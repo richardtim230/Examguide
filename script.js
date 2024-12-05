@@ -1,3 +1,25 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+  const notificationCenter = document.getElementById("notification-center");
+  const closeNotification = document.getElementById("close-notification");
+
+  // Get visit count from localStorage
+  let visitCount = parseInt(localStorage.getItem("visitCount")) || 0;
+
+  // Show popup if it's the first visit or every 10th visit
+  if (visitCount === 0 || visitCount % 10 === 0) {
+    notificationCenter.classList.remove("hidden");
+  }
+
+  // Increment visit count and save to localStorage
+  localStorage.setItem("visitCount", visitCount + 1);
+
+  // Close popup when "Got it, Start!" button is clicked
+  closeNotification.addEventListener("click", () => {
+    notificationCenter.classList.add("hidden");
+  });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const courseSelectionSection = document.getElementById("course-selection-section");
   const accessCodeSection = document.getElementById("access-code-section");
