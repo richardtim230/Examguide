@@ -39,13 +39,15 @@ header h1 {
 
 }
 
-.h2 
+.h2 {
 
   margin: 0;
 
   font-size: 0.7rem;
 
   font-weight: bold;
+  
+  text-align: center;
 
 }
 
