@@ -159,8 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     }
   }, 
-
-    Botany: {
+Botany: {
   "BOT101": {
     title: "Cell Division Basics",
     questions: [
@@ -410,8 +409,8 @@ document.addEventListener("DOMContentLoaded", () => {
         explanation: "Telophase is marked by chromosomes decondensing, the nuclear envelope reassembling, and the nucleolus reappearing."
       }, 
 
-{
-        text: "Cytokinesis in animal cells occurs through:",
+       { 
+         text: "Cytokinesis in animal cells occurs through:",
         options: [
           "Formation of cell plate",
           "Cleavage furrow formation",
@@ -636,6 +635,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ]
   }
+}
 };
 
 
