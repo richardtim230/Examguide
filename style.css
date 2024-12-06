@@ -199,7 +199,8 @@ button.danger:hover {
   width: 100%;
   text-align: left;
   margin-bottom: 0.7rem;
-  padding: 1rem;
+  padding: 0.6rem;
+  gap: 1.0rem;
   font-size: 1rem;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
@@ -281,10 +282,12 @@ button.danger:hover {
 
 #summary-section .remark.excellent {
   color: green;
+  font-weight: bold;
 }
 
 #summary-section .remark.good {
   color: blue;
+  font-weight: bold;
 }
 
 #summary-section .remark.poor {
