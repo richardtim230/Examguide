@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ],
           correct: 1,
           explanation: "A test cross is performed to determine the genotype of an individual with a dominant phenotype by crossing it with a homozygous recessive individual."
-        }
+        }, 
         // Add more Genetics questions here...
       ]
     }
@@ -158,6 +158,483 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add more Animal Systematics questions here...
       ]
     }
+  }, 
+
+    { Botany = {
+  "BOT101": {
+    title: "Cell Division Basics",
+    questions: [
+      {
+        text: "A rough idea of cell division was given by:",
+        options: ["Hofmeister", "Von Mohl", "Flemmings", "Weismann"],
+        correct: 1,
+        explanation: "Hugo von Mohl was one of the early scientists to provide insights into cell division processes."
+      },
+      {
+        text: "Who described the cell division first?",
+        options: ["Hofmeister", "Hugo Von Mohl", "Weismann", "W. Flemmings"],
+        correct: 1,
+        explanation: "Hugo von Mohl first described the process of cell division in plant cells."
+      },
+      {
+        text: "Who used the word 'karyokinesis' for cell division?",
+        options: ["Hugo Von Mohl", "Weismann", "W. Flemmings", "None of these"],
+        correct: 2,
+        explanation: "W. Flemming introduced the term 'karyokinesis' to describe nuclear division."
+      },
+      {
+        text: "Word 'mitosis' was coined by:",
+        options: ["Hofmeister", "Weismann", "W. Flemmings", "Strasburger"],
+        correct: 3,
+        explanation: "Eduard Strasburger coined the term 'mitosis' to describe the process of cell division."
+      },
+      {
+        text: "Cell division in plants was described first by:",
+        options: ["Strasburger", "Hofmeister", "Weismann", "None of these"],
+        correct: 0,
+        explanation: "Strasburger detailed cell division in plant cells."
+      },
+      {
+        text: "Who observed first that the reproductive cells have different division than somatic cells?",
+        options: ["Weismann", "Hofmeister", "Flemmings", "Sutton"],
+        correct: 0,
+        explanation: "August Weismann observed the distinct process of division in reproductive cells (meiosis)."
+      },
+      {
+        text: "Sutton emphasized:",
+        options: [
+          "Importance of cell division in heredity",
+          "That reproductive cells divide differently than somatic cells",
+          "Cells come from pre-existing cells",
+          "None of these"
+        ],
+        correct: 0,
+        explanation: "Sutton correlated the behavior of chromosomes during meiosis with inheritance patterns."
+      },
+      {
+        text: "Importance of cell division in heredity was emphasized by:",
+        options: ["Sutton", "Weismann", "Flemmings", "None of these"],
+        correct: 1,
+        explanation: "Weismann linked cell division to the transmission of hereditary information."
+      },
+      {
+        text: "Strasburger observed:",
+        options: ["Mitosis", "Meiosis", "Cell division in plants", "None of these"],
+        correct: 2,
+        explanation: "Strasburger's work focused on mitosis and cell division in plants."
+      },
+      {
+        text: "Meiosis was termed by:",
+        options: [
+          "J.B. Farmer and Moore",
+          "Hofmeister and Flemmings",
+          "Hugo Von Mohl and Strasburger",
+          "None of these"
+        ],
+        correct: 0,
+        explanation: "J.B. Farmer and Moore coined the term 'meiosis.'"
+      },
+      {
+        text: "Cell division in eukaryotic cells involves:",
+        options: ["Karyokinesis only", "Cytokinesis only", "Both (a) & (b)", "None of these"],
+        correct: 2,
+        explanation: "Eukaryotic cell division includes both karyokinesis (nuclear division) and cytokinesis (cytoplasmic division)."
+      },
+      {
+        text: "Cell division in animal cells occur by:",
+        options: ["Amitosis", "Mitosis", "Meiosis", "All these methods"],
+        correct: 3,
+        explanation: "Animal cells can divide by amitosis, mitosis, or meiosis depending on the context."
+      },
+      {
+        text: "During amitotic cell division in animals, there is:",
+        options: [
+          "Only elongation of nucleus and subsequent division into two daughter cells",
+          "Reduction in the number of chromosomes in the daughter cells",
+          "Breaking into two nuclei",
+          "None of these"
+        ],
+        correct: 0,
+        explanation: "Amitosis is a simpler division process without chromosomal segregation."
+      },
+      {
+        text: "Mitosis occurs only in:",
+        options: ["Somatic cells", "Reproductive cells", "Both (a) & (b)", "None of these"],
+        correct: 0,
+        explanation: "Mitosis typically occurs in somatic cells for growth and repair."
+      },
+      {
+        text: "Prophase in mitosis is characterized by which of these events:",
+        options: [
+          "Nucleus starts disappearing",
+          "Chromatin material changes into chromosomes",
+          "Nucleolus starts disintegrating",
+          "All of these"
+        ],
+        correct: 3,
+        explanation: "Prophase involves chromatin condensation, nuclear membrane disappearance, and nucleolus disintegration."
+      },
+      {
+        text: "Spindle is formed during cell division by:",
+        options: ["Centrioles and astral rays", "Nucleus", "Both (a) & (b)", "None of these"],
+        correct: 0,
+        explanation: "Spindle formation is facilitated by centrioles and astral microtubules."
+      },
+      {
+        text: "Mitosis is a process of cell division during which there is:",
+        options: [
+          "Distribution of same number at the end of the process",
+          "Reduction in the number of chromosomes at the end",
+          "Change in chromosomal number",
+          "None of these"
+        ],
+        correct: 0,
+        explanation: "Mitosis ensures the equal distribution of chromosomes to daughter cells."
+      },
+      {
+        text: "Mitotic cell division results in the:",
+        options: [
+          "Reduction in chromosomal number",
+          "Increase in chromosomal number",
+          "No change in chromosomal number",
+          "Doubling of cell columns"
+        ],
+        correct: 2,
+        explanation: "Mitosis maintains the chromosome number in daughter cells."
+      }, 
+      {
+        text: "Meiosis differs from mitosis because in it:",
+        options: [
+          "Homologous chromosomes pair and exchange segments",
+          "Chromosomal number is halved",
+          "The four daughter nuclei formed are haploid",
+          "All of these"
+        ],
+        correct: 3,
+        explanation: "Meiosis is characterized by pairing of homologous chromosomes, halving of the chromosome number, and the formation of haploid daughter cells."
+      },
+      {
+        text: "Separation of chromatids and their movement to opposite poles of the spindle occurs in which of these phases:",
+        options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+        correct: 2,
+        explanation: "Anaphase is marked by the separation of sister chromatids towards opposite poles."
+      },
+      {
+        text: "How many mitotic divisions are required to make 256 daughter nuclei:",
+        options: ["8", "64", "32", "16"],
+        correct: 0,
+        explanation: "Each mitotic division doubles the number of cells. To produce 256 nuclei, 2^8 = 256, so 8 divisions are required."
+      },
+      {
+        text: "Which of these plays important role in cell division in animal cells:",
+        options: ["Centriole", "Mitochondria", "Golgi complex", "None of these"],
+        correct: 0,
+        explanation: "Centrioles play a critical role in forming the spindle apparatus during mitosis."
+      },
+      {
+        text: "Chromosomes during metaphase:",
+        options: [
+          "Occupy equatorial position",
+          "Are not yet ready to divide",
+          "Assemble at one end of spindle",
+          "Occupy any place in spindle"
+        ],
+        correct: 0,
+        explanation: "In metaphase, chromosomes align at the equatorial plate of the spindle."
+      },
+      {
+        text: "Movement of chromosomes during anaphase is:",
+        options: [
+          "Dependent on association of spindle fibres with kinetochore",
+          "Independent of spindle fibres",
+          "Due to streaming of cytoplasm",
+          "Due to excess of ATP formed in microtubules"
+        ],
+        correct: 0,
+        explanation: "Chromosomal movement during anaphase is facilitated by the interaction of spindle fibers with the kinetochores."
+      },
+      {
+        text: "Chromosomes are composed of:",
+        options: ["DNA only", "Proteins only", "DNA + Proteins", "RNA only"],
+        correct: 2,
+        explanation: "Chromosomes consist of DNA molecules wrapped around proteins (mainly histones)."
+      },
+      {
+        text: "For mitotic division the DNA is:",
+        options: [
+          "Left unaffected",
+          "Reduced to half",
+          "Replicated",
+          "Reduced in chromosomal number"
+        ],
+        correct: 2,
+        explanation: "During the S phase of interphase, DNA is replicated to ensure each daughter cell receives an identical copy."
+      },
+      {
+        text: "Some of microtubules of spindle attaching to centromeres of chromosomes are called:",
+        options: ["Chromosomal fibres", "Continuous fibres", "Interchromosomal fibres", "None of these"],
+        correct: 0,
+        explanation: "Chromosomal fibers connect the spindle apparatus to the centromeres of chromosomes."
+      },
+      {
+        text: "Continuous fibres in spindle are those which connect:",
+        options: [
+          "One centriole with other and attached pole",
+          "Centromeres of chromosomes with spindle",
+          "Centrioles with spindle and also the poles",
+          "None of these"
+        ],
+        correct: 0,
+        explanation: "Continuous fibers span between the poles of the spindle and help maintain its structure."
+      },
+      {
+        text: "Some microtubules in spindle which remain attached to spindle and also to the poles are called:",
+        options: [
+          "Continuous fibres",
+          "Chromosomal fibres",
+          "Interchromosomal fibres",
+          "None of these"
+        ],
+        correct: 0,
+        explanation: "Continuous fibers are the spindle microtubules that connect the spindle poles."
+      },
+      {
+        text: "Which of these changes mark the telophase in mitosis:",
+        options: [
+          "Chromosomes start reaching poles and become thread like",
+          "Nucleolus start reappearing and nuclear membrane reappears",
+          "Both of these",
+          "None of these"
+        ],
+        correct: 2,
+        explanation: "Telophase is marked by chromosomes decondensing, the nuclear envelope reassembling, and the nucleolus reappearing."
+      }, 
+
+{
+        text: "Cytokinesis in animal cells occurs through:",
+        options: [
+          "Formation of cell plate",
+          "Cleavage furrow formation",
+          "Both (a) and (b)",
+          "None of these"
+        ],
+        correct: 1,
+        explanation: "In animal cells, cytokinesis involves the formation of a cleavage furrow, which divides the cytoplasm."
+      },
+      {
+        text: "The centromere is important during mitosis because:",
+        options: [
+          "It serves as the point of attachment for spindle fibers",
+          "It stores genetic material",
+          "It synthesizes ATP",
+          "It forms the cell membrane"
+        ],
+        correct: 0,
+        explanation: "The centromere is the attachment site for spindle fibers, ensuring proper chromosome segregation."
+      },
+      {
+        text: "The primary function of mitosis is:",
+        options: [
+          "To produce genetically identical cells",
+          "To reduce chromosome number",
+          "To increase genetic variation",
+          "To eliminate mutations"
+        ],
+        correct: 0,
+        explanation: "Mitosis produces two genetically identical daughter cells, maintaining chromosome number."
+      },
+      {
+        text: "Which organelle is crucial for spindle formation in animal cells?",
+        options: ["Nucleus", "Golgi apparatus", "Centriole", "Mitochondria"],
+        correct: 2,
+        explanation: "Centriole is essential for organizing the spindle apparatus in animal cells."
+      },
+      {
+        text: "Meiosis is important because it:",
+        options: [
+          "Produces haploid gametes",
+          "Introduces genetic variation",
+          "Reduces chromosome number",
+          "All of these"
+        ],
+        correct: 3,
+        explanation: "Meiosis ensures haploid gamete formation, reduces chromosome number, and introduces genetic variation."
+      },
+      {
+        text: "Which phase of meiosis involves crossing over?",
+        options: ["Prophase I", "Metaphase I", "Anaphase I", "Telophase I"],
+        correct: 0,
+        explanation: "Crossing over occurs during Prophase I when homologous chromosomes exchange genetic material."
+      },
+      {
+        text: "During metaphase of mitosis:",
+        options: [
+          "Chromosomes align along the equatorial plate",
+          "Nuclear membrane reforms",
+          "Chromosomes condense",
+          "Cytoplasm divides"
+        ],
+        correct: 0,
+        explanation: "In metaphase, chromosomes align at the cell's equatorial plate for proper segregation."
+      },
+      {
+        text: "Spindle fibers are primarily composed of:",
+        options: ["Actin filaments", "Microtubules", "Intermediate filaments", "Collagen"],
+        correct: 1,
+        explanation: "Spindle fibers are made of microtubules, which play a role in chromosome movement."
+      },
+      {
+        text: "How many daughter cells are produced at the end of meiosis?",
+        options: ["2", "4", "8", "16"],
+        correct: 1,
+        explanation: "Meiosis produces four haploid daughter cells from a single diploid parent cell."
+      },
+      {
+        text: "Which stage of mitosis is characterized by the complete separation of chromatids?",
+        options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+        correct: 2,
+        explanation: "Anaphase involves the separation of chromatids as they move to opposite poles."
+      },
+      {
+        text: "In plant cells, cytokinesis occurs through:",
+        options: [
+          "Cleavage furrow formation",
+          "Cell plate formation",
+          "Both (a) and (b)",
+          "None of these"
+        ],
+        correct: 1,
+        explanation: "Plant cells divide by forming a cell plate, which becomes the new cell wall."
+      },
+      {
+        text: "Chromosome number is halved during:",
+        options: ["Mitosis", "Meiosis I", "Meiosis II", "None of these"],
+        correct: 1,
+        explanation: "Chromosome number is halved during Meiosis I as homologous chromosomes are separated."
+      },
+      {
+        text: "Genetic recombination during meiosis occurs because of:",
+        options: [
+          "Crossing over",
+          "Independent assortment",
+          "Both (a) and (b)",
+          "None of these"
+        ],
+        correct: 2,
+        explanation: "Crossing over and independent assortment contribute to genetic diversity during meiosis."
+      },
+      {
+        text: "Which phase of the cell cycle involves DNA replication?",
+        options: ["G1 phase", "S phase", "G2 phase", "M phase"],
+        correct: 1,
+        explanation: "DNA replication occurs during the S phase of the cell cycle."
+      },
+      {
+        text: "The term 'synapsis' refers to:",
+        options: [
+          "The separation of sister chromatids",
+          "The pairing of homologous chromosomes",
+          "The formation of spindle fibers",
+          "The division of cytoplasm"
+        ],
+        correct: 1,
+        explanation: "Synapsis is the pairing of homologous chromosomes during Prophase I of meiosis."
+      },
+      {
+        text: "Which phase of mitosis involves the reformation of the nuclear envelope?",
+        options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+        correct: 3,
+        explanation: "In Telophase, the nuclear envelope reforms around the separated chromatids."
+      },
+      {
+        text: "Chromosomes first become visible during which phase of mitosis?",
+        options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+        correct: 0,
+        explanation: "Chromosomes condense and become visible during Prophase."
+      },
+      {
+        text: "The structure that holds sister chromatids together is called:",
+        options: ["Centromere", "Spindle", "Telomere", "Chromatin"],
+        correct: 0,
+        explanation: "The centromere connects sister chromatids until they are separated during mitosis."
+      },
+      {
+        text: "In which type of cell division does independent assortment occur?",
+        options: ["Mitosis", "Meiosis", "Both (a) and (b)", "None of these"],
+        correct: 1,
+        explanation: "Independent assortment occurs during meiosis, contributing to genetic variation."
+      },
+      {
+        text: "The spindle apparatus attaches to chromosomes at the:",
+        options: ["Centromere", "Telomere", "Kinetochore", "Chromatin"],
+        correct: 2,
+        explanation: "Spindle fibers attach to chromosomes at the kinetochore, a protein structure on the centromere."
+      },
+      {
+        text: "Which of these processes does not occur during interphase?",
+        options: [
+          "DNA replication",
+          "Organelle duplication",
+          "Chromosome condensation",
+          "Protein synthesis"
+        ],
+        correct: 2,
+        explanation: "Chromosome condensation occurs during Prophase, not interphase."
+      },
+      {
+        text: "Which event is unique to meiosis but not mitosis?",
+        options: [
+          "Chromosome alignment at the equatorial plate",
+          "Separation of chromatids",
+          "Formation of a synaptonemal complex",
+          "Cytokinesis"
+        ],
+        correct: 2,
+        explanation: "The synaptonemal complex forms during meiosis to facilitate homologous recombination."
+      },
+      {
+        text: "What is the ploidy level of cells at the end of meiosis I?",
+        options: ["Diploid", "Haploid", "Tetraploid", "None of these"],
+        correct: 1,
+        explanation: "Cells are haploid at the end of meiosis I because homologous chromosomes are separated."
+      },
+      {
+        text: "During which stage of meiosis do homologous chromosomes separate?",
+        options: ["Prophase I", "Metaphase I", "Anaphase I", "Telophase I"],
+        correct: 2,
+        explanation: "Homologous chromosomes separate during Anaphase I of meiosis."
+      },
+      {
+        text: "Which cell cycle checkpoint ensures proper DNA replication?",
+        options: ["G1 checkpoint", "S checkpoint", "G2 checkpoint", "M checkpoint"],
+        correct: 2,
+        explanation: "The G2 checkpoint ensures that DNA has been accurately replicated before mitosis begins."
+      },
+      {
+        text: "The longest phase of the cell cycle is:",
+        options: ["G1 phase", "S phase", "G2 phase", "M phase"],
+        correct: 0,
+        explanation: "G1 is typically the longest phase, as cells grow and prepare for DNA replication."
+      },
+      {
+        text: "A tetrad is formed during which stage of meiosis?",
+        options: ["Prophase I", "Metaphase I", "Anaphase I", "Telophase I"],
+        correct: 0,
+        explanation: "A tetrad, consisting of four chromatids, forms during Prophase I when homologous chromosomes pair."
+      },
+      {
+        text: "During which phase of mitosis do chromosomes decondense?",
+        options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+        correct: 3,
+        explanation: "Chromosomes decondense and return to a less compact state during Telophase."
+      },
+      {
+        text: "Which protein is involved in the regulation of the cell cycle?",
+        options: ["Actin", "Tubulin", "Cyclin", "Keratin"],
+        correct: 2,
+        explanation: "Cyclins regulate the progression of the cell cycle by activating cyclin-dependent kinases."
+      }
+    ]
   }
 };
 
