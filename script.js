@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 
 
-    { Botany = {
+    Botany: {
   "BOT101": {
     title: "Cell Division Basics",
     questions: [
