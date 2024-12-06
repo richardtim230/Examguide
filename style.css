@@ -268,25 +268,27 @@ button.danger:hover {
 #summary-section p {
   margin: 0rem 0;
   font-size: 1.0rem;
+  margin-bottom: 3rem;
+
 }
 
 #summary-section .remark {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 3rem;
 }
 
 #summary-section .remark.excellent {
-  color: #16a34a;
+  color: green;
 }
 
 #summary-section .remark.good {
-  color: #f59e0b;
+  color: blue;
 }
 
 #summary-section .remark.poor {
-  color: #dc2626;
+  color: red;
 }
 
   /* Popup Overlay */
