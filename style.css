@@ -21,6 +21,16 @@ header h1 {
   font-weight: bold;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 main {
   padding: 2rem;
   max-width: 800px;
