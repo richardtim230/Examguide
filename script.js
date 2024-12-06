@@ -57,6 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
           { text: "What is 10 - 7?", options: ["1", "2", "3", "4"], correct: 2, explanation: "10 - 7 equals 3." },
         ],
       },
+    }, 
+ }, 
+}, 
       
 Zoology: {
     "ZOO203": {
@@ -262,7 +265,8 @@ Zoology: {
         }
       ],                                          
     },
-  };
+ }, 
+};
 
   function showSection(section) {
     [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach(
