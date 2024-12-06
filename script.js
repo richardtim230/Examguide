@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
           { text: "What is 10 - 7?", options: ["1", "2", "3", "4"], correct: 2, explanation: "10 - 7 equals 3." },
         ],
       },
-      {
-  Zoology: {
+      
+Zoology: {
     "ZOO203": {
       "title": "Advanced Concepts in Genetics",
       "questions": [
@@ -260,11 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "correct": 1,
           "explanation": "Frameshift mutations occur due to insertions or deletions that shift the reading frame, often resulting in a completely altered protein sequence."
         }
-      ]
-    }
-  }
-}
-
+      ],                                          
     },
   };
 
