@@ -272,25 +272,26 @@ button.danger:hover {
   margin-bottom: 3rem;
 
 }
+ 
 
-#summary-section .remark {
+.remark {
   font-size: 1.3rem;
   font-weight: bold;
   margin-top: 2rem;
   margin-bottom: 3rem;
-}
+} 
 
-#summary-section .remark.excellent {
+.remark.excellent {
   color: green;
   font-weight: bold;
-}
+} 
 
-#summary-section .remark.good {
+.remark.good {
   color: blue;
   font-weight: bold;
-}
+} 
 
-#summary-section .remark.poor {
+.remark.poor {
   color: red;
 }
 
