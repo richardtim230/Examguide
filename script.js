@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ], 
     }, 
       
-  "ZOO101": {
+  ZOO101: {
     title: Advanced Technical Questions on Phylum Chordata and Vertebrata,
     questions: [
       {
