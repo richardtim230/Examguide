@@ -1148,10 +1148,8 @@ document.addEventListener("DOMContentLoaded", () => {
           correct: 1,
           explanation: "Phylogeny refers to the evolutionary history and relationships of a species or group of species."
         }, 
-        // Add more Animal Systematics questions here...
-      ]
-    }
-  },     
+        ] 
+    },     
 
     "Chm102": {
       title: "Fundamentals of Animal Systematics",
