@@ -2234,156 +2234,157 @@ Botany: {
 };
 
 
-  function showSection(section) {
-    [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
-      if (el) el.classList.add("hidden");
-    });
-    section.classList.remove("hidden");
+function showSection(section) {
+  [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
+    if (el) el.classList.add("hidden");
+  });
+  section.classList.remove("hidden");
+}
+
+document.querySelectorAll(".course").forEach((button) => {
+  button.addEventListener("click", () => {
+    selectedCourse = button.dataset.course;
+    selectedCourseTitle.textContent = `Enter Access Code for ${selectedCourse}`;
+    showSection(accessCodeSection);
+  });
+});
+
+document.getElementById("submit-code").addEventListener("click", () => {
+  const code = document.getElementById("access-code").value.trim();
+  const courseData = questionBanks[selectedCourse]?.[code];
+
+  if (!courseData) {
+    alert("Invalid access code. Please try again.");
+    return;
   }
 
-  document.querySelectorAll(".course").forEach((button) => {
-    button.addEventListener("click", () => {
-      selectedCourse = button.dataset.course;
-      selectedCourseTitle.textContent = `Enter Access Code for ${selectedCourse}`;
-      showSection(accessCodeSection);
-    });
+  const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${code}`)) || [];
+  const remainingQuestions = courseData.questions.filter((_, i) => !storedProgress.includes(i));
+
+  if (remainingQuestions.length === 0) {
+    alert("You have already completed all questions in this question bank.");
+    return;
+  }
+
+  questions = shuffleArray(remainingQuestions);
+  subCourseName = courseData.title;
+  startExam();
+});
+
+cancelButton.addEventListener("click", () => {
+  showSection(courseSelectionSection);
+});
+
+document.getElementById("next-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex++;
+  updateQuestion();
+});
+
+document.getElementById("prev-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex--;
+  updateQuestion();
+});
+
+document.getElementById("end-exam").addEventListener("click", () => {
+  clearInterval(timerInterval);
+  endExam();
+});
+
+document.getElementById("restart-exam").addEventListener("click", () => {
+  questions = [];
+  answers = [];
+  currentQuestionIndex = 0;
+  subCourseName = "";
+  timeRemaining = 60;
+  clearInterval(timerInterval);
+  showSection(courseSelectionSection);
+});
+
+function startExam() {
+  subjectTitle.textContent = subCourseName;
+  showSection(examSection);
+  createProgress();
+  updateQuestion();
+  startTimer();
+}
+
+function updateQuestion() {
+  const question = questions[currentQuestionIndex];
+  // Display question number along with the question text
+  questionText.innerHTML = `<h3>Question ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  optionsContainer.innerHTML = "";
+
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.addEventListener("click", () => selectAnswer(index));
+    button.className = "option-button";
+    optionsContainer.appendChild(button);
   });
 
-  document.getElementById("submit-code").addEventListener("click", () => {
-    const code = document.getElementById("access-code").value.trim();
-    const courseData = questionBanks[selectedCourse]?.[code];
+  // Enable/Disable navigation buttons based on the current index
+  document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
+  document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
+  updateProgress();
+}
 
-    if (!courseData) {
-      alert("Invalid access code. Please try again.");
-      return;
+function createProgress() {
+  progressContainer.innerHTML = "";
+  questions.forEach((_, index) => {
+    const progressItem = document.createElement("div");
+    progressItem.classList.add("progress-item");
+    progressItem.dataset.index = index;
+    progressContainer.appendChild(progressItem);
+  });
+}
+
+function updateProgress() {
+  const items = progressContainer.querySelectorAll(".progress-item");
+  items.forEach((item, index) => {
+    item.classList.toggle("answered", answers[index] !== undefined);
+    if (index === currentQuestionIndex) {
+      item.classList.add("current");
+    } else {
+      item.classList.remove("current");
     }
-
-    const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${code}`)) || [];
-    const remainingQuestions = courseData.questions.filter((_, i) => !storedProgress.includes(i));
-
-    if (remainingQuestions.length === 0) {
-      alert("You have already completed all questions in this question bank.");
-      return;
-    }
-
-    questions = shuffleArray(remainingQuestions);
-    subCourseName = courseData.title;
-    startExam();
   });
+}
 
-  cancelButton.addEventListener("click", () => {
-    showSection(courseSelectionSection);
-  });
+function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
+  updateProgress();
+}
 
-  document.getElementById("next-question").addEventListener("click", () => {
-    saveAnswer();
-    currentQuestionIndex++;
-    updateQuestion();
-  });
-
-  document.getElementById("prev-question").addEventListener("click", () => {
-    saveAnswer();
-    currentQuestionIndex--;
-    updateQuestion();
-  });
-
-  document.getElementById("end-exam").addEventListener("click", () => {
-    clearInterval(timerInterval);
-    endExam();
-  });
-
-  document.getElementById("restart-exam").addEventListener("click", () => {
-    questions = [];
-    answers = [];
-    currentQuestionIndex = 0;
-    subCourseName = "";
-    timeRemaining = 60;
-    clearInterval(timerInterval);
-    showSection(courseSelectionSection);
-  });
-
-  function startExam() {
-    subjectTitle.textContent = subCourseName;
-    showSection(examSection);
-    createProgress();
-    updateQuestion();
-    startTimer();
+function saveAnswer() {
+  if (answers[currentQuestionIndex] === undefined) {
+    answers[currentQuestionIndex] = null; // Mark unanswered
   }
+}
 
-  function updateQuestion() {
-    const question = questions[currentQuestionIndex];
-    questionText.textContent = question.text;
-    optionsContainer.innerHTML = "";
-<h3>${currentQuestionIndex + 1}. ${currentQuestion.question}</h3>
-    question.options.forEach((option, index) => {
-      const button = document.createElement("button");
-      button.textContent = option;
-      button.addEventListener("click", () => selectAnswer(index));
-      button.className = "option-button";
-      optionsContainer.appendChild(button);
-    });
+function startTimer() {
+  const timerDisplay = document.createElement("div");
+  timerDisplay.id = "timer-display";
+  timerDisplay.style.margin = "1rem 0";
+  timerDisplay.style.fontSize = "1.2rem";
+  examSection.insertBefore(timerDisplay, progressContainer);
 
-    document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
-    document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
-    updateProgress();
-  }
-
-
-  function createProgress() {
-    progressContainer.innerHTML = "";
-    questions.forEach((_, index) => {
-      const progressItem = document.createElement("div");
-      progressItem.classList.add("progress-item");
-      progressItem.dataset.index = index;
-      progressContainer.appendChild(progressItem);
-    });
-  }
-
-  function updateProgress() {
-    const items = progressContainer.querySelectorAll(".progress-item");
-    items.forEach((item, index) => {
-      item.classList.toggle("answered", answers[index] !== undefined);
-      if (index === currentQuestionIndex) {
-        item.classList.add("current");
-      } else {
-        item.classList.remove("current");
-      }
-    });
-  }
-
-  function selectAnswer(index) {
-    answers[currentQuestionIndex] = index;
-    updateProgress();
-  }
-
-  function saveAnswer() {
-    if (answers[currentQuestionIndex] === undefined) {
-      answers[currentQuestionIndex] = null; // Mark unanswered
-    }
-  }
-
-  function startTimer() {
-    const timerDisplay = document.createElement("div");
-    timerDisplay.id = "timer-display";
-    timerDisplay.style.margin = "1rem 0";
-    timerDisplay.style.fontSize = "1.2rem";
-    examSection.insertBefore(timerDisplay, progressContainer);
-
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeRemaining--;
     updateTimerDisplay();
-    timerInterval = setInterval(() => {
-      timeRemaining--;
-      updateTimerDisplay();
-      if (timeRemaining <= 0) {
-        clearInterval(timerInterval);
-        alert("Time's up! The exam will be submitted automatically.");
-        endExam();
-      }
-    }, 1000);
-  }
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      alert("Time's up! The exam will be submitted automatically.");
+      endExam();
+    }
+  }, 1000);
+}
 
-  function updateTimerDisplay() {
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
+function updateTimerDisplay() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
     document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 
