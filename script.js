@@ -54,6 +54,24 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
       },
     },
+
+  Physics: {
+        "PHYS101": {
+        title: "Biometry/Biostatistics",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
+           
+      "PHYS105": {     
+      title: "Basic Arithmetic",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ],
+      },
+    },                                  
     
 
     Zoology: {
@@ -1246,6 +1264,15 @@ Botany: {
           { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
         ]
       },
+
+      "BOT102": {
+        title: "Introductory Botany 2",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
+           
     
   "BOT101": {
     title: "Cell Division Basics",
