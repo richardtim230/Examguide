@@ -2314,7 +2314,7 @@ Botany: {
     const question = questions[currentQuestionIndex];
     questionText.textContent = question.text;
     optionsContainer.innerHTML = "";
-
+<h3>${currentQuestionIndex + 1}. ${currentQuestion.question}</h3>
     question.options.forEach((option, index) => {
       const button = document.createElement("button");
       button.textContent = option;
