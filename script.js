@@ -1110,7 +1110,50 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 
 
     Chemistry: {
-    "Chm191": {
+    "Chm101-pap": {
+      title: "Introductory Chemistry 1",
+      questions: [
+        {
+          text: "What is the primary goal of animal systematics?",
+          options: [
+            "To study animal habitats",
+            "To classify and organize animals based on evolutionary relationships",
+            "To monitor animal populations",
+            "To conserve endangered species"
+          ],
+          correct: 1,
+          explanation: "The primary goal of animal systematics is to classify and organize animals based on their evolutionary relationships, helping to understand biodiversity and the tree of life."
+        },
+        {
+          text: "Which of the following is not a hierarchical taxonomic rank?",
+          options: ["Phylum", "Order", "Family", "Ecosystem"],
+          correct: 3,
+          explanation: "Ecosystem is not a taxonomic rank; it refers to a community of interacting organisms and their physical environment."
+        },
+        {
+          text: "Who is known as the 'Father of Taxonomy'?",
+          options: ["Charles Darwin", "Carolus Linnaeus", "Aristotle", "Gregor Mendel"],
+          correct: 1,
+          explanation: "Carolus Linnaeus is known as the 'Father of Taxonomy' for developing the binomial nomenclature system."
+        },
+        {
+          text: "What does the binomial nomenclature consist of?",
+          options: ["Family and Order", "Genus and Species", "Class and Phylum", "Kingdom and Domain"],
+          correct: 1,
+          explanation: "Binomial nomenclature assigns a species a two-part name consisting of its genus and species."
+        },
+        {
+          text: "Which term refers to the evolutionary history of a species?",
+          options: ["Taxonomy", "Phylogeny", "Ecology", "Morphology"],
+          correct: 1,
+          explanation: "Phylogeny refers to the evolutionary history and relationships of a species or group of species."
+        }, 
+        // Add more Animal Systematics questions here...
+      ]
+    }
+  },     
+
+    "Chm102": {
       title: "Fundamentals of Animal Systematics",
       questions: [
         {
@@ -1151,7 +1194,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add more Animal Systematics questions here...
       ]
     }
-  },                                           
+  }, 
     
 Botany: {
   "BOT101": {
