@@ -1785,20 +1785,6 @@ Botany: {
     updateProgress();
   }
 
-    // Update UI to reflect the selected option
-  function updateSelectedOptions() {
-    const optionButtons = optionsContainer.querySelectorAll(".option");
-    optionButtons.forEach((button, i) => {
-      button.classList.toggle("selected", answers[currentQuestionIndex] === i);
-    });
-  }
-  
-     question.options.forEach((option, optionIndex) => {
-      const optionElement = document.createElement("button");
-      optionElement.textContent = option;
-      optionElement.classList.add("option");
-
-
 
   function createProgress() {
     progressContainer.innerHTML = "";
