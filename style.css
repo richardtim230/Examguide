@@ -278,16 +278,16 @@ button.danger:hover {
   margin: 0rem 0;
   font-size: 1.0rem;
   margin-bottom: 3rem;
+}
 
 
-
-.remark 
+.remark {
   font-size: 1.3rem;
   font-weight: bold;
   margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 3rem;}
 
-.remark.excellent 
+.remark.excellent {
   color: green;
   font-weight: bold;
 
