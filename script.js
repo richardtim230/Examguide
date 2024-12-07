@@ -1202,6 +1202,14 @@ Botany: {
           { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
         ]
       },
+
+    "BOT203": {
+        title: "Welcome to the World of Genetics",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
     
   "BOT101": {
     title: "Cell Division Basics",
