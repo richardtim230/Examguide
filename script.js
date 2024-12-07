@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let timeRemaining = 3600; // Timer in seconds
   let selectedCourse = "";
   let subCourseName = "";
+  const answers = []; 
 
   const questionBanks = {
     Mathematics: {
@@ -1784,6 +1785,21 @@ Botany: {
     document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
     updateProgress();
   }
+
+    // Update UI to reflect the selected option
+  function updateSelectedOptions() {
+    const optionButtons = optionsContainer.querySelectorAll(".option");
+    optionButtons.forEach((button, i) => {
+      button.classList.toggle("selected", answers[currentQuestionIndex] === i);
+    });
+  }
+  
+     question.options.forEach((option, optionIndex) => {
+      const optionElement = document.createElement("button");
+      optionElement.textContent = option;
+      optionElement.classList.add("option");
+
+
 
   function createProgress() {
     progressContainer.innerHTML = "";
