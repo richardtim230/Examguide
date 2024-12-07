@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     },
     Zoology: {
-      "SYS101-SET1": {
+      "ZOO101-12": {
         title: "Animal Systematics Fundamentals",
         questions: [
           { text: "What is the primary basis for the classification of animals in taxonomy?", options: ["Reproductive methods", "Body structure", "Feeding habits", "Behavior"], correct: 1, explanation: "Body structure is a fundamental criterion used in taxonomy to classify animals." },
@@ -1770,7 +1770,7 @@ Botany: {
   }
 
   function shuffleArray(array) {
-    return array.sort(() => 1.5 - Math.random()).slice(2, 50);
+    return array.sort(() => 1.5 - Math.random()).slice()), 50);
   }
 
   function getRemark(percentage) {
