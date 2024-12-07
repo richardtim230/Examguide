@@ -160,3 +160,221 @@ button.cta:hover {
 .course:nth-child(6) {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
 }
+
+
+  /* Overlay Pop-Up Screen */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Pop-Up Content Header */
+.popup-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #2563eb;
+}
+
+.popup-content p {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+/* Pop-Up Input Fields */
+.popup-content input {
+  width: 90%;
+  max-width: 400px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.popup-content input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+}
+
+/* Pop-Up Buttons */
+.popup-content button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.popup-content button.primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.popup-content button.primary:hover {
+  background: #1d4ed8;
+}
+
+.popup-content button.danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.popup-content button.danger:hover {
+  background: #b91c1c;
+}
+
+/* Animation for Pop-Up */
+@keyframes fadeIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Exam Section Layout */
+#examSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  min-height: 100vh; /* Ensure it always fits the screen */
+  background: linear-gradient(180deg, #f9fafb, #ffffff);
+}
+
+/* Timer Display */
+#timer-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+/* Question Text */
+#questionText h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1d4ed8;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Option Buttons */
+.option-button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.option-button:hover {
+  background: #f1f5f9;
+}
+
+.option-button.selected {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+/* Navigation Buttons */
+#prev-question, #next-question, #end-exam {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin: 0.5rem;
+}
+
+#prev-question {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+#prev-question:hover {
+  background: #1d4ed8;
+}
+
+#next-question {
+  background: #10b981;
+  color: #ffffff;
+}
+
+#next-question:hover {
+  background: #059669;
+}
+
+#end-exam {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+#end-exam:hover {
+  background: #b91c1c;
+}
+
+/* Progress Bar */
+#progress-container {
+  display: flex;
+  gap: 8px;
+  margin: 1rem 0;
+}
+
+.progress-item {
+  width: 20px;
+  height: 20px;
+  background: #e5e7eb;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.progress-item.answered {
+  background: #10b981; /* Green for answered */
+}
+
+.progress-item.current {
+  background: #2563eb; /* Blue for the current question */
+}
