@@ -141,6 +141,116 @@ main {
 .hidden {
   display: none;
 }
+/* General layout for the exam section */
+#examSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 2rem auto;
+}
+
+/* Stylish timer display */
+#timer-display {
+  color: #fff;
+  background-color: #007bff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Question text styling */
+#questionText h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Options container layout */
+#optionsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Individual option button */
+.option-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Option button hover effects */
+.option-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Progress container styling */
+#progressContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.progress-item {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.progress-item.current {
+  background: #007bff;
+  transform: scale(1.2);
+}
+
+.progress-item.answered {
+  background: #28a745;
+}
+
+/* Navigation buttons */
+#prev-question, #next-question, #end-exam {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  margin: 1rem 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#prev-question:hover, #next-question:hover, #end-exam:hover {
+  background: #555;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  #optionsContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 
 /* Button Styles */
 button {
