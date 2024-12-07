@@ -188,7 +188,7 @@ button.danger:hover {
 
 /* Exam Section */
 #exam-section {
-  background: pitch;
+  background: orange;
   padding: 7px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -221,7 +221,7 @@ button.danger:hover {
 #options-container button.selected {
   background: #1d4ed8;
   color: white;
-  border-color: #1d4ed8;
+  border-color: green;
 }
 
 #timer-display {
