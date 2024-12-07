@@ -2428,3 +2428,16 @@ function updateTimerDisplay() {
 });
 
 
+function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
+
+  // Deselect all option buttons
+  const allOptions = document.querySelectorAll(".option-button");
+  allOptions.forEach((button) => button.classList.remove("selected"));
+
+  // Mark the clicked button as selected
+  const selectedButton = allOptions[index];
+  selectedButton.classList.add("selected");
+
+  updateProgress();
+}
