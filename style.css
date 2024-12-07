@@ -231,17 +231,19 @@ main {
   background: #333;
   color: #fff;
   border: none;
-  padding: 0.7rem 1.5rem;
+  padding: 0.5rem 0.9rem;
   margin: 1rem 0.5rem;
   font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease;
+  gap: 0.5rem;
 }
 
 #prev-question:hover, #next-question:hover, #end-exam:hover {
   background: #555;
-  gap: 1.0rem;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
 }
 
 /* Responsive design for mobile */
@@ -391,7 +393,9 @@ button.danger:hover {
 /* Exam Section */
 #exam-section {
   background: #fffaf0;
+  font-size: 1.0rem;
   padding: 7px;
+  font-weight: light;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
