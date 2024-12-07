@@ -1,126 +1,145 @@
-// Predefined access codes with validity periods
-const predefinedAccessCodes = [
-  { code: "ABC123", validityDays: 5 },
-  { code: "XYZ789", validityDays: 10 },
-  { code: "LMN456", validityDays: 15 },
-  { code: "QRS112", validityDays: 20 },
-  { code: "TUV224", validityDays: 25 },
-  { code: "JKL334", validityDays: 30 },
-  { code: "MNO445", validityDays: 7 },
-  { code: "PQR556", validityDays: 12 },
-  { code: "STU667", validityDays: 8 },
-  { code: "VWXY778", validityDays: 3 },
-  { code: "FGH889", validityDays: 18 },
-  { code: "IJK990", validityDays: 6 },
-  { code: "DEF001", validityDays: 11 },
-  { code: "GHI223", validityDays: 13 },
-  { code: "JKL445", validityDays: 9 },
-  { code: "XYZ556", validityDays: 2 },
-  { code: "LMN667", validityDays: 17 },
-  { code: "OPQ778", validityDays: 4 },
-  { code: "RST889", validityDays: 14 },
-  { code: "UVW990", validityDays: 19 }
+// Predefined access codes with validity periods in days
+const accessCodes = [
+    { code: 'CODE123', validity: 7 },
+    { code: 'CODE456', validity: 14 },
+    { code: 'CODE789', validity: 30 },
+    { code: 'CODE101', validity: 10 },
+    { code: 'CODE202', validity: 20 },
+    { code: 'CODE303', validity: 5 },
+    { code: 'CODE404', validity: 15 },
+    { code: 'CODE505', validity: 25 },
+    { code: 'CODE606', validity: 12 },
+    { code: 'CODE707', validity: 21 },
+    { code: 'CODE808', validity: 8 },
+    { code: 'CODE909', validity: 18 },
+    { code: 'CODE111', validity: 6 },
+    { code: 'CODE222', validity: 9 },
+    { code: 'CODE333', validity: 19 },
+    { code: 'CODE444', validity: 11 },
+    { code: 'CODE555', validity: 13 },
+    { code: 'CODE666', validity: 23 },
+    { code: 'CODE777', validity: 17 },
+    { code: 'CODE888', validity: 16 },
 ];
 
-// Store predefined access codes in local storage (initially, if not already stored)
-if (!localStorage.getItem('accessCodes')) {
-  localStorage.setItem('accessCodes', JSON.stringify(predefinedAccessCodes));
+// DOM Elements
+const loginContainer = document.getElementById('loginContainer');
+const registerContainer = document.getElementById('registerContainer');
+const recoverContainer = document.getElementById('recoverContainer');
+
+const loginBtn = document.getElementById('loginBtn');
+const registerBtn = document.getElementById('registerBtn');
+const recoverBtn = document.getElementById('recoverBtn');
+
+const goToRegister = document.getElementById('goToRegister');
+const goToLogin = document.getElementById('goToLogin');
+const forgotPassword = document.getElementById('forgotPassword');
+const backToLogin = document.getElementById('backToLogin');
+
+// Helper function to check access code validity
+function isValidAccessCode(code, username) {
+    const storedCodes = JSON.parse(localStorage.getItem('usedAccessCodes')) || {};
+    const currentDate = new Date();
+
+    if (storedCodes[code]) {
+        const { expiry, users } = storedCodes[code];
+        if (users.includes(username)) return false; // Code already used by this user
+        if (new Date(expiry) < currentDate) return false; // Code expired
+    }
+
+    return accessCodes.some((item) => item.code === code);
 }
 
-// Check if access code is valid (within the 30-day validity)
-function checkAccessCodeValidity(code) {
-  const accessCodes = JSON.parse(localStorage.getItem('accessCodes'));
-  const codeData = accessCodes.find((accessCode) => accessCode.code === code);
+// Helper function to activate access code
+function activateAccessCode(code, username) {
+    const currentDate = new Date();
+    const codeDetails = accessCodes.find((item) => item.code === code);
+    const expiryDate = new Date(currentDate.setDate(currentDate.getDate() + codeDetails.validity));
 
-  if (codeData) {
-    const today = new Date();
-    const codeExpiryDate = new Date(today.getTime() + codeData.validityDays * 24 * 60 * 60 * 1000); // Expiry date
-    const lastLoginDate = localStorage.getItem('lastLoginDate') ? new Date(localStorage.getItem('lastLoginDate')) : null;
-
-    if (today <= codeExpiryDate && (!lastLoginDate || (today - lastLoginDate) < 30 * 24 * 60 * 60 * 1000)) {
-      // Access code is valid
-      localStorage.setItem('lastLoginDate', today.toISOString());
-      return true;
+    let storedCodes = JSON.parse(localStorage.getItem('usedAccessCodes')) || {};
+    if (!storedCodes[code]) {
+        storedCodes[code] = { expiry: expiryDate, users: [] };
     }
-  }
-  return false;
+    storedCodes[code].users.push(username);
+
+    localStorage.setItem('usedAccessCodes', JSON.stringify(storedCodes));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const authOverlay = document.getElementById('auth-overlay');
-  const appContent = document.getElementById('app-content');
-  const loginForm = document.getElementById('login-form');
-  const registerForm = document.getElementById('register-form');
-  const authTitle = document.getElementById('auth-title');
-  const accessCodeInput = document.getElementById('access-code');
-  const accessCodeRegisterInput = document.getElementById('access-code-register');
-  const fullNameInput = document.getElementById('full-name');
-  const emailInput = document.getElementById('email');
-
-  const loginBtn = document.getElementById('login-btn');
-  const registerBtn = document.getElementById('register-btn');
-  const registerSubmitBtn = document.getElementById('register-submit-btn');
-  const backToLoginBtn = document.getElementById('back-to-login-btn');
-
-  // Initial check if the user is already logged in or if 30 days have passed
-  const storedCode = localStorage.getItem('accessCode');
-  if (storedCode && checkAccessCodeValidity(storedCode)) {
-    appContent.style.display = 'block';
-    authOverlay.style.display = 'none';
-  } else {
-    authOverlay.style.display = 'flex';
-    appContent.style.display = 'none';
-  }
-
-  // Log In logic
-  loginBtn.addEventListener('click', () => {
-    const accessCode = accessCodeInput.value.trim();
-
-    if (checkAccessCodeValidity(accessCode)) {
-      localStorage.setItem('accessCode', accessCode); // Store access code
-      appContent.style.display = 'block';
-      authOverlay.style.display = 'none';
-    } else {
-      alert('Invalid or expired access code. Please try again.');
-    }
-  });
-
-  // Register logic
-  registerBtn.addEventListener('click', () => {
-    authTitle.innerText = 'Register';
-    loginForm.style.display = 'none';
-    registerForm.style.display = 'block';
-  });
-
-  // Back to login from register
-  backToLoginBtn.addEventListener('click', () => {
-    authTitle.innerText = 'Log In';
-    registerForm.style.display = 'none';
-    loginForm.style.display = 'block';
-  });
-
-  // Submit registration
-  registerSubmitBtn.addEventListener('click', () => {
-    const fullName = fullNameInput.value.trim();
-    const email = emailInput.value.trim();
-    const accessCode = accessCodeRegisterInput.value.trim();
-
-    if (!fullName || !email || !accessCode) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    const accessCodes = JSON.parse(localStorage.getItem('accessCodes'));
-    const existingCode = accessCodes.find((codeObj) => codeObj.code === accessCode);
-
-    if (existingCode) {
-      alert('Access code already exists');
-    } else {
-      alert('Access code registration failed! Please contact the administrator.');
-    }
-  });
+// Toggle between sections
+goToRegister.addEventListener('click', () => {
+    loginContainer.classList.add('hidden');
+    registerContainer.classList.remove('hidden');
 });
 
+goToLogin.addEventListener('click', () => {
+    registerContainer.classList.add('hidden');
+    loginContainer.classList.remove('hidden');
+});
+
+forgotPassword.addEventListener('click', () => {
+    loginContainer.classList.add('hidden');
+    recoverContainer.classList.remove('hidden');
+});
+
+backToLogin.addEventListener('click', () => {
+    recoverContainer.classList.add('hidden');
+    loginContainer.classList.remove('hidden');
+});
+
+// User registration
+registerBtn.addEventListener('click', () => {
+    const username = document.getElementById('regUsername').value;
+    const password = document.getElementById('regPassword').value;
+    const question = document.getElementById('securityQuestion').value;
+    const answer = document.getElementById('securityAnswer').value;
+    const accessCode = document.getElementById('accessCode').value;
+
+    if (!isValidAccessCode(accessCode, username)) {
+        alert('Invalid or expired access code!');
+        return;
+    }
+
+    if (localStorage.getItem(username)) {
+        alert('User already exists!');
+    } else {
+        activateAccessCode(accessCode, username);
+        localStorage.setItem(username, JSON.stringify({ password, question, answer }));
+        alert('Registration successful! Please log in.');
+        registerContainer.classList.add('hidden');
+        loginContainer.classList.remove('hidden');
+    }
+});
+
+// User login
+loginBtn.addEventListener('click', () => {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+
+    const user = JSON.parse(localStorage.getItem(username));
+
+    if (user && user.password === password) {
+        alert('Login successful!');
+        document.getElementById('overlay').classList.add('hidden');
+    } else {
+        alert('Invalid username or password!');
+    }
+});
+
+// Password recovery
+recoverBtn.addEventListener('click', () => {
+    const username = document.getElementById('recoverUsername').value;
+    const answer = document.getElementById('recoverAnswer').value;
+
+    const user = JSON.parse(localStorage.getItem(username));
+
+    if (user && user.answer === answer) {
+        alert(`Your password is: ${user.password}`);
+        recoverContainer.classList.add('hidden');
+        loginContainer.classList.remove('hidden');
+    } else {
+        alert('Incorrect username or security answer!');
+    }
+});
 
 
 document.addEventListener("DOMContentLoaded", () => {
