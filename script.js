@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", () => {
   // Notification Center Logic
   const notificationCenter = document.getElementById("notification-center");
@@ -1945,3 +1947,128 @@ Botany: {
     return "Keep practicing! You can do better.";
   }
 });
+
+
+// Predefined access codes with validity periods
+const predefinedAccessCodes = [
+  { code: "ABC123", validityDays: 5 },
+  { code: "XYZ789", validityDays: 10 },
+  { code: "LMN456", validityDays: 15 },
+  { code: "QRS112", validityDays: 20 },
+  { code: "TUV224", validityDays: 25 },
+  { code: "JKL334", validityDays: 30 },
+  { code: "MNO445", validityDays: 7 },
+  { code: "PQR556", validityDays: 12 },
+  { code: "STU667", validityDays: 8 },
+  { code: "VWXY778", validityDays: 3 },
+  { code: "FGH889", validityDays: 18 },
+  { code: "IJK990", validityDays: 6 },
+  { code: "DEF001", validityDays: 11 },
+  { code: "GHI223", validityDays: 13 },
+  { code: "JKL445", validityDays: 9 },
+  { code: "XYZ556", validityDays: 2 },
+  { code: "LMN667", validityDays: 17 },
+  { code: "OPQ778", validityDays: 4 },
+  { code: "RST889", validityDays: 14 },
+  { code: "UVW990", validityDays: 19 }
+];
+
+// Store predefined access codes in local storage (initially, if not already stored)
+if (!localStorage.getItem('accessCodes')) {
+  localStorage.setItem('accessCodes', JSON.stringify(predefinedAccessCodes));
+}
+
+// Check if access code is valid (within the 30-day validity)
+function checkAccessCodeValidity(code) {
+  const accessCodes = JSON.parse(localStorage.getItem('accessCodes'));
+  const codeData = accessCodes.find((accessCode) => accessCode.code === code);
+
+  if (codeData) {
+    const today = new Date();
+    const codeExpiryDate = new Date(today.getTime() + codeData.validityDays * 24 * 60 * 60 * 1000); // Expiry date
+    const lastLoginDate = localStorage.getItem('lastLoginDate') ? new Date(localStorage.getItem('lastLoginDate')) : null;
+
+    if (today <= codeExpiryDate && (!lastLoginDate || (today - lastLoginDate) < 30 * 24 * 60 * 60 * 1000)) {
+      // Access code is valid
+      localStorage.setItem('lastLoginDate', today.toISOString());
+      return true;
+    }
+  }
+  return false;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const authOverlay = document.getElementById('auth-overlay');
+  const appContent = document.getElementById('app-content');
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const authTitle = document.getElementById('auth-title');
+  const accessCodeInput = document.getElementById('access-code');
+  const accessCodeRegisterInput = document.getElementById('access-code-register');
+  const fullNameInput = document.getElementById('full-name');
+  const emailInput = document.getElementById('email');
+
+  const loginBtn = document.getElementById('login-btn');
+  const registerBtn = document.getElementById('register-btn');
+  const registerSubmitBtn = document.getElementById('register-submit-btn');
+  const backToLoginBtn = document.getElementById('back-to-login-btn');
+
+  // Initial check if the user is already logged in or if 30 days have passed
+  const storedCode = localStorage.getItem('accessCode');
+  if (storedCode && checkAccessCodeValidity(storedCode)) {
+    appContent.style.display = 'block';
+    authOverlay.style.display = 'none';
+  } else {
+    authOverlay.style.display = 'flex';
+    appContent.style.display = 'none';
+  }
+
+  // Log In logic
+  loginBtn.addEventListener('click', () => {
+    const accessCode = accessCodeInput.value.trim();
+
+    if (checkAccessCodeValidity(accessCode)) {
+      localStorage.setItem('accessCode', accessCode); // Store access code
+      appContent.style.display = 'block';
+      authOverlay.style.display = 'none';
+    } else {
+      alert('Invalid or expired access code. Please try again.');
+    }
+  });
+
+  // Register logic
+  registerBtn.addEventListener('click', () => {
+    authTitle.innerText = 'Register';
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+  });
+
+  // Back to login from register
+  backToLoginBtn.addEventListener('click', () => {
+    authTitle.innerText = 'Log In';
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+  });
+
+  // Submit registration
+  registerSubmitBtn.addEventListener('click', () => {
+    const fullName = fullNameInput.value.trim();
+    const email = emailInput.value.trim();
+    const accessCode = accessCodeRegisterInput.value.trim();
+
+    if (!fullName || !email || !accessCode) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    const accessCodes = JSON.parse(localStorage.getItem('accessCodes'));
+    const existingCode = accessCodes.find((codeObj) => codeObj.code === accessCode);
+
+    if (existingCode) {
+      alert('Access code already exists');
+    } else {
+      alert('Access code registration failed! Please contact the administrator.');
+    }
+  });
+});
+
