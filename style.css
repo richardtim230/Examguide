@@ -81,29 +81,6 @@ input {
     border-radius: 5px;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
 
 /* Main content styling */
 .main-content {
@@ -147,7 +124,7 @@ main {
   flex-direction: column;
   align-items: center;
   background: #f9f9f9;
-  padding: 2rem;
+  padding: 1.6rem;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 80%;
@@ -244,7 +221,7 @@ main {
 }
 
 /* Responsive design for mobile */
-@media (max-width: 768px) {
+@media (max-width: 400px) {
   #optionsContainer {
     grid-template-columns: 1fr;
   }
