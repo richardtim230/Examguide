@@ -1066,9 +1066,9 @@ document.addEventListener("DOMContentLoaded", () => {
         options: ["Prevents multiple sperm entry", "Provides nutrients", "Supports mitosis", "Initiates cleavage"],
         correct: 0,
         explanation: "The zona pellucida prevents polyspermy by blocking additional sperm after the first fertilization event."
-      }, 
-    ], 
-  }, 
+      }
+    ]
+  }
 }, 
   Animal_Systematics: {
     "BIO201-SET1": {
