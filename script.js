@@ -100,43 +100,130 @@ document.addEventListener("DOMContentLoaded", () => {
           ],
           correct: 3,
           explanation: "In prokaryotes, transcription occurs in the cytoplasm as they lack a nucleus, and their genes typically lack introns. In contrast, eukaryotes perform transcription in the nucleus and have introns in their genes."
-        },
-        {
-          text: "What is the purpose of a test cross in genetics?",
-          options: [
-            "To determine the mutation rate in a population",
-            "To assess the genotype of an individual with a dominant phenotype",
-            "To increase genetic variation",
-            "To identify linkage between two genes"
-          ],
-          correct: 1,
-          explanation: "A test cross is performed to determine the genotype of an individual with a dominant phenotype by crossing it with a homozygous recessive individual."
-        }, 
-        // Add more Genetics questions here...
-      ], 
-    }, 
-      
-  "ZOO101": {
-    title: Advanced Technical Questions on Phylum Chordata and Vertebrata,
-    questions: [
-      {
-        text: "Which specific cells in the neural crest of vertebrates give rise to peripheral nerves?",
-        options: ["Ectodermal cells", "Schwann cells", "Neural crest cells", "Mesodermal cells"],
-        correct: 2,
-        explanation: "Neural crest cells migrate to form peripheral nerves, pigment cells, and other specialized tissues in vertebrates."
+document.addEventListener("DOMContentLoaded", () => {
+  // Notification Center Logic
+  const notificationCenter = document.getElementById("notification-center");
+  const closeNotification = document.getElementById("close-notification");
+
+  if (notificationCenter && closeNotification) {
+    let visitCount = parseInt(localStorage.getItem("visitCount") || "0", 10);
+    if (visitCount === 0 || visitCount % 10 === 0) {
+      notificationCenter.classList.remove("hidden");
+    }
+    localStorage.setItem("visitCount", visitCount + 1);
+
+    closeNotification.addEventListener("click", () => {
+      notificationCenter.classList.add("hidden");
+    });
+  }
+
+  // Course Selection and Exam Logic
+  const courseSelectionSection = document.getElementById("course-selection-section");
+  const accessCodeSection = document.getElementById("access-code-section");
+  const examSection = document.getElementById("exam-section");
+  const summarySection = document.getElementById("summary-section");
+  const questionText = document.getElementById("question-text");
+  const optionsContainer = document.getElementById("options-container");
+  const progressContainer = document.getElementById("progress-container");
+  const summaryContent = document.getElementById("summary-content");
+  const subjectTitle = document.getElementById("subject-title");
+  const selectedCourseTitle = document.getElementById("selected-course-title");
+  const cancelButton = document.getElementById("cancel-button");
+
+  let questions = [];
+  let currentQuestionIndex = 0;
+  let answers = [];
+  let timerInterval = null;
+  let timeRemaining = 60; // Timer in seconds
+  let selectedCourse = "";
+  let subCourseName = "";
+
+  const questionBanks = {
+    Mathematics: {
+      "MATH101-SET1": {
+        title: "Basic Arithmetic",
+        questions: [
+          { 
+            text: "What is 2 + 2?", 
+            options: ["2", "3", "4", "5"], 
+            correct: 2, 
+            explanation: "2 + 2 equals 4." 
+          },
+          { 
+            text: "What is 3 x 3?", 
+            options: ["6", "9", "12", "15"], 
+            correct: 1, 
+            explanation: "3 x 3 equals 9." 
+          },
+        ],
       },
-      {
-        text: "What type of jaw articulation is seen in cartilaginous fishes (Chondrichthyes)?",
-        options: ["Amphistylic", "Autostylic", "Hyostylic", "Synapsid"],
-        correct: 2,
-        explanation: "Hyostylic jaw articulation allows greater mobility of the jaws in Chondrichthyes, enhancing feeding efficiency."
+    },
+    Zoology: {
+      "SYS101-SET1": {
+        title: "Animal Systematics Fundamentals",
+        questions: [
+          { 
+            text: "What is the primary basis for the classification of animals in taxonomy?", 
+            options: ["Reproductive methods", "Body structure", "Feeding habits", "Behavior"], 
+            correct: 1, 
+            explanation: "Body structure is a fundamental criterion used in taxonomy to classify animals." 
+          },
+        ],
       },
-      {
-        text: "Which embryonic structure in chordates contributes to the development of the intervertebral discs in vertebrates?",
-        options: ["Endostyle", "Notochord", "Dorsal hollow nerve cord", "Pharyngeal slits"],
-        correct: 1,
-        explanation: "The notochord becomes the nucleus pulposus of the intervertebral discs in vertebrates."
+      "BIO301-SET1": {
+        title: "Advanced Concepts in Genetics",
+        questions: [
+          { 
+            text: "What is the role of the promoter region in gene expression?", 
+            options: [
+              "It codes for the protein structure",
+              "It serves as a binding site for RNA polymerase",
+              "It terminates transcription",
+              "It splices introns"
+            ], 
+            correct: 1, 
+            explanation: "The promoter region is a DNA sequence that serves as the binding site for RNA polymerase and transcription factors, initiating transcription." 
+          },
+          { 
+            text: "Which of the following is a characteristic of autosomal recessive inheritance?", 
+            options: [
+              "Affected individuals always have affected parents",
+              "Males are more commonly affected",
+              "The trait skips generations and is expressed only in homozygotes",
+              "The trait is transmitted exclusively through maternal lines"
+            ], 
+            correct: 2, 
+            explanation: "Autosomal recessive inheritance requires an individual to inherit two copies of the mutant allele (one from each parent) for the trait to be expressed." 
+          },
+        ],
       },
+      "ZOO101": {
+        title: "Advanced Technical Questions on Phylum Chordata and Vertebrata",
+        questions: [
+          { 
+            text: "Which cranial nerve is associated with the lateral line system in fishes?", 
+            options: ["Facial nerve (VII)", "Olfactory nerve (I)", "Glossopharyngeal nerve (IX)", "Trigeminal nerve (V)"], 
+            correct: 0, 
+            explanation: "The facial nerve (VII) transmits sensory information from the lateral line system in fishes." 
+          },
+          { 
+            text: "Which gene family regulates the patterning of the vertebrate body axis during development?", 
+            options: ["Hox genes", "Pax genes", "Wnt genes", "Bmp genes"], 
+            correct: 0, 
+            explanation: "Hox genes regulate the anterior-posterior axis formation in vertebrates, determining segment identity." 
+          },
+          { 
+            text: "What is the role of somites in vertebrate embryogenesis?", 
+            options: ["Formation of the neural tube", "Segmentation of the body", "Development of the digestive tract", "Formation of gills"], 
+            correct: 1, 
+            explanation: "Somites are mesodermal structures that segment the body and give rise to vertebrae, muscles, and dermis." 
+          },
+          { 
+            text: "Which of the following vertebrate classes is characterized by the absence of bone?", 
+            options: ["Chondrichthyes", "Osteichthyes", "Amphibia", "Aves"], 
+            correct: 0, 
+            explanation: "Chondrichthyes, such as sharks and rays, have skeletons made entirely of cartilage." 
+          },
       {
         text: "What distinguishes placoid scales found in Chondrichthyes from other scale types?",
         options: ["Keratin composition", "Bone-derived structure", "Tooth-like structure with dentin", "Overlapping arrangement"],
