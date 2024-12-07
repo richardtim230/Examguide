@@ -385,3 +385,16 @@ button.danger:hover {
     opacity: 1;
   }
 }
+
+    .option {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.option.selected {
+  background-color: #007bff;
+  color: white;
+}
+
