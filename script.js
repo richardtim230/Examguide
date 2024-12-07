@@ -38,7 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
                           
   const questionBanks = {
     Mathematics: {
-      "MATH101-SET1": {
+        "MTH105-12": {
+        title: "Biometry/Biostatistics",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
+           
+      "MTH101-12": {
         title: "Basic Arithmetic",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
@@ -46,7 +54,35 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
       },
     },
+    
+
     Zoology: {
+
+         "ZOO201": {
+        title: "Biometry/Biostatistics",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
+
+  "ZOO202": {
+        title: "Biometry/Biostatistics",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
+           
+  "ZOO207": {
+        title: "Biometry/Biostatistics",
+        questions: [
+          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
+          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+        ]
+      },
+           
+               
       "ZOO101-12": {
         title: "Animal Systematics Fundamentals",
         questions: [
