@@ -1111,10 +1111,9 @@ document.addEventListener("DOMContentLoaded", () => {
           options: ["Taxonomy", "Phylogeny", "Ecology", "Morphology"],
           correct: 1,
           explanation: "Phylogeny refers to the evolutionary history and relationships of a species or group of species."
-        }, 
+        }
         // Add more Animal Systematics questions here...
       ]
-    }
   }, 
     
 Botany: {
