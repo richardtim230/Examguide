@@ -35,8 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let timeRemaining = 3600; // Timer in seconds
   let selectedCourse = "";
   let subCourseName = "";
-  const answers = []; 
-
+                          
   const questionBanks = {
     Mathematics: {
       "MATH101-SET1": {
