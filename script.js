@@ -1770,7 +1770,7 @@ Botany: {
   }
 
   function shuffleArray(array) {
-    return array.sort(() => 1.5 - Math.random()).slice()), 50);
+    return array.sort(() => 0.5 - Math.random()).slice(0.5, 50);
   }
 
   function getRemark(percentage) {
