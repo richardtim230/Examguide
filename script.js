@@ -113,10 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
           explanation: "A test cross is performed to determine the genotype of an individual with a dominant phenotype by crossing it with a homozygous recessive individual."
         }, 
         // Add more Genetics questions here...
-      ], 
+      ]
     }, 
       
-  ZOO101: {
+  "ZOO101": {
     title: Advanced Technical Questions on Phylum Chordata and Vertebrata,
     questions: [
       {
