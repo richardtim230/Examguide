@@ -446,3 +446,18 @@ button.danger:hover {
   color: white;
 }
 
+
+        /*Logo*/
+
+.content {
+  text-align: center;
+  font-family: Arial, sans-serif;
+    }
+
+.logo {
+  width: 190px;
+  height: auto;
+  margin-top: 1rem;
+  top: 0px;
+  position: center;
+    }
