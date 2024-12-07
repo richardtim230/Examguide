@@ -134,31 +134,35 @@ main {
 /* Stylish timer display */
 #timer-display {
   color: #fff;
-  background-color: #007bff;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
 /* Question text styling */
 #questionText h3 {
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.8rem; /* Larger font size for emphasis */
+  color: #222; /* Darker color for better readability */
   margin-bottom: 1.5rem;
   text-align: center;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Georgia', serif; /* Elegant font style for questions */
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-/* Options container layout */
-#optionsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  width: 100%;
-  margin-top: 1rem;
+/* Navigation buttons (Previous, Next, End Exam) - Smaller size */
+#prev-question, #next-question, #end-exam {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem; /* Reduced padding for smaller size */
+  margin: 0.5rem;
+  font-size: 0.9rem; /* Smaller font size */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* Individual option button */
+#prev-question:hover, #next-question:hover, #end-exam:hover {
+  background: #555;
+}
+
+/* Option button styling - remain in secondary color when selected */
 .option-button {
   background: #007bff;
   color: white;
@@ -171,62 +175,82 @@ main {
   font-family: 'Arial', sans-serif;
 }
 
-/* Option button hover effects */
-.option-button:hover {
-  background: #0056b3;
+/* When option button is selected */
+.option-button.selected {
+  background: #28a745; /* Secondary color (green) for selected state */
+  color: #fff;
   transform: scale(1.05);
 }
 
-/* Progress container styling */
-#progressContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 1.5rem 0;
+/* Option button hover effects */
+.option-button:hover {
+  background: #0056b3;
 }
 
-.progress-item {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ddd;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.progress-item.current {
-  background: #007bff;
-  transform: scale(1.2);
-}
-
-.progress-item.answered {
+/* Reset previous selections when a new option is picked */
+.option-button.selected:not(:hover) {
   background: #28a745;
+  color: #fff;
 }
 
-/* Navigation buttons */
+        /* Question text styling */
+#questionText h3 {
+  font-size: 1.8rem; /* Larger font size for emphasis */
+  color: #222; /* Darker color for better readability */
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Georgia', serif; /* Elegant font style for questions */
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Navigation buttons (Previous, Next, End Exam) - Smaller size */
 #prev-question, #next-question, #end-exam {
   background: #333;
   color: #fff;
   border: none;
-  padding: 0.7rem 1.5rem;
-  margin: 1rem 0.5rem;
-  font-size: 1rem;
+  padding: 0.5rem 1rem; /* Reduced padding for smaller size */
+  margin: 0.5rem;
+  font-size: 0.9rem; /* Smaller font size */
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 #prev-question:hover, #next-question:hover, #end-exam:hover {
   background: #555;
 }
 
-/* Responsive design for mobile */
-@media (max-width: 400px) {
-  #optionsContainer {
-    grid-template-columns: 1fr;
-  }
+/* Option button styling - remain in secondary color when selected */
+.option-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-family: 'Arial', sans-serif;
 }
 
+/* When option button is selected */
+.option-button.selected {
+  background: #28a745; /* Secondary color (green) for selected state */
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Option button hover effects */
+.option-button:hover {
+  background: #0056b3;
+}
+
+/* Reset previous selections when a new option is picked */
+.option-button.selected:not(:hover) {
+  background: #28a745;
+  color: #fff;
+}
 
 
 /* Button Styles */
