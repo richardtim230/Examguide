@@ -4,7 +4,7 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background: #f3f4f6;
+  background: #d3d3d3;
   color: #333;
 }
 
@@ -51,9 +51,9 @@ header h3 {
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 5px;
+    left: 5px;
+    width: 90%;
     height: 90%;
     background: blue;
     z-index: 1000; /* Ensure it covers all content */
@@ -113,7 +113,7 @@ a:hover {
 
 .main-content.visible {
     display: block;
-}};
+}
 
 
 
