@@ -7,6 +7,22 @@ body {
   color: #333;
 }
 
+/*Logo*/
+
+.content {
+  text-align: center;
+  font-family: Arial, sans-serif;
+    }
+
+.logo {
+  width: 190px;
+  height: auto;
+  margin-top: 1rem;
+  top: 0px;
+  position: center;
+    }
+
+
 header {
   background: #1e3a8a;
   color: #fff;
@@ -447,17 +463,4 @@ button.danger:hover {
 }
 
 
-        /*Logo*/
-
-.content {
-  text-align: center;
-  font-family: Arial, sans-serif;
-    }
-
-.logo {
-  width: 190px;
-  height: auto;
-  margin-top: 1rem;
-  top: 0px;
-  position: center;
-    }
+        
