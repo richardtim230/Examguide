@@ -73,7 +73,7 @@ header h3 {
     display: none;
 }
 
-input {
+.input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -81,8 +81,8 @@ input {
     border-radius: 5px;
 }
 
-button {
-    width: 50%;
+.button {
+   width: 50%;
     padding: 5px;
     margin: 10px 0;
     border: none;
@@ -92,7 +92,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.button:hover {
     background-color: #0056b3;
 }
 
