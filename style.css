@@ -20,6 +20,12 @@ header h1 {
   font-size: 2rem;
   font-weight: bold;
 }
+header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
 
 .container {
   max-width: 1200px;
@@ -232,15 +238,17 @@ button.danger:hover {
   justify-content: center;
   gap: 5px;
   margin: 1rem 0;
+  overflow-x: auto;
 }
 
 .progress-item {
   width: 20px;
   height: 20px;
   background: #e2e8f0;
-  border-radius: 50%;
+  border-radius: 10%;
   border: 2px solid transparent;
   display: inline-block;
+  overflow-x: auto;
 }
 
 .progress-item.answered {
