@@ -1,221 +1,162 @@
-/* General Styling */
+/* Homepage Styling */
 body {
-  font-family: 'Arial', sans-serif;
+  background: #f9fafb; /* Light background for a clean look */
   margin: 0;
-  padding: 0;
-  background: #f3f4f6; /* Light gray for better readability */
-  color: #333;
+  font-family: 'Arial', sans-serif;
 }
 
-/* Header */
 header {
-  background: linear-gradient(90deg, #1e3a8a, #3b82f6);
-  color: #fff;
-  padding: 2rem;
+  background: linear-gradient(90deg, #1d4ed8, #2563eb);
+  color: #ffffff;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 header h1 {
-  margin: 0;
   font-size: 2.5rem;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.5rem;
 }
 
 header h3 {
-  margin: 0;
-  font-size: 1rem;
+  font-size: 1.2rem;
   opacity: 0.8;
 }
 
-/* Logo Section */
-.logo {
-  width: 200px;
-  height: auto;
-  margin: 1.5rem auto;
-  display: block;
-  border-radius: 10px;
-  border: 2px solid #1d4ed8;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Overlay */
-.overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
-}
-
-.container {
-  background: #fff;
-  padding: 2rem;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-/* Main Content */
 .main-content {
-  display: none;
-  padding: 2rem;
-  text-align: left;
-  max-width: 900px;
+  text-align: center;
+  padding: 2rem 1rem;
+  max-width: 800px;
   margin: 2rem auto;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.main-content.visible {
-  display: block;
-}
-
-/* Exam Section */
-#examSection {
-  background: linear-gradient(135deg, #f9f9f9, #dbeafe);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  width: 90%;
-  max-width: 800px;
-  margin: 2rem auto;
-  font-family: 'Georgia', serif;
-}
-
-#timer-display {
-  font-size: 1.5rem;
-  color: #dc2626;
-  font-weight: bold;
-  text-align: center;
+.main-content h2 {
+  font-size: 2rem;
+  color: #1d4ed8;
   margin-bottom: 1rem;
 }
 
-#questionText h3 {
-  font-size: 1.8rem;
-  color: #1d4ed8;
+.main-content p {
+  font-size: 1.2rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+button.cta {
+  background: linear-gradient(135deg, #16a34a, #10b981);
+  color: #ffffff;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+button.cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Access Code Page */
+#access-code-section {
+  background: #ffffff;
+  padding: 2.5rem 1rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 3rem auto;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-/* Navigation Buttons */
-button {
+#access-code-section h2 {
+  font-size: 2rem;
+  color: #1d4ed8;
+  margin-bottom: 1rem;
+}
+
+#access-code-section input {
+  width: 90%;
+  max-width: 400px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#access-code-section button {
+  background: #2563eb;
+  color: #ffffff;
   padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.1rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: background 0.3s, transform 0.3s;
 }
 
-button.primary {
-  background: #2563eb;
-  color: #fff;
-}
-
-button.primary:hover {
+#access-code-section button:hover {
   background: #1d4ed8;
+  transform: translateY(-3px);
 }
-
-button.danger {
-  background: #dc2626;
-  color: #fff;
-}
-
-button.danger:hover {
-  background: #b91c1c;
-}
-
-/* Option Buttons */
-.option-button {
-  background: #e5e7eb;
-  color: #333;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  border-radius: 8px;
-  text-align: left;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease;
-}
-
-.option-button.selected {
-  background: #1d4ed8;
-  color: #fff;
-}
-
-/* Course Section */
+/* Courses Grid Styling */
 #courses-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   padding: 2rem;
-  background: #f3f4f6;
-  border-radius: 12px;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .course {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  color: #fff;
-  text-align: center;
-  padding: 2rem;
-  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  color: #ffffff;
   font-weight: bold;
   font-size: 1.2rem;
+  text-align: center;
+  border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 .course:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Summary Section */
-#summary-section {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  text-align: center;
+/* Unique Gradients for Courses */
+.course:nth-child(1) {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
 
-#summary-section h3 {
-  font-size: 1.8rem;
-  color: #1d4ed8;
+.course:nth-child(2) {
+  background: linear-gradient(135deg, #16a34a, #10b981);
 }
 
-#summary-section p {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: #4b5563;
+.course:nth-child(3) {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
-/* Popup Overlay */
-.popup {
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.course:nth-child(4) {
+  background: linear-gradient(135deg, #d946ef, #a855f7);
 }
 
-.popup-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
+.course:nth-child(5) {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.course:nth-child(6) {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
 }
