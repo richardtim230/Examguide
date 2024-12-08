@@ -158,7 +158,7 @@ main {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.h2 {
+#subject-title {
   margin: 0;
   font-size: 0.5rem;
   font-weight: bold;
