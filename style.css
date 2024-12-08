@@ -16,7 +16,7 @@ body {
     }
 
 .logo {
-  width: 150px;
+  width: 120px;
   height: auto;
   margin-top: 1rem;
   top: 50px;
@@ -39,7 +39,13 @@ header h1 {
 }
 header h3 {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.4rem;
+  font-weight: bold;
+}
+
+header h2 {
+  margin: 0;
+  font-size: 0.5rem;
   font-weight: bold;
 }
 
@@ -165,7 +171,7 @@ main {
 
 /* Question text styling */
 #questionText h3 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #333;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -177,7 +183,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  width: 100%;
+  width: 90%;
   margin-top: 1rem;
 }
 
@@ -433,6 +439,12 @@ width: 100%;
   color: white;
   border-color: green;
 }
+#prev-question:hover, #next-question:hover, #end-exam:hover {
+  background: #555;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+}
+
 
 #timer-display {
   font-weight: bold;
