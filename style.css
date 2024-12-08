@@ -237,8 +237,8 @@ main {
   background: #333;
   color: #fff;
   border: none;
-  padding: 0.5rem 0.9rem;
-  margin: 1rem 0.5rem;
+  padding: 0.5rem;
+  margin: 1rem;
   font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
@@ -249,7 +249,7 @@ main {
 #prev-question:hover, #next-question:hover, #end-exam:hover {
   background: #555;
   gap: 0.5rem;
-  padding: 0.5rem 0.9rem;
+  padding: 0.5rem;
 }
 
 /* Responsive design for mobile */
