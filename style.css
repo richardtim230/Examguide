@@ -400,52 +400,6 @@ width: 100%;
   margin: 1rem 0;
 }
 
-/* Exam Section */
-#exam-section {
-  background: #fffaf0;
-  font-size: 1.0rem;
-  padding: 7px;
-  font-weight: light;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#question-container {
-  margin: 1rem 0;
-  font-size: 1.0rem;
-  padding: 8px;
-}
-
-#options-container button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 0.7rem;
-  padding: 0.6rem;
-  gap: 1.0rem;
-  font-size: 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  transition: background 0.9s, color 0.3s;
-}
-
-#options-container button:hover {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-#options-container button.selected {
-  background: #1d4ed8;
-  color: white;
-  border-color: green;
-}
-#prev-question:hover, #next-question:hover, #end-exam:hover {
-  background: #555;
-  gap: 0.5rem;
-  padding: 0.5rem 0.9rem;
-}
-
-
 #timer-display {
   font-weight: bold;
   color: #dc2626;
