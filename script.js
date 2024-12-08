@@ -1598,6 +1598,220 @@ Botany: {
         correct: 1,
         explanation: "Hugo von Mohl was one of the early scientists to provide insights into cell division processes."
       },  
+
+  {
+    text: "Among invertebrates who possess great power of regeneration:",
+    options: ["Arthropods", "Molluscs", "Sponges", "Nematodes"],
+    correct: 2,
+    explanation: "Sponges possess remarkable regenerative abilities. They can regenerate not only cells but entire body structures from fragments, which is a unique adaptation in invertebrates."
+  },
+  {
+    text: "Which statement is incorrect?:",
+    options: ["Lizard can regenerate its head", "Salamander can regenerate its limbs", "Earthworm can regenerate its head", "Man can regenerate his skin"],
+    correct: 0,
+    explanation: "Lizards can regenerate tails, but they cannot regenerate heads. The other statements are correct as salamanders and earthworms have regeneration abilities, and humans regenerate skin continuously."
+  },
+  {
+    text: "Growth is basically an increase in:",
+    options: ["Number of cells", "Size of cells", "Both of these", "None of these"],
+    correct: 2,
+    explanation: "Growth in organisms involves an increase in cell number through cell division and enlargement of cell size, contributing to overall body size and complexity."
+  },
+  {
+    text: "The stage of rapid cell division just after fertilization is:",
+    options: ["Gastrulation", "Cleavage", "Organogenesis", "Growth"],
+    correct: 1,
+    explanation: "Cleavage is the stage of rapid mitotic divisions immediately after fertilization, resulting in a multicellular structure without increasing the overall size of the zygote."
+  },
+  {
+    text: "The German scientist Spemann worked on differentiation in:",
+    options: ["1924", "1925", "1915", "1940"],
+    correct: 0,
+    explanation: "Hans Spemann’s pioneering work on embryonic development and the organizer effect, which was recognized in 1924, laid the foundation for the field of developmental biology."
+  }, 
+  {
+    text: "Inducer substances are produced by:",
+    options: ["Nicholson", "Goethe", "Antershon", "Sacke"],
+    correct: 3,
+    explanation: "Inducer substances, crucial for developmental processes, were discovered by Sacke in early studies on embryology and differentiation."
+  },
+  {
+    text: "What is the feature of cells in gastrulation?:",
+    options: ["Differentiation", "Migration", "Division", "All of these"],
+    correct: 3,
+    explanation: "During gastrulation, cells exhibit differentiation, migration to form germ layers, and division to increase cell numbers, making it a pivotal stage in embryogenesis."
+  },
+  {
+    text: "Vertebral column is formed from:",
+    options: ["Ectoderm", "Endoderm", "Mesoderm", "None of these"],
+    correct: 2,
+    explanation: "The vertebral column develops from the mesoderm, specifically the somites, which give rise to axial skeletal structures during embryonic development."
+  },
+  {
+    text: "Liver and pancreas arise from:",
+    options: ["Foregut", "Midgut", "Hindgut", "None of these"],
+    correct: 0,
+    explanation: "The liver and pancreas originate from the endoderm of the foregut during early embryonic development."
+  },
+  {
+    text: "Interaction between genes occupying different loci is:",
+    options: ["Dominance", "Epistasis", "Pleiotropy", "None of these"],
+    correct: 1,
+    explanation: "Epistasis occurs when the expression of one gene is influenced or suppressed by another gene located at a different locus, affecting phenotypic traits."
+  },
+  {
+    text: "Genes that affect growth rate in humans influencing both weight and height are:",
+    options: ["Codominant", "Polygene", "Pleiotropy", "Epistasis"],
+    correct: 2,
+    explanation: "Pleiotropic genes influence multiple traits, such as growth rate, weight, and height in humans, showcasing their diverse effects on phenotypic expression."
+  },
+  {
+    text: "All of the following are continuously varying traits except:",
+    options: ["Kernel colour in wheat", "Skin colour in humans", "Height in humans", "Tongue rolling in humans"],
+    correct: 3,
+    explanation: "Tongue rolling is a Mendelian trait with a discrete inheritance pattern, unlike the other traits, which show continuous variation due to polygenic inheritance."
+  },
+  {
+    text: "The number of linkage groups in humans is:",
+    options: ["12", "23", "46", "92"],
+    correct: 1,
+    explanation: "Humans have 23 pairs of chromosomes, corresponding to 23 linkage groups, as genes on the same chromosome are inherited together unless separated by recombination."
+  },
+  {
+    text: "Recombination frequency between two linked genes can be calculated by:",
+    options: ["Back cross", "Test cross", "Normal cross", "None of these"],
+    correct: 1,
+    explanation: "A test cross is used to calculate recombination frequency by examining offspring phenotypes, determining the genetic distance between linked genes."
+  },
+  {
+    text: "Which of the following is male determining gene in humans?:",
+    options: ["tfm", "SRY", "Both of these", "None of these"],
+    correct: 1,
+    explanation: "The SRY (Sex-determining Region Y) gene located on the Y chromosome triggers the development of male characteristics in humans."
+  }, 
+  {
+    text: "It was discovered by J. Seiler in 1914 in moth:",
+    options: ["XX-XO", "XY-XX", "ZZ-ZW", "None of these"],
+    correct: 0,
+    explanation: "J. Seiler discovered the XX-XO sex determination system in moths in 1914, where the presence or absence of a sex chromosome determines gender."
+  },
+  {
+    text: "Haemophilia B is due to abnormality of factor:",
+    options: ["VIII", "IX", "X", "XI"],
+    correct: 1,
+    explanation: "Haemophilia B, also known as Christmas disease, is caused by a deficiency in clotting factor IX, leading to prolonged bleeding."
+  },
+  {
+    text: "Gene for blue spasm is present on chromosome:",
+    options: ["X", "Y", "7", "11"],
+    correct: 0,
+    explanation: "The gene responsible for blue spasm, a rare disorder, is located on the X chromosome, making it an X-linked condition."
+  },
+  {
+    text: "Most common type of Diabetes mellitus is:",
+    options: ["MODY", "Type II", "Type I", "None of these"],
+    correct: 1,
+    explanation: "Type II Diabetes is the most common form, characterized by insulin resistance and often associated with lifestyle factors such as diet and exercise."
+  },
+  {
+    text: "Phenotype represents:",
+    options: ["Morphology", "Physiology", "Genetics", "None of these"],
+    correct: 0,
+    explanation: "Phenotype refers to the observable physical characteristics of an organism, influenced by both genetic and environmental factors."
+  },
+  {
+    text: "During test cross, if all offsprings are phenotypically dominant then parents are:",
+    options: ["Homozygous", "Heterozygous", "One homozygous other heterozygous", "None of these"],
+    correct: 0,
+    explanation: "If all offspring exhibit the dominant phenotype, the parents are homozygous dominant, ensuring no recessive traits are passed down."
+  },
+  {
+    text: "True breeding variety is produced by:",
+    options: ["Self fertilization", "Cross fertilization", "Both of these", "None of these"],
+    correct: 0,
+    explanation: "True-breeding varieties arise from self-fertilization, ensuring genetic uniformity and consistent traits across generations."
+  },
+  {
+    text: "Genotype ratio of Mendel’s law of independent assortment is:",
+    options: ["3:1", "1:02:01", "9:3:3:1", "None of these"],
+    correct: 2,
+    explanation: "The 9:3:3:1 ratio is observed in the F2 generation of a dihybrid cross, demonstrating Mendel's law of independent assortment."
+  },
+  {
+    text: "Which of the following is universal donor?:",
+    options: ["AB", "B", "A", "O"],
+    correct: 3,
+    explanation: "Individuals with blood group O are universal donors because their red blood cells lack A and B antigens, minimizing immune reactions."
+  },
+  {
+    text: "Such inheritance in which trait vary quantitatively is:",
+    options: ["Continuously varying trait", "Incomplete dominance", "Test cross", "Polygenic inheritance"],
+    correct: 3,
+    explanation: "Polygenic inheritance involves multiple genes contributing to a single trait, leading to continuous variation, such as height or skin color."
+  },
+  {
+    text: "Inheritance in man is traced by:",
+    options: ["Mathematical method", "Pedigree method", "Statistical method", "Genetic method"],
+    correct: 1,
+    explanation: "Pedigree analysis is used to trace inheritance patterns in humans, providing insights into genetic disorders across generations."
+  },
+  {
+    text: "Skin colour in man is controlled by:",
+    options: ["1 pair", "2 pairs", "4 pairs", "8 pairs"],
+    correct: 2,
+    explanation: "Skin color in humans is determined by four pairs of genes, exhibiting polygenic inheritance and resulting in continuous variation."
+  },
+  {
+    text: "Feature correct to O-negative blood group:",
+    options: ["A,B antigen present", "Anti-A, Anti-B antibody present", "Rh antigen present", "Rh antibody present"],
+    correct: 1,
+    explanation: "O-negative blood group lacks A, B, and Rh antigens but has anti-A and anti-B antibodies, making it compatible as a universal donor."
+  },
+  {
+    text: "Which of the following blood group is always heterozygous?:",
+    options: ["AB", "B", "A", "O"],
+    correct: 0,
+    explanation: "The AB blood group is heterozygous because it results from the codominant expression of both A and B alleles."
+  },
+  {
+    text: "A pure breeding tall plant was crossed to dwarf plant. What would be probability of ‘Tt’ genotype in F1?:",
+    options: ["0.25", "0", "0.75", "1"],
+    correct: 3,
+    explanation: "All F1 offspring of a pure-breeding tall plant (TT) crossed with a dwarf plant (tt) will have the heterozygous genotype (Tt), making the probability 1."
+  },
+  {
+    text: "A monohybrid cross yielded 3:1 F2. What could be mode of inheritance?:",
+    options: ["Segregation", "Independent assortment", "Both of these", "None of these"],
+    correct: 0,
+    explanation: "The 3:1 ratio in the F2 generation of a monohybrid cross is a result of Mendel’s law of segregation, where alleles separate during gamete formation."
+  },
+  {
+    text: "If heterozygous individual shows the complete effect of both alleles, the type of inheritance would be:",
+    options: ["Complete dominance", "Co-dominance", "Incomplete dominance", "Non-dominance"],
+    correct: 1,
+    explanation: "In co-dominance, both alleles are fully expressed in the phenotype of a heterozygous individual, such as in the AB blood group."
+  },
+  {
+    text: "The gene which controls ABO blood group has how many alleles in an individual?:",
+    options: ["One", "Two", "Three", "Four"],
+    correct: 1,
+    explanation: "Each individual carries two alleles for the ABO blood group, one inherited from each parent, among the three possible alleles (A, B, and O)."
+  },
+  {
+    text: "How many genes control Rh blood group system?:",
+    options: ["One", "Two", "Three", "Four"],
+    correct: 1,
+    explanation: "The Rh blood group system is controlled by two closely linked genes, RHD and RHCE, which determine the presence or absence of Rh antigens."
+  },
+  {
+    text: "A man with blood group ‘A’ marries a woman of blood group ‘B’. Both are heterozygous. What is the probability of getting offspring with blood group ‘O’?:",
+    options: ["50%", "25%", "75%", "0"],
+    correct: 1,
+    explanation: "If both parents are heterozygous (IAi and IBi), the probability of producing offspring with blood group O (ii) is 25%."
+  }, 
+
+
+
     { text: "What is the basic unit of life?", options: ["Atom", "Molecule", "Cell", "Organ"], correct: 2, explanation: "The cell is considered the basic unit of life as it is the smallest structure capable of performing all life processes." },
     { text: "Which organelle is known as the powerhouse of the cell?", options: ["Ribosome", "Nucleus", "Mitochondria", "Golgi apparatus"], correct: 2, explanation: "Mitochondria generate most of the cell's energy in the form of ATP, hence they are called the powerhouse of the cell." },
     { text: "What structure encloses the cell and regulates the passage of substances?", options: ["Cell wall", "Plasma membrane", "Cytoplasm", "Endoplasmic reticulum"], correct: 1, explanation: "The plasma membrane encloses the cell, providing a barrier and regulating the movement of materials in and out." },
