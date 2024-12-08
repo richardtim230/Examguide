@@ -194,23 +194,11 @@ main {
   color: white;
   border-color: green;
 }
-#prev-question {
+#prev-question:hover, #next-question:hover, #end-exam:hover {
   background: #555;
   gap: 0.5rem;
   padding: 0.5rem 0.9rem;
 }
-
-#next-question {
-
-background: #555;
-gap: 0.5rem;
-padding: 0.5rem 0.9rem;
-}
-
-#end-exam {
-background: #555;
-  gap: 0.5rem;
-  padding: 0.5rem 0.9rem;
 
 #timer-display {
   color: #fff;
@@ -622,4 +610,3 @@ width: 100%;
   background-color: #007bff;
   color: white;
 }
-
