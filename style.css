@@ -334,26 +334,29 @@ button.danger:hover {
 
 .course:nth-child(1) {
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  width: 100%;
 }
 
 .course:nth-child(2) {
   background: linear-gradient(135deg, #16a34a, #15803d);
+  width: 100%;
 }
 
 .course:nth-child(3) {
   background: linear-gradient(135deg, #f59e0b, #d97706);
+  width: 100%;
 }
 
 .course:nth-child(4) {
 
   background: linear-gradient(135deg, #f59e0b, #d97706);
-
+  width: 100%;
 }
 
 .course:nth-child(5) {
 
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-
+  width: 100%;
 }
 
 
@@ -361,12 +364,13 @@ button.danger:hover {
 .course:nth-child(6) {
 
   background: linear-gradient(135deg, #f59e0b, #d97706);
-
+  width: 100%;
 }
 
 .course:nth-child(7) {
 
   background: linear-gradient(135deg, #16a34a, #15803d);
+width: 100%;
 
 }
 
