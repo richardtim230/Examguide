@@ -2313,7 +2313,7 @@ function startExam() {
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
   // Display question number along with the question text
-  questionText.innerHTML = `<h3>Question ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  questionText.innerHTML = `<h3>Quest ${currentQuestionIndex + 1}: ${question.text}</h3>`;
   optionsContainer.innerHTML = "";
 
   question.options.forEach((option, index) => {
@@ -2362,6 +2362,21 @@ function saveAnswer() {
     answers[currentQuestionIndex] = null; // Mark unanswered
   }
 }
+ 
+  function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
+
+  // Deselect all option buttons
+  const allOptions = document.querySelectorAll(".option-button");
+  allOptions.forEach((button) => button.classList.remove("selected"));
+
+  // Mark the clicked button as selected
+  const selectedButton = allOptions[index];
+  selectedButton.classList.add("selected");
+
+  updateProgress();
+}
+
 
 function startTimer() {
   const timerDisplay = document.createElement("div");
@@ -2427,17 +2442,3 @@ function updateTimerDisplay() {
   }
 });
 
-
-function selectAnswer(index) {
-  answers[currentQuestionIndex] = index;
-
-  // Deselect all option buttons
-  const allOptions = document.querySelectorAll(".option-button");
-  allOptions.forEach((button) => button.classList.remove("selected"));
-
-  // Mark the clicked button as selected
-  const selectedButton = allOptions[index];
-  selectedButton.classList.add("selected");
-
-  updateProgress();
-}
