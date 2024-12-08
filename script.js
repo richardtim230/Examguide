@@ -1775,7 +1775,68 @@ Botany: {
         options: ["Hugo Von Mohl", "Weismann", "W. Flemmings", "None of these"],
         correct: 2,
         explanation: "W. Flemming introduced the term 'karyokinesis' to describe nuclear division."
-      },
+      }, 
+  {
+    text: "Interaction between genes occupying different loci",
+    options: ["Dominance", "Epistasis", "Pleiotropy", "None of these"],
+    correct: 1,
+    explanation: "Epistasis describes the interaction between genes at different loci affecting a single trait."
+  },
+  {
+    text: "Genes that affect growth rate in humans influencing both weight and height",
+    options: ["Codominant", "Polygene", "Pleiotropy", "Epistasis"],
+    correct: 2,
+    explanation: "Pleiotropy refers to one gene influencing multiple traits; growth genes often affect both height and weight."
+  },
+  {
+    text: "All of the following are continuously varying traits except",
+    options: ["Kernel colour in wheat", "Skin colour in humans", "Height in humans", "Tongue rolling in humans"],
+    correct: 3,
+    explanation: "Tongue rolling is a discrete trait; you either can or cannot roll your tongue."
+  },
+  {
+    text: "The number of linkage groups in humans",
+    options: ["12", "23", "46", "92"],
+    correct: 1,
+    explanation: "Humans have 23 pairs of chromosomes, therefore 23 linkage groups."
+  },
+  {
+    text: "Recombination frequency between two linked genes can be calculated by",
+    options: ["Back cross", "Test cross", "Normal cross", "None of these"],
+    correct: 1,
+    explanation: "Test crosses are used to determine the recombination frequency between linked genes."
+  },
+  {
+    text: "Which of the following is male determining gene in humans",
+    options: ["tfm", "SRY", "Both of these", "None of these"],
+    correct: 1,
+    explanation: "The SRY gene on the Y chromosome is the primary determinant of maleness in humans."
+  },
+  {
+    text: "It was discovered by J. Seiler in 1914 in moth",
+    options: ["XX-XO", "XY-XX", "ZZ-ZW", "None of these"],
+    correct: 0,
+    explanation: "J. Seiler described the XX-XO sex determination system in moths."
+  },
+  {
+    text: "Haemophilia B is due to abnormality of factor",
+    options: ["VIII", "IX", "X", "XI"],
+    correct: 1,
+    explanation: "Haemophilia B is caused by a deficiency in factor IX."
+  },
+  {
+    text: "Gene for blue cone monochromacy (sometimes associated with nystagmus and informally called \"blue spasm\") is present on chromosome",
+    options: ["X", "Y", "7", "11"],
+    correct: 0,
+    explanation: "The gene for blue cone monochromacy is X-linked."
+  },
+  {
+    text: "Most common type of Diabetes mellitus",
+    options: ["MODY", "Type II", "Type I", "None of these"],
+    correct: 1,
+    explanation: "Type II diabetes is far more prevalent than Type I or MODY."
+  }, 
+           
       {
         text: "Word 'mitosis' was coined by:",
         options: ["Hofmeister", "Weismann", "W. Flemmings", "Strasburger"],
