@@ -160,6 +160,7 @@ main {
 
 #subject-title {
   margin: 0;
+  padding: 6px;
   font-size: 1.3rem;
   font-weight: bold;
 }
@@ -190,7 +191,7 @@ main {
 }
 
 #options-container button.selected {
-  background: #1d4ed8;
+  background: green;
   color: white;
   border-color: green;
 }
