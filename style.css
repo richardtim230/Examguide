@@ -147,20 +147,52 @@ main {
 .hidden {
   display: none;
 }
-/* General layout for the exam section */
-#examSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #f9f9f9;
-  padding: 2rem;
+
+/* Exam Section */
+#exam-section {
+  background: #fffaf0;
+  font-size: 1.0rem;
+  padding: 7px;
+  font-weight: light;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  margin: 2rem auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Stylish timer display */
+#question-container {
+  margin: 1rem 0;
+  font-size: 1.0rem;
+  padding: 8px;
+}
+
+#options-container button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.7rem;
+  padding: 0.6rem;
+  gap: 1.0rem;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  transition: background 0.9s, color 0.3s;
+}
+
+#options-container button:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+#options-container button.selected {
+  background: #1d4ed8;
+  color: white;
+  border-color: green;
+}
+#prev-question:hover, #next-question:hover, #end-exam:hover {
+  background: #555;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+}
+
 #timer-display {
   color: #fff;
   background-color: #007bff;
@@ -169,16 +201,14 @@ main {
   font-weight: bold;
 }
 
-/* Question text styling */
 #questionText h3 {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   color: #333;
   margin-bottom: 1.5rem;
   text-align: center;
   font-family: 'Arial', sans-serif;
 }
 
-/* Options container layout */
 #optionsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
