@@ -61,7 +61,7 @@ header h2 {
     position: fixed;
     top: 0px;
     left: 0px;
-    width: 100%;
+    width: 80%;
     height: 100%;
     border-radius: 10px;
     background: blue;
@@ -167,6 +167,7 @@ main {
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
+  text-align: center;
 }
 
 
@@ -207,7 +208,7 @@ main {
 
 #timer-display {
   color: #fff;
-  background-color: #007bff;
+  background-color: yellow;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   font-weight: bold;
