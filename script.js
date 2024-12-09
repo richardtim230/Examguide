@@ -1598,6 +1598,266 @@ Botany: {
         correct: 1,
         explanation: "Hugo von Mohl was one of the early scientists to provide insights into cell division processes."
       },  
+        {
+  text: "The number of linkage groups in Drosophila is",
+  options: ["4", "8", "23", "46"],
+  correct: 0,
+  explanation: "Drosophila melanogaster has four pairs of chromosomes, leading to four linkage groups."
+},
+{
+  text: "Who is known as the father of genetics?",
+  options: ["Mendel", "Darwin", "Morgan", "Watson"],
+  correct: 0,
+  explanation: "Gregor Mendel is considered the father of genetics due to his foundational work on inheritance patterns in pea plants."
+},
+{
+  text: "AB blood group is an example of",
+  options: ["Incomplete dominance", "Codominance", "Recessive traits", "Dominant traits"],
+  correct: 1,
+  explanation: "AB blood group demonstrates codominance, where both A and B alleles are equally expressed."
+},
+{
+  text: "Which of the following is a sex-linked recessive disorder?",
+  options: ["Down syndrome", "Cystic fibrosis", "Haemophilia", "Sickle cell anemia"],
+  correct: 2,
+  explanation: "Haemophilia is a sex-linked recessive disorder carried on the X chromosome."
+},
+{
+  text: "DNA as the genetic material was first demonstrated in",
+  options: ["E. coli", "Tobacco mosaic virus", "Bacteriophage", "Streptococcus pneumoniae"],
+  correct: 3,
+  explanation: "Griffith's experiment with *Streptococcus pneumoniae* laid the groundwork for discovering DNA as the genetic material."
+},
+{
+  text: "Cross between F1 and homozygous recessive parent is called",
+  options: ["Test cross", "Back cross", "Self cross", "Monohybrid cross"],
+  correct: 0,
+  explanation: "A test cross is performed between an F1 individual and a homozygous recessive parent to determine the genotype of the F1 individual."
+},
+{
+  text: "Father of modern eugenics is",
+  options: ["Mendel", "Morgan", "Francis Galton", "Darwin"],
+  correct: 2,
+  explanation: "Francis Galton is considered the father of modern eugenics due to his work in heredity and human improvement."
+},
+{
+  text: "The condition where a chromosome is lost during cell division is called",
+  options: ["Aneuploidy", "Monosomy", "Polyploidy", "Trisomy"],
+  correct: 1,
+  explanation: "Monosomy refers to the loss of one chromosome in a pair, leading to a total chromosome count of 2n-1."
+},
+{
+  text: "Which of the following is an example of polygenic inheritance?",
+  options: ["ABO blood group", "Height", "Sickle cell anemia", "Color blindness"],
+  correct: 1,
+  explanation: "Height is an example of polygenic inheritance, influenced by multiple genes resulting in continuous variation."
+},
+{
+  text: "The ability of a gene to have multiple effects is called",
+  options: ["Polygeny", "Pleiotropy", "Epistasis", "Codominance"],
+  correct: 1,
+  explanation: "Pleiotropy occurs when a single gene influences multiple distinct traits."
+},
+{
+  text: "Cross between heterozygotes for a single trait produces which phenotypic ratio?",
+  options: ["1:1", "3:1", "9:3:3:1", "1:2:1"],
+  correct: 1,
+  explanation: "A cross between heterozygotes for a single trait follows Mendel's law, producing a phenotypic ratio of 3:1 (dominant to recessive)."
+},
+{
+  text: "An organism having two different alleles for a trait is called",
+  options: ["Homozygous", "Heterozygous", "Hemizygous", "Polyzygous"],
+  correct: 1,
+  explanation: "An organism with two different alleles for a specific trait is termed heterozygous for that trait."
+},
+{
+  text: "Sickle cell anemia is caused due to a mutation in the gene encoding",
+  options: ["Hemoglobin A", "Hemoglobin S", "Myoglobin", "Collagen"],
+  correct: 1,
+  explanation: "Sickle cell anemia results from a mutation in the gene coding for hemoglobin S, leading to abnormal red blood cells."
+},
+{
+  text: "Which of the following is the universal acceptor blood group?",
+  options: ["O", "A", "AB", "B"],
+  correct: 2,
+  explanation: "AB-positive blood is considered the universal acceptor because it has no antibodies against A, B, or Rh antigens."
+},
+{
+  text: "Sex determination in humans is influenced by",
+  options: ["X chromosome", "Y chromosome", "Both X and Y chromosomes", "None of these"],
+  correct: 1,
+  explanation: "The presence of the Y chromosome (and specifically the SRY gene) determines male sex in humans."
+},
+{
+  text: "Phenotypic ratio for a dihybrid cross is",
+  options: ["3:1", "9:3:3:1", "1:2:1", "6:3:3:4"],
+  correct: 1,
+  explanation: "The phenotypic ratio for a dihybrid cross involving independent assortment is 9:3:3:1."
+}, 
+
+{
+  text: "Genes that affect growth rate in humans influencing both weight and height are",
+  options: ["Codominant", "Polygene", "Pleiotropy", "Epistasis"],
+  correct: 2,
+  explanation: "Pleiotropy describes when a single gene influences multiple phenotypic traits. Genes affecting growth rate often impact both weight and height."
+},
+{
+  text: "All of the following are continuously varying traits except",
+  options: ["Kernel colour in wheat", "Skin colour in humans", "Height in humans", "Tongue rolling in humans"],
+  correct: 3,
+  explanation: "Tongue rolling is a discrete trait; an individual either can or cannot roll their tongue. Kernel color, skin color, and height demonstrate continuous variation."
+},
+{
+  text: "The number of linkage groups in humans is",
+  options: ["12", "23", "46", "92"],
+  correct: 1,
+  explanation: "Humans have 23 pairs of chromosomes, thus 23 linkage groups (one for each chromosome)."
+},
+{
+  text: "Recombination frequency between two linked genes can be calculated by",
+  options: ["Back cross", "Test cross", "Normal cross", "None of these"],
+  correct: 1,
+  explanation: "A test cross (crossing a heterozygote with a homozygous recessive) allows for the determination of recombination frequencies between linked genes."
+},
+{
+  text: "Which of the following is male determining gene in humans?",
+  options: ["tfm", "SRY", "Both of these", "None of these"],
+  correct: 1,
+  explanation: "The SRY gene (sex-determining region Y) on the Y chromosome is the primary determinant of maleness in humans."
+},
+{
+  text: "It was discovered by J. Seiler in 1914 in moth",
+  options: ["XX-XO", "XY-XX", "ZZ-ZW", "None of these"],
+  correct: 0,
+  explanation: "J. Seiler's work in 1914 described the XX-XO sex-determination system in moths."
+},
+{
+  text: "Haemophilia B is due to abnormality of factor",
+  options: ["VIII", "IX", "X", "XI"],
+  correct: 1,
+  explanation: "Haemophilia B (Christmas disease) is caused by a deficiency in clotting factor IX."
+},
+{
+  text: "Gene for blue spasm is present on chromosome",
+  options: ["X", "Y", "7", "11"],
+  correct: 0,
+  explanation: "The gene for blue-cone monochromacy (a form of color blindness that may be associated with blue spasm or nystagmus) is located on the X chromosome."
+},
+{
+  text: "Most common type of Diabetes mellitus is",
+  options: ["MODY", "Type II", "Type I", "None of these"],
+  correct: 1,
+  explanation: "Type II diabetes mellitus (non-insulin-dependent) is far more prevalent than Type I (insulin-dependent) or MODY (maturity-onset diabetes of the young)."
+},
+{
+  text: "Phenotype represents",
+  options: ["Morphology", "Physiology", "Genetics", "None of these"],
+  correct: 0,
+  explanation: "Phenotype refers to the observable characteristics of an organism, encompassing both its morphology (physical structure) and physiology (biological function)."
+},
+{
+  text: "During test cross, if all offsprings are phenotypically dominant then parents are",
+  options: ["Homozygous", "Heterozygous", "One homozygous other heterozygous", "None of these"],
+  correct: 0,
+  explanation: "If all offspring from a test cross show the dominant phenotype, the parent with the unknown genotype must be homozygous dominant."
+},
+{
+  text: "True breeding variety is produced by",
+  options: ["Self fertilization", "Cross fertilization", "Both of these", "None of these"],
+  correct: 0,
+  explanation: "True-breeding varieties are homozygous for the traits of interest, and they are produced through repeated self-fertilization."
+},
+{
+  text: "Genotype ratio of Mendel’s law of independent assortment is",
+  options: ["3:1", "1:02:01", "9:3:3:1", "None of these"],
+  correct: 2,
+  explanation: "Mendel's dihybrid cross, illustrating the law of independent assortment, produces a 9:3:3:1 genotypic ratio in the F2 generation."
+},
+{
+  text: "Which of the following is universal donor?",
+  options: ["AB", "B", "A", "O"],
+  correct: 3,
+  explanation: "O-negative blood is considered the universal donor because it lacks A, B, and Rh antigens, minimizing the risk of adverse reactions in transfusions."
+},
+{
+  text: "Such inheritance in which trait vary quantitatively is",
+  options: ["Continuously varying trait", "Incomplete dominance", "Test cross", "Polygenic inheritance"],
+  correct: 3,
+  explanation: "Polygenic inheritance involves multiple genes contributing to a single trait, resulting in continuous variation."
+},
+{
+  text: "Inheritance in man is traced by",
+  options: ["Mathematical method", "Pedigree method", "Statistical method", "Genetic method"],
+  correct: 1,
+  explanation: "Pedigree analysis is a crucial method used to trace inheritance patterns in humans and other organisms, visually representing family relationships and phenotypes."
+},
+{
+  text: "Skin colour in man is controlled by",
+  options: ["1 pair", "2 pairs", "4 pairs", "8 pairs"],
+  correct: 2,
+  explanation: "Human skin color is a polygenic trait, controlled by multiple gene pairs (at least 4 pairs are believed to contribute significantly)."
+}, 
+
+{
+  text: "Among invertebrates who possess great power of regeneration",
+  options: ["Arthropods", "Molluscs", "Sponges", "Nematodes"],
+  correct: 2,
+  explanation: "Sponges exhibit remarkable regenerative capabilities. They can regenerate from small fragments, demonstrating a high degree of plasticity and cell totipotency."
+},
+{
+  text: "Which statement is incorrect?",
+  options: ["Lizard can regenerate its head", "Salamander can regenerate its limbs", "Earthworm can regenerate its head", "Man can regenerate his skin"],
+  correct: 0,
+  explanation: "Lizards cannot regenerate their heads. While they can detach their tails as a defense mechanism, head regeneration is not a capability observed in lizards."
+},
+{
+  text: "Growth is basically an increase in",
+  options: ["Number of cells", "Size of cells", "Both of these", "None of these"],
+  correct: 2,
+  explanation: "Growth involves both an increase in the number of cells (hyperplasia) and an increase in the size of individual cells (hypertrophy)."
+},
+{
+  text: "The stage of rapid cell division just after fertilization is",
+  options: ["Gastrulation", "Cleavage", "Organogenesis", "Growth"],
+  correct: 1,
+  explanation: "Cleavage is a series of rapid mitotic cell divisions that occur immediately after fertilization, resulting in a multicellular blastula."
+},
+{
+  text: "The German scientist Spemann worked on differentiation in",
+  options: ["1924", "1925", "1915", "1940"],
+  correct: 1,
+  explanation: "Hans Spemann's crucial work on embryonic induction and differentiation, particularly his experiments with the newt embryo, culminated in his Nobel Prize in 1935, although his key experiments were done in 1924 leading to publications around 1925."
+},
+{
+  text: "Inducer substances are produced by",
+  options: ["Nicholson", "Goethe", "Antershon", "Sacke"],
+  correct: 2,
+  explanation: "While the specific individual isn't easily identifiable from the given options, the concept of 'inducer substances' is central to Spemann's work on embryonic induction. The organizer region of the embryo produces these signaling molecules which induce differentiation in neighboring cells. There is no prominent individual called Antershon known in developmental biology. This question requires more context or clarification."
+},
+{
+  text: "What is the feature of cells in gastrulation?",
+  options: ["Differentiation", "Migration", "Division", "All of these"],
+  correct: 3,
+  explanation: "Gastrulation involves cell differentiation, as cells take on different fates, and cell migration, as cells move to establish the three germ layers. While cell division also occurs, it is not as rapid as during cleavage, and the other two processes are the defining features of gastrulation."
+},
+{
+  text: "Vertebral column is formed from",
+  options: ["Ectoderm", "Endoderm", "Mesoderm", "None of these"],
+  correct: 2,
+  explanation: "The mesoderm is the germ layer that gives rise to the skeletal system, including the vertebral column (spine)."
+},
+{
+  text: "Liver and pancreas arise from",
+  options: ["Foregut", "Midgut", "Hindgut", "None of these"],
+  correct: 0,
+  explanation: "The liver and pancreas develop from the endodermal lining of the foregut, the anterior part of the primitive gut."
+},
+{
+  text: "Interaction between genes occupying different loci is",
+  options: ["Dominance", "Epistasis", "Pleiotropy", "None of these"],
+  correct: 1,
+  explanation: "Epistasis refers to the interaction between genes at different loci, where one gene modifies or masks the expression of another."
+}, 
     { text: "What is the basic unit of life?", options: ["Atom", "Molecule", "Cell", "Organ"], correct: 2, explanation: "The cell is considered the basic unit of life as it is the smallest structure capable of performing all life processes." },
     { text: "Which organelle is known as the powerhouse of the cell?", options: ["Ribosome", "Nucleus", "Mitochondria", "Golgi apparatus"], correct: 2, explanation: "Mitochondria generate most of the cell's energy in the form of ATP, hence they are called the powerhouse of the cell." },
     { text: "What structure encloses the cell and regulates the passage of substances?", options: ["Cell wall", "Plasma membrane", "Cytoplasm", "Endoplasmic reticulum"], correct: 1, explanation: "The plasma membrane encloses the cell, providing a barrier and regulating the movement of materials in and out." },
