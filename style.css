@@ -621,3 +621,8 @@ width: 100%;
   background-color: #007bff;
   color: white;
 }
+.noncopiable {
+    user-select: none; /* Prevents text selection */
+    -webkit-user-select: none; /* For Safari */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+}
