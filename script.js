@@ -1598,6 +1598,68 @@ Botany: {
         correct: 1,
         explanation: "Hugo von Mohl was one of the early scientists to provide insights into cell division processes."
       },  
+ {
+    text: "Which of the following terms represent a pair of contrasting characters?",
+    options: ["homozygous", "heterozygous", "alleles", "codominant genes"],
+    correct: 2,
+    explanation: "Alleles represent contrasting forms of a gene. For example, in pea plants, the gene for flower color has two alleles: one for purple flowers (P) and one for white flowers (p).  Homozygous and heterozygous describe the combination of alleles an individual possesses, not the contrasting characters themselves. Codominant genes are a special case where both alleles are expressed equally, but they still represent contrasting traits."
+  },
+  {
+    text: "The best method to determine the genotype of a dominant parent is by crossing it with a hybrid. This method is called",
+    options: ["back cross", "test cross", "selfing", "cross fertilization"],
+    correct: 1,
+    explanation: "A test cross involves crossing an individual with a dominant phenotype (but unknown genotype) with a homozygous recessive individual. The offspring's phenotype reveals the unknown parent's genotype.  A backcross is a cross between an offspring and one of its parents (or an individual genetically similar to its parent). While it can sometimes help determine genotype, a test cross is more direct for determining the genotype of a dominant parent."
+  },
+  {
+    text: "The best cross to determine the homozygosity and heterozygosity of an individual is",
+    options: ["self-fertilization", "back cross", "test cross", "breeding"],
+    correct: 2,
+    explanation: "A test cross is the most effective method.  Crossing the individual with a homozygous recessive individual reveals the genotype of the tested individual through the resulting offspring phenotypes. Self-fertilization can reveal homozygosity but is less useful for determining heterozygosity.  Backcrossing and general breeding are less specific and efficient approaches."
+  },
+  {
+    text: "All of this obeys Mendel’s laws except",
+    options: ["Linkage", "independent assortment", "dominance", "purity of gametes"],
+    correct: 0,
+    explanation: "Mendel's laws (segregation and independent assortment) assume that genes are independently assorted and that alleles are passed on without influence from nearby genes. Linkage violates this assumption because linked genes are inherited together.  Dominance and purity of gametes are fundamental concepts within Mendel's framework."
+  },
+  {
+
+    text: "The geometrical device that helps to find out all the possible combinations of male and female gametes is called",
+    options: ["Punnet square", "Bateson square", "Mendel square", "Morgan square"],
+    correct: 0,
+    explanation: "A Punnett square is a diagram used to predict the genotypes of a particular cross or breeding experiment. It shows all possible combinations of alleles from the parents."
+  },
+  {
+    text: "The title of Mendel’s paper while presenting at Brunn Natural History Society in 1865 was",
+    options: ["Laws of inheritance", "Laws of heredity", "Experiments on pea plants", "Experiments in plant hybridization"],
+    correct: 3,
+    explanation: "Mendel's paper was titled \"Versuche über Pflanzen-Hybriden\" which translates to \"Experiments in Plant Hybridization\"."
+  },
+  {
+    text: "Mendel’s Second Law is also known as",
+    options: ["The Law of Probability", "The Law of Segregation", "The Law of Independent Assortment", "The Law of Experiments"],
+    correct: 2,
+    explanation: "Mendel's Second Law describes the independent assortment of alleles during gamete formation."
+  },
+  {
+    text: "A pea plant that is heterozygous for two traits is called",
+    options: ["hybrid", "dual heterozygote", "dihybrid", "dual heterozygote"],
+    correct: 2,
+    explanation: "A dihybrid is an individual heterozygous for two different genes."
+  },
+  {
+    text: "The term “testcross” is used to describe",
+    options: ["an experiment used to validate a previously discovered finding", "an experiment to determine a new genotypic ratio", "an experiment to determine the genotypic expression of two genes", "a model of the genotype of an organism"],
+    correct: 2,
+    explanation: "A testcross is specifically used to determine the genotype of an individual with a dominant phenotype by crossing it with a homozygous recessive individual."
+  },
+  {
+    text: "If a plant heterozygous for two traits is crossed with a plant that is homozygous recessive for both traits, what is the ratio of phenotypes expressive for both traits?",
+    options: ["3:1", "9:3:3:1", "1:2:1", "1:1:1:1"],
+    correct: 3,
+    explanation: "When a dihybrid (heterozygous for two traits) is crossed with a homozygous recessive individual, the resulting phenotypic ratio is 1:1:1:1. This is because each trait assorts independently.  The question asks for the ratio of phenotypes expressive for *both* traits, which would be a subset of this overall ratio."
+  }, 
+        
         {
   text: "The number of linkage groups in Drosophila is",
   options: ["4", "8", "23", "46"],
