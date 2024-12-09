@@ -2814,7 +2814,7 @@ function startExam() {
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
   // Display question number along with the question text
-  questionText.innerHTML = `<h3>Quest ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
   optionsContainer.innerHTML = "";
 
   question.options.forEach((option, index) => {
