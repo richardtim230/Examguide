@@ -1612,6 +1612,114 @@ Botany: {
   },
  
   {
+    text: "The forerunner of the microscope and telescope is/are",
+    options: ["Anton van Leeuwenhoek", "Galileo", "Zacharias Janssen", "Charles Spencer"],
+    correct: 2,
+    explanation: "Zacharias Janssen is often credited with inventing the first compound microscope, while Galileo Galilei improved the design of telescopes, which share optical principles with microscopes."
+  },
+  {
+    text: "Who is referred to as the father of physics and astronomy who made a better microscope with a focusing device?",
+    options: ["Anton van Leeuwenhoek", "Galileo", "Zacharias Janssen", "Charles Spencer"],
+    correct: 1,
+    explanation: "While not solely focused on microscopy, Galileo Galilei significantly improved telescopic design and incorporated focusing mechanisms, which are crucial to microscope functionality. Anton van Leeuwenhoek is considered the father of microscopy due to his advancements in lens making and biological observations."
+  },
+  {
+    text: "Who is referred to as the father of the microscope?",
+    options: ["Anton van Leeuwenhoek", "Galileo", "Zacharias Janssen", "Charles Spencer"],
+    correct: 0,
+    explanation: "Anton van Leeuwenhoek is widely considered the father of microscopy due to his significant improvements in lens-making and his extensive biological observations using microscopes he created."
+  },
+  {
+    text: "_____ built an instrument with magnification of 1250 diameter with ordinary light up to 5000 diameter with blue light.",
+    options: ["Anton van Leeuwenhoek", "Galileo", "Zacharias Janssen", "Charles Spencer"],
+    correct: 0,
+    explanation: "Anton van Leeuwenhoek achieved remarkably high magnifications for his time using single-lens microscopes."
+  },
+  {
+    text: "The knowledge of transmission electron microscopy was invented by a man called",
+    options: ["Rodger James", "Rodger James", "Manfred von Ardenne", "Zworykin"],
+    correct: 2,
+    explanation: "Manfred von Ardenne is credited with significant contributions to the development of transmission electron microscopy."
+  },
+  {
+    text: "Who was the first person to develop a scanning electron microscope?",
+    options: ["Ernst Ruska", "Rodger Ernst Ruska", "Rodger James", "Manfred Ardenne"],
+    correct: 0,
+    explanation: "Ernst Ruska is credited with pioneering work in electron microscopy, including the development of the scanning electron microscope."
+  },
+  {
+    text: "A type of microscope known as a magnifying glass is known as a",
+    options: ["compound microscope", "fluorescence microscope", "simple microscope", "bright field microscope"],
+    correct: 2,
+    explanation: "A simple microscope uses a single lens for magnification, similar to a magnifying glass."
+  },
+  {
+    text: "Which of the following is incorrect about a stereo microscope?",
+    options: ["It is a light illuminating microscope", "It produces an image that appears 3-dimensional", "They are used to observe objects that are too large to be viewed with a compound microscope", "Slide preparation is required", "Used to observe surface tension of an object"],
+    correct: 3,
+    explanation: "Stereo microscopes, also known as dissecting microscopes, do not require slide preparation; they are used to view whole specimens."
+  },
+  {
+    text: "Dissecting microscopes provide magnification of about",
+    options: ["500 times", "200 times", "400 times", "100 times"],
+    correct: 3,
+    explanation: "Dissecting microscopes typically offer lower magnifications compared to compound microscopes."
+  },
+  {
+    text: "A type of light microscope in which light passes directly through the specimen unless the cell is naturally pigmented or artificially stained is known as a",
+    options: ["phase contrast light microscope", "bright field", "fluorescence microscope", "confocal microscope"],
+    correct: 1,
+    explanation: "A bright-field microscope uses transmitted light, making specimens visible only if they are pigmented or stained."
+  },
+  {
+    text: "A type of light microscope with variation in density within the specimen in which the variations are amplified to enhance contrast in unstained, unpigmented cells is known as a",
+    options: ["phase contrast light", "bright field", "fluorescence microscope", "confocal microscope"],
+    correct: 0,
+    explanation: "Phase contrast microscopy enhances contrast in transparent specimens by exploiting differences in refractive index."
+  },
+  {
+    text: "A type of microscope to examine living cells is known as a",
+    options: ["phase contrast microscope", "bright field microscope", "fluorescence microscope", "confocal microscope"],
+    correct: 0,
+    explanation: "Phase contrast microscopy is well-suited for observing living cells without staining."
+  },
+  {
+    text: "The fluid mosaic model was coined by",
+    options: ["S.J. Singer and G.L. Nicolson", "Ernest and mategan", "Griffith and telson", "None of the above"],
+    correct: 0,
+    explanation: "S.J. Singer and G.L. Nicolson are credited with proposing the fluid mosaic model of the cell membrane."
+  },
+  {
+    text: "Which of the following is NOT a crucial membrane function of proteins?",
+    options: ["structural support", "recognition", "communication", "transport"],
+    correct: 3,
+    explanation: "Membrane proteins play crucial roles in structural support, recognition, and communication, and are vital for various transport processes."
+  },
+  {
+    text: "What is the main difference between active transport and passive transport?",
+    options: ["passive transport is primarily in single cell organisms, active transport occurs primarily in multicellular organism", "passive transport does not require any energy for substance to cross the cell membrane, active transport require cellular energy for substance to cross the cell membrane", "passive transport works with gravity, active transport require cellular energy", "passive transport works with gravity, active transport does not require active transport does not require any cellular transport passive transport does not"],
+    correct: 1,
+    explanation: "Active transport requires energy (ATP) to move substances against their concentration gradient, unlike passive transport."
+  },
+  {
+    text: "_____ protein can change shape to move material from one side of the membrane to the other.",
+    options: ["channel protein", "carrier protein", "a and b", "none of the option"],
+    correct: 2,
+    explanation: "Both channel and carrier proteins facilitate transport across the membrane; carrier proteins undergo conformational changes."
+  },
+  {
+    text: "Channel proteins are embedded in the cell membrane and have a pore for material to cross which is known as ___.",
+    options: ["Aloterine", "aquaporin", "silicone", "none of the above"],
+    correct: 1,
+    explanation: "Aquaporins are channel proteins that facilitate the transport of water across cell membranes."
+  },
+  {
+    text: "All of the following are types of passive transport except",
+    options: ["osmosis", "diffusion", "facilitated diffusion", "endocytosis"],
+    correct: 3,
+    explanation: "Endocytosis is an active transport process requiring energy."
+  }, 
+  {
     text: "Transpiration is very essential for plants as it",
     options: ["cools", "exchange gases", "removes water", "uptake water"],
     correct: 0,
