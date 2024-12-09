@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
            
                
       "ZOO101": {
-        title: "Animal Systematics Fundamentals",
+        title: "INTRODUCTORY ZOOLOGY 1",
         questions: [
           { text: "What is the primary basis for the classification of animals in taxonomy?", options: ["Reproductive methods", "Body structure", "Feeding habits", "Behavior"], correct: 1, explanation: "Body structure is a fundamental criterion used in taxonomy to classify animals." },
        
