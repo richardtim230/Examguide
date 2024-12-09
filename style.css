@@ -521,8 +521,8 @@ width: 100%;
 
   /* Popup Overlay */
 .popup {
+  top: 10px;
   position: fixed;
-  position: center;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
