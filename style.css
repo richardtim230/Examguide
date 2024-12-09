@@ -531,6 +531,7 @@ width: 100%;
   align-items: center;
   z-index: 1000;
   overflow-y: auto;
+  margin: 1rem;
 }
 
 /* Hidden State */
@@ -549,7 +550,7 @@ width: 100%;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   animation: slideIn 0.3s ease-out;
   overflow-y:auto;
-  margin: 1rem;
+  
 }
 
 .popup-content h2 {
