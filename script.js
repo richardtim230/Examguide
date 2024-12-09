@@ -1610,6 +1610,140 @@ Botany: {
     correct: 1,
     explanation: "A test cross involves crossing an individual with a dominant phenotype (but unknown genotype) with a homozygous recessive individual. The offspring's phenotype reveals the unknown parent's genotype.  A backcross is a cross between an offspring and one of its parents (or an individual genetically similar to its parent). While it can sometimes help determine genotype, a test cross is more direct for determining the genotype of a dominant parent."
   },
+ 
+  {
+    text: "Transpiration is very essential for plants as it",
+    options: ["cools", "exchange gases", "removes water", "uptake water"],
+    correct: 0,
+    explanation: "Transpiration helps cool the plant through evaporative cooling."
+  },
+  {
+    text: "Rate of transpiration is increased with the increase in",
+    options: ["Light", "temperature", "wind", "all of the above"],
+    correct: 3,
+    explanation: "Increased light, temperature, and wind all increase the rate of transpiration."
+  },
+  {
+    text: "Water transpiration is done 90% by the process of",
+    options: ["cuticular transpiration", "lenticular transpiration", "stomatal transpiration", "sweating"],
+    correct: 2,
+    explanation: "Most water loss in plants occurs through the stomata."
+  },
+  {
+    text: "In transpiration, the water leaves the cell of plants in the form of",
+    options: ["ice", "water droplets", "sugars", "dew"],
+    correct: 1,
+    explanation: "Water leaves plant cells as water vapor during transpiration."
+  },
+  {
+    text: "Transpiration in plants occurs through",
+    options: ["cortex of phloem cells", "stomata in leaves", "xylem cells", "stomata openings"],
+    correct: 1,
+    explanation: "Stomata in leaves are the primary sites of transpiration."
+  },
+  {
+    text: "Loss of water through evaporation from the surface of plants is called",
+    options: ["transpiration", "water uptake", "food uptake", "mesophyll uptake"],
+    correct: 0,
+    explanation: "Transpiration is the term for water loss through evaporation from plant surfaces."
+  },
+  {
+    text: "Small stomata present in stems of plants are classified as",
+    options: ["plasmodesmata", "lenticels", "guard cells", "food present"],
+    correct: 1,
+    explanation: "Lenticels are small pores in the stems of plants that allow for gas exchange."
+  },
+  {
+    text: "Mark the one, which is NOT the form of transpiration?",
+    options: ["Radical transpiration", "Cuticular transpiration", "Lenticular transpiration", "Stomatal transpiration"],
+    correct: 0,
+    explanation: "Radical transpiration refers to water loss from roots, not a type of transpiration from aerial parts."
+  },
+  {
+    text: "What is guttation?",
+    options: ["Exudation of xylem sap", "Root pressure", "Radial movement", "Field capacity"],
+    correct: 0,
+    explanation: "Guttation is the exudation of xylem sap from the leaves."
+  },
+  {
+    text: "Which of the following is used to determine the rate of transpiration in a plant?",
+    options: ["potometer", "porometer", "auxanometer", "barometer"],
+    correct: 0,
+    explanation: "A potometer measures the rate of water uptake, which is related to transpiration rate."
+  },
+  {
+    text: "Of all the environmental factors which is the most influential in determining the rate of transpiration?",
+    options: ["light", "relative humidity of atmosphere", "temperature", "water"],
+    correct: 0,
+    "explanation": "Light intensity is a major factor influencing stomatal opening and therefore transpiration."
+  },
+  {
+    text: "Guttation is mainly due to",
+    options: ["Root pressure", "transpiration", "Imbibition", "osmosis"],
+    correct: 0,
+    explanation: "Root pressure forces water out of leaf hydathodes in guttation."
+  },
+  {
+    text: "Transpiration helps in",
+    options: ["Ascent regulation in plant", "Mineral transport along with water", "Active absorption of water", "Temperature regulation"],
+    correct: 1,
+    explanation: "Transpiration creates the transpiration pull that helps move water and minerals upward in the plant."
+  },
+  {
+    text: "Rate of transpiration increases with increase with an increase in",
+    options: ["carbon dioxide", "root shoot ratio", "atmospheric humidity", "temperature"],
+    correct: 3,
+    explanation: "Higher temperatures increase the rate of evaporation, leading to increased transpiration."
+  },
+  {
+    text: "Transpiration is least in",
+    options: ["good soil moisture", "high wind velocity", "dry environment", "high atmospheric humidity"],
+    correct: 3,
+    explanation: "High atmospheric humidity reduces the transpiration rate because the water vapor gradient is less."
+  },
+  {
+    text: "Water is transported from the roots to all parts of a plant by",
+    options: ["xylem", "phloem", "lenticel", "stomata"],
+    correct: 0,
+    explanation: "Xylem is the vascular tissue responsible for water transport in plants."
+  },
+  {
+    text: "What is the pressure potential of a turgid plant cell that has an osmotic potential of -0.7 MPa?",
+    options: ["0.7 MPa", "0.7 MPa", "0.5 MPa", "-0.5 MPa"],
+    correct: 0,
+    explanation: "In a turgid cell, pressure potential (Ψp) is equal and opposite to osmotic potential (Ψs), therefore Ψp = +0.7 MPa"
+  },
+  {
+    text: "If a plasmolysed cell is placed in distilled water, then it returns to its original state & become turgid; this is called as:",
+    options: ["Plasmolysis", "Exosmosis", "Endosmosis", "Deplasmolysis"],
+    correct: 3,
+    explanation: "Deplasmolysis is the process where a plasmolyzed cell regains its turgor pressure."
+  },
+  {
+    text: "Osmotic potential (Ψs) of a solution is always",
+    options: ["Positive", "Negative", "Zero", "Variable"],
+    correct: 1,
+    explanation: "Osmotic potential is always negative because it represents the tendency of water to move into a solution."
+  },
+  {
+    text: "Water potential of a cell when placed in a hypertonic solution:",
+    options: ["Decreases", "Increases", "First increases then decreases", "No change"],
+    correct: 0,
+    explanation: "Water moves out of the cell into the hypertonic solution, decreasing the water potential."
+  },
+  {
+    text: "A cell when kept in a sugar solution gets dehydrated. Then the solution is:",
+    options: ["Hypotonic", "Hypertonic", "Isotonic", "None of the above"],
+    correct: 1,
+    explanation: "If a cell dehydrates in a solution, the solution is hypertonic (higher solute concentration)."
+  },
+  {
+    text: "The molar concentration of the sugar solution in an open beaker has been determined to be 0.3 M. Calculate the solute potential at 27°C:",
+    options: ["-7.48 bars", "7.48 bars", "5.28 bars", "-5.28 bars"],
+    correct: 0,
+    explanation: "Using the formula Ψs = -iCRT, where i=1, C=0.3M, R=0.0831 liter bar/mol K, and T=300K, Ψs ≈ -7.48 bars"
+  }, 
+        
   {
     text: "The best cross to determine the homozygosity and heterozygosity of an individual is",
     options: ["self-fertilization", "back cross", "test cross", "breeding"],
