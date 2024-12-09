@@ -1657,9 +1657,136 @@ Botany: {
     text: "If a plant heterozygous for two traits is crossed with a plant that is homozygous recessive for both traits, what is the ratio of phenotypes expressive for both traits?",
     options: ["3:1", "9:3:3:1", "1:2:1", "1:1:1:1"],
     correct: 3,
-    explanation: "When a dihybrid (heterozygous for two traits) is crossed with a homozygous recessive individual, the resulting phenotypic ratio is 1:1:1:1. This is because each trait assorts independently.  The question asks for the ratio of phenotypes expressive for *both* traits, which would be a subset of this overall ratio."
+    explanation: "When a dihybrid (heterozygous for two traits) is crossed with a homozygous recessive individual, the resulting phenotypic ratio is 1:1:1:1. This is because each trait assorts independently.  The question asks for the ratio of phenotypes expressive for both traits, which would be a subset of this overall ratio."
   }, 
         
+  {
+    text: "Which of the following is NOT a correct statement about the events of the cell cycle?",
+    options: ["Interphase is usually the longest phase.", "Cell division ends with cytokinesis.", "The cell replicates its DNA during the G2 phase.", "The cell replicates during the S phase.", "DNA is replicated during the S phase."],
+    correct: 2,
+    explanation: "DNA replication occurs during the S (synthesis) phase, not the G2 phase. G2 is a gap phase where the cell prepares for mitosis."
+  },
+  {
+    text: "Chromosome pairing of homologous structures starts and are not distinct. This describes what phase in prophase I of meiosis?",
+    options: ["Leptonema", "Zygonema", "Pachynema", "Diplonema"],
+    correct: 1,
+    explanation: "Zygonema (zygotene) is the stage of prophase I where homologous chromosomes begin to pair up, forming bivalents. The chromosomes are not yet distinct individual structures at this early stage of pairing."
+  },
+  {
+    text: "Chiasmata formation occurs during which stage of prophase I?",
+    options: ["Leptonema", "Zygonema", "Pachynema", "Diplonema"],
+    correct: 2,
+    explanation: "Chiasmata (the plural of chiasma) are formed during pachytene, representing points of crossing over between homologous chromosomes. This is where genetic recombination occurs."
+  },
+  {
+    text: "Which of the following statements is true regarding the law of segregation?",
+    options: ["Law of segregation is the law of purity of genes", "Alleles separate from each other during gametogenesis", "Segregation of factors is due to the segregation of chromosomes during meiosis", "All of the above"],
+    correct: 3,
+    explanation: "The law of segregation states that during gamete formation, the two alleles for each gene separate, so each gamete receives only one allele. This separation is a direct result of the segregation of homologous chromosomes during meiosis."
+  },
+  {
+    text: "An exception to Mendelian law is",
+    options: ["Independent assortment", "Linkage", "Dominance", "Purity of gametes"],
+    correct: 1,
+    explanation: "Linkage is an exception because it violates the principle of independent assortment; linked genes on the same chromosome tend to be inherited together."
+  },
+  {
+    text: "Pea plants were used in Mendel's experiments because",
+    options: ["They were cheap", "They had contrasting characters", "They were easily available", "All of the above"],
+    correct: 3,
+
+    explanation: "Pea plants were a good choice for Mendel's experiments because they exhibited easily observable contrasting traits (e.g., flower color, seed shape), were relatively easy to cultivate, and had a short generation time."
+  },
+  {
+    text: "Mendel's findings were rediscovered by",
+    options: ["Correns", "De Vries", "Tschermak", "All of the above"],
+    correct: 3,
+    explanation: "Mendel's work was independently rediscovered by Carl Correns, Hugo de Vries, and Erich von Tschermak around the beginning of the 20th century."
+  },
+  {
+    text: "When the activity of one gene is suppressed by the activity of a non-allelic gene, it is known as",
+    options: ["Pseudo-dominance", "Hypostasis", "Epistasis", "Incomplete dominance"],
+    correct: 2,
+    explanation: "Epistasis describes the interaction between genes where one gene masks the effect of another gene at a different locus."
+  },
+  {
+    text: "Cystic fibrosis is a",
+    options: ["Sex-linked recessive disorder", "Autosomal dominant disorder", "Autosomal recessive disorder", "Sex-linked dominant disorder"],
+    correct: 2,
+    explanation: "Cystic fibrosis is an autosomal recessive disorder, meaning it requires two copies of the mutated gene to manifest the disease."
+  },
+  {
+    text: "A small amount of selective mutation is always present in the population due to",
+    options: ["Positive selection", "Negative selection", "Frequency-dependent selection", "Mutation-selection balance"],
+    correct: 3,
+    explanation: "Mutation-selection balance describes the equilibrium between the introduction of new mutations and their removal by natural selection."
+  },
+  {
+    text: "If a plant with genotype Aabb is selfed, the probability of getting AABB genotype will be",
+    options: ["3/16", "1/16", "1/4", "1/8"],
+    correct: 1,
+    explanation: "The probability of getting AA from the A/a self-cross is 1/4. The probability of getting BB from the b/b self-cross is 0. Therefore, the probability of AABB is (1/4) * 0 = 0. There is no possibility of obtaining AABB from this cross."
+  },
+  {
+    text: "The process of transfer of hereditary character from one generation to another is known as?",
+    options: ["Genes", "Mutation", "Variation", "Genetics"],
+    correct: 3,
+    explanation: "Genetics is the broad field studying heredity and variation. While genes are the units of heredity, and variation is the outcome, genetics encompasses the overall process."
+  },
+  {
+    text: "Who is known as the father of genetics?",
+    options: ["Gregor Mendel", "Augustin friar", "Norman Borlaug", "M.L.S Swaminathan"],
+    correct: 0,
+    explanation: "Gregor Mendel is considered the father of genetics due to his pioneering work on inheritance patterns in pea plants."
+  },
+  {
+    text: "Who coined the term Mutation?",
+    options: ["James Watson", "Herman Joseph Muller", "Hugo de Vries", "None of the above"],
+    correct: 2,
+    explanation: "Hugo de Vries is credited with coining the term mutation to describe sudden, heritable changes in organisms."
+  },
+  {
+    text: "Which term of genetics represents the potential ability of a plant cell to grow into a complete plant?",
+    options: ["Pluripotency", "Totipotency", "Cloning", "Variation"],
+    correct: 1,
+    explanation: "Totipotency refers to the ability of a single cell to divide and differentiate into all the cell types of an organism."
+  },
+  {
+    text: "A sudden change in the gene which is heritable from one generation to another is known as?",
+    options: ["Variation", "Cloning", "Totipotency", "Mutation"],
+    correct: 3,
+    explanation: "A mutation is a sudden, heritable change in the DNA sequence."
+  },
+  {
+    text: "Which plant did Gregor Mendel use for his experiments?",
+    options: ["Onion plant", "Carrot plant", "Pea plant", "Lily plant"],
+    correct: 2,
+    explanation: "Gregor Mendel used pea plants (Pisum sativum) in his experiments on inheritance."
+  },
+  {
+    text: "The crossing of F1 to a homozygous recessive parent is called",
+    options: ["back cross", "test cross", "F1 cross", "all of these"],
+    correct: 1,
+    explanation: "A test cross involves crossing an F1 generation individual with a homozygous recessive parent to determine the genotype of the F1."
+  },
+  {
+    text: "The test cross is used to determine",
+    options: ["the genotype of the plant", "the phenotype of the plant", "both a and d", "none of these"],
+    correct: 0,
+    explanation: "A test cross is primarily used to determine the genotype of an individual with a dominant phenotype."
+  },
+  {
+    text: "Monohybrid test cross ratio is",
+    options: ["9:3:2:1", "1:1", "9:3:3:1", "9:3:3:1"],
+    correct: 1,
+    explanation: "The phenotypic ratio of a monohybrid test cross is 1:1."
+  },
+  {
+    text: "The phenotypic monohybrid cross is",
+    options: ["trihybrid cross", "tetrahybrid cross", "dihybrid cross", "monohybrid cross"],
+    correct: 3,
+    explanation: "A monohybrid cross involves individuals differing in only one trait."
+  }, 
         {
   text: "The number of linkage groups in Drosophila is",
   options: ["4", "8", "23", "46"],
