@@ -1,3 +1,8 @@
+document.addEventListener("copy", function (e) {
+            e.preventDefault();
+            alert("Copying is disabled on this text!");
+        });
+
 // Predefined access codes with validity periods in days
 const accessCodes = [
     { code: 'CODE123', validity: 7 },
