@@ -1581,7 +1581,7 @@ Botany: {
         ]
       },
 
-      "BOT102": {
+      "BOT102-1": {
         title: "Introductory Botany 2",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
@@ -1965,13 +1965,13 @@ Botany: {
 { text: "Inheritance in man is traced by:", options: ["Mathematical method", "Pedigree method", "Statistical method", "Genetic method"], correct: 1, explanation: "Pedigree analysis is a common method for tracing inheritance patterns in humans." },
 { text: "Skin colour in man is controlled by:", options: ["1 pair", "2 pairs", "4 pairs", "8 pairs"], correct: 2, explanation: "Human skin color is a polygenic trait, controlled by multiple gene pairs (at least 4 pairs contribute significantly)." },
 { text: "Feature correct to O-negative blood group:", options: ["A,B antigen present", "Anti-A, Anti-B antibody present", "Rh antigen present", "Rh antibody present"], correct: 1, explanation: "O-negative blood lacks A and B antigens but has anti-A and anti-B antibodies, and lacks the Rh antigen." },
-{ text: "Which of the following blood group is always heterozygous?:", options: ["AB", "B", "A", "O"], correct: 0, explanation: "The AB blood group genotype is always heterozygous (IAIB)." },
-        { text: "Which statement is incorrect?:", options: ["Lizard can regenerate its head", "Salamander can regenerate its limbs", "Earthworm can regenerate its head", "Man can regenerate his skin"], correct: 0, explanation: "Lizards cannot regenerate their heads; they can detach their tails, but not their heads." },
+{ text: "Which of the following blood group is always heterozygous?", options: ["AB", "B", "A", "O"], correct: 0, explanation: "The AB blood group genotype is always heterozygous (IAIB)." },
+{ text: "Which statement is incorrect?", options: ["Lizard can regenerate its head", "Salamander can regenerate its limbs", "Earthworm can regenerate its head", "Man can regenerate his skin"], correct: 0, explanation: "Lizards cannot regenerate their heads; they can detach their tails, but not their heads." },
 { text: "Growth is basically an increase in:", options: ["Number of cells", "Size of cells", "Both of these", "None of these"], correct: 2, explanation: "Growth involves both cell division (increasing number) and cell enlargement (increasing size)." },
 { text: "The stage of rapid cell division just after fertilization is:", options: ["Gastrulation", "Cleavage", "Organogenesis", "Growth"], correct: 1, explanation: "Cleavage is the rapid series of cell divisions immediately following fertilization." },
 { text: "The German scientist Spemann worked on differentiation in:", options: ["1924", "1925", "1915", "1940"], correct: 0, explanation: "Hans Spemann's key experiments on embryonic induction were primarily conducted in the 1920s, leading to publications around 1924-1925." },
 { text: "Inducer substances are produced by:", options: ["Nicholson", "Goethe", "Antershon", "Sacke"], correct: 2, explanation: "While the options lack a precisely correct answer,  the question refers to Spemann's organizer, a region of the embryo that produces signals (inducer substances) influencing differentiation.  This question needs clarification as to the intended person.  Antershon is not a known figure in this area." },
-{ text: "What is the feature of cells in gastrulation?:", options: ["Differentiation", "Migration", "Division", "All of these"], correct: 3, explanation: "Gastrulation involves cell differentiation, migration, and some cell division." },
+{ text: "What is the feature of cells in gastrulation?", options: ["Differentiation", "Migration", "Division", "All of these"], correct: 3, explanation: "Gastrulation involves cell differentiation, migration, and some cell division." },
 { text: "Vertebral column is formed from:", options: ["Ectoderm", "Endoderm", "Mesoderm", "None of these"], correct: 2, explanation: "The mesoderm is the germ layer that gives rise to the skeletal system, including the vertebral column." },
 { text: "Liver and pancreas arise from:", options: ["Foregut", "Midgut", "Hindgut", "None of these"], correct: 0, explanation: "The liver and pancreas develop from the foregut during embryonic development." },
 
@@ -1980,7 +1980,7 @@ Botany: {
 { text: "All of the following are continuously varying traits except:", options: ["Kernel colour in wheat", "Skin colour in humans", "Height in humans", "Tongue rolling in humans"], correct: 3, explanation: "Tongue rolling is a discrete trait; you either can or cannot roll your tongue." },
 { text: "The number of linkage groups in humans is:", options: ["12", "23", "46", "92"], correct: 1, explanation: "Humans have 23 pairs of chromosomes, therefore 23 linkage groups." },
 { text: "Recombination frequency between two linked genes can be calculated by:", options: ["Back cross", "Test cross", "Normal cross", "None of these"], correct: 1, explanation: "Test crosses are used to determine the recombination frequency between linked genes." },
-{ text: "Which of the following is male determining gene in humans?:", options: ["tfm", "SRY", "Both of these", "None of these"], correct: 1, explanation: "The SRY gene on the Y chromosome is the primary determinant of maleness in humans." },
+{ text: "Which of the following is male determining gene in humans?", options: ["tfm", "SRY", "Both of these", "None of these"], correct: 1, explanation: "The SRY gene on the Y chromosome is the primary determinant of maleness in humans." },
 { text: "It was discovered by J. Seiler in 1914 in moth:", options: ["XX-XO", "XY-XX", "ZZ-ZW", "None of these"], correct: 0, explanation: "J. Seiler described the XX-XO sex determination system in moths." },
 { text: "Haemophilia B is due to abnormality of factor:", options: ["VIII", "IX", "X", "XI"], correct: 1, explanation: "Haemophilia B is caused by a deficiency in factor IX." },
 { text: "Gene for blue spasm is present on chromosome:", options: ["X", "Y", "7", "11"], correct: 0, explanation: "The gene for blue cone monochromacy (which may be associated with nystagmus sometimes called "blue spasm") is X-linked." },
@@ -1989,10 +1989,10 @@ Botany: {
 { text: "During test cross, if all offsprings are phenotypically dominant then parents are:", options: ["Homozygous", "Heterozygous", "One homozygous other heterozygous", "None of these"], correct: 0, explanation: "If all offspring from a test cross show the dominant phenotype, the parent with the unknown genotype must be homozygous dominant." },
 { text: "True breeding variety is produced by:", options: ["Self fertilization", "Cross fertilization", "Both of these", "None of these"], correct: 0, explanation: "True-breeding varieties are homozygous for the traits of interest, achieved through self-fertilization." },
 { text: "Genotype ratio of Mendel’s law of independent assortment is:", options: ["3:1", "1:02:01", "9:3:3:1", "None of these"], correct: 2, explanation: "Mendel's dihybrid cross shows a 9:3:3:1 genotypic ratio in the F2 generation." },
-{ text: "Which of the following is universal donor?:", options: ["AB", "B", "A", "O"], correct: 3, explanation: "O-negative blood is considered the universal donor because it lacks A, B, and Rh antigens." },
+{ text: "Which of the following is universal donor?", options: ["AB", "B", "A", "O"], correct: 3, explanation: "O-negative blood is considered the universal donor because it lacks A, B, and Rh antigens." },
 { text: "Such inheritance in which trait very quantitatively is:", options: ["Continuously varying trait", "Incomplete dominance", "Test cross", "Polygenic inheritance"], correct: 3, explanation: "Polygenic inheritance involves multiple genes contributing to a quantitative trait." },
-{ text: "A pure breeding tall plant was crossed to dwarf plant. What would be probability of ‘Tt’ genotype in F1?:", options: ["0.25", "0", "0.75", "1"], correct: 3, explanation: "A cross of TT x tt will produce all Tt offspring in the F1 generation." },
-{ text: "A monohybrid cross yielded 3:1 F2. What could be mode of inheritance?:", options: ["Segregation", "Independent assortment", "Both of these", "None of these"], correct: 0, explanation: "A 3:1 F2 ratio is characteristic of Mendel's law of segregation with complete dominance." }, 
+{ text: "A pure breeding tall plant was crossed to dwarf plant. What would be probability of ‘Tt’ genotype in F1?", options: ["0.25", "0", "0.75", "1"], correct: 3, explanation: "A cross of TT x tt will produce all Tt offspring in the F1 generation." },
+{ text: "A monohybrid cross yielded 3:1 F2. What could be mode of inheritance?", options: ["Segregation", "Independent assortment", "Both of these", "None of these"], correct: 0, explanation: "A 3:1 F2 ratio is characteristic of Mendel's law of segregation with complete dominance." }, 
 { text: "What is the smallest unit of life that can function independently?", options: ["Atom", "Molecule", "Organelle", "Cell"], correct: 3, explanation: "The cell is the smallest unit of life that can independently carry out all life functions." },
     { text: "What process allows cells to take in solid particles?", options: ["Pinocytosis", "Exocytosis", "Phagocytosis", "Osmosis"], correct: 2, explanation: "Phagocytosis is a type of endocytosis where cells engulf solid particles into vesicles." },
     { text: "Which organelle is responsible for assembling proteins?", options: ["Golgi apparatus", "Ribosomes", "Nucleus", "Mitochondria"], correct: 1, explanation: "Ribosomes are responsible for protein synthesis by translating messenger RNA." },
