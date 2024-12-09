@@ -1610,7 +1610,115 @@ Botany: {
     correct: 1,
     explanation: "A test cross involves crossing an individual with a dominant phenotype (but unknown genotype) with a homozygous recessive individual. The offspring's phenotype reveals the unknown parent's genotype.  A backcross is a cross between an offspring and one of its parents (or an individual genetically similar to its parent). While it can sometimes help determine genotype, a test cross is more direct for determining the genotype of a dominant parent."
   },
- 
+   {
+    text: "Which of the following is NOT a function of cholesterol in the cell membrane?",
+    options: ["it maintains the fluidity of the membrane", "it strengthens the membrane", "it weakens the membrane allowing molecules to pass through more easily", "it lengthens the fatty acid chains in the membrane", "it provides energy that cells need to move molecules against a concentrated gradient"],
+    correct: 2,
+    explanation: "Cholesterol helps maintain membrane fluidity, but it does not weaken the membrane. It actually helps stabilize it."
+  },
+  {
+    text: "Facilitated diffusion allows certain kinds of compounds that are normally blocked by the cell membrane to cross the cell membrane. The following are examples of compounds that move by facilitated diffusion except",
+    options: ["active transport", "osmosis", "facilitated diffusion", "passive transport"],
+    correct: 0,
+    explanation: "Active transport requires energy, unlike facilitated diffusion, which is a type of passive transport."
+  },
+  {
+    text: "Which of the following is an example of osmosis?",
+    options: ["a plant root uses osmosis to absorb water from the soil", "a single-celled organism uses osmosis to take food particles in", "the human body uses osmosis to absorb nutrients into and out of a cell", "none of these"],
+    correct: 0,
+    explanation: "Osmosis specifically refers to the movement of water across a semipermeable membrane."
+  },
+  {
+    text: "How does substance move into and out of a cell through endocytosis?",
+    options: ["substance crosses the cell membrane through protein channels", "substances are engulfed by a cell's plasma membrane to form a channel into the cell", "substances are engulfed by a vesicle which crosses the cell membrane to form a channel to the cell", "substances are engulfed by a vesicle which crosses the plasma membrane"],
+    correct: 3,
+    explanation: "Endocytosis involves the formation of vesicles to engulf substances and bring them into the cell."
+  },
+  {
+    text: "What type of material is transported through osmosis?",
+    options: ["oxygen", "blood", "water", "nitrogen-fixing bacteria"],
+    correct: 2,
+    explanation: "Osmosis is the movement of water across a selectively permeable membrane."
+  },
+  {
+    text: "In facilitated diffusion, what are the channels that help substances cross the cell membrane made of?",
+    options: ["protein", "water molecules", "carbon", "nucleic acid"],
+    correct: 0,
+
+    explanation: "Channel proteins facilitate the movement of substances across the cell membrane."
+  },
+  {
+    text: "In facilitated diffusion, what are the channels that help substances cross the cell membrane made of?",
+    options: ["protein", "water molecules", "carbon", "nucleic acid"],
+    correct: 0,
+    explanation: "Channel proteins facilitate the movement of substances across the cell membrane."
+  },
+  {
+    text: "Which statement is true regarding active transport?",
+    options: ["substances do not require additional energy to move in and out of the cell", "substances move from an area of low concentration to an area of high concentration", "substances can only move into cells, and not out of cells", "substances can only move across the cell membrane if they are water"],
+    correct: 1,
+    explanation: "Active transport moves substances against their concentration gradient, requiring energy."
+  },
+  {
+    text: "What best describes the role of exocytosis in cell transport?",
+    options: ["exocytosis moves substances into the cell", "exocytosis moves substances into or out of the cell against the concentration gradient", "exocytosis moves substances out of the cell", "exocytosis moves substances into or out of the cell during concentration gradient"],
+    correct: 2,
+    explanation: "Exocytosis is the process of moving substances out of the cell."
+  },
+  {
+    text: "In general, in what direction does a diffusing substance move?",
+    options: ["its opposite direction", "it would normally move down its concentration gradient", "up its concentration gradient", "it depends on the option"],
+    correct: 1,
+    explanation: "Diffusion moves substances from areas of high concentration to areas of low concentration."
+  },
+  {
+    text: "Endocytosis is an example of what type of transport?",
+    options: ["active transport", "passive transport", "a and b", "none of the option"],
+    correct: 0,
+    explanation: "Endocytosis requires energy and is thus a form of active transport."
+  },
+  {
+    text: "How does particle size affect molecule transport across a cell membrane?",
+    options: ["it is easier for small molecules to diffuse across the cell membranes", "particle size is less important than particle shape for calculating transport speed", "particle size does not affect molecule transport speed across the cell membrane", "it is easier for large molecules to diffuse across the cell membrane"],
+    correct: 0,
+    explanation: "Smaller molecules generally diffuse across cell membranes more easily."
+  },
+  {
+    text: "In what direction does a diffusing substance move?",
+    options: ["down the concentration gradient", "in opposite directions", "it moves normally", "none of these"],
+    correct: 0,
+    explanation: "Diffusion moves substances from areas of high concentration to areas of low concentration."
+  },
+  {
+    text: "Where there is a higher concentration of ions in solution than in the cell, which allows water to move from the cell into the solution, causing shrinking of the cell, is known as",
+    options: ["hypotonic", "hypertonic", "isotonic", "sonotonic"],
+    correct: 1,
+    explanation: "A hypertonic solution has a higher solute concentration than the cell."
+  },
+  {
+    text: "If there is an equal concentration of ions in solution and cell, this solution is known as",
+    options: ["hypotonic", "hypertonic", "isotonic", "sonotonic"],
+    correct: 2,
+    explanation: "An isotonic solution has the same solute concentration as the cell."
+  },
+  {
+    text: "The pressure exerted by the cell membrane against the cell wall and the pressure against the protoplast is",
+    options: ["turgor pressure", "Turgor pressure", "Osmotic pressure", "hydrostatic pressure"],
+    correct: 0,
+    explanation: "Turgor pressure is the pressure exerted by the cell contents against the cell wall."
+  },
+  {
+    text: "When a plant cell is placed in a hypotonic solution it becomes",
+    options: ["plasmolysed", "symplast", "apoplast", "apoplast route"],
+    correct: 1,
+    explanation: "In a hypotonic solution, water enters the cell, making it turgid, not plasmolysed."
+  },
+  {
+    text: "Movement of solute through the intercellular spaces between the cells is known as",
+    options: ["symplast", "apoplast", "value of water potential for pure water at 25°C", "water and air"],
+    correct: 1,
+    explanation: "Apoplast is the movement of water and solutes through the cell walls and intercellular spaces."
+  },
   {
     text: "The forerunner of the microscope and telescope is/are",
     options: ["Anton van Leeuwenhoek", "Galileo", "Zacharias Janssen", "Charles Spencer"],
