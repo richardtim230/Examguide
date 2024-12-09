@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
   Physics: {
-        "PHYS101": {
+        "PHYS101-1": {
         title: "Biometry/Biostatistics",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       },
            
-      "PHYS105": {     
+      "PHYS105_1": {     
       title: "Basic Arithmetic",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
            
                
-      "ZOO101-12": {
+      "ZOO101": {
         title: "Animal Systematics Fundamentals",
         questions: [
           { text: "What is the primary basis for the classification of animals in taxonomy?", options: ["Reproductive methods", "Body structure", "Feeding habits", "Behavior"], correct: 1, explanation: "Body structure is a fundamental criterion used in taxonomy to classify animals." },
@@ -1521,7 +1521,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ] 
     },     
 
-    "Chm102": {
+    "Chm102-1": {
       title: "Fundamentals of Animal Systematics",
       questions: [
         {
