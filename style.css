@@ -531,6 +531,7 @@ width: 100%;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow-y: auto;
 }
 
 /* Hidden State */
