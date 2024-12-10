@@ -3628,28 +3628,23 @@ function updateTimerDisplay() {
   const modal = document.getElementById('confirmationModal');
   modal.style.display = 'flex';
 
+  // Declare variables in outer scope
+  let score, totalQuestions, percentage;
+
   // Handle confirmation buttons
   document.getElementById('confirmYes').onclick = function () {
     modal.style.display = 'none';
 
-    // Proceed with submission
-    const score = answers.filter((ans, i) => ans === questions[i].correct).length;
-    const totalQuestions = questions.length;
-    const percentage = Math.round((score / totalQuestions) * 100);
+    // Calculate results
+    score = answers.filter((ans, i) => ans === questions[i].correct).length;
+    totalQuestions = questions.length;
+    percentage = Math.round((score / totalQuestions) * 100);
 
     const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
     const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
     localStorage.setItem(`${selectedCourse}-${subCourseName}`, JSON.stringify(updatedProgress));
 
-    // Proceed with any further actions like showing results
-    console.log(`You scored ${score}/${totalQuestions} (${percentage}%)`);
-  };
-
-  document.getElementById('confirmNo').onclick = function () {
-    modal.style.display = 'none';
-  };
-}
-
+    // Show results
     showSection(summarySection);
     summaryContent.innerHTML = `
       <h3>Score: ${score}/${totalQuestions} (${percentage}%)</h3>
@@ -3666,7 +3661,15 @@ function updateTimerDisplay() {
         )
         .join("")}
     `;
-  }
+  };
+
+  document.getElementById('confirmNo').onclick = function () {
+    modal.style.display = 'none';
+    // Prevent further actions when "No" is clicked
+    return;
+  };
+}
+
 
   function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random()).slice(0.5, 50);
