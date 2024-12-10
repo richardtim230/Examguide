@@ -3,6 +3,30 @@ document.addEventListener("copy", function (e) {
             alert("Copying is disabled on this text!");
         });
 
+document.addEventListener('DOMContentLoaded', function () {
+  const endExamBtn = document.getElementById('end-exam');
+  const modal = document.getElementById('confirmationModal');
+  const confirmYes = document.getElementById('confirmYes');
+  const confirmNo = document.getElementById('confirmNo');
+
+  endExamBtn.addEventListener('click', function () {
+    modal.style.display = 'flex'; // Show the confirmation modal
+    console.log('Submit Exam button clicked');
+  });
+
+  confirmYes.addEventListener('click', function () {
+    modal.style.display = 'none';
+    console.log('Exam submitted!');
+    // Add your submission logic here
+  });
+
+  confirmNo.addEventListener('click', function () {
+    modal.style.display = 'none'; // Hide the modal
+    console.log('Submission canceled');
+  });
+});
+
+
 // Predefined access codes with validity periods in days
 const accessCodes = [
     { code: 'CODE123', validity: 7 },
