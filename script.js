@@ -3673,13 +3673,6 @@ function updateTimerDisplay() {
 }
 
 
-  document.getElementById('confirmNo').onclick = function () {
-    modal.style.display = 'none';
-    // Prevent further actions when "No" is clicked
-    return;
-  };
-}
-
 
   function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random()).slice(0.5, 50);
