@@ -277,7 +277,7 @@ main {
 }
 
 /* Navigation buttons */
-#prev-question, #next-question, #end-exam {
+#prev-question, #next-question, #submitBtn {
   background: #333;
   color: #fff;
   border: none;
@@ -290,7 +290,7 @@ main {
   gap: 0.5rem;
 }
 
-#prev-question:hover, #next-question:hover, #end-exam:hover {
+#prev-question:hover, #next-question:hover, #submitBtn:hover {
   background: #555;
   gap: 0.5rem;
   padding: 0.5rem;
