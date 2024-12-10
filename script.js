@@ -3671,6 +3671,7 @@ function updateTimerDisplay() {
     console.log("User canceled submission");
   };
 }
+document.getElementById('submitBtn').addEventListener('click', endExam);
 
 
 
