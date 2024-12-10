@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Submission canceled');
   });
 });
+console.log(`Timer is running: ${timeRemaining}`);
+ const timerDisplay = document.getElementById("timer-display");
+if (!timerDisplay) {
+  console.error("Timer display element not found");
+}
 
 
 // Predefined access codes with validity periods in days
