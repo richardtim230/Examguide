@@ -1509,7 +1509,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 
 
     Chemistry: {
-    "Chm101-pap": {
+    "Chm101-p": {
       title: "Introductory Chemistry 1",
       questions: [
         {
@@ -1523,30 +1523,93 @@ document.addEventListener("DOMContentLoaded", () => {
           correct: 1,
           explanation: "The primary goal of animal systematics is to classify and organize animals based on their evolutionary relationships, helping to understand biodiversity and the tree of life."
         },
-        {
-          text: "Which of the following is not a hierarchical taxonomic rank?",
-          options: ["Phylum", "Order", "Family", "Ecosystem"],
-          correct: 3,
-          explanation: "Ecosystem is not a taxonomic rank; it refers to a community of interacting organisms and their physical environment."
-        },
-        {
-          text: "Who is known as the 'Father of Taxonomy'?",
-          options: ["Charles Darwin", "Carolus Linnaeus", "Aristotle", "Gregor Mendel"],
-          correct: 1,
-          explanation: "Carolus Linnaeus is known as the 'Father of Taxonomy' for developing the binomial nomenclature system."
-        },
-        {
-          text: "What does the binomial nomenclature consist of?",
-          options: ["Family and Order", "Genus and Species", "Class and Phylum", "Kingdom and Domain"],
-          correct: 1,
-          explanation: "Binomial nomenclature assigns a species a two-part name consisting of its genus and species."
-        },
-        {
-          text: "Which term refers to the evolutionary history of a species?",
-          options: ["Taxonomy", "Phylogeny", "Ecology", "Morphology"],
-          correct: 1,
-          explanation: "Phylogeny refers to the evolutionary history and relationships of a species or group of species."
-        }, 
+
+       
+  {
+    text: "A nucleus that spontaneously decomposes is said to be",
+    options: ["a radionuclide", "radioactive", "reactive", "electropositive"],
+    correct: 1,
+    explanation: "A nucleus that spontaneously decomposes is said to be radioactive. Radioactivity is the spontaneous emission of radiation from an unstable atomic nucleus. A radionuclide is a specific type of atom that is radioactive, but radioactivity is the broader term describing the process. Reactive refers to a substance's tendency to participate in chemical reactions, while electropositive refers to an element's tendency to lose electrons and form positive ions. Neither of these concepts relates directly to spontaneous nuclear decay."
+  },
+  {
+    text: "_ , when it is produced by a nucleus at high speed, is more commonly called a beta particle.",
+    options: ["Electron", "Neutron", "Nucleon", "Proton"],
+    correct: 0,
+    explanation: "A high-speed electron emitted from a nucleus is more commonly called a beta particle.  Beta decay is a type of radioactive decay that involves the emission of a beta particle (an electron or a positron)."
+  },
+  {
+    text: "The net effect of the production of a beta particle is to convert _ to _.",
+    options: ["electron to a γ-particle", "neutron to a proton", "proton to neutron", "β-particle to energy"],
+    correct: 1,
+    explanation: "Beta decay involves the conversion of a neutron into a proton within the nucleus. This process results in the emission of a beta particle (an electron) and an antineutrino to conserve charge and energy. Therefore, the net effect is a transformation of a neutron into a proton."
+  },
+  {
+    text: "When a nucleus undergoes alpha decay, the _ of the nucleus decreases by four units.",
+    options: ["mass", "neutron", "proton", "electron"],
+    correct: 0,
+    explanation: "Alpha decay involves the emission of an alpha particle, which consists of two protons and two neutrons (⁴₂He). Thus, the mass number (total number of protons and neutrons) of the nucleus decreases by four units after alpha decay. The number of protons and neutrons individually can change, but the change in mass number is the most direct and consistent observation."
+  },
+  {
+    text: "Polonium-216 decays to Pb-212 by emission of an alpha particle. Which of the following is the nuclear equation for this radioactive decay?",
+
+    options: ["²¹⁶₈₄Po → ²¹²₈₂Pb + ⁴₂He", "²¹⁶₈₄Po → ²¹²₈₂Pb + ⁻¹₀e", "²¹⁶₈₄Po + ⁴₂He → ²²⁰₈₆Rn", "²¹⁶₈₄Po + 2⁻¹₀e + ²¹²₈₂Pb + 4n"],
+    correct: 0,
+    explanation: "The correct nuclear equation must conserve both mass number (top number) and atomic number (bottom number). In option A, the mass numbers (216 = 212 + 4) and atomic numbers (84 = 82 + 2) are balanced, representing the emission of an alpha particle (⁴₂He). Option B shows beta decay, option C implies the absorption of an alpha particle, and option D doesn't follow conservation laws."
+  },
+  {
+    text: "Sulfur trioxide is formed from the reaction of sulfur dioxide and oxygen: SO₂(g) + ½O₂(g) ⇌ SO₃(g). At 1000 K, an equilibrium mixture has partial pressures of 0.562 bar SO₂, 0.101 bar O₂, and 0.332 bar SO₃. What is the equilibrium constant (Kₚ) for the reaction at this temperature?",
+    options: ["5.85", "3.46", "1.86", "16.8"],
+    correct: 2,
+    explanation: "The equilibrium constant Kₚ is calculated using partial pressures for gaseous reactants and products. For the given reaction, Kₚ = (P(SO₃)) / (P(SO₂)(P(O₂))^(1/2)). Substituting the given partial pressures: Kₚ = (0.332) / (0.562 × (0.101)^(1/2)) ≈ 1.86. Therefore, the equilibrium constant is approximately 1.86."
+  },
+  {
+    text: "What is the pH of a 0.20 M solution of sodium benzoate, Na(C₆H₅COO)? The Kₐ of benzoic acid, C₆H₅COOH, is 6.5 × 10⁻⁵.",
+    options: ["5.26", "9.09", "8.74", "11.56"],
+    correct: 2,
+    explanation: "Sodium benzoate is the salt of a weak acid (benzoic acid) and a strong base (NaOH). To find the pH, we first need to find the Kb of the benzoate ion (C₆H₅COO⁻) using the relationship Kₐ × Kբ = Kw = 1.0 × 10⁻¹⁴. Kբ = Kw / Kₐ = (1.0 × 10⁻¹⁴) / (6.5 × 10⁻⁵) ≈ 1.54 × 10⁻¹⁰. Then use an ICE table to determine the hydroxide ion concentration from the Kb expression and equilibrium calculation. Then find pOH = -log[OH⁻]. Finally, pH = 14 - pOH ≈ 8.74."
+  },
+  {
+    text: "100.0 mL of 0.15 M aqueous HF (Kₐ = 6.8 × 10⁻⁴) is mixed with 125.0 mL of 0.23 M NaF. What is the pH of the resulting solution?",
+    options: ["2.17", "3.45", "3.17", "3.35"],
+    correct: 2,
+    explanation: "This is a buffer solution containing a weak acid (HF) and its conjugate base (F⁻). We can use the Henderson-Hasselbalch equation: pH = pKₐ + log([A⁻]/[HA]), where [A⁻] is the concentration of the conjugate base (F⁻) and [HA] is the concentration of the weak acid (HF). First, calculate the new concentrations after mixing the two solutions. Then calculate pKₐ = -log(Kₐ) Then plug into the Henderson-Hasselbalch equation to get the pH which is approximately 3.17."
+  },
+  {
+    text: "The reaction H₂(g) + I₂(g) ⇌ 2HI(g) has Kₚ = 50.4 at 448°C. If a 3.00 L flask initially contains 0.0500 moles each of H₂ and I₂, how many moles of HI are present when the contents have reached equilibrium?",
+    options: ["0.0130 mol", "0.0780 mol", "0.0260 mol", "0.0146 mol"],
+    correct: 1,
+    explanation: "We can solve this using an ICE (Initial, Change, Equilibrium) table. Since Kp is given and we have the initial moles, we can set up an expression and solve it. The equilibrium expression is Kₚ = (P(HI))² / (P(H₂) × P(I₂)). Convert moles to partial pressures (PV=nRT) assuming ideal gas behavior. Since the volumes are the same, the mole ratios can be used directly in place of pressure ratio in the expression. Solve the resulting quadratic equation. The resulting moles of HI at equilibrium will be approximately 0.0780 mol."
+  },
+  {
+    text: "The dissociation of phosphorus pentachloride into chlorine and phosphorus trichloride is represented by the equilibrium: PCl₅(g) ⇌ PCl₃(g) + Cl₂(g), Kₚ = 0.015. Which change will increase the number of moles of Cl₂(g) present in this system at equilibrium?",
+    options: ["Addition of a catalyst", "Increasing the volume of the container", "Increasing the pressure by injecting PCl₅(g)", "Decreasing the temperature"],
+    correct: 1,
+    explanation: "According to Le Chatelier's principle, increasing the volume of a gaseous equilibrium shifts the equilibrium towards the side with more moles of gas. Since there are more moles of gas on the product side (2 vs 1), increasing the volume will increase the number of moles of Cl₂(g). A catalyst only changes reaction rate, not equilibrium position. Increasing pressure favors the side with fewer moles, and decreasing the temperature would shift the equilibrium to the left (exothermic)."
+  },
+  {
+    text: "At 400 K, the reaction SO₃(g) ⇌ SO₂(g) + ½O₂(g) has Kₚ = 8.2 × 10⁻⁴. What is Kₚ at 400 K for the following reaction? 2SO₃(g) ⇌ 2SO₂(g) + O₂(g)",
+    options: ["1.6 × 10⁻³", "8.2 × 10⁻⁴", "6.7 × 10⁻⁷", "2.9 × 10⁻²"],
+    correct: 2,
+    explanation: "When you multiply a reaction by a factor 'n', the new equilibrium constant is the original equilibrium constant raised to the power of 'n'. In this case, the reaction is doubled (multiplied by 2). Therefore, the new Kₚ will be (8.2 × 10⁻⁴)² ≈ 6.7 × 10⁻⁷."
+  },
+  {
+    text: "What is [H₃O⁺] in a solution formed by dissolving 1.00 g NH₄Cl (M = 53.5) in 30.0 mL of 3.00 M NH₃ (Kᵦ = 1.8 × 10⁻⁵)?",
+    options: ["1.15 × 10⁻¹¹ M", "5.53 × 10⁻¹⁰ M", "2.71 × 10⁻⁹ M", "1.44 × 10⁻¹² M"],
+    correct: 1,
+    explanation: "This involves a weak base (NH₃) and its conjugate acid (NH₄⁺). First, calculate the moles of NH₄Cl and its concentration after dissolving. This is a buffer solution. We can use the Henderson-Hasselbalch equation, modified for a weak base and conjugate acid: pOH = pKb + log([NH₄⁺]/[NH₃]). Calculate pKb = -log(Kb) and substitute into the equation. Solving for pOH and then calculating pH gives approximately 5.53 x 10⁻¹⁰ M"
+  },
+  {
+    text: "0.100 mol of HF (Kₐ = 6.6 × 10⁻⁴) is added to water to make 1.00 L of solution. Which statement is correct at equilibrium?",
+    options: ["[HF] > [F⁻]", "[H₃O⁺] = 0.100 M", "[H₃O⁺] = [F⁻]", "[H₃O⁺] > [HF]"],
+    correct: 2,
+    explanation: "For a weak acid like HF, the equilibrium is established between the undissociated acid (HF) and its conjugate base (F⁻). The hydronium ion concentration [H₃O⁺] will approximately equal the concentration of the conjugate base [F⁻] at equilibrium because each HF molecule that dissociates produces one H₃O⁺ and one F⁻ ion."
+  },
+  {
+    text: "A sample of sulfuryl chloride, SO₂Cl₂, is introduced into a movable piston with the pressure maintained at 1.00 atm and the temperature at 450 K. The volume increases as the sulfuryl chloride equilibrates according to the reaction: SO₂Cl₂(g) ⇌ SO₂(g) + Cl₂(g), ΔH° > 0. Which of these changes would decrease the number of moles of SO₂Cl₂(g) present at equilibrium?",
+    options: ["Increasing the temperature", "Decreasing the pressure", "Increasing the pressure", "Adding SO₂Cl₂(g)"],
+    correct: 0,
+    explanation: "The reaction is endothermic (ΔH° > 0). According to Le Chatelier's principle, increasing the temperature will shift the equilibrium towards the products, thereby decreasing the amount of SO₂Cl₂(g) at equilibrium. Decreasing the pressure shifts towards the side with more gas molecules, and adding more SO₂Cl₂(g) would also shift the equilibrium towards the product side. Only temperature change directly affects the equilibrium constant itself."
+  },               
         ] 
     },     
 
