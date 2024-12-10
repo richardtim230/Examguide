@@ -3624,21 +3624,24 @@ function updateTimerDisplay() {
   }
 
   function endExam() {
-  // Show the modal
+  console.log("Submit button clicked");
+
   const modal = document.getElementById('confirmationModal');
+  if (!modal) {
+    console.error("Modal element not found");
+    return;
+  }
+
+  // Show the modal
   modal.style.display = 'flex';
 
-  // Declare variables in outer scope
-  let score, totalQuestions, percentage;
-
-  // Handle confirmation buttons
   document.getElementById('confirmYes').onclick = function () {
     modal.style.display = 'none';
+    console.log("User confirmed submission");
 
-    // Calculate results
-    score = answers.filter((ans, i) => ans === questions[i].correct).length;
-    totalQuestions = questions.length;
-    percentage = Math.round((score / totalQuestions) * 100);
+    const score = answers.filter((ans, i) => ans === questions[i].correct).length;
+    const totalQuestions = questions.length;
+    const percentage = Math.round((score / totalQuestions) * 100);
 
     const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
     const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
@@ -3662,6 +3665,13 @@ function updateTimerDisplay() {
         .join("")}
     `;
   };
+
+  document.getElementById('confirmNo').onclick = function () {
+    modal.style.display = 'none';
+    console.log("User canceled submission");
+  };
+}
+
 
   document.getElementById('confirmNo').onclick = function () {
     modal.style.display = 'none';
