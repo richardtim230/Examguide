@@ -25,11 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Submission canceled');
   });
 });
-console.log(`Timer is running: ${timeRemaining}`);
- const timerDisplay = document.getElementById("timer-display");
-if (!timerDisplay) {
-  console.error("Timer display element not found");
-}
 
 
 // Predefined access codes with validity periods in days
@@ -3653,41 +3648,39 @@ function updateTimerDisplay() {
 }
 
 function endExam(autoSubmit = false) {
-function endExam(autoSubmit = false) {
-  const modal = document.getElementById("confirmationModal");
-
   if (!autoSubmit) {
-    // Show the confirmation modal for manual submission
+    // Show the confirmation modal
+    const modal = document.getElementById("confirmationModal");
     modal.style.display = "flex";
-    console.log("Submit button clicked, showing modal.");
 
     // Handle "Yes" button
     document.getElementById("confirmYes").onclick = function () {
       modal.style.display = "none";
-      clearInterval(timerInterval); // Stop the timer only on confirmation
+      clearInterval(timerInterval); // Stop the timer
       console.log("Exam submitted!");
-      finalizeSubmission(); // Perform the submission
+      // Add your submission logic here
+      finalizeSubmission();
     };
 
     // Handle "No" button
     document.getElementById("confirmNo").onclick = function () {
       modal.style.display = "none";
-      console.log("Submission canceled. Timer continues.");
-      // Timer continues running; no action needed
+      console.log("Submission canceled");
+      // Timer continues running
     };
 
-    return; // Exit to wait for user decision
+    return; // Prevent further execution until the user confirms
   }
 
-  // Auto-submit logic (e.g., when the timer ends)
+  // Auto-submit (e.g., when time runs out)
   clearInterval(timerInterval);
-  console.log("Auto-submitting exam...");
+  console.log("Time's up! Auto-submitting exam...");
   finalizeSubmission();
 }
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
-  // Add your submission logic here (e.g., send answers to server, show results)
+  // Add your submission logic here (e.g., send answers to the server, show results)
 }
 
 
