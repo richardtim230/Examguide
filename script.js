@@ -3666,12 +3666,15 @@ function updateTimerDisplay() {
     `;
   };
 
-  document.getElementById('confirmNo').onclick = function () {
-    modal.style.display = 'none';
-    console.log("User canceled submission");
-  };
-}
-document.getElementById('submitBtn').addEventListener('click', endExam);
+  document.getElementById('submitBtn').addEventListener('click', function () {
+  console.log('Submit button clicked');
+});
+document.getElementById('confirmYes').addEventListener('click', function () {
+  console.log('Yes button clicked');
+});
+document.getElementById('confirmNo').addEventListener('click', function () {
+  console.log('No button clicked');
+});
 
 
 
