@@ -1609,6 +1609,181 @@ Botany: {
     correct: 2,
     explanation: "Alleles represent contrasting forms of a gene. For example, in pea plants, the gene for flower color has two alleles: one for purple flowers (P) and one for white flowers (p).  Homozygous and heterozygous describe the combination of alleles an individual possesses, not the contrasting characters themselves. Codominant genes are a special case where both alleles are expressed equally, but they still represent contrasting traits."
   },
+ 
+  {
+    text: "Which of the following is not true for a food web?",
+    options: ["Formed from food chains", "More complex than food chains", "More stable than food chains", "Starts with primary consumers"],
+    correct: 2,
+    explanation: "Food webs are more complex and generally more stable than individual food chains because of the multiple interconnected pathways."
+  },
+  {
+    text: "Which one of the following is more tolerant to herbivores?",
+    options: ["Grasses", "Trees", "Herbs", "None of these"],
+    correct: 0,
+    explanation: "Grasses, due to their growth form and ability to regenerate from their base, are generally more tolerant to herbivory than trees or herbs."
+  },
+  {
+    text: "Which of the following steps of the nitrogen cycle is not useful for plants?",
+    options: ["Ammonification", "Nitrification", "Denitrification", "Both ammonification and denitrification"],
+    correct: 3,
+    explanation: "Denitrification converts nitrates back to atmospheric nitrogen, making it unavailable to plants."
+  },
+  {
+    text: "Symbiotic relationship in which only one organism is benefited:",
+    options: ["Symbiosis", "Commensalism", "Mutualism", "Unism"],
+    correct: 1,
+    explanation: "Commensalism is a symbiotic relationship where one organism benefits, and the other is neither harmed nor benefited."
+  },
+  {
+    text: "Sharks may have small fish attached to them called:",
+    options: ["Remoras", "Remoras", "Remoras", "Remoras"],
+    correct: 0,
+    explanation: "Remoras are small fish that attach themselves to sharks and other larger marine animals."
+  },
+  {
+    text: "Overgrazing leads to:",
+    options: ["Good pastured lands", "Rocky areas", "Totally barren lands", "Salinity"],
+    correct: 2,
+    explanation: "Overgrazing depletes vegetation, leading to soil erosion and barren lands."
+  },
+  {
+    text: "Nitrogen constitutes about __ % of the atmosphere:",
+    options: ["58%", "23%", "10%", "78%"],
+    correct: 3,
+    explanation: "Approximately 78% of the Earth's atmosphere is nitrogen gas (N₂)."
+  },
+  {
+    text: "Oxidation of ammonia or ammonium ions by bacteria in soil is called:",
+    options: ["Nitrification", "Denitrification", "Assimilation", "Ammonification"],
+    correct: 0,
+    explanation: "Nitrification is the oxidation of ammonia (NH₃) to nitrite (NO₂⁻) and then to nitrate (NO₃⁻)."
+  },
+  {
+    text: "Gross primary production is:",
+    options: ["Total amount of energy fixed by all plants", "Amount of energy fixed by large plants", "Amount of energy fixed by small plants", "Primary production minus respiratory loss"],
+    correct: 0,
+    explanation: "Gross primary production is the total amount of energy captured by producers through photosynthesis."
+  },
+  {
+    text: "Plant biomass is:",
+    options: ["Gross primary production minus respiratory loss", "Net primary production", "Gross primary production", "Both net primary production and gross primary production"],
+    correct: 1,
+    explanation: "Plant biomass is the net primary production—the energy remaining after respiration."
+  },
+  {
+    text: "Total solar energy trapped by the producers in an ecosystem is:",
+    options: ["78%", "20%", "95%", "1%"],
+    correct: 1,
+    explanation: "Producers capture roughly 1-3% of incoming solar radiation, with 20% being a reasonable approximation."
+  },
+  {
+    text: "The major unit of ecology is:",
+    options: ["Population", "Community", "Ecosystem", "Biome"],
+    correct: 2,
+    explanation: "The ecosystem encompasses all biotic and abiotic factors interacting in a given area."
+  },
+  {
+    text: "Plants growing in xeric conditions are called:",
+    options: ["Sperophytes", "Mesophytes", "Xerophytes", "Tendophytes"],
+    correct: 2,
+    explanation: "Xerophytes are plants adapted to dry conditions."
+  },
+  {
+    text: "Lichen and algae form:",
+    options: ["Climax community", "Pioneer community", "Initiator community", "Serial community"],
+    correct: 1,
+    explanation: "Lichens and algae are often pioneer species in ecological succession."
+  },
+  {
+    text: "Diverse and stable community at the end of succession is:",
+    options: ["Climax community", "Stable community", "Top community", "Pioneer community"],
+    correct: 0,
+    explanation: "A climax community represents a relatively stable endpoint of succession."
+  },
+  {
+    text: "Secondary succession starts from:",
+    options: ["From remains of previous ecosystem", "Clear glacial pool", "A bar rock sand", "Fire"],
+    correct: 0,
+    explanation: "Secondary succession begins in areas where a previous community has been disturbed."
+  },
+  {
+    text: "Hydrosere is:",
+    options: ["Secondary succession starting in a pond", "Primary succession starting in a pond", "Primary succession starting on dry soil", "All of these"],
+    correct: 1,
+    explanation: "Hydrosere refers to primary succession in aquatic environments."
+  },
+  {
+    text: "Mosses are:",
+    options: ["Desmatocarpon", "Permelia", "Tortula", "Both Permelia and Tortula"],
+    correct: 2,
+    explanation: "Tortula is a genus of mosses."
+  },
+  {
+    text: "Wood forests form the:",
+    options: ["Pioneer community", "Climax community", "Top community", "Transient community"],
+    correct: 1,
+    explanation: "In many temperate regions, mature forests are considered climax communities."
+  },
+  {
+    text: "Disease in living organisms caused by parasites is called:",
+    options: ["Parasitism", "Infection", "Predation", "Infestation"],
+    correct: 1,
+    explanation: "Infection refers to a disease caused by a pathogen, which can include parasites."
+  },
+  {
+    text: "Legume plants are the hosts to:",
+    options: ["Rhizobium", "Mycorrhiza", "Lichen", "Algae"],
+    correct: 0,
+    explanation: "Rhizobium bacteria form symbiotic relationships with legumes, fixing nitrogen."
+  },
+  {
+    text: "Study of association of organisms to their environment is:",
+    options: ["Ecology", "Palaentology", "Geology", "None of these"],
+    correct: 0,
+    explanation: "Ecology is the study of the relationships between organisms and their environment."
+  },
+  {
+    text: "All populations within an ecosystem interconnected to one another are known as:",
+    options: ["Species", "Family", "Community", "Biomes"],
+    correct: 2,
+    explanation: "A community consists of all the interacting populations in an ecosystem."
+  },
+  {
+    text: "Major regional ecological community of plants and animals forms:",
+    options: ["Biomes", "Biomass", "Biosphere", "Ecosystem"],
+    correct: 0,
+    explanation: "Biomes are large-scale ecosystems classified by their dominant vegetation and climate."
+  },
+  {
+    text: "The actual location or place where an organism lives is:",
+    options: ["Environment", "Biosphere", "Biomass", "Habitat"],
+    correct: 3,
+    explanation: "Habitat refers to the specific place where an organism lives."
+  },
+  {
+    text: "The role a species plays in a community, including its behavior and influence, is:",
+    options: ["Nichen", "Niche", "Autoecology", "Profession"],
+    correct: 1,
+    explanation: "Niche describes the ecological role of a species."
+  },
+  {
+    text: "Study of a single population's relationship to its environment is called:",
+    options: ["Ecology", "Synecology", "Autoecology", "Niche"],
+    correct: 2,
+    explanation: "Autoecology focuses on the relationship between a single species and its environment."
+  },
+  {
+    text: "The biosphere covers about:",
+    options: ["8-10 km", "5-10 km", "15-20 km", "16-20 km"],
+    correct: 1,
+    explanation: "The biosphere extends from the deepest ocean trenches to the highest mountain peaks, approximately 5-10 km."
+  },
+  {
+    text: "Abiotic components include:",
+    options: ["Atmosphere", "Hydrosphere", "Lithosphere", "All of these"],
+    correct: 3,
+    explanation: "Abiotic components encompass the non-living parts of an environment, including atmosphere, hydrosphere, and lithosphere."
+  },                
   {
     text: "The best method to determine the genotype of a dominant parent is by crossing it with a hybrid. This method is called",
     options: ["back cross", "test cross", "selfing", "cross fertilization"],
