@@ -3624,6 +3624,13 @@ function updateTimerDisplay() {
   }
 
   function endExam() {
+    const isSure = confirm("Are you sure you want to submit the exam? Once submitted, you cannot make any changes.");
+
+  if (!isSure) {
+    // If the user cancels the confirmation, stop further execution
+    return;
+  }
+              
     const score = answers.filter((ans, i) => ans === questions[i].correct).length;
     const totalQuestions = questions.length;
     const percentage = Math.round((score / totalQuestions) * 100);
