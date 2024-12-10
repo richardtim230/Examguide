@@ -3636,7 +3636,7 @@ function startTimer() {
     if (timeRemaining <= 0) {
       clearInterval(timerInterval);
       alert("Time's up! The exam will be submitted automatically.");
-      endExam();
+      endExam(true); // Pass a flag to force submission
     }
   }, 1000);
 }
@@ -3644,8 +3644,45 @@ function startTimer() {
 function updateTimerDisplay() {
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = timeRemaining % 60;
-    document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+  document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+function endExam(autoSubmit = false) {
+  if (!autoSubmit) {
+    // Show the confirmation modal
+    const modal = document.getElementById("confirmationModal");
+    modal.style.display = "flex";
+
+    // Handle "Yes" button
+    document.getElementById("confirmYes").onclick = function () {
+      modal.style.display = "none";
+      clearInterval(timerInterval); // Stop the timer
+      console.log("Exam submitted!");
+      // Add your submission logic here
+      finalizeSubmission();
+    };
+
+    // Handle "No" button
+    document.getElementById("confirmNo").onclick = function () {
+      modal.style.display = "none";
+      console.log("Submission canceled");
+      // Timer continues running
+    };
+
+    return; // Prevent further execution until the user confirms
   }
+
+  // Auto-submit (e.g., when time runs out)
+  clearInterval(timerInterval);
+  console.log("Time's up! Auto-submitting exam...");
+  finalizeSubmission();
+}
+
+function finalizeSubmission() {
+  console.log("Finalizing submission...");
+  // Add your submission logic here (e.g., send answers to the server, show results)
+}
+
 
 function endExam() {
   // Show the modal
