@@ -3623,25 +3623,22 @@ function updateTimerDisplay() {
     document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 
-  function endExam() {
-  console.log("Submit button clicked");
-
-  const modal = document.getElementById('confirmationModal');
-  if (!modal) {
-    console.error("Modal element not found");
-    return;
-  }
-
+function endExam() {
   // Show the modal
+  const modal = document.getElementById('confirmationModal');
   modal.style.display = 'flex';
 
+  // Declare variables in outer scope
+  let score, totalQuestions, percentage;
+
+  // Handle confirmation buttons
   document.getElementById('confirmYes').onclick = function () {
     modal.style.display = 'none';
-    console.log("User confirmed submission");
 
-    const score = answers.filter((ans, i) => ans === questions[i].correct).length;
-    const totalQuestions = questions.length;
-    const percentage = Math.round((score / totalQuestions) * 100);
+    // Calculate results
+    score = answers.filter((ans, i) => ans === questions[i].correct).length;
+    totalQuestions = questions.length;
+    percentage = Math.round((score / totalQuestions) * 100);
 
     const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
     const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
@@ -3666,16 +3663,12 @@ function updateTimerDisplay() {
     `;
   };
 
-  document.getElementById('submitBtn').addEventListener('click', function () {
-  console.log('Submit button clicked');
-});
-document.getElementById('confirmYes').addEventListener('click', function () {
-  console.log('Yes button clicked');
-});
-document.getElementById('confirmNo').addEventListener('click', function () {
-  console.log('No button clicked');
-});
-
+  document.getElementById('confirmNo').onclick = function () {
+    modal.style.display = 'none';
+    // Prevent further actions when "No" is clicked
+    return;
+  };
+}
 
 
   function shuffleArray(array) {
