@@ -3624,13 +3624,15 @@ function updateTimerDisplay() {
   }
 
   function endExam() {
-    const isSure = confirm("Are you sure you want to submit the exam? Once submitted, you cannot make any changes.");
+  // Show the modal
+  const modal = document.getElementById('confirmationModal');
+  modal.style.display = 'flex';
 
-  if (!isSure) {
-    // If the user cancels the confirmation, stop further execution
-    return;
-  }
-              
+  // Handle confirmation buttons
+  document.getElementById('confirmYes').onclick = function () {
+    modal.style.display = 'none';
+
+    // Proceed with submission
     const score = answers.filter((ans, i) => ans === questions[i].correct).length;
     const totalQuestions = questions.length;
     const percentage = Math.round((score / totalQuestions) * 100);
@@ -3638,6 +3640,15 @@ function updateTimerDisplay() {
     const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
     const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
     localStorage.setItem(`${selectedCourse}-${subCourseName}`, JSON.stringify(updatedProgress));
+
+    // Proceed with any further actions like showing results
+    console.log(`You scored ${score}/${totalQuestions} (${percentage}%)`);
+  };
+
+  document.getElementById('confirmNo').onclick = function () {
+    modal.style.display = 'none';
+  };
+}
 
     showSection(summarySection);
     summaryContent.innerHTML = `
