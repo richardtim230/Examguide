@@ -3648,39 +3648,41 @@ function updateTimerDisplay() {
 }
 
 function endExam(autoSubmit = false) {
+function endExam(autoSubmit = false) {
+  const modal = document.getElementById("confirmationModal");
+
   if (!autoSubmit) {
-    // Show the confirmation modal
-    const modal = document.getElementById("confirmationModal");
+    // Show the confirmation modal for manual submission
     modal.style.display = "flex";
+    console.log("Submit button clicked, showing modal.");
 
     // Handle "Yes" button
     document.getElementById("confirmYes").onclick = function () {
       modal.style.display = "none";
-      clearInterval(timerInterval); // Stop the timer
+      clearInterval(timerInterval); // Stop the timer only on confirmation
       console.log("Exam submitted!");
-      // Add your submission logic here
-      finalizeSubmission();
+      finalizeSubmission(); // Perform the submission
     };
 
     // Handle "No" button
     document.getElementById("confirmNo").onclick = function () {
       modal.style.display = "none";
-      console.log("Submission canceled");
-      // Timer continues running
+      console.log("Submission canceled. Timer continues.");
+      // Timer continues running; no action needed
     };
 
-    return; // Prevent further execution until the user confirms
+    return; // Exit to wait for user decision
   }
 
-  // Auto-submit (e.g., when time runs out)
+  // Auto-submit logic (e.g., when the timer ends)
   clearInterval(timerInterval);
-  console.log("Time's up! Auto-submitting exam...");
+  console.log("Auto-submitting exam...");
   finalizeSubmission();
 }
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
-  // Add your submission logic here (e.g., send answers to the server, show results)
+  // Add your submission logic here (e.g., send answers to server, show results)
 }
 
 
