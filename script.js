@@ -1511,20 +1511,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Chemistry: {
     "Chm101-p": {
       title: "Introductory Chemistry 1",
-      questions: [
-        {
-          text: "What is the primary goal of animal systematics?",
-          options: [
-            "To study animal habitats",
-            "To classify and organize animals based on evolutionary relationships",
-            "To monitor animal populations",
-            "To conserve endangered species"
-          ],
-          correct: 1,
-          explanation: "The primary goal of animal systematics is to classify and organize animals based on their evolutionary relationships, helping to understand biodiversity and the tree of life."
-        },
-
-       
+      questions: [                              
   {
     text: "A nucleus that spontaneously decomposes is said to be",
     options: ["a radionuclide", "radioactive", "reactive", "electropositive"],
@@ -1605,11 +1592,53 @@ document.addEventListener("DOMContentLoaded", () => {
     explanation: "For a weak acid like HF, the equilibrium is established between the undissociated acid (HF) and its conjugate base (F⁻). The hydronium ion concentration [H₃O⁺] will approximately equal the concentration of the conjugate base [F⁻] at equilibrium because each HF molecule that dissociates produces one H₃O⁺ and one F⁻ ion."
   },
   {
-    text: "A sample of sulfuryl chloride, SO₂Cl₂, is introduced into a movable piston with the pressure maintained at 1.00 atm and the temperature at 450 K. The volume increases as the sulfuryl chloride equilibrates according to the reaction: SO₂Cl₂(g) ⇌ SO₂(g) + Cl₂(g), ΔH° > 0. Which of these changes would decrease the number of moles of SO₂Cl₂(g) present at equilibrium?",
-    options: ["Increasing the temperature", "Decreasing the pressure", "Increasing the pressure", "Adding SO₂Cl₂(g)"],
+    text: "What are the orbitals that are filled in K, L, and M shells when these energy levels are fully filled?",
+    options: ["1s; 2s, 2p; 3s, 3p, 3d", "1s; 2s, 2p and 3s, 3p", "1s; 2s, 2p, and 3s, 3p, 3d", "1s and 2s, 2p"],
     correct: 0,
-    explanation: "The reaction is endothermic (ΔH° > 0). According to Le Chatelier's principle, increasing the temperature will shift the equilibrium towards the products, thereby decreasing the amount of SO₂Cl₂(g) at equilibrium. Decreasing the pressure shifts towards the side with more gas molecules, and adding more SO₂Cl₂(g) would also shift the equilibrium towards the product side. Only temperature change directly affects the equilibrium constant itself."
-  },               
+    explanation: "The K, L, and M shells represent principal quantum numbers n=1, 2, and 3 respectively. When these shells are fully filled, the orbitals are 1s for K; 2s, 2p for L; and 3s, 3p, 3d for M."
+  },
+  {
+    text: "Fifteen grams (15.00 g) of hydrated calcium sulphate, CaSO₄·nH₂O, weighs 11.85 g after being heated to a constant mass. What is the value of n in CaSO₄·nH₂O? [H = 1; O = 16; S = 32; Ca = 40]",
+    options: [1, 2, 5, 7],
+    correct: 1,
+    explanation: "The mass of water lost is 15.00 - 11.85 = 3.15 g. The molar mass of H₂O is 18 g/mol, and the molar mass of anhydrous CaSO₄ is 136 g/mol. Using stoichiometry, moles of water lost = 3.15 ÷ 18 = 0.175 mol, and moles of CaSO₄ = 11.85 ÷ 136 = 0.087 mol. The ratio of moles of H₂O to CaSO₄ is 0.175 ÷ 0.087 ≈ 2. Thus, n = 2."
+  },
+  {
+    text: "If 40.00 mL of 1.600 M HCl and 60.00 mL of 2.000 M NaOH are mixed, what are the respective molar concentrations of OH⁻, Cl⁻, and Na⁺ in the resulting solution?",
+    options: ["1.200, 0.560, 0.640 M", "1.200, 0.640, 1.200 M", "0.640, 0.560, 1.200 M", "1.200, 0.640, 0.560 M"],
+    correct: 1,
+    explanation: "HCl reacts with NaOH in a 1:1 molar ratio. Moles of HCl = 0.040 × 1.600 = 0.064 mol. Moles of NaOH = 0.060 × 2.000 = 0.120 mol. After reaction, excess OH⁻ = 0.120 - 0.064 = 0.056 mol. Total volume = 0.040 + 0.060 = 0.100 L. Concentration of OH⁻ = 0.056 ÷ 0.100 = 0.560 M, Cl⁻ = 0.064 ÷ 0.100 = 0.640 M, Na⁺ = (0.120 ÷ 0.100) = 1.200 M."
+  },
+  {
+    text: "Nitrogen gas can be prepared by passing gaseous ammonia over solid copper(II) oxide at high temperatures. The other products of the reaction are solid copper and water vapour. If 18.1 g NH₃ is reacted with 90.4 g of CuO, how many grams of N₂ will be formed? [NH₃ = 17; CuO = 79.5]",
+    options: [10.6 g, 11.6 g, 12.6 g, 13.6 g],
+    correct: 1,
+    explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol. Mass of N₂ = 0.5325 × 28 = 11.6 g."
+  },
+  {
+    text: "Calculate the number of Cl⁻ ions in 1.75 L of 1.0 × 10⁻³ M AlCl₃. [Nₐ = 6.02 × 10²³/mol]",
+    options: ["3.16 × 10²³", "1.75 × 10²³", "3.16 × 10²¹", "1.75 × 10²¹"],
+    correct: 2,
+    explanation: "AlCl₃ dissociates into Al³⁺ and 3Cl⁻ ions. The concentration of Cl⁻ = 3 × 1.0 × 10⁻³ = 3.0 × 10⁻³ M. Moles of Cl⁻ = 3.0 × 10⁻³ × 1.75 = 5.25 × 10⁻³ mol. Number of ions = 5.25 × 10⁻³ × 6.02 × 10²³ = 3.16 × 10²¹ ions."
+  },
+  {
+    text: "What is the percentage by mass of copper in copper(I) oxide? [O = 16.0; Cu = 64]",
+    options: ["20.0%", "80.0%", "66.7%", "88.9%"],
+    correct: 3,
+    explanation: "The molar mass of Cu₂O is (2 × 64) + 16 = 144 g/mol. The mass of copper is 128 g/mol. Percentage by mass = (128 ÷ 144) × 100 = 88.9%."
+  },
+  {
+    text: "One of the reasons that solid CuSO₄ dissolves in water is:",
+    options: [
+      "The electrostatic force of attraction between the Cu²⁺ and the SO₄²⁻ ions.",
+      "Instantaneous dipole-induced dipole forces (dispersion forces) between the solid molecules.",
+      "The ion-dipole forces between the ions and the water molecules.",
+      "The hydrogen bonding between the water molecules."
+    ],
+    correct: 2,
+    explanation: "CuSO₄ dissolves due to ion-dipole interactions between Cu²⁺, SO₄²⁻, and water molecules, which stabilize the ions in solution."
+  }
+               
         ] 
     },     
 
