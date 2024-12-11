@@ -1599,7 +1599,7 @@ document.addEventListener("DOMContentLoaded", () => {
   },
   {
     text: "Fifteen grams (15.00 g) of hydrated calcium sulphate, CaSO₄·nH₂O, weighs 11.85 g after being heated to a constant mass. What is the value of n in CaSO₄·nH₂O? [H = 1; O = 16; S = 32; Ca = 40]",
-    options: [1, 2, 5, 7],
+    options: ["1", "2", "5", "7"],
     correct: 1,
     explanation: "The mass of water lost is 15.00 - 11.85 = 3.15 g. The molar mass of H₂O is 18 g/mol, and the molar mass of anhydrous CaSO₄ is 136 g/mol. Using stoichiometry, moles of water lost = 3.15 ÷ 18 = 0.175 mol, and moles of CaSO₄ = 11.85 ÷ 136 = 0.087 mol. The ratio of moles of H₂O to CaSO₄ is 0.175 ÷ 0.087 ≈ 2. Thus, n = 2."
   },
@@ -1611,7 +1611,7 @@ document.addEventListener("DOMContentLoaded", () => {
   },
   {
     text: "Nitrogen gas can be prepared by passing gaseous ammonia over solid copper(II) oxide at high temperatures. The other products of the reaction are solid copper and water vapour. If 18.1 g NH₃ is reacted with 90.4 g of CuO, how many grams of N₂ will be formed? [NH₃ = 17; CuO = 79.5]",
-    options: [10.6 g, 11.6 g, 12.6 g, 13.6 g],
+    options: ["10.6 g", "11.6 g", "12.6 g", "13.6 g"],
     correct: 1,
     explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol. Mass of N₂ = 0.5325 × 28 = 11.6 g."
   },
