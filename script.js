@@ -1627,6 +1627,38 @@ document.addEventListener("DOMContentLoaded", () => {
     correct: 3,
     explanation: "The molar mass of Cu₂O is (2 × 64) + 16 = 144 g/mol. The mass of copper is 128 g/mol. Percentage by mass = (128 ÷ 144) × 100 = 88.9%."
   },
+
+  {
+    text: "Arrange the following in order of increasing boiling point temperature: HCl, H₂O, SiH₄, CH₄.",
+    options: ["SiH₄ < CH₄ < HCl < H₂O", "CH₄ < SiH₄ < HCl < H₂O", "SiH₄ < CH₄ < H₂O < HCl", "H₂O < HCl < SiH₄ < CH₄"],
+    correct: 1,
+    explanation: "The boiling points depend on intermolecular forces. CH₄ and SiH₄ have weak van der Waals forces, but CH₄ is smaller and has a lower boiling point. HCl has dipole-dipole interactions, while H₂O has strong hydrogen bonding, giving it the highest boiling point. Hence, the correct order is CH₄ < SiH₄ < HCl < H₂O."
+  },
+  {
+    text: "All of the following have a standard heat of formation value of zero at 25 °C and 1.0 atm except:",
+    options: ["N₂(g)", "Hg(l)", "Ne(g)", "Hg(g)"],
+    correct: 3,
+    explanation: "Standard heat of formation is zero for elements in their most stable form. N₂ (gas), Hg (liquid), and Ne (gas) are in their stable states. Hg(g) is not in its most stable form, so it does not have a standard heat of formation of zero."
+  },
+  {
+    text: "Calculate ΔH° for the reaction: Na₂O₃(s) + SO₃(g) → Na₂SO₄(s) given the following information:\n(i) Na₂O₃(s) + H₂O(l) → NaOH(aq) + ½ H₂(g) ΔH° = -146 kJ\n(ii) Na₂SO₄(s) + H₂O(l) → 2NaOH(s) + SO₃(g) ΔH° = +418 kJ\n(iii) 2Na₂O₃(s) + 2H₂(g) → 4Na(s) + 2H₂O(l) ΔH° = +259 kJ.",
+    options: ["+401.5 kJ", "-435 kJ", "-580.5 kJ", "+531 kJ"],
+    correct: 2,
+    explanation: "Rearranging the equations and adding them:\nFrom (i): Na₂O₃(s) + H₂O(l) → NaOH(aq) + ½ H₂(g), ΔH° = -146 kJ\nFrom (ii): Reverse to get Na₂SO₄(s) → NaOH(aq) + SO₃(g), ΔH° = -418 kJ\nCombining, ΔH° = -146 - 418 = -580.5 kJ."
+  },
+  {
+    text: "Estimate the heat of reaction at 298 K for the reaction: Br₂(g) + 3F₂(g) → 2BrF₃(g). Given the average bond energies for Br-Br, F-F, and Br-F as 192 kJ, 158 kJ, and 197 kJ respectively.",
+    options: ["-516 kJ", "-324 kJ", "-611 kJ", "-665 kJ"],
+    correct: 2,
+    explanation: "The bond energy changes are calculated as follows:\nBonds broken: 1 × Br-Br (192 kJ) + 3 × F-F (3 × 158 = 474 kJ) = 666 kJ.\nBonds formed: 6 × Br-F (6 × 197 = 1182 kJ).\nΔH° = Bonds broken - Bonds formed = 666 - 1182 = -516 kJ."
+  },
+  {
+    text: "The standard heat of combustion of ethanol, C₂H₅OH, is 1372 kJ/mol. How much heat (in kJ) would be liberated by completely burning a 20.0 g sample? [Molar mass of ethanol = 46 g/mol]",
+    options: ["596.5 kJ", "519 kJ", "715 kJ", "686 kJ"],
+    correct: 1,
+    explanation: "First, calculate the moles of ethanol: 20.0 g ÷ 46 g/mol = 0.4348 mol.\nHeat released = moles × heat of combustion = 0.4348 × 1372 = 596.5 kJ."
+  }, 
+                  
   {
     text: "One of the reasons that solid CuSO₄ dissolves in water is:",
     options: [
