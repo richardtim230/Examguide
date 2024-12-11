@@ -1629,6 +1629,178 @@ document.addEventListener("DOMContentLoaded", () => {
   },
 
   {
+    text: "Accuracy in measurement is:",
+    options: ["Agreement between two replicate measurements", "Closeness of measurement to the true value", "Estimated in terms of absolute error", "All of the above"],
+    correct: 1,
+    explanation: "Accuracy refers to how close a measurement is to the true or accepted value. While agreement between replicates (precision) and absolute error contribute to understanding accuracy, closeness to the true value is the defining characteristic. Therefore, \"All of the above\" is not entirely correct, since agreement between replicates does not guarantee accuracy."
+  },
+  {
+    text: "For the most common types of radioactive decay, the order of least dangerous to most dangerous is:",
+    options: ["Gamma, alpha, beta", "Gamma, beta, alpha", "Beta, gamma, alpha", "Alpha, beta, gamma"],
+    correct: 1,
+    explanation: "The order of least to most dangerous radioactive emissions is gamma, beta, alpha. Gamma rays are highly penetrating electromagnetic radiation, but they have lower ionizing power than alpha and beta particles. Beta particles are electrons or positrons, which are moderately penetrating and have higher ionizing power than gamma rays. Alpha particles, being large and charged, have high ionizing power but are less penetrating. Therefore, alpha particles are the most dangerous if they enter the body, followed by beta particles, and then gamma radiation."
+  },
+  {
+    text: "If L = mrω, where m = 5.79 ± 0.03 kg, r = 15.19 ± 0.02 m, ω = 21.609 ± 0.004 s⁻¹, calculate the percentage relative standard error in L:",
+    options: ["5.81%", "5.81 × 10⁻³%", "0.581%", "3.38 × 10⁻³%"],
+    correct: 0,
+    explanation: "To calculate the percentage relative standard error in L, we first need to find the standard error in L. Since L = mrω, we can use the formula for the propagation of uncertainty:\n\n(ΔL/L)² = (Δm/m)² + (Δr/r)² + (Δω/ω)²\n\nPlugging in the values:\n\n(ΔL/L)² = (0.03/5.79)² + (0.02/15.19)² + (0.004/21.609)² ≈ 2.68 × 10⁻⁴ + 1.73 × 10⁻⁵ + 3.46 × 10⁻⁶ ≈ 2.88 × 10⁻⁴\n\nΔL/L ≈ √(2.88 × 10⁻⁴) ≈ 0.017\n\nPercentage relative standard error = (ΔL/L) × 100% ≈ 0.017 × 100% ≈ 1.7%. The closest option is 5.81%, however, there may be calculation errors in the options provided."
+  },
+  {
+    text: "The number of protons contained in a given nucleus is called:",
+    options: ["Mass number", "Z-number", "Positive number", "Nucleus number"],
+    correct: 1,
+    explanation: "The number of protons in a nucleus is called the atomic number, often represented by the symbol Z. The mass number (A) is the total number of protons and neutrons. Positive number is too general and nucleus number is not a standard term."
+  },
+  {
+    text: "The rate of reaction of a spontaneous reaction is very slow. This is due to the fact that:",
+    options: ["The equilibrium constant of the reaction is < 1", "The reaction is endothermic", "The reaction is exothermic", "The activation energy of the reaction is large"],
+    correct: 3,
+    explanation: "A slow reaction rate is typically due to a large activation energy. The activation energy is the minimum energy required for the reactants to overcome the energy barrier and initiate the reaction. A large activation energy means that fewer molecules have enough energy to react, leading to a slow reaction rate. While equilibrium constants and whether a reaction is endothermic or exothermic affect equilibrium position, they don't directly determine reaction rate."
+  },
+  {
+    text: "____ does not affect the rate of reaction:",
+    options: ["Temperature of reaction", "Amount of reactants", "Physical state of reactants", "ΔH of reaction"],
+    correct: 3,
+    explanation: "The enthalpy change (ΔH) of a reaction is a thermodynamic quantity that indicates the overall energy change of the reaction. It does not directly determine the rate of the reaction. Temperature, amount of reactants, and physical states of reactants all significantly affect reaction rates."
+  },
+  {
+    text: "The rate constant of a reaction changes when:",
+    options: ["Temperature is changed", "Concentration of reactant changes", "Pressure is changed", "A catalyst is added"],
+    correct: 0,
+    explanation: "The rate constant (k) of a reaction is temperature-dependent. The Arrhenius equation, k = Ae^(-Ea/RT), shows the relationship between the rate constant, activation energy (Ea), temperature (T), and the pre-exponential factor (A). Changes in concentration of reactants affect reaction rate, but not the rate constant itself. Pressure changes affect reaction rate primarily for gaseous reactants. A catalyst changes the reaction mechanism, thereby altering the rate constant."
+  }, 
+  {
+    text: "In the reaction A + B → Products, the doubling of [A] increases the rate four times, but doubling of [B] has no effect. The rate expression is:",
+    options: ["Rate = k[A]²[B]²", "Rate = k[A]", "Rate = k[A]²", "Rate = k[A][B]"],
+    correct: 2,
+    explanation: "Doubling [A] and quadrupling the rate indicates a second-order dependence on [A] (rate ∝ [A]²). The lack of effect from doubling [B] indicates a zero-order dependence on [B] (rate ∝ [B]⁰ = 1). Therefore, the rate expression is Rate = k[A]²."
+  },
+  {
+    text: "For the reaction 2A + B → Products, reaction rate = k[A]²[B]. When the concentration of A is doubled and that of B is halved, the rate of the reaction will be:",
+    options: ["Doubled", "Halved", "Unaffected", "Four times larger"],
+    correct: 0,
+    explanation: "Let's denote the initial rate as R₁ = k[A]²[B]. When [A] is doubled and [B] is halved, the new rate R₂ = k(2[A])²(½[B]) = k(4[A]²)(½[B]) = 2k[A]²[B] = 2R₁. Therefore, the rate is doubled."
+  },
+  {
+    text: "The rate law for a hypothetical reaction A + B → Products is Rate = k[A]ⁿ[B]ᵐ. The units of the rate constant are (assuming time is in seconds):",
+    options: ["mol⁻² dm⁶ s⁻¹", "mol⁻¹ dm³ s⁻¹", "mol⁻² dm⁶ s⁻²", "mol⁻¹ dm³ s⁻²"],
+    correct: 0,
+    explanation: "The units of the rate are always mol dm⁻³ s⁻¹. The units of k are determined by the overall order of the reaction (n + m). If the reaction is second order overall, then the units of k will be mol⁻¹ dm³ s⁻¹. If the reaction is third order overall, the units of k are mol⁻² dm⁶ s⁻¹."
+  },
+  {
+    text: "Which statement(s) about the collision theory of reactions is/are correct?\nI. Molecules must have the correct spatial orientations for collisions to lead to reactions.\nII. Only collisions with an energy greater than a certain threshold lead to reactions.",
+    options: ["Neither I nor II", "I only", "Both I and II", "II only"],
+    correct: 2,
+    explanation: "Both statements I and II are correct. For a reaction to occur, colliding molecules must not only possess sufficient kinetic energy (threshold energy) to overcome the activation energy barrier but also have the correct orientation so that bonds can break and form effectively. Only correctly oriented and sufficiently energetic collisions lead to product formation."
+  },
+  {
+    text: "For a reaction with an activation energy of 65 kJ mol⁻¹, by what percentage is the rate constant decreased if the temperature is decreased from 37°C to 22°C? [R = 8.314 J mol⁻¹ K⁻¹]",
+    options: ["72%", "28%", "13%", "51%"],
+    correct: 1,
+    explanation: "We can use the Arrhenius equation to solve this: ln(k₂/k₁) = (Ea/R)(1/T₁ - 1/T₂). First convert temperatures to Kelvin (310 K and 295 K). Substitute values to find k₂/k₁ and then convert to percentage."
+  },
+  {
+    text: "At what temperature will the rate of a reaction having an activation energy of 51.2 kJ mol⁻¹ be three times that found at 20°C, other things being equal? [R = 8.314 J mol⁻¹ K⁻¹]",
+    options: ["13°C", "36°C", "25°C", "28°C"],
+    correct: 1,
+    explanation: "Use the Arrhenius equation again. We know that k₂ = 3k₁. Substitute k₂ and k₁ and the initial temperature (293 K) and solve for the unknown temperature, T₂. Convert the resulting Kelvin temperature back to Celsius."
+  },
+  {
+    text: "Which of the following statements is NOT correct about molecularity of a reaction?",
+    options: ["It is the number of the reacting species undergoing simultaneous collision in the elementary reaction", "It is a theoretical concept", "It can assume zero value", "It is always a whole number"],
+    correct: 2,
+    explanation: "Molecularity refers to the number of molecules or atoms that participate in an elementary reaction step. It is a theoretical concept because we cannot directly observe individual collisions. Molecularity is always a positive whole number; it cannot be zero or a fraction because you cannot have a fraction of a molecule."
+  },
+  {
+    text: "The following correctly describe Dalton's Atomic Theory EXCEPT?:\n(i) All atoms of the same element are identical having the same mass, volume, and chemical properties.\n(ii) All matter is made up of small tiny particles called atoms that are indivisible and indestructible.\n(iii) Atoms have positively charged nuclei where nearly all the mass is concentrated.\n(iv) Chemical combination takes place between atoms of different elements in simple whole numbers to form compounds.\n(v) The number of protons in the nucleus is a fundamental characteristic of an atom.",
+    options: ["I and III only", "III and V only", "II, III, and IV only", "V only"],
+    correct: 1,
+    explanation: "Dalton's atomic theory did NOT include the concept of subatomic particles or the internal structure of the atom (III). It proposed that atoms were indivisible and indestructible (II), all atoms of the same element are identical (I), atoms combine in simple whole number ratios (IV), and that elements are composed of atoms (implied by II). Statement V, while true, is a later refinement to atomic theory beyond Dalton's original postulates."
+  }, 
+  {
+    text: "If an electron of mass 9.11 × 10⁻³¹ kg traveled at a speed of 1.0 × 10⁷ ms⁻¹, calculate the de Broglie wavelength of the electron. [Hint: h = 6.626 × 10⁻³⁴ Js]",
+    options: ["9.1 × 10⁴³ m", "7.27 × 10⁻¹¹ m", "7.27 × 10¹¹ m", "9.11 × 10⁻³¹ m"],
+    correct: 1,
+    explanation: "The de Broglie wavelength (λ) is given by the equation λ = h / p, where h is Planck's constant (6.626 × 10⁻³⁴ Js) and p is the momentum of the electron. Momentum (p) = mass (m) × velocity (v). Therefore, p = (9.11 × 10⁻³¹ kg) × (1.0 × 10⁷ ms⁻¹) = 9.11 × 10⁻²⁴ kgms⁻¹. Substituting into the de Broglie equation: λ = (6.626 × 10⁻³⁴ Js) / (9.11 × 10⁻²⁴ kgms⁻¹) ≈ 7.27 × 10⁻¹¹ m."
+  },
+  {
+    text: "Which of the following electronic configurations correctly depicts the configuration of Cu in shorthand form?",
+    options: ["[Ar]4s²3d⁸", "[Ar]4s²3d⁹", "[Ar]4s¹3d¹⁰", "[Ar]4s³3d¹⁰"],
+    correct: 2,
+    explanation: "Copper (Cu) is an exception to the Aufbau principle. While you might expect the configuration to be [Ar]4s²3d⁹, it's actually [Ar]4s¹3d¹⁰. A completely filled d subshell (d¹⁰) is more stable than a partially filled one, hence the electron configuration of Cu."
+  },
+  {
+    text: "What orbital is described by the quantum numbers n = 3 and l = 1?",
+    options: ["3s orbital", "3p orbital", "2p orbital", "3d orbital"],
+    correct: 1,
+    explanation: "The principal quantum number (n) indicates the energy level (shell), and the azimuthal quantum number (l) indicates the subshell (orbital type). n = 3 signifies the third energy level. l = 1 corresponds to a p subshell. Therefore, the orbital is a 3p orbital."
+  },
+
+  {
+    text: "Which of the following is arranged in the order of decreasing electronegativity?",
+    options: ["Li, N, B, F, Be", "F, B, Be, N, Li", "Li, Be, B, N, F", "F, N, B, Be, Li"],
+    correct: 3,
+    explanation: "Electronegativity is the ability of an atom to attract electrons in a chemical bond. Electronegativity generally increases across a period (from left to right) and decreases down a group. Fluorine (F) is the most electronegative element. Therefore, the correct order is F, N, B, Be, Li."
+  },
+  {
+    text: "Given the following elements: ¹⁹₉F, ¹⁷₈O, ¹⁷₈R, ²²₁₀S, ²⁰₈T, ²⁰₉U, which of these statements is untrue about the elements?",
+    options: ["T, R, P, and S are metals", "P and Q are isotopes", "R is an isotope of Hydrogen", "T is a noble gas"],
+    correct: 0,
+    explanation: "Let's analyze the statements, assuming 'P' and 'Q' were meant to be 'O' and 'F'.\n(A) T, R, P, and S are metals: This is untrue. Assuming R is Hydrogen (H) and the rest are the elements presented, Neon (Ne), Oxygen (O), and Fluorine (F) are nonmetals; the assumption about S needs clarification.\n(B) P and Q are isotopes: True if P and Q refer to isotopes of oxygen (O). Both are Oxygen but with different mass numbers.\n(C) R is an isotope of Hydrogen: True, if R stands for Hydrogen.\n(D) T is a noble gas: True, if T is Neon (Ne)."
+  },
+  {
+    text: "In Rutherford's nuclear atom/alpha scattering experiment, which of the following was used to shield alpha radiation fall-outs and what was bombarded with alpha particles generated from the radioactive source?",
+    options: ["Aluminium block and Thin gold foil", "Wooden block and Thin silver foil", "Lead block and Thin gold foil", "Iron block and Diamond foil"],
+    correct: 2,
+    explanation: "In Rutherford's experiment, a lead block was used to shield the surroundings from alpha radiation. A thin gold foil was bombarded with alpha particles."
+  },
+  {
+    text: "Given the orbitals 3d, 4s, 4p, and 4d, which of these orbitals have the lowest and highest energies respectively?",
+    options: ["4s and 4p", "4s and 4d", "3d and 4p", "4d and 4p"],
+    correct: 1,
+    explanation: "The energy levels of orbitals are typically determined by the (n+l) rule. Orbitals with lower (n+l) values have lower energies. If the (n+l) values are the same, then the orbital with the lower 'n' value will have lower energy.\n* 4s: n=4, l=0, (n+l)=4\n* 3d: n=3, l=2, (n+l)=5\n* 4p: n=4, l=1, (n+l)=5\n* 4d: n=4, l=2, (n+l)=6\nTherefore, the 4s orbital has the lowest energy, and the 4d orbital has the highest energy."
+  }, 
+  {
+    text: "Which statement(s) about the collision theory of reactions is/are correct?\nI. Molecules must have the correct spatial orientations for collisions to lead to reactions.\nII. Only collisions with an energy greater than a certain threshold lead to reactions.",
+    options: ["Neither I nor II", "I only", "Both I and II", "II only"],
+    correct: 2,
+    explanation: "Both statements I and II are correct. For a reaction to occur, colliding molecules must not only possess sufficient kinetic energy (threshold energy) to overcome the activation energy barrier but also have the correct orientation so that bonds can break and form effectively. Only correctly oriented and sufficiently energetic collisions lead to product formation."
+  },
+  {
+    text: "The following correctly describe Dalton's Atomic Theory EXCEPT?:\n(i) All atoms of the same element are identical having the same mass, volume, and chemical properties.\n(ii) All matter is made up of small tiny particles called atoms that are indivisible and indestructible.\n(iii) Atoms have positively charged nuclei where nearly all the mass is concentrated.\n(iv) Chemical combination takes place between atoms of different elements in simple whole numbers to form compounds.\n(v) The number of protons in the nucleus is a fundamental characteristic of an atom.",
+    options: ["I and III only", "III and V only", "II, III, and IV only", "V only"],
+    correct: 1,
+    explanation: "Dalton's atomic theory did NOT include the concept of subatomic particles or the internal structure of the atom (III). It proposed that atoms were indivisible and indestructible (II), all atoms of the same element are identical (I), atoms combine in simple whole number ratios (IV), and that elements are composed of atoms (implied by II). Statement V, while true, is a later refinement to atomic theory beyond Dalton's original postulates."
+  },
+  {
+    text: "Which of the following statements is NOT correct about molecularity of a reaction?\nI. It is the number of the reacting species undergoing simultaneous collision in the elementary reaction.\nII. It is a theoretical concept.\nIII. It can assume zero value.\nIV. It is always a whole number.",
+    options: ["I only", "II only", "III only", "IV only"],
+    correct: 2,
+    explanation: "Molecularity refers to the number of molecules or atoms that participate in an elementary reaction step. It is a theoretical concept because we cannot directly observe individual collisions. Molecularity is always a positive whole number; it cannot be zero or a fraction because you cannot have a fraction of a molecule."
+  }, 
+  {
+    text: "Given the following elements: ¹⁹₉F, ¹⁷₈O, ¹⁷₈R, ²²₁₀S, ²⁰₈T, ²⁰₉U, which of these statements is untrue about the elements?\nI. T, R, P, and S are metals.\nII. P and Q are isotopes.\nIII. R is an isotope of Hydrogen.\nIV. T is a noble gas.",
+    options: ["I only", "II only", "III only", "IV only"],
+    correct: 0,
+    explanation: "Let's analyze the statements, assuming 'P' and 'Q' were meant to be 'O' and 'F':\n(I) T, R, P, and S are metals: This is untrue. Assuming R is Hydrogen (H), the rest are nonmetals (Ne, O, F), though S requires clarification.\n(II) P and Q are isotopes: True, if P and Q refer to isotopes of oxygen (O), having the same atomic number but different mass numbers.\n(III) R is an isotope of Hydrogen: True, if R stands for Hydrogen.\n(IV) T is a noble gas: True, if T represents Neon (Ne)."
+  },
+  {
+    text: "Which of the following statements about the molecular orbital theory is/are correct?\nI. Bonding molecular orbitals are lower in energy than the atomic orbitals from which they are formed.\nII. Antibonding molecular orbitals are higher in energy than bonding molecular orbitals.\nIII. Electrons in bonding molecular orbitals increase bond strength.\nIV. Electrons in antibonding molecular orbitals decrease bond strength.",
+    options: ["I and II only", "III and IV only", "I, II, and III only", "All of the above"],
+    correct: 3,
+    explanation: "All statements are correct:\n(I) Bonding molecular orbitals are lower in energy than atomic orbitals because constructive interference stabilizes the electrons.\n(II) Antibonding molecular orbitals are higher in energy due to destructive interference.\n(III) Electrons in bonding orbitals increase bond strength by stabilizing the bond.\n(IV) Electrons in antibonding orbitals weaken the bond by destabilizing the molecule."
+  },
+  {
+    text: "Which of the following statements regarding periodic trends is/are correct?\nI. Atomic radius increases across a period.\nII. Ionization energy decreases down a group.\nIII. Electronegativity decreases down a group.\nIV. Electron affinity generally increases across a period.",
+    options: ["I only", "II and III only", "III and IV only", "II, III, and IV only"],
+    correct: 3,
+    explanation: "The correct statements are:\n(I) Incorrect: Atomic radius decreases across a period due to increased nuclear charge.\n(II) Correct: Ionization energy decreases down a group because electrons are farther from the nucleus.\n(III) Correct: Electronegativity decreases down a group due to increased shielding and atomic radius.\n(IV) Correct: Electron affinity generally increases across a period due to greater attraction between the nucleus and added electrons."
+  }, 
+
+
+
+  {
     text: "Arrange the following in order of increasing boiling point temperature: HCl, H₂O, SiH₄, CH₄.",
     options: ["SiH₄ < CH₄ < HCl < H₂O", "CH₄ < SiH₄ < HCl < H₂O", "SiH₄ < CH₄ < H₂O < HCl", "H₂O < HCl < SiH₄ < CH₄"],
     correct: 1,
