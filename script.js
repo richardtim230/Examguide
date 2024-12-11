@@ -1637,7 +1637,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
     correct: 2,
     explanation: "CuSO₄ dissolves due to ion-dipole interactions between Cu²⁺, SO₄²⁻, and water molecules, which stabilize the ions in solution."
-  }
+  }, 
                
         ] 
     },     
