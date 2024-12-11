@@ -1797,7 +1797,6 @@ document.addEventListener("DOMContentLoaded", () => {
     correct: 3,
     explanation: "The correct statements are:\n(I) Incorrect: Atomic radius decreases across a period due to increased nuclear charge.\n(II) Correct: Ionization energy decreases down a group because electrons are farther from the nucleus.\n(III) Correct: Electronegativity decreases down a group due to increased shielding and atomic radius.\n(IV) Correct: Electron affinity generally increases across a period due to greater attraction between the nucleus and added electrons."
   }, 
-
   {
     text: "Which of the following is not correct about Quantum numbers and Atomic orbitals?",
     options: ["Shells are sometimes designated by letters K, L, M, N... corresponding to 1, 2, 3, 4...", "Azimuthal quantum number (l) describes the orbitals in which electrons can be found.", "The values of Magnetic quantum number (mₗ) depend on Azimuthal quantum number (l) and can assume all integral values between -l and +l, including zero.", "Azimuthal quantum number (l) shows the degeneracy of energy."],
@@ -1919,7 +1918,6 @@ document.addEventListener("DOMContentLoaded", () => {
     explanation: "Volume of metal = 21.6 ml - 12.7 ml = 8.9 ml\nDensity = mass / volume = 33.42 g / 8.9 ml ≈ 3.76 g/ml"
   },
   {
-
     text: "A carbon-oxygen bond in a sample organic molecule absorbs radiation that has a frequency of 6.0 × 10¹² s⁻¹. What is the energy of this radiation per mole of photons?",
     options: ["2.4 × 10³ J", "2.00 × 10⁻²³ J", "3.978 × 10²¹ J", "7.18 × 10¹¹ J"],
     correct: 2,
