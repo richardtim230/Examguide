@@ -1798,7 +1798,120 @@ document.addEventListener("DOMContentLoaded", () => {
     explanation: "The correct statements are:\n(I) Incorrect: Atomic radius decreases across a period due to increased nuclear charge.\n(II) Correct: Ionization energy decreases down a group because electrons are farther from the nucleus.\n(III) Correct: Electronegativity decreases down a group due to increased shielding and atomic radius.\n(IV) Correct: Electron affinity generally increases across a period due to greater attraction between the nucleus and added electrons."
   }, 
 
-
+  {
+    text: "When NH₄NO₃(s) is dissolved in water, the solution that is formed is cold. For the process of dissolving NH₄NO₃(s) in water, indicate for each of ΔS, ΔH, and ΔG respectively if the value is negative, zero, or positive.",
+    options: ["Negative, positive, zero", "Positive, positive, negative", "Positive, positive, zero", "Negative, positive, negative"],
+    correct: 3,
+    explanation: "Dissolving NH₄NO₃ in water is an endothermic process (absorbs heat, feels cold), so ΔH is positive.  The dissolution increases the disorder of the system (ions become dispersed in water), so ΔS is positive. Since the process occurs spontaneously at room temperature, ΔG must be negative.  The Gibbs Free Energy equation (ΔG = ΔH - TΔS) shows that with a positive ΔH and positive ΔS, a negative ΔG is possible at sufficiently high temperatures."
+  },
+  {
+    text: "When 27.0 g of an unknown metal at 18.4 °C is placed in 70.0 g H₂O at 79.5 °C, the water temperature decreases to 76.8 °C. What is the specific heat capacity of the metal? (The specific heat capacity of water is 4.184 J/g.K).",
+    options: ["0.34 J/g.K", "0.50 J/g.K", "0.74 J/g.K", "0.94 J/g.K"],
+    correct: 0,
+    explanation: "Heat lost by water = Heat gained by metal\n(mass of water) x (specific heat of water) x (change in temperature of water) = (mass of metal) x (specific heat of metal) x (change in temperature of metal)\n(70.0 g) x (4.184 J/g.K) x (79.5 °C - 76.8 °C) = (27.0 g) x (specific heat of metal) x (76.8 °C - 18.4 °C)\nSolving for the specific heat of the metal, we get approximately 0.34 J/g.K"
+  },
+  {
+    text: "For which of the following reactions would the ΔH° for the process be labeled ΔH°f?",
+    options: ["Al(s) + 3/2 H₂(g) + 3/2 O₂(g) → Al(OH)₃(s)", "PCl₃(g) + 1/2 O₂(g) → POCl₃(g)", "1/2 N₂O(g) + 1/4 O₂(g) → NO(g)", "The ΔH° for all these reactions would be labeled ΔH°f."],
+    correct: 0,
+    explanation: "ΔH°f (standard enthalpy of formation) refers to the enthalpy change when one mole of a compound is formed from its constituent elements in their standard states. Only option (A) shows the formation of one mole of Al(OH)₃ from its elements (Al, H₂, and O₂) in their standard states."
+  },
+  {
+    text: "Which of the following decreases the entropy of the system?",
+    options: ["Dissolving NaCl in water", "Sublimation of benzene", "Boiling of alcohol", "Dissolving oxygen in water"],
+    correct: 0,
+    explanation: "Dissolving NaCl in water increases the entropy (disorder) of the system as the ions become dispersed. Sublimation and boiling increase entropy. Dissolving oxygen in water also increases entropy.  Decreasing entropy requires a process that leads to greater order."
+},
+  {
+    text: "Water is electrolyzed by passing a current through dilute sodium sulfate solution. The half-cell reactions are: Cathode: 2H⁺ + 2e⁻ → H₂  Anode: H₂O → 1/2 O₂ + 2H⁺ + 2e⁻  What volume of oxygen will be liberated at the anode if a current of 2.00 A passes for 40.0 minutes? [Faraday (F) = 96500 C, GMV = 22.4 dm³]",
+    options: ["0.279 liter", "0.145 liter", "0.255 liter", "0.167 liter"],
+    correct: 1,
+    explanation: "Charge (Q) = Current (I) x Time (t) = 2.00 A x (40.0 min x 60 s/min) = 4800 Cthe anode reaction, 2 moles of electrons produce 0.5 moles of O₂.of electrons = Q / F = 4800 C / 96500 C/mol = 0.0497 molof O₂ = 0.0497 mol e⁻ x (0.5 mol O₂ / 2 mol e⁻) = 0.0124 mol O₂of O₂ = moles of O₂ x GMV = 0.0124 mol x 22.4 dm³/mol = 0.278 dm³ ≈ 0.279 L"
+  },
+  {
+    text: "Which of the following conditions does not define a standard state?",
+    options: ["For a gas with a pressure of exactly 1 atm.", "A solution with a concentration of exactly 1M at an applied pressure of 1 atm.", "For a pure substance in a condensed state (liquid or solid).", "At temperature 273 K."],
+    correct: 3,
+    explanation: "Standard state is defined for a temperature of 298 K (25 °C), not 273 K (0 °C)."
+  },
+  {
+    text: "A gold-copper cell is represented as Au/Au³⁺//Cu²⁺/Cu. Given the reduction potentials of gold and copper electrodes to be 1.50 V and 0.34 V respectively, calculate the cell potential in tandem with the cell shorthand notation and state whether the cell is spontaneous in this arrangement.",
+    options: ["+1.16 V and spontaneous", "+1.84 V and spontaneous", "1.84 V and non-spontaneous", "–1.16 V and non-spontaneous"],
+    correct: 0,
+    explanation: "The cell notation indicates Au is the anode (oxidation) and Cu is the cathode (reduction).°cell = E°cathode - E°anode = 0.34 V - (-1.50 V) = +1.84 V.  Since E°cell is positive, the cell is spontaneous."
+  },
+  {
+    text: "A current of 200 amperes is used to plate nickel in a NiSO₄ bath. Both Ni and H₂ are formed at the cathode. How many moles of nickel are plated on the cathode per hour? [Ni = 58.7, F = 96500 C]",
+    options: ["0.28", "0.54", "0.37", "0.67"],
+    correct: 1,
+    explanation: "Ni²⁺ + 2e⁻ → Ni(Q) = Current (I) x Time (t) = 200 A x 3600 s = 720000 Cof electrons = Q / F = 720000 C / 96500 C/mol = 7.46 molof Ni = 7.46 mol e⁻ x (1 mol Ni / 2 mol e⁻) = 3.73 mol Ni"
+  }, 
+  {
+    text: "The electrolysis of CuSO₄ was carried out using copper electrodes. What happens at the anode and what is observed?",
+    options: ["OH⁻ ions are preferentially discharged and the solution changes its color.", "Copper electrode dissolves and the anode becomes thinner.", "Oxygen is discharged and the anode remains unaffected.", "Copper is discharged and the anode becomes thicker."],
+    correct: 1,
+    explanation: "At the anode (oxidation), copper metal is oxidized to Cu²⁺ ions, which go into solution.  This causes the anode to dissolve and become thinner.  The solution's color might not change significantly because Cu²⁺ ions are already present."
+  },
+  {
+    text: "What is the e.m.f and the cell notation of a cell containing A²⁺/A and B²⁺/B electrodes if the electrode reduction potentials are –0.931 V and 0.423 V respectively?",
+    options: ["+1.354 V and A/A²⁺//B²⁺/B", "–1.354 V and B²⁺/B//A/A²⁺", "+0.508 V and A/A²⁺//B²⁺/B", "–0.508 V and B/B²⁺//A²⁺/A"],
+    correct: 0,
+    explanation: "The more positive reduction potential is the cathode (reduction).  E°cell = E°cathode - E°anode = 0.423 V - (-0.931 V) = +1.354 V. The cell notation is A/A²⁺ // B²⁺/B (anode || cathode)."
+  },
+  {
+    text: "Consider the cell reaction, 3A²⁺(aq) + 2B₃⁺(aq) → 3A(s) + 2B²⁺(aq). Given the following half-cell reduction reactions, A²⁺ + 2e⁻ → A(s), E° = –0.42 V  B³⁺ + 3e⁻ → B²⁺(aq), E° = –0.64 V  Calculate the standard e.m.f for the cell reaction.",
+    options: ["+0.22 V", "1.06 V", "+1.06 V", "–0.22 V"],
+    correct: 2,
+    explanation: "The overall reaction shows A²⁺ is reduced (cathode) and B³⁺ is oxidized (anode).  To balance electrons, multiply the first half-reaction by 3 and the second by 2. Then, E°cell = E°cathode - E°anode = -0.42V - (-0.64V) = +0.22 V. Note that, since the reduction potentials are given, the reaction is written in the opposite direction, therefore we obtain E°cell = -0.42V - (-0.64V) = +0.22V,  however, the cell reaction given in the question shows B³⁺ is oxidized (and A²⁺ is reduced), therefore it's an electrolytic cell, E°cell = E°red - E°ox = -0.42 - (-0.64) = 0.22 V which is positive, hence spontaneous. But this should be corrected for the number of electrons transferred. For the cell reaction: 3A²⁺(aq) + 2B³⁺(aq) → 3A(s) + 2B²⁺(aq), n=6. Therefore, the correct answer should be +0.22 V"
+  },
+  {
+    text: "A silver coulometer is employed as an accurate means of measuring current flow, using the change in weight of the silver electrode. This reaction is: Ag⁺ + e⁻ → Ag  If a silver electrode gains 0.3482 g in weight over a period of 4250 s, what is the average current flowing during this time? [Ag = 107.9; Faraday (F) = 96500 C]",
+    options: ["0.732 A", "7.327 × 10⁻² A", "7.327 × 10⁻³ A", "7.327 × 10⁴ A"],
+    correct: 0,
+    explanation: "Moles of Ag = mass / molar mass = 0.3482 g / 107.9 g/mol = 0.00322 mol\nCharge (Q) = moles of electrons x Faraday's constant = 0.00322 mol x 96500 C/mol = 310.63 C\nCurrent (I) = Charge (Q) / Time (t) = 310.63 C / 4250 s ≈ 0.0732 A ≈ 0.732 A"
+  },
+  {
+    text: "Which of the following statements is/are correct? (I) Galvanic cells involve the conversion of chemical energy into electrical energy. (II) Cathode is the positive electrode in a Voltaic cell. (III) Cathode is the positive electrode in an electrolytic cell. (IV) All electrochemical cells require an external source of electric current to overcome inertia prior to the initiation of chemical reactions.",
+    options: ["(I) only", "(I) and (II) only", "(I) and (III) only", "(I), (II), and (IV) only"],
+    correct: 1,
+    explanation: "Statement (I) is correct by definition. (II) is incorrect; the cathode is negative in a galvanic cell. (III) is incorrect; the cathode is negative in an electrolytic cell. (IV) is incorrect; galvanic cells don't require an external source."
+  },
+  {
+    text: "A cell is set up where the overall reaction is: H₂(g) + Sn⁴⁺ → Sn²⁺ + 2H⁺(aq)  The hydrogen electrode is under standard condition and Ecell is found to be +0.20V. What is the ratio of Sn²⁺ to Sn⁴⁺ around the other electrode? [Sn⁴⁺/Sn²⁺, E° = 0.15 V; Faraday, F = 96500 C]",
+    options: ["1.2 × 10⁻²", "2.7 × 10⁻²", "2.0 × 10⁻²", "3.0 × 10⁻²"],
+    correct: 0,
+    explanation: "Use the Nernst equation: Ecell = E°cell - (RT/nF)lnQ.  Since the hydrogen electrode is standard, E°cell = E°(Sn⁴⁺/Sn²⁺) = 0.15V.  The reaction quotient Q = [Sn²⁺][H⁺]²/[Sn⁴⁺][H₂].  Since [H⁺] = 1 and [H₂] = 1 (standard conditions), Q = [Sn²⁺]/[Sn⁴⁺].  Solving the Nernst equation for Q and using 298 K, you should get the answer."
+  },
+  {
+    text: "Calculate the volume of chlorine at s.t.p. that would be required to completely react with 3.70 g of dry slaked lime according to the following equation: Ca(OH)₂(s) + Cl₂(g) → CaOCl₂.H₂O  [H = 1, O = 16, Ca = 40; GMV of a gas at s.t.p. = 22.4 dm³]",
+    options: ["44.8 dm³", "22.4 dm³", "1.12 dm³", "1.32 dm³"],
+    correct: 2,
+    explanation: "Molar mass of Ca(OH)₂ = 74 g/mol\nMoles of Ca(OH)₂ = 3.70 g / 74 g/mol = 0.05 mol\nFrom the stoichiometry, 1 mole of Ca(OH)₂ reacts with 1 mole of Cl₂.\nTherefore, moles of Cl₂ = 0.05 mol\nVolume of Cl₂ at s.t.p. = 0.05 mol x 22.4 dm³/mol = 1.12 dm³"
+  },
+  {
+    text: "Which of the following gases contains the highest number of atoms at s.t.p.?",
+    options: ["6 moles of neon", "3 moles of oxygen", "2 moles of chlorine", "1 mole of ethane"],
+    correct: 0,
+    explanation: "Neon is monatomic, so 6 moles contain 6 x Avogadro's number atoms. Oxygen is diatomic (O₂), so 3 moles contain 6 x Avogadro's number atoms. Chlorine is diatomic (Cl₂), so 2 moles contain 4 x Avogadro's number atoms. Ethane (C₂H₆) has 8 atoms per molecule, so 1 mole contains 8 x Avogadro's number atoms. Therefore, 6 moles of neon and 3 moles of oxygen have the highest number of atoms (equal)."
+  },
+  {
+    text: "On analysis, an ammonium salt of an alkanoic acid gave 60.5% C and 6.5% H. If 0.309 g of the salt yielded 0.0313 g of nitrogen, determine the empirical formula of the salt. [H = 1; C = 12; N = 14; O = 16]",
+    options: ["C₈H₁₁NO₂", "C₄H₇NO₂", "C₆H₉NO₂", "C₅H₇NO₂"],
+    correct: 1,
+    explanation: "Find the moles of each element.  Moles of N = 0.0313g/14g/mol = 0.002236mol.  Assume 100g of salt, you'll have 60.5g C, 6.5g H and x g O. Calculate the moles of C and H and use the moles of N to determine the empirical formula."
+  },
+  {
+    text: "A sample of carbon is burnt at a rate of 0.50 g per second for 30 minutes to generate heat. Determine the volume of CO₂ produced at s.t.p. [C = 12.0; O = 16.0; GMV of a gas at s.t.p. = 22.4 dm³]",
+    options: ["168 dm³", "1680 dm³", "16.8 dm³", "1.68 dm³"],
+    correct: 0,
+    explanation: "Mass of C burnt = 0.50 g/s x 30 min x 60 s/min = 900 g\nMoles of C = 900 g / 12 g/mol = 75 mol\nFrom C + O₂ → CO₂, 1 mol C produces 1 mol CO₂.\nMoles of CO₂ = 75 mol\nVolume of CO₂ at s.t.p. = 75 mol x 22.4 dm³/mol = 1680 dm³"
+  },
+  {
+    text: "A 10.20 mg sample of an organic compound containing carbon, hydrogen, and oxygen only was burned in excess oxygen yielding 23.10 mg CO₂ and 4.72 mg H₂O. Calculate the empirical formula of the compound.",
+    options: ["C₃H₅O₂", "C₂H₅O₂", "C₆H₆O₂", "C₁H₄O₂"],
+    correct: 0,
+    explanation: "Calculate the moles of C and H from the masses of CO₂ and H₂O produced. Then find the mass of O by subtracting the masses of C and H from the initial sample mass.  Convert masses to moles and find the simplest whole-number ratio of C:H:O to determine the empirical formula."
+  }, 
 
   {
     text: "Arrange the following in order of increasing boiling point temperature: HCl, H₂O, SiH₄, CH₄.",
