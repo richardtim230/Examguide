@@ -1948,7 +1948,7 @@ document.addEventListener("DOMContentLoaded", () => {
     explanation: "Use the Rydberg formula: 1/λ = Rh(1/n₁² - 1/n₂²) where n₂ = 2 (final level) and λ = 397.2 nm = 397.2 × 10⁻⁹ m. Solve for n₁ (initial level)."
   },
   {
-    text: "An atom of a particular element is travelling at 1
+    text: "An atom of a particular element is travelling at 1", 
     options: ["⁴⁰Ca", "³⁹K", "⁹Be", "²³Na"],
     correct: 1,
     explanation: "Use the de Broglie equation: λ = h/mv.  The velocity (v) is 0.01c = 3 × 10⁶ m/s.  Calculate the mass (m) of the atom from the de Broglie wavelength. Then convert this mass to molar mass, and that molar mass matches most closely to K."
