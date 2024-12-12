@@ -1797,8 +1797,6 @@ document.addEventListener("DOMContentLoaded", () => {
     correct: 3,
     explanation: "The correct statements are:\n(I) Incorrect: Atomic radius decreases across a period due to increased nuclear charge.\n(II) Correct: Ionization energy decreases down a group because electrons are farther from the nucleus.\n(III) Correct: Electronegativity decreases down a group due to increased shielding and atomic radius.\n(IV) Correct: Electron affinity generally increases across a period due to greater attraction between the nucleus and added electrons."
   }, 
-
-   
     {
       text: "Chemical equilibrium is achieved when:",
       options: [
@@ -1813,7 +1811,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       text: "The study of energy changes in chemical reactions is known as:",
       options: [
-        "Kinetics",        "Thermochemistry",     "Electrochemistry",
+        "Kinetics",
+        "Thermochemistry", 
+        "Electrochemistry",
         "Equilibrium"
       ],
       correct: 1,
