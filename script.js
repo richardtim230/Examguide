@@ -1797,6 +1797,447 @@ document.addEventListener("DOMContentLoaded", () => {
     correct: 3,
     explanation: "The correct statements are:\n(I) Incorrect: Atomic radius decreases across a period due to increased nuclear charge.\n(II) Correct: Ionization energy decreases down a group because electrons are farther from the nucleus.\n(III) Correct: Electronegativity decreases down a group due to increased shielding and atomic radius.\n(IV) Correct: Electron affinity generally increases across a period due to greater attraction between the nucleus and added electrons."
   }, 
+   {
+      text: "An exothermic reaction:",
+      options: [
+        "Releases heat",
+        "Absorbs heat",
+        "Has zero enthalpy change",
+        "Requires a catalyst"
+      ],
+      correct: 0,
+      explanation: "An exothermic reaction is one that releases heat to its surroundings, resulting in a temperature increase of the surroundings. Common examples include combustion reactions and many oxidation reactions."
+    },
+    {
+      text: "Which of the following is a state function?",
+      options: [
+        "Heat (q)",
+        "Work (w)",
+        "Enthalpy (H)",
+        "Path length"
+      ],
+      correct: 2,
+      explanation: "A state function is a property that depends only on the state of the system, not on the path taken to reach that state. Enthalpy (H) is a state function because it depends only on the current state of the system."
+    },
+    {
+      text: "The standard enthalpy of formation of an element in its standard state is:",
+      options: [
+        "1",
+        "0",
+        "-1",
+        "Variable"
+      ],
+      correct: 1,
+      explanation: "The standard enthalpy of formation (ΔHf°) of an element in its standard state is defined as zero. This is because the formation of an element from itself involves no energy change."
+    },
+    {
+      text: "Hess’s Law states that:",
+      options: [
+        "Entropy is always increasing",
+        "The total enthalpy change is independent of the path taken",
+        "Energy is conserved in a reaction",
+        "None of the above"
+      ],
+      correct: 1,
+      explanation: "Hess’s Law states that the total enthalpy change for a reaction is the same, regardless of the pathway taken, as long as the initial and final conditions are the same. This principle allows for the calculation of enthalpy changes using known enthalpy changes of other reactions."
+    },
+    {
+      text: "In an endothermic reaction, the surroundings:",
+      options: [
+        "Get hotter",
+        "Get colder",
+        "Remain unchanged",
+        "React with the system"
+      ],
+      correct: 1,
+      explanation: "In an endothermic reaction, heat is absorbed from the surroundings, causing a decrease in the temperature of the surroundings while the system undergoes the reaction."
+    },
+    {
+      text: "What is the unit of enthalpy?",
+      options: [
+        "Kelvin (K)",
+        "Joule (J)",
+        "Watt (W)",
+        "Newton (N)"
+      ],
+      correct: 1,
+      explanation: "The standard unit of enthalpy is the Joule (J). Enthalpy measures the total heat content of a system at constant pressure."
+    },
+    {
+      text: "Which of the following is an extensive property?",
+      options: [
+        "Temperature",
+        "Density",
+        "Enthalpy",
+        "Pressure"
+      ],
+      correct: 2,
+      explanation: "Extensive properties depend on the amount of substance present. Enthalpy is classified as an extensive property because it changes as the amount of substance in the system changes."
+    },
+    {
+      text: "The heat required to raise the temperature of 1 g of water by 1°C is called:",
+      options: [
+        "Specific heat",
+        "Heat capacity",
+        "Calorie",
+        "Joule"
+      ],
+      correct: 2,
+      explanation: "A calorie is defined as the amount of heat required to raise the temperature of 1 gram of water by 1°C. It is a common unit for measuring heat."
+    },
+    {
+      text: "The specific heat capacity of a substance depends on:",
+      options: [
+        "Mass of the substance",
+        "Nature of the substance",
+        "Both A and B",
+        "None of the above"
+      ],
+      correct: 1,
+      explanation: "The specific heat capacity is an intrinsic property of a substance that depends on its nature. It indicates how much heat is required to raise the temperature of a unit mass of the substance by one degree Celsius."
+    },
+    {
+      text: "In calorimetry, the device used to measure heat is called:",
+      options: [
+        "Thermometer",
+        "Calorimeter",
+        "Hygrometer",
+        "Barometer"
+      ],
+      correct: 1,
+      explanation: "A calorimeter is an instrument used to measure the amount of heat involved in a chemical reaction or a physical process."
+    },
+    {
+      text: "The heat absorbed by a system at constant volume is equal to:",
+      options: [
+        "Work done",
+        "Enthalpy change",
+        "Internal energy change",
+        "None of the above"
+      ],
+      correct: 2,
+      explanation: "At constant volume, the heat absorbed by the system is equal to the change in internal energy (ΔU) of the system, as no work is done during volume changes."
+    },
+    {
+      text: "An isothermal process occurs at:",
+      options: [
+        "Constant pressure",
+        "Constant volume",
+        "Constant temperature",
+        "Constant energy"
+      ],
+      correct: 2,
+      explanation: "An isothermal process is one that occurs at a constant temperature. In such processes, the internal energy of the system remains unchanged, provided the ideal gas law applies."
+    },
+    {
+      text: "The entropy of a perfectly crystalline substance at absolute zero is:",
+      options: [
+        "Infinity",
+        "Zero",
+        "Constant",
+        "Negative"
+      ],
+      correct: 1,
+      explanation: "According to the third law of thermodynamics, the entropy of a perfect crystal approaches zero as the temperature approaches absolute zero (0 K). At this temperature, the crystal is in a state of perfect order."
+    },
+    {
+      text: "Which of these reactions is exothermic?",
+      options: [
+        "Melting of ice",
+        "Combustion of methane",
+        "Evaporation of water",
+        "Boiling of water"
+      ],
+      correct: 1,
+      explanation: "The combustion of methane is an exothermic reaction that releases heat and light energy. It involves the reaction of methane with oxygen to produce carbon dioxide and water."
+    },
+    {
+      text: "Gibbs free energy (G) is given by:",
+      options: [
+        "G = H - TS",
+        "G = H + TS",
+        "G = TS - H",
+        "G = H × T × S"
+      ],
+      correct: 0,
+      explanation: "The Gibbs free energy equation is defined as G = H - TS, where G is the Gibbs free energy, H is the enthalpy, T is the temperature in Kelvin, and S is the entropy. This equation helps predict the spontaneity of a reaction."
+    },
+    {
+      text: "The heat of neutralization for a strong acid and a strong base is approximately:",
+      options: [
+        "-13.7 kJ/mol",
+        "-57.1 kJ/mol",
+        "57.1 kJ/mol",
+        "13.7 kJ/mol"
+      ],
+      correct: 1,
+      explanation: "The heat of neutralization for the reaction between a strong acid and a strong base is approximately -57.1 kJ/mol. This represents the heat released when one mole of water is formed from the neutralization reaction."
+    },
+    {
+      text: "A reaction is spontaneous if:",
+      options: [
+        "ΔG > 0",
+        "ΔG = 0",
+        "ΔG < 0",
+        "None of the above"
+      ],
+      correct: 2,
+      explanation: "A reaction is considered spontaneous if the change in Gibbs free energy (ΔG) is less than zero (ΔG < 0). This indicates that the reaction can occur without needing to input additional energy."
+    },
+    {
+      text: "The enthalpy change during the combustion of 1 mole of a substance is called:",
+      options: [
+        "Heat of formation",
+        "Heat of reaction",
+        "Heat of combustion",
+        "Heat of vaporization"
+      ],
+      correct: 2,
+      explanation: "The enthalpy change associated with the combustion of one mole of a substance is termed the heat of combustion. This value can be negative, indicating that energy is released during the combustion process."
+    }, 
+    {
+      text: "Who proposed the Plum Pudding Model of the atom?",
+      options: [
+        "Ernest Rutherford",
+        "J.J. Thomson",
+        "John Dalton",
+        "Niels Bohr"
+      ],
+      correct: 1,
+      explanation: "J.J. Thomson's Plum Pudding Model, proposed in 1904, depicted the atom as a sphere of positive charge with negatively charged electrons embedded within it, like plums in a pudding. This model was a significant step forward from Dalton's solid sphere model but was later superseded by Rutherford's nuclear model."
+    },
+    {
+      text: "What does the principal quantum number (n) describe?",
+      options: [
+        "Shape of the orbital",
+        "Energy level of the electron",
+        "Spin of the electron",
+        "Magnetic orientation of the orbital"
+      ],
+      correct: 1,
+      explanation: "The principal quantum number (n) represents the energy level of an electron within an atom.  It is a positive integer (n = 1, 2, 3, ...), with higher values of 'n' indicating higher energy levels and greater distance from the nucleus.  The energy levels are not equally spaced; the spacing between levels decreases as 'n' increases."
+    },
+    {
+      text: "The smallest particle of an element that retains its chemical properties is:",
+      options: [
+        "Molecule",
+        "Ion",
+        "Atom",
+        "Proton"
+      ],
+      correct: 2,
+      explanation: "An atom is the smallest unit of an element that retains its chemical properties.  A molecule is formed from two or more atoms chemically bonded together, while ions are atoms that have gained or lost electrons, acquiring a net electric charge. A proton is a subatomic particle found in the nucleus; it is not the smallest particle retaining chemical properties."
+    },
+    {
+      text: "Who discovered the nucleus in the atom?",
+      options: [
+        "J.J. Thomson",
+        "Ernest Rutherford",
+        "Niels Bohr",
+        "Max Planck"
+      ],
+      correct: 1,
+      explanation: "Ernest Rutherford's gold foil experiment in 1911 led to the discovery of the atomic nucleus.  By observing the scattering of alpha particles, he determined that the atom's positive charge and most of its mass were concentrated in a small, dense central region, which he termed the nucleus."
+    },
+    {
+      text: "Which subatomic particle determines the atomic number?",
+      options: [
+        "Neutron",
+        "Proton",
+        "Electron",
+        "Positron"
+      ],
+      correct: 1,
+      explanation: "The atomic number of an element is defined by the number of protons in its nucleus.  Protons carry a positive charge and are one of the two major components of the atomic nucleus. The number of protons uniquely identifies an element and determines its place on the periodic table."
+    },
+    {
+      text: "The isotope of an element has:",
+      options: [
+        "Same number of neutrons, different protons",
+        "Different number of protons, same electrons",
+        "Same number of protons, different neutrons",
+        "Different electrons, same neutrons"
+      ],
+      correct: 2,
+      explanation: "Isotopes are atoms of the same element that have the same number of protons (and thus the same atomic number) but differ in the number of neutrons. This difference in neutron number results in different mass numbers for the isotopes.  The chemical properties are largely determined by the number of protons and electrons."
+    },
+    {
+      text: "What is the maximum number of electrons in an s-orbital?",
+      options: [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      correct: 0,
+      explanation: "An s-orbital is a spherical electron orbital that can hold a maximum of two electrons, according to the Pauli Exclusion Principle. Each electron in the orbital has a unique set of quantum numbers; to satisfy this, they must have opposite spins."
+    },
+    {
+      text: "What is the charge of an alpha particle?",
+      options: [
+        "+2",
+        "-1",
+        "0",
+        "+1"
+      ],
+      correct: 0,
+      explanation: "An alpha particle is a helium nucleus, consisting of two protons and two neutrons. Therefore, it carries a net positive charge of +2."
+    },
+    {
+      text: "The concept of quantized energy levels was proposed by:",
+      options: [
+        "Einstein",
+        "Planck",
+        "Bohr",
+        "Rutherford"
+      ],
+      correct: 2,
+      explanation: "While Max Planck's work on blackbody radiation laid the groundwork for the concept of quantized energy, it was Niels Bohr who incorporated this concept into his model of the atom in 1913. Bohr's model proposed that electrons orbit the nucleus in specific energy levels, and transitions between these levels involve the absorption or emission of discrete quanta of energy."
+    },
+    {
+      text: "The Heisenberg Uncertainty Principle states that:",
+      options: [
+        "Electrons are found in fixed paths",
+        "Position and momentum of an electron cannot be determined simultaneously",
+        "Electrons emit radiation continuously",
+        "All particles have the same energy level"
+      ],
+      correct: 1,
+      explanation: "The Heisenberg Uncertainty Principle, formulated in 1927, states that it is fundamentally impossible to simultaneously determine both the position and momentum of a particle (like an electron) with perfect accuracy.  The more precisely one quantity is known, the less precisely the other can be known. This principle is a fundamental aspect of quantum mechanics."
+    },
+    {
+      text: "What is the shape of a p-orbital?",
+      options: [
+        "Spherical",
+        "Dumbbell",
+        "Elliptical",
+        "Linear"
+      ],
+      correct: 1,
+      explanation: "A p-orbital has a dumbbell shape, with two lobes of electron density on either side of the nucleus. There are three p-orbitals oriented along the x, y, and z axes in space, designated px, py, and pz."
+    },
+    {
+      text: "The mass of a neutron is approximately equal to:",
+      options: [
+        "Proton",
+        "Electron",
+        "Nucleus",
+        "Photon"
+      ],
+      correct: 0,
+      explanation: "The mass of a neutron is approximately equal to the mass of a proton.  Both are significantly more massive than an electron.  The nucleus contains both protons and neutrons, and a photon is a massless particle."
+    },
+    {
+      text: "The atomic theory was first proposed by:",
+      options: [
+"J.J. Thomson",
+        "John Dalton",
+        "Rutherford",
+        "Democritus"
+      ],
+      correct: 1,
+      explanation: "While the ancient Greek philosopher Democritus proposed the concept of atoms, it was John Dalton who, in the early 1800s, formulated the first scientific atomic theory. Dalton's theory proposed that all matter is made up of indivisible atoms, atoms of the same element are identical, and chemical reactions involve the rearrangement of atoms."
+    },
+    {
+      text: "Electrons revolve around the nucleus in fixed orbits according to:",
+      options: [
+        "Rutherford’s Model",
+        "Bohr’s Model",
+        "Thomson’s Model",
+        "Modern Atomic Theory"
+      ],
+      correct: 1,
+      explanation: "Bohr's model of the atom, proposed in 1913, incorporated the concept of quantized energy levels.  It suggested that electrons orbit the nucleus in specific, quantized energy levels or shells, and transitions between these levels result in the absorption or emission of photons of specific energies."
+    },
+    {
+      text: "Which element has no neutrons?",
+      options: [
+        "Oxygen",
+        "Hydrogen",
+        "Helium",
+        "Lithium"
+      ],
+      correct: 1,
+      explanation: "The most common isotope of hydrogen (protium) has only one proton and no neutrons in its nucleus.  Other isotopes of hydrogen (deuterium and tritium) do contain neutrons."
+    },
+    {
+      text: "The wave-particle duality of electrons was proposed by:",
+      options: [
+        "Einstein",
+        "Louis de Broglie",
+        "Rutherford",
+        "Bohr"
+      ],
+      correct: 1,
+      explanation: "Louis de Broglie, in his 1924 doctoral thesis, proposed that all matter exhibits wave-particle duality, meaning that particles like electrons have both wave-like and particle-like properties.  This revolutionary idea was a cornerstone of the development of quantum mechanics."
+    },
+    {
+      text: "The Pauli Exclusion Principle states that:",
+      options: [
+        "An orbital can hold a maximum of two electrons with opposite spins",
+        "Electrons occupy the lowest energy orbitals first",
+        "No two electrons can have the same set of quantum numbers",
+        "Energy is quantized"
+      ],
+      correct: 2,
+      explanation: "The Pauli Exclusion Principle states that no two electrons in an atom can have the same set of four quantum numbers (n, l, ml, ms). This means that each orbital can hold a maximum of two electrons, which must have opposite spins (spin up and spin down)."
+    },
+    {
+      text: "The electron configuration of Na (Z=11) is:",
+      options: [
+        "1s² 2s² 2p⁵",
+        "1s² 2s² 2p⁶ 3s¹",
+        "1s² 2s² 2p⁶",
+        "1s² 2s² 3s¹"
+      ],
+      correct: 1,
+      explanation: "Sodium (Na) has 11 electrons.  Following the Aufbau principle, these electrons fill the orbitals in order of increasing energy: 1s², 2s², 2p⁶, 3s¹.  Therefore, the electron configuration of Na is 1s² 2s² 2p⁶ 3s¹."
+    },
+    {
+      text: "The Aufbau Principle is used to determine:",
+      options: [
+        "Energy of electrons",
+        "Electron configuration of atoms",
+        "Spin of electrons",
+        "Size of orbitals"
+      ],
+      correct: 1,
+      explanation: "The Aufbau principle states that electrons first fill the lowest energy levels (orbitals) available before occupying higher energy levels.  This principle, along with Hund's rule and the Pauli exclusion principle, helps predict the electron configurations of atoms."
+    },
+    {
+      text: "Which of these elements is an inert gas?",
+      options: [
+        "Hydrogen",
+        "Neon",
+        "Oxygen",
+        "Nitrogen"
+      ],
+      correct: 1,
+      explanation: "Neon (Ne) is an inert gas (or noble gas) because it has a full valence electron shell (2s² 2p⁶), making it extremely unreactive. Inert gases have very low reactivity because they have stable electron configurations."
+    },
+    {
+      text: "The first law of thermodynamics states that:",
+      options: [
+        "Energy cannot be created or destroyed",
+        "Energy can only be destroyed",
+        "Energy flows spontaneously from cold to hot",
+        "None of the above"
+      ],
+      correct: 0,
+      explanation: "The first law of thermodynamics, also known as the law of conservation of energy, states that energy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant."
+    },
+    {
+      text: "What is enthalpy (H)?",
+      options: [
+        "Total energy of a system",
+        "Heat content at constant pressure",
+        "Kinetic energy of particles",
+        "Work done by a system"
+      ],
+      correct: 1,
+      explanation: "Enthalpy (H) is a thermodynamic property of a system that represents the total heat content of the system at constant pressure.  It is defined as H = U + PV, where U is the internal energy, P is the pressure, and V is the volume."
+    }, 
+                    
   {
     text: "Which of the following is not correct about Quantum numbers and Atomic orbitals?",
     options: ["Shells are sometimes designated by letters K, L, M, N... corresponding to 1, 2, 3, 4...", "Azimuthal quantum number (l) describes the orbitals in which electrons can be found.", "The values of Magnetic quantum number (mₗ) depend on Azimuthal quantum number (l) and can assume all integral values between -l and +l, including zero.", "Azimuthal quantum number (l) shows the degeneracy of energy."],
