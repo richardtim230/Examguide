@@ -1797,6 +1797,449 @@ document.addEventListener("DOMContentLoaded", () => {
     correct: 3,
     explanation: "The correct statements are:\n(I) Incorrect: Atomic radius decreases across a period due to increased nuclear charge.\n(II) Correct: Ionization energy decreases down a group because electrons are farther from the nucleus.\n(III) Correct: Electronegativity decreases down a group due to increased shielding and atomic radius.\n(IV) Correct: Electron affinity generally increases across a period due to greater attraction between the nucleus and added electrons."
   }, 
+
+   
+    {
+      text: "Chemical equilibrium is achieved when:",
+      options: [
+        "The forward and reverse reactions stop",
+        "The concentrations of reactants and products remain constant",
+        "The rate of the forward reaction exceeds the reverse reaction",
+        "The reaction is irreversible"
+      ],
+      correct: 1,
+      explanation: "Chemical equilibrium is a dynamic state where the rates of the forward and reverse reactions are equal, resulting in no net change in the concentrations of reactants and products.  While the reactions continue, there's no further change in overall composition."
+    },
+    {
+      text: "The study of energy changes in chemical reactions is known as:",
+      options: [
+        "Kinetics",        "Thermochemistry",     "Electrochemistry",
+        "Equilibrium"
+      ],
+      correct: 1,
+      explanation: "Thermochemistry is the branch of chemistry that deals with the heat absorbed or released during chemical reactions and changes in state. It focuses on the relationship between chemical reactions and energy changes."
+    },
+    {
+      text: "The heat absorbed or released during a reaction at constant pressure is called:",
+      options: [
+        "Work done",
+        "Enthalpy change",
+        "Free energy change",
+        "Heat capacity"
+      ],
+      correct: 1,
+      explanation: "Enthalpy change (ΔH) represents the heat absorbed or released at constant pressure.  It's a measure of the heat content of a system."
+    },
+    {
+      text: "If a reaction releases heat to the surroundings, it is classified as:",
+      options: [
+        "Endothermic",
+        "Exothermic",
+        "Isothermal",
+        "Reversible"
+      ],
+      correct: 1,
+      explanation: "An exothermic reaction is characterized by the release of heat to the surroundings.  The enthalpy change (ΔH) for an exothermic reaction is negative."
+    },
+    {
+      text: "The internal energy of a system includes:",
+      options: [
+        "Kinetic and potential energies of particles",
+        "Only kinetic energy of particles",
+        "Only potential energy of particles",
+        "Heat absorbed by the system"
+      ],
+      correct: 0,
+      explanation: "Internal energy (U) encompasses the total kinetic and potential energies of all the particles within a system.  It's a state function, meaning its value depends only on the current state of the system."
+    },
+    {
+      text: "In an isolated system, the total energy remains constant because:",
+      options: [
+        "Heat cannot flow into or out of the system",
+        "Work cannot be done on the system",
+        "The system is open",
+        "The first law of thermodynamics applies"
+      ],
+      correct: 3,
+      explanation: "The first law of thermodynamics, which states that energy is conserved, explains why the total energy of an isolated system remains constant.  No energy transfer (heat or work) occurs between the isolated system and its surroundings."
+    },
+    {
+      text: "Heat transfer at constant volume is related to:",
+      options: [
+
+        "Enthalpy change",
+        "Change in internal energy",
+        "Entropy change",
+        "Work done"
+      ],
+      correct: 1,
+      explanation: "At constant volume, no work is done (w = 0), and the heat transferred (q) equals the change in internal energy (ΔU), according to the first law of thermodynamics (ΔU = q + w)."
+    },
+    {
+      text: "The specific heat of a substance is defined as the amount of heat required to:",
+      options: [
+        "Raise the temperature of 1 gram of a substance by 1°C",
+        "Vaporize 1 gram of a liquid",
+        "Freeze 1 gram of a liquid",
+        "Increase the volume of a substance by 1 liter"
+      ],
+      correct: 0,
+      explanation: "Specific heat capacity is defined as the amount of heat required to raise the temperature of 1 gram of a substance by 1°C (or 1 K). It is an intensive property, meaning that it is independent of the amount of the substance."
+    },
+    {
+      text: "Hess's Law is based on the principle of:",
+      options: [
+        "Conservation of mass",
+        "Conservation of energy",
+        "Conservation of volume",
+        "Conservation of entropy"
+      ],
+      correct: 1,
+      explanation: "Hess's Law is a direct consequence of the law of conservation of energy. The total enthalpy change for a reaction is independent of the path taken, only depending on the initial and final states."
+    },
+    {
+      text: "In an endothermic reaction, the enthalpy change is:",
+      options: [
+        "Negative",
+        "Zero",
+        "Positive",
+        "Equal to the work done"
+      ],
+      correct: 2,
+      explanation: "In an endothermic reaction, the system absorbs heat from its surroundings, resulting in a positive enthalpy change (ΔH > 0)."
+    },
+    {
+      text: "What is the enthalpy of a compound in its standard state?",
+      options: [
+        "Zero",
+        "Variable",
+        "Equal to its internal energy",
+        "Equal to the heat of formation"
+      ],
+      correct: 3,
+      explanation: "The standard enthalpy of formation (ΔHf°) of a compound is the enthalpy change when one mole of the compound is formed from its elements in their standard states (usually at 298 K and 1 atm)."
+    },
+    {
+      text: "The amount of heat required to break bonds in 1 mole of a gaseous substance is called:",
+      options: [
+        "Heat of combustion",
+        "Bond enthalpy",
+        "Heat of formation",
+        "Heat of reaction"
+      ],
+      correct: 1,
+      explanation: "Bond enthalpy (or bond energy) represents the average amount of energy required to break one mole of a particular type of bond in a gaseous molecule."
+    },
+    {
+      text: "If ΔH = -50 kJ and ΔS = -0.1 kJ/K at 298 K, the reaction is:",
+      options: [
+        "Always spontaneous",
+        "Never spontaneous",
+        "Spontaneous only at low temperatures",
+        "Spontaneous only at high temperatures"
+      ],
+      correct: 2,
+      explanation: "Using Gibbs Free Energy (ΔG = ΔH - TΔS), at 298K, ΔG = -50kJ - (298K)(-0.1kJ/K) = -20.2 kJ.  A negative ΔG indicates spontaneity. However, since both ΔH and ΔS are negative, the reaction will only be spontaneous at lower temperatures where the -TΔS term is less significant than the negative ΔH.  At high temperatures, the positive TΔS term would dominate, making ΔG positive and the reaction non-spontaneous."
+    },
+    {
+      text: "The entropy of a system increases when:",
+      options: [
+        "A gas is compressed",
+        "A liquid freezes",
+        "A solid melts",
+        "A liquid condenses"
+      ],
+      correct: 2,
+      explanation: "Entropy (S) is a measure of disorder or randomness.  Melting a solid increases disorder as particles become more mobile.  The other options decrease disorder (increased order)."
+    },
+    {
+      text: "Which process occurs at constant temperature?",
+      options: [
+        "Isobaric",
+        "Isothermal",
+        "Isochoric",
+        "Adiabatic"
+      ],
+correct: 1,
+      explanation: "An isothermal process occurs at constant temperature. Isobaric is constant pressure, isochoric is constant volume, and adiabatic is no heat exchange."
+    },
+    {
+      text: "The second law of thermodynamics states that:",
+      options: [
+        "Energy is conserved",
+        "Entropy of the universe always increases",
+        "Work done is always positive",
+        "Heat flows from cold to hot spontaneously"
+      ],
+      correct: 1,
+      explanation: "The second law of thermodynamics states that the total entropy of an isolated system can only increase over time, or remain constant in ideal cases where the system is in a steady state or undergoing a reversible process."
+    },
+    {
+      text: "A reaction that proceeds with both heat release and increased disorder is:",
+      options: [
+  "Non-spontaneous",
+        "Reversible",
+        "Spontaneous",
+        "Exothermic only"
+      ],
+      correct: 2,
+      explanation: "A negative enthalpy change (ΔH < 0) indicates heat release (exothermic), and a positive entropy change (ΔS > 0) indicates increased disorder.  Both contribute to a negative Gibbs free energy change (ΔG < 0), indicating spontaneity."
+    },
+    {
+      text: "The enthalpy change during the combustion of 1 mole of a substance is known as:",
+      options: [
+        "Heat of vaporization",
+        "Heat of combustion",
+        "Heat of reaction",
+        "Heat of solution"
+      ],
+      correct: 1,
+      explanation: "The heat of combustion is the enthalpy change when one mole of a substance undergoes complete combustion with oxygen under standard conditions."
+    },
+    {
+      text: "Which quantity represents the maximum usable energy in a reaction?",
+      options: [
+        "Entropy",
+        "Free energy",
+        "Enthalpy",
+        "Internal energy"
+      ],
+      correct: 1,
+      explanation: "Gibbs free energy (G) represents the maximum amount of energy available from a reaction that can be used to do useful work at constant temperature and pressure."
+    },
+    {
+      text: "The heat of neutralization for a strong acid and a strong base is approximately:",
+      options: [
+        "-57 kJ/mol",
+        "57 kJ/mol",
+        "-13 kJ/mol",
+        "0 kJ/mol"
+      ],
+      correct: 0,
+      explanation: "The heat of neutralization for a strong acid and a strong base is approximately -57 kJ/mol because the reaction is exothermic.  The value is relatively constant for strong acids and strong bases because the reaction essentially involves the formation of water molecules."
+    },
+    {
+      text: "Which property determines whether a reaction is spontaneous?",
+      options: [
+        "Enthalpy change",
+        "Free energy change",
+        "Bond energy",
+        "Activation energy"
+      ],
+      correct: 1,
+      explanation: "The Gibbs free energy change (ΔG) determines the spontaneity of a reaction at constant temperature and pressure.  A negative ΔG indicates a spontaneous reaction."
+ },
+{
+  "questions": [
+    {
+      text: "What is the equilibrium constant for a reversible reaction?",
+      options: [
+        "Ratio of concentrations of products to reactants",
+        "Difference in enthalpy of products and reactants",
+        "Total energy of the system",
+        "None of the above"
+      ],
+      correct: 0,
+      explanation: "The equilibrium constant (K) is the ratio of the product of the concentrations of the products raised to their stoichiometric coefficients to the product of the concentrations of the reactants raised to their stoichiometric coefficients, each concentration at equilibrium."
+    },
+    {
+      text: "Le Chatelier’s Principle predicts the effect of:",
+      options: [
+        "Concentration changes",
+        "Temperature changes",
+        "Pressure changes",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "Le Chatelier's Principle states that if a change of condition is applied to a system in equilibrium, the system will shift in a direction that relieves the stress. This applies to changes in concentration, temperature, pressure, and volume."
+    },
+    {
+      text: "Which reaction is most affected by a change in pressure?",
+      options: [
+        "Reactions with no change in the number of moles of gas",
+        "Reactions with fewer gas moles on the product side",
+        "Reactions with no gases involved",
+        "Reactions with liquids"
+      ],
+      correct: 1,
+      explanation: "Reactions involving gases are most affected by pressure changes.  A pressure increase shifts the equilibrium towards the side with fewer gas moles to reduce the pressure, and vice-versa."
+    },
+    {
+      text: "An increase in temperature for an endothermic reaction will:",
+      options: [
+        "Shift equilibrium to the right",
+        "Shift equilibrium to the left",
+        "Have no effect on equilibrium",
+        "Stop the reaction"
+      ],
+      correct: 0,
+      explanation: "For an endothermic reaction (heat is a reactant), increasing the temperature adds more 'reactant' (heat), shifting the equilibrium to the right, favoring the products."
+    },
+    {
+      text: "Which factor does not affect equilibrium constant (K)?",
+      options: [
+        "Concentration",
+        "Temperature",
+        "Pressure",
+        "Catalyst"
+      ],
+      correct: 3,
+      explanation: "A catalyst increases the rate of both the forward and reverse reactions equally, therefore it does not affect the position of equilibrium and hence, the equilibrium constant K."
+    },
+    {
+      text: "What is the relationship between Kp and Kc?",
+      options: [
+        "Kp = Kc × RT",
+        "Kp = Kc × (RT)ⁿ",
+        "Kp = Kc × Rⁿ",
+        "Kp = Kc × nRT"
+      ],
+      correct: 1,
+      explanation: "Kp is the equilibrium constant expressed in terms of partial pressures, while Kc uses molar concentrations. The relationship is Kp = Kc(RT)^Δn, where Δn is the change in the number of moles of gas in the reaction (moles of gaseous products - moles of gaseous reactants)."
+    },
+    {
+      text: "The equilibrium constant of a reaction is very large. This implies that:",
+      options: [
+        "Reactants are favored",
+        "Products are favored",
+        "The reaction is very slow",
+        "The system is at equilibrium"
+      ],
+      correct: 1,
+      explanation: "A large equilibrium constant (K >> 1) indicates that the equilibrium lies far to the right, meaning that the products are significantly favored at equilibrium."
+    },
+    {
+      text: "The equilibrium constant for a reaction is 1. What does this mean?",
+      options: [
+        "Forward reaction dominates",
+        "Reverse reaction dominates",
+        "Reactants and products are in equal concentration",
+        "The reaction is spontaneous"
+      ],
+      correct: 2,
+      explanation: "When K = 1, the concentrations of reactants and products at equilibrium are roughly equal. This means neither the forward nor the reverse reaction is strongly favored."
+    },
+    {
+      text: "If Q > K, the reaction will:",
+      options: [
+        "Shift to the right",
+        "Shift to the left",
+        "Be at equilibrium",
+        "Stop completely"
+      ],
+      correct: 1,
+      explanation: "Q is the reaction quotient. If Q > K, the concentration of products is higher than at equilibrium.  The reaction will shift to the left (reverse reaction) to consume products and form reactants, reducing Q until it equals K."
+    },
+    {
+      text: "A catalyst affects equilibrium by:",
+      options: [
+        "Increasing the equilibrium constant",
+        "Decreasing the equilibrium constant",
+        "Increasing the rate at which equilibrium is achieved",
+        "Shifting the equilibrium to the right"
+      ],
+      correct: 2,
+      explanation: "A catalyst speeds up both the forward and reverse reactions equally, thus it does not shift the equilibrium position but only speeds up the rate at which the equilibrium is reached."
+    },
+    {
+      text: "The reaction quotient (Q) is used to:",
+      options: [
+        "Predict the direction of the reaction",
+        "Calculate the heat released",
+        "Measure the change in entropy",
+        "Calculate the activation energy"
+      ],
+      correct: 0,
+      explanation: "The reaction quotient (Q) is a measure of the relative amounts of products and reactants present in a reaction at any given time. By comparing Q to the equilibrium constant K, we can determine whether a reaction will proceed in the forward or reverse direction to reach equilibrium."
+    },
+    {
+      text: "What happens to K when temperature increases for an exothermic reaction?",
+      options: [
+        "K increases",
+        "K decreases",
+        "K remains constant",
+        "Reaction stops"
+      ],
+      correct: 1,
+      explanation: "For an exothermic reaction (heat is a product), increasing the temperature adds more 'product' (heat), shifting the equilibrium to the left, and thus decreasing the equilibrium constant K."
+    },
+    {
+      text: "When a system at equilibrium is disturbed, it adjusts to counteract the change. This is known as:",
+      options: [
+        "Hess's Law",
+        "Dalton's Law",
+        "Le Chatelier’s Principle",
+        "Thermodynamic Law"
+      ],
+      correct: 2,
+      explanation: "Le Chatelier's Principle describes the response of a system at equilibrium to external changes. The system shifts to minimize the effect of the change."
+    },
+    {
+      text: "In the Haber process, increasing pressure favors:",
+      options: [
+        "Reactants",
+        "Products",
+        "No change in equilibrium",
+        "None of the above"
+      ],
+      correct: 1,
+      explanation: "The Haber process (N₂ + 3H₂ ⇌ 2NH₃) has fewer moles of gas on the product side. Increasing pressure shifts the equilibrium to the right, favoring ammonia (NH₃) production."
+    },
+    {
+      text: "At equilibrium, the rate of the forward reaction is:",
+      options: [
+        "Greater than the reverse reaction",
+        "Less than the reverse reaction",
+        "Equal to the reverse reaction",
+        "Zero"
+      ],
+      correct: 2,
+      explanation: "At equilibrium, the rates of the forward and reverse reactions are equal. This is why there is no net change in the concentrations of reactants and products."
+    },
+    {
+      text: "For the equilibrium N₂(g) + 3H₂(g) ⇌ 2NH₃(g), decreasing volume:",
+      options: [
+        "Shifts equilibrium to the right",
+        "Shifts equilibrium to the left",
+        "Has no effect",
+        "Increases activation energy"
+      ],
+      correct: 0,
+      explanation: "Decreasing the volume increases the pressure.  According to Le Chatelier's principle, the equilibrium will shift to the side with fewer moles of gas, which is the right side (products) in this reaction."
+    },
+    {
+      text: "In the equilibrium H₂O(l) ⇌ H₂O(g), increasing temperature will:",
+      options: [
+        "Shift equilibrium to the right",
+        "Shift equilibrium to the left",
+        "Increase liquid water concentration",
+        "Have no effect"
+      ],
+      correct: 0,
+      explanation: "This is an endothermic reaction (heat is absorbed to vaporize water). Increasing the temperature shifts the equilibrium to the right, favoring the gaseous phase."
+    },
+    {
+      text: "The equilibrium constant for a gaseous reaction is called:",
+      options: [
+        "Kp",
+        "Kc",
+        "Ksp",
+        "Ka"
+      ],
+      correct: 0,
+      explanation: "Kp is the equilibrium constant expressed in terms of the partial pressures of the gases involved in the reaction at equilibrium."
+    },
+    {
+      text: "For a reaction to reach equilibrium, it must be:",
+      options: [
+        "Irreversible",
+        "Reversible",
+        "Exothermic",
+        "Endothermic"
+      ],
+      correct: 1,
+      explanation: "Equilibrium is only possible in reversible reactions, where both the forward and reverse reactions can occur simultaneously."
+    },              
    {
       text: "An exothermic reaction:",
       options: [
