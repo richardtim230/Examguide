@@ -2029,8 +2029,6 @@ correct: 1,
       correct: 1,
       explanation: "The Gibbs free energy change (ΔG) determines the spontaneity of a reaction at constant temperature and pressure.  A negative ΔG indicates a spontaneous reaction."
  },
-{
-  "questions": [
     {
       text: "What is the equilibrium constant for a reversible reaction?",
       options: [
