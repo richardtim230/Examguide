@@ -671,7 +671,7 @@ input::placeholder {
   color: #ddd;
 }
 
-button {
+register-box button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
@@ -684,6 +684,35 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+login-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+welcome-popup button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 
 button:hover {
   background: linear-gradient(135deg, #a777e3, #6e8efb);
