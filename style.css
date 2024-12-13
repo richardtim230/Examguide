@@ -725,16 +725,13 @@ label {
   color: white;
   display: block;
   margin-top: 15px;
-  text-align: left;
+  
   cursor: pointer;
   font-weight: bold;
   display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    color: white;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
 /* Styling for the agreement terms link inside label (if needed) */
@@ -743,12 +740,9 @@ label a {
   text-decoration: underline;
   font-weight: bold;
   display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    color: white;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
 label a:hover {
