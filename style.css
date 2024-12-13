@@ -867,7 +867,7 @@ button:hover {
 }
 
 /* Checkbox label for agreement */
-#check box label a {
+#agree-checkbox label a {
   font-size: 7px;
   color: white;
   display: block;
