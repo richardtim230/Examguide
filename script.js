@@ -27,149 +27,246 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Predefined access codes with validity periods in days
-const accessCodes = [
-    { code: 'CODE123', validity: 7 },
-    { code: 'CODE456', validity: 14 },
-    { code: 'CODE789', validity: 30 },
-    { code: 'CODE101', validity: 10 },
-    { code: 'CODE202', validity: 20 },
-    { code: 'CODE303', validity: 5 },
-    { code: 'CODE404', validity: 15 },
-    { code: 'CODE505', validity: 25 },
-    { code: 'CODE606', validity: 12 },
-    { code: 'CODE707', validity: 21 },
-    { code: 'CODE808', validity: 8 },
-    { code: 'CODE909', validity: 18 },
-    { code: 'CODE111', validity: 6 },
-    { code: 'CODE222', validity: 9 },
-    { code: 'CODE333', validity: 19 },
-    { code: 'CODE444', validity: 11 },
-    { code: 'CODE555', validity: 13 },
-    { code: 'CODE666', validity: 23 },
-    { code: 'CODE777', validity: 17 },
-    { code: 'CODE888', validity: 16 },
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("overlay");
+  const loginBox = document.getElementById("login-box");
+  const registerBox = document.getElementById("register-box");
+  const welcomePopup = document.getElementById("welcome-popup");
+  const app = document.getElementById("homepage");
+
+  const loginBtn = document.getElementById("login-btn");
+  const registerBtn = document.getElementById("register-btn");
+  const backToLoginBtn = document.getElementById("back-to-login");
+  const submitRegisterBtn = document.getElementById("submit-register");
+  const continueBtn = document.getElementById("continue-btn");
+
+  const userIdInput = document.getElementById("user-id");
+  const fullNameInput = document.getElementById("full-name");
+  const departmentInput = document.getElementById("department");
+  const levelInput = document.getElementById("level");
+  const coursesInput = document.getElementById("courses");
+  const photoUpload = document.getElementById("photo-upload");
+  const agreeCheckbox = document.getElementById("agree-checkbox");
+
+  const studentDetailsElement = document.getElementById("student-details");
+  const profilePhoto = document.getElementById("profile-photo");
+  const welcomeMessage = document.getElementById("welcome-message");
+
+  const activeUserIDs = ["AG0R02", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
+  const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
+    "Good morning!",
+    "Rise and shine!",
+    "Hello! How was your night?",
+    "Good morning, sunshine!",
+    "Wishing you a bright and productive day!",
+    "Good morning! May your coffee be strong and your Monday be short.",
+    "Good morning! Let's make today amazing!",
+    "Good morning! Embrace the day with a smile!",
+    "Have a wonderful morning!",
+    "Good morning! May your day be filled with joy and success.",
+    "Good morning! Wishing you a day filled with happiness and laughter.",
+    "Hello beautiful! Have a great day!",
+    "Good morning!  May your day be as radiant as you are.",
+    "Good morning! Time to seize the day!",
+    "Good morning!  Hoping you have a fantastic start to your day.",
+    "Good morning!  May your day be filled with opportunities.",
+    "Good morning!  Let's make some memories today!",
+    "Good morning!  May all your dreams come true today.",
+    "Good morning!  Sending you positive vibes for a wonderful day!",
+    "Good morning!  May your day be filled with peace and serenity.",
+    "Good morning!  May your day be filled with love and kindness.",
+    "Good morning!  I hope you have a productive and successful day.",
+    "Good morning!  May your day be filled with fun and adventure!",
+    "Good morning!  May your day be better than yesterday.",
+    "Good morning!  Don't forget to breathe and be mindful today.",
+    "Good morning!  Stay hydrated and energized!",
+    "Good morning!  Believe in yourself and your abilities today.",
+    "Good morning! May your day be filled with inspiration and creativity.",
+    "Good morning!  Remember to take some time for yourself today.",
+    "Good morning!  I hope this message brightens your day!"];
+  const afternoonMessages = ["Good afternoon", "Hope you're having a productive day!", "Keep shining!", 
+    "Hope you're having a productive day!",
+    "Let me know if you need anything.",
+    "Just checking in to see how things are going.",
+    "Thinking of you and hoping your workday is going smoothly.",
+    "Great work on studies! Keep it up!",
+    "Let's schedule a quick chat later today to discuss [topic].",
+    "I've got new questions for you to practice! 😊.",
+    "Making progress on that course?",
+    "How's that deadline looking?",
+    "Anything I can assist with today?",
+    "Need a hand with anything?",
+    "Let's brainstorm solutions for CHM101.",
+    "Keep up the amazing work!",
+    "Remember to take short breaks throughout the day.",
+    "Stay focused and determined!",
+    "Don't forget to hydrate and refuel!",
+    "Almost through the week - keep going!",
+    "What are your priorities for the rest of the day?",
+    "Is there anything blocking your progress?",
+    "Checking in – how's the workload?",
+    "Any updates on CHM101?",
+    "Remember to prioritize your tasks.",
+    "Time for a quick team huddle?",
+    "What's your plan of action for the afternoon?",
+    "Let's touch base at [time] to review [topic].",
+    "Any questions I can answer?",
+    "How's your energy level?",
+    "Remember to take a proper lunch break!",
+    "Wishing you a productive afternoon!",
+    "It's almost time to go home; hang in there!"
+];
+  const eveningMessages = ["Good evening", "Hope your day was great!", "Relax, you did well today!", 
+    "Good evening!",
+    "Good night! Sleep tight!",
+    "Sweet dreams!",
+    "Have a restful night!",
+    "Good night! May your sleep be peaceful and your dreams be sweet.",
+    "Sleep well, and have a wonderful tomorrow.",
+    "Good night! Rest up for a productive day ahead.",
+    "Hoping you have a relaxing evening.",
+    "Enjoy your evening!",
+    "Wishing you a peaceful and quiet night.",
+    "Time to unwind and relax.",
+    "May your evening be filled with joy and comfort.",
+    "Good night!  May your sleep be deep and restorative.",
+    "Wishing you a pleasant evening and a good night's rest.",
+    "Take some time to de-stress before bed.",
+    "Good night!  May tomorrow bring new opportunities.",
+    "Sweet dreams and a happy tomorrow!",
+    "Enjoy the quiet of the evening.",
+    "Have a wonderful evening, filled with happiness.",
+    "May your evening be filled with things you love.",
+    "Good night!  May your sleep be sound and refreshing.",
+    "Time to disconnect and recharge.",
+    "Hoping your evening is filled with relaxation and joy.",
+    "Good night!  Sending positive thoughts for a great night's sleep.",
+    "May your dreams be filled with wonder and excitement.",
+    "Enjoy a well-deserved rest.",
+    "Good night and sleep well!",
+    "Wishing you a calming and peaceful night.",
+    "Time to reflect on the day and prepare for tomorrow.",
+    "Goodnight!  May your sleep be as peaceful as the night sky."
 ];
 
-// DOM Elements
-const loginContainer = document.getElementById('loginContainer');
-const registerContainer = document.getElementById('registerContainer');
-const recoverContainer = document.getElementById('recoverContainer');
+  function generateUserID() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+  }
 
-const loginBtn = document.getElementById('loginBtn');
-const registerBtn = document.getElementById('registerBtn');
-const recoverBtn = document.getElementById('recoverBtn');
-
-const goToRegister = document.getElementById('goToRegister');
-const goToLogin = document.getElementById('goToLogin');
-const forgotPassword = document.getElementById('forgotPassword');
-const backToLogin = document.getElementById('backToLogin');
-
-// Helper function to check access code validity
-function isValidAccessCode(code, username) {
-    const storedCodes = JSON.parse(localStorage.getItem('usedAccessCodes')) || {};
-    const currentDate = new Date();
-
-    if (storedCodes[code]) {
-        const { expiry, users } = storedCodes[code];
-        if (users.includes(username)) return false; // Code already used by this user
-        if (new Date(expiry) < currentDate) return false; // Code expired
+  function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return morningMessages[Math.floor(Math.random() * morningMessages.length)];
+    if (hour < 18) return afternoonMessages[Math.floor(Math.random() * afternoonMessages.length)];
+    return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
     }
 
-    return accessCodes.some((item) => item.code === code);
+  loginBtn.addEventListener("click", () => {
+    const userId = userIdInput.value.trim();
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+
+    if (storedUserData && storedUserData.userID === userId) {
+      if (activeUserIDs.includes(userId)) {
+        profilePhoto.src = storedUserData.photo || "default.png"; // Default image if none provided
+        studentDetailsElement.innerHTML = `
+          Full Name: ${storedUserData.fullName}<br>
+          Department: ${storedUserData.department}<br>
+          Level: ${storedUserData.level}<br>
+          Courses: ${storedUserData.courses}
+        `;
+        welcomeMessage.textContent = getGreeting();
+        loginBox.classList.add("hidden");
+        welcomePopup.classList.remove("hidden");
+      } else {
+        alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly")
+        window.open(
+          `https://wa.me/2349155127634?text=${encodeURIComponent(
+            `Hi sir/ma, my User ID is ${userId}. Please activate my account.`
+          )}`,
+          "_blank"
+        );
+      }
+    } else {
+      alert("Invalid User ID.");
+    }
+  });
+
+  registerBtn.addEventListener("click", () => {
+    loginBox.classList.add("hidden");
+    registerBox.classList.remove("hidden");
+  });
+
+  backToLoginBtn.addEventListener("click", () => {
+    registerBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+  });
+
+  submitRegisterBtn.addEventListener("click", () => {
+    if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
+      alert("Please fill all fields and upload your photo.");
+      return;
+    }
+
+    if (!agreeCheckbox.checked) {
+      alert("You must agree to proceed.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const userID = generateUserID();
+      const userData = {
+        userID,
+        fullName: fullNameInput.value,
+        department: departmentInput.value,
+        level: levelInput.value,
+        courses: coursesInput.value,
+        photo: reader.result,
+      };
+
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      // Send all details to WhatsApp
+      const whatsappMessage = `
+        Registration Details:
+        - Full Name: ${userData.fullName}
+        - Department: ${userData.department}
+        - Level: ${userData.level}
+        - Courses: ${userData.courses}
+        - User ID: ${userData.userID}
+      `;
+
+      alert(`Your User ID is ${userID}. Contact admin for activation. You will be redirected shortly`);
+
+      window.open(
+        `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
+        "_blank"
+      );
+
+      registerBox.classList.add("hidden");
+      loginBox.classList.remove("hidden");
+    };
+
+    reader.readAsDataURL(photoUpload.files[0]);
+  });
+
+  continueBtn.addEventListener("click", () => {
+    // Hide overlay and show the main application
+    overlay.style.display = "none"; // Completely hide the overlay
+    app.style.display = "block"; // Display the main app content
+  });
+  
+    // Expiry Logic
+  const expiryDays = 7;
+  const currentDate = new Date();
+  const savedDate = localStorage.getItem("loginDate");
+
+  if (savedDate && (currentDate - new Date(savedDate)) / (1000 * 60 * 60 * 24) > expiryDays) {
+    alert("Your ID has expired.");
+  } else {
+    localStorage.setItem("loginDate", currentDate);
 }
-
-// Helper function to activate access code
-function activateAccessCode(code, username) {
-    const currentDate = new Date();
-    const codeDetails = accessCodes.find((item) => item.code === code);
-    const expiryDate = new Date(currentDate.setDate(currentDate.getDate() + codeDetails.validity));
-
-    let storedCodes = JSON.parse(localStorage.getItem('usedAccessCodes')) || {};
-    if (!storedCodes[code]) {
-        storedCodes[code] = { expiry: expiryDate, users: [] };
-    }
-    storedCodes[code].users.push(username);
-
-    localStorage.setItem('usedAccessCodes', JSON.stringify(storedCodes));
-}
-
-// Toggle between sections
-goToRegister.addEventListener('click', () => {
-    loginContainer.classList.add('hidden');
-    registerContainer.classList.remove('hidden');
+  
 });
-
-goToLogin.addEventListener('click', () => {
-    registerContainer.classList.add('hidden');
-    loginContainer.classList.remove('hidden');
-});
-
-forgotPassword.addEventListener('click', () => {
-    loginContainer.classList.add('hidden');
-    recoverContainer.classList.remove('hidden');
-});
-
-backToLogin.addEventListener('click', () => {
-    recoverContainer.classList.add('hidden');
-    loginContainer.classList.remove('hidden');
-});
-
-// User registration
-registerBtn.addEventListener('click', () => {
-    const username = document.getElementById('regUsername').value;
-    const password = document.getElementById('regPassword').value;
-    const question = document.getElementById('securityQuestion').value;
-    const answer = document.getElementById('securityAnswer').value;
-    const accessCode = document.getElementById('accessCode').value;
-
-    if (!isValidAccessCode(accessCode, username)) {
-        alert('Invalid or expired access code!');
-        return;
-    }
-
-    if (localStorage.getItem(username)) {
-        alert('User already exists!');
-    } else {
-        activateAccessCode(accessCode, username);
-        localStorage.setItem(username, JSON.stringify({ password, question, answer }));
-        alert('Registration successful! Please log in.');
-        registerContainer.classList.add('hidden');
-        loginContainer.classList.remove('hidden');
-    }
-});
-
-// User login
-loginBtn.addEventListener('click', () => {
-    const username = document.getElementById('loginUsername').value;
-    const password = document.getElementById('loginPassword').value;
-
-    const user = JSON.parse(localStorage.getItem(username));
-
-    if (user && user.password === password) {
-        alert('Login successful!');
-        document.getElementById('overlay').classList.add('hidden');
-    } else {
-        alert('Invalid username or password!');
-    }
-});
-
-// Password recovery
-recoverBtn.addEventListener('click', () => {
-    const username = document.getElementById('recoverUsername').value;
-    const answer = document.getElementById('recoverAnswer').value;
-
-    const user = JSON.parse(localStorage.getItem(username));
-
-    if (user && user.answer === answer) {
-        alert(`Your password is: ${user.password}`);
-        recoverContainer.classList.add('hidden');
-        loginContainer.classList.remove('hidden');
-    } else {
-        alert('Incorrect username or security answer!');
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
   // Notification Center Logic
