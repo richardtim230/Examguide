@@ -621,7 +621,7 @@ width: 100%;
   backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 20px 40px;
-  text-align: margin;
+  text-align: center;
   color: white;
   width: 350px;
   height: 95%;
@@ -708,6 +708,8 @@ input::placeholder {
     justify-content: center;
     align-items: center;
     color: white;
+    margin-bottom: 5rem;
+   font-weight: bold;
 }
 
 #login-box button {
@@ -766,7 +768,7 @@ button:hover {
 
 /* Paragraph text for general use */
 #welcome-popup p {
-  font-size: 12px;
+  font-size: 10px;
   color: white;
   margin-top: 10px;
   display: flex;
@@ -777,7 +779,7 @@ button:hover {
 }
 
 /* Checkbox label for agreement */
-check box label {
+#check box label a {
   font-size: 7px;
   color: white;
   display: block;
