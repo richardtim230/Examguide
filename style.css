@@ -390,13 +390,6 @@ main {
   padding: 0.5rem;
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  #optionsContainer {
-    grid-template-columns: 1fr;
-  }
-}
-
 
 
 /* Button Styles */
