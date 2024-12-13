@@ -724,9 +724,9 @@ width: 100%;
 }
         
 #register-box {
-background: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+background: linear-gradient(-125deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 90%);
   backdrop-filter: blur(15px);
-  border-radius: 20px;
+  border-radius: 40px;
   padding: 20px 40px;
   text-align: center;
   width: 350px;
