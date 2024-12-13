@@ -242,8 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
        {
-  "questions": [
-    {
       text: "If A = 4i‌ - 3j‌ and B = -2i‌ + 6j‌, find A + B.",
       options: [
         "6i‌ + 3j‌",
@@ -585,8 +583,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
       explanation: "tan θ = 12/5; θ = arctan(12/5) ≈ 67.4° with respect to the positive x-axis."
     }, 
               
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
-        ],
+], 
       },
     },                                  
     
