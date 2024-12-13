@@ -867,7 +867,7 @@ button:hover {
 }
 
 /* Checkbox label for agreement */
-#agree-checkbox label a {
+#agree-checkbox {
   font-size: 7px;
   color: white;
   display: block;
@@ -881,7 +881,7 @@ button:hover {
 }
 
 /* Styling for the agreement terms link inside label (if needed) */
-label a {
+#agree-checkbox label a {
   color: #6e8efb;
   text-decoration: underline;
   font-weight: bold;
