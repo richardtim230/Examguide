@@ -98,22 +98,6 @@
         </div>
     
     <div id="notification-center" class="popup hidden">
-  <div class="popup-content">
-    <h2>Welcome to Your Assessment</h2>
-    <img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
-    <p>Before starting your exam, please read the following instructions carefully:</p>
-    <ul>
-      <li>Each question must be answered before proceeding to the next.</li>
-      <li>Kindly contact the administrator if concerns are raised via +2349155127634 on WhatsApp.</li>
-      <li>Once you complete all questions, your answers will be automatically submitted.</li>
-      <li>Ensure you are in a quiet environment for better concentration.</li>
-      <li>Each Section contains 50 set of questions each, ensure to attempt all before submitting and also be aware that it submits immediately you click on the SUBMIT BUTTON.</li>
-      <li>You can retake the same questions only after completing the entire question bank.</li>
-      <li>Stay within the time limit displayed at the top of your screen.</li>
-    </ul>
-    <button id="close-notification" class="primary">Got it, Start!</button>
-  </div>
-</div>
 
     <section id="course-selection-section">
 
@@ -139,7 +123,28 @@
         <button class="course" data-course="Zoology">Zoology</button>
 
       </div>
-
+      
+<!-- Instruction Popup -->
+<div id="instructionPopup" class="popup-overlay">
+  <div class="popup-content">
+    <h2>Welcome to the Academic Examination Unit</h2>
+    <img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
+    <p>
+      Prepare for exams with practice questions for each department. Select your department, input the access code, and configure the number of questions and time limit to get started.
+    </p>
+    <p>
+      Instructions:
+      <ul>
+        <li>Click a department button to select your course.</li>
+        <li>Enter the correct access code to access questions.</li>
+        <li>Configure your desired number of questions and time.</li>
+        <li>Complete the questions within the time limit.</li>
+      </ul>
+    </p>
+    <button id="closePopupBtn" class="close-popup-btn">Got It!</button>
+  </div>
+  </div>
+      
     </section>
 
     <section id="access-code-section" class="hidden">
@@ -200,6 +205,12 @@
     </section>
 
   </main>
+
+  <footer class="footer">
+
+      <p>© 2024 Academic Past and Practice Questions. All rights reserved. Obafemi Awolowo University</p>
+      
+        </footer>
 
 
   <script src="script.js"></script>
