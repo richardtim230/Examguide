@@ -5422,7 +5422,7 @@ document.getElementById("end-exam").addEventListener("click", () => {
 
 document.getElementById("restart-exam").addEventListener("click", () => {
   questions = [];
-  answers = [];
+  let answers = [];
   currentQuestionIndex = 0;
   subCourseName = "";
   timeRemaining = 60;
@@ -5437,6 +5437,7 @@ function startExam() {
   updateQuestion();
   startTimer();
 }
+
 
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
@@ -5485,11 +5486,20 @@ function selectAnswer(index) {
   updateProgress();
 }
 
+
+// Save Answer
+
 function saveAnswer() {
-  if (answers[currentQuestionIndex] === undefined) {
-    answers[currentQuestionIndex] = null; // Mark unanswered
+
+  const selected = document.querySelector('input[name="answer"]:checked');
+
+  if (selected) {
+
+    answers[currentQuestionIndex] = parseInt(selected.value);
+
   }
-}
+
+        }
  
   function selectAnswer(index) {
   answers[currentQuestionIndex] = index;
