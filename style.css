@@ -671,7 +671,7 @@ input::placeholder {
   color: #ddd;
 }
 
-register-box button {
+#register-box button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
@@ -685,7 +685,7 @@ register-box button {
   transition: all 0.3s ease;
 }
 
-login-box button {
+#login-box button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
@@ -699,7 +699,7 @@ login-box button {
   transition: all 0.3s ease;
 }
 
-welcome-popup button {
+#welcome-popup button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
