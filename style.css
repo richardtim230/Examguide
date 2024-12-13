@@ -644,7 +644,13 @@ background: rgba(255, 255, 255, 0.2);
   overflow-y:auto;
 }    
 
-#register-box, #login-box h2 {
+#register-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+#login-box h2 {
   font-size: 24px;
   margin-bottom: 20px;
   color: white;
