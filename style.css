@@ -679,7 +679,7 @@ input::placeholder {
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   border: none;
   border-radius: 6px;
-  color: white;
+  color: orange;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -688,7 +688,7 @@ input::placeholder {
 
 #back-btn {
   background: transparent;
-  color: white;
+  color: red;
   margin-top: 5px;
   border: 2px solid white;
   font-weight: bold;
@@ -710,6 +710,7 @@ input::placeholder {
     color: white;
     margin-bottom: 5rem;
    font-weight: bold;
+          font-size: 16px;
 }
 
 #login-box button {
