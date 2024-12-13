@@ -673,7 +673,7 @@ input::placeholder {
 }
 
 #register-box button {
-  width: 100%;
+  width: 90%;
   padding: 12px;
   margin-top: 10px;
   background: #09203F;
@@ -686,7 +686,7 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
-#back-btn {
+.back-btn {
   background: #C33764;
   color: red;
   margin-top: 5px;
@@ -695,7 +695,7 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
-#back-btn:hover {
+.back-btn:hover {
   background: white;
   color: #6e8efb;
 }
@@ -710,7 +710,7 @@ input::placeholder {
     color: white;
     margin-bottom: 5rem;
    font-weight: bold;
-          font-size: 16px;
+    font-size: 20px;
 }
 
 #login-box button {
