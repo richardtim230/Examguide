@@ -50,7 +50,101 @@ header h2 {
   font-weight: bold;
  text-align: center;
 }
+/* Footer Styling */
 
+.footer {
+
+  text-align: center;
+
+  padding: 20px;
+
+  background: #333;
+
+  color: #ccc;
+
+  margin-top: 40px;
+
+  font-size: 0.9rem;
+
+}
+
+.footer a,
+
+.footer button {
+
+  color: #4caf50;
+
+  text-decoration: none;
+
+  font-size: 1rem;
+
+  font-weight: bold;
+
+}
+
+.footer a:hover,
+
+.footer button:hover {
+
+  color: #81c784;
+
+        }
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+/* Popup Content */
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-content p {
+  margin: 10px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.popup-content ul {
+  text-align: left;
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.close-popup-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-popup-btn:hover {
+  background-color: #45a049;
+        }
 
 /* Overlay styling */
 
