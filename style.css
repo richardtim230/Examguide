@@ -94,15 +94,27 @@ button {
     padding: 5px;
     margin: 10px 0;
     border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    background-image: linear-gradient(to right, #360033 0%, #0b8793  51%, #360033  100%);
+        
+            margin: 10px;
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;            
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+            display: block;
+        }
 
 button:hover {
-    background-color: #0056b3;
-}
+    background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        border-radius: 5px;
+    cursor: pointer;
+          }
 
 a {
     color: #007bff;
@@ -630,7 +642,7 @@ width: 100%;
 }
         
 #register-box {
-background: rgba(255, 255, 255, 0.2);
+background: linear-gradient(to right, #AA076B 0%, #61045F  51%, #AA076B  100%);
   backdrop-filter: blur(15px);
   border-radius: 20px;
   padding: 20px 40px;
@@ -819,4 +831,3 @@ label a:hover {
     transform: translateY(0);
   }
 }
-       
