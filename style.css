@@ -626,7 +626,6 @@ width: 100%;
   width: 350px;
   height: 95%;
   animation: fadeIn 0.7s ease-in-out;
-  margin-bottom: 10rem;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 }
         
@@ -699,6 +698,16 @@ input::placeholder {
 #back-btn:hover {
   background: white;
   color: #6e8efb;
+}
+
+  #student-details {
+    margin-top: 20px;
+    line-height: 1.8;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
 #login-box button {
