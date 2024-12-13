@@ -617,7 +617,7 @@ width: 100%;
 }
 
 #welcome-popup {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(#09203F → #537895);
   backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 20px 40px;
@@ -676,10 +676,10 @@ input::placeholder {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  background: #09203F;
   border: none;
   border-radius: 6px;
-  color: orange;
+  color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
