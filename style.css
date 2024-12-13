@@ -617,7 +617,7 @@ width: 100%;
 }
 
 #welcome-popup {
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 20px 40px;
