@@ -626,7 +626,7 @@ width: 100%;
   width: 350px;
   height: 95%;
   animation: fadeIn 0.7s ease-in-out;
-  margin-bottom: 3rem;
+  margin-bottom: 10rem;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 }
         
@@ -687,7 +687,7 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
-.back-btn {
+#back-btn {
   background: transparent;
   color: white;
   margin-top: 5px;
@@ -696,7 +696,7 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
-.back-btn:hover {
+#back-btn:hover {
   background: white;
   color: #6e8efb;
 }
@@ -716,7 +716,7 @@ input::placeholder {
 }
 
 #welcome-popup button {
-  width: 100%;
+  width: 90%;
   padding: 12px;
   margin-top: 10px;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
@@ -739,7 +739,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .profile-pic {
@@ -764,12 +764,12 @@ button:hover {
   justify-content: center;
   align-items: center;
   color: white;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
 }
 
 /* Checkbox label for agreement */
 check box label {
-  font-size: 10px;
+  font-size: 7px;
   color: white;
   display: block;
   margin-top: 15px;
