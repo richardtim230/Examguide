@@ -617,7 +617,7 @@ width: 100%;
 }
 
 #welcome-popup {
-  background: linear-gradient(#09203F, #537895);
+  background: linear-gradient(135deg, #C33764, #1D2671);
   backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 20px 40px;
@@ -687,7 +687,7 @@ input::placeholder {
 }
 
 #back-btn {
-  background: #C33764  → #1D2671;
+  background: #C33764;
   color: red;
   margin-top: 5px;
   border: 2px solid white;
