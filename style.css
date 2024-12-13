@@ -882,7 +882,7 @@ button:hover {
 
 /* Styling for the agreement terms link inside label (if needed) */
 #agree-checkbox label a {
-  color: #6e8efb;
+  color: white;
   text-decoration: underline;
   font-weight: bold;
   display: flex;
@@ -891,7 +891,7 @@ button:hover {
   color: white;
 }
 
-label a:hover {
+#agree-checkbox label a:hover {
   color: #a777e3;
 }
 
