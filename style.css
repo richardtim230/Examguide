@@ -644,13 +644,13 @@ background: rgba(255, 255, 255, 0.2);
   overflow-y:auto;
 }    
 
-h2 {
+.h2 {
   font-size: 24px;
   margin-bottom: 20px;
   color: white;
 }
 
-.input {
+register-box input {
   width: 100%;
   margin: 10px 0;
   padding: 10px;
@@ -661,7 +661,7 @@ h2 {
   color: white;
 }
 
-.input::placeholder {
+input::placeholder {
   color: #ddd;
 }
 
@@ -718,7 +718,7 @@ button:hover {
   color: #6e8efb;
 }
 /* Paragraph text for general use */
-p {
+.p {
   font-size: 14px;
   color: white;
   margin-top: 10px;
