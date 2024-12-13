@@ -685,6 +685,20 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
+.back-btn {
+  background: transparent;
+  color: white;
+  margin-top: 5px;
+  border: 2px solid white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: white;
+  color: #6e8efb;
+}
+
 #login-box button {
   width: 100%;
   padding: 12px;
@@ -738,22 +752,9 @@ button:hover {
   display: none;
 }
 
-/* Back to Login button */
-.back-btn {
-  background: transparent;
-  color: white;
-  margin-top: 5px;
-  border: 2px solid white;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
 
-.back-btn:hover {
-  background: white;
-  color: #6e8efb;
-}
 /* Paragraph text for general use */
-.p {
+#welcome-popup p {
   font-size: 14px;
   color: white;
   margin-top: 10px;
@@ -767,7 +768,7 @@ button:hover {
 }
 
 /* Checkbox label for agreement */
-label {
+check box label {
   font-size: 10px;
   color: white;
   display: block;
