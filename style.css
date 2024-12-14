@@ -827,7 +827,7 @@ input::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: black;
     margin-bottom: 5rem;
    font-weight: bold;
     font-size: 50px;
@@ -892,10 +892,11 @@ button:hover {
   font-size: 10px;
   color: white;
   margin-top: 10px;
+  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   margin-bottom: 5rem;
 }
 
