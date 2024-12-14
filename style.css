@@ -732,8 +732,8 @@ width: 100%;
 }
         
 #register-box {
-  background: linear-gradient(45deg, #5400af, #410c80, #2f0f55, #1d0d2c, #000000);
-  backdrop-filter: blur(15px);
+  background-image: url('./front-view-stacked-books-diploma-earth-globe-with-copy-space-education-day_23-2149241048.webp');
+  backdrop-filter: blur(19px);
   border-radius: 40px;
   color: white;
   padding: 20px 40px;
