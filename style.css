@@ -504,6 +504,7 @@ button.danger:hover {
 .course:nth-child(3) {
   background-image: url('./biology-concept-realistic-microscope-plant-seedling-pot_208581-1520.webp');
   width: 100%;
+  background-size: 100% 100%;
 }
 
 .course:nth-child(4) {
@@ -511,6 +512,9 @@ button.danger:hover {
   background-image: url('./growth-fresh-green-plant-natures-lap-generative-ai_188544-7961.webp');
  
   width: 100%;
+  background-size: 100% 100%;
+ background-color: rgba(1, 2, 2, 15); /* Semi-transparent black overlay */
+  z-index: -1;
 }
 
 .course:nth-child(5) {
@@ -548,8 +552,8 @@ background-size: 100% 100%;
 #access-code-section {
   background-image: url('./science-realistic-icons-set_1284-9379.webp');
   background-size: 100% 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  z-index: 0.5;
+  background-color: rgba(0, 3, 6, 25); /* Semi-transparent black overlay */
+  z-index: -1;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
