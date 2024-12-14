@@ -692,7 +692,7 @@ width: 100%;
 
 /* Glassy container */
 #login-box{
-  background: rgba(255, 255, 255, 0.2);
+  background: <img src="login_bg.jpg" alt="OAU-DOCs Logo" class="logo">;
   backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 20px 40px;
