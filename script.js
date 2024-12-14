@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["NPC8HB", "8VL5DS", "YO638H", "8VL5DS", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
+  const activeUserIDs = ["NPC8HB", "8VL5DS", "YO638H", "GO1JWC", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
