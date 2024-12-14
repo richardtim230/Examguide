@@ -528,6 +528,7 @@ button.danger:hover {
 
 background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
 width: 100%;
+background-size: 100% 100%;
 
 }
 
@@ -738,7 +739,9 @@ width: 100%;
   border-radius: 12px;
   padding: 20px 40px;
   text-align: center;
-  color: white;
+  color: black;
+  text-align: left;
+  font-weight: bold;
   width: 350px;
   height: 95%;
   animation: fadeIn 0.7s ease-in-out;
@@ -898,6 +901,7 @@ button:hover {
   align-items: center;
   color: black;
   margin-bottom: 5rem;
+  text-align: left;
 }
 
 /* Checkbox label for agreement */
@@ -912,6 +916,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   color: white;
+        font-weight: bold;
 }
 
 /* Styling for the agreement terms link inside label (if needed) */
@@ -923,6 +928,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   color: white;
+  font-weight: bold;
 }
 
 #agree-checkbox label a:hover {
