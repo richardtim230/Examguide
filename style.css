@@ -498,7 +498,6 @@ button.danger:hover {
   width: 100%;
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  z-index: -1;
 
 }
 
@@ -549,7 +548,6 @@ background-size: 100% 100%;
   background-image: url('./science-realistic-icons-set_1284-9379.webp');
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  z-index: -1;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
