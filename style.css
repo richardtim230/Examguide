@@ -719,8 +719,10 @@ width: 100%;
 }
 
 #welcome-popup {
-  background: linear-gradient(135deg, #C33764, #1D2671);
-  backdrop-filter: blur(15px);
+  background-image: url('./objects-graduation-ceremony-illustration_87521-2091.jpg');
+  background-color: rgba(0, 0, 0, 1); /* Semi-transparent black overlay */
+  z-index: -1;
+  backdrop-filter: blur(20px);
   border-radius: 12px;
   padding: 20px 40px;
   text-align: center;
@@ -734,6 +736,8 @@ width: 100%;
 #register-box {
   background-image: url('./front-view-stacked-books-diploma-earth-globe-with-copy-space-education-day_23-2149241048.webp');
   backdrop-filter: blur(19px);
+  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black overlay */
+  z-index: -1;
   border-radius: 40px;
   color: white;
   padding: 20px 40px;
