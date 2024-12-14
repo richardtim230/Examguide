@@ -747,7 +747,7 @@ width: 100%;
   backdrop-filter: blur(19px);
   background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black overlay */
   z-index: -1;
-  background-size: contain;
+  background-size: 100% 100%;
   border-radius: 40px;
   color: white;
   padding: 20px 40px;
@@ -819,7 +819,7 @@ input::placeholder {
 
   #student-details {
     margin-top: 20px;
-    line-height: 1.8;
+    line-height: 2.8;
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
