@@ -494,8 +494,12 @@ button.danger:hover {
 }
 
 .course:nth-child(2) {
-  background: linear-gradient(135deg, #16a34a, #15803d);
+  background-image: url('./scientific-laboratory-design-concept_1284-9382.webp');
   width: 100%;
+  background-size: 100% 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: -1;
+
 }
 
 .course:nth-child(3) {
@@ -542,7 +546,10 @@ background-size: 100% 100%;
 
 /* Access Code Section */
 #access-code-section {
-  background: #ffffff;
+  background-image: url('./science-realistic-icons-set_1284-9379.webp');
+  background-size: 100% 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: -1;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
