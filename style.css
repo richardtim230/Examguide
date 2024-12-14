@@ -505,6 +505,7 @@ button.danger:hover {
   background-image: url('./biology-concept-realistic-microscope-plant-seedling-pot_208581-1520.webp');
   width: 100%;
   background-size: 100% 100%;
+        color: black;
 }
 
 .course:nth-child(4) {
@@ -514,7 +515,7 @@ button.danger:hover {
   width: 100%;
   background-size: 100% 100%;
  background-color: rgba(1, 2, 2, 15); /* Semi-transparent black overlay */
-  z-index: -1;
+  z-index: 0.5;
 }
 
 .course:nth-child(5) {
