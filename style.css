@@ -502,13 +502,14 @@ button.danger:hover {
 }
 
 .course:nth-child(3) {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background-image: url('./biology-concept-realistic-microscope-plant-seedling-pot_208581-1520.webp');
   width: 100%;
 }
 
 .course:nth-child(4) {
 
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background-image: url('./growth-fresh-green-plant-natures-lap-generative-ai_188544-7961.webp');
+ 
   width: 100%;
 }
 
@@ -522,7 +523,7 @@ button.danger:hover {
 
 .course:nth-child(6) {
 
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background-image: url('./physics-textbook-school-chalkboard-background_8071-53388.webp');
   width: 100%;
   background-size: 100% 100%;
 }
@@ -548,6 +549,7 @@ background-size: 100% 100%;
   background-image: url('./science-realistic-icons-set_1284-9379.webp');
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: 0.5;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
