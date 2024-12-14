@@ -39,7 +39,7 @@ body::before {
 
 
 header {
-  background: #1e3a8a;
+  background-image: url('./oau.jpeg');
   color: #fff;
   padding: 1.5rem;
   text-align: center;
@@ -234,7 +234,7 @@ a:hover {
 
 
 
-container {
+.container {
   max-width: 1200px;
   margin: 20px auto;
   padding: 10px;
@@ -523,12 +523,18 @@ button.danger:hover {
 
 .course:nth-child(7) {
 
-  background: linear-gradient(135deg, #16a34a, #15803d);
+background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
 width: 100%;
 
 }
 
-
+.course:nth-child(6) access-code-section {
+  background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+        }
 
 /* Access Code Section */
 #access-code-section {
