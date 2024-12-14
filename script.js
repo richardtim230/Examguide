@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["3IV4RI", "733M8P", "QQTIRS", "733M8P", "9MDGVD", "N65QAA", " QQTIRS", "NPC8HB", "8VL5DS", "YO638H", "GO1JWC", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
+  const activeUserIDs = ["EB5N28", "3IV4RI", "733M8P", "QQTIRS", "733M8P", "9MDGVD", "N65QAA", " QQTIRS", "NPC8HB", "8VL5DS", "YO638H", "GO1JWC", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
         - User ID: ${userData.userID}
       `;
 
-      alert(`Your User ID is ${userID}. Contact admin for activation. You will be redirected shortly`);
+      alert(`Your User ID is ${userID}. Contact admin for activation. You will be redirected shortly. (Do not close or refresh to avoid multiple creation of accounts)`);
 
       window.open(
         `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
     // Expiry Logic
-  const expiryDays = 7;
+  const expiryDays = 10;
   const currentDate = new Date();
   const savedDate = localStorage.getItem("loginDate");
 
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       },
            
-      "PHY105": {     
+      "PHY105-1": {     
       title: "INTRODUCTORY PHYSICS FOR BIOLOGICAL SCIENCES",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
