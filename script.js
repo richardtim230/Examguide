@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["733M8P", "QQTIRS", "733M8P", "9MDGVD", "N65QAA", " QQTIRS", "NPC8HB", "8VL5DS", "YO638H", "GO1JWC", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
+  const activeUserIDs = ["3IV4RI", "733M8P", "QQTIRS", "733M8P", "9MDGVD", "N65QAA", " QQTIRS", "NPC8HB", "8VL5DS", "YO638H", "GO1JWC", "0V4BBD", "GYAH6S"]; // Admin-activated user IDs
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
