@@ -238,7 +238,9 @@ a:hover {
   max-width: 1200px;
   margin: 20px auto;
   padding: 10px;
-  background: white;
+  background-image: url('./row-bookcases_23-2147679267.webp');
+  background-color: rgba(0, 0.1, 0.2, 5); /* Semi-transparent black overlay */
+  z-index: -1;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -485,7 +487,7 @@ button.danger:hover {
 }
 
 .course:nth-child(1) {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background-image: url('./mathematics-textbook-school-education-background_8071-51963.jpg');
   width: 100%;
 }
 
