@@ -39,9 +39,10 @@ body::before {
 
 
 header {
-  background-image: url('./top-view-workspace-concept-with-orange-background_23-2148226897.webp');
+  background-image: url('./oau.jpeg');
   color: #fff;
   padding: 1.5rem;
+  background-size: 100% 100%;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -489,6 +490,7 @@ button.danger:hover {
 .course:nth-child(1) {
   background-image: url('./mathematics-textbook-school-education-background_8071-51963.jpg');
   width: 100%;
+ background-size: 100% 100%;
 }
 
 .course:nth-child(2) {
@@ -519,6 +521,7 @@ button.danger:hover {
 
   background: linear-gradient(135deg, #f59e0b, #d97706);
   width: 100%;
+  background-size: 100% 100%;
 }
 
 .course:nth-child(7) {
