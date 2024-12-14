@@ -39,7 +39,7 @@ body::before {
 
 
 header {
-  background-image: url('./oau.jpeg');
+  background-image: url('./top-view-workspace-concept-with-orange-background_23-2148226897.webp');
   color: #fff;
   padding: 1.5rem;
   text-align: center;
@@ -528,7 +528,7 @@ width: 100%;
 
 }
 
-.course:nth-child(6) access-code-section {
+#course:nth-child(6) access-code-section {
   background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
   padding: 2rem;
   border-radius: 10px;
