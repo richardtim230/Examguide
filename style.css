@@ -730,6 +730,7 @@ width: 100%;
   background-image: url('./top-view-workspace-concept-with-orange-background_23-2148226897.webp');
   background-color: rgba(0, 0, 0, 1); /* Semi-transparent black overlay */
   z-index: -1;
+  background-size: 100% 100%;
   backdrop-filter: blur(20px);
   border-radius: 12px;
   padding: 20px 40px;
@@ -746,6 +747,7 @@ width: 100%;
   backdrop-filter: blur(19px);
   background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black overlay */
   z-index: -1;
+  background-size: contain;
   border-radius: 40px;
   color: white;
   padding: 20px 40px;
