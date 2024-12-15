@@ -21,20 +21,22 @@ body::before {
   z-index: -1;
 }
 
+
     /* Notification Styles */
     #notification {
       display: none; /* Initially hidden */
       position: fixed;
-      justify-content: center;
-      width: 100%;
-      height: 150px;
-      size: 100% 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
-      animation: slide-in 1s ease forwards;
+      animation: fade-in 1s ease forwards;
       z-index: 1000;
+      text-align: center;
     }
     #notification img {
       width: 100%;
@@ -42,21 +44,20 @@ body::before {
     }
     #notification-content {
       padding: 15px;
-      text-align: center;
     }
     #notification h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: 20px;
       color: #333;
     }
     #notification p {
-      font-size: 14px;
+      font-size: 16px;
       color: #555;
-      margin: 5px 0;
+      margin: 10px 0;
     }
     #close-btn {
       margin-top: 10px;
-      padding: 5px 15px;
+      padding: 8px 15px;
       background-color: #ff5722;
       color: #fff;
       border: none;
@@ -68,17 +69,17 @@ body::before {
       background-color: #e64a19;
     }
 
-    /* Slide-in Animation */
-    @keyframes slide-in {
+    /* Fade-in Animation */
+    @keyframes fade-in {
       from {
-        transform: translateX(400px);
         opacity: 0;
       }
       to {
-        transform: translateX(0);
         opacity: 1;
       }
-        }
+    }
+  
+
 
 /*Logo*/
 
