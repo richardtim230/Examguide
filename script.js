@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.style.display = 'none'; // Hide the modal
     console.log('Submission canceled');
   });
-});
+
 
 
   const overlay = document.getElementById("overlay");
