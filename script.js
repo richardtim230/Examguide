@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("overlay");
   const loginBox = document.getElementById("login-box");
   const registerBox = document.getElementById("register-box");
