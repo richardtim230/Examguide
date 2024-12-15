@@ -905,14 +905,14 @@ button:hover {
 
 /* Paragraph text for general use */
 #welcome-popup p {
-  font-size: 20px;
+  font-size: 10px;
   color: white;
   margin-top: 30px;
   margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
   margin-bottom: 5rem;
   text-align: left;
 }
