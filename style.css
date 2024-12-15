@@ -557,6 +557,8 @@ button.danger:hover {
   background-image: url('./mathematics-science-concept_1284-10155.webp');
   width: 100%;
  background-size: 100% 100%;
+ color: black;
+        font-weight: bold;
 }
 
 .course:nth-child(2) {
@@ -564,14 +566,16 @@ button.danger:hover {
   width: 100%;
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-
+  color: black;
+        font-weight: bold;
 }
 
 .course:nth-child(3) {
   background-image: url('./biology-concept-realistic-microscope-plant-seedling-pot_208581-1520.webp');
   width: 100%;
   background-size: 100% 100%;
-        color: black;
+  color: black;
+        font-weight: bold;
 }
 
 .course:nth-child(4) {
@@ -582,6 +586,7 @@ button.danger:hover {
   background-size: 100% 100%;
  background-color: rgba(1, 2, 2, 15); /* Semi-transparent black overlay */
   z-index: 0.5;
+        font-weight: bold;
 }
 
 .course:nth-child(5) {
@@ -589,6 +594,7 @@ button.danger:hover {
   background-image: url('./microbiology.webp');
   width: 100%;
   background-size: 100% 100%;
+        font-weight: bold;
 }
 
 
@@ -598,6 +604,7 @@ button.danger:hover {
   background-image: url('./physics-textbook-school-chalkboard-background_8071-53388.webp');
   width: 100%;
   background-size: 100% 100%;
+        font-weight: bold;
 }
 
 .course:nth-child(7) {
@@ -605,6 +612,7 @@ button.danger:hover {
 background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
 width: 100%;
 background-size: 100% 100%;
+        font-weight: bold;
 
 }
 
@@ -612,6 +620,8 @@ background-size: 100% 100%;
   background-image: url('./geology.jpg');
   background-size: 100% 100%;
   width: 100%;
+  color: black;
+        font-weight: bold;
         }
 
 /* Access Code Section */
