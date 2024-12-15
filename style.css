@@ -867,7 +867,7 @@ input::placeholder {
   width: 50%;
   padding: 8px;
   margin-top: 10px;
-  left: 30px;
+  left: 30%;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   border: none;
   border-radius: 6px;
