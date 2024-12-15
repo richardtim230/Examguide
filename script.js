@@ -1,16 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Image categories and greetings
-  const data = {
+  // Data for images and messages
+  const notifications = {
     morning: {
       images: [
         "good morning 1.webp",
         "good morning 2.jpg",
         "good morning 3.jpg"
       ],
-      greetings: [
-        "Good morning! Start your day with positivity.",
-        "Rise and shine! Today is full of opportunities.",
-        "A fresh morning, a fresh start!"
+      messages: [
+        {
+          title: "Morning Motivation!",
+          message: `
+            <p><strong>Start your day with positivity and energy!</strong></p>
+            <p>Join our <em>Morning Boost</em> session at <strong>8:30AM</strong>.</p>
+            <p>Click <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a> to join for free!</p>
+          `
+        },
+        {
+          title: "Rise and Shine!",
+          message: `
+            <p><strong>Ready to tackle the day?</strong></p>
+            <p>Our productivity tips are live now. Check them out <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a>.</p>
+          `
+        }
       ]
     },
     afternoon: {
@@ -19,10 +31,22 @@ document.addEventListener("DOMContentLoaded", function () {
         "good afternoon 2.webp",
         "good afternoon 3.jpg"
       ],
-      greetings: [
-        "Good afternoon! Keep up the amazing work.",
-        "Hope you're having a productive afternoon!",
-        "Afternoon vibes: Keep going, you're doing great!"
+      messages: [
+        {
+          title: "Afternoon Update",
+          message: `
+            <p><strong>Feeling stuck on CHM101 problems?</strong></p>
+            <p>Join our <em>CHM101 Simplifiers</em> group at 8:30PM.</p>
+            <p>Link: <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">Click here to join</a></p>
+          `
+        },
+        {
+          title: "Stay Focused!",
+          message: `
+            <p><strong>Afternoon study session starts now!</strong></p>
+            <p>Get the most out of your day. <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">Join here</a>.</p>
+          `
+        }
       ]
     },
     night: {
@@ -31,15 +55,27 @@ document.addEventListener("DOMContentLoaded", function () {
         "goodnight2.webp",
         "good night 3.webp"
       ],
-      greetings: [
-        "Good night! Time to relax and recharge.",
-        "Sweet dreams are made of this!",
-        "Relax and unwind, you've earned it."
+      messages: [
+        {
+          title: "Night Reminder",
+          message: `
+            <p><strong>Join us for tonight's special chemistry revision.</strong></p>
+            <p><strong>Time:</strong> 8:30PM | <strong>Fee:</strong> Free!</p>
+            <p>Access it <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a>.</p>
+          `
+        },
+        {
+          title: "Relax and Recharge",
+          message: `
+            <p><strong>Take it easy tonight and recharge for tomorrow.</strong></p>
+            <p>Need help? Join our <em>Night Owl</em> group <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a>.</p>
+          `
+        }
       ]
     }
   };
 
-  // Determine time of day
+  // Determine the time of day
   const currentHour = new Date().getHours();
   let timeCategory;
 
@@ -51,11 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
     timeCategory = "night";
   }
 
-  // Randomly pick an image and greeting
-  const images = data[timeCategory].images;
-  const greetings = data[timeCategory].greetings;
-  const randomImage = images[Math.floor(Math.random() * images.length)];
-  const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Get random image and message
+  const category = notifications[timeCategory];
+  const randomImage = category.images[Math.floor(Math.random() * category.images.length)];
+  const randomMessage = category.messages[Math.floor(Math.random() * category.messages.length)];
 
   // Set up notification content
   const notification = document.getElementById("notification");
@@ -65,11 +100,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeBtn = document.getElementById("close-btn");
 
   // Assign values
-  notificationImg.src = randomImage;
-  notificationTitle.textContent = timeCategory === "morning" ? "Good Morning!" :
-                                   timeCategory === "afternoon" ? "Good Afternoon!" :
-                                   "Good Night!";
-  notificationMessage.textContent = randomGreeting;
+  notificationImg.src = randomImage; // Set random image
+  notificationTitle.textContent = randomMessage.title; // Set random title
+  notificationMessage.innerHTML = randomMessage.message; // Set rich HTML message
 
   // Show notification after a delay
   setTimeout(() => {
