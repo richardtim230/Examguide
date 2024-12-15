@@ -21,6 +21,63 @@ body::before {
   z-index: -1;
 }
 
+    /* Notification Styles */
+    #notification {
+      display: none; /* Initially hidden */
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: slide-in 1s ease forwards;
+      z-index: 1000;
+    }
+    #notification img {
+      width: 100%;
+      height: auto;
+    }
+    #notification-content {
+      padding: 15px;
+      text-align: center;
+    }
+    #notification h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+    #notification p {
+      font-size: 14px;
+      color: #555;
+      margin: 5px 0;
+    }
+    #close-btn {
+      margin-top: 10px;
+      padding: 5px 15px;
+      background-color: #ff5722;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    #close-btn:hover {
+      background-color: #e64a19;
+    }
+
+    /* Slide-in Animation */
+    @keyframes slide-in {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+        }
 
 /*Logo*/
 
@@ -548,7 +605,7 @@ background-size: 100% 100%;
 
 }
 
-#course:nth-child(6) access-code-section {
+.course:nth-child(8) {
   background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
   padding: 2rem;
   border-radius: 10px;
