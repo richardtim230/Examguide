@@ -875,6 +875,7 @@ input::placeholder {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: fixed;
 }
 
 
@@ -913,7 +914,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   color: white;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   text-align: left;
 }
 
