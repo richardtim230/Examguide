@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const data = {
     morning: {
       images: [
-        "images/morning1.jpg",
-        "images/morning2.jpg",
-        "images/morning3.jpg"
+        "good morning 1.webp",
+        "good morning 2.jpg",
+        "good morning 3.jpg"
       ],
       greetings: [
         "Good morning! Start your day with positivity.",
@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     afternoon: {
       images: [
-        "images/afternoon1.jpg",
-        "images/afternoon2.jpg",
-        "images/afternoon3.jpg"
+        "good afternoon 1.jpg",
+        "good afternoon 2.webp",
+        "good afternoon 3.jpg"
       ],
       greetings: [
         "Good afternoon! Keep up the amazing work.",
@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     night: {
       images: [
-        "images/night1.jpg",
-        "images/night2.jpg",
-        "images/night3.jpg"
+        "goodnight 1.webp",
+        "goodnight2.webp",
+        "good night 3.webp"
       ],
       greetings: [
         "Good night! Time to relax and recharge.",
