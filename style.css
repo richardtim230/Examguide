@@ -754,7 +754,7 @@ background-size: 100% 100%;
   color: black;
   text-align: left;
   font-weight: bold;
-  font-size: 20px;   
+  font-size: 15px;   
   width: 350px;
   height: 95%;
   animation: fadeIn 0.7s ease-in-out;
@@ -905,9 +905,9 @@ button:hover {
 
 /* Paragraph text for general use */
 #welcome-popup p {
-  font-size: 10px;
+  font-size: 15px;
   color: white;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-left: 10px;
   display: flex;
   justify-content: center;
