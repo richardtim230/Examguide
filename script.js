@@ -1,3 +1,88 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Image categories and greetings
+  const data = {
+    morning: {
+      images: [
+        "images/morning1.jpg",
+        "images/morning2.jpg",
+        "images/morning3.jpg"
+      ],
+      greetings: [
+        "Good morning! Start your day with positivity.",
+        "Rise and shine! Today is full of opportunities.",
+        "A fresh morning, a fresh start!"
+      ]
+    },
+    afternoon: {
+      images: [
+        "images/afternoon1.jpg",
+        "images/afternoon2.jpg",
+        "images/afternoon3.jpg"
+      ],
+      greetings: [
+        "Good afternoon! Keep up the amazing work.",
+        "Hope you're having a productive afternoon!",
+        "Afternoon vibes: Keep going, you're doing great!"
+      ]
+    },
+    night: {
+      images: [
+        "images/night1.jpg",
+        "images/night2.jpg",
+        "images/night3.jpg"
+      ],
+      greetings: [
+        "Good night! Time to relax and recharge.",
+        "Sweet dreams are made of this!",
+        "Relax and unwind, you've earned it."
+      ]
+    }
+  };
+
+  // Determine time of day
+  const currentHour = new Date().getHours();
+  let timeCategory;
+
+  if (currentHour >= 5 && currentHour < 12) {
+    timeCategory = "morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    timeCategory = "afternoon";
+  } else {
+    timeCategory = "night";
+  }
+
+  // Randomly pick an image and greeting
+  const images = data[timeCategory].images;
+  const greetings = data[timeCategory].greetings;
+  const randomImage = images[Math.floor(Math.random() * images.length)];
+  const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+  // Set up notification content
+  const notification = document.getElementById("notification");
+  const notificationImg = document.getElementById("notification-img");
+  const notificationTitle = document.getElementById("notification-title");
+  const notificationMessage = document.getElementById("notification-message");
+  const closeBtn = document.getElementById("close-btn");
+
+  // Assign values
+  notificationImg.src = randomImage;
+  notificationTitle.textContent = timeCategory === "morning" ? "Good Morning!" :
+                                   timeCategory === "afternoon" ? "Good Afternoon!" :
+                                   "Good Night!";
+  notificationMessage.textContent = randomGreeting;
+
+  // Show notification after a delay
+  setTimeout(() => {
+    notification.style.display = "block";
+  }, 1000); // Delay of 1 second
+
+  // Close button functionality
+  closeBtn.addEventListener("click", function () {
+    notification.style.display = "none";
+  });
+});
+
+
 document.addEventListener("copy", function (e) {
             e.preventDefault();
             alert("Copying is disabled on this text!");
