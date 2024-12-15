@@ -864,7 +864,7 @@ input::placeholder {
 }
 
 #welcome-popup button {
-  width: 90%;
+  width: 50%;
   padding: 12px;
   margin-top: 10px;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
