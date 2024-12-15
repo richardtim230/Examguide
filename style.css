@@ -29,7 +29,7 @@ body::before {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90%;
+      width: 92%;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -554,7 +554,7 @@ button.danger:hover {
 }
 
 .course:nth-child(1) {
-  background-image: url('./mathematics-textbook-school-education-background_8071-51963.jpg');
+  background-image: url('./mathematics-science-concept_1284-10155.webp');
   width: 100%;
  background-size: 100% 100%;
 }
