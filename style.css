@@ -22,21 +22,21 @@ body::before {
 }
 
 
-    /* Notification Styles */
+
     #notification {
       display: none; /* Initially hidden */
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 92%;
+      width: 400px;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
       animation: fade-in 1s ease forwards;
       z-index: 1000;
-      text-align: center;
+      text-align: left;
     }
     #notification img {
       width: 100%;
@@ -46,7 +46,7 @@ body::before {
       padding: 15px;
     }
     #notification h3 {
-      margin: 0;
+      margin: 0 0 10px 0;
       font-size: 20px;
       color: #333;
     }
@@ -69,7 +69,14 @@ body::before {
       background-color: #e64a19;
     }
 
-    /* Fade-in Animation */
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
     @keyframes fade-in {
       from {
         opacity: 0;
@@ -79,6 +86,7 @@ body::before {
       }
     }
   
+
 
 
 /*Logo*/
