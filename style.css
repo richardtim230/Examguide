@@ -639,6 +639,14 @@ background-size: 100% 100%;
         font-weight: bold;
         }
 
+.course:nth-child(8) {
+  background-image: url('./knowledge-learning-education-technology-student-with-afro-hairstyle-solving-mathematical-problems-sitting-cafe-table-with-textbooks-electronic-device_273609-7498.webp');
+  background-size: 100% 100%;
+  width: 100%;
+  color: white;
+        font-weight: bold;
+        }
+
 /* Access Code Section */
 #access-code-section {
   background-image: url('./science-realistic-icons-set_1284-9379.webp');
