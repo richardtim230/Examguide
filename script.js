@@ -5737,8 +5737,8 @@ function endExam() {
           (q, i) => `
         <p>
           ${i + 1}. ${q.text} <br>
-          Your Answer: ${q.options[answers[i]] || "Unanswered"} <br>
-          Correct Answer: ${q.options[q.correct]} <br>
+          Your Answer: ${q.options[answers[i]] || "Unanswered"} <br><br>
+          Correct Answer: ${q.options[q.correct]} <br><br>
           Explanation: ${q.explanation} <br>
         </p>`
         )
@@ -5757,8 +5757,13 @@ function endExam() {
     }
   });
 
+    document.getElementById("download-btn").addEventListener("click", () => {
+  console.log("Download button clicked!");
+  downloadResultsAsPDF();
+});
+
   function downloadResultsAsPDF() {
-    const resultContent = document.getElementById("summary-section");
+    const resultContent = document.getElementById("summarySection");
 
     if (!resultContent) {
       console.error("Summary content is missing. Cannot generate PDF.");
@@ -5796,3 +5801,4 @@ function endExam() {
     return "Keep practicing! You can do better.";
   }
 });
+
