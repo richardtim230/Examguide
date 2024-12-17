@@ -5738,8 +5738,8 @@ function endExam() {
         <p>
           ${i + 1}. ${q.text} <br>
           Your Answer: ${q.options[answers[i]] || "Unanswered"} <br><br>
-          Correct Answer: ${q.options[q.correct]} <br><br>
-          Explanation: ${q.explanation} <br>
+         <strong> Correct Answer: ${q.options[q.correct]} </strong><br><br>
+          Explanation: ${q.explanation} <br><br>
         </p>`
         )
         .join("")}
