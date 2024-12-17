@@ -5746,6 +5746,11 @@ function endExam() {
     `;
   };
 
+  
+    // Auto-Submit on Page Leave
+
+    window.onblur = summarySection;
+  
   document.getElementById('confirmNo').onclick = function () {
     modal.style.display = 'none';
     // Prevent further actions when "No" is clicked
