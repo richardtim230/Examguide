@@ -5521,6 +5521,8 @@ document.getElementById("submit-code").addEventListener("click", () => {
     alert("You have already completed all questions in this question bank.");
     return;
   }
+  
+const downloadBtn = document.getElementById("download-btn");
 
   questions = shuffleArray(remainingQuestions);
   subCourseName = courseData.title;
@@ -5557,6 +5559,7 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   clearInterval(timerInterval);
   showSection(courseSelectionSection);
 });
+
 
 function startExam() {
   subjectTitle.textContent = subCourseName;
@@ -5747,6 +5750,12 @@ function endExam() {
   };
 
   
+        // Add PDF Download Listener
+
+        document.getElementById("download-btn").addEventListener("click", downloadResultsAsPDF);
+
+                          }
+  
     // Auto-Submit on Page Leave
 
     window.onblur = summarySection;
@@ -5770,3 +5779,32 @@ function endExam() {
     return "Keep practicing! You can do better.";
   }
 });
+
+  // Download Results as PDF
+
+    function downloadResultsAsPDF() {
+
+        const resultContent = resultContainer.innerHTML;
+
+        const resultWindow = window.open("", "_blank");
+
+        resultWindow.document.write(`
+
+            <html>
+
+                <head><title>Exam Results</title></head>
+
+                <body>${resultContent}</body>
+
+            </html>
+
+        `);
+
+        resultWindow.document.close();
+
+        resultWindow.print();
+
+    }
+
+});
+
