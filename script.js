@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
   // Data for images and messages
   const notifications = {
@@ -5522,7 +5521,7 @@ document.getElementById("submit-code").addEventListener("click", () => {
     alert("You have already completed all questions in this question bank.");
     return;
   }
-  
+
   questions = shuffleArray(remainingQuestions);
   subCourseName = courseData.title;
   startExam();
@@ -5558,7 +5557,6 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   clearInterval(timerInterval);
   showSection(courseSelectionSection);
 });
-
 
 function startExam() {
   subjectTitle.textContent = subCourseName;
@@ -5755,42 +5753,15 @@ function endExam() {
   };
 }
 
-// Attach PDF Download Listener
-(function () {
-  document.addEventListener("DOMContentLoaded", function () {
-    const downloadBtn = document.getElementById("download-btn");
 
-    if (downloadBtn) {
-      downloadBtn.addEventListener("click", downloadResultsAsPDF);
-    } else {
-      console.error("Download button not found.");
-    }
-  });
-
-  function downloadResultsAsPDF() {
-    const resultContent = document.getElementById("summaryContent");
-
-    if (!resultContent) {
-      console.error("Summary content is missing. Cannot generate PDF.");
-      return;
-    }
-
-    const options = {
-      margin: 1,
-      filename: 'Exam_Results.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-
-    html2pdf().set(options).from(resultContent).save();
+  function shuffleArray(array) {
+    return array.sort(() => 0.5 - Math.random()).slice(0.5, 50);
   }
-})();
 
-
-function getRemark(percentage) {
-  if (percentage === 100) return "Excellent! You aced the test!";
-  if (percentage >= 75) return "Great job! You did very well.";
-  if (percentage >= 50) return "Good effort, but there's room for improvement.";
-  return "Keep practicing! You can do better.";
-}
+  function getRemark(percentage) {
+    if (percentage === 100) return "Excellent! You aced the test!";
+    if (percentage >= 75) return "Great job! You did very well.";
+    if (percentage >= 50) return "Good effort, but there's room for improvement.";
+    return "Keep practicing! You can do better.";
+  }
+});
