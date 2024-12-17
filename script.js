@@ -1,13 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const downloadBtn = document.getElementById("download-btn");
-
-  if (downloadBtn) {
-    downloadBtn.addEventListener("click", downloadResultsAsPDF);
-  } else {
-    console.error("Download button not found.");
-  }
-});
-
 
 document.addEventListener("DOMContentLoaded", function () {
   // Data for images and messages
@@ -5766,26 +5756,37 @@ function endExam() {
 }
 
 // Attach PDF Download Listener
-document.getElementById("download-btn").addEventListener("click", downloadResultsAsPDF);
+(function () {
+  document.addEventListener("DOMContentLoaded", function () {
+    const downloadBtn = document.getElementById("download-btn");
 
-function downloadResultsAsPDF() {
-  const resultContent = document.getElementById("summaryContent");
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", downloadResultsAsPDF);
+    } else {
+      console.error("Download button not found.");
+    }
+  });
 
-  if (!resultContent) {
-    console.error("Summary content is missing. Cannot generate PDF.");
-    return;
+  function downloadResultsAsPDF() {
+    const resultContent = document.getElementById("summaryContent");
+
+    if (!resultContent) {
+      console.error("Summary content is missing. Cannot generate PDF.");
+      return;
+    }
+
+    const options = {
+      margin: 1,
+      filename: 'Exam_Results.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(resultContent).save();
   }
+})();
 
-  const options = {
-    margin: 1,
-    filename: 'Exam_Results.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-  };
-
-  html2pdf().set(options).from(resultContent).save();
-}
 
 function getRemark(percentage) {
   if (percentage === 100) return "Excellent! You aced the test!";
