@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const downloadBtn = document.getElementById("download-btn");
+
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", downloadResultsAsPDF);
+  } else {
+    console.error("Download button not found.");
+  }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
   // Data for images and messages
   const notifications = {
     morning: {
@@ -5522,8 +5533,6 @@ document.getElementById("submit-code").addEventListener("click", () => {
     return;
   }
   
-const downloadBtn = document.getElementById("download-btn");
-
   questions = shuffleArray(remainingQuestions);
   subCourseName = courseData.title;
   startExam();
@@ -5749,17 +5758,6 @@ function endExam() {
     `;
   };
 
-  
-        // Add PDF Download Listener
-
-        document.getElementById("download-btn").addEventListener("click", downloadResultsAsPDF);
-
-                          }
-  
-    // Auto-Submit on Page Leave
-
-    window.onblur = summarySection;
-  
   document.getElementById('confirmNo').onclick = function () {
     modal.style.display = 'none';
     // Prevent further actions when "No" is clicked
@@ -5767,44 +5765,31 @@ function endExam() {
   };
 }
 
+// Attach PDF Download Listener
+document.getElementById("download-btn").addEventListener("click", downloadResultsAsPDF);
 
-  function shuffleArray(array) {
-    return array.sort(() => 0.5 - Math.random()).slice(0.5, 50);
+function downloadResultsAsPDF() {
+  const resultContent = document.getElementById("summaryContent");
+
+  if (!resultContent) {
+    console.error("Summary content is missing. Cannot generate PDF.");
+    return;
   }
 
-  function getRemark(percentage) {
-    if (percentage === 100) return "Excellent! You aced the test!";
-    if (percentage >= 75) return "Great job! You did very well.";
-    if (percentage >= 50) return "Good effort, but there's room for improvement.";
-    return "Keep practicing! You can do better.";
-  }
-});
+  const options = {
+    margin: 1,
+    filename: 'Exam_Results.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
 
-  // Download Results as PDF
+  html2pdf().set(options).from(resultContent).save();
+}
 
-    function downloadResultsAsPDF() {
-
-        const resultContent = resultContainer.innerHTML;
-
-        const resultWindow = window.open("", "_blank");
-
-        resultWindow.document.write(`
-
-            <html>
-
-                <head><title>Exam Results</title></head>
-
-                <body>${resultContent}</body>
-
-            </html>
-
-        `);
-
-        resultWindow.document.close();
-
-        resultWindow.print();
-
-    }
-
-});
-
+function getRemark(percentage) {
+  if (percentage === 100) return "Excellent! You aced the test!";
+  if (percentage >= 75) return "Great job! You did very well.";
+  if (percentage >= 50) return "Good effort, but there's room for improvement.";
+  return "Keep practicing! You can do better.";
+}
