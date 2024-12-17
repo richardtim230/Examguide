@@ -5758,7 +5758,7 @@ function endExam() {
   });
 
   function downloadResultsAsPDF() {
-    const resultContent = document.getElementById("summaryContent");
+    const resultContent = document.getElementById("summary-section");
 
     if (!resultContent) {
       console.error("Summary content is missing. Cannot generate PDF.");
