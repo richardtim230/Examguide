@@ -5746,6 +5746,37 @@ function endExam() {
     `;
   };
 
+  (function () {
+  document.addEventListener("DOMContentLoaded", function () {
+    const downloadBtn = document.getElementById("download-btn");
+
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", downloadResultsAsPDF);
+    } else {
+      console.error("Download button not found.");
+    }
+  });
+
+  function downloadResultsAsPDF() {
+    const resultContent = document.getElementById("summaryContent");
+
+    if (!resultContent) {
+      console.error("Summary content is missing. Cannot generate PDF.");
+      return;
+    }
+
+    const options = {
+      margin: 1,
+      filename: 'Exam_Results.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(resultContent).save();
+  }
+})();
+
   document.getElementById('confirmNo').onclick = function () {
     modal.style.display = 'none';
     // Prevent further actions when "No" is clicked
