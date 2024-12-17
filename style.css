@@ -1048,39 +1048,6 @@ button:hover {
   color: #a777e3;
 }
 
-
-
-/* Progress Bar */
-
-.progress-container {
-
-    width: 100%;
-
-    height: 10px;
-
-    background: #ccc;
-
-    border-radius: 5px;
-
-    overflow: hidden;
-
-    margin-bottom: 20px;
-
-}
-
-.progress-bar {
-
-    height: 100%;
-
-    width: 0%;
-
-    background: #ff5c5c;
-
-    transition: width 0.5s ease;
-
-        }
-
-
 /* Download Button */
 
 .download-button {
