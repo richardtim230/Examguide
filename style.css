@@ -1048,6 +1048,71 @@ button:hover {
   color: #a777e3;
 }
 
+
+
+/* Progress Bar */
+
+.progress-container {
+
+    width: 100%;
+
+    height: 10px;
+
+    background: #ccc;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    margin-bottom: 20px;
+
+}
+
+.progress-bar {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #ff5c5c;
+
+    transition: width 0.5s ease;
+
+        }
+
+
+/* Download Button */
+
+.download-button {
+
+    background: #ff5c5c;
+
+    color: white;
+
+    padding: 10px 30px;
+
+    font-size: 1em;
+
+    border: none;
+
+    border-radius: 50px;
+
+    cursor: pointer;
+
+    margin-top: 20px;
+
+    transition: background 0.3s ease, transform 0.2s ease;
+
+}
+
+.download-button:hover {
+
+    background: #e04646;
+
+}
+
+
+
 /* Animation */
 @keyframes fadeIn {
   from {
