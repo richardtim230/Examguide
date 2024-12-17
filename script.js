@@ -5737,7 +5737,7 @@ function endExam() {
           (q, i) => `
         <p>
           ${i + 1}. ${q.text} <br>
-          Your Answer:<strong>${q.options[answers[i]]</strong>|| "Unanswered"} <br><br>
+          Your Answer: <strong> ${q.options[answers[i]] || "Unanswered"} </strong><br><br>
          <strong> Correct Answer: ${q.options[q.correct]} </strong><br><br>
           Explanation: ${q.explanation} <br><br><br>
         </p>`
