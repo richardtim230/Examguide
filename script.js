@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentQuestionIndex = 0;
   let answers = [];
   let timerInterval = null;
-  let timeRemaining = 3600; // Timer in seconds
+  let timeRemaining = 2400; // Timer in seconds
   let selectedCourse = "";
   let subCourseName = "";
                           
@@ -462,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       },
            
-      "PHY105-1": {     
+      "PHY105": {     
       title: "INTRODUCTORY PHYSICS FOR BIOLOGICAL SCIENCES",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
