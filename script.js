@@ -441,6 +441,612 @@ document.addEventListener("DOMContentLoaded", () => {
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
           { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+          {
+  text: "What is the union of the sets A = {1, 2, 3} and B = {3, 4, 5}?",
+  options: [
+    "{1, 2, 3, 4, 5}",
+    "{3}",
+    "{1, 2}",
+    "{4, 5}"
+  ],
+  correct: 0,
+  explanation: "The union of two sets includes all elements that are in either set. A ∪ B = {1, 2, 3, 4, 5}."
+},
+{
+  text: "What is the intersection of the sets A = {1, 2, 3} and B = {3, 4, 5}?",
+  options: [
+    "{1, 2}",
+    "{3}",
+    "{1, 2, 3, 4, 5}",
+    "{}"
+  ],
+  correct: 1,
+  explanation: "The intersection of two sets includes only the elements common to both sets. A ∩ B = {3}."
+},
+{
+  text: "If A = {1, 2, 3} and B = {3, 4, 5}, what is the difference A − B?",
+  options: [
+    "{1, 2}",
+    "{3, 4}",
+    "{1, 2, 3}",
+    "{4, 5}"
+  ],
+  correct: 0,
+  explanation: "The difference A − B includes elements in A but not in B. A − B = {1, 2}."
+},
+{
+  text: "Which of the following is the correct definition of a subset?",
+  options: [
+    "A set where all elements are in another set.",
+    "A set with no elements.",
+    "A set with exactly one element.",
+    "A set that contains all possible elements."
+  ],
+  correct: 0,
+  explanation: "A subset is defined as a set where every element of the subset is also an element of another set."
+},
+{
+  text: "What is the power set of the set A = {1, 2}?",
+  options: [
+    "{{}, {1}, {2}, {1, 2}}",
+    "{{1, 2}}",
+    "{{1}, {2}}",
+    "{}"
+  ],
+  correct: 0,
+  explanation: "The power set includes all subsets of a set. For A = {1, 2}, the power set is {{}, {1}, {2}, {1, 2}}."
+},
+{
+  text: "If the universal set U = {1, 2, 3, 4, 5} and A = {1, 2}, what is the complement of A?",
+  options: [
+    "{3, 4, 5}",
+    "{1, 2}",
+    "{1, 2, 3}",
+    "{}"
+  ],
+  correct: 0,
+  explanation: "The complement of a set includes all elements in the universal set that are not in the given set. A' = {3, 4, 5}."
+},
+{
+  text: "If A = {x | x is an even number less than 10}, what is the set A?",
+  options: [
+    "{2, 4, 6, 8}",
+    "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+    "{10, 12, 14}",
+    "{0, 2, 4, 6, 8, 10}"
+  ],
+  correct: 0,
+  explanation: "The set A includes all even numbers less than 10. A = {2, 4, 6, 8}."
+},
+{
+  text: "If A = {1, 2, 3} and B = {3, 4, 5}, what is the symmetric difference A △ B?",
+  options: [
+    "{1, 2, 4, 5}",
+    "{3}",
+    "{1, 2, 3, 4, 5}",
+    "{}"
+  ],
+  correct: 0,
+  explanation: "The symmetric difference includes elements in either A or B but not in both. A △ B = {1, 2, 4, 5}."
+},
+{
+  text: "How many subsets does a set with 3 elements have?",
+  options: [
+    "3",
+    "6",
+    "8",
+    "9"
+  ],
+  correct: 2,
+  explanation: "A set with n elements has 2ⁿ subsets. For 3 elements, the total subsets = 2³ = 8."
+},
+{
+  text: "If A = {x | x > 0} and B = {x | x < 0}, what is A ∩ B?",
+  options: [
+    "{x | x > 0}",
+    "{}",
+    "{x | x < 0}",
+    "{0}"
+  ],
+  correct: 1,
+  explanation: "Since A includes all positive numbers and B includes all negative numbers, they have no elements in common. A ∩ B = {}."
+},
+{
+  text: "If the universal set U = {1, 2, 3, 4, 5} and A = {1, 2, 3}, what is A' ∩ {4, 5}?",
+  options: [
+    "{4, 5}",
+    "{}",
+    "{1, 2, 3}",
+    "{3}"
+  ],
+  correct: 0,
+  explanation: "The complement A' = {4, 5}. A' ∩ {4, 5} = {4, 5}."
+},
+{
+  text: "If A and B are disjoint sets, what is A ∩ B?",
+  options: [
+    "A ∪ B",
+    "A − B",
+    "{}",
+    "B − A"
+  ],
+  correct: 2,
+  explanation: "Disjoint sets have no elements in common, so their intersection is the empty set, {}."
+},
+{
+  text: "What is the Cartesian product of A = {1, 2} and B = {a, b}?",
+  options: [
+    "{(1, a), (2, b)}",
+    "{(1, a), (1, b), (2, a), (2, b)}",
+    "{(a, 1), (b, 2)}",
+    "{}"
+  ],
+  correct: 1,
+  explanation: "The Cartesian product includes all ordered pairs (x, y) where x ∈ A and y ∈ B. A × B = {(1, a), (1, b), (2, a), (2, b)}."
+},
+{
+  text: "If A = {1, 2, 3} and B = {3, 4, 5}, how many elements are in A ∪ B?",
+  options: [
+    "3",
+    "5",
+    "6",
+    "7"
+  ],
+  correct: 1,
+  explanation: "A ∪ B = {1, 2, 3, 4, 5}, which has 5 elements."
+},
+{
+  text: "Which of the following is true for every set A?",
+  options: [
+    "A ⊆ A",
+    "A ⊂ A",
+    "{} ⊆ A",
+    "Both (a) and (c)"
+  ],
+  correct: 3,
+  explanation: "A set is always a subset of itself (A ⊆ A). The empty set is also a subset of every set ({} ⊆ A)."
+}, 
+{
+  text: "If A = {x | x is a prime number less than 20} and B = {x | x is an odd number less than 20}, what is A ∩ B?",
+  options: [
+    "{3, 5, 7, 11, 13, 17, 19}",
+    "{3, 5, 7, 11, 13, 17, 19, 2}",
+    "{3, 5, 7, 11, 13, 17, 19}",
+    "{2}"
+  ],
+  correct: 2,
+  explanation: "A includes all primes < 20: {2, 3, 5, 7, 11, 13, 17, 19}. B includes all odd numbers < 20. Intersection A ∩ B excludes 2 (not odd). A ∩ B = {3, 5, 7, 11, 13, 17, 19}."
+},
+{
+  text: "If U = {1, 2, 3, 4, 5, 6, 7, 8, 9}, A = {2, 4, 6, 8}, and B = {1, 2, 3, 4, 5}, find A' ∪ B'.",
+  options: [
+    "{1, 2, 3, 4, 5, 7, 9}",
+    "{6, 7, 8, 9}",
+    "{1, 3, 5, 7, 9}",
+    "{6, 7, 8}"
+  ],
+  correct: 2,
+  explanation: "A' = U − A = {1, 3, 5, 7, 9}. B' = U − B = {6, 7, 8, 9}. A' ∪ B' = {1, 3, 5, 7, 9}."
+},
+{
+  text: "If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, calculate |A ∪ B| − |A ∩ B|.",
+  options: [
+    "6",
+    "4",
+    "5",
+    "3"
+  ],
+  correct: 0,
+  explanation: "|A ∪ B| = |{1, 2, 3, 4, 5, 6}| = 6. |A ∩ B| = |{3, 4}| = 2. Therefore, |A ∪ B| − |A ∩ B| = 6 − 2 = 4."
+},
+{
+  text: "If A = {x | x is a multiple of 3, x ≤ 30} and B = {x | x is a multiple of 5, x ≤ 30}, find A ∩ B.",
+  options: [
+    "{15, 30}",
+    "{3, 15}",
+    "{15}",
+    "{}"
+  ],
+  correct: 0,
+  explanation: "A = {3, 6, 9, 12, 15, 18, 21, 24, 27, 30}. B = {5, 10, 15, 20, 25, 30}. A ∩ B includes common multiples of 3 and 5 (LCM of 3 and 5), which are {15, 30}."
+},
+{
+  text: "A survey showed 40 students like tea, 25 like coffee, and 10 like both. How many students like tea or coffee?",
+  options: [
+    "65",
+    "55",
+    "45",
+    "35"
+  ],
+  correct: 2,
+  explanation: "Using the inclusion-exclusion principle, |A ∪ B| = |A| + |B| − |A ∩ B|. Here, |A| = 40, |B| = 25, |A ∩ B| = 10. |A ∪ B| = 40 + 25 − 10 = 55."
+},
+{
+  text: "If A = {1, 2, 3, 4, 5, 6, 7, 8, 9} and B = {x | x is divisible by 2}, find |A − B|.",
+  options: [
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  correct: 2,
+  explanation: "B = {2, 4, 6, 8} (elements divisible by 2). A − B = {1, 3, 5, 7, 9}. Therefore, |A − B| = 5."
+},
+{
+  text: "A school has 100 students. 60 take math, 50 take science, and 20 take both. How many students take only math?",
+  options: [
+    "40",
+    "30",
+    "20",
+    "50"
+  ],
+  correct: 0,
+  explanation: "Using the formula: Only Math = |Math| − |Math ∩ Science|. Only Math = 60 − 20 = 40."
+},
+{
+  text: "Given three sets A = {1, 2, 3, 4}, B = {3, 4, 5, 6}, and C = {1, 2, 5, 6}, calculate A ∩ (B ∪ C).",
+  options: [
+    "{1, 2}",
+    "{3, 4}",
+    "{1, 3, 4}",
+    "{1, 2, 3, 4}"
+  ],
+  correct: 1,
+  explanation: "B ∪ C = {1, 2, 3, 4, 5, 6}. A ∩ (B ∪ C) = {1, 2, 3, 4} ∩ {1, 2, 3, 4, 5, 6} = {3, 4}."
+},
+{
+  text: "If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, find |A × B|.",
+  options: [
+    "16",
+    "8",
+    "12",
+    "6"
+  ],
+  correct: 0,
+  explanation: "The Cartesian product A × B has |A| × |B| elements. Here, |A| = 4 and |B| = 4. So, |A × B| = 4 × 4 = 16."
+},
+{
+  text: "Out of 120 people, 80 like pizza, 50 like burgers, and 30 like both. How many people like only pizza?",
+  options: [
+    "50",
+    "30",
+    "20",
+    "60"
+  ],
+  correct: 3,
+  explanation: "Using the formula: Only Pizza = |Pizza| − |Pizza ∩ Burger|. Only Pizza = 80 − 30 = 50."
+}, 
+{
+  text: "A marketing survey shows that 120 people use Instagram, 100 use Facebook, and 70 use both. If 150 people were surveyed, how many use either Instagram or Facebook?",
+  options: [
+    "150",
+    "130",
+    "200",
+    "220"
+  ],
+  correct: 1,
+  explanation: "Using the inclusion-exclusion principle, |Instagram ∪ Facebook| = |Instagram| + |Facebook| − |Both|. Substituting: |Instagram ∪ Facebook| = 120 + 100 − 70 = 150. Since there are 150 surveyed, all use at least one platform."
+},
+{
+  text: "In a class of 50 students, 30 play football, 25 play basketball, and 10 play both. How many students play only one sport?",
+  options: [
+    "35",
+    "25",
+    "45",
+    "30"
+  ],
+  correct: 0,
+  explanation: "Using the formula: Only Football = |Football| − |Both| = 30 − 10 = 20. Only Basketball = |Basketball| − |Both| = 25 − 10 = 15. Total = 20 + 15 = 35."
+},
+{
+  text: "A store sells 200 products: 120 are electronics, 90 are household items, and 50 are both. How many products are either electronics or household items?",
+  options: [
+    "160",
+    "200",
+    "220",
+    "140"
+  ],
+  correct: 3,
+  explanation: "Using the inclusion-exclusion principle, |Electronics ∪ Household Items| = |Electronics| + |Household Items| − |Both|. Substituting: |Electronics ∪ Household Items| = 120 + 90 − 50 = 160."
+},
+{
+  text: "In a company, 100 employees speak English, 60 speak Spanish, and 40 speak both. If there are 150 employees, how many speak neither language?",
+  options: [
+    "10",
+    "30",
+    "50",
+    "20"
+  ],
+  correct: 1,
+  explanation: "Using the inclusion-exclusion principle, |English ∪ Spanish| = |English| + |Spanish| − |Both|. Substituting: |English ∪ Spanish| = 100 + 60 − 40 = 120. Employees who speak neither = 150 − 120 = 30."
+},
+{
+  text: "At a park, 200 visitors play tennis, 150 play badminton, and 80 play both. How many visitors play only tennis?",
+  options: [
+    "120",
+    "80",
+    "150",
+    "70"
+  ],
+  correct: 0,
+  explanation: "Using the formula: Only Tennis = |Tennis| − |Both|. Substituting: Only Tennis = 200 − 80 = 120."
+},
+{
+  text: "In a survey, 60% of people like tea, 40% like coffee, and 25% like both. What percentage of people like only tea?",
+  options: [
+    "35%",
+    "25%",
+    "60%",
+    "50%"
+  ],
+  correct: 0,
+  explanation: "Using the formula: Only Tea = %Tea − %Both. Substituting: Only Tea = 60% − 25% = 35%."
+},
+{
+  text: "A library has 500 books: 300 are fiction, 250 are non-fiction, and 100 are both. How many books are only fiction or non-fiction?",
+  options: [
+    "450",
+    "350",
+    "300",
+    "400"
+  ],
+  correct: 0,
+  explanation: "Using the formula: Only Fiction = |Fiction| − |Both| = 300 − 100 = 200. Only Non-Fiction = |Non-Fiction| − |Both| = 250 − 100 = 150. Total = 200 + 150 = 350."
+},
+{
+  text: "A software company has 200 developers: 120 know Python, 100 know Java, and 50 know both. How many developers know either Python or Java?",
+  options: [
+    "220",
+    "170",
+    "150",
+    "180"
+  ],
+  correct: 1,
+  explanation: "Using the inclusion-exclusion principle, |Python ∪ Java| = |Python| + |Java| − |Both|. Substituting: |Python ∪ Java| = 120 + 100 − 50 = 170."
+},
+{
+  text: "In a university, 300 students take biology, 250 take chemistry, and 150 take both. If there are 400 students in total, how many take neither subject?",
+  options: [
+    "100",
+    "200",
+    "150",
+    "50"
+  ],
+  correct: 0,
+  explanation: "Using the inclusion-exclusion principle, |Biology ∪ Chemistry| = |Biology| + |Chemistry| − |Both|. Substituting: |Biology ∪ Chemistry| = 300 + 250 − 150 = 400. Students taking neither = Total − Biology ∪ Chemistry = 400 − 400 = 100."
+},
+{
+  text: "A gym has 500 members: 300 use the treadmill, 200 use the cycling machine, and 100 use both. How many members use only one type of equipment?",
+  options: [
+    "400",
+    "300",
+    "200",
+    "400"
+  ],
+  correct: 1,
+  explanation: "Using the formula: Only Treadmill = |Treadmill| − |Both| = 300 − 100 = 200. Only Cycling = |Cycling| − |Both| = 200 − 100 = 100. Total = 200 + 100 = 300."
+}, 
+{
+  text: "Solve the quadratic equation x² + 5x + 6 = 0.",
+  options: [
+    "x = -2, x = -3",
+    "x = 2, x = 3",
+    "x = -1, x = -6",
+    "x = 1, x = 6"
+  ],
+  correct: 0,
+  explanation: "Factorize x² + 5x + 6 = (x + 2)(x + 3) = 0. Therefore, x = -2 and x = -3."
+},
+{
+  text: "If x = √5, find the value of x² + 2x.",
+  options: [
+    "7 + 2√5",
+    "9",
+    "10 + 2√5",
+    "15"
+  ],
+  correct: 2,
+  explanation: "Substitute x = √5 into the expression x² + 2x. x² = (√5)² = 5, and 2x = 2√5. So, x² + 2x = 5 + 2√5."
+},
+{
+  text: "Simplify the surd expression: √72 + √50.",
+  options: [
+    "13√2",
+    "14√2",
+    "12√2",
+    "15√2"
+  ],
+  correct: 1,
+  explanation: "√72 = √(36 × 2) = 6√2, and √50 = √(25 × 2) = 5√2. Adding gives 6√2 + 5√2 = 14√2."
+},
+{
+  text: "Solve for x in the equation x² = 7 + 4√3.",
+  options: [
+    "x = √(7 + 4√3), x = -√(7 + 4√3)",
+    "x = √(7 − 4√3), x = -√(7 − 4√3)",
+    "x = √(3 + 4√7), x = -√(3 + 4√7)",
+    "x = √(3 − 4√7), x = -√(3 − 4√7)"
+  ],
+  correct: 0,
+  explanation: "To solve x² = 7 + 4√3, take square roots of both sides. x = ±√(7 + 4√3)."
+},
+{
+  text: "Find the nature of the roots of the quadratic equation 2x² − 4x + 3 = 0.",
+  options: [
+    "Real and equal",
+    "Real and distinct",
+    "Imaginary",
+    "Cannot be determined"
+  ],
+  correct: 2,
+  explanation: "The discriminant Δ = b² − 4ac = (−4)² − 4(2)(3) = 16 − 24 = −8. Since Δ < 0, the roots are imaginary."
+},
+{
+  text: "Simplify: ³√27 + √9 − 2√16.",
+  options: [
+    "3",
+    "5",
+    "6",
+    "0"
+  ],
+  correct: 1,
+  explanation: "³√27 = 3, √9 = 3, and 2√16 = 2 × 4 = 8. Adding and subtracting gives 3 + 3 − 8 = −2."
+},
+{
+  text: "A quadratic equation has roots 2 and 3. What is the equation?",
+  options: [
+    "x² − 5x + 6 = 0",
+    "x² − 6x + 5 = 0",
+    "x² + 5x − 6 = 0",
+    "x² + 6x − 5 = 0"
+  ],
+  correct: 0,
+  explanation: "If the roots are 2 and 3, the quadratic equation is (x − 2)(x − 3) = x² − 5x + 6."
+},
+{
+  text: "If x = √3 + √2, what is x²?",
+  options: [
+    "5 + 2√6",
+    "5 − 2√6",
+    "5",
+    "4√6 + 6"
+  ],
+  correct: 0,
+  explanation: "Using (a + b)² = a² + 2ab + b², with a = √3 and b = √2: x² = (√3)² + 2(√3)(√2) + (√2)² = 3 + 2√6 + 2 = 5 + 2√6."
+},
+{
+  text: "The product of two consecutive odd numbers is 143. What are the numbers?",
+  options: [
+    "11 and 13",
+    "13 and 15",
+    "9 and 11",
+    "7 and 9"
+  ],
+  correct: 0,
+  explanation: "Let the numbers be x and x + 2. Their product is x(x + 2) = 143. Solving x² + 2x − 143 = 0 gives x = 11 and x + 2 = 13."
+},
+{
+  text: "If p(x) = x² − 6x + 8, find the sum of its roots.",
+  options: [
+    "6",
+    "8",
+    "−6",
+    "−8"
+  ],
+  correct: 0,
+  explanation: "The sum of roots for a quadratic equation ax² + bx + c = 0 is −b/a. For p(x), sum = −(−6)/1 = 6."
+}, 
+{
+  text: "The height of a projectile is modeled by the equation h(t) = -5t² + 20t + 15, where h is the height in meters, and t is the time in seconds. Will the projectile hit the ground?",
+  options: [
+    "Yes, at t = 4 seconds",
+    "Yes, at t = 3 seconds",
+    "Yes, at t = 2 seconds",
+    "No, it will never hit the ground"
+  ],
+  correct: 1,
+  explanation: "To find when the projectile hits the ground, solve h(t) = 0: -5t² + 20t + 15 = 0. Using the quadratic formula: \( t = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \), with a = -5, b = 20, c = 15, we get t = 3 or t = -1. Since time cannot be negative, t = 3 seconds."
+},
+{
+  text: "A company models profit using the equation P(x) = -2x² + 12x - 16, where x is the number of units sold. Will the profit ever be zero?",
+  options: [
+    "Yes, at x = 4 and x = 2",
+    "Yes, at x = 6 and x = 3",
+    "No, it is always negative",
+    "Yes, at x = 8 and x = 5"
+  ],
+  correct: 0,
+  explanation: "To find when profit is zero, solve P(x) = 0: -2x² + 12x - 16 = 0. Using the quadratic formula: \( x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \), we get x = 4 and x = 2."
+},
+{
+  text: "The roots of a quadratic equation ax² + bx + c = 0 are imaginary. Which of the following must be true?",
+  options: [
+    "b² − 4ac < 0",
+    "b² − 4ac = 0",
+    "b² − 4ac > 0",
+    "a = 0"
+  ],
+  correct: 0,
+  explanation: "For roots to be imaginary, the discriminant \( b^2 - 4ac \) must be negative. This makes the square root term imaginary."
+},
+{
+  text: "A football is kicked, and its height is modeled by the equation h(t) = -4.9t² + 14.7t. When does it return to the ground?",
+  options: [
+    "At t = 3 seconds",
+    "At t = 5 seconds",
+    "At t = 7 seconds",
+    "At t = 2 seconds"
+  ],
+  correct: 0,
+  explanation: "Solve h(t) = 0: -4.9t² + 14.7t = 0. Factorize to get t(-4.9t + 14.7) = 0. So, t = 0 or t = 3 seconds. Since t = 0 is the starting point, the football returns to the ground at t = 3 seconds."
+},
+{
+  text: "The roots of the equation x² − 4x + 4 = 0 are:",
+  options: [
+    "Real and equal",
+    "Real and distinct",
+    "Imaginary",
+    "None of these"
+  ],
+  correct: 0,
+  explanation: "The discriminant \( b^2 - 4ac = (-4)^2 - 4(1)(4) = 16 - 16 = 0 \). When \( \Delta = 0 \), the roots are real and equal."
+},
+{
+  text: "The quadratic equation x² + 2x + 10 = 0 has roots that are:",
+  options: [
+    "Real and equal",
+    "Real and distinct",
+    "Imaginary",
+    "None of these"
+  ],
+  correct: 2,
+  explanation: "The discriminant \( b^2 - 4ac = 2^2 - 4(1)(10) = 4 - 40 = -36 \). When \( \Delta < 0 \), the roots are imaginary."
+},
+{
+  text: "A rectangle has an area of 30 m² and its length is 2 m more than its width. What is the width of the rectangle?",
+  options: [
+    "3 m",
+    "5 m",
+    "6 m",
+    "10 m"
+  ],
+  correct: 1,
+  explanation: "Let the width = x and the length = x + 2. Area = length × width, so \( x(x + 2) = 30 \). Solve \( x^2 + 2x - 30 = 0 \). Using the quadratic formula, \( x = 5 \) or \( x = -6 \). Since width cannot be negative, x = 5 m."
+},
+{
+  text: "The quadratic equation 2x² − 4x + 2 = 0 has roots that are:",
+  options: [
+    "Real and equal",
+    "Real and distinct",
+    "Imaginary",
+    "None of these"
+  ],
+  correct: 0,
+  explanation: "The discriminant \( b^2 - 4ac = (-4)^2 - 4(2)(2) = 16 - 16 = 0 \). Since \( \Delta = 0 \), the roots are real and equal."
+},
+{
+  text: "A farmer wants to build a rectangular pen with an area of 100 m² and the length is twice the width. What are the dimensions of the pen?",
+  options: [
+    "Length = 10 m, Width = 5 m",
+    "Length = 20 m, Width = 5 m",
+    "Length = 15 m, Width = 10 m",
+    "Length = 25 m, Width = 4 m"
+  ],
+  correct: 0,
+  explanation: "Let the width = x and the length = 2x. Area = length × width, so \( x(2x) = 100 \). Solve \( 2x^2 = 100 \): \( x^2 = 50 \), \( x = 5 \). Length = 2x = 10 m."
+},
+{
+  text: "The quadratic equation 3x² + 6x + 2 = 0 has roots that are:",
+  options: [
+    "Real and distinct",
+    "Real and equal",
+    "Imaginary",
+    "None of these"
+  ],
+  correct: 0,
+  explanation: "The discriminant \( b^2 - 4ac = (6)^2 - 4(3)(2) = 36 - 24 = 12 \). Since \( \Delta > 0 \), the roots are real and distinct."
+}, 
+
         ]
       },
            
