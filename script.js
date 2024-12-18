@@ -436,11 +436,9 @@ document.addEventListener("DOMContentLoaded", () => {
                           
   const questionBanks = {
     Mathematics: {
-        "MTH105-12": {
-        title: "Biometry/Biostatistics",
+        "MTH105": {
+        title: "Mathematics for Biological Sciences",
         questions: [
-          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
           {
   text: "What is the union of the sets A = {1, 2, 3} and B = {3, 4, 5}?",
   options: [
