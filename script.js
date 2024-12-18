@@ -743,6 +743,134 @@ document.addEventListener("DOMContentLoaded", () => {
   explanation: "The formula for orbital velocity is v = √(GM/r). Substituting G = 6.67 × 10⁻¹¹, M = 6.0 × 10²⁴, and r = 4.2 × 10⁷: v = √[(6.67 × 10⁻¹¹ × 6.0 × 10²⁴) / 4.2 × 10⁷] ≈ 1.07 × 10⁴ m/s."
 },
 {
+  text: "If the acceleration a of a particle moving with uniform speed v in a circle of radius r is proportional to vⁿ and some power of r, what is the power of values in v and r?",
+  options: [
+    "n = 2, m = -1",
+    "n = 1, m = -2",
+    "n = 1, m = 3",
+    "n = 2, m = 1",
+    "n = 3, m = -1"
+  ],
+  correct: 0,
+  explanation: "Centripetal acceleration a is given by a = v²/r. Here, the power of v is 2 (n = 2), and the power of r is -1 (m = -1)."
+},
+{
+  text: "On a particular planet, 'bolasec' is a unit of time, 100 bolasec is equivalent to 1 hour. Determine the value of 1 day in bolasec:",
+  options: [
+    "3.6 × 10⁴ bolasec",
+    "4.2 × 10⁵ bolasec",
+    "2.4 × 10⁴ bolasec",
+    "1.2 × 10⁵ bolasec"
+  ],
+  correct: 3,
+  explanation: "1 hour = 100 bolasec. There are 24 hours in a day. Therefore, 1 day = 24 × 100 = 2400 bolasec × 10 = 1.2 × 10⁵ bolasec."
+},
+{
+  text: "The dimensions of specific heat capacity are:",
+  options: [
+    "M⁰L²T⁻²K⁻¹",
+    "MLT⁻²",
+    "M⁰L⁰T⁰",
+    "M¹L²T⁻²K⁻¹",
+    "None of the above"
+  ],
+  correct: 0,
+  explanation: "Specific heat capacity has the formula Q = mcΔT, where c = Q / (mΔT). This gives the dimensions [L²T⁻²K⁻¹]."
+},
+{
+  text: "In a particular country, 'niksec' is a unit of time, 200 niksec is equivalent to 1 hour. Determine the value of 1 day in niksec:",
+  options: [
+    "2.3 × 10⁵ niksec",
+    "3.3 × 10⁴ niksec",
+    "4.8 × 10⁴ niksec",
+    "2.4 × 10⁵ niksec"
+  ],
+  correct: 3,
+  explanation: "1 hour = 200 niksec. Since there are 24 hours in a day, 1 day = 24 × 200 = 4800 niksec × 10 = 2.4 × 10⁵ niksec."
+},
+{
+  text: "An hyperbolical unit of time 'Ratu' (1 Ratu is equivalent to 5 μs). Express 50 years in Ratu:",
+  options: [
+    "1.5768 × 10¹⁵ Ratu",
+    "4.5768 × 10¹⁸ Ratu",
+    "1.5768 × 10¹⁷ Ratu",
+    "1.7568 × 10¹⁵ Ratu"
+  ],
+  correct: 0,
+  explanation: "1 year = 3.1536 × 10⁷ seconds. 50 years = 50 × 3.1536 × 10⁷ = 1.5768 × 10⁹ seconds. Since 1 Ratu = 5 μs = 5 × 10⁻⁶ seconds, we get 1.5768 × 10¹⁵ Ratu."
+},
+{
+  text: "Express the units of the following physical quantities in terms of fundamental units: (i) Forces, (ii) Power, respectively:",
+  options: [
+    "LT⁻², MLT⁻²",
+    "MLT⁻², ML²T⁻³",
+    "MLT⁻², ML²T⁻²",
+    "MLT⁻², MTL⁻³",
+    "None of these"
+  ],
+  correct: 1,
+  explanation: "Force = mass × acceleration, so its unit is MLT⁻². Power = work/time, where work = force × distance, so its unit is ML²T⁻³."
+},
+{
+  text: "Which of the following statements is false?",
+  options: [
+    "Mechanics is a science that studies and predicts the condition of equilibrium or motion of a body",
+    "1 second is the time taken by 9192631770 oscillations of the light of a cesium-133 atom",
+    "The kilogram is defined as the mass of a platinum-iridium alloy (NIST platinum-iron) kept in Sevres, France (near Paris)"
+  ],
+  correct: 2,
+  explanation: "The kilogram is no longer defined based on a physical object but by Planck’s constant since 2019."
+},
+{
+  text: "Suppose two quantities A and B have different dimensions. Determine which of the following arithmetic operations could be physically meaningful:",
+  options: [
+    "A + B",
+    "A/B",
+    "AB",
+    "A - B",
+    "None of the above"
+  ],
+  correct: 1,
+  explanation: "Only division (A/B) or multiplication (AB) can be meaningful if the dimensions differ. Addition and subtraction require the same dimensions."
+},
+{
+  text: "The gravitational force (Newtons), between two masses m₁ and m₂ (kilograms), which are at a distance r (meters) apart is given by: F = Gm₁m₂/r². The dimensionality of the universal gravitational constant G is:",
+  options: [
+    "M⁻¹L³T⁻²",
+    "ML⁻³T⁻²",
+    "M⁻¹L²T⁻¹",
+    "M⁻²L³T⁻²",
+    "None of these"
+  ],
+  correct: 0,
+  explanation: "From F = Gm₁m₂/r², solving for G gives G = FL²/M². Substituting the units, we get G = [M⁻¹L³T⁻²]."
+},
+{
+  text: "Which of the following quantities has the dimension ML²T⁻³?",
+  options: [
+    "Density",
+    "Work",
+    "Power",
+    "Acceleration",
+    "None of the above"
+  ],
+  correct: 2,
+  explanation: "Power is defined as work/time. Work = force × distance, and force = MLT⁻². Therefore, Power = ML²T⁻³."
+},
+{
+  text: "An astronomical unit (AU) is the average distance of Earth from the sun, approximately 1.5 × 10¹¹ m. The speed of light is about 3 × 10⁸ m/s. Express the speed of light in terms of astronomical units per minute:",
+  options: [
+    "12.0 AU/min",
+    "1.2 AU/min",
+    "0.12 AU/min",
+    "0.012 AU/min",
+    "None of the above"
+  ],
+  correct: 2,
+  explanation: "Speed of light = 3 × 10⁸ m/s. 1 AU = 1.5 × 10¹¹ m. In 1 minute = 60 seconds, distance = 3 × 10⁸ × 60 = 1.8 × 10¹⁰ m. In AU/min = (1.8 × 10¹⁰) / (1.5 × 10¹¹) = 0.12 AU/min."
+}, 
+
+{
   text: "A satellite of mass m is in a circular orbit at height h above the Earth’s surface. If R is the radius of the Earth and g is the acceleration due to gravity, the total energy of the satellite is:",
   options: [
     "-mgR/2",
