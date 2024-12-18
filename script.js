@@ -488,6 +488,341 @@ document.addEventListener("DOMContentLoaded", () => {
       correct: 1,
       explanation: "A + B = (2 + 1)i‌ + (3 + 4)j‌ = 3i‌ + 7j‌. The magnitude is √(3² + 7²) ≈ 7.62"
     },
+
+          {
+  text: "Which of the following statements is true about the motion of an object?",
+  options: [
+    "A rigid object in a straight line with constant acceleration, its average velocity is given as V_avg = (V_1 + V_2) / 2",
+    "Objects undergoing free fall experience different accelerations",
+    "An object which travels at constant velocity has a constant acceleration",
+    "Any freely falling object experiences a constant acceleration directed towards the center of the Earth"
+  ],
+  correct: 3,
+  explanation: "In free fall, objects experience constant acceleration towards the Earth's center due to gravity."
+},
+{
+  text: "The velocity of an object, v (in m/s), is given by v = 4t + 6t². Calculate the displacement of the object at time t = 2 s, given that x(0) = 2 m at time t = 0 s.",
+  options: [
+    "34 m",
+    "45 m",
+    "26 m",
+    "30 m"
+  ],
+  correct: 1,
+  explanation: "Displacement is obtained by integrating v = 4t + 6t² with respect to time and substituting t = 2."
+},
+{
+  text: "The displacement y(t) of an object is given as y = 8t² + 2t + 5. Determine the velocity of the object at time t = 5 s.",
+  options: [
+    "40 m/s, 12 m/s²",
+    "80 m/s, 16 m/s²",
+    "40 m/s, 16 m/s²",
+    "48 m/s, 12 m/s²"
+  ],
+  correct: 2,
+  explanation: "Velocity is the derivative of y(t): v = dy/dt = 16t + 2. At t = 5, v = 40 m/s, and acceleration is constant at 16 m/s²."
+},
+{
+  text: "The cables of an elevator at a height of 10 m suddenly broke. What is the velocity of the elevator just before touching the ground (g = 10 m/s²)?",
+  options: [
+    "10 m/s",
+    "17 m/s",
+    "14 m/s",
+    "20 m/s"
+  ],
+  correct: 1,
+  explanation: "Using v² = u² + 2gh, with u = 0, h = 10 m, and g = 10 m/s², v = √(2 × 10 × 10) = 14 m/s."
+},
+{
+  text: "An object moves such that its displacement is given as x = 30t + 0.2t² meters. Find its instantaneous velocity at t = 3.0 s and average velocity for the time interval 2.0 s to 3.0 s.",
+  options: [
+    "21.6 m/s, 24.0 m/s",
+    "30.6 m/s, 33.6 m/s",
+    "54.2 m/s, 62.1 m/s",
+    "7.4 m/s, 6.0 m/s"
+  ],
+  correct: 0,
+  explanation: "Instantaneous velocity is the derivative of displacement: v = dx/dt = 30 + 0.4t. At t = 3, v = 21.6 m/s."
+},
+{
+  text: "Given v(t) = 25 − 18t, where v is in m/s and t is in seconds. Determine the total displacement between t₁ = 1.5 s and t₂ = 3.1 s.",
+  options: [
+    "64 m",
+    "106 m",
+    "91 m",
+    "164 m"
+  ],
+  correct: 1,
+  explanation: "Displacement is obtained by integrating v(t) between t₁ and t₂. Solving gives 106 m."
+},
+{
+  text: "The displacement x of a particle in meters is given as x(t) = 4t² + 3t + 2. Find its instantaneous acceleration at t = 3 s.",
+  options: [
+    "8 m/s²",
+    "12 m/s²",
+    "16 m/s²",
+    "24 m/s²"
+  ],
+  correct: 2,
+  explanation: "Acceleration is the second derivative of x(t): a = d²x/dt² = 8 m/s² (constant)."
+},
+{
+  text: "A stone is thrown vertically upward from a platform which is 50 m above the ground with a velocity of 10 m/s. Calculate the velocity of the stone when it hits the ground (g = 10 m/s²).",
+  options: [
+    "10 m/s",
+    "20 m/s",
+    "33.2 m/s",
+    "13.2 m/s"
+  ],
+  correct: 2,
+  explanation: "Using v² = u² + 2gh, with u = 10 m/s and h = 50 m, v = √(10² + 2 × 10 × 50) = 33.2 m/s."
+},
+{
+  text: "Which of the following equations is NOT true about the equations for free fall?",
+  options: [
+    "v = u + gt",
+    "x = x₀ + v₀t − gt² / 2",
+    "v² = v₀² − 2g(x − x₀)",
+    "x = v₀² − 2g(x − x₀)"
+  ],
+  correct: 3,
+  explanation: "The last option is not a correct equation for free fall motion."
+},
+{
+  text: "The relation 3t = √(3x) + 6 describes the displacement of a particle on one direction, where t is in meters and x is in seconds. Find the displacement when the velocity is zero.",
+  options: [
+    "6 m",
+    "2 m",
+    "0 m",
+    "3 m"
+  ],
+  correct: 0,
+  explanation: "To find when velocity is zero, differentiate x with respect to t and set it to zero, then solve for x."
+},
+{
+  text: "A particle moves along the x-direction according to the equation x = (2t² − 3t + 6) m. Determine the average speed between t = 2 s and t = 4 s.",
+  options: [
+    "18 m/s, 2.0 m/s²",
+    "16 m/s, 1.5 m/s²",
+    "8 m/s, 3.0 m/s²",
+    "None of the above"
+  ],
+  correct: 3,
+  explanation: "Average speed is calculated as the total displacement divided by time interval."
+},
+{
+  text: "What do the quantities d²x/dt² and dx/dt represent? What are their S.I. Units?",
+  options: [
+    "Instantaneous velocity (m/s) and acceleration (m/s²)",
+    "Instantaneous acceleration (m/s²) and velocity (m/s)",
+    "Square of velocity (m²/s²) and acceleration (m/s²)",
+    "Acceleration (m/s²) and square of velocity (m²/s²)"
+  ],
+  correct: 1,
+  explanation: "dx/dt represents velocity (m/s) and d²x/dt² represents acceleration (m/s²)."
+}, 
+{
+  text: "The position of an object is given by x(t) = 4t³ − 3t² + 2t + 5, where x is in meters and t is in seconds. What is the instantaneous velocity at t = 2 s?",
+  options: [
+    "50 m/s",
+    "38 m/s",
+    "30 m/s",
+    "42 m/s"
+  ],
+  correct: 1,
+  explanation: "The instantaneous velocity is obtained by differentiating x(t) with respect to time: v(t) = dx/dt = d(4t³ − 3t² + 2t + 5)/dt = 12t² − 6t + 2. At t = 2 s, v(2) = 12(2)² − 6(2) + 2 = 48 − 12 + 2 = 38 m/s."
+},
+{
+  text: "A particle starts from rest and moves with constant acceleration a = 4 m/s². What is the displacement of the particle after 5 seconds?",
+  options: [
+    "25 m",
+    "50 m",
+    "75 m",
+    "100 m"
+  ],
+  correct: 1,
+  explanation: "Using the kinematic equation for displacement under constant acceleration: x = ut + 0.5at². Since the particle starts from rest (u = 0), x = 0.5 × 4 × (5)² = 0.5 × 4 × 25 = 50 m."
+},
+{
+  text: "A ball is projected upward with an initial velocity of 20 m/s. What is the maximum height attained by the ball? (Take g = 10 m/s²).",
+  options: [
+    "10 m",
+    "15 m",
+    "20 m",
+    "40 m"
+  ],
+  correct: 2,
+  explanation: "At the maximum height, the velocity becomes zero. Using v² = u² − 2gh, where v = 0, u = 20 m/s, and g = 10 m/s²: 0 = (20)² − 2(10)(h). Solving for h: h = (20)² / (2 × 10) = 400 / 20 = 20 m."
+},
+{
+  text: "The velocity of a car is described by v(t) = 10 − 2t, where t is in seconds and v is in m/s. Find the time at which the car comes to rest.",
+  options: [
+    "5 s",
+    "2.5 s",
+    "10 s",
+    "7.5 s"
+  ],
+  correct: 0,
+  explanation: "The car comes to rest when its velocity becomes zero. Setting v(t) = 0: 10 − 2t = 0. Solving for t gives t = 10 / 2 = 5 seconds."
+},
+{
+  text: "The acceleration of an object is constant at 5 m/s². If its initial velocity is 10 m/s, what is its velocity after 6 seconds?",
+  options: [
+    "30 m/s",
+    "40 m/s",
+    "25 m/s",
+    "50 m/s"
+  ],
+  correct: 1,
+  explanation: "Using the kinematic equation v = u + at, where u = 10 m/s, a = 5 m/s², and t = 6 s: v = 10 + (5 × 6) = 10 + 30 = 40 m/s."
+},
+{
+  text: "A projectile is thrown horizontally from a height of 80 m with an initial velocity of 15 m/s. How long does it take to hit the ground? (Take g = 10 m/s²).",
+  options: [
+    "2.5 s",
+    "3.0 s",
+    "4.0 s",
+    "5.0 s"
+  ],
+  correct: 2,
+  explanation: "The time to hit the ground is determined by the vertical motion alone. Using y = 0.5gt², where y = 80 m and g = 10 m/s²: 80 = 0.5 × 10 × t². Solving for t² gives t² = 16, so t = √16 = 4.0 seconds."
+},
+{
+  text: "A body moving in a straight line has an initial velocity of 12 m/s and an acceleration of 3 m/s². What is its velocity after 4 seconds?",
+  options: [
+    "20 m/s",
+    "24 m/s",
+    "30 m/s",
+    "18 m/s"
+  ],
+  correct: 1,
+  explanation: "Using the kinematic equation v = u + at, where u = 12 m/s, a = 3 m/s², and t = 4 s: v = 12 + (3 × 4) = 12 + 12 = 24 m/s."
+},
+{
+  text: "An object is dropped from a height of 45 m. How long will it take to reach the ground? (Take g = 10 m/s²).",
+  options: [
+    "2.5 s",
+    "3.0 s",
+    "4.5 s",
+    "6.0 s"
+  ],
+  correct: 1,
+  explanation: "Using y = 0.5gt², where y = 45 m and g = 10 m/s²: 45 = 0.5 × 10 × t². Solving for t² gives t² = 9, so t = √9 = 3.0 seconds."
+},
+{
+  text: "A car accelerates uniformly from rest at 6 m/s². What is its velocity after traveling 72 m?",
+  options: [
+    "12 m/s",
+    "18 m/s",
+    "24 m/s",
+    "36 m/s"
+  ],
+  correct: 2,
+  explanation: "Using v² = u² + 2as, where u = 0, a = 6 m/s², and s = 72 m: v² = 0 + 2(6)(72) = 864. Solving for v: v = √864 = 24 m/s."
+},
+{
+  text: "A train moving at 20 m/s comes to rest in 10 seconds under uniform deceleration. What is the magnitude of the deceleration?",
+  options: [
+    "1.5 m/s²",
+    "2.0 m/s²",
+    "2.5 m/s²",
+    "3.0 m/s²"
+  ],
+  correct: 1,
+  explanation: "Using v = u + at, where v = 0, u = 20 m/s, and t = 10 s. Rearranging for a: 0 = 20 + (a × 10) → a = −20 / 10 = −2.0 m/s². The magnitude is 2.0 m/s²."
+}, 
+{
+  text: "A satellite revolves around the Earth in a circular orbit of radius 4.2 × 10⁷ m. The mass of the Earth is 6.0 × 10²⁴ kg, and G = 6.67 × 10⁻¹¹ Nm²/kg². Calculate the orbital velocity of the satellite.",
+  options: [
+    "3.07 × 10³ m/s",
+    "1.07 × 10⁴ m/s",
+    "2.07 × 10³ m/s",
+    "7.03 × 10⁴ m/s"
+  ],
+  correct: 1,
+  explanation: "The formula for orbital velocity is v = √(GM/r). Substituting G = 6.67 × 10⁻¹¹, M = 6.0 × 10²⁴, and r = 4.2 × 10⁷: v = √[(6.67 × 10⁻¹¹ × 6.0 × 10²⁴) / 4.2 × 10⁷] ≈ 1.07 × 10⁴ m/s."
+},
+{
+  text: "A satellite of mass m is in a circular orbit at height h above the Earth’s surface. If R is the radius of the Earth and g is the acceleration due to gravity, the total energy of the satellite is:",
+  options: [
+    "-mgR/2",
+    "-mg/2",
+    "-mgR/h",
+    "-mgR/(R+h)"
+  ],
+  correct: 3,
+  explanation: "The total energy of a satellite in a circular orbit is given by E = -GMm / (2r), where r = R + h. Since g = GM/R², substituting gives E = -mgR/(R + h)."
+},
+{
+  text: "The radius of the moon’s orbit around the Earth is 3.84 × 10⁸ m, and the time period is 27.3 days. Find the orbital speed of the moon.",
+  options: [
+    "1.02 × 10³ m/s",
+    "1.12 × 10³ m/s",
+    "1.33 × 10³ m/s",
+    "0.92 × 10³ m/s"
+  ],
+  correct: 1,
+  explanation: "The orbital speed is v = 2πr / T, where r = 3.84 × 10⁸ m and T = 27.3 × 24 × 3600 seconds. Substituting: v ≈ (2 × 3.1416 × 3.84 × 10⁸) / (2.36 × 10⁶) ≈ 1.12 × 10³ m/s."
+},
+{
+  text: "The weight of a body of mass m on Earth is 10 N. If the same body is taken to a planet where the acceleration due to gravity is 1/6 of the Earth’s value, the weight of the body on the planet will be:",
+  options: [
+    "1.67 N",
+    "2.5 N",
+    "6.0 N",
+    "0.6 N"
+  ],
+  correct: 0,
+  explanation: "Weight is proportional to the gravitational acceleration. On the planet, g' = g / 6. Therefore, weight = 10 / 6 ≈ 1.67 N."
+},
+{
+  text: "The escape velocity Vₑₛc for an object of mass m is given by:",
+  options: [
+    "Vₑₛc = √(GM/r)",
+    "Vₑₛc = √(2GM/r)",
+    "Vₑₛc = GM/r²",
+    "Vₑₛc = 2GM/r"
+  ],
+  correct: 1,
+  explanation: "The escape velocity is derived from the energy conservation principle. Vₑₛc = √(2GM/r), where G is the gravitational constant, M is the planet's mass, and r is the distance from the center."
+},
+{
+  text: "If the gravitational potential at a point in space is -32 J/kg, what is the work done to bring a 2 kg mass from infinity to that point?",
+  options: [
+    "64 J",
+    "32 J",
+    "-64 J",
+    "-32 J"
+  ],
+  correct: 2,
+  explanation: "The work done is equal to the gravitational potential energy, which is mass × potential. Therefore, W = 2 × (-32) = -64 J."
+},
+{
+  text: "Which of the following is a correct statement about the gravitational potential energy of a body?",
+  options: [
+    "It is always positive.",
+    "It is always negative.",
+    "It is zero at infinity.",
+    "Both (b) and (c)."
+  ],
+  correct: 3,
+  explanation: "Gravitational potential energy is defined as negative because work is required to move a body against gravity. At infinity, potential energy is defined as zero. Hence, the correct answer is both (b) and (c)."
+},
+{
+  text: "A satellite revolves in a circular orbit at a height h above the Earth. If the radius of the Earth is R, the ratio of the orbital velocity to the escape velocity is:",
+  options: [
+    "1/√2",
+    "1/2",
+    "√2",
+    "2"
+  ],
+  correct: 0,
+  explanation: "The orbital velocity is vₒ = √(GM/r), and the escape velocity is Vₑₛc = √(2GM/r). The ratio vₒ / Vₑₛc = √(GM/r) / √(2GM/r) = 1/√2."
+}, 
+
+
+
+          
     {
       text: "Two vectors of magnitudes 10 units and 10 units act at an angle of 30 degrees. Find the magnitude of the resultant.",
       options: [
