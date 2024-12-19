@@ -1,3 +1,16 @@
+// Add a new history state
+window.onload = function() {
+    history.pushState(null, '', window.location.href);
+};
+
+// Handle back button
+window.onpopstate = function(event) {
+    // Prevent app from closing
+    history.pushState(null, '', window.location.href);
+    alert("Use the navigation buttons within the app!");
+};
+
+
 document.addEventListener("DOMContentLoaded", function () {
   // Data for images and messages
   const notifications = {
