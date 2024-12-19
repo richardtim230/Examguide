@@ -3340,7 +3340,8 @@ text: "Which arthropod subphylum is characterized by having chelicerae and pedip
   {
     text: "Which subphylum of chordates includes tunicates?",
     options: [
-      "Vertebrata",      "Cephalochordata",
+      "Vertebrata",      
+      "Cephalochordata",
       "Urochordata",
       "Craniata"
     ],
@@ -3400,9 +3401,7 @@ text: "Which arthropod subphylum is characterized by having chelicerae and pedip
       "Reproduction"
     ],
     correct: 2,
-    explanation: "Sip
-
-hons facilitate the intake of water containing food particles and the expulsion of filtered water."
+    explanation: "Siphons facilitate the intake of water containing food particles and the expulsion of filtered water."
   },
   {
     text: "Which structure in a tunicate larva shows the presence of a dorsal hollow nerve cord?",
@@ -4026,7 +4025,8 @@ nding the relationships between these two phyla."
     text: "Which of the following is NOT a method of reproduction in cnidarians?",
     options: [
       "Asexual budding",
-      "Sexual reproduction with external fertilization",      "Parthenogenesis",
+      "Sexual reproduction with external fertilization",      
+      "Parthenogenesis",
       "Internal fertilization with direct development"
     ],
     correct: 3,
