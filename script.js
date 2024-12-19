@@ -1983,7 +1983,2079 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
     { text: "Which phylum includes organisms with a segmented body?", "options": ["Porifera", "Annelida", "Nematoda", "Cnidaria"], "correct": 1, "explanation": "Annelids have segmented bodies, as seen in earthworms and leeches." },
     { text: "What is the mode of reproduction in sponges?", "options": ["Only sexual", "Only asexual", "Both sexual and asexual", "Parthenogenesis"], "correct": 2, "explanation": "Sponges reproduce both sexually through gametes and asexually by budding or fragmentation." },
     { text: "Which phylum includes tapeworms?", "options": ["Nematoda", "Platyhelminthes", "Cnidaria", "Porifera"], "correct": 1, "explanation": "Tapeworms are parasitic flatworms classified under the phylum Platyhelminthes." }, 
+     {
+    text: "Which type of cleavage is characterized by rapid cell divisions with little to no growth between divisions, resulting in a smaller blastomere size?",
+    options: [
+      "Holoblastic, equal",
+      "Holoblastic, unequal",
+      "Meroblastic, discoidal",
+      "Meroblastic, superficial"
+    ],
+    correct: 0,
+    explanation: "This describes holoblastic equal cleavage, where the entire egg divides completely and the resulting blastomeres are roughly equal in size.  This is typical of many marine invertebrates with relatively little yolk."
+  },
+  {
+    text: "What type of egg is most likely to exhibit meroblastic cleavage?",
+    options: [
+      "Alecithal",
+      "Oligolecithal",
+      "Mesolecithal",
+      "Telolecithal"
+    ],
+    correct: 3,
+    explanation: "Telolecithal eggs have a large amount of yolk concentrated at one pole. The yolk hinders complete cell division, leading to meroblastic cleavage where only a portion of the cytoplasm divides."
+  },
+  {
+    text: "In what type of cleavage do the cleavage furrows run parallel to the animal-vegetal axis?",
+    options: [
+      "Radial",
+      "Spiral",
+      "Bilateral",
+      "Rotational"
+    ],
+    correct: 0,
+    explanation: "Radial cleavage is characterized by cleavage planes that are either parallel or perpendicular to the animal-vegetal axis, resulting in tiers of cells stacked on top of each other."
+  },
+  {
+    text: "Which type of cleavage is associated with the formation of a spiral arrangement of blastomeres?",
+    options: [
+      "Radial",
+      "Spiral",
+      "Bilateral",
+      "Rotational"
+    ],
+    correct: 1,
+    explanation: "Spiral cleavage is characterized by oblique cleavage planes, resulting in a spiral arrangement of blastomeres. This is often seen in mollusks and annelids."
+  },
+  {
+    text: "What is the significance of the presence of a yolk in an egg?",
+    options: [
+      "Provides structural support for the egg",
+      "Provides nutrients for the developing embryo",
+      "Regulates the rate of cell division",
+      "All of the above"
+    ],
+    correct: 3,
+    explanation: "The yolk serves all three functions. It acts as a nutrient source for the developing embryo, influences the pattern and rate of cleavage, and also provides some structural support to the egg."
+  },
+  {
+    text: "A bird's egg is best described as which type of egg?",
+    options: [
+      "Alecithal",
+      "Oligolecithal",
+      "Mesolecithal",
+      "Telolecithal"
+    ],
 
+    correct: 3,
+    explanation: "Bird eggs are characterized by a massive amount of yolk, making them telolecithal. This large yolk supply is crucial for the development of the relatively large embryo."
+  },
+  {
+    text: "Which of these animals would likely exhibit holoblastic rotational cleavage?",
+    options: [
+      "Sea urchin",
+      "Bird",
+      "Frog",
+      "Insect"
+    ],
+    correct: 2,
+    explanation: "Frogs have moderate amounts of yolk, making holoblastic cleavage possible.  Rotational cleavage is a variation of holoblastic where the first two blastomeres divide at different angles to the animal-vegetal axis."
+  },
+  {
+    text: "What type of cleavage is observed in mammals?",
+    options: [
+      "Holoblastic, equal",
+      "Holoblastic, rotational",
+      "Meroblastic, superficial",
+      "Meroblastic, discoidal"
+    ],
+    correct: 1,
+    explanation: "Mammalian eggs are relatively small with little yolk, hence they exhibit holoblastic rotational cleavage."
+  },
+  {
+    text: "How does the amount of yolk in an egg influence the pattern of cleavage?",
+    options: [
+      "More yolk leads to slower and more incomplete cleavage",
+      "More yolk leads to faster and more complete cleavage",
+      "Yolk amount has no effect on cleavage pattern",
+      "More yolk leads to unequal blastomere sizes"
+    ],
+    correct: 0,
+    explanation: "The presence of abundant yolk inhibits cell division, resulting in slower and often incomplete cleavage (meroblastic)."
+  },
+  {
+    text: "Which type of cleavage results in a blastoderm?",
+    options: [
+      "Holoblastic",
+      "Meroblastic, discoidal",
+      "Meroblastic, superficial",
+      "Holoblastic, equal"
+    ],
+    correct: 1,
+    explanation: "Discoidal cleavage, a type of meroblastic cleavage, results in a blastoderm which is a flattened disc of cells atop the large yolk mass."
+  },
+  {
+    text: "What is the difference between isolecithal and telolecithal eggs?",
+    options: [
+      "Isolethical eggs have a lot of yolk, telolecithal eggs have little yolk",
+      "Isolethical eggs have little yolk evenly distributed, telolecithal eggs have a lot of yolk concentrated at one pole",
+      "Isolethical eggs are larger, telolecithal eggs are smaller",
+      "Isolethical eggs undergo holoblastic cleavage, telolecithal eggs undergo meroblastic cleavage"
+    ],
+    correct: 1,
+    explanation: "This accurately describes the key difference: yolk distribution and amount."
+  },
+  {
+    text: "Which type of egg would be most likely to have a large perivitelline space?",
+    options: [
+      "Alecithal",
+      "Oligolecithal",
+      "Mesolecithal",
+      "Telolecithal"
+    ],
+    correct: 3,
+    explanation: "Telolecithal eggs, due to their large yolk volume, often have a significant perivitelline space between the plasma membrane and the vitelline envelope."
+  },
+  {
+    text: "In which type of cleavage do the blastomeres retain their contact with the yolk?",
+    options: [
+      "Discoidal",
+      "Superficial",
+      "Rotational",
+      "Radial"
+    ],
+    correct: 1,
+    explanation: "Superficial cleavage is characterized by the nuclei dividing multiple times before the cell membrane forms, creating a syncytium, before cellularisation occurs."
+  },
+  {
+    text: "What is the significance of the animal-vegetal axis in cleavage?",
+    options: [
+      "It determines the orientation of the cleavage planes",
+      "It establishes the anterior-posterior axis of the embryo",
+      "It determines the rate of cell division",
+      "Both A and B"
+    ],
+    correct: 3,
+    explanation: "The animal-vegetal axis is crucial in establishing the general body plan of the embryo by influencing cleavage plane orientation and, consequently, the location of key structures along the body axes."
+  },
+  {
+    text: "Which animal is most likely to exhibit superficial cleavage?",
+    options: [
+      "Sea urchin",
+      "Fruit fly",
+      "Frog",
+      "Mammal"
+    ],
+    correct: 1,
+    explanation: "Superficial cl
+
+eavage is a hallmark of insect development."
+  },
+  {
+    text: "How does bilateral cleavage differ from radial cleavage?",
+    options: [
+      "Bilateral cleavage results in mirror-image symmetry, while radial cleavage does not.",
+      "Bilateral cleavage produces unequal blastomeres, while radial cleavage produces equal blastomeres.",
+      "Bilateral cleavage is only found in invertebrates, while radial cleavage is found in both vertebrates and invertebrates.",
+      "Bilateral cleavage involves the formation of a blastocoel, while radial cleavage does not."
+    ],
+    correct: 0,
+    explanation: "Bilateral cleavage establishes a plane of symmetry early in development, leading to mirror-image symmetry."
+  },
+  {
+    text: "Which type of cleavage is most likely to produce blastomeres of significantly different sizes?",
+    options: [
+      "Holoblastic, equal",
+      "Holoblastic, unequal",
+      "Meroblastic, discoidal",
+      "All of the above"
+    ],
+    correct: 1,
+    explanation: "Holoblastic unequal cleavage is characterized by the production of blastomeres of different sizes, usually due to the influence of the yolk."
+  },
+  {
+    text: "What is the term for an egg with a moderate amount of yolk distributed unevenly?",
+    options: [
+      "Alecithal",
+      "Mesolecithal",
+      "Telolecithal",
+      "Isolecithal"
+    ],
+    correct: 1,
+    explanation: "Mesolecithal eggs have a moderate amount of yolk that is distributed unevenly, concentrating more toward the vegetal pole."
+  },
+  {
+    text: "Which statement accurately describes the relationship between cleavage type and yolk distribution?",
+    options: [
+      "More yolk always results in holoblastic cleavage",
+      "Less yolk always results in meroblastic cleavage",
+      "Yolk amount significantly influences the type of cleavage that occurs",
+      "There is no correlation between yolk amount and cleavage type"
+    ],
+    correct: 2,
+    explanation: "The amount and distribution of yolk are major determinants of the type of cleavage a zygote undergoes (holoblastic or meroblastic)."
+  }, 
+  {
+    text: "Which of the following is NOT a characteristic feature of mollusks?",
+    options: [
+      "A mantle",
+      "A radula",
+      "A segmented body",
+      "A muscular foot"
+    ],
+    correct: 2,
+    explanation: "Mollusks are unsegmented coelomates. Segmentation is a characteristic of annelids and arthropods."
+  },
+  {
+    text: "The radula is a specialized structure found in most mollusks. What is its primary function?",
+    options: [
+      "Gas exchange",
+      "Feeding",
+      "Locomotion",
+      "Reproduction"
+    ],
+    correct: 1,
+    explanation: "The radula is a rasping tongue-like structure used for scraping food particles from surfaces."
+  },
+  {
+    text: "Which class of mollusks is characterized by a shell composed of two valves?",
+    options: [
+      "Gastropoda",
+      "Cephalopoda",
+      "Bivalvia",
+      "Polyplacophora"
+    ],
+    correct: 2,
+    explanation: "Bivalves, such as clams and mussels, have a shell consisting of two hinged parts."
+  },
+  {
+    text: "What is the mantle in a mollusk?",
+    options: [
+      "The muscular foot",
+      "The digestive system",
+      "A fold of tissue that secretes the shell",
+      "The nervous system"
+    ],
+    correct: 2,
+    explanation: "The mantle is a significant part of the mollusk body; it secretes the shell and forms the mantle cavity."
+  },
+  {
+    text: "Which class of mollusks includes squids, octopuses, and cuttlefish?",
+    options: [
+      "Gastropoda",
+      "Bivalvia",
+      "Cephalopoda",
+      "Aplacophora"
+    ],
+    correct: 2,
+    explanation: "Cephalopods are characterized by their well-developed nervous systems and often lack an external shell."
+  },
+  {
+    text: "Gastropods typically exhibit which type of symmetry?",
+    options: [
+      "Bilateral symmetry",
+      "Radial symmetry",
+      "Asymmetry",
+      "Pentaradial symmetry"
+    ],
+    correct: 0,
+    explanation: "While torsion can twist the visceral mass, gastropods fundamentally exhibit bilateral symmetry."
+  },
+  {
+    text: "What is torsion in gastropods?",
+    options: [
+      "The formation of the shell",
+      "A 180-degree twisting of the visceral mass",
+      "The process of shedding the shell",
+      "The formation of the radula"
+    ],
+    correct: 1,
+    explanation: "Torsion is a developmental process unique to gastropods that rotates the visceral mass."
+  },
+  {
+    text: "How do most bivalves obtain food?",
+    options: [
+      "Predation",
+      "Filter feeding",
+      "Parasitism",
+      "Photosynthesis"
+    ],
+    correct: 1,
+    explanation: "Bivalves are primarily filter feeders, using their gills to trap food particles from the water."
+  },
+  {
+    text: "What is the primary function of the siphon in many bivalves?",
+    options: [
+      "Gas exchange",
+      "Excretion",
+      "Water intake and expulsion",
+      "Reproduction"
+    ],
+    correct: 2,
+    explanation: "Siphons are tubes used to draw water in and expel water, facilitating filter feeding and respiration."
+  },
+  {
+    text: "Which of the following is a unique characteristic of cephalopod locomotion?",
+    options: [
+      "Use of parapodia",
+      "Jet propulsion",
+      "Ciliary movement",
+      "Muscular undulation"
+    ],
+    correct: 1,
+    explanation: "Cephalopods utilize jet propulsion for rapid movement by expelling water from their mantle cavity."
+  },
+  {
+    text: "The circulatory system of most mollusks is best described as:",
+    options: [
+      "Closed",
+      "Open",
+      "Absent",
+      "Incomplete"
+    ],
+    correct: 1,
+    explanation: "Most mollusks have an open circulatory system, with hemolymph bathing the tissues."
+  },
+  {
+    text: "What is the periostracum?",
+    options: [
+      "The innermost layer of the mollusk shell",
+      "The outermost layer of the mollusk shell",
+      "The muscular foot",
+      "The mantle cavity"
+    ],
+    correct: 1,
+    explanation: "The periostracum is the thin, organic outer layer of the shell that protects the underlying calcium carbonate layers."
+  },
+  {
+    text: "Which mollusk class possesses a shell composed of eight overlapping plates?",
+    options: [
+      "Gastropoda",
+      "Bivalvia",
+      "Cephalopoda",
+      "Polyplacophora"
+    ],
+    correct: 3,
+    explanation: "Chitons, belonging to the class Polyplacophora, are characterized by their eight-plated shell."
+  },
+  {
+    text: "Many cephalopods possess specialized pigment sacs called:",
+    options: [
+      "Radulae",
+      "Siphons",
+    "Chromatophores",
+      "Statocysts"
+    ],
+    correct: 2,
+    explanation: "Chromatophores allow cephalopods to rapidly change color for camouflage and communication."
+  },
+  {
+    text: "What is the function of the osphradia in some mollusks?",
+    options: [
+     "Chemoreception",
+      "Mechanoreception",
+      "Osmoregulation",
+      "Excretion"
+    ],
+    correct: 0,
+    explanation: "The osphradia are sensory organs that detect chemicals in the water, aiding in feeding and avoiding predators."
+  },
+  {
+    text: "Which molluscan class is known for its highly developed brain and complex behaviors?",
+    options: [
+      "Gastropoda",
+      "Bivalvia",
+      "Cephalopoda",
+      "Scaphopoda"
+    ],
+    correct: 2,
+    explanation: "Cephalopods exhibit remarkable intelligence and sophisticated behaviors compared to other mollusks."
+  },
+  {
+    text: "Pearl formation occurs in which class of mollusks?",
+    options: [
+      "Gastropoda",
+      "Bivalvia",
+      "Cephalopoda",
+      "Polyplacophora"
+    ],
+    correct: 1,
+    explanation: "Pearls are formed by certain bivalves as a defense mechanism against irritants."
+  },
+  {
+    text: "What is the visceral mass in a mollusk?",
+    options: [
+      "The head region",
+      "The internal organs",
+      "The muscular foot",
+      "The mantle"
+    ],
+    correct: 1,
+    explanation: "The visceral mass contains the majority of the mollusk's internal organs."
+  },
+  {
+    text: "Which structure is responsible for the secretion of the nacreous layer in mollusk shells?",
+    options: [
+      "The radula",
+      "The mantle",
+      "The foot",
+      "The gills"
+    ],
+    correct: 1,
+    explanation: "The mantle secretes the nacreous (pearly) layer of the shell."
+  },
+  {
+    text: "Give an example of a mollusk that is a significant agricultural pest.",
+    options: [
+      "Giant squid",
+      "Oyster",
+      "Garden snail",
+      "Cuttlefish"
+    ],
+    correct: 2,
+    explanation: "Many species of land snails are known to damage crops."
+  }, 
+  {
+    text: "What type of circulatory system do most mollusks possess?",
+    options: [
+      "Closed circulatory system",
+      "Open circulatory system",
+      "Double circulatory system",
+      "No circulatory system"
+    ],
+    correct: 1,
+    explanation: "Most mollusks have an open circulatory system, where hemolymph is pumped into sinuses."
+  },
+  {
+    text: "Which mollusk class exhibits the greatest degree of cephalization?",
+    options: [
+      "Bivalvia",
+      "Gastropoda",
+      "Cephalopoda",
+      "Polyplacophora"
+    ],
+    correct: 2,
+    explanation: "Cephalopods have the most developed nervous system and brain among mollusks."
+  },
+  {
+    text: "What is the function of the crystalline style in some bivalves?",
+    options: [
+      "Shell secretion",
+      "Digestion",
+      "Gas exchange",
+      "Locomotion"
+    ],
+    correct: 1,
+    explanation: "The crystalline style is a rod-like structure that aids in the digestion of food."
+  },
+  {
+    text: "Which structure in mollusks is primarily responsible for excretion?",
+    options: [
+      "Nephridia",
+      "Gills",
+      "Mantle",
+      "Radula"
+    ],
+    correct: 0,
+    explanation: "Nephridia are excretory organs found in mollusks."
+  },
+  {
+    text: "What is the name of the larval stage common to many mollusks?",
+    options: [
+      "Trochophore",
+      "Nauplius",
+      "Bipinnaria",
+      "Pluteus"
+    ],
+    correct: 0,
+    explanation: "The trochophore larva is a characteristic larval stage in many molluscan groups."
+  },
+  {
+    text: "Which mollusk class includes organisms that are primarily herbivores?",
+    options: [
+      "Cephalopoda",
+      "Bivalvia",
+      "Gastropoda",
+      "Polyplacophora"
+    ],
+    correct: 2,
+    explanation: "Many gastropods are herbivores, grazing on algae and plants."
+  },
+  {
+    text: "What is the role of the statocysts in cephalopods?",
+    options: [
+      "Respiration",
+      "Balance and orientation",
+      "Digestion",
+      "Reproduction"
+    ],
+    correct: 1,
+    explanation: "Statocysts are sensory organs that help cephalopods maintain balance and detect their orientation."
+  },
+  {
+    text: "In what type of environment do most bivalves live?",
+    options: [
+      "Terrestrial",
+      "Aquatic",
+      "Aerial",
+      "Arboreal"
+    ],
+    correct: 1,
+    explanation: "The vast majority of bivalves are aquatic organisms."
+  },
+  {
+    text: "What is the name of the hard, calcareous structure that supports the radula?",
+    options: [
+      "Odontophore",
+      "Operculum",
+      "Periostracum",
+      "Shell"
+    ],
+    correct: 0,
+    explanation: "The odontophore is a supporting structure for the radula."
+  },
+  {
+    text: "Which mollusk class includes organisms that are often venomous?",
+    options: [
+      "Gastropoda",
+      "Bivalvia",
+      "Cephalopoda",
+      "Polyplacophora"
+    ],
+    correct: 2,
+    explanation: "Some cephalopods, like certain octopuses, possess venomous bites."
+  },
+  {
+    text: "What is the function of the operculum in some gastropods?",
+    options: [
+      "Protection of the soft body",
+      "Feeding",
+      "Respiration",
+      "Locomotion"
+    ],
+    correct: 0,
+    explanation: "The operculum is a plate-like structure that seals the shell opening."
+  },
+  {
+    text: "Which mollusk class is characterized by a reduced or absent shell?",
+    options: [
+      "Gastropoda",
+      "Bivalvia",
+      "Cephalopoda",
+      "Polyplacophora"
+    ],
+    correct: 2,
+    explanation: "Many cephalopods have internalized or reduced shells."
+  },
+  {
+    text: "What is the term for the process by which a gastropod loses its shell?",
+    options: [
+      "Torsion",
+      "Detorsion",
+      "Deshelling",
+      "Anaplasia"
+    ],
+    correct: 2,
+    explanation: "While not very common, some gastropods lose their shells during development."
+  },
+  {
+    text: "Which mollusk class typically has a single shell?",
+    options: [
+      "Bivalvia",
+      "Cephalopoda",
+      "Gastropoda",
+      "Polyplacophora"
+    ],
+    correct: 2,
+    explanation: "Gastropods typically have a single, spiraled shell (though some exceptions exist)."
+  },
+  {
+    text: "What type of feeding mechanism is common among chitons (Polyplacophora)?",
+    options: [
+      "Filter feeding",
+      "Parasitism",
+      "Herbivory (grazing)",
+      "Carnivory"
+    ],
+    correct: 2,
+    explanation: "Chitons are mostly herbivores, using their radula to graze on algae."
+  },
+  {
+    text: "Many cephalopods have excellent vision.  What contributes to this?",
+    options: [
+      "Large, well-developed eyes",
+      "Numerous photoreceptor cells in their eyes",
+      "A complex nervous system processing visual information",
+      "All of the above"
+    ],
+    correct: 3,
+    explanation: "Cephalopod eyes are remarkably similar in structure and function to vertebrate eyes."
+  },
+  {
+    text: "Which structure helps some mollusks to attach to substrates?",
+    options: [
+      "Byssus threads",
+      "Radula",
+      "Siphon",
+      "Operculum"
+    ],
+    correct: 0,
+    explanation: "Byssal threads are strong, proteinaceous filaments secreted by some bivalves and other mollusks for attachment."
+  },
+  {
+    text: "What is the primary respiratory organ in most aquatic mollusks?",
+    options: [
+      "Lungs",
+      "Gills",
+      "Skin",
+      "Trachea"
+    ],
+    correct: 1,
+    explanation: "Gills are the main respiratory organ in most aquatic mollusks."
+  },
+  {
+    text: "Which of the following is NOT a characteristic of the class Bivalvia?",
+    options: [
+      "Two shells",
+      "A well-developed head",
+      "Filter feeding",
+      "A muscular foot"
+    ],
+    correct: 1,
+    explanation: "Bivalves have reduced or absent heads compared to other mollusks."
+  },
+  {
+    text: "Name a commercially important bivalve species.",
+    options: [
+      "Garden snail",
+      "Giant squid",
+      "Oyster",
+      "Chiton"
+    ],
+    correct: 2,
+    explanation: "Oysters are a well-known example of commercially important bivalves."
+  }, 
+  {
+    text: "Which of the following is NOT a characteristic of arthropods?",
+    options: [
+      "Segmented body",
+      "Exoskeleton",
+      "Jointed appendages",
+      "Closed circulatory system"
+    ],
+    correct: 3,
+    explanation: "Arthropods have an open circulatory system."
+  },
+  {
+    text: "The exoskeleton of arthropods is primarily composed of:",
+    options: [
+      "Chitin",
+      "Cellulose",
+      "Calcium carbonate",
+      "Silicon dioxide"
+    ],
+    correct: 0,
+    explanation: "Chitin is a tough, protective polysaccharide that forms the main component of the arthropod exoskeleton."
+  },
+  {
+    text: "What process must arthropods undergo to increase in size?",
+    options: [
+      "Continuous growth",
+      "Molting (ecdysis)",
+      "Cellular elongation",
+      "Bone remodeling"
+    ],
+    correct: 1,
+    explanation: "Arthropods shed their exoskeleton (molt) periodically to allow for growth."
+  },
+  {
+    text: "Which subphylum of arthropods includes insects, crustaceans, and myriapods?",
+    options: [
+      "Chelicerata",
+      "Myriapoda",
+      "Crustacea",
+      "Uniramia"
+    ],
+    correct: 3,
+    explanation: "Uniramia is a subphylum containing insects, crustaceans, and myriapods (although some classifications differ)."
+  },
+  {
+    text: "What are the characteristic mouthparts of chelicerates?",
+    options: [
+      "Mandibles",
+      "Chelicerae",
+      "Maxillae",
+      "Labrum"
+    ],
+    correct: 1,
+    explanation: "Chelicerates, such as spiders and scorpions, have chelicerae as their primary mouthparts."
+  },
+  {
+    text: "Which class of arthropods includes spiders, mites, and scorpions?",
+    options: [
+      "Insecta",
+      "Crustacea",
+      "Arachnida",
+      "Myriapoda"
+    ],
+    correct: 2,
+    explanation: "Arachnida is the class containing spiders, mites, and scorpions."
+  },
+  {
+    text: "What is the function of the spinnerets in spiders?",
+    options: [
+      "Sensory perception",
+      "Respiration",
+      "Silk production",
+      "Locomotion"
+    ],
+    correct: 2,
+    explanation: "Spinnerets produce silk used for web-building, prey capture, and other functions."
+  },
+  {
+    text: "Which class of arthropods is characterized by having a large number of legs?",
+    options: [
+      "Insecta",
+      "Crustacea",
+      "Arachnida",
+      "Myriapoda"
+    ],
+    correct: 3,
+    explanation: "Myriapods, such as centipedes and millipedes, have many legs."
+  },
+  {
+    text: "What is the function of the Malpighian tubules in insects?",
+    options: [
+      "Digestion",
+      "Respiration",
+      "Excretion",
+      "Reproduction"
+    ],
+    correct: 2,
+    explanation: "Malpighian tubules are excretory organs found in insects and other arthropods."
+  },
+  {
+    text: "Which class of arthropods includes lobsters, crabs, and shrimp?",
+    options: [
+      "Insecta",
+      "Arachnida",
+      "Crustacea",
+      "Myriapoda"
+    ],
+    correct: 2,
+    explanation: "Crustacea is the class that includes lobsters, crabs, and shrimp."
+  },
+  {
+    text: "What type of respiratory organs do most insects possess?",
+    options: [
+      "Gills",
+      "Lungs",
+      "Tracheae",
+      "Skin"
+    ],
+    correct: 2,
+    explanation: "Insects respire through a system of tracheae."
+  },
+  {
+    text: "Which of the following is a characteristic of insect metamorphosis?",
+    options: [
+      "Continuous growth",
+      "Abrupt change in body form",
+      "Lack of larval stage",
+      "Absence of wings"
+    ],
+    correct: 1,
+    explanation: "Metamorphosis involves a dramatic change in body form during development."
+  },
+  {
+    text: "What is the name of the immature stage in incomplete metamorphosis?",
+    options: [
+      "Pupa",
+      "Larva",
+      "Nymph",
+      "Egg"
+    ],
+    correct: 2,
+    explanation: "In incomplete metamorphosis, the immature stage is called a nymph."
+  },
+  {
+    text: "What is the function of the antennae in many arthropods?",
+    options: [
+      "Locomotion",
+      "Feeding",
+      "Sensory perception",
+      "Reproduction"
+    ],
+    correct: 2,
+    explanation: "Antennae are used for sensing the environment, including detecting chemicals and vibrations."
+  },
+  {
+    text: "Which arthropod group is characterized by having a body divided into a cephalothorax and an abdomen?",
+    options: [
+      "Insects",
+      "Myriapods",
+      "Crustaceans",
+      "Chelicerates"
+    ],
+    correct: 3,
+    explanation: "Chelicerates have a body divided into a cephalothorax and an abdomen."
+  },
+  {
+    text: "What is the function of the compound eyes in many arthropods?",
+    options: [
+      "Vision",
+      "Hearing",
+      "Smell",
+      "Taste"
+    ],
+    correct: 0,
+    explanation: "Compound eyes are capable of detecting movement and forming a mosaic image."
+  },
+  {
+    text: "What is a defining characteristic of crustaceans?",
+    options: [
+      "Three pairs of legs",
+      "Two pairs of antennae",
+      "Chelicerae",
+      "Many legs"
+    ],
+    correct: 1,
+    explanation: "Crustaceans possess two pairs of antennae."
+  },
+  {
+    text: "Which arthropod class has the largest number of species?",
+    options: [
+      "Arachnida",
+      "Crustacea",
+      "Insecta",
+      "Myriapoda"
+    ],
+    correct: 2,
+    explanation: "Insects are the most diverse group of arthropods."
+  },
+  {
+    text: "What is the name of the process by which an arthropod sheds its exoskeleton?",
+    options: [
+      "Metamorphosis",
+      "Molting (ecdysis)",
+      "Regeneration",
+      "Development"
+    ],
+    correct: 1,
+    explanation: "Molting is the shedding of the exoskeleton."
+  },
+  {
+    text: "What type of symmetry do arthropods generally exhibit?",
+    options: [
+      "Radial symmetry",
+      "Bilateral symmetry",
+      "Asymmetry",
+      "Spherical symmetry"
+    ],
+    correct: 1,
+    explanation: "Arthropods typically have bilateral symmetry."
+  },
+  {
+    text: "Which of the following is an example of a social insect?",
+    options: [
+      "Spider",
+      "Scorpion",
+      "Ant",
+      "Centipede"
+    ],
+    correct: 2,
+    explanation: "Ants are eusocial insects, exhibiting complex social structures."
+  },
+  {
+    text: "What is the primary role of the mandibles in many arthropods?",
+    options: [
+      "Sensory perception",
+      "Respiration",
+      "Chewing and biting",
+      "Locomotion"
+    ],
+    correct: 2,
+    explanation: "Mandibles are used for chewing and biting food."
+  },
+  {
+
+text: "Which arthropod subphylum is characterized by having chelicerae and pedipalps?",
+    options: [
+      "Myriapoda",
+      "Hexapoda",
+      "Crustacea",
+      "Chelicerata"
+    ],
+    correct: 3,
+    explanation: "Chelicerates possess chelicerae and pedipalps as mouthparts."
+  },
+  {
+    text: "What is the name of the opening in the exoskeleton through which gases are exchanged in some arthropods?",
+    options: [
+      "Spiracle",
+      "Trachea",
+      "Gill",
+      "Lung"
+    ],
+    correct: 0,
+    explanation: "Spiracles are openings in the exoskeleton that lead to the tracheal system."
+  },
+  {
+    text: "What type of development is characterized by a gradual change from nymph to adult?",
+    options: [
+      "Complete metamorphosis",
+      "Incomplete metamorphosis",      "Ametamorphosis",
+      "Holometabolous metamorphosis"
+    ],
+    correct: 1,
+    explanation: "Incomplete metamorphosis involves a gradual change without a pupal stage."
+  },
+  {
+    text: "Which class of arthropods includes insects with wings?",
+    options: [
+      "Arachnida",
+      "Myriapoda",
+      "Crustacea",
+      "Insecta"
+    ],
+    correct: 3,
+    explanation: "Insects are the only arthropod class with wings (although not all insects have wings)."
+  },
+  {
+    text: "What is the primary function of the legs in most arthropods?",
+    options: [
+      "Sensory perception",
+      "Locomotion",
+      "Feeding",
+      "Respiration"
+    ],
+    correct: 1,
+    explanation: "Legs are primarily used for locomotion, although they can have other functions in some species."
+  },
+  {
+    text: "Name a crustacean that is a significant food source for humans.",
+    options: [
+      "Scorpion",
+      "Centipede",
+      "Lobster",
+      "Spider"
+    ],
+    correct: 2,
+    explanation: "Lobsters are a commercially important crustacean."
+  },
+  {
+    text: "What is the term for the fusion of the head and thorax in some arthropods?",
+    options: [
+      "Abdomen",
+      "Cephalothorax",
+      "Prothorax",
+      "Mesothorax"
+    ],
+    correct: 1,
+    explanation: "A cephalothorax is a fused head and thorax."
+  }, 
+  {
+    text: "Explain the evolutionary significance of the arthropod exoskeleton in relation to terrestrial adaptation.",
+    options: [
+      "Provided buoyancy for aquatic life",
+      "Offered no significant advantage in terrestrial environments",
+      "Offered protection from desiccation and physical damage, facilitating terrestrial colonization",
+      "Allowed for efficient gas exchange in air"
+    ],
+    correct: 2,
+    explanation: "The exoskeleton provided crucial protection from desiccation and physical damage, a key step in the successful transition to terrestrial habitats."
+  },
+  {
+    text: "Discuss the different types of metamorphosis in insects and their evolutionary implications.",
+    options: [
+      "All insect groups follow the same metamorphic pattern",
+      "Metamorphosis offers advantages in resource partitioning and reduced competition between life stages",
+      "Metamorphic stages do not influence ecological roles",
+      "Complete and incomplete metamorphosis are functionally equivalent"
+    ],
+    correct: 1,
+    explanation: "Different metamorphic pathways allow for specialization in different ecological niches, reducing competition between larvae and adults."
+  },
+  {
+    text: "How does the structure of insect tracheae facilitate efficient gas exchange in air?",
+    options: [
+      "They are poorly ventilated",
+      "They have a large surface area and are highly branched, ensuring efficient oxygen uptake",
+      "They rely on circulatory system for oxygen transport",
+      "They only function underwater"
+    ],
+    correct: 1,
+    explanation: "The intricate branching and large surface area of tracheae maximize oxygen diffusion directly to tissues."
+  },
+  {
+    text: "Compare and contrast the nervous systems of crustaceans and insects.",
+    options: [
+      "Both have identical nervous system structures",
+      "Crustaceans have a more centralized nervous system",
+      "Insects have a more decentralized nervous system compared to crustaceans",
+      "Neither group exhibits cephalization"
+    ],
+    correct: 2,
+    explanation: "While both show cephalization, insects have a more highly centralized nervous system with a more prominent brain than most crustaceans."
+  },
+  {
+    text: "Describe the role of hormones in insect molting and metamorphosis.",
+    options: [
+      "Hormones play no role in insect development",
+      "Hormones regulate the timing and process of molting and metamorphosis, coordinating developmental transitions",
+      "Hormones only affect adult morphology",
+      "Hormones are only produced during pupal stage"
+    ],
+    correct: 1,
+    explanation: "Precise hormonal regulation is critical for the timely and coordinated events of molting and metamorphosis."
+  },
+  {
+    text: "Analyze the adaptive significance of different feeding strategies in arthropods.",
+    options: [
+      "All arthropods utilize the same feeding strategy",
+      "Feeding strategies are not related to habitat or lifestyle",
+      "Diverse feeding strategies allow arthropods to occupy a wide range of ecological niches",
+      "Feeding strategies do not influence competition"
+    ],
+    correct: 2,
+    explanation: "The incredible diversity of arthropod feeding mechanisms is directly related to their success in colonizing virtually every habitat."
+  },
+  {
+    text: "Discuss the evolutionary origins and diversification of arthropod appendages.",
+    options: [
+      "Arthropod appendages evolved independently in different lineages",
+      "Appendages have remained unchanged throughout arthropod evolution",
+      "Appendage modifications have led to diverse functionalities, driving arthropod diversification",
+      "Appendage evolution is unrelated to ecological success"
+    ],
+    correct: 2,
+    explanation: "The modification of appendages for locomotion, feeding, sensing, and reproduction has been crucial to arthropod diversification."
+  },
+  {
+    text: "Explain the concept of tagmatization in arthropods and its functional advantages.",
+    options: [
+      "Tagmatization offers no functional advantage",
+      "Tagmatization is the random fusion of body segments",
+      "Tagmatization is the fusion of body segments into functional units (tagmata), improving efficiency and specialization",
+      "Tagmatization only occurs in insects"
+    ],
+    correct: 2,
+    explanation: "The grouping of segments into specialized units such as head, thorax, and abdomen enhances functional efficiency."
+  },
+  {
+    text: "Describe the different types of arthropod eyes and their respective advantages and disadvantages.",
+    options: [
+      "All arthropods possess the same type of eye",
+      "Simple eyes are superior to compound eyes in all situations",
+      "Simple and compound eyes offer different visual capabilities, each adapted to specific needs",
+      "Arthropod eyes are not well-adapted for their environment"
+    ],
+    correct: 2,
+    explanation:  "Simple eyes and compound eyes provide different types of visual information. Simple eyes are better for detecting light intensity whereas compound eyes are better for detecting movement."
+  },
+  {
+    text: "Discuss the mechanisms of social behavior in eusocial insects, focusing on the role of kin selection.",
+    options: [
+      "Eusociality is purely based on individual competition",
+      "Kin selection plays a minor role in eusocial insect behavior",
+      "Kin selection, where individuals help relatives, is crucial in explaining altruistic behaviors in eusocial insects",
+      "Eusociality is a random phenomenon"
+    ],
+    correct: 2,
+    explanation: "Kin selection, where helping relatives increases inclusive fitness, is fundamental to understanding altruistic behavior in eusocial insects."
+  },
+  {
+    text: "Explain the ecological and evolutionary consequences of the co-evolutionary arms race between arthropods and their predators or parasites.",
+    options: [
+      "Co-evolution has no influence on diversity",
+      "Co-evolutionary pressures have driven the evolution of sophisticated defenses and counter-adaptations in both arthropods and their antagonists",
+      "Predators have no impact on arthropod evolution",
+      "Parasites do not drive arthropod evolution"
+    ],
+    correct: 1,
+    explanation: "The continuous interplay between predator-prey or parasite-host interactions has driven remarkable adaptations on both sides."
+  },
+  {
+    text: "Analyze the impact of arthropods on various ecosystems, highlighting their roles as pollinators, decomposers, and prey.",
+    options: [
+      "Arthropods play minimal ecological roles",
+      "Arthropods are only significant as agricultural pests",
+      "Arthropods are crucial components of food webs, impacting pollination, decomposition, and nutrient cycling",
+      "Arthropods only impact terrestrial ecosystems"
+    ],
+    correct: 2,
+    explanation: "Arthropods are keystone species in many ecosystems, driving essential processes like pollination and decomposition."
+  },
+  {
+    text: "Discuss the challenges and adaptations related to water balance in terrestrial arthropods.",
+    options: [
+      "Terrestrial arthropods do not face water balance challenges",
+      "The exoskeleton completely prevents water loss",
+      "Terrestrial arthropods have evolved various mechanisms such as the waxy cuticle and efficient excretory systems to conserve water",
+      "Water balance is not relevant to arthropod survival"
+    ],
+    correct: 2,
+    explanation: "Maintaining water balance is a crucial challenge for terrestrial arthropods, necessitating adaptations to minimize water loss."
+  },
+  {
+    text: "Explain the mechanisms of sound production and reception in different groups of arthropods.",
+    options: [
+      "All arthropods produce and receive sounds the same way",
+      "Sound production and reception mechanisms are diverse, reflecting varied communication strategies and environmental contexts",
+      "Arthropods do not communicate using sound",
+      "Sound production only occurs in aquatic arthropods"
+    ],
+    correct: 1,
+    explanation: "Arthropods use a variety of structures and mechanisms to produce and detect sounds for communication, mate attraction, and predator avoidance."
+  },
+  {
+    text: "Describe the different types of arthropod locomotion and their adaptations to specific habitats.",
+    options: [
+      "All arthropods move in the same manner",
+      "Locomotion strategies are not adapted to habitats",
+      "Arthropod locomotion is highly diverse, reflecting adaptations to various substrates and environmental conditions",
+      "Only insects exhibit diverse locomotion"
+    ],
+    correct: 2,
+    explanation: "Arthropod locomotion strategies are remarkably diverse, ranging from walking and running to swimming, jumping, and flying."
+  },
+  {
+    text: "Discuss the role of sensory structures (other than eyes) in arthropod behavior and survival.",
+    options: [
+      "Arthropods rely solely on vision for survival",
+      "Sensory structures other than eyes play a minimal role in arthropod behavior",
+      "Chemoreception, mechanoreception, and other senses are crucial for arthropod navigation, foraging, and predator avoidance",
+      "Only aquatic arthropods utilize non-visual senses"
+    ],
+    correct: 2,
+    explanation: "Arthropods rely heavily on a range of sensory modalities, including chemoreception, mechanoreception, and others, to navigate, find food, and avoid danger."
+  },
+  {
+    text: "Analyze the evolutionary relationships within the major arthropod groups using phylogenetic evidence (e.g., molecular data, morphology).",
+    options: [
+      "Arthropod phylogeny is completely understood",
+      "Phylogeny remains entirely speculative",
+      "Phylogenetic analyses combining morphology and molecular data reveal complex relationships among arthropod lineages, often challenging traditional classifications",
+      "Only molecular data is useful for arthropod phylogeny"
+    ],
+    correct: 2,
+    explanation: "Arthropod phylogeny is a complex and active area of research, with ongoing debate and revision of relationships based on new data."
+  },
+  {
+    text: "Explain how the process of molting affects the vulnerability of arthropods to predation or parasitism.",
+    options: [
+      "Molting does not impact vulnerability",
+      "Molting increases vulnerability during the soft-bodied stage",
+      "Molting increases vulnerability only in aquatic arthropods",
+      "Molting increases vulnerability only to certain parasites"
+    ],
+    correct: 1,
+    explanation: "The period immediately following molting, when the new exoskeleton is soft, represents a period of increased vulnerability to predators and parasites."
+  },
+  {
+    text: "Discuss the economic importance of arthropods, including both beneficial and detrimental impacts on human activities.",
+    options: [
+      "Arthropods are only detrimental to humans",
+      "Arthropods are only beneficial to humans",
+      "Arthropods have both significant positive (e.g., pollination, food sources) and negative (e.g., pests, disease vectors) impacts on human societies",
+      "Arthropods have no significant economic impact"
+    ],
+    correct: 2,
+    explanation: "Arthropods play a dual role in human economies, providing essential services while also causing significant damage."
+  },
+  {
+    text: "Describe the diversity of reproductive strategies in arthropods, including variations in mating systems, parental care, and reproductive modes.",
+    options: [
+      "All arthropods reproduce in the same way",
+      "Reproductive strategies are uniform across arthropod groups",
+      "Arthropod reproductive strategies exhibit remarkable diversity, reflecting adaptations to different environments and life histories",
+      "Reproductive strategies are not influenced by environment"
+    ],
+    correct: 2,
+    explanation: "Arthropod reproduction demonstrates a wide array of strategies, adapted to their diverse life histories and environments."
+  },
+  {
+    text: "Analyze the impact of human activities (e.g., habitat loss, pesticide use, climate change) on arthropod populations and biodiversity.",
+    options: [
+      "Human activities have no impact on arthropods",
+      "Human activities only positively influence arthropods",
+      "Human activities are negatively impacting arthropod populations globally, threatening biodiversity and ecosystem services",
+      "Arthropod populations are unaffected by human actions"
+    ],
+    correct: 2,
+    explanation: "Human impacts are driving significant declines in arthropod populations, with serious implications for biodiversity and ecosystem function."
+  }, 
+  {
+    text: "What is the defining characteristic of echinoderms that sets them apart from other invertebrate phyla?",
+    options: [
+      "Radial symmetry",
+      "Bilateral symmetry",
+      "A water vascular system",
+      "A segmented body"
+    ],
+    correct: 2,
+    explanation: "The water vascular system is unique to echinoderms and plays a crucial role in locomotion, feeding, and gas exchange."
+  },
+  {
+    text: "Echinoderms typically exhibit what type of symmetry as adults?",
+    options: [
+      "Bilateral symmetry",
+      "Radial symmetry",
+      "Asymmetry",
+      "Pentaradial symmetry"
+    ],
+    correct: 3,
+    explanation: "Adult echinoderms generally exhibit pentaradial symmetry (five-part radial symmetry)."
+  },
+  {
+    text: "What is the function of the water vascular system in echinoderms?",
+    options: [
+      "Gas exchange only",
+      "Locomotion and feeding",
+      "Excretion only",
+      "Reproduction only"
+    ],
+    correct: 1,
+    explanation: "The water vascular system is vital for locomotion, feeding, and sensory functions in echinoderms."
+  },
+  {
+    text: "Tube feet are a key feature of the water vascular system.  What is their primary function?",
+    options: [
+      "Sensory perception",
+      "Gas exchange",
+      "Locomotion and attachment",
+      "Excretion"
+    ],
+    correct: 2,
+    explanation: "Tube feet allow for movement, adhesion to surfaces, and manipulation of food."
+  },
+  {
+    text: "Which class of echinoderms includes sea stars?",
+    options: [
+      "Crinoidea",
+      "Asteroidea",
+      "Echinoidea",
+      "Holothuroidea"
+    ],
+    correct: 1,
+    explanation: "Sea stars belong to the class Asteroidea."
+  },
+  {
+    text: "Which class of echinoderms includes sea urchins and sand dollars?",
+    options: [
+      "Crinoidea",
+      "Asteroidea",
+      "Echinoidea",
+      "Holothuroidea"
+    ],
+    correct: 2,
+    explanation: "Sea urchins and sand dollars are in the class Echinoidea."
+  },
+  {
+    text: "Which class of echinoderms includes sea cucumbers?",
+    options: [
+      "Crinoidea",
+      "Asteroidea",
+      "Echinoidea",
+      "Holothuroidea"
+    ],
+    correct: 3,
+    explanation: "Sea cucumbers belong to the class Holothuroidea."
+  },
+  {
+    text: "What is the function of pedicellariae in some echinoderms?",
+    options: [
+      "Locomotion",
+      "Defense and cleaning",
+      "Feeding",
+      "Reproduction"
+    ],
+    correct: 1,
+    explanation: "Pedicellariae are small, pincer-like structures that help protect the animal and keep its surface clean."
+  },
+  {
+    text: "What is the larval form common to many echinoderms?",
+    options: [
+      "Trochophore",
+      "Bipinnaria",
+      "Nauplius",
+      "Veliger"
+    ],
+    correct: 1,
+    explanation: "Many echinoderm larvae are bipinnaria or similar forms."
+  },
+  {
+    text: "What type of skeleton do echinoderms possess?",
+    options: [
+      "Exoskeleton",
+      "Endoskeleton",
+      "Hydrostatic skeleton",
+      "No skeleton"
+    ],
+    correct: 1,
+    explanation: "Echinoderms have an internal skeleton composed of ossicles."
+  },
+  {
+    text: "Which of the following is a characteristic of chordates?",
+    options: [
+      "Radial symmetry",
+      "A notochord",
+      "An exoskeleton",
+      "A closed circulatory system"
+    ],
+    correct: 1,
+    explanation: "A notochord is a defining feature of chordates at some point in their life cycle."
+  },
+  {
+    text: "What is a notochord?",
+    options: [
+      "A dorsal, hollow nerve cord",
+      "A flexible rod providing skeletal support",
+      "Pharyngeal slits",
+      "A post-anal tail"
+    ],
+    correct: 1,
+    explanation: "The notochord is a flexible rod that provides structural support."
+  },
+  {
+    text: "What are pharyngeal slits?",
+    options: [
+      "Openings in the pharynx",
+      "Part of the brain",
+      "Type of digestive enzyme",
+      "Part of the circulatory system"
+    ],
+    correct: 0,
+    explanation: "Pharyngeal slits are openings in the pharynx that function in filter feeding in some chordates and develop into other structures in others."
+  },
+  {
+    text: "What is the post-anal tail?",
+    options: [
+      "Extension of the body beyond the anus",
+      "Part of the digestive system",
+      "Sensory structure",
+      "Type of muscle fiber"
+    ],
+    correct: 0,
+    explanation: "The post-anal tail is a posterior extension of the body beyond the anus."
+  },
+  {
+    text: "Which subphylum of chordates includes tunicates?",
+    options: [
+      "Vertebrata",      "Cephalochordata",
+      "Urochordata",
+      "Craniata"
+    ],
+    correct: 2,
+    explanation: "Tunicates are in the subphylum Urochordata."
+  },
+  {
+    text: "What is the defining characteristic of urochordates (tunicates)?",
+    options: [
+      "A notochord present only in the larval stage",
+      "A notochord present throughout life",
+      "Absence of a notochord",
+      "Presence of a segmented body"
+    ],
+    correct: 0,
+    explanation: "Urochordates possess a notochord only during their larval stage."
+  },
+  {
+    text: "What is the tunic of a tunicate composed of?",
+    options: [
+      "Chitin",
+      "Calcium carbonate",
+      "Tunicin (cellulose)",
+      "Collagen"
+    ],
+    correct: 2,
+    explanation: "The tunic is a tough, protective covering composed of tunicin, a type of cellulose."
+  },
+  {
+    text: "How do most adult tunicates feed?",
+    options: [
+      "Predation",
+      "Filter feeding",
+      "Parasitism",
+      "Photosynthesis"
+    ],
+    correct: 1,
+    explanation: "Adult tunicates are mostly sessile filter feeders."
+  },
+  {
+    text: "What is the significance of the larval stage in urochordates in relation to chordate evolution?",
+    options: [
+      "The larval stage shows no chordate characteristics",
+      "The larval stage provides evidence of a common ancestor with other chordates",
+      "The larval stage is irrelevant to chordate evolution",
+      "The larval stage is only present in parasitic tunicates"
+    ],
+    correct: 1,
+    explanation: "The larval form of tunicates displays key chordate characteristics, supporting their evolutionary relationships to other chordates."
+  },
+  {
+    text: "What is the primary function of the siphons in tunicates?",
+    options: [
+      "Locomotion",
+      "Gas exchange",
+      "Water intake and expulsion for filter feeding",
+      "Reproduction"
+    ],
+    correct: 2,
+    explanation: "Sip
+
+hons facilitate the intake of water containing food particles and the expulsion of filtered water."
+  },
+  {
+    text: "Which structure in a tunicate larva shows the presence of a dorsal hollow nerve cord?",
+    options: [
+      "Tunic",
+      "Siphon",
+      "Notochord",
+      "Neural tube"
+    ],
+    correct: 3,
+    explanation: "In tunicate larvae, a neural tube (which develops into the dorsal hollow nerve cord) is a key chordate characteristic."
+  },
+  {
+    text: "Describe the endoskeleton of a sea urchin.",
+    options: [
+      "Made of chitin",
+      "Made of calcium carbonate plates forming a test",
+      "Absent",
+      "Made of cartilage"
+    ],
+    correct: 1,
+    explanation: "Sea urchins possess a test, a rigid endoskeleton made of fused calcium carbonate plates."
+  },
+  {
+    text: "What type of symmetry do echinoderm larvae exhibit?",
+    options: [
+      "Radial symmetry",
+      "Bilateral symmetry",
+      "Pentaradial symmetry",
+      "Asymmetry"
+    ],
+    correct: 1,
+    explanation: "Echinoderm larvae show bilateral symmetry, contrasting with the radial symmetry of adults."
+  },
+  {
+    text: "How do sea stars (Asteroidea) typically feed?",
+    options: [
+      "Filter feeding",
+      "Herbivory",
+      "Predation, often on bivalves",
+      "Parasitism"
+    ],
+    correct: 2,
+    explanation: "Sea stars are often predators, using their tube feet and eversible stomach to feed on bivalves and other prey."
+  },
+  {
+    text: "What is the function of Aristotle's lantern in sea urchins?",
+    options: [
+      "Locomotion",
+      "Respiration",
+      "Feeding (chewing and scraping)",
+      "Defense"
+    ],
+    correct: 2,
+    explanation: "Aristotle's lantern is a complex jaw-like structure used for feeding."
+  },
+  {
+    text: "Explain the process of regeneration in sea stars.",
+    options: [
+      "Sea stars cannot regenerate lost body parts",
+      "Sea stars can regenerate lost arms, and under certain conditions, a whole organism from a single arm",
+      "Sea stars regenerate only lost spines",
+      "Regeneration only occurs in larval stages"
+    ],
+    correct: 1,
+    explanation: "Sea stars possess remarkable regenerative abilities."
+  },
+  {
+    text: "How does the structure of the tunicate pharynx facilitate filter feeding?",
+    options: [
+      "The pharynx lacks any specializations for filter feeding",
+      "The pharynx is smooth and simple",
+      "The pharynx has numerous cilia and a large surface area to capture food particles",
+      "The pharynx secretes digestive enzymes to break down food externally"
+    ],
+    correct: 2,
+    explanation: "The highly ciliated pharynx creates water currents and traps food particles."
+  },
+  {
+    text: "What is the significance of the chordate characteristics in understanding the evolutionary relationships among vertebrates and invertebrates?",
+    options: [
+      "Chordate characteristics are irrelevant to evolutionary relationships",
+      "Chordate characteristics support the hypothesis of a common ancestor among vertebrates and some invertebrate groups",
+      "Chordate characteristics indicate that vertebrates are unrelated to invertebrates",
+      "Chordate characteristics prove that vertebrates descended from echinoderms"
+    ],
+    correct: 1,
+    explanation: "The presence of chordate characteristics in some invertebrate groups helps explain evolutionary lineages and common ancestry."
+  },
+  {
+    text: "Describe the unique features of the hemichordates and their phylogenetic significance in relation to echinoderms and chordates.",
+    options: [
+      "Hemichordates are unrelated to chordates and echinoderms",
+      "Hemichordates share characteristics with both echinoderms and chordates, suggesting a possible evolutionary link",
+      "Hemichordates are exclusively terrestrial",
+      "Hemichordates are exclusively parasitic"
+    ],
+    correct: 1,
+    explanation: "Hemichordates, with their combination of echinoderm-like and chordate-like features, play an important role in understa
+
+nding the relationships between these two phyla."
+  },
+  {
+    text: "Discuss the ecological roles of echinoderms in marine ecosystems.",
+    options: [
+      "Echinoderms play a minimal role in marine ecosystems",
+      "Echinoderms are exclusively decomposers",
+      "Echinoderms can be predators, prey, and important components of nutrient cycling in many marine habitats",
+      "Echinoderms only live in deep-sea environments"
+    ],
+    correct: 2,
+    explanation: "Echinoderms are significant members of various marine communities, impacting nutrient cycling and other ecological processes."
+  }, 
+  {
+    text: "A key difference between the adult radial symmetry of echinoderms and the radial symmetry of cnidarians lies in:",
+    options: [
+      "The number of planes of symmetry",
+      "The presence of a water vascular system",
+      "The developmental origin of radial symmetry",
+      "The presence of a coelom"
+    ],
+    correct: 2,
+    explanation: "Cnidarian radial symmetry is primary (present from the beginning), while echinoderm radial symmetry is secondary (derived from bilateral symmetry)."
+  },
+  {
+    text: "While both possess a water vascular system, crinoids differ significantly from other echinoderms primarily in their:",
+    options: [
+      "Feeding mechanism",
+      "Mode of locomotion",
+      "Symmetry as adults",
+      "Larval development"
+    ],
+    correct: 0,
+    explanation: "Crinoids are suspension feeders, unlike most other echinoderms which are primarily deposit or active predators."
+  },
+  {
+    text: "The seemingly paradoxical combination of bilateral larval symmetry and adult radial symmetry in echinoderms suggests:",
+    options: [
+      "Evolutionary stasis",
+      "A lack of evolutionary relationship to other phyla",
+      "An evolutionary shift in body plan",
+      "An error in classification"
+    ],
+    correct: 2,
+    explanation: "The larval bilateral symmetry points to a common ancestor with bilateral symmetry, with the adult radial form being a later adaptation."
+  },
+  {
+    text: "The ossicles of the echinoderm endoskeleton are composed of:",
+    options: [
+      "Chitin and protein",
+      "Calcium carbonate and protein",
+      "Silicon dioxide",
+      "Pure calcium carbonate"
+    ],
+    correct: 1,
+    explanation: "The ossicles are not pure calcium carbonate; they have a proteinaceous matrix."
+  },
+  {
+    text: "A unique feature of holothurians (sea cucumbers) compared to other echinoderms is their:",
+    options: [
+      "Lack of tube feet",
+      "Presence of a water vascular system",
+      "Modified tube feet around the mouth",
+      "Pentaradial symmetry"
+    ],
+    correct: 2,
+    explanation: "While having a water vascular system, holothurians have modified tube feet around their mouths, called buccal tentacles."
+  },
+  {
+    text: "The most significant evolutionary innovation that allowed for the diversification of chordates is:",
+    options: [
+      "The development of a coelom",
+      "The evolution of bilateral symmetry",
+      "The origin of the notochord and associated structures",
+      "The development of a segmented body plan"
+    ],
+    correct: 2,
+    explanation: "The notochord, along with the dorsal nerve cord, pharyngeal slits, and post-anal tail, allowed for the development of complex body plans."
+  },
+  {
+    text: "In which chordate subphylum is the notochord present only during the larval stage?",
+    options: [
+      "Vertebrata",
+    "Cephalochordata",
+      "Urochordata",
+      "All of the above"
+    ],
+    correct: 2,
+    explanation:  "Urochordates (tunicates) are the only subphylum where the notochord is largely transient."
+  },
+  {
+    text: "The pharyngeal slits in chordates initially evolved for:",
+    options: [
+      "Gas exchange in air",
+      "Filter feeding",
+      "Sound reception",
+      "Chemoreception"
+    ],
+    correct: 1,
+    explanation: "Filter feeding was the ancestral function; they later developed into gills in many lineages."
+  },
+  {
+    text: "A crucial difference between cephalochordates (lancelets) and vertebrates lies in the:",
+    options: [
+      "Presence of a notochord",
+      "Type of body symmetry",
+      "Development of a cranium and vertebral column",
+      "Presence of a closed circulatory system"
+    ],
+    correct: 2,
+    explanation: "Vertebrates have a cranium and vertebral column enclosing the nerve cord; these are absent in lancelets."
+  },
+  {
+    text: "The tunic of a tunicate is primarily composed of:",
+    options: [
+      "Chitin",
+      "Protein",
+      "Tunicin (a cellulose-like substance)",
+      "Calcium carbonate"
+    ],
+    correct: 2,
+    explanation: "The tunic is a unique feature, not found in other animals, and its composition is a cellulose derivative."
+  },
+  {
+    text: "The most accurate description of the tunicate lifestyle is:",
+    options: [
+      "Exclusively planktonic",
+      "Exclusively benthic and sessile",
+      "Primarily sessile as adults, with a motile larval stage",
+      "Always parasitic"
+    ],
+    correct: 2,
+    explanation: "Adult tunicates are generally sessile filter feeders, but the larval stage is motile and plays a crucial role in dispersal."
+  },
+  {
+    text: "The evolutionary significance of the tunicate larval stage lies in its:",
+    options: [
+      "Similarity to vertebrate embryos",
+      "Lack of chordate characteristics",
+      "Unique feeding strategy",
+      "Absence of a notochord"
+    ],
+    correct: 0,
+    explanation: "The larval stage displays several key chordate features, including a notochord, supporting phylogenetic relationships."
+  },
+  {
+    text: "A surprising feature of some sea cucumbers (Holothuroidea) as a defense mechanism is:",
+    options: [
+      "Regeneration of lost body parts",
+      "Ejection of internal organs",
+      "Production of toxins",
+      "Camouflage"
+    ],
+    correct: 1,
+    explanation: "Evisceration—the expulsion of internal organs—is a unique and effective defense mechanism."
+  },
+  {
+    text: "The madreporite in echinoderms is primarily involved in:",
+    options: [
+      "Gas exchange",
+      "Reproduction",
+      "Water regulation of the water vascular system",
+      "Locomotion"
+    ],
+    correct: 2,
+    explanation: "The madreporite is the opening through which water enters the water vascular system."
+  },
+  {
+    text: "The closest invertebrate relatives to the chordates are considered to be:",
+    options: [
+      "Mollusks",
+      "Annelids",
+      "Arthropods",
+      "Echinoderms"
+    ],
+    correct: 3,
+    explanation:  "While debated, hemichordates, sharing characteristics with both, and echinoderms provide the strongest evidence for this relationship."
+  },
+  {
+    text: "The presence of a dorsal hollow nerve cord in both tunicate larvae and vertebrate embryos indicates:",
+    options: [
+      "Convergent evolution",
+      "Parallel evolution",
+      "A shared ancestry",
+      "A chance resemblance"
+    ],
+    correct: 2,
+    explanation: "Homologous structures, like the dorsal hollow nerve cord, point to common ancestry."
+  },
+  {
+    text: "A characteristic shared by both echinoderms and chordates, but not necessarily present in adults of both phyla, is:",
+    options: [
+      "Radial symmetry",
+      "Bilateral symmetry",
+      "A water vascular system",
+      "A notochord"
+    ],
+    correct: 1,
+    explanation: "Both show bilateral symmetry in their larval stages."
+  },
+  {
+    text: "Which of the following is NOT a characteristic of all chordates at some point in their life cycle?",
+    options: [
+      "Notochord",
+      "Post-anal tail",
+      "Pharyngeal slits",
+      "Vertebral column"
+    ],
+    correct: 3,
+    explanation: "Only vertebrates possess a vertebral column."
+  },
+  {
+    text: "The evolution of the cranium in vertebrates is primarily associated with:",
+    options: [
+      "Improved locomotion",
+      "Enhanced sensory perception",
+      "More efficient respiration",
+      "Protection of the brain"
+    ],
+    correct: 3,
+    explanation: "The cranium provided crucial protection for the developing brain and associated sensory organs."
+  },
+  {
+    text: "Which of these features distinguishes cephalochordates from urochordates?",
+    options: [
+      "Possession of a notochord",
+      "Filter feeding",
+      "Retention of the notochord in the adult stage",
+      "Presence of a closed circulatory system"
+    ],
+    correct: 2,
+    explanation: "Cephalochordates retain the notochord throughout their lives, unlike tunicates."
+  }, 
+  {
+    text: "The defining characteristic of a radially symmetrical animal is:",
+    options: [
+      "A single plane of symmetry dividing the body into mirror images",
+      "Multiple planes of symmetry through a central axis",
+      "Absence of any symmetry",
+      "Bilateral symmetry with a head region"
+    ],
+    correct: 1,
+    explanation: "Radial symmetry allows for interaction with the environment from all directions."
+  },
+  {
+    text: "Which of the following phyla does NOT contain radially symmetrical animals?",
+    options: [
+      "Cnidaria",
+      "Ctenophora",
+      "Porifera",
+      "Platyhelminthes"
+    ],
+    correct: 3,
+    explanation: "Platyhelminthes (flatworms) exhibit bilateral symmetry."
+  },
+  {
+    text: "The basic body plan of a cnidarian can be described as:",
+    options: [
+      "Acoelomate, triploblastic",
+      "Pseudocoelomate, diploblastic",
+      "Coelomate, triploblastic",
+      "Diploblastic, with a gastrovascular cavity"
+    ],
+    correct: 3,
+    explanation: "Cnidarians have two germ layers (ectoderm and endoderm) and a gastrovascular cavity."
+  },
+  {
+    text: "Cnidocytes are specialized cells found in which phylum?",
+    options: [
+      "Ctenophora",
+      "Porifera",
+      "Cnidaria",
+      "Platyhelminthes"
+    ],
+    correct: 2,
+    explanation: "Cnidocytes contain nematocysts, used for prey capture and defense."
+  },
+  {
+    text: "Nematocysts are:",
+    options: [
+      "Specialized stinging structures",
+      "Locomotive appendages",
+      "Sensory receptors",
+      "Reproductive organs"
+    ],
+    correct: 0,
+    explanation: "Nematocysts are the stinging organelles within cnidocytes."
+  },
+  {
+    text: "The gastrovascular cavity in cnidarians functions in:",
+    options: [
+      "Gas exchange only",
+      "Digestion and circulation",
+      "Excretion only",
+      "Reproduction only"
+    ],
+    correct: 1,
+    explanation: "The gastrovascular cavity serves in both digestion and distribution of nutrients."
+  },
+  {
+    text: "Which cnidarian body form is typically sessile?",
+    options: [
+      "Medusa",
+      "Polyp",
+      "Both medusa and polyp",
+      "Neither medusa nor polyp"
+    ],
+    correct: 1,
+    explanation: "Polyps are typically attached to a substrate, while medusae are free-swimming."
+  },
+  {
+    text: "Which cnidarian body form is typically free-swimming?",
+    options: [
+      "Polyp",
+      "Medusa",
+      "Both polyp and medusa",
+      "Neither polyp nor medusa"
+    ],
+    correct: 1,
+    explanation: "Medusae are the motile form in many cnidarians."
+  },
+  {
+    text: "Which of the following is NOT a class within the phylum Cnidaria?",
+    options: [
+      "Hydrozoa",
+      "Scyphozoa",
+      "Anthozoa",
+      "Platyhelminthes"
+    ],
+    correct: 3,
+    explanation: "Platyhelminthes is a separate phylum (flatworms)."
+  },
+  {
+    text: "Comb jellies belong to which phylum?",
+    options: [
+      "Cnidaria",
+      "Porifera",
+      "Ctenophora",
+      "Platyhelminthes"
+    ],
+    correct: 2,
+    explanation: "Ctenophores are characterized by their comb-like plates of cilia."
+  },
+  {
+    text: "Colloblasts are adhesive cells found in which phylum?",
+    options: [
+      "Cnidaria",
+      "Ctenophora",
+      "Porifera",
+      "Platyhelminthes"
+    ],
+    correct: 1,
+    explanation: "Colloblasts are used by ctenophores to capture prey."
+  },
+  {
+    text: "Ctenophores move using:",
+    options: [
+      "Muscle contractions only",
+      "Cilia only",
+      "Flagella only",
+      "A combination of cilia and muscle contractions"
+    ],
+    correct: 1,
+    explanation: "Rows of cilia, called comb rows, power their movement."
+  },
+  {
+    text: "Which of the following is a characteristic of sponges (Porifera)?",
+    options: [
+      "Radial symmetry with a gastrovascular cavity",
+      "Bilateral symmetry with a complete gut",
+      "Asymmetrical body plan with numerous pores",
+      "Segmented body plan with jointed appendages"
+    ],
+    correct: 2,
+    explanation: "Sponges lack true tissues and organs, and have numerous pores for water flow."
+  },
+  {
+    text: "Sponges feed primarily by:",
+    options: [
+      "Predation",
+      "Filter feeding",
+      "Parasitism",
+      "Photosynthesis"
+    ],
+    correct: 1,
+    explanation: "Sponges filter microscopic food particles from water."
+  },
+  {
+    text: "Amoebocytes in sponges are involved in:",
+    options: [
+      "Locomotion only",
+      "Digestion and nutrient transport",
+      "Reproduction only",
+      "Gas exchange only"
+    ],
+    correct: 1,
+    explanation: "Amoebocytes perform various functions, including digestion and nutrient distribution."
+  },
+  {
+    text: "The most complex body plan among the radiata is found in:",
+    options: [
+      "Sponges (Porifera)",
+      "Comb jellies (Ctenophora)",
+      "Hydras (Cnidaria)",
+      "Jellyfish (Cnidaria)"
+    ],
+    correct: 1,
+    explanation: "Ctenophores have more developed tissues and organ systems compared to sponges."
+  },
+  {
+    text: "Which of the following is a characteristic shared by both cnidarians and ctenophores?",
+    options: [
+      "Nematocysts",
+      "Colloblasts",
+      "Radial symmetry",
+      "Segmented body plan"
+    ],
+    correct: 2,
+    explanation: "Both phyla exhibit radial symmetry, although it is secondary in origin for ctenophores."
+  },
+  {
+    text: "A key difference between the polyps of hydrozoans and anthozoans lies in:",
+    options: [
+      "The presence of a gastrovascular cavity",
+      "The type of symmetry",
+      "The presence of a medusa stage",
+      "The number of tentacles"
+    ],
+    correct: 2,
+    explanation: "Hydrozoans often have a medusa stage in their life cycle, while anthozoans do not."
+  },
+  {
+    text: "Which of the following is a characteristic that distinguishes hydrozoans from other cnidarian classes?",
+    options: [
+      "The presence of a gastrovascular cavity",
+      "Radial symmetry",
+      "A life cycle that often includes both polyp and medusa stages",
+      "The presence of nematocysts"
+    ],
+    correct: 2,
+    explanation: "Many hydrozoans exhibit alternation of generations between polyp and medusa."
+  },
+  {
+    text: "Sclerocytes are specialized cells that secrete spicules, which are found in:",
+    options: [
+      "Cnidarians",
+      "Ctenophores",
+      "Sponges",
+      "Platyhelminthes"
+    ],
+    correct: 2,
+    explanation: "Spicules are skeletal elements providing structural support in sponges."
+  },
+{
+    text: "Which type of canal system is found in sponges, facilitating water flow?",
+    options: [
+      "Closed circulatory system",
+      "Open circulatory system",
+      "Asconoid, syconoid, and leuconoid canal systems",
+      "Tracheal system"
+    ],
+    correct: 2,
+    explanation: "Sponges exhibit variations in canal systems influencing their efficiency of filter feeding."
+  },
+  {
+    text: "The mesoglea in cnidarians is best described as:",
+    options: [
+      "A solid inner layer of cells",
+      "A gelatinous layer between the epidermis and gastrodermis",
+      "A fluid-filled body cavity",
+      "A hard outer covering"
+    ],
+    correct: 1,
+    explanation: "The mesoglea provides structural support and separates the two epithelial layers."
+  },
+  {
+    text: "Which class of cnidarians is characterized by the predominance of the medusa stage in their life cycle?",
+    options: [
+      "Hydrozoa",
+      "Anthozoa",
+      "Scyphozoa",
+      "Cubozoa"
+    ],
+    correct: 2,
+    explanation: "Scyphozoans, such as jellyfish, are primarily known for their medusa form."
+  },
+  {
+    text: "Box jellies belong to which class of cnidarians known for their highly potent venom?",
+    options: [
+      "Hydrozoa",
+      "Anthozoa",
+      "Scyphozoa",
+      "Cubozoa"
+    ],
+    correct: 3,
+    explanation: "Cubozoans have a cube-shaped medusa with highly venomous nematocysts."
+  },
+  {
+    text: "Sea anemones and corals belong to which class of cnidarians?",
+    options: [
+      "Hydrozoa",
+      "Scyphozoa",
+      "Anthozoa",
+      "Cubozoa"
+    ],
+    correct: 2,
+    explanation: "Anthozoans are exclusively polyp forms, often colonial."
+  },
+  {
+    text: "A defining feature of ctenophores that distinguishes them from cnidarians is:",
+    options: [
+      "The presence of a gastrovascular cavity",
+      "Radial symmetry",
+      "The presence of colloblasts",
+      "Diploblastic body plan"
+    ],
+    correct: 2,
+    explanation: "Colloblasts are unique adhesive cells used for prey capture in ctenophores."
+  },
+  {
+    text: "Which of the following is NOT a method of reproduction in cnidarians?",
+    options: [
+      "Asexual budding",
+      "Sexual reproduction with external fertilization",      "Parthenogenesis",
+      "Internal fertilization with direct development"
+    ],
+    correct: 3,
+    explanation: "While some cnidarians have internal fertilization, many exhibit external fertilization."
+  },
+  {
+    text: "Sponges reproduce both asexually and sexually.  An example of asexual reproduction in sponges is:",
+    options: [
+      "External fertilization",
+      "Budding",
+      "Internal fertilization",
+      "Meiosis"
+    ],
+    correct: 1,
+    explanation: "Budding is a common form of asexual reproduction in sponges."
+  },
+  {
+    text: "The larval stage in many cnidarians is known as a:",
+    options: [
+      "Trochophore",
+      "Planula",
+      "Bipinnaria",
+      "Veliger"
+    ],
+    correct: 1,
+    explanation: "The planula is a free-swimming, ciliated larva in many cnidarians."
+  }, 
     { text: "Which cnidarian exists only in the polyp form?", "options": ["Hydra", "Jellyfish", "Sea anemone", "Portuguese man-of-war"], "correct": 0, "explanation": "Hydra exists only in the polyp form and reproduces asexually by budding." },
     { text: "Which phylum includes roundworms?", "options": ["Annelida", "Platyhelminthes", "Nematoda", "Cnidaria"], "correct": 2, "explanation": "Nematoda includes roundworms such as Ascaris and hookworms." },
     { text: "What is the primary mode of locomotion in Paramecium?", "options": ["Flagella", "Cilia", "Pseudopodia", "None"], "correct": 1, "explanation": "Paramecium uses cilia for locomotion and feeding." },
