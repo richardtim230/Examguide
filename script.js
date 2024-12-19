@@ -1,14 +1,20 @@
-// Add a new history state
+// Add a new state when the page loads
 window.onload = function() {
     history.pushState(null, '', window.location.href);
 };
 
-// Handle back button
+// Listen for the back button event
 window.onpopstate = function(event) {
-    // Prevent app from closing
-    history.pushState(null, '', window.location.href);
-    alert("Use the navigation buttons within the app!");
+    // Show a confirmation dialog
+    if (confirm("Are you sure you want to go back?")) {
+        // Allow navigation
+        history.back();
+    } else {
+        // Prevent navigation by pushing the state back
+        history.pushState(null, '', window.location.href);
+    }
 };
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
