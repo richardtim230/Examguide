@@ -2147,9 +2147,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
       "Mammal"
     ],
     correct: 1,
-    explanation: "Superficial cl
-
-eavage is a hallmark of insect development."
+    explanation: "Superficial cleavage is a hallmark of insect development."
   },
   {
     text: "How does bilateral cleavage differ from radial cleavage?",
