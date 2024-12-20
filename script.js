@@ -32,8 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
           message: `
             <p><strong>This is to inform you that your first CHM101 Mock test would commence by 5:00PM this evening, stay tuned</strong></p>
             <p>Join our <em>Revision Class</em> session at <strong>8:30PM</strong>.</p>
-            <p>Click https://mock-t.vercel.app" target="_blank">here</a> to join for free!</p>
-          `
+            <p>Link: <a href="https://mock-t.vercel.app" target="_blank">Click here to join</a></p>
         }
         
       ]
