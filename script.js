@@ -28,20 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       messages: [
         {
-          title: "Morning Motivation!",
+          title: "CHM101 MOCK TEST!",
           message: `
-            <p><strong>Start your day with positivity and energy!</strong></p>
-            <p>Join our <em>Morning Boost</em> session at <strong>8:30AM</strong>.</p>
-            <p>Click <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a> to join for free!</p>
-          `
-        },
-        {
-          title: "Rise and Shine!",
-          message: `
-            <p><strong>Ready to tackle the day?</strong></p>
-            <p>Our productivity tips are live now. Check them out <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a>.</p>
+            <p><strong>This is to inform you that your first CHM101 Mock test would commence by 5:00PM this evening, stay tuned</strong></p>
+            <p>Join our <em>Revision Class</em> session at <strong>8:30PM</strong>.</p>
+            <p>Click https://mock-t.vercel.app" target="_blank">here</a> to join for free!</p>
           `
         }
+        
       ]
     },
     afternoon: {
