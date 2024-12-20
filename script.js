@@ -63,26 +63,18 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     night: {
       images: [
-        "goodnight 1.webp",
-        "goodnight2.webp",
-        "good night 3.webp"
+        "boy-doing-homework-with-use-laptop_23-2148880020.jpg",      
       ],
       messages: [
         {
-          title: "Night Reminder",
+          title: "CHM101 MOCK TEST II",
           message: `
-            <p><strong>Join us for tonight's special chemistry revision.</strong></p>
-            <p><strong>Time:</strong> 8:30PM | <strong>Fee:</strong> Free!</p>
-            <p>Access it <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a>.</p>
-          `
-        },
-        {
-          title: "Relax and Recharge",
-          message: `
-            <p><strong>Take it easy tonight and recharge for tomorrow.</strong></p>
-            <p>Need help? Join our <em>Night Owl</em> group <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">here</a>.</p>
+            <p><strong>CLICK ON THE START BUTTON BELOW TO COMMENCE WITH YOUR MOCK TEST</strong></p>
+            <p><strong>Time Duration:</strong> 20 Mins | <strong>Fee:</strong> Free!</p>
+            <p>Access it <a href="https://mock-t.vercel.app/" target="_blank">here</a>.</p>
           `
         }
+        
       ]
     }
   };
@@ -181,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
+  const activeUserIDs = ["59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
