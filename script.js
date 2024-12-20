@@ -51,30 +51,12 @@ document.addEventListener("DOMContentLoaded", function () {
         "good afternoon 3.jpg"
       ],
       messages: [
+
         {
-          title: "Afternoon Update",
+          title: "CHM101 1ST MOCK EXAM",
           message: `
-            <p><strong>Feeling stuck on CHM101 problems?</strong></p>
-            <p>Join our <em>CHM101 Simplifiers</em> group at 8:30PM.</p>
-            <p>Link: <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">Click here to join</a></p>
-          `
-        },
-        {
-  title: "Final Revision Tonight!",
-  message: `
-    <p><strong>Final Revision on Errors, Combination of Errors, and Atomic Theory happening tonight!</strong></p>
-    <p>Are you having issues with any of those above topics in <em>CHM101</em>? Join us tonight online at the <em>De-Brainstormers Tutorials</em> group. It's completely free.</p>
-    <p><strong>Time:</strong> 8:30PM</p>
-    <p><strong>Venue:</strong> Online via <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv</a></p>
-    <p><strong>Fee:</strong> Completely free, just prepare your book and pen!</p>
-    <p>See you there!</p>
-  `
-}, 
-        {
-          title: "Stay Focused!",
-          message: `
-            <p><strong>Afternoon study session starts now!</strong></p>
-            <p>Get the most out of your day. <a href="https://chat.whatsapp.com/I7T3HYSlcBS4rJzBIm9vFv" target="_blank">Join here</a>.</p>
+            <p><strong>CHM101 MOCK TEST starts now!</strong></p>
+            <p>Get the most out of your day. <a href="https://mock-t.vercel.app/" target="_blank">START NOW</a>.</p>
           `
         }
       ]
