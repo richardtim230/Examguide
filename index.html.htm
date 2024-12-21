@@ -53,6 +53,28 @@
 
   </div>  
 
+  <!-- First Notification -->
+  <div id="notification1" class="notification hidden">
+    <div class="notification-content">
+      <img src="https://via.placeholder.com/300" alt="Exam Alert" class="notification-image">
+      <h2>Mock Exam Alert</h2>
+      <p>The CHM101 Mock Exam will be live by 12:00 PM. A link will be sent later. Meanwhile, you can practice the available exams on the app.</p>
+      <button class="btn secondary" onclick="dismissNotification('notification1')">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- Second Notification -->
+  <div id="notification2" class="notification hidden">
+    <div class="notification-content">
+      <img src="https://via.placeholder.com/300" alt="Exam Live" class="notification-image">
+      <h2>CHM101 Mock Exam Live!</h2>
+      <p>The CHM101 Mock Exam is now live. Click below to start:</p>
+      <a href="https://mock-exam-link.com" class="btn primary">Start Mock Exam</a>
+      <button class="btn secondary" onclick="dismissNotification('notification2')">Dismiss</button>
+    </div>
+  </div>
+
+      
   <!-- Overlay for login and registration -->
   <div id="overlay">
     <!-- Login Section -->
