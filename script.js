@@ -1,3 +1,41 @@
+
+window.addEventListener('load', () => {
+  // Show the first notification on page load
+  const notification1 = document.getElementById('notification1');
+  document.body.classList.add('modal-active'); // Prevent scrolling
+  notification1.classList.remove('hidden');
+
+  // Schedule the second notification for 12:00 PM
+  const targetTime = new Date();
+  targetTime.setHours(12, 0, 0, 0); // Set to 12:00 PM
+
+  const now = new Date();
+
+  if (now >= targetTime) {
+    // If it's already 12:00 PM or later, show the second notification immediately
+    showNotification('notification2');
+  } else {
+    // Calculate the delay until 12:00 PM
+    const delay = targetTime - now;
+    setTimeout(() => {
+      showNotification('notification2');
+    }, delay);
+  }
+});
+
+function showNotification(notificationId) {
+  const notification = document.getElementById(notificationId);
+  document.body.classList.add('modal-active'); // Prevent scrolling
+  notification.classList.remove('hidden');
+}
+
+function dismissNotification(notificationId) {
+  const notification = document.getElementById(notificationId);
+  document.body.classList.remove('modal-active'); // Re-enable scrolling
+  notification.classList.add('hidden');
+}
+
+
 // Add a new state when the page loads
 window.onload = function() {
     history.pushState(null, '', window.location.href);
