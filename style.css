@@ -11,8 +11,6 @@ body {
 }
 
 
-
-
 body::before {
   content: '';
   position: absolute;
@@ -1187,7 +1185,3 @@ button:hover {
   transition: transform 0.3s ease, opacity 0.3s ease;
   will-change: transform, opacity;
 }
-/* Enable or disable GPU rendering */
-body {
-  transform: translateZ(0); /* Triggers hardware acceleration */
-        }
