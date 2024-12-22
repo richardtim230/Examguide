@@ -1,3 +1,11 @@
+// Use debounce to limit frequent state updates
+function debounce(func, delay) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+}
 
 window.addEventListener('load', () => {
   // Show the first notification on page load
