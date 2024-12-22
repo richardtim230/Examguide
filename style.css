@@ -10,15 +10,7 @@ body {
   color: black;
 }
 
-/* Use GPU-accelerated animations */
-.element {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  will-change: transform, opacity;
-}
-/* Enable or disable GPU rendering */
-body {
-  transform: translateZ(0); /* Triggers hardware acceleration */
-}
+
 
 
 body::before {
@@ -1190,3 +1182,12 @@ button:hover {
     transform: translateY(0);
   }
 }
+/* Use GPU-accelerated animations */
+.element {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+/* Enable or disable GPU rendering */
+body {
+  transform: translateZ(0); /* Triggers hardware acceleration */
+        }
