@@ -732,7 +732,7 @@ background-size: 100% 100%;
   background-size: 100% 100%;
   width: 100%;
   color: white;
-        height: 155px;
+        height: 160px;
         font-weight: bold;
         }
 
@@ -753,7 +753,7 @@ background-size: 100% 100%;
   font-size: 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  width: 80%;
+  width: 90%;
   margin: 1rem 0;
 }
 
@@ -776,7 +776,7 @@ background-size: 100% 100%;
 
 .progress-item {
   width: 20px;
-  height: 20px;
+  height: 14px;
   background: #e2e8f0;
   border-radius: 10%;
   border: 2px solid transparent;
@@ -810,14 +810,14 @@ background-size: 100% 100%;
 #summary-section p {
   margin: 0rem 0;
   font-size: 1.0rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 
 .remark {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   margin-bottom: 2rem;}
 
 .remark.excellent {
@@ -887,13 +887,7 @@ background-size: 100% 100%;
 }
 
 
-   /* Reset some basics */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+   
 /* Main application (no styling effect) */
 #app {
   font-family: 'Poppins', sans-serif;
@@ -931,10 +925,10 @@ background-size: 100% 100%;
 
 #welcome-popup {
   background-image: url('./top-view-workspace-concept-with-orange-background_23-2148226897.webp');
-  background-color: rgba(0, 0, 0, 1); /* Semi-transparent black overlay */
+  background-color: rgba(0, 0, 0, 3); /* Semi-transparent black overlay */
   z-index: -1;
   background-size: 100% 100%;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(40px);
   border-radius: 12px;
   padding: 20px 40px;
   text-align: center;
