@@ -908,6 +908,10 @@ background-size: 100% 100%;
   align-items: center;
   z-index: 1000; /* Ensure it sits above all other content */
 }
+/* Prevent scrolling of the body when a notification is active */
+body.modal-active {
+  overflow: hidden;
+}
 
 /* Glassy container */
 #login-box{
@@ -917,7 +921,7 @@ background-size: 100% 100%;
   padding: 20px 40px;
   text-align: center;
   color: white;
-  width: 350px;
+  width: 330px;
   height: 95%;
   animation: fadeIn 0.7s ease-in-out;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
@@ -936,7 +940,7 @@ background-size: 100% 100%;
   text-align: left;
   font-weight: bold;
   font-size: 15px;   
-  width: 350px;
+  width: 340px;
   height: 95%;
   animation: fadeIn 0.7s ease-in-out;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
@@ -952,7 +956,7 @@ background-size: 100% 100%;
   color: white;
   padding: 20px 40px;
   text-align: center;
-  width: 350px;
+  width: 340px;
   height: 95%;
   justify-content: center;
   align-items: center;
@@ -975,7 +979,7 @@ background-size: 100% 100%;
 }
 
 register-box input {
-  width: 100%;
+  width: 90%;
   margin: 10px 0;
   padding: 10px;
   font-size: 16px;
