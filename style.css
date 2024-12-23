@@ -921,8 +921,8 @@ body.modal-active {
   padding: 20px 40px;
   text-align: center;
   color: white;
-  width: 330px;
-  height: 95%;
+  width: 90%;
+  height: 90%;
   animation: fadeIn 0.7s ease-in-out;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 }
@@ -956,8 +956,8 @@ body.modal-active {
   color: white;
   padding: 20px 40px;
   text-align: center;
-  width: 340px;
-  height: 95%;
+  width: 90%;
+  height: 90%;
   justify-content: center;
   align-items: center;
   position: fixed;
