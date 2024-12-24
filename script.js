@@ -1425,11 +1425,11 @@ document.addEventListener("DOMContentLoaded", () => {
   options: [
     "2.3 × 10⁵ niksec",
     "3.3 × 10⁴ niksec",
-    "4.8 × 10⁴ niksec",
+    "4.8 × 10³ niksec",
     "2.4 × 10⁵ niksec"
   ],
-  correct: 3,
-  explanation: "1 hour = 200 niksec. Since there are 24 hours in a day, 1 day = 24 × 200 = 4800 niksec × 10 = 2.4 × 10⁵ niksec."
+  correct: 2,
+  explanation: "1 hour = 200 niksec. Since there are 24 hours in a day, 1 day = 24 × 200 = 4800 niksec = 4.8 × 10³ niksec."
 },
 {
   text: "An hyperbolical unit of time 'Ratu' (1 Ratu is equivalent to 5 μs). Express 50 years in Ratu:",
@@ -1602,25 +1602,25 @@ document.addEventListener("DOMContentLoaded", () => {
         "10.98",
         "18.66"
       ],
-      correct: 3,
-      explanation: "Use the law of cosines: R² = A² + B² - 2ABcos(150°), where A = B = 10 and the angle between them is 150° (180° - 30°). R ≈ 18.66"
+      correct: 0,
+      explanation: "Use the law of cosines: R² = A² + B² - 2ABcos(150°), where A = B = 10 and the angle between them is 150° (180° - 30°). R ≈ 10√3"
     },
     {
       text: "Two forces of 20 N and 50 N act at an angle of 120 degrees. Find the resultant force.",
       options: [
         "51.96",
-        "48.5",
+        "62.45",
         "60.2",
         "52.08"
       ],
-      correct: 0,
-      explanation: "Use the law of cosines: R² = A² + B² - 2ABcos(120°), where A = 20 and B = 50. R ≈ 51.96 N"
+      correct: 1,
+      explanation: "Use the law of cosines: R² = A² + B² - 2ABcos(120°), where A = 20 and B = 50. R ≈ 62.45N"
     },
     {
       text: "Two vectors A = 3i‌ + 4j‌ and B = 4i‌ + 5j‌. Find the dot product A ⋅ B.",
       options: [
         "31",
-        "41",
+        "32",
         "43",
         "39"
       ],
@@ -1654,7 +1654,7 @@ document.addEventListener("DOMContentLoaded", () => {
       options: [
         "144",
         "150",
-        "120",
+        "13",
         "60"
       ],
       correct: 2,
@@ -1664,7 +1664,7 @@ document.addEventListener("DOMContentLoaded", () => {
       text: "Find the angle between two vectors A = 4i‌ - 3j‌ and B = -2i‌ + 6j‌",
       options: [
         "30°",
-        "67.38°",
+        "47.38°",
         "45°",
         "60°"
       ],
@@ -1712,8 +1712,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "15 N",
         "5 N"
       ],
-      correct: 0,
-      explanation: "The resultant force can be calculated using the law of cosines: R² = 10² + 10² + 2(10)(10)cos(120°) = 100.  Therefore, R = 10 N."
+      correct: 1,
+      explanation: "The resultant force can be calculated using the law of cosines: R² = 10² + 10² - 2(10)(10)cos(120°) = 10√3.  Therefore, R = 10√3 N."
     },
     {
       text: "A vector A = 3i^+4j^. What is its magnitude?",
