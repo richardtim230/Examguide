@@ -30,10 +30,7 @@ button {
   pointer-events: auto;
 }
 
-/* Prevent scrolling of the body when a notification is active */
-body.modal-active {
-  overflow: hidden;
-}
+
 
 /* Notification covers 90% of the screen */
 .notification {
