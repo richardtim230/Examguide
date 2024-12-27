@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["SOTHD4", "KEEWPP", "VJJ6DP", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
+  const activeUserIDs = ["C4BVOZ", "SOTHD4", "KEEWPP", "VJJ6DP", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly")
         window.open(
           `https://wa.me/2349155127634?text=${encodeURIComponent(
-            `Hi sir/ma, my User ID is ${userId}. Please activate my account.`
+            `I just completed my registration and my User ID is ${userId}. I am here to activate my account.`
           )}`,
           "_blank"
         );
