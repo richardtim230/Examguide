@@ -329,34 +329,111 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
   loginBtn.addEventListener("click", () => {
-    const userId = userIdInput.value.trim();
-    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+  const userId = userIdInput.value.trim();
+  const storedUserData = JSON.parse(localStorage.getItem("userData"));
 
-    if (storedUserData && storedUserData.userID === userId) {
-      if (activeUserIDs.includes(userId)) {
-        profilePhoto.src = storedUserData.photo || "default.png"; // Default image if none provided
-        studentDetailsElement.innerHTML = `
-          Full Name: ${storedUserData.fullName}<br>
-          Department: ${storedUserData.department}<br>
-          Level: ${storedUserData.level}<br>
-          Courses: ${storedUserData.courses}
-        `;
-        welcomeMessage.textContent = getGreeting();
-        loginBox.classList.add("hidden");
-        welcomePopup.classList.remove("hidden");
-      } else {
-        alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly")
-        window.open(
-          `https://wa.me/2349155127634?text=${encodeURIComponent(
-            `I just completed my registration and my User ID is ${userId}. I am here to activate my account.`
-          )}`,
-          "_blank"
-        );
-      }
+  if (storedUserData && storedUserData.userID === userId) {
+    if (activeUserIDs.includes(userId)) {
+      profilePhoto.src = storedUserData.photo || "default.png"; // Default image if none provided
+      studentDetailsElement.innerHTML = `
+        Full Name: ${storedUserData.fullName}<br>
+        Department: ${storedUserData.department}<br>
+        Level: ${storedUserData.level}<br>
+        Courses: ${storedUserData.courses}
+      `;
+      welcomeMessage.textContent = getGreeting();
+      loginBox.classList.add("hidden");
+      welcomePopup.classList.remove("hidden");
+
+      // Generate and download the receipt
+      generateAndDownloadReceipt(storedUserData);
+
     } else {
-      alert("Invalid User ID.");
+      alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly");
+      window.open(
+        `https://wa.me/2349155127634?text=${encodeURIComponent(
+          `I just completed my registration and my User ID is ${userId}. I am here to activate my account.`
+        )}`,
+        "_blank"
+      );
     }
+  } else {
+    alert("Invalid User ID.");
+  }
+});
+
+function generateAndDownloadReceipt(userData) {
+  const receiptCanvas = document.createElement("canvas");
+  const ctx = receiptCanvas.getContext("2d");
+
+  // Set canvas size
+  receiptCanvas.width = 500;
+  receiptCanvas.height = 700;
+
+  const { fullName, userID, department, level } = userData;
+  const subscription = "Students Support System";
+  const amountPaid = "₦1500";
+  const validUntil = "12/31/2025";
+  const director = "Jane Smith";
+
+  // Draw receipt
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, receiptCanvas.width, receiptCanvas.height);
+
+  // Header
+  ctx.fillStyle = "#6200ea";
+  ctx.fillRect(0, 0, receiptCanvas.width, 100);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 24px 'Segoe UI'";
+  ctx.fillText("Receipt", 20, 50);
+  ctx.font = "16px 'Segoe UI'";
+  ctx.fillText("Students Support System", 20, 80);
+
+  // User Information
+  ctx.fillStyle = "#333333";
+  ctx.font = "18px 'Segoe UI'";
+  ctx.fillText("Name:", 20, 140);
+  ctx.fillText(fullName, 120, 140);
+
+  ctx.fillText("User ID:", 20, 180);
+  ctx.fillText(userID, 120, 180);
+
+  ctx.fillText("Subscription:", 20, 220);
+  ctx.fillText(subscription, 120, 220);
+
+  ctx.fillText("Amount Paid:", 20, 260);
+  ctx.fillText(amountPaid, 120, 260);
+
+  ctx.fillText("Valid Until:", 20, 300);
+  ctx.fillText(validUntil, 120, 300);
+
+  // Footer
+  ctx.font = "16px 'Segoe UI'";
+  const now = new Date();
+  const date = now.toLocaleDateString();
+  const time = now.toLocaleTimeString();
+  ctx.fillText(`Generated On: ${date} at ${time}`, 20, 350);
+
+  ctx.font = "italic 16px 'Segoe UI'";
+  ctx.fillText("Esigned by:", 20, 400);
+  ctx.font = "bold 18px 'Segoe UI'";
+  ctx.fillText(director, 20, 430);
+
+  ctx.fillStyle = "rgba(98, 0, 234, 0.2)";
+  ctx.font = "40px Arial";
+  ctx.rotate(-Math.PI / 12);
+  ctx.fillText("Esigned", -180, 650);
+  ctx.rotate(Math.PI / 12);
+
+  // Automatically download the receipt
+  receiptCanvas.toBlob((blob) => {
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "receipt.png";
+    link.click();
   });
+}
+
 
   registerBtn.addEventListener("click", () => {
     loginBox.classList.add("hidden");
@@ -6908,49 +6985,3 @@ function endExam() {
     return "Keep practicing! You can do better.";
   }
 });
-
-
-// Existing code in script.js
-
-// Function to generate the receipt
-function generateReceipt() {
-    const canvas = document.getElementById('receiptCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Retrieve user details from local storage
-    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    if (!userDetails) {
-        console.error('User details not found in local storage');
-        return;
-    }
-
-    // Set canvas dimensions
-    canvas.width = 400;
-    canvas.height = 200;
-
-    // Fill user details on the receipt
-    ctx.fillStyle = '#000';
-    ctx.font = '20px Arial';
-    ctx.fillText(`Name: ${userDetails.name}`, 50, 50);
-    ctx.fillText(`Email: ${userDetails.email}`, 50, 100);
-
-    // Automatically download the receipt
-    const downloadLink = document.createElement('a');
-    downloadLink.href = canvas.toDataURL('image/png');
-    downloadLink.download = 'receipt.png';
-    downloadLink.click();
-}
-
-// Event listener for the login button
-document.getElementById('login-btn').addEventListener('click', function() {
-    generateReceipt();
-    document.getElementById('receipt-container').style.display = 'block';
-});
-
-// Ensure the receipt container is hidden initially
-document.getElementById('receipt-container').style.display = 'none';
-
-// Example of setting user details in local storage (to be removed in production)
-localStorage.setItem('userDetails', JSON.stringify({ name: 'John Doe', email: 'john.doe@example.com' }));
-
-
