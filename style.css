@@ -319,8 +319,21 @@ header h2 {
 .close-popup-btn:hover {
   background-color: #45a049;
         }
-
-/* Overlay styling */
+#receipt-container {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+}
+canvas {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 2px solid #007BFF;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: #f9f9f9;
+        }
+/* Overlay styling *
 
 .overlay {
     display: flex;
