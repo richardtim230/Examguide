@@ -345,9 +345,11 @@ document.addEventListener('DOMContentLoaded', function () {
       loginBox.classList.add("hidden");
       welcomePopup.classList.remove("hidden");
 
-      // Generate and download the receipt
-      generateAndDownloadReceipt(storedUserData);
-
+      // Check if receipt has already been generated
+      if (!localStorage.getItem("receiptGenerated")) {
+        generateAndDownloadReceipt(storedUserData);
+        localStorage.setItem("receiptGenerated", "true"); // Mark as generated
+      }
     } else {
       alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly");
       window.open(
@@ -377,52 +379,80 @@ function generateAndDownloadReceipt(userData) {
   const director = "Jane Smith";
 
   // Draw receipt
+  // Background and gradient header
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, receiptCanvas.width, receiptCanvas.height);
 
-  // Header
-  ctx.fillStyle = "#6200ea";
+  const gradient = ctx.createLinearGradient(0, 0, receiptCanvas.width, 0);
+  gradient.addColorStop(0, "#007BFF");
+  gradient.addColorStop(1, "#80deea");
+  ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, receiptCanvas.width, 100);
+
+  // Header Text
   ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 24px 'Segoe UI'";
-  ctx.fillText("Receipt", 20, 50);
+  ctx.font = "bold 26px 'Segoe UI'";
+  ctx.textAlign = "center";
+  ctx.fillText("RECEIPT", receiptCanvas.width / 2, 50);
+
   ctx.font = "16px 'Segoe UI'";
-  ctx.fillText("Students Support System", 20, 80);
+  ctx.fillText("Students Support System", receiptCanvas.width / 2, 80);
+
+  // Divider Line
+  ctx.beginPath();
+  ctx.moveTo(20, 140);
+  ctx.lineTo(receiptCanvas.width - 20, 140);
+  ctx.strokeStyle = "#ddd";
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
 
   // User Information
   ctx.fillStyle = "#333333";
   ctx.font = "18px 'Segoe UI'";
-  ctx.fillText("Name:", 20, 140);
-  ctx.fillText(fullName, 120, 140);
+  ctx.textAlign = "left";
+  const padding = 20;
 
-  ctx.fillText("User ID:", 20, 180);
-  ctx.fillText(userID, 120, 180);
+  ctx.fillText("Name:", padding, 180);
+  ctx.fillText(fullName, padding + 120, 180);
 
-  ctx.fillText("Subscription:", 20, 220);
-  ctx.fillText(subscription, 120, 220);
+  ctx.fillText("User ID:", padding, 220);
+  ctx.fillText(userID, padding + 120, 220);
 
-  ctx.fillText("Amount Paid:", 20, 260);
-  ctx.fillText(amountPaid, 120, 260);
+  ctx.fillText("Department:", padding, 260);
+  ctx.fillText(department, padding + 120, 260);
 
-  ctx.fillText("Valid Until:", 20, 300);
-  ctx.fillText(validUntil, 120, 300);
+  ctx.fillText("Level:", padding, 300);
+  ctx.fillText(level, padding + 120, 300);
+
+  ctx.fillText("Subscription:", padding, 340);
+  ctx.fillText(subscription, padding + 120, 340);
+
+  ctx.fillText("Amount Paid:", padding, 380);
+  ctx.fillText(amountPaid, padding + 120, 380);
+
+  ctx.fillText("Valid Until:", padding, 420);
+  ctx.fillText(validUntil, padding + 120, 420);
 
   // Footer
   ctx.font = "16px 'Segoe UI'";
   const now = new Date();
   const date = now.toLocaleDateString();
   const time = now.toLocaleTimeString();
-  ctx.fillText(`Generated On: ${date} at ${time}`, 20, 350);
+
+  ctx.fillText(`Generated On: ${date} at ${time}`, padding, 460);
 
   ctx.font = "italic 16px 'Segoe UI'";
-  ctx.fillText("Esigned by:", 20, 400);
-  ctx.font = "bold 18px 'Segoe UI'";
-  ctx.fillText(director, 20, 430);
+  ctx.fillText("Esigned by:", padding, 500);
 
-  ctx.fillStyle = "rgba(98, 0, 234, 0.2)";
+  ctx.font = "bold 18px 'Segoe UI'";
+  ctx.fillText(director, padding + 120, 500);
+
+  // Esigned Stamp
+  ctx.fillStyle = "rgba(0, 123, 255, 0.2)";
   ctx.font = "40px Arial";
+  ctx.textAlign = "center";
   ctx.rotate(-Math.PI / 12);
-  ctx.fillText("Esigned", -180, 650);
+  ctx.fillText("Esigned", receiptCanvas.width / 2 - 140, 600);
   ctx.rotate(Math.PI / 12);
 
   // Automatically download the receipt
