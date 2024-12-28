@@ -6919,7 +6919,8 @@ const userDetails = {
     director: "Jane Smith"
 };
 
-const loginButton = document.getElementById("loginButton");
+
+const loginBtn = document.getElementById("login-btn");
 const receiptContainer = document.getElementById("receipt-container");
 const receiptCanvas = document.getElementById("receiptCanvas");
 const ctx = receiptCanvas.getContext("2d");
