@@ -328,41 +328,52 @@ document.addEventListener('DOMContentLoaded', function () {
     return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
     }
 
-loginBtn.addEventListener("click", () => {
-  const userId = userIdInput.value.trim();
-  const storedUserData = JSON.parse(localStorage.getItem("userData"));
+document.addEventListener("DOMContentLoaded", () => {
+  const loginBtn = document.getElementById("loginBtn");
+  const userIdInput = document.getElementById("userIdInput");
+  const profilePhoto = document.getElementById("profilePhoto");
+  const studentDetailsElement = document.getElementById("studentDetails");
+  const welcomeMessage = document.getElementById("welcomeMessage");
+  const loginBox = document.getElementById("login-box");
+  const welcomePopup = document.getElementById("welcome-popup");
 
-  if (storedUserData && storedUserData.userID === userId) {
-    if (activeUserIDs.includes(userId)) {
-      profilePhoto.src = storedUserData.photo || "default.png"; // Default image if none provided
-      studentDetailsElement.innerHTML = `
-        Full Name: ${storedUserData.fullName}<br>
-        Department: ${storedUserData.department}<br>
-        Level: ${storedUserData.level}<br>
-        Courses: ${storedUserData.courses.join(", ")}
-      `;
-      welcomeMessage.textContent = getGreeting();
-      loginBox.classList.add("hidden");
-      welcomePopup.classList.remove("hidden");
+  const activeUserIDs = ["SSS12345"]; // Example of active user IDs for validation
 
-      // Check if receipt has already been generated
-      if (!localStorage.getItem("receiptGenerated")) {
-        generateAndDownloadReceipt(storedUserData);
-        localStorage.setItem("receiptGenerated", "true"); // Mark as generated
+  loginBtn.addEventListener("click", () => {
+    const userId = userIdInput.value.trim();
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+
+    if (storedUserData && storedUserData.userID === userId) {
+      if (activeUserIDs.includes(userId)) {
+        profilePhoto.src = storedUserData.photo || "default.png"; // Default image if none provided
+        studentDetailsElement.innerHTML = `
+          Full Name: ${storedUserData.fullName}<br>
+          Department: ${storedUserData.department}<br>
+          Level: ${storedUserData.level}<br>
+          Courses: ${storedUserData.courses.join(", ")}
+        `;
+        welcomeMessage.textContent = getGreeting();
+        loginBox.classList.add("hidden");
+        welcomePopup.classList.remove("hidden");
+
+        // Check if receipt has already been generated
+        if (!localStorage.getItem("receiptGenerated")) {
+          generateAndDownloadReceipt(storedUserData);
+          localStorage.setItem("receiptGenerated", "true"); // Mark as generated
+        }
+      } else {
+        alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly");
+        window.open(
+          `https://wa.me/2349155127634?text=${encodeURIComponent(
+            `I just completed my registration and my User ID is ${userId}. I am here to activate my account.`
+          )}`,
+          "_blank"
+        );
       }
     } else {
-      alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly");
-      window.open(
-        `https://wa.me/2349155127634?text=${encodeURIComponent(
-          `I just completed my registration and my User ID is ${userId}. I am here to activate my account.`
-        )}`,
-        "_blank"
-      );
+      alert("Invalid User ID.");
     }
-  } else {
-    alert("Invalid User ID.");
-  }
-});
+  });
 
 function generateAndDownloadReceipt(userData) {
   const receiptCanvas = document.createElement("canvas");
