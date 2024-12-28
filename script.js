@@ -1,3 +1,114 @@
+// User details (dynamically loaded after login in real-world apps)
+const userDetails = {
+    name: "John Doe",
+    userID: "SSS12345",
+    subscription: "Students Support System",
+    amountPaid: "₦1500",
+    validUntil: "12/31/2025",
+    director: "Jane Smith"
+};
+
+const loginButton = document.getElementById("loginButton");
+const receiptContainer = document.getElementById("receipt-container");
+const receiptCanvas = document.getElementById("receiptCanvas");
+const ctx = receiptCanvas.getContext("2d");
+
+// Set canvas dimensions
+receiptCanvas.width = 500;
+receiptCanvas.height = 700;
+
+loginButton.addEventListener("click", () => {
+    generateReceipt();
+    receiptContainer.style.display = "block";
+
+    // Download the receipt
+    const link = document.createElement("a");
+    link.download = "receipt.png";
+    link.href = receiptCanvas.toDataURL("image/png");
+    link.click();
+
+    // Hide login button
+    loginButton.style.display = "none";
+});
+
+function generateReceipt() {
+    const { name, userID, subscription, amountPaid, validUntil, director } = userDetails;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, receiptCanvas.width, receiptCanvas.height);
+
+    // Add background and border
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, receiptCanvas.width, receiptCanvas.height);
+
+    // Header Section
+    const gradient = ctx.createLinearGradient(0, 0, receiptCanvas.width, 0);
+    gradient.addColorStop(0, "#007BFF");
+    gradient.addColorStop(1, "#80deea");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, receiptCanvas.width, 120);
+
+    // Header Title
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 30px 'Segoe UI'";
+    ctx.textAlign = "center";
+    ctx.fillText("RECEIPT", receiptCanvas.width / 2, 50);
+
+    // Subheader
+    ctx.font = "16px 'Segoe UI'";
+    ctx.fillText("Students Support System", receiptCanvas.width / 2, 90);
+
+    // Divider Line
+    ctx.beginPath();
+    ctx.moveTo(20, 140);
+    ctx.lineTo(receiptCanvas.width - 20, 140);
+    ctx.strokeStyle = "#ddd";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // User Information Section with Padding
+    ctx.fillStyle = "#333333";
+    ctx.font = "18px 'Segoe UI'";
+    ctx.textAlign = "left";
+    const padding = 20;
+    ctx.fillText("Name:", padding, 180);
+    ctx.fillText(name, padding + 120, 180);
+
+    ctx.fillText("User ID:", padding, 220);
+    ctx.fillText(userID, padding + 120, 220);
+
+    ctx.fillText("Subscription:", padding, 260);
+    ctx.fillText(subscription, padding + 120, 260);
+
+    ctx.fillText("Amount Paid:", padding, 300);
+    ctx.fillText(amountPaid, padding + 120, 300);
+
+    ctx.fillText("Valid Until:", padding, 340);
+    ctx.fillText(validUntil, padding + 120, 340);
+
+    // Footer Section
+    ctx.font = "16px 'Segoe UI'";
+    const now = new Date();
+    const date = now.toLocaleDateString();
+    const time = now.toLocaleTimeString();
+    ctx.fillText(`Generated On: ${date} at ${time}`, padding, 400);
+
+    // Signature Section
+    ctx.font = "italic 16px 'Segoe UI'";
+    ctx.fillText("Esigned by:", padding, 460);
+    ctx.font = "bold 18px 'Segoe UI'";
+    ctx.fillText(director, padding + 120, 460);
+
+    // Esigned Stamp
+    ctx.fillStyle = "rgba(0, 123, 255, 0.2)";
+    ctx.font = "40px Arial";
+    ctx.textAlign = "center";
+    ctx.rotate(-Math.PI / 12);
+    ctx.fillText("Esigned", receiptCanvas.width / 2 - 140, 600);
+    ctx.rotate(Math.PI / 12);
+}
+
+
 // Use debounce to limit frequent state updates
 function debounce(func, delay) {
   let timeout;
