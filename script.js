@@ -6929,7 +6929,7 @@ const ctx = receiptCanvas.getContext("2d");
 receiptCanvas.width = 500;
 receiptCanvas.height = 700;
 
-loginButton.addEventListener("click", () => {
+loginBtn.addEventListener("click", () => {
     generateReceipt();
     receiptContainer.style.display = "block";
 
@@ -6940,7 +6940,7 @@ loginButton.addEventListener("click", () => {
     link.click();
 
     // Hide login button
-    loginButton.style.display = "none";
+    loginBtn.style.display = "none";
 });
 
 function generateReceipt() {
