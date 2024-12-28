@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
     }
 
-  loginBtn.addEventListener("click", () => {
+loginBtn.addEventListener("click", () => {
   const userId = userIdInput.value.trim();
   const storedUserData = JSON.parse(localStorage.getItem("userData"));
 
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Full Name: ${storedUserData.fullName}<br>
         Department: ${storedUserData.department}<br>
         Level: ${storedUserData.level}<br>
-        Courses: ${storedUserData.courses}
+        Courses: ${storedUserData.courses.join(", ")}
       `;
       welcomeMessage.textContent = getGreeting();
       loginBox.classList.add("hidden");
@@ -370,13 +370,13 @@ function generateAndDownloadReceipt(userData) {
 
   // Set canvas size
   receiptCanvas.width = 500;
-  receiptCanvas.height = 700;
+  receiptCanvas.height = 800;
 
-  const { fullName, userID, department, level, courses} = userData;
+  const { fullName, userID, department, level, courses } = userData;
   const subscription = "Students Support System";
   const amountPaid = "₦1500";
-  const validUntil = "End of 2023/2024 Academic Session";
-  const director = "Hon RRichard D'Prof;
+  const validUntil = "2023/2024 Academic Session";
+  const director = "Hon Richard D'Prof";
 
   // Draw receipt
   // Background and gradient header
@@ -391,88 +391,94 @@ function generateAndDownloadReceipt(userData) {
 
   // Logo
   const logo = new Image();
-  logo.src = "Logo.png"; // Replace with the actual logo URL
+  logo.src = "logo.png"; // Replace with the actual logo URL
   logo.onload = () => {
     ctx.drawImage(logo, receiptCanvas.width / 2 - 40, 10, 80, 80);
 
+    // Header Text
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px 'Segoe UI'";
+    ctx.textAlign = "center";
+    ctx.fillText("STUDENTS SUPPORT SYSTEM", receiptCanvas.width / 2, 120);
 
-  // Header Text
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 26px 'Segoe UI'";
-  ctx.textAlign = "center";
-  ctx.fillText("STUDENTS SUPPORT SYSTEM", receiptCanvas.width / 2, 50);
+    ctx.font = "16px 'Segoe UI'";
+    ctx.fillText("Obafemi Awolowo University", receiptCanvas.width / 2, 140);
 
-  ctx.font = "16px 'Segoe UI'";
-  ctx.fillText("Obafemi Awolowo University", receiptCanvas.width / 2, 80);
+    // Divider Line
+    ctx.beginPath();
+    ctx.moveTo(20, 160);
+    ctx.lineTo(receiptCanvas.width - 20, 160);
+    ctx.strokeStyle = "#ddd";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-  // Divider Line
-  ctx.beginPath();
-  ctx.moveTo(20, 140);
-  ctx.lineTo(receiptCanvas.width - 20, 140);
-  ctx.strokeStyle = "#ddd";
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
+    // User Information
+    ctx.fillStyle = "#333333";
+    ctx.font = "18px 'Segoe UI'";
+    ctx.textAlign = "left";
+    const padding = 20;
 
-  // User Information
-  ctx.fillStyle = "#333333";
-  ctx.font = "18px 'Segoe UI'";
-  ctx.textAlign = "left";
-  const padding = 20;
+    ctx.fillText("Name:", padding, 200);
+    ctx.fillText(fullName, padding + 120, 200);
 
-  ctx.fillText("Name:", padding, 180);
-  ctx.fillText(fullName, padding + 120, 180);
+    ctx.fillText("User ID:", padding, 240);
+    ctx.fillText(userID, padding + 120, 240);
 
-  ctx.fillText("User ID:", padding, 220);
-  ctx.fillText(userID, padding + 120, 220);
+    ctx.fillText("Department:", padding, 280);
+    ctx.fillText(department, padding + 120, 280);
 
-  ctx.fillText("Department:", padding, 260);
-  ctx.fillText(department, padding + 120, 260);
+    ctx.fillText("Level:", padding, 320);
+    ctx.fillText(level, padding + 120, 320);
 
-  ctx.fillText("Level:", padding, 300);
-  ctx.fillText(level, padding + 120, 300);
-    
-  ctx.fillText("Courses:", padding, 300);
-  ctx.fillText(courses, padding + 120, 300);
+    ctx.fillText("Subscription:", padding, 360);
+    ctx.fillText(subscription, padding + 120, 360);
 
-    
-  ctx.fillText("Subscription:", padding, 340);
-  ctx.fillText(subscription, padding + 120, 340);
+    ctx.fillText("Amount Paid:", padding, 400);
+    ctx.fillText(amountPaid, padding + 120, 400);
 
-  ctx.fillText("Amount Paid:", padding, 380);
-  ctx.fillText(amountPaid, padding + 120, 380);
+    ctx.fillText("Valid Until:", padding, 440);
+    ctx.fillText(validUntil, padding + 120, 440);
 
-  ctx.fillText("Valid Until:", padding, 420);
-  ctx.fillText(validUntil, padding + 120, 420);
+    // Courses Section
+    ctx.font = "bold 18px 'Segoe UI'";
+    ctx.fillText("Registered Courses:", padding, 480);
 
-  // Footer
-  ctx.font = "16px 'Segoe UI'";
-  const now = new Date();
-  const date = now.toLocaleDateString();
-  const time = now.toLocaleTimeString();
+    ctx.font = "16px 'Segoe UI'";
+    courses.forEach((course, index) => {
+      ctx.fillText(`${index + 1}. ${course}`, padding + 20, 520 + index * 30);
+    });
 
-  ctx.fillText(`Generated On: ${date} at ${time}`, padding, 460);
+    // Footer
+    const footerY = 520 + courses.length * 30 + 20; // Dynamically adjust footer position
+    ctx.font = "16px 'Segoe UI'";
+    const now = new Date();
+    const date = now.toLocaleDateString();
+    const time = now.toLocaleTimeString();
 
-  ctx.font = "italic 16px 'Segoe UI'";
-  ctx.fillText("Esigned by:", padding, 500);
+    ctx.fillText(`Generated On: ${date} at ${time}`, padding, footerY);
 
-  ctx.font = "bold 18px 'Segoe UI'";
-  ctx.fillText(director, padding + 120, 500);
+    ctx.font = "italic 16px 'Segoe UI'";
+    ctx.fillText("Esigned by:", padding, footerY + 40);
 
-  // Esigned Stamp
-  ctx.fillStyle = "rgba(0, 123, 255, 0.2)";
-  ctx.font = "40px Arial";
-  ctx.textAlign = "center";
-  ctx.rotate(-Math.PI / 12);
-  ctx.fillText("Esigned", receiptCanvas.width / 2 - 140, 600);
-  ctx.rotate(Math.PI / 12);
+    ctx.font = "bold 18px 'Segoe UI'";
+    ctx.fillText(director, padding + 120, footerY + 40);
 
-  // Automatically download the receipt
-  receiptCanvas.toBlob((blob) => {
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "receipt.png";
-    link.click();
-  });
+    // Esigned Stamp
+    ctx.fillStyle = "rgba(0, 123, 255, 0.2)";
+    ctx.font = "40px Arial";
+    ctx.textAlign = "center";
+    ctx.rotate(-Math.PI / 12);
+    ctx.fillText("Esigned", receiptCanvas.width / 2 - 140, footerY + 100);
+    ctx.rotate(Math.PI / 12);
+
+    // Automatically download the receipt
+    receiptCanvas.toBlob((blob) => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "receipt.png";
+      link.click();
+    });
+  };
 }
 
 
