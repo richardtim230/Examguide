@@ -372,11 +372,11 @@ function generateAndDownloadReceipt(userData) {
   receiptCanvas.width = 500;
   receiptCanvas.height = 700;
 
-  const { fullName, userID, department, level } = userData;
+  const { fullName, userID, department, level, courses} = userData;
   const subscription = "Students Support System";
   const amountPaid = "₦1500";
-  const validUntil = "12/31/2025";
-  const director = "Jane Smith";
+  const validUntil = "End of 2023/2024 Academic Session";
+  const director = "Hon RRichard D'Prof;
 
   // Draw receipt
   // Background and gradient header
@@ -389,14 +389,21 @@ function generateAndDownloadReceipt(userData) {
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, receiptCanvas.width, 100);
 
+  // Logo
+  const logo = new Image();
+  logo.src = "Logo.png"; // Replace with the actual logo URL
+  logo.onload = () => {
+    ctx.drawImage(logo, receiptCanvas.width / 2 - 40, 10, 80, 80);
+
+
   // Header Text
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 26px 'Segoe UI'";
   ctx.textAlign = "center";
-  ctx.fillText("RECEIPT", receiptCanvas.width / 2, 50);
+  ctx.fillText("STUDENTS SUPPORT SYSTEM", receiptCanvas.width / 2, 50);
 
   ctx.font = "16px 'Segoe UI'";
-  ctx.fillText("Students Support System", receiptCanvas.width / 2, 80);
+  ctx.fillText("Obafemi Awolowo University", receiptCanvas.width / 2, 80);
 
   // Divider Line
   ctx.beginPath();
@@ -423,7 +430,11 @@ function generateAndDownloadReceipt(userData) {
 
   ctx.fillText("Level:", padding, 300);
   ctx.fillText(level, padding + 120, 300);
+    
+  ctx.fillText("Courses:", padding, 300);
+  ctx.fillText(courses, padding + 120, 300);
 
+    
   ctx.fillText("Subscription:", padding, 340);
   ctx.fillText(subscription, padding + 120, 340);
 
