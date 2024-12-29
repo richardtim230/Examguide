@@ -317,7 +317,10 @@ document.addEventListener('DOMContentLoaded', function () {
     "Goodnight!  May your sleep be as peaceful as the night sky."
 ];
 
-
+function generateUserID() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+                           }
+  
   function getGreeting() {
     const hour = new Date().getHours();
     if (hour < 12) return morningMessages[Math.floor(Math.random() * morningMessages.length)];
@@ -461,6 +464,17 @@ function generateAndDownloadReceipt(userData) {
   });
 }
 
+// Elements
+const loginBox = document.getElementById("login-box");
+const registerBox = document.getElementById("register-box");
+const paymentGatewayBox = document.createElement("div"); // Payment gateway will be dynamically added
+const submitRegisterBtn = document.getElementById("submitRegisterBtn");
+const fullNameInput = document.getElementById("full-name");
+const departmentInput = document.getElementById("department");
+const levelInput = document.getElementById("level");
+const coursesInput = document.getElementById("courses");
+const photoUpload = document.getElementById("photo-upload");
+const agreeCheckbox = document.getElementById("agree-checkbox");
 
 
 // Registration Navigation Buttons
@@ -550,12 +564,7 @@ submitRegisterBtn.addEventListener("click", () => {
   reader.readAsDataURL(photoUpload.files[0]);
 });
 
-// Generate a User ID (Helper Function)
-function generateUserID() {
-  return `USER-${Math.floor(Math.random() * 100000)}`;
-}
 
-    
 
 // Invoice Download
 document.getElementById("downloadInvoiceBtn").addEventListener("click", () => {
