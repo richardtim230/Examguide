@@ -1154,8 +1154,12 @@ button:hover {
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
-  text-align: center;
+  text-align: left;
   animation: fadeIn 1s ease-in-out;
+  height: 95%;
+  overflow-y: auto;
+  top: 5px;
+
 }
 
 /* Title */
@@ -1163,6 +1167,7 @@ button:hover {
   font-size: 30px;
   color: #2C3E50;
   margin-bottom: 15px;
+  text-align: center;
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -1172,6 +1177,8 @@ button:hover {
   font-size: 24px;
   font-style: italic;
   color: #2C3E50;
+
+text-align: center;
   margin-bottom: 10px;
 }
 
@@ -1181,6 +1188,8 @@ button:hover {
   color: #4CAF50;
   margin-bottom: 15px;
   font-weight: 600;
+text-align: center;
+
 }
 
 /* Paragraph Styling */
