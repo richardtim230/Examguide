@@ -363,10 +363,10 @@ window.addEventListener("beforeunload", () => {
   }
 });
 
+// Login Validation Logic
 loginBtn.addEventListener("click", () => {
   const userId = userIdInput.value.trim();
   const storedUserData = JSON.parse(localStorage.getItem("userData"));
-  const activeUserIDs = JSON.parse(localStorage.getItem("activeUserIDs")) || [];
 
   if (!storedUserData) {
     alert("No user data found. Please register first.");
@@ -375,7 +375,7 @@ loginBtn.addEventListener("click", () => {
 
   if (storedUserData.userID === userId) {
     if (activeUserIDs.includes(userId)) {
-      // User is active, proceed to welcome screen
+      // Valid User ID found in the active list
       profilePhoto.src = storedUserData.photo || "default.png";
       studentDetailsElement.innerHTML = `
         Full Name: ${storedUserData.fullName}<br>
@@ -387,13 +387,13 @@ loginBtn.addEventListener("click", () => {
       loginBox.classList.add("hidden");
       welcomePopup.classList.remove("hidden");
 
-      // Generate Receipt if not done already
+      // Generate Receipt if not already done
       if (!localStorage.getItem("receiptGenerated")) {
         generateAndDownloadReceipt(storedUserData);
         localStorage.setItem("receiptGenerated", "true");
       }
     } else {
-      // User ID exists but is not active
+      // User ID is valid but not yet active
       alert("Your account is not active. Please contact admin via WhatsApp.");
       window.open(
         `https://wa.me/2349155127634?text=${encodeURIComponent(
@@ -406,6 +406,7 @@ loginBtn.addEventListener("click", () => {
     alert("Invalid User ID. Please check and try again.");
   }
 });
+
 
 
 function generateAndDownloadReceipt(userData) {
