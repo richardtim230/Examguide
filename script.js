@@ -489,54 +489,105 @@ function generateAndDownloadReceipt(userData) {
     loginBox.classList.remove("hidden");
   });
 
+// Handle Registration Submission
 submitRegisterBtn.addEventListener("click", () => {
-    if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
-      alert("Please fill all fields and upload your photo.");
-      return;
-    }
+  if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
+    alert("Please fill all fields and upload your photo.");
+    return;
+  }
 
-    if (!agreeCheckbox.checked) {
-      alert("You must agree to proceed.");
-      return;
-    }
+  if (!agreeCheckbox.checked) {
+    alert("You must agree to proceed.");
+    return;
+  }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const userID = generateUserID();
-      const userData = {
-        userID,
-        fullName: fullNameInput.value,
-        department: departmentInput.value,
-        level: levelInput.value,
-        courses: coursesInput.value,
-        photo: reader.result,
-      };
-
-      localStorage.setItem("userData", JSON.stringify(userData));
-
-      // Send all details to WhatsApp
-      const whatsappMessage = `
-        Registration Details:
-        - Full Name: ${userData.fullName}
-        - Department: ${userData.department}
-        - Level: ${userData.level}
-        - Courses: ${userData.courses}
-        - User ID: ${userData.userID}
-      `;
-
-      alert(`Your User ID is ${userID}. Contact admin for activation. You will be redirected shortly. (Do not close or refresh to avoid multiple creation of accounts)`);
-
-      window.open(
-        `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
-        "_blank"
-      );
-
-      registerBox.classList.add("hidden");
-      loginBox.classList.remove("hidden");
+  const reader = new FileReader();
+  reader.onload = () => {
+    const userID = generateUserID();
+    const userData = {
+      userID,
+      fullName: fullNameInput.value,
+      department: departmentInput.value,
+      level: levelInput.value,
+      courses: coursesInput.value,
+      photo: reader.result,
     };
 
-    reader.readAsDataURL(photoUpload.files[0]);
-  });
+    localStorage.setItem("userData", JSON.stringify(userData));
+
+    // Display Payment Page with User Details
+    document.getElementById("paymentFullName").innerText = userData.fullName;
+    document.getElementById("paymentDepartment").innerText = userData.department;
+    document.getElementById("paymentLevel").innerText = userData.level;
+    document.getElementById("paymentUserID").innerText = userData.userID;
+
+    registerBox.classList.add("hidden");
+    paymentPage.classList.remove("hidden");
+  };
+
+  reader.readAsDataURL(photoUpload.files[0]);
+});
+
+// Generate Invoice
+generateInvoiceBtn.addEventListener("click", () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
+  const invoiceContent = `
+    Invoice for Payment
+    -------------------------
+    Full Name: ${userData.fullName}
+    Department: ${userData.department}
+    Level: ${userData.level}
+    User ID: ${userData.userID}
+    Amount Due: [Specify Amount]
+    
+    Bank Details:
+    Bank Name: Opay Microfinance Bank
+    Account Number: 9070962822
+    Account Name: Ochuko Timothy
+    
+    Please ensure accurate payment and upload your receipt.
+  `;
+
+  const blob = new Blob([invoiceContent], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `Invoice_${userData.userID}.txt`;
+  link.click();
+});
+
+// Submit Receipt and Redirect to WhatsApp
+submitReceiptBtn.addEventListener("click", () => {
+  const receiptFile = receiptUpload.files[0];
+  if (!receiptFile) {
+    alert("Please upload your payment receipt.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+    const whatsappMessage = `
+      Payment Submission Details:
+      - Full Name: ${userData.fullName}
+      - Department: ${userData.department}
+      - Level: ${userData.level}
+      - User ID: ${userData.userID}
+      - Receipt: Attached
+    `;
+
+    window.open(
+      `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
+      "_blank"
+    );
+
+    alert("Receipt submitted. Redirecting to admin on WhatsApp.");
+  };
+
+  reader.readAsDataURL(receiptFile);
+});
+
 
   continueBtn.addEventListener("click", () => {
     // Hide overlay and show the main application
