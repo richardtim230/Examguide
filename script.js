@@ -528,33 +528,62 @@ submitRegisterBtn.addEventListener("click", () => {
   reader.readAsDataURL(photoUpload.files[0]);
 });
 
-// Generate Invoice
+// Generate Invoice as an Image
 generateInvoiceBtn.addEventListener("click", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
+  
+  // Create an off-screen canvas
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  
+  // Set canvas dimensions
+  canvas.width = 800;
+  canvas.height = 600;
 
-  const invoiceContent = `
-    Invoice for Payment
-    -------------------------
-    Full Name: ${userData.fullName}
-    Department: ${userData.department}
-    Level: ${userData.level}
-    User ID: ${userData.userID}
-    Amount Due: [Specify Amount]
-    
-    Bank Details:
-    Bank Name: Opay Microfinance Bank
-    Account Number: 9070962822
-    Account Name: Ochuko Timothy
-    
-    Please ensure accurate payment and upload your receipt.
-  `;
+  // Background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const blob = new Blob([invoiceContent], { type: "text/plain" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `Invoice_${userData.userID}.txt`;
+  // Header
+  ctx.fillStyle = '#4CAF50';
+  ctx.fillRect(0, 0, canvas.width, 80);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '24px Arial';
+  ctx.fillText('Invoice for Payment', 20, 50);
+
+  // User Details
+  ctx.fillStyle = '#333333';
+  ctx.font = '18px Arial';
+  ctx.fillText(`Full Name: ${userData.fullName}`, 20, 120);
+  ctx.fillText(`Department: ${userData.department}`, 20, 160);
+  ctx.fillText(`Level: ${userData.level}`, 20, 200);
+  ctx.fillText(`User ID: ${userData.userID}`, 20, 240);
+
+  // Payment Details
+  ctx.font = '20px Arial';
+  ctx.fillStyle = '#4CAF50';
+  ctx.fillText('Payment Details:', 20, 300);
+  ctx.fillStyle = '#333333';
+  ctx.font = '16px Arial';
+  ctx.fillText('Bank Name: Opay Microfinance Bank', 40, 340);
+  ctx.fillText('Account Number: 9070962822', 40, 380);
+  ctx.fillText('Account Name: Ochuko Timothy', 40, 420);
+
+  // Footer Note
+  ctx.fillStyle = '#FF0000';
+  ctx.font = '14px Arial';
+  ctx.fillText('Please ensure accurate payment and upload your receipt.', 20, 500);
+
+  // Save canvas as image
+  const image = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.href = image;
+  link.download = `Invoice_${userData.userID}.png`;
   link.click();
+
+  alert('Invoice has been generated and downloaded as an image.');
 });
+
 
 // Submit Receipt and Redirect to WhatsApp
 submitReceiptBtn.addEventListener("click", () => {
