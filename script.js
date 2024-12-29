@@ -493,7 +493,9 @@ paymentGatewayBox.innerHTML = `
 document.body.appendChild(paymentGatewayBox);
 
 // Register Event Listener
-submitRegisterBtn.addEventListener("click", () => {
+registerBtn.addEventListener("click", () => {
+  console.log("Register button clicked");
+
   if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
     alert("Please fill all fields and upload your photo.");
     return;
@@ -527,13 +529,16 @@ submitRegisterBtn.addEventListener("click", () => {
       <p><strong>User ID:</strong> ${userData.userID}</p>
     `;
 
-    // Show Payment Gateway
+    // Show Payment Page, Hide Other Pages
     registerBox.classList.add("hidden");
+    loginBox.classList.add("hidden");
     paymentGatewayBox.classList.remove("hidden");
   };
 
   reader.readAsDataURL(photoUpload.files[0]);
 });
+
+    
 
 // Invoice Download
 document.getElementById("downloadInvoiceBtn").addEventListener("click", () => {
