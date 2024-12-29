@@ -342,13 +342,41 @@ console.log(generateUserID()); // Example Output: OAU-A1b2C
     return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
     }
 
-  loginBtn.addEventListener("click", () => {
+
+// Check and Display User Data on Load
+window.addEventListener("DOMContentLoaded", () => {
+  const savedUserData = JSON.parse(localStorage.getItem("userData"));
+  
+  if (savedUserData) {
+    document.getElementById("paymentFullName").innerText = savedUserData.fullName;
+    document.getElementById("paymentDepartment").innerText = savedUserData.department;
+    document.getElementById("paymentLevel").innerText = savedUserData.level;
+    document.getElementById("paymentUserID").innerText = savedUserData.userID;
+  }
+});
+
+
+window.addEventListener("beforeunload", () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  if (userData) {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
+});
+
+loginBtn.addEventListener("click", () => {
   const userId = userIdInput.value.trim();
   const storedUserData = JSON.parse(localStorage.getItem("userData"));
+  const activeUserIDs = JSON.parse(localStorage.getItem("activeUserIDs")) || [];
 
-  if (storedUserData && storedUserData.userID === userId) {
+  if (!storedUserData) {
+    alert("No user data found. Please register first.");
+    return;
+  }
+
+  if (storedUserData.userID === userId) {
     if (activeUserIDs.includes(userId)) {
-      profilePhoto.src = storedUserData.photo || "default.png"; // Default image if none provided
+      // User is active, proceed to welcome screen
+      profilePhoto.src = storedUserData.photo || "default.png";
       studentDetailsElement.innerHTML = `
         Full Name: ${storedUserData.fullName}<br>
         Department: ${storedUserData.department}<br>
@@ -359,13 +387,14 @@ console.log(generateUserID()); // Example Output: OAU-A1b2C
       loginBox.classList.add("hidden");
       welcomePopup.classList.remove("hidden");
 
-      // Check if receipt has already been generated
+      // Generate Receipt if not done already
       if (!localStorage.getItem("receiptGenerated")) {
         generateAndDownloadReceipt(storedUserData);
-        localStorage.setItem("receiptGenerated", "true"); // Mark as generated
+        localStorage.setItem("receiptGenerated", "true");
       }
     } else {
-      alert("Your account is not active. Please contact admin via WhatsApp. You will be redirected shortly");
+      // User ID exists but is not active
+      alert("Your account is not active. Please contact admin via WhatsApp.");
       window.open(
         `https://wa.me/2349155127634?text=${encodeURIComponent(
           `I just completed my registration and my User ID is ${userId}. I am here to activate my account.`
@@ -374,9 +403,10 @@ console.log(generateUserID()); // Example Output: OAU-A1b2C
       );
     }
   } else {
-    alert("Invalid User ID.");
+    alert("Invalid User ID. Please check and try again.");
   }
 });
+
 
 function generateAndDownloadReceipt(userData) {
   const receiptCanvas = document.createElement("canvas");
@@ -501,7 +531,12 @@ backToLoginBtn.addEventListener("click", () => {
   loginBox.classList.remove("hidden");
 });
 
-// ➡️ Submit Registration and Navigate to Payment Page
+// Ensure activeUserIDs exists in localStorage
+if (!localStorage.getItem("activeUserIDs")) {
+  localStorage.setItem("activeUserIDs", JSON.stringify([]));
+}
+
+// Submit Registration and Save Details
 submitRegisterBtn.addEventListener("click", () => {
   if (
     !fullNameInput.value ||
@@ -521,7 +556,9 @@ submitRegisterBtn.addEventListener("click", () => {
 
   const reader = new FileReader();
   reader.onload = () => {
+    // Generate a unique User ID
     const userID = generateUserID();
+    
     const userData = {
       userID,
       fullName: fullNameInput.value,
@@ -531,9 +568,10 @@ submitRegisterBtn.addEventListener("click", () => {
       photo: reader.result,
     };
 
+    // Save user data securely to localStorage
     localStorage.setItem("userData", JSON.stringify(userData));
 
-    // Display Payment Page with User Details
+    // Update Payment Page Details
     document.getElementById("paymentFullName").innerText = userData.fullName;
     document.getElementById("paymentDepartment").innerText = userData.department;
     document.getElementById("paymentLevel").innerText = userData.level;
@@ -541,10 +579,13 @@ submitRegisterBtn.addEventListener("click", () => {
 
     registerBox.classList.add("hidden");
     paymentPage.classList.remove("hidden");
+
+    alert(`Registration Successful! Your User ID is: ${userID}`);
   };
 
   reader.readAsDataURL(photoUpload.files[0]);
 });
+
 
 // ➡️ Generate Invoice as an Image
 generateInvoiceBtn.addEventListener("click", () => {
