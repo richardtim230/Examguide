@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (hour < 18) return afternoonMessages[Math.floor(Math.random() * afternoonMessages.length)];
     return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
     }
-
+  paymentGatewayBox.classList.add("hidden");
   loginBtn.addEventListener("click", () => {
   const userId = userIdInput.value.trim();
   const storedUserData = JSON.parse(localStorage.getItem("userData"));
@@ -493,7 +493,7 @@ paymentGatewayBox.innerHTML = `
 document.body.appendChild(paymentGatewayBox);
 
 // Register Event Listener
-registerBtn.addEventListener("click", () => {
+submitRegisterBtn.addEventListener("click", () => {
   console.log("Register button clicked");
 
   if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
