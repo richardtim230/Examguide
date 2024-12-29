@@ -532,12 +532,7 @@ backToLoginBtn.addEventListener("click", () => {
   loginBox.classList.remove("hidden");
 });
 
-// Ensure activeUserIDs exists in localStorage
-if (!localStorage.getItem("activeUserIDs")) {
-  localStorage.setItem("activeUserIDs", JSON.stringify([]));
-}
-
-// Submit Registration and Save Details
+// Submit Registration and Save User Data
 submitRegisterBtn.addEventListener("click", () => {
   if (
     !fullNameInput.value ||
@@ -572,7 +567,7 @@ submitRegisterBtn.addEventListener("click", () => {
     // Save user data securely to localStorage
     localStorage.setItem("userData", JSON.stringify(userData));
 
-    // Update Payment Page Details
+    // Display User Details on Payment Page
     document.getElementById("paymentFullName").innerText = userData.fullName;
     document.getElementById("paymentDepartment").innerText = userData.department;
     document.getElementById("paymentLevel").innerText = userData.level;
@@ -586,6 +581,21 @@ submitRegisterBtn.addEventListener("click", () => {
 
   reader.readAsDataURL(photoUpload.files[0]);
 });
+
+// Utility Function to Generate User ID
+function generateUserID() {
+  const prefix = 'OAU-';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomPart = '';
+
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters[randomIndex];
+  }
+
+  return prefix + randomPart;
+}
+
 
 
 // ➡️ Generate Invoice as an Image
