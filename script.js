@@ -549,32 +549,42 @@ generateInvoiceBtn.addEventListener("click", () => {
   ctx.fillRect(0, 0, canvas.width, 80);
   ctx.fillStyle = '#ffffff';
   ctx.font = '24px Arial';
-  ctx.fillText('Invoice for Payment', 20, 50);
+  ctx.fillText('STUDENTS SUPPORT SYSTEM', 20, 50);
 
-  // User Details
-  ctx.fillStyle = '#333333';
+  // University Name
+  ctx.fillStyle = '#2C3E50';
+  ctx.font = '20px italic Arial';
+  ctx.fillText('Obafemi Awolowo University', 20, 120);
+
+  // Payment Info
   ctx.font = '18px Arial';
-  ctx.fillText(`Full Name: ${userData.fullName}`, 20, 120);
-  ctx.fillText(`Department: ${userData.department}`, 20, 160);
-  ctx.fillText(`Level: ${userData.level}`, 20, 200);
-  ctx.fillText(`User ID: ${userData.userID}`, 20, 240);
+  ctx.fillText('Payment of User ID Activation Fee for the 2023/2024 Academic Session', 20, 160);
 
-  // Payment Details
-  ctx.font = '20px Arial';
-  ctx.fillStyle = '#4CAF50';
-  ctx.fillText('Payment Details:', 20, 300);
-  ctx.fillStyle = '#333333';
+  ctx.fillStyle = '#555';
   ctx.font = '16px Arial';
-  ctx.fillText('Bank Name: Opay Microfinance Bank', 40, 340);
-  ctx.fillText('Account Number: 9070962822', 40, 380);
-  ctx.fillText('Account Name: Ochuko Timothy', 40, 420);
+  ctx.fillText(`Full Name: ${userData.fullName}`, 20, 200);
+  ctx.fillText(`Department: ${userData.department}`, 20, 240);
+  ctx.fillText(`Level: ${userData.level}`, 20, 280);
+  ctx.fillText(`User ID: ${userData.userID}`, 20, 320);
+  ctx.fillText(`Amount: N1500.00`, 20, 360);
+
+  // Bank Details
+  ctx.fillStyle = '#4CAF50';
+  ctx.font = '18px Arial';
+  ctx.fillText('Payment Details:', 20, 400);
+
+  ctx.fillStyle = '#555';
+  ctx.font = '16px Arial';
+  ctx.fillText('Bank Name: Opay Microfinance Bank', 40, 440);
+  ctx.fillText('Account Number: 9070962822', 40, 480);
+  ctx.fillText('Account Name: Ochuko Timothy', 40, 520);
 
   // Footer Note
   ctx.fillStyle = '#FF0000';
   ctx.font = '14px Arial';
-  ctx.fillText('Please ensure accurate payment and upload your receipt.', 20, 500);
+  ctx.fillText('Please ensure accurate payment and upload your receipt.', 20, 560);
 
-  // Save canvas as image
+  // Save as Image
   const image = canvas.toDataURL('image/png');
   const link = document.createElement('a');
   link.href = image;
@@ -584,39 +594,45 @@ generateInvoiceBtn.addEventListener("click", () => {
   alert('Invoice has been generated and downloaded as an image.');
 });
 
-
 // Submit Receipt and Redirect to WhatsApp
 submitReceiptBtn.addEventListener("click", () => {
   const receiptFile = receiptUpload.files[0];
-  if (!receiptFile) {
-    alert("Please upload your payment receipt.");
-    return;
-  }
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  
+  const whatsappMessage = `
+    Payment Submission Details:
+    - Full Name: ${userData.fullName}
+    - Department: ${userData.department}
+    - Level: ${userData.level}
+    - User ID: ${userData.userID}
+    - Amount Paid: N1500.00
+    
+    📌 *Please attach the receipt image alongside this message.*
+  `;
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    const userData = JSON.parse(localStorage.getItem("userData"));
+  window.open(
+    `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
+    "_blank"
+  );
 
-    const whatsappMessage = `
-      Payment Submission Details:
-      - Full Name: ${userData.fullName}
-      - Department: ${userData.department}
-      - Level: ${userData.level}
-      - User ID: ${userData.userID}
-      - Receipt: Attached
-    `;
-
-    window.open(
-      `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
-      "_blank"
-    );
-
-    alert("Receipt submitted. Redirecting to admin on WhatsApp.");
-  };
-
-  reader.readAsDataURL(receiptFile);
+  alert("Redirecting to admin on WhatsApp. Please ensure your receipt is attached.");
 });
+  
+// Back to Login from Payment Page
+const backToLoginPaymentBtn = document.getElementById("back-to-login-payment");
 
+backToLoginPaymentBtn.addEventListener("click", () => {
+  // Hide the payment page
+  paymentPage.classList.add("hidden");
+  
+  // Show the login page
+  loginBox.classList.remove("hidden");
+  
+  // Optionally clear local storage or reset any temporary data
+  localStorage.removeItem("userData");
+  
+  alert("You have been redirected back to the login page.");
+});
 
   continueBtn.addEventListener("click", () => {
     // Hide overlay and show the main application
@@ -625,7 +641,7 @@ submitReceiptBtn.addEventListener("click", () => {
   });
   
     // Expiry Logic
-  const expiryDays = 30;
+  const expiryDays = 365;
   const currentDate = new Date();
   const savedDate = localStorage.getItem("loginDate");
 
