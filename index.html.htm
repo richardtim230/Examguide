@@ -91,7 +91,30 @@
       <button id="submit-register">Submit</button>
       <button id="back-to-login" class="back-btn">Back to Login</button>
     </div>
+    
+<!-- Payment Page -->
+<div id="paymentPage" class="hidden">
+  <h2>Payment Gateway</h2>
+  <p><strong>Full Name:</strong> <span id="paymentFullName"></span></p>
+  <p><strong>Department:</strong> <span id="paymentDepartment"></span></p>
+  <p><strong>Level:</strong> <span id="paymentLevel"></span></p>
+  <p><strong>User ID:</strong> <span id="paymentUserID"></span></p>
+  
+  <h3>Payment Details</h3>
+  <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
+  <p><strong>Account Number:</strong> 9070962822</p>
+  <p><strong>Account Name:</strong> Ochuko Timothy</p>
+  
+  <p><em>Please ensure accurate details when making your payment.</em></p>
+  
+  <h3>Upload Payment Receipt</h3>
+  <input type="file" id="receiptUpload" accept="image/*,application/pdf">
+  <button id="submitReceiptBtn">Submit Receipt</button>
+  
+  <button id="generateInvoiceBtn">Generate Invoice</button>
+</div>
 
+    
     <!-- Welcome Popup -->
     <div id="welcome-popup" class="hidden">
       <div class="profile-container">
