@@ -1143,6 +1143,33 @@ button:hover {
   color: #a777e3;
 }
 
+#paymentPage {
+  padding: 20px;
+  background-color: #f9fafc;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+#paymentPage h2, h3 {
+  color: #333;
+}
+
+#paymentPage p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+#paymentPage button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* Download Button */
 
 .download-button {
