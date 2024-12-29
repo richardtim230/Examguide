@@ -1155,6 +1155,7 @@ button:hover {
   font-family: 'Arial', sans-serif;
   text-align: center;
   animation: fadeIn 1s ease-in-out;
+  height: 95%;
 }
 
 /* Header Styling */
@@ -1164,6 +1165,7 @@ button:hover {
   margin-bottom: 15px;
   text-transform: uppercase;
   font-weight: bold;
+  top: 5px;
   letter-spacing: 1px;
 }
 
