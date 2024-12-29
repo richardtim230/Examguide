@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const backToLoginBtn = document.getElementById("back-to-login");
   const submitRegisterBtn = document.getElementById("submit-register");
   const continueBtn = document.getElementById("continue-btn");
-
+  const paymentGatewayBox = document.createElement("div");
   const userIdInput = document.getElementById("user-id");
   const fullNameInput = document.getElementById("full-name");
   const departmentInput = document.getElementById("department");
@@ -317,9 +317,6 @@ document.addEventListener('DOMContentLoaded', function () {
     "Goodnight!  May your sleep be as peaceful as the night sky."
 ];
 
-  function generateUserID() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
-  }
 
   function getGreeting() {
     const hour = new Date().getHours();
@@ -465,8 +462,13 @@ function generateAndDownloadReceipt(userData) {
 }
 
 
-  // Elements
-const paymentGatewayBox = document.createElement("div");
+
+// Registration Navigation Buttons
+const registerBtn = document.getElementById("register-btn");
+const backToLoginBtn = document.getElementById("back-to-login");
+
+// Initialize Payment Gateway Container
+paymentGatewayBox.id = "payment-gateway-box";
 paymentGatewayBox.classList.add("hidden");
 paymentGatewayBox.innerHTML = `
   <h2>Payment Gateway</h2>
@@ -492,10 +494,20 @@ paymentGatewayBox.innerHTML = `
 
 document.body.appendChild(paymentGatewayBox);
 
-// Register Event Listener
-submitRegisterBtn.addEventListener("click", () => {
-  console.log("Register button clicked");
+// Show Registration Page
+registerBtn.addEventListener("click", () => {
+  loginBox.classList.add("hidden");
+  registerBox.classList.remove("hidden");
+});
 
+// Back to Login Page
+backToLoginBtn.addEventListener("click", () => {
+  registerBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+});
+
+// Handle Registration Submission
+submitRegisterBtn.addEventListener("click", () => {
   if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
     alert("Please fill all fields and upload your photo.");
     return;
@@ -520,7 +532,7 @@ submitRegisterBtn.addEventListener("click", () => {
 
     localStorage.setItem("userData", JSON.stringify(userData));
 
-    // Populate Payment Gateway
+    // Populate Payment Gateway with User Details
     const userDetailsDiv = document.getElementById("userDetails");
     userDetailsDiv.innerHTML = `
       <p><strong>Full Name:</strong> ${userData.fullName}</p>
@@ -529,7 +541,7 @@ submitRegisterBtn.addEventListener("click", () => {
       <p><strong>User ID:</strong> ${userData.userID}</p>
     `;
 
-    // Show Payment Page, Hide Other Pages
+    // Show Payment Gateway and Hide Registration Form
     registerBox.classList.add("hidden");
     loginBox.classList.add("hidden");
     paymentGatewayBox.classList.remove("hidden");
@@ -537,6 +549,11 @@ submitRegisterBtn.addEventListener("click", () => {
 
   reader.readAsDataURL(photoUpload.files[0]);
 });
+
+// Generate a User ID (Helper Function)
+function generateUserID() {
+  return `USER-${Math.floor(Math.random() * 100000)}`;
+}
 
     
 
