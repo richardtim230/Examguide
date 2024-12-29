@@ -1143,7 +1143,8 @@ button:hover {
   color: #a777e3;
 }
 
-/* Payment Page Rebranding */
+
+/* Payment Page Styling */
 #paymentPage {
   max-width: 600px;
   margin: 40px auto;
@@ -1155,25 +1156,30 @@ button:hover {
   font-family: 'Arial', sans-serif;
   text-align: center;
   animation: fadeIn 1s ease-in-out;
-  height: 95%;
-  overflow-y: auto;
 }
 
-/* Header Styling */
-#paymentPage h2 {
-  font-size: 28px;
+/* Title */
+#paymentPage h1 {
+  font-size: 30px;
   color: #2C3E50;
   margin-bottom: 15px;
-  text-transform: uppercase;
   font-weight: bold;
-  top: 5px;
-  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
+/* H2 (University Name) */
+#paymentPage h2 {
+  font-size: 24px;
+  font-style: italic;
+  color: #2C3E50;
+  margin-bottom: 10px;
+}
+
+/* H3 (Session Fee Details) */
 #paymentPage h3 {
   font-size: 18px;
   color: #4CAF50;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-weight: 600;
 }
 
@@ -1185,7 +1191,7 @@ button:hover {
   line-height: 1.5;
 }
 
-/* Highlighted User Details */
+/* Highlight Important Details */
 #paymentPage p strong {
   color: #4CAF50;
   font-weight: 600;
@@ -1230,27 +1236,6 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Invoice Button Special Styling */
-#generate-invoice-btn {
-  background: linear-gradient(90deg, #FF9800, #F57C00);
-}
-
-#generate-invoice-btn:hover {
-  background: linear-gradient(90deg, #F57C00, #E64A19);
-}
-
-/* Animation for Fade In */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Footer Note */
 #paymentPage .footer-note {
   margin-top: 25px;
@@ -1259,38 +1244,14 @@ button:hover {
   font-style: italic;
 }
 
-
-/* Download Button */
-
-.download-button {
-
-    background: #ff5c5c;
-
-    color: white;
-
-    padding: 10px 30px;
-
-    font-size: 1em;
-
-    border: none;
-
-    border-radius: 50px;
-
-    cursor: pointer;
-
-    margin-top: 20px;
-
-    transition: background 0.3s ease, transform 0.2s ease;
-
+/* Invoice Button */
+#generate-invoice-btn {
+  background: linear-gradient(90deg, #FF9800, #F57C00);
 }
 
-.download-button:hover {
-
-    background: #e04646;
-
+#generate-invoice-btn:hover {
+  background: linear-gradient(90deg, #F57C00, #E64A19);
 }
-
-
 
 /* Animation */
 @keyframes fadeIn {
