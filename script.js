@@ -554,8 +554,13 @@ generateInvoiceBtn.addEventListener("click", () => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   
-  canvas.width = 800;
+  canvas.width = 650;
   canvas.height = 600;
+
+ // Background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
   // Header
   ctx.fillStyle = '#4CAF50';
