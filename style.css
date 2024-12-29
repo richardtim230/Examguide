@@ -1143,32 +1143,119 @@ button:hover {
   color: #a777e3;
 }
 
+/* Payment Page Rebranding */
 #paymentPage {
-  padding: 20px;
-  background-color: #f9fafc;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  margin-top: 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f3f8ff);
+  border: 2px solid #e0e6f0;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
 }
 
-#paymentPage h2, h3 {
-  color: #333;
+/* Header Styling */
+#paymentPage h2 {
+  font-size: 28px;
+  color: #2C3E50;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
+#paymentPage h3 {
+  font-size: 18px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Paragraph Styling */
 #paymentPage p {
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
+  line-height: 1.5;
 }
 
-#paymentPage button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+/* Highlighted User Details */
+#paymentPage p strong {
+  color: #4CAF50;
+  font-weight: 600;
 }
+
+/* Payment Details Box */
+.payment-details {
+  background: #f9fafc;
+  border: 1px solid #dce7f1;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px 0;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Upload Receipt */
+#receipt-upload {
+  margin: 15px 0;
+  padding: 8px;
+  width: 80%;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+/* Buttons Styling */
+#paymentPage button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #4CAF50, #388E3C);
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+#paymentPage button:hover {
+  background: linear-gradient(90deg, #388E3C, #2E7D32);
+  transform: translateY(-2px);
+}
+
+/* Invoice Button Special Styling */
+#generate-invoice-btn {
+  background: linear-gradient(90deg, #FF9800, #F57C00);
+}
+
+#generate-invoice-btn:hover {
+  background: linear-gradient(90deg, #F57C00, #E64A19);
+}
+
+/* Animation for Fade In */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer Note */
+#paymentPage .footer-note {
+  margin-top: 25px;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+}
+
 
 /* Download Button */
 
