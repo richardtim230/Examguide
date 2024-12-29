@@ -593,8 +593,8 @@ generateInvoiceBtn.addEventListener("click", () => {
   ctx.fillStyle = '#555';
   ctx.font = '16px Arial';
   ctx.fillText('Bank Name: Opay Microfinance Bank', 40, 440);
-  ctx.fillText('Account Number: 9070962822', 40, 480);
-  ctx.fillText('Account Name: Ochuko Timothy', 40, 520);
+  ctx.fillText('Account Number: 6112744499', 40, 480);
+  ctx.fillText('Account Name: OCHUKO TIMOTHY RICHARD', 40, 520);
 
   // Save as Image
   const image = canvas.toDataURL('image/png');
