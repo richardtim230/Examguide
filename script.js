@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const backToLoginBtn = document.getElementById("back-to-login");
   const submitRegisterBtn = document.getElementById("submit-register");
   const continueBtn = document.getElementById("continue-btn");
-  const paymentGatewayBox = document.createElement("div");
+
   const userIdInput = document.getElementById("user-id");
   const fullNameInput = document.getElementById("full-name");
   const departmentInput = document.getElementById("department");
@@ -317,17 +317,17 @@ document.addEventListener('DOMContentLoaded', function () {
     "Goodnight!  May your sleep be as peaceful as the night sky."
 ];
 
-function generateUserID() {
+  function generateUserID() {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
-                           }
-  
+  }
+
   function getGreeting() {
     const hour = new Date().getHours();
     if (hour < 12) return morningMessages[Math.floor(Math.random() * morningMessages.length)];
     if (hour < 18) return afternoonMessages[Math.floor(Math.random() * afternoonMessages.length)];
     return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
     }
-  paymentGatewayBox.classList.add("hidden");
+
   loginBtn.addEventListener("click", () => {
   const userId = userIdInput.value.trim();
   const storedUserData = JSON.parse(localStorage.getItem("userData"));
@@ -464,192 +464,71 @@ function generateAndDownloadReceipt(userData) {
   });
 }
 
-// Elements
-const loginBox = document.getElementById("login-box");
-const registerBox = document.getElementById("register-box");
-const paymentGatewayBox = document.createElement("div"); // Payment gateway will be dynamically added
-const submitRegisterBtn = document.getElementById("submitRegisterBtn");
-const fullNameInput = document.getElementById("full-name");
-const departmentInput = document.getElementById("department");
-const levelInput = document.getElementById("level");
-const coursesInput = document.getElementById("courses");
-const photoUpload = document.getElementById("photo-upload");
-const agreeCheckbox = document.getElementById("agree-checkbox");
 
+  registerBtn.addEventListener("click", () => {
+    loginBox.classList.add("hidden");
+    registerBox.classList.remove("hidden");
+  });
 
-// Registration Navigation Buttons
-const registerBtn = document.getElementById("register-btn");
-const backToLoginBtn = document.getElementById("back-to-login");
+  backToLoginBtn.addEventListener("click", () => {
+    registerBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+  });
 
-// Initialize Payment Gateway Container
-paymentGatewayBox.id = "payment-gateway-box";
-paymentGatewayBox.classList.add("hidden");
-paymentGatewayBox.innerHTML = `
-  <h2>Payment Gateway</h2>
-  <div id="userDetails"></div>
-  <div id="paymentDetails">
-    <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
-    <p><strong>Account Number:</strong> 9070962822</p>
-    <p><strong>Account Name:</strong> Ochuko Timothy</p>
-    <p>Note: Ensure to input the exact details for manual payment. Double-check all payment information before proceeding.</p>
-  </div>
-  <form id="receiptSubmissionForm">
-    <h3>Submit Payment Receipt</h3>
-    <label for="receiptUpload">Upload Receipt:</label>
-    <input type="file" id="receiptUpload" accept="image/*" required />
-    <label for="fullNameSubmit">Full Name:</label>
-    <input type="text" id="fullNameSubmit" required />
-    <label for="userIDSubmit">User ID:</label>
-    <input type="text" id="userIDSubmit" required />
-    <button type="submit" id="submitReceiptBtn">Submit Receipt</button>
-  </form>
-  <button id="downloadInvoiceBtn">Download Invoice</button>
-`;
+  submitRegisterBtn.addEventListener("click", () => {
+    if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
+      alert("Please fill all fields and upload your photo.");
+      return;
+    }
 
-document.body.appendChild(paymentGatewayBox);
+    if (!agreeCheckbox.checked) {
+      alert("You must agree to proceed.");
+      return;
+    }
 
-// Show Registration Page
-registerBtn.addEventListener("click", () => {
-  loginBox.classList.add("hidden");
-  registerBox.classList.remove("hidden");
-});
+    const reader = new FileReader();
+    reader.onload = () => {
+      const userID = generateUserID();
+      const userData = {
+        userID,
+        fullName: fullNameInput.value,
+        department: departmentInput.value,
+        level: levelInput.value,
+        courses: coursesInput.value,
+        photo: reader.result,
+      };
 
-// Back to Login Page
-backToLoginBtn.addEventListener("click", () => {
-  registerBox.classList.add("hidden");
-  loginBox.classList.remove("hidden");
-});
+      localStorage.setItem("userData", JSON.stringify(userData));
 
-// Handle Registration Submission
-submitRegisterBtn.addEventListener("click", () => {
-  if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
-    alert("Please fill all fields and upload your photo.");
-    return;
-  }
+      // Send all details to WhatsApp
+      const whatsappMessage = `
+        Registration Details:
+        - Full Name: ${userData.fullName}
+        - Department: ${userData.department}
+        - Level: ${userData.level}
+        - Courses: ${userData.courses}
+        - User ID: ${userData.userID}
+      `;
 
-  if (!agreeCheckbox.checked) {
-    alert("You must agree to proceed.");
-    return;
-  }
+      alert(`Your User ID is ${userID}. Contact admin for activation. You will be redirected shortly. (Do not close or refresh to avoid multiple creation of accounts)`);
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    const userID = generateUserID();
-    const userData = {
-      userID,
-      fullName: fullNameInput.value,
-      department: departmentInput.value,
-      level: levelInput.value,
-      courses: coursesInput.value,
-      photo: reader.result,
+      window.open(
+        `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
+        "_blank"
+      );
+
+      registerBox.classList.add("hidden");
+      loginBox.classList.remove("hidden");
     };
 
-    localStorage.setItem("userData", JSON.stringify(userData));
+    reader.readAsDataURL(photoUpload.files[0]);
+  });
 
-    // Populate Payment Gateway with User Details
-    const userDetailsDiv = document.getElementById("userDetails");
-    userDetailsDiv.innerHTML = `
-      <p><strong>Full Name:</strong> ${userData.fullName}</p>
-      <p><strong>Department:</strong> ${userData.department}</p>
-      <p><strong>Level:</strong> ${userData.level}</p>
-      <p><strong>User ID:</strong> ${userData.userID}</p>
-    `;
-
-    // Show Payment Gateway and Hide Registration Form
-    registerBox.classList.add("hidden");
-    loginBox.classList.add("hidden");
-    paymentGatewayBox.classList.remove("hidden");
-  };
-
-  reader.readAsDataURL(photoUpload.files[0]);
-});
-
-
-
-// Invoice Download
-document.getElementById("downloadInvoiceBtn").addEventListener("click", () => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const invoiceHTML = `
-    <div class="invoice-container">
-      <div class="invoice-header">
-        <h1>Invoice</h1>
-        <p>Generated: ${new Date().toLocaleDateString()}</p>
-      </div>
-      <div class="invoice-body">
-        <div class="user-info">
-          <h2>User Details</h2>
-          <p><strong>Full Name:</strong> ${userData.fullName}</p>
-          <p><strong>Department:</strong> ${userData.department}</p>
-          <p><strong>Level:</strong> ${userData.level}</p>
-          <p><strong>User ID:</strong> ${userData.userID}</p>
-        </div>
-        <div class="payment-info">
-          <h2>Payment Information</h2>
-          <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
-          <p><strong>Account Number:</strong> 9070962822</p>
-          <p><strong>Account Name:</strong> Ochuko Timothy</p>
-        </div>
-        <div class="invoice-footer">
-          <p><strong>Total Due:</strong> Registration Fee</p>
-          <p>Please ensure all details are accurate before making payment. Thank you.</p>
-        </div>
-      </div>
-    </div>
-  `;
-
-  const blob = new Blob([invoiceHTML], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "invoice.html";
-  a.click();
-  URL.revokeObjectURL(url);
-});
-
-// Receipt Submission
-document.getElementById("receiptSubmissionForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const receiptFile = document.getElementById("receiptUpload").files[0];
-  const fullName = document.getElementById("fullNameSubmit").value;
-  const userID = document.getElementById("userIDSubmit").value;
-
-  if (!receiptFile) {
-    alert("Please upload a receipt.");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    const receiptData = reader.result;
-    const userData = JSON.parse(localStorage.getItem("userData"));
-
-    // Send details to WhatsApp
-    const whatsappMessage = `
-      Receipt Submission:
-      - Full Name: ${fullName}
-      - User ID: ${userID}
-      - Department: ${userData.department}
-      - Level: ${userData.level}
-      - Receipt: (Attached below)
-    `;
-
-    const receiptBlob = new Blob([receiptData], { type: "image/*" });
-    const receiptUrl = URL.createObjectURL(receiptBlob);
-
-    window.open(
-      `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}&attachment=${encodeURIComponent(receiptUrl)}`,
-      "_blank"
-    );
-
-    alert("Receipt and details sent to admin.");
-    paymentGatewayBox.classList.add("hidden");
-    loginBox.classList.remove("hidden");
-  };
-
-  reader.readAsDataURL(receiptFile);
-});
-
+  continueBtn.addEventListener("click", () => {
+    // Hide overlay and show the main application
+    overlay.style.display = "none"; // Completely hide the overlay
+    app.style.display = "block"; // Display the main app content
+  });
   
     // Expiry Logic
   const expiryDays = 30;
