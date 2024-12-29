@@ -317,9 +317,23 @@ document.addEventListener('DOMContentLoaded', function () {
     "Goodnight!  May your sleep be as peaceful as the night sky."
 ];
 
-  function generateUserID() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
+  // Utility Function to Generate Alphanumeric User ID
+function generateUserID() {
+  const prefix = 'OAU-';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomPart = '';
+
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters[randomIndex];
   }
+
+  return prefix + randomPart;
+}
+
+// Example usage
+console.log(generateUserID()); // Example Output: OAU-A1b2C
+
 
   function getGreeting() {
     const hour = new Date().getHours();
@@ -475,7 +489,7 @@ function generateAndDownloadReceipt(userData) {
     loginBox.classList.remove("hidden");
   });
 
-  submitRegisterBtn.addEventListener("click", () => {
+submitRegisterBtn.addEventListener("click", () => {
     if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
       alert("Please fill all fields and upload your photo.");
       return;
