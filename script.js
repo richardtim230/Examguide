@@ -465,70 +465,160 @@ function generateAndDownloadReceipt(userData) {
 }
 
 
-  registerBtn.addEventListener("click", () => {
-    loginBox.classList.add("hidden");
-    registerBox.classList.remove("hidden");
-  });
+  // Elements
+const paymentGatewayBox = document.createElement("div");
+paymentGatewayBox.classList.add("hidden");
+paymentGatewayBox.innerHTML = `
+  <h2>Payment Gateway</h2>
+  <div id="userDetails"></div>
+  <div id="paymentDetails">
+    <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
+    <p><strong>Account Number:</strong> 9070962822</p>
+    <p><strong>Account Name:</strong> Ochuko Timothy</p>
+    <p>Note: Ensure to input the exact details for manual payment. Double-check all payment information before proceeding.</p>
+  </div>
+  <form id="receiptSubmissionForm">
+    <h3>Submit Payment Receipt</h3>
+    <label for="receiptUpload">Upload Receipt:</label>
+    <input type="file" id="receiptUpload" accept="image/*" required />
+    <label for="fullNameSubmit">Full Name:</label>
+    <input type="text" id="fullNameSubmit" required />
+    <label for="userIDSubmit">User ID:</label>
+    <input type="text" id="userIDSubmit" required />
+    <button type="submit" id="submitReceiptBtn">Submit Receipt</button>
+  </form>
+  <button id="downloadInvoiceBtn">Download Invoice</button>
+`;
 
-  backToLoginBtn.addEventListener("click", () => {
-    registerBox.classList.add("hidden");
-    loginBox.classList.remove("hidden");
-  });
+document.body.appendChild(paymentGatewayBox);
 
-  submitRegisterBtn.addEventListener("click", () => {
-    if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
-      alert("Please fill all fields and upload your photo.");
-      return;
-    }
+// Register Event Listener
+submitRegisterBtn.addEventListener("click", () => {
+  if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
+    alert("Please fill all fields and upload your photo.");
+    return;
+  }
 
-    if (!agreeCheckbox.checked) {
-      alert("You must agree to proceed.");
-      return;
-    }
+  if (!agreeCheckbox.checked) {
+    alert("You must agree to proceed.");
+    return;
+  }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const userID = generateUserID();
-      const userData = {
-        userID,
-        fullName: fullNameInput.value,
-        department: departmentInput.value,
-        level: levelInput.value,
-        courses: coursesInput.value,
-        photo: reader.result,
-      };
-
-      localStorage.setItem("userData", JSON.stringify(userData));
-
-      // Send all details to WhatsApp
-      const whatsappMessage = `
-        Registration Details:
-        - Full Name: ${userData.fullName}
-        - Department: ${userData.department}
-        - Level: ${userData.level}
-        - Courses: ${userData.courses}
-        - User ID: ${userData.userID}
-      `;
-
-      alert(`Your User ID is ${userID}. Contact admin for activation. You will be redirected shortly. (Do not close or refresh to avoid multiple creation of accounts)`);
-
-      window.open(
-        `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
-        "_blank"
-      );
-
-      registerBox.classList.add("hidden");
-      loginBox.classList.remove("hidden");
+  const reader = new FileReader();
+  reader.onload = () => {
+    const userID = generateUserID();
+    const userData = {
+      userID,
+      fullName: fullNameInput.value,
+      department: departmentInput.value,
+      level: levelInput.value,
+      courses: coursesInput.value,
+      photo: reader.result,
     };
 
-    reader.readAsDataURL(photoUpload.files[0]);
-  });
+    localStorage.setItem("userData", JSON.stringify(userData));
 
-  continueBtn.addEventListener("click", () => {
-    // Hide overlay and show the main application
-    overlay.style.display = "none"; // Completely hide the overlay
-    app.style.display = "block"; // Display the main app content
-  });
+    // Populate Payment Gateway
+    const userDetailsDiv = document.getElementById("userDetails");
+    userDetailsDiv.innerHTML = `
+      <p><strong>Full Name:</strong> ${userData.fullName}</p>
+      <p><strong>Department:</strong> ${userData.department}</p>
+      <p><strong>Level:</strong> ${userData.level}</p>
+      <p><strong>User ID:</strong> ${userData.userID}</p>
+    `;
+
+    // Show Payment Gateway
+    registerBox.classList.add("hidden");
+    paymentGatewayBox.classList.remove("hidden");
+  };
+
+  reader.readAsDataURL(photoUpload.files[0]);
+});
+
+// Invoice Download
+document.getElementById("downloadInvoiceBtn").addEventListener("click", () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const invoiceHTML = `
+    <div class="invoice-container">
+      <div class="invoice-header">
+        <h1>Invoice</h1>
+        <p>Generated: ${new Date().toLocaleDateString()}</p>
+      </div>
+      <div class="invoice-body">
+        <div class="user-info">
+          <h2>User Details</h2>
+          <p><strong>Full Name:</strong> ${userData.fullName}</p>
+          <p><strong>Department:</strong> ${userData.department}</p>
+          <p><strong>Level:</strong> ${userData.level}</p>
+          <p><strong>User ID:</strong> ${userData.userID}</p>
+        </div>
+        <div class="payment-info">
+          <h2>Payment Information</h2>
+          <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
+          <p><strong>Account Number:</strong> 9070962822</p>
+          <p><strong>Account Name:</strong> Ochuko Timothy</p>
+        </div>
+        <div class="invoice-footer">
+          <p><strong>Total Due:</strong> Registration Fee</p>
+          <p>Please ensure all details are accurate before making payment. Thank you.</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const blob = new Blob([invoiceHTML], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "invoice.html";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Receipt Submission
+document.getElementById("receiptSubmissionForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const receiptFile = document.getElementById("receiptUpload").files[0];
+  const fullName = document.getElementById("fullNameSubmit").value;
+  const userID = document.getElementById("userIDSubmit").value;
+
+  if (!receiptFile) {
+    alert("Please upload a receipt.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const receiptData = reader.result;
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+    // Send details to WhatsApp
+    const whatsappMessage = `
+      Receipt Submission:
+      - Full Name: ${fullName}
+      - User ID: ${userID}
+      - Department: ${userData.department}
+      - Level: ${userData.level}
+      - Receipt: (Attached below)
+    `;
+
+    const receiptBlob = new Blob([receiptData], { type: "image/*" });
+    const receiptUrl = URL.createObjectURL(receiptBlob);
+
+    window.open(
+      `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}&attachment=${encodeURIComponent(receiptUrl)}`,
+      "_blank"
+    );
+
+    alert("Receipt and details sent to admin.");
+    paymentGatewayBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+  };
+
+  reader.readAsDataURL(receiptFile);
+});
+
   
     // Expiry Logic
   const expiryDays = 30;
