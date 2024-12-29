@@ -479,22 +479,6 @@ function generateAndDownloadReceipt(userData) {
 }
 
 
-// 🎯 DOM Elements
-
-// Login and Registration Elements
-const registerBtn = document.getElementById("register-btn");
-const backToLoginBtn = document.getElementById("back-to-login");
-const submitRegisterBtn = document.getElementById("submit-register");
-const loginBox = document.getElementById("login-box");
-const registerBox = document.getElementById("register-box");
-
-// Input Fields for Registration
-const fullNameInput = document.getElementById("full-name");
-const departmentInput = document.getElementById("department");
-const levelInput = document.getElementById("level");
-const coursesInput = document.getElementById("courses");
-const photoUpload = document.getElementById("photo-upload");
-const agreeCheckbox = document.getElementById("agree-checkbox");
 
 // Payment Page Elements
 const paymentPage = document.getElementById("paymentPage");
@@ -649,19 +633,7 @@ backToLoginPaymentBtn.addEventListener("click", () => {
   alert("You have been redirected back to the login page.");
 });
 
-// 🎯 Utility Function to Generate Alphanumeric User ID
-function generateUserID() {
-  const prefix = 'OAU-';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let randomPart = '';
 
-  for (let i = 0; i < 5; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomPart += characters[randomIndex];
-  }
-
-  return prefix + randomPart;
-}
 
 
   continueBtn.addEventListener("click", () => {
