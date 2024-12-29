@@ -479,19 +479,53 @@ function generateAndDownloadReceipt(userData) {
 }
 
 
-  registerBtn.addEventListener("click", () => {
-    loginBox.classList.add("hidden");
-    registerBox.classList.remove("hidden");
-  });
+// 🎯 DOM Elements
 
-  backToLoginBtn.addEventListener("click", () => {
-    registerBox.classList.add("hidden");
-    loginBox.classList.remove("hidden");
-  });
+// Login and Registration Elements
+const registerBtn = document.getElementById("register-btn");
+const backToLoginBtn = document.getElementById("back-to-login");
+const submitRegisterBtn = document.getElementById("submit-register");
+const loginBox = document.getElementById("login-box");
+const registerBox = document.getElementById("register-box");
 
-// Handle Registration Submission
+// Input Fields for Registration
+const fullNameInput = document.getElementById("full-name");
+const departmentInput = document.getElementById("department");
+const levelInput = document.getElementById("level");
+const coursesInput = document.getElementById("courses");
+const photoUpload = document.getElementById("photo-upload");
+const agreeCheckbox = document.getElementById("agree-checkbox");
+
+// Payment Page Elements
+const paymentPage = document.getElementById("paymentPage");
+const submitReceiptBtn = document.getElementById("submit-receipt-btn");
+const generateInvoiceBtn = document.getElementById("generate-invoice-btn");
+const backToLoginPaymentBtn = document.getElementById("back-to-login-payment");
+const receiptUpload = document.getElementById("receipt-upload");
+
+// 🎯 Event Listeners
+
+// ➡️ Navigate to Registration Page
+registerBtn.addEventListener("click", () => {
+  loginBox.classList.add("hidden");
+  registerBox.classList.remove("hidden");
+});
+
+// ➡️ Back to Login from Registration Page
+backToLoginBtn.addEventListener("click", () => {
+  registerBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+});
+
+// ➡️ Submit Registration and Navigate to Payment Page
 submitRegisterBtn.addEventListener("click", () => {
-  if (!fullNameInput.value || !departmentInput.value || !levelInput.value || !coursesInput.value || !photoUpload.files.length) {
+  if (
+    !fullNameInput.value ||
+    !departmentInput.value ||
+    !levelInput.value ||
+    !coursesInput.value ||
+    !photoUpload.files.length
+  ) {
     alert("Please fill all fields and upload your photo.");
     return;
   }
@@ -528,7 +562,7 @@ submitRegisterBtn.addEventListener("click", () => {
   reader.readAsDataURL(photoUpload.files[0]);
 });
 
-// Generate Invoice as an Image
+// ➡️ Generate Invoice as an Image
 generateInvoiceBtn.addEventListener("click", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   
@@ -536,13 +570,8 @@ generateInvoiceBtn.addEventListener("click", () => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   
-  // Set canvas dimensions
   canvas.width = 800;
   canvas.height = 600;
-
-  // Background
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Header
   ctx.fillStyle = '#4CAF50';
@@ -572,17 +601,11 @@ generateInvoiceBtn.addEventListener("click", () => {
   ctx.fillStyle = '#4CAF50';
   ctx.font = '18px Arial';
   ctx.fillText('Payment Details:', 20, 400);
-
   ctx.fillStyle = '#555';
   ctx.font = '16px Arial';
   ctx.fillText('Bank Name: Opay Microfinance Bank', 40, 440);
   ctx.fillText('Account Number: 9070962822', 40, 480);
   ctx.fillText('Account Name: Ochuko Timothy', 40, 520);
-
-  // Footer Note
-  ctx.fillStyle = '#FF0000';
-  ctx.font = '14px Arial';
-  ctx.fillText('Please ensure accurate payment and upload your receipt.', 20, 560);
 
   // Save as Image
   const image = canvas.toDataURL('image/png');
@@ -594,7 +617,7 @@ generateInvoiceBtn.addEventListener("click", () => {
   alert('Invoice has been generated and downloaded as an image.');
 });
 
-// Submit Receipt and Redirect to WhatsApp
+// ➡️ Submit Receipt and Redirect to WhatsApp
 submitReceiptBtn.addEventListener("click", () => {
   const receiptFile = receiptUpload.files[0];
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -617,22 +640,29 @@ submitReceiptBtn.addEventListener("click", () => {
 
   alert("Redirecting to admin on WhatsApp. Please ensure your receipt is attached.");
 });
-  
-// Back to Login from Payment Page
-const backToLoginPaymentBtn = document.getElementById("back-to-login-payment");
 
+// ➡️ Back to Login from Payment Page
 backToLoginPaymentBtn.addEventListener("click", () => {
-  // Hide the payment page
   paymentPage.classList.add("hidden");
-  
-  // Show the login page
   loginBox.classList.remove("hidden");
-  
-  // Optionally clear local storage or reset any temporary data
   localStorage.removeItem("userData");
-  
   alert("You have been redirected back to the login page.");
 });
+
+// 🎯 Utility Function to Generate Alphanumeric User ID
+function generateUserID() {
+  const prefix = 'OAU-';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomPart = '';
+
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters[randomIndex];
+  }
+
+  return prefix + randomPart;
+}
+
 
   continueBtn.addEventListener("click", () => {
     // Hide overlay and show the main application
