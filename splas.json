@@ -1,0 +1,173 @@
+{
+  "body": {
+    "style": "margin: 0; font-family: Arial, sans-serif; overflow: hidden;",
+    "content": [
+      {
+        "id": "splash-screen",
+        "style": "position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(135deg, #ff8c00, #ff4500); display: flex; justify-content: center; align-items: center; z-index: 2000;",
+        "content": [
+          {
+            "style": "text-align: center; animation: fadeInZoom 3s ease-in-out; position: relative;",
+            "content": [
+              {
+                "type": "div",
+                "style": "width: 200px; height: 200px; margin: auto; background: white; border-radius: 50%; position: relative; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); overflow: hidden;",
+                "content": [
+                  {
+                    "type": "div",
+                    "style": "width: 160px; height: 160px; background: #ff4500; border-radius: 50%; margin: 20px auto; animation: pulse 1.5s infinite;"
+                  },
+                  {
+                    "type": "div",
+                    "class": "sparkles",
+                    "content": [
+                      { "type": "span", "style": "animation-delay: 0s;" },
+                      { "type": "span", "style": "animation-delay: 0.3s;" },
+                      { "type": "span", "style": "animation-delay: 0.6s;" },
+                      { "type": "span", "style": "animation-delay: 0.9s;" },
+                      { "type": "span", "style": "animation-delay: 1.2s;" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "h1",
+                "style": "margin-top: 40px; color: white; font-size: 36px; animation: fadeIn 2s 1.2s forwards; opacity: 0;",
+                "textContent": "Welcome to"
+              },
+              {
+                "type": "h2",
+                "style": "color: white; font-size: 28px; animation: fadeIn 2s 1.5s forwards; opacity: 0;",
+                "textContent": "OAU STUDENTS SUPPORT SYSTEM"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "auth-container",
+        "style": "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000;",
+        "content": [
+          {
+            "class": "auth-box",
+            "id": "login-box",
+            "style": "background: white; border-radius: 10px; padding: 30px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);",
+            "content": [
+              {
+                "type": "h2",
+                "style": "margin-bottom: 20px; color: #ff4500;",
+                "textContent": "Login"
+              },
+              {
+                "type": "input",
+                "id": "login-username",
+                "placeholder": "Username",
+                "required": true,
+                "style": "width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;"
+              },
+              {
+                "type": "input",
+                "id": "login-password",
+                "placeholder": "Password",
+                "required": true,
+                "style": "width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;"
+              },
+              {
+                "type": "button",
+                "onClick": "handleLogin",
+                "style": "width: 100%; padding: 10px; margin: 10px 0; background: #ff8c00; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;",
+                "textContent": "Login"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": [
+    {
+      "content": `
+        setTimeout(() => {
+            document.getElementById("splash-screen").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("splash-screen").style.display = "none";
+                document.getElementById("auth-container").style.display = "flex";
+            }, 1000);
+        }, 15000);
+
+        function handleLogin() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                alert('Login successful!');
+                document.getElementById('auth-container').style.display = 'none';
+            } else {
+                alert('Invalid username or password!');
+            }
+        }
+      `
+    }
+  ],
+  "styles": [
+    {
+      "content": `
+        @keyframes fadeInZoom {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .sparkles span {
+            width: 15px;
+            height: 15px;
+            background: white;
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white;
+            animation: sparkle 1.5s infinite;
+        }
+
+        .sparkles span:nth-child(1) {
+            top: 20px;
+            left: 80px;
+        }
+
+        .sparkles span:nth-child(2) {
+            top: 80px;
+            left: 160px;
+        }
+
+        .sparkles span:nth-child(3) {
+            top: 150px;
+            left: 50px;
+        }
+
+        .sparkles span:nth-child(4) {
+            top: 200px;
+            left: 120px;
+        }
+
+        .sparkles span:nth-child(5) {
+            top: 60px;
+            left: 100px;
+        }
+      `
+    }
+  ]
+}
