@@ -8593,32 +8593,6 @@ Botany: {
 };
 
 
-          // Example function to add a question with an image
-function addQuestionWithImage(questionText, imageUrl) {
-  // Create a new div element for the question
-  var questionDiv = document.createElement('div');
-  questionDiv.className = 'question';
-
-  // Create a paragraph element for the question text
-  var questionTextElement = document.createElement('p');
-  questionTextElement.innerText = questionText;
-  questionDiv.appendChild(questionTextElement);
-
-  // Create an image element for the question image
-  var questionImageElement = document.createElement('img');
-  questionImageElement.src = imageUrl;
-  questionImageElement.alt = 'Question Image';
-  questionImageElement.className = 'question-image';
-  questionDiv.appendChild(questionImageElement);
-
-  // Append the question div to the container
-  var container = document.getElementById('questions-container');
-  container.appendChild(questionDiv);
-}
-
-// Example usage
-addQuestionWithImage('What is the capital of France?', 'path/to/image.jpg');
-    
 function showSection(section) {
   [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
     if (el) el.classList.add("hidden");
@@ -8695,7 +8669,6 @@ function startExam() {
   startTimer();
 }
 
-
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
   // Display question number along with the question text
@@ -8709,6 +8682,19 @@ function updateQuestion() {
     button.className = "option-button";
     optionsContainer.appendChild(button);
   });
+
+    // Update the question text
+  document.getElementById('question-text').textContent = currentQuestion.text;
+  
+
+  // Update the question image
+  const questionImageElement = document.getElementById('question-image');
+  if (currentQuestion.image) {
+    questionImageElement.src = currentQuestion.image;
+    questionImageElement.classList.remove('hidden');
+  } else {
+    questionImageElement.classList.add('hidden');
+  }
 
   // Enable/Disable navigation buttons based on the current index
   document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
