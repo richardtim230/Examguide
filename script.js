@@ -693,7 +693,6 @@ submitReceiptBtn.addEventListener("click", () => {
 backToLoginPaymentBtn.addEventListener("click", () => {
   paymentPage.classList.add("hidden");
   loginBox.classList.remove("hidden");
-  localStorage.removeItem("userData");
   alert("You have been redirected back to the login page.");
 });
 
