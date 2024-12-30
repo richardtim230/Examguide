@@ -1037,9 +1037,13 @@ input::placeholder {
     justify-content: center;
     align-items: center;
     color: black;
+    padding: 15px; 
+    background: white;
     margin-bottom: 5rem;
    font-weight: bold;
     font-size: 50px;
+border-radius: 25px;
+
 }
 
 #login-box button {
@@ -1110,6 +1114,10 @@ button:hover {
   color: white;
   margin-bottom: 2rem;
   text-align: left;
+        padding: 25px;
+        background: blue;
+        border-radius: 25px;
+
 }
 
 /* Checkbox label for agreement */
