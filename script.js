@@ -3044,8 +3044,61 @@ document.addEventListener("DOMContentLoaded", () => {
         "PHYS101-1": {
         title: "Biometry/Biostatistics",
         questions: [
-          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+          {
+  text: "An object is observed to follow a random path as shown below (Refer to the diagram at './images/random_path.png'). Which of the following best describes its motion?",
+  options: [
+    "The motion is linear",
+    "The motion is circular",
+    "The motion is random",
+    "The motion is uniform"
+  ],
+  correct: 2,
+  explanation: "The object's path does not follow a fixed direction or pattern, indicating that it exhibits random motion. Linear, circular, and uniform motions have structured paths, unlike random motion."
+},
+{
+  text: "Consider the molecules of a gas in a closed container as shown in the image './science-realistic-icons-set_1284-9379.webp'. How would you describe their motion?",
+  options: [
+    "The molecules move in a straight line without collisions",
+    "The molecules follow a zigzag motion due to collisions",
+    "The molecules move in circular orbits",
+    "The molecules are stationary"
+  ],
+  correct: 1,
+  explanation: "The diagram illustrates random motion of gas molecules caused by collisions with each other and the container walls. Unlike uniform straight-line motion, gas molecules continuously collide, giving a zigzag motion."
+},
+{
+  text: "The diagram at './row-bookcases_23-2147679267.webp' shows a pollen grain under a microscope. What type of motion is exhibited by the pollen grain due to collisions with water molecules?",
+  options: [
+    "Uniform motion",
+    "Random motion",
+    "Oscillatory motion",
+    "Circular motion"
+  ],
+  correct: 1,
+  explanation: "The motion of a pollen grain in water is governed by Brownian motion, where random impacts of water molecules cause irregular motion. None of the other options are appropriate for this context."
+},
+{
+  text: "If a particle undergoes random motion as shown in './images/particle_trajectory.png', which quantity remains constant throughout its motion?",
+  options: [
+    "Velocity",
+    "Kinetic energy",
+    "Acceleration",
+    "None of the mentioned quantities"
+  ],
+  correct: 3,
+  explanation: "In random motion, the particle’s path, velocity, and acceleration vary unpredictably due to external forces. Therefore, no specific quantity remains constant."
+},
+{
+  text: "The image at './red-light-round-podium-black-background-mock-up_43614-950.webp' shows the motion of dust particles visible in a beam of sunlight. What causes this motion?",
+  options: [
+    "Gravitational forces",
+    "Interaction with air molecules",
+    "Magnetic forces",
+    "Static electricity"
+  ],
+  correct: 1,
+  explanation: "The dust particles in a beam of sunlight exhibit random motion due to continuous collisions with air molecules. Gravitational, magnetic, or static electric forces do not explain this behavior."
+}, 
         ]
       },
            
