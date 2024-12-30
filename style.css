@@ -466,7 +466,8 @@ main {
 }
 
 #question-image {
-  max-width: 100%;
+  max-width: 50%;
+        height: 50%;
   margin-top: 10px;
         }
 
