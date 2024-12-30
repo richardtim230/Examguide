@@ -1682,27 +1682,248 @@ document.addEventListener("DOMContentLoaded", () => {
   explanation: "All integers are real numbers, making integers a subset of real numbers."
 },
 {
-  text: "In statistical mechanics, a microstate represents:",
+  text: "Which of the following is the definition of a function?",
   options: [
-    "A macroscopic property of the system.",
-    "A particular quantum configuration of the system.",
-    "The total energy of the system.",
-    "The total number of particles in the system."
+    "A relation where every input has a unique output",
+    "A set of ordered pairs with no restrictions",
+    "A process of finding derivatives",
+    "A subset of irrational numbers"
+  ],
+  correct: 0,
+  explanation: "A function is defined as a relation where every input (from the domain) has a unique output. Option b is incorrect because a general set of ordered pairs does not necessarily satisfy this condition. Option c refers to calculus, not the definition of a function. Option d refers to number sets, not functions."
+},
+{
+  text: "What is the domain of the function f(x) = √(x - 2)?",
+  options: [
+    "x ≥ 2",
+    "x > 2",
+    "x ≤ 2",
+    "All real numbers"
+  ],
+  correct: 0,
+  explanation: "The square root function is defined only for non-negative arguments. For √(x - 2), this implies x - 2 ≥ 0, or x ≥ 2. Option b excludes x = 2, which is part of the domain. Option c incorrectly suggests x ≤ 2, but the square root cannot be defined for values less than 2. Option d includes negative arguments, which are invalid under a square root."
+},
+{
+  text: "What type of function is f(x) = x²?",
+  options: [
+    "Linear",
+    "Quadratic",
+    "Cubic",
+    "Exponential"
   ],
   correct: 1,
-  explanation: "A microstate is a specific arrangement of particles, while a macrostate describes observable properties."
+  explanation: "f(x) = x² is a quadratic function because it is a polynomial of degree 2. Option a is incorrect because linear functions have a degree of 1. Option c refers to cubic functions, which have a degree of 3. Option d refers to exponential functions of the form f(x) = aⁿ."
+},
+{
+  text: "Which of these functions is not one-to-one?",
+  options: [
+    "f(x) = x + 1",
+    "f(x) = x²",
+    "f(x) = eˣ",
+    "f(x) = ln(x)"
+  ],
+  correct: 1,
+  explanation: "f(x) = x² is not one-to-one because multiple inputs (for example, both x = 2 and x = -2) can produce the same output (f(2) = 4, f(-2) = 4). Option a is one-to-one because adding 1 to x is injective. Option c is injective as eˣ is strictly increasing. Option d is also injective as ln(x) is strictly increasing."
+},
+{
+  text: "The range of f(x) = |x| is:",
+  options: [
+    "All real numbers",
+    "[0, ∞)",
+    "(-∞, ∞)",
+    "(-∞, 0]"
+  ],
+  correct: 1,
+  explanation: "The absolute value function |x| outputs only non-negative values, thus its range is [0, ∞). Option a is incorrect because the range excludes negative values. Option c wrongly implies |x| includes negative values. Option d refers only to non-positive values, which is incorrect."
+},
+{
+  text: "What is f(2) if f(x) = 3x + 5?",
+  options: [
+    "6",
+    "11",
+    "10",
+    "8"
+  ],
+  correct: 1,
+  explanation: "Substitute x = 2 into the function: f(2) = 3(2) + 5 = 6 + 5 = 11. The other options result from incorrect substitutions or calculations."
+},
+{
+  text: "If f(x) = x² + 3x + 2, then f(-1) is:",
+  options: [
+    "-6",
+    "0",
+    "2",
+    "6"
+  ],
+  correct: 1,
+  explanation: "Substitute x = -1 into the function: f(-1) = (-1)² + 3(-1) + 2 = 1 - 3 + 2 = 0. The other options result from incorrect substitutions or arithmetic."
+},
+{
+  text: "Which of the following is a constant function?",
+  options: [
+    "f(x) = x + 5",
+    "f(x) = 7",
+    "f(x) = x² + 3x",
+    "f(x) = eˣ"
+  ],
+  correct: 1,
+  explanation: "f(x) = 7 is constant because the output is the same (7) for every input. The other options are functions that depend on x and are therefore not constant."
+},
+{
+  text: "For a function f(x), if f(x) = f(-x), the function is called:",
+  options: [
+    "Odd",
+    "Even",
+    "Linear",
+    "Periodic"
+  ],
+  correct: 1,
+  explanation: "A function is even if f(x) = f(-x) for all x in its domain. Option a refers to odd functions, where f(-x) = -f(x). Option c describes a class of functions, not symmetry. Option d refers to functions that repeat over regular intervals."
+},
+{
+  text: "The inverse of f(x) = 3x + 4 is:",
+  options: [
+    "f⁻¹(x) = (x - 4)/3",
+    "f⁻¹(x) = 3x - 4",
+    "f⁻¹(x) = (x + 4)/3",
+    "f⁻¹(x) = (4 - x)/3"
+  ],
+  correct: 0,
+  explanation: "To find the inverse, set y = 3x + 4 and solve for x: x = (y - 4)/3. Thus f⁻¹(x) = (x - 4)/3. The other options result from incorrect algebraic manipulations."
+},
+{
+  text: "Which of the following is an example of a surjective function?",
+  options: [
+    "f(x) = x², x ∈ ℝ",
+    "f(x) = 2x, x ∈ ℝ",
+    "f(x) = eˣ, x ∈ ℝ",
+    "f(x) = ln(x), x > 0"
+  ],
+  correct: 3,
+  explanation: "f(x) = ln(x) is surjective as it maps all positive real numbers (the domain) to the entire real line (the codomain). Option a is not surjective as negative values are not in the range. Option b is injective but not surjective for ℝ to ℝ. Option c is injective and not surjective for ℝ to ℝ because it only outputs positive values."
 }, 
 {
-  text: "In statistical mechanics, a microstate represents:",
+  text: "The modulus function f(x) = |x| is:",
   options: [
-    "A macroscopic property of the system.",
-    "A particular quantum configuration of the system.",
-    "The total energy of the system.",
-    "The total number of particles in the system."
+    "Always increasing",
+    "Always decreasing",
+    "Neither increasing nor decreasing",
+    "Increasing for x > 0"
+  ],
+  correct: 3,
+  explanation: "The modulus function f(x) = |x| increases for x > 0 because in this region, |x| = x, which is strictly increasing. For x < 0, |x| = -x, which is decreasing. At x = 0, the function is constant, making it neither increasing nor decreasing. Thus, the correct answer is that it increases for x > 0."
+}, 
+
+{
+  text: "The function f(x) = 1/x is defined for:",
+  options: [
+    "All real numbers",
+    "x ≠ 0",
+    "x > 0",
+    "x < 0"
   ],
   correct: 1,
-  explanation: "A microstate represents a specific arrangement of particles in a system, considering their positions, velocities, and quantum states. Option A is incorrect because macrostates describe observable bulk properties like temperature and pressure, not specific arrangements. Option C is incorrect because energy is a property resulting from microstates, not a microstate itself. Option D is incorrect because the total number of particles is a property of the macrostate, not an individual microstate."
+  explanation: "The function f(x) = 1/x is undefined when x = 0 because division by zero is not allowed. n- Option a is incorrect because it includes x = 0. n- Option c is incorrect because the function is defined for both positive and negative x values. n- Option d excludes positive values, which are part of the domain."
 },
+{
+  text: "Which of the following is true for a periodic function f(x)?",
+  options: [
+    "f(x) = f(x + T) for all x",
+    "f(x) = f(-x)",
+    "f(x) = -f(-x)",
+    "f(x) = f'(x)"
+  ],
+  correct: 0,
+  explanation: "A function is periodic if it repeats itself after a fixed interval T, meaning f(x) = f(x + T) for all x. n- Option b refers to even functions, not necessarily periodic ones. n- Option c refers to odd functions, which are also not necessarily periodic. n- Option d implies equality with its derivative, which is unrelated to periodicity."
+},
+{
+  text: "The function f(x) = x² - 4x + 4 has its vertex at:",
+  options: [
+    "(0, 4)",
+    "(2, 0)",
+    "(2, -4)",
+    "(4, 2)"
+  ],
+  correct: 1,
+  explanation: "The vertex of a quadratic function is given by (-b / 2a, f(-b / 2a)). Substituting a = 1, b = -4, and c = 4 into f(x) = x² - 4x + 4, we get the vertex at (2, 0). n- The other options result from incorrect calculations."
+},
+{
+  text: "If f(x) = x² and g(x) = 2x, then (f + g)(x) is:",
+  options: [
+    "2x² + x",
+    "x² + 2x",
+    "x³ + x",
+    "x² - 2x"
+  ],
+  correct: 1,
+  explanation: "(f + g)(x) means f(x) + g(x). Substituting f(x) = x² and g(x) = 2x: (f + g)(x) = x² + 2x. n- The other options involve incorrect operations."
+},
+{
+  text: "The domain of f(x) = ln(x) is:",
+  options: [
+    "x > 0",
+    "x ≥ 0",
+    "x ≠ 0",
+    "All real numbers"
+  ],
+  correct: 0,
+  explanation: "The natural log function ln(x) is defined only for positive real numbers, so the domain is x > 0. n- Option b includes x = 0, which is invalid. n- Option c incorrectly permits negative values. n- Option d incorrectly includes all numbers."
+},
+{
+  text: "If f(x) = 2x² - 3x + 1, then f(0) is:",
+  options: [
+    "2",
+    "0",
+    "1",
+    "-3"
+  ],
+  correct: 2,
+  explanation: "Substitute x = 0 into the function: f(0) = 2(0)² - 3(0) + 1 = 1. n- The other options result from incorrect calculations."
+},
+{
+  text: "A function f(x) is said to be injective if:",
+  options: [
+    "Every input has a unique output",
+    "Different inputs have different outputs",
+    "It maps R onto itself",
+    "It is periodic"
+  ],
+  correct: 1,
+  explanation: "Injective functions ensure that different inputs map to different outputs. n- Option a refers to functions in general, including non-injective ones. n- Option c describes surjective functions. n- Option d describes periodic functions and is unrelated to injectivity."
+},
+{
+  text: "The graph of f(x) = x³ intersects the origin at:",
+  options: [
+    "(1, 1)",
+    "(0, 0)",
+    "(-1, -1)",
+    "(2, 8)"
+  ],
+  correct: 1,
+  explanation: "The graph of f(x) = x³ passes through the origin because f(0) = 0³ = 0, resulting in the point (0, 0). n- The other points represent other values of f(x) or are incorrect."
+},
+{
+  text: "If f(x) = x + 2, then f(f(x)) is:",
+  options: [
+    "x + 4",
+    "x + 6",
+    "x + 8",
+    "x + 2"
+  ],
+  correct: 0,
+  explanation: "Substitute f(x) = x + 2 into itself: f(f(x)) = f(x + 2) = (x + 2) + 2 = x + 4. n- The other options involve incorrect substitutions."
+},
+{
+  text: "The range of f(x) = eˣ is:",
+  options: [
+    "(-∞, ∞)",
+    "[0, ∞)",
+    "(0, ∞)",
+    "All real numbers"
+  ],
+  correct: 2,
+  explanation: "The exponential function eˣ is always positive, so its range is (0, ∞). n- Option a is incorrect because eˣ does not produce negative values. n- Option b incorrectly includes 0, which eˣ never reaches. n- Option d is incorrect as the range is not all real numbers."
+}, 
 {
   text: "Two sets A and B are such that A ∪ B = A. Which of the following is correct?",
   options: [
