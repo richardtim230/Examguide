@@ -8691,16 +8691,6 @@ function updateQuestion() {
   // Display question number along with the question text
   questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
   
-  // Handle the question image
-  if (question.image) {
-    questionImage.src = question.image;
-    questionImage.alt = "Question Image";
-    questionImage.classList.remove("hidden");
-  } else {
-    questionImage.src = "";
-    questionImage.alt = "";
-    questionImage.classList.add("hidden");
-  }
 
   // Clear previous options
   optionsContainer.innerHTML = "";
