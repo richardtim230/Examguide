@@ -747,7 +747,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const subjectTitle = document.getElementById("subject-title");
   const selectedCourseTitle = document.getElementById("selected-course-title");
   const cancelButton = document.getElementById("cancel-button");
-
+  const questionImage = document.getElementById("question-image");
   let questions = [];
   let currentQuestionIndex = 0;
   let answers = [];
@@ -8686,14 +8686,18 @@ function updateQuestion() {
   const question = questions[currentQuestionIndex];
   
   // Display question number along with the question text
-  let questionContent = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
   
-  // Embed image inline if it exists
+  // Handle the question image
   if (question.image) {
-    questionContent += `<br><img src="${question.image}" alt="Question Image" class="question-image">`;
+    questionImage.src = question.image;
+    questionImage.alt = "Question Image";
+    questionImage.classList.remove("hidden");
+  } else {
+    questionImage.src = "";
+    questionImage.alt = "";
+    questionImage.classList.add("hidden");
   }
-  
-  questionText.innerHTML = questionContent;
 
   // Clear previous options
   optionsContainer.innerHTML = "";
@@ -8707,6 +8711,7 @@ function updateQuestion() {
     optionsContainer.appendChild(button);
   });
 }
+
 
 
   // Enable/Disable navigation buttons based on the current index
