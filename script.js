@@ -1373,8 +1373,580 @@ document.addEventListener("DOMContentLoaded", () => {
       "MTH101-12": {
         title: "Basic Arithmetic",
         questions: [
-          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+   {
+  text: "Given sets A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, what is A ∪ B?",
+  options: [
+    "{3, 4}",
+    "{1, 2, 5, 6}",
+    "{1, 2, 3, 4, 5, 6}",
+    "{}"
+  ],
+  correct: 2,
+  explanation: "The union (A ∪ B) of two sets includes all unique elements from both sets. A ∪ B = {1, 2, 3, 4, 5, 6}."
+},
+{
+  text: "Using the same sets A and B from question 1, what is A ∩ B?",
+  options: [
+    "{1, 2, 5, 6}",
+    "{1, 2}",
+    "{5, 6}",
+    "{3, 4}"
+  ],
+  correct: 3,
+  explanation: "The intersection (A ∩ B) includes only the elements common to both sets. A ∩ B = {3, 4}."
+},
+{
+  text: "If A = {x | x is an even number less than 10} and B = {x | x is a prime number less than 10}, what is A ∩ B?",
+  options: [
+    "{2, 4, 6, 8}",
+    "{2, 3, 5, 7}",
+    "{2}",
+    "{}"
+  ],
+  correct: 2,
+  explanation: "The only number common to both the even numbers less than 10 and the prime numbers less than 10 is 2."
+},
+{
+  text: "Let the universal set U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. If A = {2, 4, 6, 8}, what is A'?",
+  options: [
+    "{1, 3, 5, 7, 9, 10}",
+    "{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}",
+    "{2, 4, 6, 8}",
+    "{}"
+  ],
+  correct: 0,
+  explanation: "The complement (A') includes everything in the universal set (U) that is not in A. A' = {1, 3, 5, 7, 9, 10}."
+},
+{
+  text: "If C = {x | x is a real number}, and D = {x | x is an integer}, what does C ∩ D represent?",
+  options: [
+    "All real numbers",
+    "All integers",
+    "All irrational numbers",
+    "{}"
+  ],
+  correct: 1,
+  explanation: "The intersection (C ∩ D) refers to numbers that are both real and integers, which simply means all integers."
+},
+{
+  text: "Which of the following is NOT a law of set theory?",
+  options: [
+    "Commutative law",
+    "Associative law",
+    "Distributive law",
+    "Integral law"
+  ],
+  correct: 3,
+  explanation: "Integral law is a term from calculus, not set theory. Commutative, Associative, and Distributive laws are valid set theory laws."
+},
+{
+  text: "Given a universal set of all real numbers, R, A = {x | x > 5}, what is the complement of A?",
+  options: [
+    "{x | x < 5}",
+    "{x | x ≥ 5}",
+    "{x | x ≤ 5}",
+    "{x | x < -5}"
+  ],
+  correct: 2,
+  explanation: "The complement of A includes everything not satisfying x > 5, which means x ≤ 5."
+},
+{
+  text: "If set A represents all possible outcomes of rolling a die, and set B represents all outcomes that are even numbers, what does A - B represent?",
+  options: [
+    "{2, 4, 6}",
+    "{1, 3, 5}",
+    "{}",
+    "{1, 2, 3, 4, 5, 6}"
+  ],
+  correct: 1,
+  explanation: "A - B includes all elements in A that are not in B: {1, 3, 5}."
+},
+{
+  text: "If a set has n elements, how many subsets does it have?",
+  options: [
+    "n",
+    "2n",
+    "n²",
+    "2ⁿ"
+  ],
+  correct: 3,
+  explanation: "Each element in a set can either be included or not included in a subset, creating 2ⁿ subsets."
+},
+{
+  text: "Which of the following describes the power set of a set A?",
+  options: [
+    "The set of all subsets of A including the empty set.",
+    "The set of all supersets of A",
+    "The set of all elements in A",
+    "All sets that include A"
+  ],
+  correct: 0,
+  explanation: "The power set includes every possible subset, including the empty set and the original set itself."
+},
+{
+  text: "In a survey of 100 students, 60 like physics, 50 like math, and 30 like both. How many students like neither physics nor math?",
+  options: [
+    "10",
+    "20",
+    "30",
+    "40"
+  ],
+  correct: 0,
+  explanation: "Using the inclusion-exclusion principle, 10 students like neither physics nor math."
+},
+{
+  text: "Sets A and B are said to be disjoint if:",
+  options: [
+    "A ∪ B = {}",
+    "A ∩ B = A",
+    "A ∩ B = {}",
+    "A ⊆ B"
+  ],
+  correct: 2,
+  explanation: "Disjoint sets have no common elements, so their intersection is an empty set."
+},
+{
+  text: "Which of the following describes De Morgan's Law?",
+  options: [
+    "(A ∪ B)' = A' ∩ B' and (A ∩ B)' = A' ∪ B'",
+    "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)",
+    "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)",
+    "A ∪ B = B ∪ A"
+  ],
+  correct: 0,
+  explanation: "De Morgan's Laws describe how complements interact with union and intersection."
+},
+{
+  text: "Given A = {1, 2}, what is the power set of A?",
+  options: [
+    "{{}, {1, 2}}",
+    "{{}, {1}, {2}}",
+    "{{}, {1}, {2}, {1, 2}}",
+    "{{1}, {2}}"
+  ],
+  correct: 2,
+  explanation: "The power set of A includes all subsets: {}, {1}, {2}, and {1, 2}."
+}, 
+  {
+  text: "For three sets A, B, and C, A ∪ (B ∩ C) is equal to:",
+  options: [
+    "(A ∪ B) ∩ (A ∪ C)",
+    "(A ∩ B) ∪ (A ∩ C)",
+    "(A ∪ B) ∪ C",
+    "A ∩ B ∩ C"
+  ],
+  correct: 0,
+  explanation: "The Distributive Law states: A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)."
+},
+{
+  text: "A set that contains all possible outcomes of an experiment is known as the?",
+  options: [
+    "Empty set",
+    "Subset",
+    "Power set",
+    "Universal set"
+  ],
+  correct: 3,
+  explanation: "The universal set represents all possible outcomes in a given context."
+},
+{
+  text: "If A ⊆ B and B ⊆ C then:",
+  options: [
+    "A ⊆ C",
+    "C ⊆ A",
+    "A = B",
+    "B ∩ C = {}"
+  ],
+  correct: 0,
+  explanation: "If A is a subset of B, and B is a subset of C, then A is also a subset of C."
+},
+{
+  text: "If the intersection of two sets is equal to either of the sets, which statement is true?",
+  options: [
+    "The sets are disjoint",
+    "The sets are equal",
+    "One is a subset of the other",
+    "The sets are the same as the universal set"
+  ],
+  correct: 2,
+  explanation: "If A ∩ B = A (or B), then one set must be a subset of the other."
+},
+{
+  text: "A set with no elements is called a/an?",
+  options: [
+    "Singleton set",
+    "Null set",
+    "Universal set",
+    "Power set"
+  ],
+  correct: 1,
+  explanation: "A null set (or empty set) has no elements."
+},
+{
+  text: "If A = {1,2,3} and B = {4,5}, what is A × B (Cartesian product)?",
+  options: [
+    "{1,2,3,4,5}",
+    "{(1,4),(1,5),(2,4),(2,5),(3,4),(3,5)}",
+    "{(4,1),(4,2),(4,3),(5,1),(5,2),(5,3)}",
+    "{}"
+  ],
+  correct: 1,
+  explanation: "The Cartesian product pairs every element from set A with every element from set B."
+},
+{
+  text: "Given A = {1,2,3} and B = {2,3}, what is B - A?",
+  options: [
+    "{1}",
+    "{2,3}",
+    "{}",
+    "{4,5}"
+  ],
+  correct: 2,
+  explanation: "B - A includes elements in B that are not in A. Since B is a subset of A, the result is an empty set."
+},
+{
+  text: "In a system with 30 particles, 20 are fermions and 15 are bosons. If 10 particles are neither fermions nor bosons, how many are both fermions and bosons?",
+  options: [
+    "5",
+    "10",
+    "15",
+    "25"
+  ],
+  correct: 0,
+  explanation: "Using inclusion-exclusion, the overlap of fermions and bosons is calculated as 5."
+},
+{
+  text: "Which set operation corresponds to the logical AND operator?",
+  options: [
+    "Union",
+    "Intersection",
+    "Complement",
+    "Difference"
+  ],
+  correct: 1,
+  explanation: "The intersection corresponds to the logical AND operator, where both conditions must hold true."
+},
+{
+  text: "If two sets are equal, which statement is true?",
+  options: [
+    "They must have the same elements",
+    "They must have the same power set",
+    "They must have the same cardinal number",
+    "All of the above"
+  ],
+  correct: 3,
+  explanation: "Equal sets have the same elements, power set, and cardinality."
+},
+{
+  text: "Given set A = {1, 2, {3, 4}}. Which of the following is NOT an element of set A?",
+  options: [
+    "1",
+    "2",
+    "{3,4}",
+    "3"
+  ],
+  correct: 3,
+  explanation: "While {3,4} is an element, 3 by itself is not directly an element of A."
+},
+{
+  text: "What is the cardinal number of A, given A = {x | x is a letter in the word 'MATHEMATICS'}?",
+  options: [
+    "11",
+    "10",
+    "8",
+    "12"
+  ],
+  correct: 2,
+  explanation: "The set of unique letters in 'MATHEMATICS' contains 8 distinct elements."
+},
+{
+  text: "A set is called countably infinite if:",
+  options: [
+    "Its elements can be put into a one-to-one correspondence with the natural numbers.",
+    "It contains an infinite number of subsets.",
+    "It includes all the real numbers.",
+    "It has a finite number of elements."
+  ],
+  correct: 0,
+  explanation: "A countably infinite set can be mapped one-to-one with natural numbers."
+},
+{
+  text: "Which of the following best represents an example of a subset?",
+  options: [
+    "The set of all integers compared to the set of all real numbers.",
+    "The set of all real numbers compared to the set of all integers.",
+    "The set of all positive numbers compared to the set of all integers.",
+    "The set of all negative integers compared to the set of all real numbers."
+  ],
+  correct: 0,
+  explanation: "All integers are real numbers, making integers a subset of real numbers."
+},
+{
+  text: "In statistical mechanics, a microstate represents:",
+  options: [
+    "A macroscopic property of the system.",
+    "A particular quantum configuration of the system.",
+    "The total energy of the system.",
+    "The total number of particles in the system."
+  ],
+  correct: 1,
+  explanation: "A microstate is a specific arrangement of particles, while a macrostate describes observable properties."
+}, 
+{
+  text: "In statistical mechanics, a microstate represents:",
+  options: [
+    "A macroscopic property of the system.",
+    "A particular quantum configuration of the system.",
+    "The total energy of the system.",
+    "The total number of particles in the system."
+  ],
+  correct: 1,
+  explanation: "A microstate represents a specific arrangement of particles in a system, considering their positions, velocities, and quantum states. Option A is incorrect because macrostates describe observable bulk properties like temperature and pressure, not specific arrangements. Option C is incorrect because energy is a property resulting from microstates, not a microstate itself. Option D is incorrect because the total number of particles is a property of the macrostate, not an individual microstate."
+},
+{
+  text: "Two sets A and B are such that A ∪ B = A. Which of the following is correct?",
+  options: [
+    "A ⊂ B",
+    "B ⊂ A",
+    "A = B",
+    "A ∩ B = ∅"
+  ],
+  correct: 1,
+  explanation: "If the union of A and B results in A, then every element of B must already be in A, meaning B is a subset of A. Option A is incorrect because A being a subset of B contradicts the union condition. Option C is incorrect because equality would require both sets to have identical elements, which isn't stated. Option D is incorrect because an empty intersection implies no overlap, which contradicts the union result."
+},
+{
+  text: "For a system of N particles which are considered indistinguishable, how does the use of set theory assist in analyzing the total system?",
+  options: [
+    "It is unnecessary to use set theory.",
+    "It provides a means to group the particles by their quantum states.",
+    "It allows us to count the total number of quantum states, allowing for calculation of the total partition function.",
+    "Both B and C"
+  ],
+  correct: 3,
+  explanation: "Set theory is essential for grouping particles into quantum states and counting those states to calculate the partition function. Option A is incorrect because set theory plays a crucial role in organizing quantum states. Option B, while true, only partially explains the role of set theory. Option C is also true, but it alone does not cover the grouping aspect, making option D the most comprehensive choice."
+},
+{
+  text: "What is the complement of the empty set with respect to a universal set?",
+  options: [
+    "The empty set itself.",
+    "The universal set",
+    "A singleton set.",
+    "Nothing."
+  ],
+  correct: 1,
+  explanation: "The complement of the empty set includes everything in the universal set since nothing is excluded. Option A is incorrect because the empty set cannot complement itself—it would remain empty. Option C is incorrect because a singleton set contains only one element, not everything in the universal set. Option D is incorrect because 'nothing' contradicts the universal set being the complement."
+},
+{
+  text: "Given A = {1, 2} and B = {3, 4}, then A ∪ B is what?",
+  options: [
+    "{1,2}",
+    "{3,4}",
+    "{}",
+    "{1,2,3,4}"
+  ],
+  correct: 3,
+  explanation: "The union of two sets combines all unique elements from both sets, resulting in {1, 2, 3, 4}. Option A is incorrect because it only represents set A. Option B is incorrect because it only represents set B. Option C is incorrect because an empty set means no elements, which contradicts the union operation."
+},
+{
+  text: "If set A is contained in set B and set A does not equal set B, which is correct?",
+  options: [
+    "Set A is a superset of set B.",
+    "Set A is a proper subset of set B.",
+    "The sets are disjoint.",
+    "The sets are equivalent."
+  ],
+  correct: 1,
+  explanation: "If A is fully contained in B and not equal to B, it is a proper subset. Option A is incorrect because a superset would mean A contains all elements of B, which isn’t true here. Option C is incorrect because disjoint sets share no elements, contradicting A being part of B. Option D is incorrect because equivalent sets must have the same elements, which isn’t the case here."
+},
+{
+  text: "If A ∩ B = ∅ what is A - B?",
+  options: [
+    "∅",
+    "A",
+    "B",
+    "A ∪ B"
+  ],
+  correct: 1,
+  explanation: "If A and B have no common elements, removing B from A still leaves all of A intact. Option A is incorrect because it implies A has no elements, which isn’t stated. Option C is incorrect because B is irrelevant to the difference operation here. Option D is incorrect because the union represents both sets combined, not the difference."
+},
+{
+  text: "A system contains multiple quantum states represented by set S. Subsets A, B, and C represent groups of states within S. If A ∩ B = ∅, B ∩ C = ∅, and C ∩ A = ∅, what does this mean?",
+  options: [
+    "All the states in S are the same",
+    "The states in A, B, and C are disjoint",
+    "The total number of states in S is equal to the number of states in A, B, and C added together",
+    "The total energy of all the sets is 0"
+  ],
+  correct: 1,
+  explanation: "Disjoint sets have no elements in common, meaning the states in A, B, and C are separate groups. Option A is incorrect because if the states were the same, they would overlap. Option C is incorrect because we can't assume the union covers the entire set S. Option D is incorrect because disjointness has no relation to energy."
+}, 
+{
+  text: "Which of the following is an example of an infinite set?",
+  options: [
+    "{x | x is a natural number between 1 and 10}",
+    "{x | x is an integer}",
+    "{x | x is a letter in the English alphabet}",
+    "{x | x is the number of atoms in one gram of Carbon}"
+  ],
+  correct: 1,
+  explanation: "The set of integers is infinite because it goes on forever in both positive and negative directions: {..., -2, -1, 0, 1, 2, ...}. Option A is incorrect because the set of natural numbers between 1 and 10 is finite. Option C is incorrect because the English alphabet has a fixed, finite number of letters. Option D is incorrect because the number of atoms, while extremely large, is still finite."
+},
+{
+  text: "For three sets, what is the number of terms in the expansion of A ∪ B ∪ C?",
+  options: [
+    "7",
+    "8",
+    "6",
+    "9"
+  ],
+  correct: 1,
+  explanation: "The number of terms in the union expansion of three sets follows the inclusion-exclusion principle, calculated as 2³ = 8. Option A is incorrect because 7 misses one term. Option C is incorrect because it undercounts the valid combinations. Option D is incorrect because it overestimates the count."
+},
+{
+  text: "A system in quantum mechanics uses a set to describe possible quantum states. If the set contains two elements, what does that imply?",
+  options: [
+    "The system is in only one quantum state",
+    "The system can be in either of two quantum states",
+    "The system has a definite amount of energy",
+    "The system is classical in nature"
+  ],
+  correct: 1,
+  explanation: "If a set contains two quantum states, the system can exist in either state, reflecting two distinct possibilities. Option A is incorrect because the system isn’t limited to one state. Option C is incorrect because the number of states doesn't directly indicate a definite energy level. Option D is incorrect because having two states doesn’t imply classical behavior."
+},
+{
+  text: "In a solid, if you have the set of all electrons, which concept of sets can help in understanding how to group them by energy?",
+  options: [
+    "Union",
+    "Intersection",
+    "Subsets",
+    "Complement"
+  ],
+  correct: 2,
+  explanation: "Subsets allow us to group electrons based on their energy levels. Each subset represents electrons with specific energy properties. Option A is incorrect because the union combines groups rather than categorizing them. Option B is incorrect because the intersection finds common elements, not distinct groupings. Option D is incorrect because the complement deals with exclusion, not categorization."
+},
+{
+  text: "In a probability experiment, what does the intersection of two events represent?",
+  options: [
+    "The event where either of the two events occur",
+    "The event where both events occur simultaneously",
+    "The event where neither event occurs",
+    "The event that one event must occur but the other does not"
+  ],
+  correct: 1,
+  explanation: "The intersection represents the event where both events occur simultaneously. Option A is incorrect because it refers to the union of events. Option C is incorrect because it represents the complement of both events. Option D is incorrect because it suggests mutual exclusivity, not intersection."
+},
+{
+  text: "Which of the following is an example of an infinite set?",
+  options: [
+    "{x | x is a natural number between 1 and 10}",
+    "{x | x is an integer}",
+    "{x | x is a letter in the English alphabet}",
+    "{x | x is the number of atoms in one gram of Carbon}"
+  ],
+  correct: 1,
+  explanation: "The set of integers is infinite because it goes on forever in both positive and negative directions: {..., -2, -1, 0, 1, 2, ...}. Option A is incorrect because the set of natural numbers between 1 and 10 is finite. Option C is incorrect because the English alphabet has a fixed, finite number of letters. Option D is incorrect because the number of atoms, while extremely large, is still finite."
+},
+{
+  text: "For three sets, what is the number of terms in the expansion of A ∪ B ∪ C?",
+  options: [
+    "7",
+    "8",
+    "6",
+    "9"
+  ],
+  correct: 1,
+  explanation: "The number of terms in the union expansion of three sets follows the inclusion-exclusion principle, calculated as 2³ = 8. Option A is incorrect because 7 misses one term. Option C is incorrect because it undercounts the valid combinations. Option D is incorrect because it overestimates the count."
+},
+{
+  text: "A system in quantum mechanics uses a set to describe possible quantum states. If the set contains two elements, what does that imply?",
+  options: [
+    "The system is in only one quantum state",
+    "The system can be in either of two quantum states",
+    "The system has a definite amount of energy",
+    "The system is classical in nature"
+  ],
+  correct: 1,
+  explanation: "If a set contains two quantum states, the system can exist in either state, reflecting two distinct possibilities. Option A is incorrect because the system isn’t limited to one state. Option C is incorrect because the number of states doesn't directly indicate a definite energy level. Option D is incorrect because having two states doesn’t imply classical behavior."
+},
+{
+  text: "In a solid, if you have the set of all electrons, which concept of sets can help in understanding how to group them by energy?",
+  options: [
+    "Union",
+    "Intersection",
+    "Subsets",
+    "Complement"
+  ],
+  correct: 2,
+  explanation: "Subsets allow us to group electrons based on their energy levels. Each subset represents electrons with specific energy properties. Option A is incorrect because the union combines groups rather than categorizing them. Option B is incorrect because the intersection finds common elements, not distinct groupings. Option D is incorrect because the complement deals with exclusion, not categorization."
+},
+{
+  text: "In a probability experiment, what does the intersection of two events represent?",
+  options: [
+    "The event where either of the two events occur",
+    "The event where both events occur simultaneously",
+    "The event where neither event occurs",
+    "The event that one event must occur but the other does not"
+  ],
+  correct: 1,
+  explanation: "The intersection represents the event where both events occur simultaneously. Option A is incorrect because it refers to the union of events. Option C is incorrect because it represents the complement of both events. Option D is incorrect because it suggests mutual exclusivity, not intersection."
+},
+{
+  text: "If the cardinality of two finite sets A and B are m and n, respectively, and the intersection of A and B has a cardinality of k, then the cardinality of A ∪ B is:",
+  options: [
+    "m + n",
+    "m + n + k",
+    "m + n - k",
+    "m - n - k"
+  ],
+  correct: 2,
+  explanation: "Using the inclusion-exclusion principle, the formula for the cardinality of the union is |A ∪ B| = m + n - k. Option A is incorrect because it double-counts the intersection. Option B adds the intersection again, overestimating the total. Option D is incorrect because it arbitrarily subtracts all values, yielding an incorrect result."
+},
+{
+  text: "Sets A, B, and C represent different sub-systems of a large system. What is the physical interpretation of (A ∩ B) ∪ C?",
+  options: [
+    "The sub-systems that belong to either all of A, B and C, or only C.",
+    "The sub-systems that belong to both A and B, or either of C.",
+    "The sub-systems that belong to either A or B, and also C.",
+    "The sub-systems that belong to all of A, B and C."
+  ],
+  correct: 1,
+  explanation: "The expression (A ∩ B) ∪ C represents sub-systems that are either shared between A and B or belong to C. Option A is incorrect because it misinterprets the union and intersection. Option C is incorrect because it implies all three must overlap. Option D is incorrect because it restricts the interpretation to complete intersection."
+},
+{
+  text: "In statistical mechanics, what is the relationship between the set of all microstates and the macrostate?",
+  options: [
+    "Microstates are independent of the macrostate",
+    "The microstate is the union of several different macrostates",
+    "A macrostate is a grouping of similar microstates",
+    "Microstates can only describe a system in equilibrium, not in a macrostate"
+  ],
+  correct: 2,
+  explanation: "A macrostate represents a collection of similar microstates that result in the same observable properties. Option A is incorrect because microstates directly determine macrostates. Option B is incorrect because macrostates are not formed from unions of microstates but from groupings. Option D is incorrect because microstates exist regardless of equilibrium."
+},
+{
+  text: "How is set theory used when studying crystal structures in solid-state physics?",
+  options: [
+    "It allows us to define the symmetries within the crystal using groups of points.",
+    "It allows us to look at the energy distribution of electrons within the solid.",
+    "It allows us to investigate how waves propagate in a solid using overlapping sets.",
+    "It's not applicable in solid-state physics."
+  ],
+  correct: 0,
+  explanation: "Set theory helps define symmetries in crystal structures using mathematical groups and points. Option B focuses on energy distributions, which is more about statistical mechanics. Option C relates to wave propagation, not set theory. Option D is incorrect because set theory plays a crucial role in defining crystal symmetries."
+},
+{
+  text: "Which mathematical framework is most relevant for formally describing the collection of quantum states in physical systems?",
+  options: [
+    "Geometry",
+    "Set Theory",
+    "Calculus",
+    "Differential equations"
+  ],
+  correct: 1,
+  explanation: "Set theory provides the mathematical foundation for organizing and defining collections of quantum states. Option A focuses on spatial relationships, not quantum states. Option C focuses on rates of change, which doesn’t describe quantum states. Option D focuses on change over time, not static state organization."
+}, 
+
+
         ],
       },
     },
