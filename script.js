@@ -752,7 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentQuestionIndex = 0;
   let answers = [];
   let timerInterval = null;
-  let timeRemaining = 2400; // Timer in seconds
+  let timeRemaining = 3000; // Timer in seconds
   let selectedCourse = "";
   let subCourseName = "";
                           
@@ -3044,8 +3044,18 @@ document.addEventListener("DOMContentLoaded", () => {
         "PHYS101-1": {
         title: "Biometry/Biostatistics",
         questions: [
-          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+          {
+  text: "Which of the following is an example of an infinite set? <br><img src='images/infinite_set_example.png' alt='Infinite Set Image' class='question-image'>",
+  options: [
+    "{x | x is a natural number between 1 and 10}",
+    "{x | x is an integer}",
+    "{x | x is a letter in the English alphabet}",
+    "{x | x is the number of atoms in one gram of Carbon}"
+  ],
+  correct: 1,
+  explanation: "The set of integers is infinite because it goes on forever in both positive and negative directions."
+}, 
+
         ]
       },
            
@@ -8603,7 +8613,7 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   let answers = [];
   currentQuestionIndex = 0;
   subCourseName = "";
-  timeRemaining = 60;
+  timeRemaining = 3000;
   clearInterval(timerInterval);
   showSection(courseSelectionSection);
 });
