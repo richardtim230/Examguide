@@ -8683,8 +8683,11 @@ function startExam() {
 
 
 function updateQuestion() {
+  console.log('Updating question...');
+
   const question = questions[currentQuestionIndex];
-  
+  console.log('Current question:', question);
+
   // Display question number along with the question text
   questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
   
