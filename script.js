@@ -8656,7 +8656,7 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   let answers = [];
   currentQuestionIndex = 0;
   subCourseName = "";
-  timeRemaining = 60;
+  timeRemaining = [];
   clearInterval(timerInterval);
   showSection(courseSelectionSection);
 });
@@ -8668,6 +8668,7 @@ function startExam() {
   updateQuestion();
   startTimer();
 }
+
 
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
@@ -8682,19 +8683,6 @@ function updateQuestion() {
     button.className = "option-button";
     optionsContainer.appendChild(button);
   });
-
-    // Update the question text
-  document.getElementById('question-text').textContent = currentQuestion.text;
-  
-
-  // Update the question image
-  const questionImageElement = document.getElementById('question-image');
-  if (currentQuestion.image) {
-    questionImageElement.src = currentQuestion.image;
-    questionImageElement.classList.remove('hidden');
-  } else {
-    questionImageElement.classList.add('hidden');
-  }
 
   // Enable/Disable navigation buttons based on the current index
   document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
@@ -8806,7 +8794,9 @@ function endExam(autoSubmit = false) {
       // Timer continues running
     };
 
-    
+    return; // Prevent further execution until the user confirms
+  }
+
   // Auto-submit (e.g., when time runs out)
   clearInterval(timerInterval);
   console.log("Time's up! Auto-submitting exam...");
