@@ -937,15 +937,15 @@ background-size: 100% 100%;
 
 #welcome-popup {
   background-image: url('./red-light-round-podium-black-background-mock-up_43614-950.webp');
-  background-color: rgba(0, 0, 0, 3); /* Semi-transparent black overlay */
+  background-color: rgba(3, 3, 3, 6); /* Semi-transparent black overlay */
   z-index: -1;
   background-size: 100% 100%;
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(60px);
   border-radius: 12px;
   padding: 20px 40px;
   text-align: center;
-  color: black;
-  text-align: left;
+  color: white;
+  text-align: center;
   font-weight: bold;
   font-size: 15px;   
   width: 340px;
@@ -1106,17 +1106,18 @@ button:hover {
 #welcome-popup p {
   font-size: 15px;
   color: white;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-align: left;
-        padding: 25px;
+        padding: 30px;
         background: blue;
         border-radius: 25px;
+        overflow-y: auto;
 
 }
 
