@@ -460,6 +460,13 @@ main {
   padding: 8px;
 }
 
+
+.question-image {
+  display: block;
+  margin-top: 10px;
+  max-width: 100%;
+        }
+
 #options-container button {
   display: block;
   width: 100%;
