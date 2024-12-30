@@ -1370,8 +1370,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       },
            
-      "MTH101-12": {
-        title: "Basic Arithmetic",
+      "MTH101": {
+        title: "General Mathematics for Physical Sciences and Engineering Students",
         questions: [
    {
   text: "Given sets A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, what is A ∪ B?",
@@ -1901,6 +1901,874 @@ document.addEventListener("DOMContentLoaded", () => {
   correct: 2,
   explanation: "Using the inclusion-exclusion principle, the formula for the cardinality of the union is |A ∪ B| = m + n - k. Option A is incorrect because it double-counts the intersection. Option B adds the intersection again, overestimating the total. Option D is incorrect because it arbitrarily subtracts all values, yielding an incorrect result."
 },
+{
+  text: "What type of sequence is 2, 8, 32, 128, ...?",
+  options: [
+    "An arithmetic sequence",
+    "A geometric progression",
+    "A harmonic sequence",
+    "None of the mentioned"
+  ],
+  correct: 1,
+  explanation: "The sequence has a constant ratio between consecutive terms: 8 ÷ 2 = 4, 32 ÷ 8 = 4, etc. Hence, it is a geometric progression with a common ratio of 4."
+},
+{
+  text: "How many terms are in the GP 32, 256, 2048, 16384, ..., 250?",
+  options: [
+    "11",
+    "13",
+    "15",
+    "None of the mentioned"
+  ],
+  correct: 3,
+  explanation: "Using the nth term formula, gₙ = g₁ × rⁿ⁻¹, we substitute g₁ = 32, r = 8, and solve 250 = 32 × 8ⁿ⁻¹. This equation does not yield an integer value for n, so 250 is not a term in the series. Correct answer: None of the mentioned."
+},
+{
+  text: "What is the term at position 11 in the GP: 32, 256, 2048, 16384, ...?",
+  options: [
+    "235",
+    "245",
+    "35",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "Using the formula g₁₁ = g₁ × r¹⁰, where g₁ = 32 and r = 8, the 11th term is calculated to be 235."
+},
+{
+  text: "In the GP 250, 247, 244, ..., at what position does the first fractional term appear?",
+  options: [
+    "17",
+    "20",
+    "18",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "The nth term is given by gₙ = 250 × (2/3)ⁿ⁻¹. Setting gₙ < 1, we solve 1 = 250 × (2/3)ⁿ⁻¹, yielding n = 17.66.... Hence, the first fractional term occurs at position 18."
+},
+{
+  text: "In the GP 250, 247, 244, ..., what is the first fractional term?",
+  options: [
+    "2⁻¹",
+    "2⁻²",
+    "2⁻³",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "For the 18th term, using the geometric formula g₁₈ = 250 × (2/3)¹⁷, we calculate that g₁₈ = 2⁻¹."
+},
+{
+  text: "Is the sequence 1, 1, 1, 1, 1, ... a GP?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0,
+  explanation: "A sequence is a GP if the ratio between consecutive terms is constant. Here, the ratio is 1/1 = 1, which is constant. Hence, it is a GP."
+},
+{
+  text: "Is 225 a term in the GP 32, 256, 2048, 16384, ...?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "Substituting into the nth term formula gₙ = g₁ × rⁿ⁻¹, with g₁ = 32 and r = 8, we solve 225 = 32 × 8ⁿ⁻¹. The result n = 7.66... is not an integer; therefore, 225 is not part of the sequence."
+},
+{
+  text: "Which of the following sequences is a GP with a common ratio of 3?",
+  options: [
+    "gₙ = 2n² + 3n",
+    "gₙ = 2n² + 3",
+    "gₙ = 3n² + 3n",
+    "gₙ = 6(3ⁿ⁻¹)"
+  ],
+  correct: 3,
+  explanation: "The sequence gₙ = 6(3ⁿ⁻¹) has the form of a geometric progression, where the common ratio is clearly r = 3."
+},
+{
+  text: "If a, b, c are in GP, what is the relationship between them?",
+  options: [
+    "2b = 2a + 3c",
+    "2a = b + c",
+    "b = (ac)¹/²",
+    "2c = a + c"
+  ],
+  correct: 2,
+  explanation: "For three terms in GP, b² = a × c. Taking the square root, b = (ac)¹/², which is the geometric mean of a and c."
+},
+{
+  text: "If the product of three consecutive terms in GP is 8, what is the middle term?",
+  options: [
+    "2",
+    "3",
+    "4",
+    "179"
+  ],
+  correct: 0,
+  explanation: "Let the terms be a/r, a, ar. Their product is (a/r) × a × ar = a³ = 8. Taking the cube root, a = 2, which is the middle term."
+}, 
+{
+  text: "Let the sequence be 1, 3, 5, 7, 9… then this sequence is ____",
+  options: [
+    "An arithmetic sequence",
+    "A geometric progression",
+    "A harmonic sequence",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "The difference between any term and its previous term is constant, so this is an arithmetic sequence."
+},
+{
+  text: "In the given AP series, find the number of terms: 5, 8, 11, 14, 17, 20… 50.",
+  options: [
+    "11",
+    "13",
+    "15",
+    "None of the mentioned"
+  ],
+  correct: 3,
+  explanation: "Using the formula for the nth term of an AP: nth term = first_term + (number_of_terms – 1) × common_difference, we solve 50 = 5 + (n-1) × 3. This gives n = 16, which is not listed in the options. Correct answer: None of the mentioned."
+},
+{
+  text: "In the given AP series, the term at position 11 would be: 5, 8, 11, 14, 17, 20… 50.",
+  options: [
+    "35",
+    "45",
+    "25",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "The formula for the nth term is a + (n – 1)d. Substituting, we get nth term = 5 + (11-1) × 3 = 35."
+},
+{
+  text: "For the given Arithmetic progression, find the position of the first negative term: 50, 47, 44, 41, ….",
+  options: [
+    "17",
+    "20",
+    "18",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "Let the nth term = 0. The term after this will be the first negative term. Using the formula, 0 = 50 + (n-1) × -3, solving gives n = 17.66. Hence, the first negative term occurs at position 18."
+},
+{
+  text: "For the given Arithmetic progression, find the first negative term: 50, 47, 44, 41, ….",
+  options: [
+    "-1",
+    "-2",
+    "-3",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "The first negative term occurs at n=18. Substituting into the formula: nth term = 50 + (18-1) × -3, we get the term as -1."
+},
+{
+  text: "A series can either be AP only or GP only or HP only but not all at the same time.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "The sequence 1, 1, 1, 1, 1,… is simultaneously an AP (difference = 0), GP (ratio = 1), and HP (reciprocals also form an AP), making the statement false."
+},
+{
+  text: "In the given Arithmetic progression, ‘25’ would be a term in it: 5, 8, 11, 14, 17, 20… 50.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "Using the nth term formula: a + (n-1)d, solving for 25 = 5 + (n-1) × 3, we get n = 7.666. Since n is not an integer, 25 is not a term in this series."
+},
+{
+  text: "Which of the following sequences in AP will have a common difference of 3, where n is an Integer?",
+  options: [
+    "an = 2n² + 3n",
+    "an = 2n² + 3",
+    "an = 3n² + 3n",
+    "an = 5 + 3n"
+  ],
+  correct: 3,
+  explanation: "The sequence an = 5 + 3n is linear with a constant coefficient of 3 for n, making it an AP with a common difference of 3."
+},
+{
+  text: "If a, b, c are in AP, then the relation between a, b, c can be ____",
+  options: [
+    "2b = 2a + 3c",
+    "2a = b + c",
+    "2b = a + c",
+    "2c = a + c"
+  ],
+  correct: 2,
+  explanation: "The term b in an AP should be the arithmetic mean of terms a and c. Thus, 2b = a + c."
+},
+{
+  text: "Let the sum of three consecutive terms in AP be 180. What is the middle of those three terms?",
+  options: [
+    "60",
+    "80",
+    "90",
+    "179"
+  ],
+  correct: 0,
+  explanation: "Let the three terms be a-d, a, and a+d. Their sum is 3a = 180, so a = 60. The middle term is 60."
+}, 
+{
+  text: "What is the domain of a function?",
+  options: [
+    "the maximal set of numbers for which a function is defined",
+    "the maximal set of numbers which a function can take values",
+    "it is a set of natural numbers for which a function is defined",
+    "none of the mentioned"
+  ],
+  correct: 0,
+  explanation: "Domain is the set of all the numbers on which a function is defined. It may include real numbers as well."
+},
+{
+  text: "What is the domain of the function f(x) = √x?",
+  options: [
+    "(2, ∞)",
+    "(-∞, 1)",
+    "[0, ∞)",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "A square root function is not defined for negative real numbers, so its domain is [0, ∞)."
+},
+{
+  text: "What is the range of a function?",
+  options: [
+    "the maximal set of numbers for which a function is defined",
+    "the maximal set of numbers which a function can take values",
+    "it is a set of natural numbers for which a function is defined",
+    "none of the mentioned"
+  ],
+  correct: 1,
+  explanation: "Range is the set of all possible values that a function can take as output."
+},
+{
+  text: "What is the domain of the function f(x) = 1/x for it to be defined everywhere on its domain?",
+  options: [
+    "(2, ∞)",
+    "(-∞, ∞) – {0}",
+    "[0, ∞)",
+    "None of the mentioned"
+  ],
+  correct: 1,
+  explanation: "The function 1/x is not defined for x=0; however, it is defined for all other real numbers."
+},
+{
+  text: "The range of the function f(x) = sin(x) is (-∞, ∞).",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "A sine function takes values between -1 and 1, so its range is [-1, 1]."
+},
+{
+  text: "Codomain is the subset of range.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "Range is a subset of the codomain, meaning every value in the range belongs to the codomain, but not all values in the codomain are part of the range."
+},
+{
+  text: "What is the range of the function f(x) = 1/x which is defined everywhere on its domain?",
+  options: [
+    "(-∞, ∞)",
+    "(-∞, ∞) – {0}",
+    "[0, ∞)",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "The function 1/x can take any real number as its range."
+},
+{
+  text: "If f(x) = e^x, what is the range of the function?",
+  options: [
+    "(-∞, ∞)",
+    "(-∞, ∞) – {0}",
+    "(0, ∞)",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "The exponential function e^x only takes positive values, so its range is (0, ∞)."
+},
+{
+  text: "If f(x) = x² + 4, then what is the range of f(x)?",
+  options: [
+    "[4, ∞)",
+    "(-∞, ∞) – {0}",
+    "(0, ∞)",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "The minimum value of x² is 0, so x² + 4 may take any value in the interval [4, ∞)."
+},
+{
+  text: "Let f(x) = sin²(x) + log(x). Is the domain of f(x) (-∞, ∞)?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "The domain of f(x) is (0, ∞) because log(x) is not defined for negative numbers or zero."
+}, 
+{
+  text: "If f(x) = (x³ – 1) / (3x + 1) then f(x) is?",
+  options: [
+    "O(x²)",
+    "O(x)",
+    "O(x² / 3)",
+    "O(1)"
+  ],
+  correct: 0,
+  explanation: "Since 0 < (x³ – 1) / (3x + 1) < x² as x grows large, the function is O(x²)."
+},
+{
+  text: "If f(x) = 3x² + x³logx, then f(x) is?",
+  options: [
+    "O(x²)",
+    "O(x³)",
+    "O(x)",
+    "O(1)"
+  ],
+  correct: 1,
+  explanation: "Since 0 < 3x² < x³ as x grows large, and the dominant term is x³ from x³logx, it follows that f(x) = O(x³)."
+},
+{
+  text: "The big-O notation for f(n) = (nlogn + n²)(n³ + 2) is?",
+  options: [
+    "O(n²)",
+    "O(3n)",
+    "O(n⁴)",
+    "O(n⁵)"
+  ],
+  correct: 3,
+  explanation: "Since 0 < n³ + 2 ≤ n³ as n grows large, the product (nlogn + n²)(n³ + 2) is dominated by n⁵. Thus, the function is O(n⁵)."
+},
+{
+  text: "The big-theta notation for the function f(n) = 2n³ + n – 1 is?",
+  options: [
+    "n",
+    "n²",
+    "n³",
+    "n⁴"
+  ],
+  correct: 2,
+  explanation: "Since 2n³ dominates both n and -1 as n grows large, the function is Θ(n³)."
+},
+{
+  text: "The big-theta notation for f(n) = nlog(n² + 1) + n²logn is?",
+  options: [
+    "n²logn",
+    "n²",
+    "logn",
+    "nlog(n²)"
+  ],
+  correct: 0,
+  explanation: "Since n²logn < n³ as n grows large and the leading term is n²logn, the function is Θ(n²logn)."
+},
+{
+  text: "The big-omega notation for f(x, y) = x⁵y³ + x⁴y⁴ + x³y⁵ is?",
+  options: [
+    "x⁵y³",
+    "x⁵y⁵",
+    "x³y³",
+    "x⁴y⁴"
+  ],
+  correct: 2,
+  explanation: "All terms, x⁵y³, x⁴y⁴, and x³y⁵, are greater than or equal to x³y³. Thus, the function is Ω(x³y³)."
+},
+{
+  text: "If f₁(x) is O(g(x)) and f₂(x) is o(g(x)), then f₁(x) + f₂(x) is?",
+  options: [
+    "O(g(x))",
+    "o(g(x))",
+    "O(g(x)) + o(g(x))",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "Since f₂(x) is negligible compared to f₁(x), the upper bound for f₁(x) + f₂(x) is O(g(x))."
+},
+{
+  text: "The little-o notation for f(x) = xlogx is?",
+  options: [
+    "x",
+    "x³",
+    "x²",
+    "xlogx"
+  ],
+  correct: 2,
+  explanation: "The limit of xlogx / x² as x approaches infinity shows that xlogx grows slower than x². Hence, f(x) = o(x²)."
+},
+{
+  text: "The big-O notation for f(n) = 2log(n!) + (n² + 1)logn is?",
+  options: [
+    "n",
+    "n²",
+    "nlogn",
+    "n²logn"
+  ],
+  correct: 3,
+  explanation: "Since log(n!) ≤ n²logn for large n, the function 2log(n!) + (n² + 1)logn is dominated by n²logn. Thus, f(n) = O(n²logn)."
+},
+{
+  text: "The big-O notation for f(x) = 5logx is?",
+  options: [
+    "1",
+    "x",
+    "x²",
+    "x³"
+  ],
+  correct: 1,
+  explanation: "Since a logarithmic function logx is less than x for large values of x, f(x) = O(x)."
+},
+{
+  text: "The big-Omega notation for f(x) = 2x⁴ + x² – 4 is?",
+  options: [
+    "x²",
+    "x³",
+    "x",
+    "x⁴"
+  ],
+  correct: 3,
+  explanation: "The dominant term is 2x⁴, which is greater than or equal to x⁴. Thus, the function is Ω(x⁴)."
+}, 
+{
+  text: "A function is said to be ______ if and only if f(a) = f(b) implies that a = b for all a and b in the domain of f.",
+  options: [
+    "One-to-many",
+    "One-to-one",
+    "Many-to-many",
+    "Many-to-one"
+  ],
+  correct: 1,
+  explanation: "A function is one-to-one if and only if f(a) ≠ f(b) whenever a ≠ b."
+},
+{
+  text: "The function f(x)=x+1 from the set of integers to itself is onto. Is it True or False?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0,
+  explanation: "For every integer 'y', there is an integer 'x' such that f(x) = y."
+},
+{
+  text: "The value of ⌊1/2.⌊5/2⌋ ⌋ is ______",
+  options: [
+    "1",
+    "2",
+    "3",
+    "0.5"
+  ],
+  correct: 0,
+  explanation: "The value of ⌊5/2⌋ is 2, so the value of ⌊1/2 × 2⌋ is 1."
+},
+{
+  text: "Which of the following functions f: Z × Z → Z is not onto?",
+  options: [
+    "f(a, b) = a + b",
+    "f(a, b) = a",
+    "f(a, b) = |b|",
+    "f(a, b) = a - b"
+  ],
+  correct: 2,
+  explanation: "The function f(a, b) = |b| is not onto because its output cannot take negative values."
+},
+{
+  text: "The domain of the function that assigns to each pair of integers the maximum of these two integers is ___",
+  options: [
+    "N",
+    "Z",
+    "Z+",
+    "Z+ × Z+"
+  ],
+  correct: 3,
+  explanation: "The domain is the set of all possible pairs of positive integers, which is Z+ × Z+."
+},
+{
+  text: "Let f and g be functions from the set of integers to itself, defined by f(x) = 2x + 1 and g(x) = 3x + 4. Then the composition of f and g is ____",
+  options: [
+    "6x + 9",
+    "6x + 7",
+    "6x + 6",
+    "6x + 8"
+  ],
+  correct: 0,
+  explanation: "The composition of f and g is given by f(g(x)), which equals 2(3x + 4) + 1 = 6x + 9."
+},
+{
+  text: "__ bytes are required to encode 2000 bits of data.",
+  options: [
+    "1",
+    "2",
+    "3",
+    "8"
+  ],
+  correct: 1,
+  explanation: "Two bytes are required to encode 2000 bits of data because 1 byte = 8 bits, and 2000 bits fit into 2 bytes (with some space remaining)."
+},
+{
+  text: "The inverse of the function f(x) = x³ + 2 is ____",
+  options: [
+    "f⁻¹(y) = (y - 2)^(1/2)",
+    "f⁻¹(y) = (y - 2)^(1/3)",
+    "f⁻¹(y) = (y)^(1/3)",
+    "f⁻¹(y) = (y - 2)"
+  ],
+  correct: 1,
+  explanation: "To find the inverse, we set f(x) = y, then solve for x in terms of y: x = (y - 2)^(1/3)."
+},
+{
+  text: "The function f(x) = x³ is a bijection from R to R. Is it True or False?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0,
+  explanation: "The function f(x) = x³ is one-to-one (no two inputs have the same output) and onto (every real number is an output)."
+},
+{
+  text: "The g⁻¹({0}) for the function g(x) = ⌊x⌋ is ___",
+  options: [
+    "{x | 0 ≤ x < 1}",
+    "{x | 0 < x ≤ 1}",
+    "{x | 0 < x < 1}",
+    "{x | 0 ≤ x ≤ 1}"
+  ],
+  correct: 3,
+  explanation: "The inverse image of 0 under the floor function is the interval {x | 0 ≤ x ≤ 1}."
+}, 
+{
+  text: "If a set contains 3 elements, then the number of subsets is?",
+  options: [
+    "6",
+    "3",
+    "12",
+    "8"
+  ],
+  correct: 3,
+  explanation: "For a set with n elements, the number of subsets is 2ⁿ. For 3 elements, it is 2³ = 8."
+},
+{
+  text: "The set containing all the collection of subsets is known as _____",
+  options: [
+    "Subset",
+    "Power set",
+    "Union set",
+    "None of the mentioned"
+  ],
+  correct: 1,
+  explanation: "A power set contains all the subsets of a set as its elements, including the empty set."
+},
+{
+  text: "If a set is empty, then the number of subsets will be _____",
+  options: [
+    "1",
+    "2",
+    "0",
+    "4"
+  ],
+  correct: 0,
+  explanation: "An empty set has zero elements, so the number of subsets is 2⁰ = 1."
+},
+{
+  text: "If the number of subsets of a set is 4, then the number of elements in that set is _____",
+  options: [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  correct: 1,
+  explanation: "If the number of subsets is 4, then 2ⁿ = 4. Solving, n = 2. Thus, the set has 2 elements."
+},
+{
+  text: "The number of subsets of a set is 5.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "The number of subsets of a set must always be a power of 2. For example: 2, 4, 8, etc."
+},
+{
+  text: "The number of subsets of a set can be odd or even.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0,
+  explanation: "The number of subsets will be odd in the case of an empty set (1 subset), otherwise, it will always be even."
+},
+{
+  text: "Let a set be A = {1, 2, 3}. How many subsets contain exactly two elements?",
+  options: [
+    "4",
+    "3",
+    "5",
+    "8"
+  ],
+  correct: 1,
+  explanation: "The subsets with exactly two elements are: {1, 2}, {2, 3}, {1, 3}. There are 3 such subsets."
+},
+{
+  text: "Let the set be A = {a, b, c, {a, b}}. Which of the following is false?",
+  options: [
+    "{a, b} ∈ A",
+    "a ∈ A",
+    "{a} ∈ A",
+    "b, c ∈ A"
+  ],
+  correct: 2,
+  explanation: "Only elements directly belong to a set. {a} is not an element of the set; it is a subset of the set."
+},
+{
+  text: "If A = {1, 2, 3, 4}, how many subsets of A contain the element 2 but not 3?",
+  options: [
+    "16",
+    "4",
+    "8",
+    "24"
+  ],
+  correct: 1,
+  explanation: "The subsets that contain 2 but not 3 are: {1, 2, 4}, {1, 2}, {2, 4}, {2}. There are 4 such subsets."
+},
+{
+  text: "Let A(1), A(2), A(3), ..., A(100) be 100 sets such that the number of elements in A(i) = i + 1 and A(1) is a subset of A(2), A(2) is a subset of A(3), ..., A(99) is a subset of A(100). What is the number of elements in the union of all the sets?",
+  options: [
+    "99",
+    "100",
+    "101",
+    "102"
+  ],
+  correct: 2,
+  explanation: "Since all sets are subsets of A(100), the union of all these sets will contain only the elements of A(100). A(100) contains 101 elements."
+}, 
+{
+  text: "Let set A = {1, 2} and B = {3, 4}. What is A × B (Cartesian product of set A and B)?",
+  options: [
+    "{1, 2, 3, 4}",
+    "{(1, 3), (2, 4)}",
+    "{(1, 3), (2, 4), (1, 4), (2, 3)}",
+    "{(3, 1), (4, 1)}"
+  ],
+  correct: 2,
+  explanation: "In the Cartesian product A × B, each pair (c, d) is constructed such that c ∈ A and d ∈ B. Thus, A × B = {(1, 3), (2, 4), (1, 4), (2, 3)}."
+},
+{
+  text: "If set A has 4 elements and B has 3 elements, then what is n(A × B)?",
+  options: [
+    "12",
+    "14",
+    "24",
+    "7"
+  ],
+  correct: 0,
+  explanation: "The total number of elements in A × B is given by n(A × B) = n(A) × n(B). Hence, n(A × B) = 4 × 3 = 12."
+},
+{
+  text: "If set A has 3 elements, how many elements are in A × A × A?",
+  options: [
+    "9",
+    "27",
+    "6",
+    "19"
+  ],
+  correct: 1,
+  explanation: "The total number of elements in A × A × A is n(A × A × A) = n(A) × n(A) × n(A) = 3 × 3 × 3 = 27."
+},
+{
+  text: "Which of the following statements regarding Cartesian products is false?",
+  options: [
+    "A × B = B × A",
+    "A × B ≠ B × A",
+    "n(A × B) = n(A) × n(B)",
+    "All of the mentioned"
+  ],
+  correct: 0,
+  explanation: "The Cartesian product is not commutative. A × B ≠ B × A unless A = B."
+},
+{
+  text: "If n(A × B) = n(B × A) = 36, which of the following may hold true?",
+  options: [
+    "n(A) = 2, n(B) = 18",
+    "n(A) = 9, n(B) = 4",
+    "n(A) = 6, n(B) = 6",
+    "All of the mentioned"
+  ],
+  correct: 3,
+  explanation: "Since n(A × B) = 36, all pairs of integers (n(A), n(B)) whose product equals 36 (e.g., (2, 18), (9, 4), (6, 6)) satisfy this relation."
+},
+{
+  text: "If C = {1}, is it true that C × (C × C) = (C × C) × C?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1,
+  explanation: "The Cartesian product is not associative. C × (C × C) = { (1, (1, 1)) }, while (C × C) × C = { ((1, 1), 1) }, so they are not equal."
+},
+{
+  text: "Let the sets be A, B, C, D. What is (A ∩ B) × (C ∩ D) equivalent to?",
+  options: [
+    "(A × C) ∩ (B × D)",
+    "(A × D) ∪ (B × C)",
+    "(A × C) ∪ (B × D)",
+    "None of the mentioned"
+  ],
+  correct: 0,
+  explanation: "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D), but this equality does not hold for unions."
+},
+{
+  text: "If A ⊆ B, is it true that A × C ⊆ B × C?",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0,
+  explanation: "For any element (x, y) in A × C, x ∈ A and y ∈ C. Since A ⊆ B, we conclude that x ∈ B, so (x, y) ∈ B × C. This implies A × C ⊆ B × C."
+},
+{
+  text: "If set A has 3 elements and set B has 4 elements, how many subsets does the set A × B have?",
+  options: [
+    "1024",
+    "2048",
+    "512",
+    "4096"
+  ],
+  correct: 3,
+  explanation: "A × B has 3 × 4 = 12 elements. The number of subsets of a set is 2ⁿ, so A × B has 2¹² = 4096 subsets."
+},
+{
+  text: "If A × B = B × A, which of the following sets may satisfy this condition?",
+  options: [
+    "A = {1, 2, 3}, B = {1, 2, 3, 4}",
+    "A = {1, 2}, B = {2, 1}",
+    "A = {1, 2, 3}, B = {2, 3, 4}",
+    "None of the mentioned"
+  ],
+  correct: 1,
+  explanation: "A × B = B × A holds true only when A = B. This condition is satisfied for A = {1, 2} and B = {2, 1} because they are identical sets."
+}, 
+{
+  text: "Let C and D be two sets. Which of the following statements are true?\n\ni) C ∪ D = D ∪ C \nii) C ∩ D = D ∩ C",
+  options: [
+    "Both of the statements",
+    "Only i statement",
+    "Only ii statement",
+    "None of the statements"
+  ],
+  correct: 0,
+  explanation: "Both union and intersection operations are commutative. Therefore, C ∪ D = D ∪ C and C ∩ D = D ∩ C."
+},
+{
+  text: "If set C is {1, 2, 3, 4} and C – D = Φ, then set D can be ___",
+  options: [
+    "{1, 2, 4, 5}",
+    "{1, 2, 3}",
+    "{1, 2, 3, 4, 5}",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "For C – D = Φ, the set C must be a subset of D. Therefore, D can be {1, 2, 3, 4, 5}."
+},
+{
+  text: "Let C and D be two sets. C – D is equivalent to ___",
+  options: [
+    "C' ∩ D",
+    "C' ∩ D'",
+    "C ∩ D'",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "C – D contains those elements that are in C but not in D, which is equivalent to C ∩ D'."
+},
+{
+  text: "For two sets C and D, the set (C – D) ∩ D is ___",
+  options: [
+    "C",
+    "D",
+    "Φ",
+    "None of the mentioned"
+  ],
+  correct: 2,
+  explanation: "(C – D) = C ∩ D', so (C – D) ∩ D = (C ∩ D') ∩ D. Since D ∩ D' = Φ, the result is Φ."
+},
+{
+  text: "Which of the following statements regarding sets is false?",
+  options: [
+    "A ∩ A = A",
+    "A ∪ A = A",
+    "A – (B ∩ C) = (A – B) ∪ (A – C)",
+    "(A ∪ B)' = A' ∪ B'"
+  ],
+  correct: 3,
+  explanation: "The complement of a union is not equal to the union of complements; rather, it is equal to the intersection of complements: (A ∪ B)' = A' ∩ B'."
+},
+{
+  text: "Let C = {1, 2, 3, 4} and D = {1, 2, 3, 4}. Which of the following is not true?",
+  options: [
+    "C – D = D – C",
+    "C ∪ D = C ∩ D",
+    "C ∩ D = C – D",
+    "C – D = Φ"
+  ],
+  correct: 2,
+  explanation: "C ∩ D = {1, 2, 3, 4}, while C – D = Φ. Therefore, the statement 'C ∩ D = C – D' is false."
+},
+{
+  text: "If C' ∪ (D ∩ E') is equivalent to ___",
+  options: [
+    "(C ∩ (D ∪ E))'",
+    "(C ∩ (D ∩ E'))'",
+    "(C ∩ (D' ∪ E))'",
+    "(C ∪ (D ∩ E'))'"
+  ],
+  correct: 2,
+  explanation: "Using set manipulation properties, C' ∪ (D ∩ E') is equivalent to (C ∩ (D' ∪ E))'."
+},
+{
+  text: "Let the universal set U = {1, 2, 3, 4, 5, 6, 7, 8}, A' = {2, 5, 6, 7}, and A ∩ B = {1, 3, 4}. Which element surely belongs to B'?",
+  options: [
+    "8",
+    "7",
+    "1",
+    "3"
+  ],
+  correct: 0,
+  explanation: "A = {1, 3, 4, 8}, so B does not have 8 in it, as 8 is not in A ∩ B. For other elements like 7, we cannot be sure."
+},
+{
+  text: "Let A be a set. What are A ∩ Φ and A ∪ Φ?",
+  options: [
+    "Φ, Φ",
+    "Φ, A",
+    "A, Φ",
+    "None of the mentioned"
+  ],
+  correct: 1,
+  explanation: "By the Domination Laws of set theory: A ∩ Φ = Φ and A ∪ Φ = A."
+},
+{
+  text: "If sets A, B, and C satisfy |B ∩ C| = 8, |A ∩ B| = 7, and |C ∩ A| = 7, what is the minimum number of elements in A ∪ B ∪ C?",
+  options: [
+    "8",
+    "14",
+    "22",
+    "15"
+  ],
+  correct: 0,
+  explanation: "For minimization, assume B and C each have 8 elements and all are identical. Also, A should have 7 elements, which are already present in B and C. Thus, |A ∪ B ∪ C| = |B| = 8."
+}, 
+
+
+
 {
   text: "Sets A, B, and C represent different sub-systems of a large system. What is the physical interpretation of (A ∩ B) ∪ C?",
   options: [
