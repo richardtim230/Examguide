@@ -174,39 +174,27 @@
     </section>
 
     <section id="exam-section" class="hidden">
-
-      <h2 id="subject-title">Subject Title</h2>
-
-      <div id="questions-container"></div>
-
-        <p id="question-text">Question will appear here...</p>
-
-        <div id="options-container"></div>
-
-      </div>
-
-      <div id="navigation">
-
-        <button id="prev-question" disabled>Previous</button>
-
-        <button id="next-question">Next</button>
-
-        <button id="end-exam" onclick="endExam()">Submit Examination</button>
-
-
-      </div>
-
-      <div id="confirmationModal" class="modal">
-  <div class="modal-content">
-    <p>Are you sure you want to submit the exam? Once submitted, you cannot make any changes.</p>
-    <button id="confirmYes" class="btn">Yes</button>
-    <button id="confirmNo" class="btn">No</button>
+  <h2 id="subject-title">Subject Title</h2>
+  <div id="questions-container">
+    <p id="question-text">Question will appear here...</p>
+    <img id="question-image" src="" alt="Question Image" class="hidden">
+    <div id="options-container"></div>
   </div>
-</div>
-
-      <div id="progress-container"></div>
-
-    </section>
+  <div id="navigation">
+    <button id="prev-question" disabled>Previous</button>
+    <button id="next-question">Next</button>
+    <button id="end-exam" onclick="endExam()">Submit Examination</button>
+  </div>
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to submit the exam? Once submitted, you cannot make any changes.</p>
+      <button id="confirmYes" class="btn">Yes</button>
+      <button id="confirmNo" class="btn">No</button>
+    </div>
+  </div>
+  <div id="progress-container"></div>
+          </section>
+      
 
     <section id="summary-section" class="hidden">
 
