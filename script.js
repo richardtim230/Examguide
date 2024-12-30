@@ -752,7 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentQuestionIndex = 0;
   let answers = [];
   let timerInterval = null;
-  let timeRemaining = 2400; // Timer in seconds
+  let timeRemaining = 3000; // Timer in seconds
   let selectedCourse = "";
   let subCourseName = "";
                           
@@ -3088,6 +3088,18 @@ document.addEventListener("DOMContentLoaded", () => {
   correct: 3,
   explanation: "In random motion, the particle’s path, velocity, and acceleration vary unpredictably due to external forces. Therefore, no specific quantity remains constant."
 },
+{
+  text: "Which of the following is an example of an infinite set? <br><img src='images/infinite_set_example.png' alt='Infinite Set Image' class='question-image'>",
+  options: [
+    "{x | x is a natural number between 1 and 10}",
+    "{x | x is an integer}",
+    "{x | x is a letter in the English alphabet}",
+    "{x | x is the number of atoms in one gram of Carbon}"
+  ],
+  correct: 1,
+  explanation: "The set of integers is infinite because it goes on forever in both positive and negative directions."
+}, 
+
 {
   text: "The image at './red-light-round-podium-black-background-mock-up_43614-950.webp' shows the motion of dust particles visible in a beam of sunlight. What causes this motion?",
   options: [
@@ -8656,7 +8668,7 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   let answers = [];
   currentQuestionIndex = 0;
   subCourseName = "";
-  timeRemaining = [];
+  timeRemaining = 3000;
   clearInterval(timerInterval);
   showSection(courseSelectionSection);
 });
@@ -8672,10 +8684,21 @@ function startExam() {
 
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
+  
   // Display question number along with the question text
-  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  let questionContent = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  
+  // Embed image inline if it exists
+  if (question.image) {
+    questionContent += `<br><img src="${question.image}" alt="Question Image" class="question-image">`;
+  }
+  
+  questionText.innerHTML = questionContent;
+
+  // Clear previous options
   optionsContainer.innerHTML = "";
 
+  // Display options as buttons
   question.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.textContent = option;
@@ -8683,6 +8706,8 @@ function updateQuestion() {
     button.className = "option-button";
     optionsContainer.appendChild(button);
   });
+}
+
 
   // Enable/Disable navigation buttons based on the current index
   document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
