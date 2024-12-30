@@ -8593,6 +8593,32 @@ Botany: {
 };
 
 
+          // Example function to add a question with an image
+function addQuestionWithImage(questionText, imageUrl) {
+  // Create a new div element for the question
+  var questionDiv = document.createElement('div');
+  questionDiv.className = 'question';
+
+  // Create a paragraph element for the question text
+  var questionTextElement = document.createElement('p');
+  questionTextElement.innerText = questionText;
+  questionDiv.appendChild(questionTextElement);
+
+  // Create an image element for the question image
+  var questionImageElement = document.createElement('img');
+  questionImageElement.src = imageUrl;
+  questionImageElement.alt = 'Question Image';
+  questionImageElement.className = 'question-image';
+  questionDiv.appendChild(questionImageElement);
+
+  // Append the question div to the container
+  var container = document.getElementById('questions-container');
+  container.appendChild(questionDiv);
+}
+
+// Example usage
+addQuestionWithImage('What is the capital of France?', 'path/to/image.jpg');
+    
 function showSection(section) {
   [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
     if (el) el.classList.add("hidden");
@@ -8794,9 +8820,7 @@ function endExam(autoSubmit = false) {
       // Timer continues running
     };
 
-    return; // Prevent further execution until the user confirms
-  }
-
+    
   // Auto-submit (e.g., when time runs out)
   clearInterval(timerInterval);
   console.log("Time's up! Auto-submitting exam...");
