@@ -1670,6 +1670,318 @@ document.addEventListener("DOMContentLoaded", () => {
   correct: 0,
   explanation: "A countably infinite set can be mapped one-to-one with natural numbers."
 },
+
+
+{
+  text: "What does the symbol 'N' represent in set theory?",
+  options: [
+    "The set of all integers",
+    "The set of all natural numbers",
+    "The set of all rational numbers",
+    "The set of all real numbers"
+  ],
+  correct: 1,
+  explanation: "In set theory, 'N' represents the set of all natural numbers, which typically include positive integers starting from 1 (or sometimes 0, depending on the definition)."
+},
+
+{
+  text: "What does the symbol 'Z' represent in set theory?",
+  options: [
+    "The set of all integers",
+    "The set of all natural numbers",
+    "The set of all rational numbers",
+    "The set of all real numbers"
+  ],
+  correct: 0,
+  explanation: "In set theory, 'Z' (from the German word 'Zahlen') represents the set of all integers, including positive, negative, and zero."
+},
+
+{
+  text: "What does the symbol 'Q' represent in set theory?",
+  options: [
+    "The set of all integers",
+    "The set of all natural numbers",
+    "The set of all rational numbers",
+    "The set of all real numbers"
+  ],
+  correct: 2,
+  explanation: "In set theory, 'Q' represents the set of all rational numbers, which are numbers that can be expressed as the ratio of two integers."
+},
+
+{
+  text: "Which of the following is a correct interpretation of the set A = {x: x ∈ N, x² − 5x + 6 = 0}?",
+  options: [
+    "A is a set of integers that satisfy x² − 5x + 6 = 0",
+    "A is a set of natural numbers that satisfy x² − 5x + 6 = 0",
+    "A is a set of real numbers that satisfy x² − 5x + 6 = 0",
+    "A is a set of rational numbers that satisfy x² − 5x + 6 = 0"
+  ],
+  correct: 1,
+  explanation: "The equation x² − 5x + 6 = 0 is satisfied by the roots x = 2 and x = 3. Since the problem specifies x ∈ N, A contains natural numbers that satisfy the equation."
+},
+
+{
+  text: "What are the elements of the set A = {x: x ∈ N, x² − 5x + 6 = 0}?",
+  options: [
+    "{1, 6}",
+    "{2, 3}",
+    "{-2, -3}",
+    "{-1, -6}"
+  ],
+  correct: 1,
+  explanation: "Factoring x² − 5x + 6 = 0 gives (x − 2)(x − 3) = 0. Thus, x = 2 or x = 3. Since the set is restricted to natural numbers, A = {2, 3}."
+},
+
+{
+  text: "Which of the following is a correct interpretation of the set B = {y: y ∈ Z, y² − 3y + 1 = 0}?",
+  options: [
+    "B is a set of integers that satisfy y² − 3y + 1 = 0",
+    "B is a set of natural numbers that satisfy y² − 3y + 1 = 0",
+    "B is a set of real numbers that satisfy y² − 3y + 1 = 0",
+    "B is a set of rational numbers that satisfy y² − 3y + 1 = 0"
+  ],
+  correct: 0,
+  explanation: "The equation y² − 3y + 1 = 0 has roots y = (3 ± √5)/2, which are not integers. Thus, B is an empty set as no integers satisfy this equation."
+},
+
+{
+  text: "What is the universal set U given as U = {1, 2, 3, ..., 10}?",
+  options: [
+    "The set of integers from 1 to 10",
+    "The set of natural numbers from 1 to 10",
+    "The set of rational numbers from 1 to 10",
+    "The set of real numbers from 1 to 10"
+  ],
+  correct: 1,
+  explanation: "The universal set U is defined as {1, 2, ..., 10}. Since these are positive integers, they correspond to the natural numbers."
+},
+
+{
+  text: "What is the complement of X (X') given U = {1, 2, 3, ..., 10} and X = {2, 4, 6, 8}?",
+  options: [
+    "{1, 3, 5, 7, 9, 10}",
+    "{2, 4, 6, 8, 10}",
+    "{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}",
+    "{1, 3, 5, 7, 9}"
+  ],
+  correct: 0,
+  explanation: "The complement of X is all elements in U that are not in X. Subtracting {2, 4, 6, 8} from U = {1, 2, ..., 10} leaves {1, 3, 5, 7, 9, 10}."
+},
+{
+  text: "What is the complement of Y (Y') given U = {1, 2, 3, ..., 10} and Y = {1, 2, 3, 4}?",
+  options: [
+    "{5, 6, 7, 8, 9, 10}",
+    "{1, 2, 3, 4}",
+    "{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}",
+    "{5, 6, 7, 8, 9}"
+  ],
+  correct: 0,
+  explanation: "The complement of Y consists of all elements in U that are not in Y. Subtracting {1, 2, 3, 4} from U = {1, 2, ..., 10} leaves {5, 6, 7, 8, 9, 10}."
+},
+
+{
+  text: "What is the complement of Z (Z') given U = {1, 2, 3, ..., 10} and Z = {3, 4, 5, 6, 8}?",
+  options: [
+    "{1, 2, 7, 9, 10}",
+    "{3, 4, 5, 6, 8}",
+    "{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}",
+    "{1, 2, 7, 9}"
+  ],
+  correct: 0,
+  explanation: "The complement of Z includes all elements in U that are not in Z. Subtracting {3, 4, 5, 6, 8} from U = {1, 2, ..., 10} leaves {1, 2, 7, 9, 10}."
+},
+
+{
+  text: "What does (X ∪ Y)' represent?",
+  options: [
+    "The complement of X intersected with the complement of Y",
+    "The union of the complement of X and the complement of Y",
+    "The complement of the union of X and Y",
+    "The intersection of X and Y"
+  ],
+  correct: 2,
+  explanation: "De Morgan's Laws state that (X ∪ Y)' = X' ∩ Y'. It represents the complement of the union of X and Y."
+},
+
+{
+  text: "What does X' ∩ Y' represent?",
+  options: [
+    "The union of the complement of X and the complement of Y",
+    "The intersection of X and Y",
+    "The complement of the union of X and Y",
+    "The intersection of the complement of X and the complement of Y"
+  ],
+  correct: 3,
+  explanation: "By De Morgan's Laws, X' ∩ Y' is the intersection of the complements of X and Y. It represents all elements not in X or Y."
+},
+
+{
+  text: "If (X ∪ Y)' = X' ∩ Y', is this identity true?",
+  options: [
+    "Yes, always",
+    "No, never",
+    "Only for specific sets",
+    "Sometimes true"
+  ],
+  correct: 0,
+  explanation: "This identity is always true and is a fundamental property described by De Morgan's Laws."
+},
+
+{
+  text: "What does (Y ∩ Z)' represent?",
+  options: [
+    "The complement of the intersection of Y and Z",
+    "The union of the complement of Y and the complement of Z",
+    "The intersection of Y and Z",
+    "The complement of the union of Y and Z"
+  ],
+  correct: 0,
+  explanation: "De Morgan's Laws state that (Y ∩ Z)' = Y' ∪ Z'. It represents the complement of the intersection of Y and Z."
+},
+
+{
+  text: "What does Y' ∪ Z' represent?",
+  options: [
+    "The complement of the intersection of Y and Z",
+    "The intersection of the complement of Y and the complement of Z",
+    "The intersection of Y and Z",
+    "The union of the complement of Y and the complement of Z"
+  ],
+  correct: 3,
+  explanation: "By De Morgan's Laws, Y' ∪ Z' represents the union of the complements of Y and Z."
+},
+
+{
+  text: "If (Y ∩ Z)' = Y' ∪ Z', is this identity true?",
+  options: [
+    "Yes, always",
+    "No, never",
+    "Only for specific sets",
+    "Sometimes true"
+  ],
+  correct: 0,
+  explanation: "This identity is always true and is a key principle in De Morgan's Laws."
+},
+
+{
+  text: "What does (P ∪ Q) ∪ R represent?",
+  options: [
+    "The union of sets P and Q, intersected with set R",
+    "The union of sets P and Q, then union with set R",
+    "The intersection of sets P and Q, then union with set R",
+    "The union of set P with the intersection of sets Q and R"
+  ],
+  correct: 1,
+  explanation: "The union operator is associative, so (P ∪ Q) ∪ R = P ∪ (Q ∪ R). It represents the union of all three sets."
+},
+
+{
+  text: "What does P ∩ (Q ∪ R) represent?",
+  options: [
+    "The intersection of set P with the union of sets Q and R",
+    "The union of set P with the intersection of sets Q and R",
+    "The intersection of set P with the intersection of sets Q and R",
+    "The union of set P with the union of sets Q and R"
+  ],
+  correct: 0,
+  explanation: "The distributive property of set operations states that P ∩ (Q ∪ R) = (P ∩ Q) ∪ (P ∩ R)."
+},
+{
+  text: "What does (P ∩ Q) ∩ R represent?",
+  options: [
+    "The union of sets P and Q, intersected with set R",
+    "The intersection of sets P and Q, then union with set R",
+    "The intersection of sets P and Q, then intersected with set R",
+    "The union of set P with the intersection of sets Q and R"
+  ],
+  correct: 2,
+  explanation: "The intersection operator is associative, so (P ∩ Q) ∩ R = P ∩ (Q ∩ R). It represents the intersection of all three sets."
+},
+
+{
+  text: "What does P ∪ (Q ∩ R) represent?",
+  options: [
+    "The union of set P with the intersection of sets Q and R",
+    "The intersection of set P with the union of sets Q and R",
+    "The intersection of set P with the intersection of sets Q and R",
+    "The union of set P with the union of sets Q and R"
+  ],
+  correct: 0,
+  explanation: "The distributive property states that P ∪ (Q ∩ R) is the union of P with the intersection of Q and R."
+},
+
+{
+  text: "What does (P ∪ Q) ∩ (P ∪ R) represent?",
+  options: [
+    "The union of set P with the intersection of sets Q and R",
+    "The intersection of set P with the union of sets Q and R",
+    "The union of sets P and Q, then intersection with the union of sets P and R",
+    "The union of sets P and R, then intersection with the union of sets P and Q"
+  ],
+  correct: 2,
+  explanation: "Using the distributive property, (P ∪ Q) ∩ (P ∪ R) represents the intersection of the two unions."
+},
+
+{
+  text: "If P ∪ (Q ∩ R) = (P ∪ Q) ∩ (P ∪ R), which property is this demonstrating?",
+  options: [
+    "Commutative property",
+    "Distributive property",
+    "Associative property",
+    "De Morgan's Law"
+  ],
+  correct: 1,
+  explanation: "This demonstrates the distributive property, where the union distributes over the intersection."
+},
+
+{
+  text: "What is another way to express the property described in question 43?",
+  options: [
+    "The union distributes over the intersection",
+    "The intersection distributes over the union",
+    "The intersection is commutative",
+    "The union is commutative"
+  ],
+  correct: 1,
+  explanation: "The property described in question 43 is the distributive property of intersection over union."
+},
+
+{
+  text: "What is another way to express the property described in question 46?",
+  options: [
+    "The intersection distributes over the union",
+    "The union distributes over the intersection",
+    "The intersection is associative",
+    "The union is associative"
+  ],
+  correct: 1,
+  explanation: "The property in question 46 is the distributive property of union over intersection."
+},
+
+{
+  text: "What is the general idea behind De Morgan's Laws?",
+  options: [
+    "Relating the complement of the union to the intersection of complements",
+    "Relating the intersection to the union of the complements",
+    "Relating the commutativity of operations",
+    "Relating the associativity of operations"
+  ],
+  correct: 0,
+  explanation: "De Morgan's Laws provide a relationship between the complement of the union and the intersection of complements, and vice versa."
+},
+
+{
+  text: "Which of the following represents the complement of the union of two sets?",
+  options: [
+    "The intersection of their complements",
+    "The union of their complements",
+    "The intersection of the sets",
+    "The union of the sets"
+  ],
+  correct: 0,
+  explanation: "De Morgan's Laws state that the complement of the union of two sets is the intersection of their complements."
+},
+
 {
   text: "Which of the following best represents an example of a subset?",
   options: [
