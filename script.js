@@ -1671,6 +1671,590 @@ document.addEventListener("DOMContentLoaded", () => {
   explanation: "A countably infinite set can be mapped one-to-one with natural numbers."
 },
 
+{
+  text: "Which of the following is NOT a correct application of De Morgan's Law?",
+  options: [
+    "(X ∪ Y)' = X' ∩ Y'",
+    "(X ∩ Y)' = X' ∪ Y'",
+    "(X ∪ Y)' = X' ∪ Y'",
+    "(X' ∪ Y')' = X ∩ Y"
+  ],
+  correct: 2,
+  explanation: "De Morgan's Laws state that the complement of a union equals the intersection of complements, and the complement of an intersection equals the union of complements. The expression (X ∪ Y)' = X' ∪ Y' is incorrect."
+},
+
+{
+  text: "If Z = X ∪ Y, which statement is true about the complements, assuming the universe set is the same?",
+  options: [
+    "Z' = X' ∪ Y'",
+    "Z' = X' ∩ Y'",
+    "Z' = (X ∩ Y)'",
+    "Z' = X' - Y'"
+  ],
+  correct: 1,
+  explanation: "By De Morgan's Laws, the complement of the union Z = X ∪ Y is Z' = X' ∩ Y'."
+},
+
+{
+  text: "Given X, Y, and Z, what does X ∩ (Y - Z) represent?",
+  options: [
+    "Elements in X that are also in Y, excluding elements in Z.",
+    "Elements in X that are in Y but not in Z.",
+    "Elements common to X, Y, and not in Z.",
+    "Elements in X, Y, and Z that are unique to X."
+  ],
+  correct: 1,
+  explanation: "The operation Y - Z represents elements in Y but not in Z. The intersection with X limits it to elements in X, resulting in 'elements in X that are in Y but not in Z.'"
+},
+
+{
+  text: "What is the simplified form of (X - Y) - Z?",
+  options: [
+    "X - (Y ∪ Z)",
+    "X - (Y ∩ Z)",
+    "(X - Z) - (Y - Z)",
+    "X - Y - Z"
+  ],
+  correct: 0,
+  explanation: "The subtraction of Z from (X - Y) means removing elements of Z from X and Y. This simplifies to X - (Y ∪ Z)."
+},
+
+{
+  text: "Which expression is equivalent to X - (Y ∪ Z)?",
+  options: [
+    "(X - Y) ∪ (X - Z)",
+    "(X - Y) ∩ (X - Z)",
+    "(X - Y) ∪ Z'",
+    "X - Y - Z"
+  ],
+  correct: 1,
+  explanation: "Distributing the subtraction over the union gives (X - Y) ∩ (X - Z)."
+},
+
+{
+  text: "If (X - Y) ∪ Z' = (X - Z), what does this imply about the relationship between X, Y, and Z?",
+  options: [
+    "X and Z have no common elements",
+    "Z is a subset of Y",
+    "X and Y are disjoint",
+    "Z is a subset of X"
+  ],
+  correct: 3,
+  explanation: "The relationship (X - Y) ∪ Z' = (X - Z) implies that Z must be a subset of X for the union to simplify correctly."
+},
+
+{
+  text: "Given sets X and Y, what does XΔY represent?",
+  options: [
+    "(X - Y) ∩ (Y - X)",
+    "(X ∪ Y) - (X ∩ Y)",
+    "(X ∩ Y)'",
+    "X ∪ Y"
+  ],
+  correct: 1,
+  explanation: "The symmetric difference XΔY represents elements in either X or Y but not in both. It simplifies to (X ∪ Y) - (X ∩ Y)."
+},
+
+{
+  text: "If X and Y are sets, what is the result of XΔX?",
+  options: [
+    "X",
+    "Y",
+    "∅",
+    "X ∪ Y"
+  ],
+  correct: 2,
+  explanation: "The symmetric difference of a set with itself is the empty set, as there are no elements exclusively in one copy of the set."
+},
+
+{
+  text: "If (XΔY)ΔZ = XΔ(YΔZ), what is this set property called?",
+  options: [
+    "Commutative property",
+    "Distributive property",
+    "Associative property",
+    "De Morgan's Law"
+  ],
+  correct: 2,
+  explanation: "This demonstrates the associative property of symmetric difference, which allows grouping changes without affecting the result."
+},
+
+{
+  text: "If XΔY = (X - Y) ∪ (Y - X), what does it mean if XΔY = ∅?",
+  options: [
+    "X = Y",
+    "X and Y are disjoint",
+    "X is a subset of Y",
+    "Y is a subset of X"
+  ],
+  correct: 0,
+  explanation: "If XΔY = ∅, it means there are no elements in either X or Y that are not in both, implying X = Y."
+},
+{
+  text: "If Ø × Y = Ø, what does this imply about the symmetric difference?",
+  options: [
+    "This is always true for any set Y.",
+    "This is true only if Y is empty.",
+    "This is true only if Y contains all elements of the universe set.",
+    "This is only true if X is not empty."
+  ],
+  correct: 0,
+  explanation: "The symmetric difference between the empty set and any set Y is always the empty set because there are no elements exclusively in Ø or Y."
+},
+
+{
+  text: "If (X ∩ Y) × Z = X × (Y ∩ Z) is not true for every set, what does this imply about symmetric difference?",
+  options: [
+    "Symmetric difference is not distributive over intersection.",
+    "Symmetric difference is distributive over union.",
+    "Symmetric difference is associative.",
+    "Symmetric difference is commutative."
+  ],
+  correct: 0,
+  explanation: "This implies that symmetric difference does not distribute over intersection, as the equality fails for certain sets."
+},
+
+{
+  text: "If A ∩ (B ∪ C) = (A - B) ∪ (A ∩ C) using a Venn diagram, what can you conclude?",
+  options: [
+    "Intersection distributes over the union.",
+    "Union distributes over the intersection.",
+    "Complements can distribute over union.",
+    "The sets are all disjoint."
+  ],
+  correct: 0,
+  explanation: "The Venn diagram confirms that intersection distributes over union, breaking the operation into distributive parts."
+},
+
+{
+  text: "If A ∪ (B ∩ C) is equivalent to (A - B) ∪ (A - C), what can you infer?",
+  options: [
+    "Union distributes over intersection.",
+    "Intersection distributes over union.",
+    "The operation is commutative.",
+    "The complement operation can be distributed."
+  ],
+  correct: 1,
+  explanation: "Intersection distributes over union in this case, as the union breaks into independent parts involving the intersection."
+},
+
+{
+  text: "If X ∩ Y = X implies X ⊆ Y, what other set relations might be true?",
+  options: [
+    "Y ⊆ X",
+    "X and Y are disjoint",
+    "X = Y",
+    "None of the above"
+  ],
+  correct: 2,
+  explanation: "If X ∩ Y = X, then all elements of X are in Y, which implies X is a subset of Y. If Y contains no extra elements, X = Y."
+},
+
+{
+  text: "If X ∪ Y = X, which of the following must be true?",
+  options: [
+    "Y is a subset of X.",
+    "X is a subset of Y.",
+    "X and Y are disjoint.",
+    "X = Y."
+  ],
+  correct: 0,
+  explanation: "If the union of X and Y is equal to X, it means all elements of Y are already in X, so Y is a subset of X."
+},
+
+{
+  text: "What is A ∪ (A' ∩ B) simplified to?",
+  options: [
+    "A ∪ B",
+    "A ∩ B",
+    "B",
+    "A"
+  ],
+  correct: 0,
+  explanation: "Using set algebra, A ∪ (A' ∩ B) simplifies to A ∪ B because A' ∩ B adds elements of B not in A to the union."
+},
+
+{
+  text: "What is A' ∪ (A' ∪ B') simplified to?",
+  options: [
+    "A ∩ B",
+    "(A ∩ B)'",
+    "A'",
+    "B'"
+  ],
+  correct: 2,
+  explanation: "The expression A' ∪ (A' ∪ B') simplifies to A' because the union with A' already encompasses all elements not in A."
+},
+
+{
+  text: "What is (A' ∩ B') ∪ (A ∩ B) simplified to?",
+  options: [
+    "A Δ B",
+    "(A ∪ B)'",
+    "(A ∪ B)",
+    "A ∩ B"
+  ],
+  correct: 0,
+  explanation: "The expression represents the symmetric difference A Δ B, as it combines elements exclusive to A or B."
+},
+
+{
+  text: "What is the principle behind n(A) + n(B) = n(A ∪ B) + n(A ∩ B)?",
+  options: [
+    "Inclusion-exclusion principle for two sets",
+    "Distributive law for sets",
+    "Associative law for sets",
+    "De Morgan’s Law"
+  ],
+  correct: 0,
+  explanation: "This is the inclusion-exclusion principle, which accounts for the overlap (intersection) when adding the sizes of two sets."
+},
+{
+  text: "What does n(A ∪ B ∪ C) = n(A) + n(B) + n(C) - n(A ∩ B) - n(B ∩ C) - n(C ∩ A) + n(A ∩ B ∩ C) represent?",
+  options: [
+    "Inclusion-exclusion principle for three sets",
+    "Distributive property for three sets",
+    "Associative property for three sets",
+    "Commutative property for three sets"
+  ],
+  correct: 0,
+  explanation: "This is the inclusion-exclusion principle extended to three sets. It accounts for overlaps among pairs and triples of sets to avoid overcounting."
+},
+
+{
+  text: "If 63% of OAU students like eba and 76% like rice, what is the MINIMUM percentage that likes both?",
+  options: [
+    "39%",
+    "25%",
+    "63%",
+    "0%"
+  ],
+  correct: 3,
+  explanation: "The minimum percentage of students that like both is 0%, which occurs if no students like both eba and rice."
+},
+
+{
+  text: "If 63% of OAU students like eba and 76% like rice, what is the MAXIMUM percentage that likes both?",
+  options: [
+    "63%",
+    "76%",
+    "39%",
+    "100%"
+  ],
+  correct: 0,
+  explanation: "The maximum percentage of students that like both is equal to the smaller of the two percentages, i.e., 63%."
+},
+
+{
+  text: "In a survey of 100 students, 41 take Spanish, 29 French, and 26 Russian. If 15 take both Spanish and French, 8 take French and Russian, 19 take Spanish and Russian, and 5 take all three, how many take EXACTLY two languages?",
+  options: [
+    "37",
+    "27",
+    "15",
+    "42"
+  ],
+  correct: 1,
+  explanation: "Using inclusion-exclusion, the number of students taking exactly two languages is: (15 - 5) + (8 - 5) + (19 - 5) = 10 + 3 + 14 = 27."
+},
+
+{
+  text: "In the same survey, how many students take at least one of the three languages?",
+  options: [
+    "67",
+    "73",
+    "100",
+    "56"
+  ],
+  correct: 1,
+  explanation: "Using inclusion-exclusion: n(A ∪ B ∪ C) = 41 + 29 + 26 - 15 - 8 - 19 + 5 = 73."
+},
+
+{
+  text: "In the same survey, how many students do not take any of the three languages?",
+  options: [
+    "33",
+    "27",
+    "56",
+    "0"
+  ],
+  correct: 0,
+  explanation: "If 73 students take at least one language, the number of students who do not take any is 100 - 73 = 33."
+},
+
+{
+  text: "In the same survey, how many students take only one of the languages?",
+  options: [
+    "47",
+    "15",
+    "30",
+    "27"
+  ],
+  correct: 0,
+  explanation: "Using inclusion-exclusion: Only Spanish = 41 - (15 + 19 - 5), Only French = 29 - (15 + 8 - 5), Only Russian = 26 - (19 + 8 - 5). Adding these gives 47."
+},
+
+{
+  text: "If U is the set of integers x such that 1 ≤ x ≤ 300, what is the correct interpretation of 'not divisible by 2 or 3'?",
+  options: [
+    "Integers not divisible by 2 and not divisible by 3",
+    "Integers not divisible by 2 or not divisible by 3",
+    "Integers divisible by neither 2 nor 3",
+    "Integers that are prime numbers"
+  ],
+  correct: 2,
+  explanation: "The phrase 'not divisible by 2 or 3' means integers divisible by neither 2 nor 3."
+},
+
+{
+  text: "If U is the set of integers x such that 1 ≤ x ≤ 300, how many integers are NOT divisible by 2?",
+  options: [
+    "150",
+    "100",
+    "200",
+    "300"
+  ],
+  correct: 0,
+  explanation: "Half of the integers from 1 to 300 are not divisible by 2. Thus, the answer is 300 / 2 = 150."
+},
+
+{
+  text: "If U is the set of integers x such that 1 ≤ x ≤ 300, how many integers are not divisible by both 2 or 5?",
+  options: [
+    "120",
+    "60",
+    "180",
+    "240"
+  ],
+  correct: 3,
+  explanation: "Using the principle of inclusion-exclusion, the number of integers not divisible by 2 or 5 is calculated as follows: 300 - [divisible by 2 + divisible by 5 - divisible by both]."
+},
+{
+  text: "If U is the set of integers x such that 1 ≤ x ≤ 300, how many integers are NOT divisible by 2 or 3?",
+  options: [
+    "100",
+    "50",
+    "150",
+    "200"
+  ],
+  correct: 2,
+  explanation: "Using inclusion-exclusion: Total integers = 300. Divisible by 2 = 150, divisible by 3 = 100, divisible by both 2 and 3 = 50. Not divisible by 2 or 3 = 300 - (150 + 100 - 50) = 150.  (a) 100 is wrong because it underestimates the count of integers excluded.   - (b) 50 is incorrect because it counts only the overlap, not the total.  - (d) 200 is incorrect because it overestimates the exclusion, ignoring the overlap."
+},
+
+{
+  text: "If U is the set of integers x such that 1 ≤ x ≤ 300, how many integers are NOT divisible by 2, 3, or 5?",
+  options: [
+    "80",
+    "60",
+    "120",
+    "100"
+  ],
+  correct: 0,
+  explanation: "Using inclusion-exclusion: Total integers = 300. Divisible by 2 = 150, by 3 = 100, by 5 = 60. Overlap terms: Divisible by 2 and 3 = 50, by 2 and 5 = 30, by 3 and 5 = 20, by all three = 10. Subtracting these overlaps: 300 - (150 + 100 + 60 - 50 - 30 - 20 + 10) = 80.  - (b) 60 is wrong because it fails to include the final overlap correction.    - (c) 120 is incorrect as it misses removing duplicates.    - (d) 100 overestimates the remaining integers by failing to subtract all overlaps."
+},
+
+{
+  text: "Given A ⊕ B = (A ∩ B') ∪ (B ∩ A'), what set does A ⊕ A' represent?",
+  options: [
+    "U (Universal set)",
+    "∅ (Empty set)",
+    "A",
+    "A'"
+  ],
+  correct: 0,
+  explanation: "A ⊕ A' means the symmetric difference of a set and its complement, which includes all elements in the universal set, U.      - (b) ∅ is incorrect because symmetric difference includes all elements of U.    - (c) A is wrong because it doesn't account for A'.    - (d) A' is incorrect because it doesn't include elements in A."
+},
+
+{
+  text: "Given A ⊕ B = (A ∩ B') ∪ (B ∩ A'), what set does A ⊕ ∅ represent?",
+  options: [
+    "A",
+    "∅",
+    "A'",
+    "U"
+  ],
+  correct: 0,
+  explanation: "A ⊕ ∅ means the symmetric difference of A and the empty set, which is just A, as no elements are added or removed.    - (b) ∅ is wrong because A is not empty.   - (c) A' is incorrect because it represents the complement of A, not A itself.  - (d) U is wrong because it includes all elements, not just A."
+},
+
+{
+  text: "If A * B is defined as A ∩ B', what is A * U?",
+  options: [
+    "A",
+    "∅",
+    "U",
+    "A'"
+  ],
+  correct: 1,
+  explanation: "A * U = A ∩ U', where U' is the empty set (elements outside U). Thus, A ∩ ∅ = ∅.    - (a) A is incorrect because A * U removes all elements of A.   - (c) U is wrong because the operation specifically intersects with the complement of U.  - (d) A' is incorrect because it involves elements not in A, not related to U."
+},
+
+{
+  text: "If A * B is defined as A ∩ B', what is A * A?",
+  options: [
+    "A",
+    "∅",
+    "U",
+    "A'"
+  ],
+  correct: 1,
+  explanation: "A * A = A ∩ A', and A ∩ A' is the empty set because no element can belong to both A and its complement simultaneously.    - (a) A is wrong because it doesn't exclude A's complement.  - (c) U is incorrect because the operation is defined for A and its complement only.  - (d) A' is incorrect because it doesn't account for the intersection."
+},
+
+{
+  text: "If A * (B ∪ C) = (A * B) ∩ (A * C), what does this relationship imply about the * operation?",
+  options: [
+    "* distributes over the union.",
+    "Union distributes over *.",
+    "* distributes over the intersection.",
+    "Intersection distributes over *."
+  ],
+  correct: 0,
+  explanation: "This shows that the operation * is distributive over the union, as it breaks into smaller intersections.  - (b) is wrong because union does not distribute over *.  - (c) and (d) are incorrect because * operates on complements, not intersections directly."
+},
+
+{
+  text: "If A * (B * C) is not the same as (A * B) * C, what does this mean for the * operator?",
+  options: [
+    "It is commutative.",
+    "It is distributive.",
+    "It is associative.",
+    "It is not associative."
+  ],
+  correct: 3,
+  explanation: "If A * (B * C) ≠ (A * B) * C, the operation is not associative because the grouping of sets affects the outcome.  - (a) is wrong because commutativity refers to order, not grouping.  - (b) is incorrect as it refers to distribution, not associativity.  - (c) is wrong because the operation explicitly fails associativity."
+},
+
+{
+  text: "What does A ∩ (B * C) simplify to, given A * B = A ∩ B'?",
+  options: [
+    "(A ∩ B) * (A ∩ C)",
+    "(A * B) ∩ (A * C)",
+    "(A ∩ B) ∩ (A ∩ C)",
+    "(A ∩ B) ∪ (A ∩ C)"
+  ],
+  correct: 1,
+  explanation: "Using substitution: A ∩ (B * C) becomes A ∩ (B ∩ C') = (A ∩ B) ∩ (A ∩ C'). This simplifies to (A * B) ∩ (A * C).  - (a) is wrong because * applies to complements, not direct intersections.  - (c) and (d) are incorrect because they fail to consider complements."
+},
+{
+  text: "What is A * A' simplified to, given A * B = A ∩ B'?",
+  options: [
+    "A",
+    "∅",
+    "U",
+    "A'"
+  ],
+  correct: 1,
+  explanation: "A * A' = A ∩ A'. Since no element can be in both A and its complement A', the result is the empty set (∅).   - (a) A is incorrect because no elements are shared between A and A'.   - (c) U is incorrect as it includes all elements of the universal set.   - (d) A' is wrong because it refers to the complement of A, not the intersection with A."
+},
+
+{
+  text: "If there are 20 in the math class and 30 in physics, and both meet at the same time, what is the number of students if all students are enrolled in at least one?",
+  options: [
+    "50",
+    "10",
+    "20",
+    "30"
+  ],
+  correct: 0,
+  explanation: "Since all students are enrolled in at least one class and both meet at the same time, there are no overlaps, so the total is 20 + 30 = 50.    - (b) 10 is incorrect because it underestimates the total.   - (c) and (d) are wrong because they fail to sum both class enrollments."
+},
+
+{
+  text: "If there are 20 in the math class and 30 in physics, and they meet at different times, and 10 are in both classes, how many are in the two classes?",
+  options: [
+    "40",
+    "10",
+    "50",
+    "60"
+  ],
+  correct: 2,
+  explanation: "Using inclusion-exclusion: Total = 20 + 30 - 10 = 40. The overlap is subtracted to avoid double-counting.   - (b) 10 is wrong because it only considers the overlap.    - (d) 60 overestimates by ignoring the overlap."
+},
+
+{
+  text: "In a government office of 400, there are 150 men, 276 graduates, and 212 married persons. What do these numbers represent?",
+  options: [
+    "Cardinality of the sets",
+    "Complements of the sets",
+    "Intersection of the sets",
+    "Unions of the sets"
+  ],
+  correct: 0,
+  explanation: "The numbers represent the cardinality (size) of the respective sets: men, graduates, and married persons.   - (b) Complements refer to elements not in the set - (c) and (d) are incorrect because they refer to relationships between sets."
+},
+
+{
+  text: "In the given government office, how many male employees are not graduates?",
+  options: [
+    "56",
+    "150",
+    "94",
+    "212"
+  ],
+  correct: 0,
+  explanation: "Number of male employees not graduates = Total men - Male graduates = 150 - 94 = 56. - (b) 150 is the total number of men.  - (c) 94 is the number of male graduates.  - (d) 212 is the total number of married persons."
+},
+
+{
+  text: "In the same office, how many married men are not graduates?",
+  options: [
+    "47",
+    "119",
+    "72",
+    "45"
+  ],
+  correct: 0,
+  explanation: "Married men not graduates = Married men - Married male graduates = 119 - 72 = 47.   - (b) 119 is the total number of married men.   - (c) 72 is the number of married male graduates.   - (d) 45 is an incorrect calculation."
+},
+
+{
+  text: "In the same office, how many married women are not graduates?",
+  options: [
+    "61",
+    "121",
+    "70",
+    "151"
+  ],
+  correct: 0,
+  explanation: "Married women not graduates = Total married - Married graduates = 212 - 151 = 61.    - (b) 121 is the total number of female graduates.  - (c) and (d) are incorrect calculations."
+},
+
+{
+  text: "In the same office, how many men are not married?",
+  options: [
+    "31",
+    "150",
+    "119",
+    "50"
+  ],
+  correct: 0,
+  explanation: "Men not married = Total men - Married men = 150 - 119 = 31.   - (b) 150 is the total number of men.   - (c) 119 is the number of married men.   - (d) 50 is incorrect as it doesn’t reflect the subtraction."
+},
+
+{
+  text: "In the same office, how many women are married?",
+  options: [
+    "151",
+    "212",
+    "61",
+    "72"
+  ],
+  correct: 2,
+  explanation: "Married women = Total married - Married men = 212 - 151 = 61.   - (a) 151 is the number of married men.  - (b) 212 is the total number of married persons.    - (d) 72 is the number of married male graduates."
+},
+
+{
+  text: "What is the correct way to represent the number of elements in set A ∪ B ∪ C?",
+  options: [
+    "n(A) + n(B) + n(C)",
+    "n(A) + n(B) + n(C) - n(A ∩ B) - n(B ∩ C) - n(C ∩ A)",
+    "n(A) + n(B) + n(C) - n(A ∩ B) - n(B ∩ C) - n(C ∩ A) + n(A ∩ B ∩ C)",
+    "n(A) + n(B) + n(C) + n(A ∩ B) + n(B ∩ C) + n(C ∩ A)"
+  ],
+  correct: 2,
+  explanation: "Using the inclusion-exclusion principle, the correct formula accounts for overlaps of pairs and triples: n(A) + n(B) + n(C) - n(A ∩ B) - n(B ∩ C) - n(C ∩ A) + n(A ∩ B ∩ C).    - (a) is wrong because it ignores overlaps.    - (b) accounts for pairs but misses the triple overlap.    - (d) adds overlaps instead of subtracting."
+},
+
 
 {
   text: "What does the symbol 'N' represent in set theory?",
@@ -1934,29 +2518,6 @@ document.addEventListener("DOMContentLoaded", () => {
   explanation: "This demonstrates the distributive property, where the union distributes over the intersection."
 },
 
-{
-  text: "What is another way to express the property described in question 43?",
-  options: [
-    "The union distributes over the intersection",
-    "The intersection distributes over the union",
-    "The intersection is commutative",
-    "The union is commutative"
-  ],
-  correct: 1,
-  explanation: "The property described in question 43 is the distributive property of intersection over union."
-},
-
-{
-  text: "What is another way to express the property described in question 46?",
-  options: [
-    "The intersection distributes over the union",
-    "The union distributes over the intersection",
-    "The intersection is associative",
-    "The union is associative"
-  ],
-  correct: 1,
-  explanation: "The property in question 46 is the distributive property of union over intersection."
-},
 
 {
   text: "What is the general idea behind De Morgan's Laws?",
