@@ -703,7 +703,7 @@ backToLoginPaymentBtn.addEventListener("click", () => {
     // Hide overlay and show the main application
     overlay.style.display = "none"; // Completely hide the overlay
     app.style.display = "block"; // Display the main app content
-    app.body.style.overflow = 'auto';
+    app.style.body.overflow = 'auto';
   });
   
     // Expiry Logic
