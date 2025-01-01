@@ -419,7 +419,7 @@ function generateAndDownloadReceipt(userData) {
 
   const { fullName, userID, department, level } = userData;
   const subscription = "Students Support System";
-  const amountPaid = "₦1500";
+  const amountPaid = "₦2000";
   const validUntil = "12/31/2025";
   const director = "Richard O. Timothy";
 
@@ -643,7 +643,7 @@ generateInvoiceBtn.addEventListener("click", () => {
   ctx.fillText(`Department: ${userData.department}`, 20, 240);
   ctx.fillText(`Level: ${userData.level}`, 20, 280);
   ctx.fillText(`User ID: ${userData.userID}`, 20, 320);
-  ctx.fillText(`Amount: N1500.00`, 20, 360);
+  ctx.fillText(`Amount: N2000.00`, 20, 360);
 
   // Bank Details
   ctx.fillStyle = '#4CAF50';
