@@ -7,7 +7,7 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   position: relative;
-  overflow: hidden; /* Prevent scrolling */
+  
   color: black;
 }
 
@@ -1334,7 +1334,7 @@ text-align: center;
 
   justify-content: center;
 
-  z-index: 9999;
+  z-index: 999;
 
 }
 
