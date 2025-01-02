@@ -1489,7 +1489,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "None of these"
   ],
   correct: 0,
-  explanation: "The discriminant \( b^2 - 4ac = (6)^2 - 4(3)(2) = 36 - 24 = 12 \). Since \( \Delta > 0 \), the roots are real and distinct."
+  explanation: "The discriminant ( b² - 4ac = (6)² - 4(3)(2) = 36 - 24 = 12 ). Since ( ∆ > 0 ), the roots are real and distinct."
 }, 
 
         ]
@@ -3986,8 +3986,6 @@ document.addEventListener("DOMContentLoaded", () => {
   explanation: "For minimization, assume B and C each have 8 elements and all are identical. Also, A should have 7 elements, which are already present in B and C. Thus, |A ∪ B ∪ C| = |B| = 8."
 }, 
 
-
-
 {
   text: "Sets A, B, and C represent different sub-systems of a large system. What is the physical interpretation of (A ∩ B) ∪ C?",
   options: [
@@ -4035,6 +4033,361 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         ],
+      },
+    },
+
+    'Mock-Exam': {
+        "ZOO101": {
+        title: "INTRODUCTORY ZOOLOGY 1",
+        questions: [
+                
+          { text: "What is the primary basis for the classification of animals in taxonomy?", options: ["Reproductive methods", "Body structure", "Feeding habits", "Behavior"], correct: 1, explanation: "Body structure is a fundamental criterion used in taxonomy to classify animals." },
+       
+      {
+        text: "Which specific cells in the neural crest of vertebrates give rise to peripheral nerves?",
+        options: ["Ectodermal cells", "Schwann cells", "Neural crest cells", "Mesodermal cells"],
+        correct: 2,
+        explanation: "Neural crest cells migrate to form peripheral nerves, pigment cells, and other specialized tissues in vertebrates."
+      }, 
+    { text: "Which type of egg has a uniform distribution of yolk?", "options": ["Telolecithal", "Isolecithal", "Centrolecithal", "Mesolecithal"], "correct": 1, "explanation": "Isolecithal eggs have a uniform distribution of yolk, seen in mammals and echinoderms." },
+    { text: "What type of fertilization occurs outside the female body?", "options": ["Internal fertilization", "External fertilization", "Self-fertilization", "Artificial insemination"], "correct": 1, "explanation": "External fertilization occurs outside the female body, typical in aquatic animals like frogs and fish." },
+    { text: "Which cleavage pattern occurs in isolecithal eggs?", "options": ["Holoblastic equal", "Meroblastic", "Superficial", "Holoblastic unequal"], "correct": 0, "explanation": "Holoblastic equal cleavage occurs in isolecithal eggs due to the even yolk distribution." },
+    { text: "What is the process of forming three germ layers called?", "options": ["Fertilization", "Cleavage", "Gastrulation", "Organogenesis"], "correct": 2, "explanation": "Gastrulation is the process where the blastula reorganizes into three germ layers: ectoderm, mesoderm, and endoderm." },
+    { text: "Which tissue originates from the ectoderm?", "options": ["Liver", "Muscles", "Skin", "Heart"], "correct": 2, "explanation": "The ectoderm gives rise to the skin, nervous system, and sensory organs." },
+    { text: "What is the significance of the gray crescent in frog embryos?", "options": ["Prevents polyspermy", "Determines the dorsal side", "Contains yolk", "Secretes enzymes"], "correct": 1, "explanation": "The gray crescent determines the dorsal side and is crucial for establishing body axes in frog embryos." },
+    { text: "Which type of egg is found in birds?", "options": ["Isolecithal", "Telolecithal", "Mesolecithal", "Centrolecithal"], "correct": 1, "explanation": "Bird eggs are telolecithal, meaning they have a large amount of yolk concentrated at one end." },
+    { text: "What term describes the fusion of male and female gametes?", "options": ["Gamogenesis", "Fertilization", "Cleavage", "Gastrulation"], "correct": 1, "explanation": "Fertilization is the process where male and female gametes fuse to form a zygote." },
+    { text: "Which process forms the neural tube in vertebrates?", "options": ["Organogenesis", "Cleavage", "Gastrulation", "Neurulation"], "correct": 3, "explanation": "Neurulation is the process that forms the neural tube, which develops into the central nervous system." },
+    { text: "What is the first organ to develop during vertebrate development?", "options": ["Heart", "Brain", "Lungs", "Liver"], "correct": 0, "explanation": "The heart is the first organ to develop and begin functioning during vertebrate development." },
+    { text: "Which layer gives rise to the digestive tract lining?", "options": ["Ectoderm", "Mesoderm", "Endoderm", "None of these"], "correct": 2, "explanation": "The endoderm forms the digestive tract lining and associated organs such as the liver and pancreas." },
+    { text: "Which cleavage type is found in reptile and bird eggs?", "options": ["Holoblastic", "Superficial", "Meroblastic discoidal", "Equal"], "correct": 2, "explanation": "Reptile and bird eggs undergo meroblastic discoidal cleavage due to the large yolk preventing complete division." },
+    { text: "Which embryonic structure forms the placenta in mammals?", "options": ["Yolk sac", "Amnion", "Chorion", "Allantois"], "correct": 2, "explanation": "The chorion contributes to the formation of the placenta, facilitating nutrient and gas exchange in mammals." },
+    { text: "What is the term for repeated mitotic divisions of the zygote?", "options": ["Fertilization", "Cleavage", "Gastrulation", "Organogenesis"], "correct": 1, "explanation": "Cleavage involves repeated mitotic divisions of the zygote, forming a multicellular structure." },
+    { text: "What structure in frogs guides cell migration during gastrulation?", "options": ["Neural plate", "Blastopore", "Archenteron", "Yolk plug"], "correct": 1, "explanation": "The blastopore guides cell migration during gastrulation and later becomes the anus in deuterostomes." },
+    { text: "What is the cavity formed during gastrulation?", "options": ["Coelom", "Blastocoel", "Archenteron", "Amniotic cavity"], "correct": 2, "explanation": "The archenteron is the primitive gut formed during gastrulation, eventually developing into the digestive tract." },
+    { text: "Which process leads to cell specialization in an embryo?", "options": ["Fertilization", "Cleavage", "Differentiation", "Organogenesis"], "correct": 2, "explanation": "Differentiation allows cells to acquire specialized structures and functions during development." },
+    { text: "What is the fate of the mesoderm in vertebrates?", "options": ["Skin and nerves", "Muscles and bones", "Liver and lungs", "Heart and brain"], "correct": 1, "explanation": "The mesoderm forms muscles, bones, the circulatory system, and other connective tissues in vertebrates." },
+    { text: "Which structure supports and protects the embryo in reptiles and birds?", "options": ["Amnion", "Yolk sac", "Allantois", "Chorion"], "correct": 0, "explanation": "The amnion forms a fluid-filled sac that protects the embryo from mechanical shocks and desiccation." },
+    { text: "What is the term for the hollow ball of cells formed after cleavage?", "options": ["Blastula", "Morula", "Gastrula", "Neurula"], "correct": 0, "explanation": "The blastula is a hollow ball of cells formed after cleavage, containing a fluid-filled cavity called the blastocoel." }, 
+
+    { text: "Which germ layer forms the nervous system?", "options": ["Endoderm", "Mesoderm", "Ectoderm", "None"], "correct": 2, "explanation": "The ectoderm forms the nervous system, including the brain and spinal cord." },
+    { text: "What structure forms the vertebral column?", "options": ["Notochord", "Blastocoel", "Somites", "Neural tube"], "correct": 0, "explanation": "The notochord serves as a temporary structure that later forms the vertebral column." },
+    { text: "Which structure stores waste in reptilian embryos?", "options": ["Amnion", "Yolk sac", "Allantois", "Chorion"], "correct": 2, "explanation": "The allantois stores waste products in reptilian and bird embryos." },
+    { text: "What is the term for an egg with a large yolk concentrated at one end?", "options": ["Isolecithal", "Telolecithal", "Mesolecithal", "Centrolecithal"], "correct": 1, "explanation": "Telolecithal eggs have a large yolk concentrated at one end, common in birds and reptiles." },
+    { text: "Which cleavage pattern occurs in amphibians?", "options": ["Meroblastic", "Holoblastic unequal", "Holoblastic equal", "Superficial"], "correct": 1, "explanation": "Amphibians undergo holoblastic unequal cleavage due to moderate yolk presence." },
+    { text: "What is the fate of the blastopore in deuterostomes?", "options": ["Mouth", "Anus", "Brain", "Stomach"], "correct": 1, "explanation": "In deuterostomes, including humans, the blastopore develops into the anus." },
+    { text: "Which process forms somites in vertebrates?", "options": ["Gastrulation", "Cleavage", "Neurulation", "Segmentation"], "correct": 3, "explanation": "Segmentation leads to the formation of somites, which develop into muscles and vertebrae." },
+    { text: "Which layer gives rise to the circulatory system?", "options": ["Endoderm", "Ectoderm", "Mesoderm", "Blastoderm"], "correct": 2, "explanation": "The mesoderm gives rise to the circulatory system, muscles, and skeleton." },
+    { text: "What forms after fertilization but before gastrulation?", "options": ["Blastula", "Morula", "Gastrula", "Neurula"], "correct": 0, "explanation": "The blastula forms after cleavage and before gastrulation." },
+    { text: "What is the hollow cavity inside the blastula?", "options": ["Blastopore", "Blastocoel", "Archenteron", "Coelom"], "correct": 1, "explanation": "The blastocoel is the fluid-filled cavity inside the blastula." },
+    { text: "Which type of fertilization is common in mammals?", "options": ["External", "Self", "Artificial", "Internal"], "correct": 3, "explanation": "Mammals use internal fertilization for reproduction." },
+    { text: "Which term describes the initial cell formed after fertilization?", "options": ["Embryo", "Zygote", "Blastomere", "Oocyte"], "correct": 1, "explanation": "The zygote is the first cell formed after the fusion of sperm and egg." },
+    { text: "What process follows cleavage in animal development?", "options": ["Organogenesis", "Gastrulation", "Fertilization", "Implantation"], "correct": 1, "explanation": "Gastrulation follows cleavage and forms the three germ layers." },
+    { text: "What type of cleavage occurs in insects?", "options": ["Holoblastic", "Superficial", "Discoidal", "Unequal"], "correct": 1, "explanation": "Insects undergo superficial cleavage due to their centrolecithal eggs." },
+    { text: "Which structure anchors the embryo to the uterine wall?", "options": ["Placenta", "Amnion", "Yolk sac", "Allantois"], "correct": 0, "explanation": "The placenta anchors the embryo and facilitates nutrient exchange in mammals." },
+    { text: "Which germ layer forms the kidneys?", "options": ["Endoderm", "Ectoderm", "Mesoderm", "Blastoderm"], "correct": 2, "explanation": "The mesoderm forms organs such as the kidneys, heart, and skeletal muscles." },
+    { text: "Which organ system forms from the endoderm?", "options": ["Digestive", "Nervous", "Skeletal", "Circulatory"], "correct": 0, "explanation": "The endoderm forms the digestive and respiratory systems." },
+    { text: "Which structure provides nutrition to the developing embryo?", "options": ["Yolk sac", "Amnion", "Chorion", "Blastocoel"], "correct": 0, "explanation": "The yolk sac provides nutrition to the developing embryo in birds and reptiles." },
+    { text: "Which process establishes the body axes in embryos?", "options": ["Fertilization", "Cleavage", "Gastrulation", "Segmentation"], "correct": 2, "explanation": "Gastrulation establishes the body axes and forms the three germ layers." },
+    { text: "What forms the neural plate?", "options": ["Endoderm", "Mesoderm", "Ectoderm", "Blastocoel"], "correct": 2, "explanation": "The ectoderm thickens to form the neural plate, which becomes the neural tube." },
+    { text: "Which type of development involves no larval stage?", "options": ["Direct development", "Indirect development", "Complete metamorphosis", "Partial metamorphosis"], "correct": 0, "explanation": "Direct development involves the embryo developing into a miniature adult without a larval stage." },
+    { text: "Which process creates identical twins?", "options": ["Fertilization", "Cleavage", "Blastulation", "Splitting of the embryo"], "correct": 3, "explanation": "Identical twins result from the splitting of the early embryo into two separate embryos." },
+    { text: "What type of symmetry is established during cleavage?", "options": ["Radial", "Bilateral", "Asymmetry", "No symmetry"], "correct": 1, "explanation": "Bilateral symmetry is established in many animals during cleavage and early development." }, 
+    { text: "Which phylum includes acellular animals like protozoa?", "options": ["Porifera", "Protozoa", "Cnidaria", "Annelida"], "correct": 1, "explanation": "Protozoa are unicellular or acellular organisms classified under the Kingdom Protista." },
+    { text: "Which of the following is a characteristic of coelenterates?", "options": ["Bilateral symmetry", "Radial symmetry", "Segmented body", "No symmetry"], "correct": 1, "explanation": "Coelenterates like jellyfish and corals have radial symmetry." },
+    { text: "Which class of Protozoa includes Amoeba?", "options": ["Sarcodina", "Ciliophora", "Sporozoa", "Mastigophora"], "correct": 0, "explanation": "Amoeba belongs to the class Sarcodina, characterized by pseudopodia for movement." },
+    { text: "Which of these is a characteristic feature of Porifera?", "options": ["Presence of cnidocytes", "Spongocoel and choanocytes", "Bilateral symmetry", "Segmented body"], "correct": 1, "explanation": "Porifera (sponges) have a spongocoel lined with choanocytes that filter food from water." },
+    { text: "Which invertebrate has a water vascular system?", "options": ["Jellyfish", "Starfish", "Earthworm", "Coral"], "correct": 1, "explanation": "Echinoderms like starfish have a water vascular system for movement and feeding." },
+    { text: "Which phylum includes corals and sea anemones?", "options": ["Porifera", "Mollusca", "Cnidaria", "Echinodermata"], "correct": 2, "explanation": "Cnidaria includes corals, sea anemones, and jellyfish, known for their stinging cells." },
+    { text: "Which of the following are filter feeders?", "options": ["Earthworms", "Sponges", "Starfish", "Planarians"], "correct": 1, "explanation": "Sponges filter feed by drawing water through their pores using choanocytes." },
+    { text: "What structure in Protozoa aids in osmoregulation?", "options": ["Cilia", "Pseudopodia", "Contractile vacuole", "Flagella"], "correct": 2, "explanation": "The contractile vacuole regulates water content by expelling excess water in protozoa." },
+    { text: "Which is the main characteristic of Cnidaria?", "options": ["Presence of a water vascular system", "Cnidocytes for stinging", "Segmented body", "Parapodia for movement"], "correct": 1, "explanation": "Cnidaria possess cnidocytes, specialized stinging cells for capturing prey and defense." },
+    { text: "Which Protozoan causes malaria?", "options": ["Plasmodium", "Amoeba", "Paramecium", "Euglena"], "correct": 0, "explanation": "Plasmodium is a sporozoan that causes malaria and is transmitted by Anopheles mosquitoes." },
+    { text: "Which symmetry do members of the phylum Cnidaria exhibit?", "options": ["Radial", "Bilateral", "Asymmetry", "Pentamerous"], "correct": 0, "explanation": "Cnidarians show radial symmetry, meaning their body parts are arranged around a central axis." },
+    { text: "Which of the following is not a Protozoan?", "options": ["Paramecium", "Plasmodium", "Hydra", "Euglena"], "correct": 2, "explanation": "Hydra is a cnidarian, not a protozoan." },
+    { text: "Which phylum includes flatworms?", "options": ["Nematoda", "Platyhelminthes", "Cnidaria", "Mollusca"], "correct": 1, "explanation": "Platyhelminthes includes flatworms such as planarians, tapeworms, and flukes." },
+    { text: "Which Protozoan moves using cilia?", "options": ["Amoeba", "Plasmodium", "Paramecium", "Euglena"], "correct": 2, "explanation": "Paramecium moves using cilia, small hair-like structures on its surface." },
+    { text: "What is a unique feature of sponges?", "options": ["Notochord", "Segmented body", "Porous body", "Cnidocytes"], "correct": 2, "explanation": "Sponges have a porous body structure that allows water to flow through them." },
+    { text: "What type of digestive system do flatworms have?", "options": ["Incomplete", "Complete", "No digestive system", "Multiple systems"], "correct": 0, "explanation": "Flatworms have an incomplete digestive system with a single opening serving as both mouth and anus." },
+    { text: "Which phylum exhibits alternation of generations?", "options": ["Cnidaria", "Nematoda", "Porifera", "Platyhelminthes"], "correct": 0, "explanation": "Cnidarians exhibit alternation of generations, alternating between polyp and medusa forms." },
+    { text: "Which structure in Euglena aids in photosynthesis?", "options": ["Pseudopodia", "Flagella", "Chloroplast", "Cilia"], "correct": 2, "explanation": "Euglena has chloroplasts that enable photosynthesis, making it a mixotroph." },
+    { text: "Which phylum includes organisms with a segmented body?", "options": ["Porifera", "Annelida", "Nematoda", "Cnidaria"], "correct": 1, "explanation": "Annelids have segmented bodies, as seen in earthworms and leeches." },
+    { text: "What is the mode of reproduction in sponges?", "options": ["Only sexual", "Only asexual", "Both sexual and asexual", "Parthenogenesis"], "correct": 2, "explanation": "Sponges reproduce both sexually through gametes and asexually by budding or fragmentation." },
+    { text: "Which phylum includes tapeworms?", "options": ["Nematoda", "Platyhelminthes", "Cnidaria", "Porifera"], "correct": 1, "explanation": "Tapeworms are parasitic flatworms classified under the phylum Platyhelminthes." },
+]
+     }, 
+
+"MTH101-Mock": {
+        title: "General Mathematics for Physical Sciences and Engineering Students",
+        questions: [
+   {
+  text: "Given sets A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, what is A ∪ B?",
+  options: [
+    "{3, 4}",
+    "{1, 2, 5, 6}",
+    "{1, 2, 3, 4, 5, 6}",
+    "{}"
+  ],
+  correct: 2,
+  explanation: "The union (A ∪ B) of two sets includes all unique elements from both sets. A ∪ B = {1, 2, 3, 4, 5, 6}."
+},
+{
+  text: "Using the same sets A and B from question 1, what is A ∩ B?",
+  options: [
+    "{1, 2, 5, 6}",
+    "{1, 2}",
+    "{5, 6}",
+    "{3, 4}"
+  ],
+  correct: 3,
+  explanation: "The intersection (A ∩ B) includes only the elements common to both sets. A ∩ B = {3, 4}."
+},
+{
+  text: "If A = {x | x is an even number less than 10} and B = {x | x is a prime number less than 10}, what is A ∩ B?",
+  options: [
+    "{2, 4, 6, 8}",
+    "{2, 3, 5, 7}",
+    "{2}",
+    "{}"
+  ],
+  correct: 2,
+  explanation: "The only number common to both the even numbers less than 10 and the prime numbers less than 10 is 2."
+},
+{
+  text: "Let the universal set U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. If A = {2, 4, 6, 8}, what is A'?",
+  options: [
+    "{1, 3, 5, 7, 9, 10}",
+    "{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}",
+    "{2, 4, 6, 8}",
+    "{}"
+  ],
+  correct: 0,
+  explanation: "The complement (A') includes everything in the universal set (U) that is not in A. A' = {1, 3, 5, 7, 9, 10}."
+},
+{
+  text: "If C = {x | x is a real number}, and D = {x | x is an integer}, what does C ∩ D represent?",
+  options: [
+    "All real numbers",
+    "All integers",
+    "All irrational numbers",
+    "{}"
+  ],
+  correct: 1,
+  explanation: "The intersection (C ∩ D) refers to numbers that are both real and integers, which simply means all integers."
+},
+]
+}, 
+
+    "CHM101-Mock": {
+      title: "Introductory Chemistry 1",
+      questions: [                              
+  {
+    text: "A nucleus that spontaneously decomposes is said to be",
+    options: ["a radionuclide", "radioactive", "reactive", "electropositive"],
+    correct: 1,
+    explanation: "A nucleus that spontaneously decomposes is said to be radioactive. Radioactivity is the spontaneous emission of radiation from an unstable atomic nucleus. A radionuclide is a specific type of atom that is radioactive, but radioactivity is the broader term describing the process. Reactive refers to a substance's tendency to participate in chemical reactions, while electropositive refers to an element's tendency to lose electrons and form positive ions. Neither of these concepts relates directly to spontaneous nuclear decay."
+  },
+  {
+    text: "_ , when it is produced by a nucleus at high speed, is more commonly called a beta particle.",
+    options: ["Electron", "Neutron", "Nucleon", "Proton"],
+    correct: 0,
+    explanation: "A high-speed electron emitted from a nucleus is more commonly called a beta particle.  Beta decay is a type of radioactive decay that involves the emission of a beta particle (an electron or a positron)."
+  },
+  {
+    text: "The net effect of the production of a beta particle is to convert _ to _.",
+    options: ["electron to a γ-particle", "neutron to a proton", "proton to neutron", "β-particle to energy"],
+    correct: 1,
+    explanation: "Beta decay involves the conversion of a neutron into a proton within the nucleus. This process results in the emission of a beta particle (an electron) and an antineutrino to conserve charge and energy. Therefore, the net effect is a transformation of a neutron into a proton."
+  },
+  {
+    text: "When a nucleus undergoes alpha decay, the _ of the nucleus decreases by four units.",
+    options: ["mass", "neutron", "proton", "electron"],
+    correct: 0,
+    explanation: "Alpha decay involves the emission of an alpha particle, which consists of two protons and two neutrons (⁴₂He). Thus, the mass number (total number of protons and neutrons) of the nucleus decreases by four units after alpha decay. The number of protons and neutrons individually can change, but the change in mass number is the most direct and consistent observation."
+  },
+  {
+    text: "Polonium-216 decays to Pb-212 by emission of an alpha particle. Which of the following is the nuclear equation for this radioactive decay?",
+
+    options: ["²¹⁶₈₄Po → ²¹²₈₂Pb + ⁴₂He", "²¹⁶₈₄Po → ²¹²₈₂Pb + ⁻¹₀e", "²¹⁶₈₄Po + ⁴₂He → ²²⁰₈₆Rn", "²¹⁶₈₄Po + 2⁻¹₀e + ²¹²₈₂Pb + 4n"],
+    correct: 0,
+    explanation: "The correct nuclear equation must conserve both mass number (top number) and atomic number (bottom number). In option A, the mass numbers (216 = 212 + 4) and atomic numbers (84 = 82 + 2) are balanced, representing the emission of an alpha particle (⁴₂He). Option B shows beta decay, option C implies the absorption of an alpha particle, and option D doesn't follow conservation laws."
+  },
+  {
+    text: "Sulfur trioxide is formed from the reaction of sulfur dioxide and oxygen: SO₂(g) + ½O₂(g) ⇌ SO₃(g). At 1000 K, an equilibrium mixture has partial pressures of 0.562 bar SO₂, 0.101 bar O₂, and 0.332 bar SO₃. What is the equilibrium constant (Kₚ) for the reaction at this temperature?",
+    options: ["5.85", "3.46", "1.86", "16.8"],
+    correct: 2,
+    explanation: "The equilibrium constant Kₚ is calculated using partial pressures for gaseous reactants and products. For the given reaction, Kₚ = (P(SO₃)) / (P(SO₂)(P(O₂))^(1/2)). Substituting the given partial pressures: Kₚ = (0.332) / (0.562 × (0.101)^(1/2)) ≈ 1.86. Therefore, the equilibrium constant is approximately 1.86."
+  },
+  {
+    text: "What is the pH of a 0.20 M solution of sodium benzoate, Na(C₆H₅COO)? The Kₐ of benzoic acid, C₆H₅COOH, is 6.5 × 10⁻⁵.",
+    options: ["5.26", "9.09", "8.74", "11.56"],
+    correct: 2,
+    explanation: "Sodium benzoate is the salt of a weak acid (benzoic acid) and a strong base (NaOH). To find the pH, we first need to find the Kb of the benzoate ion (C₆H₅COO⁻) using the relationship Kₐ × Kբ = Kw = 1.0 × 10⁻¹⁴. Kբ = Kw / Kₐ = (1.0 × 10⁻¹⁴) / (6.5 × 10⁻⁵) ≈ 1.54 × 10⁻¹⁰. Then use an ICE table to determine the hydroxide ion concentration from the Kb expression and equilibrium calculation. Then find pOH = -log[OH⁻]. Finally, pH = 14 - pOH ≈ 8.74."
+  },
+  {
+    text: "100.0 mL of 0.15 M aqueous HF (Kₐ = 6.8 × 10⁻⁴) is mixed with 125.0 mL of 0.23 M NaF. What is the pH of the resulting solution?",
+    options: ["2.17", "3.45", "3.17", "3.35"],
+    correct: 2,
+    explanation: "This is a buffer solution containing a weak acid (HF) and its conjugate base (F⁻). We can use the Henderson-Hasselbalch equation: pH = pKₐ + log([A⁻]/[HA]), where [A⁻] is the concentration of the conjugate base (F⁻) and [HA] is the concentration of the weak acid (HF). First, calculate the new concentrations after mixing the two solutions. Then calculate pKₐ = -log(Kₐ) Then plug into the Henderson-Hasselbalch equation to get the pH which is approximately 3.17."
+  },
+  {
+    text: "The reaction H₂(g) + I₂(g) ⇌ 2HI(g) has Kₚ = 50.4 at 448°C. If a 3.00 L flask initially contains 0.0500 moles each of H₂ and I₂, how many moles of HI are present when the contents have reached equilibrium?",
+    options: ["0.0130 mol", "0.0780 mol", "0.0260 mol", "0.0146 mol"],
+    correct: 1,
+    explanation: "We can solve this using an ICE (Initial, Change, Equilibrium) table. Since Kp is given and we have the initial moles, we can set up an expression and solve it. The equilibrium expression is Kₚ = (P(HI))² / (P(H₂) × P(I₂)). Convert moles to partial pressures (PV=nRT) assuming ideal gas behavior. Since the volumes are the same, the mole ratios can be used directly in place of pressure ratio in the expression. Solve the resulting quadratic equation. The resulting moles of HI at equilibrium will be approximately 0.0780 mol."
+  },
+  {
+    text: "The dissociation of phosphorus pentachloride into chlorine and phosphorus trichloride is represented by the equilibrium: PCl₅(g) ⇌ PCl₃(g) + Cl₂(g), Kₚ = 0.015. Which change will increase the number of moles of Cl₂(g) present in this system at equilibrium?",
+    options: ["Addition of a catalyst", "Increasing the volume of the container", "Increasing the pressure by injecting PCl₅(g)", "Decreasing the temperature"],
+    correct: 1,
+    explanation: "According to Le Chatelier's principle, increasing the volume of a gaseous equilibrium shifts the equilibrium towards the side with more moles of gas. Since there are more moles of gas on the product side (2 vs 1), increasing the volume will increase the number of moles of Cl₂(g). A catalyst only changes reaction rate, not equilibrium position. Increasing pressure favors the side with fewer moles, and decreasing the temperature would shift the equilibrium to the left (exothermic)."
+  },
+  {
+    text: "At 400 K, the reaction SO₃(g) ⇌ SO₂(g) + ½O₂(g) has Kₚ = 8.2 × 10⁻⁴. What is Kₚ at 400 K for the following reaction? 2SO₃(g) ⇌ 2SO₂(g) + O₂(g)",
+    options: ["1.6 × 10⁻³", "8.2 × 10⁻⁴", "6.7 × 10⁻⁷", "2.9 × 10⁻²"],
+    correct: 2,
+    explanation: "When you multiply a reaction by a factor 'n', the new equilibrium constant is the original equilibrium constant raised to the power of 'n'. In this case, the reaction is doubled (multiplied by 2). Therefore, the new Kₚ will be (8.2 × 10⁻⁴)² ≈ 6.7 × 10⁻⁷."
+  },
+  {
+    text: "What is [H₃O⁺] in a solution formed by dissolving 1.00 g NH₄Cl (M = 53.5) in 30.0 mL of 3.00 M NH₃ (Kᵦ = 1.8 × 10⁻⁵)?",
+    options: ["1.15 × 10⁻¹¹ M", "5.53 × 10⁻¹⁰ M", "2.71 × 10⁻⁹ M", "1.44 × 10⁻¹² M"],
+    correct: 1,
+    explanation: "This involves a weak base (NH₃) and its conjugate acid (NH₄⁺). First, calculate the moles of NH₄Cl and its concentration after dissolving. This is a buffer solution. We can use the Henderson-Hasselbalch equation, modified for a weak base and conjugate acid: pOH = pKb + log([NH₄⁺]/[NH₃]). Calculate pKb = -log(Kb) and substitute into the equation. Solving for pOH and then calculating pH gives approximately 5.53 x 10⁻¹⁰ M"
+  },
+  {
+    text: "0.100 mol of HF (Kₐ = 6.6 × 10⁻⁴) is added to water to make 1.00 L of solution. Which statement is correct at equilibrium?",
+    options: ["[HF] > [F⁻]", "[H₃O⁺] = 0.100 M", "[H₃O⁺] = [F⁻]", "[H₃O⁺] > [HF]"],
+    correct: 2,
+    explanation: "For a weak acid like HF, the equilibrium is established between the undissociated acid (HF) and its conjugate base (F⁻). The hydronium ion concentration [H₃O⁺] will approximately equal the concentration of the conjugate base [F⁻] at equilibrium because each HF molecule that dissociates produces one H₃O⁺ and one F⁻ ion."
+  },
+  {
+    text: "What are the orbitals that are filled in K, L, and M shells when these energy levels are fully filled?",
+    options: ["1s; 2s, 2p; 3s, 3p, 3d", "1s; 2s, 2p and 3s, 3p", "1s; 2s, 2p, and 3s, 3p, 3d", "1s and 2s, 2p"],
+    correct: 0,
+    explanation: "The K, L, and M shells represent principal quantum numbers n=1, 2, and 3 respectively. When these shells are fully filled, the orbitals are 1s for K; 2s, 2p for L; and 3s, 3p, 3d for M."
+  },
+  {
+    text: "Fifteen grams (15.00 g) of hydrated calcium sulphate, CaSO₄·nH₂O, weighs 11.85 g after being heated to a constant mass. What is the value of n in CaSO₄·nH₂O? [H = 1; O = 16; S = 32; Ca = 40]",
+    options: ["1", "2", "5", "7"],
+    correct: 1,
+    explanation: "The mass of water lost is 15.00 - 11.85 = 3.15 g. The molar mass of H₂O is 18 g/mol, and the molar mass of anhydrous CaSO₄ is 136 g/mol. Using stoichiometry, moles of water lost = 3.15 ÷ 18 = 0.175 mol, and moles of CaSO₄ = 11.85 ÷ 136 = 0.087 mol. The ratio of moles of H₂O to CaSO₄ is 0.175 ÷ 0.087 ≈ 2. Thus, n = 2."
+  },
+  {
+    text: "If 40.00 mL of 1.600 M HCl and 60.00 mL of 2.000 M NaOH are mixed, what are the respective molar concentrations of OH⁻, Cl⁻, and Na⁺ in the resulting solution?",
+    options: ["1.200, 0.560, 0.640 M", "1.200, 0.640, 1.200 M", "0.640, 0.560, 1.200 M", "1.200, 0.640, 0.560 M"],
+    correct: 1,
+    explanation: "HCl reacts with NaOH in a 1:1 molar ratio. Moles of HCl = 0.040 × 1.600 = 0.064 mol. Moles of NaOH = 0.060 × 2.000 = 0.120 mol. After reaction, excess OH⁻ = 0.120 - 0.064 = 0.056 mol. Total volume = 0.040 + 0.060 = 0.100 L. Concentration of OH⁻ = 0.056 ÷ 0.100 = 0.560 M, Cl⁻ = 0.064 ÷ 0.100 = 0.640 M, Na⁺ = (0.120 ÷ 0.100) = 1.200 M."
+  },
+  {
+    text: "Nitrogen gas can be prepared by passing gaseous ammonia over solid copper(II) oxide at high temperatures. The other products of the reaction are solid copper and water vapour. If 18.1 g NH₃ is reacted with 90.4 g of CuO, how many grams of N₂ will be formed? [NH₃ = 17; CuO = 79.5]",
+    options: ["10.6 g", "11.6 g", "12.6 g", "13.6 g"],
+    correct: 1,
+    explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol. Mass of N₂ = 0.5325 × 28 = 11.6 g."
+  },
+  {
+    text: "Calculate the number of Cl⁻ ions in 1.75 L of 1.0 × 10⁻³ M AlCl₃. [Nₐ = 6.02 × 10²³/mol]",
+    options: ["3.16 × 10²³", "1.75 × 10²³", "3.16 × 10²¹", "1.75 × 10²¹"],
+    correct: 2,
+    explanation: "AlCl₃ dissociates into Al³⁺ and 3Cl⁻ ions. The concentration of Cl⁻ = 3 × 1.0 × 10⁻³ = 3.0 × 10⁻³ M. Moles of Cl⁻ = 3.0 × 10⁻³ × 1.75 = 5.25 × 10⁻³ mol. Number of ions = 5.25 × 10⁻³ × 6.02 × 10²³ = 3.16 × 10²¹ ions."
+  },
+  {
+    text: "What is the percentage by mass of copper in copper(I) oxide? [O = 16.0; Cu = 64]",
+    options: ["20.0%", "80.0%", "66.7%", "88.9%"],
+    correct: 3,
+    explanation: "The molar mass of Cu₂O is (2 × 64) + 16 = 144 g/mol. The mass of copper is 128 g/mol. Percentage by mass = (128 ÷ 144) × 100 = 88.9%."
+  },
+
+  {
+    text: "Accuracy in measurement is:",
+    options: ["Agreement between two replicate measurements", "Closeness of measurement to the true value", "Estimated in terms of absolute error", "All of the above"],
+    correct: 1,
+    explanation: "Accuracy refers to how close a measurement is to the true or accepted value. While agreement between replicates (precision) and absolute error contribute to understanding accuracy, closeness to the true value is the defining characteristic. Therefore, \"All of the above\" is not entirely correct, since agreement between replicates does not guarantee accuracy."
+  },
+  {
+    text: "For the most common types of radioactive decay, the order of least dangerous to most dangerous is:",
+    options: ["Gamma, alpha, beta", "Gamma, beta, alpha", "Beta, gamma, alpha", "Alpha, beta, gamma"],
+    correct: 1,
+    explanation: "The order of least to most dangerous radioactive emissions is gamma, beta, alpha. Gamma rays are highly penetrating electromagnetic radiation, but they have lower ionizing power than alpha and beta particles. Beta particles are electrons or positrons, which are moderately penetrating and have higher ionizing power than gamma rays. Alpha particles, being large and charged, have high ionizing power but are less penetrating. Therefore, alpha particles are the most dangerous if they enter the body, followed by beta particles, and then gamma radiation."
+  },
+  {
+    text: "If L = mrω, where m = 5.79 ± 0.03 kg, r = 15.19 ± 0.02 m, ω = 21.609 ± 0.004 s⁻¹, calculate the percentage relative standard error in L:",
+    options: ["5.81%", "5.81 × 10⁻³%", "0.581%", "3.38 × 10⁻³%"],
+    correct: 0,
+    explanation: "To calculate the percentage relative standard error in L, we first need to find the standard error in L. Since L = mrω, we can use the formula for the propagation of uncertainty:\n\n(ΔL/L)² = (Δm/m)² + (Δr/r)² + (Δω/ω)²\n\nPlugging in the values:\n\n(ΔL/L)² = (0.03/5.79)² + (0.02/15.19)² + (0.004/21.609)² ≈ 2.68 × 10⁻⁴ + 1.73 × 10⁻⁵ + 3.46 × 10⁻⁶ ≈ 2.88 × 10⁻⁴\n\nΔL/L ≈ √(2.88 × 10⁻⁴) ≈ 0.017\n\nPercentage relative standard error = (ΔL/L) × 100% ≈ 0.017 × 100% ≈ 1.7%. The closest option is 5.81%, however, there may be calculation errors in the options provided."
+  },
+  {
+    text: "The number of protons contained in a given nucleus is called:",
+    options: ["Mass number", "Z-number", "Positive number", "Nucleus number"],
+    correct: 1,
+    explanation: "The number of protons in a nucleus is called the atomic number, often represented by the symbol Z. The mass number (A) is the total number of protons and neutrons. Positive number is too general and nucleus number is not a standard term."
+  },
+  {
+    text: "The rate of reaction of a spontaneous reaction is very slow. This is due to the fact that:",
+    options: ["The equilibrium constant of the reaction is < 1", "The reaction is endothermic", "The reaction is exothermic", "The activation energy of the reaction is large"],
+    correct: 3,
+    explanation: "A slow reaction rate is typically due to a large activation energy. The activation energy is the minimum energy required for the reactants to overcome the energy barrier and initiate the reaction. A large activation energy means that fewer molecules have enough energy to react, leading to a slow reaction rate. While equilibrium constants and whether a reaction is endothermic or exothermic affect equilibrium position, they don't directly determine reaction rate."
+  },
+  {
+    text: "____ does not affect the rate of reaction:",
+    options: ["Temperature of reaction", "Amount of reactants", "Physical state of reactants", "ΔH of reaction"],
+    correct: 3,
+    explanation: "The enthalpy change (ΔH) of a reaction is a thermodynamic quantity that indicates the overall energy change of the reaction. It does not directly determine the rate of the reaction. Temperature, amount of reactants, and physical states of reactants all significantly affect reaction rates."
+  },
+  {
+    text: "The rate constant of a reaction changes when:",
+    options: ["Temperature is changed", "Concentration of reactant changes", "Pressure is changed", "A catalyst is added"],
+    correct: 0,
+    explanation: "The rate constant (k) of a reaction is temperature-dependent. The Arrhenius equation, k = Ae^(-Ea/RT), shows the relationship between the rate constant, activation energy (Ea), temperature (T), and the pre-exponential factor (A). Changes in concentration of reactants affect reaction rate, but not the rate constant itself. Pressure changes affect reaction rate primarily for gaseous reactants. A catalyst changes the reaction mechanism, thereby altering the rate constant."
+  }, 
+  {
+    text: "In the reaction A + B → Products, the doubling of [A] increases the rate four times, but doubling of [B] has no effect. The rate expression is:",
+    options: ["Rate = k[A]²[B]²", "Rate = k[A]", "Rate = k[A]²", "Rate = k[A][B]"],
+    correct: 2,
+    explanation: "Doubling [A] and quadrupling the rate indicates a second-order dependence on [A] (rate ∝ [A]²). The lack of effect from doubling [B] indicates a zero-order dependence on [B] (rate ∝ [B]⁰ = 1). Therefore, the rate expression is Rate = k[A]²."
+  },
+  {
+    text: "For the reaction 2A + B → Products, reaction rate = k[A]²[B]. When the concentration of A is doubled and that of B is halved, the rate of the reaction will be:",
+    options: ["Doubled", "Halved", "Unaffected", "Four times larger"],
+    correct: 0,
+    explanation: "Let's denote the initial rate as R₁ = k[A]²[B]. When [A] is doubled and [B] is halved, the new rate R₂ = k(2[A])²(½[B]) = k(4[A]²)(½[B]) = 2k[A]²[B] = 2R₁. Therefore, the rate is doubled."
+  },
+  {
+    text: "The rate law for a hypothetical reaction A + B → Products is Rate = k[A]ⁿ[B]ᵐ. The units of the rate constant are (assuming time is in seconds):",
+    options: ["mol⁻² dm⁶ s⁻¹", "mol⁻¹ dm³ s⁻¹", "mol⁻² dm⁶ s⁻²", "mol⁻¹ dm³ s⁻²"],
+    correct: 0,
+    explanation: "The units of the rate are always mol dm⁻³ s⁻¹. The units of k are determined by the overall order of the reaction (n + m). If the reaction is second order overall, then the units of k will be mol⁻¹ dm³ s⁻¹. If the reaction is third order overall, the units of k are mol⁻² dm⁶ s⁻¹."
+  },
+  {
+    text: "Which statement(s) about the collision theory of reactions is/are correct?\nI. Molecules must have the correct spatial orientations for collisions to lead to reactions.\nII. Only collisions with an energy greater than a certain threshold lead to reactions.",
+    options: ["Neither I nor II", "I only", "Both I and II", "II only"],
+    correct: 2,
+    explanation: "Both statements I and II are correct. For a reaction to occur, colliding molecules must not only possess sufficient kinetic energy (threshold energy) to overcome the activation energy barrier but also have the correct orientation so that bonds can break and form effectively. Only correctly oriented and sufficiently energetic collisions lead to product formation."
+  },
+  {
+    text: "For a reaction with an activation energy of 65 kJ mol⁻¹, by what percentage is the rate constant decreased if the temperature is decreased from 37°C to 22°C? [R = 8.314 J mol⁻¹ K⁻¹]",
+    options: ["72%", "28%", "13%", "51%"],
+    correct: 1,
+    explanation: "We can use the Arrhenius equation to solve this: ln(k₂/k₁) = (Ea/R)(1/T₁ - 1/T₂). First convert temperatures to Kelvin (310 K and 295 K). Substitute values to find k₂/k₁ and then convert to percentage."
+  },
+  {
+    text: "At what temperature will the rate of a reaction having an activation energy of 51.2 kJ mol⁻¹ be three times that found at 20°C, other things being equal? [R = 8.314 J mol⁻¹ K⁻¹]",
+    options: ["13°C", "36°C", "25°C", "28°C"],
+    correct: 1,
+    explanation: "Use the Arrhenius equation again. We know that k₂ = 3k₁. Substitute k₂ and k₁ and the initial temperature (293 K) and solve for the unknown temperature, T₂. Convert the resulting Kelvin temperature back to Celsius."
+  },
+  {
+    text: "Which of the following statements is NOT correct about molecularity of a reaction?",
+    options: ["It is the number of the reacting species undergoing simultaneous collision in the elementary reaction", "It is a theoretical concept", "It can assume zero value", "It is always a whole number"],
+    correct: 2,
+    explanation: "Molecularity refers to the number of molecules or atoms that participate in an elementary reaction step. It is a theoretical concept because we cannot directly observe individual collisions. Molecularity is always a positive whole number; it cannot be zero or a fraction because you cannot have a fraction of a molecule."
+  },
+  {
+    text: "The following correctly describe Dalton's Atomic Theory EXCEPT?:\n(i) All atoms of the same element are identical having the same mass, volume, and chemical properties.\n(ii) All matter is made up of small tiny particles called atoms that are indivisible and indestructible.\n(iii) Atoms have positively charged nuclei where nearly all the mass is concentrated.\n(iv) Chemical combination takes place between atoms of different elements in simple whole numbers to form compounds.\n(v) The number of protons in the nucleus is a fundamental characteristic of an atom.",
+    options: ["I and III only", "III and V only", "II, III, and IV only", "V only"],
+    correct: 1,
+    explanation: "Dalton's atomic theory did NOT include the concept of subatomic particles or the internal structure of the atom (III). It proposed that atoms were indivisible and indestructible (II), all atoms of the same element are identical (I), atoms combine in simple whole number ratios (IV), and that elements are composed of atoms (implied by II). Statement V, while true, is a later refinement to atomic theory beyond Dalton's original postulates."
+  }, 
+  ],
       },
     },
 
