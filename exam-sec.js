@@ -746,77 +746,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedCourse = "";
   let subCourseName = "";
                           
-  const questionBanks = {
-    Mathematics: {
-        "MTH105": {
-        title: "Mathematics for Biological Sciences",
-        questions: [
-          {
-  text: "What is the union of the sets A = {1, 2, 3} and B = {3, 4, 5}?",
-  options: [
-    "{1, 2, 3, 4, 5}",
-    "{3}",
-    "{1, 2}",
-    "{4, 5}"
-  ],
-  correct: 0,
-  explanation: "The union of two sets includes all elements that are in either set. A ∪ B = {1, 2, 3, 4, 5}."
-},
-{
-  text: "What is the intersection of the sets A = {1, 2, 3} and B = {3, 4, 5}?",
-  options: [
-    "{1, 2}",
-    "{3}",
-    "{1, 2, 3, 4, 5}",
-    "{}"
-  ],
-  correct: 1,
-  explanation: "The intersection of two sets includes only the elements common to both sets. A ∩ B = {3}."
-},
-{
-  text: "If A = {1, 2, 3} and B = {3, 4, 5}, what is the difference A − B?",
-  options: [
-    "{1, 2}",
-    "{3, 4}",
-    "{1, 2, 3}",
-    "{4, 5}"
-  ],
-  correct: 0,
-  explanation: "The difference A − B includes elements in A but not in B. A − B = {1, 2}."
-},
-{
-  text: "Which of the following is the correct definition of a subset?",
-  options: [
-    "A set where all elements are in another set.",
-    "A set with no elements.",
-    "A set with exactly one element.",
-    "A set that contains all possible elements."
-  ],
-  correct: 0,
-  explanation: "A subset is defined as a set where every element of the subset is also an element of another set."
-},
-{
-  text: "What is the power set of the set A = {1, 2}?",
-  options: [
-    "{{}, {1}, {2}, {1, 2}}",
-    "{{1, 2}}",
-    "{{1}, {2}}",
-    "{}"
-  ],
-  correct: 0,
-  explanation: "The power set includes all subsets of a set. For A = {1, 2}, the power set is {{}, {1}, {2}, {1, 2}}."
-},
-{
-  text: "If the universal set U = {1, 2, 3, 4, 5} and A = {1, 2}, what is the complement of A?",
-  options: [
-    "{3, 4, 5}",
-    "{1, 2}",
-    "{1, 2, 3}",
-    "{}"
-  ],
-  correct: 0,
-  explanation: "The complement of a set includes all elements in the universal set that are not in the given set. A' = {3, 4, 5}."
-},
+document.addEventListener("DOMContentLoaded", () => {
+  // Fetch question sets from JSON file
+  fetch('exam-ques.json')
+    .then(response => response.json())
+    .then(data => {
+      // Store the question sets in a global variable
+      window.questionBanks = data;
+    })
+    .catch(error => console.error('Error fetching question sets:', error));
+
+    
 function showSection(section) {
   [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
     if (el) el.classList.add("hidden");
@@ -833,26 +773,27 @@ document.querySelectorAll(".course").forEach((button) => {
 });
 
 document.getElementById("submit-code").addEventListener("click", () => {
-  const code = document.getElementById("access-code").value.trim();
-  const courseData = questionBanks[selectedCourse]?.[code];
+    const code = document.getElementById("access-code").value.trim();
+    const courseData = window.questionBanks[selectedCourse]?.[code];
 
-  if (!courseData) {
-    alert("Invalid access code. Please try again.");
-    return;
-  }
+    if (!courseData) {
+      alert("Invalid access code. Please try again.");
+      return;
+    }
 
-  const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${code}`)) || [];
-  const remainingQuestions = courseData.questions.filter((_, i) => !storedProgress.includes(i));
+    const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${code}`)) || [];
+    const remainingQuestions = courseData.questions.filter((_, i) => !storedProgress.includes(i));
 
-  if (remainingQuestions.length === 0) {
-    alert("You have already completed all questions in this question bank.");
-    return;
-  }
+    if (remainingQuestions.length === 0) {
+      alert("You have already completed all questions in this question bank.");
+      return;
+    }
 
-  questions = shuffleArray(remainingQuestions);
-  subCourseName = courseData.title;
-  startExam();
-});
+    questions = shuffleArray(remainingQuestions);
+    subCourseName = courseData.title;
+    startExam();
+  });
+  
 
 cancelButton.addEventListener("click", () => {
   showSection(courseSelectionSection);
