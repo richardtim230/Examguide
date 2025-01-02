@@ -867,3 +867,176 @@ function saveAnswer() {
  
   function selectAnswer(index) {
   answers[currentQuestionIndex] = index;
+
+      // Deselect all option buttons
+  const allOptions = document.querySelectorAll(".option-button");
+  allOptions.forEach((button) => button.classList.remove("selected"));
+
+  // Mark the clicked button as selected
+  const selectedButton = allOptions[index];
+  selectedButton.classList.add("selected");
+
+  updateProgress();
+}
+
+
+function startTimer() {
+  const timerDisplay = document.createElement("div");
+  timerDisplay.id = "timer-display";
+  timerDisplay.style.margin = "1rem 0";
+  timerDisplay.style.fontSize = "1.2rem";
+  examSection.insertBefore(timerDisplay, progressContainer);
+
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeRemaining--;
+    updateTimerDisplay();
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      alert("Time's up! The exam will be submitted automatically.");
+      endExam(true); // Pass a flag to force submission
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+  document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+function endExam(autoSubmit = false) {
+  if (!autoSubmit) {
+    // Show the confirmation modal
+    const modal = document.getElementById("confirmationModal");
+    modal.style.display = "flex";
+
+    // Handle "Yes" button
+    document.getElementById("confirmYes").onclick = function () {
+      modal.style.display = "none";
+      clearInterval(timerInterval); // Stop the timer
+      console.log("Exam submitted!");
+      // Add your submission logic here
+      finalizeSubmission();
+    };
+
+    // Handle "No" button
+    document.getElementById("confirmNo").onclick = function () {
+      modal.style.display = "none";
+      console.log("Submission canceled");
+      // Timer continues running
+    };
+
+    return; // Prevent further execution until the user confirms
+  }
+
+  // Auto-submit (e.g., when time runs out)
+  clearInterval(timerInterval);
+  console.log("Time's up! Auto-submitting exam...");
+  finalizeSubmission();
+}
+
+function finalizeSubmission() {
+  console.log("Finalizing submission...");
+  // Add your submission logic here (e.g., send answers to the server, show results)
+}
+
+
+function endExam() {
+  // Show the modal
+  const modal = document.getElementById('confirmationModal');
+  modal.style.display = 'flex';
+
+  // Declare variables in outer scope
+  let score, totalQuestions, percentage;
+
+  // Handle confirmation buttons
+  document.getElementById('confirmYes').onclick = function () {
+    modal.style.display = 'none';
+
+    // Calculate results
+    score = answers.filter((ans, i) => ans === questions[i].correct).length;
+    totalQuestions = questions.length;
+    percentage = Math.round((score / totalQuestions) * 100);
+
+    const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
+    const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
+    localStorage.setItem(`${selectedCourse}-${subCourseName}`, JSON.stringify(updatedProgress));
+
+    // Show results
+    showSection(summarySection);
+    summaryContent.innerHTML = `
+      <h3>Score: ${score}/${totalQuestions} (${percentage}%)</h3>
+      <p>${getRemark(percentage)}</p>
+      ${questions
+        .map(
+          (q, i) => `
+        <p>
+          ${i + 1}. ${q.text} <br>
+          Your Answer: <strong> ${q.options[answers[i]] || "Unanswered"} </strong><br><br>
+         <strong> Correct Answer: ${q.options[q.correct]} </strong><br><br>
+          Explanation: ${q.explanation} <br><br><br>
+        </p>`
+        )
+        .join("")}
+    `;
+  };
+
+  (function () {
+  document.addEventListener("DOMContentLoaded", function () {
+    const downloadBtn = document.getElementById("download-btn");
+
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", downloadResultsAsPDF);
+    } else {
+      console.error("Download button not found.");
+    }
+  });
+
+    document.getElementById("download-btn").addEventListener("click", () => {
+  console.log("Download button clicked!");
+  downloadResultsAsPDF();
+});
+
+  function downloadResultsAsPDF() {
+    const resultContent = document.getElementById("summarySection");
+
+    if (!resultContent) {
+      console.error("Summary content is missing. Cannot generate PDF.");
+      return;
+    }
+
+    const options = {
+      margin: 1,
+      filename: 'Exam_Results.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(resultContent).save();
+  }
+})();
+
+  document.getElementById('confirmNo').onclick = function () {
+    modal.style.display = 'none';
+    // Prevent further actions when "No" is clicked
+    return;
+  };
+}
+
+
+  function shuffleArray(array) {
+    return array.sort(() => 0.5 - Math.random()).slice(0.5, 50);
+  }
+
+  function getRemark(percentage) {
+    if (percentage === 100) return "Excellent! You aced the test!";
+    if (percentage >= 75) return "Great job! You did very well.";
+    if (percentage >= 50) return "Good effort, but there's room for improvement.";
+    return "Keep practicing! You can do better.";
+  }
+});
+
+
+
