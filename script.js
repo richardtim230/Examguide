@@ -4037,8 +4037,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     'Mock-Exam': {
-        "ZOO101": {
-        title: "INTRODUCTORY ZOOLOGY 1",
+        "ZOO101-Mock": {
+        title: "INTRODUCTORY ZOOLOGY Mock Test",
         questions: [
                 
           { text: "What is the primary basis for the classification of animals in taxonomy?", options: ["Reproductive methods", "Body structure", "Feeding habits", "Behavior"], correct: 1, explanation: "Body structure is a fundamental criterion used in taxonomy to classify animals." },
@@ -4179,7 +4179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }, 
 
     "CHM101-Mock": {
-      title: "Introductory Chemistry 1",
+      title: "Introductory Chemistry Mock Test",
       questions: [                              
   {
     text: "A nucleus that spontaneously decomposes is said to be",
@@ -4187,6 +4187,17 @@ document.addEventListener("DOMContentLoaded", () => {
     correct: 1,
     explanation: "A nucleus that spontaneously decomposes is said to be radioactive. Radioactivity is the spontaneous emission of radiation from an unstable atomic nucleus. A radionuclide is a specific type of atom that is radioactive, but radioactivity is the broader term describing the process. Reactive refers to a substance's tendency to participate in chemical reactions, while electropositive refers to an element's tendency to lose electrons and form positive ions. Neither of these concepts relates directly to spontaneous nuclear decay."
   },
+        {
+      text: "The isotope of an element has:",
+      options: [
+        "Same number of neutrons, different protons",
+        "Different number of protons, same electrons",
+        "Same number of protons, different neutrons",
+        "Different electrons, same neutrons"
+      ],
+      correct: 2,
+      explanation: "Isotopes are atoms of the same element that have the same number of protons (and thus the same atomic number) but differ in the number of neutrons. This difference in neutron number results in different mass numbers for the isotopes.  The chemical properties are largely determined by the number of protons and electrons."
+    },
   {
     text: "_ , when it is produced by a nucleus at high speed, is more commonly called a beta particle.",
     options: ["Electron", "Neutron", "Nucleon", "Proton"],
@@ -4227,8 +4238,8 @@ document.addEventListener("DOMContentLoaded", () => {
   {
     text: "100.0 mL of 0.15 M aqueous HF (Kₐ = 6.8 × 10⁻⁴) is mixed with 125.0 mL of 0.23 M NaF. What is the pH of the resulting solution?",
     options: ["2.17", "3.45", "3.17", "3.35"],
-    correct: 2,
-    explanation: "This is a buffer solution containing a weak acid (HF) and its conjugate base (F⁻). We can use the Henderson-Hasselbalch equation: pH = pKₐ + log([A⁻]/[HA]), where [A⁻] is the concentration of the conjugate base (F⁻) and [HA] is the concentration of the weak acid (HF). First, calculate the new concentrations after mixing the two solutions. Then calculate pKₐ = -log(Kₐ) Then plug into the Henderson-Hasselbalch equation to get the pH which is approximately 3.17."
+    correct: 1,
+    explanation: "This is a buffer solution containing a weak acid (HF) and its conjugate base (F⁻). We can use the Henderson-Hasselbalch equation: pH = pKₐ + log([A⁻]/[HA]), where [A⁻] is the concentration of the conjugate base (F⁻) and [HA] is the concentration of the weak acid (HF). First, calculate the new concentrations after mixing the two solutions. Then calculate pKₐ = -log(Kₐ) Then plug into the Henderson-Hasselbalch equation to get the pH which is approximately 3.45."
   },
   {
     text: "The reaction H₂(g) + I₂(g) ⇌ 2HI(g) has Kₚ = 50.4 at 448°C. If a 3.00 L flask initially contains 0.0500 moles each of H₂ and I₂, how many moles of HI are present when the contents have reached equilibrium?",
@@ -4250,14 +4261,14 @@ document.addEventListener("DOMContentLoaded", () => {
   },
   {
     text: "What is [H₃O⁺] in a solution formed by dissolving 1.00 g NH₄Cl (M = 53.5) in 30.0 mL of 3.00 M NH₃ (Kᵦ = 1.8 × 10⁻⁵)?",
-    options: ["1.15 × 10⁻¹¹ M", "5.53 × 10⁻¹⁰ M", "2.71 × 10⁻⁹ M", "1.44 × 10⁻¹² M"],
-    correct: 1,
-    explanation: "This involves a weak base (NH₃) and its conjugate acid (NH₄⁺). First, calculate the moles of NH₄Cl and its concentration after dissolving. This is a buffer solution. We can use the Henderson-Hasselbalch equation, modified for a weak base and conjugate acid: pOH = pKb + log([NH₄⁺]/[NH₃]). Calculate pKb = -log(Kb) and substitute into the equation. Solving for pOH and then calculating pH gives approximately 5.53 x 10⁻¹⁰ M"
+    options: ["1.15 × 10⁻¹⁰ M", "5.53 × 10⁻¹⁰ M", "2.71 × 10⁻⁹ M", "1.44 × 10⁻¹² M"],
+    correct: 0,
+    explanation: "This involves a weak base (NH₃) and its conjugate acid (NH₄⁺). First, calculate the moles of NH₄Cl and its concentration after dissolving. This is a buffer solution. We can use the Henderson-Hasselbalch equation, modified for a weak base and conjugate acid: pOH = pKb + log([NH₄⁺]/[NH₃]). Calculate pKb = -log(Kb) and substitute into the equation. Solving for pOH and then calculating pH gives approximately 1.15 x 10⁻¹⁰ M"
   },
   {
     text: "0.100 mol of HF (Kₐ = 6.6 × 10⁻⁴) is added to water to make 1.00 L of solution. Which statement is correct at equilibrium?",
-    options: ["[HF] > [F⁻]", "[H₃O⁺] = 0.100 M", "[H₃O⁺] = [F⁻]", "[H₃O⁺] > [HF]"],
-    correct: 2,
+    options: ["[HF] > [F⁻]", "[H₃O⁺] = 0.100 M", "[H₃O⁺] = [HF]", "[H₃O⁺] > [HF]"],
+    correct: 0,
     explanation: "For a weak acid like HF, the equilibrium is established between the undissociated acid (HF) and its conjugate base (F⁻). The hydronium ion concentration [H₃O⁺] will approximately equal the concentration of the conjugate base [F⁻] at equilibrium because each HF molecule that dissociates produces one H₃O⁺ and one F⁻ ion."
   },
   {
@@ -4275,14 +4286,14 @@ document.addEventListener("DOMContentLoaded", () => {
   {
     text: "If 40.00 mL of 1.600 M HCl and 60.00 mL of 2.000 M NaOH are mixed, what are the respective molar concentrations of OH⁻, Cl⁻, and Na⁺ in the resulting solution?",
     options: ["1.200, 0.560, 0.640 M", "1.200, 0.640, 1.200 M", "0.640, 0.560, 1.200 M", "1.200, 0.640, 0.560 M"],
-    correct: 1,
+    correct: 3,
     explanation: "HCl reacts with NaOH in a 1:1 molar ratio. Moles of HCl = 0.040 × 1.600 = 0.064 mol. Moles of NaOH = 0.060 × 2.000 = 0.120 mol. After reaction, excess OH⁻ = 0.120 - 0.064 = 0.056 mol. Total volume = 0.040 + 0.060 = 0.100 L. Concentration of OH⁻ = 0.056 ÷ 0.100 = 0.560 M, Cl⁻ = 0.064 ÷ 0.100 = 0.640 M, Na⁺ = (0.120 ÷ 0.100) = 1.200 M."
   },
   {
     text: "Nitrogen gas can be prepared by passing gaseous ammonia over solid copper(II) oxide at high temperatures. The other products of the reaction are solid copper and water vapour. If 18.1 g NH₃ is reacted with 90.4 g of CuO, how many grams of N₂ will be formed? [NH₃ = 17; CuO = 79.5]",
     options: ["10.6 g", "11.6 g", "12.6 g", "13.6 g"],
-    correct: 1,
-    explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol. Mass of N₂ = 0.5325 × 28 = 11.6 g."
+    correct: 0,
+    explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol. Mass of N₂ = 0.5325 × 28 = 10.6 g."
   },
   {
     text: "Calculate the number of Cl⁻ ions in 1.75 L of 1.0 × 10⁻³ M AlCl₃. [Nₐ = 6.02 × 10²³/mol]",
