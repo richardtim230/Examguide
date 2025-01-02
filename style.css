@@ -1334,7 +1334,8 @@ text-align: center;
 
   justify-content: center;
 
-  z-index: 900;
+  z-index: 900, -1;
+        overflow-y: auto;
 
 }
 
@@ -1359,6 +1360,7 @@ text-align: center;
   flex-direction: column;
 
   text-align: center;
+        overflow-y: auto;
 
 }
 
