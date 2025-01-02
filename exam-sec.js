@@ -548,7 +548,98 @@ generateInvoiceBtn.addEventListener("click", () => {
   alert('Invoice has been generated and downloaded as an image.');
 });
 
+// ➡️ Submit Receipt and Redirect to WhatsApp
+submitReceiptBtn.addEventListener("click", () => {
+  const receiptFile = receiptUpload.files[0];
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  
+  const whatsappMessage = `
+    Payment Submission Details:
+    - Full Name: ${userData.fullName}
+    - Department: ${userData.department}
+    - Level: ${userData.level}
+    - User ID: ${userData.userID}
+    - Amount Paid: N1500.00
+    
+    📌 *Please attach the receipt image alongside this message.*
+  `;
 
+  window.open(
+    `https://wa.me/2349155127634?text=${encodeURIComponent(whatsappMessage)}`,
+    "_blank"
+  );
+
+  alert("Redirecting to admin on WhatsApp. Please ensure your receipt is attached.");
+});
+
+// ➡️ Back to Login from Payment Page
+backToLoginPaymentBtn.addEventListener("click", () => {
+  paymentPage.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+  alert("You have been redirected back to the login page.");
+});
+
+
+
+
+  continueBtn.addEventListener("click", () => {
+    // Hide overlay and show the main application
+    overlay.style.display = "none"; // Completely hide the overlay
+    app.style.display = "block"; // Display the main app content
+    app.style.body.overflow = 'auto';
+  });
+  
+    // Expiry Logic
+  const expiryDays = 365;
+  const currentDate = new Date();
+  const savedDate = localStorage.getItem("loginDate");
+
+  if (savedDate && (currentDate - new Date(savedDate)) / (1000 * 60 * 60 * 24) > expiryDays) {
+    alert("Your ID has expired.");
+  } else {
+    localStorage.setItem("loginDate", currentDate);
+}
+  
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Notification Center Logic
+  const notificationCenter = document.getElementById("notification-center");
+  const closeNotification = document.getElementById("close-notification");
+
+  if (notificationCenter && closeNotification) {
+    let visitCount = parseInt(localStorage.getItem("visitCount") || "0", 10);
+    if (visitCount === 0 || visitCount % 10 === 0) {
+      notificationCenter.classList.remove("hidden");
+    }
+    localStorage.setItem("visitCount", visitCount + 1);
+
+    closeNotification.addEventListener("click", () => {
+      notificationCenter.classList.add("hidden");
+    });
+  }
+
+  // Course Selection and Exam Logic
+  const courseSelectionSection = document.getElementById("course-selection-section");
+  const accessCodeSection = document.getElementById("access-code-section");
+  const examSection = document.getElementById("exam-section");
+  const summarySection = document.getElementById("summary-section");
+  const questionText = document.getElementById("question-text");
+  const optionsContainer = document.getElementById("options-container");
+  const progressContainer = document.getElementById("progress-container");
+  const summaryContent = document.getElementById("summary-content");
+  const subjectTitle = document.getElementById("subject-title");
+  const selectedCourseTitle = document.getElementById("selected-course-title");
+  const cancelButton = document.getElementById("cancel-button");
+  const questionImage = document.getElementById("question-image");
+  let questions = [];
+  let currentQuestionIndex = 0;
+  let answers = [];
+  let timerInterval = null;
+  let timeRemaining = 3000; // Timer in seconds
+  let selectedCourse = "";
+  let subCourseName = "";
+                          
   const questionBanks = {
     Mathematics: {
         "MTH105": {
@@ -620,3 +711,159 @@ generateInvoiceBtn.addEventListener("click", () => {
   correct: 0,
   explanation: "The complement of a set includes all elements in the universal set that are not in the given set. A' = {3, 4, 5}."
 },
+function showSection(section) {
+  [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
+    if (el) el.classList.add("hidden");
+  });
+  section.classList.remove("hidden");
+}
+
+document.querySelectorAll(".course").forEach((button) => {
+  button.addEventListener("click", () => {
+    selectedCourse = button.dataset.course;
+    selectedCourseTitle.textContent = `Enter Access Code for ${selectedCourse}`;
+    showSection(accessCodeSection);
+  });
+});
+
+document.getElementById("submit-code").addEventListener("click", () => {
+  const code = document.getElementById("access-code").value.trim();
+  const courseData = questionBanks[selectedCourse]?.[code];
+
+  if (!courseData) {
+    alert("Invalid access code. Please try again.");
+    return;
+  }
+
+  const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${code}`)) || [];
+  const remainingQuestions = courseData.questions.filter((_, i) => !storedProgress.includes(i));
+
+  if (remainingQuestions.length === 0) {
+    alert("You have already completed all questions in this question bank.");
+    return;
+  }
+
+  questions = shuffleArray(remainingQuestions);
+  subCourseName = courseData.title;
+  startExam();
+});
+
+cancelButton.addEventListener("click", () => {
+  showSection(courseSelectionSection);
+});
+
+document.getElementById("next-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex++;
+  updateQuestion();
+});
+
+document.getElementById("prev-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex--;
+  updateQuestion();
+});
+
+document.getElementById("end-exam").addEventListener("click", () => {
+  clearInterval(timerInterval);
+  endExam();
+});
+
+document.getElementById("restart-exam").addEventListener("click", () => {
+  questions = [];
+  let answers = [];
+  currentQuestionIndex = 0;
+  subCourseName = "";
+  timeRemaining = 3000;
+  clearInterval(timerInterval);
+  showSection(courseSelectionSection);
+});
+
+function startExam() {
+  subjectTitle.textContent = subCourseName;
+  showSection(examSection);
+  createProgress();
+  updateQuestion();
+  startTimer();
+}
+
+function updateQuestion() {
+  const question = questions[currentQuestionIndex];
+  
+  // Display question number along with the question text
+  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  
+  // Handle the question image
+  if (question.image) {
+    questionImage.src = question.image;
+    questionImage.alt = "Question Image";
+    questionImage.classList.remove("hidden");
+  } else {
+    questionImage.src = "";
+    questionImage.alt = "";
+    questionImage.classList.add("hidden");
+  }
+
+  // Clear previous options
+  optionsContainer.innerHTML = "";
+
+  // Display options as buttons
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.addEventListener("click", () => selectAnswer(index));
+    button.className = "option-button";
+    optionsContainer.appendChild(button);
+  });
+
+
+  // Enable/Disable navigation buttons based on the current index
+  document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
+  document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
+  updateProgress();
+}
+
+function createProgress() {
+  progressContainer.innerHTML = "";
+  questions.forEach((_, index) => {
+    const progressItem = document.createElement("div");
+    progressItem.classList.add("progress-item");
+    progressItem.dataset.index = index;
+    progressContainer.appendChild(progressItem);
+  });
+}
+
+function updateProgress() {
+  const items = progressContainer.querySelectorAll(".progress-item");
+  items.forEach((item, index) => {
+    item.classList.toggle("answered", answers[index] !== undefined);
+    if (index === currentQuestionIndex) {
+      item.classList.add("current");
+    } else {
+      item.classList.remove("current");
+    }
+  });
+}
+
+function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
+  updateProgress();
+}
+
+
+// Save Answer
+
+function saveAnswer() {
+
+  const selected = document.querySelector('input[name="answer"]:checked');
+
+  if (selected) {
+
+    answers[currentQuestionIndex] = parseInt(selected.value);
+
+  }
+
+        }
+ 
+  function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
