@@ -1275,7 +1275,7 @@ text-align: center;
 
   justify-content: center;
 
-  z-index: 100, -50;
+  z-index: 1;
         overflow-y: auto;
 
 }
@@ -1393,7 +1393,6 @@ text-align: center;
   cursor: pointer;
 
   transition: background 0.3s ease;
-        width: 10px;
 
 }
 
