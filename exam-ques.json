@@ -1,4 +1,4 @@
-const questionBanks = {
+ {
     Mathematics: {
         "MTH105": {
         title: "Mathematics for Biological Sciences",
