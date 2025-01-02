@@ -306,6 +306,112 @@ const overlay = document.getElementById("overlay");
     "Goodnight!  May your sleep be as peaceful as the night sky."
 ];
 
+  // Utility Function to Generate Alphanumeric User ID
+function generateUserID() {
+  const prefix = 'OAU-';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomPart = '';
+
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters[randomIndex];
+  }
+
+  return prefix + randomPart;
+}
+
+// Example usage
+console.log(generateUserID()); // Example Output: OAU-A1b2C
+
+
+  function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return morningMessages[Math.floor(Math.random() * morningMessages.length)];
+    if (hour < 18) return afternoonMessages[Math.floor(Math.random() * afternoonMessages.length)];
+    return eveningMessages[Math.floor(Math.random() * eveningMessages.length)];
+    }
+
+
+// Check and Display User Data on Load
+window.addEventListener("DOMContentLoaded", () => {
+  const savedUserData = JSON.parse(localStorage.getItem("userData"));
+  
+  if (savedUserData) {
+    document.getElementById("paymentFullName").innerText = savedUserData.fullName;
+    document.getElementById("paymentDepartment").innerText = savedUserData.department;
+    document.getElementById("paymentLevel").innerText = savedUserData.level;
+    document.getElementById("paymentUserID").innerText = savedUserData.userID;
+  }
+});
+
+
+
+
+// Submit Registration and Save User Data
+submitRegisterBtn.addEventListener("click", () => {
+  if (
+    !fullNameInput.value ||
+    !departmentInput.value ||
+    !levelInput.value ||
+    !coursesInput.value ||
+    !photoUpload.files.length
+  ) {
+    alert("Please fill all fields and upload your photo.");
+    return;
+  }
+
+  if (!agreeCheckbox.checked) {
+    alert("You must agree to proceed.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    // Generate a unique User ID
+    const userID = generateUserID();
+    
+    const userData = {
+      userID,
+      fullName: fullNameInput.value,
+      department: departmentInput.value,
+      level: levelInput.value,
+      courses: coursesInput.value,
+      photo: reader.result,
+    };
+
+    // Save user data securely to localStorage
+    localStorage.setItem("userData", JSON.stringify(userData));
+
+    // Display User Details on Payment Page
+    document.getElementById("paymentFullName").innerText = userData.fullName;
+    document.getElementById("paymentDepartment").innerText = userData.department;
+    document.getElementById("paymentLevel").innerText = userData.level;
+    document.getElementById("paymentUserID").innerText = userData.userID;
+
+    registerBox.classList.add("hidden");
+    paymentPage.classList.remove("hidden");
+
+    alert(`Registration Successful! Your User ID is: ${userID}`);
+  };
+
+  reader.readAsDataURL(photoUpload.files[0]);
+});
+
+// Utility Function to Generate User ID
+function generateUserID() {
+  const prefix = 'OAU-';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomPart = '';
+
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters[randomIndex];
+  }
+
+  return prefix + randomPart;
+}
+
+
 window.addEventListener("beforeunload", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   if (userData) {
