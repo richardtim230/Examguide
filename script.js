@@ -9952,18 +9952,23 @@ document.getElementById("submit-code").addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
   showSection(courseSelectionSection);
 });
-
-document.getElementById("next-question").addEventListener("click", () => {
-  saveAnswer();
-  currentQuestionIndex++;
-  updateQuestion();
+  
+nextBtn.addEventListener('click', () => {
+  if (currentStep < tourSteps.length - 1) {
+    saveAnswer();
+    currentStep++;
+    showStep(currentStep);
+  }
 });
 
-document.getElementById("prev-question").addEventListener("click", () => {
-  saveAnswer();
-  currentQuestionIndex--;
-  updateQuestion();
+prevBtn.addEventListener('click', () => {
+  if (currentStep > 0) {
+    saveAnswer();
+    currentStep--;
+    showStep(currentStep);
+  }
 });
+
 
 document.getElementById("end-exam").addEventListener("click", () => {
   clearInterval(timerInterval);
@@ -10051,22 +10056,15 @@ function selectAnswer(index) {
   updateProgress();
 }
 
-
 // Save Answer
-
 function saveAnswer() {
-
-  const selected = document.querySelector('input[name="answer"]:checked');
-
+  const selected = document.querySelector('.option-button.selected');
   if (selected) {
-
-    answers[currentQuestionIndex] = parseInt(selected.value);
-
+    answers[currentQuestionIndex] = parseInt(selected.dataset.index);
   }
+}
 
-        }
- 
-  function selectAnswer(index) {
+function selectAnswer(index) {
   answers[currentQuestionIndex] = index;
 
   // Deselect all option buttons
@@ -10079,6 +10077,51 @@ function saveAnswer() {
 
   updateProgress();
 }
+
+function updateQuestion() {
+  const question = questions[currentQuestionIndex];
+
+  // Display question number along with the question text
+  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+
+  // Handle the question image
+  if (question.image) {
+    questionImage.src = question.image;
+    questionImage.alt = "Question Image";
+    questionImage.classList.remove("hidden");
+  } else {
+    questionImage.src = "";
+    questionImage.alt = "";
+    questionImage.classList.add("hidden");
+  }
+
+  // Clear previous options
+  optionsContainer.innerHTML = "";
+
+  // Display options as buttons
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.className = "option-button";
+    button.dataset.index = index;
+    button.addEventListener("click", () => selectAnswer(index));
+
+    // Apply the selected state if this option was previously selected
+    if (answers[currentQuestionIndex] === index) {
+      button.classList.add("selected");
+    }
+
+    optionsContainer.appendChild(button);
+  });
+
+  // Enable/Disable navigation buttons based on the current index
+  document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
+  document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
+  updateProgress();
+}
+
+// Initialize the first question on page load
+updateQuestion();
 
 
 function startTimer() {
