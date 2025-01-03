@@ -10172,7 +10172,10 @@ function endExam(autoSubmit = false) {
     document.getElementById("confirmNo").onclick = function () {
       modal.style.display = "none";
       console.log("Submission canceled");
-      // Timer continues running
+      // Ensure the timer continues running
+      if (!autoSubmit) {
+        startTimer(); // Restart the timer if it was stopped
+      }
     };
 
     return; // Prevent further execution until the user confirms
@@ -10184,6 +10187,7 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
 }
 
+  
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
