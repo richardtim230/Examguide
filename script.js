@@ -10043,34 +10043,26 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
           }
 
-    let practiceMode = false;
-let timer = 30; // default timer in seconds
+    let isPracticeMode = false; // State variable to track the mode
 
-// Function to start the timer
-function startTimer() {
-    let timeLeft = timer;
-    const timerInterval = setInterval(() => {
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            // Handle timer end (e.g., submit answers)
-        } else {
-            timeLeft--;
-            console.log(timeLeft); // Update this to display the timer in the UI
-        }
-    }, 1000);
-}
-
-// Function to set practice mode
-function setPracticeMode(isPractice) {
-    practiceMode = isPractice;
-    if (practiceMode) {
-        timer = 30; // Set default timer for practice mode
+// Function to switch modes
+function switchMode() {
+    isPracticeMode = !isPracticeMode;
+    if (isPracticeMode) {
+        alert("Switched to Practice Mode. Timer set to 30 seconds.");
+        // Set the timer to 30 seconds for practice mode
+        timeRemaining = 30;
+        startTimer();
+    } else {
+        alert("Switched to Exam Mode.");
+        // Set the timer to default for exam mode
+        timeRemaining = 3000;
         startTimer();
     }
 }
 
-// Example usage: Set practice mode to true
-setPracticeMode(true);
+// Event listener for the switch mode button
+document.getElementById("switch-mode-btn").addEventListener("click", switchMode);
             
 function startExam() {
   subjectTitle.textContent = subCourseName;
