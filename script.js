@@ -9952,8 +9952,7 @@ document.getElementById("submit-code").addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
   showSection(courseSelectionSection);
 });
-  
-nextBtn.addEventListener('click', () => {
+  document.getElementById("next-question").addEventListener('click', () => {
   if (currentStep < tourSteps.length - 1) {
     saveAnswer();
     currentStep++;
@@ -9961,7 +9960,7 @@ nextBtn.addEventListener('click', () => {
   }
 });
 
-prevBtn.addEventListener('click', () => {
+document.getElementById("prev-question").addEventListener('click', () => {
   if (currentStep > 0) {
     saveAnswer();
     currentStep--;
