@@ -10,6 +10,12 @@ body {
   overflow: hidden; /* Prevent scrolling */
   color: black;
 }
+/* Container */
+.container {
+  display: -webkit-box;    /* Old Safari */
+  display: -ms-flexbox;    /* IE 10 */
+  display: flex;           /* Standard */
+}
 
 
 body::before {
@@ -1514,4 +1520,14 @@ text-align: center;
 
   background: #d32f2f;
 
+}
+@media (max-width: 768px) {
+  .logo {
+    width: 100%;
+    height: auto;
+  }
+  #login-box, #register-box, #paymentPage {
+    width: 90%;
+    margin: auto;
+  }
 }
