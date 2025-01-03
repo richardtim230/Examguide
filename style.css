@@ -38,8 +38,7 @@ button {
   font-size: 2rem;
   cursor: pointer;
   position: absolute;
-        padding: 2px;
-        background: blue;
+        background: none;
         border-radius: 25%;
   right: 1px;
 }
