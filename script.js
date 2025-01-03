@@ -10187,7 +10187,9 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
 }
 
-  
+  function startTimer() {
+  // Timer implementation
+      }
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
@@ -10240,16 +10242,14 @@ function endExam() {
     const downloadBtn = document.getElementById("download-btn");
 
     if (downloadBtn) {
-      downloadBtn.addEventListener("click", downloadResultsAsPDF);
+      downloadBtn.addEventListener("click", () => {
+        console.log("Download button clicked!");
+        downloadResultsAsPDF();
+      });
     } else {
       console.error("Download button not found.");
     }
   });
-
-    document.getElementById("download-btn").addEventListener("click", () => {
-  console.log("Download button clicked!");
-  downloadResultsAsPDF();
-});
 
   function downloadResultsAsPDF() {
     const resultContent = document.getElementById("summarySection");
@@ -10271,11 +10271,6 @@ function endExam() {
   }
 })();
 
-  document.getElementById('confirmNo').onclick = function () {
-    modal.style.display = 'none';
-    // Prevent further actions when "No" is clicked
-    return;
-  };
 }
 
 
