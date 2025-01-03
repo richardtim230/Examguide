@@ -9960,12 +9960,17 @@ document.getElementById("end-exam").addEventListener("click", () => {
 });
 
 document.getElementById("restart-exam").addEventListener("click", () => {
+  // Clear previous exam session data
   questions = [];
-  let answers = [];
+  answers = [];  // Clear previously selected answers
   currentQuestionIndex = 0;
   subCourseName = "";
   timeRemaining = 3000;
+  
+  // Stop any running timer
   clearInterval(timerInterval);
+  
+  // Show the initial course selection section
   showSection(courseSelectionSection);
 });
 
@@ -10178,6 +10183,7 @@ function endExam(autoSubmit = false) {
   console.log("Time's up! Auto-submitting exam...");
   finalizeSubmission();
 }
+
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
