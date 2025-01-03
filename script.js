@@ -10022,7 +10022,7 @@ function updateQuestion() {
     optionsContainer.appendChild(button);
   });
 
-
+}
 
 
 function createProgress() {
