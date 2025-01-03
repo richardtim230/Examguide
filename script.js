@@ -10023,11 +10023,7 @@ function updateQuestion() {
   });
 
 
-  // Enable/Disable navigation buttons based on the current index
-  document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
-  document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
-  updateProgress();
-}
+
 
 function createProgress() {
   progressContainer.innerHTML = "";
