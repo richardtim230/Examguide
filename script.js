@@ -10043,27 +10043,7 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
           }
 
-    let isPracticeMode = false; // State variable to track the mode
-
-// Function to switch modes
-function switchMode() {
-    isPracticeMode = !isPracticeMode;
-    if (isPracticeMode) {
-        alert("Switched to Practice Mode. Timer set to 30 seconds.");
-        // Set the timer to 30 seconds for practice mode
-        timeRemaining = 30;
-        startTimer();
-    } else {
-        alert("Switched to Exam Mode.");
-        // Set the timer to default for exam mode
-        timeRemaining = 3000;
-        startTimer();
-    }
-}
-
-// Event listener for the switch mode button
-document.getElementById("switch-mode-btn").addEventListener("click", switchMode);
-            
+    
 function startExam() {
   subjectTitle.textContent = subCourseName;
   showSection(examSection);
