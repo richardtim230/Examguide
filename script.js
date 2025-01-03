@@ -10271,17 +10271,11 @@ function endExam() {
   }
 })();
   
-document.getElementById("confirmNo").onclick = function () {
-      modal.style.display = "none";
-      console.log("Submission canceled");
-      // Ensure the timer continues running
-      if (!autoSubmit) {
-        startTimer(); // Restart the timer if it was stopped
-      }
-    };
-
-    return; // Prevent further execution until the user confirms
-                            }
+document.getElementById('confirmNo').onclick = function () {
+    modal.style.display = 'none';
+    // Prevent further actions when "No" is clicked
+    return;
+  };
 }
 
 
