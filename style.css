@@ -32,6 +32,19 @@ button {
   pointer-events: auto;
 }
 
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.icon-btn:hover {
+  color: #007BFF; /* Change color on hover for better UX */
+        }
 
 
 /* Notification covers 90% of the screen */
