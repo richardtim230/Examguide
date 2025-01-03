@@ -40,9 +40,7 @@ button {
   position: absolute;
         padding: 5px;
         background: blue;
-        border-radius: 100%;
-  top: 20px;
-  right: 0px;
+        border-radius: 25%;
 }
 
 .icon-btn:hover {
