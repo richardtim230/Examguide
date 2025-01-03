@@ -10270,7 +10270,18 @@ function endExam() {
     html2pdf().set(options).from(resultContent).save();
   }
 })();
+  
+document.getElementById("confirmNo").onclick = function () {
+      modal.style.display = "none";
+      console.log("Submission canceled");
+      // Ensure the timer continues running
+      if (!autoSubmit) {
+        startTimer(); // Restart the timer if it was stopped
+      }
+    };
 
+    return; // Prevent further execution until the user confirms
+                            }
 }
 
 
