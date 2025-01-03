@@ -32,7 +32,7 @@ button {
   pointer-events: auto;
 }
 
-.icon-btn {
+#icon-btn {
   
   border: none;
   font-size: 2rem;
