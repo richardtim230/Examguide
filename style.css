@@ -1521,13 +1521,4 @@ text-align: center;
   background: #d32f2f;
 
 }
-@media (max-width: 768px) {
-  .logo {
-    width: 100%;
-    height: auto;
-  }
-  #login-box, #register-box, #paymentPage {
-    width: 90%;
-    margin: auto;
-  }
-}
+
