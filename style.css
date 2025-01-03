@@ -38,14 +38,14 @@ button {
   font-size: 2rem;
   cursor: pointer;
   position: absolute;
-        padding: 5px;
+        padding: 2px;
         background: blue;
         border-radius: 25%;
   right: 1px;
 }
 
 .icon-btn:hover {
-  color: #007BFF; /* Change color on hover for better UX */
+  color: yellow; /* Change color on hover for better UX */
         }
 
 
