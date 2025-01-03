@@ -903,7 +903,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           
   const questionBanks = {
     Mathematics: {
-        "MTH105": {
+        "MTH105-1": {
         title: "Mathematics for Biological Sciences",
         questions: [
           {
@@ -1515,7 +1515,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       },
            
-      "MTH101": {
+      "MTH101-1": {
         title: "General Mathematics for Physical Sciences and Engineering Students",
         questions: [
    {
@@ -4427,7 +4427,7 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Biometry/Biostatistics",
         questions: [
           {
-  text: "Which of the following is an example of an infinite set? <br><img src='row-bookcases_23-2147679267.webp' alt='Infinite Set Image' class='question-image'>",
+  text: "Which of the following is an example of an infinite set? <br><img src='row-bookcases_23-2147679267.webp' alt='Infinite Set Image' class='question-image' style=height: 5px, width: 5px>",
   options: [
     "{x | x is a natural number between 1 and 10}",
     "{x | x is an integer}",
@@ -4441,7 +4441,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       },
            
-      "PHY105": {     
+      "PHY105-1": {     
       title: "INTRODUCTORY PHYSICS FOR BIOLOGICAL SCIENCES",
         questions: [
           { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
@@ -6517,7 +6517,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   }, 
 
     Chemistry: {
-    "CHM101": {
+    "CHM101-1": {
       title: "Introductory Chemistry 1",
       questions: [                              
   {
