@@ -10042,6 +10042,35 @@ function endExam(autoSubmit = false) {
   console.log("Time's up! Auto-submitting exam...");
   finalizeSubmission();
           }
+
+    let practiceMode = false;
+let timer = 30; // default timer in seconds
+
+// Function to start the timer
+function startTimer() {
+    let timeLeft = timer;
+    const timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            // Handle timer end (e.g., submit answers)
+        } else {
+            timeLeft--;
+            console.log(timeLeft); // Update this to display the timer in the UI
+        }
+    }, 1000);
+}
+
+// Function to set practice mode
+function setPracticeMode(isPractice) {
+    practiceMode = isPractice;
+    if (practiceMode) {
+        timer = 30; // Set default timer for practice mode
+        startTimer();
+    }
+}
+
+// Example usage: Set practice mode to true
+setPracticeMode(true);
             
 function startExam() {
   subjectTitle.textContent = subCourseName;
@@ -10256,9 +10285,6 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
 }
 
-  function startTimer() {
-  // Timer implementation
-      }
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
