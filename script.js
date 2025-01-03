@@ -9978,7 +9978,7 @@ let isPracticeMode = false;
 
 document.getElementById("switch-mode-btn").addEventListener("click", () => {
   isPracticeMode = !isPracticeMode;
-  document.getElementById("switch-mode-btn").textContent = isPracticeMode ? "Switch to Exam Mode" : "Switch to Practice Mode";
+  document.getElementById("switch-mode-btn").textContent = isPracticeMode ? "📝" : "📖";
 });
 
 function startExam() {
