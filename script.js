@@ -843,11 +843,16 @@ backToLoginPaymentBtn.addEventListener("click", () => {
 
 
 
-  continueBtn.addEventListener("click", () => {
-  // Hide overlay and show the main application
-  overlay.style.display = "none"; // Completely hide the overlay
-  app.style.display = "block"; // Display the main app content
-  document.body.classList.remove("modal-active"); // Re-enable scrolling
+  // Continue Button Event Listener
+continueBtn.addEventListener("click", () => {
+    // Hide overlay and show the main application
+    overlay.style.display = "none"; // Completely hide the overlay
+    app.style.display = "block"; // Display the main app content
+    app.style.body.overflow = 'auto';
+
+    // Start the tour after the welcome page
+    overlay.style.display = 'flex';
+    showStep(currentStep);
 });
   
     // Expiry Logic
