@@ -9952,21 +9952,6 @@ document.getElementById("submit-code").addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
   showSection(courseSelectionSection);
 });
-  document.getElementById("next-question").addEventListener('click', () => {
-  if (currentStep < tourSteps.length - 1) {
-    saveAnswer();
-    currentStep++;
-    showStep(currentStep);
-  }
-});
-
-document.getElementById("prev-question").addEventListener('click', () => {
-  if (currentStep > 0) {
-    saveAnswer();
-    currentStep--;
-    showStep(currentStep);
-  }
-});
 
 
 document.getElementById("end-exam").addEventListener("click", () => {
@@ -10114,6 +10099,18 @@ function updateQuestion() {
   document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
   updateProgress();
 }
+
+  document.getElementById("next-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex++;
+  updateQuestion();
+});
+
+document.getElementById("prev-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex--;
+  updateQuestion();
+});
 
 // Initialize the first question on page load
 updateQuestion();
