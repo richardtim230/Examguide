@@ -9974,6 +9974,75 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   showSection(courseSelectionSection);
 });
 
+let isPracticeMode = false;
+
+document.getElementById("switch-mode-btn").addEventListener("click", () => {
+  isPracticeMode = !isPracticeMode;
+  document.getElementById("switch-mode-btn").textContent = isPracticeMode ? "Switch to Exam Mode" : "Switch to Practice Mode";
+});
+
+function startExam() {
+  subjectTitle.textContent = subCourseName;
+  showSection(examSection);
+  createProgress();
+  updateQuestion();
+  if (!isPracticeMode) {
+    startTimer();
+  }
+}
+
+function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
+
+  // Deselect all option buttons
+  const allOptions = document.querySelectorAll(".option-button");
+  allOptions.forEach((button) => button.classList.remove("selected"));
+
+  // Mark the clicked button as selected
+  const selectedButton = allOptions[index];
+  selectedButton.classList.add("selected");
+
+  if (isPracticeMode) {
+    // Display correct answer and explanation
+    const question = questions[currentQuestionIndex];
+    const explanation = document.createElement("div");
+    explanation.innerHTML = `<strong>Correct Answer: ${question.options[question.correct]}</strong><br>Explanation: ${question.explanation}`;
+    optionsContainer.appendChild(explanation);
+  }
+
+  updateProgress();
+}
+
+function endExam(autoSubmit = false) {
+  if (!autoSubmit) {
+    // Show the confirmation modal
+    const modal = document.getElementById("confirmationModal");
+    modal.style.display = "flex";
+
+    // Handle "Yes" button
+    document.getElementById("confirmYes").onclick = function () {
+      modal.style.display = "none";
+      clearInterval(timerInterval); // Stop the timer
+      console.log("Exam submitted!");
+      finalizeSubmission();
+    };
+
+    // Handle "No" button
+    document.getElementById("confirmNo").onclick = function () {
+      modal.style.display = "none";
+      console.log("Submission canceled");
+      // Timer continues running
+    };
+
+    return; // Prevent further execution until the user confirms
+  }
+
+  // Auto-submit (e.g., when time runs out)
+  clearInterval(timerInterval);
+  console.log("Time's up! Auto-submitting exam...");
+  finalizeSubmission();
+          }
+            
 function startExam() {
   subjectTitle.textContent = subCourseName;
   showSection(examSection);
