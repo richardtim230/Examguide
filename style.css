@@ -1369,7 +1369,7 @@ text-align: center;
 
 #tour-modal {
 
-  width: 80%;
+  width: 90%;
 
   max-width: 800px;
 
@@ -1480,7 +1480,7 @@ text-align: center;
 
   transition: background 0.3s ease;
 
-  gap: 0.5rem;
+  gap: 0.6rem;
 
 }
 
