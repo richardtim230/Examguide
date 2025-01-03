@@ -16,7 +16,9 @@ body {
   display: -ms-flexbox;    /* IE 10 */
   display: flex;           /* Standard */
 }
-
+.modal-active {
+  overflow: hidden;
+        }
 
 body::before {
   content: '';
