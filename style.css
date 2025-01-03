@@ -41,6 +41,7 @@ button {
         padding: 5px;
         background: blue;
         border-radius: 25%;
+  right: 1px;
 }
 
 .icon-btn:hover {
