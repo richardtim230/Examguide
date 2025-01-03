@@ -844,11 +844,11 @@ backToLoginPaymentBtn.addEventListener("click", () => {
 
 
   continueBtn.addEventListener("click", () => {
-    // Hide overlay and show the main application
-    overlay.style.display = "none"; // Completely hide the overlay
-    app.style.display = "block"; // Display the main app content
-    app.style.body.overflow = 'auto';
-  });
+  // Hide overlay and show the main application
+  overlay.style.display = "none"; // Completely hide the overlay
+  app.style.display = "block"; // Display the main app content
+  document.body.classList.remove("modal-active"); // Re-enable scrolling
+});
   
     // Expiry Logic
   const expiryDays = 365;
