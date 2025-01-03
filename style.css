@@ -1362,7 +1362,7 @@ text-align: center;
 
   justify-content: center;
 
-  z-index: -4;
+  z-index: -10;
         overflow-y: auto;
 
 }
