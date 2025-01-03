@@ -38,11 +38,11 @@ button {
   font-size: 2rem;
   cursor: pointer;
   position: absolute;
-        padding: 10px;
+        padding: 5px;
         background: blue;
-        border-radius: 50%;
+        border-radius: 100%;
   top: 20px;
-  right: 5px;
+  right: 0px;
 }
 
 .icon-btn:hover {
