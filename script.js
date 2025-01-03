@@ -10117,6 +10117,13 @@ updateQuestion();
 
 
 function startTimer() {
+  // Remove existing timer container if it exists
+  const existingTimerDisplay = document.getElementById("timer-display");
+  if (existingTimerDisplay) {
+    existingTimerDisplay.remove();
+  }
+
+  // Create a new timer container
   const timerDisplay = document.createElement("div");
   timerDisplay.id = "timer-display";
   timerDisplay.style.margin = "1rem 0";
