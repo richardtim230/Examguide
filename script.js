@@ -290,26 +290,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-let isPracticeMode = false; // State variable to track the mode
-
-// Function to switch modes
-function switchMode() {
-    isPracticeMode = !isPracticeMode;
-    if (isPracticeMode) {
-        alert("Switched to Practice Mode. Timer set to 30 seconds.");
-        // Set the timer to 30 seconds for practice mode
-        timeRemaining = 30;
-        startTimer();
-    } else {
-        alert("Switched to Exam Mode.");
-        // Set the timer to default for exam mode
-        timeRemaining = 3000;
-        startTimer();
-    }
-}
-
-// Event listener for the switch mode button
-document.getElementById("switch-mode-btn").addEventListener("click", switchMode);
 
 document.addEventListener("copy", function (e) {
             e.preventDefault();
@@ -10009,17 +9989,7 @@ document.getElementById("switch-mode-btn").addEventListener("click", () => {
   resetApp();
 });
 
-// Start the exam
-function startExam() {
-  subjectTitle.textContent = "Exam Title Here";
-  showSection(examSection);
-  createProgress();
-  updateQuestion();
-  if (!isPracticeMode) {
-    timeRemaining = 3000; // Default exam time
-    startTimer();
-  }
-}
+
 
 // Reset the app for mode switch
 function resetApp() {
@@ -10105,22 +10075,6 @@ function startTimer() {
   }, 1000);
 }
 
-// Show the desired section
-function showSection(section) {
-  document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
-  section.style.display = "block";
-}
-
-// Create progress bar
-function createProgress() {
-  progressDisplay.style.width = `0%`;
-}
-
-function updateProgress() {
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-  progressDisplay.style.width = `${progress}%`;
-}
-
 
 function endExam(autoSubmit = false) {
   if (!autoSubmit) {
@@ -10153,14 +10107,18 @@ function endExam(autoSubmit = false) {
           }
 
     
+// Start the exam
 function startExam() {
-  subjectTitle.textContent = subCourseName;
+  subjectTitle.textContent = "Exam Title Here";
   showSection(examSection);
   createProgress();
   updateQuestion();
-  startTimer();
+  if (!isPracticeMode) {
+    timeRemaining = 3000; // Default exam time
+    startTimer();
+  }
 }
-
+        
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
   
