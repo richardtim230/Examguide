@@ -6564,7 +6564,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   {
     text: "100.0 mL of 0.15 M aqueous HF (Kₐ = 6.8 × 10⁻⁴) is mixed with 125.0 mL of 0.23 M NaF. What is the pH of the resulting solution?",
     options: ["2.17", "3.45", "3.17", "3.35"],
-    correct: 2,
+    correct: 1,
     explanation: "This is a buffer solution containing a weak acid (HF) and its conjugate base (F⁻). We can use the Henderson-Hasselbalch equation: pH = pKₐ + log([A⁻]/[HA]), where [A⁻] is the concentration of the conjugate base (F⁻) and [HA] is the concentration of the weak acid (HF). First, calculate the new concentrations after mixing the two solutions. Then calculate pKₐ = -log(Kₐ) Then plug into the Henderson-Hasselbalch equation to get the pH which is approximately 3.17."
   },
   {
@@ -6588,13 +6588,13 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   {
     text: "What is [H₃O⁺] in a solution formed by dissolving 1.00 g NH₄Cl (M = 53.5) in 30.0 mL of 3.00 M NH₃ (Kᵦ = 1.8 × 10⁻⁵)?",
     options: ["1.15 × 10⁻¹¹ M", "5.53 × 10⁻¹⁰ M", "2.71 × 10⁻⁹ M", "1.44 × 10⁻¹² M"],
-    correct: 1,
+    correct: 0,
     explanation: "This involves a weak base (NH₃) and its conjugate acid (NH₄⁺). First, calculate the moles of NH₄Cl and its concentration after dissolving. This is a buffer solution. We can use the Henderson-Hasselbalch equation, modified for a weak base and conjugate acid: pOH = pKb + log([NH₄⁺]/[NH₃]). Calculate pKb = -log(Kb) and substitute into the equation. Solving for pOH and then calculating pH gives approximately 5.53 x 10⁻¹⁰ M"
   },
   {
     text: "0.100 mol of HF (Kₐ = 6.6 × 10⁻⁴) is added to water to make 1.00 L of solution. Which statement is correct at equilibrium?",
     options: ["[HF] > [F⁻]", "[H₃O⁺] = 0.100 M", "[H₃O⁺] = [F⁻]", "[H₃O⁺] > [HF]"],
-    correct: 2,
+    correct: 0,
     explanation: "For a weak acid like HF, the equilibrium is established between the undissociated acid (HF) and its conjugate base (F⁻). The hydronium ion concentration [H₃O⁺] will approximately equal the concentration of the conjugate base [F⁻] at equilibrium because each HF molecule that dissociates produces one H₃O⁺ and one F⁻ ion."
   },
   {
@@ -6612,14 +6612,14 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   {
     text: "If 40.00 mL of 1.600 M HCl and 60.00 mL of 2.000 M NaOH are mixed, what are the respective molar concentrations of OH⁻, Cl⁻, and Na⁺ in the resulting solution?",
     options: ["1.200, 0.560, 0.640 M", "1.200, 0.640, 1.200 M", "0.640, 0.560, 1.200 M", "1.200, 0.640, 0.560 M"],
-    correct: 1,
+    correct: 0,
     explanation: "HCl reacts with NaOH in a 1:1 molar ratio. Moles of HCl = 0.040 × 1.600 = 0.064 mol. Moles of NaOH = 0.060 × 2.000 = 0.120 mol. After reaction, excess OH⁻ = 0.120 - 0.064 = 0.056 mol. Total volume = 0.040 + 0.060 = 0.100 L. Concentration of OH⁻ = 0.056 ÷ 0.100 = 0.560 M, Cl⁻ = 0.064 ÷ 0.100 = 0.640 M, Na⁺ = (0.120 ÷ 0.100) = 1.200 M."
   },
   {
     text: "Nitrogen gas can be prepared by passing gaseous ammonia over solid copper(II) oxide at high temperatures. The other products of the reaction are solid copper and water vapour. If 18.1 g NH₃ is reacted with 90.4 g of CuO, how many grams of N₂ will be formed? [NH₃ = 17; CuO = 79.5]",
     options: ["10.6 g", "11.6 g", "12.6 g", "13.6 g"],
-    correct: 1,
-    explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol. Mass of N₂ = 0.5325 × 28 = 11.6 g."
+    correct: 0,
+    explanation: "The balanced reaction is 2NH₃ + 3CuO → N₂ + 3Cu + 3H₂O. Moles of NH₃ = 18.1 ÷ 17 = 1.065 mol. Moles of CuO = 90.4 ÷ 79.5 = 1.137 mol. From the stoichiometry, 2 mol NH₃ reacts with 3 mol CuO. Thus, NH₃ is limiting. Moles of N₂ formed = 1.065 ÷ 2 = 0.5325 mol."
   },
   {
     text: "Calculate the number of Cl⁻ ions in 1.75 L of 1.0 × 10⁻³ M AlCl₃. [Nₐ = 6.02 × 10²³/mol]",
@@ -6649,8 +6649,8 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   {
     text: "If L = mrω, where m = 5.79 ± 0.03 kg, r = 15.19 ± 0.02 m, ω = 21.609 ± 0.004 s⁻¹, calculate the percentage relative standard error in L:",
     options: ["5.81%", "5.81 × 10⁻³%", "0.581%", "3.38 × 10⁻³%"],
-    correct: 0,
-    explanation: "To calculate the percentage relative standard error in L, we first need to find the standard error in L. Since L = mrω, we can use the formula for the propagation of uncertainty:\n\n(ΔL/L)² = (Δm/m)² + (Δr/r)² + (Δω/ω)²\n\nPlugging in the values:\n\n(ΔL/L)² = (0.03/5.79)² + (0.02/15.19)² + (0.004/21.609)² ≈ 2.68 × 10⁻⁴ + 1.73 × 10⁻⁵ + 3.46 × 10⁻⁶ ≈ 2.88 × 10⁻⁴\n\nΔL/L ≈ √(2.88 × 10⁻⁴) ≈ 0.017\n\nPercentage relative standard error = (ΔL/L) × 100% ≈ 0.017 × 100% ≈ 1.7%. The closest option is 5.81%, however, there may be calculation errors in the options provided."
+    correct: 2,
+    explanation: "To solve, first understand the different types of formulas involed. Relative Standard error is calculated using the formula (ΔL/L)² = (Δm/m)² + 2(Δr/r)² + (Δω/ω)². Note that the ∆ of any quantity means the error of that quantity. So inputting all necessary values, the  % relative standard error would be 0.581%." 
   },
   {
     text: "The number of protons contained in a given nucleus is called:",
@@ -6689,12 +6689,6 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
     explanation: "Let's denote the initial rate as R₁ = k[A]²[B]. When [A] is doubled and [B] is halved, the new rate R₂ = k(2[A])²(½[B]) = k(4[A]²)(½[B]) = 2k[A]²[B] = 2R₁. Therefore, the rate is doubled."
   },
   {
-    text: "The rate law for a hypothetical reaction A + B → Products is Rate = k[A]ⁿ[B]ᵐ. The units of the rate constant are (assuming time is in seconds):",
-    options: ["mol⁻² dm⁶ s⁻¹", "mol⁻¹ dm³ s⁻¹", "mol⁻² dm⁶ s⁻²", "mol⁻¹ dm³ s⁻²"],
-    correct: 0,
-    explanation: "The units of the rate are always mol dm⁻³ s⁻¹. The units of k are determined by the overall order of the reaction (n + m). If the reaction is second order overall, then the units of k will be mol⁻¹ dm³ s⁻¹. If the reaction is third order overall, the units of k are mol⁻² dm⁶ s⁻¹."
-  },
-  {
     text: "Which statement(s) about the collision theory of reactions is/are correct?\nI. Molecules must have the correct spatial orientations for collisions to lead to reactions.\nII. Only collisions with an energy greater than a certain threshold lead to reactions.",
     options: ["Neither I nor II", "I only", "Both I and II", "II only"],
     correct: 2,
@@ -6726,15 +6720,15 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   }, 
   {
     text: "If an electron of mass 9.11 × 10⁻³¹ kg traveled at a speed of 1.0 × 10⁷ ms⁻¹, calculate the de Broglie wavelength of the electron. [Hint: h = 6.626 × 10⁻³⁴ Js]",
-    options: ["9.1 × 10⁴³ m", "7.27 × 10⁻¹¹ m", "7.27 × 10¹¹ m", "9.11 × 10⁻³¹ m"],
+    options: ["9.1 × 10⁻⁴³ m", "7.27 × 10⁻¹¹ m", "7.27 × 10¹¹ m", "9.11 × 10⁻³¹ m"],
     correct: 1,
     explanation: "The de Broglie wavelength (λ) is given by the equation λ = h / p, where h is Planck's constant (6.626 × 10⁻³⁴ Js) and p is the momentum of the electron. Momentum (p) = mass (m) × velocity (v). Therefore, p = (9.11 × 10⁻³¹ kg) × (1.0 × 10⁷ ms⁻¹) = 9.11 × 10⁻²⁴ kgms⁻¹. Substituting into the de Broglie equation: λ = (6.626 × 10⁻³⁴ Js) / (9.11 × 10⁻²⁴ kgms⁻¹) ≈ 7.27 × 10⁻¹¹ m."
   },
   {
     text: "Which of the following electronic configurations correctly depicts the configuration of Cu in shorthand form?",
-    options: ["[Ar]4s²3d⁸", "[Ar]4s²3d⁹", "[Ar]4s¹3d¹⁰", "[Ar]4s³3d¹⁰"],
-    correct: 2,
-    explanation: "Copper (Cu) is an exception to the Aufbau principle. While you might expect the configuration to be [Ar]4s²3d⁹, it's actually [Ar]4s¹3d¹⁰. A completely filled d subshell (d¹⁰) is more stable than a partially filled one, hence the electron configuration of Cu."
+    options: ["[Ar]4s²3d⁸", "[Ar]4s²3d⁹", "[Ar]4s¹3d¹⁰", "[Ar]4s¹3d¹⁰"],
+    correct: 3,
+    explanation: "Copper (Cu) is an exception to the Aufbau principle. While you might expect the configuration to be [Ar]4s²3d¹⁰, it's actually [Ar]4s¹3d¹⁰. A completely filled d subshell (d¹⁰) is more stable than a partially filled one, hence the electron configuration of Cu."
   },
   {
     text: "What orbital is described by the quantum numbers n = 3 and l = 1?",
@@ -6746,11 +6740,11 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   {
     text: "Which of the following is arranged in the order of decreasing electronegativity?",
     options: ["Li, N, B, F, Be", "F, B, Be, N, Li", "Li, Be, B, N, F", "F, N, B, Be, Li"],
-    correct: 3,
+    correct: 2,
     explanation: "Electronegativity is the ability of an atom to attract electrons in a chemical bond. Electronegativity generally increases across a period (from left to right) and decreases down a group. Fluorine (F) is the most electronegative element. Therefore, the correct order is F, N, B, Be, Li."
   },
   {
-    text: "Given the following elements: ¹⁹₉F, ¹⁷₈O, ¹⁷₈R, ²²₁₀S, ²⁰₈T, ²⁰₉U, which of these statements is untrue about the elements?",
+    text: "Given the following elements: ¹⁹₉P, ¹⁷₉Q, ³₁R, ²⁴₁₂S, ²⁰₁₀T, which of these statements is untrue about the elements?",
     options: ["T, R, P, and S are metals", "P and Q are isotopes", "R is an isotope of Hydrogen", "T is a noble gas"],
     correct: 0,
     explanation: "Let's analyze the statements, assuming 'P' and 'Q' were meant to be 'O' and 'F'.\n(A) T, R, P, and S are metals: This is untrue. Assuming R is Hydrogen (H) and the rest are the elements presented, Neon (Ne), Oxygen (O), and Fluorine (F) are nonmetals; the assumption about S needs clarification.\n(B) P and Q are isotopes: True if P and Q refer to isotopes of oxygen (O). Both are Oxygen but with different mass numbers.\n(C) R is an isotope of Hydrogen: True, if R stands for Hydrogen.\n(D) T is a noble gas: True, if T is Neon (Ne)."
@@ -6773,24 +6767,14 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
     correct: 2,
     explanation: "Both statements I and II are correct. For a reaction to occur, colliding molecules must not only possess sufficient kinetic energy (threshold energy) to overcome the activation energy barrier but also have the correct orientation so that bonds can break and form effectively. Only correctly oriented and sufficiently energetic collisions lead to product formation."
   },
-  {
-    text: "The following correctly describe Dalton's Atomic Theory EXCEPT?:\n(i) All atoms of the same element are identical having the same mass, volume, and chemical properties.\n(ii) All matter is made up of small tiny particles called atoms that are indivisible and indestructible.\n(iii) Atoms have positively charged nuclei where nearly all the mass is concentrated.\n(iv) Chemical combination takes place between atoms of different elements in simple whole numbers to form compounds.\n(v) The number of protons in the nucleus is a fundamental characteristic of an atom.",
-    options: ["I and III only", "III and V only", "II, III, and IV only", "V only"],
-    correct: 1,
-    explanation: "Dalton's atomic theory did NOT include the concept of subatomic particles or the internal structure of the atom (III). It proposed that atoms were indivisible and indestructible (II), all atoms of the same element are identical (I), atoms combine in simple whole number ratios (IV), and that elements are composed of atoms (implied by II). Statement V, while true, is a later refinement to atomic theory beyond Dalton's original postulates."
-  },
+  
   {
     text: "Which of the following statements is NOT correct about molecularity of a reaction?\nI. It is the number of the reacting species undergoing simultaneous collision in the elementary reaction.\nII. It is a theoretical concept.\nIII. It can assume zero value.\nIV. It is always a whole number.",
     options: ["I only", "II only", "III only", "IV only"],
     correct: 2,
     explanation: "Molecularity refers to the number of molecules or atoms that participate in an elementary reaction step. It is a theoretical concept because we cannot directly observe individual collisions. Molecularity is always a positive whole number; it cannot be zero or a fraction because you cannot have a fraction of a molecule."
   }, 
-  {
-    text: "Given the following elements: ¹⁹₉F, ¹⁷₈O, ¹⁷₈R, ²²₁₀S, ²⁰₈T, ²⁰₉U, which of these statements is untrue about the elements?\nI. T, R, P, and S are metals.\nII. P and Q are isotopes.\nIII. R is an isotope of Hydrogen.\nIV. T is a noble gas.",
-    options: ["I only", "II only", "III only", "IV only"],
-    correct: 0,
-    explanation: "Let's analyze the statements, assuming 'P' and 'Q' were meant to be 'O' and 'F':\n(I) T, R, P, and S are metals: This is untrue. Assuming R is Hydrogen (H), the rest are nonmetals (Ne, O, F), though S requires clarification.\n(II) P and Q are isotopes: True, if P and Q refer to isotopes of oxygen (O), having the same atomic number but different mass numbers.\n(III) R is an isotope of Hydrogen: True, if R stands for Hydrogen.\n(IV) T is a noble gas: True, if T represents Neon (Ne)."
-  },
+  
   {
     text: "Which of the following statements about the molecular orbital theory is/are correct?\nI. Bonding molecular orbitals are lower in energy than the atomic orbitals from which they are formed.\nII. Antibonding molecular orbitals are higher in energy than bonding molecular orbitals.\nIII. Electrons in bonding molecular orbitals increase bond strength.\nIV. Electrons in antibonding molecular orbitals decrease bond strength.",
     options: ["I and II only", "III and IV only", "I, II, and III only", "All of the above"],
@@ -7710,18 +7694,6 @@ correct: 1,
     explanation: "A large equilibrium constant (K) indicates that the equilibrium favors the products; therefore, the reaction lies to the right."
   },
   {
-    text: "For the reaction: A + B ⇌ C + D  6.0 moles of A and 5.0 moles of B are mixed together in a suitable container. When equilibrium is reached, 4.0 moles of C are produced. The equilibrium constant for this reaction is:",
-    options: ["K = 1/8", "K = 8", "K = 30/16", "K = 16/30"],
-    correct: 1,
-    explanation: "At equilibrium: Moles of C = 4.0, Moles of D = 4.0, Moles of A = 6.0 - 4.0 = 2.0, Moles of B = 5.0 - 4.0 = 1.0. K = [C][D]/[A][B] = (4.0)(4.0)/(2.0)(1.0) = 8.  The options seem to contain errors, the correct answer should be K=8"
-  },
-  {
-    text: "Consider the following reversible reaction: N₂(g) + 3H₂(g) ⇌ 2NH₃(g)  In a 3.00 L container, the following amounts are found in equilibrium at 400 °C: 0.0420 mol N₂, 0.516 mol H₂, and 0.0357 mol NH₃. Evaluate Kc:",
-    options: ["0.22", "1.99", "0.503", "4.94"],
-    correct: 1,
-    explanation: "Kc = [NH₃]²/([N₂][H₂]³).  Calculate the equilibrium concentrations by dividing moles by volume (3.00 L). Then substitute the concentrations into the Kc expression."
-  },
-  {
     text: "The contribution of Rutherford’s scattering experiment to the atomic model is:",
     options: ["The nuclear particles carry all of the mass of the ionizing gas atoms and their charge-to-mass ratio depending on the nature of the residual gas.", "The atom has a small but dense, centrally placed nucleus where nearly all the mass is concentrated and is positively charged.", "Cathode rays are electrons and are negatively charged.", "The atom consists of tiny particles at the center surrounded by orbiting electrons that are negatively charged."],
     correct: 1,
@@ -7751,18 +7723,7 @@ correct: 1,
     correct: 1,
     explanation: "Molar mass of N₂O₄ = (2 × 14) + (4 × 16) = 92 g/mol\nMoles of N₂O₄ = 3.00 g / 92 g/mol = 0.0326 mol\nMolecules of N₂O₄ = 0.0326 mol × 6.022 × 10²³ molecules/mol = 1.96 × 10²² molecules\nAtoms of N = 1.96 × 10²² molecules × 2 atoms N/molecule = 3.92 × 10²² atoms N. The closest answer is A, likely due to rounding differences in intermediate steps."
   },
-  {
-    text: "Aspartame is an artificial sweetener that is 160 times sweeter than sucrose when dissolved in water. The molecular formula is C₁₄H₁₈N₂O₅. What is the mass in grams of 1.0 × 10¹⁰ molecules of aspartame?",
-    options: ["1.661 × 10⁻¹³", "7.882 × 10⁻¹¹", "4.882 × 10⁻¹³", "3.051 × 10⁻¹⁵"],
-    correct: 1,
-    explanation: "Molar mass of aspartame = (14 × 12) + (18 × 1) + (2 × 14) + (5 × 16) = 294 g/mol\nMoles of aspartame = (1.0 × 10¹⁰ molecules) / (6.022 × 10²³ molecules/mol) = 1.661 × 10⁻¹⁴ mol\nMass of aspartame = 1.661 × 10⁻¹⁴ mol × 294 g/mol = 4.882 × 10⁻¹² g. The closest answer is B, likely a calculation error in the explanation."
-  },
-  {
-    text: "Fungal laccase, a blue protein found in wood-rotting fungi, is 63.09% Cu by mass. If a fungal laccase molecule contains four copper atoms, what is the molar mass of fungal laccase?",
-    options: ["6.51 × 10³ g/mol", "254 g/mol", "2.409 × 10²⁴ g/mol", "1294.50 g/mol"],
-    correct: 0,
-    explanation: "Mass of 4 Cu atoms = 4 × 63.5 g/mol = 254 g/mol\nLet x be the molar mass of fungal laccase.\n0.6309x = 254 g/mol\nx = 254 g/mol / 0.6309 ≈ 402.5 g/mol. The closest option is A, likely due to rounding differences."
-  },
+
   {
     text: "A compound contains only carbon, hydrogen, and oxygen. Combustion of 10.68 mg of the compound yields 16.01 mg CO₂ and 4.37 mg H₂O. Determine the empirical formula of the compound.",
     options: ["CHO", "C₃H₄O₃", "C₃H₆O₂", "C₂H₄O₂"],
@@ -7802,18 +7763,18 @@ correct: 1,
   {
     text: "A sample containing 33.42 g of metal pallets is poured into a graduated cylinder initially containing 12.7 ml of water, causing the water level in the cylinder to rise to 21.6 ml. Calculate the density of the metal.",
     options: ["8.9 g/ml", "37.5 g/ml", "3.76 g/ml", "3.75 g/ml"],
-    correct: 3,
+    correct: 2,
     explanation: "Volume of metal = 21.6 ml - 12.7 ml = 8.9 ml\nDensity = mass / volume = 33.42 g / 8.9 ml ≈ 3.76 g/ml"
   },
   {
     text: "A carbon-oxygen bond in a sample organic molecule absorbs radiation that has a frequency of 6.0 × 10¹² s⁻¹. What is the energy of this radiation per mole of photons?",
-    options: ["2.4 × 10³ J", "2.00 × 10⁻²³ J", "3.978 × 10²¹ J", "7.18 × 10¹¹ J"],
-    correct: 2,
+    options: ["2.4 × 10³ J", "2.00 × 10⁻¹⁴ J", "3.978 × 10⁻²¹ J", "7.18 × 10¹¹ J"],
+    correct: 0,
     explanation: "Energy of a photon (E) = hν = (6.63 × 10⁻³⁴ Js)(6.0 × 10¹² s⁻¹) = 3.98 × 10⁻²¹ Jper mole = (3.98 × 10⁻²¹ J/photon)(6.02 × 10²³ photons/mol) ≈ 2.39 × 10³ J/mol"
   },
   {
     text: "αK₄Fe(CN)₆ + bH₂SO₄ + cH₂O → dK₂SO₄ + eFeSO₄ + f(NH₄)₂SO₄ + gCO",
-    options: ["1, 6, 6, 2, 3, 1, 6", "6, 2, 3, 1, 1, 6, 3", "2, 1, 6, 6, 1, 6, 3", "2, 3, 4, 8, 1, 6, 6"],
+    options: ["1, 6, 6, 2, 1, 3, 6", "6, 2, 3, 1, 1, 6, 3", "2, 1, 6, 6, 1, 6, 3", "2, 3, 4, 8, 1, 6, 6"],
     correct: 0,
     explanation: "Balancing this redox reaction requires careful consideration of all atoms. The correct balanced equation is K₄Fe(CN)₆ + 6H₂SO₄ + 6H₂O → 2K₂SO₄ + FeSO₄ + 3(NH₄)₂SO₄ + 6CO."
   },
@@ -7824,22 +7785,22 @@ correct: 1,
     explanation: "Robert Millikan's oil drop experiment determined the charge of an electron, and using other data from Thomson's work, the mass could be calculated."
   },
   {
-    text: "An experiment requires 43.5 g of propan-2-ol. Instead of using a balance, a student dispensed the liquid into a measuring cylinder. If the density of propan-2-ol is 0.785 g/cm³, what volume of propan-2-ol should be used?",
-    options: ["34.3 cm³", "55.7 cm³", "1.80² cm³", "5.567 cm³"],
-    correct: 0,
-    explanation: "Volume = mass / density = 43.5 g / 0.785 g/cm³ ≈ 55.4 cm³"
+    text: "An experiment requires 43.7 g of propan-2-ol. Instead of using a balance, a student dispensed the liquid into a measuring cylinder. If the density of propan-2-ol is 0.785 g/cm³, what volume of propan-2-ol should be used?",
+    options: ["34.3 cm³", "55.7 cm³", "1.80⁻² cm³", "5.567 cm³"],
+    correct: 1,
+    explanation: "Volume = mass / density = 43.7 g / 0.785 g/cm³ ≈ 55.67 cm³"
   },
   {
     text: "An excited hydrogen atom emits light with a wavelength of 397.2 nm to reach the energy level for which n = 2. In which principal quantum number did the electron begin?",
     options: ["3", "5", "7", "9"],
-    correct: 1,
+    correct: 2,
     explanation: "Use the Rydberg formula: 1/λ = Rh(1/n₁² - 1/n₂²) where n₂ = 2 (final level) and λ = 397.2 nm = 397.2 × 10⁻⁹ m. Solve for n₁ (initial level)."
   },
   {
     text: "An atom of a particular element is travelling at 1", 
     options: ["⁴⁰Ca", "³⁹K", "⁹Be", "²³Na"],
-    correct: 1,
-    explanation: "Use the de Broglie equation: λ = h/mv.  The velocity (v) is 0.01c = 3 × 10⁶ m/s.  Calculate the mass (m) of the atom from the de Broglie wavelength. Then convert this mass to molar mass, and that molar mass matches most closely to K."
+    correct: 3,
+    explanation: "Use the de Broglie equation: λ = h/mv.  The velocity (v) is 0.01c = 3 × 10⁶ m/s.  Calculate the mass (m) of the atom from the de Broglie wavelength. Then convert this mass to molar mass, and that molar mass matches most closely to Na."
   }, 
   {
     text: "When NH₄NO₃(s) is dissolved in water, the solution that is formed is cold. For the process of dissolving NH₄NO₃(s) in water, indicate for each of ΔS, ΔH, and ΔG respectively if the value is negative, zero, or positive.",
