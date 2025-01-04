@@ -9999,44 +9999,128 @@ document.getElementById("restart-exam").addEventListener("click", () => {
   showSection(courseSelectionSection);
 });
 
-let isPracticeMode = false;
+  let isPracticeMode = false; // Track the mode
 
+// Event listener for the switch mode button
 document.getElementById("switch-mode-btn").addEventListener("click", () => {
   isPracticeMode = !isPracticeMode;
-  document.getElementById("switch-mode-btn").textContent = isPracticeMode ? "📝" : "📖";
+  document.getElementById("switch-mode-btn").textContent = isPracticeMode ? "📝 Practice Mode" : "📖 Exam Mode";
+  alert(isPracticeMode ? "Switched to Practice Mode. Timer set to 30 seconds." : "Switched to Exam Mode.");
+  resetApp();
 });
 
+// Start the exam
 function startExam() {
-  subjectTitle.textContent = subCourseName;
+  subjectTitle.textContent = "Exam Title Here";
   showSection(examSection);
   createProgress();
   updateQuestion();
   if (!isPracticeMode) {
+    timeRemaining = 3000; // Default exam time
     startTimer();
   }
 }
 
+// Reset the app for mode switch
+function resetApp() {
+  currentQuestionIndex = 0;
+  timeRemaining = isPracticeMode ? 30 : 3000; // Adjust timer based on mode
+  answers.length = 0;
+  startExam();
+}
+
+// Display the current question
+function updateQuestion() {
+  const question = questions[currentQuestionIndex];
+  const questionTitle = document.getElementById("question-title");
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+
+  // Clear and populate options
+  optionsContainer.innerHTML = "";
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.className = "option-button";
+    button.textContent = option;
+    button.onclick = () => selectAnswer(index);
+    optionsContainer.appendChild(button);
+  });
+}
+
+// Select an answer
 function selectAnswer(index) {
   answers[currentQuestionIndex] = index;
 
-  // Deselect all option buttons
+  // Deselect all buttons
   const allOptions = document.querySelectorAll(".option-button");
   allOptions.forEach((button) => button.classList.remove("selected"));
 
-  // Mark the clicked button as selected
+  // Highlight selected button
   const selectedButton = allOptions[index];
   selectedButton.classList.add("selected");
 
   if (isPracticeMode) {
-    // Display correct answer and explanation
+    // Show explanation in Practice Mode
     const question = questions[currentQuestionIndex];
     const explanation = document.createElement("div");
-    explanation.innerHTML = `<strong>Correct Answer: ${question.options[question.correct]}</strong><br>Explanation: ${question.explanation}`;
+    explanation.className = "explanation";
+    explanation.innerHTML = `<strong>Correct Answer:</strong> ${question.options[question.correct]}<br><strong>Explanation:</strong> ${question.explanation}`;
     optionsContainer.appendChild(explanation);
-  }
 
-  updateProgress();
+    // Automatically move to the next question after 30 seconds
+    setTimeout(() => {
+      nextQuestion();
+    }, 30000);
+  } else {
+    // Update progress and allow manual navigation in Exam Mode
+    updateProgress();
+  }
 }
+
+// Move to the next question
+function nextQuestion() {
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    updateQuestion();
+  } else {
+    endExam();
+  }
+}
+
+
+// Start the timer
+function startTimer() {
+  clearInterval(timer);
+  const timer = setInterval(() => {
+    if (timeRemaining > 0) {
+      timeRemaining--;
+      timerDisplay.textContent = `Time Remaining: ${timeRemaining}s`;
+    } else {
+      clearInterval(timer);
+      if (!isPracticeMode) {
+        endExam(); // End the exam in Exam Mode
+      } else {
+        nextQuestion(); // Move to next question in Practice Mode
+      }
+    }
+  }, 1000);
+}
+
+// Show the desired section
+function showSection(section) {
+  document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
+  section.style.display = "block";
+}
+
+// Create progress bar
+function createProgress() {
+  progressDisplay.style.width = `0%`;
+}
+
+function updateProgress() {
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  progressDisplay.style.width = `${progress}%`;
+}
+
 
 function endExam(autoSubmit = false) {
   if (!autoSubmit) {
