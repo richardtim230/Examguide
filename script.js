@@ -843,15 +843,15 @@ backToLoginPaymentBtn.addEventListener("click", () => {
 
 
 
+// Continue Button Event Listener
 continueBtn.addEventListener("click", () => {
     // Hide overlay and show the main application
-    welcomePopup.style.display = "none"; // Hide the welcome popup
+    overlay.style.display = "none"; // Completely hide the overlay
     app.style.display = "block"; // Display the main app content
-    document.body.style.overflow = 'auto';
+    app.style.body.overflow = 'auto';
 
     // Start the tour after the welcome page
-    const tourOverlay = document.getElementById('tour-overlay');
-    tourOverlay.style.display = 'flex';
+    overlay.style.display = 'flex';
     showStep(currentStep);
 });
   
