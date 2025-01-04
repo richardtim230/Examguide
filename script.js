@@ -9983,12 +9983,6 @@ document.getElementById("restart-exam").addEventListener("click", () => {
 let currentQuestionIndex = 0;
 let timeRemaining = 3000; // Default time for Exam Mode
 
-const subjectTitle = document.getElementById("subject-title");
-const examSection = document.getElementById("exam-section");
-const optionsContainer = document.getElementById("options-container");
-const timerDisplay = document.getElementById("timer");
-const progressDisplay = document.getElementById("progress-bar");
-
 // Event listener for the switch mode button
 document.getElementById("switch-mode-btn").addEventListener("click", () => {
   isPracticeMode = !isPracticeMode;
@@ -10084,20 +10078,44 @@ function endExam() {
 
 // Start the timer
 function startTimer() {
-  clearInterval(timer);
-  const timer = setInterval(() => {
-    if (timeRemaining > 0) {
-      timeRemaining--;
-      timerDisplay.textContent = `Time Remaining: ${timeRemaining}s`;
-    } else {
-      clearInterval(timer);
-      if (!isPracticeMode) {
-        endExam(); // End the exam in Exam Mode
+  // Remove existing timer container if it exists
+  const existingTimerDisplay = document.getElementById("timer-display");
+  if (existingTimerDisplay) {
+    existingTimerDisplay.remove();
+  }
+
+  // Create a new timer container
+  const timerDisplay = document.createElement("div");
+  timerDisplay.id = "timer-display";
+  timerDisplay.style.margin = "1rem 0";
+  timerDisplay.style.fontSize = "1.2rem";
+  examSection.insertBefore(timerDisplay, progressContainer);
+
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    timeRemaining--;
+    updateTimerDisplay();
+
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+
+      if (isPracticeMode) {
+        // Handle Practice Mode when time is up
+        showExplanation(); // Show the correct answer
       } else {
-        nextQuestion(); // Move to next question in Practice Mode
+        // Handle Exam Mode when time is up
+        alert("Time's up! The exam will be submitted automatically.");
+        endExam(true); // Auto-submit the exam
       }
     }
   }, 1000);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+  document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
 // Show the desired section
@@ -10132,50 +10150,10 @@ function updateQuestion() {
     optionsContainer.appendChild(button);
   });
 }
-
-// Select an answer
-function selectAnswer(index) {
-  answers[currentQuestionIndex] = index;
-
-  // Deselect all buttons
-  const allOptions = document.querySelectorAll(".option-button");
-  allOptions.forEach((button) => button.classList.remove("selected"));
-
-  // Highlight selected button
-  const selectedButton = allOptions[index];
-  selectedButton.classList.add("selected");
-
-  if (isPracticeMode) {
-    // Show explanation in Practice Mode
-    const question = questions[currentQuestionIndex];
-    const explanation = document.createElement("div");
-    explanation.className = "explanation";
-    explanation.innerHTML = `<strong>Correct Answer:</strong> ${question.options[question.correct]}<br><strong>Explanation:</strong> ${question.explanation}`;
-    optionsContainer.appendChild(explanation);
-
-    // Automatically move to the next question after 30 seconds
-    setTimeout(() => {
-      nextQuestion();
-    }, 30000);
-  } else {
-    // Update progress and allow manual navigation in Exam Mode
-    updateProgress();
-  }
-}
-
-// Move to the next question
-function nextQuestion() {
-  if (currentQuestionIndex < questions.length - 1) {
-    currentQuestionIndex++;
-    updateQuestion();
-  } else {
-    endExam();
-  }
-}
     
 // Start the exam
 function startExam() {
-  subjectTitle.textContent = "Exam Title Here";
+  subjectTitle.textContent = subCourseName;
   showSection(examSection);
   createProgress();
   updateQuestion();
@@ -10205,17 +10183,42 @@ function updateQuestion() {
   // Clear previous options
   optionsContainer.innerHTML = "";
 
-  // Display options as buttons
+// Display options as buttons
   question.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.addEventListener("click", () => selectAnswer(index));
     button.className = "option-button";
+    button.dataset.index = index;
+    button.addEventListener("click", () => selectAnswer(index));
+
+    // Apply the selected state if this option was previously selected
+    if (answers[currentQuestionIndex] === index) {
+      button.classList.add("selected");
+    }
+
     optionsContainer.appendChild(button);
   });
 
+  // Enable/Disable navigation buttons based on the current index
+  document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
+  document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
+  updateProgress();
 }
 
+  document.getElementById("next-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex++;
+  updateQuestion();
+});
+
+document.getElementById("prev-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex--;
+  updateQuestion();
+});
+
+// Initialize the first question on page load
+updateQuestion();
 
 function createProgress() {
   progressContainer.innerHTML = "";
@@ -10266,104 +10269,6 @@ function selectAnswer(index) {
   updateProgress();
 }
 
-function updateQuestion() {
-  const question = questions[currentQuestionIndex];
-
-  // Display question number along with the question text
-  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
-
-  // Handle the question image
-  if (question.image) {
-    questionImage.src = question.image;
-    questionImage.alt = "Question Image";
-    questionImage.classList.remove("hidden");
-  } else {
-    questionImage.src = "";
-    questionImage.alt = "";
-    questionImage.classList.add("hidden");
-  }
-
-  // Clear previous options
-  optionsContainer.innerHTML = "";
-
-  // Display options as buttons
-  question.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.className = "option-button";
-    button.dataset.index = index;
-    button.addEventListener("click", () => selectAnswer(index));
-
-    // Apply the selected state if this option was previously selected
-    if (answers[currentQuestionIndex] === index) {
-      button.classList.add("selected");
-    }
-
-    optionsContainer.appendChild(button);
-  });
-
-  // Enable/Disable navigation buttons based on the current index
-  document.getElementById("prev-question").disabled = currentQuestionIndex === 0;
-  document.getElementById("next-question").disabled = currentQuestionIndex === questions.length - 1;
-  updateProgress();
-}
-
-  document.getElementById("next-question").addEventListener("click", () => {
-  saveAnswer();
-  currentQuestionIndex++;
-  updateQuestion();
-});
-
-document.getElementById("prev-question").addEventListener("click", () => {
-  saveAnswer();
-  currentQuestionIndex--;
-  updateQuestion();
-});
-
-// Initialize the first question on page load
-updateQuestion();
-
-
-function startTimer() {
-  // Remove existing timer container if it exists
-  const existingTimerDisplay = document.getElementById("timer-display");
-  if (existingTimerDisplay) {
-    existingTimerDisplay.remove();
-  }
-
-  // Create a new timer container
-  const timerDisplay = document.createElement("div");
-  timerDisplay.id = "timer-display";
-  timerDisplay.style.margin = "1rem 0";
-  timerDisplay.style.fontSize = "1.2rem";
-  examSection.insertBefore(timerDisplay, progressContainer);
-
-  updateTimerDisplay();
-
-  timerInterval = setInterval(() => {
-    timeRemaining--;
-    updateTimerDisplay();
-
-    if (timeRemaining <= 0) {
-      clearInterval(timerInterval);
-
-      if (isPracticeMode) {
-        // Handle Practice Mode when time is up
-        showExplanation(); // Show the correct answer
-      } else {
-        // Handle Exam Mode when time is up
-        alert("Time's up! The exam will be submitted automatically.");
-        endExam(true); // Auto-submit the exam
-      }
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay() {
-  const minutes = Math.floor(timeRemaining / 60);
-  const seconds = timeRemaining % 60;
-  document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
-}
 
 function endExam(autoSubmit = false) {
   if (!autoSubmit) {
@@ -10395,12 +10300,6 @@ function endExam(autoSubmit = false) {
   clearInterval(timerInterval);
   console.log("Exam auto-submitted!");
   finalizeSubmission();
-}
-
-function finalizeSubmission() {
-  // Add your logic to finalize the exam submission here
-  // For example: calculating the score, saving answers to the database, etc.
-  alert("Exam finalized and submitted!");
 }
 
 
