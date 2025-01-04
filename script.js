@@ -9980,6 +9980,14 @@ document.getElementById("restart-exam").addEventListener("click", () => {
 });
 
   let isPracticeMode = false; // Track the mode
+let currentQuestionIndex = 0;
+let timeRemaining = 3000; // Default time for Exam Mode
+
+const subjectTitle = document.getElementById("subject-title");
+const examSection = document.getElementById("exam-section");
+const optionsContainer = document.getElementById("options-container");
+const timerDisplay = document.getElementById("timer");
+const progressDisplay = document.getElementById("progress-bar");
 
 // Event listener for the switch mode button
 document.getElementById("switch-mode-btn").addEventListener("click", () => {
@@ -9989,7 +9997,17 @@ document.getElementById("switch-mode-btn").addEventListener("click", () => {
   resetApp();
 });
 
-
+// Start the exam
+function startExam() {
+  subjectTitle.textContent = subCourseName;
+  showSection(examSection);
+  createProgress();
+  updateQuestion();
+  if (!isPracticeMode) {
+    timeRemaining = 3000; // Default exam time
+    startTimer();
+  }
+}
 
 // Reset the app for mode switch
 function resetApp() {
@@ -10056,6 +10074,13 @@ function nextQuestion() {
   }
 }
 
+// End the exam
+function endExam() {
+  alert("Exam Complete!");
+  // Display score and results
+  const score = answers.reduce((acc, answer, index) => acc + (answer === questions[index].correct ? 1 : 0), 0);
+  alert(`Your Score: ${score}/${questions.length}`);
+}
 
 // Start the timer
 function startTimer() {
@@ -10073,6 +10098,79 @@ function startTimer() {
       }
     }
   }, 1000);
+}
+
+// Show the desired section
+function showSection(section) {
+  document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
+  section.style.display = "block";
+}
+
+// Create progress bar
+function createProgress() {
+  progressDisplay.style.width = `0%`;
+}
+
+function updateProgress() {
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  progressDisplay.style.width = `${progress}%`;
+}
+
+// Display the current question
+function updateQuestion() {
+  const question = questions[currentQuestionIndex];
+  const questionTitle = document.getElementById("question-title");
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+
+  // Clear and populate options
+  optionsContainer.innerHTML = "";
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.className = "option-button";
+    button.textContent = option;
+    button.onclick = () => selectAnswer(index);
+    optionsContainer.appendChild(button);
+  });
+}
+
+// Select an answer
+function selectAnswer(index) {
+  answers[currentQuestionIndex] = index;
+
+  // Deselect all buttons
+  const allOptions = document.querySelectorAll(".option-button");
+  allOptions.forEach((button) => button.classList.remove("selected"));
+
+  // Highlight selected button
+  const selectedButton = allOptions[index];
+  selectedButton.classList.add("selected");
+
+  if (isPracticeMode) {
+    // Show explanation in Practice Mode
+    const question = questions[currentQuestionIndex];
+    const explanation = document.createElement("div");
+    explanation.className = "explanation";
+    explanation.innerHTML = `<strong>Correct Answer:</strong> ${question.options[question.correct]}<br><strong>Explanation:</strong> ${question.explanation}`;
+    optionsContainer.appendChild(explanation);
+
+    // Automatically move to the next question after 30 seconds
+    setTimeout(() => {
+      nextQuestion();
+    }, 30000);
+  } else {
+    // Update progress and allow manual navigation in Exam Mode
+    updateProgress();
+  }
+}
+
+// Move to the next question
+function nextQuestion() {
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    updateQuestion();
+  } else {
+    endExam();
+  }
 }
     
 // Start the exam
