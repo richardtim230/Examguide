@@ -10074,38 +10074,6 @@ function startTimer() {
     }
   }, 1000);
 }
-
-
-function endExam(autoSubmit = false) {
-  if (!autoSubmit) {
-    // Show the confirmation modal
-    const modal = document.getElementById("confirmationModal");
-    modal.style.display = "flex";
-
-    // Handle "Yes" button
-    document.getElementById("confirmYes").onclick = function () {
-      modal.style.display = "none";
-      clearInterval(timerInterval); // Stop the timer
-      console.log("Exam submitted!");
-      finalizeSubmission();
-    };
-
-    // Handle "No" button
-    document.getElementById("confirmNo").onclick = function () {
-      modal.style.display = "none";
-      console.log("Submission canceled");
-      // Timer continues running
-    };
-
-    return; // Prevent further execution until the user confirms
-  }
-
-  // Auto-submit (e.g., when time runs out)
-  clearInterval(timerInterval);
-  console.log("Time's up! Auto-submitting exam...");
-  finalizeSubmission();
-          }
-
     
 // Start the exam
 function startExam() {
@@ -10273,13 +10241,22 @@ function startTimer() {
   examSection.insertBefore(timerDisplay, progressContainer);
 
   updateTimerDisplay();
+
   timerInterval = setInterval(() => {
     timeRemaining--;
     updateTimerDisplay();
+
     if (timeRemaining <= 0) {
       clearInterval(timerInterval);
-      alert("Time's up! The exam will be submitted automatically.");
-      endExam(true); // Pass a flag to force submission
+
+      if (isPracticeMode) {
+        // Handle Practice Mode when time is up
+        showExplanation(); // Show the correct answer
+      } else {
+        // Handle Exam Mode when time is up
+        alert("Time's up! The exam will be submitted automatically.");
+        endExam(true); // Auto-submit the exam
+      }
     }
   }, 1000);
 }
@@ -10310,18 +10287,22 @@ function endExam(autoSubmit = false) {
       modal.style.display = "none";
       console.log("Submission canceled");
       // Ensure the timer continues running
-      if (!autoSubmit) {
-        startTimer(); // Restart the timer if it was stopped
-      }
+      startTimer(); // Restart the timer if it was stopped
     };
 
     return; // Prevent further execution until the user confirms
   }
 
-  // Auto-submit (e.g., when time runs out)
+  // Auto-submit logic for when the timer ends
   clearInterval(timerInterval);
-  console.log("Time's up! Auto-submitting exam...");
+  console.log("Exam auto-submitted!");
   finalizeSubmission();
+}
+
+function finalizeSubmission() {
+  // Add your logic to finalize the exam submission here
+  // For example: calculating the score, saving answers to the database, etc.
+  alert("Exam finalized and submitted!");
 }
 
 
