@@ -9980,8 +9980,6 @@ document.getElementById("restart-exam").addEventListener("click", () => {
 });
 
   let isPracticeMode = false; // Track the mode
-let currentQuestionIndex = 0;
-let timeRemaining = 3000; // Default time for Exam Mode
 
 // Event listener for the switch mode button
 document.getElementById("switch-mode-btn").addEventListener("click", () => {
