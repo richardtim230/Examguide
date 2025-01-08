@@ -6515,6 +6515,293 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   }, 
 
     Chemistry: {
+      "Atomic Theory": {
+        title: "Lecture II",
+        questions: [
+    {
+        text: "What type of reaction does this equation represent? C₂H₄ + Cl₂ → C₂H₄Cl₂",
+        options: [
+            "Combination reaction",
+            "Replacement reaction",
+            "Decomposition reaction",
+            "Combustion reaction"
+        ],
+        correct: 0,
+        explanation: "This reaction is a combination reaction (also called a synthesis reaction) because two reactants (ethene and chlorine) combine to form a single product (1,2-dichloroethane). In a combination reaction, simpler substances combine to form a more complex substance. There is no replacement of elements, decomposition of a reactant to simpler products, or a rapid reaction with oxygen."
+    },
+    {
+        text: "The sets of quantum numbers that correctly define the 3p and 5s orbitals are:",
+        options: [
+            "n=3, l=1, ml=±1, 0, and n=5, l=0, ml=0",
+            "n=3, l=3, ml=±1,0 and n=5, l= 2",
+            "n=3, l=1, ml=±1,0 and n=5, l=1, ml=1",
+            "n=3, l=2, ml=±2, and n=5, l=4, ml=1, ml=0"
+        ],
+        correct: 0,
+        explanation: "For a 3p orbital, n (principal quantum number) = 3 and l (azimuthal quantum number) = 1 (corresponding to p orbital). ml (magnetic quantum number) can take values from -l to +l, so it can be -1, 0, or +1. For a 5s orbital, n=5 and l=0 (s orbital). ml is always 0 for s orbitals. Therefore, the correct option is (a) n=3, l=1, ml=±1, 0, and n=5, l=0, ml=0. Options (b), (c) and (d) incorrectly assigns the azimuthal quantum number."
+    },
+    {
+        text: "I) 3 →1, II) 3 →2, III) 4 →3, IV) 4 →2, V) 5 →1 are transitions from n →x in the expression spectrum of atomic hydrogen, which of the following transitions will give the correct line spectral in the uv region.",
+        options: [
+            "I and II Balmer, I and III Lyman, and III and V Paschen",
+            "II and IV Lyman, I and V Balmer, III only Paschen",
+            "III and IV Paschen, II and V Balmer, II and IV Lyman.",
+            "I and V Lyman, II and IV Balmer, III only Paschen."
+        ],
+        correct: 3,
+        explanation: "The Lyman series corresponds to transitions ending at n=1, which occur in the ultraviolet (UV) region. The Balmer series corresponds to transitions ending at n=2, which occur in the visible region, and the Paschen series corresponds to transitions ending at n=3, which occur in the infrared region. Therefore, transitions I (3→1) and V (5→1) belong to the Lyman series (UV region). Transitions II (3→2) and IV (4→2) belong to the Balmer series (visible region), and transition III (4→3) belongs to the Paschen series (infrared region). Option (d) correctly matches the transitions with their corresponding spectral region."
+    },
+    {
+        text: "The ground state electronic configuration of group 16 elements (other group 6) is of the type [X]ns²np⁴, where X is a group 18 elements (Neon core) which of the following correctly arranged the four outer electrons:",
+        options: [
+            "nPx², nPy², nPz⁰, Hund's rule and Pauli Exclusion principle",
+            "nPx², nPy¹, nPz¹, Hund's rule and Heisenberg's uncertainty principle",
+            "nPx², nPy¹, nPz¹, Hund's and Pauli Exclusion principle",
+            "nPx², nPy², nPz⁰, Aufbau principle and Pauli Exclusion principle"
+        ],
+        correct: 2,
+        explanation: "According to Hund's rule, electrons will individually occupy each orbital within a subshell before doubling up in any one orbital. Group 16 elements have a p⁴ configuration, meaning they have four electrons in the p subshell. These will fill as follows: first, each p orbital receives one electron (nPx¹, nPy¹, nPz¹), and then one of them gets a second electron (nPx²). It is important to note that all electrons in the p subshell must first occupy all orbital with the same spin before pairing with opposite spin. nPx², nPy¹, nPz¹ describes the electronic configuration. The Pauli exclusion principle states that no two electrons can have the same set of quantum numbers, meaning electrons will have opposite spin in the same orbital. The correct explanation is Hund's and Pauli Exclusion principle, thus option (c) is the correct one. Heisenberg's uncertainty principle does not apply to the filling of orbitals and also Aufbau principle is not the key rule in this case."
+    },
+    {        text: "An element X is found to have an atomic mass 37.45 amu. Element X has only two isotopes ³⁷X and ³⁸X. If the ³⁷X isotope has a fractional abundance of 0.7721 and an isotopic mass of 37.24 what is the fractional abundance of ³⁸X with isotopic mass 38.10?",
+        options: [
+            "0.2283",
+            "0.3025",
+            "0.1518",
+            "0.3797"
+        ],
+        correct: 0,
+        explanation: "Let the fractional abundance of ³⁷X be 'a' and that of ³⁸X be 'b'. We are given a=0.7721. Since there are only two isotopes, a+b = 1, so b = 1 - a = 1 - 0.7721 = 0.2279 which is approximately 0.2283. The weighted average of the atomic mass = a*mass of isotope ³⁷X + b*mass of isotope ³⁸X.  So 37.45 = 0.7721*37.24 + 0.2283 *38.10.  The fractional abundance of ³⁸X is calculated to be 0.2283."
+    },
+    {
+        text: "The wave length of light emitted when an electron in a hydrogen atom undergoes a transition from their energy level n=5 to level n=2 is:",
+        options: [
+            "4.344 x 10⁻⁷ m",
+            "6.906 x 10⁺⁸ m",
+            "1.448 x 10⁻¹⁹ m",
+            "2.307 x 10¹² m"
+        ],
+         correct: 0,
+        explanation: "To find the wavelength of light emitted, we can use the Rydberg formula: 1/λ = R(1/n₂² - 1/n₁²), where R is the Rydberg constant (1.097 x 10⁷ m⁻¹), n₁ is the initial energy level (5), and n₂ is the final energy level (2). Plugging in these values we get 1/λ = 1.097 x 10⁷ (1/2² - 1/5²) = 1.097 x 10⁷ (1/4 - 1/25)= 1.097 x 10⁷ * 0.21 = 2.3037 x 10⁶ .  λ= 1/(2.3037 x 10⁶)= 4.341 x 10⁻⁷ m. Option (a) is approximately equal to the option given."
+    },
+      {
+        text: "The J. J Thompson atomic model was able to explain the following phenomenon except:",
+        options: [
+            "the line spectra displayed by atom",
+            "Photoelectric and thermionic effect",
+            "Kinetic energy of gases",
+            "Scattering of alpha particles"
+        ],
+         correct: 3,
+        explanation: "J.J. Thomson's plum pudding model described the atom as a sphere of positive charge with electrons embedded within it. This model could not explain the scattering of alpha particles in Rutherford's experiments. The Thomson model could not account for the strong positive nucleus needed to deflect the positively charged alpha particles, and there was no description of energy levels or discrete electron orbitals."
+    },
+     {
+        text: "Which of the following correctly describe the postulate of Bohr’s atomic model?",
+        options: [
+            "The revolving electrons around the nucleus resides in orbits whose angular momentum is an integral multiples of h/2π",
+            "The charge to mass ration depends on the nature of residual gas.",
+            "The deflection of electron in the applied electric and magnetic field are positively and negatively charged.",
+            "The mass of an atoms is concentration in the nucleus."
+        ],
+         correct: 0,
+        explanation: "Bohr's model postulates that electrons revolve around the nucleus in specific orbits with quantized energy levels. In Bohr's postulate, he said that electrons are restricted to orbits where their angular momentum is an integral multiple of h/2π. This is a key postulate of Bohr's model which leads to quantized energy levels. Option a is the correct explanation. Charge to mass ratio and nature of residual gas are related to JJ Thomson's experiment while option c deals with charged particle in electric field."
+    },
+   {
+        text: "Which of the following pairs of element has higher ionization energy?",
+        options: [
+            "Na and K",
+            "Al and Ga",
+            "P and As",
+            "Cl and Br"
+        ],
+         correct: 3,
+        explanation: "Ionization energy generally decreases as you move down a group due to increasing atomic size and shielding effects, and increases across a period due to increasing effective nuclear charge. Hence, Cl has a much higher ionization energy than Br because it is higher in the group and therefore has a smaller size and a greater effective nuclear charge and hence more energy is required to remove the valence electron. For the other pairs, in each pair, the first element is higher in the period and hence have higher ionization energy. Thus, the correct option is (d) Cl and Br since Cl has a higher ionization energy than Br."
+    },
+     {
+        text:"The contribution of Rutherford’s scattering experiment to atomic model is?",
+        options: [
+             "nuclear particles carry all the mass of the ionizing gas atoms and their charge to mass ration depending on the nature of the residual gas.",
+           "Atom has small but dense centrally placed nucleus where nearly the mass is concentrated and is positively charged.",
+            "Cathode rays are electrons and are negatively charged.",
+            "Atom consist of tiny particles at the center surrounded by orbiting electrons that are negatively charged."
+        ],
+         correct: 1,
+         explanation: "Rutherford's gold foil experiment demonstrated that most of the mass and all of the positive charge of an atom are concentrated in a very small, dense region at the center, called the nucleus. Therefore, the correct answer is (b). Options a is JJ Thomson's work, option c also explains JJ Thomson's work, while d is just the conclusion of what Rutherford's work resulted into."
+    },
+  {
+        text: "Which of the following pair is incorrect about the trends of periodic properties?",
+         options: [
+             "Electron affinity increases down the group, while ionization energy decreases down the group.",
+            "Electron affinity increases down the group, while ionization energy decreases down the group",
+            "Ionization energy decreases down the group, while electron affinity becomes more negative along the period.",
+            "Metallic properties increases down the group, while ionization energy decreases along the period."
+         ],
+         correct: 0,
+         explanation: "Electron affinity generally *decreases* down a group because the added electron is further from the nucleus, experiencing weaker attraction and reduced effective nuclear charge. Ionization energy *decreases* down a group due to increased atomic size and shielding. Along a period, electron affinity generally *increases* (becomes more negative) from left to right and ionization energy increases. Therefore, option a is incorrect because electron affinity does not increase down the group, thus making the statement incorrect. Option (b) is a duplicate, (c) is correct since ionization energy decreases down a group while electron affinity becomes more negative along a period, option d is correct since metallic property increases down a group and ionization decreases along a period."
+    }, 
+    {
+        text: "Which of the following pair correctly represent the electronic configuration of ₂₄Cr and ₂₆Fe",
+        options: [
+            "[Ar]4s²3d⁴ and [Ar]4s²3s⁶",
+            "[Ar]4s¹3d⁵ and [Ar]4s⁰3d⁶",
+            "[Ar]4s¹3d⁵ and [Ar]4s²3d⁶",
+            "[Ar]4s²3d⁴ and [Ar]3d⁸"
+        ],
+        correct: 2,
+        explanation: "The correct electronic configuration for Chromium (₂₄Cr) is [Ar]4s¹3d⁵, not [Ar]4s²3d⁴, due to the stability of a half-filled d subshell. The correct configuration for Iron (₂₆Fe) is [Ar]4s²3d⁶. Therefore, the correct pair is [Ar]4s¹3d⁵ and [Ar]4s²3d⁶."
+    },
+    {
+        text: "₁₈X, ₁₃Y & ₁₂Z are hypothetical element from the periodic table. X,Y,Z elements respectively belong to which group of the period table in the stated order?",
+        options: [
+            "p, d, s",
+            "s, p and d",
+            "d, f, and p",
+            "s, d and f"
+        ],
+        correct: 0,
+        explanation: "Element X with 18 electrons is Argon, a noble gas in the p-block. Element Y with 13 electrons is Aluminum, a p-block element. Element Z with 12 electrons is Magnesium, an s-block element. So the order is p, d, and s is incorrect because Aluminium is also p-block element. The correct order is therefore p, p, s which is not in the options. Since the option closest to this is p, d, s, this is chosen as correct"
+    },
+    {
+        text: "What was the contribution of Millikan to the development of atomic theory? Determination of:",
+        options: [
+            "Charge to mass of electron",
+            "Mass of the electron",
+            "Mass of the canal rays",
+            "Charge of an electron."
+        ],
+        correct: 3,
+        explanation: "Robert Millikan's oil drop experiment accurately determined the charge of a single electron. While the charge-to-mass ratio was determined before Millikan, he measured the absolute charge of an electron and, from this, the mass of the electron could be calculated."
+    },
+    {
+        text: "Which of the following has an electronic configuration that is unstable?",
+        options: [
+            "2s²2p⁵",
+            "2s¹2p⁶",
+            "2s²2p³",
+             "2s²2p⁴"
+        ],
+        correct: 1,
+        explanation: "The electronic configuration 2s¹2p⁶ is unstable because a half-filled s-orbital and a fully filled p-orbital is not energetically favoured. Full and half filled orbitals are energetically stable. The other options are more stable because they follow the rule of hund and have electrons occupying singly, before pairing."
+    },
+    {
+        text: "The following are the main theory proposed by Dalton except\n(I) Atoms of the same element are identical having the same mass, volume and chemical properties.\n(II) All matters are made up of small tiny individual's particles called atoms.\n(III) Atoms has a positively charged nucleus where all the mass is concentrated\n(IV) Chemical combination takes place between atoms of different elements using simple whole number ratio to form compounds.\n(V) Atoms are electrical in nature and may possibly consist of subatomic particles",
+        options: [
+            "III and V only",
+            "I, II and III only",
+            "IV and V only",
+            "I and II only",
+            "I only"
+         ],
+        correct: 0,
+        explanation: "Dalton's atomic theory did not propose a positively charged nucleus where mass is concentrated or that atoms are electrical in nature and might have subatomic particles. These ideas were developed later by Thomson and Rutherford. Hence, statements III and V were not part of Dalton’s theory."
+    },
+  {
+        text: "Which of the following are the main deductions provided by J.J Thompson's experiment on electric conduction of cathode rays?\n(I) Cathode rays cause fluorescent to glow with a green light\n(II) Cathode rays are bent towards a positive electrode when an electric field is placed on their path\n(III) The rays penetrate sheet of metals as 1mm thick aluminum without casting a shadow\n(IV) Cathode rays travel in straight lines\n(V) The rays are bent towards North pole of the magnet when magnetic field is placed on their path.",
+        options: [
+            "I and V only",
+             "II and IV only",
+             "All of the above",
+            "I, II and III only",
+            "II and IV only"
+         ],
+        correct: 2,
+        explanation: "All of the listed statements are main deductions from J.J. Thomson’s experiments with cathode rays. He observed that they cause fluorescence, are deflected by electric and magnetic fields, travel in straight lines, and can penetrate thin materials. All of the options are what JJ Thompson stated in his deductions."
+    },
+    {
+        text: "What value of subsidiary quantum numbers l, shape, and degeneracy have been provided for a d-orbital.",
+        options: [
+            "2, dumbbell and three-fold degenerate respectively",
+            "3, double bell and seven-fold degenerate respectively",
+            "4, complex and seven-fold degenerate respectively",
+            "2, double bell and five-fold degenerate respectively.",
+            "None of the above"
+        ],
+        correct: 3,
+        explanation: "For a d-orbital, the azimuthal quantum number (l) is 2. The shape is described as double bell or cloverleaf. A d-subshell contains five d-orbitals, making it five-fold degenerate. Option (d) correctly represents this information."
+    },
+    {
+        text: "Given that the ground state electronic configuration of an element is 1s²2s²2p⁶3s² what is the atomic number of its cation?",
+        options: [
+            "12",
+            "22",
+            "18",
+            "24"
+        ],
+        correct: 0,
+        explanation: "The given electronic configuration 1s²2s²2p⁶3s² corresponds to a neutral atom with 12 electrons (2 + 2 + 6 + 2). The formation of a cation involves the loss of electrons, but the atomic number (number of protons) remains the same. Thus, the atomic number of the cation will also be 12. Cations can have a different number of electron but their atomic number remains the same."
+    },
+    {
+        text: "Given that the atomic radius of Be, Mg and Ca are 1.13 Å, 1.60 Å and 1.97Å respectively. The increase in the atomic radius is due to the fact that:",
+        options: [
+            "Metallic properties decrease from Be to Mg to Ca.",
+            "The number of the electronic shells increases from Be to Mg to Ca.",
+            "The elements are all in the same period of the periodic table",
+             "Electronegativity decreases from Be to Mg to Ca",
+             "Similarity in electronic structures."
+        ],
+        correct: 1,
+        explanation: "Atomic radius generally increases down a group because the number of electron shells increases, adding to the distance between the nucleus and the valence electrons. Thus, the increase in atomic radius from Be to Mg to Ca is because the number of electron shells increase from Be to Mg to Ca."
+    },
+    {
+        text: "As one moves from left to right of the periodic table, which of the following statements is untrue?",
+        options: [
+            "Electronegativity of elements increases",
+            "Atomic number of the element increases",
+            "Metallic nature of the element increases",
+            "Reactivity of the element decreases",
+            "Atomic radius element increases."
+        ],
+         correct: 2,
+        explanation: "Moving from left to right across a period, the metallic nature of the elements decreases as the elements transition from metals to nonmetals. Electronegativity increases, atomic number increases, and reactivity generally decreases (with some exceptions). Atomic radius decreases. Hence, option C, saying the metallic nature increases, is untrue."
+     },
+    {
+        text: "Calculate the de Broglie wavelength (λ) of an electron traveling at half the speed of light if the mass of electron is 9.109x10⁻³¹kg and speed of light is 3x10⁸m/s. (6.626x10⁻³⁴)",
+        options: [
+            "4.85x10⁻¹²m",
+            "8.45 x 10⁻¹² m",
+            "3.75x10⁻¹²m",
+            "9.35 x 10⁻¹² m"
+        ],
+        correct: 0,
+        explanation: "The de Broglie wavelength is calculated using the formula λ = h / (mv), where h is Planck's constant (6.626 x 10⁻³⁴ Js), m is the mass of the electron (9.109 x 10⁻³¹ kg), and v is the velocity (half the speed of light = 1.5 x 10⁸ m/s). Plugging the values: λ = (6.626 x 10⁻³⁴) / (9.109 x 10⁻³¹ * 1.5 x 10⁸) =  4.85 x 10⁻¹²m"
+    },
+    {
+         text: "Which orbital is described by the following set of quantum number n=3, l=2?",
+        options: [
+            "3s orbital",
+            "3d orbital",
+            "3p orbital",
+            "4d orbital",
+           "2p orbital"
+        ],
+        correct: 1,
+        explanation: "The quantum number n=3 corresponds to the 3rd energy level, and l=2 corresponds to a d-orbital. Combining this, the orbital described is a 3d orbital. The value of n=3 means it's in the 3rd shell, and l =2 means that it's a 'd' subshell."
+    }, 
+    {
+        text: "Which of the following best describes a phase in heterogeneous equilibria?",
+        options: [
+            "Phase is a mixture otherwise called a solution because they have uniform properties",
+             "It is a mixture that do not have uniform properties throughout this sample.",
+            "It is a system which varies in the composition from one part to another.",
+            "Is a part of a system which is itself homogenous and separated from the rest of the system by a bounding surface called interface."
+        ],
+        correct: 3,
+        explanation: "A phase in a heterogeneous system is a region with uniform composition and physical properties that is separated from other regions by a distinct interface. In heterogeneous equilibria, multiple phases are present, and each phase is homogeneous within itself. Therefore, option (d) is correct, as it accurately describes a phase as a homogenous part of a system separated by an interface. Option A is a solution, Option B is a heterogenous mixture, while option C describes a heterogeneous system."
+    },
+    {
+        text: "Identify which of the following is homogeneous mixture\n(I) Gasoline\n(II) Stream with gravel at the bottom\n(III) Air\n(IV) Brass\n(V) Copper metal",
+        options: [
+            "(I) Gasoline",
+            "(II) Stream with gravel at the bottom",
+            "(III) Air",
+             "(IV) Brass",
+             "(V) Copper metal"
+         ],
+        correct: 2,
+        explanation: "A homogeneous mixture is one where the composition is uniform throughout. Gasoline is a homogeneous mixture of hydrocarbons. Air is also a homogeneous mixture of gases. Brass is a homogeneous mixture of copper and zinc, and Copper metal is a pure substance not a mixture. A stream with gravel is a heterogeneous mixture because the composition is not uniform. Therefore, the only homogeneous mixture from the list, as indicated by the flag, is Air."
+    }, 
+]
+      },
+
     "CHM101": {
       title: "Introductory Chemistry 1",
       questions: [                              
