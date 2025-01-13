@@ -515,26 +515,31 @@ loginBtn.addEventListener("click", () => {
     return;
   }
 
-  if (storedUserData.userID === userId) {
-    if (activeUserIDs.includes(userId)) {
-      // Valid User ID found in the active list
-      profilePhoto.src = storedUserData.photo || "default.png";
-      studentDetailsElement.innerHTML = `
-        Full Name: ${storedUserData.fullName}<br>
-        Department: ${storedUserData.department}<br>
-        Level: ${storedUserData.level}<br>
-        Courses: ${storedUserData.courses}
-      `;
-      welcomeMessage.textContent = getGreeting();
-      loginBox.classList.add("hidden");
-      welcomePopup.classList.remove("hidden");
+  // Check and Display User Data on Load
+window.addEventListener("DOMContentLoaded", () => {
+    const savedUserData = JSON.parse(localStorage.getItem("userData"));
 
-      // Generate Receipt if not already done
-      if (!localStorage.getItem("receiptGenerated")) {
-        generateAndDownloadReceipt(storedUserData);
-        localStorage.setItem("receiptGenerated", "true");
-      }
-    } else {
+    if (savedUserData) {
+        if (confirm(`Do you want to log in with User ID: ${savedUserData.userID}?`)) {
+            if (activeUserIDs.includes(savedUserData.userID)) {
+                // Valid User ID found in the active list
+                profilePhoto.src = savedUserData.photo || "default.png";
+                studentDetailsElement.innerHTML = `
+                    Full Name: ${savedUserData.fullName}<br>
+                    Department: ${savedUserData.department}<br>
+                    Level: ${savedUserData.level}<br>
+                    Courses: ${savedUserData.courses}
+                `;
+                welcomeMessage.textContent = getGreeting();
+                loginBox.classList.add("hidden");
+                welcomePopup.classList.remove("hidden");
+
+                // Generate Receipt if not already done
+                if (!localStorage.getItem("receiptGenerated")) {
+                    generateAndDownloadReceipt(savedUserData);
+                    localStorage.setItem("receiptGenerated", "true");
+                }
+                } else {
       // User ID is valid but not yet active
       alert("Your account is not active. Please contact admin via WhatsApp.");
       window.open(
@@ -547,6 +552,11 @@ loginBtn.addEventListener("click", () => {
   } else {
     alert("Invalid User ID. Please check and try again.");
   }
+        } else {
+            // Re-enable manual login
+            loginBox.classList.remove("hidden");
+        }
+    }
 });
 
 
