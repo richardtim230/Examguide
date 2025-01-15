@@ -10,16 +10,22 @@ body {
   overflow: hidden; /* Prevent scrolling */
   color: black;
 }
-/* Container */
-.container {
-  display: -webkit-box;    /* Old Safari */
-  display: -ms-flexbox;    /* IE 10 */
-  display: flex;           /* Standard */
-}
+
 .modal-active {
   overflow: hidden;
         }
+/* Ensure the container does not exceed its original size */
+.container {
+  max-width: 1200px; /* Set this to the original size you want */
+  width: 100%;
+  margin: 0 auto;
+}
 
+/* Similar approach for images or other elements */
+img, video {
+  max-width: 100%;
+  height: auto;
+        }
 body::before {
   content: '';
   position: absolute;
