@@ -7058,9 +7058,6 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
         correct: 2,
          explanation: "The yolk is an integral part of the cytoplasm in eggs. The yolk is not independent from the cytoplasm but rather a component that stores nutrients within the cytoplasm of the ovum."
     }, 
-]
-    }
-  }, 
         // Add more Animal Systematics questions here...
       ]
     }
