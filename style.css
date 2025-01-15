@@ -14,18 +14,17 @@ body {
 .modal-active {
   overflow: hidden;
         }
-/* Ensure the container does not exceed its original size */
-.container {
+body {
   max-width: 1200px; /* Set this to the original size you want */
   width: 100%;
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
-/* Similar approach for images or other elements */
 img, video {
   max-width: 100%;
   height: auto;
-        }
+}
 body::before {
   content: '';
   position: absolute;
