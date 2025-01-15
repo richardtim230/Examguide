@@ -962,8 +962,6 @@ background-size: 100% 100%;
   background: #1e3d59;
   background-size: cover; /* Ensures background image covers the whole area without stretching */
   max-width: 1200px; /* Adjust this value to your preferred maximum width */
-  width: 100%;
-  margin: 0 auto;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
