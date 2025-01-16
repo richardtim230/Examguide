@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exam Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Global Styles */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-image: url('./atom-biotechnology-nuclear-medicine-with-scientist-rsquo-s-hands-digital-transformation-remix_53876-126746.webp');
+        color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .hidden {
+        display: none !important;
+    }
+    .container {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 700px;
+    }
+    h1, h2 {
+        color: #333;
+        margin-bottom: 25px;
+    }
+    .input-field {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .styled-btn {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: white;
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: transform 0.2s ease-in-out;
+    }
+    .styled-btn:hover {
+        transform: scale(1.05);
+    }
+    /* Header Styles */
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .header h1 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .header p {
+        font-size: 12px;
+        color: #555;
+    }
+    /* Content Styles */
+    .content {
+        margin-bottom: 30px;
+        text-align: left;
+    }
+    .content h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    .answer-btn {
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin: 10px 0;
+        cursor: pointer;
+        border-radius: 8px;
+        width: 100%;
+        text-align: left;
+        transition: all 0.3s ease;
+    }
+    .answer-btn:hover {
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    }
+    .answer-btn.selected {
+        background: #28a745;
+        color: white;
+        font-weight: bold;
+        border: 2px solid #1e7e34;
+    }
+    /* Blog Section Styling */
+.blog-section {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 2px solid #ddd;
+}
+
+.blog-section h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.instructions ul {
+  list-style: disc inside;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.instructions ul li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.examiner-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.examiner-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.examiner-img {
+  border-radius: 25%;
+  width: 70%;
+  height: 200px;
+  object-fit: 100%, 100%;
+}
+
+.examiner-info p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+    .results-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.results-actions button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+#retakeExamBtn {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+}
+
+#retakeExamBtn:hover {
+    transform: scale(1.05);
+}
+
+
+    /* Footer Styles */
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+    .progress-bar-container {
+        background-color: #eee;
+        border-radius: 8px;
+        height: 10px;
+        width: 100%;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        width: 0;
+        transition: width 0.3s ease-in-out;
+    }
+    #timer {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+    }
+    #results-section p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    /* Logo Styling */
+.logo {
+    display: block;
+    margin: 0 auto 15px; /* Center the logo and add spacing below */
+    width: 100px;       /* Adjust the logo size */
+    height: auto;       /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: rounded edges for a softer look */
+}
+/* Welcome Header Styling */
+.welcome-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-header h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.welcome-header p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+    /* Button Styles */
+    .pdf-btn {
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .pdf-btn:hover {
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    }
+  </style>
+</head>
+<body>
+<!-- Authentication Section -->
+<div id="auth-section" class="container">
+    <div class="welcome-header">
+        <img src="logo.png" alt="De-Brainstormers Logo" class="logo">
+        <h2>Welcome to De-Brainstormers Exam Page</h2>
+        <p>Kindly log in to proceed with your exam.</p>
+    </div>
+    <h2>Login</h2>
+    <input type="text" id="fullName" placeholder="Enter Full Name" class="input-field">
+    <input type="text" id="userID" placeholder="Enter User ID" class="input-field">
+    <button id="loginBtn" class="styled-btn">Login</button>
+</div>
+
+
+  
+<!-- Course Code Section -->
+<div id="course-code-section" class="container hidden">
+  <h2>Select Course</h2>
+  <input type="text" id="courseCode" placeholder="Enter Course Code (e.g., BIO101)" class="input-field">
+  <button id="selectCourseBtn" class="styled-btn">Start Exam</button>
+
+  <!-- Blog Section -->
+  <div class="blog-section">
+    <div class="instructions">
+      <h3>Exam Instructions</h3>
+      <ul>
+        <li>You have a maximum of 20 minutes to complete the exam.</li>
+        <li>Ensure you select the correct answers for each question before proceeding.</li>
+        <li>Each session displays 50 randomized questions from the question bank.</li>
+        <li>Review your answers before submitting, as changes cannot be made afterward.</li>
+        <li>Good luck with your exam!</li>
+      </ul>
+    </div>
+    <div class="examiner-info">
+      <h3>About the Examiner</h3>
+      <div class="examiner-content">
+      <p>  <img
+          src="FB_IMG_17341196385175781.jpg" 
+          alt="Examiner Image" 
+          class="examiner-img" 
+    />
+          <strong>HON. RICHARD D'PROF</strong> is an experienced educator and a student of Obafemi Awolowo University. He is dedicated to helping students have upper edge in their academic pursuits and loves putting forward the interest of the students of Obafemi Awolowo University. 
+          <em>Educator</em> and <em>Zoologist</em> with over 6 years of 
+          teaching and research experience, He has prepared this exam to assess 
+          your understanding of core concepts in the subject. If you have any 
+          questions, reach out to the administration desk before starting the exam.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Exam Section -->
+  <div id="exam-section" class="container hidden">
+      <div class="header">
+          <h1 id="exam-title">OBAFEMI AWOLOWO UNIVERSITY</h1>
+          <p id="user-details">Candidate: Full Name</p>
+      </div>
+      <div class="content">
+          <h2 id="question-title">Question will appear here</h2>
+          <div id="answer-options"></div>
+      </div>
+      <div class="footer">
+          <div class="button-group">
+              <button id="prevBtn" class="styled-btn hidden">Previous</button>
+              <button id="nextBtn" class="styled-btn">Next</button>
+              <button id="submitBtn" class="styled-btn hidden">Submit</button>
+          </div>
+          <div class="progress-bar-container">
+              <div class="progress-bar"></div>
+          </div>
+          <div id="timer">Time Remaining: 30:00</div>
+      </div>
+  </div>
+<!-- Results Section -->
+<div id="results-section" class="container hidden">
+    <h2>Exam Results</h2>
+    <div id="results-summary"></div> <!-- Performance report -->
+    <div id="results-content"></div>
+    <div class="results-actions">
+        <button id="downloadPDF" class="pdf-btn">Download Results as PDF</button>
+        <button id="retakeExamBtn" class="styled-btn">Retake or Take Another Exam</button>
+    </div>
+</div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
