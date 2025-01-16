@@ -696,10 +696,10 @@ function loadQuestion() {
   // Add question number dynamically
   questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-  // Populate Answer Options without numbering
+  // Populate Answer Options with correct numbering
   answerOptions.innerHTML = question.options
-    .map(option => `
-      <button class="answer-btn" onclick="selectAnswer('${option}', this')">
+    .map((option, index) => `
+      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
         ${option}
       </button>
     `)
