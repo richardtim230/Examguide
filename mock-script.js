@@ -664,9 +664,15 @@ selectCourseBtn.addEventListener("click", () => {
   selectedCourseCode = courseCodeInput;
   questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
 
+  if (questions.length === 0) {
+    alert("No questions available for this course. Please try another course code.");
+    return;
+  }
+
   courseCodeSection.classList.add("hidden");
   initializeExam();
 });
+
 
 // Shuffle questions randomly
 function shuffleArray(array) {
@@ -687,13 +693,14 @@ function initializeExam() {
 function loadQuestion() {
   const question = questions[currentQuestionIndex];
 
-  questionTitle.textContent = question.text;
+  // Add question number dynamically
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-  // Populate Answer Options
+  // Populate Answer Options without numbering
   answerOptions.innerHTML = question.options
-    .map((option, idx) => `
-      <button class="answer-btn" onclick="selectAnswer(${idx}, this)">
-        ${idx + 1}. ${option}
+    .map(option => `
+      <button class="answer-btn" onclick="selectAnswer('${option}', this')">
+        ${option}
       </button>
     `)
     .join("");
@@ -701,7 +708,7 @@ function loadQuestion() {
   highlightSelectedAnswer();
   updateButtons();
   updateProgressBar();
-    }
+}
 
 // Highlight Previously Selected Answer
 function highlightSelectedAnswer() {
@@ -738,6 +745,12 @@ function updateProgressBar() {
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
   progressBar.style.width = `${progress}%`;
 }
+console.log("Questions array:", questions);
+console.log("Current question index:", currentQuestionIndex);
+console.log("Loaded question:", questions[currentQuestionIndex]);
+
+
+
 
 // Timer
 function startTimer() {
