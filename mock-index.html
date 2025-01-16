@@ -80,28 +80,32 @@
         font-size: 18px;
         margin-bottom: 15px;
     }
-    .answer-btn {
-        background: linear-gradient(135deg, #2193b0, #6dd5ed);
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        font-size: 16px;
-        margin: 10px 0;
-        cursor: pointer;
-        border-radius: 8px;
-        width: 100%;
-        text-align: left;
-        transition: all 0.3s ease;
-    }
-    .answer-btn:hover {
-        background: linear-gradient(135deg, #6dd5ed, #2193b0);
-    }
-    .answer-btn.selected {
-        background: #28a745;
-        color: white;
-        font-weight: bold;
-        border: 2px solid #1e7e34;
-    }
+    /* Styling for Answer Buttons */
+.answer-btn {
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%; /* Make buttons stretch to full width */
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.answer-btn:hover {
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+}
+
+.answer-btn.selected {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #1e7e34;
+}
+
     /* Blog Section Styling */
 .blog-section {
   margin-top: 20px;
@@ -155,7 +159,7 @@
     border-radius: 50%; /* Make the image circular */
     width: 120px;       /* Adjust size */
     height: 120px;      /* Maintain aspect ratio */
-    object-fit: cover;
+    object-fit: 100%, 100%;
     border: 2px solid #ddd; /* Optional: Add a border */
 }
 
