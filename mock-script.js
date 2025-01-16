@@ -682,18 +682,18 @@ function initializeExam() {
   examSection.classList.remove("hidden");
 }
 
+
 // Load Current Question
 function loadQuestion() {
   const question = questions[currentQuestionIndex];
 
-  // Add question number dynamically
-  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+  questionTitle.textContent = question.text;
 
-  // Populate Answer Options without numbering
+  // Populate Answer Options
   answerOptions.innerHTML = question.options
-    .map(option => `
-      <button class="answer-btn" onclick="selectAnswer('${option}', this')">
-        ${option}
+    .map((option, idx) => `
+      <button class="answer-btn" onclick="selectAnswer(${idx}, this)">
+        ${idx + 1}. ${option}
       </button>
     `)
     .join("");
@@ -701,8 +701,7 @@ function loadQuestion() {
   highlightSelectedAnswer();
   updateButtons();
   updateProgressBar();
-}
-
+    }
 
 // Highlight Previously Selected Answer
 function highlightSelectedAnswer() {
