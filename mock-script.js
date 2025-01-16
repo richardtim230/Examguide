@@ -686,13 +686,14 @@ function initializeExam() {
 function loadQuestion() {
   const question = questions[currentQuestionIndex];
 
-  questionTitle.textContent = question.text;
+  // Add question number dynamically
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-  // Populate Answer Options
+  // Populate Answer Options without numbering
   answerOptions.innerHTML = question.options
-    .map((option, idx) => `
-      <button class="answer-btn" onclick="selectAnswer(${idx}, this)">
-        ${idx + 1}. ${option}
+    .map(option => `
+      <button class="answer-btn" onclick="selectAnswer('${option}', this')">
+        ${option}
       </button>
     `)
     .join("");
@@ -701,6 +702,7 @@ function loadQuestion() {
   updateButtons();
   updateProgressBar();
 }
+
 
 // Highlight Previously Selected Answer
 function highlightSelectedAnswer() {
