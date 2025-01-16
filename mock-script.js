@@ -762,6 +762,309 @@ const questionBanks = {
     correct: 2,
     explanation: "A tenfold increase in known vertebrate species would significantly alter our understanding of animal diversity, potentially shifting the balance of known species and requiring reevaluation of evolutionary relationships and ecological dynamics."
   },
+    
+    {
+        text: "A taxonomic grouping that includes several genera is known as a:",
+        options: ["Class", "Order", "Family", "Phylum"],
+        correct: 2,
+        explanation: "A Family is a taxonomic rank that groups together several related genera.  The order of taxonomic ranks, from most inclusive to least, is: Kingdom, Phylum, Class, Order, Family, Genus, Species."
+    },
+    {
+        text: "What does the sharing of a common family name suggest about the evolutionary history of multiple organisms?",
+        options: ["They are in the same species.", "They are in the same order", "They share a relatively recent common ancestor.", "They share very distant common ancestry."],
+        correct: 2,
+        explanation: "Organisms sharing a common family name have a relatively recent common ancestor. Families are a more specific grouping than orders or phyla in the taxonomic hierarchy, so they indicate a closer relationship than broader classifications. Species within the same family are evolutionarily closer than those within the same order."
+    },
+    {
+        text: "What characteristic, at its core, defines a species?",
+        options: ["Similar Morphology", "Geographical Location", "Ability to interbreed", "Similar habitat"],
+        correct: 2,
+         explanation: "The core defining characteristic of a species is the ability of its members to interbreed and produce viable, fertile offspring. While morphology, geographic location, and habitat can be helpful for identification, they are not the primary defining characteristic of a species."
+    },
+     {
+        text: "The largest taxonomic category of the animal kingdom is:",
+        options: ["Phylum", "Class", "Family", "Kingdom"],
+        correct: 3,
+        explanation: "The Kingdom is the largest and most inclusive taxonomic category in the classification system. All living organisms are grouped into one of several kingdoms (e.g., Animalia, Plantae, Fungi), and these are the broadest groupings."
+    },
+    {
+        text: "Which rank in the taxonomic hierarchy would contain organisms with the broadest shared characteristics?",
+        options: ["Class", "Family", "Genus", "Phylum"],
+        correct: 3,
+        explanation: "Phylum is a higher rank than class, family and genus so contains a broader range of organisms which have more general characteristics in common. As you move down the ranks the shared characteristics become more specific."
+    },
+     {
+
+        text: "Organisms in the same genus share:",
+        options: ["Many characteristics and are closely related", "Few characteristics and distantly related", "Only habitats and are distantly related", "Only species and are closely related"],
+        correct: 0,
+        explanation: "Organisms within the same genus share many characteristics and are closely related, indicating a recent common ancestor. Genus is a narrower taxonomic category than family, so organisms within a genus share more specific traits and are more closely related to each other than those in the same family."
+    },
+    {
+        text: "What is the primary determinant for distinguishing between diploblastic and triploblastic organisms?",
+        options: ["Type of cell wall", "Number of tissue layers during development", "Method of food acquisition", "Symmetry of their body plans"],
+        correct: 1,
+       explanation: "The primary distinction between diploblastic and triploblastic organisms lies in the number of tissue layers they develop during embryogenesis. Diploblastic organisms have two germ layers (ectoderm and endoderm), while triploblastic organisms have three germ layers (ectoderm, mesoderm, and endoderm)."
+    },
+    {
+        text: "Which embryonic tissue layer is absent in diploblastic organisms?",
+        options: ["Ectoderm", "Mesoderm", "Endoderm", "Epidermis"],
+        correct: 1,
+       explanation: "Diploblastic organisms lack the mesoderm. They only have ectoderm and endoderm which are separated by a jelly-like substance called mesoglea."
+    },
+    {
+        text: "The term 'mesoglea' refers to a key component found in which group?",
+        options: ["All coelomate animals", "All triploblastic animals", "All diploblastic animals", "All acoelomate animals"],
+        correct: 2,
+         explanation: "Mesoglea is a gelatinous, non-cellular substance found in diploblastic animals. It is located between the ectoderm and endoderm layers. It acts as a support and helps maintain their shape."
+    },
+    {
+        text: "What structural feature differentiates the phylum Cnidaria from other animal phyla?",
+        options: ["The type of cells that they have", "The number of layers", "The symmetry of the body", "Their method of reproduction"],
+        correct: 2,
+       explanation: "Cnidarians are characterized by having radial symmetry in their body plans. This distinguishes them from most other animals, which are bilaterally symmetrical. In addition, they have specialized stinging cells called cnidocytes."
+    },
+  {
+        text: "Triploblastic animals are characterized by possessing which tissue?",
+        options: ["Ectoderm only", "Endoderm only", "Mesoderm only", "Ectoderm, mesoderm, and endoderm"],
+        correct: 3,
+       explanation: "Triploblastic animals possess all three primary tissue layers: the ectoderm (outer layer), mesoderm (middle layer), and endoderm (inner layer). These layers give rise to all of the tissues and organs of the animal."
+    },
+    {
+        text: "A 'true coelom' is distinguished from other body cavities by being:",
+        options: ["Partially lined with mesoderm", "Fully lined with endoderm", "Fully lined with mesoderm", "Containing a jelly-like substance"],
+        correct: 2,
+        explanation: "A true coelom is a body cavity that is fully lined with tissue derived from mesoderm. This lining creates a space within which organs can develop and be cushioned, allowing for more complex structures and movement. The fluid filled space is beneficial for several reasons."
+    },
+    {
+        text: "What primary distinction defines a pseudocoelom?",
+        options: ["The coelom lacks a lining", "The coelom is fully lined with endoderm", "The coelom is fully lined with mesoderm", "The coelom is only partially lined with mesoderm"],
+        correct: 3,
+        explanation: "A pseudocoelom is a body cavity that is only partially lined with mesoderm. Specifically, the mesoderm lines the outer edge of the cavity, but  not the inner edge. This difference in lining distinguishes it from a true coelom."
+    },
+   {
+        text: "Which group is characterized by lacking a body cavity?",
+        options: ["Coelomates", "Pseudocoelomates", "Acoelomates", "Radiates"],
+        correct: 2,
+         explanation: "Acoelomates are animals that lack a body cavity. This means there is no fluid-filled space between their digestive tract and their outer body wall. The space is instead filled with mesodermal tissue."
+    },
+   {
+        text: "How would you describe the pattern in which the body parts are arranged around a central axis?",
+        options: ["Bilaterally symmetrical", "Biradially symmetrical", "Radially symmetrical", "Asymmetrical"],
+        correct: 2,
+       explanation: "The arrangement of body parts around a central axis is a characteristic of radially symmetrical animals. They have top and bottom sides but no clear left and right sides, or front and back ends."
+    },
+    {
+        text: "A specific type of symmetry that has some mirror image qualities would be called:",
+        options: ["Biradial Symmetry", "Radial Symmetry", "Bilateral Symmetry", "Asymmetrical symmetry"],
+        correct: 2,
+        explanation: "Bilateral symmetry is characterized by a distinct left and right side, each being a near mirror image of the other. Organisms with bilateral symmetry typically have a head and a tail (anterior and posterior), a top and bottom (dorsal and ventral), and a left and right side."
+    },
+     {
+        text: "What defines the orientation (front/back) for animals that have radial symmetry?",
+        options: ["Presence of a head", "Position of the mouth", "The direction of their movement", "The pattern of their body plan"],
+         correct: 1,
+        explanation: "For radially symmetrical animals, the position of the mouth defines the oral (front) end. This is because they often interact with their environment equally on all sides."
+    },
+    {
+        text: "The aboral end of a radially symmetrical animal would be best described as:",
+        options: ["The end closest to the mouth", "The end furthest from the mouth", "The anterior end", "The posterior end"],
+        correct: 1,
+         explanation: "The aboral end of a radially symmetrical animal is the end that is furthest from its mouth. This term is used as radial symmetrical animals do not have a true head or tail."
+    },
+     {
+        text: "An organism is found to have 3 embryonic layers and a partially lined body cavity. To which category does it belong?",
+        options: ["Acoelomate and Diploblastic", "Coelomate and Triploblastic", "Pseudocoelomate and Triploblastic", "Acoelomate and Triploblastic"],
+        correct: 2,
+        explanation: "An organism with three embryonic layers is triploblastic. The presence of a partially lined body cavity, where the mesoderm does not completely surround the cavity, defines a pseudocoelomate. Thus the organism is a pseudocoelomate and triploblastic."
+    },
+     {
+        text: "If an animal exhibits radial symmetry, and has a mouth, but no other defined features, which phylum might it belong to?",
+        options: ["Annelida", "Platyhelminthes", "Chordata", "Cnidaria"],
+        correct: 3,
+        explanation: "Cnidaria (which includes jellyfish, corals, and sea anemones) are characterized by radial symmetry and possess a mouth but lack defined organ systems or a head. The other phyla listed have bilateral symmetry."
+    },
+    {
+        text: "Which feature is the most relevant to differentiate nematodes from flatworms?",
+        options: ["Body symmetry", "Number of germ layers", "Presence of a coelom", "Type of cells that they have"],
+        correct: 2,
+        explanation: "The presence of a coelom is the most relevant feature. Nematodes are pseudocoelomates (they have a partially lined body cavity), while flatworms are acoelomates (they lack a body cavity). Both groups are bilaterally symmetrical and triploblastic."
+    },
+    {
+        text: "How does having a true coelom potentially benefit an organism's evolutionary success?",
+         options: ["Enhances rigidity", "Does not provide an evolutionary advantage", "Provides space for organ development", "Increases speed"],
+       correct: 2,
+       explanation: "Having a true coelom provides a space for organ development, which allows for more complex organ systems to develop. It also provides cushioning and flexibility, which can increase its success. It also can allow for a more complex circulatory system."
+    },
+     {
+        text: "What does the existence of diploblastic and triploblastic animals suggest about the evolution of tissue complexity?",
+        options: ["All animals have a common ancestor", "That they have evolved independently", "It shows different types of body organization", "There is a gradient in development"],
+        correct: 3,
+        explanation: "The existence of diploblastic and triploblastic animals suggests a gradient in the development of tissue complexity. Diploblastic animals (like cnidarians) are considered more basal with only two tissue layers, while triploblastic animals have evolved a third layer, allowing for greater diversity and structural complexity. This suggests a step-wise pattern of evolutionary development."
+    },
+    {
+        text: "Why are the terms anterior and posterior not relevant for all animal types?",
+         options: ["Because all animals have a head and tail", "They have to be radial symmetrical", "They are too basic for complex systems.", "Not all animals display clear head-tail orientation"],
+        correct: 3,
+        explanation: "The terms 'anterior' and 'posterior' refer to the front and back ends of bilaterally symmetrical animals, respectively. Radially symmetrical animals do not have a distinct head-tail orientation, as they are symmetrical around a central axis, making these terms irrelevant for them."
+    },
+    {
+       text: "If a new animal phylum is discovered to possess a mesoderm but no coelom, how would this impact the currently described groups?",
+       options: ["It would confirm the existing classification.", "It might require a new intermediate category.", "It would not impact anything", "It means the data is incorrect"],
+       correct: 1,
+       explanation: "A new animal phylum with a mesoderm but no coelom would require reevaluation of our current classification. It does not fit existing categories as most animals with a mesoderm also have a coelom. This would suggest a new intermediate grouping such as an 'acoelomate triploblastic' or a 'mesoderm-only' classification is needed."
+    },
+     {
+       text: "Imagine an animal that exhibits both radial and bilateral symmetry in its body plan. How would this influence its classification?",
+        options: ["It can only have bilateral symmetry", "It can only have radial symmetry", "It would likely need a new category in terms of classification.", "It would just be considered asymmetrical"],
+        correct: 2,
+        explanation: "Such an organism with both symmetries would be very unusual and does not fit any of the classifications we currently have. This would likely require a new category to accommodate this novel body plan. Some animals, such as larval starfish have bilateral symmetry but then transition to radial symmetry as an adult."
+    },
+  {
+        text: "If you found a new organism lacking a mesoderm, what type of body plan would be the best comparison?",
+        options: ["A triploblastic coelomate", "A diploblastic organism", "A triploblastic pseudocoelomate", "An acoelomate organism"],
+        correct: 1,
+        explanation: "An organism lacking a mesoderm would be best compared to a diploblastic organism, which also lacks this tissue layer, only having an ectoderm and an endoderm. Acoelomates still have mesoderm just no coelom."
+  },
+    {
+      text: "If vertebrate diversity was found to be much higher, what impact could this have?",
+       options: ["No impact because invertebrates are still higher.", "It would indicate a flawed understanding of animal diversity", "Vertebrate species would still be less than invertebrates.", "It will mean the system of classification is incorrect."],
+      correct: 1,
+     explanation: "If vertebrate diversity was found to be much higher than we currently think, it would mean we have a flawed understanding of the animal groups. It would require re-evaluation of the diversity of life as we currently see it. It wouldn't make the system of classification incorrect, it may just need to be updated with new data."
+    },
+    {
+        text: "How would our understanding of animal evolution change if a new phylum was discovered with a novel coelom formation that is lined with both endoderm and mesoderm?",
+        options: ["It would be a completely new category.", "It would not influence the current coelom classification.", "The classification would need adjustment", "The old data must be incorrect"],
+         correct: 2,
+        explanation: "Our current understanding of coelom formation is that it is lined only by mesoderm (for true coeloms) or partially mesoderm (for pseudocoeloms). The discovery of a new phylum with a coelom lined by both endoderm and mesoderm would mean we have to adjust our classification system and understanding of coelom development. This indicates that there may be different evolutionary paths than we previously thought, rather than old data being wrong."
+    },
+     {
+       text: "Imagine that a mesoglea-like substance was discovered in many groups with triploblastic body plans, how would this alter our view of development?",
+      options: ["It would show it is only specific to one group.", "It might indicate that it evolved multiple times in parallel.", "It would prove that our data is incorrect.", "It would not alter our views at all."],
+        correct: 2,
+       explanation: "The presence of a mesoglea-like substance in triploblastic animals would indicate that this type of structure is not exclusive to diploblastic animals. The discovery of a mesoglea-like substance in diverse groups of triploblastic organisms might indicate it evolved independently multiple times through convergent evolution, thus we would have to re-evaluate our understanding of evolutionary development."
+    }, 
+  {
+    text: "Which taxonomic rank is the most inclusive within the animal kingdom?",
+    options: ["Family", "Genus", "Species", "Kingdom"],
+    correct: 3,
+    explanation: "The Kingdom is the most inclusive (broadest) taxonomic rank in the biological classification system. It is the highest level and contains all the different phyla within it."
+  },
+  {
+    text: "If two organisms share the same family but have different genera, what can you infer about their relationship?",
+    options: ["They are in the same species.", "They are in the same order.", "They are in different classes.", "They are distantly related."],
+    correct: 1,
+    explanation: "If two organisms are in the same family, they must also be in the same order. Families are more specific than orders. They must also be in the same class, phylum and kingdom. Genera are within families, therefore they are not in the same genus."
+  },
+   {
+        text: "What is the defining characteristic of a species within the taxonomic hierarchy?",
+        options: ["Members of a species have identical characteristics.", "They occupy similar habitats", "Members can reproduce with each other", "They are very similar in morphology"],
+         correct: 2,
+        explanation: "The defining characteristic of a species is that its members can interbreed and produce viable, fertile offspring. While species members often share similar characteristics, this is not the primary defining criterion."
+    },
+  {
+    text: "A class is composed of multiple:",
+    options: ["Orders", "Genera", "Species", "Families"],
+    correct: 0,
+    explanation: "A Class is a broad group which consists of multiple related Orders. The hierarchical structure of taxonomy means that class is within phylum and order is within class."
+  },
+    {
+        text: "Why is a phylum considered a higher taxonomic grouping than a class?",
+        options: ["Because it contains fewer species", "Because it groups animals with broader shared traits", "Because it groups animals with highly specific traits", "Because it includes fewer organisms"],
+        correct: 1,
+        explanation: "A phylum is a higher and more inclusive rank than a class. A phylum encompasses animals that share a more general set of common characteristics, while classes are more specific groupings of animals within that phylum."
+    },
+  {
+    text: "What is a correct relationship between the terms?",
+
+    options: ["Kingdom is within the Phylum", "Family is within Order", "Species is within Genus", "Genus is within Family"],
+    correct: 3,
+    explanation: "The correct relationship is that a Genus is within a Family. All the other answers are incorrect. The taxonomic order is Kingdom, Phylum, Class, Order, Family, Genus, and Species. Therefore the correct relationship has to follow this order."
+  },
+  {
+    text: "What is the primary distinction between vertebrates and invertebrates?",
+    options: ["The type of cells that they have", "The presence or absence of a backbone", "The size of organisms", "The habitats they occupy"],
+     correct: 1,
+    explanation: "Vertebrates are characterized by the presence of a backbone (spinal column), while invertebrates lack a backbone. This is the most significant difference in classifying animals into these two groups."
+  },
+    {
+       text: "Triploblastic animals are characterized by:",
+        options: ["Having 2 embryonic layers.", "Having only ectoderm", "Having three embryonic layers", "The presence of mesoglea"],
+        correct: 2,
+       explanation: "Triploblastic animals are characterized by having three embryonic tissue layers: the ectoderm, mesoderm, and endoderm."
+    },
+    {
+       text: "What does the term mesoglea refer to?",
+      options: ["The fluid-filled cavity of a coelom", "The outermost embryonic layer", "A jelly-like layer found in diploblastic organisms", "The inner layer of a triploblastic animal"],
+       correct: 2,
+       explanation: "Mesoglea is a jelly-like, non-cellular substance found in diploblastic organisms. It is located between the ectoderm and endoderm layers and gives structure and support to the organism."
+    },
+     {
+        text: "Which phylum represents a group of animals that possess a unique structure called mesoglea?",
+        options: ["Annelida", "Arthropoda", "Cnidaria", "Platyhelminthes"],
+        correct: 2,
+        explanation: "Cnidarians, such as jellyfish, corals, and sea anemones, are diploblastic animals characterized by the presence of mesoglea between their ectoderm and endoderm."
+    },
+ {
+        text: "A key characteristic of diploblastic animals is that they lack:",
+        options: ["an ectoderm layer.", "a mesoderm layer.", "a coelom", "endoderm"],
+         correct: 1,
+        explanation: "Diploblastic animals have only two embryonic layers, the ectoderm and endoderm and lack a mesoderm layer. The mesoglea is the structure between the two layers."
+    },
+  {
+    text: "A true coelom is characterized by:",
+    options: ["being a fluid-filled body cavity lined with endoderm", "being a fluid-filled body cavity lined with mesoderm", "lacking a body cavity entirely", "having a body cavity filled with mesoglea"],
+    correct: 1,
+    explanation: "A true coelom is a fluid-filled body cavity that is completely lined with tissue derived from the mesoderm. This lining provides cushioning, flexibility and space for organ development."
+  },
+    {
+        text: "How is a pseudocoelom distinguished from a true coelom?",
+        options: ["It lacks a body cavity completely", "It's only partially lined with mesoderm", "It is completely lined with mesoderm", "It is completely lined with endoderm."],
+         correct: 1,
+        explanation: "A pseudocoelom is a body cavity that is only partially lined with mesoderm. In contrast, a true coelom is fully lined by mesodermal tissue, and acoelomates lack a body cavity."
+    },
+  {
+    text: "Which phylum contains acoelomate animals?",
+    options: ["Arthropoda", "Nematoda", "Platyhelminthes", "Echinodermata"],
+    correct: 2,
+    explanation: "Platyhelminthes, which includes flatworms, are acoelomate animals. Acoelomates lack a body cavity entirely. Arthropoda, Nematoda and Echinodermata are coelomate or pseudocoelomate animals"
+  },
+  {
+    text: "Which term describes the kind of symmetry in which body parts are arranged around a central axis?",
+    options: ["Bilateral", "Biradial", "Asymmetrical", "Radial"],
+    correct: 3,
+    explanation: "Radial symmetry describes the arrangement of body parts around a central axis, like spokes on a wheel, this can be seen in Cnidarians. Bilateral symmetry, in contrast, has a left and right side. Asymmetrical animals have no symmetry."
+  },
+    {
+        text: "What characterizes a biradial symmetry?",
+        options: ["Animals with no symmetry", "A modification of radial symmetry with mirror images", "Only 1 line of symmetry", "Having two halves of an organism"],
+         correct: 1,
+        explanation: "Biradial symmetry is a modified form of radial symmetry where there is a single line of symmetry. This results in mirror images on either side of one of the axes, but not all axes."
+    },
+   {
+        text: "Animals with radial symmetry lack:",
+        options: ["An oral end", "An aboral end", "Anterior or posterior ends", "A central axis"],
+        correct: 2,
+        explanation: "Radially symmetrical animals do not have distinct anterior (front) or posterior (back) ends. Instead, they have an oral end (where the mouth is) and an aboral end (opposite the mouth)."
+    },
+    {
+        text: "The mouth of a radially symmetrical animal is considered the:",
+         options: ["Anterior end", "Posterior end", "Oral end", "Aboral end"],
+        correct: 2,
+        explanation: "The mouth of a radially symmetrical animal is considered the oral end. This is because of their interaction with the environment from the direction of the mouth. They do not have an anterior or posterior."
+    },
+     {
+        text: "An animal is discovered with a mesoderm, and a fluid filled cavity completely lined with mesoderm. What category would it belong to?",
+        options: ["Diploblastic and acoelomate", "Triploblastic and pseudocoelomate", "Triploblastic and coelomate", "Triploblastic and acoelomate"],
+         correct: 2,
+         explanation: "An animal with a mesoderm is triploblastic. A fluid-filled cavity completely lined with mesoderm defines a true coelomate. So, the organism would be a triploblastic coelomate. A pseudocoelom is partially lined with mesoderm. Acoelomates do not have a body cavity."
+    },
+ {
+        text: "An organism displays radial symmetry with distinct oral and aboral ends. Which phylum would it most likely belong to?",
+        options: ["Platyhelminthes", "Annelida", "Cnidaria", "Arthropoda"],
+        correct: 2,
+        explanation: "Cnidaria, which includes jellyfish and sea anemones, is characterized by radial symmetry and have oral and aboral ends. Platyhelminthes, Annelida and Arthropoda display bilateral symmetry."
+    }, 
   {
     text: "Imagine that scientists discover a new phylum with a unique coelomic structure. How might this impact current classifications of animals based on the coelom?",
     options: ["No impact since coelom structure is a minor detail", "The existing system may need to be revised and improved.", "Scientists will ignore the finding.", "Coelomic structure is irrelevant"],
