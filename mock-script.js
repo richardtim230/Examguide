@@ -1,5 +1,5 @@
 const validUserIDs = [
-  "USER101", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
+  "USER101", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   
 
 let currentQuestionIndex = 0;
@@ -1300,120 +1300,134 @@ resultsContent.innerHTML = questions.map((q, i) => {
 
 async function generatePDF() {
   const { jsPDF } = window.jspdf; // Import jsPDF
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "px",
-    format: "a4"
-  });
+  const logo = "logo.png"; // Full Base64 string
+  const doc = new jsPDF({ orientation: "portrait", unit: "px", format: "a4" });
 
-  // Constants
+  // Prompt user for PDF type
+  const isAdmin = confirm("Is this PDF for Admins (Plain questions with answer keys)? Click 'OK' for Admins, 'Cancel' for Results and corrections.");
+
+  if (isAdmin) {
+    const adminCode = prompt("Please enter the admin code:");
+    if (!adminCode || adminCode.trim().toUpperCase() !== "OAU-ADMIN") {
+      alert("Invalid admin code. PDF generation aborted.");
+      return;
+    }
+
+    const courseTitle = prompt("Please enter the course title:");
+    const duration = prompt("Please enter the exam duration:");
+
+    if (!courseTitle || !duration) {
+      alert("Course title or duration is missing. PDF generation aborted.");
+      return;
+    }
+
+    generateAdminPDF(doc, logo, courseTitle, duration);
+  } else {
+    generateUserPDF(doc, logo);
+  }
+}
+function generateUserPDF(doc, logo) {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 40;
-  const contentWidth = pageWidth - margin * 2; // Width for text
-  const lineHeight = 20;
-  const sectionSpacing = 10;
   let yOffset = margin;
 
-  // Colors
-  const headerBackground = "#4A90E2";
-  const sectionHeadingColor = "#333";
-  const questionColor = "#000";
-  const answerColor = "#28a745";
-  const explanationColor = "#555";
+  // Add Logo
+  doc.addImage(logo, "PNG", margin, yOffset, 50, 50);
+  yOffset += 70;
 
-  // Header Section
-  doc.setFillColor(headerBackground);
-  doc.rect(0, 0, pageWidth, 70, "F"); // Draw header background
-
+  // Add Header
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
-  doc.setTextColor("#FFFFFF");
-  doc.text("Obafemi Awolowo University", pageWidth / 2, 40, { align: "center" });
+  doc.text("Obafemi Awolowo University", pageWidth / 2, yOffset, { align: "center" });
+  yOffset += 30;
 
   doc.setFontSize(16);
-  doc.text(`Zoology Exam Results`, pageWidth / 2, 60, { align: "center" });
-  yOffset += 80;
+  doc.text(`Zoology Exam Results`, pageWidth / 2, yOffset, { align: "center" });
+  yOffset += 50;
 
-  // Performance Summary Section
+  // Performance Summary
   const totalAnswered = userAnswers.filter(answer => answer !== undefined).length;
-  const totalNotAnswered = questions.length - totalAnswered;
   const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
   const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
 
-  doc.setFontSize(16);
-  doc.setTextColor(sectionHeadingColor);
-  doc.text("Performance Report", margin, yOffset);
-  yOffset += lineHeight;
-
-  doc.setFont("helvetica", "normal");
   doc.setFontSize(14);
-  doc.text(`Candidate Name: ${fullName}`, margin, yOffset); // Candidate's full name
-  yOffset += lineHeight;
-  doc.text(`Course: Zoology`, margin, yOffset);
-  yOffset += lineHeight;
-  doc.text(`Course Code: ${selectedCourseCode}`, margin, yOffset);
-  yOffset += lineHeight;
-  doc.text(`Total Questions Answered: ${totalAnswered}`, margin, yOffset);
-  yOffset += lineHeight;
-  doc.text(`Total Questions Not Answered: ${totalNotAnswered}`, margin, yOffset);
-  yOffset += lineHeight;
+  doc.text(`Candidate Name: ${fullName}`, margin, yOffset);
+  yOffset += 20;
   doc.text(`Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)`, margin, yOffset);
-  yOffset += lineHeight * 2;
+  yOffset += 40;
 
-  // Add Divider Line
-  doc.setDrawColor("#000");
-  doc.setLineWidth(0.5);
-  doc.line(margin, yOffset, pageWidth - margin, yOffset);
-  yOffset += sectionSpacing * 2;
-
-  // Questions and Answers Section
+  // Render Questions
   questions.forEach((q, i) => {
-    if (yOffset > pageHeight - margin - lineHeight * 6) {
-      doc.addPage(); // Add a new page if content exceeds the current page
+    if (yOffset > 700) {
+      doc.addPage();
       yOffset = margin;
     }
 
-    // Question Number and Text
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.setTextColor(questionColor);
-    const questionText = doc.splitTextToSize(`${i + 1}. ${q.text}`, contentWidth);
-    doc.text(questionText, margin, yOffset);
-    yOffset += questionText.length * lineHeight;
+    doc.text(`${i + 1}. ${q.text}`, margin, yOffset);
+    yOffset += 20;
 
-    // Correct Answer
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(answerColor);
-    const correctAnswer = doc.splitTextToSize(`Correct Answer: ${q.options[q.correct]}`, contentWidth);
-    doc.text(correctAnswer, margin, yOffset);
-    yOffset += correctAnswer.length * lineHeight;
+    doc.text(`Correct Answer: ${q.options[q.correct]}`, margin, yOffset);
+    yOffset += 20;
 
-    // Explanation
     doc.setFont("helvetica", "italic");
-    doc.setTextColor(explanationColor);
-    const explanation = doc.splitTextToSize(`Explanation: ${q.explanation}`, contentWidth);
-    doc.text(explanation, margin, yOffset);
-    yOffset += explanation.length * lineHeight + sectionSpacing;
-
-    // Add Divider Line
-    doc.setDrawColor("#ddd");
-    doc.setLineWidth(0.5);
-    doc.line(margin, yOffset, pageWidth - margin, yOffset);
-    yOffset += sectionSpacing * 2;
+    doc.text(`Explanation: ${q.explanation}`, margin, yOffset);
+    yOffset += 30;
   });
 
-  // Footer Section
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(12);
-  doc.setTextColor("#666");
-  const footerY = pageHeight - margin;
-  doc.text("Compliled by Hon Richard D'Prof and Generated for OAU Practice Exam Platform", pageWidth / 2, footerY, { align: "center" });
-
-  // Save the PDF
+  // Save File
   doc.save(`${fullName}_Exam_Results.pdf`);
 }
+function generateAdminPDF(doc, logo, courseTitle, duration) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 40;
+  let yOffset = margin;
 
+  // Add Logo
+  doc.addImage(logo, "PNG", margin, yOffset, 50, 50);
+  yOffset += 70;
+
+  // Add Header
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(22);
+  doc.text("Obafemi Awolowo University", pageWidth / 2, yOffset, { align: "center" });
+  yOffset += 30;
+
+  doc.setFontSize(16);
+  doc.text(`Zoology Exam Questions`, pageWidth / 2, yOffset, { align: "center" });
+  yOffset += 50;
+
+  // Add Course Details
+  doc.setFontSize(14);
+  doc.text(`Course Title: ${courseTitle}`, margin, yOffset);
+  yOffset += 20;
+  doc.text(`Duration: ${duration}`, margin, yOffset);
+  yOffset += 40;
+
+  // Render Questions
+  questions.forEach((q, i) => {
+    if (yOffset > 700) {
+      doc.addPage();
+      yOffset = margin;
+    }
+
+    doc.setFont("helvetica", "bold");
+    doc.text(`${i + 1}. ${q.text}`, margin, yOffset);
+    yOffset += 20;
+
+    doc.setFont("helvetica", "normal");
+    q.options.forEach((option, idx) => {
+      doc.text(`${String.fromCharCode(65 + idx)}. ${option}`, margin + 20, yOffset);
+      yOffset += 20;
+    });
+
+    yOffset += 10;
+  });
+
+  // Save File
+  doc.save(`${courseTitle}_Admin_Questions.pdf`);
+}
 
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
