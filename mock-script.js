@@ -1072,46 +1072,6 @@ const questionBanks = {
         }, 
       ], 
 
-  "ZOO101-E1": [
-    { }, 
-      ], 
-
-  "ZOO101-E2": [
-    { }, 
-      ], 
-  "ZOO101-E3": [
-    { }, 
-      ], 
-    "ZOO101-E4": [
-    { }, 
-      ], 
-  "BOT101-1": [
-    { }, 
-      ], 
-  "BOT101-2": [
-    { }, 
-      ], 
-  "BOT101-3": [
-    { }, 
-      ], 
-  "BOT101-E1": [
-    { }, 
-      ], 
-  "BOT101-E2": [
-    { }, 
-      ], 
-  "BOT101-E3": [
-    { }, 
-      ], 
-  "CHM101-E1": [
-    { }, 
-      ], 
-  "CHM101-E2": [
-    { }, 
-      ], 
-  "CHM101-E3": [
-    { }, 
-      ], 
   "ZOO101-2": [
     
   {
@@ -1674,15 +1634,6 @@ loginBtn.addEventListener("click", () => {
   courseCodeSection.classList.remove("hidden");
 });
 
-// Ensure to clear the local storage upon logout or session end
-function logout() {
-  localStorage.removeItem("fullName");
-  localStorage.removeItem("userID");
-  window.location.href = "login.html"; // Redirect to the login page
-}
-
-// Call the logout function when needed (e.g., when the user clicks a logout button)
-document.getElementById("logoutBtn").addEventListener("click", logout);
 
 // Select Course Code
 selectCourseBtn.addEventListener("click", () => {
