@@ -14,6 +14,73 @@ let selectedCourseCode = "";
 
 // Predefined question banks by course codes
 const questionBanks = {
+  
+  "ZOO101-E1": [
+    {
+      
+    }, 
+      ], 
+
+  "ZOO101-E2": [
+    {
+      
+    }, 
+      ], 
+  "ZOO101-E3": [
+    {
+      
+    }, 
+      ], 
+    "ZOO101-E4": [
+    {
+      
+    }, 
+      ], 
+  "BOT101-1": [
+    {
+      
+    }, 
+      ], 
+  "BOT101-2": [
+    {
+      
+    }, 
+      ], 
+  "BOT101-3": [
+    {
+      
+    }, 
+      ], 
+  "BOT101-E1": [
+    {
+      
+    }, 
+      ], 
+  "BOT101-E2": [
+    {
+      
+    }, 
+      ], 
+  "BOT101-E3": [
+    {
+      
+    }, 
+      ], 
+  "CHM101-E1": [
+    {
+      
+    }, 
+      ], 
+  "CHM101-E2": [
+    {
+      
+    }, 
+      ], 
+  "CHM101-E3": [
+    {
+      
+    }, 
+      ], 
   "ZOO101-1": [
     
  {
