@@ -591,6 +591,484 @@ const questionBanks = {
          explanation: "The yolk is an integral part of the cytoplasm in eggs. The yolk is not independent from the cytoplasm but rather a component that stores nutrients within the cytoplasm of the ovum."
     },  
   ],
+
+    "PHYS-1": [
+{
+  text: "An arrow is shot straight up in the air at an initial speed of 15.0 m/s. After how much time is the arrow heading downward at a speed of 8.00 m/s?",
+  options: ["0.714 s", "1.24 s", "1.87 s", "2.35 s", "3.22 s"],
+  correct: 3,
+  explanation: "The arrow's velocity changes due to gravity. First, calculate the time to reach the peak (v=0) using v=vₒ+at, giving t=1.53s. Then time to reach 8.0m/s downwards by v=vₒ+at, resulting in t₂=0.816. Total time is t₁+t₂, where 1.53+0.816= 2.35s."
+},
+{
+  text: "One drop of oil falls straight down onto the road from the engine of a moving car every 5 s. With maximum length of 600m. What is the average speed of the car over this section of its motion?",
+  options: ["20 m/s", "24 m/s", "30 m/s", "100 m/s", "120 m/s"],
+  correct: 1,
+   explanation: "Average speed is calculated by dividing the total distance traveled by the total time taken. Given that the drops are 600m apart over 5 seconds each and there are 3 such gaps, therefore total distance is 600m. And the total time is 600 / 25 = 24 m/s."
+},
+{
+  text: "When applying the equations of kinematics for an object moving in one dimension, which of the following statements must be true?",
+  options: ["The velocity of the object must remain constant.", "The acceleration of the object must remain constant.", "The velocity of the object must increase with time.", "The position of the object must increase with time.", "The velocity of the object must always be in the same direction as its acceleration."],
+  correct: 1,
+  explanation: "Kinematic equations apply when acceleration is constant. Velocity and position can change, and velocity and acceleration are not always in the same direction. Therefore, the acceleration of the object must remain constant."
+},
+{
+  text: "A juggler throws a bowling pin straight up in the air. After the pin leaves his hand and while it is in the air, which statement is true?",
+  options: ["The velocity of the pin is always in the same direction as its acceleration.", "The velocity of the pin is never in the same direction as its acceleration.", "The acceleration of the pin is zero.", "The velocity of the pin is opposite its acceleration on the way up.", "The velocity of the pin is in the same direction as its acceleration on the way up."],
+   correct: 3,
+  explanation: "The acceleration of the pin is due to gravity, which always acts downward. While the pin is going up, its velocity is upward, hence velocity and acceleration are opposite. When going down the velocity is downwards therefore it is aligned with acceleration."
+},
+{
+   text: "A racing car starts from rest and reaches a final speed v in a time t. If the acceleration of the car is constant during this time, which of the following statements must be true?",
+   options: ["The car travels a distance vt.", "The average speed of the car is vt/2.", "The acceleration of the car is v/t.", "The velocity of the car remains constant.", "None of these."],
+   correct: 2,
+   explanation: "With constant acceleration, the acceleration is defined as the change in velocity over time. Since the car starts from rest (vi=0) to final speed v (vf=v) over time (t), then a= (vf - vi)/ t which gives v/t. Therefore, the correct option is that the acceleration of the car is v/t."
+},
+{
+  text: "When the pilot reverses the propeller in a boat moving north, the boat moves with an acceleration directed south. Assume the acceleration of the boat remains constant in magnitude and direction. What happens to the boat?",
+  options: ["It eventually stops and remains stopped.", "It eventually stops and then speeds up in the northward direction.", "It eventually stops and then speeds up in the southward direction.", "It never stops but loses speed more and more slowly forever.", "It never stops but continues to speed up in the northward direction."],
+   correct: 2,
+  explanation: "With acceleration in the opposite direction to velocity, the boat will initially slow down until it stops momentarily, the continue to accelerate back the other way until it moves in the south direction, which is the direction of acceleration."
+},
+{
+  text: "An object moves along the x-axis, its position measured at each instant of time. The data are organized into an accurate graph of x vs. t. Which of the following quantities cannot be obtained from this graph?",
+  options: ["the velocity at any instant", "the acceleration at any instant", "the displacement during some time interval", "the average velocity during some time interval", "the speed of the particle at any instant"],
+  correct: 1,
+  explanation: "A position-time graph shows the object's position at each instant. The slope of the graph at any point gives the velocity at that instant. However, the acceleration requires a change in velocity, meaning that you need a velocity time graph. Therefore, from the x-t graph, the acceleration at any instant cannot be directly obtained."
+},
+{
+  text: "A skateboarder starts from rest and moves down a hill with constant acceleration in a straight line, traveling for 6 s. In a second trial, he starts from rest and moves along the same straight line with the same acceleration for only 2 s. How does his displacement from his starting point in this second trial compare with the first trial?",
+  options: ["one-third as large", "three times larger", "one-ninth as large", "nine times larger", "1/√3 times as large"],
+  correct: 2,
+  explanation: "Displacement in constant acceleration is given by x = 1/2at². In the first trial, it's proportional to 6²=36. The second, it's proportional to 2²=4. The ratio of second trial to the first trial is 4/36 = 1/9, therefore second trial is 1/9 as large as the first trial."
+},
+{
+  text: "Races are timed to an accuracy of 1/1,000 of a second. What distance could a person in-line skating at a speed of 8.5 m/s travel in that period of time?",
+  options: ["85 m", "85 cm", "8.5 m", "8.5 mm", "8.5 km"],
+  correct: 2,
+  explanation: "The time of travel is 1/1000 of a second (0.001 s). Using the formula distance = speed x time. distance= 8.5m/s ×0.001s = 0.0085m which is 8.5mm. If you use 1/100 which is 0.01s then the distance would be 0.085m which is 8.5 cm. And if you use 1/10 of a second the time of travel would be 0.1s and the distance is 0.85m. If you use a whole second the distance would be 8.5m."
+}, 
+    {
+        text: "A student at the top of a building throws a red ball upward with speed v₀ and then throws a blue ball downward with the same initial speed v₀. Immediately before the two balls reach the ground, which of the following statements are true? (Choose all correct statements; neglect air friction.)",
+        options: [
+            "The speed of the red ball is less than that of the blue ball.",
+            "The speed of the red ball is greater than that of the blue ball.",
+            "Their velocities are equal.",
+            "The speed of each ball is lesser than v₀.",
+            "The acceleration of the blue ball is greater than that of the red ball."
+        ],
+        correct: 2,
+        explanation: "Both balls experience the same acceleration due to gravity. The red ball initially goes up, stops momentarily, and then accelerates downwards. Since they have the same initial speed, by the time they reach the ground, their speeds would be the same (ignoring air resistance). However, since one is coming down, the other up, their velocities (which is speed with direction) are opposite, therefore, they are not equal."
+    },
+    {
+        text: "A ball is thrown downward from the top of a 40.0 m tower with an initial speed of 12 m/s. Assuming negligible air resistance, what is the speed of the ball just before hitting the ground?",
+        options: [
+            "28 m/s",
+            "30 m/s",
+            "56 m/s",
+            "784 m/s",
+            "More information is needed."
+        ],
+        correct: 1,
+        explanation: "We use the equation vf² = vi² + 2ad, where vf is the final speed, vi is initial speed (12 m/s), a is acceleration due to gravity (9.8 m/s²), and d is the distance (40 m).  So, vf² = 12² + 2 * 9.8 * 40 = 144 + 784 = 928. Taking the square root, vf = √928 ≈ 30.46 m/s, which rounds to 30 m/s."
+    },
+    {
+        text: "A ball is thrown straight up in the air. For which situation are both the instantaneous velocity and the acceleration zero?",
+        options: [
+            "on the way up",
+            "at the top of the flight path",
+            "on the way down",
+            "halfway up and halfway down",
+            "none of these"
+        ],
+        correct: 4,
+        explanation: "When a ball is thrown upwards, gravity acts continuously, and so it is always -9.8m/s^2 downwards. Therefore, the acceleration of the ball is never 0. When the ball reaches the peak, the speed is 0, but the acceleration due to gravity is always -9.8m/s^2 downwards."
+    }, 
+    {
+        text: "A horizontal force of 95.0 N is applied to a 60.0-kg crate on a rough, level surface. If the crate accelerates at 1.20 m/s², what is the magnitude of the force of kinetic friction acting on the crate?",
+        options: [
+            "23.0 N",
+            "45.0 N",
+            "16.0 N",
+            "33.0 N",
+            "8.80 N"
+        ],
+        correct: 0,
+        explanation: "First, calculate the net force using Newton's second law F_net = ma = (60 kg)(1.20 m/s²) = 72 N. Since the applied force is 95N, the friction force = 95 - 72 = 23N."
+    },
+    {
+        text: "As a block slides down a frictionless incline, which of the following statements is true?",
+        options: [
+            "Both its speed and acceleration increase.",
+            "Its speed and acceleration remain constant.",
+            "Its speed increases and its acceleration remains constant.",
+            "Both its speed and acceleration decrease.",
+             "Its speed increases and its acceleration decreases."
+        ],
+        correct: 2,
+        explanation: "In a frictionless incline, the acceleration is constant. As the block slides down, its speed increases due to the component of gravity acting parallel to the incline."
+    },
+     {
+        text: "If Earth's mass and radius both suddenly doubled, what would be the new value of the acceleration of gravity near Earth's surface?",
+        options: [
+            "9.80 m/s²",
+            "4.90 m/s²",
+            "2.45 m/s²",
+            "19.6 m/s²",
+            "12.6 m/s²"
+        ],
+        correct: 1,
+        explanation: "The acceleration due to gravity is given by g = GM/r². If both mass (M) and radius (r) are doubled, then g_new = G(2M)/(2r)²=2GM/4r²=(1/2)(GM/r²). Therefore, the new gravity would be half of the original, 9.8 / 2 = 4.9 m/s²."
+    },
+ {
+        text: "If a constant non-zero net external force acts on an object during a given period, which of the following statements must be true during that time?",
+        options: [
+            "The object moves.",
+            "The magnitude of the object's velocity increases.",
+            "The acceleration of the object is increasing.",
+            "The object decelerates.",
+             "The object's speed remains constant."
+        ],
+        correct: 0,
+        explanation: "According to Newton's first law, an object at rest will remain at rest and an object in motion will remain in motion unless acted upon by a net external force, meaning a net force will cause a movement, so an object moves."
+    },
+    {
+        text: "Two monkeys of equal mass are holding onto a single vine of negligible mass that hangs vertically from a tree, with one monkey a few meters higher than the other. What is the ratio of the tension in the vine between the two monkeys?",
+        options: [
+            "1",
+            "1",
+            "1/2",
+            "2",
+             "More information is required."
+        ],
+        correct: 3,
+        explanation: "Let T1 be the tension above the higher monkey, and T2 the tension between the two. The lower monkey has mass m and weight mg and is supported by T2, thus T2 = mg. The upper monkey is supported by T1 along with lower monkey, thus T1 = 2mg. Therefore the ratio of T1/T2 = 2mg/mg= 2"
+    },
+   {
+        text: "A crate remains stationary after it has been placed on a ramp inclined at an angle with the horizontal. Which of the following statements must be true about the magnitude of the frictional force that acts on the crate?",
+        options: [
+            "It is larger than the weight of the crate.",
+            "It is at least equal to the weight of the crate.",
+            "It is equal to μN.",
+            "It is greater than the component of the gravitational force acting down the ramp.",
+            "It is equal to the component of the gravitational force acting down the ramp."
+        ],
+        correct: 4,
+        explanation: "Since the crate is stationary, the static friction is equal in magnitude and opposite in direction to the component of gravity that pulls it down the ramp. Hence, the frictional force is equal to the component of gravitational force acting down the ramp."
+    },
+    {
+        text: "In the photo on page 89, a locomotive has broken through the wall of a train station. During the collision, what can be said about the force exerted by the locomotive on the wall?",
+        options: [
+           "The force exerted by the locomotive on the wall was larger than the force the wall could exert on the locomotive.",
+            "The force exerted by the locomotive on the wall was the same in magnitude as the force exerted by the wall on the locomotive.",              "The force exerted by the locomotive on the wall was less than the force exerted by the wall on the locomotive.",
+            "The wall cannot be said to “exert” a force; after all, it broke."
+        ],
+        correct: 1,
+        explanation: "Newton's third law states that forces come in pairs. The force that the locomotive exerts on the wall is equal in magnitude and opposite in direction to the force that the wall exerts on the locomotive."
+    },
+    {
+        text: "If an object of mass m moves with constant velocity v, the net force on the object is",
+         options: [
+           "mg",
+            "mv",
+            "mv/t",
+            "0",
+            "None of these answers is correct."
+        ],
+        correct: 3,
+        explanation: "According to Newton's first law, an object in motion continues in that motion with the same velocity unless a net force acts on it. If the velocity is constant, the acceleration is zero, so the net force on the object is also zero."
+    },
+{
+        text: "Four forces act on an object, given (⃗A⃗)⃗ = 40 N east, (⃗B⃗)⃗ = 50 N north, (⃗C⃗)⃗ = 70 N west, and (⃗D⃗)⃗ = 90 N south. What is the magnitude of the net force on the object?",
+        options: [
+            "50 N",
+            "70 N",
+            "131 N",
+            "170 N",
+            "250 N"
+        ],
+        correct: 0,
+       explanation: "Resolve the forces into x and y components. x component is 40N (east) - 70 N(west) = -30N and y is 50N (north) -90N(south) = -40N. Now you have two perpendicular vectors with magnitude of 30N and 40N and so use Pythag theorem to find result vector, which is the magnitude of square root of (30² + 40²) = 50N."
+    }, 
+    {
+        text: "If an object is in equilibrium, which of the following statements is *not* true?",
+        options: [
+            "The speed of the object remains constant.",
+            "The acceleration of the object is zero.",
+            "The net force acting on the object is zero.",
+            "The object must be at rest.",
+            "The velocity is constant."
+        ],
+        correct: 3,
+        explanation: "An object in equilibrium has zero net force and therefore zero acceleration. However, zero acceleration implies that the velocity is constant, not necessarily zero. Hence the object could be moving at a constant velocity."
+    },
+    {
+        text: "A manager of a restaurant pushes horizontally with a force of magnitude 150 N on a box of melons. The box moves across the floor with a constant acceleration in the same direction as the applied force. Which statement is most accurate concerning the magnitude of the force of kinetic friction acting on the box?",
+       options: [
+            "It is greater than 150 N.",
+            "It is less than 150 N.",
+            "It is equal to 150 N.",
+             "The kinetic friction force is steadily decreasing.",
+           "The kinetic friction force must be zero."
+        ],
+        correct: 1,
+        explanation: "If the box has a constant acceleration in the same direction as the applied force, then the applied force must be greater than the opposing force of kinetic friction. Therefore the kinetic friction is less than 150 N."
+    },
+    {
+        text: "A truck loaded with sand accelerates along a highway. The driving force on the truck remains constant. What happens to the acceleration of the truck as its trailer leaks sand at a constant rate through a hole in its bottom?",
+       options: [
+            "It decreases at a steady rate.",
+            "It increases at a steady rate.",
+            "It increases and then decreases.",
+            "It decreases and then increases.",
+           "It remains constant."
+        ],
+        correct: 1,
+         explanation: "According to Newton's second law F=ma, if the driving force remains constant and the mass of the truck is decreasing, the acceleration increases as a=F/m."
+    },
+    {
+        text: "A large crate of mass m is placed on the back of a truck but not tied down. As the truck accelerates forward with an acceleration a, the crate remains at rest relative to the truck. What force causes the crate to accelerate forward?",
+        options: [
+            "the normal force",
+            "the force of gravity",
+            "the force of friction between the crate and the floor of the truck",
+           "the “ma” force",
+            "none of these"
+        ],
+        correct: 2,
+        explanation: "The crate accelerates forward because of static friction which acts on the crate from the floor of the truck. There is no normal force or force of gravity that pushes the crate forward. The 'ma force' is not a real force; it is just a product of mass and acceleration."
+    },
+    {
+        text: "Two objects are connected by a string that passes over a frictionless pulley. Where m₁ < m₂ and a₁ and a₂ are the respective magnitudes of the accelerations. Which mathematical statement is true concerning the magnitude of the acceleration a₂ of mass m₂?",
+        options: [
+            "a₂ < g",
+            "a₂ > g",
+            "a₂ = g",
+            "a₂ < a₁",
+            "a₂ > a₁"
+        ],
+         correct: 0,
+        explanation: "Since the masses are connected, the magnitude of their accelerations is the same but the direction is opposite. Because m2 > m1 then gravity acts against the tension and so its acceleration is less than that of free fall."
+    },
+  {
+        text: "Which of the following statements are true?",
+        options: [
+            "An astronaut’s weight is the same on the Moon as on Earth.",
+            "An astronaut’s mass is the same on the International Space Station as it is on Earth.",
+            "Earth’s gravity has no effect on astronauts inside the International Space Station.",
+            "An astronaut’s mass is greater on Earth than on the Moon.",
+            "None of these statements are true."
+        ],
+        correct: 1,
+        explanation: "Mass is an intrinsic property and does not change based on location. Weight is affected by gravity. Therefore, mass is constant whereas weight is variable depending on gravitational force. So the astronaut's mass on the ISS is the same as it is on Earth."
+    },
+    {
+        text: "An object of mass m undergoes an acceleration, a down a rough incline. Which of the following forces should not appear in the free-body diagram for the object? Choose all correct answers.",
+        options: [
+            "the force of gravity",
+            "the normal force of the incline on the object",
+            "the force of friction due to the incline",
+     "the speed of the object on the incline"
+        ],
+        correct: 2,
+        explanation: "A free-body diagram shows forces *acting* on the object. Acceleration is not a force, so it does not belong in a free-body diagram, nor does speed. The speed is a property of an object, therefore it should not appear in a free-body diagram."
+    }, 
+    {
+        text: "A worker pushes a wheelbarrow 5.0 m along a level surface, exerting a constant horizontal force of 50.0 N. If a frictional force of 43 N acts on the wheelbarrow in a direction opposite to that of the worker, what net work is done on the wheelbarrow?",
+        options: [
+            "250 J",
+            "215 J",
+            "35 J",
+            "15 J",
+            "45 J"
+        ],
+        correct: 2,
+        explanation: "Net work done is the net force multiplied by the displacement. Net force is the difference between pushing force and friction force, so 50 N - 43 N = 7 N. Net work is 7 N * 5 m = 35 J."
+    },
+    {
+        text: "What average mechanical power must be delivered by the muscles of a 70.0-kg mountain climber who climbs a summit of height 325 m in 95.0 min? Note: Due to inefficiencies in converting chemical energy to mechanical energy, the amount calculated here is only a fraction of the power that must be produced by the climber's body.",
+        options: [
+            "39.1 W",
+            "54.6 W",
+            "25.5 W",
+            "67.0 W",
+            "88.4 W"
+        ],
+        correct: 0,
+        explanation: "Power is work done over time. Work done by the climber is the change in potential energy: mgh = 70 kg * 9.8 m/s² * 325 m = 222950 J. Time is 95 min = 95*60=5700 seconds. Power = work/time = 222950 J / 5700 s = 39.1 W."
+    },
+    {
+        text: "A 40.0-N crate starting at rest slides down a rough 6.00-m-long ramp, inclined at 30.0° with the horizontal. The magnitude of the force of friction between the crate and the ramp is 6.0 N. What is the speed of the crate at the bottom of the incline?",
+        options: [
+            "1.60 m/s",
+            "3.2 m/s",
+            "3.5 m/s",
+            "6.42 m/s"
+        ],
+        correct: 3,
+        explanation: "The potential energy of the crate at the top will equal to its kinetic energy at the bottom plus work done by friction. Potential energy mgh where h is 6sin(30)=3m so PE = 40*3= 120J. Work done by friction = 6*6=36J. KE = 120-36= 84J. KE=1/2mv^2. Since w=mg then m=w/g=40/9.8=4.08 so v=sqrt (84*2/4.08) which is 6.42 m/s"
+    },
+    {
+         text: "A skier leaves a ski jump at 15.0 m/s at some angle θ. At what speed is he traveling at his maximum height of 4.50 m above the level of the end of the ski jump? (Neglect air friction.)",
+        options: [
+            "11.7 m/s",
+            "16.3 m/s",
+            "12.9 m/s",
+            "8.55 m/s",
+                  "17.4 m/s"
+        ],
+        correct: 0,
+        explanation: "At maximum height, the vertical component of velocity is zero. The initial kinetic energy is (1/2)mv². At the max height, only horizontal velocity component exists, therefore the vertical component is lost which is now converted to potential energy: 1/2mvy² = mgh, so vy= √(2gh). So vy = √(2×9.8×4.5)= √88.2 = 9.39. Then using Pythag theorem to calculate horizontal component. Since total velocity = 15m/s then the horizontal component becomes √(15² - 9.39²)=11.7 m/s"
+    },
+  {
+        text: "The work required to accelerate an object on a frictionless surface from a speed ( v ) to a speed ( 2v ) is",
+        options: [
+            "equal to the work required to accelerate the object from ( v = 0 ) to ( 2v )",
+            "twice the work required to accelerate the object from ( v = 0 ) to ( v )",
+            "three times the work required to accelerate the object from ( v = 0 ) to ( v )",
+            "the work required to accelerate the object from ( 2v ) to ( 3v )",
+            "not known without knowledge of the acceleration."
+       ],
+        correct: 2,
+       explanation: "Work is equal to the change in kinetic energy. KE=1/2mv^2. So the change in KE to go from v to 2v is 1/2m(2v^2) - 1/2mv^2=3/2mv^2. If the change is from 0 to v then it becomes 1/2mv^2 -0= 1/2mv^2, therefore the work to go from v to 2v is 3 times of 0 to v."
+    },
+    {
+        text: "You hold a slingshot at arm's length, pull the light elastic band back to your chin, and release it to launch a pebble horizontally with speed 200 cm/s. With the same procedure, you fire a bean with speed 600 cm/s. What is the ratio of the mass of the bean to the mass of the pebble?",
+         options: [
+            "1/9",
+            "1/3",
+            "1",
+            "3",
+           "None of these"
+        ],
+        correct: 0,
+         explanation: "Energy stored in the slingshot goes into the kinetic energy of each projectile. Since the same work is done, the KE of the bean = KE of the pebble 1/2m_p *v_p^2=1/2m_b * v_b^2, so ratio of m_b/m_p = (v_p/v_b)^2 = (200/600)^2 = 1/9."
+    },
+    {
+        text: "Mark and David are loading identical cement blocks onto David’s pickup truck. Mark lifts his block straight up from the ground to the truck, whereas David slides his block up a ramp on massless, frictionless rollers. Which statement is true?",
+       options: [
+            "Mark does more work than David.",
+            "Mark and David do the same amount of work.",
+            "David does more work than Mark.",
+            "None of these statements is necessarily true because the angle of the incline is unknown.",
+           "None of these statements is necessarily true because the mass of one block is not given."
+        ],
+        correct: 1,
+        explanation: "Work done is equal to the change in potential energy. Both mark and david raise the block to the same height, therefore their change in potential energy and hence the work done will be the same irrespective of method, or slope."
+    }, 
+   {
+        text: "If the speed of a particle is doubled, what happens to its kinetic energy?",
+        options: [
+            "It becomes four times larger.",
+            "It becomes two times larger.",
+            "It becomes √2 times larger.",
+            "It is unchanged.",
+            "It becomes half as large."
+        ],
+        correct: 0,
+        explanation: "Kinetic energy (KE) is given by 1/2mv², where v is speed.  If the speed doubles (2v), then the new KE is 1/2m(2v)² = 1/2m(4v²) = 4(1/2mv²). Therefore the kinetic energy becomes four times larger."
+    },
+    {
+        text: "A certain truck has twice the mass of a car. Both are moving at the same speed. If the kinetic energy of the truck is K, what is the kinetic energy of the car?",
+        options: [
+            "K/4",
+            "K/2",
+            "0.71K",
+            "K",
+             "2K"
+        ],
+        correct: 1,
+        explanation: "Kinetic energy (KE) is 1/2mv². Let the mass of the car be m and mass of the truck be 2m. Since the speed is the same, the truck KE is 1/2(2m)v² =K. Then the car KE is 1/2(m)v² = 1/2K. Therefore the kinetic energy of the car is half of the truck."
+    },
+   {
+        text: "An athlete jumping vertically on a trampoline leaves the surface with a velocity of 8.5 m/s upward. What maximum height does she reach?",
+        options: [
+            "13 m",
+            "2.3 m",
+            "3.7 m",
+            "0.27 m",
+            "The answer can't be determined because the mass of the athlete isn't given."
+        ],
+        correct: 2,
+        explanation: "At the maximum height, the vertical velocity is zero. All kinetic energy is converted to potential energy. Using the equation mgh = 1/2mv^2, where g=9.8m/s^2 and v = 8.5 m/s. The mass cancels out so h = v²/2g = 8.5²/(2*9.8) = 3.69 meters."
+    },
+    {
+        text: "If the net work done on a particle is zero, which of the following statements must be true?",
+        options: [
+            "The velocity is zero.",
+            "The velocity is decreased.",
+            "The velocity is unchanged.",
+            "The speed is unchanged.",
+            "More information is needed."
+        ],
+        correct: 3,
+        explanation: "Net work done is the change in kinetic energy. If the net work done is zero, then the change in kinetic energy is zero. Since KE=1/2mv^2, if the KE does not change then the speed does not change. However, velocity (which includes direction) could change, for example the object could be going at a constant speed in a circle."
+   },
+     {
+        text: "A block of mass m is dropped from the fourth floor of an office building, subsequently hitting the sidewalk at speed v. From what floor should the mass be dropped to double that impact speed?",
+        options: [
+            "the sixth floor",
+            "the eighth floor",
+            "the tenth floor",
+            "the twelfth floor",
+            "the sixteenth floor"
+        ],
+         correct: 4,
+        explanation: "The velocity of impact is given by v² = 2gh. So if the velocity is to be doubled, then (2v)²=2g(h_new) then 4v²= 2g(h_new), therefore 4(2gh)=2g(h_new) so h_new =4h. Since the initial height is 4 floors, then to double the speed it should be 4*4=16."
+   },
+   {
+        text: "A car accelerates uniformly from rest. When does the car require the greatest power?",
+        options: [
+            "when the car first accelerates",
+           "just as the car reaches its maximum speed",
+            "when the car reaches half its maximum speed",
+            "The question is misleading because the power required is constant.",
+            "More information is needed."
+        ],
+        correct: 1,
+        explanation: "Power is force multiplied by velocity. When the car reaches maximum velocity, the acceleration becomes zero, but since we know that power = force * velocity and velocity is at maximum, so it will therefore be at maximum power."
+    }, 
+        {
+          text: "A vector lying in the xy-plane has components of opposite sign. The vector must lie in which quadrant?",
+          options: ["the first quadrant", "the second quadrant", "the third quadrant", "the fourth quadrant", "either the second or the fourth quadrant"],
+          correct: 4,
+          explanation: "In the second quadrant, x is negative and y is positive. In the fourth quadrant, x is positive and y is negative.  Therefore, the vector lies in either the second or fourth quadrant."
+        },
+        {
+          text: "A NASA astronaut hits a golf ball on the Moon. Which of the following quantities, if any, remain constant as the ball travels through the lunar vacuum?",
+          options: ["speed", "acceleration", "velocity", "horizontal component of velocity", "vertical component of velocity"],
+          correct: 3,
+          explanation: "In the absence of air resistance, the horizontal component of velocity remains constant. The other quantities change due to the acceleration of gravity."
+        },
+        {
+          text: "A car moving around a circular track with constant speed",
+          options: ["has zero acceleration", "has an acceleration component in the direction of its velocity", "has an acceleration directed away from the center of its path", "has an acceleration directed toward the center of its path", "has an acceleration with a direction that cannot be determined from the information given"],
+          correct: 3,
+          explanation: "Even with constant speed, the car is experiencing centripetal acceleration, which is always directed towards the center of the circular path."
+        },
+        {
+          text: "An athlete runs three-fourths of the way around a circular track. Which of the following statements is true?",
+          options: ["His average speed is greater than the magnitude of his average velocity.", "The magnitude of his average velocity is greater than his average speed.", "His average speed is equal to the magnitude of his average velocity.", "His average speed is the same as the magnitude of his average velocity if his instantaneous speed is constant.", "None of statements (a) through (d) is true."],
+          correct: 0,
+          explanation: "Average speed is total distance/total time, and average velocity is displacement/total time. Since the distance is larger than the displacement, the average speed will be larger. "
+        },
+        {          text: "A projectile is launched from Earth's surface at a certain initial velocity at an angle above the horizontal, reaching maximum height after time tₘₐₓ. Another projectile is launched with the same initial velocity and angle from the surface of the Moon, where the acceleration of gravity is one-sixth that of Earth. Neglecting air resistance (on Earth) and variations in the acceleration of gravity with height, how long does it take the projectile on the Moon to reach its maximum height?",
+           options: ["tₘₐₓ", "tₘₐₓ/6", "√6 tₘₐₓ", "36 tₘₐₓ", "6 tₘₐₓ"],
+          correct: 4,
+          explanation: "The time to reach maximum height is proportional to the inverse of the acceleration of gravity. Since the Moon's gravity is 1/6 of Earth's, the time will be 6 times greater on the Moon."
+        },
+       {
+          text: "A sailor drops a wrench from the top of a sailboat’s vertical mast while the boat is moving rapidly and steadily straight forward. Where will the wrench hit the deck?",
+          options: ["ahead of the base of the mast", "at the base of the mast", "behind the base of the mast", "on the windward side of the base of the mast", "None of choices (a) through (d) is correct."],
+          correct: 1,
+          explanation: "Due to inertia, the wrench will continue to move forward with the same horizontal velocity as the boat while falling and therefore land at the base of the mast."
+        },
+       {
+          text: "A baseball is thrown from the outfield toward the catcher. When the ball reaches its highest point, which statement is true?",
+          options: ["Its velocity and its acceleration are both zero.", "Its velocity is not zero, but its acceleration is zero.", "Its velocity is perpendicular to its acceleration.", "Its acceleration depends on the angle at which the ball was thrown.", "None of statements (a) through (d) is true."],
+          correct: 2,
+          explanation: "At the highest point, the vertical component of velocity is zero, but the horizontal component of velocity is not.  The acceleration due to gravity is downwards, so velocity is horizontal and acceleration is vertical, and thus they are perpendicular."
+        }, 
+      ], 
   "ZOO101-2": [
     
   {
