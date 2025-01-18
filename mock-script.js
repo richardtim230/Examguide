@@ -1,3 +1,5 @@
+
+
 const validUserIDs = [
   "USER101", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   
@@ -1069,6 +1071,47 @@ const questionBanks = {
           explanation: "At the highest point, the vertical component of velocity is zero, but the horizontal component of velocity is not.  The acceleration due to gravity is downwards, so velocity is horizontal and acceleration is vertical, and thus they are perpendicular."
         }, 
       ], 
+
+  "ZOO101-E1": [
+    { }, 
+      ], 
+
+  "ZOO101-E2": [
+    { }, 
+      ], 
+  "ZOO101-E3": [
+    { }, 
+      ], 
+    "ZOO101-E4": [
+    { }, 
+      ], 
+  "BOT101-1": [
+    { }, 
+      ], 
+  "BOT101-2": [
+    { }, 
+      ], 
+  "BOT101-3": [
+    { }, 
+      ], 
+  "BOT101-E1": [
+    { }, 
+      ], 
+  "BOT101-E2": [
+    { }, 
+      ], 
+  "BOT101-E3": [
+    { }, 
+      ], 
+  "CHM101-E1": [
+    { }, 
+      ], 
+  "CHM101-E2": [
+    { }, 
+      ], 
+  "CHM101-E3": [
+    { }, 
+      ], 
   "ZOO101-2": [
     
   {
@@ -1579,7 +1622,34 @@ const resultsContent = document.getElementById("results-content");
 const resultsSummary = document.getElementById("results-summary");
 const downloadPDF = document.getElementById("downloadPDF");
 
-// Authentication
+// Add this function to check if the user is authenticated
+function isAuthenticated() {
+  const userID = localStorage.getItem("userID");
+  const fullName = localStorage.getItem("fullName");
+
+  if (userID && validUserIDs.includes(userID) && fullName) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Call this function before initializing the exam
+function initializeExam() {
+  if (!isAuthenticated()) {
+    alert("You must be logged in to access the exam.");
+    window.location.href = "login.html"; // Redirect to the login page
+    return;
+  }
+
+  userDetails.textContent = `Candidate: ${fullName} | Course: ${selectedCourseCode}`;
+  startTime = Date.now();
+  loadQuestion();
+  startTimer();
+  examSection.classList.remove("hidden");
+}
+
+// Authentication logic (store user details in localStorage upon successful login)
 loginBtn.addEventListener("click", () => {
   const fullNameInput = document.getElementById("fullName").value.trim();
   const userIDInput = document.getElementById("userID").value.trim();
@@ -1594,12 +1664,25 @@ loginBtn.addEventListener("click", () => {
     return;
   }
 
+  localStorage.setItem("fullName", fullNameInput);
+  localStorage.setItem("userID", userIDInput);
+
   fullName = fullNameInput;
   userID = userIDInput;
 
   authSection.classList.add("hidden");
   courseCodeSection.classList.remove("hidden");
 });
+
+// Ensure to clear the local storage upon logout or session end
+function logout() {
+  localStorage.removeItem("fullName");
+  localStorage.removeItem("userID");
+  window.location.href = "login.html"; // Redirect to the login page
+}
+
+// Call the logout function when needed (e.g., when the user clicks a logout button)
+document.getElementById("logoutBtn").addEventListener("click", logout);
 
 // Select Course Code
 selectCourseBtn.addEventListener("click", () => {
