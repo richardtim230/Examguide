@@ -1816,10 +1816,6 @@ function generateUserPDF(doc, logo) {
   const sectionSpacing = 10;
   let yOffset = margin;
 
-  // Add Logo in the center
-  doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset, 50, 50);
-  yOffset += 60;
-
   // Colors
   const headerBackground = "#4A90E2";
   const sectionHeadingColor = "#333";
@@ -1829,16 +1825,21 @@ function generateUserPDF(doc, logo) {
 
   // Header Section
   doc.setFillColor(headerBackground);
-  doc.rect(0, 0, pageWidth, 70, "F"); // Draw header background
+  doc.rect(0, yOffset, pageWidth, 70, "F"); // Draw header background
+  yOffset += 35; // Adjust for the height of the logo
+
+  // Add Logo in the center of the header
+  doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset - 25, 50, 50);
+  yOffset += 35; // Adjust for the height of the header
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
   doc.setTextColor("#FFFFFF");
-  doc.text("Obafemi Awolowo University", pageWidth / 2, 40, { align: "center" });
+  doc.text("Obafemi Awolowo University", pageWidth / 2, yOffset - 40, { align: "center" });
 
   doc.setFontSize(16);
-  doc.text(`Zoology Exam Results`, pageWidth / 2, 60, { align: "center" });
-  yOffset += 80;
+  doc.text(`Zoology Exam Results`, pageWidth / 2, yOffset - 20, { align: "center" });
+  yOffset += 30;
 
   // Performance Summary Section
   const totalAnswered = userAnswers.filter(answer => answer !== undefined).length;
@@ -1929,10 +1930,6 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   const sectionSpacing = 10;
   let yOffset = margin;
 
-  // Add Logo in the center
-  doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset, 50, 50);
-  yOffset += 60;
-
   // Colors
   const headerBackground = "#4A90E2";
   const sectionHeadingColor = "#333";
@@ -1941,16 +1938,21 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
 
   // Header Section
   doc.setFillColor(headerBackground);
-  doc.rect(0, 0, pageWidth, 70, "F"); // Draw header background
+  doc.rect(0, yOffset, pageWidth, 70, "F"); // Draw header background
+  yOffset += 35; // Adjust for the height of the logo
+
+  // Add Logo in the center of the header
+  doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset - 25, 50, 50);
+  yOffset += 35; // Adjust for the height of the header
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
   doc.setTextColor("#FFFFFF");
-  doc.text("Obafemi Awolowo University", pageWidth / 2, 40, { align: "center" });
+  doc.text("Obafemi Awolowo University", pageWidth / 2, yOffset - 40, { align: "center" });
 
   doc.setFontSize(16);
-  doc.text(`Zoology Exam Questions`, pageWidth / 2, 60, { align: "center" });
-  yOffset += 80;
+  doc.text(`Zoology Exam Questions`, pageWidth / 2, yOffset - 20, { align: "center" });
+  yOffset += 30;
 
   // Add Course Title and Duration
   doc.setFont("helvetica", "normal");
@@ -2064,8 +2066,7 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
 
   // Save the PDF
   doc.save(`${selectedCourseCode}_Exam_Questions.pdf`);
-}  
-
+    }
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
   // Reset user answers and navigation
