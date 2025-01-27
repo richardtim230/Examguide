@@ -340,6 +340,369 @@ const questionBanks = {
     }, 
       ], 
   "BOT101-T2": [
+      {
+    text: "What type of imaging is confocal microscopy?",
+    options: [
+      "Electron",
+      "Optical",
+      "Chemical",
+      "Acoustic"
+    ],
+    correct: 1,
+    explanation: "Confocal microscopy is a type of optical microscopy, meaning it uses light to create images."
+  },
+  {
+    text: "What does confocal microscopy increase in an image?",
+    options: [
+      "Magnification and clarity",
+      "Resolution and contrast",
+      "Brightness and size",
+      "Depth and color"
+    ],
+    correct: 1,
+    explanation: "Confocal microscopy is known for increasing both the resolution and contrast in an image compared to standard light microscopy."
+  },
+  {
+    text: "How does confocal microscopy achieve its image improvements?",
+     options: [
+      "By using multiple lenses",
+      "By using a spatial pinhole",
+       "By using a laser beam",
+      "By using polarized light"
+    ],
+    correct: 1,
+    explanation: "Confocal microscopy uses a spatial pinhole to eliminate out-of-focus light, which enhances image clarity and resolution."
+  },
+  {
+    text: "What is a controllable aspect of confocal microscopy?",
+     options: [
+      "Wavelength of light",
+      "Color of the specimen",
+      "Depth of field",
+      "Intensity of the beam"
+    ],
+    correct: 3,
+    explanation: "In confocal microscopy, the intensity of the beam (laser) can be controlled by the user, influencing the overall image appearance and potential photobleaching."
+  },
+  {
+    text: "What does confocal microscopy eliminate from an image?",
+     options: [
+      "Color information",
+      "Out-of-focus light",
+       "The background",
+       "Details inside the cells"
+    ],
+    correct: 1,
+    explanation: "A key feature of confocal microscopy is its ability to eliminate out-of-focus light, which allows for sharper and clearer images."
+  },
+  {
+    text: "Why has confocal microscopy's popularity increased?",
+    options: [
+      "Its low cost",
+      "Its complex procedure",
+      "The relative ease of use and high-quality images",
+      "It's good for dissections"
+    ],
+    correct: 2,
+     explanation: "Confocal microscopy has gained popularity because it balances ease of use with the production of high-quality images compared to other advanced microscopy techniques."
+  },
+   {
+     text: "How are samples typically prepared for conventional optical microscopy and confocal microscopy differently?",
+     options: [
+       "They are prepared using the same method",
+       "They are prepared using more complex methods for confocal",
+        "They are prepared differently but have no effect on each other.",
+       "Specimens for confocal are generally prepared with more ease"
+     ],
+    correct: 1,
+     explanation: "While both types of microscopy may use similar staining techniques, confocal microscopy requires more complex sample preparation, such as specific mounting media and careful staining procedures, to fully utilize its imaging capabilities."
+   },
+    {
+    text: "What type of microscope is an SEM?",
+    options: [
+      "Optical microscope",
+      "Light microscope",
+      "Electron microscope",
+      "Confocal microscope"
+    ],
+    correct: 2,
+    explanation: "A Scanning Electron Microscope (SEM) is a type of electron microscope, meaning it uses electrons instead of light to create images."
+    },
+    {
+    text: "What does an SEM produce images of?",
+     options: [
+      "Internal structure",
+      "Surface of a sample",
+      "Sub atomic particles",
+       "Living organism images"
+    ],
+    correct: 1,
+    explanation: "An SEM is designed to produce images of the surface of a sample, providing detailed topographical information."
+   },
+   {
+    text: "How does an SEM scan a sample?",
+     options: [
+       "With a laser beam",
+       "With a beam of light",
+        "With a focused beam of electrons",
+       "By moving the stage"
+     ],
+    correct: 2,
+    explanation: "An SEM scans a sample by using a focused beam of electrons. These electrons interact with the sample, and the signal is collected to form an image."
+   },
+    {
+    text: "How do electrons interact with atoms in SEM?",
+    options: [
+      "They are absorbed",
+      "They bounce off and are measured",
+      "They produce chemical reactions",
+      "They are turned into light"
+    ],
+     correct: 1,
+    explanation: "In SEM, electrons bounce off the surface of the sample, and these backscattered or secondary electrons are measured to create an image."
+   },
+   {
+      text: "What is the main information collected by SEM?",
+     options: [
+       "Chemical composition of sample",
+       "Interior cell structure",
+       "Surface topography and composition",
+        "Cell motility"
+    ],
+    correct: 2,
+    explanation:"The main information collected by SEM is related to the surface topography (shape and texture) and composition of a sample based on the interaction of electrons with the material."
+  },
+    {
+    text: "What is the nature of the illumination in SEM?",
+    options: [
+      "Laser light",
+       "LED light",
+      "Electron",
+       "White light"
+    ],
+    correct: 2,
+    explanation:"The illumination in SEM is based on a focused beam of electrons, which interact with the sample and generate the necessary signals to form an image."
+   },
+    {
+     text: "What dimension is the image seen with SEM?",
+     options: [
+       "Two-dimensional",
+       "Three-dimensional",
+        "Inverted",
+        "Blurred"
+     ],
+      correct: 1,
+      explanation: "Although SEM captures surface information, the resulting images often appear three-dimensional due to the shading and shadow effects created by the electrons interacting with the sample's topography."
+   },
+    {
+     text: "How is the specimen prepared for SEM?",
+      options: [
+        "It is stained",
+        "It is coated in gold",
+        "It is sliced very thin",
+        "It is hydrated"
+      ],
+     correct: 1,
+      explanation: "Samples for SEM are typically coated in a thin layer of a conductive material, such as gold, to enhance electron scattering and prevent charge buildup, ensuring a higher quality image."
+   },
+    {
+    text: "How are images formed in SEM?",
+    options: [
+       "Light absorption",
+       "Light reflection",
+      "Electrons bouncing off the sample",
+       "Transmission of electrons through the sample"
+     ],
+    correct: 2,
+    explanation:"Images in SEM are formed by detecting the electrons that bounce off (are scattered from ) the sample's surface. These scattered electrons are then translated into an image."
+   },
+    {
+    text: "What colors are SEM images typically shown in?",
+    options: [
+      "Color",
+      "Black and white",
+      "Fluorescent",
+      "Any color"
+    ],
+    correct: 1,
+    explanation:"SEM images are typically displayed in black and white, and grayscale is used to show the topographical and compositional differences in the sample. Color can be added artificially for illustrative purposes."
+    },
+  {
+      text: "What type of microscopy is TEM?",
+      options: [
+        "Optical microscopy",
+        "Scanning electron microscopy",
+        "Transmission electron microscopy",
+       "Confocal microscopy"
+      ],
+      correct: 2,
+      explanation: "Transmission Electron Microscopy (TEM) is a form of electron microscopy, similar to SEM, but differs in how the image is formed."
+  },
+  {
+    text: "How does TEM form an image?",
+     options: [
+       "Reflecting light from the sample",
+       "Scanning the surface of the sample",
+       "Transmitting electrons through the sample",
+        "Producing electron signals"
+     ],
+      correct: 2,
+      explanation: "TEM creates images by transmitting a beam of electrons through the sample, with the image resulting from the electrons that pass through the sample."
+   },
+  {
+    text: "How are samples prepared for TEM?",
+     options: [
+       "Coated with gold",
+        "Sliced into ultrathin sections",
+       "Stained with dyes",
+        "Left in their natural state"
+     ],
+    correct: 1,
+     explanation: "For TEM, samples are sliced into extremely thin (ultrathin) sections, allowing electrons to pass through to form an image."
+  },
+  {
+   text: "What is the typical thickness of a TEM specimen?",
+    options: [
+       "Greater than 1000 nm",
+      "Less than 100 nm",
+       "About 1000 μm",
+       "A few millimeters"
+    ],
+    correct: 1,
+    explanation: "TEM specimens are typically prepared to be less than 100 nanometers (nm) thick so that electrons can pass through them."
+   },
+    {
+    text: "What can TEM also use to observe samples?",
+     options: [
+       "A water solution",
+        "A suspension on a grid",
+       "A glass slide",
+       "A gold plated plate"
+     ],
+     correct: 1,
+     explanation: "Besides ultrathin sections, TEM can also be used to observe samples such as a virus or a cell, suspended on a grid for observation."
+    },
+   {
+      text: "What is the magnification capability of TEM?",
+     options: [
+       "Up to 1000x",
+       "Up to 10,000x",
+        "Up to 1 million times",
+        "Up to 2 million times"
+      ],
+      correct: 2,
+      explanation: "TEM has a very high magnification capability, typically up to 1 million times, allowing for the visualization of very small structures."
+   },
+   {
+     text: "What dimension is the image produced by TEM?",
+     options: [
+       "Three-dimensional",
+        "Two-dimensional",
+        "Inverted",
+        "A composite image"
+     ],
+     correct: 1,
+      explanation:"TEM produces a two-dimensional image that gives information about the internal structures of the sample based on the electron transmission."
+    }, 
+  {
+    text: "What does the base do for a microscope?",
+    options: [
+      "Helps with magnification",
+      "Helps with focusing",
+      "Helps with light intensity",
+      "It supports the instrument"
+    ],
+    correct: 3,
+    explanation: "The base of the microscope provides a stable foundation and supports the entire instrument. It's essential for maintaining the microscope's stability during use."
+  },
+  {
+    text: "Why is parfocal design useful for a microscope?",
+    options: [
+      "Allows to see multiple specimen",
+      "Keeps focus as magnification is changed",
+       "Increases the magnification power",
+       "Improves image quality"
+    ],
+    correct: 1,
+    explanation: "A parfocal design is useful because it allows the image to remain in focus (or nearly in focus) when you switch between objective lenses of different magnifications, minimizing the need for major refocusing."
+  },
+  {
+    text: "How does the objective lens affect the image seen through the eyepiece?",
+    options: [
+      "Provides the main focus",
+      "Provides the final magnification",
+       "It does not affect the image",
+      "Provides the first magnification"
+    ],
+    correct: 3,
+    explanation: "The objective lens provides the first stage of magnification and is essential for collecting light that passes through the specimen and creating an initial enlarged image."
+  },
+    {
+    text: "If the objective lens with the highest magnification is the longest, what does this imply about its focal length?",
+    options: [
+      "Shorter focal length",
+      "Longer focal length",
+      "It depends on the microscope",
+      "It is not related to focal length"
+    ],
+    correct: 0,
+    explanation: "Objective lenses with higher magnification typically have a shorter focal length, which means they must be closer to the specimen to achieve the desired magnification."
+  },
+  {
+     text: "If you are having trouble with image clarity when focusing with the coarse knob, what should you use first?",
+     options: [
+      "Diaphragm",
+      "Fine focus",
+      "Stage clips",
+      "Rheostat"
+     ],
+     correct: 1,
+     explanation: "After using the coarse focus to get the image in view, the fine focus should be used to sharpen the image and improve image clarity. The fine focus allows for small precise adjustments that enhance the details of the specimen."
+  },
+  {
+    text: "If the field of view of a microscope is too small, how could you change it?",
+    options: [
+      "Change the objective to higher magnification",
+      "Change the objective to lower magnification",
+      "Increase the light",
+      "Adjust the diaphragm"
+    ],
+    correct: 1,
+    explanation: "To increase the field of view (see a wider area), you need to switch to a lower magnification objective lens. Lower magnification lenses show a larger area of the specimen."
+   },
+  {
+    text: "If two objective lenses have the same magnification power, what can be different between them?",
+    options: [
+      "Only focal length is different",
+      "Only clarity of images is different",
+      "Numerical Aperture or resolution",
+      "They are identical"
+    ],
+    correct: 2,
+    explanation: "Even if two objective lenses have the same magnification, they can differ in their numerical aperture (NA), which affects the resolution and light gathering capability of the lens. Higher NA lenses can achieve greater resolution."
+  },
+   {
+     text: "If the text describes the diaphragm as a part of the condenser, what might be a function of the condenser?",
+    options: [
+      "It helps illuminate the specimen",
+      "It helps adjust light intensity",
+      "It helps with magnification",
+       "It helps with resolution"
+     ],
+     correct: 0,
+     explanation:"The condenser is part of the microscope’s illumination system. The condenser collects and focuses the light from the light source onto the specimen, providing illumination needed for proper viewing. The diaphragm is responsible for adjusting light intensity."
+   },
+    {
+    text: "Based on the parts of the microscope described, what part is designed to directly interact with the sample in order to change magnification?",
+    options: [
+      "Ocular lens",
+      "Objective lens",
+      "Revolving nosepiece",
+      "Light source"
+    ],
+    correct: 1,
+    explanation: "The objective lens is designed to directly interact with the sample when changing magnification. It's the lens closest to the specimen and provides the initial magnification, which is altered when different objective lenses are used."
+  }, 
     {
       
         text: "What is the radiation source for a light microscope?",
@@ -759,7 +1122,7 @@ options: ["It is used for sectioning", "It is used for embedding in light micros
     ],
     correct: 1,
      explanation: "The light source of the microscope is where light is emitted. The light shines up through the specimen and the lenses, allowing you to see the magnified image. "
-    }, 
+      }, 
       ], 
   "BOT101-3": [
     {
@@ -2651,10 +3014,10 @@ function generateUserPDF(doc, logo) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
   doc.setTextColor("#FFFFFF");
-  doc.text("Obafemi Awolowo University", pageWidth / 2, yOffset - 40, { align: "center" });
+  doc.text("STUDENTS SUPPORT SYSTEM", pageWidth / 2, yOffset - 40, { align: "center" });
 
-  doc.setFontSize(16);
-  doc.text(`Zoology Exam Results`, pageWidth / 2, yOffset - 20, { align: "center" });
+  doc.setFontSize(15);
+  doc.text(`OBAFEMI AWOLOWO UNIVERSITY`, pageWidth / 2, yOffset - 20, { align: "center" });
   yOffset += 30;
 
   // Performance Summary Section
