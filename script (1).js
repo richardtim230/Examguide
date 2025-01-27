@@ -11287,13 +11287,16 @@ function displaySessionDetails(session) {
   const historyContent = document.getElementById('exam-history-content');
   historyContent.innerHTML = ''; // Clear current content
 
+  // Check if the session contains questions
   if (!session.questions || session.questions.length === 0) {
+    console.log("No questions found in session:", session);
     historyContent.innerHTML = '<p>No questions available for this session.</p>';
     return;
   }
 
+  // Loop through each question and display details
   session.questions.forEach((question, qIndex) => {
-    console.log(`Question ${qIndex + 1}:`, question); // Debug each question
+    console.log(`Question ${qIndex + 1}:`, question);
 
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
@@ -11303,24 +11306,32 @@ function displaySessionDetails(session) {
     questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
     questionDiv.appendChild(questionText);
 
-    // Display user's answer
-    const answerText = document.createElement('p');
-    const userAnswer = session.answers[qIndex] !== undefined
-      ? question.options[session.answers[qIndex]]
-      : "Unanswered";
-    answerText.innerHTML = `<strong>Your Answer:</strong> ${userAnswer}`;
-    questionDiv.appendChild(answerText);
+    // Display options
+    const optionsList = document.createElement('ul');
+    question.options.forEach((option, index) => {
+      const optionItem = document.createElement('li');
+      optionItem.textContent = option;
 
-    // Display correct answer
-    const correctAnswerText = document.createElement('p');
-    correctAnswerText.innerHTML = `<strong>Correct Answer:</strong> ${question.options[question.correct]}`;
-    questionDiv.appendChild(correctAnswerText);
+      // Highlight user's answer and correct answer
+      if (session.answers[qIndex] === index) {
+        optionItem.style.color = 'blue'; // User's answer
+        optionItem.style.fontWeight = 'bold';
+      }
+      if (index === question.correct) {
+        optionItem.style.color = 'green'; // Correct answer
+        optionItem.style.fontWeight = 'bold';
+      }
+
+      optionsList.appendChild(optionItem);
+    });
+    questionDiv.appendChild(optionsList);
 
     // Display explanation
     const explanationText = document.createElement('p');
     explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation}`;
     questionDiv.appendChild(explanationText);
 
+    // Append question details to the content
     historyContent.appendChild(questionDiv);
   });
 
@@ -11331,6 +11342,7 @@ function displaySessionDetails(session) {
   backButton.style.marginTop = '20px';
   historyContent.appendChild(backButton);
 }
+
 
 
   (function () {
