@@ -1124,9 +1124,764 @@ options: ["It is used for sectioning", "It is used for embedding in light micros
      explanation: "The light source of the microscope is where light is emitted. The light shines up through the specimen and the lenses, allowing you to see the magnified image. "
       }, 
       ], 
-  "BOT101-3": [
+  "BOT101-T3": [
+  {
+    text: "What is another name for a dissection microscope?",
+    options: [
+      "Compound microscope",
+      "Light microscope",
+      "Stereo microscope",
+      "Fluorescence microscope"
+    ],
+    correct: 2,
+    explanation: "A dissection microscope is also commonly known as a stereo microscope because it provides a three-dimensional view of the specimen."
+  },
+  {
+    text: "What kind of image appears with a dissection microscope?",
+    options: [
+      "Two-dimensional",
+      "Three-dimensional",
+      "Inverted",
+      "Magnified"
+    ],
+    correct: 1,
+    explanation: "A dissection microscope produces a three-dimensional image, allowing for depth perception when viewing a specimen."
+  },
+  {
+    text: "What is the primary use of a dissection microscope?",
+    options: [
+      "Viewing individual cells",
+      "Dissecting large specimens",
+      "Observing tiny organisms",
+      "High magnification studies"
+    ],
+    correct: 1,
+    explanation: "The primary use of a dissection microscope is for dissecting or manipulating larger specimens, providing a wide field of view and a comfortable working distance."
+  },
+  {
+    text: "What is the magnification of a dissection microscope?",
+    options: [
+      "High magnification",
+      "Moderate magnification",
+      "Low magnification",
+     "Variable magnification"
+    ],
+    correct: 2,
+    explanation: "Dissection microscopes typically provide low magnification, which is suitable for viewing larger objects and performing dissections."
+  },
+  {
+    text: "What is the main reason you cannot see individual cells with a dissection microscope?",
+    options: [
+      "Image is too clear",
+      "Magnification is too high",
+      "Magnification is too low",
+      "Illumination is too dim"
+    ],
+    correct: 2,
+    explanation: "The main reason individual cells cannot be seen with a dissection microscope is because its magnification power is too low to resolve small structures like individual cells."
+  },
+  {
+    text: "What type of illumination is used with a compound microscope?",
+    options: [
+      "Electron",
+      "Light",
+      "Laser",
+      "Ultraviolet"
+    ],
+    correct: 1,
+    explanation: "Compound microscopes use light for illumination, employing a light source that passes through the specimen to form an image."
+  },
+  {
+    text: "What kind of image is seen with a compound microscope?",
+    options: [
+      "Three-dimensional",
+      "Two-dimensional",
+      "Inverted",
+      "Blurred"
+    ],
+    correct: 2,
+     explanation: "A compound microscope produces a two-dimensional image that is also inverted (upside down and backwards) compared to the orientation of the specimen."
+   },
     {
-      
+    text: "What is a key feature of the compound microscope?",
+    options: [
+        "It's rarely used",
+      "It is most commonly used",
+       "It's only used to view dead cells",
+      "It has high magnification and resolution"
+      ],
+    correct: 1,
+    explanation: "Compound microscopes are key in microscopy because they are the most commonly used type of microscope for both research and education."
+  },
+    {
+    text: "What can be observed using a compound microscope?",
+     options: [
+        "Only dead cells",
+        "Only plant cells",
+        "Only large organisms",
+        "Individual cells and even living ones"
+    ],
+     correct: 3,
+     explanation: "Compound microscopes are used to view individual cells, and living cells can be observed when using proper slide preparation techniques."
+    },
+    {
+      text: "What is the typical magnification range of a compound microscope?",
+      options: [
+        "1x to 10x",
+        "4x to 100x",
+        "100x to 1000x",
+       "1000x to 10000x"
+      ],
+      correct: 2,
+      explanation: "Compound microscopes typically have a magnification range from 100x to 1000x, achieved by using combinations of objective and ocular lenses."
+    },
+    {
+      text: "What is the typical resolution of a compound microscope?",
+      options: [
+        "High",
+        "Low",
+        "Variable",
+       "Moderate"
+      ],
+      correct: 3,
+      explanation: "Compound microscopes have moderate resolution, which is adequate for viewing cells and some subcellular structures, but is not as high as electron microscopes."
+    },
+  {
+    text: "What is a fluorescence microscope used to study?",
+     options: [
+      "Surface structures",
+      "Properties of substances",
+      "Internal organs",
+       "Electron properties"
+    ],
+    correct: 1,
+    explanation: "Fluorescence microscopes are used to study the properties of substances that fluoresce when exposed to specific wavelengths of light."
+  },
+  {
+    text: "What phenomena does a fluorescence microscope utilize?",
+    options: [
+      "Reflection and absorption",
+      "Magnification and resolution",
+      "Fluorescence and phosphorescence",
+      "Refraction and diffraction"
+    ],
+    correct: 2,
+    explanation: "Fluorescence microscopes use the phenomena of fluorescence and phosphorescence, in which substances emit light of one wavelength after absorbing light of another."
+  },
+   {
+     text: "Is fluorescence microscopy used instead of or in addition to reflection and absorption methods?",
+     options: [
+      "Always instead of",
+      "Always in addition to",
+      "Either instead of or in addition to",
+      "Neither of the above"
+    ],
+     correct: 2,
+    explanation: "Fluorescence microscopy can be used either instead of or in addition to reflection and absorption methods, depending on the specific application and structures to be visualized."
+  },
+  {
+      text: "What is a key area where fluorescence microscopy is rapidly expanding?",
+      options: [
+        "Astronomy",
+        "Geology",
+         "Medicine and biology",
+        "Mechanical engineering"
+      ],
+      correct: 2,
+      explanation: "Fluorescence microscopy is rapidly expanding in the fields of medicine and biology due to its capabilities in specific labeling and high-contrast imaging."
+  },
+  {
+    text: "What has the expansion of fluorescence microscopy spurred?",
+    options: [
+      "Development of simpler microscopes",
+      "Decreased use of other microscopes",
+      "More sophisticated microscopes and accessories",
+      "Less need for microscope study"
+    ],
+    correct: 2,
+    explanation: "The rapid expansion of fluorescence microscopy has led to the development of more sophisticated microscopes and accessories, enhancing its imaging capabilities."
+  },
+   {
+     text: "How is a dissection microscope image described?",
+     options: [
+       "Flat and detailed",
+       "3D but with lower resolution",
+        "Inverted and magnified",
+        "2D with high magnification"
+     ],
+     correct: 1,
+      explanation:"A dissection microscope image is typically described as 3D (three-dimensional) but with a lower resolution compared to other types of microscopes. This makes them well-suited for manipulating large objects."
+    },
+   {
+     text: "How is a compound microscope image described?",
+      options: [
+         "3D with low resolution",
+         "2D and highly magnified",
+        "Inverted with low magnification",
+       "3D and highly magnified"
+    ],
+      correct: 1,
+      explanation:"A compound microscope image is typically described as 2D (two-dimensional) and highly magnified, allowing detailed observation of small specimens."
+    },
+    {
+    text: "Which microscope is generally considered the most complex?",
+    options: [
+      "Dissection microscope",
+      "Compound microscope",
+      "Fluorescence microscope",
+      "All are equally complex"
+    ],
+    correct: 2,
+      explanation: "Fluorescence microscopes are generally considered to be the most complex because they involve additional components like specialized light sources, filters and detectors."
+   },
+   {
+    text: "Which microscope is likely to have dual eyepieces?",
+    options: [
+      "Dissection microscope",
+       "Compound microscope",
+      "Fluorescence microscope",
+       "Both compound and fluorescence"
+    ],
+     correct: 0,
+      explanation:"Dissection microscopes are often designed with dual eyepieces to provide the user with stereoscopic vision, creating the three-dimensional image of the specimen."
+    },
+  {
+    text: "Which type of microscope seems best suited to looking at large and whole specimens?",
+    options: [
+      "Dissection",
+      "Compound",
+      "Fluorescence",
+      "They are all equal in capability"
+    ],
+    correct: 0,
+     explanation: "Based on their function, dissection microscopes are best suited for looking at large and whole specimens due to their wide field of view, long working distance, and three-dimensional image."
+  },
+   {
+    text: "Why is a dissection microscope useful for dissection?",
+    options: [
+      "Its high magnification allows for detailed views of cells",
+      "Its illumination is specifically for dissection",
+     "Its 3D image provides depth perception",
+      "Its low resolution prevents damage"
+    ],
+    correct: 2,
+     explanation: "The 3D image provided by a dissection microscope gives the user depth perception, making it easier to manipulate tools when dissecting or working with the specimen."
+  }, 
+  {
+    text: "What does it mean that a compound microscope is 'most commonly used'?",
+    options: [
+      "It's the best microscope",
+      "It's the cheapest microscope",
+      "It has a balance of magnification and usability",
+      "All biologists use it"
+    ],
+    correct: 2,
+    explanation: "The phrase 'most commonly used' implies that the compound microscope strikes a good balance between magnification capabilities, resolution, and overall ease of use making it a good all-purpose tool."
+  },
+  {
+    text: "Which of these microscopy techniques is advancing most rapidly?",
+     options: [
+      "Dissection microscopy",
+      "Compound microscopy",
+      "Fluorescence microscopy",
+      "All are rapidly advancing"
+    ],
+    correct: 2,
+    explanation: "Fluorescence microscopy is advancing most rapidly due to its high growth in application in medicine and biology, with the development of new techniques and accessories."
+  },
+  {
+    text: "What is a key difference between fluorescence and phosphorescence?",
+     options: [
+       "Phosphorescence is higher in intensity",
+        "Fluorescence is a delayed light emission",
+      "Phosphorescence is a delayed light emission",
+       "Fluorescence uses shorter wavelengths"
+    ],
+    correct: 2,
+    explanation: "While both fluorescence and phosphorescence involve the emission of light after excitation, a key difference is that phosphorescence is a delayed light emission, lasting longer than fluorescence which is immediate."
+  },
+    {
+    text: "Why is it important to have different types of microscopes?",
+     options: [
+      "All microscopes are the same",
+      "Each microscope is suitable for specific specimens and study",
+       "Some microscopes are more expensive",
+      "Some microscopes are more old fashioned"
+    ],
+    correct: 1,
+     explanation: "It is important to have different types of microscopes because each type is specifically designed and suited for observing particular specimens and answering specific scientific questions. Not all microscopes have the same resolution, magnification, or field of view."
+   },
+   {
+    text: "If a sample does not fluoresce or phosphoresce, which microscope would be least suitable for studying it?",
+    options: [
+       "Dissection microscope",
+       "Compound microscope",
+      "Fluorescence microscope",
+       "Either dissection or compound microscope"
+    ],
+    correct: 2,
+    explanation: "If a sample does not fluoresce or phosphoresce, a fluorescence microscope would be the least suitable since it relies on those properties to visualize the sample."
+  },
+  {
+    text: "What kind of samples are not suitable to study with a compound microscope?",
+     options: [
+       "Large and whole samples",
+      "Single cell samples",
+       "Living cell samples",
+      "Dead cell samples"
+    ],
+    correct: 0,
+    explanation: "Compound microscopes are not well-suited for studying large and whole samples because they have a smaller field of view and are better designed for microscopic specimens like cells."
+  },
+  {
+    text: "Which microscope would be preferred to observe live organisms in their natural state?",
+    options: [
+      "Dissection microscope",
+      "Compound microscope",
+      "Fluorescence microscope",
+       "Electron microscope"
+    ],
+    correct: 0,
+    explanation: "A dissection microscope would be preferred for observing live organisms in their natural state because it provides a 3D view, a large working distance and an easier way to view whole and often larger organisms."
+  },
+  {
+    text: "Which microscope would you choose for general biology studies and why?",
+    options: [
+      "Dissection microscope, because it’s easy to see the whole specimens",
+      "Compound microscope, because it provides a balance of magnification and usability",
+       "Fluorescence microscope, because it is the most versatile",
+      "None of them, you need all three equally"
+    ],
+      correct: 1,
+       explanation: "For general biology studies, the compound microscope is the most suitable choice because it balances magnification, resolution, and ease of use, making it a good all-purpose instrument."
+    },
+ {
+    text: "If you were to improve on the design of the fluorescence microscope, what would be the first improvement?",
+    options: [
+       "Making it smaller",
+       "More ease of use",
+       "Improving resolution and magnification power",
+       "Making it more affordable"
+    ],
+    correct: 2,
+    explanation: "While all options are beneficial, the first improvement for a fluorescence microscope would be to enhance the resolution and magnification power since those are its limiting factors, allowing for better image clarity and detail."
+  }, 
+  {
+    text: "When did Charles A. Spencer build his microscopes?",
+    options: [
+      "Early 18th century",
+      "Mid 19th century",
+      "Late 19th century",
+      "Early 20th century"
+    ],
+    correct: 1,
+    explanation: "Charles A. Spencer built his microscopes in the mid-19th century."
+  },
+  {
+    text: "How were the instruments built by Charles A. Spencer described?",
+    options: [
+      "Basic",
+      "Complex",
+      "Finest",
+      "Simplistic"
+    ],
+    correct: 2,
+    explanation: "The microscopes built by Charles A. Spencer were known as some of the finest instruments of their time."
+  },
+  {
+    text: "What was the magnification of Spencer's microscopes with ordinary light?",
+     options: [
+      "Up to 125 diameters",
+      "Up to 1250 diameters",
+      "Up to 500 diameters",
+      "Up to 5000 diameters"
+    ],
+    correct: 0,
+    explanation: "With ordinary light, Spencer's microscopes had a magnification of up to 125 diameters."
+  },
+  {
+    text: "What was the highest magnification achieved with blue light in Spencer's microscopes?",
+    options: [
+      "Up to 1250 diameters",
+      "Up to 12500 diameters",
+      "Up to 5000 diameters",
+      "Up to 500 diameters"
+    ],
+    correct: 0,
+    explanation: "The highest magnification achieved with blue light in Spencer's microscopes was up to 1250 diameters."
+  },
+  {
+    text: "How does magnification with blue light compare to ordinary light in Spencer's microscopes?",
+     options: [
+       "Lower",
+       "The same",
+      "Higher",
+      "Unaffected"
+    ],
+    correct: 2,
+     explanation: "Magnification with blue light was higher compared to ordinary light in Spencer's microscopes."
+  },
+  {
+    text: "What defines a 'simple microscope'?",
+     options: [
+      "It has multiple lenses",
+      "It has only one lens",
+       "It has an adjustable stage",
+      "It uses a light source"
+    ],
+    correct: 1,
+    explanation: "A 'simple microscope' is defined by having only one lens to magnify the image."
+  },
+    {
+    text: "What kind of lens is typically in a simple microscope?",
+    options: [
+      "Ocular only",
+       "Objective only",
+      "Both ocular and objective",
+      "Condenser"
+    ],
+     correct: 1,
+      explanation: "A simple microscope typically uses only one objective lens."
+  },
+    {
+    text: "What defines a 'compound microscope'?",
+    options: [
+       "High resolution",
+      "Adjustable stage",
+       "Both objective and ocular lenses",       "Electronic components"
+    ],
+    correct: 2,
+    explanation: "A 'compound microscope' is defined by having both objective and ocular lenses working together to magnify the image."
+   },
+   {
+    text: "What does a compound microscope use?",
+     options: [
+       "A single lens system",
+       "One type of lens",
+      "Multiple lens types",
+       "A simpler design"
+    ],
+      correct: 2,
+      explanation: "A compound microscope uses multiple types of lenses, including objective and ocular lenses, to achieve a higher magnification."
+   },
+    {
+    text: "How many lens types are in a simple microscope?",
+     options: [
+      "Two or more",
+      "Only one",
+       "Either one or two",
+       "None"
+    ],
+      correct: 1,
+     explanation: "A simple microscope has only one lens type, usually a single objective lens."
+    },
+   {
+    text: "What is the 'Handle' on the simple microscope?",
+    options: [
+     "The light source",
+      "The base",
+      "The focusing knob",
+       "Part to move it"
+    ],
+    correct: 3,
+    explanation: "On a simple microscope, the 'Handle' is the part used to move the instrument."
+   },
+  {
+    text: "Where is the 'Slide' placed on a simple microscope?",
+     options: [
+       "On the lamp",
+       "On the stand",
+        "On the stage",
+       "Above the eyepiece"
+     ],
+      correct: 2,
+       explanation: "On a simple microscope, the 'Slide' is placed on the stage for observation."
+   },
+  {
+    text: "Where is the 'eyepiece' located on a compound microscope?",
+    options: [
+      "On the base",
+      "At the bottom near the light source",
+      "At the top",
+      "Below the objective lens"
+    ],
+    correct: 2,
+    explanation: "On a compound microscope, the 'eyepiece' is located at the top, where the user looks through to view the magnified image."
+  },
+   {
+     text: "What does the 'Nosepiece' hold on a compound microscope?",
+      options: [
+        "The support structure",
+        "The stage",
+        "Multiple objective lenses",
+        "The lens closest to the eye"
+      ],
+      correct: 2,
+      explanation: "On a compound microscope, the 'Nosepiece' holds multiple objective lenses, allowing the user to switch between them."
+   },
+   {
+     text: "What is below the stage on a compound microscope?",
+      options: [
+        "The objective",
+       "The slide",
+        "The Sub stage",
+        "The light source"
+      ],
+      correct: 3,
+      explanation: "Below the stage of a compound microscope is the light source, which provides illumination for viewing the specimen."
+    },
+    {
+      text: "What does the 'Coarse Adjustment knob' do on a compound microscope?",
+      options: [
+        "Holds the sample",
+       "Does overall focusing",
+        "Does fine focusing",
+        "Is closest to the objective"
+      ],
+      correct: 1,
+      explanation:"The 'Coarse Adjustment knob' on a compound microscope is used for large focusing adjustments to get the sample into view."
+    },
+  {
+    text: "How many main microscope types are used by biologists?",
+     options: [
+      "Two",
+      "Three",
+      "Four",
+      "Five"
+    ],
+    correct: 1,
+    explanation: "Biologists commonly use three main types of microscopes."
+  },
+  {
+    text: "Which is NOT a main microscope type?",
+     options: [
+      "Optical Dissection",
+       "Confocal",
+      "Scanning Electron (SEM)",
+       "Dark Field"
+    ],
+    correct: 3,
+    explanation: "Dark field is a mode within an optical compound microscope, and is not a main type of microscope itself."
+  },
+    {
+     text: "What does 'SEM' stand for?",
+    options: [
+      "Scanning Emission",
+      "Scanning Electron",
+      "Scanning Elemental",
+      "Surface Electron"
+    ],
+     correct: 1,
+      explanation:"'SEM' stands for Scanning Electron Microscope."
+  },
+   {
+     text: "What does 'TEM' stand for?",
+    options: [
+      "Thermal Electron",
+      "Transmission Electron",
+      "Total Electron",
+     "Transforming Electron"
+    ],
+correct: 1,
+      explanation: "'TEM' stands for Transmission Electron Microscope."
+   },
+  {
+    text: "What is the combined type of 'Optical Compound - Light, Fluorescence and Confocal'?",
+     options: [
+       "Separate types",
+       "Compound microscope with different modes",
+        "A single mode microscope",
+       "It's a light only microscope"
+    ],
+     correct: 1,
+      explanation: "Optical Compound microscopes are versatile. They use light and can come with different modes such as fluorescence and confocal capabilities which work together as one instrument."
+   },
+  {
+    text: "What does 'ordinary light' most likely mean?",
+    options: [
+      "Sunlight",
+      "Incandescent light",
+      "Visible light",
+      "Laser light"
+    ],
+    correct: 2,
+     explanation: "'Ordinary light' most likely refers to visible light, which encompasses the range of wavelengths that are visible to the human eye."
+  },
+  {
+     text: "Why is the term 'diameters' significant in early microscopy?",
+      options: [
+        "Specifies microscope length",
+       "Describes linear enlargement",
+       "Measures lens diameter",
+        "Calculates resolution"
+    ],
+     correct: 1,
+      explanation: "The term 'diameters' is significant because it describes the linear enlargement or magnification of the specimen. In early microscopy, magnification was expressed in terms of how many times larger an image was compared to the actual specimen."
+   },
+   {
+    text: "What does the use of 'blue light' suggest about Spencer’s microscopes?",
+     options: [
+      "Coloured images",
+      "Fluorescence microscopy",
+        "Higher magnification and resolution",
+      "Cooling the specimen"
+    ],
+    correct: 2,
+    explanation: "The use of 'blue light' suggests that Spencer’s microscopes could achieve higher magnification and resolution, as shorter wavelengths of light allow for better separation of tiny structures."
+   },
+  {
+    text: "What is the main difference between simple and compound microscopes?",
+    options: [
+       "Size",
+      "Number of lenses",
+       "Resolution",
+        "Light source"
+    ],
+    correct: 1,
+     explanation: "The main difference between simple and compound microscopes is the number of lenses used for magnification; simple microscopes use one, while compound microscopes use multiple."
+  }, 
+  {
+    text: "What do the four listed microscope types suggest?",
+    options: [
+      "Only four options for biological study",
+      "Need for diverse techniques",
+      "Microscopy is limiting",
+       "All microscope types are the same"
+    ],
+    correct: 1,
+    explanation: "The different microscope types listed suggest the need for diverse techniques in biological study because each type is designed for specific applications and provides unique insights."
+  },
+  {
+    text: "Why are electron microscopes listed separately from optical ones?",
+    options: [
+       "Not used by biologists",
+       "No lenses",
+      "Different illumination",
+      "Same design"
+    ],
+    correct: 2,
+    explanation: "Electron microscopes are listed separately from optical ones because they use electrons for illumination instead of light, which allows for much higher resolution."
+  },
+  {
+    text: "How does 'blue light' relate to resolution?",
+    options: [
+      "Reduces resolution",
+      "Increases magnification",
+      "Shorter wavelengths for better resolution",
+      "For fluorescent microscopy only"
+    ],
+    correct: 2,
+    explanation: "Blue light, having shorter wavelengths than other visible light, provides higher resolution in microscopy, allowing for the separation of fine details."
+  },
+  {
+    text: "If using 'light,' 'fluorescence,' and 'confocal' modes, what microscope type is used?",
+    options: [
+      "Optical Dissection",
+      "Optical Compound",
+      "Scanning Electron",
+      "Transmission Electron"
+    ],
+    correct: 1,
+    explanation: "If using 'light', 'fluorescence' and 'confocal' modes, the microscope type in use is an Optical Compound microscope, which can incorporate these different modes."
+  },
+  {
+    text: "How are electron microscopes different from optical microscopes?",
+    options: [
+      "Electron microscopes use lenses, optical use mirrors",
+      "Optical uses electrons, electron uses light",
+      "Electron microscopes use electrons for imaging",
+      "They have same design"
+    ],
+    correct: 2,
+     explanation: "Electron microscopes are different from optical microscopes because they use electrons instead of light to generate images, enabling much higher magnifications and resolutions."
+  },
+    {
+    text: "What is 'diameter' closest to in terms of magnification?",
+     options: [
+      "Area",
+      "Linear magnification",
+      "Resolution",
+      "Field of view"
+      ],
+     correct: 1,
+     explanation: "The term 'diameter' is closely related to linear magnification, as it refers to the enlargement of a specimen's length or width, not its area."
+   },
+  {
+    text: "Is 'ocular lens' the same as 'eyepiece'?",
+     options: [
+      "Yes, they are the same",
+      "No, eyepiece is objective",
+       "No, ocular is part of eyepiece",
+       "It depends on microscope"
+    ],
+      correct: 0,
+      explanation:"Yes, the terms 'ocular lens' and 'eyepiece' are generally used interchangeably to refer to the lens closest to the user's eye."
+    },
+    {
+      text: "What can be inferred about the evolution of microscopy?",
+        options: [
+          "Microscopy is progressing to more simple designs",
+          "Microscopy is progressing to higher complex designs",
+        "Microscopy progressed all at the same time",
+         "Microscopes didn’t evolve"
+      ],
+      correct: 1,
+      explanation: "Microscopy has progressed toward more complex designs, incorporating new technologies and functionalities to achieve better image quality and resolution."
+    },
+  {
+    text: "What unit of magnification is more accurate than 'diameters'?",
+      options: [
+        "Resolution",
+        "Area",
+        "Linear magnification with a numerical value",
+       "Field of view"
+       ],
+    correct: 2,
+     explanation: "Linear magnification with a numerical value is a more accurate way to express magnification than 'diameters', as it specifies how many times larger the image is than the specimen with an exact number."
+   },
+ {
+    text: "How do simple microscopes like Leeuwenhoek’s relate to compound microscopes?",
+    options: [
+       "Unrelated inventions",
+      "Compound microscopes are direct descendant of simple microscopes",
+       "Modern microscopes similar structure and principle as Leeuwenhoek’s",
+      "No relationship"
+    ],
+    correct: 1,
+     explanation: "Compound microscopes are considered direct descendants of simple microscopes, as they built upon the basic principle of magnification, adding more lenses for increased magnification and resolution."
+   },
+    {
+    text: "Why is distinguishing between optical and electron microscopes important for biologists?",
+     options: [
+        "Determines image quality",
+       "Determines observable sample type",
+        "Determines resolution and sample nature",
+        "Determines ease of use"
+    ],
+     correct: 2,
+     explanation: "Distinguishing between optical and electron microscopes is important for biologists because it determines the resolution capabilities and the type of sample that can be observed and studied."
+   },
+  {
+    text: "If 'confocal microscopy' is mentioned, what other microscopic technique is likely used?",
+    options: [
+      "Electron microscopy",
+      "Fluorescence microscopy",
+       "Dissection microscopy",
+      "Simple microscopy"
+    ],
+    correct: 1,
+     explanation: "Confocal microscopy is often used in conjunction with fluorescence microscopy, as confocal techniques improve the resolution and image quality of fluorescent signals by removing out-of-focus light."
+    },
+    {
+    text: "What is a likely next focus of development in microscopy?",
+    options: [
+       "More manual focusing",
+        "Higher resolution without blue light",
+        "Better light and electron sources",
+      "Easier user experience"
+    ],
+    correct: 2,
+      explanation: "A likely next focus of development in microscopy is on improving light and electron sources, which can enable higher resolution, contrast, and more detailed images in general."
     }, 
       ], 
   "BOT101-E1": [
