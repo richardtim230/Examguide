@@ -38,7 +38,58 @@ document.addEventListener('click', throttle(function(event) {
   }
 }, 500));
 
+// Toggle history section visibility
+document.getElementById('history-btn').addEventListener('click', () => {
+  const historySection = document.getElementById('exam-history-section');
+  historySection.classList.toggle('hidden');
+  if (!historySection.classList.contains('hidden')) {
+    displayExamHistory();
+  }
+});
 
+// Function to display exam history
+function displayExamHistory() {
+  const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+  const historySection = document.getElementById('exam-history-content');
+  historySection.innerHTML = ''; // Clear the current content
+
+  examHistory.forEach((session, index) => {
+    const sessionDiv = document.createElement('div');
+    sessionDiv.classList.add('exam-session');
+
+    const sessionTitle = document.createElement('h3');
+    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
+    sessionTitle.addEventListener('click', () => displaySessionDetails(session));
+    sessionDiv.appendChild(sessionTitle);
+
+    historySection.appendChild(sessionDiv);
+  });
+}
+
+// Function to display session details
+function displaySessionDetails(session) {
+  const historySection = document.getElementById('exam-history-content');
+  historySection.innerHTML = ''; // Clear the current content
+
+  session.questions.forEach((question, qIndex) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+
+    const questionText = document.createElement('p');
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
+    questionDiv.appendChild(questionText);
+
+    const answerText = document.createElement('p');
+    answerText.innerHTML = `<strong>Your Answer:</strong> ${question.options[session.answers[qIndex]]}`;
+    questionDiv.appendChild(answerText);
+
+    const explanationText = document.createElement('p');
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${session.explanations[qIndex]}`;
+    questionDiv.appendChild(explanationText);
+
+    historySection.appendChild(questionDiv);
+  });
+}
 // Tour Data
 
 const tourSteps = [
@@ -11106,8 +11157,26 @@ function endExam(autoSubmit = false) {
 
 function finalizeSubmission() {
   console.log("Finalizing submission...");
+  
+  // Create an exam session object
+  const examSession = {
+    date: new Date().toLocaleString(),
+    questions: questions,
+    answers: answers,
+    explanations: questions.map(q => q.explanation)
+  };
+  
+  // Retrieve existing exam history from local storage
+  const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
+  
+  // Add the new exam session to the history
+  examHistory.push(examSession);
+  
+  // Save the updated exam history back to local storage
+  localStorage.setItem("examHistory", JSON.stringify(examHistory));
+  
   // Add your submission logic here (e.g., send answers to the server, show results)
-}
+                  }
 
 
 function endExam() {
