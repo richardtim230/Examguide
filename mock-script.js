@@ -1,7 +1,7 @@
 
 
 const validUserIDs = [
-  "USER 101", " USER101", "STUDENT" "Student", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
+  "USER101", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   
 
 let currentQuestionIndex = 0;
@@ -15,10 +15,308 @@ let selectedCourseCode = "";
 // Predefined question banks by course codes
 const questionBanks = {
   
-  "ZOO101-E1": [
+  "BOT101-T1": [
+    
+  {
+    text: "What color does aniline blue stain?",
+    options: ["Pink", "Red", "Blue", "Green"],
+    correct: 2,
+    explanation: "Aniline blue stains tissue a blue color."
+  },
+  {
+    text: "What color does borax carmine stain?",
+    options: ["Red", "Pink", "Blue", "Yellow"],
+    correct: 1,
+    explanation: "Borax carmine stains tissue a pink color."
+  },
+  {
+    text: "What color does eosin stain?",
+    options: ["Blue", "Green", "Pink or red", "Yellow"],
+    correct: 2,
+    explanation: "Eosin stains tissue either a pink or red color."
+  },
+  {
+    text: "What color does light/fast green stain?",
+    options: ["Blue", "Green", "Pink", "Red"],
+    correct: 1,
+    explanation: "Light/fast green stains tissue a green color."
+  },
+  {
+    text: "What color does methylene blue stain?",
+    options: ["Red", "Green", "Blue", "Yellow"],
+    correct: 2,
+    explanation: "Methylene blue stains tissue a blue color."
+  },
+  {
+    text: "What color does safranin stain?",
+    options: ["Blue", "Red", "Pink", "Yellow"],
+    correct: 1,
+    explanation: "Safranin stains tissue a red color."
+  },
+  {
+    text: "What color does iodine stain?",
+     options: ["Red", "Blue-black", "Pink", "Yellow"],
+     correct: 1,
+     explanation: "Iodine stains tissue a blue-black color."
+  },
+   {
+    text: "What color does phoroglucinol + HCl stain?",
+     options: ["Yellow", "Red", "Pink", "Blue"],
+     correct: 1,
+     explanation: "Phoroglucinol + HCl stains tissue a red color."
+  },
+  {
+    text: "What color does aniline HCl or SO4 stain?",
+     options: ["Blue", "Pink", "Yellow", "Red"],
+     correct: 2,
+     explanation: "Aniline HCl or SO4 stains tissue a yellow color."
+  },
+ {
+    text: "What color does schultz's solution stain?",
+    options: ["Blue", "Yellow", "Pink", "Red"],
+    correct: 1,
+    explanation: "Schultz's solution stains tissue a yellow color."
+  },
+  {
+    text: "What does aniline blue stain?",
+    options: ["Nuclei", "Cytoplasm", "Fungal hyphae and spores", "Starch"],
+    correct: 2,
+    explanation: "Aniline blue is used to stain fungal hyphae and spores."
+  },
+  {
+     text: "What does borax carmine stain?",
+     options: ["Cytoplasm", "Nuclei", "Cellulose", "Lignin"],
+     correct: 1,
+     explanation: "Borax carmine is used to stain nuclei."
+   },
+  {
+    text: "What does eosin stain?",
+    options: ["Nuclei", "Cytoplasm and cellulose", "Lignin", "Fungal spores"],
+    correct: 1,
+    explanation: "Eosin is used to stain both cytoplasm and cellulose."
+  },
+  {
+    text: "What does light/fast green stain?",
+    options: ["Nuclei", "Cytoplasm or cellulose", "Lignin", "Starch"],
+    correct: 1,
+    explanation: "Light/fast green is used to stain either cytoplasm or cellulose."
+  },
+  {
+    text: "What does methylene blue stain?",
+    options: ["Cytoplasm", "Lignin", "Nuclei", "Starch"],
+    correct: 2,
+    explanation: "Methylene blue is used to stain nuclei."
+  },
+  {
+    text: "What does safranin stain?",
+    options: ["Fungal spores", "Starch", "Nuclei, cytoplasm, lignin and suberin", "Cellulose"],
+    correct: 2,
+     explanation: "Safranin is used to stain nuclei, cytoplasm, lignin, and suberin."
+   },
+ {
+    text: "What does iodine stain?",
+    options: ["Nuclei", "Starch", "Lignin", "Cytoplasm"],
+    correct: 1,
+    explanation: "Iodine is used to stain starch."
+  },
+  {
+    text: "What does phoroglucinol + HCl stain?",
+    options: ["Cellulose", "Nuclei", "Lignin", "Starch"],
+    correct: 2,
+    explanation: "Phoroglucinol + HCl is used to stain lignin."
+  },
+  {
+    text: "What does aniline HCl or SO₄ stain?",
+    options: ["Lignin", "Cytoplasm", "Starch", "Cellulose"],
+    correct: 0,
+    explanation: "Aniline HCl or SO4 is used to stain lignin."
+  },
+  {
+    text: "What does Schultz's solution stain?",
+     options: ["Nuclei", "Cytoplasm", "Lignin, cutin, suberin, protein", "Starch"],
+     correct: 2,
+     explanation: "Schultz's solution is used to stain lignin, cutin, suberin, and protein."
+  },
+   {
+    text: "Which stain identifies fungal structures?",
+    options: ["Eosin", "Methylene blue", "Aniline blue", "Safranin"],
+    correct: 2,
+     explanation: "Aniline blue is used to identify fungal structures such as hyphae and spores."
+   },
+  {
+    text: "Which stains highlight nuclei?",
+    options: ["Safranin and Eosin", "Methylene blue and Borax carmine", "Eosin and light green", "Aniline blue and Schultz's solution"],
+    correct: 1,
+    explanation: "Methylene blue and borax carmine are primarily used to stain nuclei."
+  },
     {
-      
+    text: "Which stains highlight cytoplasm?",
+    options: ["Iodine and Aniline HCl", "Safranin and Eosin", "Methylene blue and Borax carmine", "Iodine and Schultz’s solution"],
+    correct: 1,
+     explanation: "Safranin and eosin are used to stain cytoplasm."
+   },
+  {
+    text: "Which stains identify cellulose?",
+    options: ["Safranin and Iodine", "Eosin and Light/fast green", "Aniline blue and Schultz’s solution", "Methylene blue and Aniline HCl"],
+    correct: 1,
+    explanation: "Eosin and light/fast green are used to stain cellulose."
+  },
+   {
+    text: "Which stain identifies starch?",
+    options: ["Safranin", "Iodine", "Aniline blue", "Phoroglucinol + HCl"],
+    correct: 1,
+    explanation: "Iodine is used to identify starch."
+   },
+  {
+    text: "Which stains identify lignin?",
+    options: ["Eosin and Light green", "Aniline blue and Methylene blue", "Safranin, Phoroglucinol, Aniline HCl and Schultz’s solution", "Iodine and Schultz’s Solution"],
+    correct: 2,
+    explanation: "Safranin, phoroglucinol + HCl, aniline HCl and schultz's solution are used to stain lignin."
+  },
+   {
+    text: "Which stain is NOT for cell structure?",
+    options: ["Methylene blue", "Eosin", "Iodine", "Borax carmine"],
+    correct: 2,
+    explanation: "Iodine is used to stain starch, which is a carbohydrate rather than a cell structure."
+   }, 
+    {
+        text: "Which stain differentiates cytoplasm and cellulose?",
+        options: ["Iodine", "Aniline blue", "Eosin", "Methylene blue"],
+        correct: 2,
+        explanation: "Eosin is used to differentiate between cytoplasm (pink) and cellulose (red)."
+    },
+    {
+        text: "Which stain highlights both nuclei and cytoplasm?",
+        options: ["Aniline blue", "Methylene blue", "Eosin", "Safranin"],
+        correct: 3,
+        explanation: "Safranin can stain both nuclei and cytoplasm."
+    },
+    {
+        text: "If a tissue stains blue, which stains were used?",
+        options: ["Aniline blue or Eosin", "Methylene blue or Iodine", "Aniline blue or Methylene blue", "Safranin or Phoroglucinol"],
+        correct: 2,
+        explanation: "Aniline blue and Methylene blue both stain tissues blue."
+    },
+    {
+        text: "If a tissue stains red, which was NOT used?",
+        options: ["Eosin", "Phoroglucinol + HCl", "Safranin", "Aniline blue"],
+        correct: 3,
+        explanation: "Aniline blue stains tissue blue, not red."
+    },
+    {
+        text: "Which stain identifies MULTIPLE cell structures simultaneously?",
+        options: ["Methylene blue", "Iodine", "Safranin", "Phoroglucinol + HCl"],
+        correct: 2,
+        explanation: "Safranin is used to stain nuclei, cytoplasm, lignin, and suberin."
+    },
+    {
+        text: "What is a common property of lignin stains?",
+        options: ["They all stain yellow", "They all stain red", "They all contain hydrochloric acid", "They are all plant derived"],
+         correct: 0,
+        explanation: "Aniline HCl, Schultz's solution, and phoroglucinol all stain lignin yellow."
+    },
+     {
+        text: "Which stain is LEAST useful for studying internal fungal spore structure?",
+        options: ["Aniline Blue", "Safranin", "Methylene blue", "Iodine"],
+        correct: 3,
+        explanation: "Iodine stains for starch, not cell structures."
+    },
+    {
+         text: "If a plant cell shows both pink and red, what stain was likely used?",
+         options: ["Light/Fast Green", "Iodine", "Aniline blue", "Eosin"],
+         correct: 3,
+         explanation: "Eosin stains cytoplasm pink and cellulose red."
+    },
+    {
+        text: "If an iodine-stained tissue is blue-black, what is present?",
+        options: ["Lignin", "Starch", "Cellulose", "Protein"],
+        correct: 1,
+        explanation: "Iodine stains starch a blue-black color."
+    },
+    {
+        text: "If you only need to study lignin, which stain is LEAST specific?",
+        options: ["Aniline HCl or SO₄", "Phoroglucinol + HCl", "Schultz’s solution", "Safranin"],
+        correct: 3,
+        explanation: "Safranin stains multiple structures, including lignin."
+    },
+    {
+        text: "Why have a variety of stains in microscopy?",
+        options: ["To make the images more colorful", "Each stain highlights different structures", "Some stains are easier to use", "Some stains are more cheaper"],
+        correct: 1,
+        explanation: "Different stains interact with different cellular components."
+    },
+   {
+        text: "If a tissue stains only red, what is present?",
+        options: ["Cellulose", "Only lignin", "Only starch", "Maybe either cytoplasm or lignin, but not both"],
+        correct: 3,
+        explanation: "Eosin stains cytoplasm and cellulose, safranin stains cytoplasm and lignin, so it may be either cytoplasm or lignin staining red."
+    },
+   {
+        text: "If Schultz’s solution stains protein, why use other stains?",
+        options: ["It doesn’t stain other structures specifically", "Other stains are brighter", "Schultz’s solution is less specific", "It is too expensive to use"],
+        correct: 2,
+        explanation: "Schultz’s solution is less specific, so other stains highlight cellular components better."
     }, 
+    {
+    text: "How does the resolution of TEM compare to the resolution of light microscopy?",
+    options: ["Lower", "Higher", "About the same", "Varied"],
+    correct: 1,
+    explanation: "The resolution of TEM is higher than the resolution of light microscopy."
+  },
+ {
+    text: "What is the difference between specimen preparation in light vs electron microscopy?",
+    options: ["Both specimens are prepared the same", "Light microscopy focuses on thin specimens while electron on whole samples", "Light microscopy uses staining, while electron uses heavy metals", "Electron microscopy specimens are generally non-living samples, while light microscopy specimens are either living or non living"],
+    correct: 3,
+    explanation: "Light microscopy specimens can be living or non-living and are stained by coloured dyes, whereas electron microscopy specimens are non living and prepared using heavy metals."
+  },
+  {
+     text: "Why is it necessary to dehydrate specimens before embedding?",
+     options: ["To make the specimen transparent", "To make specimen more compatible with embedding medium", "To prevent damage to the specimen", "To make it more reflective"],
+      correct: 1,
+       explanation: "Dehydration makes specimens compatible with embedding mediums."
+  },
+  {
+     text: "If a researcher wants to study the movement of cells over time, which type of slide preparation would be more appropriate for light microscopy?",
+     options: ["Temporary", "Permanent", "Both are equally suitable", "Neither"],
+      correct: 0,
+       explanation: "Temporary slide preparation is better for observing movement of cells."
+  },
+ {
+    text: "Why would a sample need to be coated in gold for SEM?",
+    options: ["To make the sample shine more", "To protect the sample from electron beams", "To allow the electrons to bounce off the sample more easily", "To help the sample stick better to the grid"],
+     correct: 2,
+     explanation: "Gold coating helps electrons bounce off the sample in SEM."
+   },
+  {
+    text: "Based on the methods described, which samples can generally be viewed by light microscopy and electron microscopy?",
+    options: ["Only living samples", "Only non-living samples", "Living or non-living samples in light, but only non-living samples in electron microscopy", "Non-living samples in light, but living in electron"],
+     correct: 2,
+     explanation: "Light microscopy can use living or non-living samples, but electron microscopy can only use non-living samples."
+   },
+ {
+    text: "Considering the differences between light and electron microscopy, which would be more suitable for viewing individual living bacteria?",
+    options: ["Electron microscopy", "Light microscopy", "Either, but preparation varies", "Neither"],
+    correct: 1,
+    explanation: "Light microscopy is more suitable for viewing individual living bacteria."
+  }, 
+     {
+        text: "What process is done using graded series of alcohol?",
+        options: ["Embedding", "Staining", "Dehydration", "Mounting"],
+        correct: 2,
+        explanation: "A graded series of alcohol is used for dehydration of samples."
+    },
+    {
+        text: "What is the purpose of critical point drying?",
+        options: ["It is used in light microscopy", "It is used in SEM", "It is used in TEM", "It is used in fluorescence"],
+        correct: 1,
+        explanation: "Critical point drying is used in SEM techniques."
+    },
+    {
+        text: "What type of material is wax used for in microscopy?",
+        options: ["It is used for sectioning", "It is used for embedding in light microscopy", "It is used for mounting", "It is used in electron microscopy"],
+        correct: 1,
+        explanation: "Wax is used for embedding in light microscopy."
+    },
       ], 
 
   "ZOO101-E2": [
@@ -41,9 +339,140 @@ const questionBanks = {
       
     }, 
       ], 
-  "BOT101-2": [
+  "BOT101-T211": [
     {
       
+        text: "What is the radiation source for a light microscope?",
+        options: ["Electrons", "Light", "X-rays", "UV light"],
+        correct: 1,
+        explanation: "Light microscopes use light as their radiation source."
+    },
+    {
+        text: "What is the radiation source for a transmission electron microscope (TEM)?",
+        options: ["Light", "X-rays", "Electrons", "UV light"],
+        correct: 2,
+        explanation: "Transmission electron microscopes use electrons as their radiation source."
+    },
+    {
+        text: "What is the approximate wavelength range of light used in light microscopy?",
+        options: ["About 0.005 nm", "400-700 nm", "0.5 nm", "200 nm"],
+        correct: 1,
+        explanation: "The wavelength of visible light used in light microscopy is approximately 400-700 nm."
+    },
+    {
+        text: "What is the approximate wavelength of electrons in TEM?",
+        options: ["400-700 nm", "200 nm", "About 0.005 nm", "0.5 nm"],
+        correct: 2,
+        explanation: "The wavelength of electrons in TEM is approximately 0.005 nm."
+    },
+    {
+        text: "What is the maximum resolution of a light microscope?",
+        options: ["About 0.005 nm", "200 nm", "0.5 nm", "400-700nm"],
+        correct: 1,
+        explanation: "The maximum resolution of a light microscope is about 200 nm."
+    },
+    {
+        text: "What is the maximum resolution of a TEM?",
+        options: ["200 nm", "400-700 nm", "About 0.005 nm", "0.5 nm"],
+        correct: 3,
+        explanation: "The maximum resolution of a TEM is about 0.5 nm."
+    },
+    {
+        text: "What type of system is used as lenses in light microscopy?",
+        options: ["Electromagnets", "Glass lenses", "Copper grids", "Heavy metals"],
+        correct: 1,
+        explanation: "Light microscopes use glass lenses."
+    },
+    {
+        text: "What type of system is used as lenses in TEM?",
+        options: ["Glass lenses", "Copper grids", "Heavy metals", "Electromagnets"],
+        correct: 3,
+        explanation: "TEM uses electromagnets as lenses."
+    },
+    {
+        text: "What is the typical specimen state in light microscopy?",
+        options: ["Non-living and dehydrated", "Dehydrated, small and very thin", "Small and on a copper grid", "Living or non-living"],
+        correct: 3,
+        explanation: "Specimens for light microscopy can be living or non-living."
+    },
+    {
+        text: "What is the typical specimen state in TEM?",
+        options: ["Living or non-living", "Small and very thin", "Large and whole", "Non-living and dehydrated"],
+        correct: 1,
+        explanation: "TEM specimens are typically non-living, small, and very thin."
+    },
+    {
+        text: "What is the typical specimen support for light microscopy?",
+        options: ["Copper grid", "Glass slide", "Liquid suspension", "Paper mount"],
+        correct: 1,
+        explanation: "Light microscopy specimens are typically placed on a glass slide."
+    },
+    {
+        text: "What is the typical specimen support for TEM?",
+        options: ["Glass slide", "Liquid suspension", "Small copper grid", "Paper mount"],
+        correct: 2,
+        explanation: "TEM specimens are typically supported on a small copper grid."
+    },
+    {
+        text: "What do the stains used in light microscopy consist of?",
+        options: ["Heavy metals", "Glass", "Coloured dyes", "Resin"],
+        correct: 2,
+        explanation: "Light microscopy uses coloured dyes for staining."
+    },
+    {
+        text: "What do stains used in TEM contain?",
+        options: ["Coloured dyes", "Heavy metals", "Glass", "Water"],
+        correct: 1,
+        explanation: "TEM uses heavy metals in stains."
+    },
+    {
+        text: "What is the usual color of images in light microscopy?",
+        options: ["Black and white", "Greyscale", "Usually coloured", "Transparent"],
+        correct: 2,
+        explanation: "Images from light microscopy are usually coloured."
+    },
+    {
+        text: "What is the usual color of images in TEM?",
+        options: ["Usually coloured", "Black and white", "Transparent", "Greyscale"],
+        correct: 1,
+        explanation: "Images from TEM are usually black and white."
+    },
+    {
+        text: "What are the two main ways of specimen preparation for microscopy?",
+        options: ["Fixation and dehydration", "Embedding and sectioning", "Temporary and permanent slides", "Staining and mounting"],
+        correct: 2,
+        explanation: "The two main ways are preparing temporary and permanent slides."
+    },
+    {
+        text: "What does FAA stand for as used in microscopy?",
+        options: ["Formalin Alcohol Acetic", "Formalin Acetic Alcohol", "Fixation Acetic Alcohol", "Formic Alcohol Acetic"],
+        correct: 1,
+        explanation: "FAA stands for Formalin Acetic Alcohol."
+    },
+    {
+        text: "What is FAA mainly recommended for?",
+        options: ["Electron microscopy", "Light microscopy", "Dissection microscopy", "Fluorescence microscopy"],
+        correct: 1,
+        explanation: "FAA is mainly recommended for light microscopy."
+    },
+    {
+        text: "What types of fixatives are used in electron microscopy?",
+        options: ["Only FAA", "Only Osmium tetroxide", "Both FAA and Osmium Tetroxide", "Combination of primary and secondary"],
+        correct: 3,
+        explanation: "Electron microscopy uses a combination of primary and secondary fixatives, such as formaldehyde/glutaraldehyde and osmium tetroxide."
+    },
+    {
+        text: "What type of material is resin used for in microscopy?",
+options: ["It is used for sectioning", "It is used for embedding in light microscopy", "It is used for embedding in electron microscopy", "It is used for mounting"],
+        correct: 2,
+        explanation: "Resin is used for embedding in electron microscopy."
+    },
+    {
+        text: "What kind of knives are typically used for sectioning in light microscopy?",
+        options: ["Diamond knives only", "Ultramicrotome only", "Metal knives and ordinary microtomes", "Glass knives only"],
+        correct: 2,
+        explanation: "Metal knives and ordinary microtomes are used for sectioning in light microscopy"
+
     }, 
       ], 
   "BOT101-3": [
