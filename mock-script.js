@@ -339,7 +339,7 @@ const questionBanks = {
       
     }, 
       ], 
-  "BOT101-T211": [
+  "BOT101-T2": [
     {
       
         text: "What is the radiation source for a light microscope?",
@@ -473,6 +473,292 @@ options: ["It is used for sectioning", "It is used for embedding in light micros
         correct: 2,
         explanation: "Metal knives and ordinary microtomes are used for sectioning in light microscopy"
 
+    }, 
+  {
+    text: "What does 'magnification' refer to?",
+    options: [
+      "The clarity of detail",
+      "The size of the image",
+      "The ratio of image size to actual size",
+      "The amount of light used"
+    ],
+    correct: 2,
+    explanation: "Magnification is the process of enlarging the apparent size of an object, expressed as the ratio of the image size to the actual size of the object. It makes things appear bigger, but doesn't necessarily improve clarity."
+  },
+  {
+    text: "What is the typical magnification range of a compound microscope?",
+    options: [
+      "1x to 10x",
+      "4x to 100x",
+      "100x to 1000x",
+      "1000x to 10000x"
+    ],
+    correct: 2,
+    explanation: "Compound microscopes typically have a magnification range from 100x to 1000x. This range is achieved using a combination of objective and ocular lenses."
+  },
+  {
+    text: "What does 'resolution' refer to?",
+    options: [
+      "The size of the image",
+      "The amount of light used",
+      "The ability to see fine detail",
+      "The number of layers seen"
+    ],
+    correct: 2,
+    explanation: "Resolution is the ability of a microscope to distinguish between two points that are very close together. A higher resolution allows for more clarity and the ability to see fine details."
+  },
+  {
+    text: "What does 'field of view' refer to?",
+    options: [
+      "The clarity of the image",
+      "The focus of the image",
+      "How much you can see at one time",
+      "The size of the lens"
+    ],
+    correct: 2,
+    explanation: "The field of view is the diameter of the circle of light you see when looking into a microscope. It essentially defines how much of the specimen is visible at one time. A larger field of view means you can see a wider area."
+  },
+  {
+    text: "How does magnification affect the field of view?",
+    options: [
+      "As magnification increases, the field of view increases",
+      "As magnification increases, the field of view decreases",
+      "Magnification does not affect field of view",
+      "The relationship is variable"
+    ],
+    correct: 1,
+    explanation: "As the magnification of a microscope increases, the field of view decreases. This means that while the image appears larger, you see a smaller portion of the specimen. It's like zooming in; you see less area but with more detail."
+  },
+  {
+    text: "What does 'depth of field' refer to?",
+    options: [
+      "The number of lenses used",
+      "The layers of the specimen you can see in focus",
+      "The light intensity",
+      "The size of the area that is in focus"
+    ],
+    correct: 1,
+    explanation: "Depth of field refers to the thickness of the specimen that is in focus. It represents the range of distance along the optical axis that appears sharp. A large depth of field means multiple layers of the specimen can be in focus, whereas a small depth of field is useful for viewing detailed layers."
+  },
+  {
+    text: "What is 'total magnification' a product of?",
+    options: [
+      "The ocular lens only",
+      "The objective lens only",
+      "The objective and ocular lenses",
+      "Light intensity and lenses"
+    ],
+    correct: 2,
+    explanation: "Total magnification is calculated by multiplying the magnification of the objective lens by the magnification of the ocular lens. Both lenses contribute to the final magnification of the image seen."
+  },
+  {
+    text: "If the ocular lens is 10x, what is the total magnification if the objective is 40x?",
+    options: [
+      "10x",
+      "40x",
+      "50x",
+      "400x"
+    ],
+    correct: 3,
+    explanation: "Total magnification is calculated by multiplying the ocular lens magnification (10x) by the objective lens magnification (40x), resulting in a total magnification of 400x (10 * 40 = 400)."
+  },
+  {
+    text: "What does 'parfocal' mean?",
+    options: [
+      "Only one lens is used",
+      "Focus remains when changing magnification",
+      "Focus must be adjusted after changing magnification",
+      "Depth of field remains the same"
+    ],
+    correct: 1,
+    explanation: "Parfocal microscopes are designed so that when you change from one objective lens to another, the image remains approximately in focus. This minimizes the amount of fine adjustment needed when switching between objectives and making observation easier."
+  },
+  {
+    text: "What is another name for the 'ocular lens'?",
+    options: [
+      "Objective",
+      "Condenser",
+      "Eyepiece",
+      "Diaphragm"
+    ],
+    correct: 2,
+    explanation: "The ocular lens is also commonly known as the 'eyepiece' because it is the lens closest to the viewer's eye. It's the lens through which you look at the magnified image."
+  },
+  {
+    text: "Where is the ocular lens located?",
+    options: [
+      "Closest to the sample",
+      "Below the stage",
+      "At the top where you look",
+      "In the base"
+    ],
+    correct: 2,
+    explanation: "The ocular lens (or eyepiece) is located at the top of the microscope, where the user looks to view the magnified image of the sample."
+  },
+  {
+    text: "What does the ocular lens provide?",
+    options: [
+      "Only magnification of image",
+      "Final magnification of the object",
+      "First magnification of the object",
+      "Condensation of light to sample"
+    ],
+    correct: 1,
+    explanation: "The ocular lens provides the final magnification of the object, typically multiplying the image from the objective lens to make the object viewable to the observer."
+  },
+  {
+    text: "What is the typical magnification power of ocular lenses?",
+    options: [
+      "1x to 5x",
+      "5x to 10x",
+      "10x to 15x",
+      "20x to 25x"
+    ],
+    correct: 1,
+    explanation: "Ocular lenses typically have a magnification power between 5x to 10x. However, 10x is the most common magnification found on a standard compound microscope."
+  },
+  {
+    text: "What do objective lenses do?",
+    options: [
+      "Provide final magnification",
+      "Collect light",
+      "First magnify the object",
+      "Focus the light source"
+    ],
+    correct: 2,
+    explanation: "The objective lenses are responsible for the initial magnification of the specimen. They collect light that passes through the specimen and create an enlarged image."
+  },
+  {
+    text: "How many objective lenses are typically found on a microscope?",
+    options: [
+      "1 or 2",
+      "2 or 3",
+      "3 or 4",
+      "5 or 6"
+    ],
+    correct: 2,
+    explanation: "Compound microscopes typically have 3 or 4 objective lenses. These different lenses allow for varying levels of magnification."
+  },
+  {
+    text: "Which objective lens has the lowest power?",
+    options: [
+      "Longest lens",
+      "Shortest lens",
+      "Medium lens",
+      "Rotating lens"
+    ],
+    correct: 1,
+    explanation: "The shortest objective lens typically has the lowest magnification power. This lens is used for initial viewing and locating the specimen."
+  },
+  {
+    text: "Which lens has the highest power?",
+    options: [
+      "Shortest lens",
+      "Longest lens",
+      "Medium lens",
+      "Rotating lens"
+    ],
+    correct: 1,
+    explanation: "The longest objective lens typically has the highest magnification power. This lens provides the most magnified view of the specimen and is used for detailed observation."
+  },
+  {
+    text: "What connects the eyepiece to the objective lenses?",
+    options: [
+      "Arm",
+      "Base",
+      "Body tube",
+      "Nosepiece"
+    ],
+    correct: 2,
+    explanation: "The body tube is the hollow part of the microscope that connects the eyepiece (ocular lens) to the objective lenses. It ensures the proper alignment of the lenses."
+  },
+  {
+    text: "What houses the objective lenses and is used to change them?",
+    options: [
+      "Stage",
+      "Revolving nosepiece",
+      "Body tube",
+      "Condenser"
+    ],
+    correct: 1,
+    explanation: "The revolving nosepiece is a rotating mechanism that holds the objective lenses. By rotating the nosepiece, one can easily switch between objectives with different magnifications."
+  },
+  {
+    text: "What part of the microscope is used to carry it and connects the tube to the base?",
+    options: [
+      "Base",
+      "Stage",
+      "Arm",
+      "Revolving nosepiece"
+    ],
+    correct: 2,
+    explanation: "The arm is the part of the microscope that connects the body tube to the base, and it is also used to carry the microscope. It provides a stable structure and safe handling point."
+  },
+  {
+    text: "What is the flat platform where you place slides?",
+    options: [
+      "Base",
+      "Stage",
+      "Arm",
+      "Revolving nosepiece"
+    ],
+    correct: 1,
+    explanation: "The stage is the flat platform where the specimen slide is placed for observation. It provides a stable surface for the slide and sometimes includes clips to hold the slide in place."
+  },
+  {
+    text: "What part holds the slide on the stage?",
+    options: [
+      "Fine adjustment knob",
+      "Coarse adjustment knob",
+      "Stage clips",
+      "Diaphragm"
+    ],
+    correct: 2,
+    explanation: "Stage clips are small metal clips on the microscope's stage that are used to secure the slide in place and prevent it from moving during viewing. They are very important for stable observation."
+  },
+  {
+    text: "What is used for focusing the specimen?",
+    options: [
+      "Diaphragm",
+      "Stage clips",
+      "Fine adjustment knob",
+      "Coarse adjustment knob"
+    ],
+    correct: 3,
+    explanation: "The fine and coarse adjustment knobs are used to bring the specimen into focus. The coarse adjustment knob makes large adjustments, while the fine adjustment knob makes small, precise adjustments for optimal image clarity."
+  },
+  {
+    text: "Which knob is for fine focusing?",
+    options: [
+      "Diaphragm",
+      "Stage clips",
+      "Fine adjustment knob",
+      "Coarse adjustment knob"
+    ],
+    correct: 2,
+    explanation: "The fine adjustment knob is specifically used to make small, precise adjustments to the focus. It is used after the coarse adjustment knob to get a sharp and clear image."
+  },
+  {
+    text: "What is the role of the 'Diaphragm'?",
+    options: [
+      "It controls light intensity",
+      "It adjusts magnification",
+      "It controls focus",
+      "It holds the slides"
+    ],
+    correct: 0,
+    explanation: "The diaphragm is used to control the amount of light that passes through the specimen. Adjusting the diaphragm can improve image contrast and visibility."
+  },
+  {
+    text: "What is the “light source”?",
+    options: [
+      "Where you place slides",
+      "Where light comes through",
+      "Where the eyepiece is",
+      "Where objective lenses are"
+    ],
+    correct: 1,
+     explanation: "The light source of the microscope is where light is emitted. The light shines up through the specimen and the lenses, allowing you to see the magnified image. "
     }, 
       ], 
   "BOT101-3": [
