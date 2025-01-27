@@ -11212,24 +11212,24 @@ function endExam() {
 
     // Save exam history
     const examSession = {
-      date: new Date().toLocaleString(),
-      questions: questions.map(q => ({
-        text: q.text,
-        options: q.options,
-        correct: q.correct,
-        explanation: q.explanation,
-      })),
-      answers: answers, // Array of user's answers
-      score: score,
-      totalQuestions: totalQuestions,
-      percentage: percentage,
-    };
+  date: new Date().toLocaleString(),
+  questions: questions.map(q => ({
+    text: q.text,
+    options: q.options,
+    correct: q.correct,
+    explanation: q.explanation,
+  })),
+  answers: answers, // User's answers
+  score: score,
+  totalQuestions: totalQuestions,
+  percentage: percentage,
+};
 
-    const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
-    examHistory.push(examSession);
-    localStorage.setItem("examHistory", JSON.stringify(examHistory));
+const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+examHistory.push(examSession);
+localStorage.setItem('examHistory', JSON.stringify(examHistory));
+console.log("Exam session saved:", examSession);
 
-    console.log("Exam session saved:", examSession);
 
     // Show results
     showSection(summarySection);
@@ -11264,6 +11264,7 @@ function displayExamHistory() {
   }
 
   examHistory.forEach((session, index) => {
+    console.log(`Session ${index + 1}:`, session); // Log the session data
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
@@ -11279,6 +11280,7 @@ function displayExamHistory() {
   });
 }
 
+
 function displaySessionDetails(session) {
   console.log("Session details clicked:", session);
 
@@ -11291,6 +11293,8 @@ function displaySessionDetails(session) {
   }
 
   session.questions.forEach((question, qIndex) => {
+    console.log(`Question ${qIndex + 1}:`, question); // Debug each question
+
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
 
@@ -11317,7 +11321,6 @@ function displaySessionDetails(session) {
     explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation}`;
     questionDiv.appendChild(explanationText);
 
-    // Append to content
     historyContent.appendChild(questionDiv);
   });
 
@@ -11328,6 +11331,7 @@ function displaySessionDetails(session) {
   backButton.style.marginTop = '20px';
   historyContent.appendChild(backButton);
 }
+
 
   (function () {
   document.addEventListener("DOMContentLoaded", function () {
