@@ -11176,7 +11176,7 @@ function finalizeSubmission() {
   localStorage.setItem("examHistory", JSON.stringify(examHistory));
   
   // Add your submission logic here (e.g., send answers to the server, show results)
-                  }
+}
 
 
 function endExam() {
