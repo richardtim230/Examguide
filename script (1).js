@@ -50,8 +50,13 @@ document.getElementById('history-btn').addEventListener('click', () => {
 // Function to display exam history
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
-  const historySection = document.getElementById('exam-history-content');
-  historySection.innerHTML = ''; // Clear the current content
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
+
+  if (examHistory.length === 0) {
+    historyContent.innerHTML = '<p>No exam history available.</p>';
+    return;
+  }
 
   examHistory.forEach((session, index) => {
     const sessionDiv = document.createElement('div');
@@ -62,14 +67,14 @@ function displayExamHistory() {
     sessionTitle.addEventListener('click', () => displaySessionDetails(session));
     sessionDiv.appendChild(sessionTitle);
 
-    historySection.appendChild(sessionDiv);
+    historyContent.appendChild(sessionDiv);
   });
 }
 
 // Function to display session details
 function displaySessionDetails(session) {
-  const historySection = document.getElementById('exam-history-content');
-  historySection.innerHTML = ''; // Clear the current content
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
 
   session.questions.forEach((question, qIndex) => {
     const questionDiv = document.createElement('div');
@@ -87,9 +92,15 @@ function displaySessionDetails(session) {
     explanationText.innerHTML = `<strong>Explanation:</strong> ${session.explanations[qIndex]}`;
     questionDiv.appendChild(explanationText);
 
-    historySection.appendChild(questionDiv);
+    historyContent.appendChild(questionDiv);
   });
+
+  const backButton = document.createElement('button');
+  backButton.textContent = 'Back to History';
+  backButton.addEventListener('click', displayExamHistory);
+  historyContent.appendChild(backButton);
 }
+
 // Tour Data
 
 const tourSteps = [
@@ -11161,11 +11172,11 @@ function finalizeSubmission() {
   // Create an exam session object
   const examSession = {
     date: new Date().toLocaleString(),
-    questions: questions,
-    answers: answers,
-    explanations: questions.map(q => q.explanation)
+    questions: questions, // Ensure `questions` is defined globally or passed to the function
+    answers: answers, // Ensure `answers` is defined globally or passed to the function
+    explanations: questions.map(q => q.explanation) // Map explanations from questions
   };
-  
+
   // Retrieve existing exam history from local storage
   const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
   
@@ -11175,8 +11186,11 @@ function finalizeSubmission() {
   // Save the updated exam history back to local storage
   localStorage.setItem("examHistory", JSON.stringify(examHistory));
   
+  console.log("Exam history saved:", examHistory);
+
   // Add your submission logic here (e.g., send answers to the server, show results)
 }
+
 
 
 function endExam() {
