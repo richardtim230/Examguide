@@ -3790,7 +3790,7 @@ function generateUserPDF(doc, logo) {
   doc.setFontSize(14);
   doc.text(`Candidate Name: ${fullName}`, margin, yOffset); // Candidate's full name
   yOffset += lineHeight;
-  doc.text(`Course: Zoology`, margin, yOffset);
+  doc.text(`Course: INTRODUCTORY BOTANY 1`, margin, yOffset);
   yOffset += lineHeight;
   doc.text(`Course Code: ${selectedCourseCode}`, margin, yOffset);
   yOffset += lineHeight;
