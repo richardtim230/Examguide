@@ -220,6 +220,9 @@ button {
   height: 50px;
   font-size: 24px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {
@@ -236,7 +239,23 @@ button {
   z-index: 999;
   overflow-y: auto;
   padding: 20px;
-          }
+}
+
+.exam-session {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.exam-session h3 {
+  margin: 0;
+  color: #007BFF;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
 
 
 /*Logo*/
