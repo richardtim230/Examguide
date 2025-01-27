@@ -11210,9 +11210,26 @@ function endExam() {
     totalQuestions = questions.length;
     percentage = Math.round((score / totalQuestions) * 100);
 
-    const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
-    const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
-    localStorage.setItem(`${selectedCourse}-${subCourseName}`, JSON.stringify(updatedProgress));
+    // Save exam history
+    const examSession = {
+      date: new Date().toLocaleString(),
+      questions: questions.map(q => ({
+        text: q.text,
+        options: q.options,
+        correct: q.correct,
+        explanation: q.explanation,
+      })),
+      answers: answers, // Array of user's answers
+      score: score,
+      totalQuestions: totalQuestions,
+      percentage: percentage,
+    };
+
+    const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
+    examHistory.push(examSession);
+    localStorage.setItem("examHistory", JSON.stringify(examHistory));
+
+    console.log("Exam session saved:", examSession);
 
     // Show results
     showSection(summarySection);
@@ -11232,6 +11249,33 @@ function endExam() {
         .join("")}
     `;
   };
+
+function displayExamHistory() {
+  const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+  console.log('Retrieved Exam History:', examHistory);
+
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
+
+  if (examHistory.length === 0) {
+    historyContent.innerHTML = '<p>No exam history available.</p>';
+    return;
+  }
+
+  examHistory.forEach((session, index) => {
+    const sessionDiv = document.createElement('div');
+    sessionDiv.classList.add('exam-session');
+
+    const sessionTitle = document.createElement('h3');
+    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
+    sessionTitle.addEventListener('click', () => displaySessionDetails(session));
+    sessionDiv.appendChild(sessionTitle);
+
+    historyContent.appendChild(sessionDiv);
+  });
+}
+
+
 
   (function () {
   document.addEventListener("DOMContentLoaded", function () {
