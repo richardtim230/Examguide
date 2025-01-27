@@ -11250,6 +11250,7 @@ function endExam() {
     `;
   };
 
+
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
   console.log('Retrieved Exam History:', examHistory);
@@ -11268,14 +11269,65 @@ function displayExamHistory() {
 
     const sessionTitle = document.createElement('h3');
     sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
-    sessionTitle.addEventListener('click', () => displaySessionDetails(session));
+    sessionTitle.addEventListener('click', () => {
+      console.log("Session clicked:", session); // Debug the session object
+      displaySessionDetails(session);
+    });
     sessionDiv.appendChild(sessionTitle);
 
     historyContent.appendChild(sessionDiv);
   });
 }
 
+function displaySessionDetails(session) {
+  console.log("Session details clicked:", session);
 
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
+
+  if (!session.questions || session.questions.length === 0) {
+    historyContent.innerHTML = '<p>No questions available for this session.</p>';
+    return;
+  }
+
+  session.questions.forEach((question, qIndex) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+
+    // Display question text
+    const questionText = document.createElement('p');
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
+    questionDiv.appendChild(questionText);
+
+    // Display user's answer
+    const answerText = document.createElement('p');
+    const userAnswer = session.answers[qIndex] !== undefined
+      ? question.options[session.answers[qIndex]]
+      : "Unanswered";
+    answerText.innerHTML = `<strong>Your Answer:</strong> ${userAnswer}`;
+    questionDiv.appendChild(answerText);
+
+    // Display correct answer
+    const correctAnswerText = document.createElement('p');
+    correctAnswerText.innerHTML = `<strong>Correct Answer:</strong> ${question.options[question.correct]}`;
+    questionDiv.appendChild(correctAnswerText);
+
+    // Display explanation
+    const explanationText = document.createElement('p');
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation}`;
+    questionDiv.appendChild(explanationText);
+
+    // Append to content
+    historyContent.appendChild(questionDiv);
+  });
+
+  // Add a "Back to History" button
+  const backButton = document.createElement('button');
+  backButton.textContent = 'Back to History';
+  backButton.addEventListener('click', displayExamHistory);
+  backButton.style.marginTop = '20px';
+  historyContent.appendChild(backButton);
+}
 
   (function () {
   document.addEventListener("DOMContentLoaded", function () {
