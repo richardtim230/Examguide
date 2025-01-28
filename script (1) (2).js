@@ -10951,8 +10951,56 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
           }
 
-    
+    // Function to request fullscreen mode
+function requestFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) { // Firefox
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) { // IE/Edge
+    element.msRequestFullscreen();
+  }
+}
+
+// Function to exit fullscreen mode
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { // Firefox
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { // Chrome, Safari, and Opera
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { // IE/Edge
+    document.msExitFullscreen();
+  }
+}
+
+// Function to handle visibility change
+function handleVisibilityChange() {
+  if (document.hidden) {
+    alert("You have left the exam page. The exam will end now.");
+    endExam(true); // End the exam
+  }
+}
+
+// Function to handle focus change
+function handleFocusChange() {
+  if (!document.hasFocus()) {
+    alert("You have left the exam page. The exam will end now.");
+    endExam(true); // End the exam
+  }
+}
+
+// Event listeners for visibility and focus changes
+document.addEventListener('visibilitychange', handleVisibilityChange);
+window.addEventListener('blur', handleFocusChange);
+window.addEventListener('focus', handleFocusChange);
+
 function startExam() {
+  const examElement = document.getElementById('exam-section');
+  requestFullscreen(examElement);
   subjectTitle.textContent = subCourseName;
   showSection(examSection);
   createProgress();
@@ -11141,7 +11189,7 @@ function endExam(autoSubmit = false) {
     document.getElementById('confirmYes').onclick = function () {
       modal.style.display = 'none';
       clearInterval(timerInterval); // Stop the timer
-
+      exitFullscreen();
       console.log("Exam submitted!");
 
       // Calculate results
@@ -11219,11 +11267,12 @@ function finalizeSubmission() {
 
 
 
+
 function endExam() {
   // Show the modal
   const modal = document.getElementById('confirmationModal');
   modal.style.display = 'flex';
-
+exitFullscreen();
   // Declare variables in outer scope
   let score, totalQuestions, percentage;
 
