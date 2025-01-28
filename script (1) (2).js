@@ -11442,41 +11442,44 @@ function displaySessionDetails(session) {
   historyContent.appendChild(backButton);
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const saveToHistoryBtn = document.getElementById("save-to-history-btn");
 
-
-  (function () {
-  document.addEventListener("DOMContentLoaded", function () {
-    const downloadBtn = document.getElementById("download-btn");
-
-    if (downloadBtn) {
-      downloadBtn.addEventListener("click", () => {
-        console.log("Download button clicked!");
-        downloadResultsAsPDF();
-      });
-    } else {
-      console.error("Download button not found.");
-    }
-  });
-
-  function downloadResultsAsPDF() {
-    const resultContent = document.getElementById("summarySection");
-
-    if (!resultContent) {
-      console.error("Summary content is missing. Cannot generate PDF.");
-      return;
-    }
-
-    const options = {
-      margin: 1,
-      filename: 'Exam_Results.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-
-    html2pdf().set(options).from(resultContent).save();
+  if (saveToHistoryBtn) {
+    saveToHistoryBtn.addEventListener("click", saveResultsToHistory);
+  } else {
+    console.error("Save to History button not found.");
   }
-})();
+});
+
+function saveResultsToHistory() {
+  const resultContent = document.getElementById("summarySection");
+
+  if (!resultContent) {
+    console.error("Summary content is missing. Cannot save results to history.");
+    return;
+  }
+
+
+  // Create an exam session object
+  const examSession = {
+    date: new Date().toLocaleString(),
+    content: resultContent.innerHTML // Save the summary content
+  };
+
+  // Retrieve existing exam history from local storage
+  const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
+
+  // Add the new exam session to the history
+  examHistory.push(examSession);
+
+  // Save the updated exam history back to local storage
+  localStorage.setItem("examHistory", JSON.stringify(examHistory));
+
+  console.log("Exam history saved:", examHistory);
+  alert("Results have been saved to history.");
+}
+
   
 document.getElementById('confirmNo').onclick = function () {
     modal.style.display = 'none';
