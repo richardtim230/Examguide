@@ -839,8 +839,29 @@ background-size: 100% 100%;
   color: black;
         font-weight: bold;
         }
-
 .course:nth-child(9) {
+  background-image: url('./ssc1.jpg');
+  background-size: 100% 100%;
+  width: 100%;
+  color: black;
+        font-weight: bold;
+        }
+.course:nth-child(10) {
+  background-image: url('./ser1.jpg');
+  background-size: 100% 100%;
+  width: 100%;
+  color: black;
+        font-weight: bold;
+        }
+.course:nth-child(11) {
+  background-image: url('./csc1.webp');
+  background-size: 100% 100%;
+  width: 100%;
+  color: black;
+        font-weight: bold;
+        }
+
+.course:nth-child(12) {
   background-image: url('./knowledge-learning-education-technology-student-with-afro-hairstyle-solving-mathematical-problems-sitting-cafe-table-with-textbooks-electronic-device_273609-7498.webp');
   background-size: 100% 100%;
   width: 100%;
@@ -870,6 +891,41 @@ background-size: 100% 100%;
   margin: 1rem 0;
 }
 
+#access-code-section.Mathematics {
+  background-image: url('mth2.jpg');
+}
+
+#access-code-section.Chemistry {
+  background-image: url('chm2.webp');
+}
+
+#access-code-section.Biology {
+  background-image: url('biochem2.webp');
+}
+#access-code-section.Botany {
+  background-image: url('bot21.jpg');
+        }
+#access-code-section.Microbiology {
+  background-image: url('mcb2.jpg');
+          }
+#access-code-section.Physics {
+  background-image: url('physics2.jpg');
+}
+#access-code-section.Zoology {
+  background-image: url('zoo2.jpg');
+}
+#access-code-section.Geology {
+  background-image: url('geology2.jpg');
+}
+#access-code-section.Sociology {
+  background-image: url('ssc101-2.jpg');
+}
+#access-code-section.English {
+  background-image: url('ser1.jpg');
+        }
+#access-code-section.Computer {
+  background-image: url('csc2.webp');
+}
 #timer-display {
   font-weight: bold;
   color: #dc2626;
