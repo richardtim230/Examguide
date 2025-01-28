@@ -247,11 +247,19 @@ button {
   border-bottom: 1px solid #ccc;
   cursor: pointer;
 }
-
 .exam-session h3 {
-  margin: 0;
-  color: #007BFF;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
 }
+
+.exam-session h3:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+
 
 .question {
   margin-bottom: 20px;
