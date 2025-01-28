@@ -11278,13 +11278,14 @@ console.log("Exam session saved:", examSession);
 
 
    function displayExamHistory() {
+  {
     const historySection = document.getElementById('exam-history-section');
     if (historySection) {
         historySection.classList.remove('hidden'); // Make section visible
     }
 }
-                                                                 
 
+   
   // Clear previous content
   historyContent.innerHTML = '';
 
