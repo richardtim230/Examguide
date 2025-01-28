@@ -11276,12 +11276,14 @@ console.log("Exam session saved:", examSession);
     `;
   };
 
-function displayExamHistory() {
-  const historyContent = document.getElementById('exam-history-content');
-  if (!historyContent) {
-    console.error('Element with ID "exam-history-content" not found.');
-    return;
-  }
+
+   function displayExamHistory() {
+    const historySection = document.getElementById('exam-history-section');
+    if (historySection) {
+        historySection.classList.remove('hidden'); // Make section visible
+    }
+}
+                                                                 
 
   // Clear previous content
   historyContent.innerHTML = '';
