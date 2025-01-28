@@ -11218,6 +11218,7 @@ function finalizeSubmission() {
 }
 
 
+
 function endExam() {
   // Show the modal
   const modal = document.getElementById('confirmationModal');
@@ -11306,23 +11307,23 @@ function displayExamHistory() {
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
-    // Display session title with score
-    const sessionTitle = document.createElement('h3');
+    // Extract score and percentage
     const score = session.score || 0;
     const totalQuestions = session.totalQuestions || 0;
     const percentage = session.percentage || 0;
 
+    // Display session title with score and percentage
+    const sessionTitle = document.createElement('h3');
     sessionTitle.textContent = `Session ${index + 1} - ${session.date || 'Unknown Date'} - Score: ${score}/${totalQuestions} (${percentage}%)`;
 
     // Add click event to view details
-    sessionTitle.addEventListener('click', () => {
-      displaySessionDetails(session);
-    });
+    sessionTitle.addEventListener('click', () => displaySessionDetails(session));
     sessionDiv.appendChild(sessionTitle);
 
     historyContent.appendChild(sessionDiv);
   });
 }
+
 
 function displaySessionDetails(session) {
   const historyContent = document.getElementById('exam-history-content');
