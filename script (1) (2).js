@@ -10838,17 +10838,14 @@ document.querySelectorAll(".course").forEach((button) => {
 document.querySelectorAll(".course").forEach((button) => {
   button.addEventListener("click", () => {
     selectedCourse = button.dataset.course;
-    selectedCourseTitle.textContent = `Enter Course Code for ${selectedCourse}`;
+    selectedCourseTitle.textContent = `Enter Access Code for ${selectedCourse}`;
     showSection(accessCodeSection);
-
-    // Add course-specific class for background image
-    document.getElementById('access-code-section').className = `hidden ${selectedCourse}`;
   });
 });
 
 document.getElementById("submit-code").addEventListener("click", () => {
   const code = document.getElementById("access-code").value.trim();
-  const courseData = window.questionBanks[selectedCourse]?.[code];
+  const courseData = questionBanks[selectedCourse]?.[code];
 
   if (!courseData) {
     alert("Invalid access code. Please try again.");
