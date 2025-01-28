@@ -951,7 +951,6 @@ function updateTimerDisplay() {
   const seconds = timeRemaining % 60;
   document.getElementById("timer-display").textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
-
 function endExam(autoSubmit = false) {
   if (!autoSubmit) {
     // Show the confirmation modal
@@ -971,7 +970,10 @@ function endExam(autoSubmit = false) {
     document.getElementById("confirmNo").onclick = function () {
       modal.style.display = "none";
       console.log("Submission canceled");
-      // Timer continues running
+      // Ensure the timer continues running
+      if (!autoSubmit) {
+        startTimer(); // Restart the timer if it was stopped
+      }
     };
 
     return; // Prevent further execution until the user confirms
@@ -983,10 +985,32 @@ function endExam(autoSubmit = false) {
   finalizeSubmission();
 }
 
+
 function finalizeSubmission() {
   console.log("Finalizing submission...");
+  
+  // Create an exam session object
+  const examSession = {
+    date: new Date().toLocaleString(),
+    questions: questions, // Ensure `questions` is defined globally or passed to the function
+    answers: answers, // Ensure `answers` is defined globally or passed to the function
+    explanations: questions.map(q => q.explanation) // Map explanations from questions
+  };
+
+  // Retrieve existing exam history from local storage
+  const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
+  
+  // Add the new exam session to the history
+  examHistory.push(examSession);
+  
+  // Save the updated exam history back to local storage
+  localStorage.setItem("examHistory", JSON.stringify(examHistory));
+  
+  console.log("Exam history saved:", examHistory);
+
   // Add your submission logic here (e.g., send answers to the server, show results)
 }
+
 
 
 function endExam() {
@@ -1006,11 +1030,29 @@ function endExam() {
     totalQuestions = questions.length;
     percentage = Math.round((score / totalQuestions) * 100);
 
-    const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${subCourseName}`)) || [];
-    const updatedProgress = [...storedProgress, ...questions.map((_, i) => i)];
-    localStorage.setItem(`${selectedCourse}-${subCourseName}`, JSON.stringify(updatedProgress));
+    // Save exam history
+    const examSession = {
+  date: new Date().toLocaleString(),
+  questions: questions.map(q => ({
+    text: q.text,
+    options: q.options,
+    correct: q.correct,
+    explanation: q.explanation,
+  })),
+  answers: answers, // User's answers
+  score: score,
+  totalQuestions: totalQuestions,
+  percentage: percentage,
+};
 
-    // Show results
+const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+examHistory.push(examSession);
+localStorage.setItem('examHistory', JSON.stringify(examHistory));
+console.log("Exam session saved:", examSession);
+
+
+      
+// Show               
     showSection(summarySection);
     summaryContent.innerHTML = `
       <h3>Score: ${score}/${totalQuestions} (${percentage}%)</h3>
@@ -1028,6 +1070,100 @@ function endExam() {
         .join("")}
     `;
   };
+
+
+function displayExamHistory() {
+  const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+  console.log('Retrieved Exam History:', examHistory);
+
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
+
+  if (examHistory.length === 0) {
+    historyContent.innerHTML = '<p>No exam history available.</p>';
+    return;
+  }
+
+  examHistory.forEach((session, index) => {
+    console.log(`Session ${index + 1}:`, session); // Log the session data
+    const sessionDiv = document.createElement('div');
+    sessionDiv.classList.add('exam-session');
+
+    const sessionTitle = document.createElement('h3');
+    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
+    sessionTitle.addEventListener('click', () => {
+      console.log("Session clicked:", session); // Debug the session object
+      displaySessionDetails(session);
+    });
+    sessionDiv.appendChild(sessionTitle);
+
+    historyContent.appendChild(sessionDiv);
+  });
+}
+
+
+function displaySessionDetails(session) {
+  console.log("Session details clicked:", session);
+
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
+
+  // Check if the session contains questions
+  if (!session.questions || session.questions.length === 0) {
+    console.log("No questions found in session:", session);
+    historyContent.innerHTML = '<p>No questions available for this session.</p>';
+    return;
+  }
+
+  // Loop through each question and display details
+  session.questions.forEach((question, qIndex) => {
+    console.log(`Question ${qIndex + 1}:`, question);
+
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+
+    // Display question text
+    const questionText = document.createElement('p');
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
+    questionDiv.appendChild(questionText);
+
+    // Display options
+    const optionsList = document.createElement('ul');
+    question.options.forEach((option, index) => {
+      const optionItem = document.createElement('li');
+      optionItem.textContent = option;
+
+      // Highlight user's answer and correct answer
+      if (session.answers[qIndex] === index) {
+        optionItem.style.color = 'blue'; // User's answer
+        optionItem.style.fontWeight = 'bold';
+      }
+      if (index === question.correct) {
+        optionItem.style.color = 'green'; // Correct answer
+        optionItem.style.fontWeight = 'bold';
+      }
+
+      optionsList.appendChild(optionItem);
+    });
+    questionDiv.appendChild(optionsList);
+
+    // Display explanation
+    const explanationText = document.createElement('p');
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation}`;
+    questionDiv.appendChild(explanationText);
+
+    // Append question details to the content
+    historyContent.appendChild(questionDiv);
+  });
+
+  // Add a "Back to History" button
+  const backButton = document.createElement('button');
+  backButton.textContent = 'Back to History';
+  backButton.addEventListener('click', displayExamHistory);
+  backButton.style.marginTop = '20px';
+  historyContent.appendChild(backButton);
+}
+
 
   (function () {
   document.addEventListener("DOMContentLoaded", function () {
