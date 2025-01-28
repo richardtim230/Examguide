@@ -11250,58 +11250,81 @@ console.log("Exam session saved:", examSession);
     `;
   };
 
-
 function displayExamHistory() {
-  const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
   const historyContent = document.getElementById('exam-history-content');
+  if (!historyContent) {
+    console.error('Element with ID "exam-history-content" not found.');
+    return;
+  }
+
+  let examHistory;
+  try {
+    examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+  } catch (error) {
+    console.error('Failed to parse exam history:', error);
+    historyContent.innerHTML = '<p>Error loading exam history.</p>';
+    return;
+  }
+
   historyContent.innerHTML = ''; // Clear current content
+  console.log('Exam History:', examHistory);
 
   if (examHistory.length === 0) {
     historyContent.innerHTML = '<p>No exam history available.</p>';
     return;
   }
 
+  const fragment = document.createDocumentFragment();
   examHistory.forEach((session, index) => {
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
     const sessionTitle = document.createElement('h3');
-    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
+    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date || 'Unknown Date'}`;
+    sessionTitle.setAttribute('role', 'button');
+    sessionTitle.style.cursor = 'pointer';
     sessionTitle.addEventListener('click', () => {
+      console.log('Session clicked:', session);
       displaySessionDetails(session);
     });
     sessionDiv.appendChild(sessionTitle);
 
-    historyContent.appendChild(sessionDiv);
+    fragment.appendChild(sessionDiv);
   });
+
+  historyContent.appendChild(fragment);
 }
 
 function displaySessionDetails(session) {
+  console.log('Session data:', session);
   const historyContent = document.getElementById('exam-history-content');
+  if (!historyContent) {
+    console.error('Element with ID "exam-history-content" not found.');
+    return;
+  }
+
   historyContent.innerHTML = ''; // Clear current content
 
-  if (!session.questions || session.questions.length === 0) {
+  if (!session || !session.questions || session.questions.length === 0) {
     historyContent.innerHTML = '<p>No questions available for this session.</p>';
     return;
   }
 
+  const fragment = document.createDocumentFragment();
   session.questions.forEach((question, qIndex) => {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
 
-    // Display question text
     const questionText = document.createElement('p');
-    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text || 'No text available'}`;
     questionDiv.appendChild(questionText);
 
-    // Display options
     const optionsList = document.createElement('ul');
-    question.options.forEach((option, index) => {
+    (question.options || []).forEach((option, index) => {
       const optionItem = document.createElement('li');
       optionItem.textContent = option;
 
-      // Highlight user's answer and correct answer
-      if (session.answers[qIndex] === index) {
+      if (session.answers?.[qIndex] === index) {
         optionItem.style.color = 'blue'; // User's answer
         optionItem.style.fontWeight = 'bold';
       }
@@ -11314,21 +11337,22 @@ function displaySessionDetails(session) {
     });
     questionDiv.appendChild(optionsList);
 
-    // Display explanation
     const explanationText = document.createElement('p');
-    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation}`;
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation || 'No explanation available'}`;
     questionDiv.appendChild(explanationText);
 
-    historyContent.appendChild(questionDiv);
+    fragment.appendChild(questionDiv);
   });
 
-  // Add a "Back to History" button
   const backButton = document.createElement('button');
   backButton.textContent = 'Back to History';
   backButton.addEventListener('click', displayExamHistory);
   backButton.style.marginTop = '20px';
-  historyContent.appendChild(backButton);
+  fragment.appendChild(backButton);
+
+  historyContent.appendChild(fragment);
 }
+
 
 
   (function () {
