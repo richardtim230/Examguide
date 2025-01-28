@@ -843,21 +843,21 @@ background-size: 100% 100%;
   background-image: url('./ssc1.jpg');
   background-size: 100% 100%;
   width: 100%;
-  color: black;
+  color: white;
         font-weight: bold;
         }
 .course:nth-child(10) {
   background-image: url('./ser1.jpg');
   background-size: 100% 100%;
   width: 100%;
-  color: black;
+  color: white;
         font-weight: bold;
         }
 .course:nth-child(11) {
   background-image: url('./csc1.webp');
   background-size: 100% 100%;
   width: 100%;
-  color: black;
+  color: white;
         font-weight: bold;
         }
 
