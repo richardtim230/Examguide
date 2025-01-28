@@ -11282,6 +11282,10 @@ function displayExamHistory() {
     return;
   }
 
+  // Clear previous content
+  historyContent.innerHTML = '';
+
+  // Retrieve and validate exam history from localStorage
   let examHistory;
   try {
     examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
@@ -11291,33 +11295,33 @@ function displayExamHistory() {
     return;
   }
 
-  historyContent.innerHTML = ''; // Clear current content
-  console.log('Exam History:', examHistory);
-
+  // Handle empty exam history
   if (examHistory.length === 0) {
     historyContent.innerHTML = '<p>No exam history available.</p>';
     return;
   }
 
-  const fragment = document.createDocumentFragment();
+  // Populate history content
   examHistory.forEach((session, index) => {
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
+    // Display session title with score
     const sessionTitle = document.createElement('h3');
-    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date || 'Unknown Date'}`;
-    sessionTitle.setAttribute('role', 'button');
-    sessionTitle.style.cursor = 'pointer';
+    const score = session.score || 0;
+    const totalQuestions = session.totalQuestions || 0;
+    const percentage = session.percentage || 0;
+
+    sessionTitle.textContent = `Session ${index + 1} - ${session.date || 'Unknown Date'} - Score: ${score}/${totalQuestions} (${percentage}%)`;
+
+    // Add click event to view details
     sessionTitle.addEventListener('click', () => {
-      console.log('Session clicked:', session);
       displaySessionDetails(session);
     });
     sessionDiv.appendChild(sessionTitle);
 
-    fragment.appendChild(sessionDiv);
+    historyContent.appendChild(sessionDiv);
   });
-
-  historyContent.appendChild(fragment);
 }
 
 function displaySessionDetails(session) {
