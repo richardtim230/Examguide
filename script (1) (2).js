@@ -11180,43 +11180,67 @@ function updateTimerDisplay() {
 }
 
 function endExam(autoSubmit = false) {
-  // Auto-submit (e.g., when time runs out)
+  const modal = document.getElementById('confirmationModal');
+
+  if (!autoSubmit) {
+    modal.style.display = 'flex';
+
+    // Handle "Yes" button
+    document.getElementById('confirmYes').onclick = function () {
+      modal.style.display = 'none';
+      clearInterval(timerInterval); // Stop the timer
+
+      console.log("Exam submitted!");
+
+      // Calculate results
+      const score = answers.filter((ans, i) => ans === questions[i].correct).length;
+      const totalQuestions = questions.length;
+      const percentage = Math.round((score / totalQuestions) * 100);
+
+      // Save exam history
+      const examSession = {
+        date: new Date().toLocaleString(),
+        questions: questions.map(q => ({
+          text: q.text,
+          options: q.options,
+          correct: q.correct,
+          explanation: q.explanation,
+        })),
+        answers: answers, // User's answers
+        score: score,
+        totalQuestions: totalQuestions,
+        percentage: percentage,
+      };
+
+      const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+      examHistory.push(examSession);
+      localStorage.setItem('examHistory', JSON.stringify(examHistory));
+
+      console.log("Exam session saved:", examSession);
+
+      // Reload history to reflect updates
+      displayExamHistory();
+    };
+
+    // Handle "No" button
+    document.getElementById('confirmNo').onclick = function () {
+      modal.style.display = 'none';
+      console.log("Submission canceled");
+    };
+
+    return; // Prevent further execution
+  }
+
+  // Auto-submit logic
   if (autoSubmit) {
     clearInterval(timerInterval);
     console.log("Time's up! Auto-submitting exam...");
     finalizeSubmission();
     return;
   }
-
-  // Show the confirmation modal (only if not auto-submitting)
-  const modal = document.getElementById("confirmationModal");
-  modal.style.display = "flex";
-
-  // Handle "Yes" button
-  document.getElementById("confirmYes").onclick = function () {
-    modal.style.display = "none";
-    clearInterval(timerInterval); // Stop the timer
-    console.log("Exam submitted!");
-    // Add your submission logic here
-    finalizeSubmission();
-  };
-
-  // Handle "No" button
-  document.getElementById("confirmNo").onclick = function () {
-    modal.style.display = "none";
-    console.log("Submission canceled");
-    // Ensure the timer continues running
-    startTimer(); // Restart the timer if it was stopped
-  };                                        
 }
-    }
 
-
-  // Auto-submit logic
-  clearInterval(timerInterval);
-  console.log("Time's up! Auto-submitting exam...");
-  finalizeSubmission();
-    }
+  
   
 function finalizeSubmission() {
   const score = answers.filter((ans, i) => ans === questions[i].correct).length;
