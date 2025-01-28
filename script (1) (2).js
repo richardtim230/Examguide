@@ -11253,8 +11253,6 @@ console.log("Exam session saved:", examSession);
 
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
-  console.log('Retrieved Exam History:', examHistory);
-
   const historyContent = document.getElementById('exam-history-content');
   historyContent.innerHTML = ''; // Clear current content
 
@@ -11264,14 +11262,12 @@ function displayExamHistory() {
   }
 
   examHistory.forEach((session, index) => {
-    console.log(`Session ${index + 1}:`, session); // Log the session data
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
     const sessionTitle = document.createElement('h3');
     sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
     sessionTitle.addEventListener('click', () => {
-      console.log("Session clicked:", session); // Debug the session object
       displaySessionDetails(session);
     });
     sessionDiv.appendChild(sessionTitle);
@@ -11280,24 +11276,16 @@ function displayExamHistory() {
   });
 }
 
-
 function displaySessionDetails(session) {
-  console.log("Session details clicked:", session);
-
   const historyContent = document.getElementById('exam-history-content');
   historyContent.innerHTML = ''; // Clear current content
 
-  // Check if the session contains questions
   if (!session.questions || session.questions.length === 0) {
-    console.log("No questions found in session:", session);
     historyContent.innerHTML = '<p>No questions available for this session.</p>';
     return;
   }
 
-  // Loop through each question and display details
   session.questions.forEach((question, qIndex) => {
-    console.log(`Question ${qIndex + 1}:`, question);
-
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
 
@@ -11331,7 +11319,6 @@ function displaySessionDetails(session) {
     explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation}`;
     questionDiv.appendChild(explanationText);
 
-    // Append question details to the content
     historyContent.appendChild(questionDiv);
   });
 
@@ -11342,7 +11329,6 @@ function displaySessionDetails(session) {
   backButton.style.marginTop = '20px';
   historyContent.appendChild(backButton);
 }
-
 
 
   (function () {
