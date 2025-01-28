@@ -10838,12 +10838,18 @@ document.querySelectorAll(".course").forEach((button) => {
 document.getElementById("submit-code").addEventListener("click", () => {
   const code = document.getElementById("access-code").value.trim();
   const courseData = questionBanks[selectedCourse]?.[code];
-
+  
+// Set the background based on the selected course
+    document.getElementById('access-code-section').className = `hidden ${selectedCourse}`;
+  });
+});
   if (!courseData) {
     alert("Invalid access code. Please try again.");
     return;
   }
 
+
+    
   const storedProgress = JSON.parse(localStorage.getItem(`${selectedCourse}-${code}`)) || [];
   const remainingQuestions = courseData.questions.filter((_, i) => !storedProgress.includes(i));
 
