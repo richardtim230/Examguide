@@ -11207,17 +11207,17 @@ function endExam(autoSubmit = false) {
     console.log("Submission canceled");
     // Ensure the timer continues running
     startTimer(); // Restart the timer if it was stopped
-  };
-                                              }
+  };                                        
+}
+    }
+
 
   // Auto-submit logic
   clearInterval(timerInterval);
   console.log("Time's up! Auto-submitting exam...");
   finalizeSubmission();
-}
-
-
-
+    }
+  
 function finalizeSubmission() {
   const score = answers.filter((ans, i) => ans === questions[i].correct).length;
   const totalQuestions = questions.length;
