@@ -234,7 +234,7 @@ button {
   top: 0;
   right: 2px;
   left: 2px;
-  width: 94%;
+  width: 96%;
   height: 100%;
   background-color: white;
   z-index: 999;
@@ -248,10 +248,9 @@ button {
   cursor: pointer;
 }
 .exam-session h3 {
-  font-size: 1.2em;
+  font-size: 1.0em;
   font-weight: bold;
   cursor: pointer;
-  margin: 0;
   color: #007BFF;      
 }
 
