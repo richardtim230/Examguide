@@ -232,21 +232,21 @@ button {
 #exam-history-section {
   position: fixed;
   top: 0;
-  margin-left: 0px;
-  text-align: center;
-  width: 98%;
-  height: 100%;
+  left: 0;
+  width: 100%;
+  height: 98%;
   background-color: white;
   z-index: 999;
   overflow-y: auto;
   padding: 20px;
+  text-align: left; /* Align all texts to the left */
 }
 
 .exam-session {
   padding: 10px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
-  text-align: center;
+  text-align: left; /* Align all texts to the left */
 }
 .exam-session h3 {
   font-size: 1.0em;
