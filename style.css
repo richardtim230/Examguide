@@ -245,13 +245,14 @@ button {
         border-radius: 8px;
   text-align: left; /* Align all texts to the left */
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-buttom: 10px;
 }
 
 
 #exam-history-content {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 /* Style each session */
@@ -259,7 +260,9 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background: #007bff;
     color: white;
     padding: 12px;
+        width: 90%;
     border-radius: 6px;
+        margin: 2px 0;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
 }
@@ -287,7 +290,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 #exam-history-content .question li {
     padding: 8px;
     border-radius: 4px;
-    margin: 4px 0;
+    margin: 2px 0;
         width: 90%;
     background: #f4f4f4;
 }
