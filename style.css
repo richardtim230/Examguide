@@ -233,17 +233,20 @@ button {
 
 /* ===== Exam History Section ===== */
 #exam-history-section {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    width: 100%;
-        height: 90%;
-    max-width: 600px;
-    margin: 20px auto;
-        z-index: 999;
-        overflow-y: auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 20px;
+        border-radius: 8px;
+  text-align: left; /* Align all texts to the left */
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 
 #exam-history-content {
     display: flex;
