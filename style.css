@@ -236,8 +236,8 @@ button {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 98%;
   background-color: white;
   z-index: 999;
   overflow-y: auto;
@@ -288,6 +288,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 8px;
     border-radius: 4px;
     margin: 4px 0;
+        width: 90%;
     background: #f4f4f4;
 }
 
@@ -317,6 +318,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+   margin-bottom: 10px;
     transition: background 0.3s ease;
 }
 
