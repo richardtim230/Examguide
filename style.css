@@ -232,7 +232,8 @@ button {
 #exam-history-section {
   position: fixed;
   top: 0;
-  justify-content: center;
+  margin-left: 0px;
+  text-align: center;
   width: 98%;
   height: 100%;
   background-color: white;
@@ -245,12 +246,14 @@ button {
   padding: 10px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
+  text-align: center;
 }
 .exam-session h3 {
   font-size: 1.0em;
   font-weight: bold;
   cursor: pointer;
-  color: #007BFF;      
+  color: #007BFF;   
+  text-align: center;    
 }
 
 .exam-session h3:hover {
