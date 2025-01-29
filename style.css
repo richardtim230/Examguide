@@ -232,9 +232,8 @@ button {
 #exam-history-section {
   position: fixed;
   top: 0;
-  right: 2px;
-  left: 2px;
-  width: 96%;
+  justify-content: center;
+  width: 98%;
   height: 100%;
   background-color: white;
   z-index: 999;
