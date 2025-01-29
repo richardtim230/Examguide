@@ -46,8 +46,6 @@ document.getElementById('history-btn').addEventListener('click', () => {
     displayExamHistory();
   }
 });
-
-// Function to display exam history
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
   const historyContent = document.getElementById('exam-history-content');
@@ -62,14 +60,21 @@ function displayExamHistory() {
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
+    // Extract score and percentage, using defaults if missing
+    const score = session.score || 0;
+    const totalQuestions = session.totalQuestions || 0;
+    const percentage = session.percentage || 0;
+
     const sessionTitle = document.createElement('h3');
-    sessionTitle.textContent = `Exam Session ${index + 1} - ${session.date}`;
+    sessionTitle.textContent = `Session ${index + 1} - ${session.date} - Score: ${score}/${totalQuestions} (${percentage}%)`;
+    
     sessionTitle.addEventListener('click', () => displaySessionDetails(session));
     sessionDiv.appendChild(sessionTitle);
 
     historyContent.appendChild(sessionDiv);
   });
 }
+
 
 // Function to display session details
 function displaySessionDetails(session) {
@@ -85,11 +90,15 @@ function displaySessionDetails(session) {
     questionDiv.appendChild(questionText);
 
     const answerText = document.createElement('p');
-    answerText.innerHTML = `<strong>Your Answer:</strong> ${question.options[session.answers[qIndex]]}`;
+    const userAnswerIndex = session.answers[qIndex]; // User's selected answer index
+
+    // Check if the user answer exists to prevent errors
+    const userAnswer = userAnswerIndex !== undefined ? question.options[userAnswerIndex] : "No answer selected";
+    answerText.innerHTML = `<strong>Your Answer:</strong> ${userAnswer}`;
     questionDiv.appendChild(answerText);
 
     const explanationText = document.createElement('p');
-    explanationText.innerHTML = `<strong>Explanation:</strong> ${session.explanations[qIndex]}`;
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation || "No explanation available"}`;
     questionDiv.appendChild(explanationText);
 
     historyContent.appendChild(questionDiv);
@@ -100,6 +109,7 @@ function displaySessionDetails(session) {
   backButton.addEventListener('click', displayExamHistory);
   historyContent.appendChild(backButton);
 }
+
 
 // Tour Data
 
@@ -11230,7 +11240,6 @@ function finalizeSubmission() {
 
 
 
-
 function endExam() {
   // Show the modal
   const modal = document.getElementById('confirmationModal');
@@ -11289,48 +11298,27 @@ console.log("Exam session saved:", examSession);
 
 
    function displayExamHistory() {
-  {
-    const historySection = document.getElementById('exam-history-section');
-    if (historySection) {
-        historySection.classList.remove('hidden'); // Make section visible
-    }
-}
+  const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
 
-   
-  // Clear previous content
-  historyContent.innerHTML = '';
-
-  // Retrieve and validate exam history from localStorage
-  let examHistory;
-  try {
-    examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
-  } catch (error) {
-    console.error('Failed to parse exam history:', error);
-    historyContent.innerHTML = '<p>Error loading exam history.</p>';
-    return;
-  }
-
-  // Handle empty exam history
   if (examHistory.length === 0) {
     historyContent.innerHTML = '<p>No exam history available.</p>';
     return;
   }
 
-  // Populate history content
   examHistory.forEach((session, index) => {
     const sessionDiv = document.createElement('div');
     sessionDiv.classList.add('exam-session');
 
-    // Extract score and percentage
+    // Extract score and percentage, using defaults if missing
     const score = session.score || 0;
     const totalQuestions = session.totalQuestions || 0;
     const percentage = session.percentage || 0;
 
-    // Display session title with score and percentage
     const sessionTitle = document.createElement('h3');
-    sessionTitle.textContent = `Session ${index + 1} - ${session.date || 'Unknown Date'} - Score: ${score}/${totalQuestions} (${percentage}%)`;
-
-    // Add click event to view details
+    sessionTitle.textContent = `Session ${index + 1} - ${session.date} - Score: ${score}/${totalQuestions} (${percentage}%)`;
+    
     sessionTitle.addEventListener('click', () => displaySessionDetails(session));
     sessionDiv.appendChild(sessionTitle);
 
@@ -11341,53 +11329,26 @@ console.log("Exam session saved:", examSession);
 
 function displaySessionDetails(session) {
   const historyContent = document.getElementById('exam-history-content');
-  if (!historyContent) {
-    console.error('Element with ID "exam-history-content" not found.');
-    return;
-  }
+  historyContent.innerHTML = ''; // Clear current content
 
-  // Clear existing content
-  historyContent.innerHTML = '';
-
-  // Validate session data
-  if (!session || !session.questions || session.questions.length === 0) {
-    historyContent.innerHTML = '<p>No questions available for this session.</p>';
-    return;
-  }
-
-  // Render session details
   session.questions.forEach((question, qIndex) => {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
 
-    // Display question text
     const questionText = document.createElement('p');
-    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text || 'No question text available'}`;
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
     questionDiv.appendChild(questionText);
 
-    // Display options
-    const optionsList = document.createElement('ul');
-    (question.options || []).forEach((option, index) => {
-      const optionItem = document.createElement('li');
-      optionItem.textContent = option;
+    const answerText = document.createElement('p');
+    const userAnswerIndex = session.answers[qIndex]; // User's selected answer index
 
-      // Highlight user's answer and correct answer
-      if (session.answers?.[qIndex] === index) {
-        optionItem.style.color = 'blue'; // User's answer
-        optionItem.style.fontWeight = 'bold';
-      }
-      if (index === question.correct) {
-        optionItem.style.color = 'green'; // Correct answer
-        optionItem.style.fontWeight = 'bold';
-      }
+    // Check if the user answer exists to prevent errors
+    const userAnswer = userAnswerIndex !== undefined ? question.options[userAnswerIndex] : "No answer selected";
+    answerText.innerHTML = `<strong>Your Answer:</strong> ${userAnswer}`;
+    questionDiv.appendChild(answerText);
 
-      optionsList.appendChild(optionItem);
-    });
-    questionDiv.appendChild(optionsList);
-
-    // Display explanation
     const explanationText = document.createElement('p');
-    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation || 'No explanation available'}`;
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation || "No explanation available"}`;
     questionDiv.appendChild(explanationText);
 
     historyContent.appendChild(questionDiv);
