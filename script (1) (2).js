@@ -107,6 +107,7 @@ function displaySessionDetails(session) {
   const backButton = document.createElement('button');
   backButton.textContent = 'Back to History';
   backButton.addEventListener('click', displayExamHistory);
+  backButton.style.marginTop = '20px';
   historyContent.appendChild(backButton);
 }
 
