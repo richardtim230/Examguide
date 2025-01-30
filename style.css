@@ -189,7 +189,7 @@ button {
 }
 
 /* Progress Bar */
-#progress-container {
+#ex-progress-container {
     width: 80%;
     max-width: 400px;
     margin: 20px auto;
@@ -197,7 +197,7 @@ button {
     font-size: 18px;
 }
 
-#progress-bar {
+#ex-progress-bar {
     width: 100%;
     height: 20px;
     background: #ddd;
@@ -206,7 +206,7 @@ button {
     overflow: hidden;
 }
 
-#progress-fill {
+#ex-progress-fill {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #ff6600, #ffcc00);
