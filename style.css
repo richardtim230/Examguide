@@ -62,38 +62,50 @@ button {
 
 
 /* Floating Reward Icon */
-#reward-icon {
+/* Reward Progress Container */
+#reward-progress-container {
     position: fixed;
     bottom: 20px;
-    left: 10px;
-  z-index: 1000;
-  background: linear-gradient(45deg, #ffcc00, #ff6600);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    right: 20px;
+    width: 60px;
+    height: 60px;
 }
 
-.hidden {
-  display: none;
+/* Reward Icon Centered Inside Progress Ring */
+#reward-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(45deg, #ffcc00, #ff6600);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
 #reward-icon:hover {
     transform: scale(1.1);
 }
 
+/* Progress Ring */
+#progress-ring {
+    transition: stroke-dashoffset 1s linear;
+}
 
-/* Reward Pop-Up (Initially Off-Screen) */
+
+/* Reward Pop-Up (Initially Hidden) */
 #reward-popup {
     position: fixed;
     top: 50%;
-    right: -300px; /* Start off-screen */
+    right: -320px; /* Start off-screen */
     transform: translateY(-50%);
     background: white;
     color: #333;
@@ -102,13 +114,17 @@ button {
     text-align: center;
     width: 300px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: right 0.5s ease-in-out;
+    transition: right 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    display: none; /* Fully hide initially */
 }
 
 /* Show Pop-Up */
 #reward-popup.show {
-    right: 20px; /* Slide into view */
+    right: 20px;
+    opacity: 1;
 }
+
 
 #store-popup {
     position: fixed;
