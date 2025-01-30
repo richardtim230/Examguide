@@ -83,7 +83,7 @@ function updateRewards() {
     document.getElementById("progress-amount").innerText = userRewards.totalReward;
 
     const progressPercent = Math.min((userRewards.totalReward / 3000) * 100, 100);
-    document.getElementById("progress-fill").style.width = progressPercent + "%";
+    document.getElementById("ex-progress-fill").style.width = progressPercent + "%";
 }
 
 // Play Sound Effects
