@@ -46,6 +46,69 @@ document.getElementById('history-btn').addEventListener('click', () => {
     displayExamHistory();
   }
 });
+
+// Load rewards from localStorage
+let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+    timeSpent: 0,
+    timeBonus: 0,
+    examScore: 0,
+    examBonus: 0,
+    totalReward: 0
+};
+
+// Start Timer on Login
+function startUserTimer() {
+    setInterval(() => {
+        userRewards.timeSpent++;
+
+        if (userRewards.timeSpent % 3600 === 0) { // 1 Hour = ₦50
+            userRewards.timeBonus += 50;
+            showAnimatedPopup("🎉 You earned ₦50 for using the app for 1 hour!");
+            playSound("reward-sound");
+        }
+
+        updateRewards();
+    }, 1000);
+}
+
+// Save & Update Progress Bar
+function updateRewards() {
+    userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus;
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+
+    // Update Progress UI
+    document.getElementById("time-bonus").innerText = userRewards.timeBonus;
+    document.getElementById("exam-bonus").innerText = userRewards.examBonus;
+    document.getElementById("total-reward").innerText = userRewards.totalReward;
+    document.getElementById("progress-amount").innerText = userRewards.totalReward;
+
+    const progressPercent = Math.min((userRewards.totalReward / 3000) * 100, 100);
+    document.getElementById("progress-fill").style.width = progressPercent + "%";
+}
+
+// Play Sound Effects
+function playSound(soundId) {
+    document.getElementById(soundId).play();
+}
+
+// Cash Out Function
+function cashOut() {
+    if (userRewards.totalReward >= 3000) {
+        showAnimatedPopup(`✅ You cashed out ₦${userRewards.totalReward}!`);
+        playSound("cashout-sound");
+
+        // Reset rewards
+        userRewards = { timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0 };
+        updateRewards();
+    } else {
+        showAnimatedPopup("❌ You need at least ₦3,000 to cash out.");
+        playSound("popup-sound");
+    }
+}
+
+// Start Timer on Load
+window.addEventListener("load", startUserTimer);
+
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
   const historyContent = document.getElementById('exam-history-content');
@@ -11237,29 +11300,54 @@ function endExam(autoSubmit = false) {
   
   
 function finalizeSubmission() {
-  const score = answers.filter((ans, i) => ans === questions[i].correct).length;
-  const totalQuestions = questions.length;
-  const percentage = Math.round((score / totalQuestions) * 100);
+    const score = answers.filter((ans, i) => ans === questions[i].correct).length;
+    const totalQuestions = questions.length;
+    const percentage = Math.round((score / totalQuestions) * 100);
 
-  const examSession = {
-    date: new Date().toLocaleString(),
-    questions: questions.map(q => ({
-      text: q.text,
-      options: q.options,
-      correct: q.correct,
-      explanation: q.explanation
-    })),
-    answers: answers, // User's selected answers
-    score: score,
-    totalQuestions: totalQuestions,
-    percentage: percentage
-  };
+    // Load existing rewards from localStorage or initialize
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+        timeSpent: 0,   
+        timeBonus: 0,   
+        examScore: 0,   
+        examBonus: 0,   
+        totalReward: 0  
+    };
 
-  const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
-  examHistory.push(examSession);
-  localStorage.setItem('examHistory', JSON.stringify(examHistory));
+    // Update exam statistics
+    userRewards.examScore += score; // Add this exam's correct answers
+    const previousBonus = userRewards.examBonus;
+    userRewards.examBonus = Math.floor(userRewards.examScore / 100) * 100; // ₦100 for every 100 total scores
+    userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus; // Update total reward
 
-  console.log('Exam session saved:', examSession);
+    // Calculate new bonus gained from this exam
+    const newBonus = userRewards.examBonus - previousBonus;
+    if (newBonus > 0) {
+        showAnimatedPopup(`🎉 You earned ₦${newBonus} from your exam performance!`);
+    }
+
+    // Save updated rewards to localStorage
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+
+    // Store exam results in history
+    const examSession = {
+        date: new Date().toLocaleString(),
+        questions: questions.map(q => ({
+            text: q.text,
+            options: q.options,
+            correct: q.correct,
+            explanation: q.explanation
+        })),
+        answers: answers, 
+        score: score,
+        totalQuestions: totalQuestions,
+        percentage: percentage
+    };
+
+    const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
+    examHistory.push(examSession);
+    localStorage.setItem('examHistory', JSON.stringify(examHistory));
+
+    console.log('Exam session saved:', examSession);
 }
 
 
