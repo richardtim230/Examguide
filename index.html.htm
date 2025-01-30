@@ -102,52 +102,7 @@
   <button id="generate-invoice-btn">Generate Invoice</button>
   <button id="back-to-login-payment">Back to Login</button>
 </div>
-        <h1>📚 Student Exam & Rewards</h1>
-    </header>
-
-    <main>
-
-        <!-- Floating Reward Icon -->
-        <div id="reward-icon" onclick="showRewardPopup()">💰</div>
-
-        <!-- Reward Summary Pop-Up -->
-        <div id="reward-popup" class="hidden">
-            <div id="reward-content">
-                <h2>🏆 My Rewards</h2>
-                <p><strong>Time Bonus:</strong> ₦<span id="time-bonus">0</span></p>
-                <p><strong>Exam Bonus:</strong> ₦<span id="exam-bonus">0</span></p>
-                <p><strong>Total Earnings:</strong> ₦<span id="total-reward">0</span></p>
-                <button onclick="openStore()">🎁 Redeem Rewards</button>
-                <button onclick="closeRewardPopup()">Close</button>
-            </div>
-        </div>
-
-        <!-- Store Pop-Up -->
-        <div id="store-popup" class="hidden">
-            <div id="store-content">
-                <h2>🛍️ Rewards Store</h2>
-                <p>Redeem your earnings for awesome rewards!</p>
-                <ul id="store-items"></ul>
-                <button onclick="closeStore()">Close</button>
-            </div>
-        </div>
-
         
-        
-
-<!-- Progress Bar -->
-<div id="progress-container">
-    <p>🎯 Cashout Progress: ₦<span id="progress-amount">0</span> / ₦3,000</p>
-    <div id="progress-bar">
-        <div id="progress-fill"></div>
-    </div>
-</div>
-
-<!-- Audio Effects -->
-<audio id="reward-sound" src="sounds/reward.mp3"></audio>
-<audio id="popup-sound" src="sounds/popup.mp3"></audio>
-<audio id="cashout-sound" src="sounds/cashout.mp3"></audio>
-
   <!-- Tour Modal -->
 
   <div id="tour-overlay">
@@ -206,7 +161,52 @@
   <div id="exam-history-content"></div>
 </div>
 
-  
+  <h3>📚 Student Exam & Rewards</h3>
+    </header>
+
+    <main>
+
+        <!-- Floating Reward Icon -->
+        <div id="reward-icon" onclick="showRewardPopup()">💰</div>
+
+        <!-- Reward Summary Pop-Up -->
+        <div id="reward-popup" class="hidden">
+            <div id="reward-content">
+                <h4>🏆 My Rewards</h4>
+                <p><strong>Time Bonus:</strong> ₦<span id="time-bonus">0</span></p>
+                <p><strong>Exam Bonus:</strong> ₦<span id="exam-bonus">0</span></p>
+                <p><strong>Total Earnings:</strong> ₦<span id="total-reward">0</span></p>
+                <button onclick="openStore()">🎁 Redeem Rewards</button>
+                <button onclick="closeRewardPopup()">Close</button>
+            </div>
+        </div>
+
+        <!-- Store Pop-Up -->
+        <div id="store-popup" class="hidden">
+            <div id="store-content">
+                <h2>🛍️ Rewards Store</h2>
+                <p>Redeem your earnings for awesome rewards!</p>
+                <ul id="store-items"></ul>
+                <button onclick="closeStore()">Close</button>
+            </div>
+        </div>
+
+        
+        
+
+<!-- Progress Bar -->
+<div id="progress-container">
+    <p>🎯 Cashout Progress: ₦<span id="progress-amount">0</span> / ₦3,000</p>
+    <div id="progress-bar">
+        <div id="progress-fill"></div>
+    </div>
+</div>
+
+<!-- Audio Effects -->
+<audio id="reward-sound" src="sounds/reward.mp3"></audio>
+<audio id="popup-sound" src="sounds/popup.mp3"></audio>
+<audio id="cashout-sound" src="sounds/cashout.mp3"></audio>
+
 
     <section id="course-selection-section">
  <div <button id="switch-mode-btn" class="icon-btn">🛠️</button></div>
