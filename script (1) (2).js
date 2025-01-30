@@ -38,14 +38,7 @@ document.addEventListener('click', throttle(function(event) {
   }
 }, 500));
 
-// Toggle history section visibility
-document.getElementById('history-btn').addEventListener('click', () => {
-  const historySection = document.getElementById('exam-history-section');
-  historySection.classList.toggle('hidden');
-  if (!historySection.classList.contains('hidden')) {
-    displayExamHistory();
-  }
-});
+
 
 // Load rewards from localStorage
 let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
@@ -110,31 +103,38 @@ function cashOut() {
 window.addEventListener("load", startUserTimer);
 
 // Show Reward Summary Pop-up
+function toggleRewardPopup() {
+    console.log("Toggling Reward Pop-Up"); // Debugging Check
+    const popup = document.getElementById("reward-popup");
+    popup.classList.toggle("show");
+}
+// Show Reward Pop-Up with Slide-In Effect
 function showRewardPopup() {
-    const rewardPopup = document.getElementById("reward-popup");
-    rewardPopup.classList.toggle("hidden");
+    console.log("Reward pop-up opening...");
+    const popup = document.getElementById("reward-popup");
+    popup.classList.add("show");
 }
 
+// Close Reward Pop-Up with Slide-Out Effect
 function closeRewardPopup() {
-    const rewardPopup = document.getElementById("reward-popup");
-    rewardPopup.classList.add("hidden");
+    console.log("Reward pop-up closing...");
+    const popup = document.getElementById("reward-popup");
+    popup.classList.remove("show");
 }
 
-function openStore() {
-    const storePopup = document.getElementById("store-popup");
-    storePopup.classList.remove("hidden");
-}
-
-function closeStore() {
-    const storePopup = document.getElementById("store-popup");
-    storePopup.classList.add("hidden");
-}
 
 // Debugging: Check if script is running
 window.onload = () => {
     console.log("Script loaded successfully!");
 };
-
+// Toggle history section visibility
+document.getElementById('history-btn').addEventListener('click', () => {
+  const historySection = document.getElementById('exam-history-section');
+  historySection.classList.toggle('hidden');
+  if (!historySection.classList.contains('hidden')) {
+    displayExamHistory();
+  }
+});
 
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
