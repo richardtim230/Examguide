@@ -65,19 +65,23 @@ button {
 #reward-icon {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    background: linear-gradient(45deg, #ffcc00, #ff6600);
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    left: 10px;
+  z-index: 1000;
+  background: linear-gradient(45deg, #ffcc00, #ff6600);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
 }
 
 #reward-icon:hover {
@@ -92,6 +96,8 @@ button {
     transform: translate(-50%, -50%);
     background: white;
     color: #333;
+    z-index: 999;
+
     padding: 20px;
     border-radius: 10px;
     text-align: center;
