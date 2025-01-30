@@ -40,7 +40,7 @@ document.addEventListener('click', throttle(function(event) {
 
 
 
-// Load rewards from localStorage
+// Load existing rewards or initialize
 let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
     timeSpent: 0,
     timeBonus: 0,
@@ -49,19 +49,33 @@ let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
     totalReward: 0
 };
 
-// Start Timer on Login
-function startUserTimer() {
-    setInterval(() => {
-        userRewards.timeSpent++;
+let timerInterval;
+const progressRing = document.getElementById("progress-ring");
+const fullCircle = 176; // Stroke circumference (2 * π * r for r=28)
 
-        if (userRewards.timeSpent % 3600 === 0) { // 1 Hour = ₦50
+// Start Timer
+function startUserTimer() {
+    timerInterval = setInterval(() => {
+        userRewards.timeSpent++;
+        document.getElementById("time-spent").innerText = userRewards.timeSpent;
+
+        // Update progress ring (3600 seconds = full circle)
+        const progress = Math.min((userRewards.timeSpent / 3600) * fullCircle, fullCircle);
+        progressRing.style.strokeDashoffset = fullCircle - progress;
+
+        // Every 1 hour (3600 seconds), give ₦50
+        if (userRewards.timeSpent % 3600 === 0) {
             userRewards.timeBonus += 50;
             showAnimatedPopup("🎉 You earned ₦50 for using the app for 1 hour!");
-            playSound("reward-sound");
         }
 
-        updateRewards();
-    }, 1000);
+        saveRewards();
+    }, 1000); // Update every second
+}
+
+// Save Rewards to Local Storage
+function saveRewards() {
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
 }
 
 // Save & Update Progress Bar
