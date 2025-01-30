@@ -109,6 +109,17 @@ function cashOut() {
 // Start Timer on Load
 window.addEventListener("load", startUserTimer);
 
+// Show Reward Summary Pop-up
+function showRewardPopup() {
+    const popup = document.getElementById("reward-popup");
+    popup.classList.remove("hidden");
+}
+
+// Close Reward Summary Pop-up
+function closeRewardPopup() {
+    document.getElementById("reward-popup").classList.add("hidden");
+}
+
 function displayExamHistory() {
   const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
   const historyContent = document.getElementById('exam-history-content');
@@ -118,6 +129,7 @@ function displayExamHistory() {
     historyContent.innerHTML = '<p>No exam history available.</p>';
     return;
   }
+
 
   examHistory.forEach((session, index) => {
     const sessionDiv = document.createElement('div');
