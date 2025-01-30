@@ -88,8 +88,29 @@ button {
     transform: scale(1.1);
 }
 
-/* Reward Pop-Up */
-#reward-popup, #store-popup {
+
+/* Reward Pop-Up (Initially Off-Screen) */
+#reward-popup {
+    position: fixed;
+    top: 50%;
+    right: -300px; /* Start off-screen */
+    transform: translateY(-50%);
+    background: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: right 0.5s ease-in-out;
+}
+
+/* Show Pop-Up */
+#reward-popup.show {
+    right: 20px; /* Slide into view */
+}
+
+#store-popup {
     position: fixed;
     top: 50%;
     left: 50%;
