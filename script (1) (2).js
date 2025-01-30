@@ -111,24 +111,23 @@ window.addEventListener("load", startUserTimer);
 
 // Show Reward Summary Pop-up
 function showRewardPopup() {
-    console.log("Reward icon clicked!"); // Debugging check
-    const popup = document.getElementById("reward-popup");
-    popup.classList.remove("hidden");
+    const rewardPopup = document.getElementById("reward-popup");
+    rewardPopup.classList.toggle("hidden");
 }
 
-// Close Reward Summary Pop-up
 function closeRewardPopup() {
-    document.getElementById("reward-popup").classList.add("hidden");
+    const rewardPopup = document.getElementById("reward-popup");
+    rewardPopup.classList.add("hidden");
 }
 
-// Open Rewards Store
 function openStore() {
-    document.getElementById("store-popup").classList.remove("hidden");
+    const storePopup = document.getElementById("store-popup");
+    storePopup.classList.remove("hidden");
 }
 
-// Close Store
 function closeStore() {
-    document.getElementById("store-popup").classList.add("hidden");
+    const storePopup = document.getElementById("store-popup");
+    storePopup.classList.add("hidden");
 }
 
 // Debugging: Check if script is running
