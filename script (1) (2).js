@@ -39,7 +39,6 @@ document.addEventListener('click', throttle(function(event) {
 }, 500));
 
 
-
 // Load existing rewards or initialize
 let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
     timeSpent: 0,
@@ -50,18 +49,12 @@ let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
 };
 
 let timerInterval;
-const progressRing = document.getElementById("progress-ring");
-const fullCircle = 176; // Stroke circumference (2 * π * r for r=28)
 
 // Start Timer
 function startUserTimer() {
     timerInterval = setInterval(() => {
         userRewards.timeSpent++;
-        document.getElementById("time-bonus").innerText = userRewards.timeBonus;
-
-        // Update progress ring (3600 seconds = full circle)
-        const progress = Math.min((userRewards.timeSpent / 3600) * fullCircle, fullCircle);
-        progressRing.style.strokeDashoffset = fullCircle - progress;
+        document.getElementById("time-spent").innerText = userRewards.timeSpent; // Update UI
 
         // Every 1 hour (3600 seconds), give ₦50
         if (userRewards.timeSpent % 3600 === 0) {
@@ -73,22 +66,24 @@ function startUserTimer() {
     }, 1000); // Update every second
 }
 
-// Toggle Reward Pop-Up
-function toggleRewardPopup() {
-    const popup = document.getElementById("reward-popup");
-    if (popup.classList.contains("show")) {
-        popup.classList.remove("show");
-        setTimeout(() => { popup.style.display = "none"; }, 500);
-    } else {
-        popup.style.display = "block";
-        setTimeout(() => { popup.classList.add("show"); }, 10);
-    }
-}
-
 // Save Rewards to Local Storage
 function saveRewards() {
     localStorage.setItem("userRewards", JSON.stringify(userRewards));
 }
+
+// Start Timer on Load
+window.addEventListener("load", startUserTimer);
+function toggleRewardPopup() {
+    const popup = document.getElementById("reward-popup");
+    if (popup.classList.contains("show")) {
+        popup.classList.remove("show");
+        setTimeout(() => { popup.style.display = "none"; }, 500); // Hide after animation
+    } else {
+        popup.style.display = "block"; // Show before adding animation
+        setTimeout(() => { popup.classList.add("show"); }, 10);
+    }
+}
+
 
 
 // Save & Update Progress Bar
