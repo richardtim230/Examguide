@@ -60,35 +60,40 @@ button {
   color: yellow; /* Change color on hover for better UX */
         }
 
-
-/* Floating Reward Icon */
 /* Reward Progress Container */
 #reward-progress-container {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
     width: 60px;
     height: 60px;
-   z-index: 1000;
-
+    display: flex;
+        z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-/* Reward Icon Centered Inside Progress Ring */
+/* SVG Progress Ring */
+#progress-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Reward Icon (Centered Inside Progress Ring) */
 #reward-icon {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
     background: linear-gradient(45deg, #ffcc00, #ff6600);
     color: white;
     font-size: 24px;
     font-weight: bold;
-    width: 50px;
-    height: 50px;
-        z-index: 1000;
     border-radius: 50%;
+        z-index: 1000;
     text-align: center;
-    line-height: 50px;
+    line-height: 40px;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
@@ -103,25 +108,23 @@ button {
     transition: stroke-dashoffset 1s linear;
 }
 
-
-/* Reward Pop-Up (Initially Hidden) */
+/* Reward Pop-Up */
 #reward-popup {
     position: fixed;
     top: 50%;
-    right: -320px; /* Start off-screen */
+    right: -320px;
     transform: translateY(-50%);
     background: white;
     color: #333;
+        z-index: 999;
     padding: 20px;
-
-   z-index: 999;
     border-radius: 10px;
     text-align: center;
     width: 300px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: right 0.5s ease-in-out, opacity 0.3s ease-in-out;
     opacity: 0;
-    display: none; /* Fully hide initially */
+    display: none;
 }
 
 /* Show Pop-Up */
@@ -129,6 +132,8 @@ button {
     right: 20px;
     opacity: 1;
 }
+
+
 
 
 #store-popup {
