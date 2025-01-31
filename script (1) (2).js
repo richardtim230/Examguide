@@ -57,7 +57,7 @@ const fullCircle = 176; // Stroke circumference (2 * π * r for r=28)
 function startUserTimer() {
     timerInterval = setInterval(() => {
         userRewards.timeSpent++;
-        document.getElementById("time-spent").innerText = userRewards.timeSpent;
+        document.getElementById("time-bonus").innerText = userRewards.timeBonus;
 
         // Update progress ring (3600 seconds = full circle)
         const progress = Math.min((userRewards.timeSpent / 3600) * fullCircle, fullCircle);
@@ -73,10 +73,23 @@ function startUserTimer() {
     }, 1000); // Update every second
 }
 
+// Toggle Reward Pop-Up
+function toggleRewardPopup() {
+    const popup = document.getElementById("reward-popup");
+    if (popup.classList.contains("show")) {
+        popup.classList.remove("show");
+        setTimeout(() => { popup.style.display = "none"; }, 500);
+    } else {
+        popup.style.display = "block";
+        setTimeout(() => { popup.classList.add("show"); }, 10);
+    }
+}
+
 // Save Rewards to Local Storage
 function saveRewards() {
     localStorage.setItem("userRewards", JSON.stringify(userRewards));
 }
+
 
 // Save & Update Progress Bar
 function updateRewards() {
