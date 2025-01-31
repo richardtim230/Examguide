@@ -66,9 +66,11 @@ button {
 #reward-progress-container {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     width: 60px;
     height: 60px;
+   z-index: 1000;
+
 }
 
 /* Reward Icon Centered Inside Progress Ring */
@@ -83,6 +85,7 @@ button {
     font-weight: bold;
     width: 50px;
     height: 50px;
+        z-index: 1000;
     border-radius: 50%;
     text-align: center;
     line-height: 50px;
@@ -110,6 +113,8 @@ button {
     background: white;
     color: #333;
     padding: 20px;
+
+   z-index: 999;
     border-radius: 10px;
     text-align: center;
     width: 300px;
