@@ -161,17 +161,9 @@
   <div id="exam-history-content"></div>
 </div>
 
-<!-- Progress Ring Around Reward Icon -->
-<div id="reward-progress-container">
-    <svg width="60" height="60">
-        <circle cx="30" cy="30" r="28" stroke="#ccc" stroke-width="4" fill="none" />
-        <circle id="progress-ring" cx="30" cy="30" r="28" stroke="#ffcc00" stroke-width="4" fill="none" 
-                stroke-dasharray="176" stroke-dashoffset="176" />
-    </svg>
-    <div id="reward-icon" onclick="toggleRewardPopup()">💰</div>
-</div>
+<!-- Floating Reward Icon -->
+<div id="reward-icon" onclick="toggleRewardPopup()">💰</div>
 
-        
 <!-- Reward Summary Pop-Up -->
 <div id="reward-popup">
     <div id="reward-content">
@@ -183,6 +175,7 @@
         <button onclick="toggleRewardPopup()">Close</button>
     </div>
 </div>
+
 <!-- Store Pop-Up -->
         <div id="store-popup" class="hidden">
             <div id="store-content">
