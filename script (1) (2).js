@@ -1091,7 +1091,10 @@ backToLoginPaymentBtn.addEventListener("click", () => {
     overlay.style.display = "none"; // Completely hide the overlay
     app.style.display = "block"; // Display the main app content
     app.style.body.overflow = 'auto';
-  });
+    
+    // Open the URL
+    window.location.href = "exam.html.htm";
+});
   
     // Expiry Logic
   const expiryDays = 365;
