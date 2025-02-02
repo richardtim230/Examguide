@@ -736,8 +736,48 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("paymentUserID").innerText = savedUserData.userID;
   }
 });
+// Utility function to show the custom modal with a message
+function showCustomModal(message, onConfirm) {
+  const modal = document.getElementById('custom-modal');
+  const modalMessage = document.getElementById('custom-modal-message');
+  modalMessage.textContent = message;
+  modal.classList.remove('hidden');
+  modal.style.display = 'block';
 
+  // Handle confirmation
+  document.getElementById('confirmYes').onclick = function () {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    onConfirm(true);
+  };
 
+  // Handle cancellation
+  document.getElementById('confirmNo').onclick = function () {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    onConfirm(false);
+  };
+}
+// Utility function to show the custom modal with a message
+function showCustomModal(message) {
+  const modal = document.getElementById('custom-modal');
+  const modalMessage = document.getElementById('custom-modal-message');
+  modalMessage.textContent = message;
+  modal.classList.remove('hidden');
+  modal.style.display = 'block';
+}
+
+// Utility function to hide the custom modal
+function hideCustomModal() {
+  const modal = document.getElementById('custom-modal');
+  modal.classList.add('hidden');
+  modal.style.display = 'none';
+}
+
+// Event listener to close the modal when the close button is clicked
+document.getElementById('close-custom-modal').addEventListener('click', hideCustomModal);
+
+  
 window.addEventListener("beforeunload", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   if (userData) {
@@ -751,46 +791,41 @@ loginBtn.addEventListener("click", () => {
   const storedUserData = JSON.parse(localStorage.getItem("userData"));
 
   if (!storedUserData) {
-    alert("No user data found. Please register first.");
+    showCustomModal("No user data found. Please register first.");
     return;
   }
 
-  if (confirm(`Do you want to log in with User ID: ${storedUserData.userID}?`)) {
-    if (activeUserIDs.includes(storedUserData.userID)) {
-      // Valid User ID found in the active list
-      profilePhoto.src = storedUserData.photo || "default.png";
-      studentDetailsElement.innerHTML = `
-        Full Name: ${storedUserData.fullName}<br>
-        Department: ${storedUserData.department}<br>
-        Level: ${storedUserData.level}<br>
-        Courses: ${storedUserData.courses}
-      `;
-      welcomeMessage.textContent = getGreeting();
-      loginBox.classList.add("hidden");
-      welcomePopup.classList.remove("hidden");
-
-      // Generate Receipt if not already done
-      if (!localStorage.getItem("receiptGenerated")) {
-        generateAndDownloadReceipt(storedUserData);
-        localStorage.setItem("receiptGenerated", "true");
+if (storedUserData) {
+  showCustomModal(`Do you want to log in with User ID: ${storedUserData.userID}?`, function (confirmed) {
+    if (confirmed) {
+      if (activeUserIDs.includes(storedUserData.userID)) {
+        // Valid User ID found in the active list
+        profilePhoto.src = storedUserData.photo || "default.png";
+        studentDetailsElement.innerHTML = `
+          Full Name: ${storedUserData.fullName}<br>
+          Department: ${storedUserData.department}<br>
+          Level: ${storedUserData.level}<br>
+          Courses: ${storedUserData.courses}
+        `;
+        welcomeMessage.textContent = getGreeting();
+        loginBox.classList.add("hidden");
+        welcomePopup.classList.remove("hidden");
+      } else {
+        showCustomModal("Your account is not active. Please contact admin via WhatsApp.");
+        window.open(
+          `https://wa.me/2349155127634?text=${encodeURIComponent(
+            `I just completed my registration and my User ID is ${storedUserData.userID}. I am here to activate my account.`
+          )}`,
+          "_blank"
+        );
       }
     } else {
-      // User ID is valid but not yet active
-      alert("Your account is not active. Please contact admin via WhatsApp.");
-      window.open(
-        `https://wa.me/2349155127634?text=${encodeURIComponent(
-          `I just completed my registration and my User ID is ${storedUserData.userID}. I am here to activate my account.`
-        )}`,
-        "_blank"
-      );
+      showCustomModal("Login canceled.");
     }
-  } else {
-    // Re-enable manual login
-    loginBox.classList.remove("hidden");
-  }
-
+  });
+    }
   if (storedUserData.userID !== userId) {
-    alert("Invalid or Empty User ID. Please check and try again.");
+    showCustomModal("Invalid or Empty User ID. Please check and try again.");
   }
 });
 
@@ -935,12 +970,12 @@ submitRegisterBtn.addEventListener("click", () => {
     !coursesInput.value ||
     !photoUpload.files.length
   ) {
-    alert("Please fill all fields and upload your photo.");
+    showCustomModal("Please fill all fields and upload your photo.");
     return;
   }
 
   if (!agreeCheckbox.checked) {
-    alert("You must agree to proceed.");
+    showCustomModal("You must agree to proceed.");
     return;
   }
 
@@ -958,6 +993,7 @@ submitRegisterBtn.addEventListener("click", () => {
       photo: reader.result,
     };
 
+
     // Save user data securely to localStorage
     localStorage.setItem("userData", JSON.stringify(userData));
 
@@ -970,7 +1006,7 @@ submitRegisterBtn.addEventListener("click", () => {
     registerBox.classList.add("hidden");
     paymentPage.classList.remove("hidden");
 
-    alert(`Registration Successful! Your User ID is: ${userID}`);
+    showCustomModal(`Registration Successful! Your User ID is: ${userID}`);
   };
 
   reader.readAsDataURL(photoUpload.files[0]);
