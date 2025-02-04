@@ -4672,7 +4672,7 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Biometry/Biostatistics",
         questions: [
           {
-  text: "Which of the following is an example of an infinite set? <br><img src='row-bookcases_23-2147679267.webp' alt='Infinite Set Image' class='question-image'>",
+  text: "Which of the following is an example of an infinite set? <br><img src='row-bookcases_23-2147679267.webp' alt='Infinite Set Image' width="500" class='question-image'>",
   options: [
     "{x | x is a natural number between 1 and 10}",
     "{x | x is an integer}",
