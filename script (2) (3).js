@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["OAU-acr7R", "OAU-Mafoa", "OAU-3zuzS", "OAU-Q6Z81", "OAU-XYLMF", "OAU-CFrCP", "OAU-Dq7YG", "OAU-wQUVg", "OAU-DbEbB", "OAU-7onAS", "OAU-4IE79", "OAU-HYzw2", "OAU-1GLHv", "OAU-RDOyh", "OAU-hRizi", "OAU-Z03kp", "OAU-W3Ldz", "OAU-RF8QS", "OAU-OoCDY", "OAU-zZ7XL", "OAU-RF8QS", "OAU-5ikQ4", "OAU-7WkN5", "OAU-wQUVg", "OAU-pzss7", "9KPGWE", "OAU-OoCDY","OAU-8ahti", "OAU-ZgXvX", "OAU-vTo6K", "OAU-hnBub", "OAU-SefDs", "OAU-gERUT", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
+  const activeUserIDs = ["OAU-C0hZj", "OAU-Mafoa", "OAU-3zuzS", "OAU-Q6Z81", "OAU-XYLMF", "OAU-CFrCP", "OAU-Dq7YG", "OAU-wQUVg", "OAU-DbEbB", "OAU-7onAS", "OAU-4IE79", "OAU-HYzw2", "OAU-1GLHv", "OAU-RDOyh", "OAU-hRizi", "OAU-Z03kp", "OAU-W3Ldz", "OAU-RF8QS", "OAU-OoCDY", "OAU-zZ7XL", "OAU-RF8QS", "OAU-5ikQ4", "OAU-7WkN5", "OAU-wQUVg", "OAU-pzss7", "9KPGWE", "OAU-OoCDY","OAU-8ahti", "OAU-ZgXvX", "OAU-vTo6K", "OAU-hnBub", "OAU-SefDs", "OAU-gERUT", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
@@ -7595,7 +7595,25 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
 
   "CHEMICAL KINETICS": {
       title: "Introductory Chemistry 1",
-      questions: [           
+      questions: [      
+        {
+  text: "The rate of the reaction BrO₃⁻ + 5Br⁻ + 6H⁺ → 3Br₂ + 3H₂O was studied and the following information was obtained. <br><img src='image1.jpg' alt='Infinite Set Image' width='500' class='question-image'> What is the rate law for the reaction?",
+  options: ["Rate = k[BrO₃⁻] [Br⁻]⁵[H⁺]²", "Rate = k[BrO₃⁻] [Br-] [H⁺]⁶", "Rate = k[BrO₃⁻]² [Br⁻] [H⁺]²", "Rate = k[BrO₃⁻] [Br⁻] [H⁺]²"],
+  correct: 3,
+  explanation: "Let the general rate law of the reaction be Rate = k[BrO₃⁻]ˣ [Br⁻]ʸ [H⁺]ᶻ. To determine x, consider when the rates are 1.6 x 10⁻³ and 8.0 x 10⁻⁴: (1.6 x 10⁻³)/(8.0 x 10⁻⁴) = ([0.20]ˣ[0.10]ʸ[0.10]ᶻ)/([0.10]ˣ[0.10]ʸ[0.10]ᶻ) = 2,  2 = 2ˣ, x = 1. To determine y, consider when the rates are 3.2 x 10⁻³ and 1.6 x 10⁻³: (3.2 x 10⁻³)/(1.6 x 10⁻³) = ([0.20]ˣ[0.20]ʸ[0.10]ᶻ)/([0.20]ˣ[0.10]ʸ[0.10]ᶻ) = 2,  2 = 2ʸ, y = 1. To determine z, consider when the rates are 3.2 x 10⁻³ and 8.0 x 10⁻⁴: (3.2 x 10⁻³)/(8 x 10⁻⁴) = ([0.10]ˣ[0.10]ʸ[0.20]ᶻ)/([0.10]ˣ[0.10]ʸ[0.10]ᶻ) = 4,  4 = 2ᶻ,  z = 2. Therefore, the Rate law = k[BrO³⁻] [Br⁻] [H⁺]²"
+}, 
+{
+  text: "Using the data in the table below, derive the rate law for the reaction A + B + C → Products, where the rate is measured as soon as the reactants are mixed. <br><img src='image2.jpg' alt='Infinite Set Image' width='500' class='question-image'>",
+  options: ["Rate = k[A]³ [B]² [C]", "Rate = k[A][B][C]", "Rate = k[A][B]²[C]²", "Rate = k[A]¹[B][C]²"],
+  correct: 0,
+  explanation: "Let the general rate law be Rate = k[A]ˣ [B]ʸ [C]ᶻ. To determine x, consider experiment 1 and 2: (0.800)/(0.100) = ([0.200]ˣ[0.100]ʸ[0.100]ᶻ)/([0.100]ˣ[0.100]ʸ[0.100]ᶻ) = 8, 8 = 2ˣ, 2³ = 2ˣ, x = 3. To determine y, consider experiment 2 and 3: (7.200)/(0.800) = ([0.200]ˣ[0.300]ʸ[0.100]ᶻ)/([0.200]ˣ[0.100]ʸ[0.100]ᶻ) = 9, 9 = 3ʸ, 3² = 3ʸ, y = 2. To determine z, consider experiment 1 and 4: (0.400)/(0.100) = ([0.100]ˣ[0.100]ʸ[0.400]ᶻ)/([0.100]ˣ[0.100]ʸ[0.100]ᶻ) = 4, 4 = 4ᶻ, 4¹ = 4ᶻ, z = 1. Thus, rate = k[A]³ [B]² [C]."
+},
+{
+  text: "What is the overall order of the reaction from this reaction, Rate = k[A]³ [B]² [C]?",
+  options: ["3", "4", "5", "6"],
+  correct: 3,
+  explanation: "The overall order of the reaction is the sum of the exponents of the reactant concentrations in the rate law. In this case, Rate = k[A]³ [B]² [C], so the overall order is 3 + 2 + 1 = 6."
+}, 
        {
           text: "Reaction rates generally:",
           options: ["Are always constant.", "Decrease with time.", "Are greatest at the beginning and decrease with time.", "Increase with time."],
