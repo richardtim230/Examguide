@@ -7593,6 +7593,223 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
 ]
       },
 
+      "ELECTROLYSIS-1": {
+      title: "Introductory Chemistry 1",
+      questions: [           
+         {
+    text: "What is the effect of increasing the concentration of reactants on the cell voltage?",
+    options: ["It increases the cell voltage", "It decreases the cell voltage", "It does not affect the cell voltage", "It affects it based on the reaction"],
+    correct: 3,
+    explanation: "The effect of increasing the concentration of reactants on cell voltage depends on the specific reaction and how the change in concentration impacts the reaction quotient, Q, in the Nernst equation. It is not universally true that increasing reactants always increases voltage."
+  }, 
+  {
+    text: "Given the following standard electrode potentials: E⁰ Co²⁺/Co = - 0.2770 V and E⁰ Co³⁺/ Co²⁺ = + 1.1130 V\nCalculate the E⁰ for the half reaction:\nCo³⁺ + e⁻ → Co(aq)",
+    options: ["+ 1.390 V", "+ 3.893 V", "+ 0.836 V", "- 1.390 V"],
+    correct: 0,
+    explanation: "Use Hess's law of summation of standard electrode potentials, adding the two potentials given such that E⁰ = 2(1.113) - 0.277 = 1.390 V"
+  },
+  {
+    text: "The half cell reactions for the reaction 2H₂O₂(l) ⇌ O₂(g) at 25 °C are;\nH₂O₂ ⇌ O₂(g) + 2H⁺ + 2e⁻, E⁰ = - 0.68 V\n2H₂O ⇌ O₂(g) + 4H⁺(aq) + 4e⁻ , E⁰ = - 1.23 V\nWhat is the E⁰ for the reaction?",
+    options: ["- 0.68 V", "+ 0.68 V", "+ 1.23 V", "+ 0.55 V"],
+     correct: 3,
+    explanation: "The overall reaction can be obtained by reversing the second reaction and adding to the first, hence the E° is -0.68 + 1.23 = 0.55"
+  },
+    {
+    text: "The equilibrium constant for the reason in the question above is:",
+    options: ["1.64 x 10³⁷", "1.66 x 10⁴¹", "1.68 x 10³⁵", "1.64 x 10¹⁸"],
+    correct: 0,
+    explanation: "Using the formula, E°cell = 0.0592/n * logK and solving for K with n=4, E°=0.55V. The value K is approximately 1.64 x 10³⁷"
+  },
+  {
+      text: "An unknown metal M displaces Nickel from Nickel(II)Sulphate(VI) solution but does not displace Manganese from Manganese(II)Sulphate(VI) solution. Which of the following represents the correct order of reducing power (most powerful form of the three metals)?",
+      options: ["Manganese, Nickel, M", "Manganese, M, Nickel", "Nickel, Manganese, M", "Nickel, M, Manganese"],
+      correct: 1,
+    explanation: "The reducing power of an element implies how easy it is to lose electrons. Hence manganese which is the hardest to displace will be most powerful followed by M and lastly Nickel which is the easiest to displace."
+    },
+  {
+    text: "How many grams of Chlorine can be produced by the electrolysis of molten NaCl at a current of 10.0 Amp for 5.00 min? (m. wt. of Cl₂ = 70.9 g mol⁻¹)",
+    options: ["1.00 g", "11.1 g", "1.11 g", "None of the above"],
+     correct: 3,
+    explanation: "The value obtained is approximately 0.11g, which is none of the above."
+   },
+    {
+    text: "Which of the following species is oxidised when a concentrated solution of Potassium Hydrogen Sulphate(VI) is electrolysed between inert electrodes in the production of Hydrogen Peroxides?",
+    options: ["H⁺", "H₂O", "K⁺(aq)", "HSO₄⁻(aq)"],
+     correct: 3,
+  explanation: "Sulphate ions are oxidised at the anode in the production of hydrogen peroxide"
+  },
+    {
+    text: "An electrolytic cell is an electrochemical cell in which:",
+    options: ["a non-spontaneous reaction is driven by an electric current", "a catalytic reaction is avoided by supplying current", "Faraday’s law of electrolysis breaks down at moderate temperatures", "a gas electrode is an essential component", "none of the above"],
+    correct: 0,
+    explanation: "An electrolytic cell uses an electric current to drive a non-spontaneous chemical reaction."
+  },
+  {
+      text: "The electrochemical series is a table of:",
+      options: ["Standard electrode oxidation potentials", "Overall cell potentials", "Standard electrode reduction potentials", "Spontaneous electrochemical reactions", "Applied electrochemistry"],
+      correct: 2,
+      explanation: "The electrochemical series is arranged by standard electrode reduction potentials."
+   },
+   {
+       text: "In the cell: Tl(s) / Tl⁺(aq) // Sn²⁺(aq) / Sn(s)\nThe overall reaction is?",
+       options: ["2Tl(s) + Sn²⁺(aq) → 2Tl⁺(aq) + Sn(s)", "Tl(s) + 2Sn²⁺(aq) → Tl⁺(aq) + 2Sn³⁺(s)", "3Sn(s) + 2Tl⁺(aq) → 3Sn²⁺(aq) + 2Tl(s)", "Sn(s) + 2Tl⁺(aq) → Sn²⁺(aq) + 2Tl(s)"],
+      correct: 0,
+      explanation: "The reaction at the anode is oxidation and at the cathode is reduction. Multiplying to make sure number of electrons transferred are equal on both sides"
+    },
+   {
+    text: "You are given the standard redox electrode potentials:\nZn²⁺/Zn(s), E⁰ = - 0.76 V and Cu²⁺/Cu(s), E⁰ = 0.34 V\nFor the spontaneous electrochemical cell formed from a proper combination of these two electrodes the overall standard cell  is:",
+    options: ["- 0.42 V", "+ 1.10 V", "+ 2.10 V", "+ 0.84 V", "+ 0.42 V"],
+    correct: 1,
+    explanation: "E°cell = E°cathode - E°anode, where E°cathode is for the reduction reaction and the E°anode is for the oxidation which is Zn therefore E°cell = 0.34 - (-0.76) = 1.10 V"
+  },
+    {
+     text: "In the cell: Tl(s) / Tl⁺(aq) // Sn²⁺(aq) / Sn(s)\n\nUsing the information above, the standard free energy change for the cell:\nZn(s) / Zn²⁺ (1 M) // HCl(1 M), H₂(g) (1 atm) / Pt(s)\nis:\n[Hint: The cathode is a standard hydrogen electrode]",
+    options: ["2.5 x 10⁵ C V", "- 1.8 x 10⁵ J", "- 150 kJ", "3 Faraday volts", "250 kJ"],
+       correct: 2,
+       explanation: "E°cell = 0 - (-0.76) = 0.76V, then Delta G° = -nFE° where n=2, gives -146.7 or about -150kJ"
+      },
+  {
+    text: "The electrochemical reaction in question 18 is:",
+    options: ["Spontaneous", "Semi-spontaneous", "Highly endothermic", "Spontaneous because Zn(s) will be deposited on the Pt(s) electrode", "Non - Spontaneous"],
+    correct: 0,
+    explanation: "Since the overall cell potential is positive, the reaction is spontaneous"
+  }, 
+    {
+    text: "In the cell Zn(s) / Zn²⁺ (aq) (0.010 M) // Cu²⁺ (aq) (0.010 M) / Cu(s), the reaction quotient (Q) is:",
+    options: ["1.0 x 10⁻⁴", "1.0 x 10⁻¹²", "2.0 x 10⁻³", "100.0", "1.0 x 10⁻²", "None of the options"],
+    correct: 5,
+    explanation: "The reaction quotient (Q) for this cell is [Zn²⁺]/[Cu²⁺]. Since both concentrations are 0.010M, Q = 0.010/0.010=1 which is not amongst the options"
+   },
+  {
+    text: "In the cathodic protection of steel metal pipes to prevent corrosion using magnesium rod as the 'sacrificial' anode; magnesium is used because",
+    options: ["it has a positive standard reduction potential", "Magnesium glows in water and this glow prevents the corrosion of the steel pipe", "Magnesium is not as hard as Iron", "it has a higher oxidation potential than Iron", "it forms Magnesium- Iron allow with the steel pipe"],
+    correct: 3,
+    explanation: "Magnesium has a higher oxidation potential than iron, making it more readily oxidized and thus protecting the iron from corrosion."
+  },
+  {
+    text: "In O₂(g) / H₂(g) fuel cell employed by America to send Astronauts to the moon, the cathode reaction is:",
+    options: ["O₂(g) + 2H₂O(l) + 4e⁻ → 4OH⁻(aq)", "2H₂(g) + O₂(g) → 2H₂O(l)", "O₂(g) + 2H₂O(l) + 4e⁻ → 4OH⁻(g)", "2H₂O(l) → 2H₂O(l) + 2OH⁻(aq)", "None of the above"],
+    correct: 0,
+    explanation: "The reduction reaction at the cathode involves oxygen reacting with water and electrons to produce hydroxide ions."
+  },
+  {
+    text: "Israel converts sea water to drinkable water by commercial electrolysis of the brine solution form the Mediterranean sea using mercury cells from which Sodium metal is also produced as an amalgam of Mercury. The anode and cathode are respectively made of:",
+    options: ["Graphite, Hg(l)", "Hg(l), Pt(s)", "Hg₂Cl₂, Fe(s)", "Hg(l), Hg(l)", "None of the above"],
+     correct: 0,
+     explanation: "In the mercury cell, graphite is used at the anode where oxidation takes place, and mercury is used as the cathode where sodium is reduced to form an amalgam."
+  },
+  {
+    text: "Which of the following statements are false?\nI.  In the lead storage battery, the electrodes are made of lead alloy grids.\nII. The anode reaction Pb(s) + HSO₄⁻(aq) → PbSO₄(s) + H⁺(aq) + 2e⁻ is the one not reversed\nIII. O₂(g) / H₂(g) fuel cell differs from lead storage cell by operating with a continuous supply energetic reactants and only breaks down when the supply is stopped.\nIV. The lead storage cell supplies a lot more energy than fuel cells because of its very large cell potential.",
+    options: ["III and I", "II and IV", "I and IV", "III and IV", "None of the above"],
+    correct: 1,
+    explanation: "The anode reaction is reversible and the fuel cell supply a lot more energy for its size than the lead storage cell."
+  },
+    {
+    text: "The equations representing the electrolysis of aqueous NaCl are:\nCathode reaction: 2e⁻ + 2H₂O → H₂(g) + 2OH⁻\nAnode reaction: 2Cl⁻ → Cl₂(g) + 2e⁻\nOverall reaction: 2Cl⁻ + 2H₂O → H₂(g) + Cl₂(g) + 2OH⁻\nA current of 0 F 0.0965 Amps is passed for 1000 seconds through 50.0 mL of 0.100 mol dm⁻³ solution of NaCl. The average concentration of OH⁻ in the final solution is:\n[F = 96500 C mol⁻¹]",
+    options: ["0.200 M", "0.002 M", "0.020 M", "2.0 x 10⁻³ M", "2.0 x 10⁻⁴ M"],
+     correct: 2,
+     explanation: "First, calculate total charge passed Q = It = 0.0965A * 1000s = 96.5C, next the moles = Q/F = 96.5/96500 = 0.001, 1 mole of OH- is produced for every mole of electrons passed hence number of moles of OH = 0.001 and Molarity = 0.001/0.05 = 0.02M"
+  },
+  {
+    text: "The half cell reaction, Li(s) ⇌ Li+ + e-, E° = +3.05 V as written shows that E° = +3.05 V is an",
+    options: ["Oxidation potential", "Reduction potential", "Redox potential", "Cathode half reduction potential", "None of the above"],
+    correct: 0,
+    explanation: "The half-cell reaction shows the loss of electrons from Li to form Li+, which is oxidation. Therefore, the given E° value represents the oxidation potential."
+  }, 
+  {
+    text: "Consider the following reactions:\nCu²⁺ + 2e⁻ → Cu, E⁰ = 0.34 V\n2H⁺ + 2e⁻ → H₂, E⁰ = 0.00 V\nNi²⁺ + 2e⁻ → Ni, E⁰ = -0.25 V\nZn²⁺ + 2e⁻ → Zn, E⁰ = -0.76 V\nThe trend shows that the best oxidising agent is:",
+    options: ["Cu²⁺", "H⁺", "Ni²⁺", "Zn²⁺"],
+    correct: 0,
+    explanation: "Cu²⁺ has the highest reduction potential, meaning it has the strongest tendency to gain electrons and be reduced, making it the best oxidizing agent."
+  },
+  {
+    text: "In the galvanic cell, the following reactions took place:\n2H₂O → O₂ + 4H⁺ + 4e⁻\nThe reaction occurs at the:",
+    options: ["Cathode", "Anode", "Cathode and Anode", "Bulk electrolyte"],
+    correct: 1,
+    explanation: "Oxidation occurs at the anode, and this reaction involves the loss of electrons (oxidation) from water."
+  },
+  {
+    text: "Electrolytic cells are electrochemical cells in which __ reactions are forced to occur by input of electrical energy.",
+    options: ["Spontaneous", "Non-spontaneous", "Endothermic", "Exothermic"],
+    correct: 1,
+    explanation: "Electrolytic cells use electrical energy to drive non-spontaneous chemical reactions."
+  },
+  {
+    text: "In an electrolytic cell, the change on the electrode that gives electron to the species in solution is __ and the chemical change that occurs at the electrode is called__.",
+    options: ["Positive, oxidation", "Positive, reduction", "Negative, oxidation", "Negative, reduction"],
+    correct: 0,
+    explanation: "The anode is positive in an electrolytic cell, and oxidation (loss of electrons) occurs at the anode."
+  },
+   {
+    text: "The electrochemical equivalent is related to the chemical equivalent of a metal by the equation:",
+    options: ["m = kit", "m = 10", "k = A /ZF", "m = AQ /ZF"],
+    correct: 2,
+    explanation: "The electrochemical equivalent (k) is calculated as atomic weight (A) divided by the product of charge (Z) and Faraday's constant (F)."
+  },
+  {
+     text: "One faraday of electricity is passed through an HCl electrolytic solution. Select the correct electrode result:",
+     options: ["1 gram of Chlorine ions would migrate to the anode", "1 gram of Hydrogen ions would migrate to the cathode", "5 grams of Hydrogen ions would migrate to the anode", "35 grams of Chlorine ions would migrate to the anode"],
+     correct: 1,
+     explanation: "One Faraday of charge is required to produce one gram equivalent of an element. For hydrogen with a molar mass of 1, one mole of H+ (1g) is produced from one faraday. Hydrogen is reduced to hydrogen gas in the cathode"
+   },
+  {
+    text: "How much time (in hours) is required to plate out 25.0 g of gold from a solution of Au(NO₃)₃ when the current is 2.00 Amperes and the electrode efficiency is only 65%? (Au = 197)",
+    options: ["9.36 hr", "2.88 hr", "5.10 hr", "7.85 hr"],
+    correct: 3,
+    explanation: "Using Faraday's laws and accounting for efficiency, time is approximately 7.85 hours"
+  },
+  {
+    text: "Copper metal displaces Ag⁺ from an aqueous solution. Which of the following is correct?",
+    options: ["Ag is a better reducing agent then Cu", "Ag⁺ is easier to reduce than Cu⁺", "Cu²⁺ is a better oxidising agent than Ag", "Ag is easier to oxidise than Cu"],
+    correct: 1,
+     explanation: "Since copper displaces silver, it implies silver ions are easier to reduce than copper ions or Copper is a better reducing agent than silver"
+   },
+   {
+    text: "An electric current is passed through three cells in series containing respectively solution of Copper Sulphate, Silver Nitrate and Potassium Iodide. What weights of Silver and Iodine will be respectively liberated when 1.25 g of Copper is deposited?\n(Cu = 63.5, Ag = 108, I₂ = 254)",
+    options: ["4.25 g, 5.00 g", "5.00 g, 5.00 g", "1.25 g, 5.28 g", "4.36 g, 4.48 g"],
+    correct: 0,
+    explanation: "Using Faraday's Second Law, the ratio of masses of elements deposited are directly proportional to their equivalent weights. Calculated values are approximately 4.25g and 5g respectively"
+    },
+  {
+     text: "The reduction potentials of two electrodes are:\nA²⁺ + 2e⁻ → A, E⁰ = 0.050 V\nB⁺ + e⁻ → B, E⁰ = 0.011 V\nWhat is the equilibrium constant for the cells formed by the two electrodes at 23 °C ?",
+     options: ["40", "21", "35", "14"],
+     correct: 1,
+     explanation: "Using the Nernst equation Ecell = E⁰ - (0.0592/n)logK, calculating the overall cell potential of 0.039V and setting to zero.  K equals approximately 21"
+   },
+  {
+    text: "In the Bacon-Oxygen fuel cell that powered Apollo mission to the moon, porous Nickel electrodes were used to:",
+     options: ["keep aside half reaction faster than cathode half reaction", "keep a constant supply of N₂ to the cathode", "ensure rapid exchange of H⁺ between the cathode and anode", "prevent fire outbreak on the moon from H₂/O₂ combustion reaction."],
+    correct: 2,
+    explanation: "Porous nickel electrodes allow for a larger surface area for reaction and efficient H+ ion transport."
+    },
+  {
+    text: "In the cell Pt(s) / Sn²⁺ (1 M), Sn⁴⁺ (1 M) // Cr³⁺ (1 M), Cr(s) / Pt(s) , the number of moles of electrons transferred in the overall reactions is:",
+    options: ["5", "6", "8", "4"],
+    correct: 1,
+    explanation: "The half-reactions involves Sn2+ to Sn4+ giving off 2 electrons, and Cr3+ to Cr where 3 electrons is transferred, therefore total is 6"
+  },
+  {
+    text: "What is the standard potential for the overall reaction of the cell:\nCu(s) / Cu²⁺ (1 M) // Ag⁺ (1 M) / Ag(s)\nGiven that E⁰ redox Cu²⁺/Cu(s) = 0.3402 V and\nE⁰ redox Ag⁺/Ag(s) = 0.7996 V",
+    options: ["0.2297 V if one mole of electron is transferred", "1.2590 V to account for two electrons", "0.4594 V", "1.1398 V"],
+    correct: 2,
+    explanation: "E°cell = E°cathode - E°anode. The resulting value is 0.7996 - 0.3402 = 0.4594V"
+  },
+   {
+    text: "Consider the reaction of the cell:\nCu(s) / Cu²⁺ (1 M) // Ag⁺ (1 M) / Ag(s)\nGiven that E⁰ redox Cu²⁺/Cu(s) = 0.3402 V and\nE⁰ redox Ag⁺/Ag(s) = 0.7996 V, the standard free energy change, ΔG⁰ (kJ/mol) is:",
+    options: ["-88.66", "+44.33", "0.00 since the cell is not feasible", "-178.00"],
+    correct: 0,
+    explanation: "Using the formula ΔG⁰ = -nFE⁰, where n = 2, F = 96500 C/mol and E = 0.4594V gives -88660 which is about -88.66kJ/mol"
+    },
+ {
+    text: "For the cell:\nZn(s) / Zn²⁺ (1 M) // Cu²⁺ (1 M) / Cu(s)\nThe ideal Nernst equation for the overall cell reaction (assuming a Cu(s) = a Zn(s) = 1) is given by:",
+    options: ["E = E⁰ - (RT/2F) ln(a Zn²⁺/a Cu²⁺)", "E = E⁰ + (RT/2F) ln(a Zn²⁺/a Cu²⁺)", "E = -2FE⁰", "E = E⁰ + ln (Equilibrium Quotient)"],
+    correct: 0,
+    explanation: "The Nernst equation relates cell potential to standard potential and ion concentrations. The correct form is E = E⁰ - (RT/nF)lnQ"
+  }, 
+
+]
+  }, 
+
     "CHM101": {
       title: "Introductory Chemistry 1",
       questions: [                              
