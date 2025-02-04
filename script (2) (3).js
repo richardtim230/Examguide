@@ -7593,6 +7593,611 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
 ]
       },
 
+  "CHEMICAL KINETICS": {
+      title: "Introductory Chemistry 1",
+      questions: [           
+       {
+          text: "Reaction rates generally:",
+          options: ["Are always constant.", "Decrease with time.", "Are greatest at the beginning and decrease with time.", "Increase with time."],
+          correct: 2,
+          explanation: "Reaction rates are typically highest at the beginning when reactant concentrations are highest and decrease as reactants are consumed."
+        },
+        {
+          text: "A certain zero-order reaction has a half-life of 100 s at 25°C. What will be its half-life at 25°C if the initial concentration is doubled?",
+          options: ["50 s", "100 s", "200 s", "400 s"],
+          correct: 2,
+          explanation: "For a zero-order reaction, the half-life is directly proportional to the initial concentration. Doubling the initial concentration doubles the half-life."
+        },
+        {
+          text: "For the hypothetical reaction 2A(g) → B(g), if the initial moles of A is 0.32 and after 10 mins the amount of A is 0.24, what is the rate of disappearance of A?",
+          options: ["0.008 mol/min", "0.08 mol/min", "0.016 mol/min", "0.016 M/min"],
+          correct: 0,
+          explanation: "The change in moles of A is 0.32 - 0.24 = 0.08 mol. The rate of disappearance of A is 0.08 mol / 10 min = 0.008 mol/min."
+        },
+        {
+          text: "In a first-order reaction, what happens to the half-life if the initial concentration is doubled?",
+          options: ["It doubles.", "It is halved.", "It remains the same.", "It is quadrupled."],
+          correct: 2,
+          explanation: "The half-life of a first-order reaction is independent of the initial concentration."
+        },
+        {
+          text: "As the temperature increases, the rate of reaction increases because:",
+          options: ["More molecules collide with less energy.", "More molecules collide with more energy.", "The activation energy increases.", "The number of collisions decreases."],
+          correct: 1,
+          explanation: "Increasing temperature increases the kinetic energy of molecules, leading to more frequent and energetic collisions, thus increasing the reaction rate."
+        },
+         {
+          text: "In a reaction mechanism involving a series of elementary reactions, the rate determining step is",
+          options: ["The fastest step", "The slowest step", "the step with the highest Ea", "The step with the lowest Ea"],
+          correct: 1,
+          explanation: "The slowest step in a reaction mechanism is the rate-determining step because it limits the overall rate of the reaction."
+        },
+         {
+          text: "In the reaction 2A + B → 3C. If the rate of disappearance of B is found to be 2.5 x 10⁻² M/s. What is the rate of appearance of C?",
+          options: ["3.75 x 10⁻² M/s", "7.5 x 10⁻² M/s", "2.5 x 10⁻² M/s", "1.66 x 10⁻² M/s"],
+          correct: 1,
+          explanation: "The rate of appearance of C is related to the rate of disappearance of B by the stoichiometry: (3/1) * 2.5 x 10⁻² M/s = 7.5 x 10⁻² M/s."
+         },
+         {
+          text: "Which of the following is correct for a second-order reaction A → B",
+          options: ["a plot of ln[A] vs time gives a straight line", "The half-life is independent of [A]", "a plot of 1/[A] vs time gives a straight line", "The rate is proportional to [A]"],
+          correct: 2,
+          explanation: "For a second-order reaction, a plot of 1/[A] vs time yields a straight line."
+        },
+        {
+         text: "The half-life for a first-order reaction is 1.23 hours. If the initial concentration was 1.67 M what will the concentration be after 2.5 hours?",
+         options: ["0.42 M", "0.53 M", "0.37 M", "0.67 M"],
+         correct: 1,
+         explanation: "First find k, k=ln(2)/t½ = ln2/1.23 = 0.5635. Now use the integrated rate law [A]t = [A]₀e^-kt. [A]t = 1.67e^-(0.5635)(2.5) = 0.53M"
+       },
+       {
+         text: "Consider the reaction A + B → C. At a particular time the rate of disappearance of A was 0.012 M/s, the rate of appearance of C will be:",
+         options: ["0.006 M/s", "0.024 M/s", "0.012 M/s", "Cannot be determined"],
+         correct: 2,
+         explanation: "Since the stoichiometric coefficients for A and C are both 1, the rate of disappearance of A is equal to the rate of appearance of C."
+        },
+        {
+          text: "Which of the following gives the correct units for a second order rate constant",
+           options: ["s⁻¹", "M s⁻¹", "M⁻¹s⁻¹", "M⁻²s⁻¹"],
+           correct: 2,
+           explanation: "For a second-order reaction, rate = k[A]², so the units of k are M⁻¹s⁻¹."
+        },
+       {
+         text: "A first-order reaction has a rate constant of 3.4 x 10⁻³ s⁻¹ at 400 K. What is the rate constant of the reverse reaction at 400K if Keq is 5.1 at 400 K?",
+         options: ["6.7 x 10⁻⁴ s⁻¹", "1.7 x 10⁻² s⁻¹", "1.7 x 10⁻⁴ s⁻¹", "1.7 x 10⁻² M⁻¹s⁻¹"],
+         correct: 0,
+          explanation: "Keq = kf/kr, so kr = kf/Keq = (3.4 x 10⁻³ s⁻¹)/ 5.1 = 6.7 x 10⁻⁴ s⁻¹"
+       },
+       {
+         text: "For the reaction A → B, If you plot ln[A] vs time and get a straight line, the reaction is:",
+         options: ["zero order", "first order", "second order", "Cannot be determined."],
+         correct: 1,
+         explanation: "A straight line in a plot of ln[A] vs time is characteristic of a first-order reaction."
+       },
+       {
+         text: "If a plot of 1/[A] vs time yields a straight line, the reaction is:",
+          options: ["Zero order.", "First order.", "Second order.", "Third order."],
+          correct: 2,
+          explanation: "A straight line in a plot of 1/[A] vs time is characteristic of a second-order reaction."
+       },
+       {
+          text: "As the temperature is increased:",
+          options: ["The activation energy increases.", "The rate constant decreases.", "A greater fraction of molecules possess activation energy.", "The number of collisions remains the same."],
+          correct: 2,
+          explanation: "Increasing the temperature leads to a greater fraction of molecules having enough energy to overcome the activation energy barrier, thus increasing the rate constant and reaction rate"
+       },
+       {
+        text: "For the reaction; 2NO + 2H₂ → N₂ + 2H₂O. The rate law is; rate = k[NO]²[H₂]. What is the order of the reaction with respect to H₂?",
+        options: ["0", "1", "2", "3"],
+        correct: 1,
+        explanation: "The order with respect to H₂ is the exponent of [H₂] in the rate law, which is 1."
+       },
+        {
+          text: "Which of the following statements regarding reaction mechanisms is false?",
+          options: ["The rate law of an overall reaction can be deduced from the reaction mechanism.", "A reaction mechanism describes how a reaction occurs on a molecular level.", "Reaction intermediates appear in the mechanism but not in the overall reaction.", "The rate of the overall reaction is the sum of the rates of the elementary steps."],
+          correct: 3,
+          explanation: "The overall reaction rate is determined by the rate of the slowest (rate-determining) step, not the sum of rates of all elementary steps. Instead, the overall rate law can be deduced from the rate determining step."
+       },
+        {
+           text: "If you plot the ln(k) vs 1/T, what property can you calculate from the gradient?",
+           options: ["activation energy", "rate constant", "half life", "frequency factor"],
+           correct: 0,
+           explanation: "The gradient of a ln(k) vs 1/T plot is equal to -Ea/R, therefore you can calculate the activation energy from it."
+        },
+        {
+          text: "The rate constant for a first-order reaction at 400°C is double the value of the rate constant at 380°C. Determine the activation energy in kJ/mol",
+           options: ["121.4", "12.14", "10.76", "107.6"],
+           correct: 3,
+           explanation: "Use the Arrhenius equation, ln(k2/k1) = -Ea/R(1/T2-1/T1). ln2 = -Ea/8.314(1/673 - 1/653)  =>  Ea = 107.6 kJ/mol"
+        },
+        {
+           text: "Consider the reaction; A+ 2B -> C. At a given time the rate of disappearance of A is 0.004 M/s. The rate of disappearance of B is:",
+           options: ["0.002 M/s", "0.004 M/s", "0.008 M/s", "None of the above"],
+           correct: 2,
+           explanation: "From the stoichiometry, for every 1 mole of A consumed, 2 moles of B are consumed. Therefore the rate of disappearance of B is twice the rate of disappearance of A, 2 x 0.004 = 0.008M/s"
+        },
+         {
+          text: "Which of the following is not a unit for rate constant?",
+          options: ["M s⁻¹", "M⁻¹s⁻¹", "s⁻¹", "M⁻²s⁻¹"],
+          correct: 0,
+          explanation: "M s⁻¹ is a unit for a rate, not a rate constant. Rate constants can have various units, depending on the order of the reaction but will always include s⁻¹"
+        },
+        {
+         text: "A catalyst will always:",
+          options: ["Increase the Ea", "Increase the number of collisions", "Increase the rate of reaction", "Increase the equilibrium constant."],
+          correct: 2,
+          explanation: "A catalyst provides an alternate pathway with a lower activation energy, thereby increasing the rate of the reaction without affecting the equilibrium constant."
+        },
+        {
+          text: "A reaction is found to be first order with respect to A and second order with respect to B. If [A] is halved and [B] is doubled, what will happen to the rate?",
+          options: ["It will be halved", "It will double", "It will quadruple", "It will be unchanged"],
+           correct: 1,
+           explanation: "Rate = k[A][B]². If [A] is halved and [B] is doubled, Rate becomes k(1/2[A])(2[B])²= k(1/2)[A](4)[B]² = 2k[A][B]², so the rate doubles."
+         },
+         {
+          text: "The pre exponential factor in the Arrhenius equation is:",
+          options: ["The activation energy", "A constant specific to the reaction", "The rate constant at a given temperature", "The natural log of the rate constant"],
+          correct: 1,
+           explanation: "The pre-exponential factor (A) in the Arrhenius equation is a constant specific to the reaction, related to the frequency of collisions and orientation of molecules."
+          },
+         {
+           text: "If the half-life of a reaction is doubled when the initial concentration is doubled, what is the order of reaction?",
+           options: ["0", "1", "2", "3"],
+            correct: 0,
+            explanation: "The half-life of a zero order reaction is directly proportional to the initial concentration. Doubling the concentration doubles the half-life."
+        },
+        {
+          text: "For a reaction 2A -> products, the initial concentration of A is 1.5 M and the rate constant is 0.025 M⁻¹s⁻¹. If it is a second order reaction what is [A] after 1 minute?",
+          options: ["1.07 M", "0.50 M", "0.015 M", "0.46 M"],
+          correct: 0,
+          explanation: "For a second order reaction, 1/[A]t = 1/[A]0 +kt. 1/[A]t = 1/1.5 + (0.025 x 60) => [A]t = 1/1.0667 = 1.07 M"
+        },
+        {
+           text: "What property does NOT effect a rate constant?",
+           options: ["Temperature", "Activation energy", "the presence of a catalyst", "concentration"],
+           correct: 3,
+           explanation: "Concentration affects the rate of reaction, but not the rate constant itself. Rate constants are affected by temperature, activation energy, and catalysts."
+        },
+        {
+          text: "A substance which acts to slow down a chemical reaction is:",
+          options: ["catalyst", "inhibitor", "intermediate", "transition state"],
+          correct: 1,
+          explanation: "An inhibitor is a substance that decreases the rate of a chemical reaction."
+        },
+         {
+          text: "For a reaction A → Products, if the concentration of A is halved, the rate decreases by a factor of 4, what is the order of the reaction with respect to A?",
+           options: ["0", "1", "2", "3"],
+           correct: 2,
+          explanation: "If rate = k[A]^n , when [A] is halved, the rate is 1/4 of original. 1/4 = (1/2)^n   => n = 2"
+        },
+        {
+           text: "Consider the reaction, A + 2B -> C. The rate of appearance of C was found to be 0.015 M/s. What was the rate of disappearance of B?",
+           options: ["0.03 M/s", "0.0075 M/s", "0.015 M/s", "Cannot be determined"],
+           correct: 0,
+           explanation: "For every one mole of C formed, 2 moles of B are consumed. Rate of disappearance of B is twice the rate of appearance of C, therefore 2 x 0.015 = 0.03 M/s"
+        },
+         {
+           text: "The reaction A → B is found to be third order. The units of the rate constant are:",
+           options: ["s⁻¹", "M s⁻¹", "M⁻²s⁻¹", "M⁻³s⁻¹"],
+            correct: 2,
+           explanation: "For a third order reaction, Rate=k[A]³ so k has the units M⁻²s⁻¹."
+        },
+       {
+        text: "The rate law for the elementary step A + B -> C + D is:",
+        options: ["Rate = k[A][B]", "Rate = k[A]²[B]", "Rate = k[A]", "Rate = k[B]"],
+        correct: 0,
+        explanation: "For an elementary reaction, the rate law is determined directly from the stoichiometry. Therefore, Rate=k[A][B]"
+        },
+        {
+         text: "A catalyst works by:",
+         options: ["Increasing the Ea", "Decreasing the Ea", "Increasing the temperature", "Decreasing the rate of the reverse reaction"],
+         correct: 1,
+         explanation: "A catalyst provides an alternative pathway for a reaction with a lower activation energy, allowing the reaction to proceed faster."
+        },
+        {
+        text: "In a reaction with multiple steps, the rate-determining step is",
+        options: ["The last step", "The first step", "The slowest step", "The fastest step"],
+        correct: 2,
+        explanation: "The slowest step in a reaction mechanism determines the overall rate of the reaction."
+        },
+         {
+          text: "The half-life of a second-order reaction is:",
+          options: ["Independent of [A]₀", "Directly proportional to [A]₀", "Inversely proportional to [A]₀", "Directly proportional to [A]₀²"],
+           correct: 2,
+           explanation: "The half-life for a second-order reaction is given by t½ = 1/k[A]₀ therefore it is inversely proportional to the initial concentration."
+        },
+        {
+          text: "In the Arrhenius equation, what does \"A\" represent?",
+          options: ["Activation energy", "Rate constant", "Frequency factor", "Temperature"],
+          correct: 2,
+          explanation: "In the Arrhenius equation, 'A' represents the frequency factor (or pre-exponential factor), which is related to the collision frequency and orientation of molecules."
+        },
+       {
+         text: "What is the relationship between Ea and k?",
+         options: ["Ea increases, k increases", "Ea increases, k decreases", "Ea has no effect on k", "Ea is proportional to k²"],
+          correct: 1,
+         explanation: "In the Arrhenius equation, k = Ae^(-Ea/RT), the rate constant 'k' decreases as the activation energy 'Ea' increases."
+        },
+       {
+         text: "A plot of 1/[A] vs time gave a straight line. What is the order of the reaction with respect to [A]?",
+         options: ["Zero", "1", "2", "3"],
+         correct: 2,
+         explanation: "A straight line when 1/[A] is plotted against time indicates a second order reaction."
+       },
+       {
+         text: "The collision frequency is defined as:",
+          options: ["The number of successful collisions", "The number of ineffective collisions", "The number of collisions that occur in a given time", "The number of collisions that forms a product"],
+          correct: 2,
+          explanation: "Collision frequency refers to the total number of collisions occurring between molecules per unit time."
+        },
+        {
+           text: "For a zero order reaction, a plot of what vs time will yield a straight line?",
+            options: ["ln[A]", "[A]", "1/[A]", "[A]²"],
+            correct: 1,
+            explanation: "For a zero-order reaction, the concentration of the reactant [A] decreases linearly with time, yielding a straight line when [A] is plotted against time."
+         },
+         {
+            text: "If a first order reaction has a half life of 1.2 hours, what fraction of reactant will be remaining after 3.6 hours?",
+            options: ["1/2", "1/4", "1/8", "1/6"],
+            correct: 2,
+            explanation: "After one half-life (1.2 hours), 1/2 remains. After two half-lives (2.4 hours), 1/4 remains. After three half-lives (3.6 hours), 1/8 remains."
+          },
+          {
+            text: "The decomposition of N₂O₅(g) 2N₂O₅(g) -> 4NO₂(g) + O₂(g). If the rate of decomposition of N₂O₅ is 0.015 M/s. What is the rate of formation of NO₂?",
+            options: ["0.015 M/s", "0.03 M/s", "0.0075 M/s", "0.06 M/s"],
+            correct: 1,
+            explanation: "The stoichiometry shows that for every 2 moles of N₂O₅ decomposed, 4 moles of NO₂ are formed, therefore, the rate of formation of NO₂ is twice the rate of decomposition of N₂O₅ (0.015 M/s * 2 = 0.03 M/s)"
+          },
+         {
+           text: "In a reaction mechanism, a reaction intermediate is:",
+           options: ["A substance present in excess", "A substance that is not present in the overall reaction", "A substance that is the product of the first reaction", "A substance that is present at the start of the reaction."],
+           correct: 1,
+           explanation: "Reaction intermediates are formed in one step of a mechanism and consumed in another; they do not appear in the overall reaction"
+          },
+         {
+          text: "The integrated rate law for a zero order reaction is:",
+          options: ["ln[A] = -kt + ln[A]₀", "[A] = -kt + [A]₀", "1/[A] = kt + 1/[A]₀", "[A] = e^(-kt)"],
+           correct: 1,
+           explanation: "The integrated rate law for a zero-order reaction is [A] = -kt + [A]₀, showing a linear relationship between [A] and time."
+         },
+         {
+          text: "Which statement is true regarding the effect of a catalyst on the rate law?",
+          options: ["The rate law is unchanged.", "The rate law changes as the reaction order is reduced.", "The rate law changes as the rate constant changes.", "The rate law is different, depending on if the catalyst is present in solution or in gas phase."],
+           correct: 2,
+           explanation: "A catalyst changes the rate constant but does not alter the reaction order or rate law. It provides an alternative pathway for the reaction that has a lower activation energy, therefore the rate constant changes. "
+        },
+         {
+          text: "At a given time the rate of disappearance of reactant A is 0.020 M/s. If the stoichiometric ratio of A to B is 2:3. What is the rate of appearance of B at that time?",
+          options: ["0.030 M/s", "0.013 M/s", "0.020 M/s", "0.0020 M/s"],
+           correct: 0,
+           explanation: "If the stoichiometric ratio of A to B is 2:3, the rate of appearance of B is (3/2) times the rate of disappearance of A. Thus 1.5 * 0.020 M/s = 0.030 M/s"
+        },
+         {
+          text: "What does not affect the activation energy of a reaction?",
+           options: ["The presence of a catalyst", "Temperature", "The identity of the reactants", "The reaction mechanism"],
+           correct: 1,
+           explanation: "Temperature affects the rate constant but not the activation energy. A catalyst, identity of reactants and reaction mechanism all effect the Ea."
+        },
+         {
+            text: "For a third-order reaction, if the rate of reaction is increased by a factor of 27, the concentration of reactants must have increased by a factor of:",
+           options: ["3", "6", "9", "27"],
+           correct: 0,
+           explanation: "For a third-order reaction, rate = k[A]³. If the rate is increased by a factor of 27, then 27 = x³, x=3, therefore the concentration of the reactants increased by a factor of 3"
+        },
+        {
+          text: "A reaction A → B, has a rate constant of 1.2 x 10⁻³ s⁻¹. What is the half life if the reaction is first order?",
+          options: ["577 s", "1200 s", "577 min", "1200 min"],
+           correct: 0,
+           explanation: "For a first order reaction, t½ = ln2/k = 0.693/(1.2 x 10⁻³) = 577 s"
+         },
+        {
+          text: "What statement is true regarding the effect of increased temperature on the energy distribution?",
+          options: ["The number of collisions that possess sufficient energy decreases.", "The average energy of the molecules decreases.", "The activation energy of the reaction decreases.", "The number of molecules that possess the activation energy increases."],
+          correct: 3,
+          explanation: "Increasing temperature shifts the energy distribution towards higher energies; hence, more molecules will possess the necessary activation energy."
+        },
+       {
+         text: "The rate of a reaction is generally defined as:",
+         options: ["The change in concentration of reactants over time.", "The change in concentration of products over time.", "The change in concentration of any species (reactant or product) over time.", "Either (a) or (b)."],
+          correct: 2,
+         explanation: "Reaction rate is defined as the change in concentration of any reactant or product per unit time. "
+        },
+       {
+         text: "What are the units for a zero-order rate constant?",
+         options: ["s⁻¹", "M⁻¹s⁻¹", "M s⁻¹", "M²s⁻¹"],
+          correct: 2,
+         explanation: "For a zero-order reaction, rate = k, therefore the units for k are the same as the units of rate, Ms⁻¹"
+       },
+       {
+         text: "If a reaction's rate doubles when the concentration of a reactant is doubled, the reaction is:",
+         options: ["Zero order with respect to that reactant.", "First order with respect to that reactant.", "Second order with respect to that reactant.", "Not possible to tell from the given information."],
+          correct: 1,
+         explanation: "When the rate doubles as the concentration of the reactant doubles the reaction is first order in that reactant"
+       },
+        {
+         text: "For the reaction: 2A + B -> C, if the rate law is Rate = k[A]¹[B]², what is the overall order of the reaction?",
+         options: ["1", "2", "3", "4"],
+          correct: 2,
+         explanation: "The overall reaction order is the sum of the individual orders in the rate law. Here, 1 + 2 = 3."
+        },
+       {
+          text: "Which of the following statements about catalysts is false?",
+           options: ["Catalysts increase the rate of a reaction.", "Catalysts are consumed in the reaction.", "Catalysts provide an alternative reaction pathway.", "Catalysts lower the activation energy."],
+           correct: 1,
+           explanation: "Catalysts are not consumed in a chemical reaction, they provide an alternate reaction pathway with a lower activation energy."
+         },
+       {
+         text: "The Arrhenius equation relates the rate constant to:",
+         options: ["Temperature and pressure.", "Temperature and activation energy.", "Concentration and activation energy.", "Volume and temperature."],
+         correct: 1,
+         explanation: "The Arrhenius equation, k = Ae^(-Ea/RT), relates the rate constant (k) to temperature (T) and activation energy (Ea)."
+         },
+        {
+          text: "What does a large activation energy suggest about a reaction?",
+           options: ["The reaction will be very fast.", "The reaction will be very slow.", "The reaction is exothermic.", "The reaction is endothermic."],
+           correct: 1,
+          explanation: "A large activation energy indicates a high energy barrier, making it difficult for reactant molecules to transform into products. As a result, the reaction will be slow."
+        },
+        {
+         text: "What is the effect of increasing temperature on the rate of most reactions?",
+         options: ["The rate decreases.", "The rate increases.", "The rate remains the same.", "It is unpredictable."],
+          correct: 1,
+         explanation: "Increasing the temperature generally increases the kinetic energy of the molecules and collision frequency, resulting in a higher reaction rate."
+       },
+       {
+         text: "For a first-order reaction, the half-life is:",
+         options: ["Dependent on the initial concentration.", "Independent of the initial concentration.", "Proportional to the concentration squared.", "Inversely proportional to the initial concentration."],
+          correct: 1,
+        explanation: "The half-life of a first order reaction is given by t1/2=ln2/k and is therefore independent of the initial concentration."
+        },
+        {
+           text: "A reaction with a rate constant of 3.2 x 10⁻⁴ s⁻¹ is most likely a:",
+           options: ["Zero-order reaction.", "First-order reaction.", "Second-order reaction.", "Impossible to determine."],
+           correct: 1,
+           explanation: "Rate constants with units of s⁻¹ are indicative of a first order reaction."
+       },
+      {
+        text: "Which of the following represents the units for a second order rate constant?",
+        options: ["s⁻¹", "M⁻¹s⁻¹", "M s⁻¹", "M⁻²s⁻¹"],
+         correct: 1,
+         explanation: "Second order reactions have a rate law that has the concentration squared, therefore the units of the rate constant are M⁻¹s⁻¹"
+      },
+      {
+          text: "If the rate of a reaction triples when the concentration of a reactant is tripled, the reaction is:",
+           options: ["Zero order with respect to that reactant.", "First order with respect to that reactant.", "Second order with respect to that reactant.", "Third order with respect to that reactant."],
+           correct: 1,
+           explanation: "If the rate triples when the concentration triples, this indicates that rate is directly proportional to [reactant] and the order is one"
+         },
+       {
+         text: "For the reaction A + 2B -> C, If the rate law is Rate = k[A]² what is the order with respect to B?",
+        options: ["0", "1", "2", "3"],
+         correct: 0,
+         explanation: "Since B does not appear in the rate law, the order of the reaction with respect to B is 0."
+        },
+       {
+         text: "In a reaction mechanism, the slowest step is called the:",
+         options: ["Rate-determining step.", "Equilibrium step.", "Fast step.", "Initial step."],
+          correct: 0,
+          explanation: "The slowest step in a reaction mechanism is known as the rate-determining step as it dictates the overall rate of reaction."
+       },
+       {
+         text: "The frequency factor in the Arrhenius equation is related to:",
+         options: ["Activation energy.", "Temperature.", "The frequency of collisions.", "The concentration of reactants."],
+         correct: 2,
+         explanation: "The frequency factor in the Arrhenius equation (A) is related to the frequency of collisions between reactant molecules and also their orientation."
+       },
+       {
+        text: "Which statement is true regarding the effect of a catalyst on the potential energy diagram for a reaction?",
+        options: ["The potential energy of the reactants increases.", "The potential energy of the products decreases.", "The activation energy increases.", "The activation energy decreases."],
+         correct: 3,
+         explanation: "A catalyst works by lowering the activation energy of a reaction; it does not change the potential energy of the reactants or products."
+       },
+      {
+       text: "What happens to the rate constant of a reaction if the temperature is decreased?",
+       options: ["It increases.", "It decreases.", "It stays the same.", "It is unpredictable."],
+         correct: 1,
+        explanation: "The rate constant decreases with a decrease in temperature, according to the Arrhenius equation. Lowering the temperature reduces the kinetic energy of the molecules and collision frequency, thus rate constant is reduced"
+       }, 
+    {
+          text: "If a reaction is first order with a half life of 10 minutes. What fraction of reactant will be left after 20 minutes.",
+          options: ["1/2", "1/4", "1/8", "1/10"],
+          correct: 1,
+          explanation: "After one half-life (10 minutes) 1/2 of the reactant is left. After two half-lives (20 minutes) 1/2 of 1/2 = 1/4 will remain."
+     },
+     {
+          text: "What is the half life of a zero order reaction?",
+          options: ["Dependent on [A]₀", "Independent of [A]₀", "Is infinite.", "Cannot be determined."],
+          correct: 0,
+          explanation: "The half life of a zero order reaction is t1/2 = [A]₀/2k, which shows that it is dependent on the initial concentration."
+     },
+     {
+          text: "A rate constant is found to be 2 x 10⁻³ M⁻¹s⁻¹. The reaction is most likely:",
+          options: ["zero-order", "first-order", "second-order", "not enough information"],
+          correct: 2,
+          explanation: "Rate constants with the units M⁻¹s⁻¹ are characteristic of a second order reaction."
+     },
+     {
+          text: "What are the units for a third order rate constant?",
+          options: ["s⁻¹", "M⁻¹s⁻¹", "M s⁻¹", "M⁻²s⁻¹"],
+          correct: 3,
+          explanation: "For a third order rate law, rate= k[A]³ therefore the units of k will be M⁻²s⁻¹."
+     },
+    {
+         text: "The rate law is determined by:",
+          options: ["The stoichiometry of the balanced chemical equation.", "The rate-determining step of the reaction.", "The fastest step of the reaction.", "The initial concentrations of the reactants."],
+           correct: 1,
+           explanation: "The rate law is determined experimentally and corresponds to the rate-determining step of the reaction."
+        },
+      {
+          text: "For the reaction A+ B -> C. If tripling the concentration of A triples the rate and tripling the concentration of B has no effect on the rate. The rate law is:",
+           options: ["Rate = k[A]", "Rate = k[A]²", "Rate = k[B]", "Rate = k[A][B]"],
+           correct: 0,
+           explanation: "If tripling [A] triples the rate then the reaction is first order with respect to A. If changing the concentration of B has no effect on the rate, then it is zero order with respect to B, therefore rate=k[A]"
+       },
+       {
+         text: "A catalyst will NOT affect:",
+         options: ["The activation energy of the reaction.", "The rate of the reaction.", "The equilibrium constant of the reaction.", "The mechanism of the reaction"],
+          correct: 2,
+          explanation: "A catalyst affects the activation energy and rate of a reaction and the reaction mechanism but it does not affect the equilibrium constant."
+        },
+       {
+          text: "The minimum energy required for a reaction to occur is called the:",
+           options: ["Enthalpy of reaction.", "Gibbs free energy.", "Activation energy.", "Transition state energy."],
+           correct: 2,
+           explanation: "The activation energy is the minimum energy required to initiate a chemical reaction"
+        },
+        {
+           text: "What happens to the value of the rate constant when a catalyst is introduced?",
+           options: ["It increases.", "It decreases.", "It remains the same.", "It becomes zero"],
+            correct: 0,
+            explanation: "A catalyst works by lowering the activation energy, which leads to an increase in the rate constant, hence reaction proceeds more quickly."
+         },
+        {
+          text: "Increasing the temperature affects collision frequency in what way?",
+           options: ["It decreases the number of collisions", "It increases the number of collisions", "It has no effect", "it cannot be determined"],
+           correct: 1,
+           explanation: "Increasing temperature increases the kinetic energy of molecules, leading to more frequent collisions."
+        },
+        {
+            text: "The half life of a second order reaction is:",
+           options: ["Dependent on [A]₀", "Independent of [A]₀", "is infinite", "cannot be determined"],
+            correct: 0,
+            explanation: "The half life of a second order reaction is given by t½ = 1/k[A]₀, which shows that is dependent on the initial concentration of the reactant."
+         },
+         {
+           text: "A reaction has a rate constant of 4.5 x 10⁻⁴ s⁻¹. If [A]₀= 2M. What is [A] after 1 hour assuming that it is a first order reaction.",
+           options: ["0.023", "0.34", "0.77", "1.4"],
+            correct: 3,
+            explanation: "Using the first order integrated rate law: [A]t= [A]₀ e^(-kt) [A]t = 2 x e^((-4.5 x 10⁻⁴)(3600)) = 1.4 M"
+         },
+        {
+          text: "The rate determining step of a reaction is",
+          options: ["The slowest step", "The fastest step", "Any step in the mechanism", "The last step"],
+           correct: 0,
+          explanation: "The rate-determining step is the slowest step of a multi-step reaction mechanism, it is the step that determines the overall rate of reaction."
+         },
+         {
+          text: "How does a catalyst increase the rate of reaction",
+            options: ["by decreasing the temperature", "by increasing the activation energy", "by decreasing the activation energy", "by increasing the reaction order"],
+            correct: 2,
+            explanation: "A catalyst works by providing an alternative reaction pathway with a lower activation energy."
+          },
+         {
+          text: "In the reaction A + B → C, doubling the concentration of A quadruples the rate. Tripling [B] triples the rate, what is the rate law?",
+            options: ["Rate = k[A][B]", "Rate = k[A]²[B]²", "Rate = k[A]²[B]", "Rate = k[A][B]²"],
+            correct: 2,
+            explanation: "If doubling [A] quadruples the rate then this is second order with respect to A and if tripling [B] triples the rate then the reaction is first order with respect to B. Therefore rate = k[A]²[B]"
+         },
+         {
+           text: "The term 'frequency factor' refers to:",
+            options: ["The number of products formed", "The rate constant of the reaction", "The number of collisions between molecules", "The activation energy"],
+            correct: 2,
+            explanation: "The frequency factor (A) in the  Arrhenius equation is related to the frequency of collisions between reacting molecules."
+        },
+        {
+          text: "Increasing the temperature affects the number of molecules possessing the activation energy in what way?",
+           options: ["decreases the number", "increases the number", "no effect", "It cannot be determined"],
+           correct: 1,
+            explanation: "Increasing temperature increases the kinetic energy of molecules so a greater number of molecules will now have sufficient energy to overcome the activation energy barrier."
+        },
+        {
+          text: "If a reaction is second order with a half life of 10 minutes, the half life of the reaction will double if:",
+          options: ["[A]₀ is doubled", "[A]₀ is quadrupled", "[A]₀ is halved", "[A]₀ is quartered"],
+           correct: 3,
+           explanation: "For a second order reaction, t1/2= 1/k[A]₀, therefore halving the concentration will double the half life"
+        },
+        {
+           text: "A rate constant is found to be 6.7 x 10⁻² M⁻²s⁻¹. The reaction is most likely:",
+           options: ["zero-order", "first-order", "second-order", "third-order"],
+            correct: 3,
+            explanation: "The units M⁻²s⁻¹ are indicative of a third order rate constant."
+          },
+        {
+          text: "Which of these does not affect the reaction rate?",
+           options: ["The temperature of the reaction", "The presence of a catalyst", "The volume of the reactants", "The surface area of reactants"],
+           correct: 2,
+           explanation: "The temperature, presence of catalyst, surface area and concentration all affect the rate of the reaction. The volume of the reactants has no effect."
+        },
+        {
+          text: "For a unimolecular reaction, the rate law is:",
+          options: ["first order", "second order", "zero order", "Cannot be determined"],
+            correct: 0,
+            explanation: "Unimolecular reactions involve a single molecule reacting. The rate law for an elementary unimolecular reaction is first order."
+         },
+         {
+          text: "In the rate law; Rate = k[A]²[B] the exponent 2 on the term [A] indicates",
+          options: ["the number of reactant A molecules reacting", "the number of collisions between A molecules", "the number of steps in the reaction", "the reaction is second order with respect to A"],
+          correct: 3,
+          explanation: "The exponent represents the order with respect to that reactant; a 2 indicates it is second order with respect to [A]"
+        },
+        {
+          text: "A substance that increases the rate of reaction but is not consumed by the reaction is:",
+           options: ["an intermediate", "a transition state", "a catalyst", "a product"],
+            correct: 2,
+           explanation: "A catalyst increases the rate of a chemical reaction without being consumed itself in the reaction."
+        },
+       {
+         text: "A reaction's rate constant is determined by",
+         options: ["activation energy", "concentration of products", "concentration of reactants", "stoichiometry"],
+          correct: 0,
+         explanation: "The rate constant of a reaction is determined by the activation energy and temperature and is not affected by concentrations of reactants or products, or stoichiometry."
+       },
+      {
+        text: "The rate of a reaction is affected by all of the following except:",
+         options: ["The concentrations of reactants.", "The temperature of the system.", "The presence of a catalyst", "The amount of products"],
+         correct: 3,
+        explanation: "The rate of a reaction is affected by the concentration of the reactants, temperature and the presence of a catalyst, the amount of product does not effect the reaction rate."
+      },
+      {
+       text: "The units for a first order rate constant is:",
+        options: ["M⁻¹s⁻¹", "M s⁻¹", "s⁻¹", "M⁻²s⁻¹"],
+         correct: 2,
+       explanation: "The units for a first order rate constant are s⁻¹ as in a first order rate law, rate = k[A]"
+      },
+      {
+         text: "For the elementary step; 2A → Products. The rate law is:",
+         options: ["Rate = k[A]", "Rate = k[A]²", "Rate = k[A]³", "Rate = k[A]"],
+          correct: 1,
+        explanation: "In an elementary reaction the exponents are the same as the coefficients. Thus for 2A → products, the rate law is Rate = k[A]²."
+      },
+     {
+       text: "An inhibitor is a:",
+       options: ["substance which increases reaction rate", "substance which decreases reaction rate", "substance which forms an intermediate", "substance which forms a transition state"],
+         correct: 1,
+      explanation: "An inhibitor is a substance which slows down the rate of a reaction."
+     },
+     {
+       text: "The activation energy of a reaction is usually determined by:",
+        options: ["monitoring the concentration of product", "measuring the rate of reaction at two temperatures", "measuring the half life of reactants", "determining the reaction mechanism"],
+         correct: 1,
+         explanation: "The activation energy is usually determined by measuring the rate constant at two or more temperatures and using the Arrhenius equation."
+     },
+    {
+      text: "How is the activation energy different for a catalyzed and an uncatalyzed reaction?",
+      options: ["Catalyzed reaction has a higher activation energy", "Catalyzed reaction has a lower activation energy", "Both have the same activation energy", "Catalyzed reaction has zero activation energy"],
+      correct: 1,
+      explanation: "A catalyst provides an alternative pathway with a lower activation energy, thus making the reaction faster."
+    },
+   {
+        text: "If a reaction rate is found to increase 9 fold when the concentration of a reactant is tripled. The reaction order with respect to that reactant is:",
+        options: ["1", "2", "3", "cannot be determined"],
+         correct: 2,
+         explanation: "If tripling the reactant concentration causes a 9 fold increase in the reaction rate, then the rate is proportional to [reactant]². Therefore the reaction order is 2."
+    },
+    {
+      text: "What is the concentration of a reactant left after 2 half-lives if you started with 4 M?",
+      options: ["0", "1M", "2M", "4M"],
+       correct: 1,
+      explanation: "After 1 half-life the concentration becomes 4M/2=2M and after two half lives, this concentration halves again 2M/2=1M"
+    },
+   {
+      text: "In the Arrhenius equation, an increase in temperature would cause:",
+      options: ["The rate constant to decrease", "The rate constant to increase", "The rate constant to remain unchanged", "The rate constant to become zero"],
+        correct: 1,
+       explanation: "The Arrhenius equation, k = Ae^(-Ea/RT) , shows that as temperature T increases, the rate constant k also increases."
+     }, 
+        ]
+  }, 
       "ELECTROLYSIS-1": {
       title: "Introductory Chemistry 1",
       questions: [           
