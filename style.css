@@ -87,6 +87,7 @@ button {
 
 /* Popup UI */
 .reward-popup {
+    display: none;
     position: fixed;
   top: 0;
   left: 0;
@@ -138,7 +139,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
         /* Withdrawal Section */
 .withdrawal-container {
-    
+    left: 5px;
     text-align: center;
     background: #f8f8f8;
     padding: 15px;
