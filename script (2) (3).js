@@ -38,112 +38,74 @@ document.addEventListener('click', throttle(function(event) {
   }
 }, 500));
 
-
-// Load existing rewards or initialize
-let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
-    timeSpent: 0,
-    timeBonus: 0,
-    examScore: 0,
-    examBonus: 0,
-    totalReward: 0
-};
-
-let timerInterval;
-
-// Start Timer
-function startUserTimer() {
-    timerInterval = setInterval(() => {
-        userRewards.timeSpent++;
-        document.getElementById("time-spent").innerText = userRewards.timeSpent; // Update UI
-
-        // Every 1 hour (3600 seconds), give ₦50
-        if (userRewards.timeSpent % 3600 === 0) {
-            userRewards.timeBonus += 50;
-            showAnimatedPopup("🎉 You earned ₦50 for using the app for 1 hour!");
-        }
-
-        saveRewards();
-    }, 1000); // Update every second
-}
-
-// Save Rewards to Local Storage
-function saveRewards() {
-    localStorage.setItem("userRewards", JSON.stringify(userRewards));
-}
-
-// Start Timer on Load
-window.addEventListener("load", startUserTimer);
+// Toggle Reward Popup Visibility
 function toggleRewardPopup() {
-    const popup = document.getElementById("reward-popup");
-    if (popup.classList.contains("show")) {
-        popup.classList.remove("show");
-        setTimeout(() => { popup.style.display = "none"; }, 500); // Hide after animation
-    } else {
-        popup.style.display = "block"; // Show before adding animation
-        setTimeout(() => { popup.classList.add("show"); }, 10);
-    }
+    let popup = document.getElementById("rewardPopup");
+    popup.style.display = popup.style.display === "block" ? "none" : "block";
 }
 
+// Update Reward UI
+function updateRewardUI() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+        timeSpent: 0,   
+        timeBonus: 0,   
+        examScore: 0,   
+        examBonus: 0,   
+        totalReward: 0  
+    };
 
+    document.getElementById("examBonus").innerText = `₦${userRewards.examBonus}`;
+    document.getElementById("timeBonus").innerText = `₦${userRewards.timeBonus}`;
+    document.getElementById("totalReward").innerText = `₦${userRewards.totalReward}`;
 
-// Save & Update Progress Bar
-function updateRewards() {
+    // Progress Bar Update
+    const percentage = Math.min((userRewards.totalReward / 3000) * 100, 100);
+    document.getElementById("progressFill").style.width = `${percentage}%`;
+}
+
+// Update UI on Page Load
+window.addEventListener("load", updateRewardUI);
+// script.js
+
+// Track time spent on the app
+let sessionStartTime = localStorage.getItem("sessionStartTime") ? 
+                       new Date(localStorage.getItem("sessionStartTime")) : new Date();
+
+// Function to start tracking time
+function startTimer() {
+    sessionStartTime = new Date();
+    localStorage.setItem("sessionStartTime", sessionStartTime);
+}
+
+// Function to stop tracking time and update rewards
+function stopTimer() {
+    const sessionEndTime = new Date();
+    const timeSpent = (sessionEndTime - sessionStartTime) / 1000; // Convert to seconds
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+        timeSpent: 0,   
+        timeBonus: 0,   
+        examScore: 0,   
+        examBonus: 0,   
+        totalReward: 0  
+    };
+
+    userRewards.timeSpent += timeSpent;
+    const previousTimeBonus = userRewards.timeBonus;
+    userRewards.timeBonus = Math.floor(userRewards.timeSpent / 3600) * 10; // ₦10 per hour
     userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus;
-    localStorage.setItem("userRewards", JSON.stringify(userRewards));
 
-    // Update Progress UI
-    document.getElementById("time-bonus").innerText = userRewards.timeBonus;
-    document.getElementById("exam-bonus").innerText = userRewards.examBonus;
-    document.getElementById("total-reward").innerText = userRewards.totalReward;
-    document.getElementById("progress-amount").innerText = userRewards.totalReward;
-
-    const progressPercent = Math.min((userRewards.totalReward / 3000) * 100, 100);
-    document.getElementById("ex-progress-fill").style.width = progressPercent + "%";
-}
-
-// Play Sound Effects
-function playSound(soundId) {
-    document.getElementById(soundId).play();
-}
-
-// Cash Out Function
-function cashOut() {
-    if (userRewards.totalReward >= 3000) {
-        showAnimatedPopup(`✅ You cashed out ₦${userRewards.totalReward}!`);
-        playSound("cashout-sound");
-
-        // Reset rewards
-        userRewards = { timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0 };
-        updateRewards();
-    } else {
-        showAnimatedPopup("❌ You need at least ₦3,000 to cash out.");
-        playSound("popup-sound");
+    // Check if the user has earned new time bonus
+    const newTimeBonus = userRewards.timeBonus - previousTimeBonus;
+    if (newTimeBonus > 0) {
+        showAnimatedPopup(`🕒 You earned ₦${newTimeBonus} for time spent!`);
     }
+
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
 }
 
-// Start Timer on Load
-window.addEventListener("load", startUserTimer);
-
-// Show Reward Summary Pop-up
-function toggleRewardPopup() {
-    console.log("Toggling Reward Pop-Up"); // Debugging Check
-    const popup = document.getElementById("reward-popup");
-    popup.classList.toggle("show");
-}
-// Show Reward Pop-Up with Slide-In Effect
-function showRewardPopup() {
-    console.log("Reward pop-up opening...");
-    const popup = document.getElementById("reward-popup");
-    popup.classList.add("show");
-}
-
-// Close Reward Pop-Up with Slide-Out Effect
-function closeRewardPopup() {
-    console.log("Reward pop-up closing...");
-    const popup = document.getElementById("reward-popup");
-    popup.classList.remove("show");
-}
-
+// Event Listeners for tracking time
+window.addEventListener("load", startTimer);
+window.addEventListener("beforeunload", stopTimer);
 
 // Debugging: Check if script is running
 window.onload = () => {
@@ -12192,35 +12154,45 @@ function endExam(autoSubmit = false) {
   
   
 function finalizeSubmission() {
+    if (!answers || !questions) {
+        console.error("Exam data is missing.");
+        return;
+    }
+
     const score = answers.filter((ans, i) => ans === questions[i].correct).length;
     const totalQuestions = questions.length;
     const percentage = Math.round((score / totalQuestions) * 100);
 
-    // Load existing rewards from localStorage or initialize
-    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
-        timeSpent: 0,   
-        timeBonus: 0,   
-        examScore: 0,   
-        examBonus: 0,   
-        totalReward: 0  
-    };
+    // Load existing rewards safely
+    let userRewards;
+    try {
+        userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+            timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0  
+        };
+    } catch (error) {
+        console.error("Error loading user rewards:", error);
+        userRewards = { timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0 };
+    }
 
-    // Update exam statistics
-    userRewards.examScore += score; // Add this exam's correct answers
+    // Update Exam Statistics
+    userRewards.examScore += score;  // Add this exam's correct answers
     const previousBonus = userRewards.examBonus;
-    userRewards.examBonus = Math.floor(userRewards.examScore / 100) * 100; // ₦100 for every 100 total scores
-    userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus; // Update total reward
+    
+    // Award ₦1 per correct answer
+    userRewards.examBonus += score * 1;
+    
+    userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus;
 
-    // Calculate new bonus gained from this exam
+    // Check if new bonus was earned
     const newBonus = userRewards.examBonus - previousBonus;
     if (newBonus > 0) {
         showAnimatedPopup(`🎉 You earned ₦${newBonus} from your exam performance!`);
     }
 
-    // Save updated rewards to localStorage
+    // Save updated rewards
     localStorage.setItem("userRewards", JSON.stringify(userRewards));
 
-    // Store exam results in history
+    // Store exam session history
     const examSession = {
         date: new Date().toLocaleString(),
         questions: questions.map(q => ({
@@ -12235,12 +12207,52 @@ function finalizeSubmission() {
         percentage: percentage
     };
 
-    const examHistory = JSON.parse(localStorage.getItem('examHistory')) || [];
-    examHistory.push(examSession);
-    localStorage.setItem('examHistory', JSON.stringify(examHistory));
+    try {
+        const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
+        examHistory.push(examSession);
+        localStorage.setItem("examHistory", JSON.stringify(examHistory));
+    } catch (error) {
+        console.error("Error saving exam history:", error);
+    }
 
-    console.log('Exam session saved:', examSession);
+    // Update UI in real-time
+    updateRewardUI();
+    updateExamResults(score, totalQuestions, percentage);
+
+    console.log("Exam session saved:", examSession);
 }
+
+// Update UI Elements
+function updateRewardUI() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+        timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0  
+    };
+
+    document.getElementById("examBonus").innerText = `₦${userRewards.examBonus}`;
+    document.getElementById("timeBonus").innerText = `₦${userRewards.timeBonus}`;
+    document.getElementById("totalReward").innerText = `₦${userRewards.totalReward}`;
+
+    // Update progress bar
+    document.getElementById("progressFill").style.width = `${Math.min((userRewards.totalReward / 3000) * 100, 100)}%`;
+}
+
+// Update Exam Results UI
+function updateExamResults(score, totalQuestions, percentage) {
+    document.getElementById("examScore").innerText = `Score: ${score}/${totalQuestions}`;
+    document.getElementById("examPercentage").innerText = `Percentage: ${percentage}%`;
+}
+
+// Show a notification popup
+function showAnimatedPopup(message) {
+    const popup = document.getElementById("rewardPopupMessage");
+    popup.innerText = message;
+    popup.style.display = "block";
+    setTimeout(() => { popup.style.display = "none"; }, 3000);
+}
+
+// Ensure UI updates on page load
+window.addEventListener("load", updateRewardUI);
+
 
 
 
