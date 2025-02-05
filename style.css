@@ -70,6 +70,7 @@ button {
     background: white;
     border-radius: 50%;
     text-align: center;
+        align-item: center;
     line-height: 50px;
     font-size: 24px;
     cursor: pointer;
@@ -87,7 +88,7 @@ button {
 /* Popup UI */
 .reward-popup {
     position: fixed;
-  top: 10px;
+  top: 0;
   left: 0;
   width: 95%;
   height: 98%;
