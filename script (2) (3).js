@@ -152,7 +152,66 @@ document.getElementById("withdrawForm").addEventListener("submit", function (eve
     alert(`✅ Withdrawal request of ₦${withdrawAmount} submitted successfully!`);
 });
 
-// Event Listeners for tracking time
+
+// Load session start time or set a new one
+let sessionStartTime = localStorage.getItem("sessionStartTime") 
+    ? parseInt(localStorage.getItem("sessionStartTime")) 
+    : Date.now();
+
+// Save session start time when user loads the page
+function startTimer() {
+    sessionStartTime = Date.now();
+    localStorage.setItem("sessionStartTime", sessionStartTime);
+}
+
+// Stop timer and update time-based earnings
+function stopTimer() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+        timeSpent: 0, timeBonus: 0, totalReward: 0  
+    };
+
+    // Calculate elapsed time in seconds
+    const elapsedTime = Math.floor((Date.now() - sessionStartTime) / 1000);
+    userRewards.timeSpent += elapsedTime;
+
+    // Calculate new time bonus (₦10 per hour)
+    userRewards.timeBonus = Math.floor(userRewards.timeSpent / 3600) * 10;
+    userRewards.totalReward = userRewards.timeBonus;
+
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+    localStorage.setItem("sessionStartTime", Date.now()); // Reset session time
+}
+
+// Update Timer Display in Real-Time
+function updateTimeDisplay() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || { timeSpent: 0 };
+
+    // Calculate real-time session duration
+    const elapsedTime = Math.floor((Date.now() - sessionStartTime) / 1000);
+    const totalTimeSpent = userRewards.timeSpent + elapsedTime;
+
+    let hours = Math.floor(totalTimeSpent / 3600);
+    let minutes = Math.floor((totalTimeSpent % 3600) / 60);
+    let seconds = totalTimeSpent % 60;
+
+    document.getElementById("timeSpent").innerText = 
+        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // Update time bonus dynamically
+    userRewards.timeBonus = Math.floor(totalTimeSpent / 3600) * 10;
+    userRewards.totalReward = userRewards.timeBonus;
+
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+
+    // Update UI elements
+    document.getElementById("timeBonus").innerText = `₦${userRewards.timeBonus}`;
+    document.getElementById("totalReward").innerText = `₦${userRewards.totalReward}`;
+}
+
+// Start live timer update every second
+setInterval(updateTimeDisplay, 1000);
+
+// Ensure timer starts on page load
 window.addEventListener("load", startTimer);
 window.addEventListener("beforeunload", stopTimer);
 
