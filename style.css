@@ -78,103 +78,158 @@ button {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Rewards Popup */
+/* =============================
+   🎉 Enhanced Rewards Popup UI
+   ============================= */
+
 /* Timer Display */
 #timeSpent {
     font-weight: bold;
+    font-size: 1.2rem;
     color: #007bff;
+    display: block;
+    text-align: center;
+    margin-top: 10px;
 }
 
 /* Popup UI */
 .reward-popup {
     display: none;
     position: fixed;
-  top: 0;
-  left: 0;
-  right: 8px;
-  width: 95%;
-  height: 98%;
-  background-color: white;
-  z-index: 999;
-  overflow-y: auto;
-  padding: 20px;
-        border-radius: 8px;
-  text-align: center; /* Align all texts to the left */
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-buttom: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    height: auto;
+    background: #fff;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
 }
 
+/* Close button */
+.reward-popup .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff4b5c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
 
-
+.reward-popup .close-btn:hover {
+    background: #d63a4a;
+}
 
 /* Progress Bar */
 .progress-bar-container {
     margin-top: 20px;
+    width: 100%;
+    text-align: center;
 }
 
 .progress-bar {
     width: 90%;
-    height: 10px;
-    background: #ddd;
-    border-radius: 5px;
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
 #progressFill {
     width: 0%;
-    height: 10px;
-    background: green;
-    border-radius: 5px;
+    height: 12px;
+    background: linear-gradient(90deg, #28a745, #007bff);
+    transition: width 0.5s ease-in-out;
 }
 
 /* Notification Popup */
 .popup {
     display: none;
     position: fixed;
-    top: 50px;
+    top: 20px;
     right: 20px;
     background: #28a745;
     color: white;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: slideInRight 0.4s ease-in-out;
 }
 
-        /* Withdrawal Section */
+/* Withdrawal Section */
 .withdrawal-container {
-    left: 5px;
     text-align: center;
     background: #f8f8f8;
-    padding: 15px;
-    border-radius: 10px;
-    max-width: 350px;
-    margin: 20px auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 30px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .withdrawal-container form {
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .withdrawal-container input {
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 5px;
+    padding: 10px;
+    border-radius: 6px;
     border: 1px solid #ccc;
+    font-size: 1rem;
 }
 
 .withdrawal-container button {
-    padding: 10px;
-    background: green;
+    padding: 12px;
+    background: #28a745;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    margin-top: 10px;
+    font-weight: bold;
+    transition: background 0.3s ease;
 }
 
 .withdrawal-container button:hover {
-    background: darkgreen;
+    background: #1e7e34;
 }
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
 
 
 /* Progress Bar */
