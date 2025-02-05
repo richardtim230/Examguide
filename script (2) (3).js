@@ -66,52 +66,73 @@ function updateRewardUI() {
 // Update UI on Page Load
 window.addEventListener("load", updateRewardUI);
 // script.js
+// Load session start time or set a new one
+let sessionStartTime = localStorage.getItem("sessionStartTime") 
+    ? parseInt(localStorage.getItem("sessionStartTime")) 
+    : Date.now();
 
-// Track time spent on the app
-let sessionStartTime = localStorage.getItem("sessionStartTime") ? 
-                       new Date(localStorage.getItem("sessionStartTime")) : new Date();
-
-// Function to start tracking time
+// Start tracking time when user enters
 function startTimer() {
-    sessionStartTime = new Date();
+    sessionStartTime = Date.now();
     localStorage.setItem("sessionStartTime", sessionStartTime);
 }
 
-// Function to stop tracking time and update rewards
+// Stop timer and update time-based earnings
 function stopTimer() {
-    const sessionEndTime = new Date();
-    const timeSpent = (sessionEndTime - sessionStartTime) / 1000; // Convert to seconds
+    const sessionEndTime = Date.now();
+    const timeSpent = Math.floor((sessionEndTime - sessionStartTime) / 1000); // in seconds
+
     let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
-        timeSpent: 0,   
-        timeBonus: 0,   
-        examScore: 0,   
-        examBonus: 0,   
-        totalReward: 0  
+        timeSpent: 0, timeBonus: 0, examBonus: 0, totalReward: 0  
     };
 
+    // Add elapsed time
     userRewards.timeSpent += timeSpent;
-    const previousTimeBonus = userRewards.timeBonus;
-    userRewards.timeBonus = Math.floor(userRewards.timeSpent / 3600) * 10; // ₦10 per hour
+
+    // Calculate time-based earnings (₦10 per hour)
+    userRewards.timeBonus = Math.floor(userRewards.timeSpent / 3600) * 10;
     userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus;
 
-    // Check if the user has earned new time bonus
-    const newTimeBonus = userRewards.timeBonus - previousTimeBonus;
-    if (newTimeBonus > 0) {
-        showAnimatedPopup(`🕒 You earned ₦${newTimeBonus} for time spent!`);
-    }
+    // Save updates
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+    localStorage.setItem("sessionStartTime", Date.now()); // Reset session time
+}
+
+// Update Timer Display in Real-Time
+function updateTimeDisplay() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || { timeSpent: 0 };
+
+    // Calculate real-time session duration
+    const elapsedTime = Math.floor((Date.now() - sessionStartTime) / 1000);
+    const totalTimeSpent = userRewards.timeSpent + elapsedTime;
+
+    let hours = Math.floor(totalTimeSpent / 3600);
+    let minutes = Math.floor((totalTimeSpent % 3600) / 60);
+    let seconds = totalTimeSpent % 60;
+
+    document.getElementById("timeSpent").innerText = 
+        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // Update time bonus dynamically
+    userRewards.timeBonus = Math.floor(totalTimeSpent / 3600) * 10;
+    userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus;
 
     localStorage.setItem("userRewards", JSON.stringify(userRewards));
-}
-// Show withdrawal section if balance is enough
-function checkWithdrawalEligibility() {
-    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || { totalReward: 0 };
+
+    // Update UI elements
+    document.getElementById("timeBonus").innerText = `₦${userRewards.timeBonus}`;
+    document.getElementById("totalReward").innerText = `₦${userRewards.totalReward}`;
     document.getElementById("withdrawableAmount").innerText = `₦${userRewards.totalReward}`;
 
-    if (userRewards.totalReward >= 3000) {
-        document.getElementById("withdrawalSection").style.display = "block";
-    } else {
-        document.getElementById("withdrawalSection").style.display = "none";
-    }
+    // Show withdrawal section if balance is enough
+    document.getElementById("withdrawalSection").style.display = userRewards.totalReward >= 3000 ? "block" : "none";
+}
+
+// Toggle Reward Popup Visibility
+function toggleRewardPopup() {
+    let popup = document.getElementById("rewardPopup");
+    popup.style.display = popup.style.display === "block" ? "none" : "block";
+    updateTimeDisplay();
 }
 
 // Handle Withdrawal Request
@@ -142,17 +163,20 @@ document.getElementById("withdrawForm").addEventListener("submit", function (eve
 
     // Deduct from balance
     userRewards.totalReward -= withdrawAmount;
-    userRewards.examBonus -= withdrawAmount; // Deduct from earnings
+    userRewards.timeBonus = Math.max(0, userRewards.timeBonus - withdrawAmount);
+    userRewards.examBonus = Math.max(0, userRewards.examBonus - withdrawAmount);
+
     localStorage.setItem("userRewards", JSON.stringify(userRewards));
 
     // Refresh UI
-    updateRewardUI();
-    checkWithdrawalEligibility();
-
+    updateTimeDisplay();
     alert(`✅ Withdrawal request of ₦${withdrawAmount} submitted successfully!`);
 });
 
-// Event Listeners for tracking time
+// Start live timer update every second
+setInterval(updateTimeDisplay, 1000);
+
+// Ensure timer starts on page load
 window.addEventListener("load", startTimer);
 window.addEventListener("beforeunload", stopTimer);
 
