@@ -102,6 +102,55 @@ function stopTimer() {
 
     localStorage.setItem("userRewards", JSON.stringify(userRewards));
 }
+// Show withdrawal section if balance is enough
+function checkWithdrawalEligibility() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || { totalReward: 0 };
+    document.getElementById("withdrawableAmount").innerText = `₦${userRewards.totalReward}`;
+
+    if (userRewards.totalReward >= 3000) {
+        document.getElementById("withdrawalSection").style.display = "block";
+    } else {
+        document.getElementById("withdrawalSection").style.display = "none";
+    }
+}
+
+// Handle Withdrawal Request
+document.getElementById("withdrawForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || { totalReward: 0 };
+    const bankName = document.getElementById("bankName").value.trim();
+    const accountNumber = document.getElementById("accountNumber").value.trim();
+    const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
+
+    if (withdrawAmount > userRewards.totalReward) {
+        alert("Insufficient balance!");
+        return;
+    }
+
+    // Save withdrawal request
+    let withdrawalHistory = JSON.parse(localStorage.getItem("withdrawals")) || [];
+    withdrawalHistory.push({
+        bankName: bankName,
+        accountNumber: accountNumber,
+        amount: withdrawAmount,
+        date: new Date().toLocaleString(),
+        status: "Pending"
+    });
+
+    localStorage.setItem("withdrawals", JSON.stringify(withdrawalHistory));
+
+    // Deduct from balance
+    userRewards.totalReward -= withdrawAmount;
+    userRewards.examBonus -= withdrawAmount; // Deduct from earnings
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+
+    // Refresh UI
+    updateRewardUI();
+    checkWithdrawalEligibility();
+
+    alert(`✅ Withdrawal request of ₦${withdrawAmount} submitted successfully!`);
+});
 
 // Event Listeners for tracking time
 window.addEventListener("load", startTimer);
