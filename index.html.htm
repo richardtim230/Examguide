@@ -171,14 +171,36 @@
         <p>🕒 Time Bonus: <span id="timeBonus">₦0</span></p>
         <p>💰 Total Earned: <span id="totalReward">₦0</span></p>
 
+        <!-- Live Timer Display -->
+        <p>⏳ Time Spent: <span id="timeSpent">00:00:00</span></p>
+
         <div class="progress-bar-container">
             <p>₦3,000 Withdrawal Progress</p>
             <div class="progress-bar"><div id="progressFill"></div></div>
         </div>
 
+        <!-- Withdrawal Section -->
+        <div id="withdrawalSection" class="withdrawal-container">
+            <h3>Withdraw Your Earnings</h3>
+            <p>💰 Available Balance: <span id="withdrawableAmount">₦0</span></p>
+            <form id="withdrawForm">
+                <label for="bankName">Bank Name:</label>
+                <input type="text" id="bankName" required>
+
+                <label for="accountNumber">Account Number:</label>
+                <input type="number" id="accountNumber" required>
+
+                <label for="withdrawAmount">Amount to Withdraw:</label>
+                <input type="number" id="withdrawAmount" required>
+
+                <button type="submit">Request Withdrawal</button>
+            </form>
+        </div>
+
         <button onclick="toggleRewardPopup()">Close</button>
     </div>
 </div>
+
 
 
 <!-- Notification Popup -->
