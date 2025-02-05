@@ -5523,11 +5523,485 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
         ]
       },
 
-  "ZOO202": {
-        title: "Biometry/Biostatistics",
+  "Arthropods": {
+        title: "Phylum Arthropoda",
         questions: [
-          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+          
+  {
+    text: "How does hemolymph circulation in the arthropod hemocoel MOST accurately occur?",
+    options: [
+      "Through a network of branching vessels that directly deliver nutrients to tissues.",
+      "Primarily driven by diffusion, with the heart playing a minor role in mixing.",
+      "Circulation is driven by the heart and assisted by body movements, bathing organs directly.",
+      "Via specialized cells within the hemolymph that actively transport nutrients."
+    ],
+    correct: 2,
+    explanation:
+      "Hemolymph circulation is driven by a heart that pumps hemolymph through vessels, but ultimately empties into the hemocoel, bathing the organs directly. Body movements assist in circulation."
+  },
+  {
+    text: "What is the MOST distinctive anatomical feature that defines Chelicerata?",
+    options: [
+      "The presence of mandibles adapted for chewing plant matter.",
+      "The presence of antennae used for sensing chemical cues in the environment.",
+      "The presence of chelicerae, which are modified appendages near the mouth used for grasping or piercing.",
+      "The presence of a cephalothorax and abdomen, connected by a narrow pedicel."
+    ],
+    correct: 2,
+    explanation:
+      "The presence of chelicerae, modified appendages near the mouth, is a defining feature of Chelicerata. These are used for grasping or piercing prey."
+  },
+  {
+    text: "Which characteristic is ALWAYS present in Arachnids and serves to distinguish them from other Chelicerates?",
+    options: [
+      "Silk production for web building or egg protection.",
+      "Four pairs of walking legs attached to the cephalothorax.",
+      "The presence of book lungs for gas exchange in terrestrial environments.",
+      "A segmented abdomen clearly demarcated from the cephalothorax."
+    ],
+    correct: 1,
+    explanation:
+      "Arachnids have four pairs of legs attached to the cephalothorax which distinguishes them. While silk, book lungs, and segmented abdomens are not always present."
+  },
+  {
+    text: "Which sensory modality is MOST reliant on the pedipalps in arachnids?",
+    options: [
+      "Vision, by detecting light intensity and polarization.",
+      "Chemoreception, detecting airborne pheromones for mate location.",
+      "Mechanoreception, sensing vibrations and air currents for prey detection.",
+      "Proprioception, providing information about body position and movement."
+    ],
+    correct: 2,
+    explanation:
+      "Arachnids rely mostly on mechanoreception through pedipalps, allowing them to sense vibrations and air currents for prey detection."
+  },
+  {
+    text: "What is a defining characteristic of the Merostomata (horseshoe crabs) that reflects their ancient lineage?",
+    options: [
+      "The ability to regenerate lost limbs through epimorphic regeneration.",
+      "The presence of both compound and simple eyes for vision.",
+      "The use of book gills for gas exchange, located on the abdomen.",
+      "Their complex social behavior characterized by cooperative breeding."
+    ],
+    correct: 2,
+    explanation:
+      "Merostomata have book gills located on the abdomen, used for gas exchange. This is a characteristic which displays their ancient lineage."
+  }, 
+  {
+    text: "What role do arthropods play in the carbon cycle?",
+    options: [
+      "Photosynthesis",
+      "Decomposition and respiration",
+      "Nitrogen fixation",
+      "Chemosynthesis"
+    ],
+    correct: 1,
+    explanation: "Arthropods play a significant role in the carbon cycle through decomposition of organic matter and respiration, releasing carbon dioxide back into the atmosphere."
+  },
+  {
+    text: "What type of circulatory system is found in arthropods?",
+    options: [
+      "Closed circulatory system",
+      "Open circulatory system",
+      "Lymphatic system",
+      "No circulatory system"
+    ],
+    correct: 1,
+    explanation: "Arthropods have an open circulatory system, where hemolymph is not confined to vessels but circulates through a hemocoel, bathing the tissues and organs directly."
+  },
+  {
+    text: "Which of the following best describes the structure of the arthropod brain?",
+    options: [
+      "A single, large ganglion",
+      "A ventral nerve cord with segmental ganglia",
+      "A cerebral ganglion with connectives to a ventral nerve cord",
+      "A diffuse nerve net"
+    ],
+    correct: 2,
+    explanation: "The arthropod brain consists of a cerebral ganglion (or ganglia) located in the head, connected to a ventral nerve cord with segmental ganglia running along the length of the body."
+  },
+  {
+    text: "What are the primary excretory organs in insects?",
+    options: ["Nephridia", "Green glands", "Malpighian tubules", "Kidneys"],
+    correct: 2,
+    explanation: "Insects primarily use Malpighian tubules for excretion. These tubules remove nitrogenous waste from the hemolymph and empty it into the hindgut."
+  },
+  {
+    text: "Which of the following is NOT a type of sensory receptor found in arthropods?",
+    options: [
+      "Chemoreceptors",
+      "Mechanoreceptors",
+      "Photoreceptors",
+      "Magnetoreceptors"
+    ],
+    correct: 3,
+    explanation: "While arthropods possess chemoreceptors (for taste and smell), mechanoreceptors (for touch and pressure), and photoreceptors (for vision), they do not possess magnetoreceptors, for magnetic field detection, unlike some other animals."
+  },
+  {
+    text: "How do arthropods detect gravity and orientation?",
+    options: ["Ocelli", "Statocysts", "Ommatidia", "Setae"],
+    correct: 1,
+    explanation: "Arthropods use statocysts, which are sensory organs that contain statoliths (dense particles) to detect gravity and orientation."
+  },
+  {    text: "Which of the following groups is most closely related to the insects (Hexapoda)?",
+    options: ["Crustacea", "Myriapoda", "Chelicerata", "All are equally related."],
+    correct: 0,
+    explanation: "While all are related, molecular data suggests Hexapoda is more closely related to Crustacea than the others."
+  },
+  {
+    text: "Which of the following classes contains the largest number of described species?",
+    options: ["Arachnida", "Crustacea", "Insecta", "Myriapoda"],
+    correct: 2,
+    explanation: "The class Insecta (insects) contains the largest number of described species, making up a significant portion of the Earth's biodiversity."
+  },
+  {
+    text: "Which of the following subphyla includes organisms with biramous appendages?",
+    options: ["Chelicerata", "Myriapoda", "Crustacea", "Hexapoda"],
+    correct: 2,
+    explanation: "Crustaceans are characterized by having biramous appendages, which are appendages that branch into two parts."
+  },
+  {
+    text: "The extinct trilobites belong to which of the following groups?",
+    options: [
+      "A subphylum of Arthropoda",
+      "A class of Annelida",
+      "A phylum of Mollusca",
+      "A class of Echinodermata"
+    ],
+    correct: 0,
+    explanation: "Trilobites are an extinct group of marine arthropods that belong to a subphylum of Arthropoda."
+  },
+  {
+    text: "Which subphylum is entirely terrestrial?",
+    options: ["Crustacea", "Chelicerata", "Hexapoda", "Myriapoda"],
+    correct: 1,
+    explanation: "Chelicerata are entirely terrestrial, and insects are terrestrial. Note that some Chelicerata are also aquatic"
+  }, 
+  {
+    text: "Which of the following is NOT a characteristic feature of insects?",
+    options: ["Three body segments", "Six legs", "Eight legs", "Antennae"],
+    correct: 2,
+    explanation: "Insects are characterized by having three body segments (head, thorax, and abdomen), six legs, and antennae."
+  },
+  {
+    text: "What is the function of the Malpighian tubules in insects?",
+    options: ["Gas exchange", "Digestion", "Excretion", "Circulation"],
+    correct: 2,
+    explanation: "Malpighian tubules are excretory organs found in insects and other arthropods that function to remove nitrogenous waste from the hemolymph."
+  },
+  {
+    text: "Which of the following best describes the process of incomplete metamorphosis (hemimetabolism) in insects?",
+    options: [
+      "Larva transforms directly into an adult.",
+      "Egg hatches into a nymph that gradually develops into an adult.",
+      "Egg hatches into a larva, which then forms a pupa before becoming an adult.",
+      "Asexual reproduction"
+    ],
+    correct: 1,
+    explanation: "Incomplete metamorphosis (hemimetabolism) is a developmental process in insects where the egg hatches into a nymph, which gradually develops into an adult through a series of molts."
+  },
+  {
+    text: "Which of the following structures are used for gas exchange in terrestrial insects?",
+    options: ["Gills", "Book lungs", "Tracheae", "Cutaneous respiration"],
+    correct: 2,
+    explanation: "Terrestrial insects use a tracheal system, which consists of a network of tubes that carry oxygen directly to the tissues from openings called spiracles along the body."
+  },
+  {
+    text: "What is the function of the tympanal organs in some insects?",
+    options: ["Taste", "Smell", "Hearing", "Vision"],
+    correct: 2,
+    explanation: "Tympanal organs are sensory structures found in some insects that function to detect sound vibrations."
+  },
+  {
+    text: "Which of the following features supports the evolutionary relationship between annelids and arthropods?",
+    options: [
+      "Presence of a rigid exoskeleton",
+      "Jointed appendages",
+      "Segmented body plan",
+      "Compound eyes"
+    ],
+    correct: 2,
+    explanation: "Segmented body plan is a key characteristic shared between annelids and arthropods, suggesting a common ancestry."
+  },
+  {
+    text: "What is the Panarthropoda?",
+    options: [
+      "A group of extinct marine arthropods",       "A clade that includes Arthropoda, Onychophora, and Tardigrada",
+      "The ancestral group of annelids",
+      "A type of insect respiratory system"
+    ],
+    correct: 1,
+    explanation: "Panarthropoda is a clade that includes Arthropoda, Onychophora (velvet worms), and Tardigrada (water bears), reflecting their shared evolutionary history and characteristics."
+  },
+  {
+    text: "Which of the following is NOT a characteristic shared between arthropods and annelids?",
+    options: [
+      "Bilateral symmetry",
+      "Protostome development",
+      "Rigid exoskeleton",
+      "Segmentation"
+    ],
+    correct: 2,
+    explanation: "While arthropods and annelids share characteristics such as bilateral symmetry, protostome development, and segmentation, a rigid exoskeleton is a feature unique to arthropods."
+  },
+  {
+    text: "Which of the following arthropod subphyla is considered most closely related to the Onychophora (velvet worms)?",
+    options: ["Chelicerata", "Myriapoda", "Crustacea", "Hexapoda"],
+    correct: 3,
+    explanation: "While all are related via Panarthropoda, Hexapoda and Onychophora share some molecular and morphological features."
+  },
+  {
+    text: "The evolution of wings in insects is thought to have been derived from which ancestral structure?",
+    options: ["Gills", "Legs", "Body wall extensions", "Sensory bristles"],
+    correct: 2,
+    explanation: "The prevailing hypothesis suggests that insect wings evolved from extensions of the body wall, likely serving a thermoregulatory or swimming function initially."
+  },
+  {
+    text: "What evolutionary advantage does tagmatization provide to arthropods?",
+    options: [
+      "Increased body flexibility",
+      "Specialization of body regions for different functions",
+      "Enhanced water retention",
+      "Improved camouflage"
+    ],
+    correct: 1,
+    explanation: "Tagmatization, the fusion of body segments into specialized regions (tagmata) like the head, thorax, and abdomen, allows for the specialization of different body regions for different functions."
+  },
+  {
+    text: "Which of the following is an example of convergent evolution observed in arthropods?",
+    options: [
+      "Tracheal systems in insects and arachnids",
+      "The presence of chelicerae in spiders and scorpions",
+      "The segmented body plan of annelids and arthropods",
+      "The chitinous exoskeleton"
+    ],
+    correct: 0, 
+    explanation: "The tracheal systems in insects and arachnids are an example of convergent evolution because these groups independently evolved a similar system of tubes for gas exchange."
+  },
+  {
+    text: "What is the role of juvenile hormone in insect development?",
+    options: [
+      "Stimulating molting",
+      "Promoting metamorphosis",
+      "Inhibiting metamorphosis and maintaining larval characteristics",
+      "Regulating reproduction"
+    ],
+    correct: 2,
+    explanation: "Juvenile hormone (JH) inhibits metamorphosis and maintains larval characteristics. When JH levels drop, the insect can undergo metamorphosis into its adult form."
+  },
+  {
+    text: "Which of the following best describes the function of the chordotonal organs in insects?",
+    options: [
+      "Detecting sound",
+      "Sensing tension and strain in the exoskeleton",
+      "Perceiving light",
+      "Detecting chemicals"
+    ],
+    correct: 1,
+    explanation: "Chordotonal organs are sensory receptors in insects that detect tension and strain in the exoskeleton, providing information about body position and movement."
+  },
+  {
+    text: "What is the significance of the Cambrian explosion in the context of arthropod evolution?",
+    options: [
+      "Marks the extinction of trilobites.",
+      "Represents a period of rapid arthropod diversification",
+      "Represents the first appearance of insects.",
+      "Marks the evolution of the exoskeleton."
+    ],
+    correct: 1,
+    explanation: "The Cambrian explosion was a period of rapid diversification of life forms, including arthropods, leading to the evolution of a wide range of body plans and adaptations."
+  },
+  {
+    text: "Which of the following is NOT a significant ecological role played by arthropods?",
+    options: [
+      "Pollination",
+      "Decomposition",
+      "Primary production in aquatic ecosystems",
+      "Pest control"
+    ],
+    correct: 2,
+    explanation: "Arthropods are important pollinators, decomposers, and pest control agents. Primary production in aquatic ecosystems is generally the domain of algae and other photosynthetic organisms, not arthropods."
+  },
+  {
+    text: "Which of the following best describes the role of arthropods in the transmission of human diseases?",
+    options: [
+      "All arthropods are beneficial to human health.",
+      "Arthropods can act as vectors, transmitting pathogens from one host to another.",
+      "Arthropods play no role in the transmission of human diseases.",
+      "Arthropods only transmit diseases to animals, not humans."
+    ],
+    correct: 1,
+    explanation: "Arthropods can act as vectors, transmitting pathogens from one host to another, resulting in many diseases."
+  }, 
+  {
+    text: "Which of the following is NOT a primary function of the arthropod exoskeleton?",
+    options: [
+      "Protection against predators",
+      "Prevention of water loss",
+      "Support for internal organs",
+      "Facilitating gas exchange"
+    ],
+    correct: 3,
+    explanation: "Arthropod exoskeletons primarily provide protection, prevent water loss, and support internal organs, but they are not directly involved in facilitating gas exchange, which occurs through gills, book lungs, or tracheal systems."
+  },
+  {
+    text: "Ecdysis in arthropods is directly regulated by which hormone?",
+    options: ["Insulin", "Ecdysone", "Juvenile hormone", "Thyroxine"],
+    correct: 1,
+    explanation: "Ecdysone is the steroid hormone that triggers molting (ecdysis) in arthropods. Juvenile hormone determines the type of molt."
+  },
+  {
+    text: "Which of the following best explains the evolutionary success of arthropods?",
+    options: [
+      "Simple body plan and limited specialization",
+      "Rapid reproduction and high mutation rate",
+      "Versatile appendages and a chitinous exoskeleton",
+      "Dependence on a single, stable food source"
+    ],
+    correct: 2,
+    explanation: "The evolutionary success of arthropods is largely attributed to their versatile, jointed appendages and their protective and adaptable chitinous exoskeleton."
+  },
+  {
+    text: "What is the primary component of the arthropod exoskeleton that provides rigidity?",
+    options: ["Cellulose", "Keratin", "Chitin", "Pectin"],
+    correct: 2,
+    explanation: "Chitin is a complex polysaccharide that forms the primary structural component of the arthropod exoskeleton, providing rigidity and protection."
+  },
+  {
+    text: "The hemocoel in arthropods serves primarily as a:",
+    options: [
+      "Site for gas exchange",
+      "Hydrostatic skeleton",
+      "Space for blood circulation",
+      "Storage for digestive enzymes"
+    ],
+    correct: 2,
+    explanation: "The hemocoel is the primary body cavity in arthropods and serves as a space for hemolymph (blood) circulation, directly bathing the tissues and organs."
+  },
+  {
+    text: "Which of the following structures is unique to chelicerates?",
+    options: ["Mandibles", "Antennae", "Chelicerae", "Maxillae"],
+    correct: 2,
+    explanation: "Chelicerae are specialized appendages located near the mouth of chelicerates (spiders, scorpions, horseshoe crabs, etc.) and are used for feeding and defense."
+  },
+  {    text: "Which of the following characteristics is NOT typically found in arachnids?",
+    options: [
+      "Book lungs",
+      "Silk production",
+      "Three body segments",
+      "Eight legs"
+    ],
+    correct: 2,
+    explanation: "Arachnids typically have two body segments (cephalothorax and abdomen), eight legs, book lungs for respiration, and silk glands for producing silk."
+  },
+  {
+    text: "What is the function of the pedipalps in arachnids?",
+    options: [
+      "Locomotion",
+      "Prey capture and sensory perception",
+      "Silk production",
+      "Gas exchange"
+    ],
+    correct: 1,
+    explanation: "Pedipalps are appendages located near the chelicerae in arachnids and are used for prey capture, sensory perception, and, in some species, reproduction."
+  },
+  {
+    text: "Which of the following is a unique feature of horseshoe crabs (Merostomata)?",
+    options: [
+      "Possession of mandibles",
+      "Green glands for excretion",
+      "Book gills for respiration",
+      "Silk production"
+    ],
+    correct: 2,
+    explanation: "Horseshoe crabs (Merostomata) are characterized by having book gills, which are specialized respiratory structures located on the abdomen."
+  },
+  {
+    text: "Which of the following best describes the feeding strategy of most spiders?",
+    options: ["Filter feeding", "Herbivory", "Predatory", "Parasitism"],
+    correct: 2,
+    explanation: "Most spiders are predatory, using chelicerae to inject venom and immobilize their prey before consuming it."
+  },
+  {
+    text: "What is the key difference between centipedes (Chilopoda) and millipedes (Diplopoda)?",
+    options: [
+      "Centipedes are herbivores, while millipedes are carnivores.",
+      "Centipedes have one pair of legs per segment, while millipedes have two pairs.",
+      "Centipedes possess antennae, while millipedes lack them.",
+      "Centipedes are aquatic, while millipedes are terrestrial."
+    ],
+    correct: 1,
+    explanation: "Centipedes (Chilopoda) have one pair of legs per segment and are primarily carnivorous, while millipedes (Diplopoda) have two pairs of legs per apparent segment and are typically detritivores or herbivores."
+  },
+  {
+    text: "Forcipules, venomous claws, are found in which class?",
+    options: ["Diplopoda", "Insecta", "Chilopoda", "Arachnida"],
+    correct: 2,
+    explanation: "Forcipules, which are modified legs that function as venomous claws, are a characteristic feature of centipedes (Chilopoda) and are used to capture prey."
+  },
+  {
+    text: "Which of the following is the primary diet of most millipedes?",
+    options: [
+      "Living insects",
+      "Decaying organic matter",
+      "Plant nectar",
+      "Blood"
+    ],
+    correct: 1,
+    explanation: "Most millipedes are detritivores, feeding on decaying organic matter such as leaf litter and wood."
+  },
+  {
+    text: "What type of respiratory system is typically found in myriapods?",
+    options: [
+      "Gills",
+      "Book lungs",
+      "Tracheal system",
+      "Cutaneous respiration"
+    ],
+    correct: 2,
+    explanation: "Myriapods typically have a tracheal system, which consists of a network of tubes that carry oxygen directly to the tissues from openings called spiracles along the body."
+  },
+  {
+    text: "Which class of myriapods exhibits aposematism (warning coloration) as a defense mechanism?",
+    options: ["Symphyla", "Diplopoda", "Chilopoda", "Pauropoda"],
+    correct: 1,
+    explanation: "Many millipedes (Diplopoda) exhibit aposematism, using bright colors to warn potential predators of their toxicity or unpleasant taste."
+  },
+  {
+    text: "Biramous appendages are a characteristic feature of which arthropod group?",
+    options: ["Insecta", "Myriapoda", "Crustacea", "Arachnida"],
+    correct: 2,
+    explanation: "Crustaceans are characterized by having biramous appendages, which are appendages that branch into two parts."
+  },
+  {
+    text: "What is the function of the green glands in crustaceans?",
+    options: ["Gas exchange",
+      "Osmoregulation and excretion",
+      "Digestion",
+      "Reproduction"
+    ],
+    correct: 1,
+    explanation: "Green glands are excretory organs found in crustaceans that function to maintain osmotic balance and eliminate waste products."
+  },
+  {
+    text: "Which of the following structures is used for feeding in barnacles?",
+    options: ["Chelicerae", "Mandibles", "Cirri", "Pedipalps"],
+    correct: 2,
+    explanation: "Barnacles use cirri, which are feathery appendages, to filter feed by sweeping through the water to capture plankton and other small organisms."
+  },
+  {
+    text: "Which crustacean group is characterized by a carapace that covers most of the body?",
+    options: ["Copepoda", "Branchiopoda", "Malacostraca", "Ostracoda"],
+    correct: 2,
+    explanation: "Malacostraca, which includes crabs, lobsters, shrimp, and isopods, is characterized by a carapace that covers most of the cephalothorax."
+  },
+  {
+    text: "Nauplius is a distinctive larval stage found in many members of which group?",
+    options: ["Insecta", "Myriapoda", "Crustacea", "Arachnida"],
+    correct: 2,
+    explanation: "The nauplius larva is a characteristic larval stage of many crustaceans and has three pairs of appendages and a single median eye."
+  }, 
+
         ]
       },
            
@@ -5783,6 +6257,482 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
         correct: 1,
         explanation: "The evolution of jaws in vertebrates improved feeding efficiency, enabling active predation."
       },
+          
+  {
+    text: "How does hemolymph circulation in the arthropod hemocoel MOST accurately occur?",
+    options: [
+      "Through a network of branching vessels that directly deliver nutrients to tissues.",
+      "Primarily driven by diffusion, with the heart playing a minor role in mixing.",
+      "Circulation is driven by the heart and assisted by body movements, bathing organs directly.",
+      "Via specialized cells within the hemolymph that actively transport nutrients."
+    ],
+    correct: 2,
+    explanation:
+      "Hemolymph circulation is driven by a heart that pumps hemolymph through vessels, but ultimately empties into the hemocoel, bathing the organs directly. Body movements assist in circulation."
+  },
+  {
+    text: "What is the MOST distinctive anatomical feature that defines Chelicerata?",
+    options: [
+      "The presence of mandibles adapted for chewing plant matter.",
+      "The presence of antennae used for sensing chemical cues in the environment.",
+      "The presence of chelicerae, which are modified appendages near the mouth used for grasping or piercing.",
+      "The presence of a cephalothorax and abdomen, connected by a narrow pedicel."
+    ],
+    correct: 2,
+    explanation:
+      "The presence of chelicerae, modified appendages near the mouth, is a defining feature of Chelicerata. These are used for grasping or piercing prey."
+  },
+  {
+    text: "Which characteristic is ALWAYS present in Arachnids and serves to distinguish them from other Chelicerates?",
+    options: [
+      "Silk production for web building or egg protection.",
+      "Four pairs of walking legs attached to the cephalothorax.",
+      "The presence of book lungs for gas exchange in terrestrial environments.",
+      "A segmented abdomen clearly demarcated from the cephalothorax."
+    ],
+    correct: 1,
+    explanation:
+      "Arachnids have four pairs of legs attached to the cephalothorax which distinguishes them. While silk, book lungs, and segmented abdomens are not always present."
+  },
+  {
+    text: "Which sensory modality is MOST reliant on the pedipalps in arachnids?",
+    options: [
+      "Vision, by detecting light intensity and polarization.",
+      "Chemoreception, detecting airborne pheromones for mate location.",
+      "Mechanoreception, sensing vibrations and air currents for prey detection.",
+      "Proprioception, providing information about body position and movement."
+    ],
+    correct: 2,
+    explanation:
+      "Arachnids rely mostly on mechanoreception through pedipalps, allowing them to sense vibrations and air currents for prey detection."
+  },
+  {
+    text: "What is a defining characteristic of the Merostomata (horseshoe crabs) that reflects their ancient lineage?",
+    options: [
+      "The ability to regenerate lost limbs through epimorphic regeneration.",
+      "The presence of both compound and simple eyes for vision.",
+      "The use of book gills for gas exchange, located on the abdomen.",
+      "Their complex social behavior characterized by cooperative breeding."
+    ],
+    correct: 2,
+    explanation:
+      "Merostomata have book gills located on the abdomen, used for gas exchange. This is a characteristic which displays their ancient lineage."
+  }, 
+  {
+    text: "What role do arthropods play in the carbon cycle?",
+    options: [
+      "Photosynthesis",
+      "Decomposition and respiration",
+      "Nitrogen fixation",
+      "Chemosynthesis"
+    ],
+    correct: 1,
+    explanation: "Arthropods play a significant role in the carbon cycle through decomposition of organic matter and respiration, releasing carbon dioxide back into the atmosphere."
+  },
+  {
+    text: "What type of circulatory system is found in arthropods?",
+    options: [
+      "Closed circulatory system",
+      "Open circulatory system",
+      "Lymphatic system",
+      "No circulatory system"
+    ],
+    correct: 1,
+    explanation: "Arthropods have an open circulatory system, where hemolymph is not confined to vessels but circulates through a hemocoel, bathing the tissues and organs directly."
+  },
+  {
+    text: "Which of the following best describes the structure of the arthropod brain?",
+    options: [
+      "A single, large ganglion",
+      "A ventral nerve cord with segmental ganglia",
+      "A cerebral ganglion with connectives to a ventral nerve cord",
+      "A diffuse nerve net"
+    ],
+    correct: 2,
+    explanation: "The arthropod brain consists of a cerebral ganglion (or ganglia) located in the head, connected to a ventral nerve cord with segmental ganglia running along the length of the body."
+  },
+  {
+    text: "What are the primary excretory organs in insects?",
+    options: ["Nephridia", "Green glands", "Malpighian tubules", "Kidneys"],
+    correct: 2,
+    explanation: "Insects primarily use Malpighian tubules for excretion. These tubules remove nitrogenous waste from the hemolymph and empty it into the hindgut."
+  },
+  {
+    text: "Which of the following is NOT a type of sensory receptor found in arthropods?",
+    options: [
+      "Chemoreceptors",
+      "Mechanoreceptors",
+      "Photoreceptors",
+      "Magnetoreceptors"
+    ],
+    correct: 3,
+    explanation: "While arthropods possess chemoreceptors (for taste and smell), mechanoreceptors (for touch and pressure), and photoreceptors (for vision), they do not possess magnetoreceptors, for magnetic field detection, unlike some other animals."
+  },
+  {
+    text: "How do arthropods detect gravity and orientation?",
+    options: ["Ocelli", "Statocysts", "Ommatidia", "Setae"],
+    correct: 1,
+    explanation: "Arthropods use statocysts, which are sensory organs that contain statoliths (dense particles) to detect gravity and orientation."
+  },
+  {    text: "Which of the following groups is most closely related to the insects (Hexapoda)?",
+    options: ["Crustacea", "Myriapoda", "Chelicerata", "All are equally related."],
+    correct: 0,
+    explanation: "While all are related, molecular data suggests Hexapoda is more closely related to Crustacea than the others."
+  },
+  {
+    text: "Which of the following classes contains the largest number of described species?",
+    options: ["Arachnida", "Crustacea", "Insecta", "Myriapoda"],
+    correct: 2,
+    explanation: "The class Insecta (insects) contains the largest number of described species, making up a significant portion of the Earth's biodiversity."
+  },
+  {
+    text: "Which of the following subphyla includes organisms with biramous appendages?",
+    options: ["Chelicerata", "Myriapoda", "Crustacea", "Hexapoda"],
+    correct: 2,
+    explanation: "Crustaceans are characterized by having biramous appendages, which are appendages that branch into two parts."
+  },
+  {
+    text: "The extinct trilobites belong to which of the following groups?",
+    options: [
+      "A subphylum of Arthropoda",
+      "A class of Annelida",
+      "A phylum of Mollusca",
+      "A class of Echinodermata"
+    ],
+    correct: 0,
+    explanation: "Trilobites are an extinct group of marine arthropods that belong to a subphylum of Arthropoda."
+  },
+  {
+    text: "Which subphylum is entirely terrestrial?",
+    options: ["Crustacea", "Chelicerata", "Hexapoda", "Myriapoda"],
+    correct: 1,
+    explanation: "Chelicerata are entirely terrestrial, and insects are terrestrial. Note that some Chelicerata are also aquatic"
+  }, 
+  {
+    text: "Which of the following is NOT a characteristic feature of insects?",
+    options: ["Three body segments", "Six legs", "Eight legs", "Antennae"],
+    correct: 2,
+    explanation: "Insects are characterized by having three body segments (head, thorax, and abdomen), six legs, and antennae."
+  },
+  {
+    text: "What is the function of the Malpighian tubules in insects?",
+    options: ["Gas exchange", "Digestion", "Excretion", "Circulation"],
+    correct: 2,
+    explanation: "Malpighian tubules are excretory organs found in insects and other arthropods that function to remove nitrogenous waste from the hemolymph."
+  },
+  {
+    text: "Which of the following best describes the process of incomplete metamorphosis (hemimetabolism) in insects?",
+    options: [
+      "Larva transforms directly into an adult.",
+      "Egg hatches into a nymph that gradually develops into an adult.",
+      "Egg hatches into a larva, which then forms a pupa before becoming an adult.",
+      "Asexual reproduction"
+    ],
+    correct: 1,
+    explanation: "Incomplete metamorphosis (hemimetabolism) is a developmental process in insects where the egg hatches into a nymph, which gradually develops into an adult through a series of molts."
+  },
+  {
+    text: "Which of the following structures are used for gas exchange in terrestrial insects?",
+    options: ["Gills", "Book lungs", "Tracheae", "Cutaneous respiration"],
+    correct: 2,
+    explanation: "Terrestrial insects use a tracheal system, which consists of a network of tubes that carry oxygen directly to the tissues from openings called spiracles along the body."
+  },
+  {
+    text: "What is the function of the tympanal organs in some insects?",
+    options: ["Taste", "Smell", "Hearing", "Vision"],
+    correct: 2,
+    explanation: "Tympanal organs are sensory structures found in some insects that function to detect sound vibrations."
+  },
+  {
+    text: "Which of the following features supports the evolutionary relationship between annelids and arthropods?",
+    options: [
+      "Presence of a rigid exoskeleton",
+      "Jointed appendages",
+      "Segmented body plan",
+      "Compound eyes"
+    ],
+    correct: 2,
+    explanation: "Segmented body plan is a key characteristic shared between annelids and arthropods, suggesting a common ancestry."
+  },
+  {
+    text: "What is the Panarthropoda?",
+    options: [
+      "A group of extinct marine arthropods",       "A clade that includes Arthropoda, Onychophora, and Tardigrada",
+      "The ancestral group of annelids",
+      "A type of insect respiratory system"
+    ],
+    correct: 1,
+    explanation: "Panarthropoda is a clade that includes Arthropoda, Onychophora (velvet worms), and Tardigrada (water bears), reflecting their shared evolutionary history and characteristics."
+  },
+  {
+    text: "Which of the following is NOT a characteristic shared between arthropods and annelids?",
+    options: [
+      "Bilateral symmetry",
+      "Protostome development",
+      "Rigid exoskeleton",
+      "Segmentation"
+    ],
+    correct: 2,
+    explanation: "While arthropods and annelids share characteristics such as bilateral symmetry, protostome development, and segmentation, a rigid exoskeleton is a feature unique to arthropods."
+  },
+  {
+    text: "Which of the following arthropod subphyla is considered most closely related to the Onychophora (velvet worms)?",
+    options: ["Chelicerata", "Myriapoda", "Crustacea", "Hexapoda"],
+    correct: 3,
+    explanation: "While all are related via Panarthropoda, Hexapoda and Onychophora share some molecular and morphological features."
+  },
+  {
+    text: "The evolution of wings in insects is thought to have been derived from which ancestral structure?",
+    options: ["Gills", "Legs", "Body wall extensions", "Sensory bristles"],
+    correct: 2,
+    explanation: "The prevailing hypothesis suggests that insect wings evolved from extensions of the body wall, likely serving a thermoregulatory or swimming function initially."
+  },
+  {
+    text: "What evolutionary advantage does tagmatization provide to arthropods?",
+    options: [
+      "Increased body flexibility",
+      "Specialization of body regions for different functions",
+      "Enhanced water retention",
+      "Improved camouflage"
+    ],
+    correct: 1,
+    explanation: "Tagmatization, the fusion of body segments into specialized regions (tagmata) like the head, thorax, and abdomen, allows for the specialization of different body regions for different functions."
+  },
+  {
+    text: "Which of the following is an example of convergent evolution observed in arthropods?",
+    options: [
+      "Tracheal systems in insects and arachnids",
+      "The presence of chelicerae in spiders and scorpions",
+      "The segmented body plan of annelids and arthropods",
+      "The chitinous exoskeleton"
+    ],
+    correct: 0, 
+    explanation: "The tracheal systems in insects and arachnids are an example of convergent evolution because these groups independently evolved a similar system of tubes for gas exchange."
+  },
+  {
+    text: "What is the role of juvenile hormone in insect development?",
+    options: [
+      "Stimulating molting",
+      "Promoting metamorphosis",
+      "Inhibiting metamorphosis and maintaining larval characteristics",
+      "Regulating reproduction"
+    ],
+    correct: 2,
+    explanation: "Juvenile hormone (JH) inhibits metamorphosis and maintains larval characteristics. When JH levels drop, the insect can undergo metamorphosis into its adult form."
+  },
+  {
+    text: "Which of the following best describes the function of the chordotonal organs in insects?",
+    options: [
+      "Detecting sound",
+      "Sensing tension and strain in the exoskeleton",
+      "Perceiving light",
+      "Detecting chemicals"
+    ],
+    correct: 1,
+    explanation: "Chordotonal organs are sensory receptors in insects that detect tension and strain in the exoskeleton, providing information about body position and movement."
+  },
+  {
+    text: "What is the significance of the Cambrian explosion in the context of arthropod evolution?",
+    options: [
+      "Marks the extinction of trilobites.",
+      "Represents a period of rapid arthropod diversification",
+      "Represents the first appearance of insects.",
+      "Marks the evolution of the exoskeleton."
+    ],
+    correct: 1,
+    explanation: "The Cambrian explosion was a period of rapid diversification of life forms, including arthropods, leading to the evolution of a wide range of body plans and adaptations."
+  },
+  {
+    text: "Which of the following is NOT a significant ecological role played by arthropods?",
+    options: [
+      "Pollination",
+      "Decomposition",
+      "Primary production in aquatic ecosystems",
+      "Pest control"
+    ],
+    correct: 2,
+    explanation: "Arthropods are important pollinators, decomposers, and pest control agents. Primary production in aquatic ecosystems is generally the domain of algae and other photosynthetic organisms, not arthropods."
+  },
+  {
+    text: "Which of the following best describes the role of arthropods in the transmission of human diseases?",
+    options: [
+      "All arthropods are beneficial to human health.",
+      "Arthropods can act as vectors, transmitting pathogens from one host to another.",
+      "Arthropods play no role in the transmission of human diseases.",
+      "Arthropods only transmit diseases to animals, not humans."
+    ],
+    correct: 1,
+    explanation: "Arthropods can act as vectors, transmitting pathogens from one host to another, resulting in many diseases."
+  }, 
+  {
+    text: "Which of the following is NOT a primary function of the arthropod exoskeleton?",
+    options: [
+      "Protection against predators",
+      "Prevention of water loss",
+      "Support for internal organs",
+      "Facilitating gas exchange"
+    ],
+    correct: 3,
+    explanation: "Arthropod exoskeletons primarily provide protection, prevent water loss, and support internal organs, but they are not directly involved in facilitating gas exchange, which occurs through gills, book lungs, or tracheal systems."
+  },
+  {
+    text: "Ecdysis in arthropods is directly regulated by which hormone?",
+    options: ["Insulin", "Ecdysone", "Juvenile hormone", "Thyroxine"],
+    correct: 1,
+    explanation: "Ecdysone is the steroid hormone that triggers molting (ecdysis) in arthropods. Juvenile hormone determines the type of molt."
+  },
+  {
+    text: "Which of the following best explains the evolutionary success of arthropods?",
+    options: [
+      "Simple body plan and limited specialization",
+      "Rapid reproduction and high mutation rate",
+      "Versatile appendages and a chitinous exoskeleton",
+      "Dependence on a single, stable food source"
+    ],
+    correct: 2,
+    explanation: "The evolutionary success of arthropods is largely attributed to their versatile, jointed appendages and their protective and adaptable chitinous exoskeleton."
+  },
+  {
+    text: "What is the primary component of the arthropod exoskeleton that provides rigidity?",
+    options: ["Cellulose", "Keratin", "Chitin", "Pectin"],
+    correct: 2,
+    explanation: "Chitin is a complex polysaccharide that forms the primary structural component of the arthropod exoskeleton, providing rigidity and protection."
+  },
+  {
+    text: "The hemocoel in arthropods serves primarily as a:",
+    options: [
+      "Site for gas exchange",
+      "Hydrostatic skeleton",
+      "Space for blood circulation",
+      "Storage for digestive enzymes"
+    ],
+    correct: 2,
+    explanation: "The hemocoel is the primary body cavity in arthropods and serves as a space for hemolymph (blood) circulation, directly bathing the tissues and organs."
+  },
+  {
+    text: "Which of the following structures is unique to chelicerates?",
+    options: ["Mandibles", "Antennae", "Chelicerae", "Maxillae"],
+    correct: 2,
+    explanation: "Chelicerae are specialized appendages located near the mouth of chelicerates (spiders, scorpions, horseshoe crabs, etc.) and are used for feeding and defense."
+  },
+  {    text: "Which of the following characteristics is NOT typically found in arachnids?",
+    options: [
+      "Book lungs",
+      "Silk production",
+      "Three body segments",
+      "Eight legs"
+    ],
+    correct: 2,
+    explanation: "Arachnids typically have two body segments (cephalothorax and abdomen), eight legs, book lungs for respiration, and silk glands for producing silk."
+  },
+  {
+    text: "What is the function of the pedipalps in arachnids?",
+    options: [
+      "Locomotion",
+      "Prey capture and sensory perception",
+      "Silk production",
+      "Gas exchange"
+    ],
+    correct: 1,
+    explanation: "Pedipalps are appendages located near the chelicerae in arachnids and are used for prey capture, sensory perception, and, in some species, reproduction."
+  },
+  {
+    text: "Which of the following is a unique feature of horseshoe crabs (Merostomata)?",
+    options: [
+      "Possession of mandibles",
+      "Green glands for excretion",
+      "Book gills for respiration",
+      "Silk production"
+    ],
+    correct: 2,
+    explanation: "Horseshoe crabs (Merostomata) are characterized by having book gills, which are specialized respiratory structures located on the abdomen."
+  },
+  {
+    text: "Which of the following best describes the feeding strategy of most spiders?",
+    options: ["Filter feeding", "Herbivory", "Predatory", "Parasitism"],
+    correct: 2,
+    explanation: "Most spiders are predatory, using chelicerae to inject venom and immobilize their prey before consuming it."
+  },
+  {
+    text: "What is the key difference between centipedes (Chilopoda) and millipedes (Diplopoda)?",
+    options: [
+      "Centipedes are herbivores, while millipedes are carnivores.",
+      "Centipedes have one pair of legs per segment, while millipedes have two pairs.",
+      "Centipedes possess antennae, while millipedes lack them.",
+      "Centipedes are aquatic, while millipedes are terrestrial."
+    ],
+    correct: 1,
+    explanation: "Centipedes (Chilopoda) have one pair of legs per segment and are primarily carnivorous, while millipedes (Diplopoda) have two pairs of legs per apparent segment and are typically detritivores or herbivores."
+  },
+  {
+    text: "Forcipules, venomous claws, are found in which class?",
+    options: ["Diplopoda", "Insecta", "Chilopoda", "Arachnida"],
+    correct: 2,
+    explanation: "Forcipules, which are modified legs that function as venomous claws, are a characteristic feature of centipedes (Chilopoda) and are used to capture prey."
+  },
+  {
+    text: "Which of the following is the primary diet of most millipedes?",
+    options: [
+      "Living insects",
+      "Decaying organic matter",
+      "Plant nectar",
+      "Blood"
+    ],
+    correct: 1,
+    explanation: "Most millipedes are detritivores, feeding on decaying organic matter such as leaf litter and wood."
+  },
+  {
+    text: "What type of respiratory system is typically found in myriapods?",
+    options: [
+      "Gills",
+      "Book lungs",
+      "Tracheal system",
+      "Cutaneous respiration"
+    ],
+    correct: 2,
+    explanation: "Myriapods typically have a tracheal system, which consists of a network of tubes that carry oxygen directly to the tissues from openings called spiracles along the body."
+  },
+  {
+    text: "Which class of myriapods exhibits aposematism (warning coloration) as a defense mechanism?",
+    options: ["Symphyla", "Diplopoda", "Chilopoda", "Pauropoda"],
+    correct: 1,
+    explanation: "Many millipedes (Diplopoda) exhibit aposematism, using bright colors to warn potential predators of their toxicity or unpleasant taste."
+  },
+  {
+    text: "Biramous appendages are a characteristic feature of which arthropod group?",
+    options: ["Insecta", "Myriapoda", "Crustacea", "Arachnida"],
+    correct: 2,
+    explanation: "Crustaceans are characterized by having biramous appendages, which are appendages that branch into two parts."
+  },
+  {
+    text: "What is the function of the green glands in crustaceans?",
+    options: ["Gas exchange",
+      "Osmoregulation and excretion",
+      "Digestion",
+      "Reproduction"
+    ],
+    correct: 1,
+    explanation: "Green glands are excretory organs found in crustaceans that function to maintain osmotic balance and eliminate waste products."
+  },
+  {
+    text: "Which of the following structures is used for feeding in barnacles?",
+    options: ["Chelicerae", "Mandibles", "Cirri", "Pedipalps"],
+    correct: 2,
+    explanation: "Barnacles use cirri, which are feathery appendages, to filter feed by sweeping through the water to capture plankton and other small organisms."
+  },
+  {
+    text: "Which crustacean group is characterized by a carapace that covers most of the body?",
+    options: ["Copepoda", "Branchiopoda", "Malacostraca", "Ostracoda"],
+    correct: 2,
+    explanation: "Malacostraca, which includes crabs, lobsters, shrimp, and isopods, is characterized by a carapace that covers most of the cephalothorax."
+  },
+  {
+    text: "Nauplius is a distinctive larval stage found in many members of which group?",
+    options: ["Insecta", "Myriapoda", "Crustacea", "Arachnida"],
+    correct: 2,
+    explanation: "The nauplius larva is a characteristic larval stage of many crustaceans and has three pairs of appendages and a single median eye."
+  }, 
+
       {
         text: "What type of vertebrae is characteristic of the cervical region in birds?",
         options: ["Procoelous", "Heterocoelous", "Amphicoelous", "Opisthocoelous"],
@@ -6963,6 +7913,482 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
         correct: 2,
          explanation: "Platyhelminthes, such as flatworms, display the tissue-organ grade of organization. They have tissues organized into simple organs such as a digestive cavity, but not all organ systems are fully formed, distinguishing them from the more complex organ system grade."
     },
+        
+  {
+    text: "How does hemolymph circulation in the arthropod hemocoel MOST accurately occur?",
+    options: [
+      "Through a network of branching vessels that directly deliver nutrients to tissues.",
+      "Primarily driven by diffusion, with the heart playing a minor role in mixing.",
+      "Circulation is driven by the heart and assisted by body movements, bathing organs directly.",
+      "Via specialized cells within the hemolymph that actively transport nutrients."
+    ],
+    correct: 2,
+    explanation:
+      "Hemolymph circulation is driven by a heart that pumps hemolymph through vessels, but ultimately empties into the hemocoel, bathing the organs directly. Body movements assist in circulation."
+  },
+  {
+    text: "What is the MOST distinctive anatomical feature that defines Chelicerata?",
+    options: [
+      "The presence of mandibles adapted for chewing plant matter.",
+      "The presence of antennae used for sensing chemical cues in the environment.",
+      "The presence of chelicerae, which are modified appendages near the mouth used for grasping or piercing.",
+      "The presence of a cephalothorax and abdomen, connected by a narrow pedicel."
+    ],
+    correct: 2,
+    explanation:
+      "The presence of chelicerae, modified appendages near the mouth, is a defining feature of Chelicerata. These are used for grasping or piercing prey."
+  },
+  {
+    text: "Which characteristic is ALWAYS present in Arachnids and serves to distinguish them from other Chelicerates?",
+    options: [
+      "Silk production for web building or egg protection.",
+      "Four pairs of walking legs attached to the cephalothorax.",
+      "The presence of book lungs for gas exchange in terrestrial environments.",
+      "A segmented abdomen clearly demarcated from the cephalothorax."
+    ],
+    correct: 1,
+    explanation:
+      "Arachnids have four pairs of legs attached to the cephalothorax which distinguishes them. While silk, book lungs, and segmented abdomens are not always present."
+  },
+  {
+    text: "Which sensory modality is MOST reliant on the pedipalps in arachnids?",
+    options: [
+      "Vision, by detecting light intensity and polarization.",
+      "Chemoreception, detecting airborne pheromones for mate location.",
+      "Mechanoreception, sensing vibrations and air currents for prey detection.",
+      "Proprioception, providing information about body position and movement."
+    ],
+    correct: 2,
+    explanation:
+      "Arachnids rely mostly on mechanoreception through pedipalps, allowing them to sense vibrations and air currents for prey detection."
+  },
+  {
+    text: "What is a defining characteristic of the Merostomata (horseshoe crabs) that reflects their ancient lineage?",
+    options: [
+      "The ability to regenerate lost limbs through epimorphic regeneration.",
+      "The presence of both compound and simple eyes for vision.",
+      "The use of book gills for gas exchange, located on the abdomen.",
+      "Their complex social behavior characterized by cooperative breeding."
+    ],
+    correct: 2,
+    explanation:
+      "Merostomata have book gills located on the abdomen, used for gas exchange. This is a characteristic which displays their ancient lineage."
+  }, 
+  {
+    text: "What role do arthropods play in the carbon cycle?",
+    options: [
+      "Photosynthesis",
+      "Decomposition and respiration",
+      "Nitrogen fixation",
+      "Chemosynthesis"
+    ],
+    correct: 1,
+    explanation: "Arthropods play a significant role in the carbon cycle through decomposition of organic matter and respiration, releasing carbon dioxide back into the atmosphere."
+  },
+  {
+    text: "What type of circulatory system is found in arthropods?",
+    options: [
+      "Closed circulatory system",
+      "Open circulatory system",
+      "Lymphatic system",
+      "No circulatory system"
+    ],
+    correct: 1,
+    explanation: "Arthropods have an open circulatory system, where hemolymph is not confined to vessels but circulates through a hemocoel, bathing the tissues and organs directly."
+  },
+  {
+    text: "Which of the following best describes the structure of the arthropod brain?",
+    options: [
+      "A single, large ganglion",
+      "A ventral nerve cord with segmental ganglia",
+      "A cerebral ganglion with connectives to a ventral nerve cord",
+      "A diffuse nerve net"
+    ],
+    correct: 2,
+    explanation: "The arthropod brain consists of a cerebral ganglion (or ganglia) located in the head, connected to a ventral nerve cord with segmental ganglia running along the length of the body."
+  },
+  {
+    text: "What are the primary excretory organs in insects?",
+    options: ["Nephridia", "Green glands", "Malpighian tubules", "Kidneys"],
+    correct: 2,
+    explanation: "Insects primarily use Malpighian tubules for excretion. These tubules remove nitrogenous waste from the hemolymph and empty it into the hindgut."
+  },
+  {
+    text: "Which of the following is NOT a type of sensory receptor found in arthropods?",
+    options: [
+      "Chemoreceptors",
+      "Mechanoreceptors",
+      "Photoreceptors",
+      "Magnetoreceptors"
+    ],
+    correct: 3,
+    explanation: "While arthropods possess chemoreceptors (for taste and smell), mechanoreceptors (for touch and pressure), and photoreceptors (for vision), they do not possess magnetoreceptors, for magnetic field detection, unlike some other animals."
+  },
+  {
+    text: "How do arthropods detect gravity and orientation?",
+    options: ["Ocelli", "Statocysts", "Ommatidia", "Setae"],
+    correct: 1,
+    explanation: "Arthropods use statocysts, which are sensory organs that contain statoliths (dense particles) to detect gravity and orientation."
+  },
+  {    text: "Which of the following groups is most closely related to the insects (Hexapoda)?",
+    options: ["Crustacea", "Myriapoda", "Chelicerata", "All are equally related."],
+    correct: 0,
+    explanation: "While all are related, molecular data suggests Hexapoda is more closely related to Crustacea than the others."
+  },
+  {
+    text: "Which of the following classes contains the largest number of described species?",
+    options: ["Arachnida", "Crustacea", "Insecta", "Myriapoda"],
+    correct: 2,
+    explanation: "The class Insecta (insects) contains the largest number of described species, making up a significant portion of the Earth's biodiversity."
+  },
+  {
+    text: "Which of the following subphyla includes organisms with biramous appendages?",
+    options: ["Chelicerata", "Myriapoda", "Crustacea", "Hexapoda"],
+    correct: 2,
+    explanation: "Crustaceans are characterized by having biramous appendages, which are appendages that branch into two parts."
+  },
+  {
+    text: "The extinct trilobites belong to which of the following groups?",
+    options: [
+      "A subphylum of Arthropoda",
+      "A class of Annelida",
+      "A phylum of Mollusca",
+      "A class of Echinodermata"
+    ],
+    correct: 0,
+    explanation: "Trilobites are an extinct group of marine arthropods that belong to a subphylum of Arthropoda."
+  },
+  {
+    text: "Which subphylum is entirely terrestrial?",
+    options: ["Crustacea", "Chelicerata", "Hexapoda", "Myriapoda"],
+    correct: 1,
+    explanation: "Chelicerata are entirely terrestrial, and insects are terrestrial. Note that some Chelicerata are also aquatic"
+  }, 
+  {
+    text: "Which of the following is NOT a characteristic feature of insects?",
+    options: ["Three body segments", "Six legs", "Eight legs", "Antennae"],
+    correct: 2,
+    explanation: "Insects are characterized by having three body segments (head, thorax, and abdomen), six legs, and antennae."
+  },
+  {
+    text: "What is the function of the Malpighian tubules in insects?",
+    options: ["Gas exchange", "Digestion", "Excretion", "Circulation"],
+    correct: 2,
+    explanation: "Malpighian tubules are excretory organs found in insects and other arthropods that function to remove nitrogenous waste from the hemolymph."
+  },
+  {
+    text: "Which of the following best describes the process of incomplete metamorphosis (hemimetabolism) in insects?",
+    options: [
+      "Larva transforms directly into an adult.",
+      "Egg hatches into a nymph that gradually develops into an adult.",
+      "Egg hatches into a larva, which then forms a pupa before becoming an adult.",
+      "Asexual reproduction"
+    ],
+    correct: 1,
+    explanation: "Incomplete metamorphosis (hemimetabolism) is a developmental process in insects where the egg hatches into a nymph, which gradually develops into an adult through a series of molts."
+  },
+  {
+    text: "Which of the following structures are used for gas exchange in terrestrial insects?",
+    options: ["Gills", "Book lungs", "Tracheae", "Cutaneous respiration"],
+    correct: 2,
+    explanation: "Terrestrial insects use a tracheal system, which consists of a network of tubes that carry oxygen directly to the tissues from openings called spiracles along the body."
+  },
+  {
+    text: "What is the function of the tympanal organs in some insects?",
+    options: ["Taste", "Smell", "Hearing", "Vision"],
+    correct: 2,
+    explanation: "Tympanal organs are sensory structures found in some insects that function to detect sound vibrations."
+  },
+  {
+    text: "Which of the following features supports the evolutionary relationship between annelids and arthropods?",
+    options: [
+      "Presence of a rigid exoskeleton",
+      "Jointed appendages",
+      "Segmented body plan",
+      "Compound eyes"
+    ],
+    correct: 2,
+    explanation: "Segmented body plan is a key characteristic shared between annelids and arthropods, suggesting a common ancestry."
+  },
+  {
+    text: "What is the Panarthropoda?",
+    options: [
+      "A group of extinct marine arthropods",       "A clade that includes Arthropoda, Onychophora, and Tardigrada",
+      "The ancestral group of annelids",
+      "A type of insect respiratory system"
+    ],
+    correct: 1,
+    explanation: "Panarthropoda is a clade that includes Arthropoda, Onychophora (velvet worms), and Tardigrada (water bears), reflecting their shared evolutionary history and characteristics."
+  },
+  {
+    text: "Which of the following is NOT a characteristic shared between arthropods and annelids?",
+    options: [
+      "Bilateral symmetry",
+      "Protostome development",
+      "Rigid exoskeleton",
+      "Segmentation"
+    ],
+    correct: 2,
+    explanation: "While arthropods and annelids share characteristics such as bilateral symmetry, protostome development, and segmentation, a rigid exoskeleton is a feature unique to arthropods."
+  },
+  {
+    text: "Which of the following arthropod subphyla is considered most closely related to the Onychophora (velvet worms)?",
+    options: ["Chelicerata", "Myriapoda", "Crustacea", "Hexapoda"],
+    correct: 3,
+    explanation: "While all are related via Panarthropoda, Hexapoda and Onychophora share some molecular and morphological features."
+  },
+  {
+    text: "The evolution of wings in insects is thought to have been derived from which ancestral structure?",
+    options: ["Gills", "Legs", "Body wall extensions", "Sensory bristles"],
+    correct: 2,
+    explanation: "The prevailing hypothesis suggests that insect wings evolved from extensions of the body wall, likely serving a thermoregulatory or swimming function initially."
+  },
+  {
+    text: "What evolutionary advantage does tagmatization provide to arthropods?",
+    options: [
+      "Increased body flexibility",
+      "Specialization of body regions for different functions",
+      "Enhanced water retention",
+      "Improved camouflage"
+    ],
+    correct: 1,
+    explanation: "Tagmatization, the fusion of body segments into specialized regions (tagmata) like the head, thorax, and abdomen, allows for the specialization of different body regions for different functions."
+  },
+  {
+    text: "Which of the following is an example of convergent evolution observed in arthropods?",
+    options: [
+      "Tracheal systems in insects and arachnids",
+      "The presence of chelicerae in spiders and scorpions",
+      "The segmented body plan of annelids and arthropods",
+      "The chitinous exoskeleton"
+    ],
+    correct: 0, 
+    explanation: "The tracheal systems in insects and arachnids are an example of convergent evolution because these groups independently evolved a similar system of tubes for gas exchange."
+  },
+  {
+    text: "What is the role of juvenile hormone in insect development?",
+    options: [
+      "Stimulating molting",
+      "Promoting metamorphosis",
+      "Inhibiting metamorphosis and maintaining larval characteristics",
+      "Regulating reproduction"
+    ],
+    correct: 2,
+    explanation: "Juvenile hormone (JH) inhibits metamorphosis and maintains larval characteristics. When JH levels drop, the insect can undergo metamorphosis into its adult form."
+  },
+  {
+    text: "Which of the following best describes the function of the chordotonal organs in insects?",
+    options: [
+      "Detecting sound",
+      "Sensing tension and strain in the exoskeleton",
+      "Perceiving light",
+      "Detecting chemicals"
+    ],
+    correct: 1,
+    explanation: "Chordotonal organs are sensory receptors in insects that detect tension and strain in the exoskeleton, providing information about body position and movement."
+  },
+  {
+    text: "What is the significance of the Cambrian explosion in the context of arthropod evolution?",
+    options: [
+      "Marks the extinction of trilobites.",
+      "Represents a period of rapid arthropod diversification",
+      "Represents the first appearance of insects.",
+      "Marks the evolution of the exoskeleton."
+    ],
+    correct: 1,
+    explanation: "The Cambrian explosion was a period of rapid diversification of life forms, including arthropods, leading to the evolution of a wide range of body plans and adaptations."
+  },
+  {
+    text: "Which of the following is NOT a significant ecological role played by arthropods?",
+    options: [
+      "Pollination",
+      "Decomposition",
+      "Primary production in aquatic ecosystems",
+      "Pest control"
+    ],
+    correct: 2,
+    explanation: "Arthropods are important pollinators, decomposers, and pest control agents. Primary production in aquatic ecosystems is generally the domain of algae and other photosynthetic organisms, not arthropods."
+  },
+  {
+    text: "Which of the following best describes the role of arthropods in the transmission of human diseases?",
+    options: [
+      "All arthropods are beneficial to human health.",
+      "Arthropods can act as vectors, transmitting pathogens from one host to another.",
+      "Arthropods play no role in the transmission of human diseases.",
+      "Arthropods only transmit diseases to animals, not humans."
+    ],
+    correct: 1,
+    explanation: "Arthropods can act as vectors, transmitting pathogens from one host to another, resulting in many diseases."
+  }, 
+  {
+    text: "Which of the following is NOT a primary function of the arthropod exoskeleton?",
+    options: [
+      "Protection against predators",
+      "Prevention of water loss",
+      "Support for internal organs",
+      "Facilitating gas exchange"
+    ],
+    correct: 3,
+    explanation: "Arthropod exoskeletons primarily provide protection, prevent water loss, and support internal organs, but they are not directly involved in facilitating gas exchange, which occurs through gills, book lungs, or tracheal systems."
+  },
+  {
+    text: "Ecdysis in arthropods is directly regulated by which hormone?",
+    options: ["Insulin", "Ecdysone", "Juvenile hormone", "Thyroxine"],
+    correct: 1,
+    explanation: "Ecdysone is the steroid hormone that triggers molting (ecdysis) in arthropods. Juvenile hormone determines the type of molt."
+  },
+  {
+    text: "Which of the following best explains the evolutionary success of arthropods?",
+    options: [
+      "Simple body plan and limited specialization",
+      "Rapid reproduction and high mutation rate",
+      "Versatile appendages and a chitinous exoskeleton",
+      "Dependence on a single, stable food source"
+    ],
+    correct: 2,
+    explanation: "The evolutionary success of arthropods is largely attributed to their versatile, jointed appendages and their protective and adaptable chitinous exoskeleton."
+  },
+  {
+    text: "What is the primary component of the arthropod exoskeleton that provides rigidity?",
+    options: ["Cellulose", "Keratin", "Chitin", "Pectin"],
+    correct: 2,
+    explanation: "Chitin is a complex polysaccharide that forms the primary structural component of the arthropod exoskeleton, providing rigidity and protection."
+  },
+  {
+    text: "The hemocoel in arthropods serves primarily as a:",
+    options: [
+      "Site for gas exchange",
+      "Hydrostatic skeleton",
+      "Space for blood circulation",
+      "Storage for digestive enzymes"
+    ],
+    correct: 2,
+    explanation: "The hemocoel is the primary body cavity in arthropods and serves as a space for hemolymph (blood) circulation, directly bathing the tissues and organs."
+  },
+  {
+    text: "Which of the following structures is unique to chelicerates?",
+    options: ["Mandibles", "Antennae", "Chelicerae", "Maxillae"],
+    correct: 2,
+    explanation: "Chelicerae are specialized appendages located near the mouth of chelicerates (spiders, scorpions, horseshoe crabs, etc.) and are used for feeding and defense."
+  },
+  {    text: "Which of the following characteristics is NOT typically found in arachnids?",
+    options: [
+      "Book lungs",
+      "Silk production",
+      "Three body segments",
+      "Eight legs"
+    ],
+    correct: 2,
+    explanation: "Arachnids typically have two body segments (cephalothorax and abdomen), eight legs, book lungs for respiration, and silk glands for producing silk."
+  },
+  {
+    text: "What is the function of the pedipalps in arachnids?",
+    options: [
+      "Locomotion",
+      "Prey capture and sensory perception",
+      "Silk production",
+      "Gas exchange"
+    ],
+    correct: 1,
+    explanation: "Pedipalps are appendages located near the chelicerae in arachnids and are used for prey capture, sensory perception, and, in some species, reproduction."
+  },
+  {
+    text: "Which of the following is a unique feature of horseshoe crabs (Merostomata)?",
+    options: [
+      "Possession of mandibles",
+      "Green glands for excretion",
+      "Book gills for respiration",
+      "Silk production"
+    ],
+    correct: 2,
+    explanation: "Horseshoe crabs (Merostomata) are characterized by having book gills, which are specialized respiratory structures located on the abdomen."
+  },
+  {
+    text: "Which of the following best describes the feeding strategy of most spiders?",
+    options: ["Filter feeding", "Herbivory", "Predatory", "Parasitism"],
+    correct: 2,
+    explanation: "Most spiders are predatory, using chelicerae to inject venom and immobilize their prey before consuming it."
+  },
+  {
+    text: "What is the key difference between centipedes (Chilopoda) and millipedes (Diplopoda)?",
+    options: [
+      "Centipedes are herbivores, while millipedes are carnivores.",
+      "Centipedes have one pair of legs per segment, while millipedes have two pairs.",
+      "Centipedes possess antennae, while millipedes lack them.",
+      "Centipedes are aquatic, while millipedes are terrestrial."
+    ],
+    correct: 1,
+    explanation: "Centipedes (Chilopoda) have one pair of legs per segment and are primarily carnivorous, while millipedes (Diplopoda) have two pairs of legs per apparent segment and are typically detritivores or herbivores."
+  },
+  {
+    text: "Forcipules, venomous claws, are found in which class?",
+    options: ["Diplopoda", "Insecta", "Chilopoda", "Arachnida"],
+    correct: 2,
+    explanation: "Forcipules, which are modified legs that function as venomous claws, are a characteristic feature of centipedes (Chilopoda) and are used to capture prey."
+  },
+  {
+    text: "Which of the following is the primary diet of most millipedes?",
+    options: [
+      "Living insects",
+      "Decaying organic matter",
+      "Plant nectar",
+      "Blood"
+    ],
+    correct: 1,
+    explanation: "Most millipedes are detritivores, feeding on decaying organic matter such as leaf litter and wood."
+  },
+  {
+    text: "What type of respiratory system is typically found in myriapods?",
+    options: [
+      "Gills",
+      "Book lungs",
+      "Tracheal system",
+      "Cutaneous respiration"
+    ],
+    correct: 2,
+    explanation: "Myriapods typically have a tracheal system, which consists of a network of tubes that carry oxygen directly to the tissues from openings called spiracles along the body."
+  },
+  {
+    text: "Which class of myriapods exhibits aposematism (warning coloration) as a defense mechanism?",
+    options: ["Symphyla", "Diplopoda", "Chilopoda", "Pauropoda"],
+    correct: 1,
+    explanation: "Many millipedes (Diplopoda) exhibit aposematism, using bright colors to warn potential predators of their toxicity or unpleasant taste."
+  },
+  {
+    text: "Biramous appendages are a characteristic feature of which arthropod group?",
+    options: ["Insecta", "Myriapoda", "Crustacea", "Arachnida"],
+    correct: 2,
+    explanation: "Crustaceans are characterized by having biramous appendages, which are appendages that branch into two parts."
+  },
+  {
+    text: "What is the function of the green glands in crustaceans?",
+    options: ["Gas exchange",
+      "Osmoregulation and excretion",
+      "Digestion",
+      "Reproduction"
+    ],
+    correct: 1,
+    explanation: "Green glands are excretory organs found in crustaceans that function to maintain osmotic balance and eliminate waste products."
+  },
+  {
+    text: "Which of the following structures is used for feeding in barnacles?",
+    options: ["Chelicerae", "Mandibles", "Cirri", "Pedipalps"],
+    correct: 2,
+    explanation: "Barnacles use cirri, which are feathery appendages, to filter feed by sweeping through the water to capture plankton and other small organisms."
+  },
+  {
+    text: "Which crustacean group is characterized by a carapace that covers most of the body?",
+    options: ["Copepoda", "Branchiopoda", "Malacostraca", "Ostracoda"],
+    correct: 2,
+    explanation: "Malacostraca, which includes crabs, lobsters, shrimp, and isopods, is characterized by a carapace that covers most of the cephalothorax."
+  },
+  {
+    text: "Nauplius is a distinctive larval stage found in many members of which group?",
+    options: ["Insecta", "Myriapoda", "Crustacea", "Arachnida"],
+    correct: 2,
+    explanation: "The nauplius larva is a characteristic larval stage of many crustaceans and has three pairs of appendages and a single median eye."
+  }, 
+
     {
         text: "What is the highest level of organization mentioned?",
         options: ["Tissue", "Organ", "Organ system", "Cellular"],
