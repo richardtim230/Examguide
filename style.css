@@ -91,7 +91,7 @@ button {
     position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  right: 8px;
   width: 95%;
   height: 98%;
   background-color: white;
