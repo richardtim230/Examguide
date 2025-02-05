@@ -101,7 +101,7 @@ button {
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 600px;
-    height: auto;
+    height: 97%;
     background: #fff;
     z-index: 1000;
     overflow-y: auto;
