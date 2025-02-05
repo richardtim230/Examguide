@@ -87,7 +87,7 @@ button {
 /* Popup UI */
 .reward-popup {
     position: fixed;
-  top: 0;
+  top: 10px;
   left: 0;
   width: 95%;
   height: 98%;
@@ -96,7 +96,7 @@ button {
   overflow-y: auto;
   padding: 20px;
         border-radius: 8px;
-  text-align: left; /* Align all texts to the left */
+  text-align: center; /* Align all texts to the left */
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin-buttom: 10px;
 }
