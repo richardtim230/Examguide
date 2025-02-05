@@ -136,6 +136,45 @@ button {
     border-radius: 5px;
 }
 
+        /* Withdrawal Section */
+.withdrawal-container {
+    display: none;
+    text-align: center;
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 350px;
+    margin: 20px auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.withdrawal-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.withdrawal-container input {
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.withdrawal-container button {
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.withdrawal-container button:hover {
+    background: darkgreen;
+}
+
+
 /* Progress Bar */
 #ex-progress-container {
     width: 80%;
