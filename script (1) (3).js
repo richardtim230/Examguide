@@ -1163,8 +1163,6 @@ Sociology: {
         "SSC101": {
         title: "Sociology and Anthropology",
         questions: [
-
-
  {
           text: "What is mental health, according to the World Health Organization (WHO)?",
           options: ["A state of physical well-being", "A state of mental well-being", "A balance between physical and mental health", "A cure for mental illnesses"],
@@ -1289,7 +1287,8 @@ Sociology: {
           text: "How did the lecturer describe the evolutionary journey of humanity?",
           options: ["Linear and unchanging", "Consistently evolving", "Transformative shifts from one era to another", "Isolated and stagnant"],
           correct: 2,
-          explanation: "The evolutionary journey of humanity was described as involving transformative shifts from one era to another, driven by innovation and changing circumstances."        },
+          explanation: "The evolutionary journey of humanity was described as involving transformative shifts from one era to another, driven by innovation and changing circumstances."      
+        },
         {
           text: "What was the lecturer's opinion on the paradox of human strength and sophistication?",
           options: ["It is a weakness", "It is insignificant", "It is exceptional", "It is irrelevant"],
@@ -2181,8 +2180,11 @@ Sociology: {
           explanation: "Social sanctions explain why people conform to societal norms."
         }, 
     ], 
-      },
+      }
     },
+
+
+
     Mathematics: {
         "MTH105": {
         title: "Mathematics for Biological Sciences",
