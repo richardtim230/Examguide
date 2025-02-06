@@ -1433,8 +1433,7 @@ Sociology: {
           correct: 1,
           explanation: "Anthropology contributes to achieving globalization goals in international relations by helping to eliminate biases like ethnocentrism."
         }, 
-{
-          text: "What techniques does archaeology utilize for examining historical conditions and cultural landscapes?",
+        { text: "What techniques does archaeology utilize for examining historical conditions and cultural landscapes?",
           options: ["Ethnography and participant observations", "Scientific research and lab experiments", "Geo-technical surveys and carbon dating", "Articulate speech and diverse languages"],
           correct: 2,
           explanation: "Archaeology utilizes geo-technical surveys and carbon dating to examine historical conditions and cultural landscapes by analyzing physical remnants."
@@ -1714,7 +1713,7 @@ Sociology: {
           correct: 1,
           explanation: "Deviance is defined as behavior that violates social norms, often subject to sanctions and social disapproval."
         },
-        {          text: "According to Emile Durkheim, what function does deviance serve in society?",
+        { text: "According to Emile Durkheim, what function does deviance serve in society?",
           options: ["Destroys social cohesion", "Reinforces social cohesion", "Is irrelevant to society", "Causes chaos"],
           correct: 1,
           explanation: "According to Emile Durkheim, deviance reinforces social cohesion by clarifying boundaries and reaffirming norms."
@@ -1755,7 +1754,7 @@ Sociology: {
           correct: 0,
           explanation: "Medicalization views deviance as a result of a sick state of mind, attributing deviant behaviors to medical or psychological conditions."
         }, 
-{
+        { 
           text: "What is the process by which individuals internalize the culture of their society?",
           options: ["Assimilation", "Enculturation", "Acculturation", "Socialization"],
           correct: 1,
@@ -1845,8 +1844,7 @@ Sociology: {
           correct: 1,
           explanation: "Cultural relativism encourages understanding cultures from their own perspective."
         }, 
-{
-          text: "Which of the following is *not* a primary function of political institutions?",
+        {  text: "Which of the following is *not* a primary function of political institutions?",
           options: ["Enforcing social norms", "Producing goods and services", "Promoting general welfare", "Protecting from external threats"],
           correct: 1,
           explanation: "Producing goods and services is not a primary function of political institutions."
@@ -2180,7 +2178,7 @@ Sociology: {
           explanation: "Social sanctions explain why people conform to societal norms."
         }, 
     ], 
-      }
+      },
     },
 
 
@@ -5333,8 +5331,6 @@ Sociology: {
   correct: 1,
   explanation: "Set theory provides the mathematical foundation for organizing and defining collections of quantum states. Option A focuses on spatial relationships, not quantum states. Option C focuses on rates of change, which doesn’t describe quantum states. Option D focuses on change over time, not static state organization."
 }, 
-
-
         ],
       },
     },
