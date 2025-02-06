@@ -156,6 +156,8 @@ document.getElementById("withdrawForm").addEventListener("submit", function (eve
 window.addEventListener("load", startTimer);
 window.addEventListener("beforeunload", stopTimer);
 
+// Start Timer on Load
+window.addEventListener("load", startUserTimer);
 
 // Debugging: Check if script is running
 window.onload = () => {
