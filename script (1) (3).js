@@ -152,12 +152,11 @@ document.getElementById("withdrawForm").addEventListener("submit", function (eve
     alert(`✅ Withdrawal request of ₦${withdrawAmount} submitted successfully!`);
 });
 
-// Event Listeners for tracking time
-window.addEventListener("load", startTimer);
-window.addEventListener("beforeunload", stopTimer);
-
 // Start Timer on Load
 window.addEventListener("load", startUserTimer);
+
+window.addEventListener("beforeunload", stopUserTimer);
+
 
 // Debugging: Check if script is running
 window.onload = () => {
