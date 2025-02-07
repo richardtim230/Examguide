@@ -13339,6 +13339,132 @@ Botany: {
           correct: 2,
           explanation: "The significance of the paradox lies in highlighting human exceptionalism: despite individual frailties, our combined strength and innovation allow us to achieve remarkable things."
         }, 
+      {
+          text: "What is the main focus of the discussion on human contributions in the lecture?",
+          options: ["Inventions", "Weakness", "Isolation", "Evolutionary theories"],
+          correct: 0,
+          explanation: "The main focus was on inventions as a key aspect of human contributions, highlighting how they have shaped our lives and progress."
+        },
+        {
+          text: "According to the lecturer, what is the most advanced aspect of humans despite being weaker mammals?",
+          options: ["Physical strength", "Mental health", "Advanced technology", "Human contributions through inventions"],
+          correct: 2,
+          explanation: "The lecturer emphasized that humans are more advanced due to our development of advanced technology, which compensates for our physical weaknesses."
+        },
+        {
+          text: "How did the lecturer characterize human existence throughout history?",
+          options: ["Isolated and stagnant", "Transformative and shifting", "Consistent and predictable", "Philosophically driven"],
+          correct: 1,
+          explanation: "Human existence was characterized as transformative and shifting, marked by continuous evolution and innovation."
+        },
+        {
+          text: "What was the lecturer's view on humans being purposefully designed creations?",
+          options: ["Supported the idea", "Denied the idea", "Was neutral", "Didn't discuss it"],
+          correct: 3,
+          explanation: "The lecturer did not address the concept of humans being purposefully designed creations, keeping the focus on observable developments."
+        },
+        {
+          text: "What did the lecturer emphasize as a vital factor in shaping human existence?",
+          options: ["Evolutionary theories", "Human contributions", "Human interaction", "Weakness"],
+          correct: 2,
+          explanation: "Human interaction was emphasized as a vital factor in shaping human existence, enabling the exchange of ideas and collaborative progress."
+        },
+        {
+          text: "How did the lecturer describe the evolutionary journey of humanity?",
+          options: ["Linear and unchanging", "Consistently evolving", "Transformative shifts from one era to another", "Isolated and stagnant"],
+          correct: 2,
+          explanation: "The evolutionary journey of humanity was described as involving transformative shifts from one era to another, driven by innovation and changing circumstances."
+}, 
+{
+          text: "Which anthropologist contributed to understanding personality and culture?",
+          options: ["James George Frazer", "Ruth Benedict", "Lewis Henry Morgan", "Margaret Mead"],
+          correct: 1,
+          explanation: "Ruth Benedict contributed to understanding personality and culture, particularly through her work on cultural patterns."
+        },
+        {
+          text: "What major question does anthropology try to answer regarding human knowledge?",
+          options: ["Assessing the limits of human knowledge", "Defining the origin of knowledge", "Studying cultural knowledge", "Exploring human potential"],
+          correct: 2,
+          explanation: "Anthropology tries to answer questions about human knowledge by studying cultural knowledge across different societies and time periods."
+        },
+        {
+          text: "How does anthropology contribute to creating an orderly and crisis-free society in the field of law?",
+          options: ["By promoting chaos", "By studying historical conditions", "Through ethnographic research", "By addressing practical issues"],
+          correct: 2,
+          explanation: "Anthropology contributes to creating an orderly and crisis-free society in the field of law through ethnographic research, helping understand cultural contexts."
+        },
+        {
+          text: "What aspect of human life does biological anthropology primarily focus on?",
+          options: ["Language diversity", "Biological processes and attributes", "Past cultural landscapes", "Societal dynamics"],
+          correct: 1,
+          explanation: "Biological anthropology primarily focuses on biological processes and attributes related to human evolution, genetics, and health."
+        },
+        {
+          text: "Which anthropologist introduced evolutionary ideas explaining human and societal growth?",
+          options: ["Franz Boas", "Edward Tylor", "Ruth Benedict", "Charles Darwin"],
+          correct: 1,
+          explanation: "Edward Tylor introduced evolutionary ideas explaining human and societal growth, focusing on cultural evolution."
+        },
+        {
+          text: "What does applied anthropology involve in terms of practical application?",
+          options: ["Applying linguistic theories", "Applying archaeological methods", "Applying anthropological theories to solve practical issues", "Applying social theories"],
+          correct: 2,
+          explanation: "Applied anthropology involves applying anthropological theories to solve practical issues, such as in healthcare, development, and education."
+        },
+        {
+          text: "What are the primary methods employed in linguistic anthropology for research?",
+          options: ["Ethnography and participant observations", "Geo-technical surveys and carbon dating", "Scientific research, lab experiments, and data analysis", "Articulate speech and diverse languages"],
+          correct: 3,
+          explanation: "The primary methods employed in linguistic anthropology for research are articulate speech and diverse languages, studying linguistic structures and contexts."
+        },
+        {
+          text: "Who is considered the father of American anthropology and a proponent of cultural relativism?",
+          options: ["Franz Boas", "Edward Tylor", "Ruth Benedict", "Margaret Mead"],
+          correct: 0,
+          explanation: "Franz Boas is considered the father of American anthropology and a proponent of cultural relativism, emphasizing understanding cultures in their own context."
+        },
+        {
+          text: "What does archaeology primarily examine in its field of study?",
+          options: ["Human behavior", "Linguistic diversity", "Physical remnants of past cultures", "Contemporary cultural landscapes"],
+          correct: 2,
+          explanation: "Archaeology primarily examines physical remnants of past cultures, using artifacts and sites to study human history."
+        },
+        {
+          text: "In the realm of anthropology, what does the term Homo sapiens sapiens refer to?",
+          options: ["Ancient human species", "Contemporary human species", "A specific cultural group", "A linguistic community"],
+          correct: 1,
+          explanation: "In the realm of anthropology, the term 'Homo sapiens sapiens' refers to contemporary human species, meaning wise wise human."
+        },
+        {
+          text: "What does the word culture mean?",
+          options: ["Civilization", "Language", "Clothing", "Money"],
+          correct: 0,
+          explanation: "The word culture can generally mean civilization."
+        },
+        {
+          text: "How is culture often equated by some people?",
+          options: ["With high economic status", "With customs and traditions", "With low economic status", "With technology"],
+          correct: 1,
+          explanation: "Culture is often equated by some people with customs and traditions."
+        },
+        {
+          text: "According to sociology, what does culture refer to?",
+          options: ["Only customs and traditions", "The whole ways of life of society members", "Only material goods produced by a society", "Religious bodies"],
+          correct: 1,
+          explanation: "According to sociology, culture refers to the whole ways of life of society members."
+        },
+        {
+          text: "In what ways is culture classified in terms of visibility?",
+          options: ["Explicit and implicit", "Overt and covert", "Ideal and manifest", "Stable and changing"],
+          correct: 1,
+          explanation: "In terms of visibility, culture is often classified as overt and covert."
+        },
+        {
+          text: "What is the symbolic component of culture based on?",
+          options: ["Material goods", "Values", "Language and symbols", "Clothing"],
+          correct: 2,
+          explanation: "The symbolic component of culture is largely based on language and symbols."
+        }, 
      ]
    }
  }
