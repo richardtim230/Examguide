@@ -11361,6 +11361,1030 @@ correct: 1,
       ]
     }
   }, 
+
+    Sociology: {
+  "SSC101": {
+        title: "Biometry/Biostatistics",
+        questions: [
+
+    {
+          text: "What is mental health, according to the World Health Organization (WHO)?",
+          options: ["A state of physical well-being", "A state of mental well-being", "A balance between physical and mental health", "A cure for mental illnesses"],
+          correct: 1,
+          explanation: "According to the WHO, mental health is a state of well-being in which an individual realizes their own abilities, can cope with the normal stresses of life, can work productively and is able to make a contribution to his or her community."
+        },
+        {
+          text: "Mental health is described as a continuum that varies in degrees of difficulties and distress. How is it experienced?",
+          options: ["Similarly by everyone", "Differently from one person to another", "Only in extreme cases", "Only in clinical settings"],
+          correct: 1,
+          explanation: "Mental health is a continuum, and its experience varies greatly from one person to another based on individual circumstances, coping mechanisms, and support systems."
+        },
+        {
+          text: "What is the relationship between mental health and mental illness?",
+          options: ["They are the same thing", "Mental health is the absence of mental illness", "Mental health and mental illness are unrelated", "Mental health exists on a continuum distinct from mental illness"],
+          correct: 3,
+          explanation: "Mental health exists on a continuum distinct from mental illness; a person can experience good mental health while living with a mental illness."
+        },
+        {
+          text: "What term covers mental disorders, psychosocial disabilities, and other mental states associated with significant distress?",
+          options: ["Mental health conditions", "Psychological abnormalities", "Psychiatric disorders", "Emotional disturbances"],
+          correct: 0,
+          explanation: "Mental health conditions is a broad term that encompasses mental disorders, psychosocial disabilities, and various other mental states associated with significant distress, impaired functioning, or risk of self-harm."
+        },
+        {
+          text: "How many people were reported to have anxiety disorders in 2019?",
+          options: ["100 million", "200 million", "300 million", "400 million"],
+          correct: 2,
+          explanation: "In 2019, it was reported that approximately 301 million people were living with anxiety disorders, making it a prevalent mental health condition globally."
+        },
+        {
+          text: "What is a common characteristic of anxiety disorders?",
+          options: ["Lack of worries", "Excessive worries", "Extreme happiness", "Apathetic behavior"],
+          correct: 1,
+          explanation: "A common characteristic of anxiety disorders is excessive worries, often disproportionate to the actual situation, and difficult to control."
+        },
+        {
+          text: "How is depression typically manifested?",
+          options: ["Extreme joy", "Sadness and irritability", "Complete isolation", "Euphoria"],
+          correct: 1,
+          explanation: "Depression is typically manifested by persistent sadness, loss of interest or pleasure in activities, irritability, and other emotional and physical symptoms that impair daily functioning."
+        },
+        {
+          text: "Which disorder is characterized by extreme mood swings between depression and mania?",
+          options: ["Anxiety disorder", "Bipolar disorder", "Eating disorder", "Antisocial behavior"],
+          correct: 1,
+          explanation: "Bipolar disorder is characterized by extreme mood swings that include periods of mania (elevated mood, increased energy) and periods of depression (sadness, loss of interest)."
+        },
+        {
+          text: "In the context of \"being human,\" what was emphasized as a paradox?",
+          options: ["Human weakness", "Human strength and sophistication", "Human insignificance", "Human isolation"],
+          correct: 1,
+          explanation: "The lecture emphasized a paradox: despite our individual weaknesses, as a whole, humans are strong and sophisticated due to our collective efforts."
+        },
+        {
+          text: "What did the lecturer focus on regarding human contributions in the lecture?",
+          options: ["Inventions that complicate our lives", "Inventions that have eased our lives", "Evolutionary theories", "Philosophical arguments against human achievements"],
+          correct: 1,
+          explanation: "The lecturer focused on the numerous inventions and innovations that have significantly eased and improved human lives throughout history."
+        },
+        {
+          text: "According to the lecture, what is the vital role shaping human existence?",
+          options: ["Isolation", "Evolution", "Human interaction", "Inventions"],
+          correct: 2,
+          explanation: "Human interaction was presented as the vital role in shaping human existence, as it allows for the exchange of ideas, learning, and progress."
+        },
+        {
+          text: "What did the lecturer suggest researching to understand what makes humans unique?",
+          options: ["Human achievements", "Evolutionary shifts", "Biological differences", "Philosophical arguments"],
+          correct: 0,
+          explanation: "To understand what makes humans unique, the lecturer suggested researching human achievements throughout history, highlighting our capabilities and impact on the world."
+        },
+        {
+          text: "Why does the lecturer describe humans as standing out among weaker mammals?",
+          options: ["Due to physical strength", "Due to mental health", "Due to advanced technology", "Despite being weaker, humans are more advanced"],
+          correct: 3,
+          explanation: "The lecturer describes humans as standing out among weaker mammals because, despite our relative physical weakness, we have achieved far greater advancements through intelligence and technology."
+        },
+        {
+          text: "In the lecture, what was highlighted as a transformative shift in the evolutionary journey of humanity?",
+          options: ["Isolation", "Inventions", "Weakness", "Philosophical arguments"],
+          correct: 1,
+          explanation: "Inventions were highlighted as a transformative shift in the evolutionary journey of humanity, as they have drastically altered our way of life and our ability to adapt and thrive."
+        },
+        {
+          text: "What is the significance of the paradox of human strength and sophistication?",
+          options: ["It explains human insignificance", "It questions human achievements", "It highlights human exceptionalism", "It denies human progress"],
+          correct: 2,
+          explanation: "The significance of the paradox lies in highlighting human exceptionalism: despite individual frailties, our combined strength and innovation allow us to achieve remarkable things."
+        }, 
+{
+          text: "What is the main focus of the discussion on human contributions in the lecture?",
+          options: ["Inventions", "Weakness", "Isolation", "Evolutionary theories"],
+          correct: 0,
+          explanation: "The main focus was on inventions as a key aspect of human contributions, highlighting how they have shaped our lives and progress."
+        },
+        {
+          text: "According to the lecturer, what is the most advanced aspect of humans despite being weaker mammals?",
+          options: ["Physical strength", "Mental health", "Advanced technology", "Human contributions through inventions"],
+          correct: 2,
+          explanation: "The lecturer emphasized that humans are more advanced due to our development of advanced technology, which compensates for our physical weaknesses."
+        },
+        {
+          text: "How did the lecturer characterize human existence throughout history?",
+          options: ["Isolated and stagnant", "Transformative and shifting", "Consistent and predictable", "Philosophically driven"],
+          correct: 1,
+          explanation: "Human existence was characterized as transformative and shifting, marked by continuous evolution and innovation."
+        },
+        {
+          text: "What was the lecturer's view on humans being purposefully designed creations?",
+          options: ["Supported the idea", "Denied the idea", "Was neutral", "Didn't discuss it"],
+          correct: 3,
+          explanation: "The lecturer did not address the concept of humans being purposefully designed creations, keeping the focus on observable developments."
+        },
+        {
+          text: "What did the lecturer emphasize as a vital factor in shaping human existence?",
+          options: ["Evolutionary theories", "Human contributions", "Human interaction", "Weakness"],
+          correct: 2,
+          explanation: "Human interaction was emphasized as a vital factor in shaping human existence, enabling the exchange of ideas and collaborative progress."
+        },
+        {
+          text: "How did the lecturer describe the evolutionary journey of humanity?",
+          options: ["Linear and unchanging", "Consistently evolving", "Transformative shifts from one era to another", "Isolated and stagnant"],
+          correct: 2,
+          explanation: "The evolutionary journey of humanity was described as involving transformative shifts from one era to another, driven by innovation and changing circumstances."        },
+        {
+          text: "What was the lecturer's opinion on the paradox of human strength and sophistication?",
+          options: ["It is a weakness", "It is insignificant", "It is exceptional", "It is irrelevant"],
+          correct: 2,
+          explanation: "The lecturer presented the paradox of human strength and sophistication as an example of human exceptionalism, highlighting our ability to overcome weaknesses."
+        },
+        {
+          text: "What did the lecturer underscore as profoundly important in shaping human existence?",
+          options: ["Isolation", "Evolutionary shifts", "Human contributions", "Philosophical arguments"],
+          correct: 2,
+          explanation: "The lecturer underscored the profound importance of human contributions, particularly inventions, in shaping and improving our existence."
+        },
+        {
+          text: "What did the lecturer suggest researching regarding humans and other mammals?",
+          options: ["Evolutionary shifts", "Inventions", "What makes humans unique", "Human achievements"],
+          correct: 2,
+          explanation: "The lecturer suggested researching what makes humans unique, exploring the factors that set us apart from other mammals."
+        },
+        {
+          text: "According to the lecturer, why can't we see another version of humans?",
+          options: ["Lack of evolution", "Biological differences", "Isolation", "Lack of technological advancement"],
+          correct: 1,
+          explanation: "The lecturer implied that we can't see another version of humans due to fundamental biological differences that dictate our unique evolutionary path."
+        },
+        {
+          text: "What does sociology emphasize regarding human identity?",
+          options: ["Uniformity of human experiences", "Diversity shaped by social structure", "Cultural assimilation", "Individualistic perspectives"],
+          correct: 1,
+          explanation: "Sociology emphasizes the diversity of human experiences, highlighting how social structures shape individual identities and perspectives."
+        },
+        {
+          text: "According to the lessons of sociology, why is a non-judgmental perspective crucial?",
+          options: ["To reinforce stereotypes", "To encourage discrimination", "To promote empathy and understanding", "To establish social hierarchies"],
+          correct: 2,
+          explanation: "A non-judgmental perspective is crucial in sociology to promote empathy and understanding across diverse social groups and experiences."
+        },
+        {
+          text: "What is the core tenet of sociology mentioned in the note?",
+          options: ["Uniformity in backgrounds", "Ignoring diversity", "Fostering understanding and appreciation", "Cultural homogenization"],
+          correct: 2,
+          explanation: "The core tenet of sociology, as mentioned in the note, is fostering understanding and appreciation for the diversity of human experience and social structure."
+        },
+        {
+          text: "Who coined the term \"sociological imagination\" and when?",
+          options: ["Karl Marx in 1850", "Max Weber in 1920", "C. Wright Mills in 1959", "Emile Durkheim in 1897"],
+          correct: 2,
+          explanation: "C. Wright Mills coined the term 'sociological imagination' in 1959, which is the ability to see the connections between our personal experiences and the larger forces of history and society."
+        },
+        {
+          text: "How does sociological imagination contribute to understanding individuals?",
+          options: ["By ignoring societal context", "By focusing on personal achievements", "By delving into social and historical context", "By emphasizing individualism"],
+          correct: 2,
+          explanation: "Sociological imagination contributes to understanding individuals by delving into their social and historical context, revealing how societal forces shape their lives and choices."
+        }, 
+{
+          text: "Which tool do sociologists use for systematically understanding social phenomena?",
+          options: ["Hypothesis formulation", "Logical analysis", "Observational reasoning", "Cultural assumptions"],
+          correct: 0,
+          explanation: "Sociologists systematically understand social phenomena by using hypothesis formulation to create testable questions."
+        },
+        {
+          text: "What is the role of reasoning in sociology, as mentioned in the note?",
+          options: ["Encouraging bias", "Following preconceived notions", "Posing essential questions after observation", "Avoiding critical thinking"],
+          correct: 2,
+          explanation: "Reasoning in sociology is about posing essential questions after observation to further understand social behavior."
+        },
+        {
+          text: "What is the purpose of logical analysis in sociology?",
+          options: ["Establishing irrational beliefs", "Concealing societal phenomena", "Unveiling reasons behind societal phenomena", "Ignoring causal relationships"],
+          correct: 2,
+          explanation: "Logical analysis in sociology serves the purpose of unveiling reasons behind societal phenomena through a structured process."
+        },
+        {
+          text: "Why is understanding and appreciating diverse backgrounds highlighted in sociology?",
+          options: ["To promote cultural superiority", "To reinforce stereotypes", "To foster empathy and appreciation", "To encourage cultural assimilation"],
+          correct: 2,
+          explanation: "Understanding and appreciating diverse backgrounds is highlighted in sociology to foster empathy and appreciation for different cultures and individuals."
+        },
+        {
+          text: "In sociological terms, what does the social structure mold according to the note?",
+          options: ["Universal identity", "Homogeneous societies", "Human identity", "Cultural isolation"],
+          correct: 2,
+          explanation: "In sociological terms, social structure molds human identity, impacting how individuals interact and perceive the world."
+        },
+        {
+          text: "What is the etymological origin of the term "anthropology"?",
+          options: ["Greek words "bios" and \"logos\"", "Latin roots \"homo\" and \"sapiens\"", "Greek words \"anthropos\" and \"logos\"", "Latin terms \"cultura\" and \"studium\""],
+          correct: 2,
+          explanation: "The term 'anthropology' originates from the Greek words 'anthropos' (human) and 'logos' (study), meaning the study of humanity."
+        },
+        {
+          text: "Who is credited with the seminal work \"Origin of Species\" within the context of anthropology?",
+          options: ["Edward Tylor Burnett", "Lewis Henry Morgan", "Charles Darwin", "James George Frazer"],
+          correct: 2,
+          explanation: "Charles Darwin is credited with the seminal work 'Origin of Species,' which significantly influenced evolutionary thought in anthropology."
+        },
+        {
+          text: "Which anthropology field focuses on the biological processes that differentiate Homo sapiens from other species?",
+          options: ["Linguistic anthropology", "Social anthropology", "Biological anthropology", "Archaeology"],
+          correct: 2,
+          explanation: "Biological anthropology focuses on the biological processes that differentiate Homo sapiens from other species, examining human evolution and diversity."
+        },
+        {
+          text: "What is the primary emphasis of linguistic anthropology?",
+          options: ["Human biology", "Artifacts of past cultures", "Communication through language", "Societal dynamics"],
+          correct: 2,
+          explanation: "The primary emphasis of linguistic anthropology is communication through language, examining its structure, history, and social context."
+        },
+        {
+          text: "In the context of anthropology, what is archaeology primarily concerned with?",
+          options: ["Human behavior", "Physical remnants of past cultures", "Linguistic diversity", "Contemporary cultural landscapes"],
+          correct: 1,
+          explanation: "Archaeology is primarily concerned with the physical remnants of past cultures, studying artifacts to understand human history and behavior."
+        },
+        {
+          text: "Which branch of anthropology explores socio-cultural dimensions of human life and societies?",
+          options: ["Social anthropology", "Biological anthropology", "Archaeology", "Linguistic anthropology"],
+          correct: 0,
+          explanation: "Social anthropology explores socio-cultural dimensions of human life and societies, examining social structures, customs, and beliefs."
+        },
+        {
+          text: "What is the term for applying anthropological theories to solve practical issues?",
+          options: ["Evolutionary anthropology", "Practical anthropology", "Applied anthropology", "Theoretical anthropology"],
+          correct: 2,
+          explanation: "The term for applying anthropological theories to solve practical issues is applied anthropology, which focuses on real-world problems and solutions."
+        },
+        {
+          text: "How does cultural relativism address concepts like ethnocentrism and xenocentrism in anthropology?",
+          options: ["By promoting bias", "Through cultural isolation", "By emphasizing studying cultures in their context", "Ignoring cultural differences"],
+          correct: 3,
+          explanation: "Cultural relativism addresses concepts like ethnocentrism and xenocentrism by emphasizing the importance of studying cultures in their own context, without judgment."
+        },
+        {
+          text: "In the field of anthropology, what methods does social anthropology use for research?",
+          options: ["Lab experiments and data analysis", "Ethnography, participant observations, and case studies", "Geo-technical surveys and carbon dating", "Articulate speech and diverse languages"],
+          correct: 1,
+          explanation: "In the field of anthropology, social anthropology uses ethnography, participant observations, and case studies for research purposes, collecting qualitative data."
+        },
+        {
+          text: "How does anthropology contribute to achieving globalization goals in international relations?",
+          options: ["By promoting ethnocentrism", "By eliminating biases like ethnocentrism", "Through enforcing cultural dominance", "By neglecting cultural differences"],
+          correct: 1,
+          explanation: "Anthropology contributes to achieving globalization goals in international relations by helping to eliminate biases like ethnocentrism."
+        }, 
+{
+          text: "What techniques does archaeology utilize for examining historical conditions and cultural landscapes?",
+          options: ["Ethnography and participant observations", "Scientific research and lab experiments", "Geo-technical surveys and carbon dating", "Articulate speech and diverse languages"],
+          correct: 2,
+          explanation: "Archaeology utilizes geo-technical surveys and carbon dating to examine historical conditions and cultural landscapes by analyzing physical remnants."
+        },
+        {
+          text: "Which individual is considered the father of modern anthropology and pioneered scientific ethnography?",
+          options: ["Edward Tylor", "Franz Boas", "Lewis Henry Morgan", "Bronislaw Malinowski"],
+          correct: 1,
+          explanation: "Franz Boas is considered the father of modern anthropology and pioneered scientific ethnography, emphasizing cultural relativism."
+        },
+        {
+          text: "Who studied gender roles in Samoa and authored \"Coming of Age in Samoa\" in the field of anthropology?",
+          options: ["Ruth Benedict", "Margaret Mead", "Edward Tylor", "Franz Boas"],
+          correct: 1,
+          explanation: "Margaret Mead studied gender roles in Samoa and authored 'Coming of Age in Samoa,' contributing significantly to cultural anthropology."
+        },
+        {
+          text: "What are the key methods employed in biological anthropology for research?",
+          options: ["Ethnography and participant observations", "Geo-technical surveys and carbon dating", "Scientific research, lab experiments, and data analysis", "Articulate speech and diverse languages"],
+          correct: 2,
+          explanation: "Biological anthropology primarily employs scientific research, lab experiments, and data analysis to study human biological variation and evolution."
+        },
+        {
+          text: "What is the main focus of social anthropologists in their research?",
+          options: ["Human biology", "Physical remnants of past cultures", "Societal dynamics and cultural dimensions", "Communication through language"],
+          correct: 2,
+          explanation: "The main focus of social anthropologists in their research is on societal dynamics and cultural dimensions, exploring social structures and norms."
+        }, 
+{
+          text: "Which anthropologist contributed to understanding personality and culture?",
+          options: ["James George Frazer", "Ruth Benedict", "Lewis Henry Morgan", "Margaret Mead"],
+          correct: 1,
+          explanation: "Ruth Benedict contributed to understanding personality and culture, particularly through her work on cultural patterns."
+        },
+        {
+          text: "What major question does anthropology try to answer regarding human knowledge?",
+          options: ["Assessing the limits of human knowledge", "Defining the origin of knowledge", "Studying cultural knowledge", "Exploring human potential"],
+          correct: 2,
+          explanation: "Anthropology tries to answer questions about human knowledge by studying cultural knowledge across different societies and time periods."
+        },
+        {
+          text: "How does anthropology contribute to creating an orderly and crisis-free society in the field of law?",
+          options: ["By promoting chaos", "By studying historical conditions", "Through ethnographic research", "By addressing practical issues"],
+          correct: 2,
+          explanation: "Anthropology contributes to creating an orderly and crisis-free society in the field of law through ethnographic research, helping understand cultural contexts."
+        },
+        {
+          text: "What aspect of human life does biological anthropology primarily focus on?",
+          options: ["Language diversity", "Biological processes and attributes", "Past cultural landscapes", "Societal dynamics"],
+          correct: 1,
+          explanation: "Biological anthropology primarily focuses on biological processes and attributes related to human evolution, genetics, and health."
+        },
+        {
+          text: "Which anthropologist introduced evolutionary ideas explaining human and societal growth?",
+          options: ["Franz Boas", "Edward Tylor", "Ruth Benedict", "Charles Darwin"],
+          correct: 1,
+          explanation: "Edward Tylor introduced evolutionary ideas explaining human and societal growth, focusing on cultural evolution."
+        },
+        {
+          text: "What does applied anthropology involve in terms of practical application?",
+          options: ["Applying linguistic theories", "Applying archaeological methods", "Applying anthropological theories to solve practical issues", "Applying social theories"],
+          correct: 2,
+          explanation: "Applied anthropology involves applying anthropological theories to solve practical issues, such as in healthcare, development, and education."
+        },
+        {
+          text: "What are the primary methods employed in linguistic anthropology for research?",
+          options: ["Ethnography and participant observations", "Geo-technical surveys and carbon dating", "Scientific research, lab experiments, and data analysis", "Articulate speech and diverse languages"],
+          correct: 3,
+          explanation: "The primary methods employed in linguistic anthropology for research are articulate speech and diverse languages, studying linguistic structures and contexts."
+        },
+        {
+          text: "Who is considered the father of American anthropology and a proponent of cultural relativism?",
+          options: ["Franz Boas", "Edward Tylor", "Ruth Benedict", "Margaret Mead"],
+          correct: 0,
+          explanation: "Franz Boas is considered the father of American anthropology and a proponent of cultural relativism, emphasizing understanding cultures in their own context."
+        },
+        {
+          text: "What does archaeology primarily examine in its field of study?",
+          options: ["Human behavior", "Linguistic diversity", "Physical remnants of past cultures", "Contemporary cultural landscapes"],
+          correct: 2,
+          explanation: "Archaeology primarily examines physical remnants of past cultures, using artifacts and sites to study human history."
+        },
+        {
+          text: "In the realm of anthropology, what does the term \"Homo sapiens sapiens\" refer to?",
+          options: ["Ancient human species", "Contemporary human species", "A specific cultural group", "A linguistic community"],
+          correct: 1,
+          explanation: "In the realm of anthropology, the term 'Homo sapiens sapiens' refers to contemporary human species, meaning 'wise wise human.'"
+        },
+        {
+          text: "What does the word \"culture\" mean?",
+          options: ["Civilization", "Language", "Clothing", "Money"],
+          correct: 0,
+          explanation: "The word \"culture\" can generally mean civilization."
+        },
+        {
+          text: "How is culture often equated by some people?",
+          options: ["With high economic status", "With customs and traditions", "With low economic status", "With technology"],
+          correct: 1,
+          explanation: "Culture is often equated by some people with customs and traditions."
+        },
+        {
+          text: "According to sociology, what does culture refer to?",
+          options: ["Only customs and traditions", "The whole ways of life of society members", "Only material goods produced by a society", "Religious bodies"],
+          correct: 1,
+          explanation: "According to sociology, culture refers to the whole ways of life of society members."
+        },
+        {
+          text: "In what ways is culture classified in terms of visibility?",
+          options: ["Explicit and implicit", "Overt and covert", "Ideal and manifest", "Stable and changing"],
+          correct: 1,
+          explanation: "In terms of visibility, culture is often classified as overt and covert."
+        },
+        {
+          text: "What is the symbolic component of culture based on?",
+          options: ["Material goods", "Values", "Language and symbols", "Clothing"],
+          correct: 2,
+          explanation: "The symbolic component of culture is largely based on language and symbols."
+        }, 
+{
+          text: "Which of the following is an example of a non-material culture?",
+          options: ["Clothing", "Language", "Food", "Money"],
+          correct: 1,
+          explanation: "Language is an example of non-material culture, encompassing abstract concepts and symbolic systems."
+        },
+        {
+          text: "What is the key element of culture through which it is communicated?",
+          options: ["Values", "Language", "Symbols", "Customs"],
+          correct: 1,
+          explanation: "Language serves as the key element of culture through which it is communicated, facilitating the transmission of ideas and traditions."
+        },
+        {
+          text: "What is the dynamic aspect of values?",
+          options: ["They are constant", "They change over time", "They are tangible", "They are shared"],
+          correct: 1,
+          explanation: "Values are dynamic and change over time, adapting to societal shifts and evolving perspectives."
+        },
+        {
+          text: "According to the discussion, are all cultures considered equal?",
+          options: ["Yes, all cultures are equal", "No, some cultures are superior", "Only Western cultures are equal", "Only African cultures are equal"],
+          correct: 0,
+          explanation: "According to the principle of cultural relativism, all cultures are considered equal, promoting understanding without judgment."
+        },
+        {
+          text: "How is culture transmitted from one generation to another?",
+          options: ["Through technology", "Through oral tradition", "Through written documents", "Through educational systems"],
+          correct: 3,
+          explanation: "Culture is transmitted from one generation to another through educational systems, encompassing formal and informal learning processes."
+        },
+        {
+          text: "What is the concept that refers to a process where customs and values lose their significance over time?",
+          options: ["Cultural assimilation", "Cultural lag", "Cultural attenuation", "Cultural relativism"],
+          correct: 2,
+          explanation: "Cultural attenuation refers to the process where customs and values gradually lose their significance over time."
+        },
+        {
+          text: "What is the process of learning about one's own culture?",
+          options: ["Culture shock", "Acculturation", "Enculturation", "Cultural assimilation"],
+          correct: 2,
+          explanation: "Enculturation is the process of learning about and internalizing the norms and values of one's own culture."
+        },
+        {
+          text: "When someone experiences something strange to their culture, what is it called?",
+          options: ["Culture assimilation", "Cultural lag", "Culture shock", "Cultural attenuation"],
+          correct: 2,
+          explanation: "When someone experiences something strange and disorienting to their culture, it is called culture shock."
+        },
+        {
+          text: "What term describes the smaller unit within a culture?",
+          options: ["Sub-culture", "Counter-culture", "Super-culture", "Meta-culture"],
+          correct: 0,
+          explanation: "A sub-culture describes a smaller unit within a larger culture, characterized by distinct norms and values."
+        },
+        {
+          text: "In what way is culture adaptive?",
+          options: ["It resists social changes", "It ignores technological advancements", "It responds to social changes", "It opposes changes in the social environment"],
+          correct: 3,
+          explanation: "Culture is adaptive in that it responds to social changes, allowing societies to adjust to evolving conditions."
+        },
+        {
+          text: "Why did humans develop culture according to the notes?",
+          options: ["For entertainment", "For survival and development", "For isolation", "For competition"],
+          correct: 1,
+          explanation: "According to the notes, humans developed culture for survival and development, creating frameworks for cooperation and adaptation."
+        },
+        {
+          text: "Who were the scholars mentioned in the notes who wanted to know how many definitions of culture existed?",
+          options: ["Alfred Kroeber and Clyde Kluckhohn", "Max Weber and Emile Durkheim", "Karl Marx and Friedrich Engels", "Sigmund Freud and Carl Jung"],
+          correct: 0,
+          explanation: "Alfred Kroeber and Clyde Kluckhohn were the scholars mentioned in the notes who explored the numerous definitions of culture."
+        },
+        {
+          text: "What is the process of viewing cultural traits using the perspective of that culture?",
+          options: ["Cultural assimilation", "Cultural relativism", "Cultural attenuation", "Cultural lag"],
+          correct: 1,
+          explanation: "Cultural relativism is the process of viewing cultural traits using the perspective of that culture, promoting understanding rather than judgment."
+        },
+        {
+          text: "What is the term for a sub-culture that is against the dominant culture of a place?",
+          options: ["Counter-culture", "Super-culture", "Meta-culture", "Ultra-culture"],
+          correct: 0,
+          explanation: "A counter-culture is a sub-culture that opposes the dominant culture of a place, often promoting alternative values and norms."
+        },
+        {
+          text: "Which concept involves the difference between material and non-material culture?",
+          options: ["Cultural assimilation", "Cultural lag", "Cultural attenuation", "Culture shock"],
+          correct: 1,
+          explanation: "Cultural lag involves the difference between material and non-material culture, especially how non-material culture adapts to changes in material culture."
+        }, 
+{
+          text: "How is culture considered in terms of being organic and super-organic?",
+          options: ["As only organic", "As only super-organic", "Both organic and super-organic", "Neither organic nor super-organic"],
+          correct: 2,
+          explanation: "Culture is considered both organic (influenced by human biology) and super-organic (existing beyond individual human existence)."
+        },
+        {
+          text: "What is the process of learning about other people's culture?",
+          options: ["Cultural assimilation", "Enculturation", "Acculturation", "Culture shock"],
+          correct: 2,
+          explanation: "Acculturation is the process of learning about and adapting to other people's culture."
+        },
+        {
+          text: "What does \"enculturation\" refer to?",
+          options: ["Learning about one's own culture", "Learning about other people's culture", "Experiencing culture shock", "Cultural assimilation"],
+          correct: 0,
+          explanation: "Enculturation refers to learning about and internalizing the norms and values of one's own culture."
+        },
+        {
+          text: "What is the term for the stability and adaptation of culture?",
+          options: ["Cultural lag", "Cultural attenuation", "Cultural stability", "Cultural adaptation"],
+          correct: 3,
+          explanation: "Cultural adaptation refers to the ability of a culture to adapt to changing social, environmental, and technological conditions, thus maintaining stability."
+        },
+        {
+          text: "How is ideal culture different from manifest culture?",
+          options: ["Ideal culture focuses on what people actually do", "Manifest culture focuses on what people ought to do", "Both are the same", "Ideal culture is only related to religious bodies"],
+          correct: 1,
+          explanation: "Ideal culture focuses on what people ought to do, reflecting societal values and norms, while manifest culture focuses on what people actually do, which may not always align."
+        },
+        {
+          text: "According to the notes, is any culture considered superior to another?",
+          options: ["Yes, some cultures are superior", "No, all cultures are equal", "Only Western cultures are superior", "Only African cultures are superior"],
+          correct: 1,
+          explanation: "According to the principle of cultural relativism highlighted in the notes, no culture is considered superior to another."        },
+        {
+          text: "What is the essence of culture, according to the notes?",
+          options: ["For competition", "For survival and development", "For isolation", "For entertainment"],
+          correct: 1,
+          explanation: "According to the notes, the essence of culture is for survival and development, providing frameworks for adaptation and cooperation."
+        },
+        {
+          text: "What are the two things mentioned as reasons for humans developing culture?",
+          options: ["For competition and isolation", "For survival and development", "For entertainment and isolation", "For survival and competition"],
+          correct: 1,
+          explanation: "Survival and development are the two primary reasons mentioned for humans developing culture."
+        },
+        {
+          text: "How is culture considered in terms of being shared and learned?",
+          options: ["Culture is not shared", "Culture is not learned", "Culture is both shared and learned", "Culture is either shared or learned"],
+          correct: 2,
+          explanation: "Culture is considered both shared, as it involves common beliefs and practices, and learned, as it is transmitted across generations."
+        },
+        {
+          text: "What term describes a process where an external cultural element is assimilated into one's own culture?",
+          options: ["Cultural assimilation", "Cultural lag", "Cultural attenuation", "Cultural relativism"],
+          correct: 0,
+          explanation: "Cultural assimilation describes the process where an external cultural element is integrated into one's own culture, often leading to modification of both."
+        },
+        {
+          text: "What are norms in a society?",
+          options: ["Violations of rules and regulations", "Statistical averages", "Building blocks of society", "Criminal acts"],
+          correct: 2,
+          explanation: "Norms in a society are the building blocks of society, providing guidelines for behavior and interactions."
+        },
+        {
+          text: "How is deviance defined?",
+          options: ["Following social norms", "Violating social norms", "Average behavior", "Legal activities"],
+          correct: 1,
+          explanation: "Deviance is defined as behavior that violates social norms, often subject to sanctions and social disapproval."
+        },
+        {          text: "According to Emile Durkheim, what function does deviance serve in society?",
+          options: ["Destroys social cohesion", "Reinforces social cohesion", "Is irrelevant to society", "Causes chaos"],
+          correct: 1,
+          explanation: "According to Emile Durkheim, deviance reinforces social cohesion by clarifying boundaries and reaffirming norms."
+        },
+        {
+          text: "How does society measure deviance statistically?",
+          options: ["By promoting average behavior", "By identifying absolute behaviors", "Departure from statistical average", "Ignoring statistical norms"],
+          correct: 2,
+          explanation: "Society measures deviance statistically as a departure from the statistical average, where behaviors significantly deviate from the norm."
+        },
+        {
+          text: "What is a formal sanction?",
+          options: ["Applied by unofficial persons", "Aimed at deterrence", "Applied by official agencies", "Negative reinforcement"],
+          correct: 3,
+          explanation: "A formal sanction is a form of negative reinforcement applied by official agencies, such as laws or policies."
+        },
+        {
+          text: "What does criminalization of deviance involve?",
+          options: ["Promoting deviant acts", "Applying medical solutions", "Imposing negative sanctions", "Encouraging conformity"],
+          correct: 2,
+          explanation: "Criminalization of deviance involves imposing negative sanctions, such as fines or imprisonment, for actions that violate laws."
+        },
+        {
+          text: "Which sociological theory suggests that deviance is beneficial to society?",
+          options: ["Conflict theory", "Interactionist theory", "Functionalist theory", "Structural strain theory"],
+          correct: 2,
+          explanation: "Functionalist theory suggests that deviance is beneficial to society as it reinforces norms and promotes social cohesion."
+        },
+        {
+          text: "What is the focus of general deterrence?",
+          options: ["Preventing repetition of an act", "Serving as a deterrent to others", "Applying formal sanctions", "Encouraging deviance"],
+          correct: 1,
+          explanation: "The focus of general deterrence is on serving as a deterrent to others by making an example of those who deviate from norms."
+        },
+        {
+          text: "How does medicalization view deviance?",
+          options: ["As a result of a sick state of mind", "As a conscious choice", "Encouraging punishment", "Ignoring societal norms"],
+          correct: 0,
+          explanation: "Medicalization views deviance as a result of a sick state of mind, attributing deviant behaviors to medical or psychological conditions."
+        }, 
+{
+          text: "What is the process by which individuals internalize the culture of their society?",
+          options: ["Assimilation", "Enculturation", "Acculturation", "Socialization"],
+          correct: 1,
+          explanation: "Enculturation is the process by which individuals internalize the culture of their society."
+        },
+        {
+          text: "Which of the following is *not* universally recognized as a fundamental social institution?",
+          options: ["Family", "Religion", "Technology", "Government"],
+          correct: 2,
+          explanation: "Technology is not universally recognized as a fundamental social institution."
+        },
+        {
+          text: "Which agent of socialization has the *most significant* influence during early childhood?",
+          options: ["Peer group", "Family", "Mass media", "Education"],
+          correct: 1,
+          explanation: "Family has the most significant influence during early childhood."
+        },
+        {
+          text: "Which type of authority is *hereditary* and deeply rooted in long-standing customs?",
+          options: ["Rational-legal authority", "Charismatic authority", "Traditional authority", "Institutional authority"],
+          correct: 2,
+          explanation: "Traditional authority is hereditary and deeply rooted in long-standing customs."
+        },
+        {
+          text: "What form of economy relies on age-old practices and *unchanging* methods of production?",
+          options: ["Market economy", "Command economy", "Mixed economy", "Traditional economy"],
+          correct: 3,
+          explanation: "Traditional economy relies on age-old practices and unchanging methods of production."
+        },
+        {
+          text: "The belief that one's culture is *inherently superior* to others is known as:",
+          options: ["Cultural relativism", "Ethnocentrism", "Xenocentrism", "Multiculturalism"],
+          correct: 1,
+          explanation: "Ethnocentrism is the belief that one's culture is inherently superior to others."
+        },
+        {
+          text: "Which of the following is *least* associated with the functions of religion according to sociological theory?",
+          options: ["Providing moral guidelines", "Offering emotional security", "Managing political systems", "Reinforcing social cohesion"],
+          correct: 2,
+          explanation: "Managing political systems is least associated with the functions of religion according to sociological theory."
+        },
+        {
+          text: "A small, emotionally bonded group with enduring relationships is known as:",
+          options: ["Secondary group", "Reference group", "Primary group", "Peer group"],
+          correct: 2,
+          explanation: "A small, emotionally bonded group with enduring relationships is known as a primary group."
+        },
+        {
+          text: "Which type of authority is characterized by *legal rules* and *formal procedures*?",
+          options: ["Traditional authority", "Charismatic authority", "Rational-legal authority", "Institutional authority"],
+          correct: 2,
+          explanation: "Rational-legal authority is characterized by legal rules and formal procedures."
+        },
+        {
+          text: "The *smallest unit* of social organization, where interaction is most intimate, is called:",
+          options: ["Triad", "Dyad", "Clique", "Circle"],
+          correct: 1,
+          explanation: "The smallest unit of social organization, where interaction is most intimate, is called a dyad."
+        },
+        {
+          text: "Which of the following *isn’t* a direct function of the family?",
+          options: ["Economic production", "Socialization of children", "Political governance", "Regulation of reproduction"],
+          correct: 2,
+          explanation: "Political governance is not a direct function of the family."
+        },
+        {
+          text: "The type of socialization that occurs in *early* childhood, teaching basic norms, is:",
+          options: ["Secondary socialization", "Anticipatory socialization", "Primary socialization", "Re-socialization"],
+          correct: 2,
+          explanation: "The type of socialization that occurs in early childhood, teaching basic norms, is primary socialization."
+        },
+        {
+          text: "Which of the following represents *non-material* culture?",
+          options: ["Language", "Architecture", "Clothing", "Tools"],
+          correct: 0,
+          explanation: "Language represents non-material culture."
+        },
+        {
+          text: "An economic system where *private ownership* and *market forces* dominate is known as:",
+          options: ["Command economy", "Mixed economy", "Market economy", "Traditional economy"],
+          correct: 2,
+          explanation: "An economic system where private ownership and market forces dominate is known as a market economy."
+        },
+        {
+          text: "Which concept encourages understanding cultures from *their own* perspective?",
+          options: ["Ethnocentrism", "Cultural relativism", "Cultural imperialism", "Multiculturalism"],
+          correct: 1,
+          explanation: "Cultural relativism encourages understanding cultures from their own perspective."
+        }, 
+{
+          text: "Which of the following is *not* a primary function of political institutions?",
+          options: ["Enforcing social norms", "Producing goods and services", "Promoting general welfare", "Protecting from external threats"],
+          correct: 1,
+          explanation: "Producing goods and services is not a primary function of political institutions."
+        },
+        {
+          text: "People join this type of organization for *shared moral commitments* rather than rewards:",
+          options: ["Coercive organization", "Utilitarian organization", "Normative organization", "Bureaucratic organization"],
+          correct: 2,
+          explanation: "People join normative organizations for shared moral commitments rather than rewards."
+        },
+        {
+          text: "A *hidden* or unintended function of education, such as acting as a marriage market, is:",
+          options: ["Manifest function", "Latent function", "Dysfunction", "Formal function"],
+          correct: 1,
+          explanation: "A hidden or unintended function of education is a latent function."
+        },
+        {
+          text: "A group that an individual feels *loyalty* and strong identification with is called:",
+          options: ["Reference group", "Out-group", "In-group", "Peer group"],
+          correct: 2,
+          explanation: "A group that an individual feels loyalty and strong identification with is called an in-group."
+        },
+        {
+          text: "A large, impersonal group formed to achieve a specific goal is known as a:",
+          options: ["Primary group", "Secondary group", "Clique", "Family unit"],
+          correct: 1,
+          explanation: "A large, impersonal group formed to achieve a specific goal is known as a secondary group."
+        },
+        {
+          text: "Who is widely considered the *founder* of sociology?",
+          options: ["Karl Marx", "Emile Durkheim", "Max Weber", "Auguste Comte"],
+          correct: 3,
+          explanation: "Auguste Comte is widely considered the founder of sociology."
+        },
+        {
+          text: "The *intended* function of the economy to produce and distribute goods is called:",
+          options: ["Latent function", "Manifest function", "Primary function", "Structural function"],
+          correct: 1,
+          explanation: "The intended function of the economy to produce and distribute goods is called a manifest function."
+        },
+        {          text: "What is the process of adopting *completely new* norms and behaviors?",
+          options: ["Enculturation", "Re-socialization", "Assimilation", "Acculturation"],
+          correct: 1,
+          explanation: "The process of adopting completely new norms and behaviors is re-socialization."
+        },
+        {
+          text: "A *two-person* social group with intimate interactions is a:",
+          options: ["Triad", "Dyad", "Clique", "Cohort"],
+          correct: 1,
+          explanation: "A two-person social group with intimate interactions is a dyad."
+        },
+        {
+          text: "Which is *not* typically associated with primary groups?",
+          options: ["Emotional ties", "Formal rules", "Small size", "Intimacy"],
+          correct: 1,
+          explanation: "Formal rules are not typically associated with primary groups."
+        },
+        {
+          text: "The *unequal distribution* of wealth, power, and prestige is known as:",
+          options: ["Social mobility", "Social stratification", "Socialization", "Social roles"],
+          correct: 1,
+          explanation: "The unequal distribution of wealth, power, and prestige is known as social stratification."
+        },
+        {
+          text: "In a stratified society, access to wealth and resources is usually:",
+          options: ["Equally shared", "Inherited or earned unequally", "Randomly distributed", "Based solely on education"],
+          correct: 1,
+          explanation: "In a stratified society, access to wealth and resources is usually inherited or earned unequally."
+        },
+        {
+          text: "The idea that *race* is a social rather than biological construct is central to:",
+          options: ["Genetic determinism", "Social constructivism", "Cultural imperialism", "Racial essentialism"],
+          correct: 1,
+          explanation: "The idea that race is a social rather than biological construct is central to social constructivism."
+        },
+        {
+          text: "A society where resources are shared equally regardless of status is:",
+          options: ["Rank society", "Stratified society", "Egalitarian society", "Caste society"],
+          correct: 2,
+          explanation: "A society where resources are shared equally regardless of status is an egalitarian society."
+        },
+        {
+          text: "Which scholar believed that religion will persist in society over time?",
+          options: ["Karl Marx", "Emile Durkheim", "Max Weber", "Auguste Comte"],
+          correct: 1,
+          explanation: "Emile Durkheim believed that religion will persist in society over time."
+        }, 
+{
+          text: "What is the process of *removing* previously learned behaviors and norms?",
+          options: ["Acculturation", "De-socialization", "Socialization", "Re-socialization"],
+          correct: 1,
+          explanation: "De-socialization is the process of removing previously learned behaviors and norms."
+        },
+        {
+          text: "Which of the following is an *informal* agent of socialization?",
+          options: ["School", "Workplace", "Family", "Government"],
+          correct: 2,
+          explanation: "Family is an informal agent of socialization."
+        },
+        {
+          text: "A rigid social system where status is *hereditary* and mobility is restricted is called:",
+          options: ["Class system", "Caste system", "Meritocracy", "Rank society"],
+          correct: 1,
+          explanation: "A rigid social system where status is hereditary and mobility is restricted is called a caste system."
+        },
+        {
+          text: "Which term refers to the increasing *interconnection* of global societies?",
+          options: ["Localization", "Globalization", "Nationalism", "Regionalism"],
+          correct: 1,
+          explanation: "Globalization refers to the increasing interconnection of global societies."
+        },
+        {
+          text: "Which is *not* a primary driver of globalization?",
+          options: ["Migration", "International trade", "Family traditions", "Technological advances"],
+          correct: 2,
+          explanation: "Family traditions are not a primary driver of globalization."
+        },
+        {
+          text: "Learning behaviors and values for a role one *expects* to assume is called:",
+          options: ["Secondary socialization", "Re-socialization", "Anticipatory socialization", "Formal education"],
+          correct: 2,
+          explanation: "Learning behaviors and values for a role one expects to assume is called anticipatory socialization."
+        },
+        {
+          text: "The belief in *male dominance* and control over women is referred to as:",
+          options: ["Feminism", "Patriarchy", "Matriarchy", "Egalitarianism"],
+          correct: 1,
+          explanation: "The belief in male dominance and control over women is referred to as patriarchy."
+        },
+        {
+          text: "Which term refers to the process of learning *gender-specific* norms and behaviors?",
+          options: ["Gender enculturation", "Gender socialization", "Social differentiation", "Role assimilation"],
+          correct: 1,
+          explanation: "Gender socialization refers to the process of learning gender-specific norms and behaviors."
+        },
+        {
+          text: "The feminist theory that connects gender inequality to *property ownership* is:",
+          options: ["Radical feminism", "Socialist feminism", "Liberal feminism", "Black feminism"],
+          correct: 1,
+          explanation: "Socialist feminism connects gender inequality to property ownership and economic structures."
+        },
+        {
+          text: "Which perspective emphasizes *language* in perpetuating gender roles?",
+          options: ["Conflict theory", "Functionalist perspective", "Interactionist perspective", "Feminist theory"],
+          correct: 2,
+          explanation: "The interactionist perspective emphasizes language in perpetuating gender roles."
+        },
+        {
+          text: "Which is a *positive* cultural effect of globalization?",
+          options: ["Loss of local languages", "Cultural homogenization", "Increased cultural integration", "Commercialization of culture"],
+          correct: 2,
+          explanation: "Increased cultural integration is a positive cultural effect of globalization."
+        },
+        {
+          text: "The *primary component* of the physical environment affecting human life is:",
+          options: ["Geography", "Climate", "Technology", "Economy"],
+          correct: 1,
+          explanation: "The primary component of the physical environment affecting human life is climate."
+        },
+        {
+          text: "Which of the following is an example of *environmental degradation*?",
+          options: ["Social stratification", "Water pollution", "Cultural diffusion", "Economic inequality"],
+          correct: 1,
+          explanation: "Water pollution is an example of environmental degradation."
+        },
+        {
+          text: "Which of the following is a *biotic* component of an ecosystem?",
+          options: ["Rocks", "Air", "Plants", "Soil"],
+          correct: 2,
+          explanation: "Plants are a biotic component of an ecosystem."
+        }, 
+{
+          text: "Which of the following is considered a *non-renewable* resource?",
+          options: ["Solar energy", "Wind energy", "Fossil fuels", "Geothermal energy"],
+          correct: 2,
+          explanation: "Fossil fuels are considered a non-renewable resource."
+        },
+        {
+          text: "The *uneven* distribution of resources and opportunities within society is known as:",
+          options: ["Socialization", "Social inequality", "Enculturation", "Cultural relativism"],
+          correct: 1,
+          explanation: "The uneven distribution of resources and opportunities within society is known as social inequality."
+        },
+        {
+          text: "Which of the following is *not* typically considered an environmental issue?",
+          options: ["Air pollution", "Land contamination", "Water scarcity", "Income inequality"],
+          correct: 3,
+          explanation: "Income inequality is not typically considered an environmental issue."
+        },
+        {
+          text: "Which of the following is *not* a manifest function of education?",
+          options: ["Teaching literacy", "Preserving culture", "Acting as a marriage market", "Promoting critical thinking"],
+          correct: 2,
+          explanation: "Acting as a marriage market is not a manifest function of education, but a latent function."
+        },
+        {
+          text: "Which of the following best describes a *normative organization*?",
+          options: ["Joined by force", "Joined for material benefits", "Joined for moral purposes", "Joined for inheritance rights"],
+          correct: 2,
+          explanation: "A normative organization is best described as one joined for moral purposes."
+        },
+        {
+          text: "Which is an example of *primary socialization*?",
+          options: ["Learning job skills at work", "Learning cultural customs at home", "Preparing for retirement", "Receiving a university degree"],
+          correct: 1,
+          explanation: "Learning cultural customs at home is an example of primary socialization."
+        }, 
+{
+          text: "Which of the following best explains the difference between *norms* and *values* in culture?",
+          options: ["Norms are abstract ideals, while values are concrete rules of behavior.", "Values are deeply held beliefs, while norms are specific behavioral expectations.", "Norms are symbolic representations, while values are physical artifacts.", "Values are societal laws, while norms are personal opinions."],
+          correct: 1,
+          explanation: "Values are deeply held beliefs, while norms are specific behavioral expectations."
+        },
+        {
+          text: "What distinguishes *enculturation* from *socialization*?",
+          options: ["Enculturation is informal learning, while socialization is formal instruction.", "Enculturation applies only to adults, while socialization is for children.", "Enculturation focuses on cultural learning, while socialization covers broader societal behavior.", "Enculturation is a biological process, while socialization is a cultural process."],
+          correct: 2,
+          explanation: "Enculturation focuses on cultural learning, while socialization covers broader societal behavior."
+        },
+        {
+          text: "Which form of *authority* is characterized by devotion to the exceptional sanctity or heroism of an individual?",
+          options: ["Rational-legal authority", "Traditional authority", "Charismatic authority", "Bureaucratic authority"],
+          correct: 2,
+          explanation: "Charismatic authority is characterized by devotion to the exceptional sanctity or heroism of an individual."
+        },
+        {
+          text: "Which of the following differentiates *primary groups* from *secondary groups*?",
+          options: ["Primary groups are formed around shared goals, while secondary groups focus on emotional bonds.", "Secondary groups involve personal relationships, while primary groups are impersonal.", "Primary groups involve intimate, enduring relationships, while secondary groups are goal-oriented and temporary.", "Both are based on emotional intimacy but differ in size."],
+          correct: 2,
+          explanation: "Primary groups involve intimate, enduring relationships, while secondary groups are goal-oriented and temporary."
+        },
+        {
+          text: "Which of the following represents *latent functions* of education?",
+          options: ["Teaching scientific knowledge", "Facilitating marriage prospects", "Promoting national identity", "Providing literacy skills"],
+          correct: 1,
+          explanation: "Facilitating marriage prospects is a latent function of education."
+        },
+        {
+          text: "How does *cultural relativism* counter *ethnocentrism*?",
+          options: ["By promoting a universal cultural standard", "By emphasizing the superiority of foreign cultures", "By understanding cultures within their own context, without judgment", "By encouraging the adoption of one’s own culture in all settings"],
+          correct: 2,
+          explanation: "Cultural relativism counters ethnocentrism by understanding cultures within their own context, without judgment."
+        },
+        {
+          text: "Which of the following best describes a *market economy*?",
+          options: ["An economy where decisions are based on tradition and heritage.", "An economy controlled by government planning and regulations.", "An economy driven by supply, demand, and private ownership.", "An economy where wealth is distributed equally regardless of effort."],
+          correct: 2,
+          explanation: "A market economy is best described as an economy driven by supply, demand, and private ownership."
+        },
+        {
+          text: "Which of the following is an example of *cultural diffusion*?",
+          options: ["A society strictly adhering to its own traditions", "The spread of food practices from one country to another", "A family teaching traditional values to children", "A government enforcing local customs through law"],
+          correct: 1,
+          explanation: "The spread of food practices from one country to another is an example of cultural diffusion."
+        },
+        {
+          text: "In *structural functionalism*, which of the following is considered a primary function of religion?",
+          options: ["Promoting economic prosperity", "Reinforcing social solidarity and cohesion", "Increasing political participation", "Encouraging technological innovation"],
+          correct: 1,
+          explanation: "In structural functionalism, reinforcing social solidarity and cohesion is considered a primary function of religion."
+        }, 
+{
+          text: "Which *theory* suggests that deviance is functional because it clarifies societal norms?",
+          options: ["Conflict theory", "Labeling theory", "Functionalist theory", "Strain theory"],
+          correct: 2,
+          explanation: "Functionalist theory suggests that deviance is functional because it clarifies societal norms."
+        },
+        {
+          text: "In the *political institution*, what is the *latent function* of elections?",
+          options: ["Selecting government officials", "Educating citizens about democratic processes", "Promoting political participation", "Enforcing laws and policies"],
+          correct: 1,
+          explanation: "In the political institution, the latent function of elections is educating citizens about democratic processes."
+        },
+        {
+          text: "Which of the following best defines *hegemonic power* in cultural institutions?",
+          options: ["Power maintained through violence and coercion.", "Power established through mutual consent and cultural norms without overt force.", "Power derived solely from religious institutions.", "Power gained by financial domination."],
+          correct: 1,
+          explanation: "Hegemonic power is power established through mutual consent and cultural norms without overt force."
+        },
+        {
+          text: "What is the main difference between *ethnocentrism* and *xenocentrism*?",
+          options: ["Ethnocentrism favors one's own culture, while xenocentrism favors foreign cultures.", "Xenocentrism promotes cultural superiority, while ethnocentrism rejects cultural comparisons.", "Ethnocentrism supports globalization, while xenocentrism opposes it.", "Both terms refer to equal treatment of different cultures."],
+          correct: 0,
+          explanation: "Ethnocentrism favors one's own culture, while xenocentrism favors foreign cultures."
+        },
+        {
+          text: "Which of the following is an example of *resocialization*?",
+          options: ["A child learning table manners from their parents.", "A soldier adjusting to civilian life after military service.", "A student learning a new language in school.", "A person moving to a different city for work."],
+          correct: 1,
+          explanation: "A soldier adjusting to civilian life after military service is an example of resocialization."
+        },
+        {          text: "Which type of *economy* is most closely associated with *planned production* and government control?",
+          options: ["Market economy", "Traditional economy", "Command economy", "Mixed economy"],
+          correct: 2,
+          explanation: "A command economy is most closely associated with planned production and government control."
+        },
+        {
+          text: "Which of the following is an example of *symbolic culture*?",
+          options: ["Architecture", "Religious rituals", "Food production", "Transportation systems"],
+          correct: 1,
+          explanation: "Religious rituals are an example of symbolic culture."
+        },
+        {
+          text: "Which concept explains why *material culture* often changes faster than *non-material culture*?",
+          options: ["Cultural lag", "Cultural diffusion", "Cultural assimilation", "Cultural hegemony"],
+          correct: 0,
+          explanation: "Cultural lag explains why material culture often changes faster than non-material culture."
+        },
+        {
+          text: "Which of the following is a *manifest function* of the economic institution?",
+          options: ["Creation of social networks", "Distribution of goods and services", "Reinforcement of class structures", "Promoting political ideologies"],
+          correct: 1,
+          explanation: "Distribution of goods and services is a manifest function of the economic institution."
+        },
+        {
+          text: "Which of the following best represents *deviance* according to *labeling theory*?",
+          options: ["Deviance is biologically determined.", "Deviance occurs when society labels certain behaviors as unacceptable.", "Deviance is always criminal in nature.", "Deviance stems from social inequality and class conflict."],
+          correct: 1,
+          explanation: "Deviance occurs when society labels certain behaviors as unacceptable, according to labeling theory."
+        },
+        {
+          text: "In sociological terms, what does *anomie* refer to?",
+          options: ["A strong sense of community and shared norms.", "A state of normlessness and societal breakdown.", "The enforcement of strict social rules.", "A complete rejection of cultural values."],
+          correct: 1,
+          explanation: "In sociological terms, anomie refers to a state of normlessness and societal breakdown."
+        },
+        {
+          text: "Which of the following concepts explains *why people conform* to societal norms?",
+          options: ["Cultural relativism", "Social sanctions", "Xenocentrism", "Stratification"],
+          correct: 1,
+          explanation: "Social sanctions explain why people conform to societal norms."
+        }, 
+    ]
+    }
+  },
     
 Botany: {
   "BOT202": {
