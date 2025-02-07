@@ -13240,7 +13240,105 @@ Botany: {
         correct: 2,
         explanation: "Cyclins regulate the progression of the cell cycle by activating cyclin-dependent kinases."
       }, 
-      
+      ]
+    }
+  },
+
+  Sociology: {
+  "SSC101": {
+        title: "Sociology and Anthropology",
+        questions: [
+
+          {
+          text: "What is mental health, according to the World Health Organization (WHO)?",
+          options: ["A state of physical well-being", "A state of mental well-being", "A balance between physical and mental health", "A cure for mental illnesses"],
+          correct: 1,
+          explanation: "According to the WHO, mental health is a state of well-being in which an individual realizes their own abilities, can cope with the normal stresses of life, can work productively and is able to make a contribution to his or her community."
+        },
+        {
+          text: "Mental health is described as a continuum that varies in degrees of difficulties and distress. How is it experienced?",
+          options: ["Similarly by everyone", "Differently from one person to another", "Only in extreme cases", "Only in clinical settings"],
+          correct: 1,
+          explanation: "Mental health is a continuum, and its experience varies greatly from one person to another based on individual circumstances, coping mechanisms, and support systems."
+        },
+        {
+          text: "What is the relationship between mental health and mental illness?",
+          options: ["They are the same thing", "Mental health is the absence of mental illness", "Mental health and mental illness are unrelated", "Mental health exists on a continuum distinct from mental illness"],
+          correct: 3,
+          explanation: "Mental health exists on a continuum distinct from mental illness; a person can experience good mental health while living with a mental illness."
+        },
+        {
+          text: "What term covers mental disorders, psychosocial disabilities, and other mental states associated with significant distress?",
+          options: ["Mental health conditions", "Psychological abnormalities", "Psychiatric disorders", "Emotional disturbances"],
+          correct: 0,
+          explanation: "Mental health conditions is a broad term that encompasses mental disorders, psychosocial disabilities, and various other mental states associated with significant distress, impaired functioning, or risk of self-harm."
+        },
+        {
+          text: "How many people were reported to have anxiety disorders in 2019?",
+          options: ["100 million", "200 million", "300 million", "400 million"],
+          correct: 2,
+          explanation: "In 2019, it was reported that approximately 301 million people were living with anxiety disorders, making it a prevalent mental health condition globally."
+        },
+        {
+          text: "What is a common characteristic of anxiety disorders?",
+          options: ["Lack of worries", "Excessive worries", "Extreme happiness", "Apathetic behavior"],
+          correct: 1,
+          explanation: "A common characteristic of anxiety disorders is excessive worries, often disproportionate to the actual situation, and difficult to control."
+        },
+        {
+          text: "How is depression typically manifested?",
+          options: ["Extreme joy", "Sadness and irritability", "Complete isolation", "Euphoria"],
+          correct: 1,
+          explanation: "Depression is typically manifested by persistent sadness, loss of interest or pleasure in activities, irritability, and other emotional and physical symptoms that impair daily functioning."
+        },
+        {
+          text: "Which disorder is characterized by extreme mood swings between depression and mania?",
+          options: ["Anxiety disorder", "Bipolar disorder", "Eating disorder", "Antisocial behavior"],
+          correct: 1,
+          explanation: "Bipolar disorder is characterized by extreme mood swings that include periods of mania (elevated mood, increased energy) and periods of depression (sadness, loss of interest)."
+        },
+        {
+          text: "In the context of being human, what was emphasized as a paradox?",
+          options: ["Human weakness", "Human strength and sophistication", "Human insignificance", "Human isolation"],
+          correct: 1,
+          explanation: "The lecture emphasized a paradox: despite our individual weaknesses, as a whole, humans are strong and sophisticated due to our collective efforts."
+        },
+        {
+          text: "What did the lecturer focus on regarding human contributions in the lecture?",
+          options: ["Inventions that complicate our lives", "Inventions that have eased our lives", "Evolutionary theories", "Philosophical arguments against human achievements"],
+          correct: 1,
+          explanation: "The lecturer focused on the numerous inventions and innovations that have significantly eased and improved human lives throughout history."
+        },
+        {
+          text: "According to the lecture, what is the vital role shaping human existence?",
+          options: ["Isolation", "Evolution", "Human interaction", "Inventions"],
+          correct: 2,
+          explanation: "Human interaction was presented as the vital role in shaping human existence, as it allows for the exchange of ideas, learning, and progress."
+        },
+        {
+          text: "What did the lecturer suggest researching to understand what makes humans unique?",
+          options: ["Human achievements", "Evolutionary shifts", "Biological differences", "Philosophical arguments"],
+          correct: 0,
+          explanation: "To understand what makes humans unique, the lecturer suggested researching human achievements throughout history, highlighting our capabilities and impact on the world."
+        },
+        {
+          text: "Why does the lecturer describe humans as standing out among weaker mammals?",
+          options: ["Due to physical strength", "Due to mental health", "Due to advanced technology", "Despite being weaker, humans are more advanced"],
+          correct: 3,
+          explanation: "The lecturer describes humans as standing out among weaker mammals because, despite our relative physical weakness, we have achieved far greater advancements through intelligence and technology."
+        },
+        {
+          text: "In the lecture, what was highlighted as a transformative shift in the evolutionary journey of humanity?",
+          options: ["Isolation", "Inventions", "Weakness", "Philosophical arguments"],
+          correct: 1,
+          explanation: "Inventions were highlighted as a transformative shift in the evolutionary journey of humanity, as they have drastically altered our way of life and our ability to adapt and thrive."
+        },
+        {
+          text: "What is the significance of the paradox of human strength and sophistication?",
+          options: ["It explains human insignificance", "It questions human achievements", "It highlights human exceptionalism", "It denies human progress"],
+          correct: 2,
+          explanation: "The significance of the paradox lies in highlighting human exceptionalism: despite individual frailties, our combined strength and innovation allow us to achieve remarkable things."
+        }, 
      ]
    }
  }
