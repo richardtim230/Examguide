@@ -13240,7 +13240,14 @@ Botany: {
         correct: 2,
         explanation: "Cyclins regulate the progression of the cell cycle by activating cyclin-dependent kinases."
       }, 
-      
+      ]
+    }
+  },
+
+     Sociology: {
+  "SSC101": {
+        title: "Biometry/Biostatistics",
+        questions: [                                         
      ]
    }
  }
