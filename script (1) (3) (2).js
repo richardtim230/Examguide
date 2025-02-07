@@ -13459,6 +13459,367 @@ Botany: {
           correct: 1,
           explanation: "In terms of visibility, culture is often classified as overt and covert."
         },
+       
+  {
+    text: "What is the role of language in shaping cultural identity?",
+    options: ["No role", "Minor role", "Significant role", "Only a negative role"],
+    correct: 2,
+    explanation: "Language plays a significant role in shaping cultural identity, as it is a primary means of communication, transmission of cultural values, and expression of cultural heritage."
+  },
+  {
+    text: "How do cultural norms influence individual behavior?",
+    options: ["No influence", "Significant influence", "Minor influence", "Only a negative influence"],
+    correct: 1,
+    explanation: "Cultural norms exert a significant influence on individual behavior by providing guidelines, expectations, and standards for conduct within a society."
+  },
+  {
+    text: "What is the impact of cultural diversity on social cohesion?",
+    options: ["Always positive", "Always negative", "Can be both positive and negative", "No impact"],
+    correct: 2,
+    explanation: "Cultural diversity can have both positive and negative impacts on social cohesion, as it can promote innovation and understanding but also lead to conflict and division."
+  },
+  {
+    text: "How do power dynamics influence cultural representation?",
+    options: ["No influence", "Significant influence", "Minor influence", "Only a positive influence"],
+    correct: 1,
+    explanation: "Power dynamics exert a significant influence on cultural representation, as dominant groups often control the narrative and shape how other cultures are portrayed."
+  },
+  {
+    text: "What are the ethical considerations in sociological research?",
+    options: ["None", "Informed consent", "Anonymity", "Both b and c"],
+    correct: 3,
+    explanation: "Ethical considerations in sociological research include obtaining informed consent from participants and ensuring their anonymity to protect their privacy and well-being."
+  },
+  {
+    text: "How do global institutions address issues of poverty and inequality?",
+    options: ["Effectively", "Ineffectively", "Variably", "Not at all"],
+    correct: 2,
+    explanation: "Global institutions address issues of poverty and inequality with variable success, as their efforts are often influenced by political agendas, economic constraints, and cultural differences."
+  },
+  {
+    text: "What is the impact of climate change on global societies?",
+    options: ["No impact", "Positive impact", "Negative impact", "Uncertain impact"],
+    correct: 2,
+    explanation: "Climate change has a negative impact on global societies, including rising sea levels, extreme weather events, food shortages, and displacement of populations."
+  },
+  {
+    text: "How do global social movements address issues of human rights?",
+    options: ["Ineffectively", "Effectively", "Variably", "Not at all"],
+    correct: 2,
+    explanation: "Global social movements address issues of human rights with variable success, as their influence depends on factors such as mobilization, political context, and international support."
+  },
+  {
+    text: "What is the difference between functionalism and conflict theory?",
+    options: ["No difference", "Functionalism focuses on social order, conflict on inequality", "Functionalism focuses on inequality, conflict on social order", "They are unrelated"],
+    correct: 1,
+    explanation: "Functionalism focuses on social order, conflict on inequality."
+  },
+  {
+    text: "What are the key concepts of Marxist sociology?",
+    options: ["Social class and inequality", "Symbolic interaction", "Socialization", "Deviance"],
+    correct: 0,
+    explanation: "Key concepts of Marxist sociology include social class, inequality, capitalism, exploitation, and class conflict."
+  },
+  {
+    text: "How does feminism contribute to our understanding of society?",
+    options: ["By ignoring gender", "By focusing on gender inequality", "By focusing on economic systems", "By focusing on social institutions"],
+    correct: 1,
+    explanation: "Feminism contributes to our understanding of society by focusing on gender inequality and advocating for gender equality in all aspects of life."
+  },
+  {
+    text: "What is the role of social theory in understanding contemporary social issues?",
+    options: ["No role", "Provides frameworks for analysis", "Hinders understanding", "Irrelevant"],
+    correct: 1,
+    explanation: "Provides frameworks for analysis."
+  },
+  {
+    text: "How do social institutions shape individual behavior?",
+    options: ["No influence", "Significant influence", "Minor influence", "Only negative influence"],
+    correct: 1,
+    explanation: "Social institutions exert a significant influence on individual behavior by providing norms, values, roles, and expectations that guide people's actions and interactions."
+  },
+  {
+    text: "What is the function of the family in modern society?",
+    options: ["No function", "Socialization and support", "Economic production only", "Political organization"],
+    correct: 1,
+    explanation: "The function of the family in modern society is Socialization and support."
+  },
+  {
+    text: "How has the education system changed over time?",
+    options: ["No change", "Increased access", "Decreased access", "Uncertain change"],
+    correct: 1,
+    explanation: "The education system has changed over time by Increased access."
+  },
+  {
+    text: "What is the impact of religion on social cohesion?",
+    options: ["No impact", "Can increase cohesion", "Can decrease cohesion", "Both b and c"],
+    correct: 3,
+    explanation: "Religion can have both increase and decrease cohesion"
+  },
+  {
+    text: "How do economic systems influence social inequality?",
+    options: ["No influence", "Can increase inequality", "Can decrease inequality", "Both b and c"],
+    correct: 3,
+    explanation: "Economic systems can have both Can increase inequality and Can decrease inequality."
+  },
+  {
+    text: "How does racism perpetuate social inequality?",
+    options: ["No impact", "By creating barriers", "By promoting equality", "By having no effect"],
+    correct: 1,
+    explanation: "By creating barriers"
+  }, 
+  {
+    text: "Which of the following is a social institution?",
+    options: ["A family", "A political party", "A religious organization", "All of the above"],
+    correct: 3,
+    explanation: "A social institution is a complex, integrated set of social norms organized around the goal of preserving a basic societal value. Examples include the family, education, government, religion, and the economy."
+  },
+  {
+    text: "What is a nuclear family?",
+    options: ["A family with many children", "A family with multiple generations", "A family consisting of parents and their children", "A family with extended relatives"],
+    correct: 2,
+    explanation: "A nuclear family consists of a pair of adults and their children."
+  },
+  {
+    text: "What is an extended family?",
+    options: ["A family with many children", "A family with multiple generations", "A family consisting of parents and their children", "A family with extended relatives"],
+    correct: 3,
+    explanation: "An extended family consists of parents and their children, but also other kin, such as grandparents, aunts, uncles, and cousins, who often live nearby or in the same household."
+  },
+  {
+    text: "Monogamy is defined as:",
+    options: ["Marriage to multiple spouses", "Marriage to one spouse", "A type of social control", "A form of deviance"],
+    correct: 1,
+    explanation: "Monogamy is a form of marriage in which an individual has only one spouse at a time."
+  },
+  {
+    text: "Polygamy is defined as:",
+    options: ["Marriage to one spouse", "Marriage to multiple spouses", "A type of social control", "A form of deviance"],
+    correct: 1,
+    explanation: "Polygamy is a form of marriage in which an individual has multiple spouses at the same time."
+  },
+  {
+    text: "Polygyny is:",
+    options: ["One woman, many men", "One man, many women", "One man, one woman", "A type of social control"],
+    correct: 1,
+    explanation: "Polygyny is a form of polygamy in which one man is married to multiple women."
+  },
+  {
+    text: "Polyandry is:",
+    options: ["One woman, many men", "One man, many women", "One man, one woman", "A type of social control"],
+    correct: 0,
+    explanation: "Polyandry is a form of polygamy in which one woman is married to multiple men."
+  },
+  {
+    text: "Endogamy refers to marriage:",
+    options: ["Outside one's social group", "Within one's social group", "To multiple spouses", "To one spouse"],
+    correct: 1,
+    explanation: "Endogamy is the practice of marrying within one's own social group, class, ethnicity, or caste."
+  },
+  {
+    text: "What is the role of technology in social movements?",
+    options: ["No impact", "Can hinder movements", "Can facilitate movements", "Always a negative impact"],
+    correct: 2,
+    explanation: "Technology, particularly social media, can facilitate social movements by providing tools for communication, organization, and mobilization."
+  },
+  {
+    text: "What is the difference between qualitative and quantitative research?",
+    options: ["No difference", "Qualitative uses numbers, quantitative uses words", "Qualitative uses words, quantitative uses numbers", "Qualitative is better than quantitative"],
+    correct: 2,
+    explanation: "Qualitative research uses non-numerical data such as interviews and observations, while quantitative research uses numerical data and statistical analysis."
+  },
+  {
+    text: "What is cultural relativism?",
+    options: ["Judging cultures by one's own standards", "Understanding cultures on their own terms", "Ignoring cultural differences", "Promoting one's own culture"],
+    correct: 1,
+    explanation: "Cultural relativism is the principle of understanding and judging a culture on its own terms, rather than by the standards of one's own culture."
+  },
+  {
+    text: "What is a subculture?",
+    options: ["A culture that opposes mainstream culture", "A smaller culture within a larger culture", "A global culture", "A type of social control"],
+    correct: 1,
+    explanation: "A subculture is a smaller cultural group within a larger culture, with its own distinct norms, values, and behaviors."
+  },
+  {
+    text: "What is a counterculture?",
+    options: ["A culture that opposes mainstream culture", "A smaller culture within a larger culture", "A global culture", "A type of social control"],
+    correct: 0,
+    explanation: "A counterculture is a subculture that opposes mainstream cultural norms and values."
+  },
+  {
+    text: "What is the impact of globalization on local cultures?",
+    options: ["No impact", "Always positive", "Always negative", "Both positive and negative impacts"],
+    correct: 3,
+    explanation: "Globalization can have both positive and negative impacts on local cultures, including increased cultural exchange but also the potential for cultural homogenization and loss of local traditions."
+  },
+  {
+    text: "How do social media influence cultural representation?",
+    options: ["No influence", "Positive influence only", "Negative influence only", "Both positive and negative influences"],
+    correct: 3,
+    explanation: "Social media can have both positive and negative influences on cultural representation, including increased diversity and visibility but also the potential for stereotypes and misinformation."
+  }, 
+  {
+    text: "Sociology is best defined as the study of:",
+    options: ["Individual psychology", "Animal behavior", "Human society and social relationships", "Economic systems"],
+    correct: 2,
+    explanation: "Sociology is the systematic study of human society, focusing on social relationships, social interaction, and culture."
+  },
+  {
+    text: "Which term describes the belief that one's own culture is superior to others?",
+    options: ["Cultural relativism", "Ethnocentrism", "Socialization", "Acculturation"],
+    correct: 1,
+    explanation: "Ethnocentrism is the belief in the inherent superiority of one's own ethnic group or culture, often accompanied by a feeling of contempt for other cultures."
+  },
+  {
+    text: "Material culture includes:",
+    options: ["Beliefs", "Values", "Buildings", "Norms"],
+    correct: 2,
+    explanation: "Material culture consists of physical objects and artifacts created, used, or given meaning by people, such as buildings, tools, and art."
+  },
+  {
+    text: "Non-material culture includes:",
+    options: ["Clothing", "Language", "Houses", "Cars"],
+    correct: 1,
+    explanation: "Non-material culture encompasses the nonphysical aspects of a culture, such as beliefs, values, language, rules, and customs."
+  },
+  {
+    text: "Culture is best described as:",
+    options: ["Static and unchanging", "Dynamic and ever-evolving", "Only material objects", "Only beliefs and values"],
+    correct: 1,
+    explanation: "Culture is dynamic and ever-evolving, adapting over time in response to internal and external influences."
+  },
+  {
+    text: "The primary agent of socialization is typically:",
+    options: ["The school", "The peer group", "The family", "The media"],
+    correct: 2,
+    explanation: "The family is typically considered the primary agent of socialization, as it is the earliest and most influential source of norms, values, and beliefs."
+  },
+  {
+    text: "What is culture shock?",
+    options: ["A type of music", "Discomfort in an unfamiliar culture", "A cultural celebration", "A form of social control"],
+    correct: 1,
+    explanation: "Culture shock is the feeling of disorientation experienced by someone who is suddenly subjected to an unfamiliar culture, way of life, or set of attitudes."
+  },
+  {
+    text: "What is ethnocentrism?",
+    options: ["Studying different cultures", "Judging other cultures by one's own standards", "Adapting to a new culture", "Celebrating cultural diversity"],
+    correct: 1,
+    explanation: "Ethnocentrism involves judging other cultures by the standards of one's own culture, often leading to a biased and narrow perspective."
+  },
+  {
+    text: "What is the Queen of Social Sciences?",
+    options: ["Psychology", "Anthropology", "Sociology", "Political Science"],
+    correct: 2,
+    explanation: "Sociology is often referred to as the Queen of the Social Sciences due to its broad scope and its influence on other social science disciplines."
+  },
+  {
+    text: "What is social imagination?",
+    options: ["Imagining a better society", "A sociologist's tool to understand human backgrounds", "A form of social control", "A type of deviance"],
+    correct: 1,
+    explanation: "Social imagination enables sociologists to understand human backgrounds and interaction beyond their contextual background."
+  },
+  {
+    text: "Deviance is best defined as:",
+    options: ["Criminal behavior only", "Violation of social norms", "Mental illness", "Rebellion against authority"],
+    correct: 1,
+    explanation: "Deviance is any behavior that violates social norms and expectations within a given society or group."
+  },
+  {
+    text: "A major function of deviance is to:",
+    options: ["Strengthen social bonds", "Increase social chaos", "Promote economic growth", "Reduce social inequality"],
+    correct: 0,
+    explanation: "Deviance can help to clarify and reinforce social norms, promote social unity, and stimulate social change, thereby strengthening social bonds."
+  },
+  {
+    text: "Social control mechanisms include:",
+    options: ["Laws only", "Informal sanctions only", "Both formal and informal sanctions", "None of the above"],
+    correct: 2,
+    explanation: "Social control mechanisms can be formal (e.g., laws, police) or informal (e.g., social disapproval, peer pressure) and are used to regulate behavior and maintain social order."
+  },
+  {
+    text: "What is medicalization of deviance?",
+    options: ["Treating deviance as a medical issue", "Punishing deviant acts", "Ignoring deviant acts", "Studying deviant acts"],
+    correct: 0,
+    explanation: "Medicalization of deviance involves defining and treating deviant behaviors as medical problems or illnesses, often leading to medical interventions."
+  },
+  {
+    text: "What is criminalization of deviance?",
+    options: ["Treating deviance as a medical issue", "Punishing deviant acts", "Ignoring deviant acts", "Studying deviant acts"],
+    correct: 1,
+    explanation: "Criminalization of deviance involves defining and punishing deviant behaviors as crimes, subject to legal sanctions and penalties."
+  },
+  {
+    text: "What is the difference between deviance and crime?",
+    options: ["All deviant acts are crimes", "All crimes are deviant acts", "There is no difference", "Deviant acts are not always crimes"],
+    correct: 1,
+    explanation: "All crimes are deviant acts because they violate societal norms. However, not all deviant acts are crimes because they may not break any laws."
+  },
+  {
+    text: "A social institution is best described as:",
+    options: ["A specific building", "A stable pattern of behavior", "A type of government", "A social movement"],
+    correct: 1,
+    explanation: "A social institution is a stable pattern of behavior."
+  }, 
+  {
+    text: "Which of the following best defines sociology?",
+    options: ["The study of social behavior and institutions", "The study of human biology and behavior", "The study of social imagination and its structures", "The study of human interactions without environmental influence"],
+    correct: 0,
+    explanation: "Sociology is the study of social behavior and institutions, focusing on how they influence and are influenced by human actions and interactions."
+  },
+  {
+    text: "Sociological imagination refers to:",
+    options: ["Understanding personal problems through societal structures", "Imagining a society where social structures do not exist", "Using creativity to redefine social norms", "The ability to predict future societal trends"],
+    correct: 0,
+    explanation: "The sociological imagination is the ability to see the relationship between individual experiences and the larger society."
+  },
+  {
+    text: "Which of these is NOT a characteristic of culture?",
+    options: ["Culture is symbolic", "Culture is biological", "Culture is learned", "Culture is dynamic"],
+    correct: 1,
+    explanation: "Culture is not biological; it is learned, shared, symbolic, and dynamic, adapting over time."
+  },
+  {
+    text: "The belief that one’s own culture is superior to others is called:",
+    options: ["Cultural relativism", "Ethnocentrism", "Cultural diffusion", "Acculturation"],
+    correct: 1,
+    explanation: "Ethnocentrism is the belief in the inherent superiority of one's own ethnic group or culture."
+  },
+  {
+    text: "Material culture consists of:",
+    options: ["Abstract ideas, traditions, and beliefs", "Physical objects, artifacts, and tools", "Language and symbolic systems", "Non-visible aspects of social norms"],
+    correct: 1,
+    explanation: "Material culture includes the physical objects, resources, and spaces that people use to define their culture."
+  },
+  {
+    text: "Which of the following is NOT a primary agent of socialization?",
+    options: ["Family", "Government", "Media", "Peer groups"],
+    correct: 1,
+    explanation: "The primary agents of socialization are family, peer groups, schools, and media. Government plays a more indirect role."
+  },
+  {
+    text: "Cultural accumulation refers to:",
+    options: ["The loss of cultural traits due to globalization", "The gradual addition of new elements to existing culture", "The rejection of foreign cultural influences", "The dominance of a single culture over others"],
+    correct: 1,
+    explanation: "Cultural accumulation is the process by which knowledge, beliefs, values, and customs are added to a culture over time."
+  },
+  {
+    text: "Which of the following statements about deviance is true?",
+    options: ["All deviant acts are criminal", "All criminal acts are deviant", "Deviance and crime are always the same", "Deviance is universally defined"],
+    correct: 1,
+    explanation: "All criminal acts are deviant, but not all deviant acts are criminal. Deviance varies across cultures and time."
+  },
+  {
+    text: "Social control is best defined as:",
+    options: ["The system of government laws regulating behavior", "The informal and formal mechanisms used to enforce norms", "The study of how social institutions interact", "The practice of ensuring individuals conform to laws only"],
+    correct: 1,
+    explanation: "Social control refers to the techniques and strategies for preventing deviant human behavior in any society."
+  },
+  {
+    text: "Marriage as a social institution is characterized by:",
+    options: ["A temporary relationship between two people", "The legal recognition of a relationship that includes economic, social, and personal responsibilities", "A voluntary agreement that excludes social expectations", "A relationship solely for procreation"],
+    correct: 1,
+    explanation: "Marriage as an institution involves legal recognition and a set of mutual rights and obligations between spouses, including economic, social, and personal aspects."
+  }, 
         {
           text: "What is the symbolic component of culture based on?",
           options: ["Material goods", "Values", "Language and symbols", "Clothing"],
