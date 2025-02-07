@@ -13297,7 +13297,7 @@ Botany: {
           explanation: "Bipolar disorder is characterized by extreme mood swings that include periods of mania (elevated mood, increased energy) and periods of depression (sadness, loss of interest)."
         },
         {
-          text: "In the context of \"being human,\" what was emphasized as a paradox?",
+          text: "In the context of being human, what was emphasized as a paradox?",
           options: ["Human weakness", "Human strength and sophistication", "Human insignificance", "Human isolation"],
           correct: 1,
           explanation: "The lecture emphasized a paradox: despite our individual weaknesses, as a whole, humans are strong and sophisticated due to our collective efforts."
@@ -13530,7 +13530,7 @@ Botany: {
           explanation: "Franz Boas is considered the father of modern anthropology and pioneered scientific ethnography, emphasizing cultural relativism."
         },
         {
-          text: "Who studied gender roles in Samoa and authored \"Coming of Age in Samoa\" in the field of anthropology?",
+          text: "Who studied gender roles in Samoa and authored Coming Of Age In Samoa in the field of anthropology?",
           options: ["Ruth Benedict", "Margaret Mead", "Edward Tylor", "Franz Boas"],
           correct: 1,
           explanation: "Margaret Mead studied gender roles in Samoa and authored 'Coming of Age in Samoa,' contributing significantly to cultural anthropology."
@@ -13547,7 +13547,7 @@ Botany: {
           correct: 2,
           explanation: "The main focus of social anthropologists in their research is on societal dynamics and cultural dimensions, exploring social structures and norms."
         }, 
-{
+       {
           text: "Which anthropologist contributed to understanding personality and culture?",
           options: ["James George Frazer", "Ruth Benedict", "Lewis Henry Morgan", "Margaret Mead"],
           correct: 1,
@@ -13729,7 +13729,7 @@ Botany: {
           explanation: "Acculturation is the process of learning about and adapting to other people's culture."
         },
         {
-          text: "What does \"enculturation\" refer to?",
+          text: "What does enculturation refer to?",
           options: ["Learning about one's own culture", "Learning about other people's culture", "Experiencing culture shock", "Cultural assimilation"],
           correct: 0,
           explanation: "Enculturation refers to learning about and internalizing the norms and values of one's own culture."
@@ -13835,7 +13835,7 @@ Botany: {
           explanation: "Enculturation is the process by which individuals internalize the culture of their society."
         },
         {
-          text: "Which of the following is *not* universally recognized as a fundamental social institution?",
+          text: "Which of the following is not universally recognized as a fundamental social institution?",
           options: ["Family", "Religion", "Technology", "Government"],
           correct: 2,
           explanation: "Technology is not universally recognized as a fundamental social institution."
