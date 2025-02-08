@@ -92,11 +92,33 @@ window.addEventListener("load", updateRewardUI);
 let sessionStartTime = localStorage.getItem("sessionStartTime") ? 
                        new Date(localStorage.getItem("sessionStartTime")) : new Date();
 
+
 // Function to start tracking time
 function startTimer() {
     sessionStartTime = new Date();
     localStorage.setItem("sessionStartTime", sessionStartTime);
+    console.log("Timer started at: " + sessionStartTime);
 }
+
+// Call this function when the user logs in
+window.onload = () => {
+    startTimer();
+    console.log("Script loaded and timer started successfully!");
+};
+
+// Timer
+function stopTimer() {
+    let sessionEndTime = new Date();
+    let sessionStartTime = new Date(localStorage.getItem("sessionStartTime"));
+    let duration = (sessionEndTime - sessionStartTime) / 1000; // Duration in seconds
+    console.log("Timer stopped. Duration: " + duration + " seconds");
+    localStorage.removeItem("sessionStartTime");
+}
+
+// Call this function when the user logs out or closes the session
+window.onbeforeunload = () => {
+    stopTimer();
+};
 
 // Function to stop tracking time and update rewards
 function stopTimer() {
