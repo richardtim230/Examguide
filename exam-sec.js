@@ -987,28 +987,86 @@ function endExam(autoSubmit = false) {
 
 
 function finalizeSubmission() {
-  console.log("Finalizing submission...");
-  
-  // Create an exam session object
-  const examSession = {
-    date: new Date().toLocaleString(),
-    questions: questions, // Ensure `questions` is defined globally or passed to the function
-    answers: answers, // Ensure `answers` is defined globally or passed to the function
-    explanations: questions.map(q => q.explanation) // Map explanations from questions
-  };
+    if (!answers || !questions) {
+        console.error("Exam data is missing.");
+        return;
+    }
 
-  // Retrieve existing exam history from local storage
-  const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
-  
-  // Add the new exam session to the history
-  examHistory.push(examSession);
-  
-  // Save the updated exam history back to local storage
-  localStorage.setItem("examHistory", JSON.stringify(examHistory));
-  
-  console.log("Exam history saved:", examHistory);
+    const score = answers.filter((ans, i) => ans === questions[i].correct).length;
+    const totalQuestions = questions.length;
+    const percentage = Math.round((score / totalQuestions) * 100);
 
-  // Add your submission logic here (e.g., send answers to the server, show results)
+    // Load existing rewards safely
+    let userRewards;
+    try {
+        userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+            timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0  
+        };
+    } catch (error) {
+        console.error("Error loading user rewards:", error);
+        userRewards = { timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0 };
+    }
+
+    // Update Exam Statistics
+    userRewards.examScore += score;  // Add this exam's correct answers
+    const previousBonus = userRewards.examBonus;
+    
+    // Award ₦1 per correct answer
+    userRewards.examBonus += score * 1;
+    
+    userRewards.totalReward = userRewards.timeBonus + userRewards.examBonus;
+
+    // Check if new bonus was earned
+    const newBonus = userRewards.examBonus - previousBonus;
+    if (newBonus > 0) {
+        showAnimatedPopup(`🎉 You earned ₦${newBonus} from your exam performance!`);
+    }
+
+    // Save updated rewards
+    localStorage.setItem("userRewards", JSON.stringify(userRewards));
+
+    // Store exam session history
+    const examSession = {
+        date: new Date().toLocaleString(),
+        questions: questions.map(q => ({
+            text: q.text,
+            options: q.options,
+            correct: q.correct,
+            explanation: q.explanation
+        })),
+        answers: answers, 
+        score: score,
+        totalQuestions: totalQuestions,
+        percentage: percentage
+    };
+
+    try {
+        const examHistory = JSON.parse(localStorage.getItem("examHistory")) || [];
+        examHistory.push(examSession);
+        localStorage.setItem("examHistory", JSON.stringify(examHistory));
+    } catch (error) {
+        console.error("Error saving exam history:", error);
+    }
+
+    // Update UI in real-time
+    updateRewardUI();
+    updateExamResults(score, totalQuestions, percentage);
+
+    console.log("Exam session saved:", examSession);
+}
+
+// Update UI Elements
+function updateRewardUI() {
+    let userRewards = JSON.parse(localStorage.getItem("userRewards")) || {
+        timeSpent: 0, timeBonus: 0, examScore: 0, examBonus: 0, totalReward: 0  
+    };
+
+    document.getElementById("examBonus").innerText = `₦${userRewards.examBonus}`;
+    document.getElementById("timeBonus").innerText = `₦${userRewards.timeBonus}`;
+    document.getElementById("totalReward").innerText = `₦${userRewards.totalReward}`;
+
+    // Update progress bar
+    document.getElementById("progressFill").style.width = `${Math.min((userRewards.totalReward / 3000) * 100, 100)}%`;
 }
 
 
