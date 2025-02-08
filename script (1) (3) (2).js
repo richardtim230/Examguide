@@ -14349,7 +14349,6 @@ function updateRewardUI() {
     // Update progress bar
     document.getElementById("progressFill").style.width = `${Math.min((userRewards.totalReward / 3000) * 100, 100)}%`;
 }
-
 // Update Exam Results UI
 function updateExamResults(score, totalQuestions, percentage) {
     document.getElementById("examScore").innerText = `Score: ${score}/${totalQuestions}`;
