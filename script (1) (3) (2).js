@@ -1,4 +1,52 @@
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
 
+wss.on('connection', ws => {
+  ws.on('message', message => {
+    console.log(`Received message => ${message}`);
+  });
+
+  ws.send('Hello! You are connected.');
+});
+
+// Function to broadcast updates to all connected clients
+function broadcast(data) {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+}
+
+// Example: When the active IDs list changes, broadcast the update
+function updateActiveIDs(newList) {
+  // Update the list of active IDs in your database or in-memory store
+  // ...
+
+  // Notify all connected clients
+  broadcast(JSON.stringify({ type: 'updateActiveIDs', data: newList }));
+}
+const ws = new WebSocket('ws://localhost:8080');
+
+ws.onopen = () => {
+  console.log('Connected to WebSocket server');
+};
+
+ws.onmessage = event => {
+  const message = JSON.parse(event.data);
+  if (message.type === 'updateActiveIDs') {
+    // Handle the update of active IDs
+    const activeIDs = message.data;
+    console.log('Updated active IDs:', activeIDs);
+
+    // Implement logic to update the UI or login process based on the new active IDs
+    // ...
+  }
+};
+
+ws.onclose = () => {
+  console.log('Disconnected from WebSocket server');
+};
 // Use debounce to limit frequent state updates
 function throttle(func, limit) {
   let lastFunc;
