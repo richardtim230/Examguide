@@ -91,34 +91,44 @@ window.addEventListener("load", updateRewardUI);
 // Track time spent on the app
 let sessionStartTime = localStorage.getItem("sessionStartTime") ? 
                        new Date(localStorage.getItem("sessionStartTime")) : new Date();
-
-
-// Function to start tracking time
-function startTimer() {
-    sessionStartTime = new Date();
-    localStorage.setItem("sessionStartTime", sessionStartTime);
-    console.log("Timer started at: " + sessionStartTime);
-}
-
-// Call this function when the user logs in
-window.onload = () => {
-    startTimer();
-    console.log("Script loaded and timer started successfully!");
-};
-
 // Timer
+let timerInterval;
+
+function startTimer() {
+    const startTime = new Date();
+    localStorage.setItem('sessionStartTime', startTime);
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+    console.log("Timer started at:", startTime);
+}
+// Stop
 function stopTimer() {
-    let sessionEndTime = new Date();
-    let sessionStartTime = new Date(localStorage.getItem("sessionStartTime"));
-    let duration = (sessionEndTime - sessionStartTime) / 1000; // Duration in seconds
-    console.log("Timer stopped. Duration: " + duration + " seconds");
-    localStorage.removeItem("sessionStartTime");
+    clearInterval(timerInterval);
+    const startTime = new Date(localStorage.getItem('sessionStartTime'));
+    const endTime = new Date();
+    const duration = Math.floor((endTime - startTime) / 1000); // Duration in seconds
+    console.log("Timer stopped. Duration:", duration, "seconds");
+    localStorage.removeItem('sessionStartTime');
+    updateReward(duration); // Function to update rewards based on duration
 }
 
-// Call this function when the user logs out or closes the session
-window.onbeforeunload = () => {
-    stopTimer();
-};
+function updateTimerDisplay() {
+    const startTime = new Date(localStorage.getItem('sessionStartTime'));
+    const now = new Date();
+    const duration = Math.floor((now - startTime) / 1000);
+
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+    const seconds = duration % 60;
+
+    document.getElementById('timeSpent').textContent =
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Call this when the user logs in
+document.getElementById('login-btn').addEventListener('click', startTimer);
+
+// Call this when the user logs out or closes the session
+window.addEventListener('beforeunload', stopTimer);
 
 // Function to stop tracking time and update rewards
 function stopTimer() {
