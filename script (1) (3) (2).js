@@ -13956,6 +13956,629 @@ Botany: {
     correct: 1,
     explanation: "Marriage as an institution involves legal recognition and a set of mutual rights and obligations between spouses, including economic, social, and personal aspects."
   }, 
+      
+ {
+  text: "Capitalism is often criticized for:",
+  options: [
+   "Promoting excessive government control over individual wealth",
+   "Encouraging inequality through the concentration of resources",
+   "Removing competition between businesses",
+   "Enforcing a fixed social hierarchy that cannot be changed"
+  ],
+  correct: 1,
+  explanation: "Capitalism is often criticized for encouraging inequality through the concentration of resources."
+ },
+ {
+  text: "The difference between an authoritarian and a democratic government is that:",
+  options: [
+   "Authoritarian regimes allow free elections, while democracies do not",
+   "Democratic governments limit individual rights more than authoritarian states",
+   "Authoritarian regimes concentrate power in a single authority, while democracies distribute power through representation",
+   "Democracies control the economy, while authoritarian states allow free markets"
+  ],
+  correct: 2,
+  explanation: "The key difference between authoritarian and democratic governments is that authoritarian regimes concentrate power in a single authority, while democracies distribute power through representation."
+ },
+ {
+  text: "Which of the following best describes a totalitarian government?",
+  options: [
+   "A system in which multiple political parties share power equally",
+   "A political structure in which the state controls nearly all aspects of life",
+   "A government where the public elects representatives freely",
+   "A decentralized political structure with little formal authority"
+  ],
+  correct: 1,
+  explanation: "A totalitarian government is best described as a political structure in which the state controls nearly all aspects of life."
+ },
+ {
+  text: "Which of the following would be considered an example of soft power?",
+  options: [
+   "A country using economic sanctions to influence another nation",
+   "A military invasion to impose political change",
+   "A global pop culture trend shaping international perceptions",
+   "A government enforcing strict border control policies"
+  ],
+  correct: 2,
+  explanation: "A global pop culture trend shaping international perceptions would be considered an example of soft power."
+ },
+ {
+  text: "Social institutions change over time primarily due to:",
+  options: [
+   "Resistance to technological advancements",
+   "The rigid enforcement of long-standing traditions",
+   "Political, economic, and cultural shifts",
+   "The elimination of laws and government policies"
+  ],
+  correct: 2,
+  explanation: "Social institutions change over time primarily due to political, economic, and cultural shifts."
+ },
+ {
+  text: "Which of the following best illustrates institutional adaptation?",
+  options: [
+   "A religious organization refusing to adjust its teachings over time",
+   "A legal system updating its marriage laws to reflect societal values",
+   "A country banning all forms of technological advancement",
+   "An educational institution rejecting any new curriculum changes"
+  ],
+  correct: 1,
+  explanation: "A legal system updating its marriage laws to reflect societal values best illustrates institutional adaptation."
+ },
+ {
+  text: "What is one of the unintended consequences of rapid institutional change?",
+  options: [
+   "Increased political stability",
+   "A higher level of social cohesion",
+   "Greater resistance from groups invested in the previous system",
+   "A complete absence of social conflict"
+  ],
+  correct: 2,
+  explanation: "One of the unintended consequences of rapid institutional change is greater resistance from groups invested in the previous system."
+ },
+ {
+  text: "Which of the following is most likely to cause resistance to institutional change?",
+  options: [
+   "A government promoting education reform",
+   "A cultural shift that challenges existing power structures",
+   "A new law that supports the status quo",
+   "A scientific discovery that has no social implications"
+  ],
+  correct: 1,
+  explanation: "A cultural shift that challenges existing power structures is most likely to cause resistance to institutional change."
+ },
+{
+  text: "How do social institutions typically respond to major societal changes?",
+  options: [
+   "By immediately adopting new norms without resistance",
+   "By gradually adjusting to reflect new cultural and political realities",
+   "By rejecting any form of adaptation",
+   "By eliminating all existing structures and creating entirely new ones"
+  ],
+  correct: 1,
+  explanation: "Social institutions typically respond to major societal changes by gradually adjusting to reflect new cultural and political realities."
+ },
+ {
+  text: "A key characteristic of social institutions is that they:",
+  options: [
+   "Always reinforce existing power structures and never allow change",
+   "Function independently of culture and historical context",
+   "Are dynamic structures that evolve alongside society",
+   "Exist only in modern, industrialized nations"
+  ],
+  correct: 2,
+  explanation: "Social institutions are dynamic structures that evolve alongside society."
+ },
+ {
+  text: "Social institutions differ from social groups because they:",
+  options: [
+   "Are temporary and based on individual preferences",
+   "Operate through informal rules rather than established norms",
+   "Are formalized systems that regulate behavior across generations",
+   "Only include political and economic organizations"
+  ],
+  correct: 2,
+  explanation: "Social institutions differ from social groups because they are formalized systems that regulate behavior across generations."
+ },
+ {
+  text: "Which of the following statements about polygamy is the most misleading?",
+  options: [
+   "Polygamy is illegal in every country",
+   "Some cultures recognize multiple forms of polygamous marriage",
+   "The acceptance of polygamy varies based on cultural and religious values",
+   "In some societies, polygamy is an indicator of wealth and social status"
+  ],
+  correct: 0,
+  explanation: "The most misleading statement about polygamy is that it is illegal in every country. In reality, its legality varies greatly depending on the nation."
+ },
+ {
+  text: "Which of these best illustrates the practice of levirate marriage?",
+  options: [
+   "A widow marrying her deceased husband’s brother to maintain family ties",
+   "A woman marrying a man from a different ethnic background",
+   "A man marrying multiple wives from different families",
+   "A married couple adopting a child from a foreign country"
+  ],
+  correct: 0,
+  explanation: "The best illustration of the practice of levirate marriage is a widow marrying her deceased husband’s brother to maintain family ties."
+ },
+ {
+  text: "A distinguishing feature of a matrilineal family system is that:",
+  options: [
+   "Property and inheritance pass through the mother’s line",
+   "Only women can make major household decisions",
+   "The father is excluded from family affairs",
+   "Males are completely removed from leadership roles"
+  ],
+  correct: 0,
+  explanation: "A distinguishing feature of a matrilineal family system is that property and inheritance pass through the mother’s line."
+ },
+ {
+  text: "One reason religion is considered a powerful social institution is that:",
+  options: [
+   "It is enforced by law in all societies",
+   "It dictates government policies in every country",
+   "It provides a shared moral framework that influences social norms",
+   "It operates independently of culture and history"
+  ],
+  correct: 2,
+  explanation: "One reason religion is considered a powerful social institution is that it provides a shared moral framework that influences social norms."
+ },
+ {
+  text: "Which of the following best reflects the concept of religious pluralism?",
+  options: [
+   "The coexistence of multiple religious traditions within a society",
+   "The dominance of one religion over all others",
+   "The complete separation of religion from public life",
+   "A government policy requiring citizens to follow one national religion"
+  ],
+  correct: 0,
+  explanation: "The coexistence of multiple religious traditions within a society best reflects the concept of religious pluralism."
+ },
+ {
+  text: "Which of these is the best example of a 'hidden curriculum' in education?",
+  options: [
+   "A history teacher explaining the causes of World War II",
+   "A student learning obedience and punctuality through school routines",
+   "A university offering specialized degrees in engineering",
+   "A school implementing new math textbooks"
+  ],
+  correct: 1,
+  explanation: "A student learning obedience and punctuality through school routines is the best example of a 'hidden curriculum' in education."
+ },
+ {
+  text: "How does the educational system contribute to social stratification?",
+  options: [
+   "By ensuring equal opportunities for all students",
+   "By reinforcing existing class structures through access to resources",
+   "By removing all barriers to social mobility",
+   "By eliminating economic disparities among different social groups"
+  ],
+  correct: 1,
+  explanation: "The educational system contributes to social stratification by reinforcing existing class structures through access to resources."
+ },
+ {
+  text: "Which of the following is a latent function of education?",
+  options: [
+   "Teaching students critical thinking skills",
+   "Preparing individuals for participation in the labor market",
+   "Encouraging social networking and relationship-building",
+   "Enforcing government ideology in the curriculum"
+  ],
+  correct: 2,
+  explanation: "Encouraging social networking and relationship-building is a latent function of education."
+ },
+ {
+  text: "Which of the following is an example of credentialism?",
+  options: [
+   "A company hiring only individuals with advanced degrees, even if the job does not require them",
+   "A school teaching students multiple languages",
+   "A country requiring all children to complete primary education",
+   "A student choosing to pursue higher education for personal growth"
+  ],
+  correct: 0,
+  explanation: "Credentialism is exemplified by a company hiring only individuals with advanced degrees, even if the job does not require them, overvaluing formal qualifications."
+ },
+ {
+  text: "The primary function of standardized testing in education is to:",
+  options: [
+   "Measure intelligence and predict life success",
+   "Assess student learning and compare performance across populations",
+   "Guarantee that all students receive equal opportunities",
+   "Eliminate social inequalities in educational achievement"
+  ],
+  correct: 1,
+  explanation: "The primary function of standardized testing in education is to assess student learning and compare performance across populations."
+ },
+ {
+  text: "A major characteristic of capitalism is:",
+  options: [
+   "Equal distribution of wealth among all individuals",
+   "Government control over all private industries",
+   "Market-based production with private ownership of resources",
+   "The absence of competition between businesses"
+  ],
+  correct: 2,
+  explanation: "A major characteristic of capitalism is market-based production with private ownership of resources."
+ },
+ {
+  text: "In contrast to capitalism, socialism emphasizes:",
+  options: [
+   "Total elimination of economic competition",
+   "Government regulation of key industries while allowing private enterprise",
+   "A complete ban on private ownership",
+   "An economy controlled entirely by corporations"
+  ],
+  correct: 1,
+  explanation: "In contrast to capitalism, socialism emphasizes government regulation of key industries while allowing private enterprise."
+ },
+ {
+  text: "Which of the following best illustrates a command economy?",
+  options: [
+   "An economic system in which consumer demand determines production",
+   "A government that sets prices, controls industries, and regulates supply chains",
+   "A free market system where businesses operate independently of state influence",
+   "A society in which economic exchanges occur without the use of money"
+  ],
+  correct: 1,
+  explanation: "A command economy is best illustrated by a government that sets prices, controls industries, and regulates supply chains."
+ },
+ {
+  text: "A totalitarian government differs from a democracy because:",
+  options: [
+   "Citizens have unrestricted freedom of speech",
+   "A small group or single leader has absolute control over all aspects of life",
+   "Government power is distributed among multiple political parties",
+   "Leaders are directly elected by the people"
+  ],
+  correct: 1,
+  explanation: "A totalitarian government differs from a democracy because a small group or single leader has absolute control over all aspects of life."
+ },
+ {
+  text: "In a democracy, power is primarily derived from:",
+  options: [
+   "The ruling class and wealthy elite",
+   "Military strength and enforcement",
+   "The consent of the governed and participation in elections",
+   "Religious authorities who dictate political decisions"
+  ],
+  correct: 2,
+  explanation: "In a democracy, power is primarily derived from the consent of the governed and participation in elections."
+ },
+ {
+  text: "Which of the following is a defining feature of an authoritarian regime?",
+  options: [
+   "A government that allows multiple political parties to compete equally",
+   "A system in which power is centralized and opposition is suppressed",
+   "A political structure that prioritizes individual rights over state authority",
+   "A legal framework where all policies are decided by public referendum"
+  ],
+  correct: 1,
+  explanation: "A defining feature of an authoritarian regime is a system in which power is centralized and opposition is suppressed."
+ },
+ {
+  text: "Social institutions change over time due to:",
+  options: [
+   "The inability of societies to maintain long-term traditions",
+   "Technological advancements, cultural shifts, and economic developments",
+   "The deliberate elimination of historical customs",
+   "The removal of all political structures"
+  ],
+  correct: 1,
+  explanation: "Social institutions change over time due to technological advancements, cultural shifts, and economic developments."
+ },
+ {
+  text: "Institutional adaptation occurs when:",
+  options: [
+   "A government decides to abolish all existing laws",
+   "Religious institutions refuse to acknowledge societal transformations",
+   "Schools modify curricula to reflect contemporary knowledge",
+   "Economic systems become entirely dependent on traditional practices"
+  ],
+  correct: 2,
+  explanation: "Institutional adaptation occurs when schools modify curricula to reflect contemporary knowledge."
+ },
+ {
+  text: "Social institutions are best understood as:",
+  options: [
+   "Spontaneous social interactions that occur naturally in society",
+   "Abstract ideas that have no concrete impact on human behavior",
+   "Systems of roles, norms, and values that persist over time",
+   "Temporary arrangements that change every few years"
+  ],
+  correct: 2,
+  explanation: "Social institutions are best understood as systems of roles, norms, and values that persist over time."
+ },
+ {
+  text: "Which of the following is the most accurate statement about social institutions?",
+  options: [
+   "They exist to serve individuals rather than society as a whole",
+   "They remain static and unchanged despite cultural shifts",
+   "They influence individual behavior but are not influenced by individuals",
+   "They provide structure to society by establishing predictable patterns of interaction"
+  ],
+  correct: 3,
+  explanation: "Social institutions provide structure to society by establishing predictable patterns of interaction."
+ },
+ {
+  text: "Why is the concept of 'institutionalization' important in sociology?",
+  options: [
+   "It ensures that individuals always act in the same way",
+   "It refers to the process by which behaviors and norms become established and widely accepted",
+   "It guarantees that all societies will develop the same institutions",
+   "It eliminates the need for social adaptation"
+  ],
+  correct: 1,
+  explanation: "Institutionalization refers to the process by which behaviors and norms become established and widely accepted."
+ },
+ {
+  text: "Which of these statements about family structures is the most misleading?",
+  options: [
+   "The nuclear family is universally regarded as the ideal family structure",
+   "The extended family is common in many collectivist societies",
+   "Families vary in structure based on cultural and economic factors",
+   "Family roles and expectations change over time and across societies"
+  ],
+  correct: 0,
+  explanation: "The nuclear family is NOT universally regarded as the ideal family structure; family structures vary widely across cultures."
+ },
+ {
+  text: "Which type of marriage is based on a legal framework rather than cultural traditions?",
+  options: [
+   "Religious marriage",
+   "Traditional marriage",
+   "Ordinance marriage",
+   "Endogamous marriage"
+  ],
+  correct: 2,
+  explanation: "Ordinance marriage is based on a legal framework rather than cultural traditions."
+ },
+ {
+  text: "A major difference between a patriarchal and matriarchal family system is:",
+  options: [
+   "Who earns the highest income in the household",
+   "Whether men or women hold primary authority in decision-making",
+   "The number of children raised in the household",
+   "The division of household labor"
+  ],
+  correct: 1,
+  explanation: "A major difference between a patriarchal and matriarchal family system is whether men or women hold primary authority in decision-making."
+ },
+ {
+  text: "Religion functions as a social institution by:",
+  options: [
+   "Eliminating all forms of conflict in society",
+   "Establishing a moral code and strengthening social cohesion",
+   "Preventing social institutions from interacting with one another",
+   "Replacing political authority in all societies"
+  ],
+  correct: 1,
+  explanation: "Religion functions as a social institution by establishing a moral code and strengthening social cohesion."
+ },
+ {
+  text: "Which of the following best describes secularization?",
+  options: [
+   "The process by which religious beliefs become more widely accepted in society",
+   "The shift from religious influence to non-religious, rational thinking in public affairs",
+   "The reinforcement of religious authority over political systems",
+   "The requirement for all governments to adopt a national religion"
+  ],
+  correct: 1,
+  explanation: "Secularization is best described as the shift from religious influence to non-religious, rational thinking in public affairs."
+ },
+ {
+  text: "Civil religion is different from traditional religion because it:",
+  options: [
+   "Involves official religious institutions rather than national symbols",
+   "Creates a division between religious and political institutions",
+   "Integrates religious themes into national identity and patriotism",
+   "Rejects all traditional religious beliefs in favor of legal systems"
+  ],
+  correct: 2,
+  explanation: "Civil religion is different from traditional religion because it integrates religious themes into national identity and patriotism."
+ },
+ {
+  text: "A hidden curriculum in education refers to:",
+  options: [
+   "The set of official subjects taught in a school",
+   "Unspoken social norms and values transmitted through schooling",
+   "Knowledge that only a select group of students can access",
+   "Material covered outside of standardized exams"
+  ],
+  correct: 1,
+  explanation: "A hidden curriculum in education refers to unspoken social norms and values transmitted through schooling."
+ },
+ {
+  text: "Which of the following best defines a political institution?",
+  options: [
+   "A group that regulates economic trade",
+   "A system that governs social behavior and enforces laws",
+   "An organization that educates young citizens",
+   "A temporary arrangement between powerful individuals"
+  ],
+  correct: 1,
+  explanation: "A political institution is a system that governs social behavior and enforces laws."
+ },
+ {
+  text: "What is the primary function of the economic institution?",
+  options: [
+   "Distributing religious teachings",
+   "Managing resources, production, and trade",
+   "Monitoring family structures",
+   "Enforcing moral values in society"
+  ],
+  correct: 1,
+  explanation: "The primary function of the economic institution is managing resources, production, and trade."
+ },
+ {
+  text: "Social institutions evolve over time because:",
+  options: [
+   "They must adapt to technological and cultural changes",
+   "They are completely independent of society",
+   "They are controlled by a fixed set of rules that never change",
+   "They are irrelevant in modern societies"
+  ],
+  correct: 0,
+  explanation: "Social institutions evolve over time to adapt to technological and cultural changes."
+ },
+ {
+  text: "A major consequence of institutional change is:",
+  options: [
+   "Increased resistance to technological advancement",
+   "A shift in societal norms and expectations",
+   "The elimination of all traditional customs",
+   "A breakdown of all forms of social order"
+  ],
+  correct: 1,
+  explanation: "A major consequence of institutional change is a shift in societal norms and expectations."
+ },
+ {
+  text: "Which of the following best defines a social institution?",
+  options: [
+   "A government organization that enforces laws",
+   "A structured and enduring system of social relationships that fulfills societal needs",
+   "A temporary group of people working toward a shared goal",
+   "An informal gathering that influences social norms"
+  ],
+  correct: 1,
+  explanation: "A social institution is a structured and enduring system of social relationships that fulfills societal needs."
+ },
+ {
+  text: "Social institutions primarily exist to:",
+  options: [
+   "Control human behavior through strict laws",
+   "Ensure equal wealth distribution",
+   "Organize social life and maintain societal stability",
+   "Eliminate all forms of conflict in society"
+  ],
+  correct: 2,
+  explanation: "Social institutions are established to organize social life and maintain societal stability."
+ },
+ {
+  text: "Which of the following is NOT considered a social institution?",
+  options: [
+   "The family",
+   "The military",
+   "A temporary protest group",
+   "Religion"
+  ],
+  correct: 2,
+  explanation: "A temporary protest group is not a social institution because it lacks the enduring and structured nature of established institutions."
+ },
+ {
+  text: "One key characteristic of social institutions is that they:",
+  options: [
+   "Change frequently and randomly",
+   "Are essential for the functioning of society",
+   "Exist only in developed nations",
+   "Have no influence on individual behavior"
+  ],
+  correct: 1,
+  explanation: "Social institutions are fundamental for societal functioning, providing structure and stability."
+ },
+ {
+  text: "Which of the following is NOT a major type of social institution?",
+  options: ["Education", "Economy", "Technology", "Family"],
+  correct: 2,
+  explanation: "Technology is a product of society, but it is not considered a core social institution in itself."
+ },
+ {
+  text: "The institution of family primarily serves to:",
+  options: [
+   "Control the economy",
+   "Pass down cultural values and norms",
+   "Create government policies",
+   "Provide job opportunities for its members"
+  ],
+  correct: 1,
+  explanation: "The family's primary role is to transmit cultural values and norms from one generation to the next."
+ },
+ {
+  text: "Which social institution is responsible for creating and enforcing laws?",
+  options: [
+   "The economy",
+   "The political institution",
+   "The family",
+   "The media"
+  ],
+  correct: 1,
+  explanation: "The political institution, including the government, is responsible for creating and enforcing laws."
+ },
+ {
+  text: "The economic institution is primarily responsible for:",
+  options: [
+   "Regulating marriage and family structures",
+   "Managing the production, distribution, and consumption of goods and services",
+   "Enforcing laws and punishing criminals",
+   "Controlling religious beliefs and practices"
+  ],
+  correct: 1,
+  explanation: "The economic institution focuses on the production, distribution, and consumption of goods and services within a society."
+ },
+ {
+  text: "Which of the following best describes the role of the family as a social institution?",
+  options: [
+   "A temporary arrangement between individuals",
+   "A formal organization with legal responsibilities",
+   "A structure that nurtures and socializes individuals",
+   "An institution that exists only in traditional societies"
+  ],
+  correct: 2,
+  explanation: "The family is a social structure that plays a vital role in nurturing and socializing individuals from childhood to adulthood."
+ },
+ {
+  text: "What is the primary function of the family in most societies?",
+  options: [
+   "Generating income for the economy",
+   "Providing emotional support and socialization",
+   "Enforcing government policies",
+   "Establishing religious doctrines"
+  ],
+  correct: 1,
+  explanation: "The family is crucial for providing emotional support, teaching cultural norms, and guiding individuals through socialization processes."
+ },
+ {
+  text: "Which type of family includes multiple generations living together?",
+  options: [
+   "Nuclear family",
+   "Extended family",
+   "Polygamous family",
+   "Institutional family"
+  ],
+  correct: 1,
+  explanation: "An extended family consists of multiple generations (grandparents, parents, children) living together."
+ },
+ {
+  text: "In levirate marriage, a woman is expected to:",
+  options: [
+   "Marry a man from another culture",
+   "Marry her deceased husband's brother",
+   "Avoid remarriage after the husband's death",
+   "Choose any partner freely without societal norms"
+  ],
+  correct: 1,
+  explanation: "Levirate marriage is a cultural practice where a widow is expected to marry her deceased husband's brother, often to continue the lineage."
+ },
+ {
+  text: "Religion is considered a social institution because:",
+  options: [
+   "It is practiced by everyone",
+   "It provides moral guidelines and social cohesion",
+   "It is controlled by the government",
+   "It replaces all other institutions in society"
+  ],
+  correct: 1,
+  explanation: "Religion as a social institution provides moral guidelines, social cohesion, and a shared framework for beliefs and practices."
+ },
+ {
+  text: "Which of the following is a manifest function of religion?",
+  options: [
+   "Encouraging rebellion against social norms",
+   "Providing social solidarity and moral guidance",
+   "Generating economic profits for the government",
+   "Preventing all forms of conflict"
+  ],
+  correct: 1,
+  explanation: "A manifest function of religion is to provide social solidarity, moral guidance, and a sense of community among believers."
+ },
         {
           text: "What is the symbolic component of culture based on?",
           options: ["Material goods", "Values", "Language and symbols", "Clothing"],
