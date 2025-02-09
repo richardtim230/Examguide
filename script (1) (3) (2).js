@@ -15610,6 +15610,13 @@ Botany: {
           correct: 2,
           explanation: "The symbolic component of culture is largely based on language and symbols."
         }, 
+          ]
+    }
+  }, 
+    Computer: {
+  "CSC201": {
+        title: "Biometry/Biostatistics",
+        questions: [
      ]
    }
  }
