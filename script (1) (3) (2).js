@@ -15131,6 +15131,479 @@ Botany: {
   explanation: "Criminology analyzes crime causes, while the system enforces laws."
  },
 
+ {
+  text: "Which of the following scenarios presents the MOST complex ethical dilemma when applying labeling theory?",
+  options: [
+   "A community enacting strict anti-bullying campaigns in schools.",
+   "Law enforcement targeting specific neighborhoods known for high crime rates.",
+   "A society choosing to decriminalize minor drug offenses to reduce the stigma associated with addiction.",
+   "A judge consistently sentencing repeat offenders more harshly to deter further crime."
+  ],
+  correct: 1,
+  explanation: "Targeting neighborhoods with existing problems risks reinforcing negative labels and creating self-fulfilling prophecies, even if the intent is to reduce crime. This presents a significant ethical concern."
+ },
+ {
+  text: "A society experiencing rapid economic growth significantly reduces petty theft. A functionalist theorist might INTERPRET this as:",
+  options: [
+   "Evidence that criminal behavior is primarily a result of individual moral failings.",
+   "A sign of anomie and the breakdown of traditional social norms.",
+   "Proof that economic stability reinforces social norms and reduces the need for deviant behavior.",
+   "An indication that the criminal justice system is becoming more effective."
+  ],
+  correct: 2,
+  explanation: "Functionalism emphasizes the role of social structures in maintaining order. Economic stability can reduce the strain that leads to deviance, thus reinforcing norms."
+ },
+ {
+  text: "Which scenario BEST exemplifies the limitations of the statistical approach to defining deviance?",
+  options: [
+   "A researcher documenting an increase in reported cases of online harassment.",
+   "A small town where everyone attends church regularly.",
+   "A country where corruption is widespread among government officials.",
+   "A study revealing that teenagers who use social media are more likely to experience anxiety."
+  ],
+  correct: 2,
+  explanation: "In a society where corruption is widespread, a statistical approach might incorrectly suggest it's not deviant simply because it's common. This highlights the approach's failure to address morality."
+ },
+ {
+  text: "Consider a society where tattoos were once heavily stigmatized but have now become a mainstream form of self-expression. Which social theory BEST explains this shift?",
+  options: [
+   "Strain theory",
+   "Differential association theory",
+   "Normalization",
+   "Conflict theory"
+  ],
+  correct: 2,
+  explanation: "Normalization is the process by which a previously deviant behavior or characteristic becomes widely accepted and integrated into mainstream society."
+ },
+ {
+  text: "A key criticism of applying medicalization to deviance is that it:",
+  options: [
+   "Always leads to more humane treatment of individuals.",
+   "Can reinforce social stereotypes and absolve individuals of personal responsibility.",
+   "Is ineffective in addressing complex social problems.",
+   "Reduces the stigma associated with deviant behavior."
+  ],
+  correct: 1,
+  explanation: "Medicalization, while potentially helpful, can also lead to oversimplification and the reinforcement of harmful stereotypes about individuals by removing individual responsibility."
+ },
+ {
+  text: "Which statement offers the MOST nuanced understanding of the relationship between power and the definition of deviance?",
+  options: [
+   "Those in power always define deviance to protect their interests.",
+   "Deviance is solely determined by universal moral principles, regardless of power dynamics.",
+   "While power influences what is defined as deviant, resistance and social movements can challenge and reshape these definitions.",
+   "Power only plays a role in formal deviance (criminal law), not informal deviance (social norms)."
+  ],
+  correct: 2,
+  explanation: "While those in power have a strong influence, subordinate groups are not powerless. They can resist and challenge dominant definitions of deviance."
+ },
+ {
+  text: "Mass media’s role in deviance amplification is BEST understood as:",
+  options: [
+   "Exaggerating the extent of deviance, creating moral panics, and reinforcing stereotypes.",
+   "Providing balanced and objective coverage of deviant acts, informing the public without bias.",
+   "Helping to rehabilitate offenders by humanizing their stories.",
+   "Reducing the stigma associated with deviance by promoting understanding and empathy."
+  ],
+  correct: 0,
+  explanation: "Deviance amplification, through mass media, exaggerates the extent of deviance, creating moral panics, and reinforcing stereotypes which can worsen the initial issue. "
+ },
+ {
+  text: "In a society prioritizing social order above all else, which outcome is MOST LIKELY concerning the concept of deviance?",
+  options: [
+   "Deviance is celebrated as a source of creativity and innovation.",
+   "The definition of deviance expands to include any behavior challenging the status quo, even if harmless.",
+   "Restorative justice practices are prioritized to reintegrate offenders.",
+   "Open discussions on sensitive topics like mental health are encouraged."
+  ],
+  correct: 1,
+  explanation: "In a society prioritizing social order above all else, the definition of deviance expands to include any behavior challenging the status quo, even if harmless, to maintain maximum stability."
+ },
+{
+  text: "Which of the following best explains why social institutions maintain power structures?",
+  options: [
+   "They function independently of economic systems",
+   "They create and reinforce norms that benefit dominant groups",
+   "They prevent any form of social inequality",
+   "They exist only to regulate government policies"
+  ],
+  correct: 1,
+  explanation: "Institutions often preserve social hierarchies by reinforcing norms."
+},
+{
+  text: "The ability of institutions to shape individual behavior is best explained by:",
+  options: [
+   "Structural functionalism, which views institutions as neutral organizers of society",
+   "Symbolic interactionism, which emphasizes individual choice over institutional influence",
+   "Conflict theory, which argues institutions serve the interests of the powerful",
+   "Rational choice theory, which suggests institutions have no role in decision-making"
+  ],
+  correct: 2,
+  explanation: "Conflict theory highlights how institutions benefit dominant groups."
+},
+{
+  text: "What happens when social institutions fail to regulate behavior effectively?",
+  options: [
+   "The institution disappears completely from society",
+   "Alternative institutions emerge to replace them",
+   "Social norms remain unchanged despite institutional failure",
+   "Society automatically reorganizes itself without disruption"
+  ],
+  correct: 1,
+  explanation: "New institutions or informal structures develop when old ones fail."
+},
+{
+  text: "Institutional inertia refers to:",
+  options: [
+   "The tendency of institutions to resist change and maintain existing structures",
+   "The rapid transformation of institutions due to external pressures",
+   "The inability of institutions to influence individual behavior",
+   "The process of institutions breaking apart completely"
+  ],
+  correct: 0,
+  explanation: "Institutions resist change, making reform difficult (institutional inertia)."
+},
+{
+  text: "Which of the following is the most common outcome when institutions fail to adapt to change?",
+  options: [
+   "They dissolve immediately, leaving no social impact",
+   "They become irrelevant and are replaced by informal structures",
+   "They continue to function normally without any consequences",
+   "They prevent any possibility of further institutional change"
+  ],
+  correct: 1,
+  explanation: "When institutions fail, alternative social structures often emerge."
+},
+{
+  text: "What is one reason why institutional change is difficult to implement?",
+  options: [
+   "All members of society resist institutional modifications",
+   "Institutional leaders often benefit from maintaining the status quo",
+   "Institutions are completely isolated from social norms",
+   "Change happens so frequently that institutions never become stable"
+  ],
+  correct: 1,
+  explanation: "Powerful groups often resist institutional reforms that threaten their position."
+},
+{
+  text: "Which of the following is an example of an institution having an unintended consequence?",
+  options: [
+   "Schools providing education to students",
+   "The legal system protecting private property rights",
+   "The healthcare system unintentionally increasing class disparities",
+   "Religious institutions promoting moral values"
+  ],
+  correct: 2,
+  explanation: "Unintended consequences occur when an institution produces effects beyond its intended purpose."
+},
+{
+  text: "How can social institutions unintentionally reinforce inequality?",
+  options: [
+   "By refusing to adopt new technologies",
+   "By maintaining practices that favor dominant social groups",
+   "By actively working to eliminate economic gaps",
+   "By prioritizing individual success over collective well-being"
+  ],
+  correct: 1,
+  explanation: "Institutions can uphold inequalities by legitimizing dominant-group advantages."
+},
+ {
+  text: "Social institutions resist change primarily because:",
+  options: [
+   "They are incapable of adaptation",
+   "They function best when remaining rigid and unchanging",
+   "Those benefiting from the current system often oppose reforms",
+   "Institutional change is universally accepted without conflict"
+  ],
+  correct: 2,
+  explanation: "Resistance to change often comes from those in power."
+ },
+ {
+  text: "Which of the following best illustrates institutional adaptation?",
+  options: [
+   "A government refusing to revise outdated policies",
+   "A religious organization modifying its stance on social issues",
+   "A school curriculum remaining unchanged for centuries",
+   "A legal system ignoring technological developments"
+  ],
+  correct: 1,
+  explanation: "Adaptation occurs when institutions modify their rules and beliefs."
+ },
+ {
+  text: "Institutional failure occurs when:",
+  options: [
+   "Social institutions completely disappear",
+   "An institution stops fulfilling its primary functions for society",
+   "Laws are created to regulate institutional behavior",
+   "Political systems fail to maintain economic stability"
+  ],
+  correct: 1,
+  explanation: "Dysfunctional institutions fail to serve their intended purpose."
+ },
+ {
+  text: "Which statement best captures the paradox of social institutions?",
+  options: [
+   "They exist to regulate society but rarely influence individual behavior",
+   "They are resistant to change but also evolve over time",
+   "They always function efficiently despite cultural diversity",
+   "They are controlled solely by government policies"
+  ],
+  correct: 1,
+  explanation: "Institutions provide stability but also adapt over time."
+ },
+ {
+  text: "Social institutions can be distinguished from social organizations because:",
+  options: [
+   "Institutions are more rigid, while organizations are flexible",
+   "Organizations are a part of institutions, but not vice versa",
+   "Institutions change daily, whereas organizations never adapt",
+   "Organizations function independently of cultural values"
+  ],
+  correct: 1,
+  explanation: "Institutions are broader systems; organizations operate within them."
+ },
+ {
+  text: "Which of the following is a manifest function of a social institution?",
+  options: [
+   "Schools reinforcing class divisions through credentialism",
+   "Religious institutions providing a sense of moral guidance",
+   "The economy unintentionally creating wealth gaps",
+   "The government promoting specific religious beliefs"
+  ],
+  correct: 1,
+  explanation: "Manifest functions are intended and explicit, like moral education."
+ },
+ {
+  text: "A defining feature of a patrilocal family system is that:",
+  options: [
+   "The husband moves into the wife’s family home",
+   "Couples establish an independent residence separate from both families",
+   "The wife moves into the husband’s family home",
+   "Marriage is based on religious rather than legal principles"
+  ],
+  correct: 2,
+  explanation: "Patrilocal systems require the wife to live with the husband’s family."
+ },
+ {
+  text: "The concept of 'fictive kinship' refers to:",
+  options: [
+   "Family relationships based solely on biological ties",
+   "Economic transactions that define kinship roles",
+   "Socially recognized family bonds that are not based on blood or marriage",
+   "A legal agreement that substitutes for family ties"
+  ],
+  correct: 2,
+  explanation: "Fictive kinship includes godparents, close friends treated as family, etc."
+ },
+ {
+  text: "Which of the following scenarios demonstrates a society practicing neolocal residence?",
+  options: [
+   "A newlywed couple moves into the husband's parents' home",
+   "A married couple moves into the wife's family estate",
+   "A couple establishes a home separate from both of their families",
+   "A society where marriage is prohibited outside the family structure"
+  ],
+  correct: 2,
+  explanation: "Neolocal residence means setting up an independent household."
+ },
+ {
+  text: "The concept of religious pluralism refers to:",
+  options: [
+   "The enforcement of a single religion by the state",
+   "The coexistence of multiple religious traditions in a society",
+   "The elimination of religious influence on politics",
+   "The decline of religion in favor of secular values"
+  ],
+  correct: 1,
+  explanation: "Pluralism acknowledges multiple faiths existing within a society."
+ },
+ {
+  text: "Secularization theory suggests that:",
+  options: [
+   "Religion becomes more dominant as societies modernize",
+   "Government control over religious institutions strengthens over time",
+   "Religion loses social and political influence in advanced societies",
+   "Religious institutions eliminate political interference over time"
+  ],
+  correct: 2,
+  explanation: "Secularization suggests that modern societies see religion's influence decline."
+ },
+ {
+  text: "Which of these best represents an example of civil religion?",
+  options: [
+   "A country mandating church attendance for all citizens",
+   "A nation invoking religious values to justify political actions",
+   "A society separating religious institutions from state functions",
+   "A government favoring one religious group over others"
+  ],
+  correct: 1,
+  explanation: "Civil religion uses national symbols and values in a religious-like manner to promote unity."
+ },
+ {
+ text: "A key characteristic of social institutions is that they:",
+ options: [
+  "Always remain unchanged despite external societal shifts",
+  "Function primarily to serve the economic elite",
+  "Establish recurring patterns of behavior that structure society",
+  "Are only present in developed industrial societies"
+ ],
+ correct: 2,
+ explanation: "Institutions create structured behaviors, but the wrong options seem valid to different ideological perspectives."
+ },
+ {
+ text: "Which of the following would best illustrate a social institution adapting to change?",
+ options: [
+  "A legal system enforcing old laws without modification",
+  "A religious group resisting any form of modernization",
+  "A university adding online courses in response to technological shifts",
+  "A political leader reinforcing long-standing traditions without alteration"
+ ],
+ correct: 2,
+ explanation: "Institutions adapt by evolving with societal needs."
+ },
+ {
+ text: "What is an example of an unintended consequence of social institutions?",
+ options: [
+  "The legal system maintaining law and order",
+  "The educational system unintentionally reinforcing social inequalities",
+  "The family unit providing emotional support",
+  "The economy producing goods and services for public consumption"
+ ],
+ correct: 1,
+ explanation: "Education's intended function is to provide knowledge, but it can reinforce class divisions."
+ },
+ {
+ text: "A matrilineal kinship system is one where:",
+ options: [
+  "Women hold political power while men control family wealth",
+  "Property and lineage are traced through the mother’s side",
+  "A woman is allowed multiple husbands in the same family",
+  "Marriage is based strictly on religious traditions"
+ ],
+ correct: 1,
+ explanation: "Matrilineal systems prioritize inheritance and identity through the mother's lineage."
+ },
+ {
+ text: "A nuclear family differs from an extended family because it:",
+ options: [
+  "Always includes three generations living under the same roof",
+  "Consists of only one parent raising children",
+  "Is a unit of parents and their dependent children",
+  "Prioritizes economic survival over emotional bonds"
+ ],
+ correct: 2,
+ explanation: "A nuclear family is just parents and their children, but the other options appear tempting."
+ },
+ {
+ text: "Which of the following would be considered an endogamous marriage?",
+ options: [
+  "A person marrying someone from their own ethnic or social group",
+  "A marriage that is recognized by law but not by religion",
+  "A couple choosing to marry despite strong family opposition",
+  "A legally binding union that is not based on mutual consent"
+ ],
+ correct: 0,
+ explanation: "Endogamy refers to marrying within one’s own social or cultural group."
+ },
+ {
+ text: "A major societal function of religion is to:",
+ options: [
+  "Reinforce the legitimacy of political institutions",
+  "Eliminate all cultural variations and differences",
+  "Promote universal moral values that remain unchanged over time",
+  "Serve as the only basis for defining laws"
+ ],
+ correct: 0,
+ explanation: "Religion often provides ideological support for political systems, though it does more than just this."
+ },
+ {
+ text: "The most misleading statement about secularization is that:",
+ options: [
+  "It leads to the complete disappearance of religion from society",
+  "It reduces the influence of religious institutions in public affairs",
+  "It may lead to a shift in how religion is practiced rather than its elimination",
+  "It is associated with modernization but occurs at different rates in different societies"
+ ],
+ correct: 0,
+ explanation: "Secularization reduces religious influence but does not eliminate religion."
+ },
+ {
+ text: "Civil religion differs from traditional religion because:",
+ options: [
+  "It rejects all forms of supernatural belief",
+  "It integrates national symbols and values with religious-like reverence",
+  "It relies solely on legal and rational frameworks",
+  "It operates independently of any political or social context"
+ ],
+ correct: 1,
+ explanation: "Civil religion blends national identity and patriotism with religious elements."
+ },
+ {
+ text: "Which of the following best describes credentialism in education?",
+ options: [
+  "Focusing on practical job skills rather than academic achievement",
+  "Requiring specific degrees or certifications for jobs even when skills could be learned on the job",
+  "Ensuring equal access to education for all social classes",
+  "Removing standardized testing requirements to reduce inequality"
+ ],
+ correct: 1,
+ explanation: "Credentialism is over-reliance on formal qualifications, regardless of actual job requirements."
+ },
+ {
+ text: "According to conflict theory, the hidden curriculum in education primarily functions to:",
+ options: [
+  "Promote critical thinking and challenge existing power structures",
+  "Reinforce social inequalities by transmitting dominant cultural values and norms",
+  "Ensure that all students receive equal opportunities regardless of their background",
+  "Prepare students for participation in democratic processes"
+ ],
+ correct: 1,
+ explanation: "Conflict theory views the hidden curriculum as a mechanism for perpetuating social inequality."
+ },
+ {
+ text: "A command economy is primarily characterized by:",
+ options: [
+  "Private ownership of all means of production",
+  "Minimal government intervention in the economy",
+  "Government control of production and distribution",
+  "A decentralized market driven by consumer demand"
+ ],
+ correct: 2,
+ explanation: "In a command economy, the government makes the key economic decisions."
+ },
+ {
+ text: "One major critique of capitalism is that it tends to:",
+ options: [
+  "Promote economic equality and shared wealth",
+  "Inhibit innovation and economic growth",
+  "Concentrate wealth in the hands of a few",
+  "Reduce government control over businesses"
+ ],
+ correct: 2,
+ explanation: "A common criticism is that capitalism leads to wealth inequality."
+ },
+ {
+ text: "In contrast to democratic systems, a totalitarian government is characterized by:",
+ options: [
+  "The protection of individual rights and freedoms",
+  "A multi-party system with open political competition",
+  "Limited government control over citizens' lives",
+  "Centralized control over all aspects of life"
+ ],
+ correct: 3,
+ explanation: "Totalitarianism seeks to control all aspects of public and private life."
+ },
+ {
+ text: "Which of the following is the most nuanced understanding of how social institutions change over time?",
+ options: [
+  "They are static and resistant to any kind of change",
+  "They adapt rapidly and completely to all new societal conditions",
+  "They change through a complex interplay of internal and external pressures",
+  "They are primarily driven by technological advancements"
+ ],
+ correct: 2,
+ explanation: "Change is a complex process involving multiple interacting factors, both within and outside the institution."
+ },
         {
           text: "What is the symbolic component of culture based on?",
           options: ["Material goods", "Values", "Language and symbols", "Clothing"],
