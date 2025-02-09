@@ -14579,6 +14579,558 @@ Botany: {
   correct: 1,
   explanation: "A manifest function of religion is to provide social solidarity, moral guidance, and a sense of community among believers."
  },
+      
+ {
+  text: "Which of the following best illustrates the self-fulfilling prophecy in deviance?",
+  options: [
+   "A person labeled as a criminal continues committing crimes because they are seen as a criminal",
+   "A student studying hard because they are told they are smart",
+   "A protest movement gaining traction due to media coverage",
+   "A law being passed to prevent deviant behavior"
+  ],
+  correct: 0,
+  explanation: "Once labeled, individuals may internalize the label and act accordingly (self-fulfilling prophecy)."
+ },
+ {
+  text: "What is the main issue with criminalizing all acts of deviance?",
+  options: [
+   "It discourages law enforcement from taking action",
+   "It assumes all deviance is harmful to society",
+   "It prevents people from learning from their mistakes",
+   "It only applies to formal laws, not social norms"
+  ],
+  correct: 1,
+  explanation: "Not all deviance is harmful—some forms of deviance lead to social change."
+ },
+ {
+  text: "The concept of restorative justice focuses on:",
+  options: [
+   "Punishing the offender as severely as possible",
+   "Rehabilitating offenders and repairing harm done to victims",
+   "Encouraging more severe prison sentences",
+   "Preventing any interaction between criminals and victims"
+  ],
+  correct: 1,
+  explanation: "Restorative justice prioritizes repairing harm and reintegration."
+ },
+ {
+  text: "When a previously deviant act becomes widely accepted, this is called:",
+  options: [
+   "Deviance amplification",
+   "Institutionalization",
+   "Normalization",
+   "Social reintegration"
+  ],
+  correct: 2,
+  explanation: "Social attitudes can change, making past deviant acts normal (normalization)."
+ },
+ {
+  text: "How do power dynamics influence the definition of deviance?",
+  options: [
+   "Power has no influence on deviance",
+   "The dominant group defines what is considered deviant",
+   "Deviance is determined purely by moral standards",
+   "Laws are applied equally to all individuals"
+  ],
+  correct: 1,
+  explanation: "The powerful shape what is considered deviant."
+ },
+ {
+  text: "When deviant behavior spreads due to increased media attention, this is called:",
+  options: [
+   "Labeling theory",
+   "Deviance amplification",
+   "Secondary deviance",
+   "Cultural diffusion"
+  ],
+  correct: 1,
+  explanation: "Media attention can reinforce and spread deviance (deviance amplification)."
+ },
+ {
+  text: "In what situation could crime be considered functional for society?",
+  options: [
+   "Crime has no positive function",
+   "Crime strengthens social cohesion by uniting people against criminals",
+   "Crime always leads to moral decay",
+   "Crime prevents people from obeying laws"
+  ],
+  correct: 1,
+  explanation: "Crime can reinforce norms by defining moral boundaries."
+ },
+ {
+  text: "What is a hidden consequence of mass incarceration?",
+  options: [
+   "It reduces all types of crime permanently",
+   "It creates long-term social inequalities",
+   "It eliminates the need for law enforcement",
+   "It has no effect on communities"
+  ],
+  correct: 1,
+  explanation: "Mass incarceration disproportionately affects marginalized groups, creating long-term social inequalities."
+ },
+ {
+  text: "If an act is illegal but widely accepted as normal within a society, it would be considered:",
+  options: [
+   "Deviant but not criminal",
+   "Criminal but not deviant",
+   "Both deviant and criminal",
+   "Neither deviant nor criminal"
+  ],
+  correct: 1,
+  explanation: "Since it is illegal, it is criminal, but if society accepts it, it is not seen as deviant."
+ },
+ {
+  text: "Which of the following is NOT a reason why defining deviance is complex?",
+  options: [
+   "Deviance is shaped by cultural norms that evolve over time",
+   "Some acts are always deviant, regardless of societal norms",
+   "Deviance can be situational rather than universal",
+   "The same behavior may be accepted in one group but condemned in another"
+  ],
+  correct: 1,
+  explanation: "There is no behavior that is inherently deviant across all cultures and times."
+ },
+ {
+  text: "Which of these situations best illustrates the concept of deviance being relative?",
+  options: [
+   "A woman voting in a democratic election",
+   "A man wearing shorts in the summer",
+   "A person publicly consuming alcohol in a country where drinking is illegal",
+   "A police officer enforcing laws universally across societies"
+  ],
+  correct: 2,
+  explanation: "Deviance depends on cultural context—drinking alcohol is legal in some places but not in others."
+ },
+ {
+  text: "Labeling theory suggests that deviance exists primarily because:",
+  options: [
+   "Some behaviors are inherently immoral",
+   "Society defines and reacts to certain behaviors as deviant",
+   "Laws are applied equally to all individuals",
+   "People are born with deviant tendencies"
+  ],
+  correct: 1,
+  explanation: "Labeling theory argues that deviance is created by societal reaction."
+ },
+ {
+  text: "What is the main flaw in the functionalist perspective on deviance?",
+  options: [
+   "It ignores how deviance can be used as a form of resistance against oppression",
+   "It assumes that deviance always disrupts society",
+   "It fails to recognize that all deviance is criminal",
+   "It does not consider how deviance can reinforce power structures"
+  ],
+  correct: 0,
+  explanation: "Functionalists view deviance as reinforcing norms but often ignore its role in challenging oppression."
+ },
+ {
+  text: "According to conflict theory, laws are created primarily to:",
+  options: [
+   "Ensure fairness for all citizens",
+   "Reflect the shared values of a society",
+   "Protect the interests of those in power",
+   "Discourage economic inequality"
+  ],
+  correct: 2,
+  explanation: "Conflict theory argues that laws serve elite interests."
+ },
+ {
+  text: "Which of the following acts would be considered deviant in all societies?",
+  options: [
+   "Theft",
+   "Lying",
+   "Cannibalism",
+   "None of the above"
+  ],
+  correct: 3,
+  explanation: "Even behaviors that seem universally deviant, like theft or cannibalism, have been accepted in certain cultures."
+ },
+ {
+  text: "What is the main difference between primary and secondary deviance?",
+  options: [
+   "Primary deviance results in social labeling, while secondary deviance does not",
+   "Secondary deviance occurs when a person internalizes a deviant identity after being labeled",
+   "Primary deviance is criminal, while secondary deviance is only informal deviance",
+   "There is no distinction between primary and secondary deviance"
+  ],
+  correct: 1,
+  explanation: "Secondary deviance happens when an individual accepts and continues a deviant identity after being labeled."
+ },
+ {
+  text: "A person who believes their own cultural practices are superior to others and condemns different customs as deviant is demonstrating:",
+  options: [
+   "Cultural relativism",
+   "Ethnocentrism",
+   "Social conformity",
+   "Labeling theory"
+  ],
+  correct: 1,
+  explanation: "Ethnocentrism is judging other cultures based on one's own cultural norms."
+ },
+ {
+  text: "What is the primary function of formal social control?",
+  options: [
+   "To encourage individual self-discipline",
+   "To enforce norms through laws and institutions",
+   "To replace informal social control mechanisms",
+   "To promote moral relativism"
+  ],
+  correct: 1,
+  explanation: "Formal social control uses legal systems to enforce norms."
+ },
+ {
+  text: "Which of these is NOT an example of informal social control?",
+  options: [
+   "Social shaming for breaking cultural taboos",
+   "Parents disciplining their children",
+   "A judge sentencing someone to prison",
+   "A teacher encouraging students to follow school norms"
+  ],
+  correct: 2,
+  explanation: "Judicial punishment is formal social control."
+ },
+ {
+  text: "Which of these scenarios best illustrates medicalization of deviance?",
+  options: [
+   "Classifying excessive gambling as an addiction rather than a crime",
+   "Sentencing drug offenders to longer prison terms",
+   "Increasing police patrols in high-crime areas",
+   "Labeling all criminals as genetically predisposed to deviant behavior"
+  ],
+  correct: 0,
+  explanation: "Medicalization reframes deviance as a medical issue rather than a criminal one (gambling as addiction)."
+ },
+ {
+  text: "Which of the following best explains why deviance is necessary for social stability?",
+  options: [
+   "It weakens social cohesion and encourages anarchy",
+   "It clarifies moral boundaries and reinforces norms",
+   "It eliminates all forms of crime and unethical behavior",
+   "It prevents any kind of social change from occurring"
+  ],
+  correct: 1,
+  explanation: "By defining unacceptable behavior, deviance strengthens group unity."
+ },
+ {
+  text: "A society where individuals conform to all norms without question would most likely experience:",
+  options: [
+   "High levels of creativity and social progress",
+   "A lack of social control mechanisms",
+   "Stagnation, as no new ideas challenge existing norms",
+   "An increase in deviance due to a lack of authority"
+  ],
+  correct: 2,
+  explanation: "If no one challenges norms, societal growth is limited (stagnation)."
+ },
+ {
+  text: "Which scenario best represents a situation where deviance is positively sanctioned?",
+  options: [
+   "A hacker exposing government corruption and being celebrated",
+   "A student cheating on an exam and getting expelled",
+   "A thief being arrested for stealing a car",
+   "A politician resigning due to a scandal"
+  ],
+  correct: 0,
+  explanation: "Some deviant acts, like whistleblowing, receive positive recognition."
+ },
+ {
+  text: "What distinguishes white-collar crime from blue-collar crime?",
+  options: [
+   "White-collar crime involves violence, while blue-collar crime does not",
+   "Blue-collar crime occurs in corporate settings, while white-collar crime occurs in manual labor",
+   "White-collar crime is financially motivated and non-violent, while blue-collar crime involves physical acts",
+   "There is no real difference; all crimes are treated the same in the legal system"
+  ],
+  correct: 2,
+  explanation: "White-collar crimes are financial and often involve deception, not physical force."
+ },
+ {
+  text: "Which of these would be considered a victimless crime?",
+  options: [
+   "Burglary",
+   "Illegal drug use",
+   "Fraud",
+   "Armed robbery"
+  ],
+  correct: 1,
+  explanation: "A victimless crime is one where no direct victim suffers harm."
+ },
+ {
+  text: "How does differential association theory explain criminal behavior?",
+  options: [
+   "Criminal behavior is inherited genetically",
+   "Individuals learn deviance by interacting with others who engage in crime",
+   "Crime is always a rational choice based on economic gain",
+   "People commit crime only when they lack moral reasoning"
+  ],
+  correct: 1,
+  explanation: "This theory (differential association) states that deviance is learned through social interactions."
+ },
+ {
+  text: "What is the primary reason some behaviors are deviant in one culture but normal in another?",
+  options: [
+   "Some societies are naturally more strict than others",
+   "Deviance is defined by cultural norms, which vary between societies",
+   "Western cultures impose their morality on the rest of the world",
+   "Universal moral laws determine deviant behavior"
+  ],
+  correct: 1,
+  explanation: "What is acceptable in one culture may be deviant in another."
+ },
+ {
+  text: "If an individual from a conservative culture moves to a liberal society and experiences shock at their customs, this is an example of:",
+  options: [
+   "Cultural lag",
+   "Ethnocentrism",
+   "Culture shock",
+   "Social deviance"
+  ],
+  correct: 2,
+  explanation: "Culture shock happens when someone struggles to adapt to a new environment."
+ },
+ {
+  text: "Which of the following scenarios best demonstrates cultural relativity in deviance?",
+  options: [
+   "A judge in one country sentencing a thief to 10 years in prison, while another country punishes the same crime with a fine",
+   "Every society agreeing that theft should be punished in the same way",
+   "A behavior that remains deviant regardless of context",
+   "A universal moral code defining which acts are right and wrong"
+  ],
+  correct: 0,
+  explanation: "Different societies define and punish deviance differently (cultural relativity)."
+ },
+ {
+  text: "A person labeled as a criminal is unable to find a job because of their past. This demonstrates:",
+  options: [
+   "Primary deviance",
+   "Secondary deviance",
+   "Restorative justice",
+   "Victimless crime"
+  ],
+  correct: 1,
+  explanation: "Once labeled as deviant, a person may struggle to reintegrate into society (secondary deviance)."
+ },
+ {
+  text: "In some cases, labeling someone as deviant can result in them embracing that identity. This process is known as:",
+  options: [
+   "Retrospective interpretation",
+   "Self-fulfilling prophecy",
+   "Reverse socialization",
+   "Reintegration theory"
+  ],
+  correct: 1,
+  explanation: "The label can influence future behavior (self-fulfilling prophecy)."
+ },
+ {
+  text: "When a previously deviant behavior becomes normalized, this is an example of:",
+  options: [
+   "Decriminalization",
+   "Deviance amplification",
+   "Criminal reintegration",
+   "Absolute deviance"
+  ],
+  correct: 0,
+  explanation: "Some behaviors become legally and socially acceptable over time (decriminalization)."
+ },
+ {
+  text: "Which of the following best represents an example of medicalization of deviance?",
+  options: [
+   "Treating drug addiction as a disease rather than a crime",
+   "Arresting individuals for public intoxication",
+   "Labeling certain behaviors as sinful in religious contexts",
+   "Criminalizing the use of prescription medication"
+  ],
+  correct: 0,
+  explanation: "Medicalization sees deviance as a health issue rather than a criminal one (treating addiction as a disease)."
+ },
+ {
+  text: "Which of the following statements about deviance is the most misleading?",
+  options: [
+   "Deviance is behavior that violates social norms",
+   "Deviance is always punishable by law",
+   "Deviance is socially constructed and varies by culture",
+   "Deviant acts may be encouraged in some societies"
+  ],
+  correct: 1,
+  explanation: "Deviance can be informal and not necessarily illegal."
+ },
+ {
+  text: "If an act is considered deviant in one society but not in another, this is an example of:",
+  options: [
+   "Universal morality",
+   "Cultural relativism",
+   "Socialization failure",
+   "Normative stagnation"
+  ],
+  correct: 1,
+  explanation: "Different societies define deviance differently (cultural relativism)."
+ },
+ {
+  text: "Which of the following best explains why deviance is difficult to define?",
+  options: [
+   "All societies agree on which acts are deviant",
+   "Deviance is based on objective moral standards",
+   "What is deviant in one context may be normal in another",
+   "Deviance is biologically inherited"
+  ],
+  correct: 2,
+  explanation: "Deviance is context-dependent."
+ },
+ {
+  text: "What is the key difference between primary deviance and secondary deviance?",
+  options: [
+   "Primary deviance is criminal, while secondary deviance is not",
+   "Primary deviance is unnoticed, while secondary deviance is a response to being labeled",
+   "Secondary deviance occurs before primary deviance",
+   "Primary deviance is more severe than secondary deviance"
+  ],
+  correct: 1,
+  explanation: "Secondary deviance results from being labeled as deviant."
+ },
+ {
+  text: "Which method of measuring deviance assumes that certain acts are inherently wrong?",
+  options: [
+   "Statistical approach",
+   "Absolutist approach",
+   "Labeling theory",
+   "Functionalist approach"
+  ],
+  correct: 1,
+  explanation: "Absolute deviance assumes universal moral standards."
+ },
+ {
+  text: "What is the biggest limitation of the absolute approach to deviance?",
+  options: [
+   "It ignores cultural variations in norms",
+   "It prevents law enforcement from acting",
+   "It assumes all deviance is legal",
+   "It applies only to high-status individuals"
+  ],
+  correct: 0,
+  explanation: "Moral standards differ across cultures."
+ },
+ {
+  text: "In a society where theft is common, a statistical approach to deviance would suggest that stealing is:",
+  options: [
+   "Highly deviant",
+   "A biological tendency",
+   "Not deviant since it is widespread",
+   "Only deviant in legal terms"
+  ],
+  correct: 2,
+  explanation: "Statistical deviance focuses on rarity."
+ },
+ {
+  text: "Why is it incorrect to say that all deviance is criminal?",
+  options: [
+   "Some deviant acts are too minor to be considered crimes",
+   "All deviance is eventually criminalized",
+   "Criminal acts are always morally wrong, while deviance is not",
+   "Deviance applies only to fashion and personal choices"
+  ],
+  correct: 0,
+  explanation: "Deviance includes non-criminal behaviors like unusual clothing styles."
+ },
+ {
+  text: "A person who refuses to bathe for years is engaging in:",
+  options: [
+   "Criminal deviance",
+   "Informal deviance",
+   "Social engineering",
+   "Ritualistic behavior"
+  ],
+  correct: 1,
+  explanation: "It violates norms but is not illegal (informal deviance)."
+ },
+ {
+  text: "Which of the following best illustrates counterculture deviance?",
+  options: [
+   "A person jaywalking across a street",
+   "A secret society that actively opposes mainstream cultural values",
+   "A student arriving late to class",
+   "A group of people forming a new language"
+  ],
+  correct: 1,
+  explanation: "Countercultures reject dominant societal values."
+ },
+ {
+  text: "Which of the following best defines social control?",
+  options: [
+   "The ability of individuals to self-regulate behavior",
+   "The enforcement of laws and norms by society",
+   "The legal system's control over criminal behavior",
+   "The suppression of cultural differences"
+  ],
+  correct: 1,
+  explanation: "Social control includes formal and informal measures (enforcement of laws and norms)."
+ },
+ {
+  text: "Which of these is an example of informal social control?",
+  options: [
+   "A court sentencing a thief to prison",
+   "A mother scolding her child for bad manners",
+   "A police officer issuing a speeding ticket",
+   "A government regulating businesses"
+  ],
+  correct: 1,
+  explanation: "Informal social control involves personal interactions."
+ },
+ {
+  text: "What is the key difference between medicalization and criminalization of deviance?",
+  options: [
+   "Medicalization sees deviance as a social choice, while criminalization views it as an illness",
+   "Criminalization assigns legal penalties, while medicalization treats deviance as a health issue",
+   "Medicalization only applies to mental disorders, while criminalization applies to all behaviors",
+   "Criminalization applies to informal deviance, while medicalization applies to crime"
+  ],
+  correct: 1,
+  explanation: "Medicalization treats deviance as a health issue."
+ },
+ {
+  text: "According to labeling theory, deviance is primarily determined by:",
+  options: [
+   "An individual's personal choices",
+   "Genetic predisposition to criminality",
+   "The reaction of society to certain behaviors",
+   "Economic class differences"
+  ],
+  correct: 2,
+  explanation: "Societal reaction shapes deviance."
+ },
+ {
+  text: "Conflict theory argues that laws are created to:",
+  options: [
+   "Ensure fairness and equality",
+   "Protect the interests of the powerful",
+   "Eliminate deviant behavior entirely",
+   "Prevent changes in cultural traditions"
+  ],
+  correct: 1,
+  explanation: "Conflict theory sees laws as tools of social control by elites."
+ },
+ {
+  text: "A functionalist perspective on deviance would emphasize:",
+  options: [
+   "The elimination of all deviant acts",
+   "The role deviance plays in reinforcing social norms",
+   "The genetic causes of deviant behavior",
+   "The idea that deviance has no social purpose"
+  ],
+  correct: 1,
+  explanation: "Deviance strengthens group unity by defining acceptable behavior."
+ },
+ {
+  text: "What is the main difference between criminology and the criminal justice system?",
+  options: [
+   "Criminology focuses on law enforcement, while the criminal justice system studies crime patterns",
+   "Criminology studies causes of crime, while the criminal justice system enforces laws",
+   "Criminology applies only to civil cases, while the criminal justice system handles criminal law",
+   "There is no distinction between criminology and the criminal justice system"
+  ],
+  correct: 1,
+  explanation: "Criminology analyzes crime causes, while the system enforces laws."
+ },
+
         {
           text: "What is the symbolic component of culture based on?",
           options: ["Material goods", "Values", "Language and symbols", "Clothing"],
