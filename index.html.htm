@@ -201,7 +201,26 @@
     </div>
 </div>
 
+  <!-- First Notification -->
+  <div id="notification1" class="notification hidden">
+    <div class="notification-content">
+      <img src="young-woman-with-curly-hair-using-tablet-cafe_273609-16296.webp" alt="Exam Alert" class="notification-image">
+      <h2>Mock Exam Alert</h2>
+      <p>The CHM101 Mock Exam will be live by 12:00 PM. A link will be sent later. Meanwhile, you can practice the available exams on the app.</p>
+      <button class="btn secondary" onclick="dismissNotification('notification1')">Dismiss</button>
+    </div>
+  </div>
 
+  <!-- Second Notification -->
+  <div id="notification2" class="notification hidden">
+    <div class="notification-content">
+      <img src="boy-doing-homework-with-use-laptop_23-2148880020.jpg" alt="Exam Live" class="notification-image">
+      <h2>CHM101 Mock Exam Live!</h2>
+      <p>The CHM101 Mock Exam is now live. Click below to start:</p>
+      <a href="https://mock-t.vercel.app/" class="btn primary">Start Mock Exam</a>
+      <button class="btn secondary" onclick="dismissNotification('notification2')">Dismiss</button>
+    </div>
+  </div>
 
 <!-- Notification Popup -->
 <div id="rewardPopupMessage" class="popup">You earned ₦0!</div>
