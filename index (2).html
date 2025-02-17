@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Students Support System</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="styles.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+  <header>
+  <h1>OAU EXAMINATION UNIT</h1>
+  
+  </header>
+
+  <main>
+
+  <div class="content">
+
+<img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
+
+  </div>  
+
+
+      
+  <!-- Overlay for login and registration -->
+  <div id="overlay">
+    <!-- Login Section -->
+    <div id="login-box">
+      <h2>Login</h2>
+      <div class="content">
+
+<img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
+
+      </div>
+      <input type="text" id="user-id" placeholder="Enter your User ID">
+      <button id="login-btn">Login</button>
+      <p style="margin-top: 10px;">Don't have an User ID? <button id="register-btn" class="back-btn">Register</button></p>
+    </div>
+
+    <div id="receipt-container">
+        <canvas id="receiptCanvas"></canvas>
+    </div>
+    
+    <!-- Registration Section -->
+    <div id="register-box" class="hidden">
+      <h2>Register</h2>
+      <input type="text" id="full-name" placeholder="Enter your Full Name">
+      <input type="text" id="department" placeholder="Enter your Department">
+      <input type="text" id="level" placeholder="Enter your Level">
+      <input type="text" id="courses" placeholder="Enter your Courses">
+      <input type="file" id="photo-upload" accept="image/*">
+      <p id="RF"><p></p>Registration Fee :  <strong>N2000</strong></p>
+      <label>
+        <input type="checkbox" id="agree-checkbox">
+        I agree to proceed with registration.
+      </label>
+      <button id="submit-register">Submit</button>
+      <button id="back-to-login" class="back-btn">Back to Login</button>
+    </div>
+    
+
+<!-- Payment Page -->
+<div id="paymentPage" class="hidden">
+  <h1>STUDENTS SUPPORT SYSTEM</h1>
+  <h2><em>Obafemi Awolowo University</em></h2>
+  <h3>Payment of User ID activation fee for the 2023/2024 academic session.</h3>
+  
+  <p><strong>Full Name:</strong> <span id="paymentFullName"></span></p>
+  <p><strong>Department:</strong> <span id="paymentDepartment"></span></p>
+  <p><strong>Level:</strong> <span id="paymentLevel"></span></p>
+  <p><strong>User ID:</strong> <span id="paymentUserID"></span></p>
+  <p><strong>Amount to Pay:</strong> N2000.00</p>
+  
+  <div class="payment-details">
+    <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
+    <p><strong>Account Number:</strong> 6112744499</p>
+    <p><strong>Account Name:</strong> OCHUKO TIMOTHY RICHARD</p>
+  </div>
+
+  <input type="file" id="receipt-upload" accept="image/*,application/pdf">
+  <button id="submit-receipt-btn">Submit Receipt</button>
+  <button id="generate-invoice-btn">Generate Invoice</button>
+  <button id="back-to-login-payment">Back to Login</button>
+</div>
+        
+  <!-- Tour Modal -->
+
+  <div id="tour-overlay">
+
+    <div id="tour-modal">
+
+      <div class="tour-content">
+
+        <div class="tour-image">
+
+          <img id="tour-image" src="deo1.jpg" alt="Tour Image">
+
+        </div>
+
+        <div class="tour-text">
+
+          <h2 id="tour-title">Welcome to the Tour</h2>
+
+          <p id="tour-description">This is a quick overview of our application.</p>
+
+        </div>
+
+      </div>
+
+      <div class="tour-controls">
+
+        <button id="prev-btn">Previous</button>
+
+        <button id="next-btn">Next</button>
+
+        <button id="close-btn">Close</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+    
+    <!-- Welcome Popup -->
+    <div id="welcome-popup" class="hidden">
+      <div class="profile-container">
+        <img id="profile-photo" src="" alt="Profile Photo" class="profile-pic">
+      </div>
+      <h2 id="welcome-message">Welcome!</h2>
+      <p id="student-details"></p>
+      <button id="continue-btn">Continue</button>
+    </div>
+        </div>
+    
+  <!-- Floating button -->
+<button id="history-btn" class="floating-btn">📖</button>
+
+<div id="exam-history-section" class="hidden">
+  <h2>Exam History</h2>
+  <div id="exam-history-content"></div>
+</div>
+
+<!-- Circular Icon to Open Rewards Popup -->
+<div id="rewardIcon" onclick="toggleRewardPopup()">🏆</div>
+
+<!-- Rewards Popup Modal -->
+<div id="rewardPopup" class="reward-popup">
+    <div class="reward-content">
+        <h2>Your Rewards</h2>
+        <p>🎯 Exam Bonus: <span id="examBonus">₦0</span></p>
+        <p>🕒 Time Bonus: <span id="timeBonus">₦0</span></p>
+        <p>💰 Total Earned: <span id="totalReward">₦0</span></p>
+
+        <!-- Live Timer Display -->
+        <p>⏳ Time Spent: <span id="timeSpent">00:00:00</span></p>
+
+        <div class="progress-bar-container">
+            <p>₦3,000 Withdrawal Progress</p>
+            <div class="progress-bar"><div id="progressFill"></div></div>
+        </div>
+
+        <!-- Withdrawal Section -->
+        <div id="withdrawalSection" class="withdrawal-container">
+            <h3>Withdraw Your Earnings</h3>
+            <p>💰 Available Balance: <span id="withdrawableAmount">₦0</span></p>
+            <form id="withdrawForm">
+                <label for="bankName">Bank Name:</label>
+                <input type="text" id="bankName" required>
+
+                <label for="accountNumber">Account Number:</label>
+                <input type="number" id="accountNumber" required>
+
+                <label for="withdrawAmount">Amount to Withdraw:</label>
+                <input type="number" id="withdrawAmount" required>
+
+                <button type="submit">Request Withdrawal</button>
+            </form>
+        </div>
+
+        <button onclick="toggleRewardPopup()">Close</button>
+    </div>
+</div>
+
+  <!-- First Notification -->
+  <div id="notification1" class="notification hidden">
+    <div class="notification-content">
+      <img src="young-woman-with-curly-hair-using-tablet-cafe_273609-16296.webp" alt="Exam Alert" class="notification-image">
+      <h2>EXAM PREPARATIONS</h2>
+      <p>We wish you success on your exams. Do well to practice the questions on this app regularly. We are not assuring you that you'll see word for word questions but you'll see something familiar.</p>
+      <button class="btn secondary" onclick="dismissNotification('notification1')">Dismiss</button>
+    </div>
+  </div>
+
+
+
+<!-- Notification Popup -->
+<div id="rewardPopupMessage" class="popup">You earned ₦0!</div>
+
+
+
+    <section id="course-selection-section">
+ <div <button id="switch-mode-btn" class="icon-btn">🛠️</button></div>
+
+      <h3>Select a Department and enter the Access Code to Practice Related Examination Questions</h3>
+      
+      <div id="courses-container">
+
+        <button class="course" data-course="Mathematics">Mathematics</button>
+        
+
+        <button class="course" data-course="Chemistry">Chemistry</button>
+        
+        
+
+        <button class="course" data-course="Biology">Biology</button>
+
+        <button class="course" data-course="Botany">Botany</button>
+
+        <button class="course" data-course="Microbiology">Microbiology</button>
+
+        <button class="course" data-course="Physics">Physics</button>
+      
+        <button class="course" data-course="Zoology">Zoology</button>
+        
+        <button class="course" data-course="Geology">Geology</button>
+        <button class="course" data-course="Sociology">Sociology</button>
+        <button class="course" data-course="English">English</button>
+        <button class="course" data-course="Computer">Computer Science</button>
+        <button class="course" data-course="Mock-Exam" onclick="window.location.href='mock-index.html';">General Mock Assessments</button>
+
+      </div>
+
+    </section>
+
+    <section id="access-code-section" class="hidden">
+  <h2 id="selected-course-title">Enter Access Code for course under</h2>
+  <input type="text" id="access-code" placeholder="Enter your access code">
+  <button id="submit-code">Submit</button>
+  <button id="cancel-button">Cancel</button>
+    </section>
+
+    <section id="exam-section" class="hidden">
+  <h2 id="subject-title">Subject Title</h2>
+  <div id="questions-container">
+    <p id="question-text">Question will appear here...</p>
+    <img id="question-image" src="" alt="Question Image" class="hidden">
+    <div id="options-container"></div>
+  </div>
+  <div id="navigation">
+    <button id="prev-question" disabled>Previous</button>
+    <button id="next-question">Next</button>
+    <button id="end-exam" onclick="endExam()">Submit Examination</button>
+  </div>
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to submit the exam? Once submitted, you cannot make any changes.</p>
+      <button id="confirmYes" class="btn">Yes</button>
+      <button id="confirmNo" class="btn">No</button>
+    </div>
+  </div>
+  <div id="progress-container"></div>
+          </section>
+      
+<!-- Animated Notification -->
+        <div id="reward-notification" class="hidden"></div>
+
+    
+    <section id="summary-section" class="hidden">
+  <h2>Summary</h2>
+  <div id="summary-content"></div>
+  <button id="restart-exam">Restart Exam</button>
+</section>
+
+  </main>
+
+
+</html>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+  <script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+  <script  src="./script (1) (3) (2).js"></script>
+
+</body>
+  </html>
