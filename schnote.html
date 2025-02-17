@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students Support System</title>
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, blue, orange);
+      color: black;
+    }
+    header {
+      background: blue;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    header h1, header h2 {
+      margin: 5px;
+    }
+    .content {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .logo {
+      width: 140px;
+      height: auto;
+      margin-top: 1rem;
+      top: 0px;
+      position: center;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h3 {
+      color: #0055cc;
+      border-bottom: 2px solid #0055cc;
+      padding-bottom: 5px;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 0.5px solid #ddd;
+      padding: 6px;
+      text-align: left;
+      vertical-align: left;
+      font-size: 0.50rem;
+      font-weight: bold;
+    }
+    th {
+      background-color: #0055cc;
+      color: white;
+    }
+    select, input[type="text"], button {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin: 5px 0;
+    }
+        .hidden {
+      display: none;
+    }
+    .switch-button {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #0055cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .switch-button:hover {
+      background-color: #003b8a;
+    }
+    button {
+      background-color: #0055cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003b8a;
+    }
+    #noteEditor {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      height: 200px;
+    }
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+    ul li {
+      margin: 10px 0;
+      padding: 10px;
+      background: orange;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      color: black;
+    }
+    #categories {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+
+    .popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+}
+.popup-content {
+  text-align: initial; /* Keeps the original alignment */
+}
+
+.popup-content p {
+  margin: 0;
+  line-height: 1.2;
+  text-align: initial; /* Keeps the original alignment */
+}
+.welcomePopup-content, .popup-content {
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  height: 100%;
+  overflow-y: auto;
+}
+ 
+    .popup-footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 8px;
+      border-top: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    .popup-footer button, .popup-footer label, .popup-footer input {
+      margin: 2px;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+    .prompt-overlay, .hidden {
+      display: none !important;
+    }
+    #calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      background: #f5f5f5;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 9px;
+      margin-top: 8px;
+      overflow-x: auto;
+    }
+    .day {
+      background: #e7eaf3;
+      border: 1px solid #ddd;
+      padding: 6px;
+      font-size: 0.6rem;
+      text-align: center;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .day.today {
+      background: #0055cc;
+      color: white;
+      font-weight: bold;
+    }
+    #browserIcon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    #browserIcon:hover {
+      background: #45a049;
+    }
+    #miniBrowser {
+      display: none;
+      position: fixed;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .top-controls {
+      display: flex;
+      gap: 5px;
+      padding: 10px;
+      background: #ddd;
+      border-bottom: 1px solid #ccc;
+    }
+    .top-controls input {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+    .top-controls button {
+      padding: 5px 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .top-controls button:hover {
+      background: #45a049;
+    }
+    #browserFrame {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
+    .bottom-controls {
+      display: flex;
+      gap: 5px;
+      padding: 10px;
+      background: #ddd;
+      border-top: 1px solid #ccc;
+      justify-content: center;
+    }
+    .bottom-controls button {
+      padding: 5px 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .bottom-controls button:hover {
+      background: #45a049;
+    }
+
+  .prompt-overlay {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+}
+
+.prompt-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.prompt-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.prompt-actions button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.prompt-actions button:hover {
+  background-color: #ddd;
+}
+  /* Blur the background when modal is active */
+  body.modal-active {
+    overflow: hidden; /* Prevent scrolling */
+
+  }
+
+  /* Modal-specific styles */
+  #customPromptModal input {
+    transition: border-color 0.3s ease;
+  }
+
+  #customPromptModal input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  #customPromptModal button:hover {
+    opacity: 0.9;
+  }
+@media print {
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  .note-title, .note-content {
+    page-break-inside: avoid;
+    word-wrap: break-word;
+  }
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Obafemi Awolowo University</h1>
+    <h2>Students Support System</h2>
+  </header>
+
+  <!-- Custom Prompt Modal -->
+<div id="customPromptModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); width: 300px; background: white; border-radius: 10px; z-index: 20000; box-shadow: 0 10px 20px rgba(0,0,0,0.25);">
+  <div style="padding: 20px; font-family: Arial, sans-serif; text-align: center;">
+    <h3 style="margin: 0; font-size: 20px; font-weight: bold; color: #333;">Enter Note Title</h3>
+    <p style="font-size: 14px; color: #555; margin-top: 8px;">Please provide a title for your note</p>
+    <input id="customPromptInput" type="text" placeholder="Note title..." maxlength="50" style="width: 70%; padding: 10px; margin-top: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
+    <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+      <button onclick="closeCustomPrompt(false)" style="padding: 10px 20px; background: #f0f0f0; border: none; border-radius: 5px; font-size: 14px; color: #333; cursor: pointer;">Cancel</button>
+      <button onclick="closeCustomPrompt(true)" style="padding: 10px 20px; background: #007bff; border: none; border-radius: 5px; font-size: 14px; color: white; cursor: pointer;">Save</button>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Browser Icon -->
+  <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
+
+  <!-- Mini Browser -->
+  <div id="miniBrowser" class="hidden">
+    <!-- Top Controls -->
+    <div class="browser-controls top-controls">
+      <input
+        type="text"
+        id="browserUrl"
+        placeholder="Enter URL (e.g., https://www.google.com)"
+      />
+      <button onclick="navigateBrowser()">Go</button>
+    </div>
+
+    <!-- Browser Content -->
+    <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
+
+    <!-- Footer Controls -->
+    <div class="browser-controls bottom-controls">
+      <button onclick="goBack()">Back</button>
+      <button onclick="goForward()">Forward</button>
+      <button onclick="reloadBrowser()">Reload</button>
+      <button onclick="goHome()">Home</button>
+    </div>
+  </div>
+</div>
+
+  <div class="container">
+    <!-- Class Scheduler -->
+    <div id="scheduleSection">
+      <h3>Class Scheduler</h3>
+      <div>
+        <p>Enter the schedule title and code to load predefined classes:</p>
+        <input type="text" id="scheduleTitle" placeholder="Enter title">
+        <input type="text" id="scheduleCode" placeholder="Enter code">
+        <button onclick="loadDepartmentSchedule()">Load Schedule</button>
+        <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
+      </div>
+      <button class="switch-button" onclick="switchScheduleTables()">Switch Schedule Tables</button>
+      <div id="predefinedScheduleWrapper" class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Mon</th>
+              <th>Tues</th>
+              <th>Wed</th>
+              <th>Thur</th>
+              <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
+            </tr>
+          </thead>
+          <tbody id="predefinedScheduleBody"></tbody>
+        </table>
+      </div>
+      <div id="manualScheduleWrapper" class="table-wrapper hidden">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Mon</th>
+              <th>Tues</th>
+              <th>Wed</th>
+              <th>Thur</th>
+              <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
+            </tr>
+          </thead>
+          <tbody id="manualScheduleBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <h4>PERSONAL READING TIMETABLE</h4>
+    <p>Structure your personal reading timetable here, then click on the switch button above to preview it</p>
+    <select id="timeInput">
+      <option value="">Select Time</option>
+      <option value="1:00 AM">1:00 AM</option>
+      <option value="2:00 AM">2:00 AM</option>
+      <option value="3:00 AM">3:00 AM</option>
+      <option value="4:00 AM">4:00 AM</option>
+      <option value="5:00 AM">5:00 AM</option>
+      <option value="6:00 AM">6:00 AM</option>
+      <option value="7:00 AM">7:00 AM</option>
+      <option value="8:00 AM">8:00 AM</option>
+      <option value="9:00 AM">9:00 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="11:00 AM">11:00 AM</option>
+      <option value="12:00 PM">12:00 PM</option>
+      <option value="1:00 PM">1:00 PM</option>
+      <option value="2:00 PM">2:00 PM</option>
+      <option value="3:00 PM">3:00 PM</option>
+      <option value="4:00 PM">4:00 PM</option>
+      <option value="5:00 PM">5:00 PM</option>
+      <option value="6:00 PM">6:00 PM</option>
+      <option value="7:00 PM">7:00 PM</option>
+      <option value="8:00 PM">8:00 PM</option>
+      <option value="9:00 PM">9:00 PM</option>
+      <option value="10:00 PM">10:00 PM</option>
+      <option value="11:00 PM">11:00 PM</option>
+      <option value="12:00 AM">12:00 AM</option>
+    </select>
+    <select id="dayInput">
+      <option value="">Select Day</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>
+    </select>
+    <input type="text" id="subjectInput" placeholder="Subject">
+    <button onclick="addSchedule()">Add</button>
+<div>
+    <button onclick="clearSchedule()">Clear Schedule</button>
+  </div>
+    <!-- Notes Section -->
+    <div id="notesSection">
+      <h3>Notes</h3>
+      <div id="categories">
+        <button onclick="showCategory('Personal')">Personal</button>
+        <button onclick="showCategory('Academic')">Academic</button>
+        <button onclick="showCategory('Miscellaneous')">Miscellaneous</button>
+        <button onclick="addCategory()">Add Category</button>
+      </div>
+      <div id="noteEditor" style="height: 300px;"></div> 
+      <input type="file" id="noteMedia" accept="image/*">
+      <button onclick="saveNote()">Save Note</button>
+    </div>
+    <ul id="notesList"></ul>
+
+<div id="notePopup" class="popup">
+  <div class="popup-content" id="popupContent">
+    <h3 id="noteTitle"></h3>
+    <div id="noteContent" contenteditable="false" style="position: relative;"></div>
+    <canvas id="drawingCanvas" style="white-space: pre-wrap; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;"></canvas>
+    <img id="noteMediaPreview" alt="" style="max-width: 100%; display: none;">
+  </div>
+  <div class="popup-footer">
+    <div style="flex-grow: 1; display: flex; align-items: center;">
+      <label for="highlightColor">Highlight:</label>
+      <input type="color" id="highlightColor" value="#FFFF00" style="margin-left: 5px;">
+    </div>
+    <button onclick="enableTextHighlighting()">Enable Text Highlighting</button>
+    <button onclick="enableDrawing()">Enable Freehand Drawing</button>
+    <button onclick="disableDrawing()">Disable Freehand Drawing</button>
+    <button onclick="saveHighlightedText()">Save Highlights</button>
+    <button id="previousNoteButton" onclick="navigateNote(-1)">Previous</button>
+    <button id="nextNoteButton" onclick="navigateNote(1)">Next</button>
+    <button id="editNoteButton" onclick="editNote()">Edit</button>
+    <button id="deleteNoteButton" onclick="deleteNote()">Delete</button>
+    <button onclick="closeNotePopup()">Close</button>
+    <button onclick="downloadNoteWithStylingAsPDF()">Download as PDF</button>
+  </div>
+</div>
+
+    <!-- Calendar -->
+    <div id="calendarSection">
+      <h3>Weekly Calendar</h3>
+      <div id="calendar"></div>
+      <p id="calendarMessage" style="margin-top: 10px; color: #0055cc; font-weight: bold;"></p>
+    </div>
+  </div>
+
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+// Initialize the rich text editor for notes
+const quill = new Quill('#noteEditor', {
+  theme: 'snow',
+  placeholder: 'Start typing...',
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // Basic formatting
+      [{ 'font': [] }], // Font family
+      [{ 'size': ['small', false, 'large', 'huge'] }], // Font size
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // Header levels
+      [{ 'align': [] }], // Alignment
+      [{ 'color': [] }, { 'background': [] }], // Text and background colors
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Lists
+      [{ 'indent': '-1' }, { 'indent': '+1' }], // Indentation
+      [{ 'script': 'sub' }, { 'script': 'super' }], // Subscript and superscript
+      [{ 'direction': 'rtl' }], // Text direction
+      ['link', 'image', 'video'], // Links, images, and videos
+      ['code-block', 'blockquote'], // Code block and blockquote
+      ['formula'], // Math formulas
+      ['clean'], // Clear formatting
+    ],
+  },
+});
+
+// Add a custom handler for image uploads
+quill.getModule('toolbar').addHandler('image', () => {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'image/*');
+  input.click();
+
+  input.onchange = () => {
+    const file = input.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const range = quill.getSelection();
+        quill.insertEmbed(range.index, 'image', e.target.result);
+
+        // Apply fixed size to images
+        const images = document.querySelectorAll('.ql-editor img');
+        images.forEach((img) => {
+          img.style.width = '300px'; // Fixed width
+          img.style.height = 'auto'; // Maintain aspect ratio
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadCategories();
+    console.log('Categories loaded successfully');
+  } catch (error) {
+    console.error('Error in loadCategories:', error);
+  }
+});
+
+
+  const defaultCategories = JSON.parse(localStorage.getItem('categories')) || ["Personal", "Academic", "Miscellaneous"];
+  let selectedCategory = "Personal";
+
+  function showCategory(category) {
+    selectedCategory = category;
+    loadNotes(); // Function to load notes based on the selected category
+  }
+
+  function addCategory() {
+    const newCategory = prompt("Enter new category name:");
+    if (newCategory && !defaultCategories.includes(newCategory)) {
+      defaultCategories.push(newCategory);
+      localStorage.setItem('categories', JSON.stringify(defaultCategories)); // Save to local storage
+      // Update the categories section with the new category button
+      const categoriesDiv = document.getElementById('categories');
+      const newButton = document.createElement('button');
+      newButton.textContent = newCategory;
+      newButton.onclick = () => showCategory(newCategory);
+      categoriesDiv.insertBefore(newButton, categoriesDiv.lastElementChild);
+    }
+  }
+
+  function loadCategories() {
+    const categoriesDiv = document.getElementById('categories');
+    categoriesDiv.innerHTML = '';
+    defaultCategories.forEach(category => {
+      const button = document.createElement('button');
+      button.textContent = category;
+      button.onclick = () => showCategory(category);
+      categoriesDiv.appendChild(button);
+    });
+    // Add the "Add Category" button
+    const addCategoryButton = document.createElement('button');
+    addCategoryButton.textContent = 'Add Category';
+    addCategoryButton.onclick = addCategory;
+    categoriesDiv.appendChild(addCategoryButton);
+  }
+
+
+ 
+// Random weekly schedules for departments
+const departmentSchedules = {
+  SCI123: [
+    { time: '8:00 AM', Mon: 'PHY101 Lab 1', Tue: 'CHM102 LT 2', Wed: 'MTH105 LT 3', Thu: 'PHY101 Lab 2', Fri: 'BIO110 LT 1' },
+    { time: '10:00 AM', Mon: 'CHM102 LT 3', Tue: 'PHY101 Lab 2', Wed: 'BIO110 Lab 1', Thu: 'MTH105 LT 1', Fri: 'CHM102 Lab' },
+    { time: '1:00 PM', Mon: 'MTH105 LT 2', Tue: 'BIO110 Lab 1', Wed: '', Thu: 'PHY101 Lab 3', Fri: '' }
+  ],
+  HEA456: [
+    { time: '8:00 AM', Mon: 'MED200 Lab 3', Tue: 'NUR210 LT 1', Wed: 'ANAT301 LT 2', Thu: 'MED200 LT 3', Fri: 'PHYS301 LT 1' },
+    { time: '11:00 AM', Mon: 'NUR210 Lab', Tue: '', Wed: 'PHARM210 Lab', Thu: 'ANAT301 LT 2', Fri: 'NUR210 LT 2' },
+    { time: '3:00 PM', Mon: '', Tue: 'MED200 LT 3', Wed: 'NUR210 Lab', Thu: '', Fri: '' }
+  ],
+  PHA789: [
+    { time: '9:00 AM', Mon: 'PHA201 Lab', Tue: 'PHA203 LT 1', Wed: 'PHA202 LT 3', Thu: 'PHA201 Lab', Fri: 'PHA202 LT 1' },
+    { time: '1:00 PM', Mon: '', Tue: 'PHA202 LT 1', Wed: 'PHA203 Lab', Thu: '', Fri: 'PHA201 Lab' },
+    { time: '4:00 PM', Mon: 'PHA202 LT 3', Tue: '', Wed: 'PHA201 Lab', Thu: 'PHA203 LT 2', Fri: '' }
+  ],
+  AGR101: [
+    { time: '8:00 AM', Mon: 'AGRO101 LT 1', Tue: 'FST105 Lab', Wed: 'AGR105 LT 3', Thu: 'FST105 Lab', Fri: 'AGR106 LT 2' },
+    { time: '12:00 PM', Mon: '', Tue: 'AGR107 LT 2', Wed: 'AGRO101 LT 1', Thu: 'AGR106 Lab', Fri: '' },
+    { time: '2:00 PM', Mon: 'AGR106 LT 3', Tue: '', Wed: '', Thu: 'FST105 LT 3', Fri: '' }
+  ],
+  ART202: [
+    { time: '9:00 AM', Mon: 'HIS101 LT 2', Tue: 'ENG102 LT 3', Wed: 'PHIL105 LT 2', Thu: 'HIS101 LT 1', Fri: 'ART110 LT 2' },
+    { time: '11:00 AM', Mon: 'ENG102 LT 1', Tue: 'PHIL105 LT 3', Wed: '', Thu: 'ART110 LT 3', Fri: 'ENG102 LT 2' },
+    { time: '3:00 PM', Mon: '', Tue: 'PHIL105 LT 1', Wed: 'HIS101 LT 3', Thu: 'ENG102 LT 1', Fri: '' }
+  ],
+  "ZOO/PT1": [
+    { time: '8:00 AM', Mon: 'CHM 101 (1k SLT)', Tues: 'SER 001 (BOOC)', Wed: 'ZOO 101 (ODLT 1)', Thur: 'SER 001 (BOOC)', Fri: 'ZOO 101 (TETFUND ETF)' },
+    { time: '9:00 AM', Mon: 'ZOO 101 (FBLT)', Tues: 'CHM 101 (1k SLT)', Wed: '—', Thur: '—', Fri: '-' },
+    { time: '10:00 AM', Mon: 'PHY 105 (1k SLT)', Tues: '—', Wed: 'PHY 105 (1k SLT)', Thur: '-', Fri: 'PHY 105 (1k SLT)' },
+    { time: '11:00 AM', Mon: '—', Tues: 'BOT 101 (1k SLT)', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '12:00 PM', Mon: 'BOT 101 (1k SLT)', Tues: 'ZOO 101 (—)', Wed: 'BOT 101 (1k SLT)', Thur: 'CHM 101 (1k SLT)', Fri: '-' },
+    { time: '1:00 PM', Mon: '-', Tues: '-', Wed: 'CHM 101 (1k SLT)', Thur: 'PHY 107 (Yellow House)', Fri: '-' },
+    { time: '2:00 PM', Mon: '-', Tues: '-', Wed: 'CHM 103 (2:00PM-5:00PM)', Thur: '-', Fri: '-' },
+    { time: '3:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '4:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: 'BOT 103 (4:30 PM - 6:00 PM)' },
+    { time: '5:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' }
+  ],
+  "ZOO/PT2": [
+    { time: '8:00 AM', Mon: 'MTH105 ODLT 2', Tues: 'ZOO207 Z0.01', Wed: 'ZOO203 G.23', Thur: 'ZOO207 Z0.01', Fri: '-' },
+    { time: '9:00 AM', Mon: 'ZOO203 BOO C', Tues: 'BOT202 G.23', Wed: 'ZOO203 BOO B', Thur: '-', Fri: 'ZOO203 BOO C' },
+    { time: '10:00 AM', Mon: '-', Tues: '-', Wed: '-', Thur: 'BOT202 G.23', Fri: '' },
+    { time: '11:00 AM', Mon: 'ZOO201 Z0.01', Tues: 'MTH105 FBLT', Wed: 'ZOO201 BOO B', Thur: 'ZOO201 Z0.01', Fri: 'ZOO201 BOO A' },
+    { time: '12:00 PM', Mon: 'BOT202 BOO C', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '1:00 PM', Mon: 'ZOO203 HSLT C', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '2:00 PM', Mon: 'MTH105 ODLT 1', Tues: '-', Wed: '-', Thur: 'MTH105 ODLT 2', Fri: '-' },
+    { time: '3:00 PM', Mon: '-', Tues: 'MTH105 HSLT C', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '4:00 PM', Mon: '-', Tues: '-', Wed: 'MTH105 HSLT C', Thur: '-', Fri: 'CSC201 HSLT C' }
+  ],
+  "MCB/PT1": [
+    { time: '8:00 AM', Mon: 'CHM 101 (1k SLT)\nBOT 103 (Bot Gr. IF)', Tues: 'SEA 001 (All venues)', Wed: 'CHM 101 (1k SLT)', Thur: 'SEA 001 (All venues)', Fri: 'ZOO 101 (CET/TETFUND)' },
+    { time: '9:00 AM', Mon: 'ZOO 101 (FBLT)', Tues: 'CHM 101 (1k SLT)', Wed: 'ZOO 101 (ODLT 1)', Thur: 'CHM 101 (1k SLT)', Fri: 'CHM 101 (1k SLT)' },
+    { time: '10:00 AM', Mon: 'PHY 105 (1k SLT)', Tues: 'PHY 105 (1k SLT)', Wed: 'PHY 105 (1k SLT)', Thur: 'PHY 105 (1k SLT)', Fri: 'PHY 105 (1k SLT)\nM CB SEMINAR (BOP C)' },
+    { time: '11:00 AM', Mon: 'CHM 101 (1k SLT)', Tues: 'BOT 101 (1k SLT)', Wed: '', Thur: 'CHM 101 (1k SLT)', Fri: '' },
+    { time: '12:00 PM', Mon: 'BOT 101 (1k SLT)', Tues: 'ZOO 101 (FBLT)', Wed: 'BOT 101 (1k SLT)', Thur: '', Fri: '' },
+    { time: '1:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '2:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '3:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '4:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '5:00 PM', Mon: '', Tues: 'ZOO 103 (Zoology Lab Z 1:00)', Wed: 'ZOO 103 (Zoology Lab Z 1:00)', Thur: '', Fri: '' },
+    { time: '6:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' }
+  ]
+};
+
+function loadDepartmentSchedule() {
+  const code = document.getElementById('scheduleCode').value.trim();
+  const schedule = departmentSchedules[code];
+
+  if (!schedule) {
+    alert('Invalid code. Please try again.');
+    return;
+  }
+
+  renderSchedule(schedule);
+}
+
+function renderSchedule(schedule) {
+    const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
+    const timeMap = {};
+
+    // Group schedule entries by time
+    schedule.forEach(entry => {
+      if (!timeMap[entry.time]) {
+        timeMap[entry.time] = {
+          time: entry.time,
+          Mon: '',
+          Tues: '',
+          Wed: '',
+          Thur: '',
+          Fri: '',
+          Sat: '',
+          Sun: ''
+        };
+      }
+      Object.keys(entry).forEach(day => {
+        if (day !== 'time') {
+          timeMap[entry.time][day] = entry[day];
+        }
+      });
+    });
+
+    // Create rows from the grouped schedule
+    predefinedScheduleBody.innerHTML = Object.values(timeMap).map(row => `
+      <tr>
+        <td>${row.time}</td>
+        <td>${row.Mon || ''}</td>
+        <td>${row.Tues || ''}</td>
+        <td>${row.Wed || ''}</td>
+        <td>${row.Thur || ''}</td>
+        <td>${row.Fri || ''}</td>
+        <td>${row.Sat || ''}</td>
+        <td>${row.Sun || ''}</td>
+      </tr>
+    `).join('');
+  }
+
+// Modified addSchedule function to add rows to the manual schedule table and save to local storage
+function addSchedule() {
+  const time = document.getElementById('timeInput').value.trim();
+  const day = document.getElementById('dayInput').value.trim();
+  const subject = document.getElementById('subjectInput').value.trim();
+
+  if (!time || !day || !subject) {
+    alert('Please fill in all fields to add a schedule.');
+    return;
+  }
+
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  let existingRow = null;
+
+  // Check if a row with the same time already exists
+  scheduleBody.querySelectorAll('tr').forEach(row => {
+    if (row.cells[0].textContent === time) {
+      existingRow = row;
+    }
+  });
+
+  if (existingRow) {
+    // Update the existing row with the new subject
+    existingRow.cells[dayToColumnIndex(day)].textContent = subject;
+  } else {
+    // Create a new row if no existing row with the same time
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${time}</td>
+      <td>${day === 'Monday' ? subject : ''}</td>
+      <td>${day === 'Tuesday' ? subject : ''}</td>
+      <td>${day === 'Wednesday' ? subject : ''}</td>
+      <td>${day === 'Thursday' ? subject : ''}</td>
+      <td>${day === 'Friday' ? subject : ''}</td>
+      <td>${day === 'Saturday' ? subject : ''}</td>
+      <td>${day === 'Sunday' ? subject : ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+  }
+
+  // Sort the schedule
+  sortSchedule();
+
+  // Save to local storage
+  saveManualSchedulesToLocalStorage();
+
+  // Clear inputs
+  document.getElementById('timeInput').value = '';
+  document.getElementById('dayInput').value = '';
+  document.getElementById('subjectInput').value = '';
+}
+
+function sortSchedule() {
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  const rows = Array.from(scheduleBody.querySelectorAll('tr'));
+
+  rows.sort((a, b) => {
+    const timeA = parseTime(a.cells[0].textContent);
+    const timeB = parseTime(b.cells[0].textContent);
+    return timeA - timeB;
+  });
+
+  scheduleBody.innerHTML = '';
+  rows.forEach(row => scheduleBody.appendChild(row));
+}
+
+function parseTime(timeString) {
+  const [time, period] = timeString.split(' ');
+  let [hours, minutes] = time.split(':');
+  hours = parseInt(hours, 10);
+  minutes = parseInt(minutes, 10);
+
+  if (period === 'PM' && hours !== 12) {
+    hours += 12;
+  }
+  if (period === 'AM' && hours === 12) {
+    hours = 0;
+  }
+
+  return hours * 60 + minutes;
+}
+    
+  function dayToColumnIndex(day) {
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    return days.indexOf(day) + 1;
+    }
+
+
+    function switchScheduleTables() {
+    const predefinedScheduleWrapper = document.getElementById('predefinedScheduleWrapper');
+    const manualScheduleWrapper = document.getElementById('manualScheduleWrapper');
+    if (predefinedScheduleWrapper.classList.contains('hidden')) {
+      predefinedScheduleWrapper.classList.remove('hidden');
+      manualScheduleWrapper.classList.add('hidden');
+    } else {
+      predefinedScheduleWrapper.classList.add('hidden');
+      manualScheduleWrapper.classList.remove('hidden');
+    }
+  }
+
+// Save schedule to local storage with title
+function savePredefinedToLocalStorage() {
+  const title = document.getElementById('scheduleTitle').value.trim();
+  const code = document.getElementById('scheduleCode').value.trim();
+  const schedule = departmentSchedules[code];
+
+  if (!title) {
+    alert('Please enter a title for the schedule.');
+    return;
+  }
+
+  if (!schedule) {
+    alert('Invalid code. No schedule to save.');
+    return;
+  }
+
+  const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
+
+  if (savedSchedules[title]) {
+    alert('This schedule is already saved.');
+    return;
+  }
+
+  savedSchedules[title] = schedule;
+  localStorage.setItem('savedSchedules', JSON.stringify(savedSchedules));
+  alert('Schedule saved to local storage!');
+}
+    
+  // New function to save manually added schedules to local storage
+  function saveManualSchedulesToLocalStorage() {
+  const manualSchedules = [];
+  document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
+    const cells = row.querySelectorAll('td');
+    manualSchedules.push({
+      time: cells[0].textContent,
+      Mon: cells[1].textContent,
+      Tues: cells[2].textContent,
+      Wed: cells[3].textContent,
+      Thur: cells[4].textContent,
+      Fri: cells[5].textContent,
+      Sat: cells[6].textContent,
+      Sun: cells[7].textContent
+    });
+  });
+
+  manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+}
+  
+  // New function to load manually added schedules from local storage
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadCategories();
+    await loadSavedSchedule();
+    await loadManualSchedules();
+    console.log('Initial data loaded successfully');
+  } catch (error) {
+    console.error('Error in initial data loading:', error);
+  }
+});
+
+function loadSavedSchedule() {
+  const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
+  const scheduleBody = document.getElementById('predefinedScheduleBody');
+  scheduleBody.innerHTML = '';
+
+  if (Object.keys(savedSchedules).length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
+    scheduleBody.appendChild(emptyRow);
+    return;
+  }
+
+  Object.keys(savedSchedules).forEach(title => {
+    const titleRow = document.createElement('tr');
+    titleRow.innerHTML = `<td colspan="8" style="font-weight:bold; text-align:center;">${title}</td>`;
+    scheduleBody.appendChild(titleRow);
+
+    renderSchedule(savedSchedules[title]);
+  });
+}
+//Load manual 
+function loadManualSchedules() {
+  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  scheduleBody.innerHTML = '';
+
+  if (manualSchedules.length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
+    scheduleBody.appendChild(emptyRow);
+    return;
+  }
+
+  manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  manualSchedules.forEach(schedule => {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${schedule.time}</td>
+      <td>${schedule.Mon || ''}</td>
+      <td>${schedule.Tues || ''}</td>
+      <td>${schedule.Wed || ''}</td>
+      <td>${schedule.Thur || ''}</td>
+      <td>${schedule.Fri || ''}</td>
+      <td>${schedule.Sat || ''}</td>
+      <td>${schedule.Sun || ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+  });
+}
+
+
+
+    function clearSchedule() {
+  // Clear the predefined schedule table
+  const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
+  predefinedScheduleBody.innerHTML = '';
+
+  // Clear the manual schedule table
+  const manualScheduleBody = document.getElementById('manualScheduleBody');
+  manualScheduleBody.innerHTML = '';
+
+  // Clear schedules from local storage
+  localStorage.removeItem('savedSchedules');
+  localStorage.removeItem('manualSchedules');
+
+  alert('Schedules have been cleared.');
+    }
+    
+// Save note
+function saveNote() {
+  // Show custom prompt for note title
+  document.getElementById('customPromptModal').style.display = 'flex';
+
+  const promptInput = document.getElementById('customPromptInput');
+  const promptOk = document.getElementById('promptOk');
+  const promptCancel = document.getElementById('promptCancel');
+
+  function handleSave() {
+    const title = promptInput.value.trim();
+
+    if (!title) {
+      alert("Please enter a title for the note.");
+      return;
+    }
+
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const duplicateNote = notes.find(note => note.title === title);
+
+    if (duplicateNote) {
+      alert("A note with this title already exists. Please use a different title.");
+      return;
+    }
+
+    const text = quill.root.innerHTML.trim(); // Quill editor content
+    const mediaInput = document.getElementById('noteMedia').files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      notes.push({ title, text, media: reader.result, category: selectedCategory });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      quill.root.innerHTML = ''; // Clear editor after saving
+      document.getElementById('noteMedia').value = '';
+    };
+
+    if (mediaInput) {
+      reader.readAsDataURL(mediaInput); // Handle media upload
+    } else {
+      notes.push({ title, text, media: null, category: selectedCategory });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      quill.root.innerHTML = ''; // Clear editor after saving
+      document.getElementById('noteMedia').value = '';
+    }
+
+    // Hide custom prompt after saving
+    document.getElementById('customPromptModal').style.display = 'none';
+    // Remove event listeners to avoid duplicate calls
+    promptOk.removeEventListener('click', handleSave);
+    promptCancel.removeEventListener('click', handleCancel);
+  }
+
+  function handleCancel() {
+    // Hide custom prompt without saving
+    document.getElementById('customPromptModal').style.display = 'none';
+    // Remove event listeners to avoid duplicate calls
+    promptOk.removeEventListener('click', handleSave);
+    promptCancel.removeEventListener('click', handleCancel);
+  }
+
+  // Add event listeners for the custom prompt buttons
+  promptOk.addEventListener('click', handleSave);
+  promptCancel.addEventListener('click', handleCancel);
+}
+
+    
+
+let currentEditingNote = -1; // Initialize currentEditingNote variable
+
+function showNotePopup(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[index];
+
+  // Display title and content
+  document.getElementById('noteTitle').textContent = note.title || "Untitled";
+  document.getElementById('noteContent').innerHTML = note.text || "No content available";
+
+  // Handle media preview
+  const mediaPreview = document.getElementById('noteMediaPreview');
+  if (note.media) {
+    mediaPreview.src = note.media;
+    mediaPreview.style.display = 'block';
+  } else {
+    mediaPreview.style.display = 'none';
+  }
+
+  currentEditingNote = index;
+  document.getElementById('notePopup').style.display = 'flex';
+}
+
+// Load notes
+
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadNotes();
+    console.log('Notes loaded successfully');
+  } catch (error) {
+    console.error('Error in loadNotes:', error);
+  }
+});
+    
+function loadNotes() {
+  const notesList = document.getElementById('notesList');
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  notesList.innerHTML = filteredNotes
+  .map((note, index) => 
+    `<li>
+       <h4>${note.title}</h4>
+       <button onclick="showNotePopup(${index})">View</button>
+       <button onclick="generateQRCode(${index})">Generate QR Code</button>
+       <button onclick="downloadNoteWithStylingAsPDF(${index})">Download PDF</button>
+       <div id="qrcode-${index}"></div>
+    </li>`
+  ).join('');
+
+  }
+
+function generateQRCode(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
+  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
+  qrCodeContainer.innerHTML = ""; // Clear existing QR codes
+
+  const canvas = document.createElement('canvas');
+  canvas.style.maxWidth = "100%";
+  canvas.style.height = "auto";
+  qrCodeContainer.appendChild(canvas);
+
+  QRCode.toCanvas(canvas, JSON.stringify(note), { width: 200 }, function (error) {
+    if (error) {
+      console.error('Error generating QR code:', error);
+    } else {
+      console.log('QR code generated successfully!');
+    }
+  });
+}
+
+function startQRScan() {
+  Html5Qrcode.getCameras().then(cameras => {
+    if (cameras.length === 0) {
+      console.error("No cameras found.");
+    } else {
+      const cameraId = cameras[0].id;
+      const qrReader = new Html5Qrcode("qr-reader");
+
+      qrReader.start(
+        cameraId,
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 250 }
+        },
+        (decodedText, decodedResult) => {
+          console.log("QR Code scanned successfully:", decodedText);
+          const sharedNote = JSON.parse(decodedText);
+          saveReceivedNote(sharedNote);
+
+          qrReader.stop().then(() => {
+            document.getElementById("qr-reader").innerHTML = ""; // Clear container
+          });
+        },
+        (errorMessage) => {
+          console.warn("QR scanning error:", errorMessage);
+        }
+      ).catch(err => {
+        console.error("Failed to start QR scanner:", err);
+      });
+    }
+  }).catch(err => console.error("Error getting cameras:", err));
+}
+
+function saveReceivedNote(sharedNote) {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  notes.push(sharedNote);
+  localStorage.setItem("notes", JSON.stringify(notes));
+  loadNotes();
+}
+
+    // MiniBrowser
+
+const homepage = "https://www.wikipedia.org";
+
+function toggleMiniBrowser() {
+  const miniBrowser = document.getElementById("miniBrowser");
+  const browserIcon = document.getElementById("browserIcon");
+
+  if (miniBrowser.classList.contains("hidden")) {
+    // Show the browser
+    miniBrowser.classList.remove("hidden");
+    browserIcon.textContent = "❌";
+    document.body.style.overflow = "hidden"; // Disable scrolling
+  } else {
+    // Hide the browser
+    miniBrowser.classList.add("hidden");
+    browserIcon.textContent = "🌐";
+    document.body.style.overflow = "auto"; // Enable scrolling
+    }
+  }
+
+function navigateBrowser() {
+  const urlInput = document.getElementById("browserUrl");
+  const iframe = document.getElementById("browserFrame");
+  let url = urlInput.value.trim();
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://" + url; // Default to HTTPS if no protocol is provided
+  }
+
+  iframe.src = url;
+}
+
+function reloadBrowser() {
+  const iframe = document.getElementById("browserFrame");
+  iframe.contentWindow.location.reload(); // Reload iframe content
+}
+
+function goBack() {
+  const iframe = document.getElementById("browserFrame");
+  try {
+    iframe.contentWindow.history.back(); // Navigate back
+  } catch (e) {
+    alert("No back history available.");
+  }
+}
+
+function goForward() {
+  const iframe = document.getElementById("browserFrame");
+  try {
+    iframe.contentWindow.history.forward(); // Navigate forward
+  } catch (e) {
+    alert("No forward history available.");
+  }
+  }
+function goHome() {
+  const iframe = document.getElementById("browserFrame");
+  iframe.src = homepage; // Set iframe source to homepage
+}
+    
+// Calendar functions
+
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadCalendar();
+    console.log('Calendar loaded successfully');
+  } catch (error) {
+    console.error('Error in loadCalendar:', error);
+  }
+});
+
+function loadCalendar() {
+  const calendar = document.getElementById('calendar');
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const today = new Date();
+  const todayIndex = today.getDay();
+
+  calendar.innerHTML = days.map((day, index) => `
+    <div class="day ${index === todayIndex ? 'today' : ''}">${day}</div>
+  `).join('');
+
+  document.getElementById('calendarMessage').textContent = 'Make today count!';
+}
+    
+
+// Save note
+function saveNote() {
+  openCustomPrompt((title) => {
+    if (!title) {
+      alert("Note title is required!");
+      return;
+    }
+
+    const text = quill.root.innerHTML.trim(); // Get Quill editor content
+    const mediaInput = document.getElementById('noteMedia').files[0];
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      notes.push({ title, text, media: reader.result, category: selectedCategory });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      quill.root.innerHTML = ''; // Clear editor after saving
+      document.getElementById('noteMedia').value = '';
+    };
+
+    if (mediaInput) {
+      reader.readAsDataURL(mediaInput); // Handle media upload
+    } else {
+      notes.push({ title, text, media: null, category: selectedCategory });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      quill.root.innerHTML = ''; // Clear editor after saving
+      document.getElementById('noteMedia').value = '';
+    }
+  });
+}
+
+// ShowNote
+
+function showNotePopup(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[index];
+
+  // Display title and content
+  document.getElementById('noteTitle').textContent = note.title || "Untitled";
+  document.getElementById('noteContent').innerHTML = note.text || "No content available";
+
+  // Handle media preview
+  const mediaPreview = document.getElementById('noteMediaPreview');
+  if (note.media) {
+    mediaPreview.src = note.media;
+    mediaPreview.style.display = 'block';
+  } else {
+    mediaPreview.style.display = 'none';
+  }
+
+  currentEditingNote = index;
+  document.getElementById('notePopup').style.display = 'flex';
+}
+
+    
+let customPromptCallback = null;
+
+// Open the custom prompt modal
+function openCustomPrompt(callback) {
+  customPromptCallback = callback;
+  document.getElementById('customPromptModal').style.display = 'block'; // Show modal
+  document.getElementById('customPromptInput').value = ''; // Clear input
+  document.getElementById('customPromptInput').focus(); // Focus on the input field
+  document.body.classList.add('modal-active'); // Prevent background scrolling
+}
+
+// Close the custom prompt modal
+function closeCustomPrompt(isConfirmed) {
+  const modal = document.getElementById('customPromptModal');
+  const input = document.getElementById('customPromptInput').value.trim();
+
+  if (isConfirmed && customPromptCallback) {
+    customPromptCallback(input); // Pass the input value to the callback
+  } else if (!isConfirmed && customPromptCallback) {
+    customPromptCallback(null); // Pass null if the user cancels
+  }
+
+  modal.style.display = 'none'; // Hide the modal
+  document.body.classList.remove('modal-active'); // Allow background scrolling
+}
+
+
+
+// Edit note
+function editNote() {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[currentEditingNote];
+
+  // Load the note into the editor for editing
+  if (note) {
+    quill.root.innerHTML = note.text || "";
+    document.getElementById('noteTitle').textContent = note.title || "Untitled";
+
+    // Handle media preview if any
+    const mediaPreview = document.getElementById('noteMediaPreview');
+    if (note.media) {
+      mediaPreview.src = note.media;
+      mediaPreview.style.display = 'block';
+    } else {
+      mediaPreview.style.display = 'none';
+    }
+  }
+
+  // Hide the popup after editing is done
+  document.getElementById('notePopup').style.display = 'none';
+    }
+
+// Delete note
+function deleteNote() {
+  if (currentEditingNote !== null) {
+    const confirmDelete = confirm("Are you sure you want to delete this note?");
+    if (confirmDelete) {
+      const notes = JSON.parse(localStorage.getItem('notes')) || [];
+      notes.splice(currentEditingNote, 1);
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      closeNotePopup();
+    }
+  }
+}
+
+// Close note popup
+function closeNotePopup() {
+  document.getElementById('notePopup').style.display = 'none';
+}
+
+// Navigate note
+function navigateNote(direction) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  if (notes.length === 0) return;
+
+  // Calculate the next note index
+  let newIndex = currentEditingNote + direction;
+
+  // Handle wrapping around notes
+  if (newIndex < 0) {
+    newIndex = notes.length - 1; // Go to last note
+  } else if (newIndex >= notes.length) {
+    newIndex = 0; // Go to first note
+  }
+
+  showNotePopup(newIndex);
+}
+    window.downloadNoteWithStylingAsPDF = downloadNoteWithStylingAsPDF;
+
+async function downloadNoteWithStylingAsPDF(index) {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory); // Use original selectedCategory
+  const note = filteredNotes[index];
+
+  if (!note || !note.title || !note.text) {
+    alert("Note not found or incomplete!");
+    return;
+  }
+
+  // Create a temporary HTML element to hold the styled note content
+  const container = document.createElement("div");
+  container.style.padding = "20px";
+  container.style.fontFamily = "Arial, sans-serif";
+  container.style.lineHeight = "1.6";
+  container.style.fontSize = "14px";
+
+  // Add a title and content
+  container.innerHTML = `
+    <h1 style="text-align: center; color: #4A90E2; margin-bottom: 20px;">${note.title}</h1>
+    <div>${note.text}</div>
+  `;
+
+  // Configure and generate the PDF
+  const options = {
+    margin: 10,
+    filename: `${note.title}.pdf`,
+    html2canvas: { scale: 2 }, // Improves quality
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+  };
+
+  try {
+    await html2pdf().set(options).from(container).save();
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    alert("Failed to generate PDF. Please try again.");
+  }
+}
+
+
+  </script>
+ </body>
+</html>
