@@ -10,17 +10,19 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-    }
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-image: url('./astronaut-floating-banner-background-3d-illustration-cosmonaut_522591-89.webp');
-        color: #333;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+    }body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('./astronaut-floating-banner-background-3d-illustration-cosmonaut_522591-89.webp');
+    background-size: 100%, 100%; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
     .hidden {
         display: none !important;
     }
@@ -31,6 +33,7 @@
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         width: 100%;
         max-width: 700px;
+      height: 60%;
     }
     h1, h2 {
         color: #333;
