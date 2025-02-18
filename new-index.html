@@ -1,224 +1,352 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Students Support System</title>
-  <link rel="stylesheet" href="./style.css">
+  <title>OAU Exam Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Global Styles */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-image: url('./astronaut-floating-banner-background-3d-illustration-cosmonaut_522591-89.webp');
+        color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .hidden {
+        display: none !important;
+    }
+    .container {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 700px;
+    }
+    h1, h2 {
+        color: #333;
+        margin-bottom: 25px;
+    }
+    .input-field {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .styled-btn {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: white;
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: transform 0.2s ease-in-out;
+    }
+    .styled-btn:hover {
+        transform: scale(1.05);
+    }
+    /* Header Styles */
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .header h1 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .header p {
+        font-size: 12px;
+        color: #555;
+    }
+    /* Content Styles */
+    .content {
+        margin-bottom: 30px;
+        text-align: left;
+    }
+    .content h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    /* Styling for Answer Buttons */
+.answer-btn {
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%; /* Make buttons stretch to full width */
+    text-align: left;
+    transition: all 0.3s ease;
+}
 
+.answer-btn:hover {
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+}
+
+.answer-btn.selected {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #1e7e34;
+}
+
+    /* Blog Section Styling */
+.blog-section {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 2px solid #ddd;
+}
+
+.blog-section h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.instructions ul {
+  list-style: disc inside;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.instructions ul li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Examiner Section Styling */
+.examiner-info {
+    text-align: center; /* Center-align everything */
+    margin-top: 20px;
+}
+
+.examiner-info h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.examiner-content {
+    display: flex;
+    flex-direction: column; /* Arrange photo and text vertically */
+    align-items: center;    /* Center-align content */
+    gap: 15px;
+}
+
+.examiner-img {
+    border-radius: 50%; /* Make the image circular */
+    width: 120px;       /* Adjust size */
+    height: 120px;      /* Maintain aspect ratio */
+    object-fit: 100%, 100%;
+    border: 2px solid #ddd; /* Optional: Add a border */
+}
+
+.examiner-info p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    text-align: justify; /* Align text for a professional look */
+}
+
+    .results-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.results-actions button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+#retakeExamBtn {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+}
+
+#retakeExamBtn:hover {
+    transform: scale(1.05);
+}
+
+
+    /* Footer Styles */
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+    .progress-bar-container {
+        background-color: #eee;
+        border-radius: 8px;
+        height: 10px;
+        width: 100%;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        width: 0;
+        transition: width 0.3s ease-in-out;
+    }
+    #timer {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+    }
+    #results-section p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    /* Logo Styling */
+.logo {
+    display: block;
+    margin: 0 auto 15px; /* Center the logo and add spacing below */
+    width: 100px;       /* Adjust the logo size */
+    height: auto;       /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: rounded edges for a softer look */
+}
+/* Welcome Header Styling */
+.welcome-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-header h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.welcome-header p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+    /* Button Styles */
+    .pdf-btn {
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .pdf-btn:hover {
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    }
+  </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-    <link rel="stylesheet" href="styles.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-</head>
-
-<body>
-
-  <header>
-  <h1>OAU EXAMINATION UNIT</h1>
-  
-  </header>
-
-  <main>
-
-  <div class="content">
-
-<img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
-
-  </div>  
-
-
-      
+<!-- Authentication Section -->
+<div id="auth-section" class="container">
+    <div class="welcome-header">
+        <img src="logo.png" alt="De-Brainstormers Logo" class="logo">
+        <h2>Welcome to OAU MOCK Exam Page</h2>
+        <p>Kindly log in to proceed with your exam.</p>
+    </div>
     
+    <input type="text" id="fullName" placeholder="Enter Full Name" class="input-field">
+    <input type="text" id="userID" placeholder="Enter User ID" class="input-field">
+    <button id="loginBtn" class="styled-btn">Login</button>
+</div>
 
-<!-- Payment Page -->
-<div id="paymentPage" class="hidden">
-  <h1>STUDENTS SUPPORT SYSTEM</h1>
-  <h2><em>Obafemi Awolowo University</em></h2>
-  <h3>Payment of User ID activation fee for the 2023/2024 academic session.</h3>
+
   
-  <p><strong>Full Name:</strong> <span id="paymentFullName"></span></p>
-  <p><strong>Department:</strong> <span id="paymentDepartment"></span></p>
-  <p><strong>Level:</strong> <span id="paymentLevel"></span></p>
-  <p><strong>User ID:</strong> <span id="paymentUserID"></span></p>
-  <p><strong>Amount to Pay:</strong> N2000.00</p>
-  
-  <div class="payment-details">
-    <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
-    <p><strong>Account Number:</strong> 6112744499</p>
-    <p><strong>Account Name:</strong> OCHUKO TIMOTHY RICHARD</p>
-  </div>
+<!-- Course Code Section -->
+<div id="course-code-section" class="container hidden">
+  <h2>Select Course</h2>
+  <input type="text" id="courseCode" placeholder="Enter Course Code (e.g., BIO101)" class="input-field">
+  <button id="selectCourseBtn" class="styled-btn">Start Exam</button>
 
-  <input type="file" id="receipt-upload" accept="image/*,application/pdf">
-  <button id="submit-receipt-btn">Submit Receipt</button>
-  <button id="generate-invoice-btn">Generate Invoice</button>
-  <button id="back-to-login-payment">Back to Login</button>
-</div>
-
-  <!-- Floating button -->
-<button id="history-btn" class="floating-btn">📖</button>
-
-<div id="exam-history-section" class="hidden">
-  <h2>Exam History</h2>
-  <div id="exam-history-content"></div>
-</div>
-
-<!-- Circular Icon to Open Rewards Popup -->
-<div id="rewardIcon" onclick="toggleRewardPopup()">🏆</div>
-
-<!-- Rewards Popup Modal -->
-<div id="rewardPopup" class="reward-popup">
-    <div class="reward-content">
-        <h2>Your Rewards</h2>
-        <p>🎯 Exam Bonus: <span id="examBonus">₦0</span></p>
-        <p>🕒 Time Bonus: <span id="timeBonus">₦0</span></p>
-        <p>💰 Total Earned: <span id="totalReward">₦0</span></p>
-
-        <!-- Live Timer Display -->
-        <p>⏳ Time Spent: <span id="timeSpent">00:00:00</span></p>
-
-        <div class="progress-bar-container">
-            <p>₦3,000 Withdrawal Progress</p>
-            <div class="progress-bar"><div id="progressFill"></div></div>
-        </div>
-
-        <!-- Withdrawal Section -->
-        <div id="withdrawalSection" class="withdrawal-container">
-            <h3>Withdraw Your Earnings</h3>
-            <p>💰 Available Balance: <span id="withdrawableAmount">₦0</span></p>
-            <form id="withdrawForm">
-                <label for="bankName">Bank Name:</label>
-                <input type="text" id="bankName" required>
-
-                <label for="accountNumber">Account Number:</label>
-                <input type="number" id="accountNumber" required>
-
-                <label for="withdrawAmount">Amount to Withdraw:</label>
-                <input type="number" id="withdrawAmount" required>
-
-                <button type="submit">Request Withdrawal</button>
-            </form>
-        </div>
-
-        <button onclick="toggleRewardPopup()">Close</button>
+  <!-- Blog Section -->
+  <div class="blog-section">
+    <div class="instructions">
+      <h3>Exam Instructions</h3>
+      <ul>
+        <li>You have a maximum of 30 minutes to complete the exam.</li>
+        <li>Ensure you select the correct answers for each question before proceeding.</li>
+        <li>Each session displays 50 randomized questions from the question bank.</li>
+        <li>Review your answers before submitting, as changes cannot be made afterward.</li>
+        <li>Good luck with your exam!</li>
+      </ul>
     </div>
-</div>
-
-  <!-- First Notification -->
-  <div id="notification1" class="notification hidden">
-    <div class="notification-content">
-      <img src="young-woman-with-curly-hair-using-tablet-cafe_273609-16296.webp" alt="Exam Alert" class="notification-image">
-      <h2>EXAM PREPARATIONS</h2>
-      <p>We wish you success on your exams. Do well to practice the questions on this app regularly. We are not assuring you that you'll see word for word questions but you'll see something familiar.</p>
-      <button class="btn secondary" onclick="dismissNotification('notification1')">Dismiss</button>
-    </div>
-  </div>
 
 
 
-<!-- Notification Popup -->
-<div id="rewardPopupMessage" class="popup">You earned ₦0!</div>
-
-
-
-    <section id="course-selection-section">
- <div <button id="switch-mode-btn" class="icon-btn">🛠️</button></div>
-
-      <h3>Select a Department and enter the Access Code to Practice Related Examination Questions</h3>
-      
-      <div id="courses-container">
-
-        <button class="course" data-course="Mathem atics">Mathematics</button>
-        
-
-        <button class="course" data-course="Chemi stry">Chemistry</button>
-        
-        
-
-        <button class="course" data-course="Bi ology">Biology</button>
-
-        <button class="course" data-course="Bota ny">Botany</button>
-
-        <button class="course" data-course="Microbiol ogy">Microbiology</button>
-
-        <button class="course" data-course="Phy sics">Physics</button>
-      
-        <button class="course" data-course="Zo ology">Zoology</button>
-        
-        <button class="course" data-course="Geology">Geology</button>
-        <button class="course" data-course="Soci ology">Sociology</button>
-        <button class="course" data-course="En glish">English</button>
-        <button class="course" data-course="Computer">Computer Science</button>
-        <button class="course" data-course="Mock-Exam">General Mock Assessments</button>
-
+  <!-- Exam Section -->
+  <div id="exam-section" class="container hidden">
+      <div class="header">
+          <h1 id="exam-title">OBAFEMI AWOLOWO UNIVERSITY</h1>
+          <p id="user-details">Candidate: Full Name</p>
       </div>
-
-    </section>
-
-    <section id="access-code-section" class="hidden">
-  <h2 id="selected-course-title">Enter Access Code for course under</h2>
-  <input type="text" id="access-code" placeholder="Enter your access code">
-  <button id="submit-code">Submit</button>
-  <button id="cancel-button">Cancel</button>
-    </section>
-
-    <section id="exam-section" class="hidden">
-  <h2 id="subject-title">Subject Title</h2>
-  <div id="questions-container">
-    <p id="question-text">Question will appear here...</p>
-    <img id="question-image" src="" alt="Question Image" class="hidden">
-    <div id="options-container"></div>
+      <div class="content">
+          <h2 id="question-title">Question will appear here</h2>
+          <div id="answer-options"></div>
+      </div>
+      <div class="footer">
+          <div class="button-group">
+              <button id="prevBtn" class="styled-btn hidden">Previous</button>
+              <button id="nextBtn" class="styled-btn">Next</button>
+              <button id="submitBtn" class="styled-btn hidden">Submit</button>
+          </div>
+          <div class="progress-bar-container">
+              <div class="progress-bar"></div>
+          </div>
+          <div id="timer">Time Remaining: 30:00</div>
+      </div>
   </div>
-  <div id="navigation">
-    <button id="prev-question" disabled>Previous</button>
-    <button id="next-question">Next</button>
-    <button id="end-exam" onclick="endExam()">Submit Examination</button>
-  </div>
-  <div id="confirmationModal" class="modal">
-    <div class="modal-content">
-      <p>Are you sure you want to submit the exam? Once submitted, you cannot make any changes.</p>
-      <button id="confirmYes" class="btn">Yes</button>
-      <button id="confirmNo" class="btn">No</button>
+<!-- Results Section -->
+<div id="results-section" class="container hidden">
+    <h2>Exam Results</h2>
+    <div id="results-summary"></div> <!-- Performance report -->
+    <div id="results-content"></div>
+    <div class="results-actions">
+        <button id="downloadPDF" class="pdf-btn">Download Results as PDF</button>
+        <button id="retakeExamBtn" class="styled-btn">Retake or Take Another Exam</button>
     </div>
-  </div>
-  <div id="progress-container"></div>
-          </section>
-      
-<!-- Animated Notification -->
-        <div id="reward-notification" class="hidden"></div>
-
-    
-    <section id="summary-section" class="hidden">
-  <h2>Summary</h2>
-  <div id="summary-content"></div>
-  <button id="restart-exam">Restart Exam</button>
-</section>
-
-  </main>
+</div>
 
 
-</html>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-  <script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
-  <script  src="./script (1) (3) (2) (2).js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="mock-script.js"></script>
 </body>
-  </html>
+</html>
