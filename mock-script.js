@@ -340,7 +340,7 @@ const questionBanks = {
       "The number of sister chromatids involved.",
       "The total length of the chromosome."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "The likelihood of recombination between two genes is primarily determined by the distance between them on the chromosome. The farther apart they are, the more likely crossing over will occur between them."
   },
   {
@@ -362,7 +362,7 @@ const questionBanks = {
       "They always assort independently.",
       "They are inherited on different chromosomes."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "Genes that are very close to each other on a chromosome are less likely to recombine because there is a smaller chance of a crossover event occurring between them."
   },
   {
@@ -396,7 +396,7 @@ const questionBanks = {
       "Far apart on the same chromosome.",
       "Randomly distributed across the genome."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "Linked genes are represented as being close together on the same chromosome, as this physical proximity is the reason they tend to be inherited together."
   },
   {
@@ -407,7 +407,7 @@ const questionBanks = {
       "They are located on different chromosomes.",
       "They assort independently."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "A low recombination frequency suggests that two genes are located close together on the same chromosome, as there is a smaller chance of a crossover event occurring between them."
   },
   {
@@ -451,7 +451,7 @@ const questionBanks = {
       "The exchange of genetic material between non-sister chromatids during meiosis.",
       "The inheritance of parental gene combinations without crossing over."
     ],
-    correct: 3,
+    correct: 2,
     explanation: "Recombination is the process by which genetic material is exchanged between non-sister chromatids during meiosis, leading to new combinations of alleles."
   },
   {
@@ -473,7 +473,7 @@ const questionBanks = {
       "Both parental and recombinant phenotypes occur equally.",
       "Parental phenotypes only occur in complete linkage."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "In cases of linkage (especially incomplete linkage), parental phenotypes are more frequent than recombinant phenotypes because the genes tend to stay together during inheritance."
   },
   {
@@ -496,7 +496,7 @@ const questionBanks = {
       "More parental phenotypes than recombinant phenotypes.",
       "The absence of recombination in all offspring."
     ],
-    correct: 3,
+    correct: 2,
     explanation: "Bateson and Punnett observed an excess of parental phenotypes, suggesting that the genes they were studying were linked and did not assort independently."
   },
   {
@@ -540,7 +540,7 @@ const questionBanks = {
       "Only recombinant phenotypes were observed.",
       "Only parental phenotypes were observed."
     ],
-    correct: 1,
+    correct: 0,
     explanation: "In incomplete linkage, parental phenotypes are more frequent due to the genes being on the same chromosome, but recombinant phenotypes also occur at a lower frequency due to crossing over."
   },
   {
@@ -562,7 +562,7 @@ const questionBanks = {
       "Recombination frequency depends on the physical distance between two linked loci.",
       "Recombination frequency is always 50%."
     ],
-    correct: 3,
+    correct: 2,
     explanation: "Morgan's postulate states that the recombination frequency between two linked loci is proportional to the physical distance between them on the chromosome."
   },
   {
@@ -596,13 +596,13 @@ const questionBanks = {
       "They are used to calculate the mutation rate of genes.",
       "They are ignored because they are rare."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "Double crossover events are crucial for accurately determining the order of genes in a three-point cross, as they reveal which gene is located in the middle."
   },
   {
     text: "If the number of recombinant offspring is 200 out of a total of 1000 offspring, what is the recombination frequency?",
     options: ["5%", "10%", "20%", "40%"],
-    correct: 3,
+    correct: 2,
     explanation: "Recombination frequency = (Number of recombinant offspring / Total number of offspring) * 100 = (200 / 1000) * 100 = 20%."
   },
   {
@@ -613,7 +613,7 @@ const questionBanks = {
       "Determining the physical distance between genes using a ruler.",
       "Establishing the order of genes on a chromosome."
     ],
-    correct: 3,
+    correct: 2,
     explanation: "Gene maps are created using recombination frequencies derived from test crosses. The physical distance between genes is inferred from these recombination frequencies, not measured directly with a ruler."
   },
   {
@@ -635,7 +635,7 @@ const questionBanks = {
       "The frequency of parental phenotypes.",
       "The number of chromosomes in a cell."
     ],
-    correct: 2,
+    correct: 1,
     explanation: "The Coefficient of Coincidence (CoC) measures the ratio of observed double crossovers to expected double crossovers, which indicates the degree of interference; specifically if one crossover event affects the likelihood of a second nearby crossover."
   },
   {
@@ -677,15 +677,15 @@ const questionBanks = {
     {
         text: "If two genes are assorting independently, what is the expected ratio of PD:NPD:T asci in a large sample?",
         options: ["PD>NPD", "NPD>PD", "PD=NPD", "NPD+PD>T"],
-        correct: 3,
+        correct: 2,
 
         explanation: "Genes that are assorting independently should have a PD=NPD. T depends on the distance between the loci and the centromere"
     },
     {
         text: "If tetrad analysis reveals that NPD>>PD. Which of the following is true about the genes that are being considered.",
         options: ["Genes are Linked", "Genes are unlinked", "Genes are following independent assortment.", "Double crossover between the genes are more prominent than single crossover."],
-        correct: 0,
-        explanation: "When NPD is far more prominent than PD, the genes are linked."
+        correct: 1,
+        explanation: "When NPD is far more prominent than PD, the genes are unlinked."
     },
     {
         text: "The 'four-strand double crossover' class is also called tetratype(T). What conclusion can be drawn about the two genes.",
@@ -714,14 +714,14 @@ const questionBanks = {
   {
     text: "In a three-point test cross experiment, you analyzed a large number of offspring. You found that the number of recombinant offspring between gene Set 1 and gene Set 2 was 180 out of a total of 3000 offspring. What is the recombination frequency between gene Set 1 and gene Set 2, expressed as a percentage?",
     options: ["3%", "4%", "5%", "6%"],
-    correct: 4,
-    explanation: "Recombination frequency is calculated as (number of recombinant offspring / total number of offspring) * 100.  Therefore, (180 / 3000) * 100 = 6%."
+    correct: 3,
+    explanation: "Recombination frequency is calculated as (number of recombinant offspring / total number of offspring) * 100.  Therefore, (180 / 3000) × 100 = 6%."
   },
   {
     text: "In the same experiment involving three linked genes, the number of recombinant offspring between gene Set 2 and gene Set 3 was determined to be 120 out of the total 3000 offspring. What is the recombination frequency between gene Set 2 and gene Set 3, expressed as a percentage?",
     options: ["2%", "3%", "4%", "5%"],
-    correct: 3,
-    explanation: "Recombination frequency is calculated as (number of recombinant offspring / total number of offspring) * 100. Therefore, (120 / 3000) * 100 = 4%."
+    correct: 2,
+    explanation: "Recombination frequency is calculated as (number of recombinant offspring / total number of offspring) * 100. Therefore, (120 / 3000) × 100 = 4%."
   },
   {
     text: "Given the recombination frequencies between gene Set 1 and gene Set 2, and between gene Set 2 and gene Set 3, calculate the expected number of double crossover offspring if there were no interference. The total number of offspring analyzed was 3000.",
@@ -733,7 +733,7 @@ const questionBanks = {
     text: "In the actual experiment, the number of double crossover offspring observed was 4. What is the observed frequency of double crossovers in this experiment?",
     options: ["0.05%", "0.1%", "0.13%", "0.2%"],
     correct: 2,
-    explanation: "The observed frequency of double crossovers is (number of observed double crossovers / total number of offspring) * 100. Therefore, (4 / 3000) * 100 = 0.1333...%, which rounds to 0.13%."
+    explanation: "The observed frequency of double crossovers is (number of observed double crossovers / total number of offspring) × 100. Therefore, (4 / 3000) × 100 = 0.1333...%, which rounds to 0.13%."
   },
 
   {
@@ -745,14 +745,14 @@ const questionBanks = {
   {
     text: "Two genes are determined to be 7 map units apart on a chromosome. In a cross involving these genes, what percentage of the offspring do you expect to display recombinant phenotypes?",
     options: ["3.5%", "7%", "14%", "35%"],
-    correct: 1,
-    explanation: "One map unit is equal to 1% recombination frequency. Therefore, 7 map units corresponds to a 7% recombination frequency. However this means 7% * 2 = 14%, the recombination."
+    correct: 2,
+    explanation: "One map unit is equal to 1% recombination frequency. Therefore, 7 map units corresponds to a 7% recombination frequency. However this means 7% × 2 = 14%, the recombination."
   },
   {
     text: "In a series of crosses, you counted 650 parental offspring and 60 recombinant offspring. What is the recombination frequency?",
     options: ["5%", "8%", "9%", "10%"],
-    correct: 3,
-    explanation: "Recombination frequency is (number of recombinant offspring / total number of offspring) * 100. Total offspring = 650 + 60 = 710. Therefore, (60 / 710) * 100 = 8.45% rounded to 8%."
+    correct: 1,
+    explanation: "Recombination frequency is (number of recombinant offspring / total number of offspring) × 100. Total offspring = 650 + 60 = 710. Therefore, (60 / 710) × 100 = 8.45% rounded to 8%."
   },
   {
     text: "In a three-point cross involving three genes, you find the following recombination frequencies: the recombination frequency between gene A and gene B is 0.10, between gene B and gene C is 0.04, and between gene A and gene C is 0.14. Based on these data, which gene is likely located in the middle?",
