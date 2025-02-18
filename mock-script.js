@@ -13,8 +13,6 @@ let userID = "";
 let selectedCourseCode = "";
 
 // Predefined question banks by course codes
-const formattedText = questionText.replace(/\n/g, '<br>');
-document.getElementById('question-text').innerHTML = formattedText;
 const questionBanks = {
   
   "BOT101-T1": [
@@ -4486,7 +4484,9 @@ function initializeExam() {
   startTimer();
   examSection.classList.remove("hidden");
 }
-
+//ggggg
+const formattedText = questionText.replace(/\n/g, '<br>');
+document.getElementById('question-text').innerHTML = formattedText;
 
 // Load Current Question
 function loadQuestion() {
