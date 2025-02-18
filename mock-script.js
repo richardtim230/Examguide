@@ -4483,7 +4483,8 @@ function initializeExam() {
   loadQuestion();
   startTimer();
   examSection.classList.remove("hidden");
-    }
+}
+
 
 // Load Current Question
 function loadQuestion() {
