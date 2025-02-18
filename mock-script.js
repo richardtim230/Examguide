@@ -4465,9 +4465,7 @@ selectCourseBtn.addEventListener("click", () => {
 
   selectedCourseCode = courseCodeInput;
   questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
-const formattedText = questionText.replace(/\n/g, '<br>');
-document.getElementById('question-text').innerHTML = formattedText;
-  
+
   if (questions.length === 0) {
     alert("No questions available for this course. Please try another course code.");
     return;
