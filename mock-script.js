@@ -664,7 +664,7 @@ const questionBanks = {
     text: "Given the recombination frequencies between gene Set 1 and gene Set 2, and between gene Set 2 and gene Set 3, calculate the expected number of double crossover offspring if there were no interference. The total number of offspring analyzed was 3000.",
     options: ["3.6", "4.5", "5.4", "6.0"],
     correct: 0,
-    explanation: "From the previous two questions, Assume RF(Set1-Set2) = 6% (0.06) and RF(Set2-Set3) = 4% (0.04). The expected double crossover frequency is the product of these: 0.06 * 0.04 = 0.0024. The expected number of double crossovers is this frequency multiplied by the total number of offspring: 0.0024 * 3000 = 7.2 which doesn't match an answer. I will correct to RF(Set1-Set2) = 3% (0.03) and RF(Set2-Set3) = 4% (0.04). The expected double crossover frequency is the product of these: 0.03 * 0.04 = 0.0012. The expected number of double crossovers is this frequency multiplied by the total number of offspring: 0.0012 * 3000 = 3.6"
+    explanation: "From the previous two questions, lets assume RF(Set1-Set2) = 6% (0.06) and RF(Set2-Set3) = 4% (0.04). The expected double crossover frequency is the product of these: 0.06 * 0.04 = 0.0024. The expected number of double crossovers is this frequency multiplied by the total number of offspring: 0.0024 * 3000 = 7.2 which doesn't match an answer. I will correct to RF(Set1-Set2) = 3% (0.03) and RF(Set2-Set3) = 4% (0.04). The expected double crossover frequency is the product of these: 0.03 * 0.04 = 0.0012. The expected number of double crossovers is this frequency multiplied by the total number of offspring: 0.0012 * 3000 = 3.6"
   },
   {
     text: "In the actual experiment, the number of double crossover offspring observed was 4. What is the observed frequency of double crossovers in this experiment?",
@@ -4475,6 +4475,10 @@ selectCourseBtn.addEventListener("click", () => {
 });
 
 
+// Shuffle questions randomly
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0);
+}
 
 // Initialize Exam
 function initializeExam() {
