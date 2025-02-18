@@ -1,24 +1,4 @@
-const ws = new WebSocket('ws://localhost:8080');
 
-ws.onopen = () => {
-  console.log('Connected to WebSocket server');
-};
-
-ws.onmessage = event => {
-  const message = JSON.parse(event.data);
-  if (message.type === 'updateActiveIDs') {
-    // Handle the update of active IDs
-    const activeIDs = message.data;
-    console.log('Updated active IDs:', activeIDs);
-
-    // Implement logic to update the UI or login process based on the new active IDs
-    // ...
-  }
-};
-
-ws.onclose = () => {
-  console.log('Disconnected from WebSocket server');
-};
 
 // Use debounce to limit frequent state updates
 function throttle(func, limit) {
@@ -125,7 +105,7 @@ function updateTimerDisplay() {
 }
 
 // Call this when the user logs in
-document.addEventListener('click', startTimer);
+document.addEventListener('load', startTimer);
 
 // Call this when the user logs out or closes the session
 window.addEventListener('beforeunload', stopTimer);
