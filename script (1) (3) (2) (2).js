@@ -726,125 +726,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  const overlay = document.getElementById("overlay");
-  const loginBox = document.getElementById("login-box");
-  const registerBox = document.getElementById("register-box");
-  const welcomePopup = document.getElementById("welcome-popup");
+  
   const app = document.getElementById("homepage");
-
-  const loginBtn = document.getElementById("login-btn");
-  const registerBtn = document.getElementById("register-btn");
-  const backToLoginBtn = document.getElementById("back-to-login");
-  const submitRegisterBtn = document.getElementById("submit-register");
-  const continueBtn = document.getElementById("continue-btn");
-
-  const userIdInput = document.getElementById("user-id");
-  const fullNameInput = document.getElementById("full-name");
-  const departmentInput = document.getElementById("department");
-  const levelInput = document.getElementById("level");
-  const coursesInput = document.getElementById("courses");
-  const photoUpload = document.getElementById("photo-upload");
-  const agreeCheckbox = document.getElementById("agree-checkbox");
-
-  const studentDetailsElement = document.getElementById("student-details");
-  const profilePhoto = document.getElementById("profile-photo");
-  const welcomeMessage = document.getElementById("welcome-message");
-
-  const activeUserIDs = ["OAU-gmTRk", "OAU-dcKgE", "OAU-fGSUo", "OAU-sTXn4", "OAU-NU8zL", "OAU-Kc233", "OAU-7Hyjx", "OAU-B4Wvb", "OAU-ON2Oj", "OAU-jEXEF", "OAU-PZ5Tj", "OAU-AgmoJ", "OAU-r55Vp", "OAU-JL36e", "OAU-qrTdN", "OAU-llhkh", "OAU-HggvB", "OAU-gq3hO", "OAU-z664T", "OAU-C0hZj", "OAU-Mafoa", "OAU-3zuzS", "OAU-Q6Z81", "OAU-XYLMF", "OAU-CFrCP", "OAU-Dq7YG", "OAU-wQUVg", "OAU-DbEbB", "OAU-Bmefl", "OAU-4IE79", "OAU-HYzw2", "OAU-1GLHv", "OAU-RDOyh", "OAU-hRizi", "OAU-Z03kp", "OAU-W3Ldz", "OAU-RF8QS", "OAU-zZ7XL", "OAU-RF8QS", "OAU-5ikQ4", "OAU-7WkN5", "OAU-wQUVg", "OAU-pzss7", "9KPGWE", "OAU-OoCDY","OAU-8ahti", "OAU-ZgXvX", "OAU-vTo6K", "OAU-hnBub", "OAU-SefDs", "OAU-gERUT", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-4T6Y2", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
-  const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
-    "Good morning!",
-    "Rise and shine!",
-    "Hello! How was your night?",
-    "Good morning, sunshine!",
-    "Wishing you a bright and productive day!",
-    "Good morning! May your coffee be strong and your Monday be short.",
-    "Good morning! Let's make today amazing!",
-    "Good morning! Embrace the day with a smile!",
-    "Have a wonderful morning!",
-    "Good morning! May your day be filled with joy and success.",
-    "Good morning! Wishing you a day filled with happiness and laughter.",
-    "Hello beautiful! Have a great day!",
-    "Good morning!  May your day be as radiant as you are.",
-    "Good morning! Time to seize the day!",
-    "Good morning!  Hoping you have a fantastic start to your day.",
-    "Good morning!  May your day be filled with opportunities.",
-    "Good morning!  Let's make some memories today!",
-    "Good morning!  May all your dreams come true today.",
-    "Good morning!  Sending you positive vibes for a wonderful day!",
-    "Good morning!  May your day be filled with peace and serenity.",
-    "Good morning!  May your day be filled with love and kindness.",
-    "Good morning!  I hope you have a productive and successful day.",
-    "Good morning!  May your day be filled with fun and adventure!",
-    "Good morning!  May your day be better than yesterday.",
-    "Good morning!  Don't forget to breathe and be mindful today.",
-    "Good morning!  Stay hydrated and energized!",
-    "Good morning!  Believe in yourself and your abilities today.",
-    "Good morning! May your day be filled with inspiration and creativity.",
-    "Good morning!  Remember to take some time for yourself today.",
-    "Good morning!  I hope this message brightens your day!"];
-  const afternoonMessages = ["Good afternoon", "Hope you're having a productive day!", "Keep shining!", 
-    "Hope you're having a productive day!",
-    "Let me know if you need anything.",
-    "Just checking in to see how things are going.",
-    "Thinking of you and hoping your workday is going smoothly.",
-    "Great work on studies! Keep it up!",
-    "Let's schedule a quick chat later today to discuss anything - Prof Richard.",
-    "I've got new questions for you to practice! 😊.",
-    "Making progress on that course?",
-    "How's that deadline looking?",
-    "Anything I can assist with today?",
-    "Need a hand with anything?",
-    "Let's brainstorm solutions for CHM101.",
-    "Keep up the amazing work!",
-    "Remember to take short breaks throughout the day.",
-    "Stay focused and determined!",
-    "Don't forget to hydrate and refuel!",
-    "Almost through the week - keep going!",
-    "What are your priorities for the rest of the day?",
-    "Is there anything blocking your progress?",
-    "Checking in – how's the workload?",
-    "Any updates on CHM101?",
-    "Remember to prioritize your tasks.",
-    "Time for a quick team huddle?",
-    "What's your plan of action for the afternoon?",
-    "Any questions I can answer?",
-    "How's your energy level?",
-    "Remember to take a proper lunch break!",
-    "Wishing you a productive afternoon!",
-    "It's almost time to go home; hang in there!"
-];
-  const eveningMessages = ["Good evening", "Hope your day was great!", "Relax, you did well today!", 
-    "Good evening!",
-    "Good night! Sleep tight!",
-    "Sweet dreams!",
-    "Have a restful night!",
-    "Good night! May your sleep be peaceful and your dreams be sweet.",
-    "Sleep well, and have a wonderful tomorrow.",
-    "Good night! Rest up for a productive day ahead.",
-    "Hoping you have a relaxing evening.",
-    "Enjoy your evening!",
-    "Wishing you a peaceful and quiet night.",
-    "Time to unwind and relax.",
-    "May your evening be filled with joy and comfort.",
-    "Good night!  May your sleep be deep and restorative.",
-    "Wishing you a pleasant evening and a good night's rest.",
-    "Take some time to de-stress before bed.",
-    "Good night!  May tomorrow bring new opportunities.",
-    "Sweet dreams and a happy tomorrow!",
-    "Enjoy the quiet of the evening.",
-    "Have a wonderful evening, filled with happiness.",
-    "May your evening be filled with things you love.",
-    "Good night!  May your sleep be sound and refreshing.",
-    "Time to disconnect and recharge.",
-    "Hoping your evening is filled with relaxation and joy.",
-    "Good night!  Sending positive thoughts for a great night's sleep.",
-    "May your dreams be filled with wonder and excitement.",
-    "Enjoy a well-deserved rest.",
-    "Good night and sleep well!",
-    "Wishing you a calming and peaceful night.",
-    "Time to reflect on the day and prepare for tomorrow.",
-    "Goodnight!  May your sleep be as peaceful as the night sky."
-];
 
   // Utility Function to Generate Alphanumeric User ID
 function generateUserID() {
@@ -1230,18 +1113,6 @@ backToLoginPaymentBtn.addEventListener("click", () => {
   alert("You have been redirected back to the login page.");
 });
 
-
-
-
-  continueBtn.addEventListener("click", () => {
-    // Hide overlay and show the main application
-    overlay.style.display = "none"; // Completely hide the overlay
-    app.style.display = "block"; // Display the main app content
-    app.style.body.overflow = 'auto';
-    
-    // Open the URL
-    window.location.href = "exam.html.htm";
-});
   
     // Expiry Logic
   const expiryDays = 365;
