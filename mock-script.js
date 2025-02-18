@@ -12,10 +12,6 @@ let fullName = "";
 let userID = "";
 let selectedCourseCode = "";
 
-//gggg
-
-const formattedText = questionText.replace(/\n/g, '<br>');
-document.getElementById('question-text').innerHTML = formattedText;
 
 // Predefined question banks by course codes
 const questionBanks = {
@@ -4493,7 +4489,9 @@ function initializeExam() {
   startTimer();
   examSection.classList.remove("hidden");
 }
-
+// gg
+const formattedText = questionText.replace(/\n/g, '<br>');
+document.getElementById('question-text').innerHTML = formattedText;
 
 // Load Current Question
 function loadQuestion() {
