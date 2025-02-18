@@ -16076,7 +16076,7 @@ Botany: {
 
 function showSection(section) {
   [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
-    if (el) el.classList.add("hidden");
+    if (el) el.classList.remove("hidden");
   });
   section.classList.remove("hidden");
 }
