@@ -4793,7 +4793,7 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   doc.text("Obafemi Awolowo University", pageWidth / 2, yOffset - 40, { align: "center" });
 
   doc.setFontSize(16);
-  doc.text(`Zoology Exam Questions`, pageWidth / 2, yOffset - 20, { align: "center" });
+  doc.text(`Mock Examination Questions`, pageWidth / 2, yOffset - 20, { align: "center" });
   yOffset += 30;
 
   // Add Course Title and Duration
