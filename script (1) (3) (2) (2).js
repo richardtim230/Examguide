@@ -125,7 +125,7 @@ function updateTimerDisplay() {
 }
 
 // Call this when the user logs in
-document.getElementById('login-btn').addEventListener('click', startTimer);
+document.addEventListener('click', startTimer);
 
 // Call this when the user logs out or closes the session
 window.addEventListener('beforeunload', stopTimer);
@@ -15505,7 +15505,7 @@ Botany: {
 
 function showSection(section) {
   [courseSelectionSection, accessCodeSection, examSection, summarySection].forEach((el) => {
-    if (el) el.classList.remove("hidden");
+    if (el) el.classList.add("hidden");
   });
   section.classList.remove("hidden");
 }
