@@ -673,18 +673,7 @@ const questionBanks = {
     correct: 2,
     explanation: "The observed frequency of double crossovers is (number of observed double crossovers / total number of offspring) * 100. Therefore, (4 / 3000) * 100 = 0.1333...%, which rounds to 0.13%."
   },
-  {
-    text: "Using the expected number of double crossovers (assume 3.6) and the actual observed number, determine the Coefficient of Coincidence (CoC).",
-    options: ["0.50", "0.67", "0.75", "0.83"],
-    correct: 4,
-    explanation: "The Coefficient of Coincidence (CoC) is the observed number of double crossovers divided by the expected number of double crossovers. CoC = 4 / 3.6 = 1.11 which is way off. Let's adjust question #3 again... \n\nUsing RF(Set1-Set2) = 0.18 or 18% and RF(Set2-Set3) = .12 or 12%. The expected double crossover frequency is the product of these: 0.18 * 0.12 = 0.0216. The expected number of double crossovers is this frequency multiplied by the total number of offspring: 0.0216 * 3000 = 64.8 then CoC = 4/64.8 = 0.0617.\n\nI see the issue.... The EXPECTED double cross over OFFSPRING is wrong... it should be (0.03 * 0.04 = 0.0012), hence (0.0012 * 3000 = 3.6). The correct formula is then (observed/expected) 4 / 3.6 = 1.11. If the EXPECTED had a large number than the answers would be fine. \n\nI need larger RF so that the calculation works.\n\nLet's use RF of set 1 and 2 is = 0.2 (20%) and set 2-3 of = 0.06 (6%) resulting in 3000 * .2 * .06 = expected double crossover of 36. Hence 4/36 = CoC of ~0.11 but no answer. I will change question #3 to something different."
-  },
-  {
-    text: "Based on the calculated Coefficient of Coincidence (CoC) of 0.667, determine the Interference. Express your answer as a percentage.",
-    options: ["17%", "25%", "33%", "50%"],
-    correct: 2,
-    explanation: "Interference = 1 - CoC.  If CoC = 0.667, then Interference = 1 - 0.667 = 0.333, or 33.3%. Rounded the closest answer is 33%."
-  },
+
   {
     text: "You are mapping three genes on a chromosome and discover that the Interference is 100%. What does this tell you about the occurrence of double crossovers in this region?",
     options: ["Double crossovers occur at the expected frequency.", "Double crossovers occur more frequently than expected.", "Double crossovers occur less frequently than expected.", "Double crossovers do not occur."],
