@@ -649,6 +649,68 @@ const questionBanks = {
     correct: 1,
     explanation: "A CoC of 1 (or 100%) means that the observed number of double crossovers is exactly what was expected based on the single crossover frequencies. This implies that there is no interference: one crossover doesn't influence the probability of another crossover occurring nearby."
   },
+    
+    {
+        text: "In a fungal cross, if the frequency of Parental Ditype (PD) tetrads is approximately equal to the frequency of Non-Parental Ditype (NPD) tetrads, this suggests:",
+        options: ["the genes are tightly linked.", "the genes are located very close to the centromere.", "the genes are unlinked and assorting independently.", "a high rate of double crossovers is occurring between the genes."],
+        correct: 2,
+        explanation: "When PD ≈ NPD, the genes are unlinked and assorting independently, indicating that the genes are on different chromosomes or far apart on the same chromosome."
+    },
+    {
+        text: "When analyzing tetrad data, a significant excess of Non-Parental Ditype (NPD) tetrads compared to Parental Ditype (PD) tetrads suggests:",
+        options: ["the genes are on separate chromosomes and undergoing independent assortment.", "the genes are linked on the same chromosome, close together.", "the genes are linked on the same chromosome, far apart.", "the genes are exhibiting a high degree of interference, reducing crossover frequency."],
+        correct: 2,
+        explanation: "NPD >> PD indicates linkage because a double crossover is required to produce NPD asci. It requires the genes to be linked on the same chromosome."
+    },
+    {
+        text: "The formation of a Tetratype (T) tetrad requires which meiotic event(s) between the genes under consideration?",
+        options: ["No crossover events.", "A single crossover event.", "A double crossover event involving four strands.", "Any number of crossover events; the outcome is random."],
+        correct: 1,
+        explanation: "A tetratype ascus results from a single crossover between the gene and the centromere, causing a mix of parental and recombinant spores in the ascus."
+    },
+    {
+        text: "For genes on the same chromosome, a low percentage of recombinant asci suggests:",
+        options: ["High rates of recombination.", "Independent assortment.", "Close physical proximity.", "High levels of tetratype asci."],
+        correct: 3,
+        explanation: "A low percentage of recombinant asci suggests close physical proximity because genes that are closer together are less likely to have a crossover event between them."
+    },
+    {
+        text: "If two genes are assorting independently, what is the expected ratio of PD:NPD:T asci in a large sample?",
+        options: ["PD>NPD", "NPD>PD", "PD=NPD", "NPD+PD>T"],
+        correct: 3,
+
+        explanation: "Genes that are assorting independently should have a PD=NPD. T depends on the distance between the loci and the centromere"
+    },
+    {
+        text: "If tetrad analysis reveals that NPD>>PD. Which of the following is true about the genes that are being considered.",
+        options: ["Genes are Linked", "Genes are unlinked", "Genes are following independent assortment.", "Double crossover between the genes are more prominent than single crossover."],
+        correct: 0,
+        explanation: "When NPD is far more prominent than PD, the genes are linked."
+    },
+    {
+        text: "The 'four-strand double crossover' class is also called tetratype(T). What conclusion can be drawn about the two genes.",
+        options: ["Genes are located on the same chromosome and close proximity to one another.", "Genes are located on the different chromosome.", "Genes are linked and physically located farther apart.", "Genes are far enough to form single crossover but close enough to rarely form double crossover."],
+        correct: 2,
+        explanation: "A four-strand double crossover, can also be a tetratype(T). As the gene are linked, they must be physically farther apart for this crossover to happen."
+    },
+    {
+        text: "Imagine you are performing a tetrad analysis. If the parental ditype frequency is significantly greater than the non-parental ditype frequency, what can you primarily conclude about the physical relationship between the genes?",
+        options: ["The genes are exhibiting a high degree of positive interference.", "The genes are likely located on different chromosomes.", "The genes are likely very close together on the same chromosome.", "The genes are involved in a reciprocal translocation event."],
+        correct: 2,
+        explanation: "High PD frequency suggests the genes are closely linked because they are less likely to be separated by a crossover event during meiosis."
+    },
+    {
+        text: "Which ascus type would be least frequent among linked genes in a tetrad analysis?",
+        options: ["Parental ditype", "Non-parental ditype", "Tetratype", "Depends on the distance."],
+        correct: 3,
+        explanation: "The frequency of the linked loci can be evaluated when distance is known, and distance influence which ascus can be less frequent among the genes."
+    },
+    {
+        text: "Which cross results in two strands double crossover among the genes.",
+        options: ["Cross between strain ad A and + a where the genes are not linked", "TETRAD CLASSES INVOLVING GENES THAT ARE LINKED", "Cross between strain ad A and + a where the genes are linked.", "None of the above."],
+        correct: 2,
+        explanation: "TETRAD CLASSES INVOLVING GENES THAT ARE NOT LINKED represent four strands double crossover and not a two strand double crossover."
+    },
   {
     text: "In a three-point test cross experiment, you analyzed a large number of offspring. You found that the number of recombinant offspring between gene Set 1 and gene Set 2 was 180 out of a total of 3000 offspring. What is the recombination frequency between gene Set 1 and gene Set 2, expressed as a percentage?",
     options: ["3%", "4%", "5%", "6%"],
@@ -4467,7 +4529,7 @@ selectCourseBtn.addEventListener("click", () => {
 
 // Shuffle questions randomly
 function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0);
+  return array.sort(() => Math.random() - 0.6);
 }
 
 // Initialize Exam
