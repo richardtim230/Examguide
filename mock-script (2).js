@@ -320,7 +320,7 @@ const questionBanks = {
     },
       ], 
 
-  "B203–QUIZ2": [    
+  "BOT203-T2": [    
   {
     text: "What causes recombination in incomplete linkage?",
     options: [
@@ -1152,7 +1152,7 @@ const questionBanks = {
           options: ["Removing the mutant allele.", "Preventing the mutant allele from being expressed.", "Enhancing the expression of a wild-type allele.", "Mutating the mutant allele back to the wild type."],
           correct: 1,
           explanation: "A suppressor gene does not alter the mutant allele itself or revert it back to a wild-type allele, it simply prevents it from being expressed in the phenotype."
-        },
+        }, 
         {
           text: "The Su-s gene in Drosophila and the star eye(s) mutant gene provide an example of:",
           options: ["A pleiotropic relationship.", "Epistasis.", "Suppression.", "Modification."],
@@ -1432,7 +1432,7 @@ const questionBanks = {
           text: "If you cross parent 1 (AABBCC) with parent 2 (aabbcc) and the resulting F1 are self-crossed. Approximately what fraction of F2 offspring has 3 dominant and 3 recessive alleles?",
           options: ["1/64", "6/64", "15/64", "20/64"],
           correct: 3,
-          explanation: "Each gene (A, B, C) is heterozygous in the F1 (AaBbCc). When the F1 is self-crossed (AaBbCc x AaBbCc), we want the probability of 3 dominant and 3 recessive alleles. We know the amount of combinations for n different genes is (2n)! / x! * (n-x)! , where X is the amount of recessive genes. So (2*3)! / 3! * (3-3)! = 20/64 for each gene (8)"
+          explanation: "Each gene (A, B, C) is heterozygous in the F1 (AaBbCc). When the F1 is self-crossed (AaBbCc x AaBbCc), we want the probability of 3 dominant and 3 recessive alleles. We know the amount of combinations for n different genes is (2n)! / x! × (n-x)! , where X is the amount of recessive genes. So (2×3)! / 3! × (3-3)! = 20/64 for each gene (8)"
         },
         {
           text: "In kernel color in wheat with a F1 heterozygous for two genes will segregate in F2 in which ratio?",
@@ -1444,7 +1444,7 @@ const questionBanks = {
           text: "In kernel color in wheat with a F1 heterozygous for three genes will segregate in F2 in which ratio?",
           options: ["1:4:6:4:1", "1 : 6 : 15 : 20 : 15 : 6 : 1", "9:3:3:1", "1:2:1"],
           correct: 1,
-          explanation: "In this instance, we want to know what the proportion will be from (a+b)^n, since each are being added, which is equal to 1 : 6 : 15 : 20 : 15 : 6 : 1"
+          explanation: "In this instance, we want to know what the proportion will be from (a+b)ⁿ, since each are being added, which is equal to 1 : 6 : 15 : 20 : 15 : 6 : 1"
         },
         {
           text: "Why does the intensity of seed colour depend on the number of dominant alleles present, i.e., their effects are cumulative in nature?",
@@ -1468,7 +1468,7 @@ const questionBanks = {
           text: "In summer squash, the dominant W gene for white color affects which aspect of Y gene?",
           options: ["It prevents its transcription.", "It inhibits the migration of Y mRNA to ribosomes.", "It degrades Y gene's protein product.", "It suppresses the expression of the Y gene."],
           correct: 3,
-          explanation: "In summer squash, the dominant *W* gene exhibits dominant epistasis by suppressing the expression of the *Y* gene for yellow color. This means even if the *Y* allele is present, the presence of the *W* allele will result in white fruit, irrespective of whether the Y allele is being transcribed."
+          explanation: "In summer squash, the dominant W gene exhibits dominant epistasis by suppressing the expression of the Y gene for yellow color. This means even if the Y allele is present, the presence of the *W* allele will result in white fruit, irrespective of whether the Y allele is being transcribed."
         },
         {
           text: "If a summer squash plant with genotype WwYy is self-pollinated, what proportion of the offspring will display yellow color?",
@@ -1527,7 +1527,7 @@ const questionBanks = {
           text: "In rice, purple leaf color (P) is dominant to green (p), but a dominant inhibitory gene (I) prevents purple expression. What is the expected phenotypic ratio if you cross a plant IiPp with a plant iiPp?",
           options: ["9 Purple : 7 Green", "12 Green : 4 Purple", "3 Green : 1 Purple", "1 Green : 1 Purple"],
           correct: 2,
-          explanation: "Ii x ii gives 1/2 I_ (inhibited) and 1/2 ii (not inhibited). Pp x Pp gives 3/4 P_ (purple) and 1/4 pp (green). Only iiP_ will express purple, thus 1/2 * 3/4 = 3/8, remaining are green, hence 3:1."
+          explanation: "Ii x ii gives 1/2 I_ (inhibited) and 1/2 ii (not inhibited). Pp x Pp gives 3/4 P_ (purple) and 1/4 pp (green). Only iiP_ will express purple, thus 1/2 × 3/4 = 3/8, remaining are green, hence 3:1."
         },
         {
           text: "You cross two barley plants that are heterozygous for two polymorphic genes affecting awn length (AaBb). What proportion of the offspring will have long awns, assuming that the genes act additively?",
@@ -1545,7 +1545,7 @@ const questionBanks = {
           text: "In wheat kernel color, controlled by 3 genes (A, B, C), what proportion of the F2 generation would have the darkest possible kernel color (AABBCC) from a cross of aabbcc x AABBCC, if the heterozygous F1 is self-fertilized?",
           options: ["1/64", "1/8", "1/16", "1/4"],
           correct: 0,
-          explanation: "AaBbCc x AaBbCc. Probability of AABBCC is (1/4)*(1/4)*(1/4) = 1/64."
+          explanation: "AaBbCc x AaBbCc. Probability of AABBCC is (1/4)×(1/4)×(1/4) = 1/64."
         },
         {
           text: "In dominant epistasis, the epistatic gene prevents expression of the non-allelic gene. This implies:",
@@ -1563,7 +1563,7 @@ const questionBanks = {
           text: "If a summer squash plant with genotype WwYy is self-pollinated, what proportion of the offspring will display yellow color?",
           options: ["1/16", "3/16", "1/4", "3/4"],
           correct: 1,
-          explanation: "Selfing WwYy: Ww x Ww -> 3/4 W_, 1/4 ww. Yy x Yy -> 3/4 Y_, 1/4 yy. Yellow is wwY_ which is 1/4 * 3/4 = 3/16."
+          explanation: "Selfing WwYy: Ww x Ww -> 3/4 W_, 1/4 ww. Yy x Yy -> 3/4 Y_, 1/4 yy. Yellow is wwY_ which is 1/4 × 3/4 = 3/16."
         },
         {
           text: "An inhibitory factor's primary action is to:",
