@@ -852,7 +852,6 @@ const questionBanks = {
           correct: 2,
           explanation: "A 9:6:1 ratio typically suggests genes with cumulative effects where the number of dominant alleles present determines the phenotype. It is seen when the interaction between two genes leads to a modification of the typical 9:3:3:1 ratio where the middle terms (3:3) are collapsed into a single term (6)."
         },
-
         {
           text: "A modified Mendelian ratio of 2:1 in a population of organisms with birds, this is most likely because of what gene interaction?",
           options: ["Codominance", "Recessive lethal allele", "Incomplete dominance", "X-linked mutation"],
@@ -913,7 +912,6 @@ const questionBanks = {
           correct: 0,
           explanation: "In the F2 generation, assuming one genotype is non-viable (the homozygous dominant), the resultant ratio is 2:1 as one quarter of them die."
         },
-
         {
           text: "The observation of greater variation in the F2 generation of Nicotiana crosses compared to the F1 suggests:",
           options: ["The F1 generation was inbred.", "The F1 generation was genetically uniform while the F2 generation exhibits segregation of multiple genes.", "The F1 generation was exposed to a uniform environment.", "The genes controlling corolla length are linked."],
@@ -939,7 +937,6 @@ const questionBanks = {
           explanation: "While the exact number is not definitively known, skin color is believed to be influenced by multiple gene pairs, possibly two, four, five, or even more. The polygenic nature of skin color leads to a continuous distribution of phenotypes."
         },
         {
-
           text: "If the frequency of a parental type in a polygenic inheritance cross is 1/256, how many gene pairs are likely involved?",
           options: ["Two", "Three", "Four", "Five"],
           correct: 2,
@@ -999,7 +996,6 @@ const questionBanks = {
           correct: 1,
           explanation: "Penetrance is the percentage of individuals carrying a specific genotype who also express the expected phenotype. If penetrance is incomplete, some individuals with the genotype will not display the phenotype."
         },
-
         {
           text: "If a gene has complete penetrance:",
           options: ["Its effect is always environmentally influenced.", "All individuals with the relevant genotype will exhibit the phenotype.", "The phenotype will be highly variable.", "The gene will not be expressed."],
@@ -1036,7 +1032,6 @@ const questionBanks = {
           correct: 1,
           explanation: "Expressivity quantifies *how* a trait is phenotypically expressed, whether intensely or moderately, and how other genes impact it."
         },
-
         {
           text: "The multiple factor hypothesis suggests that genes affecting quantitative traits are:",
           options: ["Always located on the same chromosome.", "Subject to strong epistatic interactions.", "Independent in segregation but have cumulative effects.", "Primarily influenced by environmental factors."],
@@ -1098,7 +1093,6 @@ const questionBanks = {
           correct: 3,
           explanation: "Multiple genes, each with a small, additive effect, can contribute to quantitative traits leading to a continuous range of phenotypes."
         },
-
         {
           text: "Duplicate Gene with Dominance Modification (11:5) implies what about the first 11 in the ratio?",
           options: ["Double the expression", "Requires that the ratio contains both dominant alleles for phenotype expression", "Both traits must be present", "Non-viable offspring"],
