@@ -1265,10 +1265,10 @@ const questionBanks = {
           explanation: "For the genes of Shepherd's Purse, the aabb genotype produces the oval capsules."
         },
         {
-          text: "'Dominance Modification' in duplicate genes requires:",
+          text: "Dominance Modification in duplicate genes requires:",
           options: ["Dominance in multiple alleles", "Presence of non-allelic Dominant only when both present", "Suppression of recessive traits", "Epistasis"],
           correct: 1,
-          explanation: "'Dominance Modification' in duplicate genes requires the presence of non-allelic dominant alleles only when both are present."
+          explanation: "Dominance Modification in duplicate genes requires the presence of non-allelic dominant alleles only when both are present."
         },
         {
           text: "When both the dominant alleles of two non-allelic genes are present together in simple interaction, they produce a _____ phenotype.",
@@ -1362,10 +1362,10 @@ const questionBanks = {
           explanation: "Semi-lethal genes differ from lethal genes in that they do not always cause death; some individuals with the genotype may survive."
         },
         {
-          text: "'Xentha mutants in some plants' are an example of:",
+          text: "Xentha mutants in some plants are an example of:",
           options: ["Balanced lethals", "Gametic lethals", "Semi-lethal genes", "Dominant lethals"],
           correct: 2,
-          explanation: "'Xentha mutants in some plants' are an example of semi-lethal genes, as they reduce but don't eliminate viability."
+          explanation: "Xentha mutants in some plants are an example of semi-lethal genes, as they reduce but don't eliminate viability."
         },
 
         {
