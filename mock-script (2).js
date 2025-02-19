@@ -819,6 +819,185 @@ const questionBanks = {
     correct: 0,
     explanation: "The largest recombination frequency is between B1 and B3 (11%). The sum of the other two RFs (B1-B2 and B2-B3) equals RF(B1-B3), therefore B2 is in the middle: B1-B2-B3."
   },
+    {
+          text: "A plant species has a gene for leaf color where the homozygous dominant genotype (AA) is lethal, resulting in seed abortion. Heterozygous (Aa) plants have green leaves, and homozygous recessive (aa) plants have white leaves. If you cross two green-leaved plants (Aa x Aa), what is the expected phenotypic ratio of viable offspring?",
+          options: ["3 Green : 1 White", "1 Green : 2 White", "2 Green : 1 White", "1 Green : 1 White"],
+          correct: 2,
+          explanation: "Aa x Aa yields 1 AA (lethal), 2 Aa (green), and 1 aa (white). Since AA is lethal, the ratio of viable offspring is 2 Green : 1 White."
+        },
+        {
+          text: "A gene in mice controls coat color, where 'Y' represents yellow and 'y' represents agouti (brown). The 'Y' allele is dominant for yellow coat but is also a recessive lethal when homozygous (YY). What is the genotypic ratio of surviving offspring from a cross between two heterozygous (Yy) mice?",
+          options: ["1 YY : 2 Yy : 1 yy", "2 Yy : 1 yy", "3 Yy : 1 yy", "1 Yy : 1 yy"],
+          correct: 1,
+          explanation: "Yy x Yy yields 1 YY (lethal), 2 Yy (yellow), and 1 yy (agouti). Since YY is lethal, the genotypic ratio of surviving offspring is 2 Yy : 1 yy."
+        },
+        {
+          text: "A late-onset dominant lethal allele means that:",
+          options: ["The individual only expresses the lethal trait in the heterozygous state", "The individual only expresses the lethal trait in the homozygous state", "The lethal effects are delayed until after the individual has had a chance to reproduce", "The individual is only affected by the lethal allele under certain environmental conditions"],
+          correct: 3,
+          explanation: "A late-onset dominant lethal allele means that the lethal effects are delayed until after the individual has had a chance to reproduce, allowing the allele to be passed on."
+        },
+        {
+          text: "Imagine a population where a dominant lethal allele arises spontaneously. Which of the following is MOST likely to occur in the short term?",
+          options: ["The allele will rapidly spread throughout the population", "The allele will be maintained at a low frequency due to mutation", "The allele will only persist if it confers some heterozygous advantage", "The allele will likely be present but only able to be passed down from germline cell development but will not allow the individual to live."],
+          correct: 3,
+          explanation: "If it's both dominant and lethal then the individual will most likely be present but die since the allele is on the dominant allele. Thus most dominant lethal factors require heterozygous to stay alive otherwise they're unable to reproduce"
+        },
+        {
+          text: "A researcher observes a modified Mendelian ratio of 2:1 in a population of birds, where two-thirds of the offspring exhibit a specific trait, and one-third lacks the trait. What is the MOST likely explanation for this ratio?",
+          options: ["Incomplete dominance", "Co-dominance", "A recessive lethal allele", "Epistasis"],
+          correct: 2,
+          explanation: "A 2:1 ratio often suggests a recessive lethal allele, where the homozygous recessive genotype is not viable."
+        },
+        {
+          text: "A dominant lethal allele with incomplete penetrance means:",
+          options: ["All individuals carrying the allele will die", "All individuals carrying the allele will live", "Some individuals carrying the allele will survive, while others will die", "The allele only causes death under specific environmental conditions"],
+          correct: 2,
+          explanation: "A dominant lethal allele with incomplete penetrance means that some individuals carrying the allele will survive, while others will die due to factors influencing gene expression."
+        },
+        {
+          text: "If a trait results from a recessive lethal gene, what proportion of offspring will not be seen in the phenotypic ratios if both parents are heterozygous for the trait?",
+          options: ["1/4", "1/2", "3/4", "All offspring will be viable"],
+          correct: 0,
+          explanation: "Aa x Aa gives 1/4 AA 2/4 Aa 1/4 aa. If aa is lethal, then this 1/4 is missing in the phenotypic ratios."
+        },
+        {
+          text: "A geneticist is studying a population of butterflies where a certain wing pattern is determined by a single gene. They observe a 2:1 phenotypic ratio for patterned vs. non-patterned wings. Based on this observation, what conclusion is most reasonable?",
+          options: ["The wing pattern gene is sex-linked", "There is a lethal allele associated with one of the genotypes", "The population is not in Hardy-Weinberg equilibrium", "The wing pattern gene is influenced by multiple other genes"],
+          correct: 1,
+          explanation: "A 2:1 phenotypic ratio is a strong indicator of a lethal allele associated with one of the genotypes."
+        },
+        {
+          text: "A plant species shows a trait controlled by a recessive lethal allele when homozygous. If you cross two plants heterozygous for this trait and obtain 300 seeds, approximately how many seedlings would you expect to survive?",
+          options: ["75", "150", "225", "300"],
+          correct: 2,
+          explanation: "Aa x Aa gives 1/4 AA 2/4 Aa 1/4 aa. If aa is lethal then only the 3/4 survive. Thus 3/4 × 300 = 225"
+        },
+        {
+          text: "In mice, gene A has two alleles: A (agouti fur) and a (black fur). AA is lethal. What phenotypic ratio is seen when breeding two heterozygotes?",
+          options: ["3:1", "1:2:1", "2:1", "1:1"],
+          correct: 2,
+          explanation: "Aa x Aa gives 1/4 AA 2/4 Aa 1/4 aa. AA being lethal means the phenotypic ratio is 2 (Agouti) : 1 (Black)."
+        },
+        {
+          text: "Which of the following is the most accurate reason why Mendelian ratios are not always observed?",
+          options: ["Simple dominance is rare in nature, and most alleles exhibit incomplete dominance", "Epistasis is a far more common form of gene regulation than previously thought by Mendel", "The 'one gene-one trait' model is an oversimplification, as single traits are often influenced by multiple interacting genes and alleles", "Mendel's experiments were flawed, and his ratios were statistical anomalies"],
+          correct: 2,
+          explanation: "The 'one gene-one trait' model is an oversimplification because single traits are often influenced by multiple interacting genes and alleles, leading to deviations from Mendelian ratios."
+        },
+        {
+          text: "The Factor Hypothesis directly challenges which key assumption of early Mendelian genetics?",
+          options: ["Genes exist in pairs", "Genes segregate during gamete formation", "Genes assort independently", "Each gene independently determines a single, distinct trait"],
+          correct: 3,
+          explanation: "The Factor Hypothesis challenges the assumption that each gene independently determines a single, distinct trait, suggesting genes can interact to affect a trait."
+        },
+        {
+          text: "In incomplete dominance, the observed phenotype in the heterozygote is best described as:",
+          options: ["A random mix of the parental traits", "A novel phenotype distinct from either parent, but not necessarily intermediate", "A quantitative reduction of the dominant parental phenotype", "A phenotype that falls within the range of the two parental phenotypes, but not necessarily exactly in the middle"],
+          correct: 3,
+          explanation: "In incomplete dominance, the heterozygote phenotype falls within the range of the two parental phenotypes, but it's not always precisely intermediate."
+        },
+        {
+          text: "A dihybrid cross exhibits incomplete dominance for trait A and complete dominance for trait B. What is the expected phenotypic ratio in the F2 generation?",
+          options: ["9:3:3:1", "1:2:1:2:4:2:1:2:1", "3:1", "3:6:3:1:2:1"],
+          correct: 3,
+          explanation: "Incomplete dominance gives 1:2:1 (3 phenotypes), and complete dominance gives 3:1 (2 phenotypes). Combination gives 3:6:3:1:2:1."
+        },
+        {          text: "Co-dominance is most accurately defined by which of the following characteristics in heterozygotes?",
+          options: ["Expression of both parental alleles, but at a reduced level compared to the homozygous state", "Simultaneous and independent expression of both parental alleles, leading to a blended phenotype", "Simultaneous and independent expression of both parental alleles, such that both parental phenotypes are clearly discernible", "Expression of both parental alleles, but only in specific tissues or at specific developmental stages"],
+          correct: 2,
+          explanation: "Co-dominance is the simultaneous and independent expression of both parental alleles, leading to a phenotype where both are clearly discernible."
+        },
+        {
+          text: "Over-dominance is often attributed to:",
+          options: ["Complete masking of one allele by the other", "The masking of deleterious recessive alleles in the heterozygous state", "The heterozygote possessing a novel combination of gene products that confers a selective advantage", "Increased gene dosage in the heterozygote"],
+          correct: 2,
+          explanation: "Over-dominance is often attributed to the heterozygote possessing a novel combination of gene products that confers a selective advantage over either homozygote."
+        },
+        {
+          text: "A gene that is recessive lethal is likely to:",
+          options: ["Be maintained at a high frequency in the population", "Be rapidly eliminated from the population", "Persist in the population through heterozygous carriers", "Cause death in the F1 generation"],
+          correct: 2,
+          explanation: "A recessive lethal gene is likely to persist in the population through heterozygous carriers who do not express the lethal phenotype."
+        },
+        {
+          text: "Which of the following scenarios would prevent a dominant lethal allele from being rapidly eliminated from a population?",
+          options: ["The allele has very low penetrance", "The allele has a late age of onset", "The allele is also beneficial in the heterozygous state", "The allele is always linked to a beneficial recessive allele"],
+          correct: 1,
+          explanation: "If the lethal effects are not felt until after the individual has already reproduced then there will be no effect."
+        },
+        {
+          text: "Conditional lethality implies:",
+          options: ["The lethal effect is always environmentally induced", "The lethal effect can be bypassed by a compensatory mutation in another gene", "The lethal effect depends on the presence or absence of a specific environmental factor or genetic background", "The lethal effect is only observed in specific developmental stages"],
+          correct: 2,
+          explanation: "Conditional lethality implies that the lethal effect depends on specific conditions - environmental or genetic - for its expression."
+        },
+        {
+          text: "The MN blood group system in humans is an example of:",
+          options: ["Complete dominance", "Incomplete dominance", "Co-dominance", "Over-dominance"],
+          correct: 2,
+          explanation: "The MN blood group system in humans is an example of co-dominance, where both M and N alleles are expressed equally in heterozygotes."
+        },
+        {
+          text: "In a population, a particular gene exhibits over-dominance. Which of the following is most likely to be observed?",
+          options: ["A decrease in heterozygote frequency over time", "Increased fitness of heterozygotes compared to both homozygotes", "Rapid elimination of one of the alleles", "Phenotypic ratios that closely resemble Mendelian ratios"],
+          correct: 1,
+          explanation: "Increased fitness of heterozygotes compared to both homozygotes is the hallmark of over-dominance, driving selection for the heterozygous genotype."
+        },
+        {
+          text: "How does Overdominance compare to Incomplete Dominance?",
+          options: ["Overdominance's heterozygote is more extreme that parental while incomplete dominance will have a blend of the parental", "Overdominance and incomplete dominance share the same heterozygote", "Overdominance's heterozygote is a blend of the parental while incomplete dominance will have a more extreme phenotype than the parental", "Overdominance will blend the parental phenotype while incomplete dominance will produce both"],
+          correct: 0,
+          explanation: "Overdominance results in a heterozygote phenotype that is outside the range of either homozygous parent, while incomplete dominance results in a blend."
+        },
+        {
+          text: "Which is not a form of allelic gene interaction?",
+          options: ["Co-dominance", "Lethal factor", "Epistasis", "Overdominance"],
+          correct: 2,
+          explanation: "Epistasis is a non-allelic gene interaction, where one gene masks the expression of another, while the others are all different forms of interactions between alleles of the same gene."
+        },
+        {
+          text: "How does lethal factors skew phenotypic ratios?",
+          options: ["Cause certain genotype to not occur", "Do not change phenotypic ratios", "Increase viable offspring count", "Affects gamete segregation"],
+          correct: 0,
+          explanation: "Lethal factors skew phenotypic ratios by causing certain genotypes to be non-viable, leading to their absence in the observed offspring."
+        },
+        {
+          text: "Which statement is the MOST accurate in describing the phenotypic expression of co-dominance?",
+          options: ["Both parental traits are expressed equally and independently", "The heterozygote results in an intermediate phenotype, effectively blending the parental traits", "One allele completely masks the expression of the other", "Expression of both alleles are shown but only in specific tissues and development stages"],
+          correct: 0,
+          explanation: "Co-dominance is characterized by both parental traits being expressed equally and independently in the heterozygote."
+        },
+        {
+          text: "How would environmental factors interact with lethal genes?",
+          options: ["Can make conditional lethal effect", "Can make dominant lethal", "Will only change recessive lethals", "All of the above"],
+          correct: 0,
+          explanation: "Environmental factors can interact with lethal genes to create conditional lethal effects, where the lethal phenotype is only expressed under certain environmental conditions."
+        },
+        {
+          text: "A mutation in a gene leads to a recessive lethal allele. Heterozygous carriers of this allele:",
+          options: ["Will exhibit a mild form of the lethal phenotype", "Will have reduced fitness compared to individuals without the allele", "Will be phenotypically normal", "Will develop the lethal phenotype later in life"],
+          correct: 2,
+          explanation: "Heterozygous carriers of a recessive lethal allele will be phenotypically normal because the presence of the dominant, non-lethal allele masks the effect of the recessive lethal allele."
+        },
+        {
+          text: "A temperature-sensitive lethal allele of a gene involved in Drosophila wing development causes wingless flies when raised at 30°C. At 20°C, the flies develop normal wings. This is an example of:",
+          options: ["A dominant lethal allele", "A recessive lethal allele", "A conditional lethal allele", "Incomplete penetrance"],
+          correct: 2,
+          explanation: "This is an example of a conditional lethal allele because the lethality (or in this case, abnormal development) depends on a specific condition: temperature."
+        },
+        {
+          text: "How would you distinguish incomplete dominance from co-dominance through observation of phenotypes in a cross?",
+          options: ["Incomplete dominance will have a blend phenotype while co-dominance will not", "You could not distinguish between incomplete dominance and co-dominance through observation of phenotypes", "Co-dominance will show both alleles expressed independently while incomplete dominance will have a blend phenotype", "Co-dominance will only be viable at certain temperatures"],
+          correct: 2,
+          explanation: "In co-dominance, both alleles are expressed distinctly, whereas in incomplete dominance, the phenotype is a blend or intermediate between the two alleles."
+        },
+        {
+          text: "How does lethal allele affect the F2 ratio?",
+          options: ["Can cause a shift in the ratio if the lethal allele is dominant", "Will not affect the ratio", "All of the above", "Can cause a shift in the ratio if the lethal allele is recessive"],
+          correct: 3,
+          explanation: "When recessive, a shift will occur to skew the phenotypic ratio"
+        },
       ], 
   
   "ZOO101-E3": [
