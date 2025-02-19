@@ -1045,7 +1045,7 @@ const questionBanks = {
           explanation: "In polygenic inheritance, the F1 generation resulting from a cross between two homozygous parents typically displays a phenotype that is intermediate between the two parental phenotypes. This is because each parent contributes different alleles that have additive effects."
         },
         {
-          text: "In the context of the lecture, \"continuous variation\" is best described as:",
+          text: "In the context of the lecture, continuous variation is best described as:",
           options: ["The presence of distinct, non-overlapping phenotypic categories.", "The gradual range of phenotypes observed for quantitative traits.", "The absence of genetic influence on a trait.", "Variation that arises solely from environmental factors."],
           correct: 1,
           explanation: "Continuous variation refers to the gradual range of phenotypes observed for quantitative traits, such as height, weight, or skin color. This type of variation arises from the cumulative effects of multiple genes, as well as environmental influences."
