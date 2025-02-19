@@ -831,7 +831,7 @@ const questionBanks = {
       
     }, 
       ], 
-  "BOT101-1": [
+  "BOT203-T3": [
     {
           text: "Which phenotypic ratio suggests that a recessive epistatic interaction is occurring?",
           options: ["9:3:3:1", "1:2:1", "9:3:4", "12:3:1"],
@@ -1003,6 +1003,185 @@ const questionBanks = {
           options: ["The intensity of a gene's expression.", "The proportion of individuals with a particular genotype who exhibit the associated phenotype.", "The range of phenotypes produced by a single gene.", "The interaction between different genes."],
           correct: 1,
           explanation: "Penetrance is the percentage of individuals carrying a specific genotype who also express the expected phenotype. If penetrance is incomplete, some individuals with the genotype will not display the phenotype."
+        },
+            {
+          text: "Balanced lethal systems specifically rely on maintaining:",
+          options: ["Dominant homozygosity", "Recessive homozygosity", "Heterozygosity", "Any combination of alleles as long as one is lethal"],
+          correct: 2,
+          explanation: "Balanced lethal systems specifically rely on maintaining heterozygosity because homozygous combinations are lethal."
+        },
+        {
+          text: "Which of the following genotypes is not viable in a balanced lethal system?",
+          options: ["Heterozygous for both lethal genes", "Homozygous dominant for one lethal gene and heterozygous for the other", "Homozygous recessive for one lethal gene and heterozygous for the other", "Homozygous for either the dominant or recessive allele of a lethal gene"],
+          correct: 3,
+          explanation: "Homozygous for either the dominant or recessive allele of a lethal gene is not viable in a balanced lethal system because that's the lethal condition being avoided by the system."
+        },
+        {
+          text: "Gametic lethals primarily affect:",
+          options: ["Zygote viability", "Somatic cell function", "Gamete functionality", "Embryonic development"],
+          correct: 2,
+          explanation: "Gametic lethals primarily affect gamete functionality, making the gametes unable to participate in fertilization."
+        },
+        {
+          text: "A segregation distorter gene in Drosophila males makes gametes incapable of:",
+          options: ["Mitosis", "Meiosis", "Fusion", "Fertilization"],
+          correct: 3,
+          explanation: "A segregation distorter gene in Drosophila males makes gametes incapable of fertilization, skewing the segregation ratios."
+        },
+        {
+          text: "Semi-lethal genes differ from lethal genes in that they:",
+          options: ["Have no phenotypic effect", "Only affect females", "Do not always cause death", "Are always dominant"],
+          correct: 2,
+          explanation: "Semi-lethal genes differ from lethal genes in that they do not always cause death; some individuals with the genotype may survive."
+        },
+        {
+          text: "Xentha mutants in some plants are an example of:",
+          options: ["Balanced lethals", "Gametic lethals", "Semi-lethal genes", "Dominant lethals"],
+          correct: 2,
+          explanation: "Xentha mutants in some plants are an example of semi-lethal genes, as they reduce but don't eliminate viability."
+        },
+        {
+          text: "Multiple alleles are defined as:",
+          options: ["More than two genes influencing a single trait", "More than two alleles for a gene at a single locus", "Alleles on multiple chromosomes influencing a single trait", "Having multiple copies of the same allele"],
+          correct: 1,
+          explanation: "Multiple alleles are defined as more than two alleles for a gene at a single locus within a population."
+        },
+        {
+          text: "A diploid organism can possess how many different alleles for a single gene?",
+          options: ["Unlimited", "Three", "Two", "Only one"],
+          correct: 2,
+          explanation: "A diploid organism can possess a maximum of two different alleles for a single gene, one on each homologous chromosome."
+        },
+        {
+          text: "The Human ABO blood group system exhibits:",
+          options: ["Complete dominance only", "Co-dominance only", "Both complete dominance and co-dominance", "Incomplete dominance"],
+          correct: 2,
+          explanation: "The Human ABO blood group system exhibits both complete dominance (IA and IB over i) and co-dominance (IA and IB together)."
+        },
+        {
+          text: "Alleles IA and IB in the ABO system are:",
+          options: ["Recessive to each other", "Dominant to each other", "Co-dominant to each other", "One is epistatic to the other"],
+          correct: 2,
+          explanation: "Alleles IA and IB in the ABO system are co-dominant to each other, meaning both are expressed when present together (AB blood type)."
+        },
+        {
+          text: "The 'i' allele in the ABO system:",
+          options: ["Produces the A antigen", "Produces the B antigen", "Specifies a detectable antigenic structure", "Fails to specify any detectable antigenic structure"],
+          correct: 3,
+          explanation: "The 'i' allele in the ABO system fails to specify any detectable antigenic structure, resulting in the O blood type."
+        },
+        {
+          text: "Self-sterility in tobacco is determined by:",
+          options: ["a single dominant allele", "a recessive lethal allele", "a gene with many different allelic forms", "environmental factors"],
+          correct: 2,
+          explanation: "Self-sterility in tobacco is determined by a gene with many different allelic forms (S alleles)."
+        },
+        {
+          text: "In self-incompatible tobacco with three alleles (s1, s2, s3), which genotype is impossible?",
+          options: ["s1s2", "s1s3", "s2s3", "s1s1"],
+          correct: 3,
+          explanation: "In self-incompatible tobacco, homozygosity results in gamete incapability. Thus, a plant homozygous for a sterility allele cannot exist in the same environment."
+        },
+        {
+          text: "Self-sterility results in:",
+          options: ["Increased homozygosity", "Decreased heterozygosity", "Restriction of fertility", "Increased fertility"],
+          correct: 2,
+          explanation: "Self-sterility results in a restriction of fertility to only specific pairings that are not self fertilization"
+        },
+        {
+          text: "Iso-alleles are characterized by:",
+          options: ["drastically different phenotypes", "lethal effects", "expression within the same phenotypic range", "an epistatic relationship"],
+          correct: 2,
+          explanation: "Iso-alleles are characterized by expression within the same phenotypic range. They produce similar phenotypes and are difficult to distinguish."
+        },
+        {
+          text: "The alleles (W+s, W+c, W+g) in Drosophila exhibiting red eye color are examples of:",
+          options: ["Recessive alleles", "Iso-alleles", "Dominant lethal alleles", "Suppressor alleles"],
+          correct: 1,
+          explanation: "The alleles (W+s, W+c, W+g) in Drosophila exhibiting red eye color are examples of iso-alleles, meaning they produce similar phenotypes."
+        },
+        {
+          text: "In simple interaction, two non-allelic gene pairs:",
+          options: ["Affect different characters", "Affect the same character", "Have no effect on phenotype", "Cause lethality"],
+          correct: 1,
+          explanation: "In simple interaction, two non-allelic gene pairs affect the same character."
+        },
+        {
+          text: "In simple interaction, if both dominant alleles are present, they produce:",
+          options: ["the same phenotype as a single dominant allele", "a new, distinct phenotype", "a recessive phenotype", "no phenotype at all"],
+          correct: 1,
+          explanation: "In simple interaction, if both dominant alleles are present, they produce a new, distinct phenotype."
+        },
+        {
+          text: "The inheritance of comb types in fowls is an example of:",
+          options: ["Complementary factor interaction", "Epistasis", "Simple interaction", "Multiple alleles"],
+          correct: 2,
+          explanation: "The inheritance of comb types in fowls is an example of simple interaction, where two genes interact to determine comb shape."
+        },
+        {
+          text: "In sweet pea, both the genes C and P are required to synthesize:",
+          options: ["chlorophyll", "starch", "anthocyanin pigment", "cellulose"],
+          correct: 2,
+          explanation: "In sweet pea, both the genes C and P are required to synthesize anthocyanin pigment, which gives the flowers their purple color."
+        },
+        {
+          text: "Complementary factors are defined by their:",
+          options: ["Independent expression regardless of other genes", "Unexpressed state when alone, requiring another gene for expression", "Ability to suppress other genes", "Additive effect on a phenotype"],
+          correct: 1,
+          explanation: "Complementary factors are defined by their unexpressed state when alone, requiring another gene for expression."
+        },
+        {           text: "In complementary factor interaction, if a plant has only gene C present, what phenotype will be observed?",
+          options: ["Purple flower", "Red flower", "White flower", "Variable flower color"],
+          correct: 2,
+          explanation: "In complementary factor interaction, if a plant has only gene C present, it will have a white flower because both C and P are needed for pigment production."
+        },
+        {
+          text: "The number of complementary genes can be:",
+          options: ["only two", "only three", "two or more", "only one"],
+          correct: 2,
+          explanation: "The number of complementary genes can be two or more, as long as all are required for a specific phenotype."
+        },
+        {
+          text: "In epistasis, the epistatic gene:",
+          options: ["Is suppressed by another gene", "Masks or prevents the expression of another gene", "Expresses itself independently", "Alters the mutation rate of another gene"],
+          correct: 1,
+          explanation: "In epistasis, the epistatic gene masks or prevents the expression of another gene."
+        },
+        {
+          text: "In epistasis, the hypostatic gene:",
+          options: ["Suppresses the expression of another gene", "Masks the expression of another gene", "Is suppressed by another gene", "Modifies the expression of another gene"],
+          correct: 2,
+          explanation: "In epistasis, the hypostatic gene is suppressed by another gene (the epistatic gene)."
+        },
+        {
+          text: "What is the phenotypic ratio associated with Recessive Epistasis?",
+          options: ["9:3:3:1", "9:7", "9:3:4", "12:3:1"],
+          correct: 2,
+          explanation: "The phenotypic ratio associated with Recessive Epistasis is 9:3:4."
+        },
+        {
+          text: "In recessive epistasis, the phenotype is determined by:",
+          options: ["The dominant alleles of all genes", "The homozygous recessive condition of one gene", "The interaction of dominant alleles from two different genes", "The heterozygous condition of the epistatic gene"],
+          correct: 1,
+          explanation: "In recessive epistasis, the phenotype is determined by the homozygous recessive condition of one gene masking the expression of another."
+        },
+        {
+          text: "In the example of coat color in mice, the 'c' allele (cc) causes:",
+          options: ["Agouti color", "Black color", "Albino", "Dilution of color"],
+          correct: 2,
+          explanation: "In the example of coat color in mice, the 'c' allele (cc) causes albino (lack of pigment)."
+        },
+        {
+          text: "In mice coat color, the A gene cannot express itself without which gene present?",
+          options: ["A", "c", "C", "a"],
+          correct: 2,
+          explanation: "In mice coat color, the A gene (agouti) cannot express itself without the dominant C allele being present. If 'cc' then the coat will be albino, regardless of the A allele."
+        },
+        {
+          text: "In mice coat color, recessive allele 'c' (cc) is said to be ____ to dominant allele A.",
+          options: ["Hypostatic", "Co-dominant", "Epistatic", "Complementary"],
+          correct: 2,
+          explanation: "In mice coat color, recessive allele 'c' (cc) is said to be epistatic to dominant allele A, because 'cc' masks the expression of the A allele."
         },
         {
           text: "If a gene has complete penetrance:",
