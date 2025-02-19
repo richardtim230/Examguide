@@ -833,7 +833,490 @@ const questionBanks = {
       ], 
   "BOT101-1": [
     {
-      
+          text: "Which phenotypic ratio suggests that a recessive epistatic interaction is occurring?",
+          options: ["9:3:3:1", "1:2:1", "9:3:4", "12:3:1"],
+          correct: 2,
+          explanation: "A 9:3:4 ratio indicates recessive epistasis, where the homozygous recessive genotype at one locus masks the expression of alleles at another locus."
+        },
+        {
+          text: "If crossing a plant and observing a 15:1 ratio of purple and white flower. What type of gene interaction is most likely occurring?",
+          options: ["Recessive Epistasis", "Simple Dominance", "Duplicate Dominance", "Dominance"],
+          correct: 2,
+          explanation: "A 15:1 ratio suggests duplicate dominance (or duplicate genes with cumulative effect), where two genes each contribute to the same phenotype, and only the absence of all dominant alleles results in the recessive phenotype."
+        },
+        {
+          text: "If a cross results in an offspring phenotypic ratio of 12:3:1 what interaction is taking place?",
+          options: ["Recessive Epistasis", "Dominant Epistasis", "Simple Dominance", "Simple Recessive"],
+          correct: 1,
+          explanation: "A 12:3:1 ratio is indicative of dominant epistasis, where a dominant allele at one locus masks the expression of alleles at another locus."
+        },
+        {
+          text: "If one observes a 9:7 ratio in the F2 generation of a dihybrid cross, this is most likely evidence of what interaction?",
+          options: ["Dominant epistasis.", "Recessive epistasis.", "Complementary gene action.", "Duplicate genes with cumulative effect."],
+          correct: 2,
+          explanation: "A 9:7 ratio suggests complementary gene action, where two genes are required for the expression of a particular phenotype.  Only when both dominant alleles are present does the dominant phenotype occur."
+        },
+        {
+          text: "A 9:6:1 phenotypic ratio is most indicative of what interaction?",
+          options: ["Complementary genes.", "Recessive epistasis.", "Polymorphic genes with cumulative effects.", "Dominant epistasis."],
+          correct: 2,
+          explanation: "A 9:6:1 ratio typically suggests genes with cumulative effects where the number of dominant alleles present determines the phenotype. It is seen when the interaction between two genes leads to a modification of the typical 9:3:3:1 ratio where the middle terms (3:3) are collapsed into a single term (6)."
+        },
+        {
+          text: "A modified Mendelian ratio of 2:1 in a population of organisms with birds, this is most likely because of what gene interaction?",
+          options: ["Codominance", "Recessive lethal allele", "Incomplete dominance", "X-linked mutation"],
+          correct: 1,
+          explanation: "A 2:1 ratio is characteristic of a recessive lethal allele. One homozygous genotype is lethal, causing a deviation from the standard Mendelian ratios."
+        },
+        {
+          text: "You cross two dihybrid plants and in the offspring you identify an 11:5, what interaction do you expect?",
+          options: ["Recessive Epistasis", "Dominant epistasis.", "Duplicate genes with dominance modification.", "Duplicate Gene"],
+          correct: 2,
+          explanation: "An 11:5 ratio is more complex but can arise from duplicate genes with dominance modification or other complex epistatic interactions. It suggests that certain combinations of alleles are producing similar phenotypes, leading to the observed ratio. It can be thought of as a modified 9:3:3:1, with the 9:3 collapsing into 11 and the other 3 collapsing into 5"
+        },
+        {
+          text: "When you perform dihybrid cross of your parents with heterozygous phenotype, but the offspring shows a 3:1 ratio, what interaction do you think occurs?",
+          options: ["Dominance", "Recessive lethal allele.", "Multiple alleles", "Recessive epistasis"],
+          correct: 0,
+          explanation: "A 3:1 ratio in a dihybrid cross (with heterozygous parents) indicates that the phenotypes are controlled by a *single* gene exhibiting simple dominance and recessiveness. You wouldn't see a 3:1 ratio when interacting with a 2nd gene since there would be at least 4 categories."
+        },
+        {
+          text: "An inhibitory gene that shows incomplete dominance with the other gene creates a ___ ratio.",
+          options: ["7:6:3", "2:1", "9:3:4", "9:7"],
+          correct: 0,
+          explanation: "An inhibitory gene exhibiting incomplete dominance will modify the typical 9:3:3:1 dihybrid ratio. When one gene inhibits the expression of another incompletely dominant gene, the resultant ratio becomes 7:6:3."
+        },
+        {          text: "Two genes (A and B) control a certain trait. Individually, each dominant allele produces a similar phenotype, but together they enhance the trait. If A and B are on different chromosomes, what phenotypic ratio would you expect in the F2 generation of a dihybrid cross?",
+          options: ["1:2:1", "3:1", "9:3:3:1", "9:6:1"],
+          correct: 3,
+          explanation: "The 9:6:1 ratio occurs when two genes cumulatively affect a single trait. The 9 represents individuals with both dominant alleles, the 6 represents those with only one dominant allele at either locus, and the 1 represents those homozygous recessive at both loci."
+        },
+        {
+          text: "For 3 unlinked genes if the parental type obtained is one out of every 64 offspring’s, what ratio will result?",
+          options: ["1:2:1", "3:1", "9:3:3:1", "1:6:15:20:15:6:1"],
+          correct: 3,
+          explanation: "This is a ratio obtained from a trihybrid cross (AaBbCc x AaBbCc), where the genes are unlinked and assort independently. Each heterozygote segregates 1:1 for each allele (1/2 A, 1/2 a, and so on). The expansion (a+b)^n gives these ratios based on the amount of genes interacting with each other"
+        },
+        {
+          text: "Assuming independent assortment, how many different gametes can a plant with the genotype AaBbCc produce? This ratio relates to what law?",
+          options: ["4, Law of Dominance", "8, Law of Independent Assortment", "6, Law of Segregation", "12, Law of Assortment"],
+          correct: 1,
+          explanation: "A plant with genotype AaBbCc can produce 2^n gametes, where n is the number of heterozygous gene pairs. In this case, n=3, so 2^3 = 8. This relates to the Law of Independent Assortment, which states that alleles of different genes assort independently during gamete formation."
+        },
+        {
+          text: "What is the typical F2 phenotypic ratio observed in a dihybrid cross involving simple dominance (no epistasis, linkage, etc.)?",
+          options: ["1:1:1:1", "3:1", "1:2:1", "9:3:3:1"],
+          correct: 3,
+          explanation: "The typical F2 phenotypic ratio in a dihybrid cross with simple dominance is 9:3:3:1. This ratio arises from the independent assortment of two genes, each with two alleles where one is dominant over the other."
+        },
+        {
+          text: "A plant with a lethal dominant homozygous allele will display what F1 genotypic ratio with a recessive parent?",
+          options: ["1:1", "1:2:1", "3:1", "All are non-viable"],
+          correct: 0,
+          explanation: "If the dominant allele is lethal when homozygous, a cross between a heterozygote (carrying one copy of the lethal allele) and a recessive parent will result in a 1:1 ratio of viable offspring. Half will inherit the lethal allele (and be heterozygotes), and half will be homozygous recessive."
+        },
+        {
+          text: "A plant with a lethal dominant homozygous allele will display what F2 phenotypic ratio if only one is non-viable?",
+          options: ["2:1", "1:2:1", "3:1", "All are non-viable"],
+          correct: 0,
+          explanation: "In the F2 generation, assuming one genotype is non-viable (the homozygous dominant), the resultant ratio is 2:1 as one quarter of them die."
+        },
+        {
+          text: "The observation of greater variation in the F2 generation of Nicotiana crosses compared to the F1 suggests:",
+          options: ["The F1 generation was inbred.", "The F1 generation was genetically uniform while the F2 generation exhibits segregation of multiple genes.", "The F1 generation was exposed to a uniform environment.", "The genes controlling corolla length are linked."],
+          correct: 1,
+          explanation: "Increased variation in the F2 indicates segregation and recombination of multiple genes that were uniformly heterozygous in the F1 generation. The F1, being derived from a cross of true-breeding lines, would be relatively uniform."
+        },
+        {
+          text: "The variation in mean F3 corolla length derived from single F2 plants indicates:",
+          options: ["Environmental effects are minimal.", "The F2 plants were genetically identical.", "The F2 plants differed genetically.", "Corolla length is primarily controlled by a single gene."],
+          correct: 2,
+          explanation: "If the mean F3 corolla length varies among different F2 plant lineages, it suggests that the F2 plants possessed different combinations of alleles influencing corolla length. This implies genetic differences among the F2 individuals."
+        },
+        {
+          text: "Skin color in human beings is given as an example of a:",
+          options: ["Qualitative trait controlled by a single gene.", "Quantitative trait under polygenic effect.", "Trait controlled by a single gene with multiple alleles.", "Trait heavily influenced by environmental factors."],
+          correct: 1,
+          explanation: "Skin color exhibits continuous variation, suggesting it's a quantitative trait influenced by multiple genes (polygenic inheritance). Each gene contributes additively to the phenotype."
+        },
+        {
+          text: "The lecture suggests that skin color in humans might be influenced by:",
+          options: ["Only two gene pairs.", "Exclusively four gene pairs.", "Possibly two or more than two, such as four or five gene pairs.", "An infinite number of genes."],
+          correct: 2,
+          explanation: "While the exact number is not definitively known, skin color is believed to be influenced by multiple gene pairs, possibly two, four, five, or even more. The polygenic nature of skin color leads to a continuous distribution of phenotypes."
+        },
+        {          text: "If the frequency of a parental type in a polygenic inheritance cross is 1/256, how many gene pairs are likely involved?",
+          options: ["Two", "Three", "Four", "Five"],
+          correct: 2,
+          explanation: "The frequency of extreme phenotypes (like parental types) in polygenic inheritance is (1/4)^n, where n is the number of gene pairs.  If (1/4)^n = 1/256, then n = 4, since 4^4 = 256. Alternatively, 1/256 = (1/2)^8, and since each gene is heterozygous, one can then divide 8/2 = 4 genes."
+        },
+        {
+          text: "Modifying genes affect:",
+          options: ["The type of allele present at a major locus.", "The phenotypic effect of a major gene.", "The transmission of genes to the next generation.", "The penetrance of a major gene."],
+          correct: 1,
+          explanation: "Modifying genes alter the expression of other non-allelic genes; they don't change the major gene itself, its transmission, or its penetrance, but they can influence its impact on the phenotype."
+        },
+        {
+          text: "Modifiers typically act in which ways?",
+          options: ["All are correct.", "They can amplify or reduce the effect of the gene.", "They act in a quantitative manner.", "Are only responsible for changing the colour in organisms"],
+          correct: 0,
+          explanation: "Modifying genes work by amplifying or reducing the phenotypic effects of a major gene and the effect of each modifier is cumulative and contributes to the final phenotype."
+        },
+        {
+          text: "Suppressor genes lead to:",
+          options: ["Enhanced expression of a mutant allele.", "A wild-type phenotype despite the presence of a mutant allele.", "A complete loss of gene function.", "The creation of new mutations."],
+          correct: 1,
+          explanation: "Suppressor genes counteract the effect of a mutant allele at a different locus, often restoring the wild-type phenotype. They don't eliminate the mutant allele but prevent its expression."
+        },
+        {
+          text: "A suppressor gene acts by:",
+          options: ["Removing the mutant allele.", "Preventing the mutant allele from being expressed.", "Enhancing the expression of a wild-type allele.", "Mutating the mutant allele back to the wild type."],
+          correct: 1,
+          explanation: "A suppressor gene does not alter the mutant allele itself or revert it back to a wild-type allele, it simply prevents it from being expressed in the phenotype."
+        },
+        {
+          text: "The Su-s gene in Drosophila and the star eye(s) mutant gene provide an example of:",
+          options: ["A pleiotropic relationship.", "Epistasis.", "Suppression.", "Modification."],
+          correct: 2,
+          explanation: "The Su-s (Suppressor of star eye) gene in *Drosophila* is a classic example of suppression. The *s* (star eye) mutant causes abnormal eye development, but the presence of the Su-s gene can suppress the *s* phenotype, restoring a more normal eye appearance."
+        },
+        {
+          text: "Pleiotropic genes are defined by:",
+          options: ["Having a single, major effect.", "Affecting multiple, seemingly unrelated traits.", "Suppressing the expression of other genes.", "Having a variable penetrance."],
+          correct: 1,
+          explanation: "Pleiotropy occurs when a single gene influences multiple, seemingly unrelated phenotypic traits. This is because the gene product might be involved in various biological processes."
+        },
+        {
+          text: "In Drosophila, genes for bristle, eye, and wing impacting the number of facets in bar-eyed individuals illustrate:",
+          options: ["Suppression.", "Pleiotropy.", "Modification.", "Epistasis."],
+          correct: 1,
+          explanation: "Pleiotropy is shown in bar-eyed *Drosophila*, as they exhibit pleiotropic genes for bristle, eye, and wing, where one gene is seen to influence the number of facets in bar-eyed individuals."
+        },
+        {
+          text: "Atavism refers to:",
+          options: ["The sudden appearance of new mutations.", "The reappearance of traits from remote ancestors.", "The suppression of gene expression.", "The modification of gene function."],
+          correct: 1,
+          explanation: "Atavism is the reappearance of ancestral traits that have been lost or reduced in more recent generations. It can occur due to the re-expression of genes that were previously silenced."
+        },
+        {
+          text: "Penetrance describes:",
+          options: ["The intensity of a gene's expression.", "The proportion of individuals with a particular genotype who exhibit the associated phenotype.", "The range of phenotypes produced by a single gene.", "The interaction between different genes."],
+          correct: 1,
+          explanation: "Penetrance is the percentage of individuals carrying a specific genotype who also express the expected phenotype. If penetrance is incomplete, some individuals with the genotype will not display the phenotype."
+        },
+        {
+          text: "If a gene has complete penetrance:",
+          options: ["Its effect is always environmentally influenced.", "All individuals with the relevant genotype will exhibit the phenotype.", "The phenotype will be highly variable.", "The gene will not be expressed."],
+          correct: 1,
+          explanation: "Complete penetrance means that every individual carrying the genotype for a particular trait will express that trait phenotypically. There are no 'skipped' generations or individuals who carry the allele but don't show the trait."
+        },
+        {
+          text: "Polydactyly in humans, where a dominant gene (P) sometimes does not result in extra digits, is an example of:",
+          options: ["Complete penetrance.", "Incomplete penetrance.", "Variable expressivity.", "Pleiotropy."],
+          correct: 1,
+          explanation: "Incomplete penetrance is when not all individuals with a particular genotype express the associated phenotype. Polydactyly, where some individuals with the dominant allele don't have extra digits, illustrates this."
+        },
+        {
+          text: "Expressivity refers to:",
+          options: ["Whether or not a gene is expressed at all.", "The degree to which a trait is phenotypically expressed.", "The ability of a gene to suppress other genes.", "The number of different phenotypes associated with a single gene."],
+          correct: 1,
+          explanation: "Expressivity is the extent to which a trait is expressed phenotypically. It describes the range or severity of the phenotype in individuals with the same genotype."
+        },
+        {
+          text: "Polydactyly being present in the left hand but not the right demonstrates what?",
+          options: ["Pleiotropy", "Penetrance", "Incomplete penetrance", "Variable Expressivity"],
+          correct: 3,
+          explanation: "Polydactyly showing different numbers of digits on each hand represents variable expressivity. The gene is penetrant (it's expressed), but the degree of expression varies."
+        },
+        {
+          text: "Which has to occur first for variable expressivity of a gene to be observed?",
+          options: ["Modification", "Suppression", "Penetrance", "Epistatsis"],
+          correct: 2,
+          explanation: "Penetrance must occur first. For expressivity to be observed, the gene *must* first be expressed (penetrant). Variable expressivity is about the *degree* to which that expression manifests."
+        },
+        {
+          text: "Which factor does expressivity quantify?",
+          options: ["How often a gene is expressed", "The degree to which a trait is phenotypically expressed", "How other genes enhance a trait", "All of the above"],
+          correct: 1,
+          explanation: "Expressivity quantifies *how* a trait is phenotypically expressed, whether intensely or moderately, and how other genes impact it."
+        },
+        {
+          text: "The multiple factor hypothesis suggests that genes affecting quantitative traits are:",
+          options: ["Always located on the same chromosome.", "Subject to strong epistatic interactions.", "Independent in segregation but have cumulative effects.", "Primarily influenced by environmental factors."],
+          correct: 2,
+          explanation: "The multiple factor hypothesis (or polygenic inheritance) proposes that multiple genes, each with a small, additive effect, contribute to quantitative traits. These genes segregate independently but their effects are cumulative, leading to a continuous range of phenotypes."
+        },
+        {
+          text: "In polygenic inheritance, the F1 generation typically displays a phenotype that is:",
+          options: ["Identical to one of the parents.", "More extreme than either parent.", "Intermediate between the two parents.", "Highly variable due to environmental influence."],
+          correct: 2,
+          explanation: "In polygenic inheritance, the F1 generation resulting from a cross between two homozygous parents typically displays a phenotype that is intermediate between the two parental phenotypes. This is because each parent contributes different alleles that have additive effects."
+        },
+        {
+          text: "In the context of the lecture, continuous variation is best described as:",
+          options: ["The presence of distinct, non-overlapping phenotypic categories.", "The gradual range of phenotypes observed for quantitative traits.", "The absence of genetic influence on a trait.", "Variation that arises solely from environmental factors."],
+          correct: 1,
+          explanation: "Continuous variation refers to the gradual range of phenotypes observed for quantitative traits, such as height, weight, or skin color. This type of variation arises from the cumulative effects of multiple genes, as well as environmental influences."
+        },
+        {
+          text: "According to the lecture text, Yule, Nilsson-Ehle, and East are notable for their contributions to:",
+          options: ["Understanding of Mendelian genetics.", "The discovery of DNA structure.", "The development of the multiple factor hypothesis.", "The study of chromosomal mutations."],
+          correct: 2,
+          explanation: "Yule, Nilsson-Ehle, and East made significant contributions to the development of the multiple factor hypothesis, which explains how multiple genes with additive effects can contribute to quantitative traits."
+        },
+        {
+          text: "What best describes the seed colour for wheat (aabbcc) with no dominant allele?",
+          options: ["Extremely high colour", "Intermediate", "No Color", "Medium Colour"],
+          correct: 2,
+          explanation: "With no dominant alleles present, the (aabbcc) genotype would result in the absence of color. The dominant alleles are responsible for contributing to the intensity of the color."
+        },
+        {
+          text: "If you cross parent 1 (AABBCC) with parent 2 (aabbcc) and the resulting F1 are self-crossed. Approximately what fraction of F2 offspring has 3 dominant and 3 recessive alleles?",
+          options: ["1/64", "6/64", "15/64", "20/64"],
+          correct: 3,
+          explanation: "Each gene (A, B, C) is heterozygous in the F1 (AaBbCc). When the F1 is self-crossed (AaBbCc x AaBbCc), we want the probability of 3 dominant and 3 recessive alleles. We know the amount of combinations for n different genes is (2n)! / x! * (n-x)! , where X is the amount of recessive genes. So (2*3)! / 3! * (3-3)! = 20/64 for each gene (8)"
+        },
+        {
+          text: "In kernel color in wheat with a F1 heterozygous for two genes will segregate in F2 in which ratio?",
+          options: ["1:4:6:4:1", "1 : 6 : 15 : 20 : 15 : 6 : 1", "9:3:3:1", "1:2:1"],
+          correct: 0,
+          explanation: "When two genes influence kernel color (A/a and B/b), the F2 segregation pattern can be described by the binomial distribution (a+b)^n, which simplifies to 1:4:6:4:1, where the numbers represent amount of dominant allele. As there is a max of 2, they can both interact with each other 1, and 2."
+        },
+        {
+          text: "In kernel color in wheat with a F1 heterozygous for three genes will segregate in F2 in which ratio?",
+          options: ["1:4:6:4:1", "1 : 6 : 15 : 20 : 15 : 6 : 1", "9:3:3:1", "1:2:1"],
+          correct: 1,
+          explanation: "In this instance, we want to know what the proportion will be from (a+b)^n, since each are being added, which is equal to 1 : 6 : 15 : 20 : 15 : 6 : 1"
+        },
+        {
+          text: "Why does the intensity of seed colour depend on the number of dominant alleles present, i.e., their effects are cumulative in nature?",
+          options: ["It allows each dominant allele to affect seed colour independently.", "This ensures the genes affect different traits.", "It follows a single dominant gene pattern.", "It allows there to be quantitative trait expression."],
+          correct: 3,
+          explanation: "The cumulative effect of dominant alleles allows for quantitative trait expression. Each dominant allele contributes to the phenotype, resulting in a continuous range of seed color intensities. Therefore, the number of dominant alleles determines the final seed colour."
+        },
+        {
+          text: "What type of variation will the multiple factor hypothesis give?",
+          options: ["Independent", "Limited", "Discontinous", "Continous"],
+          correct: 3,
+          explanation: "Multiple genes, each with a small, additive effect, can contribute to quantitative traits leading to a continuous range of phenotypes."
+        },
+        {
+          text: "In dominant epistasis, the epistatic gene prevents expression of the non-allelic gene. This implies:",
+          options: ["The non-allelic gene has no function.", "The epistatic gene is always dominant for color.", "The suppressed gene is always recessive.", "The non-allelic gene is still present but its phenotypic effect is masked."],
+          correct: 3,
+          explanation: "In dominant epistasis, the epistatic gene masks the expression of the non-allelic gene, but the non-allelic gene is still present in the genotype. Its effect is simply not visible because the epistatic gene is 'dominant' in terms of phenotypic expression."
+        },
+        {
+          text: "In summer squash, the dominant W gene for white color affects which aspect of Y gene?",
+          options: ["It prevents its transcription.", "It inhibits the migration of Y mRNA to ribosomes.", "It degrades Y gene's protein product.", "It suppresses the expression of the Y gene."],
+          correct: 3,
+          explanation: "In summer squash, the dominant *W* gene exhibits dominant epistasis by suppressing the expression of the *Y* gene for yellow color. This means even if the *Y* allele is present, the presence of the *W* allele will result in white fruit, irrespective of whether the Y allele is being transcribed."
+        },
+        {
+          text: "If a summer squash plant with genotype WwYy is self-pollinated, what proportion of the offspring will display yellow color?",
+          options: ["1/16", "3/16", "1/4", "3/4"],
+          correct: 1,
+          explanation: "With WwYy x WwYy, the proportion of yellow fruit will be W_Y_ are white 12/16 so yy is yellow. It therefore turns into wwYy=1/4, or 4/16. To determine the plants that have the yellow phenotype we do y/number = 4/16. 12 : 4 ; or reduce to 3/16."
+        },
+        {
+          text: "An inhibitory factor's primary action is to:",
+          options: ["Enhance the expression of another non-allelic gene.", "Inhibit the expression of another non-allelic gene.", "Change the physical shape of the genes", "Mutate another allele."],
+          correct: 1,
+          explanation: "An inhibitory factor's primary action is to prevent the expression of a non-allelic gene."
+        },
+              {
+          text: "Duplicate Gene with Dominance Modification (11:5) implies what about the first 11 in the ratio?",
+          options: ["Double the expression", "Requires that the ratio contains both dominant alleles for phenotype expression", "Both traits must be present", "Non-viable offspring"],
+          correct: 1,
+          explanation: "Duplicate Gene with Dominance Modification implies that the ratio of 11 requires that both dominant alleles are present for phenotype expression."
+        },
+        {
+          text: "Polygenic inheritance primarily explains:",
+          options: ["Discontinuous variation", "Qualitative traits", "Quantitative, continuous variation", "All of the above"],
+          correct: 2,
+          explanation: "Polygenic inheritance primarily explains quantitative, continuous variation in traits."
+        },
+        {
+          text: "In polygenic inheritance, individual genes are:",
+          options: ["Linked together", "Independent in their segregation", "Mutually epistatic", "Incompletely penetrant"],
+          correct: 1,
+          explanation: "In polygenic inheritance, individual genes are independent in their segregation."
+        },
+        {
+          text: "Which is not a key component to Multiple Factor Hypothesis?",
+          options: ["cumulative effect on the phenotype", "independent segregation", "no polygens present", "there could be several genes for a given quantitative trait"],
+          correct: 2,
+          explanation: "The absence of polygenes is not a key component of the Multiple Factor Hypothesis. In fact, polygenes are central to it."
+        },
+        {
+          text: "Kernel color in wheat demonstrates:",
+          options: ["Qualitative inheritance", "Discontinuous variation", "Polygenic Inheritance", "Monohybrid inheritance"],
+          correct: 2,
+          explanation: "Kernel color in wheat is a classic example of polygenic inheritance."
+        },
+        {
+          text: "In kernel color in wheat, each dominant allele:",
+          options: ["Has a major impact on color intensity", "Has a small and equal (or almost equal) effect on color intensity", "Suppresses color expression", "Results in a unique color shade"],
+          correct: 1,
+          explanation: "In kernel color in wheat, each dominant allele has a small and nearly equal effect on color intensity, leading to a range of shades."
+        },
+        {           text: "In summer squash, white fruit (W) is dominant to yellow (w), and yellow is dominant to green (y). W is epistatic to both Y and y. If you cross a plant WwYy with wwYy, what phenotypic ratio would you expect?",
+          options: ["12 White : 3 Yellow : 1 Green", "3 White : 3 Yellow : 1 Green", "3 White : 1 Yellow", "1 White : 1 Yellow"],
+          correct: 3,
+          explanation: "With W being epistatic, any genotype with W will be white. Analyzing the cross Ww x ww and Yy x Yy yields 1:1 for each, so 1 White : 1 Yellow."
+        },
+        {
+          text: "In rice, purple leaf color (P) is dominant to green (p), but a dominant inhibitory gene (I) prevents purple expression. What is the expected phenotypic ratio if you cross a plant IiPp with a plant iiPp?",
+          options: ["9 Purple : 7 Green", "12 Green : 4 Purple", "3 Green : 1 Purple", "1 Green : 1 Purple"],
+          correct: 2,
+          explanation: "Ii x ii gives 1/2 I_ (inhibited) and 1/2 ii (not inhibited). Pp x Pp gives 3/4 P_ (purple) and 1/4 pp (green). Only iiP_ will express purple, thus 1/2 * 3/4 = 3/8, remaining are green, hence 3:1."
+        },
+        {
+          text: "You cross two barley plants that are heterozygous for two polymorphic genes affecting awn length (AaBb). What proportion of the offspring will have long awns, assuming that the genes act additively?",
+          options: ["1/16", "3/16", "6/16", "9/16"],
+          correct: 3,
+          explanation: "Assuming long awns require both A and B, and the genes act additively, only AABB plants will have long awns. AaBb x AaBb gives 9/16 for A_B_."
+        },
+        {
+          text: "A farmer crosses two plants with triangular seed capsules (Aabb x aaBb). What is the probability of obtaining a plant with oval capsules, assuming that duplicate genes are involved?",
+          options: ["1/16", "1/4", "1/8", "1/2"],
+          correct: 1,
+          explanation: "With duplicate genes, only aabb results in oval capsules. Aabb x aaBb gives 1/4 aabb."
+        },
+        {
+          text: "In wheat kernel color, controlled by 3 genes (A, B, C), what proportion of the F2 generation would have the darkest possible kernel color (AABBCC) from a cross of aabbcc x AABBCC, if the heterozygous F1 is self-fertilized?",
+          options: ["1/64", "1/8", "1/16", "1/4"],
+          correct: 0,
+          explanation: "AaBbCc x AaBbCc. Probability of AABBCC is (1/4)*(1/4)*(1/4) = 1/64."
+        },
+        {
+          text: "In dominant epistasis, the epistatic gene prevents expression of the non-allelic gene. This implies:",
+          options: ["The non-allelic gene has no function", "The epistatic gene is always dominant for color", "The suppressed gene is always recessive", "The non-allelic gene is still present but its phenotypic effect is masked"],
+          correct: 3,
+          explanation: "Dominant epistasis implies that the non-allelic gene is still present, but its phenotypic effect is masked by the epistatic gene."
+        },
+        {
+          text: "In summer squash, the dominant W gene for white color affects which aspect of Y gene?",
+          options: ["It prevents its transcription", "It inhibits the migration of Y mRNA to ribosomes", "It degrades Y gene's protein product", "It suppresses the expression of the Y gene"],
+          correct: 3,
+          explanation: "The dominant W gene in summer squash suppresses the expression of the Y gene, resulting in white color regardless of the Y genotype."
+        },
+        {
+          text: "If a summer squash plant with genotype WwYy is self-pollinated, what proportion of the offspring will display yellow color?",
+          options: ["1/16", "3/16", "1/4", "3/4"],
+          correct: 1,
+          explanation: "Selfing WwYy: Ww x Ww -> 3/4 W_, 1/4 ww. Yy x Yy -> 3/4 Y_, 1/4 yy. Yellow is wwY_ which is 1/4 * 3/4 = 3/16."
+        },
+        {
+          text: "An inhibitory factor's primary action is to:",
+          options: ["Enhance the expression of another non-allelic gene", "Inhibit the expression of another non-allelic gene", "Change the physical shape of the genes", "Mutate another allele"],
+          correct: 1,
+          explanation: "An inhibitory factor's primary action is to inhibit the expression of another non-allelic gene."
+        },
+        {
+          text: "A dominant inhibitory gene 'I' only shows an inhibitory effect when:",
+          options: ["Present in at least one copy", "Homozygous dominant", "Heterozygous", "Only during gamete formation"],
+          correct: 0,
+          explanation: "A dominant inhibitory gene 'I' shows an inhibitory effect when present in at least one copy (I_)."
+        },
+        {
+          text: "In rice, a plant with the genotype IIPp will display what leaf color?",
+          options: ["Purple", "Green", "Intermediate", "Cannot be determined"],
+          correct: 1,
+          options: ["Long awns", "Medium awns", "Short awns", "No awns"],
+          correct: 1,
+          explanation: "The fact that the question states that both give medium when present alone, indicates that A will always have this result unless more dominant allele can produce an addition"
+        },
+        {
+          text: "For plant that is AaBb will express which trait in barley?",
+          options: ["Long awns", "Medium awns", "Short awns", "No awns"],
+          correct: 0,
+          explanation: "Each dominant allele acts to enhance the other. Thus the combination is the best effect"
+        },
+        {
+          text: "Duplicate genes refers to a scenario where multiple non-allelic genes produce:",
+          options: ["Different phenotypes", "The same phenotype", "No visible phenotype", "Variable phenotypes depending on environmental conditions"],
+          correct: 1,
+          explanation: "Duplicate genes refers to a scenario where multiple non-allelic genes produce the same phenotype."
+        },
+        {
+          text: "In Shepherd's purse, the presence of at least one dominant allele of either gene (A or B) leads to what capsule shape?",
+          options: ["Oval", "Round", "Square", "Triangular"],
+          correct: 3,
+          explanation: "In Shepherd's purse, the presence of at least one dominant allele of either gene (A or B) leads to triangular capsule shape."
+        },
+        {
+          text: "For the genes of Shepard Purse, which genotypes produces the oval capsules?",
+          options: ["AABB", "AAbb", "aaBB", "aabb"],
+          correct: 3,
+          explanation: "For the genes of Shepherd's Purse, the aabb genotype produces the oval capsules."
+        },
+        {
+          text: "'Dominance Modification' in duplicate genes requires:",
+          options: ["Dominance in multiple alleles", "Presence of non-allelic Dominant only when both present", "Suppression of recessive traits", "Epistasis"],
+          correct: 1,
+          explanation: "'Dominance Modification' in duplicate genes requires the presence of non-allelic dominant alleles only when both are present."
+        },
+        {
+          text: "When both the dominant alleles of two non-allelic genes are present together in simple interaction, they produce a _____ phenotype.",
+          options: ["suppressed", "blended", "new, distinct", "parental"],
+          correct: 2,
+          explanation: "In simple interaction, when both dominant alleles of two non-allelic genes are present together, they produce a new, distinct phenotype."
+        },
+        {
+          text: "In complementary factor interaction, if present alone, the genes remain _____.",
+          options: ["dominant", "recessive", "expressed", "unexpressed"],
+          correct: 3,
+          explanation: "In complementary factor interaction, if present alone, the genes remain unexpressed."
+        },
+        {
+          text: "In sweet peas, genes C and P are ____ to each other for anthocyanin formation.",
+          options: ["epistatic", "hypostatic", "complementary", "suppressive"],
+          correct: 2,
+          explanation: "In sweet peas, genes C and P are complementary to each other for anthocyanin formation."
+        },
+        {
+          text: "In recessive epistasis, the _____ allele hides the effect of the other gene.",
+          options: ["dominant", "recessive", "heterozygous", "co-dominant"],
+          correct: 1,
+          explanation: "In recessive epistasis, the recessive allele hides the effect of the other gene."
+        },
+        {
+          text: "In simple interaction, the absence of both dominant alleles gives rise to _____ phenotype.",
+          options: ["New", "Suppressed", "Another", "Blended"],
+          correct: 2,
+          explanation: "In simple interaction, the absence of both dominant alleles gives rise to another phenotype."
+        },
+        {
+          text: "In recessive epistasis (9:3:4), the '4' represents the phenotype when the recessive allele, in _____ state, hides the effect of the other gene.",
+          options: ["heterozygous", "homozygous", "hemizygous", "co-dominant"],
+          correct: 1,
+          explanation: "In recessive epistasis (9:3:4), the '4' represents the phenotype when the recessive allele, in homozygous state, hides the effect of the other gene."
+        },
+        {
+          text: "In the example of self-sterility in tobacco, pollen carrying an allele _____ from the two alleles present in the female plant will be able to function.",
+          options: ["identical", "different", "dominant", "epistatic"],
+          correct: 1,
+          explanation: "In the example of self-sterility in tobacco, pollen carrying an allele different from the two alleles present in the female plant will be able to function."
+        },
+        {
+          text: "A system where all individuals are heterozygous for lethal genes, preventing homozygosity is called _____.",
+          options: ["semi-lethal", "dominant lethal", "balanced lethal", "complementary"],
+          correct: 2,
+          explanation: "A system where all individuals are heterozygous for lethal genes, preventing homozygosity is called balanced lethal."
+        },
+        {
+          text: "In the ABO blood group system, lA and I8 alleles are _____ to the 'i' allele.",
+          options: ["recessive", "co-dominant", "hypostatic", "dominant"],
+          correct: 3,
+          explanation: "In the ABO blood group system, lA and I8 alleles are dominant to the 'i' allele."
+        },
+        {
+          text: "_____ are multiple alleles that express themselves within the same phenotypic range, often causing slight variations of the same characteristic.",
+          options: ["Semi-lethal genes", "Iso-alleles", "Complementary genes", "Epistatic genes"],
+          correct: 1,
+          explanation: "Iso-alleles are multiple alleles that express themselves within the same phenotypic range, often causing slight variations of the same characteristic."
+        
     }, 
       ], 
   "BOT101-T2": [
