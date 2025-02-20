@@ -3915,7 +3915,7 @@ correct: 1,
       
     }, 
       ], 
-  "ZOO QUIZ ONE": [
+  "ZOO101-E2": [
     
   {
     text: "How does hemolymph circulation in the arthropod hemocoel MOST accurately occur?",
@@ -5451,7 +5451,7 @@ correct: 1,
         }, 
       ], 
 
-  "ZOO101-2": [
+  "ZOO101-E3": [
     
   {
     text: "Which taxonomic rank is the most inclusive within the animal kingdom?",
@@ -6038,7 +6038,7 @@ selectCourseBtn.addEventListener("click", () => {
 
 // Shuffle questions randomly
 function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.6);
+  return array.sort(() => Math.random() - 0.9);
 }
 
 // Initialize Exam
@@ -6269,7 +6269,7 @@ function generateUserPDF(doc, logo) {
   doc.setFontSize(14);
   doc.text(`Candidate Name: ${fullName}`, margin, yOffset); // Candidate's full name
   yOffset += lineHeight;
-  doc.text(`Course: INTRODUCTORY BOTANY 1`, margin, yOffset);
+  doc.text(`Course: INTRODUCTORY ZOOLOGY 1`, margin, yOffset);
   yOffset += lineHeight;
   doc.text(`Course Code: ${selectedCourseCode}`, margin, yOffset);
   yOffset += lineHeight;
@@ -6327,7 +6327,7 @@ function generateUserPDF(doc, logo) {
   doc.setFontSize(12);
   doc.setTextColor("#666");
   const footerY = pageHeight - margin;
-  doc.text("Compiled by Hon Richard D'Prof and Generated for OAU Exam Platform", pageWidth / 2, footerY, { align: "center" });
+  doc.text("Compiled by Hon Richard D'Prof and Generated for Mock OAU Exam Platform", pageWidth / 2, footerY, { align: "center" });
 
   // Save the PDF
   doc.save(`${fullName}_Exam_Results.pdf`);
@@ -6475,7 +6475,7 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   doc.setFontSize(12);
   doc.setTextColor("#666");
   const footerY = pageHeight - margin;
-  doc.text("Compiled by Hon Richard D'Prof and Generated for OAU Exam Platform", pageWidth / 2, footerY, { align: "center" });
+  doc.text("Compiled by Hon Richard D'Prof and Generated for OAU Mock Exam Platform", pageWidth / 2, footerY, { align: "center" });
 
   // Save the PDF
   doc.save(`${selectedCourseCode}_Exam_Questions.pdf`);
