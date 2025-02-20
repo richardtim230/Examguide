@@ -2462,6 +2462,674 @@ options: ["It is used for sectioning", "It is used for embedding in light micros
      explanation: "The light source of the microscope is where light is emitted. The light shines up through the specimen and the lenses, allowing you to see the magnified image. "
       }, 
       ], 
+  "ZOO101-E1":[
+    
+  {
+    text: "What is the source of the muscles and blood vascular system in animals?",
+    options: ["Ectoderm", "Mesoderm", "Endoderm", "Blastoderm"],
+    correct: 1,
+    explanation: "The mesoderm is responsible for forming the muscles and blood vascular system."
+  },
+  {
+    text: "The cavity of the double-walled cup is called:",
+    options: ["Blastocoel", "Archenteron", "Coelom", "Gastrula"],
+    correct: 1,
+    explanation: "The cavity of the double-walled cup is called the Archenteron."
+  },
+  {
+    text: "During which phase of development does organogenesis occur?",
+    options: ["Cleavage", "Gastrulation", "Organogenesis", "Implantation"],
+    correct: 2,
+    explanation: "Organogenesis is the phase of development where organs are formed."
+  },
+  {
+    text: "The germinal layers are produced by the disappearance of which structure?",
+    options: ["Zygote", "Blastoderm", "Germ layers", "Embryo"],
+    correct: 1,
+    explanation: "The germinal layers are produced by the disappearance of a part of the blastoderm."
+  },
+  {
+    text: "What is the term for the process of cell movement and folding that forms the gastrula?",
+    options: ["Invagination", "Epiboly", "Ingression", "Delamination"],
+    correct: 0,
+    explanation: "Gastrulation is formed by invagination during the development of the gastrula."
+  },
+  {
+    text: "What are the two primary germ layers mentioned in the text?",
+    options: ["Ectoderm and endoderm", "Mesoderm and ectoderm", "Endoderm and ectoderm", "Mesoderm and endoderm"],
+    correct: 0,
+    explanation: "The two primary germ layers mentioned are ectoderm and endoderm."
+  },
+  {
+    text: "The endoderm forms which of the following structures?",
+    options: ["Muscles", "Nervous system", "Alimentary canal", "Skin"],
+    correct: 2,
+    explanation: "The endoderm forms the alimentary canal and digestive glands."
+  },
+  {
+    text: "What structure is formed from the primary germ layers during organogenesis?",
+    options: ["Tissues", "Organs", "Cells", "Embryos"],
+    correct: 1,
+    explanation: "Organogenesis involves the formation of organs from the primary germ layers."
+  },
+  {
+    text: "What is the main role of the primary germ layers?",
+    options: ["To form the placenta", "To produce the nervous system", "To give rise to various organs", "To store nutrients"],
+    correct: 2,
+    explanation: "The primary germ layers give rise to various organs during development."
+  },
+  {    text: "Which phase of development involves the splitting of the germinal layers into smaller groups?",
+    options: ["Gastrulation", "Organogenesis", "Cleavage", "Implantation"],
+    correct: 0,
+    explanation: "In gastrulation, the germinal layers split into smaller groups to form different structures."
+  },
+  {
+    text: "The sixth phase of development is referred to as:",
+    options: ["Implantation", "Gastrulation", "Organogenesis", "Histological differentiation"],
+    correct: 3,
+    explanation: "The sixth phase of development is the period of growth and histological differentiation."
+  },
+  {
+    text: "What does the term 'larva' refer to in this context?",
+    options: ["An adult organism", "A newly fertilized egg", "A young organism undergoing metamorphosis", "An embryonic structure"],
+    correct: 2,
+    explanation: "A larva is a young organism that undergoes metamorphosis before becoming an adult."
+  },
+  {
+    text: "The ability of some animals to repair injuries is known as:",
+    options: ["Regeneration", "Metamorphosis", "Plasticity", "Morphogenesis"],
+    correct: 0,
+    explanation: "Regeneration is the ability of some animals to repair injuries sustained from the environment."
+  },
+  {
+    text: "Which of the following structures is derived from the mesoderm?",
+    options: ["Skin", "Nervous system", "Muscles", "Digestive tract"],
+    correct: 2,
+    explanation: "The mesoderm gives rise to muscles and other connective tissues."
+  },
+  {
+    text: "The term 'organogenesis' specifically refers to the formation of:",
+    options: ["Cells", "Organs", "Tissues", "Germ layers"],
+    correct: 1,
+    explanation: "Organogenesis is the phase where specific organs are formed from the germ layers."
+  },
+  {
+    text: "What is the significance of the size of the egg in development?",
+    options: ["Larger eggs develop faster", "Smaller eggs are more viable", "Larger eggs have more nutrients", "Size does not matter"],
+    correct: 2,
+    explanation: "The size of the egg is significant because larger eggs contain more nutrients for the developing embryo."
+  },
+  {
+    text: "The process of fertilization involves which two components?",
+    options: ["Ovum and spermatozoon", "Embryo and yolk", "Zygote and blastomere", "Germ layers and organs"],
+    correct: 0,
+    explanation: "Fertilization involves the union of the ovum and spermatozoon."
+  },
+  {
+    text: "Which germ layer is responsible for forming the skin and nervous system?",
+    options: ["Mesoderm", "Endoderm", "Ectoderm", "Blastoderm"],
+    correct: 2,
+    explanation: "The ectoderm is responsible for forming the skin and nervous system."
+  },
+  {
+    text: "What happens to the yolk during development?",
+    options: ["It is absorbed by the embryo", "It provides nutrients for growth", "It forms the digestive system", "It is expelled during hatching"],
+    correct: 1,
+    explanation: "The yolk provides essential nutrients to the developing embryo."
+  },
+  {
+    text: "The process by which the embryo attaches to the uterine wall is called:",
+    options: ["Cleavage", "Implantation", "Fertilization", "Gastrulation"],
+    correct: 1,
+    explanation: "The embryo attaches to the uterine wall during implantation."
+  },
+  {
+    text: "The term 'embryonic stem cells' refers to:",
+    options: ["Cells that can only differentiate into specific tissues", "Cells that can develop into any cell type in the body", "Cells that are restricted to forming the placenta", "Cells that are specialized for a specific function"],
+    correct: 1,
+    explanation: "Embryonic stem cells are pluripotent and can develop into any cell type."
+  },
+  {
+    text: "Which of the following is a key characteristic of embryonic development?",
+    options: ["It is a continuous process with no clear stages", "It involves a series of well-defined stages", "It only occurs in mammals", "It is independent of environmental factors"],
+    correct: 1,
+    explanation: "Embryonic development has clear stages that can be defined."
+  },
+  {
+    text: "The development of an organism from a single cell to a multicellular structure is referred to as:",
+    options: ["Differentiation", "Morphogenesis", "Developmental biology", "Ontogeny"],
+    correct: 3,
+    explanation: "Ontogeny refers to the development of an organism from a single cell to a multicellular structure."
+  },
+  {
+    text: "What is the primary function of the yolk in an egg?",
+    options: ["To provide nutrients to the developing embryo", "To protect the embryo from external damage", "To assist in gas exchange", "To facilitate the movement of the embryo"],
+    correct: 0,
+    explanation: "The yolk serves as a source of nourishment for the developing embryo."
+  },
+  {
+    text: "What is the significance of the first meiotic division in oogenesis?",
+    options: ["It produces a haploid egg", "It produces two functional gametes", "It reduces the chromosome number by half", "It initiates the formation of polar bodies"],
+    correct: 2,
+    explanation: "The first meiotic division is essential for halving the chromosome count in the egg."
+  },
+  {
+    text: "Which cleavage type is characterized by the uneven distribution of yolk?",
+    options: ["Holoblastic", "Meroblastic", "Radial", "Spiral"],
+    correct: 1,
+    explanation: "Meroblastic cleavage is characterized by uneven distribution of yolk."
+  },
+  {
+    text: "In which type of cleavage do all cells divide completely?",
+    options: ["Holoblastic", "Meroblastic", "Telolecithal", "Isolecithal"],
+    correct: 0,
+    explanation: "Holoblastic cleavage occurs in eggs with little yolk, allowing complete division."
+  },
+  {
+    text: "What does the term 'microlecithal' refer to?",
+    options: ["A moderate amount of yolk", "A large amount of yolk", "A small amount of yolk", "No yolk"],
+    correct: 2,
+    explanation: "Microlecithal eggs contain a small amount of yolk."
+  },
+  {
+    text: "Which structure is essential for gas exchange in embryos?",
+    options: ["Yolk sac", "Amnion", "Chorion", "Allantois"],
+    correct: 2,
+    explanation: "The chorion is essential for gas exchange in embryos."
+  },
+  {
+    text: "The primary role of embryonic membranes is to:",
+    options: ["Provide nutrients", "Facilitate movement", "Protect the embryo", "All of the above"],
+    correct: 3,
+    explanation: "Embryonic membranes serve multiple roles, including protection and nutrient provision."
+  },
+  {
+    text: "Radial cleavage occurs in which group of organisms?",
+    options: ["Deuterostomes", "Protostomes", "Unicellular organisms", "Fungi"],
+    correct: 0,
+    explanation: "Radial cleavage occurs in deuterostomes, such as vertebrates and echinoderms."
+  },
+  {
+    text: "At the 2-cell stage of radial cleavage, how are the cells oriented?",
+    options: ["Both in plane view", "One on top of the other", "Side by side", "Completely detached"],
+    correct: 0,
+    explanation: "In radial cleavage, the two cells are oriented in the same plane."
+  },
+  {
+    text: "What happens at the 4-cell stage of radial cleavage?",
+    options: ["Cells are the same size", "Cells are larger than before", "Cells begin to differentiate", "Cells start to divide asymmetrically"],
+    correct: 0,
+    explanation: "Equal division yields cells of the same size at the 4-cell stage in radial cleavage."
+  },
+  {
+    text: "In the 8-cell stage of radial cleavage, the cells are:",
+    options: ["All the same size", "Different sizes", "Forming a blastula", "Undergoing differentiation"],
+    correct: 0,
+    explanation: "At the 8-cell stage, equal division yields cells of the same size."
+  },
+  {
+    text: "At the 16-cell stage, radial cleavage continues to yield cells that are:",
+    options: ["Larger and differentiated", "Smaller and more specialized", "All the same size", "Completely detached"],
+    correct: 1,
+    explanation: "As cleavage progresses, the cells become smaller and more specialized."
+  },
+  {
+    text: "Eggs of large size compared to spermatozoon are typical of which group?",
+    options: ["Amphibians", "Reptiles", "Birds", "All of the above"],
+    correct: 3,
+    explanation: "Large eggs are typical in amphibians, reptiles, and birds."
+  },
+  {
+    text: "Which type of cleavage is characterized by a large yolk concentration?",
+    options: ["Holoblastic cleavage", "Meroblastic cleavage", "Radial cleavage", "Spiral cleavage"],
+    correct: 1,
+    explanation: "Meroblastic cleavage occurs in eggs with a large yolk, where only part of the egg undergoes cleavage."
+  },
+  {
+    text: "In telolecithal eggs, where is the yolk primarily located?",
+    options: ["Evenly distributed", "At one pole", "In the center", "Surrounding the embryo"],
+    correct: 1,
+    explanation: "Telolecithal eggs have yolk concentrated at one pole, making cleavage asymmetric."
+  },
+  {
+    text: "Which term describes eggs with a small amount of yolk and complete cleavage?",
+    options: ["Holoblastic", "Meroblastic", "Telolecithal", "Isolecithal"],
+    correct: 0,
+    explanation: "Holoblastic cleavage occurs in eggs with little yolk, allowing complete division."
+  },
+  {
+    text: "The term 'microlecithal' refers to eggs that have:",
+    options: ["A moderate amount of yolk", "A large amount of yolk", "A small amount of yolk", "No yolk"],
+    correct: 2,
+    explanation: "Microlecithal eggs contain a small amount of yolk."
+  },
+  {
+    text: "What is the significance of the yolk in an egg?",
+    options: ["Protection of the embryo", "Nourishment for the developing organism", "Gas exchange", "Facilitation of embryo movement"],
+    correct: 1,
+    explanation: "The yolk serves as a source of nourishment for the developing embryo."
+  },
+  {
+    text: "Which cleavage type is characterized by the uneven distribution of yolk?",
+    options: ["Holoblastic", "Meroblastic", "Radial", "Spiral"],
+    correct: 1,
+    explanation: "Meroblastic cleavage is characterized by uneven distribution of yolk."
+  },
+  {
+    text: "The first phase of development after fertilization is:",
+    options: ["Cleavage", "Gastrulation", "Organogenesis", "Implantation"],
+    correct: 0,
+    explanation: "The first phase of development after fertilization is cleavage."
+  },
+  {
+    text: "The 3rd phase of development, known as cleavage, involves:",
+    options: ["Formation of a blastula", "Differentiation of germ layers", "Formation of the placenta", "Zygote implantation"],
+    correct: 0,
+    explanation: "Cleavage involves the formation of a large number of smaller cells from a single fertilized egg."
+  },
+  {
+    text: "The term 'blastoderm' refers to:",
+    options: ["The outer layer of the zygote", "The cap of cells formed during cleavage", "The yolk sac", "The inner cell mass"],
+    correct: 1,
+    explanation: "The blastoderm is the cap of cells formed during cleavage that eventually gives rise to the embryo."
+  },
+  {
+    text: "What does the term 'holoblastic cleavage' imply?",
+    options: ["Only part of the egg divides", "The entire egg divides completely", "Cleavage is radial", "Cleavage is spiral"],
+    correct: 1,
+    explanation: "Holoblastic cleavage means that the entire egg divides completely."
+  },
+  {
+    text: "The process leading to the development of a new individual starts with:",
+    options: ["Fertilization of the egg", "Formation of somatic cells", "Cleavage of the zygote", "Gastrulation"],
+    correct: 0,
+    explanation: "The development of a new individual starts with the fertilization of the egg."
+  },
+  {
+    text: "The 2nd phase of development involves:",
+    options: ["Cleavage", "Fertilization", "Gastrulation", "Implantation"],
+    correct: 1,
+    explanation: "The second phase of development is fertilization, where the egg is activated by sperm."
+  },
+  {
+    text: "Which phase follows cleavage during development?",
+    options: ["Gastrulation", "Organogenesis", "Implantation", "Fertilization"],
+    correct: 0,
+    explanation: "Gastrulation follows cleavage in the developmental sequence."
+  },
+  {
+    text: "During the 4th phase of development, which structure is formed?",
+    options: ["Blastopore", "Gastrula", "Zygote", "Blastocyst"],
+    correct: 1,
+    explanation: "The gastrula is formed during the 4th phase of development."
+  },
+  {
+    text: "The external germ layer is responsible for forming which structures?",
+    options: ["Skin and nervous system", "Muscles and bones", "Digestive organs", "Respiratory structures"],
+    correct: 0,
+    explanation: "The ectoderm develops into the skin and nervous system."
+  },
+  {
+    text: "Which layer gives rise to the circulatory system?",
+    options: ["Ectoderm", "Mesoderm", "Endoderm", "Hypoblast"],
+    correct: 1,
+    explanation: "The mesoderm gives rise to the circulatory system and other structures."
+  },
+  {
+    text: "The endoderm develops into which of the following?",
+    options: ["Skin", "Muscles", "Digestive tract", "Nervous tissue"],
+correct: 2,
+    explanation: "The endoderm develops into the digestive tract and other internal organs."
+  },
+  {
+    text: "The process leading to the formation of the placenta occurs in which phase?",
+    options: ["Cleavage", "Gastrulation", "Implantation", "Organogenesis"],
+    correct: 2,
+    explanation: "The placenta forms during the implantation phase of embryonic development."
+  },
+  {
+    text: "Which structure is essential for gas exchange in embryos?",
+    options: ["Yolk sac", "Amnion", "Chorion", "Allantois"],
+    correct: 2,
+    explanation: "The chorion is essential for gas exchange in embryos."
+  },
+  {
+    text: "What is the primary function of the allantois?",
+    options: ["Nutrient storage", "Gas exchange", "Waste storage", "Amniotic fluid production"],
+    correct: 2,
+    explanation: "The allantois serves as a waste storage and excretion structure."
+  },
+  {
+    text: "The amnion serves which purpose during embryonic development?",
+    options: ["Protection", "Nutrient storage", "Gas exchange", "Waste elimination"],
+    correct: 0,
+    explanation: "The amnion provides protection to the developing embryo."
+  },
+  {
+    text: "What is the primary role of embryonic membranes?",
+    options: ["To provide nutrients", "To facilitate movement", "To protect the embryo", "All of the above"],
+    correct: 3,
+    explanation: "Embryonic membranes serve multiple roles, including protection and nutrient provision."
+  },
+  {
+    text: "The external germ layer develops into which of the following structures?",
+    options: ["Skin and nervous system", "Muscles and bones", "Lungs and liver", "Heart and blood vessels"],
+    correct: 0,
+    explanation: "The ectoderm develops into the skin and nervous system."
+  },
+  {
+    text: "The mesoderm is responsible for forming:",
+    options: ["Epithelial tissues", "Muscle and connective tissues", "Nervous tissues", "Germ layers"],
+    correct: 1,
+    explanation: "The mesoderm develops into muscle and connective tissues."
+  },
+  {
+    text: "Which phase of development occurs after implantation?",
+    options: ["Cleavage", "Gastrulation", "Organogenesis", "Fertilization"],
+    correct: 2,
+    explanation: "After implantation, the next phase is organogenesis."
+  },
+  {
+    text: "The process by which the zygote divides into smaller cells is called:",
+    options: ["Fertilization", "Cleavage", "Gastrulation", "Implantation"],
+    correct: 1,
+    explanation: "The process of dividing the zygote into smaller cells is called cleavage."
+  },
+  {
+    text: "The structure that forms from the morula is known as:",
+    options: ["Blastocyst", "Zygote", "Embryo", "Gastrula"],
+    correct: 0,
+    explanation: "The morula develops into a blastocyst."
+  },
+  {
+    text: "The inner cell mass of the blastocyst eventually develops into:",
+    options: ["The placenta", "The embryo", "The amniotic sac", "The umbilical cord"],
+    correct: 1,
+    explanation: "The inner cell mass develops into the embryo."
+  },
+  {
+    text: "The outer layer of the blastocyst is called the:",
+    options: ["Trophoblast", "Epiblast", "Hypoblast", "Endoderm"],
+    correct: 0,
+    explanation: "The outer layer of the blastocyst is the trophoblast."
+  },
+  {
+    text: "Which of the following structures is NOT a result of cleavage?",
+    options: ["Zygote", "Morula", "Blastula", "Gastrula"],
+    correct: 0,
+    explanation: "The zygote is the initial cell formed after fertilization, not a result of cleavage."
+  },
+  {
+    text: "The process of gastrulation leads to the formation of:",
+    options: ["Three germ layers", "A single cell layer", "The placenta", "The neural tube"],
+    correct: 0,
+    explanation: "Gastrulation results in the formation of the three primary germ layers."
+  },
+  {
+    text: "The three primary germ layers formed during gastrulation are:",
+    options: ["Ectoderm, mesoderm, endoderm", "Ectoderm, epidermis, endoderm", "Mesoderm, endoderm, epiblast", "Trophoblast, epiblast, endoderm"],
+    correct: 0,
+    explanation: "The three primary germ layers are ectoderm, mesoderm, and endoderm."
+  },
+  {
+    text: "Which of the following is the primary function of the ectoderm?",
+    options: ["Formation of the digestive system", "Formation of muscles and bones", "Formation of the nervous system and skin", "Formation of blood and connective tissues"],
+    correct: 2,
+    explanation: "The ectoderm develops into structures like skin and the nervous system."
+  },
+  {
+    text: "The mesoderm primarily gives rise to:",
+    options: ["Nervous tissue", "Epithelial tissue", "Muscle and connective tissue", "Endocrine tissue"],
+    correct: 2,
+    explanation: "The mesoderm develops into muscle and connective tissues."
+  },
+  {    text: "The endoderm develops into which of the following structures?",
+    options: ["Heart and blood vessels", "Skin and hair", "Lungs and digestive tract", "Muscles and bones"],
+    correct: 2,
+    explanation: "The endoderm develops into internal organs like the lungs and digestive tract."
+  },
+  {
+    text: "The term 'embryogenesis' refers to:",
+    options: ["The formation of the placenta", "The process of embryo development from fertilization to birth", "The division of cells after fertilization", "The formation of gametes"],
+    correct: 1,
+    explanation: "Embryogenesis is the process of embryo development from fertilization to birth."
+  },
+  {
+    text: "Which of the following describes the process of organogenesis?",
+    options: ["The formation of the placenta", "The differentiation of germ layers into organs", "The fertilization of the egg", "The cleavage of the zygote"],
+    correct: 1,
+    explanation: "Organogenesis involves the differentiation of germ layers into organs."
+  },
+  {
+    text: "During what stage of development does the neural tube form?",
+    options: ["Cleavage", "Gastrulation", "Organogenesis", "Fertilization"],
+    correct: 2,
+    explanation: "The neural tube forms during organogenesis."
+  },
+  {
+    text: "The primary function of the yolk in an egg is to:",
+    options: ["Provide nutrients to the developing embryo", "Protect the embryo from external damage", "Assist in gas exchange", "Facilitate the movement of the embryo"],
+    correct: 0,
+    explanation: "The yolk provides essential nutrients to the developing embryo."
+  },
+  {
+    text: "What is the overall purpose of embryonic membranes?",
+    options: ["To protect the embryo and provide nutrients", "To facilitate gas exchange", "To provide structural support", "To aid in locomotion"],
+    correct: 0,
+    explanation: "Embryonic membranes have protective and nutritional roles."
+  },
+  {
+    text: "Which of the following is NOT a type of embryonic membrane?",
+    options: ["Amnion", "Chorion", "Allantois", "Thymus"],
+    correct: 3,
+    explanation: "The thymus is not an embryonic membrane; it is an organ involved in the immune system."
+  },
+  {
+    text: "The placenta develops from which of the following structures?",
+    options: ["Trophoblast", "Inner cell mass", "Amniotic sac", "Yolk sac"],
+    correct: 0,
+    explanation: "The placenta develops from the trophoblast layer."
+  },
+  {
+    text: "The process by which the embryo attaches to the uterine wall is called:",
+    options: ["Cleavage", "Implantation", "Fertilization", "Gastrulation"],
+    correct: 1,
+    explanation: "The embryo attaches to the uterine wall during implantation."
+  },
+  {
+    text: "The term 'embryonic stem cells' refers to:",
+    options: ["Cells that can only differentiate into specific tissues", "Cells that can develop into any cell type in the body", "Cells that are restricted to forming the placenta", "Cells that are specialized for a specific function"],
+    correct: 1,
+    explanation: "Embryonic stem cells are pluripotent and can develop into any cell type."
+  },
+  {
+    text: "Which of the following is a key characteristic of embryonic development?",
+    options: ["It is a continuous process with no clear stages", "It involves a series of well-defined stages", "It only occurs in mammals", "It is independent of environmental factors"],
+    correct: 1,
+    explanation: "Embryonic development has clear stages that can be defined."
+  },
+  {
+    text: "The development of an organism from a single cell to a multicellular structure is referred to as:",
+    options: ["Differentiation", "Morphogenesis", "Developmental biology", "Ontogeny"],
+    correct: 3,
+    explanation: "Ontogeny refers to the development of an organism from a single cell to a multicellular structure."
+  },
+  {
+    text: "Which of the following is NOT a problem faced by animals in life?",
+    options: ["Obtaining food", "Removing metabolic wastes", "Developing structural organization", "Maintaining water balance"],
+    correct: 2,
+    explanation: "Developing structural organization is a characteristic of life, not a problem."
+  },
+  {
+    text: "The simplest eukaryotic organisms that perform all life functions within the framework of a single cell belong to which group?",
+    options: ["Cellular group", "Protoplasmic group", "Tissue group", "Organ system group"],
+    correct: 1,
+    explanation: "The protoplasmic group consists of organisms that carry out all life functions within a single cell."
+  },
+  {
+    text: "Animals classified under the protoplasmic level of organization primarily rely on:",
+    options: ["Specialized tissues", "Subcellular structures", "Organ systems", "Complex multicellular structures"],
+    correct: 1,
+    explanation: "Protoplasmic organisms perform all life functions using subcellular structures."
+  },
+  {
+    text: "Which of the following is an example of an organism classified in the cellular group?",
+    options: ["Amoeba", "Hydra", "Earthworm", "Frog"],
+    correct: 0,
+    explanation: "Amoeba is a unicellular organism fitting into the cellular group."
+  },
+  {
+    text: "Multicellular animals are known as:",
+    options: ["Protoplasmic organisms", "Metazoans", "Unicellular organisms", "Tissue organisms"],
+    correct: 1,
+    explanation: "Multicellular animals are referred to as metazoans."
+  },
+  {
+    text: "What is the primary difference between metazoans and unicellular organisms?",
+    options: ["Metazoans are more complex", "Metazoans can reproduce asexually", "Unicellular organisms can perform all life functions within one cell", "All of the above"],
+    correct: 0,
+    explanation: "The primary distinction is that metazoans are more complex and composed of multiple cells."
+  },
+  {
+    text: "The cellular level of organization is best characterized by:",
+    options: ["The presence of organ systems", "The specialization of cells to perform collective functions", "The absence of tissues", "The presence of a single cell"],
+    correct: 1,
+    explanation: "The cellular level is characterized by specialized cells working together for collective functions."
+  },
+  {
+    text: "Which of the following is NOT a feature of tissues?",
+    options: ["Aggregation of similar cells", "Specialized functions", "Independent functioning", "Structural organization"],
+    correct: 2,
+    explanation: "Tissues work together and are not independent units; they function collectively."
+  },
+  {
+    text: "Which level of organization is considered the highest in animals?",
+    options: ["Tissue level", "Organ level", "Cellular level", "Organ system level"],
+    correct: 3,
+    explanation: "The organ system level is the highest level of organization in animals."
+  },
+  {
+    text: "The term 'organ system' refers to:",
+    options: ["A group of similar cells", "A group of tissues that work together to perform specific functions", "A collection of organs that work together to maintain homeostasis", "A single organ with specialized functions"],
+    correct: 2,
+    explanation: "An organ system is a collection of organs that work together to maintain homeostasis."
+  },
+  {
+    text: "Oogenesis is the process that leads to the production of which type of gamete?",
+    options: ["Male gamete", "Female gamete", "Somatic cell", "Zygote"],
+    correct: 1,
+    explanation: "Oogenesis leads to the production of female gametes (eggs)."
+  },
+  {
+    text: "During oogenesis, the primary oocyte undergoes which type of division before birth?",
+    options: ["Mitosis", "Meiosis", "Binary fission", "Budding"],
+    correct: 1,
+    explanation: "The primary oocyte undergoes meiosis, which begins before birth."
+  },
+  {
+    text: "What is the term for the structure that surrounds the oocyte and provides protection?",
+    options: ["Zona pellucida", "Follicle", "Cumulus oophorus", "Corona radiata"],
+    correct: 0,
+    explanation: "The zona pellucida is the protective layer around the oocyte."
+  },
+  {
+    text: "The process of oocyte development is initially arrested at which stage?",
+    options: ["Prophase I", "Metaphase I", "Metaphase II", "Anaphase II"],
+    correct: 0,
+    explanation: "The primary oocyte is arrested in prophase I of meiosis."
+  },
+  {
+    text: "What hormonal changes trigger the resumption of meiosis in oogenesis?",
+    options: ["Increase in testosterone", "Increase in estrogen", "Increase in progesterone", "Decrease in LH"],
+    correct: 1,
+    explanation: "Hormonal changes, particularly increases in estrogen, trigger the resumption of meiosis."
+  },
+  {
+    text: "At ovulation, the follicle ruptures and releases the:",
+    options: ["Polar body", "Secondary oocyte", "Zygote", "Primary follicle"],
+    correct: 1,
+    explanation: "At ovulation, the secondary oocyte is released."
+  },
+  {
+    text: "The polar body produced during oogenesis is:",
+    options: ["A fully functional gamete", "A non-functional cell", "An active reproductive cell", "A secondary oocyte"],
+    correct: 1,
+    explanation: "The polar body is a non-functional cell that results from oogenesis."
+  },
+  {
+    text: "What happens to the oocyte if fertilization does not occur?",
+    options: ["It undergoes mitosis", "It is expelled from the body", "It completes meiosis II", "It remains dormant indefinitely"],
+    correct: 1,
+    explanation: "If fertilization does not occur, the oocyte is expelled during menstruation."
+  },
+  {
+    text: "The secondary follicle contains which structure that helps in the development of the oocyte?",
+    options: ["Theca cells", "Granulosa cells", "Polar bodies", "Zona pellucida"],
+    correct: 1,
+    explanation: "The secondary follicle contains granulosa cells that help in oocyte development."
+  },
+  {
+    text: "Which term describes the initial stage of the oocyte before the first meiotic division?",
+    options: ["Primary oocyte", "Secondary oocyte", "Zygote", "Oogonium"],
+    correct: 0,
+    explanation: "The initial stage of the oocyte is the primary oocyte."
+  },
+  {
+    text: "What is the main function of the cumulus oophorus?",
+    options: ["To provide nutrients to the oocyte", "To protect the oocyte during ovulation", "To facilitate the fertilization process", "To assist in the maturation of the follicle"],
+    correct: 0,
+    explanation: "The cumulus oophorus supports the oocyte, providing it with nutrients."
+  },
+  {
+    text: "The zona pellucida is crucial for:",
+    options: ["Protecting the oocyte from dehydration", "Allowing sperm to penetrate during fertilization", "Providing structural integrity to the follicle", "Supporting the development of the embryo"],
+    correct: 1,
+    explanation: "The zona pellucida is crucial for sperm binding during fertilization."
+  },
+  {
+    text: "What is the significance of the first meiotic division in oogenesis?",
+    options: ["It produces a haploid egg", "It produces two functional gametes", "It reduces the chromosome number by half", "It initiates the formation of polar bodies"],
+    correct: 2,
+    explanation: "The first meiotic division is essential for halving the chromosome count in the egg."
+  },
+  {
+    text: "Which of the following statements about oogenesis is true?",
+    options: ["It produces four functional gametes", "It is completed before birth", "It occurs in the testes", "It produces male gametes"],
+    correct: 1,
+    explanation: "Oogenesis begins before birth and continues later, ultimately producing one functional gamete."
+  },
+  {
+    text: "The second meiotic division of the oocyte is completed:",
+    options: ["Before ovulation", "After fertilization", "During the menstrual cycle", "At puberty"],
+    correct: 1,
+    explanation: "The second meiotic division is completed after fertilization."
+  },
+  {
+    text: "The term 'corona radiata' refers to:",
+    options: ["The outer layer of the follicle", "The inner layer surrounding the oocyte", "The zone of cytoplasm in the oocyte", "The first polar body"],
+    correct: 0,
+    explanation: "The corona radiata surrounds the oocyte after ovulation and provides support."
+  },
+  {
+    text: "During which phase of the menstrual cycle does ovulation typically occur?",
+    options: ["Follicular phase", "Luteal phase", "Menstrual phase", "Proliferative phase"],
+    correct: 0,
+    explanation: "Ovulation typically occurs during the follicular phase of the menstrual cycle."
+  },
+  {
+    text: "Which hormone is primarily responsible for triggering ovulation?",
+    options: ["FSH", "LH", "Estrogen", "Progesterone"],
+    correct: 1,
+    explanation: "Luteinizing hormone (LH) is responsible for triggering ovulation."
+  },
+  {
+    text: "The cleavage pattern that leads to the formation of a blastula is characterized by:",
+    options: ["Holoblastic cleavage", "Meroblastic cleavage", "Indirect cleavage", "Spiral cleavage"],
+    correct: 0,
+    explanation: "Holoblastic cleavage occurs in the development of the blastula."
+  },
+    ],
+  
   "BOT101-T3": [
   {
     text: "What is another name for a dissection microscope?",
