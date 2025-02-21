@@ -1,4 +1,50 @@
 
+  // Register User
+  async function registerUser(email, password, username) {
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+
+      // Save user data to Firestore
+      await db.collection("users").doc(user.uid).set({
+        username: username,
+        email: email,
+        createdAt: new Date()
+      });
+
+      console.log("User registered successfully:", user);
+    } catch (error) {
+      console.error("Registration error:", error.message);
+    }
+  }
+
+  // Sign-In User
+  async function signInUser(email, password) {
+    try {
+      const userCredential = await auth.signInWithEmailAndPassword(email, password);
+      console.log("Signed in:", userCredential.user);
+    } catch (error) {
+      console.error("Sign-in failed:", error.message);
+    }
+  }
+
+
+  // Your Firebase configuration
+  const firebaseConfig = {
+    apiKey: "
+AIzaSyCAPDdDYErv2r57CSGnWOR5DaRAg_bfLCU",
+    authDomain: "students-su-fca4b.firebaseapp.com",
+    projectId: "students-su-fca4b",
+    storageBucket: "students-su-fca4b.appspot.com",
+    messagingSenderId: "298158901263",
+    appId: "1:298158901263:android:2c8d9bacf1c4a7bbbb3b7a"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestor
+e();
 
 const validUserIDs = [
   "USER101", "OAU-ZgXvX", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
