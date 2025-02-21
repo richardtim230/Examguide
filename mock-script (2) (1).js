@@ -1,34 +1,4 @@
 
-  // Register User
-  async function registerUser(email, password, username) {
-    try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-
-      // Save user data to Firestore
-      await db.collection("users").doc(user.uid).set({
-        username: username,
-        email: email,
-        createdAt: new Date()
-      });
-
-      console.log("User registered successfully:", user);
-    } catch (error) {
-      console.error("Registration error:", error.message);
-    }
-  }
-
-  // Sign-In User
-  async function signInUser(email, password) {
-    try {
-      const userCredential = await auth.signInWithEmailAndPassword(email, password);
-      console.log("Signed in:", userCredential.user);
-    } catch (error) {
-      console.error("Sign-in failed:", error.message);
-    }
-  }
-
-
   // Your Firebase configuration
   const firebaseConfig = {
     apiKey: "
