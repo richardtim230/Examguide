@@ -54,8 +54,6 @@ let currentQuestionIndex = 0;
 let userAnswers = [];
 let timerInterval;
 let remainingTime = 30 * 60; // 20 minutes
-let fullName = "";
-let userID = "";
 let selectedCourseCode = "";
 
 
@@ -6035,30 +6033,71 @@ function initializeExam() {
 }
 
 // Authentication logic (store user details in localStorage upon successful login)
-loginBtn.addEventListener("click", () => {
-  const fullNameInput = document.getElementById("fullName").value.trim();
-  const userIDInput = document.getElementById("userID").value.trim();
+  loginBtn.addEventListener("click", async () => {
+    const fullNameInput = document.getElementById("fullName").value.trim();
+    const userIDInput = document.getElementById("userID").value.trim();
+    const emailInput = document.getElementById("email").value.trim(); // Add email input
+    const passwordInput = document.getElementById("password").value.trim(); // Add password input
 
-  if (!fullNameInput || !userIDInput) {
-    alert("Please enter both Full Name and User ID.");
-    return;
+    if (!fullNameInput || !userIDInput || !emailInput || !passwordInput) {
+      alert("Please enter Full Name, User ID, Email, and Password.");
+      return;
+    }
+
+    try {
+      // Sign in using Firebase Auth
+      const userCredential = await auth.signInWithEmailAndPassword(emailInput, passwordInput);
+      const user = userCredential.user;
+
+      // Retrieve user data from Firestore
+      const userDoc = await db.collection("users").doc(user.uid).get();
+
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+
+        // Validate fullName and userID
+        if (userData.fullName === fullNameInput && userData.userID === userIDInput) {
+          console.log("Login successful!");
+
+          // You can still store in localStorage if needed for session persistence
+          localStorage.setItem("fullName", fullNameInput);
+          localStorage.setItem("userID", userIDInput);
+
+          // Update UI sections
+          authSection.classList.add("hidden");
+          courseCodeSection.classList.remove("hidden");
+        } else {
+          alert("Full Name or User ID does not match our records.");
+        }
+      } else {
+        alert("User not found in Firestore.");
+      }
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      alert("Login failed. Please check your credentials.");
+    }
+  });
+                                                
+  async function registerUser(fullName, userID, email, password) {
+    try {
+      // Create user with email and password
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+
+      // Store additional user details in Firestore
+      await db.collection("users").doc(user.uid).set({
+        fullName: fullName,
+        userID: userID,
+        email: email,
+        createdAt: new Date()
+      });
+
+      console.log("User registered and data stored successfully.");
+    } catch (error) {
+      console.error("Error during registration:", error.message);
+    }
   }
-
-  if (!validUserIDs.includes(userIDInput)) {
-    alert("Invalid User ID. Please try again.");
-    return;
-  }
-
-  localStorage.setItem("fullName", fullNameInput);
-  localStorage.setItem("userID", userIDInput);
-
-  fullName = fullNameInput;
-  userID = userIDInput;
-
-  authSection.classList.add("hidden");
-  courseCodeSection.classList.remove("hidden");
-});
-
+      
 
 // Select Course Code
 selectCourseBtn.addEventListener("click", () => {
