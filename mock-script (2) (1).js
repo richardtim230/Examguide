@@ -28,6 +28,11 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   await registerUser(email, password, username);
 });
 
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  console.log("Register form submitted"); // Debug log
+  e.preventDefault();
+});
+    
 // Login form submission handler
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
