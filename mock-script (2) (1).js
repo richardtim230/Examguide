@@ -1,4 +1,36 @@
 
+  // Register button event listener
+  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value.trim();
+
+    if (!username || !email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    await registerUser(email, password, username);
+  });
+
+  // Login button event listener
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById("fullName").value.trim();
+    const userID = document.getElementById("userID").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!fullName || !userID || !email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    await signInUser(email, password, fullName, userID);
+  });
+
+      
   // Your Firebase configuration
   const firebaseConfig = {
     apiKey: "
