@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <title>OAU Exam Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Firebase App (Core SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <!-- Firebase Firestore Database -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <style>
     /* Global Styles */
     * {
@@ -289,7 +298,21 @@
     <button id="loginBtn" class="styled-btn">Login</button>
 </div>
 
+<h2>Register</h2>
+<form onsubmit="event.preventDefault(); registerUser(registerEmail.value, registerPassword.value, username.value);">
+  <input type="text" id="username" placeholder="Username" required />
+  <input type="email" id="registerEmail" placeholder="Email" required />
+  <input type="password" id="registerPassword" placeholder="Password" required />
+  <button type="submit">Register</button>
+</form>
 
+<h2>Sign In</h2>
+<form onsubmit="event.preventDefault(); signInUser(signInEmail.value, signInPassword.value);">
+  <input type="email" id="signInEmail" placeholder="Email" required />
+  <input type="password" id="signInPassword" placeholder="Password" required />
+  <button type="submit">Sign In</button>
+  </form>
+    
   
 <!-- Course Code Section -->
 <div id="course-code-section" class="container hidden">
