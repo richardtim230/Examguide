@@ -53,9 +53,11 @@ if (!fullName || !department || !level || !faculty) {
         alert('Please fill in all fields to register.');
         return;
 }
+    else {
     alert('Registration successful! Your User ID is: ' + userId);
     window.location.href = 'new-index.html'; // Redirect to login page
-});
+    }
+    });
 
     
 
