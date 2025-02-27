@@ -48,10 +48,16 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
 
     const userDetails = { fullName, department, level, faculty, userId, exams };
     localStorage.setItem('userDetails', JSON.stringify(userDetails)); // Store user details in localStorage
-
+    
+if (!fullName || !department || !level || !faculty) {
+        alert('Please fill in all fields to register.');
+        return;
+}
     alert('Registration successful! Your User ID is: ' + userId);
     window.location.href = 'new-index.html'; // Redirect to login page
 });
+
+    
 
 const CUSTOM_EXAM_ID = 'customExam';
 const CUSTOM_EXAM_TITLE = 'Custom Mock Exam';
