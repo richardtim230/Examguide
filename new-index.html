@@ -342,19 +342,31 @@
     <button id="registerBtn" class="styled-btn">Register</button> <!-- Add Register Button -->
 </div>
 
+
+<!-- Registration Section -->
+<div id="registration-section" class="container hidden">
+    <h1>Register Account</h1>
+    <input type="text" id="registerFullName" placeholder="Enter Full Name" class="input-field">
+    <input type="text" id="department" placeholder="Enter Department" class="input-field">
+    <input type="text" id="level" placeholder="Enter Level" class="input-field">
+    <input type="text" id="faculty" placeholder="Enter Faculty" class="input-field">
+    <button id="registerAccountBtn" class="styled-btn">Register</button>
+</div>
+
 <!-- Popup Section -->
-<div id="popup" class="popup" style="display: none;">
+<div id="popup" class="popup hidden">
     <div class="popup-content">
         <span class="close-btn" id="closePopup">&times;</span>
         <h2>User Details</h2>
         <p id="userDetails"></p>
-        <div id="examsList"></div> <!-- Section for displaying available Mock Exams -->
+        <div id="examsList"></div>
         <div id="customExam" class="hidden">
             <h3>Custom Exam</h3>
             <button id="customExamBtn" class="styled-btn">Start Custom Exam</button>
         </div>
     </div>
 </div>
+  
   
 <!-- Course Code Section -->
 <div id="course-code-section" class="container hidden">
@@ -376,15 +388,6 @@
     </div>
   </div>
 </div>
-
-  <div class="container">
-    <h1>Register Account</h1>
-    <input type="text" id="fullName" placeholder="Enter Full Name" class="input-field">
-    <input type="text" id="department" placeholder="Enter Department" class="input-field">
-    <input type="text" id="level" placeholder="Enter Level" class="input-field">
-    <input type="text" id="faculty" placeholder="Enter Faculty" class="input-field">
-    <button id="registerAccountBtn" class="styled-btn">Register</button>
-  </div>
   
     
   <!-- Exam Section -->
