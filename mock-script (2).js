@@ -92,9 +92,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         }
 
         document.getElementById('popup').style.display = 'flex';
-    } else {
-        alert('Invalid User ID or Full Name');
-    }
+    } 
 });
 
 document.getElementById('closePopup').addEventListener('click', function() {
