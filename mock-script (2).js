@@ -113,20 +113,6 @@ function displayExamSection(examId) {
     // This function should be implemented to load the specific exam content (e.g., via AJAX or another method)
     alert('Displaying exam section for exam ID: ' + examId);
 }
-
-    document.getElementById('registerAccountBtn').addEventListener('click', function() {
-        const fullName = document.getElementById('fullName').value;
-        const department = document.getElementById('department').value;
-        const level = document.getElementById('level').value;
-        const faculty = document.getElementById('faculty').value;
-        const userId = Math.random().toString(36).substr(2, 5); // Generate a random user ID
-
-        const userDetails = { fullName, department, level, faculty, userId };
-        localStorage.setItem('userDetails', JSON.stringify(userDetails)); // Store user details in localStorage
-
-        alert('Registration successful! Your User ID is: ' + userId);
-        window.location.href = 'new-index.html'; // Redirect to login page
-    });
   
 document.getElementById('registerBtn').addEventListener('click', function() {
     document.getElementById('auth-section').classList.add('hidden');
