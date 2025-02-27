@@ -71,9 +71,8 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             Faculty: ${storedDetails.faculty}
         `;
 
-        // Retrieve and display available Mock Exams for the logged-in user
         const examsList = document.getElementById('examsList');
-        examsList.innerHTML = ''; // Clear previous list
+        examsList.innerHTML = '';
         const userExams = examAllocations.filter(allocation =>
             allocation.users.some(user => user.id === userId)
         );
@@ -102,15 +101,7 @@ document.getElementById('closePopup').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
 });
 
-document.getElementById('customExamBtn').addEventListener('click', function() {
-    // Redirect to a custom exam section or page
-    alert('Redirecting to custom exam...');
-    displayExamSection(CUSTOM_EXAM_ID);
-});
-
 function displayExamSection(examId) {
-    // Fetch and display the exam section based on the exam ID
-    // This function should be implemented to load the specific exam content (e.g., via AJAX or another method)
     alert('Displaying exam section for exam ID: ' + examId);
 }
   
