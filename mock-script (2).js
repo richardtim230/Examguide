@@ -6078,10 +6078,8 @@ const users = [
 ];
 
 const exams = [
-    { id: "BOT203-T2", title: "Mathematics 101" },
-    { id: "exam2", title: "Physics 201" },
-    { id: "exam3", title: "History 101" },
-    { id: "exam4", title: "Biology 202" }
+    { id: "BOT203-T2", title: "GENETICS STUDIES" },
+    { id: "BOT203-T3", title: "Physics 201" }
 ];
 
 // ✅ Allocate exams on page load
@@ -6234,27 +6232,7 @@ function initializeExam() {
     startTimer();
     document.getElementById('exam-section').classList.remove("hidden");
 }
-// ✅ Function to Load Exam Questions
-function loadExamQuestions(examId) {
-    if (!questionBanks[examId]) {
-        alert("No questions available for this exam.");
-        return;
-    }
 
-    // ✅ Shuffle and select first 50 questions
-    questions = shuffleArray(questionBanks[examId]).slice(0, 50);
-
-    if (questions.length === 0) {
-        alert("No questions available. Please try another exam.");
-        return;
-    }
-
-    // ✅ Show first question
-    currentQuestionIndex = 0;
-    displayQuestion();
-              }
-
-              
 // Load Current Question
 function loadQuestion() {
   const question = questions[currentQuestionIndex];
