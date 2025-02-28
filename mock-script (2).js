@@ -6129,22 +6129,39 @@ document.getElementById('loginBtn').addEventListener('click', function () {
             examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
         }
 
-        // ✅ Show pop-up screen
-        document.getElementById('popup').style.display = 'flex';
+        // ✅ Show the pop-up modal
+        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
+
+        // ✅ Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
 
     } else {
         alert("Invalid User ID or Full Name. Please try again.");
     }
-});                                    
+});
+                                    
 
 // ✅ Close Popup
 document.getElementById('closePopup').addEventListener('click', function() {
   document.getElementById('popup').style.display = 'none';
 });
 
+// ✅ Start Exam When Clicking an Exam Title
+function startExam(examId, examTitle) {
+    alert(`Starting exam: ${examTitle}`);
 
+    // ✅ Store selected exam for later use
+    localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
+
+    // ✅ Hide pop-up and go straight to exam session
+    document.getElementById('popup').classList.remove('active');
+    document.getElementById('examSection').classList.remove('hidden');
+
+    // ✅ Load exam questions dynamically
+    loadExamQuestions(examId);
+                            }
+      
 
 // ✅ Display Exam Section
 function displayExamSection(examId) {
