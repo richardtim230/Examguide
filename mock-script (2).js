@@ -6143,26 +6143,8 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 document.getElementById('closePopup').addEventListener('click', function() {
   document.getElementById('popup').style.display = 'none';
 });
-// ✅ Start Exam Function
-function startExam(examId, examTitle) {
-    alert(`Starting exam: ${examTitle}`);
-    
-    // ✅ Store selected exam for later use
-    localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
 
-    // ✅ Hide pop-up and go straight to exam session
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('examSection').classList.remove('hidden');
 
-    // ✅ Load exam questions dynamically
-    loadExamQuestions(examId);
-}
-
-// ✅ Close Pop-up Manually
-document.getElementById('closePopup').addEventListener('click', function () {
-    document.getElementById('popup').style.display = 'none';
-});
-      
 
 // ✅ Display Exam Section
 function displayExamSection(examId) {
