@@ -6042,13 +6042,18 @@ const CUSTOM_EXAM_ID = 'customExam';
 const CUSTOM_EXAM_TITLE = 'Custom Mock Exam';
 
 document.getElementById('loginBtn').addEventListener('click', function() {
-    const fullName = document.getElementById('fullName').value;
-    const userId = document.getElementById('userID').value;
+    const fullName = document.getElementById('fullName').value.trim();
+    const userId = document.getElementById('userID').value.trim();
 
     const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
-    const examAllocations = JSON.parse(localStorage.getItem('examAllocations'));
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || [];
 
-    if (storedDetails && storedDetails.fullName === fullName && storedDetails.userId === userId) {
+    if (!storedDetails) {
+        alert("No registered user found. Please register first.");
+        return;
+    }
+
+    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
         document.getElementById('userDetails').innerText = `
             Full Name: ${storedDetails.fullName}
             Department: ${storedDetails.department}
@@ -6059,7 +6064,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = '';
         const userExams = examAllocations.filter(allocation =>
-            allocation.users.some(user => user.id === userId)
+            allocation.users.some(user => user.userId === userId) // Ensure userId matches
         );
 
         if (userExams.length > 0) {
@@ -6076,9 +6081,16 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             document.getElementById('customExam').classList.remove('hidden');
         }
 
+        // Show the pop-up or move to exam section
         document.getElementById('popup').style.display = 'flex';
-    } 
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('course-code-section').classList.remove('hidden');
+
+    } else {
+        alert("Invalid User ID or Full Name. Please try again.");
+    }
 });
+
 
 document.getElementById('closePopup').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
