@@ -6084,67 +6084,58 @@ const exams = [
 allocateUsersToExams(users, exams);
 
 // ✅ Show Pop-up When User Logs In
-document.getElementById('loginBtn').addEventListener('click', function () {
     document.getElementById('loginBtn').addEventListener('click', function () {
-        const fullNameInput = document.getElementById('fullName').value.trim();
-        const userIdInput = document.getElementById('userID').value.trim();
+    const fullName = document.getElementById('fullName').value.trim();
+    const userId = document.getElementById('userID').value.trim();
 
-        let storedDetails = JSON.parse(localStorage.getItem('userDetails'));
-        let examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
 
-        console.log("Stored User Details:", storedDetails); // Debugging log
-        console.log("User Input:", { fullName: fullNameInput, userId: userIdInput });
+    if (!storedDetails) {
+        alert("No registered user found. Please register first.");
+        return;
+    }
 
-        if (!storedDetails) {
-            alert("No registered user found. Please register first.");
-            return;
-        }
+    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
+        // ✅ Store logged-in session
+        localStorage.setItem("currentUser", JSON.stringify(storedDetails));
 
-        // ✅ Normalize text for comparison (removes case sensitivity)
-        const storedFullName = storedDetails.fullName.trim().toLowerCase();
-        const storedUserId = storedDetails.userId.trim().toUpperCase();
-        const fullNameCheck = fullNameInput.trim().toLowerCase();
-        const userIdCheck = userIdInput.trim().toUpperCase();
+        document.getElementById('userDetails').innerHTML = `
+            <strong>Full Name:</strong> ${storedDetails.fullName} <br>
+            <strong>Faculty:</strong> ${storedDetails.faculty} <br>
+            <strong>Department:</strong> ${storedDetails.department} <br>
+            <strong>Level:</strong> ${storedDetails.level}
+        `;
 
-        console.log("Checking Against:", { storedFullName, storedUserId });
+        const examsList = document.getElementById('examsList');
+        examsList.innerHTML = ''; // Clear previous exams
 
-        if (storedFullName === fullNameCheck && storedUserId === userIdCheck) {
-            console.log("✅ Login Successful!");
-
-            // ✅ Store logged-in session
-            localStorage.setItem("currentUser", JSON.stringify(storedDetails));
-
-            document.getElementById('userDetails').innerHTML = `
-                <strong>Full Name:</strong> ${storedDetails.fullName} <br>
-                <strong>Faculty:</strong> ${storedDetails.faculty} <br>
-                <strong>Department:</strong> ${storedDetails.department} <br>
-                <strong>Level:</strong> ${storedDetails.level}
-            `;
-
-            const examsList = document.getElementById('examsList');
-            examsList.innerHTML = ''; // Clear previous exams
-
-            if (examAllocations[userIdCheck]) {
-                examAllocations[userIdCheck].forEach(exam => {
-                    const examItem = document.createElement('button');
-                    examItem.innerText = exam.title;
-                    examItem.className = 'exam-btn';
-                    examItem.addEventListener('click', function () {
-                        startExam(exam.id, exam.title);
-                    });
-                    examsList.appendChild(examItem);
+        if (examAllocations[userId]) {
+            examAllocations[userId].forEach(exam => {
+                const examItem = document.createElement('button');
+                examItem.innerText = exam.title;
+                examItem.className = 'styled-btn';
+                examItem.addEventListener('click', function () {
+                    startExam(exam.id, exam.title);
                 });
-            } else {
-                examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
-            }
-
-            // ✅ Show pop-up with animation
-            document.getElementById('popup').classList.add('active');
+                examsList.appendChild(examItem);
+            });
         } else {
-            console.log("❌ Login Failed: User details do not match.");
-            alert("Invalid User ID or Full Name. Please try again.");
+            examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
         }
-    });
+
+        // ✅ Show the pop-up modal
+        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
+
+        // ✅ Hide login section, show exam section
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('course-code-section').classList.remove('hidden');
+
+    } else {
+        alert("Invalid User ID or Full Name. Please try again.");
+    }
+});
+
 
     // ✅ Close Pop-up When User Clicks Close Button
     document.getElementById('closePopupBtn').addEventListener('click', function () {
