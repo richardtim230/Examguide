@@ -8,8 +8,6 @@ let currentQuestionIndex = 0;
 let userAnswers = [];
 let timerInterval;
 let remainingTime = 30 * 60; // 20 minutes
-let fullName = "";
-let userID = "";
 let selectedCourseCode = "";
 
 
@@ -5948,6 +5946,7 @@ const courseCodeSection = document.getElementById("course-code-section");
 const examSection = document.getElementById("exam-section");
 const resultsSection = document.getElementById("results-section");
 const loginBtn = document.getElementById("loginBtn");
+const registerBtn = document.getElementById("registerBtn");
 const selectCourseBtn = document.getElementById("selectCourseBtn");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -5961,17 +5960,7 @@ const resultsContent = document.getElementById("results-content");
 const resultsSummary = document.getElementById("results-summary");
 const downloadPDF = document.getElementById("downloadPDF");
 
-// Add this function to check if the user is authenticated
-function isAuthenticated() {
-  const userID = localStorage.getItem("userID");
-  const fullName = localStorage.getItem("fullName");
 
-  if (userID && validUserIDs.includes(userID) && fullName) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 // Call this function before initializing the exam
 function initializeExam() {
@@ -6039,12 +6028,12 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         return;
     }
 
-    const userId = Math.random().toString(36).substr(2, 5); // Generate a random user ID
+    const userId = Math.random().toString(36).substr(2, 5); 
     const userDetails = { fullName, department, level, faculty, userId };
-    localStorage.setItem('userDetails', JSON.stringify(userDetails)); // Store user details in localStorage
+    localStorage.setItem('userDetails', JSON.stringify(userDetails)); 
 
     alert('Registration successful! Your User ID is: ' + userId);
-    window.location.href = 'new-index.html'; // Redirect to login page
+    window.location.href = 'new-index.html'; 
 });
 
     
