@@ -5995,13 +5995,13 @@ function returnToLogin() {
 // ✅ Faculty-based User ID Generation
 function generateUserID(facultyCode) {
     const randomString = Math.random().toString(36).substr(2, 4).toUpperCase(); // Random 4-character mix of letters and numbers
-    return `${facultyCode}-${randomString}`;
+    return `${facultyCode}/${randomString}`;
 }
 
 // ✅ Prevent users from registering more than 2 accounts
 function hasReachedRegistrationLimit() {
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 2; // Limit to 2 accounts per user
+    return registrations.length >= 4; // Limit to 2 accounts per user
 }
 
 // ✅ Register User
