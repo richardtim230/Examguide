@@ -5992,30 +5992,51 @@ function returnToLogin() {
 }
 
 
-// ✅ Generate random 6-digit User ID
-function generateRandomUserID() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+// ✅ Faculty-based User ID Generation
+function generateUserID(facultyCode) {
+  const randomString = Math.random().toString(36).substr(2, 4).toUpperCase(); // Random 4-character mix of letters and numbers
+  return `${facultyCode}-${randomString}`;
 }
 
-// ✅ Registration Event Listener
-document.getElementById('registerAccountBtn').addEventListener('click', function() {
+// ✅ Check if user already registered
+function hasReachedRegistrationLimit() {
+  const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+  return registrations.length >= 2; // Limit to 2 accounts per user
+}
+
+// ✅ Register User
+document.getElementById('registrationForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+
   const fullName = document.getElementById('registerFullName').value.trim();
+  const facultySelect = document.getElementById('faculty');
+  const facultyCode = facultySelect.value; // Selected faculty code
   const department = document.getElementById('department').value.trim();
   const level = document.getElementById('level').value.trim();
-  const faculty = document.getElementById('faculty').value.trim();
 
-  if (!fullName || !department || !level || !faculty) {
+  if (!fullName || !facultyCode || !department || !level) {
     alert('Please fill in all fields to register.');
     return;
   }
 
-  const userId = generateRandomUserID();
-  const userDetails = { fullName, department, level, faculty, userId };
+  if (hasReachedRegistrationLimit()) {
+    alert("You have reached the registration limit. You can't register more accounts.");
+    return;
+  }
+
+  const userId = generateUserID(facultyCode);
+  const userDetails = { fullName, faculty: facultySelect.options[facultySelect.selectedIndex].text, department, level, userId };
 
   // ✅ Store user details in localStorage
   localStorage.setItem('userDetails', JSON.stringify(userDetails));
   localStorage.setItem('currentUser', JSON.stringify(userDetails));
 
+  // ✅ Track number of registrations
+  const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+  registrations.push(userId);
+  localStorage.setItem("userRegistrations", JSON.stringify(registrations));
+
+  document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
   alert('Registration successful! Your User ID is: ' + userId);
   window.location.href = 'new-index.html';
 });
