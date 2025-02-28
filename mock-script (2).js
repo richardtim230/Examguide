@@ -6241,10 +6241,10 @@ function loadExamQuestions(examId) {
         return;
     }
 
-    // ✅ Ensure we start from the first question
-    currentQuestionIndex = 0; // Fix: Start at the first question
-    displayQuestion(); // Load the first question
-              }
+// ✅ Ensure we start from the first question
+currentQuestionIndex = 0; 
+loadQuestion(); // Fix: Call the correct function
+
       
 // ✅ Function to Load Current Question
 function loadQuestion() {
