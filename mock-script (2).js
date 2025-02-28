@@ -9,7 +9,7 @@ let userAnswers = [];
 let timerInterval;
 let remainingTime = 30 * 60; // 20 minutes
 let fullName = "";
-let userID = "";
+
 let selectedCourseCode = "";
 
 
@@ -5988,7 +5988,7 @@ function initializeExam() {
   examSection.classList.remove("hidden");
 }
 
-// Authentication logic (store user details in localStorage upon successful login)
+
 // Function to allocate five random users to each exam
 function allocateUsersToExams(users, exams) {
     const examAllocations = exams.map(exam => {
@@ -6017,7 +6017,6 @@ const users = [
     { id: 'user5', fullName: 'User Five' },
     { id: 'user6', fullName: 'User Six' },
     { id: 'user7', fullName: 'User Seven' },
-
     { id: 'user8', fullName: 'User Eight' },
     { id: 'user9', fullName: 'User Nine' },
     { id: 'user10', fullName: 'User Ten' }
