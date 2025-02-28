@@ -6139,13 +6139,21 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.9);
 }
 
-// Initialize Exam
 function initializeExam() {
-  userDetails.textContent = `Candidate: ${fullName} | Course: ${selectedCourseCode}`;
-  startTime = Date.now();
-  loadQuestion();
-  startTimer();
-  examSection.classList.remove("hidden");
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (!currentUser) {
+        alert("You must be logged in to access the exam.");
+        window.location.href = "login.html"; // Redirect to login page
+        return;
+    }
+
+    document.getElementById('userDetails').textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+    
+    startTime = Date.now();
+    loadQuestion();
+    startTimer();
+    examSection.classList.remove("hidden");
 }
 
 
