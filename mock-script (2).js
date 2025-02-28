@@ -6072,7 +6072,7 @@ function allocateUsersToExams(users, exams) {
 
 // ✅ Example Users and Exams
 const users = [
-    { userId: "NASS-W7P8", fullName: "Richard Ochuko" },
+    { userId: "NASS-6W0W", fullName: "Richard Ochuko" },
     { userId: "ARTS-9T5B", fullName: "Bob Johnson" },
     { userId: "TECH-M7XJ", fullName: "Charlie Brown" }
 ];
