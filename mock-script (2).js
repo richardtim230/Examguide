@@ -6085,8 +6085,7 @@ const exams = [
 // ✅ Allocate exams on page load
 allocateUsersToExams(users, exams);
 
-
-// ✅ Login Event Listener
+// ✅ Show Pop-up When User Logs In
 document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
     const userId = document.getElementById('userID').value.trim();
@@ -6117,7 +6116,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
             examAllocations[userId].forEach(exam => {
                 const examItem = document.createElement('button');
                 examItem.innerText = exam.title;
-                examItem.className = 'styled-btn';
+                examItem.className = 'exam-btn';
                 examItem.addEventListener('click', function () {
                     startExam(exam.id, exam.title);
                 });
@@ -6127,41 +6126,40 @@ document.getElementById('loginBtn').addEventListener('click', function () {
             examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
         }
 
-        // ✅ Show the pop-up modal
-        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
-
-        // ✅ Hide login section, show exam section
-        document.getElementById('auth-section').classList.add('hidden');
-        document.getElementById('course-code-section').classList.remove('hidden');
-
+        // ✅ Show pop-up with animation
+        const popup = document.getElementById('popup');
+        popup.classList.add('active');
     } else {
         alert("Invalid User ID or Full Name. Please try again.");
     }
 });
-                                    
 
-// ✅ Close Popup
-document.getElementById('closePopup').addEventListener('click', function () {
-    document.getElementById('popup').classList.remove('active'); // ✅ Hide pop-up
+// ✅ Close Pop-up When User Clicks Close Button
+document.getElementById('closePopupBtn').addEventListener('click', function () {
+    document.getElementById('popup').classList.remove('active');
 });
 
+// ✅ Close Pop-up When Clicking the Close "X" Button
+document.getElementById('closePopup').addEventListener('click', function () {
+    document.getElementById('popup').classList.remove('active');
+});
 
 // ✅ Start Exam When Clicking an Exam Title
 function startExam(examId, examTitle) {
     alert(`Starting exam: ${examTitle}`);
 
-    // ✅ Store selected exam details in localStorage
+    // ✅ Store selected exam for later use
     localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
 
-    // ✅ Hide pop-up and show exam section
+    // ✅ Hide pop-up and go straight to exam session
     document.getElementById('popup').classList.remove('active');
-    document.getElementById('course-code-section').classList.add('hidden'); // Hide course code page
-    document.getElementById('exam-section').classList.remove('hidden'); // Show exam section
+    document.getElementById('course-code-section').classList.add('hidden');
+    document.getElementById('exam-section').classList.remove('hidden');
 
     // ✅ Load the exam questions dynamically
     initializeExam();
-}
-
+     }
+     
       
 
 // ✅ Display Exam Section
