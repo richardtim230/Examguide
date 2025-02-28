@@ -5964,33 +5964,18 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Call this function before initializing the exam
 function initializeExam() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (!isAuthenticated()) {
+    alert("You must be logged in to access the exam.");
+    window.location.href = "login.html"; // Redirect to the login page
+    return;
+  }
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("Session expired! Please log in again.");
-        returnToLogin(); // Handles logout properly
-        return;
-    }
-
-    if (!selectedCourseCode) {
-        alert("Please select a course before starting the exam.");
-        return;
-    }
-
-    userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
-
-    startTime = Date.now();
-    loadQuestion();
-    startTimer();
-    examSection.classList.remove("hidden");
+  userDetails.textContent = `Candidate: ${fullName} | Course: ${selectedCourseCode}`;
+  startTime = Date.now();
+  loadQuestion();
+  startTimer();
+  examSection.classList.remove("hidden");
 }
-
-// Helper function to handle logout and redirection
-function returnToLogin() {
-    localStorage.removeItem('currentUser'); // Clear session data
-    window.location.href = "new-index.html"; // Redirect to login page
-}
-
 
 // Function to allocate five random users to each exam
 function allocateUsersToExams(users, exams) {
@@ -6069,9 +6054,6 @@ document.getElementById('loginBtn').addEventListener('click', function() {
     }
 
     if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
-        // Store the full name globally for use in other sections
-        localStorage.setItem('currentUser', JSON.stringify({ fullName, userId }));
-
         document.getElementById('userDetails').innerText = `
             Full Name: ${storedDetails.fullName}
             Department: ${storedDetails.department}
@@ -6082,7 +6064,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = '';
         const userExams = examAllocations.filter(allocation =>
-            allocation.users.some(user => user.userId === userId)
+            allocation.users.some(user => user.userId === userId) // Ensure userId matches
         );
 
         if (userExams.length > 0) {
@@ -6099,7 +6081,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             document.getElementById('customExam').classList.remove('hidden');
         }
 
-        // Move to the next section
+        // Show the pop-up or move to exam section
         document.getElementById('popup').style.display = 'flex';
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
@@ -6108,7 +6090,6 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         alert("Invalid User ID or Full Name. Please try again.");
     }
 });
-
 
 
 document.getElementById('closePopup').addEventListener('click', function() {
@@ -6158,24 +6139,22 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.9);
 }
 
-// Initialize Exam
 function initializeExam() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!currentUser || !currentUser.fullName) {
+    if (!currentUser) {
         alert("You must be logged in to access the exam.");
-        window.location.href = "new-index.html"; // Redirect to login page
+        window.location.href = "login.html"; // Redirect to login page
         return;
     }
 
-    userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
-
+    document.getElementById('userDetails').textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+    
     startTime = Date.now();
     loadQuestion();
     startTimer();
     examSection.classList.remove("hidden");
 }
-
 
 
 // Load Current Question
