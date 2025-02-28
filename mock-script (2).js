@@ -6069,6 +6069,9 @@ document.getElementById('loginBtn').addEventListener('click', function() {
     }
 
     if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
+        // Store the full name globally for use in other sections
+        localStorage.setItem('currentUser', JSON.stringify({ fullName, userId }));
+
         document.getElementById('userDetails').innerText = `
             Full Name: ${storedDetails.fullName}
             Department: ${storedDetails.department}
@@ -6079,7 +6082,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = '';
         const userExams = examAllocations.filter(allocation =>
-            allocation.users.some(user => user.userId === userId) // Ensure userId matches
+            allocation.users.some(user => user.userId === userId)
         );
 
         if (userExams.length > 0) {
@@ -6096,7 +6099,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             document.getElementById('customExam').classList.remove('hidden');
         }
 
-        // Show the pop-up or move to exam section
+        // Move to the next section
         document.getElementById('popup').style.display = 'flex';
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
@@ -6105,6 +6108,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         alert("Invalid User ID or Full Name. Please try again.");
     }
 });
+
 
 
 document.getElementById('closePopup').addEventListener('click', function() {
@@ -6160,7 +6164,7 @@ function initializeExam() {
 
     if (!currentUser || !currentUser.fullName) {
         alert("You must be logged in to access the exam.");
-        window.location.href = "login.html"; // Redirect to login page
+        window.location.href = "new-index.html"; // Redirect to login page
         return;
     }
 
