@@ -6232,7 +6232,27 @@ function initializeExam() {
     startTimer();
     document.getElementById('exam-section').classList.remove("hidden");
 }
+// ✅ Function to Load Exam Questions
+function loadExamQuestions(examId) {
+    if (!questionBanks[examId]) {
+        alert("No questions available for this exam.");
+        return;
+    }
 
+    // ✅ Shuffle and select first 50 questions
+    questions = shuffleArray(questionBanks[examId]).slice(0, 50);
+
+    if (questions.length === 0) {
+        alert("No questions available. Please try another exam.");
+        return;
+    }
+
+    // ✅ Show first question
+    currentQuestionIndex = 1;
+    displayQuestion();
+              }
+
+              
 // Load Current Question
 function loadQuestion() {
   const question = questions[currentQuestionIndex];
