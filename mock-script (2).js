@@ -6002,11 +6002,11 @@ function hasReachedRegistrationLimit() {
     return registrations.length >= 2; // Limit to 2 accounts per user
 }
 
-// ✅ Register User
+// ✅ Register User - Now stores multiple users in localStorage
 document.getElementById('registerAccountBtn').addEventListener('click', function () {
     const fullName = document.getElementById('registerFullName').value.trim();
     const facultySelect = document.getElementById('faculty');
-    const facultyCode = facultySelect.value; // Selected faculty code
+    const facultyCode = facultySelect.value;
     const department = document.getElementById('department').value.trim();
     const level = document.getElementById('level').value.trim();
 
@@ -6029,9 +6029,10 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         userId 
     };
 
-    // ✅ Store user details in localStorage
-    localStorage.setItem('userDetails', JSON.stringify(userDetails));
-    localStorage.setItem('currentUser', JSON.stringify(userDetails));
+    // ✅ Store multiple users in an array
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push(userDetails);
+    localStorage.setItem('users', JSON.stringify(users));
 
     // ✅ Track number of registrations
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
@@ -6084,71 +6085,44 @@ const exams = [
 allocateUsersToExams(users, exams);
 
 // ✅ Show Pop-up When User Logs In
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('loginBtn').addEventListener('click', function () {
         const fullName = document.getElementById('fullName').value.trim().toLowerCase();
         const userId = document.getElementById('userID').value.trim();
 
-        const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
-        const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+        const users = JSON.parse(localStorage.getItem('users')) || [];
 
-        console.log("Stored Details:", storedDetails); // Debugging
+        console.log("Users in Local Storage:", users); // Debugging
 
-        if (!storedDetails) {
-            alert("No registered user found. Please register first.");
+        if (users.length === 0) {
+            alert("No registered users found. Please register first.");
             return;
         }
 
-        if (storedDetails.fullName.toLowerCase() === fullName && storedDetails.userId === userId) {
-            console.log("Login successful. User details matched."); // Debugging
+        const matchingUser = users.find(user => user.fullName.toLowerCase() === fullName && user.userId === userId);
 
-            localStorage.setItem("currentUser", JSON.stringify(storedDetails));
+        if (matchingUser) {
+            console.log("Login successful:", matchingUser);
 
-            const userDetailsElement = document.getElementById('userDetails');
-            const examsList = document.getElementById('examsList');
-            const authSection = document.getElementById('auth-section');
-            const courseCodeSection = document.getElementById('course-code-section');
-            const popup = document.getElementById('popup');
+            localStorage.setItem("currentUser", JSON.stringify(matchingUser));
 
-            if (!userDetailsElement || !examsList || !authSection || !courseCodeSection || !popup) {
-                console.error("One or more required elements are missing from the DOM.");
-                alert("An error occurred. Please try again.");
-                return;
-            }
-
-            // ✅ Populate user details
-            userDetailsElement.innerHTML = `
-                <strong>Full Name:</strong> ${storedDetails.fullName} <br>
-                <strong>Faculty:</strong> ${storedDetails.faculty} <br>
-                <strong>Department:</strong> ${storedDetails.department} <br>
-                <strong>Level:</strong> ${storedDetails.level}
+            document.getElementById('userDetails').innerHTML = `
+                <strong>Full Name:</strong> ${matchingUser.fullName} <br>
+                <strong>Faculty:</strong> ${matchingUser.faculty} <br>
+                <strong>Department:</strong> ${matchingUser.department} <br>
+                <strong>Level:</strong> ${matchingUser.level}
             `;
 
-            // ✅ Populate exam list
-            examsList.innerHTML = '';
-            if (examAllocations[userId] && examAllocations[userId].length > 0) {
-                examAllocations[userId].forEach(exam => {
-                    const examItem = document.createElement('button');
-                    examItem.innerText = exam.title;
-                    examItem.className = 'styled-btn';
-                    examItem.addEventListener('click', function () {
-                        startExam(exam.id, exam.title);
-                    });
-                    examsList.appendChild(examItem);
-                });
-            } else {
-                examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
-            }
-
-            // ✅ Show login success UI
-            popup.classList.add('active');
-            authSection.classList.add('hidden');
-            courseCodeSection.classList.remove('hidden');
+            // ✅ Show UI updates
+            document.getElementById('popup').classList.add('active');
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('course-code-section').classList.remove('hidden');
         } else {
             alert("Invalid User ID or Full Name. Please try again.");
         }
     });
 });
+     
 
 
 
