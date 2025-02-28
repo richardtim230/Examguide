@@ -5995,13 +5995,13 @@ function returnToLogin() {
 // ✅ Faculty-based User ID Generation
 function generateUserID(facultyCode) {
     const randomString = Math.random().toString(36).substr(2, 4).toUpperCase(); // Random 4-character mix of letters and numbers
-    return `${facultyCode}/${randomString}`;
+    return `${facultyCode}-${randomString}`;
 }
 
 // ✅ Prevent users from registering more than 2 accounts
 function hasReachedRegistrationLimit() {
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 4; // Limit to 2 accounts per user
+    return registrations.length >= 2; // Limit to 2 accounts per user
 }
 
 // ✅ Register User
@@ -6052,100 +6052,117 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 });
   
 
-// ✅ Users and Exam Data
+// ✅ Function to allocate exams based on User ID
+function allocateUsersToExams(users, exams) {
+    const examAllocations = {};
+
+    users.forEach(user => {
+        const allocatedExams = [];
+        while (allocatedExams.length < 2) { // Each user gets 2 random exams
+            const randomExam = exams[Math.floor(Math.random() * exams.length)];
+            if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
+                allocatedExams.push(randomExam);
+            }
+        }
+        examAllocations[user.userId] = allocatedExams; // Store exams per user ID
+    });
+
+    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+}
+
+// ✅ Example Users and Exams
 const users = [
-  { id: 'user1', fullName: 'User One' },
-  { id: 'user2', fullName: 'User Two' },
-  { id: 'user3', fullName: 'User Three' },
-  { id: 'user4', fullName: 'User Four' },
-  { id: 'user5', fullName: 'User Five' },
-  { id: 'user6', fullName: 'User Six' },
-  { id: 'user7', fullName: 'User Seven' },
-  { id: 'user8', fullName: 'User Eight' },
-  { id: 'user9', fullName: 'User Nine' },
-  { id: 'user10', fullName: 'User Ten' }
+    { userId: "NASS-4JX3", fullName: "Alice Smith" },
+    { userId: "ARTS-9T5B", fullName: "Bob Johnson" },
+    { userId: "TECH-M7XJ", fullName: "Charlie Brown" }
 ];
 
 const exams = [
-  { id: 'exam1', title: 'Mock Exam 1' },
-  { id: 'exam2', title: 'Mock Exam 2' }
+    { id: "exam1", title: "Mathematics 101" },
+    { id: "exam2", title: "Physics 201" },
+    { id: "exam3", title: "History 101" },
+    { id: "exam4", title: "Biology 202" }
 ];
 
-// ✅ Function to allocate users to exams
-function allocateUsersToExams(users, exams) {
-  const examAllocations = exams.map(exam => {
-    const allocatedUsers = [];
-    while (allocatedUsers.length < 5) {
-      const randomUser = users[Math.floor(Math.random() * users.length)];
-      if (!allocatedUsers.some(user => user.id === randomUser.id)) {
-        allocatedUsers.push(randomUser);
-      }
-    }
-    return { examId: exam.id, examTitle: exam.title, users: allocatedUsers };
-  });
-
-  localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
-}
-
+// ✅ Allocate exams on page load
 allocateUsersToExams(users, exams);
 
+
 // ✅ Login Event Listener
-document.getElementById('loginBtn').addEventListener('click', function() {
-  const fullName = document.getElementById('fullName').value.trim();
-  const userId = document.getElementById('userID').value.trim();
+document.getElementById('loginBtn').addEventListener('click', function () {
+    const fullName = document.getElementById('fullName').value.trim();
+    const userId = document.getElementById('userID').value.trim();
 
-  const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
-  const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || [];
+    const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
 
-  if (!storedDetails) {
-    alert("No registered user found. Please register first.");
-    return;
-  }
-
-  if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
-    // ✅ Store user session
-    localStorage.setItem("currentUser", JSON.stringify(storedDetails));
-
-    document.getElementById('userDetails').innerText = `
-      Full Name: ${storedDetails.fullName}
-      Department: ${storedDetails.department}
-      Level: ${storedDetails.level}
-      Faculty: ${storedDetails.faculty}
-    `;
-
-    const examsList = document.getElementById('examsList');
-    examsList.innerHTML = '';
-    const userExams = examAllocations.filter(allocation =>
-      allocation.users.some(user => user.id === userId)
-    );
-
-    if (userExams.length > 0) {
-      userExams.forEach(allocation => {
-        const examItem = document.createElement('button');
-        examItem.innerText = allocation.examTitle;
-        examItem.className = 'styled-btn';
-        examItem.addEventListener('click', function() {
-          displayExamSection(allocation.examId);
-        });
-        examsList.appendChild(examItem);
-      });
-    } else {
-      document.getElementById('customExam').classList.remove('hidden');
+    if (!storedDetails) {
+        alert("No registered user found. Please register first.");
+        return;
     }
 
-    document.getElementById('popup').style.display = 'flex';
-    document.getElementById('auth-section').classList.add('hidden');
-    document.getElementById('course-code-section').classList.remove('hidden');
+    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
+        // ✅ Store logged-in session
+        localStorage.setItem("currentUser", JSON.stringify(storedDetails));
 
-  } else {
-    alert("Invalid User ID or Full Name. Please try again.");
-  }
-});
+        document.getElementById('userDetails').innerHTML = `
+            <strong>Full Name:</strong> ${storedDetails.fullName} <br>
+            <strong>Faculty:</strong> ${storedDetails.faculty} <br>
+            <strong>Department:</strong> ${storedDetails.department} <br>
+            <strong>Level:</strong> ${storedDetails.level}
+        `;
+
+        const examsList = document.getElementById('examsList');
+        examsList.innerHTML = ''; // Clear previous exams
+
+        if (examAllocations[userId]) {
+            examAllocations[userId].forEach(exam => {
+                const examItem = document.createElement('button');
+                examItem.innerText = exam.title;
+                examItem.className = 'styled-btn';
+                examItem.addEventListener('click', function () {
+                    startExam(exam.id, exam.title);
+                });
+                examsList.appendChild(examItem);
+            });
+        } else {
+            examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
+        }
+
+        // ✅ Show pop-up screen
+        document.getElementById('popup').style.display = 'flex';
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('course-code-section').classList.remove('hidden');
+
+    } else {
+        alert("Invalid User ID or Full Name. Please try again.");
+    }
+});                                    
 
 // ✅ Close Popup
 document.getElementById('closePopup').addEventListener('click', function() {
   document.getElementById('popup').style.display = 'none';
 });
+// ✅ Start Exam Function
+function startExam(examId, examTitle) {
+    alert(`Starting exam: ${examTitle}`);
+    
+    // ✅ Store selected exam for later use
+    localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
+
+    // ✅ Hide pop-up and go straight to exam session
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('examSection').classList.remove('hidden');
+
+    // ✅ Load exam questions dynamically
+    loadExamQuestions(examId);
+}
+
+// ✅ Close Pop-up Manually
+document.getElementById('closePopup').addEventListener('click', function () {
+    document.getElementById('popup').style.display = 'none';
+});
+      
 
 // ✅ Display Exam Section
 function displayExamSection(examId) {
@@ -6189,22 +6206,28 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-// ✅ Initialize Exam Without Logging Out
+// ✅ Initialize Exam Based on Selection or Manual Input
 function initializeExam() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentExam = JSON.parse(localStorage.getItem('currentExam')); // Retrieve selected exam
 
-  if (!currentUser || !currentUser.fullName) {
-    alert("You must be logged in to access the exam.");
-    return; // ✅ No redirection to login page
-  }
+    if (!currentUser || !currentUser.fullName) {
+        alert("You must be logged in to access the exam.");
+        return;
+    }
 
-  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+    if (currentExam) {
+        userDetails.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.examTitle}`;
+        loadExamQuestions(currentExam.examId);
+    } else {
+        userDetails.textContent = `Candidate: ${currentUser.fullName} | Select a Course Code`;
+    }
 
-  startTime = Date.now();
-  loadQuestion();
-  startTimer();
-  examSection.classList.remove("hidden");
+    startTime = Date.now();
+    startTimer();
+    document.getElementById('examSection').classList.remove("hidden");
 }
+  
 
 
 
