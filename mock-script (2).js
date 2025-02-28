@@ -6084,57 +6084,72 @@ const exams = [
 allocateUsersToExams(users, exams);
 
 // ✅ Show Pop-up When User Logs In
+    document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('loginBtn').addEventListener('click', function () {
-    const fullName = document.getElementById('fullName').value.trim();
-    const userId = document.getElementById('userID').value.trim();
+        const fullName = document.getElementById('fullName').value.trim().toLowerCase();
+        const userId = document.getElementById('userID').value.trim();
 
-    const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
-    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+        const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
 
-    if (!storedDetails) {
-        alert("No registered user found. Please register first.");
-        return;
-    }
+        console.log("Stored Details:", storedDetails); // Debugging
 
-    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
-        // ✅ Store logged-in session
-        localStorage.setItem("currentUser", JSON.stringify(storedDetails));
-
-        document.getElementById('userDetails').innerHTML = `
-            <strong>Full Name:</strong> ${storedDetails.fullName} <br>
-            <strong>Faculty:</strong> ${storedDetails.faculty} <br>
-            <strong>Department:</strong> ${storedDetails.department} <br>
-            <strong>Level:</strong> ${storedDetails.level}
-        `;
-
-        const examsList = document.getElementById('examsList');
-        examsList.innerHTML = ''; // Clear previous exams
-
-        if (examAllocations[userId]) {
-            examAllocations[userId].forEach(exam => {
-                const examItem = document.createElement('button');
-                examItem.innerText = exam.title;
-                examItem.className = 'styled-btn';
-                examItem.addEventListener('click', function () {
-                    startExam(exam.id, exam.title);
-                });
-                examsList.appendChild(examItem);
-            });
-        } else {
-            examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
+        if (!storedDetails) {
+            alert("No registered user found. Please register first.");
+            return;
         }
 
-        // ✅ Show the pop-up modal
-        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
+        if (storedDetails.fullName.toLowerCase() === fullName && storedDetails.userId === userId) {
+            console.log("Login successful. User details matched."); // Debugging
 
-        // ✅ Hide login section, show exam section
-        document.getElementById('auth-section').classList.add('hidden');
-        document.getElementById('course-code-section').classList.remove('hidden');
+            localStorage.setItem("currentUser", JSON.stringify(storedDetails));
 
-    } else {
-        alert("Invalid User ID or Full Name. Please try again.");
-    }
+            const userDetailsElement = document.getElementById('userDetails');
+            const examsList = document.getElementById('examsList');
+            const authSection = document.getElementById('auth-section');
+            const courseCodeSection = document.getElementById('course-code-section');
+            const popup = document.getElementById('popup');
+
+            if (!userDetailsElement || !examsList || !authSection || !courseCodeSection || !popup) {
+                console.error("One or more required elements are missing from the DOM.");
+                alert("An error occurred. Please try again.");
+                return;
+            }
+
+            // ✅ Populate user details
+            userDetailsElement.innerHTML = `
+                <strong>Full Name:</strong> ${storedDetails.fullName} <br>
+                <strong>Faculty:</strong> ${storedDetails.faculty} <br>
+                <strong>Department:</strong> ${storedDetails.department} <br>
+                <strong>Level:</strong> ${storedDetails.level}
+            `;
+
+            // ✅ Populate exam list
+            examsList.innerHTML = '';
+            if (examAllocations[userId] && examAllocations[userId].length > 0) {
+                examAllocations[userId].forEach(exam => {
+                    const examItem = document.createElement('button');
+                    examItem.innerText = exam.title;
+                    examItem.className = 'styled-btn';
+                    examItem.addEventListener('click', function () {
+                        startExam(exam.id, exam.title);
+                    });
+                    examsList.appendChild(examItem);
+                });
+            } else {
+                examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
+            }
+
+            // ✅ Show login success UI
+            popup.classList.add('active');
+            authSection.classList.add('hidden');
+            courseCodeSection.classList.remove('hidden');
+        } else {
+            alert("Invalid User ID or Full Name. Please try again.");
+        }
+    });
 });
+
 
 
     // ✅ Close Pop-up When User Clicks Close Button
