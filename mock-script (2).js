@@ -6234,7 +6234,9 @@ function initializeExam() {
 }
 // ✅ Function to Load Exam Questions
 function loadExamQuestions(examId) {
-    if (!questionBanks[examId]) {
+    console.log("Loading questions for exam:", examId); // Debugging log
+
+    if (!questionBanks || !questionBanks[examId]) {
         alert("No questions available for this exam.");
         return;
     }
@@ -6247,32 +6249,49 @@ function loadExamQuestions(examId) {
         return;
     }
 
-    // ✅ Show first question
-    currentQuestionIndex = 1;
-    displayQuestion();
+    // ✅ Ensure we start from the first question
+    currentQuestionIndex = 0; // Fix: Start at the first question
+    displayQuestion(); // Load the first question
               }
-
-              
-// Load Current Question
+      
+// ✅ Function to Load Current Question
 function loadQuestion() {
-  const question = questions[currentQuestionIndex];
+    if (!questions || questions.length === 0) {
+        console.error("No questions loaded.");
+        alert("No questions found for this exam.");
+        return;
+    }
 
-  // Add question number dynamically
-  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+    if (currentQuestionIndex >= questions.length) {
+        console.error("Question index out of range.");
+        return;
+    }
 
-  // Populate Answer Options with correct numbering
-  answerOptions.innerHTML = question.options
-    .map((option, index) => `
-      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-        ${option}
-      </button>
-    `)
-    .join("");
+    const question = questions[currentQuestionIndex];
 
-  highlightSelectedAnswer();
-  updateButtons();
-  updateProgressBar();
+    if (!question || !question.text) {
+        console.error("Invalid question format.");
+        alert("Error loading question. Please restart the exam.");
+        return;
+    }
+
+    // ✅ Add question number dynamically
+    questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+
+    // ✅ Populate Answer Options with correct numbering
+    answerOptions.innerHTML = question.options
+        .map((option, index) => `
+            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+                ${option}
+            </button>
+        `)
+        .join("");
+
+    highlightSelectedAnswer();
+    updateButtons();
+    updateProgressBar();
 }
+
 
 // Highlight Previously Selected Answer
 function highlightSelectedAnswer() {
