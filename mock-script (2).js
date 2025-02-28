@@ -5994,52 +5994,63 @@ function returnToLogin() {
 
 // ✅ Faculty-based User ID Generation
 function generateUserID(facultyCode) {
-  const randomString = Math.random().toString(36).substr(2, 4).toUpperCase(); // Random 4-character mix of letters and numbers
-  return `${facultyCode}-${randomString}`;
+    const randomString = Math.random().toString(36).substr(2, 4).toUpperCase(); // Random 4-character mix of letters and numbers
+    return `${facultyCode}-${randomString}`;
 }
 
-// ✅ Check if user already registered
+// ✅ Prevent users from registering more than 2 accounts
 function hasReachedRegistrationLimit() {
-  const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-  return registrations.length >= 2; // Limit to 2 accounts per user
+    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+    return registrations.length >= 2; // Limit to 2 accounts per user
 }
 
 // ✅ Register User
-document.getElementById('registrationForm').addEventListener('submit', function (event) {
-  event.preventDefault();
+document.getElementById('registerAccountBtn').addEventListener('click', function () {
+    const fullName = document.getElementById('registerFullName').value.trim();
+    const facultySelect = document.getElementById('faculty');
+    const facultyCode = facultySelect.value; // Selected faculty code
+    const department = document.getElementById('department').value.trim();
+    const level = document.getElementById('level').value.trim();
 
-  const fullName = document.getElementById('registerFullName').value.trim();
-  const facultySelect = document.getElementById('faculty');
-  const facultyCode = facultySelect.value; // Selected faculty code
-  const department = document.getElementById('department').value.trim();
-  const level = document.getElementById('level').value.trim();
+    if (!fullName || !facultyCode || !department || !level) {
+        alert('Please fill in all fields to register.');
+        return;
+    }
 
-  if (!fullName || !facultyCode || !department || !level) {
-    alert('Please fill in all fields to register.');
-    return;
-  }
+    if (hasReachedRegistrationLimit()) {
+        alert("You have reached the registration limit. You can't register more accounts.");
+        return;
+    }
 
-  if (hasReachedRegistrationLimit()) {
-    alert("You have reached the registration limit. You can't register more accounts.");
-    return;
-  }
+    const userId = generateUserID(facultyCode);
+    const userDetails = { 
+        fullName, 
+        faculty: facultySelect.options[facultySelect.selectedIndex].text, 
+        department, 
+        level, 
+        userId 
+    };
 
-  const userId = generateUserID(facultyCode);
-  const userDetails = { fullName, faculty: facultySelect.options[facultySelect.selectedIndex].text, department, level, userId };
+    // ✅ Store user details in localStorage
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+    localStorage.setItem('currentUser', JSON.stringify(userDetails));
 
-  // ✅ Store user details in localStorage
-  localStorage.setItem('userDetails', JSON.stringify(userDetails));
-  localStorage.setItem('currentUser', JSON.stringify(userDetails));
+    // ✅ Track number of registrations
+    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+    registrations.push(userId);
+    localStorage.setItem("userRegistrations", JSON.stringify(registrations));
 
-  // ✅ Track number of registrations
-  const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-  registrations.push(userId);
-  localStorage.setItem("userRegistrations", JSON.stringify(registrations));
-
-  document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
-  alert('Registration successful! Your User ID is: ' + userId);
-  window.location.href = 'new-index.html';
+    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
+    alert('Registration successful! Your User ID is: ' + userId);
+    window.location.href = 'new-index.html';
 });
+
+// ✅ Back to Login Button
+document.getElementById("backToLoginBtn").addEventListener("click", () => {
+    document.getElementById("registration-section").classList.add("hidden");
+    document.getElementById("auth-section").classList.remove("hidden");
+});
+  
 
 // ✅ Users and Exam Data
 const users = [
