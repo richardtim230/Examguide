@@ -295,8 +295,9 @@
         background: linear-gradient(135deg, #2193b0, #6dd5ed);
     }
     
-   .popup {
-    display: none;  /* Hidden by default */
+/* ✅ Fix Pop-up Display */
+#popup {
+    display: none; /* Initially hidden */
     position: fixed;
     top: 50%;
     left: 50%;
@@ -305,7 +306,17 @@
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
 }
+
+/* ✅ Ensure it appears when active */
+#popup.active {
+    display: block !important;
+}
+
  
 
 .popup-content {
