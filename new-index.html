@@ -295,46 +295,97 @@
         background: linear-gradient(135deg, #2193b0, #6dd5ed);
     }
     
-/* ✅ Fix Pop-up Display */
-#popup {
-  display: none;
+/* ✅ Stylish Pop-up */
+.popup {
+    display: none; /* Initially hidden */
     position: fixed;
-  top: 0;
-  left: 0;
-  width: 95%;
-  height: 98%;
-  background-color: white;
-  z-index: 999;
-  overflow-y: auto;
-  padding: 20px;
-        border-radius: 8px;
-  text-align: left; /* Align all texts to the left */
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-buttom: 10px;
-}
-
-/* ✅ Ensure it appears when active */
-#popup.active {
-    display: block !important;
-}
-
- 
-
-.popup-content {
-    background: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.15); /* Light glass effect */
+    backdrop-filter: blur(15px); /* Glassmorphism effect */
     padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
     text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
+
+/* ✅ Show pop-up with smooth fade-in */
+.popup.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ✅ Pop-up Inner Content */
+.popup-content {
+    background: rgba(255, 255, 255, 0.85); /* Softer background */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Close Button */
 .close-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 15px;
+    font-size: 22px;
     cursor: pointer;
-    font-size: 24px;
+    color: #ff5c5c;
+    transition: color 0.3s ease;
 }
+
+.close-btn:hover {
+    color: #ff1a1a;
+}
+
+/* ✅ Exams Container */
+.exams-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ✅ Stylish Exam Buttons */
+.exam-btn {
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.exam-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+}
+
+/* ✅ Close Button */
+.styled-btn {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.styled-btn:hover {
+    transform: scale(1.05);
+    }
+    
 .hidden {
     display: none;
 }
@@ -378,22 +429,26 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     <button id="registerAccountBtn" class="styled-btn">Register</button>
     <button id="backToLoginBtn" class="styled-btn">Back to Log In</button> 
+  <!-- ✅ Display User ID After Registration -->
+<p id="userIdDisplay"></p>
 </div>
 <!-- ✅ Display User ID After Registration -->
 <p id="userIdDisplay"></p>
   
-<!-- ✅ Exam Pop-up -->
-<div id="popup" class="modal hidden">
-    <div class="modal-content">
+<!-- ✅ Beautiful Exam Pop-up -->
+<div id="popup" class="popup hidden">
+    <div class="popup-content">
+        <span id="closePopup" class="close-btn">&times;</span>
         <h2>Welcome to Your Exam</h2>
         <p id="userDetails"></p>
 
         <h3>Available Exams:</h3>
-        <div id="examsList"></div>
+        <div id="examsList" class="exams-container"></div>
 
-        <button id="closePopup" class="styled-btn">Close</button>
+        <button id="closePopupBtn" class="styled-btn">Close</button>
     </div>
 </div>
+  
 
     </div>
 </div>
