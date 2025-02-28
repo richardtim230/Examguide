@@ -368,21 +368,19 @@
     <button id="backToLoginBtn" class="styled-btn">Back to Log In</button> 
 </div>
 
-<!-- ✅ Display User ID After Registration -->
-<p id="userIdDisplay"></p>
-
-
-<!-- Popup Section -->
-<div id="popup" class="popup hidden">
-    <div class="popup-content">
-        <span class="close-btn" id="closePopup">&times;</span>
-        <h2>User Details</h2>
+<!-- ✅ Exam Pop-up -->
+<div id="popup" class="modal hidden">
+    <div class="modal-content">
+        <h2>Welcome to Your Exam</h2>
         <p id="userDetails"></p>
+
+        <h3>Available Exams:</h3>
         <div id="examsList"></div>
-        <div id="customExam" class="hidden">
-            <h3>Custom Exam</h3>
-            <button id="customExamBtn" class="styled-btn">Start Custom Exam</button>
-        </div>
+
+        <button id="closePopup" class="styled-btn">Close</button>
+    </div>
+</div>
+
     </div>
 </div>
   
