@@ -6085,7 +6085,6 @@ allocateUsersToExams(users, exams);
 
 // ✅ Show Pop-up When User Logs In
 document.getElementById('loginBtn').addEventListener('click', function () {
-document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('loginBtn').addEventListener('click', function () {
         const fullNameInput = document.getElementById('fullName').value.trim();
         const userIdInput = document.getElementById('userID').value.trim();
