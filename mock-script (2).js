@@ -5964,18 +5964,33 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Call this function before initializing the exam
 function initializeExam() {
-  if (!isAuthenticated()) {
-    alert("You must be logged in to access the exam.");
-    window.location.href = "login.html"; // Redirect to the login page
-    return;
-  }
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-  userDetails.textContent = `Candidate: ${fullName} | Course: ${selectedCourseCode}`;
-  startTime = Date.now();
-  loadQuestion();
-  startTimer();
-  examSection.classList.remove("hidden");
+    if (!currentUser || !currentUser.fullName) {
+        alert("Session expired! Please log in again.");
+        returnToLogin(); // Handles logout properly
+        return;
+    }
+
+    if (!selectedCourseCode) {
+        alert("Please select a course before starting the exam.");
+        return;
+    }
+
+    userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+
+    startTime = Date.now();
+    loadQuestion();
+    startTimer();
+    examSection.classList.remove("hidden");
 }
+
+// Helper function to handle logout and redirection
+function returnToLogin() {
+    localStorage.removeItem('currentUser'); // Clear session data
+    window.location.href = "new-index.html"; // Redirect to login page
+}
+
 
 // Function to allocate five random users to each exam
 function allocateUsersToExams(users, exams) {
@@ -6139,22 +6154,24 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.9);
 }
 
+// Initialize Exam
 function initializeExam() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!currentUser) {
+    if (!currentUser || !currentUser.fullName) {
         alert("You must be logged in to access the exam.");
         window.location.href = "login.html"; // Redirect to login page
         return;
     }
 
-    document.getElementById('userDetails').textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
-    
+    userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+
     startTime = Date.now();
     loadQuestion();
     startTimer();
     examSection.classList.remove("hidden");
 }
+
 
 
 // Load Current Question
