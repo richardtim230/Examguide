@@ -5995,23 +5995,17 @@ function returnToLogin() {
 // Function to allocate five random users to each exam
 function allocateUsersToExams(users, exams) {
     const examAllocations = exams.map(exam => {
-        const allocatedUsers = [];
-        while (allocatedUsers.length < 5) {
-            const randomUser = users[Math.floor(Math.random() * users.length)];
-            if (!allocatedUsers.includes(randomUser)) {
-                allocatedUsers.push(randomUser);
-            }
-        }
+        const shuffledUsers = [...users].sort(() => Math.random() - 0.5);
         return {
             examId: exam.id,
             examTitle: exam.title,
-            users: allocatedUsers
+            users: shuffledUsers.slice(0, Math.min(5, users.length))
         };
     });
     localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 }
 
-// Example usage
+// Example user and exam data
 const users = [
     { id: 'user1', fullName: 'User One' },
     { id: 'user2', fullName: 'User Two' },
@@ -6030,13 +6024,15 @@ const exams = [
     { id: 'exam2', title: 'Mock Exam 2' }
 ];
 
+// Allocate users to exams
 allocateUsersToExams(users, exams);
 
+// Register User
 document.getElementById('registerAccountBtn').addEventListener('click', function() {
-    const fullName = document.getElementById('registerFullName').value;
-    const department = document.getElementById('department').value;
-    const level = document.getElementById('level').value;
-    const faculty = document.getElementById('faculty').value;
+    const fullName = document.getElementById('registerFullName').value.trim();
+    const department = document.getElementById('department').value.trim();
+    const level = document.getElementById('level').value.trim();
+    const faculty = document.getElementById('faculty').value.trim();
 
     if (!fullName || !department || !level || !faculty) {
         alert('Please fill in all fields to register.');
@@ -6044,35 +6040,34 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     }
 
     const userId = Math.random().toString(36).substr(2, 5); 
-    const userDetails = { fullName, department, level, faculty, userId };
+    const userDetails = { fullName, department, level, faculty, id: userId };
+    
     localStorage.setItem('userDetails', JSON.stringify(userDetails)); 
 
-    alert('Registration successful! Your User ID is: ' + userId);
+    alert(`Registration successful! Your User ID is: ${userId}`);
     window.location.href = 'new-index.html'; 
 });
 
-    
-
-const CUSTOM_EXAM_ID = 'customExam';
-const CUSTOM_EXAM_TITLE = 'Custom Mock Exam';
-
+// Login User
 document.getElementById('loginBtn').addEventListener('click', function() {
-    const fullName = document.getElementById('fullName').value.trim();
+    const fullName = document.getElementById('fullName').value.trim().toLowerCase();
     const userId = document.getElementById('userID').value.trim();
 
     const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
     const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || [];
+
+    console.log("Stored User Details:", storedDetails);
+    console.log("Entered Name:", fullName);
+    console.log("Entered ID:", userId);
 
     if (!storedDetails) {
         alert("No registered user found. Please register first.");
         return;
     }
 
-    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
-        // Store the user session
+    if (storedDetails.fullName.trim().toLowerCase() === fullName && storedDetails.id === userId) {
         localStorage.setItem('currentUser', JSON.stringify({ fullName, userId }));
 
-        // Update user details in the UI
         document.getElementById('userDetails').innerText = `
             Full Name: ${storedDetails.fullName}
             Department: ${storedDetails.department}
@@ -6084,7 +6079,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = '';
         const userExams = examAllocations.filter(allocation =>
-            allocation.users.some(user => user.userId === userId)
+            allocation.users.some(user => user.id === userId)
         );
 
         if (userExams.length > 0) {
@@ -6101,15 +6096,13 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             document.getElementById('customExam').classList.remove('hidden');
         }
 
-        // ✅ Ensure the pop-up screen is displayed
         const popup = document.getElementById('popup');
         if (popup) {
-            popup.style.display = 'flex';  // Ensure it becomes visible
+            popup.style.display = 'flex'; 
         } else {
             console.error("Popup element not found! Check your HTML.");
         }
 
-        // Hide login screen and show course selection
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
 
@@ -6118,51 +6111,59 @@ document.getElementById('loginBtn').addEventListener('click', function() {
     }
 });
 
+// Close Popup
 document.getElementById('closePopup').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
 });
 
+// Display Exam Section
 function displayExamSection(examId) {
     alert('Displaying exam section for exam ID: ' + examId);
 }
-  
+
+// Show Registration Screen
 document.getElementById('registerBtn').addEventListener('click', function() {
     document.getElementById('auth-section').classList.add('hidden');
     document.getElementById('registration-section').classList.remove('hidden');
 });
 
+// Back to Login
 const backToLoginBtn = document.getElementById("backToLoginBtn");
+if (backToLoginBtn) {
+    backToLoginBtn.addEventListener("click", () => {
+        document.getElementById("registration-section").classList.add("hidden");
+        document.getElementById("auth-section").classList.remove("hidden");
+    });
+}
 
-backToLoginBtn.addEventListener("click", () => {
-  document.getElementById("registration-section").classList.add("hidden");
-  document.getElementById("auth-section").classList.remove("hidden");
-});
+// Course Selection
+const selectCourseBtn = document.getElementById("selectCourseBtn");
+const courseCodeSection = document.getElementById("course-code-section");
+const examSection = document.getElementById("exam-section");
 
-// Select Course Code
 selectCourseBtn.addEventListener("click", () => {
-  const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
+    const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
 
-  if (!courseCodeInput || !questionBanks[courseCodeInput]) {
-    alert("Invalid course code. Please try again.");
-    return;
-  }
+    if (!courseCodeInput || !questionBanks[courseCodeInput]) {
+        alert("Invalid course code. Please try again.");
+        return;
+    }
 
-  selectedCourseCode = courseCodeInput;
-  questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
+    selectedCourseCode = courseCodeInput;
+    questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); 
 
-  if (questions.length === 0) {
-    alert("No questions available for this course. Please try another course code.");
-    return;
-  }
+    if (questions.length === 0) {
+        alert("No questions available for this course. Please try another course code.");
+        return;
+    }
 
-  courseCodeSection.classList.add("hidden");
-  initializeExam();
+    courseCodeSection.classList.add("hidden");
+    initializeExam();
 });
 
-
-// Shuffle questions randomly
+// Shuffle Questions
 function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.9);
+    return array.sort(() => Math.random() - 0.5);
 }
 
 // Initialize Exam
@@ -6171,10 +6172,11 @@ function initializeExam() {
 
     if (!currentUser || !currentUser.fullName) {
         alert("You must be logged in to access the exam.");
-        window.location.href = "new-index.html"; // Redirect to login page
+        window.location.href = "new-index.html"; 
         return;
     }
 
+    const userDetails = document.getElementById("userDetails");
     userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
 
     startTime = Date.now();
@@ -6182,6 +6184,8 @@ function initializeExam() {
     startTimer();
     examSection.classList.remove("hidden");
 }
+
+    
 
 
 
