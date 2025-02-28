@@ -6139,22 +6139,24 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.9);
 }
 
+// Initialize Exam
 function initializeExam() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!currentUser) {
+    if (!currentUser || !currentUser.fullName) {
         alert("You must be logged in to access the exam.");
         window.location.href = "login.html"; // Redirect to login page
         return;
     }
 
-    document.getElementById('userDetails').textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
-    
+    userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+
     startTime = Date.now();
     loadQuestion();
     startTimer();
     examSection.classList.remove("hidden");
 }
+
 
 
 // Load Current Question
