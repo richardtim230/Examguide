@@ -6069,9 +6069,10 @@ document.getElementById('loginBtn').addEventListener('click', function() {
     }
 
     if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
-        // Store the full name globally for use in other sections
+        // Store the user session
         localStorage.setItem('currentUser', JSON.stringify({ fullName, userId }));
 
+        // Update user details in the UI
         document.getElementById('userDetails').innerText = `
             Full Name: ${storedDetails.fullName}
             Department: ${storedDetails.department}
@@ -6079,6 +6080,7 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             Faculty: ${storedDetails.faculty}
         `;
 
+        // Display allocated exams
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = '';
         const userExams = examAllocations.filter(allocation =>
@@ -6099,8 +6101,15 @@ document.getElementById('loginBtn').addEventListener('click', function() {
             document.getElementById('customExam').classList.remove('hidden');
         }
 
-        // Move to the next section
-        document.getElementById('popup').style.display = 'flex';
+        // ✅ Ensure the pop-up screen is displayed
+        const popup = document.getElementById('popup');
+        if (popup) {
+            popup.style.display = 'flex';  // Ensure it becomes visible
+        } else {
+            console.error("Popup element not found! Check your HTML.");
+        }
+
+        // Hide login screen and show course selection
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
 
@@ -6108,8 +6117,6 @@ document.getElementById('loginBtn').addEventListener('click', function() {
         alert("Invalid User ID or Full Name. Please try again.");
     }
 });
-
-
 
 document.getElementById('closePopup').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
