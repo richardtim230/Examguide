@@ -6011,7 +6011,7 @@ function allocateUsersToExams(users, exams) {
 
 // ✅ Example Users and Exams
 const users = [
-    { userId: "NASS-4JX3", fullName: "Alice Smith" },
+    { userId: "NASS-0874", fullName: "Richard Ochuko" },
     { userId: "ARTS-9T5B", fullName: "Bob Johnson" },
     { userId: "TECH-M7XJ", fullName: "Charlie Brown" }
 ];
@@ -6127,8 +6127,12 @@ document.getElementById('loginBtn').addEventListener('click', function () {
             examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
         }
 
-        // ✅ Show pop-up screen
-        document.getElementById('popup').style.display = 'flex';
+      
+
+// ✅ Show the pop-up modal
+        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
+
+        // ✅ Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
 
@@ -6137,10 +6141,8 @@ document.getElementById('loginBtn').addEventListener('click', function () {
     }
 });
 
-
-
-document.getElementById('closePopup').addEventListener('click', function() {
-    document.getElementById('popup').style.display = 'none';
+document.getElementById('closePopup').addEventListener('click', function () {
+    document.getElementById('popup').classList.remove('active'); // ✅ Hide pop-up
 });
 
 function displayExamSection(examId) {
