@@ -6518,56 +6518,51 @@ backToLoginBtn.addEventListener("click", () => {
 
 
 // Select Course Code
+// Event listener to select course code
 selectCourseBtn.addEventListener("click", () => {
-  const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
+    const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
+    
+    if (!courseCodeInput || !questionBanks[courseCodeInput]) {
+        alert("Invalid course code. Please try again.");
+        return;
+    }
 
-  if (!courseCodeInput || !questionBanks[courseCodeInput]) {
-    alert("Invalid course code. Please try again.");
-    return;
-  }
+    selectedCourseCode = courseCodeInput;
+    questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
 
-  selectedCourseCode = courseCodeInput;
-  questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
+    if (questions.length === 0) {
+        alert("No questions available for this course. Please try another course code.");
+        return;
+    }
 
-  if (questions.length === 0) {
-    alert("No questions available for this course. Please try another course code.");
-    return;
-  }
-
-  courseCodeSection.classList.add("hidden");
-  initializeExam();
+    courseCodeSection.classList.add("hidden");
+    initializeExam(); // Ensure this function is called
 });
 
 // Initialize Exam
 function initializeExam() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (!currentUser || !currentUser.fullName) {
+    alert("Session expired! Please log in again.");
+    returnToLogin();
+    return;
+  }
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("You must be logged in to access the exam.");
-        return;
-    }
+  if (!selectedCourseCode) {
+    alert("Please select a course before starting the exam.");
+    return;
+  }
 
-    if (currentExam) {
-        userDetails.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.examTitle}`;
-        loadQuestion();
-    } else {
-        userDetails.textContent = `Candidate: ${currentUser.fullName} | Select a Course Code`;
-    }
+  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
 
-    startTime = Date.now();
-    startTimer();
-    loadQuestion(); // Ensure loadQuestion is called here
-    document.getElementById('examSection').classList.remove("hidden");
+  startTime = Date.now();
+  loadQuestion();
+  startTimer();
+  examSection.classList.remove("hidden");
 }
 
 // Load Current Question
 function loadQuestion() {
-  if (questions.length === 0) {
-    alert("No questions available to load.");
-    return;
-  }
-
   const question = questions[currentQuestionIndex];
 
   // Add question number dynamically
