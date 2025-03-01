@@ -6597,19 +6597,28 @@ function loadQuestion() {
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
+
 // Start Exam Function
 function startExam(examId, examTitle) {
     alert(`Starting exam: ${examTitle}`);
     
-    // Store selected exam details in localStorage for later use
+    // Store selected exam for later use
     localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
 
-    // Hide the pop-up and go straight to the exam section
+    // Hide pop-up and go straight to exam session
     document.getElementById('popup').style.display = 'none';
     document.getElementById('examSection').classList.remove('hidden');
 
-    // Load exam questions dynamically
-    loadExamQuestions(examId);
+    // Initialize exam with selected course code
+    selectedCourseCode = examId;
+    questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
+
+    if (questions.length === 0) {
+        alert("No questions available for this course. Please try another course code.");
+        return;
+    }
+
+    initializeExam();
 }
 
 // Load Exam Questions
