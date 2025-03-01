@@ -6036,8 +6036,7 @@ function hasReachedRegistrationLimit() {
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
     return registrations.length >= 2; // Limit to 2 accounts per user
 }
-
-// ✅ Register User
+// Register User
 document.getElementById('registerAccountBtn').addEventListener('click', function () {
     const fullName = document.getElementById('registerFullName').value.trim();
     const facultySelect = document.getElementById('faculty');
@@ -6064,11 +6063,16 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         userId 
     };
 
-    // ✅ Store user details in localStorage
+    // Store user details in localStorage
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
     localStorage.setItem('currentUser', JSON.stringify(userDetails));
 
-    // ✅ Track number of registrations
+    // Automatically assign exam ID "BOT203-T2" to the new user
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    examAllocations[userId] = [{ id: "BOT203-T2", title: "BOT203-T2" }];
+    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+
+    // Track number of registrations
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
     registrations.push(userId);
     localStorage.setItem("userRegistrations", JSON.stringify(registrations));
@@ -6078,6 +6082,9 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     window.location.href = 'new-index.html';
 });
 
+
+
+
 // ✅ Back to Login Button
 document.getElementById("backToLoginBtn").addEventListener("click", () => {
     document.getElementById("registration-section").classList.add("hidden");
@@ -6086,6 +6093,7 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 
 
     
+// Login User
 document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
     const userId = document.getElementById('userID').value.trim();
@@ -6112,19 +6120,24 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = ''; // Clear previous exams
 
-        if (examAllocations[userId]) {
-            examAllocations[userId].forEach(exam => {
-                const examItem = document.createElement('button');
-                examItem.innerText = exam.title;
-                examItem.className = 'styled-btn';
-                examItem.addEventListener('click', function () {
-                    startExam(exam.id, exam.title); // Call startExam directly
-                });
-                examsList.appendChild(examItem);
-            });
-        } else {
-            examsList.innerHTML = `<p>No assigned exams. You can manually enter a course code.</p>`;
+        // Ensure "BOT203-T2" is included in the user's exam allocations
+        if (!examAllocations[userId]) {
+            examAllocations[userId] = [];
         }
+        if (!examAllocations[userId].some(exam => exam.id === "BOT203-T2")) {
+            examAllocations[userId].push({ id: "BOT203-T2", title: "BOT203-T2" });
+        }
+
+        // Display assigned exams
+        examAllocations[userId].forEach(exam => {
+            const examItem = document.createElement('button');
+            examItem.innerText = exam.title;
+            examItem.className = 'styled-btn';
+            examItem.addEventListener('click', function () {
+                startExam(exam.id, exam.title);
+            });
+            examsList.appendChild(examItem);
+        });
 
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
@@ -6138,10 +6151,8 @@ document.getElementById('loginBtn').addEventListener('click', function () {
     }
 });
 
-      
-
 document.getElementById('closePopup').addEventListener('click', function () {
-    document.getElementById('popup').classList.remove('active'); // ✅ Hide pop-up
+    document.getElementById('popup').classList.remove('active'); // Hide pop-up
 });
 
 
