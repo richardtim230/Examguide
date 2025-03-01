@@ -6087,6 +6087,37 @@ function hasReachedRegistrationLimit() {
     return registrations.length >= 2; // Limit to 2 accounts per user
 }
 
+document.getElementById('registerAccountBtn').addEventListener('click', function () {
+    const fullName = document.getElementById('registerFullName').value.trim();
+    const facultySelect = document.getElementById('faculty');
+    const facultyCode = facultySelect.value;
+    const department = document.getElementById('department').value.trim();
+    const level = document.getElementById('level').value.trim();
+
+    if (!fullName || !facultyCode || !department || !level) {
+        alert('Please fill in all fields to register.');
+        return;
+    }
+
+    const userId = generateUserID(facultyCode);
+    const userDetails = { 
+        fullName, 
+        faculty: facultySelect.options[facultySelect.selectedIndex].text, 
+        department, 
+        level, 
+        userId 
+    };
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push(userDetails);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    console.log("Registered Users:", users); // Debugging
+
+    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
+    alert('Registration successful! Your User ID is: ' + userId);
+    window.location.href = 'new-index.html';
+});
 
 
 // ✅ Function to allocate exams based on User ID
@@ -6123,7 +6154,59 @@ const exams = [
 allocateUsersToExams(users, exams);
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('loginBtn').addEventListener('click', function () {
+        const fullName = document.getElementById('fullName').value.trim().toLowerCase();
+        const userId = document.getElementById('userID').value.trim();
 
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        console.log("Users in Storage:", users); // Debugging
+        console.log("Input Full Name:", fullName, "Input User ID:", userId); // Debugging
+
+        if (users.length === 0) {
+            alert("No registered users found. Please register first.");
+            return;
+        }
+
+        const matchingUser = users.find(user => user.fullName.toLowerCase() === fullName && user.userId === userId);
+
+        if (!matchingUser) {
+            alert("Invalid User ID or Full Name. Please try again.");
+            return;
+        }
+
+        console.log("Login successful:", matchingUser); // Debugging
+
+        localStorage.setItem("currentUser", JSON.stringify(matchingUser));
+
+        const userDetailsElement = document.getElementById('userDetails');
+        const examsList = document.getElementById('examsList');
+        const authSection = document.getElementById('auth-section');
+        const courseCodeSection = document.getElementById('course-code-section');
+        const popup = document.getElementById('popup');
+
+        if (!userDetailsElement || !examsList || !authSection || !courseCodeSection || !popup) {
+            console.error("One or more required elements are missing from the DOM.");
+            alert("An error occurred. Please try again.");
+            return;
+        }
+
+        // ✅ Populate user details
+        userDetailsElement.innerHTML = `
+            <strong>Full Name:</strong> ${matchingUser.fullName} <br>
+            <strong>Faculty:</strong> ${matchingUser.faculty} <br>
+            <strong>Department:</strong> ${matchingUser.department} <br>
+            <strong>Level:</strong> ${matchingUser.level}
+        `;
+
+        // ✅ Show success UI
+        popup.classList.add('active');
+        authSection.classList.add('hidden');
+        courseCodeSection.classList.remove('hidden');
+    });
+});
+        
 
 
     // ✅ Close Pop-up When User Clicks Close Button
