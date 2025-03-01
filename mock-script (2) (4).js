@@ -6355,7 +6355,7 @@ function allocateUsersToExams(users, exams) {
 
 // ✅ Example Users and Exams
 const users = [
-    { userId: "NASS-0874", fullName: "Richard Ochuko" },
+    { userId: "PHARM-VUT2", fullName: "Richard Ochuko" },
     { userId: "NASS-RIEM", fullName: "Richard Ochuko" },
     { userId: "ARTS-TVG1", fullName: "Richard Ochuko" }
 ];
@@ -6538,33 +6538,27 @@ selectCourseBtn.addEventListener("click", () => {
   initializeExam();
 });
 
-// Initialize Exam with questions
+// Initialize Exam
 function initializeExam() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
-  if (!currentUser || !currentUser.fullName) {
-    alert("Session expired! Please log in again.");
-    returnToLogin(); // Handles logout properly
-    return;
-  }
+    if (!currentUser || !currentUser.fullName) {
+        alert("You must be logged in to access the exam.");
+        return;
+    }
 
-  if (!selectedCourseCode) {
-    alert("Please select a course before starting the exam.");
-    return;
-  }
+    if (currentExam) {
+        userDetails.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.examTitle}`;
+        loadQuestion();
+    } else {
+        userDetails.textContent = `Candidate: ${currentUser.fullName} | Select a Course Code`;
+    }
 
-  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
-  
-  // Check if questions are populated
-  if (questions.length === 0) {
-    alert("No questions available for this course. Please try another course code.");
-    return;
-  }
-
-  startTime = Date.now();
-  startTimer();
-  loadQuestion(); // Ensure loadQuestion is called here
-  examSection.classList.remove("hidden");
+    startTime = Date.now();
+    startTimer();
+    loadQuestion(); // Ensure loadQuestion is called here
+    document.getElementById('examSection').classList.remove("hidden");
 }
 
 // Load Current Question
@@ -6646,44 +6640,9 @@ function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
 }
 
-// Initialize Exam
-function initializeExam() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("You must be logged in to access the exam.");
-        return;
-    }
 
-    if (currentExam) {
-        userDetails.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.examTitle}`;
-        loadQuestion();
-    } else {
-        userDetails.textContent = `Candidate: ${currentUser.fullName} | Select a Course Code`;
-    }
 
-    startTime = Date.now();
-    startTimer();
-    document.getElementById('examSection').classList.remove("hidden");
-}
-
-// Load Current Question
-function loadQuestion() {
-    const question = questions[currentQuestionIndex];
-    questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
-    answerOptions.innerHTML = question.options
-        .map((option, index) => `
-            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-                ${option}
-            </button>
-        `)
-        .join("");
-
-    highlightSelectedAnswer();
-    updateButtons();
-    updateProgressBar();
-}
 
 
 // Highlight Previously Selected Answer
