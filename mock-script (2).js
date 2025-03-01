@@ -1,3 +1,88 @@
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('loginBtn').addEventListener('click', function () {
+        const fullName = document.getElementById('fullName').value.trim().toLowerCase();
+        const userId = document.getElementById('userID').value.trim();
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        console.log("Users in Storage:", users); // Debugging
+        console.log("Input Full Name:", fullName, "Input User ID:", userId); // Debugging
+
+        if (users.length === 0) {
+            alert("No registered users found. Please register first.");
+            return;
+        }
+
+        const matchingUser = users.find(user => user.fullName.toLowerCase() === fullName && user.userId === userId);
+
+        if (!matchingUser) {
+            alert("Invalid User ID or Full Name. Please try again.");
+            return;
+        }
+
+        console.log("Login successful:", matchingUser); // Debugging
+
+        localStorage.setItem("currentUser", JSON.stringify(matchingUser));
+
+        const userDetailsElement = document.getElementById('userDetails');
+        const examsList = document.getElementById('examsList');
+        const authSection = document.getElementById('auth-section');
+        const courseCodeSection = document.getElementById('course-code-section');
+        const popup = document.getElementById('popup');
+
+        if (!userDetailsElement || !examsList || !authSection || !courseCodeSection || !popup) {
+            console.error("One or more required elements are missing from the DOM.");
+            alert("An error occurred. Please try again.");
+            return;
+        }
+
+        // ✅ Populate user details
+        userDetailsElement.innerHTML = `
+            <strong>Full Name:</strong> ${matchingUser.fullName} <br>
+            <strong>Faculty:</strong> ${matchingUser.faculty} <br>
+            <strong>Department:</strong> ${matchingUser.department} <br>
+            <strong>Level:</strong> ${matchingUser.level}
+        `;
+
+        // ✅ Show success UI
+        popup.classList.add('active');
+        authSection.classList.add('hidden');
+        courseCodeSection.classList.remove('hidden');
+    });
+});
+          document.getElementById('registerAccountBtn').addEventListener('click', function () {
+    const fullName = document.getElementById('registerFullName').value.trim();
+    const facultySelect = document.getElementById('faculty');
+    const facultyCode = facultySelect.value;
+    const department = document.getElementById('department').value.trim();
+    const level = document.getElementById('level').value.trim();
+
+    if (!fullName || !facultyCode || !department || !level) {
+        alert('Please fill in all fields to register.');
+        return;
+    }
+
+    const userId = generateUserID(facultyCode);
+    const userDetails = { 
+        fullName, 
+        faculty: facultySelect.options[facultySelect.selectedIndex].text, 
+        department, 
+        level, 
+        userId 
+    };
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push(userDetails);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    console.log("Registered Users:", users); // Debugging
+
+    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
+    alert('Registration successful! Your User ID is: ' + userId);
+    window.location.href = 'new-index.html';
+});
+                                                         console.log("Users in Storage:", JSON.parse(localStorage.getItem("users")));
+console.log("Current User:", JSON.parse(localStorage.getItem("currentUser")));
 
 const validUserIDs = [
   "USER101", "OAU-ZgXvX", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
