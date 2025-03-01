@@ -6284,6 +6284,13 @@ correct: 1,
 let questions = []; // Placeholder for dynamically loaded questions
 
 // DOM Elements
+const closePopupBtn = document.getElementById('closePopupBtn');
+const closePopup = document.getElementById('closePopup');
+const authSection = document.getElementById('auth-section');
+const registrationSection = document.getElementById('registration-section');
+const popup = document.getElementById('popup');
+
+
 const authSection = document.getElementById("auth-section");
 const courseCodeSection = document.getElementById("course-code-section");
 const examSection = document.getElementById("exam-section");
@@ -6496,7 +6503,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 });
 
 // Close Popup Functionality
-const closePopupBtn = document.getElementById('closePopup');
+const closePopupBtn = document.getElementById('closePopupBtn');
 const popup = document.getElementById('popup');
 
 closePopupBtn.addEventListener('click', () => {
