@@ -3,6 +3,7 @@
 const validUserIDs = [
   "USER101", "OAU-ZgXvX", "OAU-Kg78V", "OAU-69FRv", "OAU-ryxMg", "OAU-b97cs", "OAU-oZTc5", "OAU-tUea4", "OAU-4FXLJ", "OAU-0ZqXe", "OAU-ztcIb", "OAU-JCfg0", "OAU-fcBhe", "OAU-1Wmt4", "OAU-ZYEu7", "OAU-sqZ2H", "OAU-YF6b8", "OAU-pRGfP", "OAU-I4KCh", "OAU-vwd1N", "OAU-U6UJd", "OAU-Bs3rn", "OAU-Lmgw1", "OAU-zonhD", "OAU-MQZiX", "OAU-M4FP5", "OAU-AFJF0", "OAU-Dsq5y", "OAU-MXqZ9", "OAU-3Loap", "OAU-aPaYK", "OAU-oDkB8", "ZAT61G", "OAU-gn5H1", "OAU-GBXbW", "OAU-pPtXA", "OAU-8zM0P", "OAU-Cts4O", "OAU-P5nJv", "C9OJNB", "OAU-iM1rP", "YO638H", "OAU-QuKF7", "OAU-eElXp", "OAU-D7QPC", "OAU-vs1He", "OAU-GM7jE", "OAU-nTs6h", "OAU-4iDRs", "OAU-Hx08e", "OAU-giRIJ", "380PSM", "6YF1OG", "NI59IE", "V5KAMW", "ENOKAF", "O34U90", "C4BVOZ", "QM39NB", "KEEWPP", "OAU-8UaFi", "NJ5PKC", "43V107", "DNV83T", "QJ8RJZ", "VUA6KK", "2ZDGJM", "QQTIRS","537G6R", "WFX1S9", "77EOLI", "59UD2L", "2WN6FP", "CEIJ7E", "3IV4RI", "BSIZTQ", "K3RBVK", "XR0QEV", "J2DTAN", "ZKWN3U", "9UR3N6", "KNNP24", "3XHF8Z", "R7F0YO", "GIY77W", "FB32H6", "X64SH5"]; // Admin-activated user IDs
   
+
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let timerInterval;
@@ -5991,298 +5992,208 @@ function returnToLogin() {
 }
 
 
-// ✅ Faculty-based User ID Generation
-function generateUserID(facultyCode) {
-    const randomString = Math.random().toString(36).substr(2, 4).toUpperCase(); // Random 4-character mix of letters and numbers
-    return `${facultyCode}-${randomString}`;
+// Function to allocate five random users to each exam
+function allocateUsersToExams(users, exams) {
+    const examAllocations = exams.map(exam => {
+        const allocatedUsers = [];
+        while (allocatedUsers.length < 5) {
+            const randomUser = users[Math.floor(Math.random() * users.length)];
+            if (!allocatedUsers.includes(randomUser)) {
+                allocatedUsers.push(randomUser);
+            }
+        }
+        return {
+            examId: exam.id,
+            examTitle: exam.title,
+            users: allocatedUsers
+        };
+    });
+    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 }
 
-// ✅ Prevent users from registering more than 2 accounts
-function hasReachedRegistrationLimit() {
-    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 2; // Limit to 2 accounts per user
-}
+// Example usage
+const users = [
+    { id: 'user1', fullName: 'User One' },
+    { id: 'user2', fullName: 'User Two' },
+    { id: 'user3', fullName: 'User Three' },
+    { id: 'user4', fullName: 'User Four' },
+    { id: 'user5', fullName: 'User Five' },
+    { id: 'user6', fullName: 'User Six' },
+    { id: 'user7', fullName: 'User Seven' },
+    { id: 'user8', fullName: 'User Eight' },
+    { id: 'user9', fullName: 'User Nine' },
+    { id: 'user10', fullName: 'User Ten' }
+];
 
-document.getElementById('registerAccountBtn').addEventListener('click', function () {
-    const fullName = document.getElementById('registerFullName').value.trim();
-    const facultySelect = document.getElementById('faculty');
-    const facultyCode = facultySelect.value;
-    const department = document.getElementById('department').value.trim();
-    const level = document.getElementById('level').value.trim();
+const exams = [
+    { id: 'exam1', title: 'Mock Exam 1' },
+    { id: 'exam2', title: 'Mock Exam 2' }
+];
 
-    if (!fullName || !facultyCode || !department || !level) {
+allocateUsersToExams(users, exams);
+
+document.getElementById('registerAccountBtn').addEventListener('click', function() {
+    const fullName = document.getElementById('registerFullName').value;
+    const department = document.getElementById('department').value;
+    const level = document.getElementById('level').value;
+    const faculty = document.getElementById('faculty').value;
+
+    if (!fullName || !department || !level || !faculty) {
         alert('Please fill in all fields to register.');
         return;
     }
 
-    const userId = generateUserID(facultyCode);
-    const userDetails = { 
-        fullName, 
-        faculty: facultySelect.options[facultySelect.selectedIndex].text, 
-        department, 
-        level, 
-        userId 
-    };
+    const userId = Math.random().toString(36).substr(2, 5); 
+    const userDetails = { fullName, department, level, faculty, userId };
+    localStorage.setItem('userDetails', JSON.stringify(userDetails)); 
 
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    users.push(userDetails);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    console.log("Registered Users:", users); // Debugging
-
-    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
     alert('Registration successful! Your User ID is: ' + userId);
-    window.location.href = 'new-index.html';
+    window.location.href = 'new-index.html'; 
 });
 
+    
 
-// ✅ Function to allocate exams based on User ID
-function allocateUsersToExams(users, exams) {
-    const examAllocations = {};
+const CUSTOM_EXAM_ID = 'customExam';
+const CUSTOM_EXAM_TITLE = 'Custom Mock Exam';
 
-    users.forEach(user => {
-        const allocatedExams = [];
-        while (allocatedExams.length < 2) { // Each user gets 2 random exams
-            const randomExam = exams[Math.floor(Math.random() * exams.length)];
-            if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
-                allocatedExams.push(randomExam);
-            }
-        }
-        examAllocations[user.userId] = allocatedExams; // Store exams per user ID
-    });
+document.getElementById('loginBtn').addEventListener('click', function() {
+    const fullName = document.getElementById('fullName').value.trim();
+    const userId = document.getElementById('userID').value.trim();
 
-    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
-}
+    const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || [];
 
-// ✅ Example Users and Exams
-const users = [
-    { userId: "NASS-6599", fullName: "Richard Ochuko" },
-    { userId: "ARTS-9T5B", fullName: "Bob Johnson" },
-    { userId: "TECH-M7XJ", fullName: "Charlie Brown" }
-];
+    if (!storedDetails) {
+        alert("No registered user found. Please register first.");
+        return;
+    }
 
-const exams = [
-    { id: "BOT203-T2", title: "GENETICS STUDIES" },
-    { id: "BOT203-T3", title: "Physics 201" }
-];
-
-// ✅ Allocate exams on page load
-allocateUsersToExams(users, exams);
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('loginBtn').addEventListener('click', function () {
-        const fullName = document.getElementById('fullName').value.trim().toLowerCase();
-        const userId = document.getElementById('userID').value.trim();
-
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        console.log("Users in Storage:", users); // Debugging
-        console.log("Input Full Name:", fullName, "Input User ID:", userId); // Debugging
-
-        if (users.length === 0) {
-            alert("No registered users found. Please register first.");
-            return;
-        }
-
-        const matchingUser = users.find(user => user.fullName.toLowerCase() === fullName && user.userId === userId);
-
-        if (!matchingUser) {
-            alert("Invalid User ID or Full Name. Please try again.");
-            return;
-        }
-
-        console.log("Login successful:", matchingUser); // Debugging
-
-        localStorage.setItem("currentUser", JSON.stringify(matchingUser));
-
-        const userDetailsElement = document.getElementById('userDetails');
-        const examsList = document.getElementById('examsList');
-        const authSection = document.getElementById('auth-section');
-        const courseCodeSection = document.getElementById('course-code-section');
-        const popup = document.getElementById('popup');
-
-        if (!userDetailsElement || !examsList || !authSection || !courseCodeSection || !popup) {
-            console.error("One or more required elements are missing from the DOM.");
-            alert("An error occurred. Please try again.");
-            return;
-        }
-
-        // ✅ Populate user details
-        userDetailsElement.innerHTML = `
-            <strong>Full Name:</strong> ${matchingUser.fullName} <br>
-            <strong>Faculty:</strong> ${matchingUser.faculty} <br>
-            <strong>Department:</strong> ${matchingUser.department} <br>
-            <strong>Level:</strong> ${matchingUser.level}
+    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
+        document.getElementById('userDetails').innerText = `
+            Full Name: ${storedDetails.fullName}
+            Department: ${storedDetails.department}
+            Level: ${storedDetails.level}
+            Faculty: ${storedDetails.faculty}
         `;
 
-        // ✅ Show success UI
-        popup.classList.add('active');
-        authSection.classList.add('hidden');
-        courseCodeSection.classList.remove('hidden');
-    });
+        const examsList = document.getElementById('examsList');
+        examsList.innerHTML = '';
+        const userExams = examAllocations.filter(allocation =>
+            allocation.users.some(user => user.userId === userId) // Ensure userId matches
+        );
+
+        if (userExams.length > 0) {
+            userExams.forEach(allocation => {
+                const examItem = document.createElement('button');
+                examItem.innerText = allocation.examTitle;
+                examItem.className = 'styled-btn';
+                examItem.addEventListener('click', function() {
+                    displayExamSection(allocation.examId);
+                });
+                examsList.appendChild(examItem);
+            });
+        } else {
+            document.getElementById('customExam').classList.remove('hidden');
+        }
+
+        // Show the pop-up or move to exam section
+        document.getElementById('popup').style.display = 'flex';
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('course-code-section').classList.remove('hidden');
+
+    } else {
+        alert("Invalid User ID or Full Name. Please try again.");
+    }
 });
-        
 
 
-    // ✅ Close Pop-up When User Clicks Close Button
-    document.getElementById('closePopupBtn').addEventListener('click', function () {
-        document.getElementById('popup').classList.remove('active');
-    });
-
-    // ✅ Close Pop-up When Clicking the Close "X" Button
-    document.getElementById('closePopup').addEventListener('click', function () {
-        document.getElementById('popup').classList.remove('active');
-    });
+document.getElementById('closePopup').addEventListener('click', function() {
+    document.getElementById('popup').style.display = 'none';
 });
 
-
-// ✅ Start Exam When Clicking an Exam Title
-function startExam(examId, examTitle) {
-    alert(`Starting exam: ${examTitle}`);
-
-    // ✅ Store selected exam for later use
-    localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
-
-    // ✅ Hide pop-up and go straight to exam session
-    document.getElementById('popup').classList.remove('active');
-    document.getElementById('course-code-section').classList.add('hidden');
-    document.getElementById('exam-section').classList.remove('hidden');
-
-    // ✅ Load the exam questions dynamically
-    initializeExam();
-     }
-     
-      
-
-// ✅ Display Exam Section
 function displayExamSection(examId) {
-  alert('Displaying exam section for exam ID: ' + examId);
+    alert('Displaying exam section for exam ID: ' + examId);
 }
-
-// ✅ Toggle Registration and Login Views
+  
 document.getElementById('registerBtn').addEventListener('click', function() {
-  document.getElementById('auth-section').classList.add('hidden');
-  document.getElementById('registration-section').classList.remove('hidden');
+    document.getElementById('auth-section').classList.add('hidden');
+    document.getElementById('registration-section').classList.remove('hidden');
 });
 
-document.getElementById("backToLoginBtn").addEventListener("click", () => {
+const backToLoginBtn = document.getElementById("backToLoginBtn");
+
+backToLoginBtn.addEventListener("click", () => {
   document.getElementById("registration-section").classList.add("hidden");
   document.getElementById("auth-section").classList.remove("hidden");
 });
 
-document.getElementById("selectCourseBtn").addEventListener("click", () => {
-    const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
+// Select Course Code
+selectCourseBtn.addEventListener("click", () => {
+  const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
 
-    if (!courseCodeInput || !questionBanks[courseCodeInput]) {
-        alert("Invalid course code. Please try again.");
-        return;
-    }
+  if (!courseCodeInput || !questionBanks[courseCodeInput]) {
+    alert("Invalid course code. Please try again.");
+    return;
+  }
 
-    // ✅ Store selected course for reference
-    localStorage.setItem("currentExam", JSON.stringify({ examId: courseCodeInput, examTitle: courseCodeInput }));
+  selectedCourseCode = courseCodeInput;
+  questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
 
-    // ✅ Hide course code section and show exam section
-    document.getElementById("course-code-section").classList.add("hidden");
-    document.getElementById("exam-section").classList.remove("hidden");
+  if (questions.length === 0) {
+    alert("No questions available for this course. Please try another course code.");
+    return;
+  }
 
-    // ✅ Load selected exam questions
-    initializeExam();
+  courseCodeSection.classList.add("hidden");
+  initializeExam();
 });
 
 
-// ✅ Shuffle Questions
+// Shuffle questions randomly
 function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
+  return array.sort(() => Math.random() - 0.9);
 }
 
-// ✅ Initialize Exam Based on Selected Exam or Manual Input
+// Initialize Exam
 function initializeExam() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam')); // ✅ Retrieve selected exam
 
     if (!currentUser || !currentUser.fullName) {
         alert("You must be logged in to access the exam.");
+        window.location.href = "login.html"; // Redirect to login page
         return;
     }
 
-    if (currentExam) {
-        // ✅ Display the selected exam
-        document.getElementById('user-details').textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.examTitle}`;
-        document.getElementById('exam-title').textContent = currentExam.examTitle;
+    userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
 
-        // ✅ Load exam questions based on the selected exam
-        loadExamQuestions(currentExam.examId);
-    } else {
-        alert("No exam selected. Please choose an exam.");
-        return;
-    }
-
-    // ✅ Start timer and display exam section
     startTime = Date.now();
+    loadQuestion();
     startTimer();
-    document.getElementById('exam-section').classList.remove("hidden");
+    examSection.classList.remove("hidden");
 }
-// ✅ Function to Load Exam Questions
-function loadExamQuestions(examId) {
-    console.log("Loading questions for exam:", examId); // Debugging log
 
-    if (!questionBanks || !questionBanks[examId]) {
-        alert("No questions available for this exam.");
-        return;
-    }
 
-    // ✅ Shuffle and select first 50 questions
-    questions = shuffleArray(questionBanks[examId]).slice(0, 50);
 
-    if (questions.length === 0) {
-        alert("No questions available. Please try another exam.");
-        return;
-    }
-
-// ✅ Ensure we start from the first question
-currentQuestionIndex = 0; 
-loadQuestion(); // Fix: Call the correct function
-
-      
-// ✅ Function to Load Current Question
+// Load Current Question
 function loadQuestion() {
-    if (!questions || questions.length === 0) {
-        console.error("No questions loaded.");
-        alert("No questions found for this exam.");
-        return;
-    }
+  const question = questions[currentQuestionIndex];
 
-    if (currentQuestionIndex >= questions.length) {
-        console.error("Question index out of range.");
-        return;
-    }
+  // Add question number dynamically
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-    const question = questions[currentQuestionIndex];
+  // Populate Answer Options with correct numbering
+  answerOptions.innerHTML = question.options
+    .map((option, index) => `
+      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+        ${option}
+      </button>
+    `)
+    .join("");
 
-    if (!question || !question.text) {
-        console.error("Invalid question format.");
-        alert("Error loading question. Please restart the exam.");
-        return;
-    }
-
-    // ✅ Add question number dynamically
-    questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
-
-    // ✅ Populate Answer Options with correct numbering
-    answerOptions.innerHTML = question.options
-        .map((option, index) => `
-            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-                ${option}
-            </button>
-        `)
-        .join("");
-
-    highlightSelectedAnswer();
-    updateButtons();
-    updateProgressBar();
+  highlightSelectedAnswer();
+  updateButtons();
+  updateProgressBar();
 }
-
 
 // Highlight Previously Selected Answer
 function highlightSelectedAnswer() {
