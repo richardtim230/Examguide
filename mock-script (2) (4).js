@@ -6012,7 +6012,7 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "NASS-0874", fullName: "Richard Ochuko" },
     { userId: "NASS-RIEM", fullName: "Richard Ochuko" },
-    { userId: "TECH-M7XJ", fullName: "Charlie Brown" }
+    { userId: "ARTS-LUTF", fullName: "Richard Ochuko" }
 ];
 
 const exams = [
@@ -6280,7 +6280,20 @@ document.getElementById('closePopup').addEventListener('click', function () {
     document.getElementById('popup').classList.remove('active'); // ✅ Hide pop-up
 });
 
+// Start Exam
+function startExam(examId, examTitle) {
+    alert(`Starting exam: ${examTitle}`);
 
+    // Store selected exam for later use
+    localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
+
+    // Hide pop-up and go straight to exam session
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('examSection').classList.remove('hidden');
+
+    // Load exam questions dynamically
+    loadExamQuestions(examId);
+}
                                    
 
 // Load Current Question
