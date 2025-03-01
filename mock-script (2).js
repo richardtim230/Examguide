@@ -6087,54 +6087,7 @@ function hasReachedRegistrationLimit() {
     return registrations.length >= 2; // Limit to 2 accounts per user
 }
 
-// ✅ Register User - Now stores multiple users in localStorage
-document.getElementById('registerAccountBtn').addEventListener('click', function () {
-    const fullName = document.getElementById('registerFullName').value.trim();
-    const facultySelect = document.getElementById('faculty');
-    const facultyCode = facultySelect.value;
-    const department = document.getElementById('department').value.trim();
-    const level = document.getElementById('level').value.trim();
 
-    if (!fullName || !facultyCode || !department || !level) {
-        alert('Please fill in all fields to register.');
-        return;
-    }
-
-    if (hasReachedRegistrationLimit()) {
-        alert("You have reached the registration limit. You can't register more accounts.");
-        return;
-    }
-
-    const userId = generateUserID(facultyCode);
-    const userDetails = { 
-        fullName, 
-        faculty: facultySelect.options[facultySelect.selectedIndex].text, 
-        department, 
-        level, 
-        userId 
-    };
-
-    // ✅ Store multiple users in an array
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    users.push(userDetails);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    // ✅ Track number of registrations
-    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    registrations.push(userId);
-    localStorage.setItem("userRegistrations", JSON.stringify(registrations));
-
-    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
-    alert('Registration successful! Your User ID is: ' + userId);
-    window.location.href = 'new-index.html';
-});
-
-// ✅ Back to Login Button
-document.getElementById("backToLoginBtn").addEventListener("click", () => {
-    document.getElementById("registration-section").classList.add("hidden");
-    document.getElementById("auth-section").classList.remove("hidden");
-});
-  
 
 // ✅ Function to allocate exams based on User ID
 function allocateUsersToExams(users, exams) {
@@ -6169,45 +6122,7 @@ const exams = [
 // ✅ Allocate exams on page load
 allocateUsersToExams(users, exams);
 
-// ✅ Show Pop-up When User Logs In
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('loginBtn').addEventListener('click', function () {
-        const fullName = document.getElementById('fullName').value.trim().toLowerCase();
-        const userId = document.getElementById('userID').value.trim();
 
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        console.log("Users in Local Storage:", users); // Debugging
-
-        if (users.length === 0) {
-            alert("No registered users found. Please register first.");
-            return;
-        }
-
-        const matchingUser = users.find(user => user.fullName.toLowerCase() === fullName && user.userId === userId);
-
-        if (matchingUser) {
-            console.log("Login successful:", matchingUser);
-
-            localStorage.setItem("currentUser", JSON.stringify(matchingUser));
-
-            document.getElementById('userDetails').innerHTML = `
-                <strong>Full Name:</strong> ${matchingUser.fullName} <br>
-                <strong>Faculty:</strong> ${matchingUser.faculty} <br>
-                <strong>Department:</strong> ${matchingUser.department} <br>
-                <strong>Level:</strong> ${matchingUser.level}
-            `;
-
-            // ✅ Show UI updates
-            document.getElementById('popup').classList.add('active');
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('course-code-section').classList.remove('hidden');
-        } else {
-            alert("Invalid User ID or Full Name. Please try again.");
-        }
-    });
-});
-     
 
 
 
