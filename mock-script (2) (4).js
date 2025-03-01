@@ -6357,11 +6357,11 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "NASS-0874", fullName: "Richard Ochuko" },
     { userId: "NASS-RIEM", fullName: "Richard Ochuko" },
-    { userId: "ARTS-LUTF", fullName: "Richard Ochuko" }
+    { userId: "ARTS-TVG1", fullName: "Richard Ochuko" }
 ];
 
 const exams = [
-    { id: "exam1", title: "Mathematics 101" },
+    { id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY" },
     { id: "exam2", title: "Physics 201" },
     { id: "exam3", title: "History 101" },
     { id: "exam4", title: "Biology 202" }
@@ -6414,7 +6414,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
 
     // Automatically assign exam ID "BOT203-T2" to the new user
     const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-    examAllocations[userId] = [{ id: "BOT203-T2", title: "BOT203-T2" }];
+    examAllocations[userId] = [{ id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY ONE" }];
     localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
     // Track number of registrations
