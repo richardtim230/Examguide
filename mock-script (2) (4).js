@@ -6427,8 +6427,16 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     window.location.href = 'new-index.html';
 });
 
-
-
+//Exam Allocation 
+examAllocations[userId].forEach(exam => {
+    const examItem = document.createElement('button');
+    examItem.innerText = exam.title;
+    examItem.className = 'styled-btn';
+    examItem.addEventListener('click', function () {
+        startExam(exam.id, exam.title);
+    });
+    examsList.appendChild(examItem);
+});
 
 // ✅ Back to Login Button
 document.getElementById("backToLoginBtn").addEventListener("click", () => {
