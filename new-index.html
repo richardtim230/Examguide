@@ -294,7 +294,7 @@
     }
     
 /* ✅ Stylish Pop-up */
-.popup {
+#popup {
     display: none; /* Initially hidden */
     position: fixed;
     top: 10%;
@@ -312,6 +312,12 @@
     text-align: center;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+}
+
+/* ✅ Ensure it appears when active */
+#popup.active {
+    display: block !important;
+  opacity: 1;
 }
 
 /* ✅ Show pop-up with smooth fade-in */
