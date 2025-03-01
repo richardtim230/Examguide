@@ -293,23 +293,22 @@
         background: linear-gradient(135deg, #2193b0, #6dd5ed);
     }
     
+
 /* ✅ Stylish Pop-up */
 #popup {
     display: none; /* Initially hidden */
     position: fixed;
-    top: 50%;
-    left: 50%;
-  height: 95%;
-    transform: translate(-50%, -50%);
+    top: 0; /* Change from 50% to 0 */
+    left: 0; /* Change from 50% to 0 */
+    height: 100%; /* Change from 95% to 100% */
+    width: 100%; /* Ensure it covers the full width */
+    transform: none; /* Remove translate to center */
     background: rgba(255, 255, 255, 0.15); /* Light glass effect */
     backdrop-filter: blur(15px); /* Glassmorphism effect */
     padding: 20px;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 450px;
-    text-align: center;
+    border-radius: 0; /* Remove border-radius */
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
@@ -317,7 +316,7 @@
 /* ✅ Ensure it appears when active */
 #popup.active {
     display: block !important;
-  opacity: 1;
+    opacity: 1;
 }
 
 /* ✅ Show pop-up with smooth fade-in */
@@ -326,12 +325,14 @@
     opacity: 1;
 }
 
-/*✅ Pop-up Inner Content */
+/* ✅ Pop-up Inner Content */
 .popup-content {
     background: rgba(255, 255, 255, 0.85); /* Softer background */
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-height: calc(100% - 40px); /* Adjust for padding */
+    overflow-y: auto; /* Enable scrolling if content overflows */
 }
 
 /* ✅ Close Button */
@@ -348,6 +349,9 @@
 .close-btn:hover {
     color: #ff1a1a;
 }
+
+
+
 
 /* ✅ Exams Container */
 .exams-container {
