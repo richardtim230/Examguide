@@ -6304,6 +6304,12 @@ const resultsSummary = document.getElementById("results-summary");
 const downloadPDF = document.getElementById("downloadPDF");
 
 
+const closePopupBtn = document.getElementById('closePopupBtn');
+const closePopup = document.getElementById('closePopup');
+const authSection = document.getElementById('auth-section');
+const registrationSection = document.getElementById('registration-section');
+
+const popup = document.getElementById('popup');
 
 
 // Initialize Exam
@@ -6516,6 +6522,13 @@ backToLoginBtn.addEventListener("click", () => {
   document.getElementById("auth-section").classList.remove("hidden");
 });
 
+// Close Popup Functionality
+const closePopupBtn = document.getElementById('closePopup');
+const popup = document.getElementById('popup');
+
+closePopupBtn.addEventListener('click', () => {
+    popup.classList.remove('active');
+});
 
 // Select Course Code
 // Event listener to select course code
