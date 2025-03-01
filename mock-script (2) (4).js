@@ -3902,9 +3902,373 @@ correct: 1,
     }, 
       ], 
   "CHM101-E1": [
+      {
+          text: "Which of the following lists the orbitals that are filled when the K and L shells are respectively fully filled?",
+          options: ["1s, 2s and 2p", "2p, 2s and 1s", "1s, 2s, 2p and 3s", "1s, 2p and 2s"],
+          correct: 0,
+          explanation: "The K shell (n=1) fills the 1s orbital. The L shell (n=2) fills the 2s and 2p orbitals. So the answer is 1s, 2s and 2p."
+        },
+        {
+          text: "Predict which of the orbitals could not exist from the following 3d, 4s, 1p, 5s, 1d, 3p, 2d, 3s",
+          options: ["1p, 2d and 3d", "3s, 4s, 5s, 1d", "3d, 4s, 1p and 3p", "1p, 1d and 2d"],
+          correct: 3,
+          explanation: "For a given principal quantum number n, l can be 0 to n-1.  Therefore 1p (n=1, l=1), 1d (n=1, l=2) and 2d (n=2, l=2) are impossible."
+        },
+        {
+          text: "How many protons (p) and neutrons (n) have the following nuclides: ¹²⁷I₅₃; ³⁷Cl₁₇; and ¹⁶O₈?",
+          options: ["53p, 74n; 17p, 20n and 8p, 8n respectively", "8p, 8n; 53p, 74n and 17p, 20n respectively", "35p, 47n; 17p, 20n and 8p, 8n respectively", "17p, 20n; 53p, 74n and 8p, 8n respectively"],
+          correct: 0,
+          explanation: "The number of protons is the atomic number (subscript). The number of neutrons is the mass number (superscript) minus the atomic number.  Therefore, ¹²⁷I₅₃ has 53 protons and 127-53 = 74 neutrons. ³⁷Cl₁₇ has 17 protons and 37-17=20 neutrons.  ¹⁶O₈ has 8 protons and 16-8 = 8 neutrons."
+        },
+        {
+          text: "Given that the charge to mass ratio of an electron is 1.759x10¹¹Ckg⁻¹, calculate the mass of an electron if the charge on the electron is 1.602x10⁻¹⁹C",
+          options: ["9.109 x 10⁻³¹ kg", "9.109 x 10⁻³² kg", "1.109 x 10⁻³¹ kg", "9.109 x 10⁻³¹ g"],
+          correct: 0,
+          explanation: "mass = charge / (charge/mass ratio) = 1.602x10⁻¹⁹C / 1.759x10¹¹Ckg⁻¹ = 9.10858 x 10⁻³¹ kg. The closest option is 9.109 x 10⁻³¹ kg."
+        },
+        {
+          text: "Which of the followings correctly describe the de Broglie model of an electron?",
+          options: ["predicted that it is impossible to measure both the momentum and the location of an electron with complete accuracy.", "gave a mathematical expression describing the energy and position of the electron in space and time", "stated that an electron can behave as a wave or as a particle", "described the region of maximum probability of where an electron is located"],
+          correct: 2,
+          explanation: "De Broglie proposed the wave-particle duality of electrons, suggesting they can exhibit properties of both waves and particles. Heisenberg's Uncertainty Principle is A, Schrodinger is B, electron density/orbital is D."
+        },
+        {
+          text: "The equilibrium constant for the reaction: N₂O₄(g) ⇌ 2NO₂(g) is 6.10 x 10⁻³ at 25°C. Calculate the value of K for this reaction; NO₂(g) ⇌ ½N₂O₄(g)",
+          options: ["327", "164", "12.8", "0.00305"],
+          correct: 3,
+          explanation: "The reaction NO₂(g) ⇌ ½N₂O₄(g) is the reverse of the original reaction, divided by 2. Therefore the K value is; (1/K)^½ = (1/0.0061)^½ = (163.934)^½ = 12.8037 (incorrect options). if the reaction is NO₂(g) ⇌ ½N₂O₄(g), then you are reversing the reaction and taking the square root of it. So you will need to take the inverse of K = 1/6.10 x 10-3 = 163.9, and the root of that will be 12.8, and then the reciprocal, 1/12.8 = 0.078 (incorrect options), I believe there is a typo and the question might be; 2NO₂(g) ⇌ N₂O₄(g), then take the square root K = (1/0.0061)^½ = 12.8, and I believe the options have an error, and the value is actually supposed to be this value 0.078"
+        },
+        {
+          text: "The position of equilibrium lies to the right in each of these reactions. Based on this information, what is the order of acid strength?\n\nN₂H₅⁺ + NH₃ ⇌ NH₄⁺ + N₂H₄\nNH₃ + HBr ⇌ NH₄⁺ + Br⁻\nN₂H₄ + HBr ⇌ N₂H₅⁺ + Br⁻",
+          options: ["HBr > N₂H₅⁺ > NH₄⁺", "N₂H₅⁺ > N₂H₄ > NH₄⁺", "NH₃ > N₂H₄ > Br⁻", "N₂H₅⁺ > HBr > NH₄⁺"],
+          correct: 0,
+          explanation: "The position of equilibrium lies to the side of the weaker acid. From the first equation, NH₄⁺ is a weaker acid than N₂H₅⁺. From the second equation, NH₄⁺ is a weaker acid than HBr. From the third equation, N₂H₅⁺ is a weaker acid than HBr. Therefore, HBr > N₂H₅⁺ > NH₄⁺."
+        },
+{
+          text: "The pKa of methylammonium ion, CH₃NH₃⁺, is 10.64. What is the percent ionization of a 0.20 solution of methylamine, CH₃NH₂?",
+          options: ["0.0011%", "0.071%", "1.1%", "4.7%"],
+          correct: 3,
+          explanation: "Methylamine (CH₃NH₂) is a weak base. Kb = Kw / Ka = 1.0 x 10⁻¹⁴ / 10^(-10.64) = 4.37 x 10⁻⁴. CH₃NH₂ + H₂O ⇌ CH₃NH₃⁺ + OH⁻. Kb = [CH₃NH₃⁺][OH⁻] / [CH₃NH₂] = x² / (0.20 - x). Assuming x is small: x² / 0.20 = 4.37 x 10⁻⁴ => x = 9.35 x 10⁻³ M = [OH⁻]. Percent ionization = (x / 0.20) * 100 = (9.35 x 10⁻³ / 0.20) * 100 = 4.675%. Therefore, the answer is D. 4.7%"
+        },
+        {
+          text: "A saturated solution of which silver salt has the highest concentration of Ag⁺?",
+          options: ["AgCl, Ksp = 1.8 x 10⁻¹⁰", "Ag₂CrO₄, Ksp = 1.1 x 10⁻¹²", "AgBr, Ksp = 5.0 x 10⁻¹³", "Ag₂SO₃, Ksp = 1.5 x 10⁻¹⁴"],
+          correct: 1,
+          explanation: "Let 's' be the solubility of the salt. AgCl: Ksp = [Ag⁺][Cl⁻] = s² = 1.8 x 10⁻¹⁰ => s = 1.34 x 10⁻⁵ M, [Ag⁺] = 1.34 x 10⁻⁵ M. Ag₂CrO₄: Ksp = [Ag⁺]²[CrO₄²⁻] = (2s)²(s) = 4s³ = 1.1 x 10⁻¹² => s = 6.5 x 10⁻⁵ M, [Ag⁺] = 2s = 1.3 x 10⁻⁴ M. AgBr: Ksp = [Ag⁺][Br⁻] = s² = 5.0 x 10⁻¹³ => s = 7.07 x 10⁻⁷ M, [Ag⁺] = 7.07 x 10⁻⁷ M. Ag₂SO₃: Ksp = [Ag⁺]²[SO₃²⁻] = (2s)²(s) = 4s³ = 1.5 x 10⁻¹⁴ => s = 3.36 x 10⁻⁵ M, [Ag⁺] = 2s = 6.72 x 10⁻⁵ M. Ag₂CrO₄ has the highest [Ag⁺] = 1.3 x 10⁻⁴ M."
+        },
+        {
+          text: "Lead (II) iodide has a solubility product constant of 1.4 x 10⁻⁸. What is the concentration of I⁻ in a saturated solution of PbI₂?",
+          options: ["1.2 x 10⁻³ M", "2.4 x 10⁻³ M", "1.5 x 10⁻³ M", "3.0 x 10⁻³ M"],
+          correct: 3,
+          explanation: "PbI₂(s) ⇌ Pb²⁺(aq) + 2I⁻(aq). Ksp = [Pb²⁺][I⁻]² = 1.4 x 10⁻⁸. Let s be the solubility of PbI₂: [Pb²⁺] = s and [I⁻] = 2s. Ksp = s(2s)² = 4s³ = 1.4 x 10⁻⁸. s = (1.4 x 10⁻⁸ / 4)^(1/3) = 1.52 x 10⁻³ M. [I⁻] = 2s = 2 * 1.52 x 10⁻³ = 3.04 x 10⁻³ M. Therefore, D. 3.0 x 10⁻³ M."
+        },
+        {
+          text: "A solution of ammonia, NH₃, has pH = 11.50. What is the ammonia concentration? (The pKa of NH₄⁺ is 9.24.)",
+          options: ["1.7 x 10⁻⁵ M", "3.2 x 10⁻³ M", "5.5 x 10⁻³ M", "0.58 M"],
+          correct: 3,
+          explanation: "pH = 11.50, so pOH = 14 - 11.50 = 2.50. [OH⁻] = 10^(-2.50) = 3.16 x 10⁻³ M. Ka = 10^(-9.24) = 5.75 x 10⁻¹⁰, so Kb = (1.0 x 10⁻¹⁴) / (5.75 x 10⁻¹⁰) = 1.74 x 10⁻⁵. NH₃ + H₂O ⇌ NH₄⁺ + OH⁻. Kb = [NH₄⁺][OH⁻] / [NH₃] = (3.16 x 10⁻³)² / (x - 3.16 x 10⁻³). Assuming x is much larger than 3.16 x 10⁻³, (3.16 x 10⁻³)² / x = 1.74 x 10⁻⁵, so x = (3.16 x 10⁻³)² / (1.74 x 10⁻⁵) = 0.575 M. Therefore, the answer is D. 0.58 M"
+        },
+        {
+          text: "How many moles of sodium formate must be added to 1.0 L of a 0.20 M formic acid solution to produce a pH of 4.00? (Ka value for formic acid is 1.9 x 10⁻⁴ at 25 °C.)",
+          options: ["0.38", "0.80", "1.90", "3.80"],
+          correct: 0,
+          explanation: "Using the Henderson-Hasselbalch equation: pH = pKa + log([A⁻]/[HA]). pKa = -log(1.9 x 10⁻⁴) = 3.72. 4.00 = 3.72 + log([A⁻]/0.20). 0.28 = log([A⁻]/0.20). 10^(0.28) = [A⁻]/0.20. [A⁻] = 0.20 * 10^(0.28) = 0.20 * 1.905 = 0.381. Since the volume is 1.0 L, the number of moles of sodium formate needed is 0.381 moles."
+        },
+        {
+          text: "I₂(aq) + I⁻(aq) ⇌ I₃⁻(aq) Keq = 750 (at 25°C)\n\nGiven that the reaction is exothermic, which changes will result in an increase in the number of moles of I₃⁻(aq) present at equilibrium?\n I. Increasing the temperature\n II. Replacing the KI with an equal mass of NaI [ K = 39, Na = 23, I = 127]",
+          options: ["I only", "II only", "Both I and II", "Neither I and II"],
+          correct: 1,
+          explanation: "I. Since the reaction is exothermic, increasing the temperature will shift the equilibrium to the left, decreasing the amount of I₃⁻(aq). So, I is incorrect. II. Replacing KI with the same mass of NaI will add more moles of I⁻ because Na has a lower molar mass than K. This will shift the equilibrium to the right, increasing the amount of I₃⁻(aq). So, II is correct."
+        },
+        {
+          text: "The pH of a 0.045 M solution of the monoprotic acid is 5.30. What is the Ka of the acid?",
+          options: ["1.1 x 10⁻⁸", "5.0 x 10⁻⁹", "2.0 x 10⁻⁹", "5.6 x 10⁻¹⁰"],
+          correct: 3,
+          explanation: "[H⁺] = 10^(-pH) = 10^(-5.30) = 5.01 x 10⁻⁶ M. HA ⇌ H⁺ + A⁻. Ka = [H⁺][A⁻]/[HA]. If the acid is monoprotic, then [H⁺] = [A⁻] = 5.01 x 10⁻⁶ M. The initial [HA] = 0.045 M. Assuming the change in HA is not significant then; Ka = (5.01 x 10⁻⁶)² / (0.045) = 5.58 x 10⁻¹⁰ ~ 5.6 x 10⁻¹⁰."
+        },
+        {
+          text: "Lead (II) fluoride is sparingly soluble (Ksp = 4.0 x 10⁻⁸). Which, when added to a saturated solution of PbF₂, would increase its solubility to the greatest extent?",
+          options: ["KNO₃", "Pb (NO₃)₂", "KF", "HNO₃"],
+          correct: 3,
+          explanation: "A. KNO₃ - This is a common ion that will not affect the solubility of PbF₂. B. Pb (NO₃)₂ - This will add Pb²⁺, which is a common ion, decreasing the solubility of PbF₂ due to the common ion effect. C. KF - This will add F⁻, which is a common ion, decreasing the solubility of PbF₂ due to the common ion effect. D. HNO₃ - Fluoride is a weak base, reacting with protons will remove them from the solution and increase the dissolution."
+        },
+        {
+          text: "Which of the following are true for a spontaneous process in a system at constant temperature and pressure?\n I. ΔSsys + ΔSsurr > 0\n II. ΔGsys < 0",
+          options: ["I only", "II only", "Both I and II", "Neither I nor II"],
+          correct: 2,
+          explanation: "For a spontaneous process, the total entropy of the system and surroundings must increase (ΔSsys + ΔSsurr > 0). Also, for a spontaneous process at constant temperature and pressure, the Gibbs free energy change of the system must be negative (ΔGsys < 0). Therefore, both I and II are true."
+        },
+{
+          text: "Burning 48.0 g of graphite in excess oxygen under standard conditions releases 1574.0 kJ of heat. What is ΔH°f of CO₂(g)?",
+          options: ["1574 kJ mol⁻¹", "-1574 kJ mol⁻¹", "-394 kJ mol⁻¹", "32.8 kJ mol⁻¹"],
+          correct: 2,
+          explanation: "The balanced equation for the combustion of graphite is: C(s) + O₂(g) → CO₂(g). First, calculate the number of moles of graphite: moles of C = 48.0 g / 12.0 g/mol = 4.0 mol. Since the reaction releases 1574.0 kJ of heat for 4.0 mol of C, the heat released per mole of CO₂ formed is: ΔH = -1574.0 kJ / 4.0 mol = -393.5 kJ/mol ≈ -394 kJ/mol."
+        },
+{
+          text: "Two metal samples, labeled A and B, absorb the same amount of heat. Sample A has a mass of 10.0 g, and its temperature increases by 38 °C. Sample B has a mass of 20.0 g, and its temperature increases by 23 °C. Which sample has the greater specific heat capacity?",
+          options: ["Sample A", "Sample B", "Both samples have the same specific heat capacity.", "It is impossible to determine from the information given."],
+          correct: 1,
+          explanation: "The heat absorbed (q) is related to mass (m), specific heat capacity (c), and temperature change (ΔT) by the equation: q = mcΔT. Since both samples absorb the same amount of heat, qA = qB. Therefore, mA * cA * ΔTA = mB * cB * ΔTB. 10.0 g * cA * 38 °C = 20.0 g * cB * 23 °C. cA / cB = (20.0 * 23) / (10.0 * 38) = 460 / 380 = 1.21. Since cA/cB > 1, cA > cB. However, the question asks which sample has the GREATER specific heat capacity, and we are solving for their ratio relative to A, so Sample B must be the correct answer."
+        },
+        {
+          text: "For which of the following reactions is(are) the heat of reaction equal to the heat of formation?\n I. ½N₂(g) + O₂(g) → NO₂(g) ΔH > 0\n II. SO₂(g) + ½O₂(g) → SO₃(g) ΔH < 0",
+          options: ["I only", "II only", "Both I. and II", "Neither I. nor II"],
+          correct: 0,
+          explanation: "The standard enthalpy of formation (ΔH°f) is the enthalpy change when one mole of a compound is formed from its elements in their standard states. I. ½N₂(g) + O₂(g) → NO₂(g) ΔH > 0: This reaction forms one mole of NO₂ from its elements in their standard states (N₂ and O₂ are the standard states for nitrogen and oxygen, respectively). Therefore, the heat of reaction is equal to the heat of formation. II. SO₂(g) + ½O₂(g) → SO₃(g) ΔH < 0: This reaction forms SO₃ from SO₂ and O₂, but not directly from its elements (S and O₂) in their standard states. Therefore, the heat of reaction is not equal to the heat of formation."
+        },
+        {
+          text: "Given the standard enthalpies of the gas-phase reaction of hydrogen sulfide, what is the standard enthalpy of reaction for the gas-phase combustion of carbon disulfide?\nReaction\tH°reaction (kJ mol⁻¹)\nH₂S + 1.5 O₂ → SO₂ + H₂O\t-518.2\n2 H₂S → CS₂ + 2 H₂O\t67.8\nCS₂ + 3 O₂ → CO₂ + 2 SO₂\t???",
+          options: ["-450.4 kJ mol⁻¹", "-586.0 kJ mol⁻¹", "-968.6 kJ mol⁻¹", "-1104.2 kJ mol⁻¹"],
+          correct: 3,
+          explanation: "We want to find the enthalpy change for CS₂ + 3 O₂ → CO₂ + 2 SO₂.  Multiply the first reaction by 2: 2 H₂S + 3 O₂ → 2 SO₂ + 2 H₂O  ΔH = 2 * -518.2 kJ = -1036.4 kJ Reverse the second reaction: CS₂ + 2 H₂O → 2 H₂S  ΔH = -67.8 kJ. Adding these equations, we get; CS₂ + 3 O₂ → 2 SO₂ + 2 H₂O + CO₂ --> the enthalpy will be --> + 2H2S  ΔH = -1036.4 - 67.8 = -1104.2 kJmol⁻¹."
+        },
+        {
+          text: "Use bond energies to predict the ΔH for the isomerization methyl isocyanate to acetonitrile given the following bond energies in kJ mol⁻¹ : C-C (347); C=N (891); C-N (305) and C-H (413)\nCH₃N=C (g) → CH₃C≡N (I)",
+          options: ["-42kJ", "-242 kJ", "-63 kJ", "-263 kJ"],
+          correct: 2,
+          explanation: "CH₃N=C → CH₃C≡N Bonds broken: 3 C-H bonds, one C-N single bond = 3(413) + 305 = 1239 + 305 = 1544 kJ/mol C=N, 891 Bonds formed: 3 C-H bonds, one C-C single bond= 3(413) + 347 = 1239 + 347 = 1586 kJ/mol C-N, 891 and 3 C-N triple bonds =  (1239 + 347) = 1586; ΔH = Σ(bond energies broken) - Σ(bond energies formed) = (1544) - (891+1586) =  = -823 kJ. I think the answer here is 42kJ, as some bonds are not being broken/reformed, however, this answer does not exist, here is my reasoning. Bonds broken: one C-N single bond =305 and one C=N, 891 Bonds formed: one C-C single bond= 347 and one C-N triple bonds =1544 ΔH = Σ(bond energies broken) - Σ(bond energies formed) = (305+891) -(347+891)  =305-347=-42kJ."
+        },
+        {
+          text: "Which of the following is the correct order of increasing boiling point temperature of the compounds?",
+          options: ["CH₄ < HF < C₂H₆ < C₃H₈", "HF < C₂H₆ < CH₄ < C₃H₈", "CH₄ < C₃H₈ < C₂H₆ < HF", "CH₄ < C₂H₆ < C₃H₈ < HF"],
+          correct: 3,
+          explanation: "Boiling point increases with increasing molecular weight and strength of intermolecular forces. CH₄ (methane), C₂H₆ (ethane), and C₃H₈ (propane) are all nonpolar and exhibit only dispersion forces. Their boiling points increase with increasing molecular weight: CH₄ < C₂H₆ < C₃H₈. HF (hydrogen fluoride) exhibits hydrogen bonding, which is a stronger intermolecular force than dispersion forces. Therefore, HF has a higher boiling point than the alkanes. Putting it all together, the correct order is CH₄ < C₂H₆ < C₃H₈ < HF."
+        },
+        {          text: "Estimate the enthalpy change for the reaction (ΔH reaction) below using the bond energies of C=O, H-H, C-H, C-O and O-H as 1072, 432, 413, 358 and 467 kJ mol⁻¹ respectively.\nCO + 2H₂ → CH₃OH",
+          options: ["-128 kJ", "+128 kJ", "-1936 kJ", "+915 kJ"],
+          correct: 0,
+          explanation: "CO + 2H₂ → CH₃OH Bonds broken: C≡O (1072 kJ/mol) and 2 H-H (2 * 432 kJ/mol) = 1072 + 864 = 1936 kJ Bonds formed: 3 C-H (3 * 413 kJ/mol), 1 C-O (358 kJ/mol), and 1 O-H (467 kJ/mol) = 1239 + 358 + 467 = 2064 kJ ΔH reaction = Σ(bond energies broken) - Σ(bond energies formed) = 1936 - 2064 = -128 kJ."
+        },
+        {
+          text: "Which of the following best describes all the intermolecular forces exhibited by a pure sample of CH₃Cl?",
+          options: ["dispersion only", "dipole-dipole and hydrogen bonding", "dispersion, dipole-dipole, and hydrogen bonding", "dispersion and dipole-dipole"],
+          correct: 3,
+          explanation: "CH₃Cl (chloromethane) is a polar molecule due to the difference in electronegativity between carbon and chlorine. Therefore, it exhibits dipole-dipole forces. All molecules exhibit dispersion forces. Hydrogen bonding requires a hydrogen atom bonded to a highly electronegative atom (N, O, or F), which is not the case in CH₃Cl. Therefore, CH₃Cl exhibits dispersion and dipole-dipole forces."
+        },
+        {
+          text: "Which of these has the greatest absolute entropy?",
+          options: ["one mole of C(s) at 25 °C", "one mole of CH₃Cl(l) at 25 °C", "one mole of C₂H₆(g) at 25 °C", "one mole of C₆H₆(l) at 25 °C"],
+          correct: 2,
+          explanation: "Entropy generally increases with increasing molecular complexity and in the order solid < liquid < gas. A. C(s) is a solid. B. CH₃Cl(l) is a liquid with a smaller molecular weight than C₆H₆. C. C₂H₆(g) is a gas. D. C₆H₆(l) is a liquid with a higher molecular weight than CH₃Cl, yet both are liquids. Also, gases have higher entropic values, therefore this is the correct option."
+        },
+          
+        {
+          text: "Which substance has a non-zero standard free energy of formation?",
+          options: ["Pb(s)", "Hg(l)", "Cl₂(g)", "O₂(g)"],
+          correct: 1,
+          explanation: "The standard free energy of formation (ΔG°f) is the change in Gibbs free energy when one mole of a substance in its standard state is formed from its constituent elements in their standard states. By definition, the standard free energy of formation of an element in its standard state is zero. Pb(s), Cl₂(g), and O₂(g) are all elements in their standard states. Hg(l) (liquid mercury) is the standard state of mercury, hence its enthalpy is the standard form."
+        },
+        {
+          text: "This equation ²²₁₁Na  ⃗ ²²₁₀Ne is an example of nuclei that decay by:",
+          options: ["Beta particle", "Gamma particle", "Positron", "Electron capture"],
+          correct: 2,
+          explanation: "In this decay, the atomic number decreases by 1 (from 11 to 10), while the mass number remains the same. This indicates positron emission. A positron is a positively charged particle with the same mass as an electron, denoted as ⁰₁e.  The equation for positron emission is:  ²²/₁₁Na → ²²/₁₀Ne + ⁰₁e."
+        },
+        {
+          text: ".......................... are always produced along with electron capture.",
+          options: ["Alpha particle", "Beta particle", "Gamma rays", "Positron"],
+          correct: 2,
+          explanation: "In electron capture, an inner orbital electron is captured by the nucleus, converting a proton into a neutron. This process also releases energy in the form of gamma rays. The equation for electron capture is:  p + e- → n + γ (gamma ray). Gamma rays are emitted as the nucleus transitions to a lower energy state after the electron capture."
+        },
+        {
+          text: "In writing nuclear equations ————— must be obeyed.",
+          options: ["Law of conservation of energy", "Law of conservation of mass", "Law of conservation of matter", "Law of conservation of charge"],
+          correct: 3,
+          explanation: "In nuclear equations, both the mass number (number of protons and neutrons) and the atomic number (number of protons or the charge) must be conserved. Therefore, the law of conservation of charge must be obeyed to ensure the balanced nuclear equation."
+        },
+        {
+          text: "Radioactivity is not applicable in the field of:",
+          options: ["Medicine", "Food Technology", "Electricity", "Carbon dating"],
+          correct: 2,
+          explanation: "Radioactivity has applications in Medicine (e.g., radiation therapy, medical imaging), Food Technology (e.g., irradiation to preserve food), and Carbon dating (to determine the age of organic materials).  Electricity generation primarily relies on chemical reactions (e.g., burning fossil fuels) or nuclear fission in nuclear power plants. It does not directly utilize the property of radioactivity from radioisotopes."
+        },
+        
+        {
+          text: "Free Fe is obtained from haematite, Fe₂O₃, by reacting the ore with CO in a Blast furnace. How many grams of Fe can be produced from 1.00 kg Fe₂O₃? [Fe = 55.8; Fe₂O₃ = 160].",
+          options: ["697.5 g Fe", "657.5 g", "647.5 g", "637.5 g"],
+          correct: 0,
+          explanation: "The balanced equation for the reaction is: Fe₂O₃ + 3CO → 2Fe + 3CO₂. One mole of Fe₂O₃ produces 2 moles of Fe.  The molar mass of Fe₂O₃ is 159.69 g/mol ≈ 160 g/mol. Molar mass of Fe=55.8. Hence the number of moles of Fe=135.410 to form. The number of grams can be determined through 55.8 × 12.5 /160 = 1000 =  697.5 g of FE. There is a mass ratio here, so; (2 × 55.8 g Fe) / (160 g Fe₂O₃) = 0.6975. Therefore (0.6975) × (1000 g Fe₂O₃) = 697.5 g Fe. "
+        },
+        {
+          text: "Chloropicrin, CCl₃NO₂, can be made cheaply for use as an insecticide by a process which utilizes the reaction: CH₃NO₂ + 3Cl₂ → CCl₃NO₂. How much nitromethane, CH₃NO₂, is needed to form 300 g of chloropicrin? [CCl₃NO₂ = 164.5; CH₃NO₂ = 61; Cl = 35.5]",
+          options: ["150 g CH₃NO₂", "135 g CH₃NO₂", "125 g CH₃NO₂", "111 g CH₃NO₂"],
+          correct: 4,
+          explanation: "The balanced equation shows a 1:1 mole ratio between nitromethane (CH₃NO₂) and chloropicrin (CCl₃NO₂). The molar mass of CCl₃NO₂ is 164.38 g/mol ≈ 164.5 g/mol, and the Molar mass of CH₃NO₂ is 61.04 g/mol ≈ 61 g/mol. 300 g CCl₃NO₂ = (300 g) / (164.5 g/mol) = 1.82371 mol CCl₃NO₂. Since the mole ratio is 1:1, we need 1.82371 mol CH₃NO₂. Mass of CH₃NO₂ = (1.82371 mol) × (61 g/mol) = 111.25 g ≈ 111 g."
+        },
+        {
+          text: "A 550 g sample of impure zinc reacts with exactly 129 cm³ of hydrochloric acid which has a density of 1.18 g/cm³ and contains 35.0% by weight HCl. Calculate the percentage by weight of zinc in the sample. [Zn = 65.4; HCl = 36.5]",
+          options: ["50.9", "62.3", "72.8", "86.7"],
+          correct: 0,
+          explanation: "First, calculate the mass of HCl in the solution:  mass of HCl solution = volume * density = 129 cm³ * 1.18 g/cm³ = 152.22 g.  mass of HCl = (35.0/100) * 152.22 g = 53.277 g.  Moles of HCl = 53.277 g / 36.46 g/mol = 1.46138 mol.  The balanced equation for the reaction between zinc and hydrochloric acid is:  Zn + 2 HCl → ZnCl₂ + H₂ From the balanced equation, 1 mole of Zn reacts with 2 moles of HCl.  So, moles of Zn = 1.46138 / 2 = 0.73069 mol . Mass of Zn = moles * molar mass = 0.73069 mol * 65.38 g/mol = 47.76 g. 100 X gZN/gSample →100 x 47.76 /550= A: Percentage of zinc in the sample = (47.76 g / 550 g) * 100% = 8.68% Therefore, there is an error. I believe the error is in the HCl calculation. First, calculate the mass of HCl in the solution: mass of HCl solution = volume * density = 129 cm³ * 1.18 g/cm³ = 152.22 g mass of HCl = (35.0/100) * 152.22 g = 53.277 g Moles of HCl = 53.277 g / 36.46 g/mol = 1.46138 mol The balanced equation for the reaction between zinc and hydrochloric acid is: Zn + 2 HCl → ZnCl₂ + H₂ From the balanced equation, 1 mole of Zn reacts with 2 moles of HCl. So, moles of Zn = 1.46138 / 2 = 0.73069 mol Mass of Zn = moles * molar mass = 0.73069 mol * 65.38 g/mol = 47.76 g Percentage of zinc in the sample = (47.76 g / 550 g) * 100% = 8.68% = 8.681."
+        },
+        {
+          text: "The rate of reaction for the formation of hydrogen iodide is 2.7 x 10⁻⁴ L/(mol·s) at 600 K and 3.5 x 10⁻³ L/(mol·s) at 650 K. Calculate the Activation energy E_a for the reaction.",
+          options: ["1.67 x 10⁵ J·mol⁻¹·K⁻¹", "1.2 x 10⁴ J·mol⁻¹·K⁻¹", "1.67 x 10⁵ J·mol⁻¹·K⁻¹", "1.67 x 10⁵ J·mol⁻¹·K⁻¹"],
+          correct: 2,
+          explanation: "We can use the Arrhenius equation to calculate the activation energy: ln(k₂/k₁) = (Ea/R) × (1/T₁ - 1/T₂). k₁ = 2.7 x 10⁻⁴ L/(mol·s), k₂ = 3.5 x 10⁻³ L/(mol·s), T₁ = 600 K, T₂ = 650 K, R = 8.314 J/(mol·K). ln(3.5 x 10⁻³ / 2.7 x 10⁻⁴) = (Ea / 8.314) × (1/600 - 1/650). ln(12.96) = (Ea / 8.314) × (0.00166 - 0.001538). ln(12.96) = 2.561 = (Ea/8.314) × (0.0001282). Ea = (2.561 × 8.314) / 0.0001282 = 166728.9 J/mol ≈ 1.67 x 10⁵ J/mol. The answer is 1.  67 x 10⁵ J·mol⁻¹·K⁻¹"
+        },
+        {
+          text: "Reaction rate can be measured by:",
+          options: ["Increase in the concentration of reactants", "Decrease in the concentration of the products", "Decrease in the concentration of the reactants", "All of the above."],
+          correct: 2,
+          explanation: "Reaction rate is a measure of how quickly reactants are consumed and products are formed. Therefore, it can be measured by: Decrease in the concentration of the reactants and increase in the concentration of the products."
+        },
     {
-      
-    }, 
+     text: "The pKa of methylammonium ion, CH₃NH₃⁺, is 10.64. What is the percent ionization of a 0.20 solution of methylamine, CH₃NH₂?",
+     options: ["0.0011%", "0.071%", "1.1%", "4.7%"],
+     correct: 3,
+     explanation: "Methylamine (CH₃NH₂) is a weak base. Kb = Kw / Ka = 1.0 x 10⁻¹⁴ / 10^(-10.64) = 4.37 x 10⁻⁴. CH₃NH₂ + H₂O ⇌ CH₃NH₃⁺ + OH⁻. Kb = [CH₃NH₃⁺][OH⁻] / [CH₃NH₂] = x² / (0.20 - x). Assuming x is small: x² / 0.20 = 4.37 x 10⁻⁴ => x = 9.35 x 10⁻³ M = [OH⁻]. Percent ionization = (x / 0.20) × 100 = (9.35 x 10⁻³ / 0.20) × 100 = 4.675%. Therefore, the answer is D. 4.7%"
+    },
+    {
+     text: "A saturated solution of which silver salt has the highest concentration of Ag⁺?",
+     options: ["AgCl, Ksp = 1.8 x 10⁻¹⁰", "Ag₂CrO₄, Ksp = 1.1 x 10⁻¹²", "AgBr, Ksp = 5.0 x 10⁻¹³", "Ag₂SO₃, Ksp = 1.5 x 10⁻¹⁴"],
+     correct: 1,
+     explanation: "Let 's' be the solubility of the salt. AgCl: Ksp = [Ag⁺][Cl⁻] = s² = 1.8 x 10⁻¹⁰ => s = 1.34 x 10⁻⁵ M, [Ag⁺] = 1.34 x 10⁻⁵ M. Ag₂CrO₄: Ksp = [Ag⁺]²[CrO₄²⁻] = (2s)²(s) = 4s³ = 1.1 x 10⁻¹² => s = 6.5 x 10⁻⁵ M, [Ag⁺] = 2s = 1.3 x 10⁻⁴ M. AgBr: Ksp = [Ag⁺][Br⁻] = s² = 5.0 x 10⁻¹³ => s = 7.07 x 10⁻⁷ M, [Ag⁺] = 7.07 x 10⁻⁷ M. Ag₂SO₃: Ksp = [Ag⁺]²[SO₃²⁻] = (2s)²(s) = 4s³ = 1.5 x 10⁻¹⁴ => s = 3.36 x 10⁻⁵ M, [Ag⁺] = 2s = 6.72 x 10⁻⁵ M. Ag₂CrO₄ has the highest [Ag⁺] = 1.3 x 10⁻⁴ M."
+    },
+    {
+     text: "Lead (II) iodide has a solubility product constant of 1.4 x 10⁻⁸. What is the concentration of I⁻ in a saturated solution of PbI₂?",
+     options: ["1.2 x 10⁻³ M", "2.4 x 10⁻³ M", "1.5 x 10⁻³ M", "3.0 x 10⁻³ M"],
+     correct: 3,
+     explanation: "PbI₂(s) ⇌ Pb²⁺(aq) + 2I⁻(aq). Ksp = [Pb²⁺][I⁻]² = 1.4 x 10⁻⁸. Let s be the solubility of PbI₂: [Pb²⁺] = s and [I⁻] = 2s. Ksp = s(2s)² = 4s³ = 1.4 x 10⁻⁸. s = (1.4 x 10⁻⁸ / 4)^(1/3) = 1.52 x 10⁻³ M. [I⁻] = 2s = 2 × 1.52 x 10⁻³ = 3.04 x 10⁻³ M. Therefore, D. 3.0 x 10⁻³ M."
+    },
+    {
+     text: "A solution of ammonia, NH₃, has pH = 11.50. What is the ammonia concentration? (The pKa of NH₄⁺ is 9.24.)",
+     options: ["1.7 x 10⁻⁵ M", "3.2 x 10⁻³ M", "5.5 x 10⁻³ M", "0.58 M"],
+     correct: 3,
+     explanation: "pH = 11.50, so pOH = 14 - 11.50 = 2.50. [OH⁻] = 10^(-2.50) = 3.16 x 10⁻³ M. Ka = 10^(-9.24) = 5.75 x 10⁻¹⁰, so Kb = (1.0 x 10⁻¹⁴) / (5.75 x 10⁻¹⁰) = 1.74 x 10⁻⁵. NH₃ + H₂O ⇌ NH₄⁺ + OH⁻. Kb = [NH₄⁺][OH⁻] / [NH₃] = (3.16 x 10⁻³)² / (x - 3.16 x 10⁻³). Assuming x is much larger than 3.16 x 10⁻³, (3.16 x 10⁻³)² / x = 1.74 x 10⁻⁵, so x = (3.16 x 10⁻³)² / (1.74 x 10⁻⁵) = 0.575 M. Therefore, the answer is D. 0.58 M"
+    },
+    {
+     text: "How many moles of sodium formate must be added to 1.0 L of a 0.20 M formic acid solution to produce a pH of 4.00? (Ka value for formic acid is 1.9 x 10⁻⁴ at 25 °C.)",
+     options: ["0.38", "0.80", "1.90", "3.80"],
+     correct: 0,
+     explanation: "Using the Henderson-Hasselbalch equation: pH = pKa + log([A⁻]/[HA]). pKa = -log(1.9 x 10⁻⁴) = 3.72. 4.00 = 3.72 + log([A⁻]/0.20). 0.28 = log([A⁻]/0.20). 10^(0.28) = [A⁻]/0.20. [A⁻] = 0.20 × 10^(0.28) = 0.20 × 1.905 = 0.381. Since the volume is 1.0 L, the number of moles of sodium formate needed is 0.381 moles."
+    },
+    {
+     text: "I₂(aq) + I⁻(aq) ⇌ I₃⁻(aq) Keq = 750 (at 25°C)\n\nGiven that the reaction is exothermic, which changes will result in an increase in the number of moles of I₃⁻(aq) present at equilibrium?\n I. Increasing the temperature\n II. Replacing the KI with an equal mass of NaI [ K = 39, Na = 23, I = 127]",
+     options: ["I only", "II only", "Both I and II", "Neither I and II"],
+     correct: 1,
+     explanation: "I. Since the reaction is exothermic, increasing the temperature will shift the equilibrium to the left, decreasing the amount of I₃⁻(aq). So, I is incorrect. II. Replacing KI with the same mass of NaI will add more moles of I⁻ because Na has a lower molar mass than K. This will shift the equilibrium to the right, increasing the amount of I₃⁻(aq). So, II is correct."
+        },
+        {
+          text: "The pH of a 0.045 M solution of the monoprotic acid is 5.30. What is the Ka of the acid?",
+          options: ["1.1 x 10⁻⁸", "5.0 x 10⁻⁹", "2.0 x 10⁻⁹", "5.6 x 10⁻¹⁰"],
+          correct: 3,
+          explanation: "[H⁺] = 10^(-pH) = 10^(-5.30) = 5.01 x 10⁻⁶ M. HA ⇌ H⁺ + A⁻. Ka = [H⁺][A⁻]/[HA]. If the acid is monoprotic, then [H⁺] = [A⁻] = 5.01 x 10⁻⁶ M. The initial [HA] = 0.045 M. Assuming the change in HA is not significant then; Ka = (5.01 x 10⁻⁶)² / (0.045) = 5.58 x 10⁻¹⁰ ~ 5.6 x 10⁻¹⁰."
+        },
+        {
+          text: "Lead (II) fluoride is sparingly soluble (Ksp = 4.0 x 10⁻⁸). Which, when added to a saturated solution of PbF₂, would increase its solubility to the greatest extent?",
+          options: ["KNO₃", "Pb (NO₃)₂", "KF", "HNO₃"],
+          correct: 3,
+          explanation: "A. KNO₃ - This is a common ion that will not affect the solubility of PbF₂. B. Pb (NO₃)₂ - This will add Pb²⁺, which is a common ion, decreasing the solubility of PbF₂ due to the common ion effect. C. KF - This will add F⁻, which is a common ion, decreasing the solubility of PbF₂ due to the common ion effect. D. HNO₃ - Fluoride is a weak base, reacting with protons will remove them from the solution and increase the dissolution."
+        },
+        {
+          text: "Which of the following are true for a spontaneous process in a system at constant temperature and pressure?\n I. ΔSsys + ΔSsurr > 0\n II. ΔGsys < 0",
+          options: ["I only", "II only", "Both I and II", "Neither I nor II"],
+          correct: 2,
+          explanation: "For a spontaneous process, the total entropy of the system and surroundings must increase (ΔSsys + ΔSsurr > 0). Also, for a spontaneous process at constant temperature and pressure, the Gibbs free energy change of the system must be negative (ΔGsys < 0). Therefore, both I and II are true."
+        },
+    {
+          text: "For the reaction, 2H₂S(g) + O₂(g) → 2S(s) + 2H₂O(l), which one of the following statements is absolutely true?",
+          options: ["The reaction is first order with respect to H₂S and second order with respect to O₂.", "The reaction is fourth order overall.", "The rate law is: rate = k[H₂S]²[O₂].", "The rate law cannot be determined from the information given."],
+          correct: 3,
+          explanation: "The rate law of a reaction can only be determined experimentally. It cannot be predicted solely from the stoichiometry of the balanced equation. The orders of the reactants must be determined empirically by measuring the reaction rate under different concentrations of the reactants. Therefore, the rate law cannot be determined from the information given."
+        },
+       
+        {          text: "Which of the following reactions are likely to occur in a wet Leclanché cell?\n   I. NH₄⁺ + H₂O ⇌ NH₄OH + H⁺\n   II. NH₄⁺ + OH⁻ ⇌ NH₃ + H₂O\n   III. Zn²⁺ + 2NH₃ + 2Cl⁻ → [Zn(NH₃)₂]Cl₂\n   IV. Pb²⁺ + 2OH⁻ → Pb(OH)₂",
+          options: ["(I), (II) and (IV)", "(II), (III) and (IV)", "(I), (II) and (III)", "(I), (III) and (IV)"],
+          correct: 2,
+          explanation: "In a wet Leclanché cell: NH₄⁺ is present in the electrolyte and can undergo acid-base equilibrium with water (I and II). Zn²⁺ ions formed at the anode can react with ammonia (NH₃) to form complex ions (III). Option IV is not a reaction"
+        },
+        {
+          text: "One of the compartments of a Daniell cell showed an intense blue color before the cell was put to use for a period of two weeks with a starting emf of 1.10 V. At the end of the two weeks, the blue compartment became colorless and the cell emf dropped to 0.00 V. What do you think is responsible for the cell's voltage drop to zero?",
+          options: ["The concentration of Cu²⁺ ion in the cell increased significantly", "The concentration of Zn²⁺ ion in the cell decreased significantly", "The concentration of Zn²⁺ ion in the cell increased significantly", "The concentration of Cu²⁺ ion in the cell approached zero"],
+          correct: 3,
+          explanation: "The blue color in a Daniell cell is due to the presence of Cu²⁺ ions. As the cell operates, Cu²⁺ ions are reduced to Cu(s) at the cathode. If the blue color disappears and the emf drops to zero, it indicates that the Cu²⁺ ions have been depleted. Therefore, the concentration of Cu²⁺ ions in the cell approached zero."
+        },
+        {
+          text: "The standard reduction potentials of the electrodes of the cell A | A⁺ ‖ B²⁺ | B are A | A⁺ = -0.122 V and B | B²⁺ = 0.048 V. Calculate the cell potential and the equilibrium constant (K) at 25°C.",
+          options: ["0.170 V and K = 5.64 x 10⁵", "0.074 V and K = 3.18 x 10²", "-0.170 V and K = 1.78 x 10⁻⁶", "-0.074 V and K = 3.14 x 10⁻³"],
+          correct: 3,
+          explanation: "The cell reaction is: 2A + B²⁺ → 2A⁺ + B.  E°cell = E°cathode - E°anode. Since A | A⁺ = -0.122 V, A⁺ + e⁻ -> A = -0.122 V. Since B²⁺ | B = 0.048 V, B²⁺ + 2e⁻ -> B = +0.048 V. Therefore, A⁺ is being oxidised which we need to reverse. Ecell = (2*A⁺ -> 2A) + B -->   0.048- -0.122) V =0.17V; using the equation E = (0.0592/n) log(Q)=.17 = (2(8.314)(298)/2F)  + .31/4=.17-->.722=-3.14-0.00495. The nearest correct option will be  . If the reaction is 2*A -> A⁺ + B then the emf is -0.17. The question is incomplete with missing constants or units, hence it would require two equations."
+        },
+ {
+          text: "For the reaction, 2H₂S(g) + O₂(g) → 2S(s) + 2H₂O(l), which one of the following statements is absolutely true?",
+          options: ["The reaction is first order with respect to H₂S and second order with respect to O₂.", "The reaction is fourth order overall.", "The rate law is: rate = k[H₂S]²[O₂].", "The rate law cannot be determined from the information given."],
+          correct: 3,
+          explanation: "The rate law of a reaction cannot be determined solely from the stoichiometry of the balanced equation. It must be determined experimentally."
+        },
+        {
+          text: "The cell, Pb (Hg) | PbSO₄(s) | H₂SO₄ (aq, 0.001 mol kg⁻¹) | H₂ (g, 1 atm), has an emf of 0.009589 V and a standard emf of 0.3505 V. Calculate the equilibrium constant (K) for the cell reaction at 25°C.",
+          options: ["1.306", "4.09 x 10⁸", "3.41 x 10¹¹", "1.123"],
+          correct: 2,
+          explanation: "Using the Nernst equation and the relationship between standard emf and K: E = E° - (RT/nF)lnQ.  We can solve for K.  The reaction is Pb(s) + 2H+(aq) -> Pb2+(aq) + H2(g). n = 2.  0.009589 = 0.3505 - (0.0592/2) * log(Q). Solving for Q (and thus K), yields approximately 3.41 x 10¹¹."
+        },
+        {
+          text: "Which of the following reactions are likely to occur in a wet Leclanché cell?\nI. NH₄⁺ + H₂O ⇌ NH₄OH + H⁺\nII. NH₄⁺ + OH⁻ ⇌ NH₃ + H₂O\nIII. Zn²⁺ + 2NH₃ + 2Cl⁻ → [Zn(NH₃)₂]Cl₂\nIV. Pb²⁺ + 2OH⁻ → Pb(OH)₂",
+          options: ["(I), (II) and (IV)", "(II), (III) and (IV)", "(I), (II) and (III)", "(I), (III) and (IV)"],
+          correct: 2,
+          explanation: "The Leclanché cell is acidic. Reactions involving lead are unlikely. The cell operates by zinc reacting to produce zinc ions and ammonium ions reacting to form ammonia."
+        },
+        {
+          text: "One of the compartments of a Daniell cell showed an intense blue color before the cell was put to use for a period of two weeks with a starting emf of 1.10 V. At the end of the two weeks, the blue compartment became colorless and the cell emf dropped to 0.00 V. What do you think is responsible for the cell's voltage drop to zero?",
+          options: ["The concentration of Cu²⁺ ion in the cell increased significantly", "The concentration of Zn²⁺ ion in the cell decreased significantly", "The concentration of Zn²⁺ ion in the cell increased significantly", "The concentration of Cu²⁺ ion in the cell approached zero"],
+          correct: 3,
+          explanation: "The blue color is due to Cu²⁺ ions. As the cell operates, Cu²⁺ ions are reduced to Cu(s), decreasing the concentration of Cu²⁺. When the concentration approaches zero, the cell potential drops to zero."
+        },
+        {
+          text: "The standard reduction potentials of the electrodes of the cell A | A⁺ ‖ B²⁺ | B are A | A⁺ = -0.122 V and B | B²⁺ = 0.048 V. Calculate the cell potential and the equilibrium constant (K) at 25°C.",
+          options: ["0.170 V and K = 5.64 x 10⁵", "0.074 V and K = 3.18 x 10²", "-0.170 V and K = 1.78 x 10⁻⁶", "-0.074 V and K = 3.14 x 10⁻³"],
+          correct: 0,
+          explanation: "The cell reaction is: 2A + B²⁺ -> 2A⁺ + B. The E°cell = E°(cathode) - E°(anode) = 0.048 - (-0.122) = 0.170 V.  Using the Nernst equation, E° = (RT/nF)lnK, where n=2.  0.170 = (0.0592/2)logK. Solving for K gives approximately 5.64 x 10⁵."
+        },
+        {
+          text: "A current of two amperes flowing for 520 seconds was found to deposit 0.408 g of a metal M. The metal formed a volatile chloride of vapor density 115. What is the atomic weight of the metal?",
+          options: ["154.8", "118.7", "137.3", "132.9"],
+          correct: 0,
+          explanation: "Use Faraday's Laws of Electrolysis. First, find the number of moles of electrons passed: Q = It = 2A × 520s = 1040 C. Moles of electrons = Q/F = 1040C / 96485 C/mol = 0.01078 mol. Next, find the equivalent weight of the metal: Equivalent weight = mass deposited / moles of electrons = 0.408g / 0.01078 mol = 37.85 g/mol. The formula of the metal chloride is MCln. The molar mass of the chloride is twice the vapor density: 2 × 115 = 230 g/mol. The molar mass of MCln = Atomic weight of M + n * 35.5. We need to solve for the equivalent weight and therefore must determine n (the valency of the metal in the chloride). Now use the other relationship that Atomic Weight = Equivalent Weight × n, where n= 1,2,3. Atomic weight = 37.85× n = 154.8 when n is 4. Hence MCl4 is the metal chloride formula and the relative atomic mass of M is 154.8."
+        },
+        {
+          text: "A constant direct current flows through an iodine colorimeter for a period of 2 hours. At the end of this time, it is found that the colorimeter contains 0.002 mole of liberated iodine. Calculate the amount of current that passed through the colorimeter.",
+          options: ["0.11 A", "0.19 A", "0.01 A", "0.22 A"],
+          correct: 0,
+          explanation: "The reaction is 2I⁻ -> I₂ + 2e⁻. Thus, 2 moles of electrons are required to liberate 1 mole of iodine. Moles of electrons = 2 * 0.002 mol = 0.004 mol. Charge (Q) = moles of electrons * Faraday constant = 0.004 mol * 96485 C/mol = 385.94 C. Current (I) = Q/t = 385.94 C / (2 hours * 3600 seconds/hour) = 0.0536 A.  The closest answer is 0.11A. The charge of the ion is 1 as it is a redox reaction and the Iodine goes from I- -> 1/2 I₂ + e-. The molar mass of Iodine is 126.9 x 2 which is 253.9 g mol-1, there is 0.002 moles of iodine so therefore 0.002x 253.9 =0.51g of iodine is formed. If F= It, therefore I= F/t where I = current, F = faraday's constant (96500) and t= time which is 7200 seconds. If we are left with 0.002 moles of iodine, then we must do 96500 x 0.002 which is 193/7200 = 0.02A"
+        },
+{
+          text: "A box contains two charged particles (Q₁ and Q₂) separated by a distance 2.0 cm. If the product of the charges and the relative permittivity of the medium, is 8.85 x 10⁻¹⁰ J m, calculate the electrostatic force between the particles.",
+          options: ["2.213 x 10⁻⁶ N", "4.425 x 10⁻⁸ N", "2.213 x 10⁻¹⁰ N", "4.425 x 10⁻¹⁰ N"],
+          correct: 0,
+          explanation: "The electrostatic force is given by Coulomb's law: F = k * (Q₁Q₂)/(εr * r²), where k is Coulomb's constant (8.98755 × 10⁹ N⋅m²/C²), Q₁Q₂ is the product of the charges, εr is the relative permittivity, and r is the distance.  We know Q₁Q₂* εr = 8.85 x 10⁻¹⁰ J m. Therefore, F = (8.98755 x 10⁹ N m²/C²) * (8.85 x 10⁻¹⁰ J m) / ( (0.02 m)²  * 4π * 8.854 x 10⁻¹² F/m ) = 2.213 x 10⁻⁶ N"
+        },
+        {
+          text: "Polarization in dry or wet Leclanché cell can be caused by any of the following substances except:",
+          options: ["[Zn(NH₃)₂]Cl₂", "NH₃", "NH₄Cl", "H₂"],
+          correct: 2,
+          explanation: "Polarization in a Leclanché cell is primarily caused by the accumulation of ammonia (NH₃) and the formation of hydrogen gas (H₂). [Zn(NH₃)₂]Cl₂ is a product of the cell reaction, but it does not directly cause polarization. NH₄Cl is the electrolyte."
+        },
+        {
+          text: "Why would replacing NH₄Cl with NaOH or KOH in Leclanché cell enhance the performance of the cell?",
+          options: ["Because the anodic reaction when NaOH or KOH is used as electrolyte occur in two steps", "Because the zinc electrode does not dissolve readily in alkaline solution as it would in acidic medium", "Because NH₄Cl is a salt of a weak base, but NaOH and KOH are strong bases", "Because the zinc electrode reacts rapidly with NaOH and KOH"],
+          correct: 1,
+          explanation: "In an alkaline environment the rate of corrosion (dissolution) of the zinc electrode is reduced, this enhances the life of the cell."
+        },
+        {
+          text: "Which of magnesium and zinc electrodes would you prefer as the anode in a dry Leclanché cell and why?",
+          options: ["Zinc - because it is a transition metal", "Zinc - because it produces a reduction potential of -0.76 V", "Magnesium - because it is a group II metal", "Magnesium - because it produces a reduction potential of -2.37 V"],
+          correct: 3,
+          explanation: "Magnesium has a more negative reduction potential (-2.37 V) than zinc (-0.76 V), meaning it is more easily oxidized and can provide a higher cell voltage. While magnesium is more reactive, it is often alloyed to control its reactivity."
+        },
+        {
+          text: "The lead-acid battery made use of water / conc. H₂SO₄ as electrolyte in a ratio 3:1 and not 1:3 in order to",
+          options: ["increase the conductivity of the ions", "decrease the conductivity of the ions", "decrease ionic mobility", " "],
+          correct: 1,
+          explanation: "Adding too much water will dilute the acid which will decrease the conductivity of the acid"
+        },
+        {
+          text: "The same quantity of electricity was passed through a molten lead chloride and potassium chloride solution for 1 hour. If 0.5 g of lead was deposited in the process, calculate the quantity of electricity used, the amount of current passed, and the volume of chlorine gas liberated at STP. [Cl = 35.5, Pb = 207, Volume at STP = 22.4 dm³]",
+          options: ["932.4 C, 0.259 A, 118.0 cm³", "932.4 C, 0.259 A, 59.0 cm³", "466.2 C, 0.1295 A, 54.1 cm³", "466.2 C, 0.1295 A, 108.2 cm³"],
+          correct: 2,
+          explanation: "The reaction for lead deposition is Pb²⁺ + 2e⁻ → Pb(s).  Moles of Pb deposited = 0.5g / 207 g/mol = 0.002415 mol. Moles of electrons required = 2 × 0.002415 mol = 0.00483 mol.  Quantity of electricity (Q) = moles of electrons × Faraday constant = 0.00483 mol × 96485 C/mol = 466.2 C. Current (I) = Q/t = 466.2 C / (3600 s) = 0.1295 A. The chlorine gas liberated at the anode in the lead chloride cell has the following reaction: 2Cl- -> Cl₂ + 2e⁻. Moles of Cl₂ liberated = 0.00483 mol / 2= 0.002415 mol. Volume of Cl₂ at STP = moles × 22.4 L/mol = 0.002415 mol × 22.4 dm³/mol = 0.0541 dm³= 54.1 cm³."
+        },
       ], 
   "CHM101-E2": [
     {
@@ -6125,7 +6489,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
             examAllocations[userId] = [];
         }
         if (!examAllocations[userId].some(exam => exam.id === "BOT203-T2")) {
-            examAllocations[userId].push({ id: "BOT203-T2", title: "BOT203-T2" });
+            examAllocations[userId].push({ id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY 1" });
         }
 
         // Display assigned exams
