@@ -3886,21 +3886,7 @@ correct: 1,
       explanation: "A likely next focus of development in microscopy is on improving light and electron sources, which can enable higher resolution, contrast, and more detailed images in general."
     }, 
       ], 
-  "BOT101-E1": [
-    {
-      
-    }, 
-      ], 
-  "BOT101-E2": [
-    {
-      
-    }, 
-      ], 
-  "BOT101-E3": [
-    {
-      
-    }, 
-      ], 
+
   "CHM101-E1": [
       {
           text: "Which of the following lists the orbitals that are filled when the K and L shells are respectively fully filled?",
@@ -4269,11 +4255,6 @@ correct: 1,
           correct: 2,
           explanation: "The reaction for lead deposition is Pb²⁺ + 2e⁻ → Pb(s).  Moles of Pb deposited = 0.5g / 207 g/mol = 0.002415 mol. Moles of electrons required = 2 × 0.002415 mol = 0.00483 mol.  Quantity of electricity (Q) = moles of electrons × Faraday constant = 0.00483 mol × 96485 C/mol = 466.2 C. Current (I) = Q/t = 466.2 C / (3600 s) = 0.1295 A. The chlorine gas liberated at the anode in the lead chloride cell has the following reaction: 2Cl- -> Cl₂ + 2e⁻. Moles of Cl₂ liberated = 0.00483 mol / 2= 0.002415 mol. Volume of Cl₂ at STP = moles × 22.4 L/mol = 0.002415 mol × 22.4 dm³/mol = 0.0541 dm³= 54.1 cm³."
         },
-      ], 
-  "CHM101-E2": [
-    {
-      
-    }, 
       ], 
   "ZOO101-E2": [
     
@@ -6488,8 +6469,8 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         if (!examAllocations[userId]) {
             examAllocations[userId] = [];
         }
-        if (!examAllocations[userId].some(exam => exam.id === "BOT203-T2")) {
-            examAllocations[userId].push({ id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY 1" });
+        if (!examAllocations[userId].some(exam => exam.id === "CHM101-E1")) {
+            examAllocations[userId].push({ id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY ONE" });
         }
 
         // Display assigned exams
@@ -6518,7 +6499,6 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 document.getElementById('closePopup').addEventListener('click', function () {
     document.getElementById('popup').classList.remove('active'); // Hide pop-up
 });
-
 
 function displayExamSection(examId) {
     alert('Displaying exam section for exam ID: ' + examId);
