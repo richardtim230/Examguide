@@ -6307,40 +6307,25 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Initialize Exam
 function initializeExam() {
-    alert("Debug: Initializing Exam");
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (!currentUser || !currentUser.fullName) {
+    alert("Session expired! Please log in again.");
+    returnToLogin();
+    return;
+  }
 
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
+  if (!selectedCourseCode) {
+    alert("Please select a course before starting the exam.");
+    return;
+  }
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("Debug: No user session found.");
-        returnToLogin();
-        return;
-    }
+  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
 
-    if (!currentExam) {
-        alert("Debug: No exam found.");
-        return;
-    }
-
-    console.log("Exam Initialized:", currentUser.fullName, "Exam:", currentExam.title);
-
-    document.getElementById('user-details').textContent = 
-        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
-
-    if (!questions || questions.length === 0) {
-        alert("Debug: No questions available to display.");
-        console.error("Error: No questions available.");
-        return;
-    }
-
-    alert("Debug: Loading first question...");
-    startTime = Date.now();
-    loadQuestion();
-    startTimer();
-    document.getElementById('examSection').classList.remove("hidden");
-      }
-          
+  startTime = Date.now();
+  loadQuestion();
+  startTimer();
+  examSection.classList.remove("hidden");
+}
     
 
 // Helper function to handle logout and redirection
@@ -6511,7 +6496,6 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 });
 
 
-
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
 
@@ -6572,77 +6556,49 @@ selectCourseBtn.addEventListener("click", () => {
     initializeExam(); // Ensure this function is called
 });
 
-// Initially 
+// Initialize Exam
 function initializeExam() {
-    alert("Debug: Initializing Exam");
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (!currentUser || !currentUser.fullName) {
+    alert("Session expired! Please log in again.");
+    returnToLogin();
+    return;
+  }
 
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
+  if (!selectedCourseCode) {
+    alert("Please select a course before starting the exam.");
+    return;
+  }
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("Debug: No user session found.");
-        returnToLogin();
-        return;
-    }
+  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
 
-    if (!currentExam) {
-        alert("Debug: No exam found.");
-        return;
-    }
-
-    console.log("Exam Initialized:", currentUser.fullName, "Exam:", currentExam.title);
-
-    document.getElementById('user-details').textContent = 
-        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
-
-    if (!questions || questions.length === 0) {
-        alert("Debug: No questions available to display.");
-        console.error("Error: No questions available.");
-        return;
-    }
-
-    alert("Debug: Loading first question...");
-    startTime = Date.now();
-    loadQuestion();
-    startTimer();
-    document.getElementById('examSection').classList.remove("hidden");
+  startTime = Date.now();
+  loadQuestion();
+  startTimer();
+  examSection.classList.remove("hidden");
 }
-
   
 
 // Load Current Question
 function loadQuestion() {
-    if (!questions || questions.length === 0) {
-        console.error("Error: No questions available.");
-        alert("No questions to display.");
-        return;
-    }
+  const question = questions[currentQuestionIndex];
 
-    const question = questions[currentQuestionIndex];
+  // Add question number dynamically
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-    // Ensure questionTitle and answerOptions exist in the DOM
-    const questionTitle = document.getElementById('questionTitle');
-    const answerOptions = document.getElementById('answerOptions');
+  // Populate Answer Options with correct numbering
+  answerOptions.innerHTML = question.options
+    .map((option, index) => `
+      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+        ${option}
+      </button>
+    `)
+    .join("");
 
-    if (!questionTitle || !answerOptions) {
-        console.error("Error: Missing DOM elements for questions.");
-        return;
-    }
-
-    questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
-    answerOptions.innerHTML = question.options
-        .map((option, index) => `
-            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-                ${option}
-            </button>
-        `)
-        .join("");
-
-    highlightSelectedAnswer();
-    updateButtons();
-    updateProgressBar();
-      }
-      
+  highlightSelectedAnswer();
+  updateButtons();
+  updateProgressBar();
+}
 
 // Shuffle questions randomly
 function shuffleArray(array) {
@@ -6659,34 +6615,17 @@ function startExam(examId, examTitle) {
     // Hide the popup
     document.getElementById('popup').classList.remove('active');
 
-    // Hide course code selection if it's visible
+    // Hide the course code selection if it's visible
     document.getElementById('course-code-section').classList.add('hidden');
 
     // Ensure the exam section is visible
     document.getElementById('examSection').classList.remove('hidden');
 
-    // Check if `questionBanks` exists
+    // Fetch questions for this exam
     if (!questionBanks || !questionBanks[examId]) {
-        console.error("No questions found for:", examId);
         alert("No questions available for this exam.");
         return;
     }
-
-    // Shuffle and select up to 50 questions
-    questions = shuffleArray(questionBanks[examId]).slice(0, 50);
-
-    if (questions.length === 0) {
-        console.error("Question bank is empty for:", examId);
-        alert("No questions available for this exam. Please try another.");
-        return;
-    }
-
-    console.log("Questions loaded:", questions);
-
-    // Initialize the exam with the selected exam details
-    initializeExam();
-}
-
 
     // Randomize and select up to 50 questions
     questions = shuffleArray(questionBanks[examId]).slice(0, 50);
