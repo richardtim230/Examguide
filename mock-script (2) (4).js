@@ -6267,7 +6267,6 @@ explanation: "The electrochemical series lists the standard reduction potentials
     explanation: "The balanced reaction is 2H₂ + O₂ -> 2H₂O. Moles of H₂ = 5/2 = 2.5 mol, moles of O₂ = 10/32 = 0.3125 mol. Oxygen is the limiting reagent. 0.3125 mol of O₂ will react with 0.625 mol of H₂ to form water, leaving 2.5-0.625 = 1.875 mol of hydrogen. 1.875 × 2 = 3.75g. Closest to the answer is 3.8g"
   },
     ],
-      },
     
   "ZOO101-E3": [
     
