@@ -6,7 +6,7 @@ let currentQuestionIndex = 0;
 let userAnswers = [];
 let timerInterval;
 let remainingTime = 30 * 60; // 20 minutes
-let selectedCourseCode = "";
+let selectedCourseCode = null;
 
 
 // Predefined question banks by course codes
@@ -6477,9 +6477,17 @@ document.getElementById('loginBtn').addEventListener('click', function () {
     const examItem = document.createElement('button');
     examItem.innerText = exam.title;
     examItem.className = 'styled-btn';
+    
     examItem.addEventListener('click', function () {
+        console.log(`Exam clicked: ${exam.id} - ${exam.title}`); // Debugging log
+        
+        // Hide the popup correctly
+        document.getElementById('popup').classList.remove('active');
+        
+        // Start the exam
         startExam(exam.id, exam.title);
     });
+    
     examsList.appendChild(examItem);
 });
 
