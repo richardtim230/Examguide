@@ -6307,34 +6307,33 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Initialize Exam
 function initializeExam() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("Session expired! Please log in again.");
-        returnToLogin();
-        return;
-    }
+  if (!currentUser || !currentUser.fullName) {
+    alert("Session expired! Please log in again.");
+    returnToLogin(); // Handles logout properly
+    return;
+  }
 
-    if (!currentExam) {
-        alert("No exam found. Please select an exam.");
-        return;
-    }
+  if (!selectedCourseCode) {
+    alert("Please select a course before starting the exam.");
+    return;
+  }
 
-    // Display user and exam details
-    document.getElementById('user-details').textContent = 
-        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
+  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+  
+  // Check if questions are populated
+  if (questions.length === 0) {
+    alert("No questions available for this course. Please try another course code.");
+    return;
+  }
 
-    startTime = Date.now();
-    loadQuestion();
-    startTimer();
-    
-    // Ensure the exam section is displayed
-    document.getElementById('examSection').classList.remove("hidden");
-
-    // Log the questions array to ensure it's populated
-    console.log("Questions array:", questions);
+  startTime = Date.now();
+  startTimer();
+  loadQuestion(); // Ensure loadQuestion is called here
+  examSection.classList.remove("hidden");
 }
+
     
 
 // Helper function to handle logout and redirection
@@ -6544,93 +6543,89 @@ backToLoginBtn.addEventListener("click", () => {
 
 
 // Select Course Code
-// Event listener to select course code
+// Select Course Code
 selectCourseBtn.addEventListener("click", () => {
-    const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
-    
-    if (!courseCodeInput || !questionBanks[courseCodeInput]) {
-        alert("Invalid course code. Please try again.");
-        return;
-    }
+  const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
 
-    selectedCourseCode = courseCodeInput;
-    questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
+  if (!courseCodeInput || !questionBanks[courseCodeInput]) {
+    alert("Invalid course code. Please try again.");
+    return;
+  }
 
-    if (questions.length === 0) {
-        alert("No questions available for this course. Please try another course code.");
-        return;
-    }
+  selectedCourseCode = courseCodeInput;
+  questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
 
-    courseCodeSection.classList.add("hidden");
-    initializeExam(); // Ensure this function is called
+  if (questions.length === 0) {
+    alert("No questions available for this course. Please try another course code.");
+    return;
+  }
+
+  courseCodeSection.classList.add("hidden");
+  initializeExam();
 });
 
-// Initialize Exam
+// Initialize Exam with questions
 function initializeExam() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("Session expired! Please log in again.");
-        returnToLogin();
-        return;
-    }
+  if (!currentUser || !currentUser.fullName) {
+    alert("Session expired! Please log in again.");
+    returnToLogin(); // Handles logout properly
+    return;
+  }
 
-    if (!currentExam) {
-        alert("No exam found. Please select an exam.");
-        return;
-    }
+  if (!selectedCourseCode) {
+    alert("Please select a course before starting the exam.");
+    return;
+  }
 
-    // Display user and exam details
-    document.getElementById('user-details').textContent = 
-        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
-
-    startTime = Date.now();
-    loadQuestion();
-    startTimer();
-    
-    // Ensure the exam section is displayed
-    document.getElementById('examSection').classList.remove("hidden");
-
-    // Log the questions array to ensure it's populated
-    console.log("Questions array:", questions);
-}
+  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
   
+  // Check if questions are populated
+  if (questions.length === 0) {
+    alert("No questions available for this course. Please try another course code.");
+    return;
+  }
+
+  startTime = Date.now();
+  startTimer();
+  loadQuestion(); // Ensure loadQuestion is called here
+  examSection.classList.remove("hidden");
+}
 
 // Load Current Question
 function loadQuestion() {
-    const question = questions[currentQuestionIndex];
+  if (questions.length === 0) {
+    alert("No questions available to load.");
+    return;
+  }
 
-    // Log the current question to ensure it's being loaded correctly
-    console.log("Current question index:", currentQuestionIndex);
-    console.log("Loaded question:", question);
+  const question = questions[currentQuestionIndex];
 
-    if (!question) {
-        alert("No more questions available.");
-        return;
-    }
+  // Add question number dynamically
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-    // Add question number dynamically
-    questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+  // Populate Answer Options with correct numbering
+  answerOptions.innerHTML = question.options
+    .map((option, index) => `
+      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+        ${option}
+      </button>
+    `)
+    .join("");
 
-    // Populate Answer Options with correct numbering
-    answerOptions.innerHTML = question.options
-        .map((option, index) => `
-            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-                ${option}
-            </button>
-        `)
-        .join("");
-
-    highlightSelectedAnswer();
-    updateButtons();
-    updateProgressBar();
-          }
+  highlightSelectedAnswer();
+  updateButtons();
+  updateProgressBar();
+}
 
 // Shuffle questions randomly
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
+  
+
+
 
 // Start Exam Function
 function startExam(examId, examTitle) {
