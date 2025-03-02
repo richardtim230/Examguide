@@ -406,11 +406,36 @@
     transform: scale(1.05);
     }
     
-
+.moving-message {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      background-color: #ffeb3b;
+      color: #333;
+      text-align: center;
+      font-size: 16px;
+      padding: 10px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .moving-message span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: move-message 10s linear infinite;
+    }
+    @keyframes move-message {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
   </style>
 </head>
 <body>
-
+<div class="moving-message">
+    <span>Service is working perfectly, success in your exams!</span>
+</div>
+  
 <!-- Authentication Section -->
 <div id="auth-section" class="container">
     <div class="welcome-header">
