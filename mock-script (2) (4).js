@@ -6365,7 +6365,7 @@ function allocateUsersToExams(users, exams) {
 
     users.forEach(user => {
         const allocatedExams = [];
-        while (allocatedExams.length < 2) { // Each user gets 2 random exams
+        while (allocatedExams.length =< 4) { // Each user gets 4 random exams
             const randomExam = exams[Math.floor(Math.random() * exams.length)];
             if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
                 allocatedExams.push(randomExam);
@@ -6380,7 +6380,7 @@ function allocateUsersToExams(users, exams) {
 // ✅ Example Users and Exams
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
-    { userId: "NASS-5HLA", fullName: "Richard Ochuko" },
+    { userId: "NASS-HLNK", fullName: "Richard Ochuko" },
     { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
 ];
 
@@ -6403,7 +6403,7 @@ function generateUserID(facultyCode) {
 // ✅ Prevent users from registering more than 2 accounts
 function hasReachedRegistrationLimit() {
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 2; // Limit to 2 accounts per user
+    return registrations.length >= 4; // Limit to 2 accounts per user
 }
 // Register User
 document.getElementById('registerAccountBtn').addEventListener('click', function () {
@@ -6945,33 +6945,31 @@ function generateUserPDF(doc, logo) {
     }
 
     // Question Number and Text
-    doc.setFont("helvetica", "bold");
+    doc.setFont("times", "bold");
     doc.setFontSize(14);
-    doc.setTextColor(questionColor);
+    doc.setTextColor("#000");
     const questionText = doc.splitTextToSize(`${i + 1}. ${q.text}`, contentWidth);
     doc.text(questionText, margin, yOffset);
     yOffset += questionText.length * lineHeight;
 
-    // Correct Answer
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(answerColor);
+    doc.setFont("times", "normal");
+    doc.setTextColor("#28a745");
     const correctAnswer = doc.splitTextToSize(`Correct Answer: ${q.options[q.correct]}`, contentWidth);
     doc.text(correctAnswer, margin, yOffset);
     yOffset += correctAnswer.length * lineHeight;
 
-    // Explanation
-    doc.setFont("helvetica", "italic");
-    doc.setTextColor(explanationColor);
+    doc.setFont("times", "italic");
+    doc.setTextColor("#555");
     const explanation = doc.splitTextToSize(`Explanation: ${q.explanation}`, contentWidth);
     doc.text(explanation, margin, yOffset);
     yOffset += explanation.length * lineHeight + sectionSpacing;
 
-    // Add Divider Line
     doc.setDrawColor("#ddd");
     doc.setLineWidth(0.5);
     doc.line(margin, yOffset, pageWidth - margin, yOffset);
     yOffset += sectionSpacing * 2;
   });
+
 
   // Footer Section
   doc.setFont("helvetica", "normal");
@@ -6985,29 +6983,25 @@ function generateUserPDF(doc, logo) {
 }
 
 function generateAdminPDF(doc, logo, courseTitle, duration) {
-  // Constants
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 40;
-  const contentWidth = pageWidth - margin * 2; // Width for text
+  const contentWidth = pageWidth - margin * 2;
   const lineHeight = 20;
   const sectionSpacing = 10;
   let yOffset = margin;
 
-  // Colors
   const headerBackground = "#4A90E2";
   const sectionHeadingColor = "#333";
   const questionColor = "#000";
   const answerColor = "#28a745";
 
-  // Header Section
   doc.setFillColor(headerBackground);
-  doc.rect(0, yOffset, pageWidth, 70, "F"); // Draw header background
-  yOffset += 35; // Adjust for the height of the logo
+  doc.rect(0, yOffset, pageWidth, 70, "F");
+  yOffset += 35;
 
-  // Add Logo in the center of the header
   doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset - 25, 50, 50);
-  yOffset += 35; // Adjust for the height of the header
+  yOffset += 35;
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
@@ -7018,7 +7012,6 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   doc.text(`Mock Examination Questions`, pageWidth / 2, yOffset - 20, { align: "center" });
   yOffset += 30;
 
-  // Add Course Title and Duration
   doc.setFont("helvetica", "normal");
   doc.setFontSize(14);
   doc.setTextColor(questionColor);
@@ -7027,14 +7020,12 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   doc.text(`Duration: ${duration}`, margin, yOffset);
   yOffset += lineHeight * 2;
 
-  // Questions Section
   questions.forEach((q, i) => {
     if (yOffset > pageHeight - margin - lineHeight * 6) {
-      doc.addPage(); // Add a new page if content exceeds the current page
+      doc.addPage();
       yOffset = margin;
     }
 
-    // Question Number and Text
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.setTextColor(questionColor);
@@ -7042,7 +7033,6 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
     doc.text(questionText, margin, yOffset);
     yOffset += questionText.length * lineHeight;
 
-    // Answer Options
     doc.setFont("helvetica", "normal");
     doc.setTextColor(questionColor);
     q.options.forEach((option, idx) => {
@@ -7054,8 +7044,7 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
     yOffset += sectionSpacing;
   });
 
-  // Answer Sheet Page
-  doc.addPage(); // Start a new page for the answer sheet
+  doc.addPage();
   yOffset = margin;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
@@ -7063,11 +7052,10 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   doc.text("Answer Sheet", margin, yOffset);
   yOffset += lineHeight * 2;
 
-  // Draw columns for A, B, C, D
   doc.setFontSize(12);
   doc.setTextColor(questionColor);
   const answerColumns = ["A", "B", "C", "D"];
-  const boxWidth = (contentWidth - 50) / 4; // Four columns
+  const boxWidth = (contentWidth - 50) / 4;
   const boxHeight = lineHeight;
 
   answerColumns.forEach((col, idx) => {
@@ -7075,12 +7063,8 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
   });
   yOffset += lineHeight;
 
-  // Draw the answer boxes for each question
   for (let i = 1; i <= 50; i++) {
-    // Draw the question number
     doc.text(`${i}.`, margin, yOffset + boxHeight / 2);
-
-    // Draw the answer boxes
     for (let j = 0; j < 4; j++) {
       doc.rect(margin + boxWidth * j + 20, yOffset, boxWidth, boxHeight);
     }
@@ -7088,7 +7072,7 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
     yOffset += lineHeight;
 
     if (i % 25 === 0 && i !== 50) {
-      doc.addPage(); // Add a new page if content exceeds the current page
+      doc.addPage();
       yOffset = margin + lineHeight * 2;
       answerColumns.forEach((col, idx) => {
         doc.text(col, margin + boxWidth * idx + 25, yOffset);
@@ -7097,8 +7081,7 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
     }
   }
 
-  // Answer Key Section
-  doc.addPage(); // Start a new page for answer keys
+  doc.addPage();
   yOffset = margin;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
@@ -7108,11 +7091,10 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
 
   questions.forEach((q, i) => {
     if (yOffset > pageHeight - margin - lineHeight * 6) {
-      doc.addPage(); // Add a new page if content exceeds the current page
+      doc.addPage();
       yOffset = margin;
     }
 
-    // Answer Key
     doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
     doc.setTextColor(answerColor);
@@ -7121,16 +7103,15 @@ function generateAdminPDF(doc, logo, courseTitle, duration) {
     yOffset += answerKey.length * lineHeight;
   });
 
-  // Footer Section
   doc.setFont("helvetica", "normal");
   doc.setFontSize(12);
   doc.setTextColor("#666");
   const footerY = pageHeight - margin;
   doc.text("Compiled by Hon Richard D'Prof and Generated for OAU Mock Exam Platform", pageWidth / 2, footerY, { align: "center" });
 
-  // Save the PDF
   doc.save(`${selectedCourseCode}_Exam_Questions.pdf`);
-    }
+}
+
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
   // Reset user answers and navigation
