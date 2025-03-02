@@ -14,9 +14,6 @@ function hidePopup() {
     document.body.classList.remove('no-scroll');
 }
 
-// Add event listeners
-popup.addEventListener('click', showPopup);
-closePopupBtn.addEventListener('click', hidePopup);
 
 // Function to handle exam button click
 function handleExamButtonClick(examId) {
