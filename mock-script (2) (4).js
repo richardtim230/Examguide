@@ -1,10 +1,3 @@
-document.getElementById('loginBtn').addEventListener('click', function () {
-    // Perform login validation here
-    // If login is successful:
-    document.getElementById('auth-section').classList.add('hidden');
-    document.getElementById('toggle-calculator').classList.remove('hidden');
-    document.getElementById('calculator-popup').classList.remove('hidden');
-});
 
 document.getElementById('toggle-calculator').addEventListener('click', function() {
   const calculatorPopup = document.getElementById('calculator-popup');
