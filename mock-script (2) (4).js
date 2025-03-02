@@ -1,3 +1,20 @@
+document.getElementById('toggle-calculator').addEventListener('click', function() {
+  const calculator = document.getElementById('calculator');
+  calculator.classList.toggle('hidden');
+});
+
+function appendToDisplay(value) {
+  document.getElementById('calc-display').value += value;
+}
+
+function clearDisplay() {
+  document.getElementById('calc-display').value = '';
+}
+
+function calculateResult() {
+  const display = document.getElementById('calc-display');
+  display.value = eval(display.value);
+}
 
   function toggleMessage() {
     const message = document.querySelector('.moving-message');
