@@ -35,7 +35,7 @@ const validUserIDs = [
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let timerInterval;
-let remainingTime = 30 * 60; // 20 minutes
+let remainingTime = 45 * 60; // 20 minutes
 let selectedCourseCode = null;
 
 
@@ -6841,14 +6841,12 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-YKZQ", fullName: "Richard Ochuko" },
-    { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
+    { userId: "CLIN-9DVS", fullName: "Titus chiamaka princess" }
 ];
 
 const exams = [
-    { id: "CHM10", title: "INTRODUCTORY CHEMISTRY" },
-    { id: "exam2", title: "Physics 201" },
-    { id: "exam3", title: "History 101" },
-    { id: "exam4", title: "Biology 202" }
+    { id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY TWO" }
+
 ];
 
 // ✅ Allocate exams on page load
@@ -7577,7 +7575,7 @@ document.getElementById("retakeExamBtn").addEventListener("click", () => {
   // Reset user answers and navigation
   currentQuestionIndex = 0;
   userAnswers = [];
-  remainingTime = 30 * 60; // Reset timer
+  remainingTime = 45 * 60; // Reset timer
   questions = []; // Clear current questions
 
   // Hide results and show course code selection
