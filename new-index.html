@@ -429,6 +429,62 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
+
+    /* Calculator Styles */
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.calc-btn {
+  background: linear-gradient(135deg, #6dd5ed, #2193b0);
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.calc-btn:hover {
+  transform: scale(1.05);
+}
+
+#calc-display {
+  width: 100%;
+  padding: 12px;
+  font-size: 24px;
+  text-align: right;
+}
+
+/* Floating Icon */
+.floating-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #6dd5ed;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.floating-icon:hover {
+  transform: scale(1.1);
+}
   </style>
 </head>
 <body>
@@ -517,7 +573,34 @@
   </div>
 </div>
   
-    
+  <!-- Calculator Toggle Icon -->
+<button id="toggle-calculator" class="floating-icon">🧮</button>
+    <!-- Calculator Section -->
+<div id="calculator" class="container hidden">
+  <h2>Calculator</h2>
+  <div class="calculator">
+    <input type="text" id="calc-display" class="input-field" readonly>
+    <div class="calculator-buttons">
+      <button class="calc-btn" onclick="appendToDisplay('1')">1</button>
+      <button class="calc-btn" onclick="appendToDisplay('2')">2</button>
+      <button class="calc-btn" onclick="appendToDisplay('3')">3</button>
+      <button class="calc-btn" onclick="appendToDisplay('+')">+</button>
+      <button class="calc-btn" onclick="appendToDisplay('4')">4</button>
+      <button class="calc-btn" onclick="appendToDisplay('5')">5</button>
+      <button class="calc-btn" onclick="appendToDisplay('6')">6</button>
+      <button class="calc-btn" onclick="appendToDisplay('-')">-</button>
+      <button class="calc-btn" onclick="appendToDisplay('7')">7</button>
+      <button class="calc-btn" onclick="appendToDisplay('8')">8</button>
+      <button class="calc-btn" onclick="appendToDisplay('9')">9</button>
+      <button class="calc-btn" onclick="appendToDisplay('*')">*</button>
+      <button class="calc-btn" onclick="appendToDisplay('0')">0</button>
+      <button class="calc-btn" onclick="appendToDisplay('.')">.</button>
+      <button class="calc-btn" onclick="clearDisplay()">C</button>
+      <button class="calc-btn" onclick="calculateResult()">=</button>
+      <button class="calc-btn" onclick="appendToDisplay('/')">/</button>
+    </div>
+  </div>
+</div>
   <!-- Exam Section -->
   <div id="exam-section" class="container hidden">
       <div class="header">
