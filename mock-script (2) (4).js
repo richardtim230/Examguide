@@ -6307,47 +6307,40 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Initialize Exam
 function initializeExam() {
+    alert("Debug: Initializing Exam");
+
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
     if (!currentUser || !currentUser.fullName) {
-        alert("Session expired! Please log in again.");
+        alert("Debug: No user session found.");
         returnToLogin();
         return;
     }
 
     if (!currentExam) {
-        alert("No exam found. Please select an exam.");
+        alert("Debug: No exam found.");
         return;
     }
 
-    console.log("Initializing Exam for:", currentUser.fullName, "Exam:", currentExam.title);
+    console.log("Exam Initialized:", currentUser.fullName, "Exam:", currentExam.title);
 
-    // Check if `user-details` exists
-    const userDetailsElement = document.getElementById('user-details');
-    if (!userDetailsElement) {
-        console.error("Error: Element #user-details not found.");
-        return;
-    }
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
 
-    userDetailsElement.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
-
-    startTime = Date.now();
-    
-    // Ensure questions are set before loading them
     if (!questions || questions.length === 0) {
-        console.error("No questions available for this exam.");
-        alert("There was an issue loading the questions.");
+        alert("Debug: No questions available to display.");
+        console.error("Error: No questions available.");
         return;
     }
 
+    alert("Debug: Loading first question...");
+    startTime = Date.now();
     loadQuestion();
     startTimer();
-    
-    // Ensure the exam section is displayed
     document.getElementById('examSection').classList.remove("hidden");
-}
-
+      }
+          
     
 
 // Helper function to handle logout and redirection
@@ -6581,46 +6574,40 @@ selectCourseBtn.addEventListener("click", () => {
 
 // Initially 
 function initializeExam() {
+    alert("Debug: Initializing Exam");
+
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
     if (!currentUser || !currentUser.fullName) {
-        alert("Session expired! Please log in again.");
+        alert("Debug: No user session found.");
         returnToLogin();
         return;
     }
 
     if (!currentExam) {
-        alert("No exam found. Please select an exam.");
+        alert("Debug: No exam found.");
         return;
     }
 
-    console.log("Initializing Exam for:", currentUser.fullName, "Exam:", currentExam.title);
+    console.log("Exam Initialized:", currentUser.fullName, "Exam:", currentExam.title);
 
-    // Check if `user-details` exists
-    const userDetailsElement = document.getElementById('user-details');
-    if (!userDetailsElement) {
-        console.error("Error: Element #user-details not found.");
-        return;
-    }
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
 
-    userDetailsElement.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
-
-    startTime = Date.now();
-    
-    // Ensure questions are set before loading them
     if (!questions || questions.length === 0) {
-        console.error("No questions available for this exam.");
-        alert("There was an issue loading the questions.");
+        alert("Debug: No questions available to display.");
+        console.error("Error: No questions available.");
         return;
     }
 
+    alert("Debug: Loading first question...");
+    startTime = Date.now();
     loadQuestion();
     startTimer();
-    
-    // Ensure the exam section is displayed
     document.getElementById('examSection').classList.remove("hidden");
-  }
+}
+
   
 
 // Load Current Question
