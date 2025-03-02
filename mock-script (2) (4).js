@@ -6475,11 +6475,16 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 
         // Ensure "BOT203-T2" is included in the user's exam allocations
         if (!examAllocations[userId]) {
-            examAllocations[userId] = [];
-        }
-        if (!examAllocations[userId].some(exam => exam.id === "CHM101-E1")) {
-            examAllocations[userId].push({ id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY ONE" });
-        }
+    examAllocations[userId] = [];
+}
+
+if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM101-E1")) {
+    examAllocations[userId].push({ id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY ONE" });
+}
+
+console.log("Exam Allocations for", userId, examAllocations[userId]);
+localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+
 
         // Display assigned exams
         examAllocations[userId].forEach(exam => {
@@ -6633,7 +6638,8 @@ function shuffleArray(array) {
 
 
 // Start Exam Function
-function startExam(examId, examTitle) {
+       function startExam(examId, examTitle) {
+         examId = examId.trim(); 
     console.log(`Starting exam: ${examTitle}`); // Debugging log
 
     // Store the selected exam for later use
@@ -6650,9 +6656,10 @@ function startExam(examId, examTitle) {
 
     // Fetch questions for this exam
     if (!questionBanks || !questionBanks[examId]) {
+        console.error("Error: No questions found for", examId);
         alert("No questions available for this exam.");
         return;
-    }
+    }                      
 
     // Randomize and select up to 50 questions
     questions = shuffleArray(questionBanks[examId]).slice(0, 50);
