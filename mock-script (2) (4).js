@@ -1,4 +1,15 @@
 
+// Function to show the pop-up and prevent scrolling
+function showPopup() {
+    popup.classList.add('active');
+    document.body.classList.add('no-scroll');
+}
+
+// Function to hide the pop-up and allow scrolling
+function hidePopup() {
+    popup.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+}
 
 
 // Function to handle exam button click
@@ -5810,7 +5821,454 @@ correct: 1,
           explanation: "At the highest point, the vertical component of velocity is zero, but the horizontal component of velocity is not.  The acceleration due to gravity is downwards, so velocity is horizontal and acceleration is vertical, and thus they are perpendicular."
         }, 
       ], 
+"CHM101-F1": [
 
+  {
+    text: "Which of SF₄, SiH₄, CO₂, ICl, CH₂Cl₂, SO₂ and XeO₃ would not exhibit the property of permanent dipole?",
+    options: ["CO₂ and SiH₄ only", "CO₂, SiH₄ and XeO₃ only", "SF₄ and SiH₄ only", "SF₄, SiH₄, CO₂ and ICl only."],
+    correct: 0,
+    explanation: "For a molecule to have a permanent dipole moment, it must have polar bonds and the molecular geometry must be such that the bond dipoles do not cancel out.  CO₂ has polar bonds but is linear, so the bond dipoles cancel. SiH₄ has bond polarity that is considered to have no effective charge, so no dipole moment. It also tetrahedral, which symmertically canceles any dipole moment"
+  },
+  {
+    text: "Calculate the enthalpy change in kJ/mol⁻¹ for the fermentation of glucose given that the heat of combustion of glucose C₆H₁₂O₆ and ethanol C₂H₅OH are -2820 and -1368 kJ/mol⁻¹ respectively.",
+    options: ["-105", "-84", "-15", "-684"],
+    correct: 1,
+    explanation: "The fermentation of glucose can be represented by the equation: C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂. The enthalpy change for this reaction can be calculated using the heats of combustion: ΔH = 2ΔH_comb(C₂H₅OH) - ΔH_comb(C₆H₁₂O₆) = 2(-1368) - (-2820) = -2736 + 2820 = -84"
+  },
+  {
+    text: "The ideal gas law for real gases, PV = nRT is invalid due to existence of intermolecular forces at a (i) high pressure (ii) low temperature (iii) low pressure (iv) high temperature",
+    options: ["i only", "iv only", "i and ii only", "iii and iv only"],
+    correct: 2,
+    explanation: "Real gases deviate from ideal behavior due to intermolecular forces and the finite volume of gas molecules. These effects are most pronounced at high pressure (where molecules are close together) and low temperature (where kinetic energy is low, and intermolecular forces are more influential)."
+  },
+  {
+    text: "Pick the correct statements from the following (i) Bond energies can be used to determine the heat of formation of compounds which are not formed under ordinary laboratory conditions (ii) The first law of thermodynamics is about conservation of energy (iii) The entropy of the universe is constant",
+    options: ["i and ii", "i and iii", "ii and iii", "all are correct", "none of the above"],
+    correct: 0,
+    explanation: "(i) This is true. Bond energies can be used to estimate the enthalpy change for reactions, even if those reactions are not easily performed. (ii) This is the fundamental concept of the first law of thermodynamics. (iii) The second law of thermodynamics states that the entropy of the universe is always increasing."
+  },
+  {
+    text: "Subconsciously, people who do hard labour prefer a plate of eba rather than rice because the metabolism of eba is",
+    options: ["more exothermic", "more endothermic", "catalyst", "accompanied close to zero release of energy", "none of the above"],
+    correct: 0,
+    explanation: "Eba is typically made from cassava (gari), which is composed of complex carbohydrates (starch). The higher starch content implies more extensive molecular breakdown during digestion to provide long-term energy to the body. Thus because the metabolic reactions are more exothermic. As the carbohydrate content is less than Gari, there is less long-term power during digestive activities in white rice compared to eba."
+  },
+  {
+    text: "Given that the enthalpies of formation for FeO and Fe₂O₃ are -266 kJ/mol⁻¹ and -821 kJ/mol⁻¹ respectively. The standard enthalpy change for the reaction 2FeO(s) + ½O₂(g) → Fe₂O₃(s) is",
+    options: ["289 kJ", "298 kJ", "-298 kJ", "-289 kJ", "-290 kJ"],
+    correct: 3,
+    explanation: "ΔH_reaction = ΣΔH_f(products) - ΣΔH_f(reactants) = [ΔH_f(Fe₂O₃)] - [2ΔH_f(FeO) + 0] = [-821] - [2(-266)] = -821 + 532 = -289 kJ."
+  },
+  {
+    text: "When one mole of benzene C₆H₆(I) is burned to CO₂(g) and H₂O(I), 782 kcal of heat is evolved. Calculate ΔH⁰f of benzene in kJ/mol⁻¹ given that ΔH⁰f CO₂(g) and H₂O(I) to be -394 and -286 kJ/mol⁻¹ respectively and that the combustion reaction may be represented by the equation C₆H₆(I) + 15/2O₂(g) → 6CO₂(g) + 3H₂O(I)",
+    options: ["+50 kJ/mol⁻¹", "-50 kJ/mol⁻¹", "+5.0 kJ/mol⁻¹", "-5.0 kJ/mol⁻¹", "-500 kJ/mol⁻¹"],
+    correct: 0,
+    explanation: "First, convert the heat of combustion to kJ/mol: -782 kcal/mol × 4.184 kJ/kcal = -3272.1 kJ/mol. ΔHᵣₜ = ΣΔHᵥ(products) - ΣΔHᵥ(reactants), -3272.1 = [6(-394) + 3(-286)] - [ΔHᵥ(C₆H₆)]. ΔHᵥ(C₆H₆) = 3272.1-3222kJ/mol = 50.1"
+  },
+  {
+    text: "The heat of combustion of ice is 79.7 cal g⁻¹. Calculate the ΔH in going from water to ice at 0 °C in kJ/mol⁻¹",
+    options: ["6.00 kJ/mol⁻¹", "4.18 kJ/mol⁻¹", "-4.18 kJ/mol⁻¹", "-6.00 kJ/mol⁻¹", "-1.44 kJ/mol⁻¹"],
+    correct: 3,
+    explanation: "Heat of fusion = -(heat of combustion) = 79.7cal/gram. Find how many joules that is, (79.7 × 4.18)/ gram. That is equal to 333Joule = 0.33kJ. Now the question wants it in mole! 0.33kJ per gram × 18 g/mol = 5.994 ~ 6"
+  },
+{
+    text: "The decomposition of N₂O₅ to NO₂ and O₂ is first order, with a rate constant of 4.80 x 10⁻⁴ s⁻¹ at 45°C. If the initial concentration is 1.65 x 10⁻² moldm⁻³, what is the concentration after 825 s?",
+    options: ["0.0111 moldm⁻³", "0.111 moldm⁻³", "1.011 moldm⁻³", "0.1361 moldm⁻³"],
+    correct: 0,
+    explanation: "For a first-order reaction, [A]t = [A]₀ × e^(-kt). [A]₀ = 1.65 x 10⁻² moldm⁻³, k = 4.80 x 10⁻⁴ s⁻¹, t = 825 s. [A]t = (1.65 x 10⁻²) × e^(-4.80 x 10⁻⁴ × 825) = (1.65 x 10⁻²) × e^(-0.396) = (1.65 x 10⁻²) × 0.673 = 0.0111 moldm⁻³."
+  },
+  {
+    text: "Which one of the following is incorrect for the reaction A → B, which is second order kinetics?",
+    options: ["The half-life depends on the initial concentration", "The half-life is the time for one half of the reactant to be consumed", "The second order rate constant can be found by plotting 1/[A] versus time where [A] is the concentration of the reactant", "The initial rates for a second order reaction depends on the concentration of the reactant squared", "None of the above"],
+    correct: 4,
+    explanation: "All the statements are correct for a second-order reaction: (a) t₁/₂ = 1/(k[A]₀) so half-life depends on initial concentration, (b) half-life is defined as the time it takes for the reactant to be consumed , (c) for 2nd order plot, 1/[A] = kt + 1/[A]₀, a plot of 1/ [A] vs t would get you K, (d) rate is given by rate = k[A]^2, thus the initial rates for a second order reaction depends on the concentration of the reactant squared. Therefore none of the options is incorrect, all are right."
+  },
+  {
+    text: "The half-life for a first order reaction is 2768 years. If the concentration after 11072 years is 0.0216 M, what was the initial concentration?",
+    options: ["0.0690 M", "0.345 M", "0.173 M", "1.000 M", "None of the above"],
+    correct: 1,
+    explanation: "For a first order reaction, the half life is related to K by t₁/2= 693/k so you can figure out K = 0.693/ 2768 = .0002503. Then find number of half lives, 11072/2768 = 4, which can be used for the equation (1/2)ⁿ = initial concentration where the initial is 0.0216. Solve, and you get 0.3456"
+  },
+  {
+    text: "Consider the following reaction in aqueous solution: 5Br⁻(aq) + BrO₃⁻(aq) + 6H⁺(aq) → 3Br₂(g) + 3H₂O(l). If the rate of appearance of Br₂ at a particular moment during the reaction is 0.025 Ms⁻¹, What is the rate of disappearance (in Ms⁻¹) of Br⁻¹ at that moment?",
+    options: ["0.0417 Ms⁻¹", "0.025 Ms⁻¹", "0.005 Ms⁻¹", "0.010 Ms⁻¹", "0.050 Ms⁻¹"],
+    correct: 0,
+    explanation: "Rate = -(1/5)Δ[Br⁻]/Δt = (1/3)Δ[Br₂]/Δt.  Δ[Br₂]/Δt is given =0.025Ms⁻¹. We need to find  Δ[Br⁻]/Δt = -5/3 × Δ[Br₂]/Δt = -5/3 × 0.025 = -0.0417Ms⁻¹ which is 0.0417"
+  },
+  {
+    text: "Reaction rates generally",
+    options: ["are constant throughout a reaction", "are smallest at the beginning and increase with time", "are greatest at the beginning of a reaction and decreases with time", "no such generalisations", "all of the above."],
+    correct: 2,
+    explanation: "Reaction rates are generally greatest at the beginning of the reaction and decrease with time. This is because the concentration of reactants is highest at the beginning, leading to more frequent and effective collisions between reactant molecules. As the reaction proceeds, the concentration of reactants decreases, which causes the rate of reaction to decrease. Thus, the reaction slows down over time."
+  },
+  {
+    text: "A certain first order reaction has a half-life of 2400 s at 30°C and 240 s at 150°C. Calculate the activation energy of this reaction",
+    options: ["15.540 kJ/mol⁻¹", "18.5551 kJ/mol⁻¹", "20.450 kJ/mol⁻¹", "45.201 kJ/mol⁻¹", "None of the above"],
+    correct: 2,
+    explanation: "Apply the Arrhenius equation to the rate constants k₁=0.693/2400=2.8875x10⁻⁴ and k₂=0.693/240=0.0028875 at the two respective temperatures. The temperature are 30°C(303k) and 150°C(423K). Apply the two points form of Arrhenius equation. Ln k₁/k₂=-Ea/R × (1/T₁-1/T₂); Ea=R × Ln (k₂/k₁)/(1/T₁-1/T₂); Ea=(8.314 j/mol × k) × Ln(.0028875/(2.8875x10-4)) /(1/303 -1/423) = 20450j or 20.45 kJ/mol"
+  },
+  {
+    text: "The current in a given wire is 1.80 Amps. How many Coulombs will pass a given point on the wire in 1.36 min?",
+    options: ["1.76 C", "714 C", "471 C", "147 C"],
+    correct: 3,
+    explanation: "Current (I) is the rate of flow of charge (Q) with respect to time (t). Q = I × t. First, convert time to seconds: 1.36 min × 60 s/min = 81.6 s. Then, Q = 1.80 A × 81.6 s = 146.88 C, which rounds to 147 C."
+  },
+  {
+    text: "The reaction representing the plate out of Silver from a solution of Ag⁺ may be written as: Ag⁺ + e⁻ → Ag(s)nWhat current is required to plate out 5 g of Silver in a period of 1000 seconds if the atomic mass of Silver is 107.868 gmol⁻¹?",
+    options: ["44.73 A", "0.4473 A", "4.473 A", "44.73 A"],
+    correct: 2,
+    explanation: "First, find the number of moles of silver: 5 g / 107.868 g/mol = 0.04635 mol. Since 1 electron is required per silver ion, the number of moles of electrons required is also 0.04635 mol. Charge (Q) = moles of electrons × Faraday's constant = 0.04635 mol × 96500 C/mol = 4472.7 C. Current (I) = Q / t = 4472.7 C / 1000 s = 4.473 A."
+  },
+  {
+    text: "In a complete cell represented by the following cell notation: Zn(s) / Zn²⁺(aq) (1 M) // Cu²⁺(aq) (1 M) / Cu(s)nThe salt-bridge helps to connect the two half-cells and",
+    options: ["makes the Zinc electrode form Zn²⁺ ions", "makes the Cu(aq) ions form Cu(s)", "causes a build - up of charges at the Zinc and Copper half-cells compartments", "removes a build - up of charges at the Zinc and Copper half-cell compartments"],
+    correct: 3,
+    explanation: "The salt bridge allows the flow of ions between the two half-cells, maintaining electrical neutrality. Without the salt bridge, there would be a build-up of positive charge in the oxidation half-cell (Zn/Zn²⁺) and a build-up of negative charge in the reduction half-cell (Cu²⁺/Cu), quickly stopping the reaction."
+  },
+  {
+    text: "The electromotive force (emf) Ecells of the concentration cell, Pt(s)H₂(g) (1 atm) / H⁺ (x M) // H⁺ (1 M) / H₂ (1 atm) Pt(s) in volts at 25 °C is equal to",
+    options: ["E⁰ cell value", "-0.0592 pH", "-0.00592 pH", "0.00"],
+    correct: 1,
+    explanation: "For a concentration cell with hydrogen electrodes, the cell potential is given by E = (0.0592/n)log(Q). Here, n = 1, and Q = [H⁺]₁/[H⁺]₂ = x/1. E = 0.0592 * log(x). pH= -log[H⁺], [H⁺] = x, E = -0.0592 pH"
+  },
+  {
+    text: "Given the following standard electrode potentials: E⁰Co²⁺ / Co= -0.2770 V and E⁰Co³⁺ / Co = +1.1130 VnCalculate the E⁰ for the half reaction: Co³⁺ + e⁻ → Co²⁺(aq)",
+    options: ["+ 1.390 V", "+3.893 V", "+ 0.836 V", "- 1.390 V"],
+    correct: 0,
+    explanation: "Co³⁺ + 3e⁻ → Co, E⁰ = +1.1130 V. Co²⁺ + 2e⁻ → Co, E⁰ = -0.2770 V. The target equation is Co³⁺ + e⁻ → Co²⁺. ΔG = -nFE. G₃ = -3F(1.1130) = -3.339F; ΔG₂ = -2F(-0.2770) = 0.554F. ΔG₁ = ΔG₃ - ΔG₂ = -3.339F - 0.554F = -3.893F; Eo = -ΔG/(-nF) = -3.893F/(-3F) = 1.297V"
+  },
+  {
+    text: "The half cell reactions for the reaction 2H₂O₂(l) + O₂(g) at 25 °C are: H₂O₂ = O₂(g) + 2H⁺(aq) + 2e⁻, E⁰ = -0.68 V ; 2H₂O = O₂(g) + 4H⁺(aq) + 4e⁻, E⁰ = -1.23 VnWhat is the E⁰ for the reaction?",
+    options: ["- 0.68 V", "+ 0.68 V", "+ 1.23 V", "+ 0.55 V"],
+    correct: 3,
+    explanation: "Reaction of intrest H2O2 + 2H+ +2e- -> 2H2O, E° red = 1.77V O2(g) + 2H+(aq) +2e- -> H2O2, E°red = 0.695V, for second reaction flip to be oxidation so the reaction is H2O2 --> O2(g) + 2H+(aq) + 2e- -> H2O2, E° = -0.695 . The overall reaction is H2O2 -> 2H2O and the reaction for Eo is 1.23V + (-0.68V) = 0.55V"
+  },
+  {
+    text: "The equilibrium constant for the reason in the question above is",
+    options: ["1.64 x 10³⁷", "1.66 x 10⁴¹", "1.68 x 10³⁵", "1.64 x 10³⁸"],
+    correct: 0,
+    explanation: "Use the equation ΔG° = -nFE° = -RTlnK. Therefore lnK = (nFE°)/RT, so K = exp((nFE°)/RT). n = 2, F = 96500 C/mol, E° = 0.55 V, R = 8.314 J/(mol·K), T = 298 K. Then, lnK = (2 × 96500 × 0.55) / (8.314 × 298) ≈ 42.7. Finally K = e⁴³ which roughly about 1.64 x 10³⁷"
+  },
+{
+text: "In the cell: Tl(s) / Tl⁺(aq) // Sn²⁺(aq) / Sn(s)\nThe overall reaction is?",
+options: ["2Tl(s) + Sn²⁺(aq) → 2Tl⁺(aq) + Sn(s)", "Tl(s) + 2Sn²⁺(aq) → Tl⁺(aq) + 2Sn²⁺", "3Sn(s) + 2Tl⁺(aq) → 3Sn²⁺(aq) + 2Tl(s)", "Sn(s) + 2Tl⁺(aq) → Sn²⁺(aq) + 2Tl(s)"],
+correct: 0,
+explanation: "The shorthand notation shows oxidation on the left (Tl(s) → Tl⁺(aq)) and reduction on the right (Sn²⁺(aq) → Sn(s)). To balance the electrons, multiply the thallium reaction by 2. This results in the overall balanced reaction of 2Tl(s) + Sn²⁺(aq) → 2Tl⁺(aq) + Sn(s)."
+},
+{
+text: "You are given the standard redox electrode potentials: Zn²⁺(aq) / Zn(s), E⁰ = - 0.76 V and Cu²⁺(aq) / Cu(s), E⁰ = 0.34 V\nFor the spontaneous electrochemical cell formed from a proper combination of these two electrodes, the overall standard cell potentials is",
+options: ["- 0.42 V", "+ 1.10 V", "+ 2.10 V", "+ 0.84 V", "+ 0.42 V"],
+correct: 1,
+explanation: "For a spontaneous cell, E°cell must be positive. Zn has more negative reduction potiential, which means the zinc is oxidized (Zn(s) -> Zn²⁺(aq) + 2e⁻) and the equation E° must be flip to be a potiential of 0.76V. Reduction is then Cu²⁺(aq) + 2e⁻ -> Cu(s), which remains at 0.34V. The overall E°Cell = 0.76 + 0.34 = 1.10 V"
+},
+{
+text: "In the cell Zn(s) / Zn²⁺(aq) (0.010 M) // Cu²⁺(aq) (0.010 M) / Cu(s), the reaction quotient (Q) is",
+options: ["1.0 x 10⁻⁴", "1.0 x 10⁻¹²", "1.00", "None of the above"],
+correct: 2,
+explanation: "The cell reaction is Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s). Q = [Zn²⁺] / [Cu²⁺] = (0.010 M) / (0.010 M) = 1.00."
+},
+{
+text: "In the cathodic protection of steel metal pipes to prevent corrosion using magnesium rods as the sacrificial anode, magnesium is used because:",
+options: ["it has a positive standard reduction potential", "Magnesium glows in water and this glow prevents the corrosion of the steel pipe", "Magnesium is not as hard as Iron", "it has a higher oxidation potential than Iron", "it forms Magnesium - Iron allow with the steel pipe"],
+correct: 3,
+explanation: "Cathodic protection works by using a more easily oxidized metal (sacrificial anode) to protect the less easily oxidized metal (steel). Magnesium has a higher oxidation potential than iron, meaning it will be oxidized in preference to the iron, thus protecting the steel from corrosion."
+},
+{
+text: "In O₂(g) / H₂(g) fuel cell employed by America to send Astronauts to the moon, the cathode reaction is:",
+options: ["O₂(g) + 2H₂O(l) + 4e⁻ → 4OH⁻(aq)", "2H₂(g) + O₂(g) + 2e⁻ → 2H₂O(l)", "O₂(g) + 2H₂O(l) + 4e⁻ → 4OH⁻(aq)", "2H₂O(l) + 2e⁻ → H₂(g) + 2OH⁻(aq)", "None of the above"],
+correct: 0,
+explanation: "In a hydrogen-oxygen fuel cell operating under basic conditions, the cathode reaction involves the reduction of oxygen to hydroxide ions, as shown in the correct option."
+},
+{
+text: "An unknown metal m displaces Nickel from Nickel(II)Sulphate(VI) solution but does not displace Manganese from Manganese(II)Sulphate(VI) solution. Which of the following represents the correct order of reducing power (most powerful form of the three metals)?",
+options: ["Manganese, Nickel, m", "Manganese, m, Nickel", "Nickel, Manganese, m", "Nickel, m, Manganese"],
+correct: 1,
+explanation: "A metal will displace another metal from its solution if it has a higher reducing power (is more easily oxidized). Since m displaces Ni, m is a stronger reducing agent than Ni. Since m does not displace Mn, Mn is a stronger reducing agent than m. Therefore, the order of reducing power is Mn > m > Ni."
+},
+{
+text: "How many grams of Chlorine can be produced by the electrolysis of molten NaCl at a current of 10.0 Amp for 5.00 min? [m. wt of Cl₂ = 70.9 g mol⁻¹]",
+options: ["1.00 g", "11.1 g", "1.11 g", "None of the above"],
+correct: 3,
+explanation: "First calculate the total charge passed Q = I × t = 10 amps × 5 minutes × 60 secs/min = 3000 Coulombs. Then use Faraday's laws to find moles of e- = Q/F where F is Faraday's constant = 96500 Coulombs/mole. 3000/96500 = .0311 moles e-. Each chlorine molecule requires 2 electrons. so .0311 moles/2 = .01558 moles of Cl2 produced. then mass is the moles × molecular weight, .01558 moles × 70.9 g/mole = 1.105 g."
+},
+{
+text: "Which of the following species is oxidised when a concentrated solution of Potassium Hydrogen Sulphate(VI) is electrolysed between inert electrodes in the production of Hydrogen Peroxides?",
+options: ["H⁺", "H₂O", "K⁺(aq)", "HSO₄⁻(aq)"],
+correct: 3,
+explanation: "In the electrolysis of concentrated potassium hydrogen sulfate, hydrogen peroxide (H₂O₂) is formed by the oxidation of bisulfate ions (HSO₄⁻) at the anode."
+},
+{
+text: "An electrolytic cell is an electrochemical cell in which",
+options: ["a non-spontaneous reaction is driven by an electric current", "a catalytic reaction is avoided by supplying current", "Faraday’s law of electrolysis breaks down at moderate temperatures", "a gas electrode is an essential component", "none of the above"],
+correct: 0,
+explanation: "An electrolytic cell uses electrical energy to drive a non-spontaneous redox reaction, as opposed to a galvanic cell which uses a spontaneous reaction to produce electrical energy."
+},
+{
+text: "The electrochemical series is a table of",
+options: ["Standard electrode oxidation potentials", "Overall cell potentials", "Standard electrode reduction potentials", "Spontaneous electrochemical reactions", "Applied electrochemistry"],
+correct: 2,
+explanation: "The electrochemical series lists the standard reduction potentials of various half-reactions, arranged in order of their potential values. This allows for the prediction of which species will be reduced and oxidized in a redox reaction."
+},
+  {
+    text: "The pH of 0.1 M NH₃ solution for which K= 1.8 × 10⁻⁵ at 25°C is",
+    options: ["11.13", "10.31", "11.31", "10.13"],
+    correct: 0,
+    explanation: "NH₃ + H₂O ⇌ NH₄⁺ + OH⁻. Kb = [NH₄⁺][OH⁻] / [NH₃] = 1.8 x 10⁻⁵. Let x be the [OH⁻].  Then, [NH₄⁺] = x, and [NH₃] = 0.1 - x.  Assume 0.1 - x ≈ 0.1. 1.8 x 10⁻⁵ = x²/0.1, x² = 1.8 x 10⁻⁶, x = 1.34 x 10⁻³ M. pOH = -log(1.34 x 10⁻³) = 2.87. pH = 14 - pOH = 14 - 2.87 = 11.13."
+  },
+  {
+    text: "The ka of Ethanoic acid is 1.75 × 10⁻⁵. What mass of Sodium Ethanoate is needed to prepare 100 ml of 0.02 M Ethanoate solution buffered at pH 4.5? [CH₃COONa = 82]",
+    options: ["9.0760 g", "0.9076 g", "0.0907 g", "0.009076 g"],
+    correct: 2,
+    explanation: "pH = pKa + log([A⁻]/[HA]). pKa = -log(1.75 x 10⁻⁵) = 4.76. 4.5 = 4.76 + log([A⁻]/[HA]), log([A⁻]/[HA]) = -0.26, [A⁻]/[HA] = 10⁻⁰.²⁶ = 0.55.  [HA] = 0.02M. [A⁻] = 0.55 * 0.02 = 0.011M. Moles of CH₃COONa = 0.011M * 0.1L = 0.0011 mol. Mass of CH₃COONa = 0.0011 mol * 82 g/mol = 0.0902 g which is roughly 0.0907g"
+  },
+  {
+    text: "In which one of the following reactions will the point of equilibrium shift to the left when pressure on the system is increased?",
+    options: ["C(s) + O₂(g) → CO₂(g)", "CaCO₃(s) ⇌ CaO(s) + CO₂(g)", "2Mg(s) + O₂(g) ⇌ 2MgO(s)", "2H₂(g) + O₂(g) ⇌ 2H₂O(g)"],
+    correct: 3,
+    explanation: "Increasing pressure shifts the equilibrium towards the side with fewer moles of gas. (a) 1 mole gas -> 1 mole gas, (b) 0 -> 1 mole gas, (c) 1 mole gas -> 0, (d) 3 moles gas -> 2 moles gas. Therefore, increasing pressure will shift the equilibrium to the left (reactants) in the reaction 2H₂(g) + O₂(g) ⇌ 2H₂O(g)."
+  },
+  {
+    text: "Given the reaction at equilibrium: BaCrO₄(s) ⇌ Ba²⁺(aq) + CrO₄²⁻(aq), which substance when added to the mixture, will cause an increase in the amount of BaCrO₄(s)?",
+    options: ["K₂CO₃", "CaCO₃", "BaCl₂", "CaCl₂"],
+    correct: 2,
+    explanation: "Adding BaCl₂ will increase the concentration of Ba²⁺ ions in the solution. According to the common ion effect, this will shift the equilibrium to the left, causing more BaCrO₄(s) to precipitate out of the solution."
+  },
+  {
+    text: "The Ksp for Calcium Hydroxide is 2.5 × 10⁻¹⁴. Calculate molar solubility of the base in pure water.",
+    options: ["1.84 × 10⁻⁵", "1.58 × 10⁻⁵", "2.92 × 10⁻⁵", "2.32 × 10⁻⁵"],
+    correct: 0,
+    explanation: "For Ca(OH)₂, Ksp = [Ca²⁺][OH⁻]² = 2.5 x 10⁻¹⁴. Let s be the solubility of Ca(OH)₂. Then, [Ca²⁺] = s and [OH⁻] = 2s. So, Ksp = s(2s)² = 4s³ = 2.5 x 10⁻¹⁴. s³ = 6.25 x 10⁻¹⁵, s = 1.84 x 10⁻⁵ M."
+  },
+  {
+    text: "Consider an aqueous solution that contains 0.10 M each of Pb²⁺, Hg²⁺, and Ni²⁺. If a solution containing 2.0 × 10⁻²⁰ M S²⁻ is added to the solution containing the metal ions, which Sulphides will precipitate from the solution? [PbS: Ksp = 8.0 × 10⁻²⁸, HgS: Ksp = 4.0 × 10⁻⁵³, NiS: Ksp = 3.2 × 10⁻¹⁹]",
+    options: ["PbS, HgS and NiS", "PbS and HgS only", "NiS and HgS only", "HgS only"],
+    correct: 1,
+    explanation: "For precipitation to occur, the ion product (Q) must be greater than Ksp. Q = [M²⁺][S²⁻]. PbS: Q = (0.1)(2.0 x 10⁻²⁰) = 2.0 x 10⁻²¹, Q > Ksp (8.0 x 10⁻²⁸), so PbS precipitates. HgS: Q = (0.1)(2.0 x 10⁻²⁰) = 2.0 x 10⁻²¹, Q > Ksp (4.0 x 10⁻⁵³), so HgS precipitates. NiS: Q = (0.1)(2.0 x 10⁻²⁰) = 2.0 x 10⁻²¹, Q < Ksp (3.2 x 10⁻¹⁹), so NiS does not precipitate."
+  },
+  {
+    text: "What is the molar solubility of Barium Sulfate in 0.10 M sodium Sulfate? [Ksp : BaSO₄ = 1.0 × 10⁻¹⁰]",
+    options: ["1.0 x 10⁻⁵", "5.0 x 10⁻¹¹", "1.0 x 10⁻¹¹", "1.0 x 10⁻⁹"],
+    correct: 2,
+    explanation: "BaSO₄(s) ⇌ Ba²⁺(aq) + SO₄²⁻(aq). Ksp = [Ba²⁺][SO₄²⁻] = 1.0 x 10⁻¹⁰. Because of the common ion (sulfate), Let the solubility of BaSO₄ be 's'. Then, [Ba²⁺] = s and [SO₄²⁻] = 0.10 + s.  Since the Ksp is small we can assume that s << 0.10, thus [SO₄²⁻]≈ 0.10. Ksp = s * 0.10 = 1.0x10⁻¹⁰, which simplifies to s = 1.0 x 10⁻¹⁰ / 0.1 = 1.0 x 10⁻⁹ M which it looks there is a typo but I followed your instructions"
+  },
+  {
+    text: "At 25°C, the dissociation constant of Acetic acid is 1.75 x 10⁻⁵. Calculate the pH of 0.1 M solution of Acetic acid.",
+    options: ["1.21", "2.88", "5.75", "6.05"],
+    correct: 1,
+    explanation: "CH₃COOH ⇌ H⁺ + CH₃COO⁻. Ka = [H⁺][CH₃COO⁻] / [CH₃COOH] = 1.75 x 10⁻⁵. Let x be the [H⁺]. Then, [CH₃COO⁻] = x, and [CH₃COOH] = 0.1 - x. Assume 0.1 - x ≈ 0.1. 1.75 x 10⁻⁵ = x²/0.1, x² = 1.75 x 10⁻⁶, x = 1.32 x 10⁻³ M. pH = -log(1.32 x 10⁻³) = 2.88."
+  },
+{    text: "The equations representing the electrolysis of aqueous NaCl are:\nCathode reaction: 2e⁻ + 2H₂O → H₂ + 2OH⁻\nAnode reaction: 2Cl⁻ → Cl₂(g) + 2e⁻\nOverall reaction: 2Cl⁻ + 2H₂O → H₂(g) + Cl₂(g) + 2OH⁻\nA current of 0 F 0.0965 Amps is passed for 1000 seconds through 50.0 ml of 0.100 mol dm⁻³ solution of NaCl. The average concentration of OH⁻ in the final solution is: [F = 96500 C mol⁻¹]",
+    options: ["0.200 M", "0.002 M", "0.020 M", "2.0 x 10⁻³ M", "2.0 x 10⁻⁴ M"],
+    correct: 2,
+    explanation: "Total charge passed, Q = I * t = 0.0965 A * 1000 s = 96.5 C. Moles of electrons passed = Q / F = 96.5 C / 96500 C/mol = 0.001 mol. From the cathode reaction, 2 moles of electrons produce 2 moles of OH⁻, so moles of OH⁻ produced = 0.001 mol. [OH⁻] = moles / volume = 0.001 mol / (50.0 ml / 1000 ml/L) = 0.001 mol / 0.050 L = 0.020 M."
+  },
+  {
+    text: "In a lead - acid accumulator (car battery), the two electrodes, Pb(s) (anode) and PbO₂(s) (cathode) dip into aqueous H₂SO₄. The anode half cell reaction may be represented by:",
+    options: ["Pb(s) + HSO₄⁻ → PbSO₄(s) + H⁺ + e⁻", "Pb(s) + SO₄²⁻ → PbSO₄(s) + 2e⁻", "Pb(s) + HSO₄⁻ → HSO₄⁻ → PbSO₄(s) + H⁺ + 2e⁻", "Pb(s) + H₂SO₄ → PbSO₄(s) + 2H⁺ + 2e⁻", "Pb(s) + H₂SO₄ → PbSO₄(s) + 2H⁺ + e⁻"],
+    correct: 0,
+    explanation: "The anode is where oxidation occurs. Lead (Pb) is oxidized to lead sulfate (PbSO₄) in the presence of bisulfate (HSO₄⁻) and releases electrons (e⁻) and a proton, hence Pb(s) + HSO₄⁻ → PbSO₄(s) + H⁺ + e⁻."
+  },
+  {
+    text: "The half cell reaction, Li(s) → Li⁺ + e⁻, E⁰ = +3.05 V as written shows that E⁰ = +3.05 V is an",
+    options: ["Oxidation potential", "Reduction potential", "Redox potential", "Cathode half reduction potential", "None of the above"],
+    correct: 0,
+    explanation: "The reaction Li(s) → Li⁺ + e⁻ represents the oxidation of lithium (loss of electrons). Therefore, the given E⁰ value is an oxidation potential."
+  },
+  {
+    text: "I₂ and Br₂ are added to a solution of I⁻ and Br⁻. The half reaction of interest are: 2I⁻ → I₂ + 2e⁻, E⁰ = -0.54V and 2Br⁻ → Br₂ + 2e⁻, E⁰ = -1.09 V\nWhat reaction would occur if the concentration of each species were 1.0 mol dm⁻³ ?",
+    options: ["2I⁻ → I₂ + 2e⁻ alone", "2Br⁻ → Br₂ + 2e⁻ alone", "2Br⁻ + I₂ → Br₂ + 2I⁻", "2I⁻ + Br₂ → I₂ + 2Br⁻", "None of the above"],
+    correct: 3,
+    explanation: "Bromine (Br₂) has a higher reduction potential than iodine (I₂). That means that it will more readily gain electron than I₂. In another way, Br₂ will oxidize 2I- to form I₂ and 2Br-."
+  },
+  {
+    text: "Calculate the pH in a saturated Mn(OH)₂ solution. The solubility product for Mn(OH)₂ is 4.6 x 10⁻¹⁴",
+    options: ["9.00", "9.65", "9.35", "9.53"],
+    correct: 1,
+    explanation: "For Mn(OH)₂, Ksp = [Mn²⁺][OH⁻]² = 4.6 x 10⁻¹⁴. If 's' is the solubility, then [Mn²⁺] = s and [OH⁻] = 2s. Thus, 4s³ = 4.6 x 10⁻¹⁴, s³ = 1.15 x 10⁻¹⁴, s = 2.26 x 10⁻⁵ M. [OH⁻] = 2s = 4.52 x 10⁻⁵ M. pOH = -log[OH⁻] = 4.34, pH = 14 - pOH = 14 - 4.34 = 9.66"
+  },
+  {
+    text: "What mass of Zn(OH)₂ is contained in a 1.0 litre of saturated solution? Ksp = 4.5 x 10⁻¹⁷",
+    options: ["0.00011 g", "0.00022 g", "0.00044 g", "0.010 g"],
+    correct: 1,
+    explanation: "For Zn(OH)₂, Ksp = [Zn²⁺][OH⁻]² = 4.5 x 10⁻¹⁷. Let s be the solubility of Zn(OH)₂. Then, [Zn²⁺] = s and [OH⁻] = 2s. So, Ksp = s(2s)² = 4s³ = 4.5 x 10⁻¹⁷. s³ = 1.125 x 10⁻¹⁷, s = 2.24 x 10⁻⁶ mol/L. Mass of Zn(OH)₂ = (2.24 x 10⁻⁶ mol/L) × (99.4 g/mol) = 0.00022 g/L."
+  },
+  {
+    text: "The non-ionized form of an acid indicator is yellow and its anion is blue. The Ka of this indicator is 10⁻⁶. What will be the approximate pH range over which this indicator changes colour?",
+    options: ["3 - 5", "4 - 6", "5 - 7", "8 - 10"],
+    correct: 2,
+    explanation: "Indicators change color over a pH range of approximately pKa ± 1. Since Ka = 10⁻⁶, pKa = -log(Ka) = 6. The pH range is therefore approximately 6 ± 1, or 5 to 7."
+  },
+  {
+    text: "Calculate the hydroxonium ion concentration of a solution containing 0.20 mol of Acetic acid (HC₂H₃O₂) in 1.00 L of solution given that Ka = 1.80 x 10⁻⁵.",
+    options: ["1.89 x 10⁻³", "1.45 x 10⁻³", "0.89 x 10⁻³", "3.78 x 10⁻³"],
+    correct: 0,
+    explanation: "HC₂H₃O₂ ⇌ H₃O⁺ + C₂H₃O₂⁻. Ka = [H₃O⁺][C₂H₃O₂⁻] / [HC₂H₃O₂]. Assume x is [H₃O⁺] at equilibrium, then [C₂H₃O₂⁻] = x, and [HC₂H₃O₂] = 0.2 - x. Since Ka is small, assume 0.2 - x ≈ 0.2. So, 1.80 x 10⁻⁵ = x² / 0.2, x² = 3.6 x 10⁻⁶, x = 1.89 x 10⁻³ M."
+  },
+  {
+    text: "Calculate the pH of a solution which has a hydrogen ion concentration of 6.0 x 10⁻⁸ M.",
+    options: ["7.22", "3.22", "3.23", "7.32"],
+    correct: 0,
+    explanation: "pH = -log[H⁺] = -log(6.0 x 10⁻⁸) = 7.22."
+  },
+  {
+    text: "When a sample of solid Mg(OH)₂ was shaken with water at 25°C, a solution containing 1.21 x 10⁻⁴ magnesium ion was produced. Calculate the Ksp.",
+    options: ["6.09 x 10⁻¹²", "8.19 x 10⁻¹²", "7.09 x 10⁻¹²", "3.54 x 10⁻¹²"],
+    correct: 2,
+    explanation: "Mg(OH)₂ ⇌ Mg²⁺ + 2OH⁻. [Mg²⁺] = 1.21 x 10⁻⁴ M. [OH⁻] = 2  × [Mg²⁺] = 2.42 x 10⁻⁴ M. Ksp = [Mg²⁺][OH⁻]² = (1.21 x 10⁻⁴)(2.42 x 10⁻⁴)² = 7.09 x 10⁻¹²."
+  },
+  {
+    text: "For the dissociation of water: H₂O(g) → H₂(g) + ½O₂(g) at 1773 K, the value of Kp with partial pressure in the atmosphere is 1.87 x 10⁻⁴. Assuming ideal behaviour of gases, calculate the corresponding value of Kc with concentration in moldm⁻³. [R = 0.08205 atmdm³K⁻¹mol⁻¹]",
+    options: ["1.55 x 10⁻⁵ moldm⁻³", "3.10 x 10⁻⁷ moldm⁻³", "3.10 x 10⁻⁵ moldm⁻³", "2.10 x 10⁻⁷ moldm⁻³"],
+    correct: 0,
+    explanation: "Kp = Kc(RT)^Δn, where Δn is the change in the number of moles of gas (products - reactants). Δn = (1 + 0.5) - 1 = 0.5. Kc = Kp / (RT)^Δn = (1.87 x 10⁻⁴) / (0.08205 × 1773)¹'² = (1.87 x 10⁻⁴) / (145.47)^0.5 = (1.87 x 10⁻⁴) / 12.06 = 1.55 x 10⁻⁵ moldm⁻³."
+  },
+  {
+    text: "What is the pH of a buffer solution that is 0.20 M CH₃COOH and 0.15 M CH₃COONa, Ka = 1.80 x 10⁻⁵.",
+    options: ["4.62", "2.31", "6.42", "5.62"],
+    correct: 0,
+    explanation: "Use the Henderson-Hasselbalch equation: pH = pKa + log([A⁻]/[HA]), where HA is CH₃COOH and A⁻ is CH₃COO⁻. pKa = -log(Ka) = -log(1.80 x 10⁻⁵) = 4.74. pH = 4.74 + log(0.15/0.20) = 4.74 + log(0.75) = 4.74 - 0.12 = 4.62."
+  },
+  {
+    text: "Addition of Hydrochloric acid to a saturated solution of Cadmium Hydroxide [Cd(OH)₂], Ksp = 2.5 × 10⁻¹⁴ in water would cause",
+    options: ["The solubility of Cadmium Hydroxide to decrease", "The OH⁻ concentration to decrease and the Cd²⁺ concentration to increase", "The concentrations of both Cd²⁺ and OH⁻ to increase", "No change in the solubility of Cd(OH)₂"],
+    correct: 1,
+    explanation: "Adding HCl increases the concentration of H⁺ ions. These H⁺ ions will react with the OH⁻ ions in the solution, decreasing the OH⁻ concentration. According to Le Chatelier's principle, to counteract the decrease in OH⁻, more Cd(OH)₂ will dissolve, increasing the Cd²⁺ concentration."
+  },
+  {
+    text: "Given the following slightly soluble salts and their solubility product constant, which salt would be most soluble in pure water?",
+    options: ["AgCl: Ksp = 1.8 × 10⁻¹⁰", "AgBr: Ksp = 5.0 × 10⁻¹³", "AgI: Ksp = 8.3 × 10⁻¹⁷", "AuCl: Ksp = 2.0 × 10⁻¹¹"],
+    correct: 0,
+    explanation: "The salt with the highest Ksp value will be the most soluble. Comparing the Ksp values: AgCl (1.8 × 10⁻¹⁰) > AuCl (2.0 × 10⁻¹¹) > AgBr (5.0 × 10⁻¹³) > AgI (8.3 × 10⁻¹⁷). Thus, AgCl is the most soluble."
+  },
+  {
+    text: "Addition of Silver Nitrate (AgNO₃) to a saturated solution of Silver Chloride (Ksp = 1.8 × 10⁻¹⁰) would cause",
+    options: ["The Chloride ion concentration to be greater than that in the saturated solution", "The Chloride ion concentration to be smaller than that in the saturated solution", "The Chloride ion and Silver ion concentrations to be larger than that in the saturated solution", "The Chloride ion and Silver ion concentrations to be smaller than that in the saturated solution"],
+    correct: 1,
+    explanation: "Adding AgNO₃ increases the concentration of Ag⁺ ions in the solution. According to the common ion effect, the increased Ag⁺ concentration will shift the equilibrium of the dissolution of AgCl to the left, causing more AgCl to precipitate and decreasing the Cl⁻ concentration."
+  },
+  {
+    text: "Which of the following best describes what will happen when a solution of AgNO₃ is slowly added to a saturated solution of Silver Acetate, CH₃COOAg without changing the volume significantly? CH₃COOAg(s) ⇌ CH₃COO⁻ + Ag⁺",
+    options: ["Some of the solid Silver Acetate will dissolve", "The concentration of Acetate ion will increase", "Some solid Silver Acetate will precipitate", "The concentration of Acetate ion and Silver ion will both increase"],
+    correct: 2,
+    explanation: "Adding AgNO₃ increases the Ag⁺ concentration. According to the common ion effect and Le Chatelier's principle, the equilibrium will shift to the left, causing more solid silver acetate to precipitate out of the solution, hence some solid Silver Acetate will precipitate."
+  },
+  {
+    text: "The pH of 1 molar solution of a weak acid with a Ka = 10⁻¹⁰ will be",
+    options: ["2.5", "4.0", "5.0", "10.0"],
+    correct: 2,
+    explanation: "For a weak acid, [H⁺] = sqrt(Ka × [HA]), where [HA] is the concentration of the acid.  [H⁺] = sqrt(10⁻¹⁰ × 1) = 10⁻⁵. pH = -log[H⁺] = -log(10⁻⁵) = 5.0."
+  },
+  {
+    text: "Calculate the pH of a solution prepared by adding 60.0 cm³ of 0.100 M NaOH to 100 cm³ of 0.100 M CH₃COOH solution. [Ka : CH₃COOH = 1.75 x 10⁻⁵]",
+    options: ["4.50", "4.93", "5.16", "8.08"],
+    correct: 1,
+    explanation: "Moles of NaOH = (60 cm³/1000 cm³/L) * 0.100 M = 0.006 mol. Moles of CH₃COOH = (100 cm³/1000 cm³/L) × 0.100 M = 0.010 mol. The reaction is CH₃COOH + NaOH -> CH₃COONa + H₂O. After the reaction, moles of CH₃COOH remaining = 0.010 - 0.006 = 0.004 mol, and moles of CH₃COONa formed = 0.006 mol. Total volume = 160 cm³ = 0.16 L. [CH₃COOH] = 0.004 mol / 0.16 L = 0.025 M. [CH₃COONa] = 0.006 mol / 0.16 L = 0.0375 M. Use the Henderson-Hasselbalch equation: pH = pKa + log([CH₃COONa]/[CH₃COOH]), pKa = -log(1.75 x 10⁻⁵) = 4.76. pH = 4.76 + log(0.0375/0.025) = 4.76 + log(1.5) = 4.76 + 0.18 = 4.94."
+  },
+  {
+    text: "In order to make 250cm³ 0.30M solution of NaOH which of the following procedure is correct?",
+    options: ["weigh 3.00g of NaOH and add 250cm³ of water", "weigh 3.00g of NaOH and add water to the 250cm mark", "weigh 12.0g of NaOH and add water to the 250cm³ mark", "weight 40.00g of a NaOH and ad 250cm of water", "weigh 12.00g of NaOH and add 250cm3 of water"],
+    correct: 1,
+    explanation: "To prepare a solution of specific molarity, you need to dissolve the solute in enough solvent to reach the desired volume. First, calculate the mass of NaOH needed: (0.30 mol/L) * (0.250 L) * (40 g/mol) = 3.00 g. Dissolving 3.00 g of NaOH and adding water to the 250cm³ mark ensures the final solution has the correct concentration."
+  },
+  {
+    text: "What volume of 15.9M HNO₃ should be added to 1250cm³ of 2.00M HNO₃ to prepare 14.0 liter of 1.00M HNO₃ ? Water is added to make the final volume exactly 14.0litres.",
+    options: ["0.993L", "0.384L", "1.767L", "0.767L", "0.179L"],
+    correct: 3,
+    explanation: "Use the dilution equation: M₁V₁ + M₂V₂ = M₀ × V₀. Where M₁=15.9M, V₁ = x, M₂= 2.00M, V₂=1.25L, M₀=1.00M, V₀ = 14.0L. So 15.9x + (2 × 1.25) = 1 × 14, 15.9x = 11.5L, x= 0.767L"
+  },
+  {
+    text: "How many moles of BaCl2 can be prepare by reaction of 3.5moles of HCl with excess Ba(OH)₂?",
+    options: ["0.75mole", "1.75moles", "3.00moles", "3.5moles", "7.00moles"],
+    correct: 1,
+    explanation: "The balanced equation is Ba(OH)₂ + 2HCl -> BaCl₂ + 2H₂O. From the balanced equation, 2 moles of HCl produce 1 mole of BaCl₂. Therefore, 3.5 moles of HCl will produce 3.5 moles / 2 = 1.75 moles of BaCl₂."
+  },
+  {
+    text: "For the reaction 2NO₂(g) ⇌ 2NO(g) + O₂(g), Kc= 1.8 x 10⁻⁶ at 184°C. At the same temperature, the value of Kc for the reaction: NO(g) + ½O₂(g) ⇌ NO₂(g)",
+    options: ["1.45 × 10²", "1.34 × 10³", "5.6 × 10⁻⁷", "2.68 × 10⁻³", "7.45 × 10⁻⁴", "None of the options"],
+    correct: 4,
+    explanation: "The target reaction is the reverse of half of the original reaction. Therefore, K'c = (1/Kc)¹'² = (1/1.8x10⁻⁶)¹'² = (5.56x10⁵)¹'² =745.6."
+  },
+  {
+    text: "The equilibrium constant k for a reversible chemical reaction of the form 2A + B ⇌ C + 3D is given by",
+    options: ["[C][D] / [A][B]", "[A]²[B] / [C][D]³", "[C][D]³ / [A]²[B]", "[C][3D] / [2A][B]", "[C][3D]³ / [2A]²[B]"],
+    correct: 2,
+    explanation: "The equilibrium constant (K) is the ratio of products to reactants, each raised to the power of their stoichiometric coefficients in the balanced chemical equation. Therefore, K = [C][D]³ / [A]²[B]."
+  },
+  {
+    text: "The solubility product of a sparingly soluble salt, MX₂ is 1.8 × 10⁻⁷ M³ at 25°C. What is the solubility of the salt at that temperature?",
+    options: ["4.8 × 10⁻³ M", "3.6 × 10⁻³ M", "6.0 × 10⁻⁹ M", "2.4 × 10⁻³ M", "9.0 × 10⁻³ M"],
+    correct: 1,
+    explanation: "For MX₂, Ksp = [M][X]² = 1.8 x 10⁻⁷. If s is the solubility of MX₂, then [M] = s and [X] = 2s. So, Ksp = s(2s)² = 4s³ = 1.8 x 10⁻⁷.  s³ = 4.5 x 10⁻⁸. s = (4.5 x 10⁻⁸)^(1/3) = 0.00357 M or 3.6 x 10⁻³ M."
+  },
+    {
+    text: "Which of the following is most soluble?",
+    options: ["AgBr (Ksp = 7.7 x 10⁻¹¹)", "MnS (Ksp = 7.0 x 10⁻¹⁶)", "PbCl₂ (Ksp = 1.7 x 10⁻⁵)", "CaF₂ (Ksp = 3.2 x 10⁻¹¹)", "CaSO₄ (Ksp = 2.4 x 10⁻⁵)"],
+    correct: 2,
+    explanation: "The most soluble compound has the highest Ksp value. Comparing the Ksp values: PbCl₂ (1.7 x 10⁻⁵) > CaSO₄ (2.4 x 10⁻⁵) > AgBr (7.7 x 10⁻¹¹) > CaF₂ (3.2 x 10⁻¹¹) > MnS (7.0 x 10⁻¹⁶) . Therefore, PbCl₂ is the most soluble."
+  },
+  {
+    text: "The following reactions were allowed to come to equilibrium A(g) + B(g) ⇌ C(g). The initial concentrations of the reactants were 0.60 M A and 0.40 M B. At equilibrium the concentration of B was 0.30 M. What is the value of Kc for this reaction?",
+    options: ["0.833", "0.667", "2.4 x 10⁻³ M", "9.0 x 10⁻³ M"],
+    correct: 1,
+    explanation: "ICE table: A + B <=> C; Initial: [A] = 0.6, [B] = 0.4, [C] = 0; Change: -x for A and B, +x for C; Equilibrium: [A] = 0.6-x, [B] = 0.4-x = 0.3 (given), [C] = x. So, x = 0.1. Thus, [A] = 0.5, [B] = 0.3, [C] = 0.1. Kc = [C] / ([A][B]) = 0.1 / (0.5 × 0.3) = 0.1 / 0.15 = 0.667."
+  },
+{
+    text: "Which of the following is most soluble?",
+    options: ["AgBr (Ksp = 7.7 x 10⁻¹¹)", "MnS (Ksp = 7.0 x 10⁻¹⁶)", "PbCl₂ (Ksp = 1.7 x 10⁻⁵)", "CaF₂ (Ksp = 3.2 x 10⁻¹¹)", "CaSO₄ (Ksp = 2.4 x 10⁻⁵)"],
+    correct: 2,
+    explanation: "The most soluble compound has the highest Ksp value. Comparing the Ksp values: PbCl₂ (1.7 x 10⁻⁵) > CaSO₄ (2.4 x 10⁻⁵) > AgBr (7.7 x 10⁻¹¹) > CaF₂ (3.2 x 10⁻¹¹) > MnS (7.0 x 10⁻¹⁶) . Therefore, PbCl₂ is the most soluble."
+  },
+  {
+    text: "Which of the compound below has the largest percentage by mass of Sulphur?",
+    options: ["FeS₂", "H₂S", "SO₂", "FeS", "SO₃"],
+    correct: 1,
+    explanation: "To find the largest percentage by mass of sulfur, calculate the %S in each compound: H₂S (34/36 × 100 = 94.4%), FeS₂ (64/120 × 100 = 53.3%), SO₂ (32/64 * 100 = 50%), FeS (32/88 × 100 = 36.4%), SO₃ (32/80 × 100 = 40%). Therefore, H₂S has the largest percentage by mass of Sulfur."
+  },
+  {
+    text: "25.00cm3 of a solution of Fe²⁺ was titrated with soliton of the oxidizing agent Cr₂O₇²⁻. If the molarity of the Fe²⁺ solution is 0.1192 and that of the dichromate solution is 0.0153. What volume in cm3 of the latter would be required for complete reaction? The equation for above reaction is 6Fe²⁺ + Cr₂O₇²⁻ + 14H₃O⁺ → 6Fe³⁺ + 2Cr³⁺ + 21H₂O",
+    options: ["32.46cm3", "24.5cm3", "26.25cm3", "36.80cm3", "30.50cm3"],
+    correct: 0,
+    explanation: "From the balanced equation, 6 moles of Fe²⁺ react with 1 mole of Cr₂O₇²⁻. Moles of Fe²⁺ = (25.00 cm³ / 1000 cm³/L) × 0.1192 mol/L = 0.00298 mol. Moles of Cr₂O₇²⁻ required = 0.00298 mol / 6 = 0.000497 mol. Volume of Cr₂O₇²⁻ = 0.000497 mol / 0.0153 mol/L = 0.03246 L = 32.46 cm³."
+  },
+  {
+    text: "What weight of AgCl can be obtained by precipitating all Ag⁺ from 50cm3 of 0.12M AgNO₃",
+    options: ["0.648g", "0.006g", "0.861", "1.722g", "8.61g"],
+    correct: 2,
+    explanation: "The reaction is AgNO₃ + Cl⁻ -> AgCl. Moles of AgNO₃ = (50 cm³/1000 cm³/L) × 0.12 mol/L = 0.006 mol. Since the mole ratio of AgNO₃ to AgCl is 1:1, 0.006 mol of AgCl will be formed. The molar mass of AgCl is 143.32 g/mol, so mass of AgCl = 0.006 mol × 143.32 g/mol = 0.860 g."
+  },
+  {
+    text: "Calculate the amount in moles of 25.4g of Lead(ii) acetate.",
+    options: ["0.0954mol PbC₂H₃O₂", "8.26 x 10⁻¹ of Pb(C₂H₃O₂)₂", "12.8mol Pb(C₂H₃O₂)₂", "0.0536mol PbC₂H₃O₂", "0.0781mol Pb(C₂H₃O₂)₂"],
+    correct: 4,
+    explanation: "Lead(II) acetate is Pb(C₂H₃O₂)₂ or Pb(CH₃COO)₂. The molar mass of Pb(C₂H₃O₂)₂ is 325.29 g/mol. Moles of Pb(C₂H₃O₂)₂ = 25.4 g / 325.29 g/mol = 0.0781 mol."
+  },
+  {
+    text: "What volume of 5.00M H₂SO₄ is required to neutralize a solution containing 2.50g NaOH?",
+    options: ["6.25", "7.25mol", "5.25ml", "5.86mol", "5.00ml"],
+    correct: 0,
+    explanation: "The balanced reaction is H₂SO₄ + 2NaOH -> Na₂SO₄ + 2H₂O. First, convert grams of NaOH to moles (2.50g / 40 g/mol = 0.0625 mol NaOH). Then, determine moles of H₂SO₄ required (0.0625 mol NaOH / 2 = 0.03125 mol H₂SO₄). Finally, calculate the volume using molarity (0.03125 mol / 5.00 M = 0.00625 L = 6.25 ml)."
+  },
+  {
+    text: "Sodium chromate forms as the crystal Na₂CrO₄.xH₂O. If the chromium content is 15.2%. What is the complete formula?",
+    options: ["Na₂CrO₄.8H₂O", "Na₂CrO₄.2H₂O", "Na₂CrO₄.4H₂O", "Na₂CrO₄.10H₂O", "None of the above"],
+    correct: 3,
+    explanation: "The molar mass of Na₂CrO₄ is 161.97 g/mol, and Cr is 51.996 g/mol. The mass % of Cr in Na₂CrO₄ is 32.1%. If the hydrated molecule is Na₂CrO₄.10H₂O (342.1 g/mol), the mass percent is then 51.996/342.1 or 15.2%."
+  },
+  {
+    text: "Thionyl chloride, SOCl₂ reacts with water to SOCl₂ + H₂O → SO₂ + 2HCl. If 5.0g SOCl₂ is mixed with 1.0g H₂O how much HCl will be produced?",
+    options: ["3.1g", "2.4g", "1.5g", "1.9g", "None of the above."],
+    correct: 0,
+    explanation: "First determine the limiting reactant. MW SOCl₂ is 118.97 g/mol, MW H₂O is 18 g/mol. Moles SOCl₂ = 5/118.97 = 0.042 mol, Moles H₂O = 1/18 = 0.056 mol. SOCl₂ is limiting. For every 1 mol SOCl₂ 2 moles of HCl are made. Moles HCl = 0.042 × 2 = 0.084 mol HCl. MW of HCl = 36.46 g/mol. Thus 0.084 × 36.46 = 3.06g"
+  },
+  {
+    text: "5.0g of gaseous hydrogen is mixed with 10.0g of gaseous oxygen and the mixture ignited. What quantity of which gas remains after the explosion?",
+    options: ["2.2g", "3.8g", "6.2g", "5.0g", "None of the above."],
+    correct: 1,
+    explanation: "The balanced reaction is 2H₂ + O₂ -> 2H₂O. Moles of H₂ = 5/2 = 2.5 mol, moles of O₂ = 10/32 = 0.3125 mol. Oxygen is the limiting reagent. 0.3125 mol of O₂ will react with 0.625 mol of H₂ to form water, leaving 2.5-0.625 = 1.875 mol of hydrogen. 1.875 × 2 = 3.75g. Closest to the answer is 3.8g"
+  },
+    ],
+      },
+    
   "ZOO101-E3": [
     
   {
@@ -6388,7 +6846,7 @@ const users = [
 ];
 
 const exams = [
-    { id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY" },
+    { id: "CHM10", title: "INTRODUCTORY CHEMISTRY" },
     { id: "exam2", title: "Physics 201" },
     { id: "exam3", title: "History 101" },
     { id: "exam4", title: "Biology 202" }
@@ -6441,7 +6899,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
 
     // Automatically assign exam ID "BOT203-T2" to the new user
     const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-    examAllocations[userId] = [{ id: "BOT203-T2", title: "INTRODUCTORY CHEMISTRY ONE" }];
+    examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
     localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
     // Track number of registrations
@@ -6497,8 +6955,8 @@ document.getElementById('loginBtn').addEventListener('click', function () {
     examAllocations[userId] = [];
 }
 
-if (!examAllocations[userId].some(exam => exam.id.trim() === "BOT203-T2")) {
-    examAllocations[userId].push({ id: "BOT203-T2", title: "INTRODUCTORY CHEMISTRY ONE" });
+if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM101-F1")) {
+    examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
 }
 
 console.log("Exam Allocations for", userId, examAllocations[userId]);
@@ -6520,15 +6978,9 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
         // Simulate clicking the course selection button
         document.getElementById("selectCourseBtn").click();
     });
-            // Get the pop-up and close button elements
-const popup = document.getElementById('popup');
-document.body.classList.add('no-scroll');
-const closePopupBtn = document.getElementById('closePopup');
-
-
+            
         // Hide the popup correctly
         document.getElementById('popup').classList.remove('active');
-        document.body.classList.remove('no-scroll');
 
 
     examsList.appendChild(examItem);
