@@ -6327,9 +6327,6 @@ function initializeExam() {
   examSection.classList.remove("hidden");
 }
     
-    // Ensure the exam section is displayed
-    document.getElementById('examSection').classList.remove("hidden");
-}
 
 // Helper function to handle logout and redirection
 function returnToLogin() {
