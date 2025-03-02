@@ -1,6 +1,10 @@
 document.getElementById('toggle-calculator').addEventListener('click', function() {
-  const calculator = document.getElementById('calculator');
-  calculator.classList.toggle('hidden');
+  const calculatorPopup = document.getElementById('calculator-popup');
+  calculatorPopup.style.display = calculatorPopup.style.display === 'none' ? 'block' : 'none';
+});
+
+document.getElementById('close-calculator').addEventListener('click', function() {
+  document.getElementById('calculator-popup').style.display = 'none';
 });
 
 function appendToDisplay(value) {
