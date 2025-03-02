@@ -1,15 +1,4 @@
 
-// Function to show the pop-up and prevent scrolling
-function showPopup() {
-    popup.classList.add('active');
-    document.body.classList.add('no-scroll');
-}
-
-// Function to hide the pop-up and allow scrolling
-function hidePopup() {
-    popup.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-}
 
 
 // Function to handle exam button click
@@ -6531,9 +6520,15 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
         // Simulate clicking the course selection button
         document.getElementById("selectCourseBtn").click();
     });
-            
+            // Get the pop-up and close button elements
+const popup = document.getElementById('popup');
+document.body.classList.add('no-scroll');
+const closePopupBtn = document.getElementById('closePopup');
+
+
         // Hide the popup correctly
         document.getElementById('popup').classList.remove('active');
+        document.body.classList.remove('no-scroll');
 
 
     examsList.appendChild(examItem);
