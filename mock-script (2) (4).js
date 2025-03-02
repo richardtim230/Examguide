@@ -6523,7 +6523,6 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 });
 
 
-
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
 
@@ -6677,7 +6676,7 @@ function shuffleArray(array) {
 
     // Initialize the exam with the selected exam details
     initializeExam();
-       }
+                    }
 
 
 // Load Exam Questions
