@@ -6841,12 +6841,14 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-YKZQ", fullName: "Richard Ochuko" },
-    { userId: "CLIN-9DVS", fullName: "Titus chiamaka princess" }
+    { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
 ];
 
 const exams = [
-    { id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY TWO" }
-
+    { id: "CHM10", title: "INTRODUCTORY CHEMISTRY" },
+    { id: "exam2", title: "Physics 201" },
+    { id: "exam3", title: "History 101" },
+    { id: "exam4", title: "Biology 202" }
 ];
 
 // ✅ Allocate exams on page load
