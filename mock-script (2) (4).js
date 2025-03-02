@@ -7028,12 +7028,15 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
 
 
+
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
 
         // Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
+      document.getElementById('toggle-calculator').classList.remove('hidden');
+    document.getElementById('calculator-popup').classList.remove('hidden');
 
     } else {
         alert("Invalid User ID or Full Name. Please try again.");
