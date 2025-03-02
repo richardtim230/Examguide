@@ -6307,24 +6307,33 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Initialize Exam
 function initializeExam() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (!currentUser || !currentUser.fullName) {
-    alert("Session expired! Please log in again.");
-    returnToLogin();
-    return;
-  }
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
-  if (!selectedCourseCode) {
-    alert("Please select a course before starting the exam.");
-    return;
-  }
+    if (!currentUser || !currentUser.fullName) {
+        alert("Session expired! Please log in again.");
+        returnToLogin();
+        return;
+    }
 
-  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+    if (!currentExam) {
+        alert("No exam found. Please select an exam.");
+        return;
+    }
 
-  startTime = Date.now();
-  loadQuestion();
-  startTimer();
-  examSection.classList.remove("hidden");
+    // Display user and exam details
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
+
+    startTime = Date.now();
+    loadQuestion();
+    startTimer();
+    
+    // Ensure the exam section is displayed
+    document.getElementById('examSection').classList.remove("hidden");
+
+    // Log the questions array to ensure it's populated
+    console.log("Questions array:", questions);
 }
     
 
@@ -6558,47 +6567,65 @@ selectCourseBtn.addEventListener("click", () => {
 
 // Initialize Exam
 function initializeExam() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (!currentUser || !currentUser.fullName) {
-    alert("Session expired! Please log in again.");
-    returnToLogin();
-    return;
-  }
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
-  if (!selectedCourseCode) {
-    alert("Please select a course before starting the exam.");
-    return;
-  }
+    if (!currentUser || !currentUser.fullName) {
+        alert("Session expired! Please log in again.");
+        returnToLogin();
+        return;
+    }
 
-  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+    if (!currentExam) {
+        alert("No exam found. Please select an exam.");
+        return;
+    }
 
-  startTime = Date.now();
-  loadQuestion();
-  startTimer();
-  examSection.classList.remove("hidden");
+    // Display user and exam details
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
+
+    startTime = Date.now();
+    loadQuestion();
+    startTimer();
+    
+    // Ensure the exam section is displayed
+    document.getElementById('examSection').classList.remove("hidden");
+
+    // Log the questions array to ensure it's populated
+    console.log("Questions array:", questions);
 }
   
 
 // Load Current Question
 function loadQuestion() {
-  const question = questions[currentQuestionIndex];
+    const question = questions[currentQuestionIndex];
 
-  // Add question number dynamically
-  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+    // Log the current question to ensure it's being loaded correctly
+    console.log("Current question index:", currentQuestionIndex);
+    console.log("Loaded question:", question);
 
-  // Populate Answer Options with correct numbering
-  answerOptions.innerHTML = question.options
-    .map((option, index) => `
-      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-        ${option}
-      </button>
-    `)
-    .join("");
+    if (!question) {
+        alert("No more questions available.");
+        return;
+    }
 
-  highlightSelectedAnswer();
-  updateButtons();
-  updateProgressBar();
-}
+    // Add question number dynamically
+    questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+
+    // Populate Answer Options with correct numbering
+    answerOptions.innerHTML = question.options
+        .map((option, index) => `
+            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+                ${option}
+            </button>
+        `)
+        .join("");
+
+    highlightSelectedAnswer();
+    updateButtons();
+    updateProgressBar();
+          }
 
 // Shuffle questions randomly
 function shuffleArray(array) {
