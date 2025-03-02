@@ -6365,7 +6365,7 @@ function allocateUsersToExams(users, exams) {
 
     users.forEach(user => {
         const allocatedExams = [];
-        while (allocatedExams.length < 2) { // Each user gets 2 random exams
+        while (allocatedExams.length < 5) { // Each user gets 2 random exams
             const randomExam = exams[Math.floor(Math.random() * exams.length)];
             if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
                 allocatedExams.push(randomExam);
@@ -6381,7 +6381,7 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-5HLA", fullName: "Richard Ochuko" },
-    { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
+    { userId: "ARTS-DUXH", fullName: "Richard Ochuko" }
 ];
 
 const exams = [
@@ -6403,7 +6403,7 @@ function generateUserID(facultyCode) {
 // ✅ Prevent users from registering more than 2 accounts
 function hasReachedRegistrationLimit() {
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 2; // Limit to 2 accounts per user
+    return registrations.length >= 4; // Limit to 2 accounts per user
 }
 // Register User
 document.getElementById('registerAccountBtn').addEventListener('click', function () {
@@ -6624,28 +6624,23 @@ function initializeExam() {
 
 // Load Current Question
 function loadQuestion() {
-  if (questions.length === 0) {
-    alert("No questions available to load.");
-    return;
-  }
+    const question = questions[currentQuestionIndex];
 
-  const question = questions[currentQuestionIndex];
+    // Add question number dynamically
+    questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
 
-  // Add question number dynamically
-  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
+    // Populate Answer Options with correct numbering
+    answerOptions.innerHTML = question.options
+        .map((option, index) => `
+            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+                ${option.replace(/\n/g, '<br>')}
+            </button>
+        `)
+        .join("");
 
-  // Populate Answer Options with correct numbering
-  answerOptions.innerHTML = question.options
-    .map((option, index) => `
-      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-        ${option}
-      </button>
-    `)
-    .join("");
-
-  highlightSelectedAnswer();
-  updateButtons();
-  updateProgressBar();
+    highlightSelectedAnswer();
+    updateButtons();
+    updateProgressBar();
 }
 
 // Shuffle questions randomly
