@@ -6518,6 +6518,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 });
 
 
+
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
 
@@ -6578,7 +6579,49 @@ selectCourseBtn.addEventListener("click", () => {
     initializeExam(); // Ensure this function is called
 });
 
+// Initially 
+function initializeExam() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
+    if (!currentUser || !currentUser.fullName) {
+        alert("Session expired! Please log in again.");
+        returnToLogin();
+        return;
+    }
+
+    if (!currentExam) {
+        alert("No exam found. Please select an exam.");
+        return;
+    }
+
+    console.log("Initializing Exam for:", currentUser.fullName, "Exam:", currentExam.title);
+
+    // Check if `user-details` exists
+    const userDetailsElement = document.getElementById('user-details');
+    if (!userDetailsElement) {
+        console.error("Error: Element #user-details not found.");
+        return;
+    }
+
+    userDetailsElement.textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
+
+    startTime = Date.now();
+    
+    // Ensure questions are set before loading them
+    if (!questions || questions.length === 0) {
+        console.error("No questions available for this exam.");
+        alert("There was an issue loading the questions.");
+        return;
+    }
+
+    loadQuestion();
+    startTimer();
+    
+    // Ensure the exam section is displayed
+    document.getElementById('examSection').classList.remove("hidden");
+  }
+  
 
 // Load Current Question
 function loadQuestion() {
