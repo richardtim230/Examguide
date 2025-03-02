@@ -6365,7 +6365,7 @@ function allocateUsersToExams(users, exams) {
 
     users.forEach(user => {
         const allocatedExams = [];
-        while (allocatedExams.length =< 4) { // Each user gets 4 random exams
+        while (allocatedExams.length < 4) { // Each user gets 4 random exams
             const randomExam = exams[Math.floor(Math.random() * exams.length)];
             if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
                 allocatedExams.push(randomExam);
