@@ -6825,7 +6825,7 @@ function allocateUsersToExams(users, exams) {
 
     users.forEach(user => {
         const allocatedExams = [];
-        while (allocatedExams.length < 4) { // Each user gets 4 random exams
+        while (allocatedExams.length < 3) { // Each user gets 4 random exams
             const randomExam = exams[Math.floor(Math.random() * exams.length)];
             if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
                 allocatedExams.push(randomExam);
@@ -6841,13 +6841,12 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-YKZQ", fullName: "Richard Ochuko" },
-    { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
+    { userId: "CLIN-9DVS", fullName: "Titus chiamaka princess" }
 ];
 
 const exams = [
-    { id: "CHM10", title: "INTRODUCTORY CHEMISTRY" },
+    { id: "CHM101-E1", title: "INTRODUCTORY CHEMISTRY" },
     { id: "exam2", title: "Physics 201" },
-    { id: "exam3", title: "History 101" },
     { id: "exam4", title: "Biology 202" }
 ];
 
