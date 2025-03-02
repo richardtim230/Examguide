@@ -1,6 +1,3 @@
-// Get the pop-up and close button elements
-const popup = document.getElementById('popup');
-const closePopupBtn = document.getElementById('closePopup');
 
 // Function to show the pop-up and prevent scrolling
 function showPopup() {
