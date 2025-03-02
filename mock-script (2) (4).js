@@ -6307,27 +6307,25 @@ const downloadPDF = document.getElementById("downloadPDF");
 
 // Initialize Exam
 function initializeExam() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (!currentUser || !currentUser.fullName) {
+    alert("Session expired! Please log in again.");
+    returnToLogin();
+    return;
+  }
 
-    if (!currentUser || !currentUser.fullName) {
-        alert("Session expired! Please log in again.");
-        returnToLogin();
-        return;
-    }
+  if (!selectedCourseCode) {
+    alert("Please select a course before starting the exam.");
+    return;
+  }
 
-    if (!currentExam) {
-        alert("No exam found. Please select an exam.");
-        return;
-    }
+  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
 
-    // Display user and exam details
-    document.getElementById('user-details').textContent = 
-        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
-
-    startTime = Date.now();
-    loadQuestion();
-    startTimer();
+  startTime = Date.now();
+  loadQuestion();
+  startTimer();
+  examSection.classList.remove("hidden");
+}
     
     // Ensure the exam section is displayed
     document.getElementById('examSection').classList.remove("hidden");
