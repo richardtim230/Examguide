@@ -6365,7 +6365,7 @@ function allocateUsersToExams(users, exams) {
 
     users.forEach(user => {
         const allocatedExams = [];
-        while (allocatedExams.length < 5) { // Each user gets 2 random exams
+        while (allocatedExams.length < 2) { // Each user gets 2 random exams
             const randomExam = exams[Math.floor(Math.random() * exams.length)];
             if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
                 allocatedExams.push(randomExam);
@@ -6381,7 +6381,7 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-5HLA", fullName: "Richard Ochuko" },
-    { userId: "ARTS-DUXH", fullName: "Richard Ochuko" }
+    { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
 ];
 
 const exams = [
@@ -6403,7 +6403,7 @@ function generateUserID(facultyCode) {
 // ✅ Prevent users from registering more than 2 accounts
 function hasReachedRegistrationLimit() {
     const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 4; // Limit to 2 accounts per user
+    return registrations.length >= 2; // Limit to 2 accounts per user
 }
 // Register User
 document.getElementById('registerAccountBtn').addEventListener('click', function () {
@@ -6624,48 +6624,29 @@ function initializeExam() {
 
 // Load Current Question
 function loadQuestion() {
-    // Ensure questions exist and currentQuestionIndex is valid
-    if (!questions || questions.length === 0) {
-        console.error("Error: No questions available.");
-        alert("No questions available. Please restart the exam.");
-        return;
-    }
+  if (questions.length === 0) {
+    alert("No questions available to load.");
+    return;
+  }
 
-    if (currentQuestionIndex < 0 || currentQuestionIndex >= questions.length) {
-        console.error("Error: Invalid question index:", currentQuestionIndex);
-        alert("Invalid question index. Please restart the exam.");
-        return;
-    }
+  const question = questions[currentQuestionIndex];
 
-    const question = questions[currentQuestionIndex];
+  // Add question number dynamically
+  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-    // Ensure question object is properly formatted
-    if (!question || !question.text || !question.options) {
-        console.error("Error: Question data is missing or incorrect:", question);
-        alert("Invalid question data. Please restart the exam.");
-        return;
-    }
+  // Populate Answer Options with correct numbering
+  answerOptions.innerHTML = question.options
+    .map((option, index) => `
+      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+        ${option}
+      </button>
+    `)
+    .join("");
 
-    console.log(`Displaying Question ${currentQuestionIndex + 1}:`, question);
-
-    // Dynamically add question number
-    document.getElementById("questionTitle").innerHTML = 
-        `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
-
-    // Populate Answer Options with correct numbering
-    document.getElementById("answerOptions").innerHTML = question.options
-        .map((option, index) => `
-            <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-                ${option.replace(/\n/g, '<br>')}
-            </button>
-        `)
-        .join("");
-
-    highlightSelectedAnswer();
-    updateButtons();
-    updateProgressBar();
+  highlightSelectedAnswer();
+  updateButtons();
+  updateProgressBar();
 }
-
 
 // Shuffle questions randomly
 function shuffleArray(array) {
