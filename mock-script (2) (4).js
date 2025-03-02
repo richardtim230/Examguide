@@ -6624,13 +6624,36 @@ function initializeExam() {
 
 // Load Current Question
 function loadQuestion() {
+    // Ensure questions exist and currentQuestionIndex is valid
+    if (!questions || questions.length === 0) {
+        console.error("Error: No questions available.");
+        alert("No questions available. Please restart the exam.");
+        return;
+    }
+
+    if (currentQuestionIndex < 0 || currentQuestionIndex >= questions.length) {
+        console.error("Error: Invalid question index:", currentQuestionIndex);
+        alert("Invalid question index. Please restart the exam.");
+        return;
+    }
+
     const question = questions[currentQuestionIndex];
 
-    // Add question number dynamically
-    questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
+    // Ensure question object is properly formatted
+    if (!question || !question.text || !question.options) {
+        console.error("Error: Question data is missing or incorrect:", question);
+        alert("Invalid question data. Please restart the exam.");
+        return;
+    }
+
+    console.log(`Displaying Question ${currentQuestionIndex + 1}:`, question);
+
+    // Dynamically add question number
+    document.getElementById("questionTitle").innerHTML = 
+        `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
 
     // Populate Answer Options with correct numbering
-    answerOptions.innerHTML = question.options
+    document.getElementById("answerOptions").innerHTML = question.options
         .map((option, index) => `
             <button class="answer-btn" onclick="selectAnswer(${index}, this)">
                 ${option.replace(/\n/g, '<br>')}
@@ -6642,6 +6665,7 @@ function loadQuestion() {
     updateButtons();
     updateProgressBar();
 }
+
 
 // Shuffle questions randomly
 function shuffleArray(array) {
