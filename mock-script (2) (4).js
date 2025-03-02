@@ -1,4 +1,22 @@
 
+  function toggleMessage() {
+    const message = document.querySelector('.moving-message');
+    let isVisible = true;
+
+    setInterval(() => {
+      if (isVisible) {
+        message.style.display = 'none';
+      } else {
+        message.style.display = 'block';
+      }
+      isVisible = !isVisible;
+    }, 30000); // Total cycle duration (20s + 10s)
+  }
+
+  // Initialize the function
+  toggleMessage();
+
+
 // Function to show the pop-up and prevent scrolling
 function showPopup() {
     popup.classList.add('active');
