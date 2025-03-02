@@ -6308,22 +6308,28 @@ const downloadPDF = document.getElementById("downloadPDF");
 // Initialize Exam
 function initializeExam() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentExam = JSON.parse(localStorage.getItem('currentExam')); // Retrieve selected exam
+    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
     if (!currentUser || !currentUser.fullName) {
-        alert("You must be logged in to access the exam.");
+        alert("Session expired! Please log in again.");
+        returnToLogin();
         return;
     }
 
-    if (currentExam) {
-        document.getElementById('user-details').textContent = `Candidate: ${currentUser.fullName} | Exam: ${currentExam.examTitle}`;
-        loadQuestion();
-    } else {
-        document.getElementById('user-details').textContent = `Candidate: ${currentUser.fullName} | Select a Course Code`;
+    if (!currentExam) {
+        alert("No exam found. Please select an exam.");
+        return;
     }
 
+    // Display user and exam details
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
+
     startTime = Date.now();
+    loadQuestion();
     startTimer();
+    
+    // Ensure the exam section is displayed
     document.getElementById('examSection').classList.remove("hidden");
 }
 
@@ -6354,7 +6360,7 @@ function allocateUsersToExams(users, exams) {
 
 // ✅ Example Users and Exams
 const users = [
-    { userId: "PHARM-VUT2", fullName: "Richard Ochuko" },
+    { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-RIEM", fullName: "Richard Ochuko" },
     { userId: "AGRIC-A6SS", fullName: "Richard Ochuko" }
 ];
@@ -6483,13 +6489,17 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         
         // Hide the popup correctly
         document.getElementById('popup').classList.remove('active');
-        
-        // Start the exam
+
+        // Hide course code section if it's visible
+        document.getElementById('course-code-section').classList.add('hidden');
+
+        // Start the exam directly
         startExam(exam.id, exam.title);
     });
     
     examsList.appendChild(examItem);
 });
+
 
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
@@ -6553,25 +6563,32 @@ selectCourseBtn.addEventListener("click", () => {
 
 // Initialize Exam
 function initializeExam() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (!currentUser || !currentUser.fullName) {
-    alert("Session expired! Please log in again.");
-    returnToLogin();
-    return;
-  }
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentExam = JSON.parse(localStorage.getItem('currentExam'));
 
-  if (!selectedCourseCode) {
-    alert("Please select a course before starting the exam.");
-    return;
-  }
+    if (!currentUser || !currentUser.fullName) {
+        alert("Session expired! Please log in again.");
+        returnToLogin();
+        return;
+    }
 
-  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+    if (!currentExam) {
+        alert("No exam found. Please select an exam.");
+        return;
+    }
 
-  startTime = Date.now();
-  loadQuestion();
-  startTimer();
-  examSection.classList.remove("hidden");
+    // Display user and exam details
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${currentExam.title}`;
+
+    startTime = Date.now();
+    loadQuestion();
+    startTimer();
+    
+    // Ensure the exam section is displayed
+    document.getElementById('examSection').classList.remove("hidden");
 }
+  
 
 // Load Current Question
 function loadQuestion() {
@@ -6601,26 +6618,38 @@ function shuffleArray(array) {
 
 // Start Exam Function
 function startExam(examId, examTitle) {
-    alert(`Starting exam: ${examTitle}`);
-    
-    // Store selected exam for later use
-    localStorage.setItem("currentExam", JSON.stringify({ examId, examTitle }));
+    console.log(`Starting exam: ${examTitle}`); // Debugging log
 
-    // Hide pop-up and go straight to exam session
-    document.getElementById('popup').style.display = 'none';
+    // Store the selected exam for later use
+    localStorage.setItem("currentExam", JSON.stringify({ id: examId, title: examTitle }));
+
+    // Hide the popup
+    document.getElementById('popup').classList.remove('active');
+
+    // Hide the course code selection if it's visible
+    document.getElementById('course-code-section').classList.add('hidden');
+
+    // Ensure the exam section is visible
     document.getElementById('examSection').classList.remove('hidden');
 
-    // Initialize exam with selected course code
-    selectedCourseCode = examId;
-    questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
-
-    if (questions.length === 0) {
-        alert("No questions available for this course. Please try another course code.");
+    // Fetch questions for this exam
+    if (!questionBanks || !questionBanks[examId]) {
+        alert("No questions available for this exam.");
         return;
     }
 
+    // Randomize and select up to 50 questions
+    questions = shuffleArray(questionBanks[examId]).slice(0, 50);
+
+    if (questions.length === 0) {
+        alert("No questions available for this exam. Please try another.");
+        return;
+    }
+
+    // Initialize the exam with the selected exam details
     initializeExam();
 }
+
 
 // Load Exam Questions
 function loadExamQuestions(examId) {
