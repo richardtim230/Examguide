@@ -6486,22 +6486,27 @@ document.getElementById('loginBtn').addEventListener('click', function () {
     const examItem = document.createElement('button');
     examItem.innerText = exam.title;
     examItem.className = 'styled-btn';
-    
+
     examItem.addEventListener('click', function () {
-        console.log(`Exam clicked: ${exam.id} - ${exam.title}`); // Debugging log
-        
-        // Hide the popup correctly
+        console.log(`Exam Clicked: ${exam.id} - ${exam.title}`);
+
+        // Ensure the popup closes
         document.getElementById('popup').classList.remove('active');
 
-        // Hide course code section if it's visible
+        // Ensure the course code section is hidden
         document.getElementById('course-code-section').classList.add('hidden');
 
-        // Start the exam directly
+        // Ensure the exam section is visible
+        document.getElementById('examSection').classList.remove('hidden');
+
+        // Call startExam
         startExam(exam.id, exam.title);
     });
-    
+
     examsList.appendChild(examItem);
 });
+
+
 
 
         // Show the pop-up modal
