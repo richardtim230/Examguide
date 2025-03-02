@@ -6504,24 +6504,15 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
         // Display assigned exams
         examAllocations[userId].forEach(exam => {
-    const examItem = document.createElement('button');
+    const examItem = document.createElement("button");
     examItem.innerText = exam.title;
-    examItem.className = 'styled-btn';
+    examItem.className = "styled-btn";
 
-    examItem.addEventListener('click', function () {
+    examItem.addEventListener("click", function () {
         console.log(`Exam Clicked: ${exam.id} - ${exam.title}`);
 
-        // Ensure the popup closes
-        document.getElementById('popup').classList.remove('active');
-
-        // Ensure the course code section is hidden
-        document.getElementById('course-code-section').classList.add('hidden');
-
-        // Ensure the exam section is visible
-        document.getElementById('examSection').classList.remove('hidden');
-
-        // Call startExam
-        startExam(exam.id, exam.title);
+        // Submit the course code automatically
+        submitCourseCode(exam.id);
     });
 
     examsList.appendChild(examItem);
@@ -6566,29 +6557,45 @@ backToLoginBtn.addEventListener("click", () => {
   document.getElementById("auth-section").classList.remove("hidden");
 });
 
-
-
-// Select Course Code
-// Select Course Code
-selectCourseBtn.addEventListener("click", () => {
-  const courseCodeInput = document.getElementById("courseCode").value.trim().toUpperCase();
-
-  if (!courseCodeInput || !questionBanks[courseCodeInput]) {
-    alert("Invalid course code. Please try again.");
-    return;
-  }
-
-  selectedCourseCode = courseCodeInput;
-  questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50); // Randomize and limit to 50 questions
-
-  if (questions.length === 0) {
-    alert("No questions available for this course. Please try another course code.");
-    return;
-  }
-
-  courseCodeSection.classList.add("hidden");
-  initializeExam();
+document.getElementById("selectCourseBtn").addEventListener("click", function () {
+    submitCourseCode(); // Calls function without arguments (manual entry)
 });
+      
+
+// Select Course Code
+function submitCourseCode(courseCodeInput = null) {
+    // Get course code from input if not provided (manual entry)
+    let courseCode = courseCodeInput || document.getElementById("courseCode").value.trim().toUpperCase();
+
+    // Validate course code
+    if (!courseCode || !questionBanks[courseCode]) {
+        alert("Invalid course code. Please try again.");
+        console.error("Error: Invalid course code:", courseCode);
+        return;
+    }
+
+    console.log(`Course Code Submitted: ${courseCode}`);
+
+    // Store the selected exam
+    localStorage.setItem("currentExam", JSON.stringify({ id: courseCode, title: courseCode }));
+
+    // Hide course code section and show exam section
+    document.getElementById("course-code-section").classList.add("hidden");
+    document.getElementById("examSection").classList.remove("hidden");
+
+    // Load questions and start the exam
+    selectedCourseCode = courseCode;
+    questions = shuffleArray(questionBanks[selectedCourseCode]).slice(0, 50);
+
+    if (questions.length === 0) {
+        alert("No questions available for this course. Please try another.");
+        console.error("Error: No questions available for:", selectedCourseCode);
+        return;
+    }
+
+    initializeExam();
+}
+
 
 // Initialize Exam with questions
 function initializeExam() {
