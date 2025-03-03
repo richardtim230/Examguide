@@ -47,6 +47,21 @@
         .styled-btn:hover {
             transform: scale(1.05);
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -57,8 +72,41 @@
         <div class="content">
             <h2>User Management</h2>
             <p>Here you can add, edit, and delete users.</p>
-            <!-- Add user management functionalities here -->
+            <button class="styled-btn" onclick="location.href='add-user.html'">Add User</button>
+            <table>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                <!-- Example data, replace with dynamic content -->
+                <tr>
+                    <td>John Doe</td>
+                    <td>johndoe</td>
+                    <td>john@example.com</td>
+                    <td>
+                        <button class="styled-btn" onclick="editUser('johndoe')">Edit</button>
+                        <button class="styled-btn" onclick="deleteUser('johndoe')">Delete</button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
+
+    <script>
+        function editUser(username) {
+            // Add logic to edit user
+            alert('Editing user: ' + username);
+        }
+
+        function deleteUser(username) {
+            // Add logic to delete user
+            const confirmation = confirm('Are you sure you want to delete user: ' + username + '?');
+            if (confirmation) {
+                alert('User deleted: ' + username);
+            }
+        }
+    </script>
 </body>
 </html>
