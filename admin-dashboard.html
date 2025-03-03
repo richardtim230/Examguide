@@ -47,6 +47,45 @@
         .styled-btn:hover {
             transform: scale(1.05);
         }
+        .settings {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 1200px;
+        }
+        .search-filter {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 1200px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-right: 10px;
+            width: 80%;
+        }
+        .search-btn {
+            background: linear-gradient(135deg, #42a5f5, #478ed1);
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -60,6 +99,22 @@
             <button class="styled-btn" onclick="location.href='manage-users.html'">Manage Users</button>
             <button class="styled-btn" onclick="location.href='manage-exams.html'">Manage Exams</button>
         </div>
+        <div class="settings">
+            <h2>Settings</h2>
+            <button class="styled-btn" onclick="location.href='settings.html'">Go to Settings</button>
+        </div>
+        <div class="search-filter">
+            <h2>Search and Filter</h2>
+            <input type="text" id="search" placeholder="Search...">
+            <button class="search-btn" onclick="searchFunction()">Search</button>
+        </div>
     </div>
+    <script>
+        function searchFunction() {
+            let input = document.getElementById('search').value;
+            // Implement search functionality here
+            alert('Search for: ' + input);
+        }
+    </script>
 </body>
 </html>
