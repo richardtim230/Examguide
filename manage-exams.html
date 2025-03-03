@@ -47,6 +47,21 @@
         .styled-btn:hover {
             transform: scale(1.05);
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -57,8 +72,47 @@
         <div class="content">
             <h2>Exam Management</h2>
             <p>Here you can create, edit, and delete exams.</p>
-            <!-- Add exam management functionalities here -->
+            <button class="styled-btn" onclick="location.href='add-exam.html'">Add Exam</button>
+            <button class="styled-btn" onclick="location.href='schedule-exam.html'">Schedule Exam</button>
+            <button class="styled-btn" onclick="location.href='view-schedules.html'">View Schedules</button>
+            <table>
+                <tr>
+                    <th>Exam Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                <!-- Example data, replace with dynamic content -->
+                <tr>
+                    <td>Math 101</td>
+                    <td>2025-03-15</td>
+                    <td>
+                        <button class="styled-btn" onclick="editExam('math101')">Edit</button>
+                        <button class="styled-btn" onclick="deleteExam('math101')">Delete</button>
+                        <button class="styled-btn" onclick="allocateExam('math101')">Allocate to Schedule</button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
+
+    <script>
+        function editExam(examId) {
+            // Add logic to edit exam
+            alert('Editing exam: ' + examId);
+        }
+
+        function deleteExam(examId) {
+            // Add logic to delete exam
+            const confirmation = confirm('Are you sure you want to delete exam: ' + examId + '?');
+            if (confirmation) {
+                alert('Exam deleted: ' + examId);
+            }
+        }
+
+        function allocateExam(examId) {
+            // Add logic to allocate exam to schedule
+            alert('Allocating exam to schedule: ' + examId);
+        }
+    </script>
 </body>
 </html>
