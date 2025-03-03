@@ -151,7 +151,52 @@
   color: #555;
   line-height: 1.5;
 }
+/* Notification Pop-up Styles */
+#notificationPopup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Light background */
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
 
+#notificationPopup.active {
+    display: block !important;
+    opacity: 1;
+}
+
+#notificationPopup .popup-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#notificationPopup h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#notificationPopup ul {
+    list-style: inside disc;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#notificationPopup button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
 /* Examiner Section Styling */
 .examiner-info {
     text-align: center; /* Center-align everything */
@@ -522,7 +567,20 @@
 <div class="moving-message">
     <span>UPDATES: You can now set up and log in with your own password, maximum security guaranteed!  ✨CHM101 MOCK EXAM IS ONGOING, LOG IN NOW!</span>
 </div>
-  
+  <!-- Notification Pop-up -->
+<div id="notificationPopup" class="popup">
+    <div class="popup-content">
+      <img src="logo.png" alt="De-Brainstormers Logo" class="logo">
+        <h2>Welcome to the Mock Exam Platform</h2>
+        <ul>
+            <li>Ensure you have a stable internet connection.</li>
+            <li>Read all instructions carefully before starting the exam.</li>
+            <li>Contact the Admin desk if you encounter any issues.</li>
+        </ul>
+        <button id="whatsappBtn" class="styled-btn">Contact Admin on WhatsApp</button>
+        <button id="closeNotification" class="close-btn">Close</button>
+    </div>                                                             
+</div>
 <!-- Authentication Section -->
 <div id="auth-section" class="container">
     <div class="welcome-header">
