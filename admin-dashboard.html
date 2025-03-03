@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .dashboard-header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .dashboard-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .styled-btn {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: transform 0.2s ease-in-out;
+        }
+        .styled-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+        </div>
+        <div class="dashboard-content">
+            <h2>Welcome, Admin!</h2>
+            <p>Use the buttons below to manage users and exams.</p>
+            <button class="styled-btn" onclick="location.href='manage-users.html'">Manage Users</button>
+            <button class="styled-btn" onclick="location.href='manage-exams.html'">Manage Exams</button>
+        </div>
+    </div>
+</body>
+</html>
