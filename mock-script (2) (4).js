@@ -6891,7 +6891,7 @@ function allocateUsersToExams(users, exams) {
 
 // ✅ Example Users and Exams
 const users = [
-    { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
+    { userId: "Richy", fullName: "Richard Ochuko" },
     { userId: "NASS-YKZQ", fullName: "Richard Ochuko" },
     { userId: "NASS-P98M", fullName: "Richard Ochuko" },
     { userId: "CLIN-9DVS", fullName: "Titus chiamaka princess" }
@@ -7053,7 +7053,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
                 localStorage.setItem("userDetails", JSON.stringify(storedDetails));
                 alert("5-figure code set up successfully!");
             } else {
-                alert("Invalid code. Please try again later.");
+                alert("Invalid code or Exam not assigned. Kindly consult the examiner/Coordinator for guidance.");
             }
         }
 
