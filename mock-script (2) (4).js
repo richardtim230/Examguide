@@ -7038,6 +7038,18 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
       document.getElementById('toggle-calculator').classList.remove('hidden');
     document.getElementById('calculator-popup').classList.remove('hidden');
 
+      // Prompt to set up 5-figure code if not already set
+        if (!storedDetails.fiveFigureCode) {
+            const newCode = prompt("Please set up a 5-figure code for future logins:");
+            if (newCode && newCode.length === 5) {
+                storedDetails.fiveFigureCode = newCode;
+                localStorage.setItem("userDetails", JSON.stringify(storedDetails));
+                alert("5-figure code set up successfully!");
+            } else {
+                alert("Invalid code. Please try again later.");
+            }
+        }
+
     } else {
         alert("Invalid User ID or Full Name. Please try again.");
     }
