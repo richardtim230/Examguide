@@ -6964,17 +6964,18 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 // Login User
 document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
-    const userId = document.getElementById('userID').value.trim();
+    const userIdOrCode = document.getElementById('userID').value.trim();
 
     const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
     const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    let userId = storedDetails ? storedDetails.userId : null;
 
     if (!storedDetails) {
         alert("No registered user found. Please register first.");
         return;
     }
 
-    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
+    if (storedDetails.fullName === fullName && (storedDetails.userId === userIdOrCode || storedDetails.fiveFigureCode === userIdOrCode)) {
         // Store logged-in session
         localStorage.setItem("currentUser", JSON.stringify(storedDetails));
 
@@ -6988,46 +6989,39 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = ''; // Clear previous exams
 
-        // Ensure "BOT203-T2" is included in the user's exam allocations
+        // Ensure "CHM101-F1" is included in the user's exam allocations
         if (!examAllocations[userId]) {
-    examAllocations[userId] = [];
-}
+            examAllocations[userId] = [];
+        }
 
-if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM101-F1")) {
-    examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
-}
+        if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM101-F1")) {
+            examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
+        }
 
-console.log("Exam Allocations for", userId, examAllocations[userId]);
-localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
-
+        console.log("Exam Allocations for", userId, examAllocations[userId]);
+        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
         // Display assigned exams
         examAllocations[userId].forEach(exam => {
-    const examItem = document.createElement('button');
-    examItem.innerText = exam.title;
-    examItem.className = 'styled-btn';
+            const examItem = document.createElement('button');
+            examItem.innerText = exam.title;
+            examItem.className = 'styled-btn';
 
-    examItem.addEventListener('click', function () {
-        console.log(`Exam Clicked: ${exam.id} - ${exam.title}`);
+            examItem.addEventListener('click', function () {
+                console.log(`Exam Clicked: ${exam.id} - ${exam.title}`);
 
-        // Auto-fill the course code input
-        document.getElementById("courseCode").value = exam.id;
+                // Auto-fill the course code input
+                document.getElementById("courseCode").value = exam.id;
 
-        // Simulate clicking the course selection button
-        document.getElementById("selectCourseBtn").click();
-    });
-            
-        // Hide the popup correctly
-        document.getElementById('popup').classList.remove('active');
+                // Simulate clicking the course selection button
+                document.getElementById("selectCourseBtn").click();
+            });
 
+            // Hide the popup correctly
+            document.getElementById('popup').classList.remove('active');
 
-    examsList.appendChild(examItem);
-});
-
-
-
-
-
+            examsList.appendChild(examItem);
+        });
 
         // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
@@ -7035,10 +7029,10 @@ localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
         // Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
-      document.getElementById('toggle-calculator').classList.remove('hidden');
-    document.getElementById('calculator-popup').classList.remove('hidden');
+        document.getElementById('toggle-calculator').classList.remove('hidden');
+        document.getElementById('calculator-popup').classList.remove('hidden');
 
-      // Prompt to set up 5-figure code if not already set
+        // Prompt to set up 5-figure code if not already set
         if (!storedDetails.fiveFigureCode) {
             const newCode = prompt("Please set up a 5-figure code for future logins:");
             if (newCode && newCode.length === 5) {
