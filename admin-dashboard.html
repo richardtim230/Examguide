@@ -5,93 +5,139 @@
     <title>Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+    --secondary-gradient: linear-gradient(135deg, #ff7e5f, #feb47b);
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --border-glass: rgba(255, 255, 255, 0.4);
+    --shadow-glass: rgba(0, 0, 0, 0.2);
+    --text-light: white;
+    --text-dark: black;
+    --background-dark: #1e1e2e;
+    --background-light: linear-gradient(to right, #141e30, #243b55);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Dark Mode Support */
+body {
+    background: var(--background-light);
+    color: var(--text-light);
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+body.dark-mode {
+    background: var(--background-dark);
+    color: var(--text-dark);
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Header */
+.dashboard-header {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px var(--shadow-glass);
+    margin-bottom: 20px;
+}
+
+/* Content Boxes */
+.dashboard-content, .settings, .search-filter {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 10px 25px var(--shadow-glass);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 15px 0;
+    backdrop-filter: blur(20px);
+    color: white;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: slideIn 1s ease-in-out;
+}
+
+.dashboard-content:hover,
+.settings:hover,
+.search-filter:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px var(--shadow-glass);
+}
+
+/* Buttons */
+.styled-btn, .search-btn, .toggle-dark-btn {
+    background: var(--secondary-gradient);
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px var(--shadow-glass);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.styled-btn:hover, .search-btn:hover, .toggle-dark-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px var(--shadow-glass);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Dark Mode */
+body.dark-mode .dashboard-header {
+    background: black;
+}
+
+body.dark-mode .dashboard-content,
+body.dark-mode .settings,
+body.dark-mode .search-filter {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode input {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+body.dark-mode .styled-btn {
+    background: linear-gradient(135deg, #222, #444);
         }
-        .dashboard-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        .dashboard-header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            width: 100%;
-            text-align: center;
-        }
-        .dashboard-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            max-width: 1200px;
-            width: 100%;
-            margin-top: 20px;
-        }
-        .styled-btn {
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            color: white;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 10px 0;
-            transition: transform 0.2s ease-in-out;
-        }
-        .styled-btn:hover {
-            transform: scale(1.05);
-        }
-        .settings {
-            margin-top: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 1200px;
-        }
-        .search-filter {
-            margin-top: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 1200px;
-        }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            margin-right: 10px;
-            width: 80%;
-        }
-        .search-btn {
-            background: linear-gradient(135deg, #42a5f5, #478ed1);
-            color: white;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
-        .search-btn:hover {
-            transform: scale(1.05);
-        }
+    
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <div class="dashboard-header">
             <h1>Admin Dashboard</h1>
+            <button class="toggle-dark-btn" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+            
         </div>
         <div class="dashboard-content">
             <h2>Welcome, Admin!</h2>
@@ -115,6 +161,21 @@
             // Implement search functionality here
             alert('Search for: ' + input);
         }
+        function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+
+    // Save user preference
+    let isDarkMode = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", isDarkMode);
+}
+
+// Load dark mode preference
+window.onload = () => {
+    if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+    }
+};
+        
     </script>
 </body>
 </html>
