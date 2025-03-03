@@ -68,10 +68,11 @@
     <div class="container">
         <div class="header">
             <h1>Manage Exams</h1>
+            <button class="styled-btn" onclick="logout()">Logout</button>
         </div>
         <div class="content">
             <h2>Exam Management</h2>
-            <p>Here you can create, edit, and delete exams.</p>
+            <p>Here you can create, edit, delete, and schedule exams, as well as allocate exams to schedules and users.</p>
             <button class="styled-btn" onclick="location.href='add-exam.html'">Add Exam</button>
             <button class="styled-btn" onclick="location.href='schedule-exam.html'">Schedule Exam</button>
             <button class="styled-btn" onclick="location.href='view-schedules.html'">View Schedules</button>
@@ -89,20 +90,32 @@
                         <button class="styled-btn" onclick="editExam('math101')">Edit</button>
                         <button class="styled-btn" onclick="deleteExam('math101')">Delete</button>
                         <button class="styled-btn" onclick="allocateExam('math101')">Allocate to Schedule</button>
+                        <button class="styled-btn" onclick="allocateUser('math101')">Allocate User</button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 
+    <script src="auth.js"></script>
     <script>
+        function checkRole() {
+            const user = getUser();
+            if (!user) {
+                alert('Please log in');
+                location.href = 'login.html';
+                return;
+            }
+            if (user.role !== 'admin') {
+                document.querySelectorAll('.styled-btn').forEach(btn => btn.disabled = true);
+            }
+        }
+
         function editExam(examId) {
-            // Add logic to edit exam
             alert('Editing exam: ' + examId);
         }
 
         function deleteExam(examId) {
-            // Add logic to delete exam
             const confirmation = confirm('Are you sure you want to delete exam: ' + examId + '?');
             if (confirmation) {
                 alert('Exam deleted: ' + examId);
@@ -110,9 +123,19 @@
         }
 
         function allocateExam(examId) {
-            // Add logic to allocate exam to schedule
             alert('Allocating exam to schedule: ' + examId);
         }
+
+        function allocateUser(examId) {
+            alert('Allocating user to exam: ' + examId);
+        }
+
+        function logout() {
+            logout();
+            location.href = 'login.html';
+        }
+
+        checkRole();
     </script>
 </body>
 </html>
