@@ -7146,14 +7146,15 @@ function initializeExam() {
 
 // Load Current Question
 function loadQuestion() {
+  if (questions.length === 0) {
+    alert("No questions available to load.");
+    return;
+  }
+
   const question = questions[currentQuestionIndex];
 
   // Add question number dynamically with proper formatting
-  questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
-
-  // Add line breaks in question text where necessary
-  const formattedQuestionText = question.text.replace(/\n/g, '<br>');
-  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${formattedQuestionText}`;
+  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
 
   // Populate Answer Options with correct numbering and line breaks
   answerOptions.innerHTML = question.options
