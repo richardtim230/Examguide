@@ -1,3 +1,15 @@
+// Show the notification pop-up
+document.getElementById('notificationPopup').classList.add('active');
+
+// Close the notification pop-up
+document.getElementById('closeNotification').addEventListener('click', function() {
+    document.getElementById('notificationPopup').classList.remove('active');
+});
+
+// WhatsApp button functionality
+document.getElementById('whatsappBtn').addEventListener('click', function() {
+    window.open('https://wa.me/+2349155127634', '_blank'); // Replace with actual WhatsApp number
+});
 
 document.getElementById('toggle-calculator').addEventListener('click', function() {
   const calculatorPopup = document.getElementById('calculator-popup');
