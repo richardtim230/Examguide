@@ -6881,6 +6881,7 @@ function allocateUsersToExams(users, exams) {
 const users = [
     { userId: "PHARM-ED0N", fullName: "Richard Ochuko" },
     { userId: "NASS-YKZQ", fullName: "Richard Ochuko" },
+    { userId: "NASS-P98M", fullName: "Richard Ochuko" },
     { userId: "CLIN-9DVS", fullName: "Titus chiamaka princess" }
 ];
 
