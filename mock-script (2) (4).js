@@ -7143,23 +7143,23 @@ function initializeExam() {
   examSection.classList.remove("hidden");
 }
 
+
 // Load Current Question
 function loadQuestion() {
-  if (questions.length === 0) {
-    alert("No questions available to load.");
-    return;
-  }
-
   const question = questions[currentQuestionIndex];
 
-  // Add question number dynamically
+  // Add question number dynamically with proper formatting
   questionTitle.textContent = `${currentQuestionIndex + 1}. ${question.text}`;
 
-  // Populate Answer Options with correct numbering
+  // Add line breaks in question text where necessary
+  const formattedQuestionText = question.text.replace(/\n/g, '<br>');
+  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${formattedQuestionText}`;
+
+  // Populate Answer Options with correct numbering and line breaks
   answerOptions.innerHTML = question.options
     .map((option, index) => `
       <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-        ${option}
+        ${option.replace(/\n/g, '<br>')}
       </button>
     `)
     .join("");
@@ -7168,7 +7168,6 @@ function loadQuestion() {
   updateButtons();
   updateProgressBar();
 }
-
 // Shuffle questions randomly
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
