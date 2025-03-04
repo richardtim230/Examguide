@@ -7392,133 +7392,177 @@ async function generatePDF() {
 
 
       
-    function generateUserPDF(doc, logo) {
+    
+function generateUserPDF(questions, fullName, selectedCourseCode, logo) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 40;
     const contentWidth = pageWidth - margin * 2;
-    const lineHeight = 20;
-    const sectionSpacing = 10;
+    const lineHeight = 16; // Adjusted for better readability
+
     let yOffset = margin;
 
-    // Set Font to Arial (better support for special characters)
-    doc.addFont("Arial", "Arial", "normal");
-    doc.setFont("Arial");
+    // **1. Font Handling (Critical)**
 
-    // Colors
-    const headerBackground = "#4A90E2";
-    const sectionHeadingColor = "#333";
-    const questionColor = "#000";
-    const answerColor = "#28a745";
-    const explanationColor = "#555";
+    // **Attempt to use Arial Unicode MS (if available)**
+    const arialUnicodeFontName = "ArialUnicodeMS"; // Use a consistent name
+    let fontLoaded = false; // track state
+    // ** Load TTF fonts online(If a reliable URL for the TTF file is available) **
 
-    // Header Section
-    doc.setFillColor(headerBackground);
-    doc.rect(0, yOffset, pageWidth, 70, "F");
-    yOffset += 35;
+    function loadFont(url, fontName, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
 
-    // Add Logo in center
-    doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset - 25, 50, 50);
-    yOffset += 35;
+        xhr.onload = function(e) {
+            if (xhr.status === 200) {
+                doc.addFont(fontName + ".ttf", fontName, 'normal', xhr.response); //embed the font
+                callback();
+            } else {
+                console.error("Failed to load font:", xhr.status, xhr.statusText);
+                callback(new Error("Failed to load font"));
+            }
+        };
+        xhr.onerror = function() {
+            console.error("Network error while loading font");
+            callback(new Error("Network error while loading font"));
+        };
+        xhr.send();
+    }
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.setTextColor("#FFFFFF");
-    doc.text("STUDENTS SUPPORT SYSTEM", pageWidth / 2, yOffset - 40, { align: "center" });
-
-    doc.setFontSize(15);
-    doc.text("OBAFEMI AWOLOWO UNIVERSITY", pageWidth / 2, yOffset - 20, { align: "center" });
-    yOffset += 30;
-
-    // Performance Report
-    const totalAnswered = userAnswers.filter(answer => answer !== undefined).length;
-    const totalNotAnswered = questions.length - totalAnswered;
-    const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
-    const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
-
-    doc.setFontSize(16);
-    doc.setTextColor(sectionHeadingColor);
-    doc.text("Performance Report", margin, yOffset);
-    yOffset += lineHeight;
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(14);
-    doc.text(`Candidate Name: ${fullName}`, margin, yOffset);
-    yOffset += lineHeight;
-    doc.text(`Course: INTRODUCTORY ZOOLOGY 1`, margin, yOffset);
-    yOffset += lineHeight;
-    doc.text(`Course Code: ${selectedCourseCode}`, margin, yOffset);
-    yOffset += lineHeight;
-    doc.text(`Total Questions Answered: ${totalAnswered}`, margin, yOffset);
-    yOffset += lineHeight;
-    doc.text(`Total Questions Not Answered: ${totalNotAnswered}`, margin, yOffset);
-    yOffset += lineHeight;
-    doc.text(`Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)`, margin, yOffset);
-    yOffset += lineHeight * 2;
-
-    doc.setDrawColor("#000");
-    doc.setLineWidth(0.5);
-    doc.line(margin, yOffset, pageWidth - margin, yOffset);
-    yOffset += sectionSpacing * 2;
-
-    // Questions and Answers
-    questions.forEach((q, i) => {
-        if (yOffset > pageHeight - margin - lineHeight * 6) {
-            doc.addPage();
-            yOffset = margin;
+    loadFont("https://your-server/arial-unicode-ms.ttf", "ArialUnicodeMS", function(err) {
+            if (err) {
+                console.warn("Arial Unicode MS font loading error!", err);
+                // Fallback to Helvetica if Arial Unicode fails
+                doc.setFont("helvetica", "normal"); // Ensure *some* font is selected
+            } else {
+                console.log("Successfully loaded Arial Unicode MS");
+                doc.setFont(arialUnicodeFontName, "normal");
+                fontLoaded = true;
+            }
+            generateContent(); // Call the function after the font has loaded (or failed)
         }
+    );
+    doc.setFontSize(14);
 
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(14);
-        doc.setTextColor(questionColor);
+    function generateContent() {
+        // ** 2. Colors (Consistent Definitions) **
+        const headerBackground = "#4A90E2";
+        const sectionHeadingColor = "#333";
+        const questionColor = "#000";
+        const answerColor = "#28a745";
+        const explanationColor = "#555";
 
-        // Wrap Question Text
-        const questionText = doc.splitTextToSize(`${i + 1}. ${q.text}`, contentWidth);
-        doc.text(questionText, margin, yOffset);
-        yOffset += questionText.length * lineHeight;
+        // ** 3. Header Section **
+        doc.setFillColor(headerBackground);
+        doc.rect(0, yOffset, pageWidth, 70, "F");
+        yOffset += 35;
 
-        // Display Answer Options with Proper Formatting
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(questionColor);
-        q.options.forEach((option, idx) => {
-            const optionText = doc.splitTextToSize(`${String.fromCharCode(65 + idx)}. ${option}`, contentWidth);
-            doc.text(optionText, margin, yOffset);
-            yOffset += optionText.length * lineHeight;
+        // Add Logo in center
+        doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset - 25, 50, 50);
+        yOffset += 35;
+
+        doc.setFont("helvetica", "bold"); // Keep helvetica for headings if Arial fails
+        doc.setFontSize(22);
+        doc.setTextColor("#FFFFFF");
+        doc.text("STUDENTS SUPPORT SYSTEM", pageWidth / 2, yOffset - 40, {
+            align: "center"
         });
 
-        // Correct Answer Highlighted
-        doc.setFont("helvetica", "bold");
-        doc.setTextColor(answerColor);
-        const correctAnswer = doc.splitTextToSize(`Correct Answer: ${q.options[q.correct]}`, contentWidth);
-        doc.text(correctAnswer, margin, yOffset);
-        yOffset += correctAnswer.length * lineHeight;
+        doc.setFontSize(15);
+        doc.text("OBAFEMI AWOLOWO UNIVERSITY", pageWidth / 2, yOffset - 20, {
+            align: "center"
+        });
+        yOffset += 30;
 
-        // Explanation Section
-        doc.setFont("helvetica", "italic");
-        doc.setTextColor(explanationColor);
-        const explanation = doc.splitTextToSize(`Explanation: ${q.explanation}`, contentWidth);
-        doc.text(explanation, margin, yOffset);
-        yOffset += explanation.length * lineHeight + sectionSpacing;
+        // ** 4. Performance Report **
+        const totalAnswered = questions.filter(answer => answer !== undefined).length;
+        const totalNotAnswered = questions.length - totalAnswered;
+        const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
+        const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
 
-        // Separator Line
-        doc.setDrawColor("#ddd");
+        doc.setFontSize(16);
+        doc.setTextColor(sectionHeadingColor);
+        doc.text("Performance Report", margin, yOffset);
+        yOffset += lineHeight;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(14);
+        doc.setTextColor("#000000") //set color to black, helvetica does not need arial for some values
+
+        doc.text(`Candidate Name: ${fullName}`, margin, yOffset);
+        yOffset += lineHeight;
+        doc.text("Course: INTRODUCTORY ZOOLOGY 1", margin, yOffset);
+        yOffset += lineHeight;
+        doc.text(`Course Code: ${selectedCourseCode}`, margin, yOffset);
+        yOffset += lineHeight;
+        doc.text(`Total Questions Answered: ${totalAnswered}`, margin, yOffset);
+        yOffset += lineHeight;
+        doc.text(`Total Questions Not Answered: ${totalNotAnswered}`, margin, yOffset);
+        yOffset += lineHeight;
+        doc.text(`Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)`, margin, yOffset);
+        yOffset += lineHeight * 2;
+
+        doc.setDrawColor("#000");
         doc.setLineWidth(0.5);
         doc.line(margin, yOffset, pageWidth - margin, yOffset);
         yOffset += sectionSpacing * 2;
-    });
 
-    // Footer
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.setTextColor("#666");
-    const footerY = pageHeight - margin;
-    doc.text("Compiled by Hon Richard D'Prof and Generated for Mock OAU Exam Platform", pageWidth / 2, footerY, { align: "center" });
+        // ** 5. Questions and Answers **
+        questions.forEach((q, i) => {
+            if (yOffset > pageHeight - margin - lineHeight * 6) {
+                doc.addPage();
+                yOffset = margin;
+            }
 
-    // Save PDF
-    doc.save(`${fullName}_Exam_Results.pdf`);
-}
-    
-    
+            doc.setFontSize(14);
+            doc.setTextColor(questionColor);
+            doc.setFont("helvetica", "bold"); //helvetica is used here
+
+            // Wrap Question Text
+            // Normalize and encode question text
+            const questionText = doc.splitTextToSize(String(i + 1 + ". " + q.text).normalize("NFKD").replace(/[\u0300-\u036f]/g, ""), contentWidth);
+            doc.text(questionText, margin, yOffset);
+            yOffset += questionText.length * lineHeight;
+
+            // Display Answer Options with Proper Formatting
+            doc.setFont("helvetica", "normal"); //helvetica is used here
+            doc.setTextColor(questionColor);
+            q.options.forEach((option, idx) => {
+                const optionText = doc.splitTextToSize(String(String.fromCharCode(65 + idx) + ". " + option).normalize("NFKD").replace(/[\u0300-\u036f]/g, ""), contentWidth);
+                doc.text(optionText, margin, yOffset);
+                yOffset += optionText.length * lineHeight;
+            });
+
+            // Correct Answer Highlighted
+            doc.setFont("helvetica", "bold"); //helvetica is used here
+            doc.setTextColor(answerColor);
+            const correctAnswer = doc.splitTextToSize(`Correct Answer: ${q.options[q.correct]}`, contentWidth);
+            doc.text(correctAnswer, margin, yOffset);
+            yOffset += correctAnswer.length * lineHeight;
+        });
+
+        // **6. Footer **
+        doc.setFont("helvetica", "normal"); //helvetica is used here
+        doc.setFontSize(12);
+        doc.setTextColor("#666");
+        const footerY = pageHeight - margin;
+        doc.text(
+            "Compiled by Hon Richard D'Prof and Generated for Mock OAU Exam Platform",
+            pageWidth / 2,
+            footerY, {
+                align: "center"
+            }
+        );
+
+        // ** 7. Save PDF **
+        doc.save(`${fullName}_Exam_Results.pdf`);
+    }
+}        
+
 function generateAdminPDF(doc, logo, courseTitle, duration) {
     // Constants
     const pageWidth = doc.internal.pageSize.getWidth();
