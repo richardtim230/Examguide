@@ -7370,7 +7370,7 @@ async function generatePDF() {
   });
 
   // Prompt the user to choose between Results and corrections or Plain questions
-  const isAdmin = confirm("Is this PDF for Admins (Plain questions with answer keys)? Click 'OK' for Admins, 'Cancel' for Results and corrections.");
+    const isAdmin = confirm("Is this PDF for Admins (Plain questions with answer keys)? Click 'OK' for Admins, 'Cancel' for Results and corrections.");
 
   if (isAdmin) {
     const adminCode = prompt("Please enter the admin code:");
@@ -7387,8 +7387,12 @@ async function generatePDF() {
   } else {
     // Generate PDF for Users
     generateUserPDF(doc, logo);
-    }
-function generateUserPDF(doc, logo) {
+  }
+}
+
+
+      
+    function generateUserPDF(doc, logo) {
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 40;
