@@ -7337,23 +7337,22 @@ function submitExam() {
   `;
 
   // Results Content
-resultsContent.innerHTML = questions.map((q, i) => {
-  const userAnswerIdx = userAnswers[i];
-  const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
-  const correctAnswer = q.options[q.correct];
-  const isCorrect = userAnswerIdx === q.correct;
-  const result = isCorrect ? "✅ Correct" : "❌ Wrong";
+  resultsContent.innerHTML = questions.map((q, i) => {
+    const userAnswerIdx = userAnswers[i];
+    const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
+    const correctAnswer = q.options[q.correct];
+    const isCorrect = userAnswerIdx === q.correct;
+    const result = isCorrect ? "✅ Correct" : "❌ Wrong";
 
-  return `
-    <p>
-      ${i + 1}. ${q.text}<br>
-      Your Answer: <b>${userAnswer}</b> - ${result}<br>
-      <b>Correct Answer:</b> ${correctAnswer}<br>
-      <i>Explanation:</i> ${q.explanation}
-    </p>
-  `;
-}).join("");
-
+    return `
+      <p>
+        ${i + 1}. ${q.text.replace(/(?:\r\n|\r|\n)/g, '<br>')}<br>
+        Your Answer: <b>${userAnswer}</b> - ${result}<br>
+        <b>Correct Answer:</b> ${correctAnswer}<br>
+        <i>Explanation:</i> ${q.explanation.replace(/(?:\r\n|\r|\n)/g, '<br>')}
+      </p>
+    `;
+  }).join("");
 
   examSection.classList.add("hidden");
   resultsSection.classList.remove("hidden");
@@ -7361,6 +7360,8 @@ resultsContent.innerHTML = questions.map((q, i) => {
   downloadPDF.addEventListener("click", generatePDF);
 }
 
+
+  
 async function generatePDF() {
   const { jsPDF } = window.jspdf; // Import jsPDF
   const logo = 'logo.png'; // Base64 encoded logo image
