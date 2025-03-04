@@ -7401,22 +7401,24 @@ async function generatePDF() {
     const sectionSpacing = 10;
     let yOffset = margin;
 
-    // Colors & Styles
+    // Set Font to Arial (better support for special characters)
+    doc.addFont("Arial", "Arial", "normal");
+    doc.setFont("Arial");
+
+    // Colors
     const headerBackground = "#4A90E2";
     const sectionHeadingColor = "#333";
     const questionColor = "#000";
     const answerColor = "#28a745";
     const explanationColor = "#555";
 
-    // Set Font
-    doc.setFont("helvetica", "normal");
-
     // Header Section
     doc.setFillColor(headerBackground);
     doc.rect(0, yOffset, pageWidth, 70, "F");
     yOffset += 35;
 
-    doc.addImage(logo, "PNG", pageWidth / 2 - 25, yOffset - 25, 50, 50);
+    // Add Logo in center
+    doc.addImage(logo, 'PNG', pageWidth / 2 - 25, yOffset - 25, 50, 50);
     yOffset += 35;
 
     doc.setFont("helvetica", "bold");
@@ -7439,6 +7441,7 @@ async function generatePDF() {
     doc.text("Performance Report", margin, yOffset);
     yOffset += lineHeight;
 
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
     doc.text(`Candidate Name: ${fullName}`, margin, yOffset);
     yOffset += lineHeight;
@@ -7458,36 +7461,46 @@ async function generatePDF() {
     doc.line(margin, yOffset, pageWidth - margin, yOffset);
     yOffset += sectionSpacing * 2;
 
-    // Questions and Answers Section
+    // Questions and Answers
     questions.forEach((q, i) => {
         if (yOffset > pageHeight - margin - lineHeight * 6) {
             doc.addPage();
             yOffset = margin;
         }
 
-        // Display Question
         doc.setFont("helvetica", "bold");
         doc.setFontSize(14);
         doc.setTextColor(questionColor);
+
+        // Wrap Question Text
         const questionText = doc.splitTextToSize(`${i + 1}. ${q.text}`, contentWidth);
         doc.text(questionText, margin, yOffset);
         yOffset += questionText.length * lineHeight;
 
-        // Display Correct Answer
+        // Display Answer Options with Proper Formatting
         doc.setFont("helvetica", "normal");
+        doc.setTextColor(questionColor);
+        q.options.forEach((option, idx) => {
+            const optionText = doc.splitTextToSize(`${String.fromCharCode(65 + idx)}. ${option}`, contentWidth);
+            doc.text(optionText, margin, yOffset);
+            yOffset += optionText.length * lineHeight;
+        });
+
+        // Correct Answer Highlighted
+        doc.setFont("helvetica", "bold");
         doc.setTextColor(answerColor);
         const correctAnswer = doc.splitTextToSize(`Correct Answer: ${q.options[q.correct]}`, contentWidth);
         doc.text(correctAnswer, margin, yOffset);
         yOffset += correctAnswer.length * lineHeight;
 
-        // Display Explanation
+        // Explanation Section
         doc.setFont("helvetica", "italic");
         doc.setTextColor(explanationColor);
-        const explanation = doc.splitTextToSize(`Explanation: ${q.explanation || "No explanation available"}`, contentWidth);
+        const explanation = doc.splitTextToSize(`Explanation: ${q.explanation}`, contentWidth);
         doc.text(explanation, margin, yOffset);
         yOffset += explanation.length * lineHeight + sectionSpacing;
 
-        // Add separator line
+        // Separator Line
         doc.setDrawColor("#ddd");
         doc.setLineWidth(0.5);
         doc.line(margin, yOffset, pageWidth - margin, yOffset);
@@ -7499,14 +7512,13 @@ async function generatePDF() {
     doc.setFontSize(12);
     doc.setTextColor("#666");
     const footerY = pageHeight - margin;
-    doc.text("Compiled by Hon Richard D'Prof and Generated for OAU Mock Exam Platform", pageWidth / 2, footerY, { align: "center" });
+    doc.text("Compiled by Hon Richard D'Prof and Generated for Mock OAU Exam Platform", pageWidth / 2, footerY, { align: "center" });
 
-    // Save the PDF
+    // Save PDF
     doc.save(`${fullName}_Exam_Results.pdf`);
-        }
+}
     
-
-
+    
 function generateAdminPDF(doc, logo, courseTitle, duration) {
     // Constants
     const pageWidth = doc.internal.pageSize.getWidth();
