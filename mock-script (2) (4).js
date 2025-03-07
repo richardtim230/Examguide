@@ -93,7 +93,16 @@ let selectedCourseCode = null;
 
 // Predefined question banks by course codes
 const questionBanks = {
-  
+
+    "BOTBOT": [
+          {
+    text: "What color does aniline blue stain <br><img src='logo.png' alt='Aniline Blue Image'><\br>?",
+    options: ["Pink", "Red", "Blue", "Green"],
+    correct: 2,
+    explanation: "Aniline blue stains tissue a blue color."
+  },
+  ],
+    
   "BOT101-T1": [
     
   {
