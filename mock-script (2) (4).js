@@ -1,3 +1,14 @@
+window.onpopstate = function(event) {
+            // Logic to reload the app to the previous page
+            // For example, navigating back to the previous page
+            window.history.back();
+        };
+
+        // Add a new state to the history stack
+        window.onload = function() {
+            window.history.pushState({ page: 1 }, "title 1", "?page=1");
+        };
+
 // Show the notification pop-up
 document.getElementById('notificationPopup').classList.add('active');
 
