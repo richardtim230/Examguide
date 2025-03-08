@@ -7368,7 +7368,193 @@ function submitExam() {
 
   downloadPDF.addEventListener("click", generatePDF);
 }
-        
+
+// Ensure the document is fully loaded before attaching event listeners
+document.addEventListener("DOMContentLoaded", function() {
+  const downloadPDFBtn = document.getElementById('downloadPDF');
+  if (downloadPDFBtn) {
+    downloadPDFBtn.addEventListener('click', generatePDF);
+  }
+});
+
+async function generatePDF() {
+  const { PDFDocument, rgb, StandardFonts } = PDFLib;
+
+  // Create a new PDF document
+  const pdfDoc = await PDFDocument.create();
+  const page = pdfDoc.addPage([600, 800]);
+
+  // Load the font
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+  // Constants
+  const margin = 40;
+  const contentWidth = page.getWidth() - margin * 2;
+  const lineHeight = 20;
+  const sectionSpacing = 15;
+  const smallSpacing = 5;
+  const largeSpacing = 30;
+  let yOffset = margin;
+
+  // Colors
+  const headerBackground = rgb(0.29, 0.56, 0.91);
+  const sectionHeadingColor = rgb(0.2, 0.2, 0.2);
+  const questionColor = rgb(0, 0, 0);
+  const answerColor = rgb(0.16, 0.65, 0.27);
+  const explanationColor = rgb(0.33, 0.33, 0.33);
+  const dividerColor = rgb(0.86, 0.86, 0.86);
+  const footerColor = rgb(0.4, 0.4, 0.4);
+
+  // Add header background
+  page.drawRectangle({
+    x: 0,
+    y: page.getHeight() - 80,
+    width: page.getWidth(),
+    height: 80,
+    color: headerBackground,
+  });
+
+  // Add header text
+  page.drawText("STUDENTS SUPPORT SYSTEM", {
+    x: margin,
+    y: page.getHeight() - 60,
+    size: 22,
+    font,
+    color: rgb(1, 1, 1),
+  });
+  page.drawText("OBAFEMI AWOLOWO UNIVERSITY", {
+    x: margin,
+    y: page.getHeight() - 80,
+    size: 15,
+    font,
+    color: rgb(1, 1, 1),
+  });
+  yOffset += 80;
+
+  // Performance Summary Section
+  const totalAnswered = userAnswers.filter(answer => answer !== undefined).length;
+  const totalNotAnswered = questions.length - totalAnswered;
+  const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
+  const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
+
+  page.drawText("Performance Report", {
+    x: margin,
+    y: page.getHeight() - yOffset,
+    size: 18,
+    font,
+    color: sectionHeadingColor,
+  });
+  yOffset += lineHeight;
+
+  const summaryLines = [
+    `Candidate Name: ${fullName}`, // Replace fullName with the actual variable containing the candidate's name
+    `Course: INTRODUCTORY ZOOLOGY 1`,
+    `Course Code: ${selectedCourseCode}`,
+    `Total Questions Answered: ${totalAnswered}`,
+    `Total Questions Not Answered: ${totalNotAnswered}`,
+    `Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)`,
+  ];
+
+  summaryLines.forEach(line => {
+    page.drawText(line, {
+      x: margin,
+      y: page.getHeight() - yOffset,
+      size: 14,
+      font,
+      color: questionColor,
+    });
+    yOffset += lineHeight;
+  });
+
+  yOffset += largeSpacing;
+
+  // Add Divider Line
+  page.drawLine({
+    start: { x: margin, y: page.getHeight() - yOffset },
+    end: { x: page.getWidth() - margin, y: page.getHeight() - yOffset },
+    thickness: 1,
+    color: dividerColor,
+  });
+  yOffset += sectionSpacing;
+
+  // Questions and Answers Section
+  questions.forEach((q, i) => {
+    if (yOffset > page.getHeight() - margin - lineHeight * 6) {
+      page.addPage([600, 800]); // Add a new page if content exceeds the current page
+      yOffset = margin;
+    }
+
+    // Question Number and Text
+    const questionText = `${i + 1}. ${q.text}`;
+    const questionTextLines = font.splitTextToSize(questionText, contentWidth, { fontSize: 14 });
+
+    page.drawText(questionTextLines.join('\n'), {
+      x: margin,
+      y: page.getHeight() - yOffset,
+      size: 14,
+      font,
+      color: questionColor,
+    });
+    yOffset += questionTextLines.length * lineHeight;
+
+    // Correct Answer
+    const correctAnswerText = `Correct Answer: ${q.options[q.correct]}`;
+    const correctAnswerTextLines = font.splitTextToSize(correctAnswerText, contentWidth, { fontSize: 14 });
+
+    page.drawText(correctAnswerTextLines.join('\n'), {
+      x: margin,
+      y: page.getHeight() - yOffset,
+      size: 14,
+      font,
+      color: answerColor,
+    });
+    yOffset += correctAnswerTextLines.length * lineHeight;
+
+    // Explanation
+    const explanationText = `Explanation: ${q.explanation}`;
+    const explanationTextLines = font.splitTextToSize(explanationText, contentWidth, { fontSize: 14 });
+
+    page.drawText(explanationTextLines.join('\n'), {
+      x: margin,
+      y: page.getHeight() - yOffset,
+      size: 14,
+      font,
+      color: explanationColor,
+    });
+    yOffset += explanationTextLines.length * lineHeight + sectionSpacing;
+
+    // Add Divider Line
+    page.drawLine({
+      start: { x: margin, y: page.getHeight() - yOffset },
+      end: { x: page.getWidth() - margin, y: page.getHeight() - yOffset },
+      thickness: 0.5,
+      color: dividerColor,
+    });
+    yOffset += sectionSpacing;
+  });
+
+  // Footer Section
+  const footerText = "Compiled by Hon Richard D'Prof and Generated for Mock OAU Exam Platform";
+  page.drawText(footerText, {
+    x: page.getWidth() / 2 - font.widthOfTextAtSize(footerText, 12) / 2,
+    y: margin / 2,
+    size: 12,
+    font,
+    color: footerColor,
+  });
+
+  // Save the PDF
+  const pdfBytes = await pdfDoc.save();
+  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${fullName}_Exam_Results.pdf`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
   
     
 
