@@ -3,7 +3,19 @@ document.getElementById('switch-mode-btn').addEventListener('click', function() 
     if (newWindow) {
         const doc = newWindow.document;
         doc.open();
-        doc.write('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Exam Guide - New Mode</title></head><body></body></html>');
+        doc.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Exam Guide - New Mode</title>
+                <link rel="stylesheet" href="./style.css">
+                <link rel="stylesheet" href="styles.css">
+            </head>
+            <body></body>
+            </html>
+        `);
         doc.close();
 
         // Get all the content from the main page
@@ -24,6 +36,15 @@ document.getElementById('switch-mode-btn').addEventListener('click', function() 
 
         // Append the content to the new window's body
         doc.body.appendChild(mainContent);
+
+        // Clone CSS styles
+        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+        stylesheets.forEach(stylesheet => {
+            const newLink = doc.createElement('link');
+            newLink.rel = 'stylesheet';
+            newLink.href = stylesheet.href;
+            doc.head.appendChild(newLink);
+        });
     } else {
         alert('Unable to open new window. Please allow pop-ups for this site.');
     }
