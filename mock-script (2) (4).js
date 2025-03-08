@@ -7368,8 +7368,11 @@ function submitExam() {
 
   downloadPDF.addEventListener("click", generatePDF);
 }
+        
+  
+    
 
-  async function generatePDF() {
+  async function downloadResultsAsPDF() {
   const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
   // Create a new PDF document
@@ -7547,6 +7550,8 @@ function submitExam() {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+  // Attach the function to the button
+  document.getElementById('downloadPDF').addEventListener('click', downloadResultsAsPDF);
 
 function generateUserPDF(questions, fullName, selectedCourseCode, logo) {
     const { jsPDF } = window.jspdf;
