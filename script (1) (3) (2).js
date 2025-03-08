@@ -1,3 +1,34 @@
+document.getElementById('switch-mode-btn').addEventListener('click', function() {
+    const newWindow = window.open('', '_blank');
+    if (newWindow) {
+        const doc = newWindow.document;
+        doc.open();
+        doc.write('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Exam Guide - New Mode</title></head><body></body></html>');
+        doc.close();
+
+        // Get all the content from the main page
+        const mainContent = document.body.cloneNode(true);
+        const elements = mainContent.querySelectorAll('*');
+
+        // Assign new IDs to each element and attach independent functionality
+        elements.forEach((element, index) => {
+            if (element.id) {
+                element.id = `new_${element.id}_${index}`;
+            }
+            if (element.id && element.id.startsWith('new_course-section')) {
+                element.addEventListener('click', function() {
+                    alert(`You clicked on ${element.id}`);
+                });
+            }
+        });
+
+        // Append the content to the new window's body
+        doc.body.appendChild(mainContent);
+    } else {
+        alert('Unable to open new window. Please allow pop-ups for this site.');
+    }
+});
+
 function openDatabase() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open('myAppDatabase', 1);
