@@ -1,4 +1,5 @@
-document.getElementById('switch-mode-btn').addEventListener('click', function() {
+
+document.getElementById('switch -mode-btn').addEventListener('click', function() {
     const newWindow = window.open('', '_blank');
     if (newWindow) {
         const doc = newWindow.document;
