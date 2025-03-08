@@ -7369,38 +7369,41 @@ function submitExam() {
   downloadPDF.addEventListener("click", generatePDF);
 }
 
-async function generatePDF() {
-  const { jsPDF } = window.jspdf; // Import jsPDF
-  const logo = 'logo.png'; // Base64 encoded logo image
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "px",
-    format: "a4"
-  });
+  async function downloadResultsAsPDF() {
+    const { PDFDocument, rgb } = PDFLib;
 
-  // Prompt the user to choose between Results and corrections or Plain questions
-    const isAdmin = confirm("Is this PDF for Admins (Plain questions with answer keys)? Click 'OK' for Admins, 'Cancel' for Results and corrections.");
+    // Create a new PDF document
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([600, 800]);
 
-  if (isAdmin) {
-    const adminCode = prompt("Please enter the admin code:");
-    if (adminCode !== "OAU-ADMIN") { // Replace 'YOUR_ADMIN_CODE' with the actual admin code
-      alert("Invalid admin code. PDF generation aborted.");
-      return;
-    }
+    // Get the results content
+    const resultsContent = document.getElementById('results-summary').innerText;
 
-    const courseTitle = prompt("Please enter the course title:");
-    const duration = prompt("Please enter the exam duration:");
+    // Add text to the PDF document
+    page.drawText(resultsContent, {
+      x: 50,
+      y: 750,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
 
-    // Generate PDF for Admins
-    generateAdminPDF(doc, logo, courseTitle, duration);
-  } else {
-    // Generate PDF for Users
-    generateUserPDF(doc, logo);
+    // Serialize the PDF document to bytes (a Uint8Array)
+    const pdfBytes = await pdfDoc.save();
+
+    // Trigger the browser to download the PDF document
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'exam-results.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
-}
 
-
-      
+  // Attach the function to the button
+  document.getElementById('downloadPDF').addEventListener('click', downloadResultsAsPDF);
     
 function generateUserPDF(questions, fullName, selectedCourseCode, logo) {
     const { jsPDF } = window.jspdf;
