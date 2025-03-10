@@ -1,4 +1,83 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const coursesContainer = document.getElementById("courses-container");
+  const topicSelectionSection = document.getElementById("topic-selection-section");
+  const topicsContainer = document.getElementById("topics-container");
 
+  // Sample topics and questions for each course
+  const courseTopics = {
+    Mathematics: {
+      topics: ["Algebra", "Calculus", "Geometry"],
+      questions: {
+        Algebra: [
+          { question: "What is 2 + 2?", options: ["3", "4", "5"], answer: "4" },
+          { question: "Solve for x: 2x = 6", options: ["2", "3", "4"], answer: "3" },
+        ],
+        Calculus: [
+          { question: "What is the derivative of x^2?", options: ["2x", "x^2", "x"], answer: "2x" },
+          { question: "What is the integral of 1/x?", options: ["ln(x)", "x^2", "x"], answer: "ln(x)" },
+        ],
+        Geometry: [
+          { question: "What is the sum of angles in a triangle?", options: ["180", "90", "360"], answer: "180" },
+          { question: "What is the area of a circle?", options: ["pi*r^2", "2*pi*r", "r^2"], answer: "pi*r^2" },
+        ],
+      },
+    },
+    Chemistry: {
+      topics: ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry"],
+      questions: {
+        "Organic Chemistry": [
+          { question: "What is the formula for methane?", options: ["CH4", "C2H6", "C3H8"], answer: "CH4" },
+          { question: "What is an alkene?", options: ["Single bond", "Double bond", "Triple bond"], answer: "Double bond" },
+        ],
+        "Inorganic Chemistry": [
+          { question: "What is the color of copper sulfate?", options: ["Blue", "Green", "Red"], answer: "Blue" },
+          { question: "What is the formula for water?", options: ["H2O", "H2O2", "HO"], answer: "H2O" },
+        ],
+        "Physical Chemistry": [
+          { question: "What is the ideal gas equation?", options: ["PV=nRT", "P=V/nRT", "PV=nR/T"], answer: "PV=nRT" },
+          { question: "What is the unit of pressure?", options: ["Pascal", "Newton", "Joule"], answer: "Pascal" },
+        ],
+      },
+    },
+    // Add more courses and topics as needed
+  };
+
+  // Event listener for course buttons
+  coursesContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("course")) {
+      const course = event.target.dataset.course;
+      displayTopics(course);
+    }
+  });
+
+  // Function to display topics for the selected course
+  function displayTopics(course) {
+    const courseData = courseTopics[course];
+    if (courseData) {
+      topicsContainer.innerHTML = "";
+      courseData.topics.forEach((topic) => {
+        const topicButton = document.createElement("button");
+        topicButton.classList.add("topic");
+        topicButton.textContent = topic;
+        topicButton.addEventListener("click", function () {
+          startExam(course, topic);
+        });
+        topicsContainer.appendChild(topicButton);
+      });
+      topicSelectionSection.classList.remove("hidden");
+    }
+  }
+
+  // Function to start the exam for the selected topic
+  function startExam(course, topic) {
+    const questions = courseTopics[course].questions[topic];
+    if (questions) {
+      // Implement exam starting logic here
+      console.log(`Starting exam for ${course} - ${topic}`, questions);
+      alert(`Starting exam for ${course} - ${topic}`);
+    }
+  }
+});
 
 function openDatabase() {
   return new Promise((resolve, reject) => {
