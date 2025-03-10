@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const coursesContainer = document.getElementById("courses-container");
+  const switchModeBtn = document.getElementById("switch-mode-btn");
+  const courseSelectionSection = document.getElementById("course-selection-section");
   const topicSelectionSection = document.getElementById("topic-selection-section");
+
+  switchModeBtn.addEventListener("click", function () {
+    courseSelectionSection.classList.toggle("hidden-section");
+    topicSelectionSection.classList.toggle("hidden-section");
+  });
+
+  // Existing code for handling course and topic selection
+  const coursesContainer = document.getElementById("courses-container");
   const topicsContainer = document.getElementById("topics-container");
 
-  // Sample topics and questions for each course
   const courseTopics = {
     Mathematics: {
       topics: ["Algebra", "Calculus", "Geometry"],
@@ -39,10 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ],
       },
     },
-    // Add more courses and topics as needed
   };
 
-  // Event listener for course buttons
   coursesContainer.addEventListener("click", function (event) {
     if (event.target.classList.contains("course")) {
       const course = event.target.dataset.course;
@@ -50,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Function to display topics for the selected course
   function displayTopics(course) {
     const courseData = courseTopics[course];
     if (courseData) {
@@ -64,15 +69,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         topicsContainer.appendChild(topicButton);
       });
-      topicSelectionSection.classList.remove("hidden");
+      topicSelectionSection.classList.remove("hidden-section");
     }
   }
 
-  // Function to start the exam for the selected topic
   function startExam(course, topic) {
     const questions = courseTopics[course].questions[topic];
     if (questions) {
-      // Implement exam starting logic here
       console.log(`Starting exam for ${course} - ${topic}`, questions);
       alert(`Starting exam for ${course} - ${topic}`);
     }
