@@ -1,3 +1,7 @@
+.hidden-section {
+  display: none;
+}
+
 /* General Styling */
         
 body {
