@@ -7027,7 +7027,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
             examAllocations[userId] = [];
         }
 
-        if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM101-F1")) {
+        if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM10 1-F1")) {
             examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
         }
 
@@ -7388,7 +7388,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-async function generatePDF() {
+async function downloadPDFBtn() {
   const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
   // Create a new PDF document
@@ -7577,7 +7577,7 @@ async function generatePDF() {
   const page = pdfDoc.addPage([600, 800]);
 
   // Load the font
-  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const font = await pdfDoc.embpedFont(StandardFonts.Helvetica);
 
   // Constants
   const margin = 40;
