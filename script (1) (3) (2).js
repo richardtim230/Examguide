@@ -17239,7 +17239,8 @@ function updateQuestion() {
   const question = questions[currentQuestionIndex];
   
   // Display question number along with the question text
-  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text.replace(/\n/g, '<br>')}</h3>`;
+  const formattedText = question.text.replace(/\n/g, '<br>');
+  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${formattedText}</h3>`;
   
   // Handle the question image
   if (question.image) {
@@ -17254,6 +17255,8 @@ function updateQuestion() {
 
   // Clear previous options
   optionsContainer.innerHTML = "";
+
+
 
   // Display options as buttons
   question.options.forEach((option, index) => {
