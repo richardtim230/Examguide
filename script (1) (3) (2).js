@@ -12015,15 +12015,792 @@ Botany: {
         ]
       },
 
-      "BOT102-1": {
+      "BOT102": {
         title: "Introductory Botany 2",
         questions: [
-          { text: "What is 2 + 2?", options: ["2", "3", "4", "5"], correct: 2, explanation: "2 + 2 equals 4." },
-          { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
+           {
+          text: "Which kingdom includes eukaryotic organisms that are mostly multicellular and obtain nutrients by absorption?",
+          options: ["Protista", "Fungi", "Plantae", "Animalia"],
+          correct: 1,
+          explanation: "Fungi are eukaryotic, mostly multicellular, and obtain nutrients through absorption from their environment."
+        },
+        {
+          text: "What is the correct way to write the scientific name of humans, using binomial nomenclature?",
+          options: ["Homo Sapiens", "Homo sapiens", "homo sapiens", "Homo sapiens (italicized)"],
+          correct: 3,
+          explanation: "The correct way to write the scientific name is *Homo sapiens*, with the genus capitalized, the species lowercase, and the entire name italicized."
+        },
+        {
+          text: "Which of the following is the broadest (most inclusive) taxonomic rank?",
+          options: ["Class", "Genus", "Kingdom", "Species"],
+          correct: 2,
+          explanation: "Kingdom is the broadest taxonomic rank, encompassing the largest groups of organisms."
+        },
+        {
+          text: "Which of the following is NOT a characteristic used in traditional taxonomy?",
+          options: ["Morphology", "Physiology", "Genetic data", "Behavior"],
+          correct: 2,
+          explanation: "While traditional taxonomy primarily relied on morphology, physiology, and behavior, genetic data is a more recent addition to taxonomic studies.  Traditional methods predate readily available and affordable genetic sequencing."
+        },
+        {
+          text: "In the taxonomic hierarchy, which level comes directly below Family?",
+          options: ["Class", "Order", "Genus", "Species"],
+          correct: 2,
+          explanation: "The taxonomic hierarchy is: Kingdom, Phylum, Class, Order, Family, Genus, Species. Genus is directly below Family."
+        },
+        {
+          text: "What is the main advantage of using a standardized taxonomic system?",
+          options: ["Eliminates ambiguity in naming organisms", "Allows for easier communication among scientists", "Reflects evolutionary relationships", "All of the above"],
+          correct: 3,
+          explanation: "A standardized taxonomic system provides a clear, unambiguous naming convention, facilitates communication, and aims to reflect evolutionary relationships, making 'all of the above' the correct answer."
+        },
+        {
+          text: "Which of the following is a prokaryotic kingdom?",
+          options: ["Fungi", "Plantae", "Protista", "Monera"],
+          correct: 3,
+          explanation: "Monera is the kingdom that includes prokaryotic organisms (bacteria and archaea)."
+        },
+        {
+          text: "Which domain includes organisms with a nucleus?",
+          options: ["Bacteria", "Archaea", "Eukarya", "Viruses"],
+          correct: 2,
+          explanation: "Eukarya is the domain that includes all organisms with cells containing a nucleus."
+        },
+        {
+          text: "What does 'phylogeny' refer to?",
+          options: ["The physical characteristics of an organism", "The evolutionary history of a species or group", "The geographic distribution of a species", "The classification system used in taxonomy"],
+          correct: 1,
+          explanation: "Phylogeny refers to the evolutionary history and relationships of organisms."
+        },
+        {
+          text: "Which of the following is the most specific (least inclusive) taxonomic rank?",
+          options: ["Family", "Genus", "Species", "Order"],
+          correct: 2,
+          explanation: "Species is the most specific, representing a group of organisms that can interbreed and produce fertile offspring."
+        }, 
+      {
+          text: "Sexual reproduction in Porella relies on:",
+          options: ["The fusion of non-flagellated gametes dispersed by wind.", "Flagellate sperms swimming to archegonia-bearing branches.", "The transfer of sperm via insect pollinators.", "Asexual spores produced in specialized structures."],
+          correct: 1,
+          explanation: "Porella relies on flagellate sperms swimming to archegonia-bearing branches for sexual reproduction."
+        },
+        {
+          text: "Though many eggs may be fertilised on an archegonia-bearing branch in Porella, how many develop to a sporophyte?",
+          options: ["no eggs develop", "all the eggs develop", "only one egg develops", "two eggs develop"],
+          correct: 2,
+          explanation: "Though many eggs may be fertilized, only one egg on an archegonia-bearing branch in Porella typically develops into a sporophyte."
+        },
+        {
+          text: "After spores germinate in Porella, they develop into:",
+          options: ["A dichotomously branched thallus.", "Thread-like filaments called protonemata.", "Leafy axes that directly give rise to sporophytes.", "Specialized structures called gemmae cups."],
+          correct: 1,
+          explanation: "After spores germinate, they develop into thread-like filaments called protonemata."
+        },
+        {
+          text: "Compared to Marchantia, the sporophyte in Porella is:",
+          options: ["More prominent, with a larger capsule and longer seta.", "Less prominent, with a smaller capsule and shorter seta.", "Morphologically identical.", "Physiologically independent of the gametophyte."],
+          correct: 0,
+          explanation: "Compared to Marchantia, the sporophyte in Porella is more prominent, with a larger capsule and longer seta."
+        },
+        {
+          text: "Which trait does porella have, but not Marchantia?",
+          options: ["Longer seta", "Photosynthetic capabilities", "a dichotomously-branched thallus", "Rhizoid stems"],
+          correct: 0,
+          explanation: "Porella has a longer seta."
+        },
+        {
+          text: "In mosses, the sporophyte is:",
+          options: ["Photosynthetic and free-living.", "Physiologically independent of the gametophyte.", "Physiologically dependent on the gametophyte.", "The dominant generation."],
+          correct: 2,
+          explanation: "In mosses, the sporophyte is physiologically dependent on the gametophyte."
+        },
+        {    text: "The leafy axes of mosses are characterized by:",
+          options: ["Highly specialized vascular tissue for water transport.", "Leaves arranged in two or three ranks along the stem.", "The absence of chlorophyll and dependence on symbiotic relationships.", "A dichotomously branched thallus."],
+          correct: 1,
+          explanation: "The leafy axes of mosses are characterized by leaves arranged in two or three ranks along the stem."
+        },
+        {
+          text: "Compared to liverworts, moss sporophytes generally have:",
+          options: ["A smaller capsule and shorter seta.", "Less conspicuous dispersal mechanisms.", "More highly specialized dispersal mechanisms and a longer seta.", "A greater dependence on water for spore dispersal."],
+          correct: 2,
+          explanation: "Compared to liverworts, moss sporophytes generally have more highly specialized dispersal mechanisms and a longer seta."
+        },
+        {
+          text: "Vegetative reproduction in mosses utilizes gemmae, but differs from Marchantia in that:",
+          options: ["Gemmae are only produced under unfavorable conditions.", "Gemmae are not restricted to cups.", "Gemmae are dispersed by animal vectors rather than water.", "Gemmae directly develop into sporophytes rather than gametophytes."],
+          correct: 1,
+          explanation: "Vegetative reproduction in mosses utilizes gemmae, but differs from Marchantia in that gemmae are not restricted to cups."
+        },
+        {
+          text: "What produces sex cells?",
+          options: ["gemmae", "the antheridia", "the archegonia", "both B and C"],
+          correct: 3,
+          explanation: "Both the antheridia and the archegonia produce sex cells."
+        },
+        {
+          text: "Bryum coronatum, is characterized by:",
+          options: ["It does not contain Chlorophyll", "the Gametophyte is 4-6 cm", "leaves which are one cell layer in thickness except at the mid-rib", "Is a leafwort"],
+          correct: 2,
+          explanation: "Bryum coronatum is characterized by leaves which are one cell layer in thickness except at the mid-rib"
+        },
+        {
+          text: "The stem of Bryum coronatum has:",
+          options: ["A chlorophyllous epidermal layer and an inner part with parenchymatous cells.", "Highly specialized vascular tissue for water transport.", "A thick, woody cortex providing structural support.", "Specialized cells for nitrogen fixation."],
+          correct: 0,
+          explanation: "The stem of Bryum coronatum has A chlorophyllous epidermal layer and an inner part with parenchymatous cells."
+        },
+        {
+          text: "The parenchymatous cells in the inner part of the stem of Bryum coronatum likely function in:",
+          options: ["Photosynthesis.", "Water transport.", "Support.", "Spore dispersal."],
+          correct: 2,
+          explanation: "The parenchymatous cells in the inner part of the stem of Bryum coronatum likely function in support."
+        },
+        {
+          text: "Overall, the text suggests that the sporophyte generation of the Mosses, compared with those of Liverworts, are:",
+          options: ["Shorter", "Equally specialized", "Less specialised", "More conspicuous"],
+          correct: 3,
+          explanation: "Overall, the text suggests that the sporophyte generation of the Mosses, compared with those of Liverworts, are more conspicuous."
+        },
+        {
+          text: "Bryophytes are not found in all regions around the world, what can be assumed about the regions where they are found?",
+          options: ["Found only in cold region", "Found only in hot region", "Found in only dry areas", "Found in wetter areas"],
+          correct: 3,
+          explanation: "Bryophytes are not found in all regions around the world, what can be assumed about the regions where they are found is that they are found in wetter areas."
+        },
+{
+          text: "Bryophytes differ from most algae in that they have:",
+          options: ["Chlorophyll and are photosynthetic.", "A dominant sporophyte generation.", "Structures for absorbing water and nutrients from the soil.", "A thalloid plant body."],
+          correct: 2,
+          explanation: "Bryophytes differ from most algae in that they have structures for absorbing water and nutrients from the soil."
+        },
+        {
+          text: "Bryophytes adaptations to a land habitat includes what in the aerial portion?",
+          options: ["prevent excessive loss of water and some other modification", "the exchange of gasses between the internal parts of the plant and the atmosphere", "the elimination of excess water from the plant body", "all of the above"],
+          correct: 3,
+          explanation: "Bryophytes adaptation to land habitat include preventing excessive loss of water and some other modification, the exchange of gasses between the internal parts of the plant and the atmosphere and the elimination of excess water from the plant body."
+        },
+        {
+          text: "What is the purpose of the rhizoid?",
+          options: ["A true root", "absorption", "subterranean", "above ground"],
+          correct: 1,
+          explanation: "The purpose of the rhizoid is absorption."
+        },
+        {
+          text: "Bryophytes are limited to moist habitats because:",
+          options: ["They lack vascular tissue for efficient water transport.", "They require water for the transport of male gametes to female gametes.", "Their dominant sporophyte generation is susceptible to desiccation.", "They are unable to tolerate high levels of sunlight."],
+          correct: 1,
+          explanation: "Bryophytes are limited to moist habitats because they require water for the transport of male gametes to female gametes."
+        },
+        {
+          text: "Bryophytes do NOT possess",
+          options: ["Haploid", "Gametes", "Vascular tissue", "Thalloid"],
+          correct: 2,
+          explanation: "Bryophytes do NOT possess vascular tissue."
+        },
+        {
+          text: "Compared to algae and fungi, bryophytes exhibit:",
+          options: ["A greater range in the size of their plant bodies.", "A wider distribution across diverse terrestrial habitats.", "Limited variation in the size of their plant bodies.", "A greater dependence on aquatic environments."],
+          correct: 2,
+          explanation: "Compared to algae and fungi, bryophytes exhibit limited variation in the size of their plant bodies."
+        },
+        {
+          text: "Unlike higher terrestrial plants, the bryophytes lack:",
+          options: ["true stems and leaves", "vascular system", "gametes", "a rhizoid system"],
+          correct: 0,
+          explanation: "Unlike higher terrestrial plants, the bryophytes lack true stems and leaves."
+        },
+        {
+          text: "The dominant generation in bryophytes is the:",
+          options: ["Diploid sporophyte.", "Haploid gametophyte.", "Alternating diploid and haploid phases.", "Asexual reproductive phase."],
+          correct: 1,
+          explanation: "The dominant generation in bryophytes is the haploid gametophyte."
+        },
+        {
+          text: "Is the sporophyte phase physiologically dependant on the gametophytic phase?",
+          options: ["no it has no use for the gametophytic phase.", "no it does not need them.", "yes it is dependent", "yes because the bryophytes have a specific nature for water transporting."],
+          correct: 2,
+          explanation: "Yes, the sporophyte phase is physiologically dependent on the gametophytic phase."
+        },
+        {
+          text: "Thalloid liverworts are characterized by:",
+          options: ["Erect leafy axes (stems).", "Prostrate leafy axes (stems).", "Flattened, dichotomously-branched thalli.", "Specialized vascular tissue for water transport."],
+          correct: 2,
+          explanation: "Thalloid liverworts are characterized by flattened, dichotomously-branched thalli."
+        },
+        {
+          text: "The pioneer species that best grows in burnt forest soil after fire is:",
+          options: ["Mosses", "Marchantia polymorpha", "Fungi", "Algae"],
+          correct: 1,
+          explanation: "The pioneer species that best grows in burnt forest soil after fire is Marchantia polymorpha."
+        },
+        {
+          text: "In Marchantia polymorpha, vegetative reproduction is achieved through:",
+          options: ["Spore formation within sporangia.", "Fragmentation of filaments and zoospore production.", "Progressive decay and gemmae production.", "Fusion of gametes within conceptacles."],
+          correct: 2,
+          explanation: "In Marchantia polymorpha, vegetative reproduction is achieved through progressive decay and gemmae production."
+        },
+        {
+          text: "What is the role of gemmae?",
+          options: ["they allow for anchorage and nutrient absorption", "they are used for sexual reproduction", "they are used for vegetative propagules", "to produce sporangia"],
+          correct: 2,
+          explanation: "Gemmae are used for vegetative propagules."
+        },
+        {
+          text: "Gemma cups function in:",
+          options: ["Protecting the thallus from desiccation.", "Facilitating gas exchange with the atmosphere.", "Producing and dispersing gemmae for vegetative reproduction.", "Attracting pollinators for sexual reproduction."],
+          correct: 2,
+          explanation: "Gemma cups function in producing and dispersing gemmae for vegetative reproduction."
+        },
+        {
+          text: "The multicellular lens-shaped bodies contained within gemma cups are called:",
+          options: ["Rhizoids.", "Sporangia.", "Gemmae.", "Conceptacles."],
+          correct: 2,
+          explanation: "The multicellular lens-shaped bodies contained within gemma cups are called gemmae."
+        },
+{
+          text: "What is the main means of Vegetative Reproduction?",
+          options: ["Germination of spores", "Liberation of spores from the Sporangium", "Growth and sexual reproduction", "Germination of hyphae"],
+          correct: 1,
+          explanation: "The main means of vegetative reproduction for some fungi is liberation of spores from the Sporangium."
+        },
+        {
+          text: "The primary mechanism for dispersal in Rhizopus is:",
+          options: ["Water-borne transmission.", "Animal vectors.", "Wind dispersal of lightweight spores.", "Direct transfer from parent mycelium to new substrate."],
+          correct: 2,
+          explanation: "The primary mechanism for dispersal in Rhizopus is wind dispersal of lightweight spores."
+        },
+        {
+          text: "Chemical interactions between mating types in Rhizopus lead to:",
+          options: ["The immediate formation of a diploid zygote through mitosis", "the formation of perpendicular growths and gametangia", "The development of conidiophores and conidia", "the release of ascospores from an ascus"],
+          correct: 1,
+          explanation: "Chemical interactions between mating types in Rhizopus lead to the formation of perpendicular growths and gametangia."
+        },
+        {
+          text: "The zygote in Rhizopus undergoes what after prolonged dormancy?",
+          options: ["Direct germination without meiosis.", "Meiosis to produce haploid spores.", "Mitosis to produce diploid spores.", "Fragmentation to produce new mycelia."],
+          correct: 1,
+          explanation: "The zygote in Rhizopus undergoes meiosis to produce haploid spores after prolonged dormancy."
+        },
+        {
+          text: "Mucor is distinguished from Rhizopus by:",
+          options: ["The presence of septate hyphae.", "The absence of rhizoids.", "The production of conidia instead of sporangiospores.", "The ability to cause lung diseases."],
+          correct: 1,
+          explanation: "Mucor is distinguished from Rhizopus by the absence of rhizoids."
+        },
+        {
+          text: "Aspergillus spores are primarily dispersed by:",
+          options: ["water", "wind", "close vectors", "fungi"],
+          correct: 1,
+          explanation: "Aspergillus spores are primarily dispersed by wind."
+        },
+        {
+          text: "Conidia are:",
+          options: ["Asexual spores produced by Aspergillus and Penicillium.", "Sexual spores produced within an ascus.", "Specialized structures for nitrogen fixation in fungi.", "Haploid spores produced by Rhizopus."],
+          correct: 0,
+          explanation: "Conidia are asexual spores produced by Aspergillus and Penicillium."
+        },
+        {
+          text: "Which of the following statement is FALSE, what are the hyphae?",
+          options: ["septate", "conidia", "produce antibiotics", "are coenocytic"],
+          correct: 3,
+          explanation: "False, hyphae are not coenocytic. However, some fungi do contain coenocytic hyphae"
+        },
+        {
+          text: "The importance of Penicillium lies in its ability to produce:",
+          options: ["Potent toxins that contaminate food.", "Essential vitamins for human nutrition.", "Antibiotics used to treat bacterial infections.", "Enzymes that break down cellulose for biofuel production."],
+          correct: 2,
+          explanation: "The importance of Penicillium lies in its ability to produce antibiotics used to treat bacterial infections."
+        },
+        {
+          text: "The macromorphological structure in fungi?",
+          options: ["Micro Fungi", "Mushrooms", "Penicillium", "Aspergillus"],
+          correct: 1,
+          explanation: "The macromorphological structure in fungi are Mushrooms"
+        },
+        {
+          text: "Which is most accurate? Brightly coloured mushrooms.",
+          options: ["Can be guaranteed to be poisonous.", "Are always edible.", "Are poisonous only when raw.", "Cannot be guaranteed to be edible or poisonous."],
+          correct: 3,
+          explanation: "You cannot guarantee that brightly coloured mushrooms are edible or poisonous."
+        },
+        {
+          text: "The 'universal veil' in gilled mushrooms is:",
+          options: ["A protective layer covering the gills.", "A specialized structure for spore dispersal.", "A membranous covering enclosing the mushroom in its early stages.", "A symbiotic association with algae or bacteria."],
+          correct: 2,
+          explanation: "The 'universal veil' in gilled mushrooms is a membranous covering enclosing the mushroom in its early stages."
+        },
+        {
+          text: "What's common to both mushroom and mould?",
+          options: ["Can grow without a need to digest", "Needs organic elements to grow", "Both are poisonous", "Are not fungi"],
+          correct: 1,
+          explanation: "Both mushroom and mould Needs organic elements to grow"
+        },
+        {
+          text: "Which form of reproduction in Rhizopus involves chemical interactions between hyphae?",
+          options: ["Liberation", "Vegetative reproduction", "Sexual reproduction", "Substrate formation"],
+          correct: 2,
+          explanation: "Sexual reproduction in Rhizopus involves chemical interactions between hyphae."
+        },
+        {
+          text: "What is the source substrate from which some edible species develop?",
+          options: ["The air and sun.", "soil with high humus content", "living plant and animal tissue", "human made sugars"],
+          correct: 1,
+          explanation: "Some edible fungi species depend on soil with high humus content to develop."
+        },
+{
+          text: "The primary function of spores in Rhizopus stolonifer is:",
+          options: ["Anchoring the fungus to the substrate.", "Sexual reproduction through fusion with other spores.", "Dispersal and propagation to new locations.", "Nutrient storage for long-term survival."],
+          correct: 2,
+          explanation: "The primary function of spores in Rhizopus stolonifer is dispersal and propagation to new locations."
+        },
+        {
+          text: "The horizontal hyphae of Rhizopus contribute to:",
+          options: ["Asexual reproduction through the formation of conidia.", "Long-distance transport of water and nutrients within the fungus.", "Rapid colonization of the substrate and nutrient acquisition.", "Protection of the fungus from desiccation."],
+          correct: 2,
+          explanation: "The horizontal hyphae of Rhizopus contribute to rapid colonization of the substrate and nutrient acquisition."
+        },
+        {
+          text: "What term describes the horizontal hyphae of Rhizopus?",
+          options: ["rhizoids", "mycelium", "sporogenous hyphae", "stolonifer"],
+          correct: 3,
+          explanation: "The horizontal hyphae of Rhizopus are described as stolonifer."
+        },
+        {
+          text: "What is the adaptive significance of coenocytic hyphae in fungi?",
+          options: ["They provide increased structural support for the fungal body.", "They allow for more efficient transport of nutrients throughout the mycelium.", "They facilitate sexual reproduction through the formation of specialized structures.", "They increase resistance to parasitic infections."],
+          correct: 1,
+          explanation: "Coenocytic hyphae in fungi allow for more efficient transport of nutrients throughout the mycelium."
+        },
+        {
+          text: "Rhizoids, being root-like structures, suggest:",
+          options: ["Fungi are evolutionarily related to plants.", "Convergent evolution to solve the challenges of anchorage and nutrient absorption.", "Parasitic relationships between fungi and plant roots.", "A transition from aquatic to terrestrial habitats."],
+          correct: 1,
+          explanation: "Rhizoids, being root-like structures, suggest convergent evolution to solve the challenges of anchorage and nutrient absorption."
+        },
+        {
+          text: "How does a fungus growing on bread cause it to spoil?",
+          options: ["it produces spores on the bread", "through a form of sexual reproduction", "through the enzymes breaking down food material", "through a form of asexual reproduction"],
+          correct: 2,
+          explanation: "A fungus growing on bread causes it to spoil through the enzymes breaking down food material."
+        },
+        {
+          text: "The primary advantage of having both horizontal and vertical axes in Rhizopus is:",
+          options: ["Enhanced structural integrity and resistance to wind.", "Efficient access to nutrients and dispersal of spores.", "Increased photosynthetic surface area.", "Improved camouflage within the environment."],
+          correct: 1,
+          explanation: "The primary advantage of having both horizontal and vertical axes in Rhizopus is efficient access to nutrients and dispersal of spores."
+        },
+        {
+          text: "The differentiation of the Rhizopus plant body into various specialized structures (rhizoids, sporangiophores, sporangia) reflects:",
+          options: ["A primitive level of organization compared to unicellular fungi.", "Adaptive complexity enabling efficient resource acquisition and reproduction.", "A transition from asexual to sexual reproduction strategies.", "Dependence on symbiotic relationships with other organisms."],
+          correct: 1,
+          explanation: "The differentiation of the Rhizopus plant body into various specialized structures reflects adaptive complexity enabling efficient resource acquisition and reproduction."
+        },
+        {
+          text: "What is the genetic state of the Rhizopus plant body described in the excerpt?",
+          options: ["Diploid", "Haploid", "Alternating generations", "Polyploid"],
+          correct: 1,
+          explanation: "The genetic state of the Rhizopus plant body described in the excerpt is haploid."
+        },
+        {
+          text: "What does the word 'Sporogenous' implies about the nature of hyphae?",
+          options: ["They produce spores", "They are horizontal", "They lie on the base", "They are multinucleate"],
+          correct: 0,
+          explanation: "The word 'Sporogenous' implies about the nature of hyphae means they produce spores."
+        },
+        {
+          text: "In wet bread the plant body is (which is haploid) differentiated into:",
+          options: ["horizontal and vertical axes", "septate or coenocytic", "Sporogenous", "sporangiophore"],
+          correct: 0,
+          explanation: "In wet bread the plant body is (which is haploid) differentiated into horizontal and vertical axes"
+        },
+        {
+          text: "If a researcher were to disrupt the function of the columella in Rhizopus, what would be the MOST likely consequence?",
+          options: ["The fungus would be unable to anchor itself to the substrate.", "The fungus would be unable to produce spores.", "The fungus would be unable to absorb nutrients.", "The fungus would be unable to transport water throughout the mycelium."],
+          correct: 1,
+          explanation: "If a researcher were to disrupt the function of the columella in Rhizopus, the most likely consequence would be that the fungus would be unable to produce spores."
+        },
+        {
+          text: "How does the large number of spores produced by sporangia enhance the fungi's reproductive rate?",
+          options: ["enhances the chances of finding favorable growing conditions.", "ensures genetic diversity.", "the large the sporangia, the more effective spore production will be.", "creates an enhanced symbiotic relationship"],
+          correct: 0,
+          explanation: "The large number of spores produced by sporangia enhances the fungi's reproductive rate because it enhances the chances of finding favorable growing conditions."
+        },
+        {
+          text: "'Substratum' is in what state in this description.",
+          options: ["liquid", "solid", "gassious", "paste"],
+          correct: 1,
+          explanation: "Substratum' is in solid state in this description."
+        },
+        {
+          text: "Compared to yeasts, Rhizopus represents:",
+          options: ["A simpler form of fungal organization.", "A more complex form of fungal organization with specialized structures.", "A more primitive form of fungal life cycle.", "A greater reliance on sexual reproduction."],
+          correct: 1,
+          explanation: "Compared to yeasts, Rhizopus represents a more complex form of fungal organization with specialized structures."
+        },
+{
+          text: "What is the fundamental building block of most fungal bodies, including complex forms like mushrooms?",
+          options: ["The spore", "The mycelium", "The hypha", "The rhizoid"],
+          correct: 2,
+          explanation: "The hypha is the fundamental building block of most fungal bodies."
+        },
+        {
+          text: "A mycelium is:",
+          options: ["A specialized reproductive structure in fungi.", "A symbiotic association between a fungus and a plant root.", "A collection of hyphae forming the body of a fungus.", "A type of fungal spore resistant to harsh environmental conditions."],
+          correct: 2,
+          explanation: "A mycelium is a collection of hyphae forming the body of a fungus."
+        },
+        {
+          text: "Which is an attribute that Rhizopus has that sporangiophore does not?",
+          options: ["has spores", "the end is the columella", "substrate", "the base has rhizoids"],
+          correct: 2,
+          explanation: "An attribute that Rhizopus has that sporangiophore does not is a substrate."
+        },
+        {
+          text: "How do fungal filaments compare to algal filaments?",
+          options: ["Fungal filaments contain chlorophyll, while algal filaments do not.", "Algal filaments are always septate, while fungal filaments are always coenocytic.", "Fungal filaments lack chlorophyll, while algal filaments typically possess it.", "There are no fundamental differences between algal and fungal filaments."],
+          correct: 2,
+          explanation: "Fungal filaments lack chlorophyll, while algal filaments typically possess it."
+        },
+        {
+          text: "What are rhizoids?",
+          options: ["Specialized reproductive structures.", "Root-like structures aiding anchorage and nutrient absorption.", "Horizontal hyphae lying on the substrate.", "Spore-producing structures."],
+          correct: 1,
+          explanation: "Rhizoids are root-like structures aiding anchorage and nutrient absorption."
+        },
+        {
+          text: "The main structural difference between septate and coenocytic hyphae is:",
+          options: ["Septate hyphae are branched, while coenocytic hyphae are unbranched.", "Septate hyphae have cross-walls dividing them into cells, while coenocytic hyphae lack these divisions.", "Septate hyphae contain chlorophyll, while coenocytic hyphae lack it.", "Septate hyphae are found in aquatic fungi, while coenocytic hyphae are found in terrestrial fungi."],
+          correct: 1,
+          explanation: "The main structural difference between septate and coenocytic hyphae is that septate hyphae have cross-walls dividing them into cells, while coenocytic hyphae lack these divisions."
+        },
+        {
+          text: "Rhizopus stolonifer is characterized as:",
+          options: ["A septate fungus found in aquatic environments.", "A coenocytic fungus commonly found on decaying food.", "A parasitic fungus infecting plant roots.", "A mycorrhizal fungus forming symbiotic associations with tree roots."],
+          correct: 1,
+          explanation: "Rhizopus stolonifer is characterized as a coenocytic fungus commonly found on decaying food."
+        },
+        {
+          text: "The role of sporangiophores is to:",
+          options: ["Anchor the fungus to the substrate.", "Transport nutrients throughout the mycelium.", "Produce spores within a sporangium.", "Engage in sexual reproduction."],
+          correct: 2,
+          explanation: "The role of sporangiophores is to produce spores within a sporangium."
+        },
+        {
+          text: "The columella is:",
+          options: ["A root-like structure anchoring the fungus to the substrate.", "A specialized cell involved in sexual reproduction.", "A photosynthetic pigment found in some fungal species.", "The swollen end of the sporangiophore that carries the sporangium."],
+          correct: 3,
+          explanation: "The columella is the swollen end of the sporangiophore that carries the sporangium."
+        },
+        {
+          text: "Which structure of the bread mold occurs at intervals?",
+          options: ["rhizoids", "columella", "sporangiophore", "substratum"],
+          correct: 2,
+          explanation: "The sporangiophore structure of the bread mold occurs at intervals"
+        },
+{
+          text: "The saprophytic lifestyle of fungi contributes MOST directly to:",
+          options: ["Increased atmospheric oxygen levels.", "The conversion of solar energy into chemical energy.", "The release of inorganic nutrients from dead organic matter, making them available to other organisms.", "The control of bacterial populations in terrestrial ecosystems."],
+          correct: 2,
+          explanation: "The saprophytic lifestyle of fungi contributes most directly to the release of inorganic nutrients from dead organic matter."
+        },
+        {
+          text: "The dual role of some fungi as both beneficial (e.g., antibiotic production) and detrimental (e.g., plant pathogens) highlights:",
+          options: ["The inherent unpredictability of biological systems.", "The context-dependent nature of ecological interactions.", "The evolutionary drive for fungi to dominate all ecosystems.", "The limitations of human attempts to control natural processes."],
+          correct: 1,
+          explanation: "The dual role of some fungi highlights the context-dependent nature of ecological interactions."
+        },
+        {
+          text: "The process of budding in Saccharomyces cerevisiae represents a form of:",
+          options: ["Horizontal gene transfer.", "Conservative replication of the entire genome.", "Asymmetrical cell division, resulting in unequal distribution of cytoplasm.", "Binary fission, leading to two identical daughter cells."],
+          correct: 2,
+          explanation: "Budding in Saccharomyces cerevisiae represents a form of asymmetrical cell division."
+        },
+        {
+          text: "The formation of ascospores within an ascus is significant because:",
+          options: ["It represents a mechanism for long-term survival under harsh environmental conditions.", "It allows for rapid asexual reproduction and colonization of new habitats.", "It combines genetic material from multiple mating types to increase genetic diversity.", "It represents a key adaptation enabling fungi to parasitize plants."],
+          correct: 0,
+          explanation: "The formation of ascospores within an ascus is significant because it represents a mechanism for long-term survival."
+        },
+        {
+          text: "How might a fungal infection in a plant disrupt ecosystem function?",
+          options: ["It could limit the plants nitrogen cycling capacity", "It could limit the plants water cycling capacity", "It could limit the plant's energy harvesting and carbon cycling capacity", "It could limit the plants capacity for heterotrophy"],
+          correct: 2,
+          explanation: "A fungal infection in a plant could disrupt ecosystem function by limiting the plant's energy harvesting and carbon cycling capacity."
+        },
+        {
+          text: "Yeast cells existing in both haploid and diploid states exemplifies:",
+          options: ["A breakdown in the normal process of meiosis.", "An adaptation to extreme environmental conditions.", "A flexible life cycle that allows for both asexual and sexual reproduction.", "A primitive form of genetic recombination."],
+          correct: 2,
+          explanation: "Yeast cells existing in both haploid and diploid states exemplifies a flexible life cycle that allows for both asexual and sexual reproduction."
+        },
+        {
+          text: "Which statement best describes the fungal role in parasitism?",
+          options: ["Fungal parasitism is limited to plants", "All fungal species are parasitic on animals", "Fungal parasitism on pests serve as biological control agents.", "The presence of certain fungal diseases indicate symbiosis"],
+          correct: 2,
+          explanation: "Fungal parasitism on pests serves as biological control agents."
+        },
+        {
+          text: "The fact that Saccharomyces cerevisiae is used both in brewing and baking indicates:",
+          options: ["It is useful in both environments", "the yeast spores will function as food", "the yeast functions in similar environments", "it has limited functions in the baking and brewing industry."],
+          correct: 2,
+          explanation: "The fact that Saccharomyces cerevisiae is used both in brewing and baking indicates that the yeast functions in similar environments."
+        },
+        {
+          text: "How is decomposition an imperative role?",
+          options: ["Without decomposition, element would become trapped.", "Without decomposition, other microb would thrive.", "Without decomposition, the circle of life would exist.", "decomposition is not an imperative role"],
+          correct: 0,
+          explanation: "Decomposition is an imperative role, without decomposition, element would become trapped."
+        },
+        {
+          text: "Medical and veterinary mycology includes fungal infections such as",
+          options: ["AIDS", "Hepatitis", "Ringworm", "Malaria"],
+          correct: 2,
+          explanation: "Medical and veterinary mycology includes fungal infections such as Ringworm"
+        },
+{
+          text: "The primary evolutionary advantage of colonial organization in algae is likely:",
+          options: ["Increased surface area for nutrient absorption.", "Enhanced protection from predation and environmental stress.", "Improved motility and dispersal capabilities.", "Greater efficiency in photosynthesis due to cellular specialization."],
+          correct: 1,
+          explanation: "The primary evolutionary advantage of colonial organization in algae is likely enhanced protection from predation and environmental stress."
+        },
+        {
+          text: "What could be a disadvantage of vegetative reproduction through fragmentation?",
+          options: ["no need for mating", "no need for pollination", "no generic information will be added", "less energy is needed"],
+          correct: 2,
+          explanation: "A disadvantage of vegetative reproduction through fragmentation is that no genetic information will be added."
+        },
+        {
+          text: "Which of the following is FALSE regarding filamentous algae?",
+          options: ["They exhibit diverse reproductive strategies.", "They are always unbranched and unicellular.", "Their cells can be either uninucleate or multinucleate.", "Fragmentation is a common mode of vegetative reproduction."],
+          correct: 1,
+          explanation: "The false statement regarding filamentous algae is: They are always unbranched and unicellular."
+        },
+        {
+          text: "What is the key distinction between isogamous and oogamous sexual reproduction?",
+          options: ["Isogamous reproduction involves the release of mobile spores, while oogamous reproduction involves the fusion of non-motile gametes.", "Isogamous reproduction occurs only in unicellular algae, while oogamous reproduction occurs in multicellular algae.", "Isogamous reproduction involves the fusion of morphologically similar gametes, while oogamous reproduction involves the fusion of dissimilar gametes.", "Isogamous reproduction leads to a diploid zygote, while oogamous reproduction leads to a haploid zygote."],
+          correct: 2,
+          explanation: "The key distinction between isogamous and oogamous sexual reproduction is that isogamous reproduction involves the fusion of morphologically similar gametes, while oogamous reproduction involves the fusion of dissimilar gametes."
+        },
+        {
+          text: "What would allow for better cell differentiation and Specialization.",
+          options: ["greater colony size", "less colony size", "less colony adherence", "isogamous reproduction"],
+          correct: 0,
+          explanation: "A greater colony size would allow for better cell differentiation and specialization."
+        },
+{
+          text: "Colonial algae are defined by:",
+          options: ["Independent, free-living cells aggregated together.", "Cells differentiated into distinct tissues and organs.", "An aggregate of more or less similar cells attached as a colony.", "Filamentous structures with specialized reproductive cells."],
+          correct: 2,
+          explanation: "Colonial algae are defined by an aggregate of more or less similar cells attached as a colony."
+        },
+        {
+          text: "Pandorina and Volvox are examples of:",
+          options: ["Red algae with complex life cycles.", "Brown algae found in intertidal zones.", "Green algae exhibiting colonial organization.", "Unicellular algae with flagellated spores."],
+          correct: 2,
+          explanation: "Pandorina and Volvox are examples of green algae exhibiting colonial organization."
+        },
+        {
+          text: "What do the single cells assume gametic functions with in Pandorina?",
+          options: ["Filamentous form", "Motile Form", "Unicellular", "Flagella"],
+          correct: 3,
+          explanation: "The single cells assume gametic functions with Flagella in Pandorina"
+        },
+        {
+          text: "Volvox is considered evolutionarily more advanced than Pandorina due to:",
+          options: ["Its smaller colony size and simpler cellular organization.", "The presence of specialized reproductive cells (heterocysts).", "A greater degree of cellular differentiation and specialization.", "Its ability to reproduce both sexually and asexually."],
+          correct: 2,
+          explanation: "Volvox is considered evolutionarily more advanced than Pandorina due to a greater degree of cellular differentiation and specialization."
+        },
+        {
+          text: "Fragmentation of filaments in filamentous algae is a form of:",
+          options: ["Sexual reproduction leading to genetic recombination.", "Asexual reproduction for rapid population growth.", "Meiosis to produce haploid gametes.", "A survival strategy under unfavorable environmental conditions."],
+          correct: 1,
+          explanation: "Fragmentation of filaments in filamentous algae is a form of asexual reproduction for rapid population growth."
+        },
+        {
+          text: "Zoopores are:",
+          options: ["Specialized reproductive cells produced by colonial algae.", "Motile spores released from vegetative cells in filamentous algae.", "Dormant structures that survive harsh environmental conditions.", "Fusion products of isogamous gametes."],
+          correct: 1,
+          explanation: "Zoopores are motile spores released from vegetative cells in filamentous algae."
+        },
+        {
+          text: "Ulothrix exhibits which type of sexual reproduction?",
+          options: ["Isogamous", "Oogamous", "Fragmentation", "Zoomorphous"],
+          correct: 0,
+          explanation: "Ulothrix exhibits isogamous sexual reproduction."
+        },
+        {
+          text: "Spirogyra filaments are characterized by:",
+          options: ["Branched filaments with multinucleate cells.", "Unbranched filaments with a spiral chloroplast in each cell.", "The absence of chlorophyll and heterotrophic nutrition.", "Specialized reproductive structures called conceptacles."],
+          correct: 1,
+          explanation: "Spirogyra filaments are characterized by unbranched filaments with a spiral chloroplast in each cell."
+        },
+        {
+          text: "What is the dominant generation in Spirogyra's life cycle?",
+          options: ["Sporophyte", "Gametophyte", "Haploid", "Diplod"],
+          correct: 2,
+          explanation: "The dominant generation in Spirogyra's life cycle is Haploid"
+        },
+        {
+          text: "The diploid generation in Spirogyra is described as:",
+          options: ["A complex, multicellular structure with specialized tissues.", "A unicellular and rather obscure phase.", "The dominant phase in its life cycle, responsible for reproduction.", "A filamentous structure with branched filaments."],
+          correct: 1,
+          explanation: "The diploid generation in Spirogyra is described as a unicellular and rather obscure phase."
+        },
+        {
+          text: "In more complex algal forms, cells are differentiated to:",
+          options: ["Maximize photosynthetic efficiency.", "Perform specific functions within the plant body.", "Increase resistance to desiccation and grazing.", "Enhance the rate of nutrient uptake from the environment."],
+          correct: 1,
+          explanation: "In more complex algal forms, cells are differentiated to perform specific functions within the plant body."
+        },
+        {
+          text: "Fucus is a genus of:",
+          options: ["Green algae found in freshwater environments.", "Red algae with complex life cycles.", "Brown algae inhabiting intertidal zones.", "Golden algae with siliceous cell walls."],
+          correct: 2,
+          explanation: "Fucus is a genus of brown algae inhabiting intertidal zones."
+        },
+        {
+          text: "What is a common mode of asexual reproduction in Ulothrix?",
+          options: ["Isogamous pairing", "Oogamous pairing", "Fragmentation", "Spirogyra"],
+          correct: 2,
+          explanation: "Fragmentation is a common mode of asexual reproduction in Ulothrix"
+        },
+        {
+          text: "Conceptacles in Fucus are the sites of:",
+          options: ["Photosynthesis", "Sexual reproduction", "Asexual reproduction", "Nutrient absorption"],
+          correct: 1,
+          explanation: "Conceptacles in Fucus are the sites of Sexual reproduction"
+        },
+        {
+          text: "What adaptation makes fucus thrive on rocks?",
+          options: ["isogamous sexual reproduction.", "They vary in size from a few centimeters to about two meters in length.", "intertidal zone inhabitation.", "sexual reproduction through oogamous pairing."],
+          correct: 3,
+          explanation: "intertidal zone inhabitation Adaptation makes fucus thrive on rocks"
+        },
+{
+          text: "The primary evolutionary advantage of colonial organization in algae is likely:",
+          options: ["Increased surface area for nutrient absorption.", "Enhanced protection from predation and environmental stress.", "Improved motility and dispersal capabilities.", "Greater efficiency in photosynthesis due to cellular specialization."],
+          correct: 1,
+          explanation: "The primary evolutionary advantage of colonial organization in algae is likely enhanced protection from predation and environmental stress."
+        },
+        {
+          text: "What could be a disadvantage of vegetative reproduction through fragmentation?",
+          options: ["no need for mating", "no need for pollination", "no generic information will be added", "less energy is needed"],
+          correct: 2,
+          explanation: "A disadvantage of vegetative reproduction through fragmentation is that no genetic information will be added."
+        },
+        {
+          text: "Which of the following is FALSE regarding filamentous algae?",
+          options: ["They exhibit diverse reproductive strategies.", "They are always unbranched and unicellular.", "Their cells can be either uninucleate or multinucleate.", "Fragmentation is a common mode of vegetative reproduction."],
+          correct: 1,
+          explanation: "The false statement regarding filamentous algae is: They are always unbranched and unicellular."
+        },
+        {
+          text: "What is the key distinction between isogamous and oogamous sexual reproduction?",
+          options: ["Isogamous reproduction involves the release of mobile spores, while oogamous reproduction involves the fusion of non-motile gametes.", "Isogamous reproduction occurs only in unicellular algae, while oogamous reproduction occurs in multicellular algae.", "Isogamous reproduction involves the fusion of morphologically similar gametes, while oogamous reproduction involves the fusion of dissimilar gametes.", "Isogamous reproduction leads to a diploid zygote, while oogamous reproduction leads to a haploid zygote."],
+          correct: 2,
+          explanation: "The key distinction between isogamous and oogamous sexual reproduction is that isogamous reproduction involves the fusion of morphologically similar gametes, while oogamous reproduction involves the fusion of dissimilar gametes."
+        },
+        {
+          text: "What would allow for better cell differentiation and Specialization.",
+          options: ["greater colony size", "less colony size", "less colony adherence", "isogamous reproduction"],
+          correct: 0,
+          explanation: "A greater colony size would allow for better cell differentiation and specialization."
+        },
+{
+          text: "Which of the following is NOT a characteristic feature of plants that distinguishes them from algae?",
+          options: ["Alternation of generations with a dominant sporophyte", "Multicellular, dependent embryos", "Cell walls made of cellulose", "Specialized vascular tissue"],
+          correct: 3,
+          explanation: "While plants have alternation of generations, multicellular dependent embryos, and cell walls of cellulose, algae lack specialized vascular tissue."
+        },
+        {
+          text: "The primary evolutionary advantage of seeds is:",
+          options: ["Enhanced protection and dispersal of the embryo.", "Increased photosynthetic surface area.", "Improved water uptake from the soil.", "Greater efficiency in pollination."],
+          correct: 0,
+          explanation: "The primary evolutionary advantage of seeds is enhanced protection and dispersal of the embryo."
+        },
+        {
+          text: "What do heterosporous plants produce?",
+          options: ["one type of spore to survive", "two types of spore to survive.", "more than 2 type to survive.", "no survival"],
+          correct: 1,
+          explanation: "Heterosporous plants produce two types of spore to survive."
+        },
+        {
+          text: "The evolution of vascular tissue allowed plants to:",
+          options: ["Colonize aquatic environments.", "Grow taller and transport water and nutrients more efficiently.", "Reproduce sexually without water.", "Develop symbiotic relationships with fungi."],
+          correct: 1,
+          explanation: "The evolution of vascular tissue allowed plants to grow taller and transport water and nutrients more efficiently."
+        },
+        {
+          text: "Which of the following is the primary function of the plant cuticle?",
+          options: ["To facilitate gas exchange for photosynthesis.", "To protect the plant from herbivore damage.", "To prevent water loss from the aerial parts of the plant.", "To provide structural support to the stem and leaves."],
+          correct: 2,
+          explanation: "The primary function of the plant cuticle is to prevent water loss from the aerial parts of the plant."
+        },
+        {
+          text: "Mycorrhizae represent a mutualistic symbiotic association between:",
+          options: ["A plant root and nitrogen-fixing bacteria.", "A plant stem and photosynthetic algae.", "A plant leaf and a pollinating insect.", "A plant root and a fungus."],
+          correct: 3,
+          explanation: "Mycorrhizae represent a mutualistic symbiotic association between a plant root and a fungus."
+        },
+        {
+          text: "The function of the casparian strip is to:",
+          options: ["Aid water diffusion through", "block mineral uptake", "force water and solutes to enter the stele through the plasma membrane of endodermal cells.", "transport materials from soil"],
+          correct: 2,
+          explanation: "The function of the casparian strip is to force water and solutes to enter the stele through the plasma membrane of endodermal cells."
+        },
+        {
+          text: "What process increases genetic variation in plant populations?",
+          options: ["mitosis", "self-pollination", "meiosis", "asexual reproduction"],
+          correct: 2,
+          explanation: "Meiosis increases genetic variation in plant populations."
+        },
+        {
+          text: "What are the three basic parts of a seed?",
+          options: ["a seed coat, endosperm, embryo", "food, roots, stem", "integument, roots, and stem", "seed coat, food and integument"],
+          correct: 0,
+          explanation: "The three basic parts of a seed are a seed coat, endosperm, and embryo."
+        },
+        {
+          text: "Which of the following cell types is primarily responsible for transporting sugars throughout the plant?",
+          options: ["Xylem", "Phloem", "Parenchyma", "Collenchyma"],
+          correct: 1,
+          explanation: "Phloem is primarily responsible for transporting sugars throughout the plant."
+        },
+        {
+          text: "The primary function of flowers is:",
+          options: ["To produce oxygen through photosynthesis.", "To attract pollinators for sexual reproduction.", "To provide structural support to the plant.", "To protect the plant from herbivores."],
+          correct: 1,
+          explanation: "The primary function of flowers is to attract pollinators for sexual reproduction."
+        },
+        {
+          text: "Which of the following plant hormones promotes fruit ripening?",
+          options: ["Auxin", "Gibberellin", "Ethylene", "Cytokinin"],
+          correct: 2,
+          explanation: "Ethylene promotes fruit ripening."
+        },
+        {
+          text: "Double fertilization is a process unique to angiosperms, resulting in the formation of:",
+          options: ["Two identical diploid zygotes.", "A diploid zygote and a triploid endosperm.", "A haploid zygote and a diploid endosperm.", "A tetraploid zygote."],
+          correct: 1,
+          explanation: "Double fertilization in angiosperms results in the formation of a diploid zygote and a triploid endosperm."
+        },
+        {
+          text: "The process of transpiration is essential for:",
+          options: ["Transport of sugars through the phloem.", "Uptake of carbon dioxide for photosynthesis.", "Movement of water from the roots to the leaves.", "Fixation of nitrogen by root nodules."],
+          correct: 2,
+          explanation: "The process of transpiration is essential for movement of water from the roots to the leaves."
+        },
+        {
+          text: "What does the plant cell wall prevent?",
+          options: ["plant cells from bursting in hypotonic solutions.", "plant cells from bursting in hypertonic solutions.", "osmosis", "active transport."],
+          correct: 0,
+          explanation: "The plant cell wall prevents plant cells from bursting in hypotonic solutions."
+        },
         ]
       },         
     
-  "BOT101": {
+  "BOT101-1": {
     title: "INTRODUCTORY BOTANY 1",
     questions: [
       {
