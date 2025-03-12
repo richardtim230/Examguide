@@ -9666,7 +9666,192 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
     }, 
 ]
       },
-
+"CHM102": {
+      title: "INTRODUCTORY CHEMISTRY 2",
+  questions: [
+    
+  {
+    text: "When sodium propionate is subjected to Kolbe's electrolysis, likely product(s) at the anode include:\n(I) ethane\n(II) hydrogen\n(III) propane\n(IV) sodium hydroxide\n(V) carbon(IV)oxide",
+    options: ["I & III only", "II & III only", "III & IV only", "IV & V only", "None"],
+    correct: 4,
+    explanation: "The likely products at the anode are butane and carbon (IV) oxide. Therefore, none of the provided options are correct."
+  },
+  {
+    text: "Consider the reaction between 2-methyl but-1-ene and hydrogen chloride to give one main product. Name the reaction type and the main product formed.",
+    options: ["Elimination, 2-methyl-2-chlorobutane", "Addition, 2-methyl-1-chlorobutane", "Substitution, 2-methyl-1-chlorobutane", "Rearrangement, 2-methyl-1-chlorobutane"],
+    correct: 4,
+    explanation: "The reaction type is addition reaction and the main product according to Markownikoff's rule is 2-chloro-2-methylbutane."
+  },
+  {
+    text: "Which of the following reagents would you expect to react with ethyl chloride in the presence of sodium in dry ether to form 3,3-dimethylpentane?",
+    options: ["2-chloro-2-methylpropane", "propylchloride", "2-chloro-2-methylbutane", "1-chloro-2-methylbutane"],
+    correct: 2,
+    explanation: "The reaction is Wurtz Reaction."
+  },
+  {
+    text: "Which of the following alkenes would not exhibit geometrical isomerism?\n(I) But-2-ene\n(II) 2-methylbut-2-ene\n(III) But-1-ene\n(IV) 1-bromo but-1-ene",
+    options: ["I only", "II & III only", "II & IV only", "II only"],
+    correct: 1,
+    explanation: "I will exhibit geometrical isomerism\nII will not exhibit geometrical isomerism\nIII will not exhibit geometrical isomerism\nIV will exhibit geometrical isomerism"
+  },
+  {
+    text: "The functional group in ethanonitrile is called:",
+    options: ["Nitrate", "Nitro", "Amino", "Cyano"],
+    correct: 3,
+    explanation: "The highlighted part of the compound is the functional group."
+  },
+  {
+    text: "When 2-chloro-3-methylbutane was treated with alcoholic KOH, two products A and B were obtained. On hydration (addition of H₂O) of the two products, A gave a secondary alcohol while B gave a tertiary alcohol. What are the names of compounds A and B respectively and which is major product?",
+    options: ["2-methylbut-2-ene and 2-methylbut-1-ene, 2-methylbut-2-ene", "2-methylbut-1-ene and 2-methylbut-2-ene, 2-methylbut-1-ene", "2-methylbut-3-ene and 3-methylbut-2-ene, 3-methylbut-2-ene", "3-methylbut-2-ene and 3-methylbut-1-ene, 2-methylbut-2-ene"],
+    correct: 4,
+    explanation: "A = 3-methylbut-1-ene\nB = 2-methylbut-2-ene and B is the major product according to Saytzeff rule."
+  },
+  {
+    text: "Which of the following are isomers of C4H8?\n(I) But-2-ene\n(II) Methylcyclopropane\n(III) Cyclobutane\n(IV) Cyclobutene",
+    options: ["I & IV only", "I & II only", "I, II & IV only", "I, II & III only"],
+    correct: 2,
+    explanation: "The isomers are I, II & IV only"
+  },
+  {
+    text: "Which of the following reaction types can be used to increase the number of carbon atoms in a molecule?",
+    options: ["Pyrolysis", "Rearrangement", "Wurtz", "Elimination"],
+    correct: 2,
+    explanation: "Wurtz reaction is a coupling reaction in organic chemistry whereby two alkyl halides are reacted with sodium metal in dry ether solution to form a higher alkane."
+  },
+  {
+    text: "The properties of homologous series include:\n(I) Consecutive members defer from each other by CH₂ group.\n(II) Members have high boiling and melting points.\n(III) solubility of members increases down the group.\n(IV) Members have identical chemical properties.",
+    options: ["I only", "All of the above", "I & III", "I & IV only"],
+    correct: 3,
+    explanation: "The properties of homologous series include Consecutive members defer from each other by CH₂ group and Members have identical chemical properties"
+  },
+  {
+    text: "The IUPAC name of the compound below is:\n(See Image for Structure)",
+    options: ["4-(1,1-dimethylethyl)octane", "4-butyl octane", "4(1-methylpropyl)octane", "4(1-methylethyl)Octane"],
+    correct: 0,
+    explanation: "The longest continuous carbon chain is eight carbon atoms (octane) and the parent name is Octane. The substituent is the coloured part of the structure which is on position 4 of the parent skeleton/chain if numbered correctly. The naming of the substituent is 1,1-dimethylethyl."
+  },
+  {
+    text: "The observation of prussian blue solution in a qualitative Lassaigne's sodium fusion test for nitrogen in an organic compound is as a result of the formation of:",
+    options: ["Na₄[Fe(CN)₆]", "NaFe[Fe(CN)₄]", "Na₄[Fe(CN)₄]", "NaFe[Fe(CN)₆]"],
+    correct: 3,
+    explanation: "Na + C + N --> NaCN\n6 NaCN + FeSO₄ --> Na₄[Fe(CN)₆] + Na₂SO₄\nNa₄[Fe(CN)₆] + FeCl₃ --> 3 NaCl + NaFe[Fe(CN)₆]\nprussian blue"
+  },
+  {
+    text: "Which is least acidic?",
+    options: ["ClCH₂COOH", "CH₃COOH", "Cl₂CHCOOH", "CCl₃COOH"],
+    correct: 1,
+    explanation: "Negative inductive effect (-I effect) increases acidity and positive inductive effect (+I effect) decreases acidity. And the further away the electronegative atom from the COOH group the weaker the acidity [(b) < (e) < (a) < (c) < (d)]."
+  },
+  {
+    text: "The following species are Lewis acids except:",
+    options: ["Oxidising agents", "Electrophiles", "Carbanion", "Carbocation"],
+    correct: 2,
+    explanation: "Oxidising agents gain electron(s) in chemical reaction (electrophiles). Electrophiles are electron-deficient species. Carbanions are electron-rich species (nucleophiles). Carbocations are electron-deficient species (electrophiles). Electrons are nuclear particles (they are neither electrophiles nor nucleophiles). According to Lewis definition, acid are electron-deficient species (electrophiles)."
+  },
+  {
+    text: "How many sigma and pi bonds respectively are there in butyne?",
+    options: ["8 & 2", "9 & 2", "7 & 3", "10 & 2"],
+    correct: 1,
+    explanation: "Based on the provided structure, there are 9 sigma bonds and 2 pi bonds."
+  },
+  {
+    text: "Organic compounds are largely:",
+    options: ["Covalent", "Van der Waal compounds", "Dipole compounds", "Ionic"],
+    correct: 0,
+    explanation: "Organic compounds are largely Covalent."
+  },
+  {
+    text: "The solubilities in g/100 g water of the alkali metal fluorides are as follows: LiF (0.27), NaF (4.22), KF (9.23), RbF (130.6), CsF (366.5). This is because:",
+    options: ["Lattice energies of the fluorides increase down the group.", "The enthalpies for the formation of the fluorides are zero.", "Lattice energies of the fluorides decrease down the group.", "Lattice energies of the fluorides and heats of formation are almost equal."],
+    correct: 2,
+    explanation: "This is due to the increasing size of the atoms and hence decreases in the lattice energies."
+  },
+  {
+    text: "The filtrate for chloride test in Lassaigne's test is boiled after acidification to eliminate interference from:",
+    options: ["Sulphide & Nitride", "Sulphide & Carbonate", "Sulphide & Cyanide", "Sulphide & Carbamide"],
+    correct: 2,
+    explanation: "The filtrate from Lassaigne's test (sodium fussion test) will contain NaCI, Na₂S and NaCN if the organic compound contains Cl, S and N. The filtrate is boiled after acidification then NaCI is converted to HCI, NaCN is converted to HCN and Na₂S is converted to H₂S. HCN and H₂S are volatile and HCI is left in the filtrate because is not as volatile as HCN and H₂S."
+  },
+  {
+    text: "The best separation techniques to separate a mixture of kerosene and gasoline is",
+    options: ["Steam distillation", "Simple distillation", "Cracking", "Fractional distillation"],
+    correct: 3,
+    explanation: "Simple distillation is used to separate liquid mixture with wide temperature difference but fractional distillation is used to separate liquid mixture of close temperature difference. Kerosene and gasoline are close in temperature difference."
+  },
+  {
+    text: "Kjeldahl's analysis is used in the:",
+    options: ["Qualitative analysis of nitrogen", "Quantitative analysis of nitrogen", "Qualitative analysis of halogens", "Qualitative analysis of halogens"],
+    correct: 1,
+    explanation: "Kjeldahl's analysis is used in the Quantitative analysis of nitrogen"
+  },
+  {
+    text: "Heterolytic fission of bonds in organic compounds produces:",
+    options: ["Electrophiles", "Nucleophiles", "Radicals", "Ions"],
+    correct: 3,
+    explanation: "Heterolytic fission produces cations and anions (ions). Organic cations are called carbocations while organic anions are called carbanions. Carbocations are electron-deficient species known as electrophiles and carbanions are electron-rich species known as nucleophiles."
+  },
+  {
+    text: "Arrange the following compounds in order of increasing basicity:\n(I) (CH₃)₂NH\n(II) (CH₃CH₂NH₂\n(III) CH₃NH₂\n(IV) (CH₃CH₂)₂N\n(V) (CH₂(CH₂)₃NH",
+    options: ["I, II, III, IV, V", "V, IV, III, II, I", "III, I, II, IV, V", "IV, V, II, I, III"],
+    correct: 1,
+    explanation: "Amines are organic bases because the lone pair of electrons on nitrogen atom according to Lewis definition. The more propounce the lone pair the more basic the amine. Alkyl groups around the nitrogen atom are electron donors that make the lone amine."
+  },
+  {
+    text: "Dissolution of substances may result into the following except:",
+    options: ["Hydration", "Neutralization", "Complex ion formation", "Dehydration"],
+    correct: 3,
+    explanation: "Dehydration involves the removal of water, while the other options involve addition of water (reaction in aqueous solution)."
+  },
+  {
+    text: "A Polar covalent bond is a bond formed when:",
+    options: ["There is separation of electric charge in a covalent bond involving a shift of electrons toward the more electronegative atom.", "Lone pairs of electrons in an atom take part in bonding", "There is transfer of electrons", "Two atoms share a lone pair of electrons"],
+    correct: 0,
+    explanation: "A polar covalent bond is a type of bond that occur when electrons are shifted towards the more electronegative atom. It occurs between two atoms of different electronegativities."
+  },
+  {
+    text: "Which of the noble gases is used by divers and why?",
+    options: ["Helium, due to its low solubility in fluids, including blood", "Helium, due to its low melting and boiling points.", "Helium, due to its high solubility in fluids, including blood.", "Neon, due to its inertness."],
+    correct: 0,
+    explanation: "Helium is the only inert gas used in the breathing mixtures for divers, this is because it reduces narcotic effect and does not dissolve readily into fluids such as blood."
+  },
+  {
+    text: "Hybridization of an s and three p orbitals gives a new set of:",
+    options: ["Four sp³ hybrid orbitals", "Four spd³ hybrid orbitals", "Four spd hybrid orbitals", "Three sp³ hybrid orbitals"],
+    correct: 0,
+    explanation: "In hybridization the number of atomic orbitals that mix together is the same number of hybrid orbitals. One 's' and three 'p' orbitals mix together to form four hybrid orbitals of sp³."
+  },
+  {
+    text: "All group 1A metals react with water to form:",
+    options: ["Hydrogen gas", "Strong alkali solution", "Neutral solutions", "Strong caustic solution with liberation of hydrogen"],
+    correct: 3,
+    explanation: "Caustic solutions are the hydroxides of Group IA metals. The reaction of sodium for example with water will produce sodium hydroxide and hydrogen."
+  },
+  {
+    text: "The following are true concerning the structures of the aquo (water) complexes of Beryllium and Magnesium:\n(1) The VSEPR number of Beryllium is 4 and that of Magnesium is 6.\n(II) The coordination number of Beryllium is 2 and that of Magnesium is 6.\n(III) The geometry of Beryllium is linear and that of Magnesium is octahedral.\n(IV) The coordination number of Beryllium is 4 and that of Magnesium is 6.\n(V) The geometry of Beryllium is tetrahedral and that of Magnesium is octahedral.",
+    options: ["I", "IV & V", "II & III", "III & IV"],
+    correct: 1,
+    explanation: "Beryllium ion Be² will only covalently bond to four water molecules because it lacks d orbitals to accommodate extra electrons while Magnesium ion Mg²⁺ has coordination number of six with the water molecules because it can make use of 3d orbitals and thus forms octahedral structure."
+  },
+  {
+    text: "Lithium in Group IA is the best reducing agent in the Group because:",
+    options: ["It is highly electronegative.", "It is very smart.", "It has a low electrode potential value.", "It has high hydration energy."],
+    correct: 3,
+    explanation: "Lithium ion has a very small size and more water molecules can easily surround its cationic sphere, thus the high hydration energy compensates for the high energy needed to remove electron and thus high negative redox potential. This results in Li having the greatest tendency to lose electrons in solution than other alkali metals, making it a highly reducing agent in solution."
+  },
+  {
+    text: "The dimerization of molecules of gaseous and liquid acetic acid is as a result of a force of attraction in the molecules which is:",
+    options: ["H-bonding", "Polarisation", "Vander Waals forces", "Dispersion/London forces"],
+    correct: 0,
+    explanation: "Acetic acid exists as a dimer in both gaseous and liquid phase due to the formation of hydrogen bonds between one molecule to another. Hydrogen bonding is an intermolecular force that occurs between molecules which have hydrogen atom directly bonded to oxygen or nitrogen."
+  },
+  {
+    text: "The sulphate of Barium is useful in the treatment of duodenal and stomach ulcers because of its:",
+    options: ["Low conductivity.", "Insolubility in water.", "Insolubility in water and opaqueness to x-rays.", "Opaqueness to x-rays"],
+    correct: 3,
+    explanation: "Barium sulphate is opaque (not allowing light to be transmitted), used as contrasting agent for the visualization of X-ray images."
+  },
+    ]
+},
   "CHEMICAL KINETICS": {
       title: "Introductory Chemistry 1",
       questions: [      
