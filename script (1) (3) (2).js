@@ -17233,11 +17233,13 @@ function startExam() {
   startTimer();
 }
 
+
+
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
   
   // Display question number along with the question text
-  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text}</h3>`;
+  questionText.innerHTML = `<h3>Que ${currentQuestionIndex + 1}: ${question.text.replace(/\n/g, '<br>')}</h3>`;
   
   // Handle the question image
   if (question.image) {
