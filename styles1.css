@@ -101,7 +101,7 @@ header {
 /* Keyframe Animation for Smooth Loop (Fix Blank Space) */
 @keyframes slide {
     0%, 33% { transform: translateX(0); }
-    34%, 66% { transform: translateX(-100%); }
+    34%, 66% { transform: translateX(-50%); }
     67%, 100% { transform: translateX(-50%); }
 }
 
