@@ -23,3 +23,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }, 5000);
 });
+
+// Open Modal
+function openModal(src) {
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("modalImage");
+    modal.style.display = "block";
+    modalImg.src = src;
+}
+
+// Close Modal
+function closeModal() {
+    var modal = document.getElementById("imageModal");
+    modal.style.display = "none";
+                }
