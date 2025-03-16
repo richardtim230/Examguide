@@ -7,32 +7,38 @@ const app = express();
 app.use(bodyParser.json());
 
 // SIGNUP: Register a new user
-app.post('/signup', async (req, res) => {
+app.post('/register', async (req, res) => {
     const { username, password } = req.body;
+    try {
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insert user into database
-    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashedPassword], function(err) {
-        if (err) return res.status(400).json({ error: 'User already exists' });
-        res.json({ message: 'User registered successfully', userId: this.lastID });
-    });
+        // Insert user into database
+        db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashedPassword], function(err) {
+            if (err) return res.status(400).json({ error: 'User already exists' });
+            res.json({ message: 'User registered successfully', userId: this.lastID });
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // LOGIN: Authenticate user
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    try {
+        db.get(`SELECT * FROM users WHERE username = ?`, [username], async (err, user) => {
+            if (err || !user) return res.status(400).json({ error: 'Invalid username or password' });
 
-    db.get(`SELECT * FROM users WHERE username = ?`, [username], async (err, user) => {
-        if (err || !user) return res.status(400).json({ error: 'Invalid username or password' });
+            // Compare hashed password
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
 
-        // Compare hashed password
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
-
-        res.json({ message: 'Login successful', userId: user.id });
-    });
+            res.json({ message: 'Login successful', userId: user.id });
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // GET USER INFO: Retrieve user by ID
