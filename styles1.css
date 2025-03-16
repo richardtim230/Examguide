@@ -141,12 +141,14 @@ header {
     background: #002147;
     color: white;
     padding: 50px 20px;
+    overflow-x: auto;
 }
 
 .grid {
     display: flex;
     justify-content: center;
     gap: 20px;
+    overflow-x: auto;
 }
 
 .grid img {
