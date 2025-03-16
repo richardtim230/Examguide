@@ -88,7 +88,7 @@ header {
     display: flex;
     width: 300%;
     height: 100%;
-    animation: slide 6s infinite ease-in-out;
+    animation: slide 14s infinite ease-in-out;
 }
 
 .slider img {
@@ -102,7 +102,7 @@ header {
 @keyframes slide {
     0%, 33% { transform: translateX(-50); }
     34%, 66% { transform: translateX(-50%); }
-    67%, 100% { transform: translateX(-50%); }
+    67%, 70% { transform: translateX(-50%); }
 }
 
 /* News Section */
