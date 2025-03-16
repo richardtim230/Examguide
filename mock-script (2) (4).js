@@ -6988,8 +6988,8 @@ document.getElementById('registerAccountBtn').addEventListener('click', async fu
     };
 
     try {
-        // Send user details to backend
-        const response = await fetch("/register", {
+        // Send user details to backend using relative path
+        const response = await fetch("/register", { 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userDetails),
@@ -7027,6 +7027,8 @@ document.getElementById('registerAccountBtn').addEventListener('click', async fu
 
 
 
+
+
 // ✅ Back to Login Button
 document.getElementById("backToLoginBtn").addEventListener("click", () => {
     document.getElementById("registration-section").classList.add("hidden");
@@ -7041,22 +7043,24 @@ document.getElementById('loginBtn').addEventListener('click', async function () 
     const userIdOrCode = document.getElementById('userID').value.trim();
 
     if (!fullName || !userIdOrCode) {
-        alert("Please enter both your Full Name and User ID.");
+        alert("⚠️ Please enter both your Full Name and User ID.");
         return;
     }
 
     try {
-        // Fetch user details from MongoDB backend
-        const response = await fetch("https://examguide.vercel.app/new-index.html", {
+        // Send login request to backend (relative path)
+        const response = await fetch("/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ fullName, userIdOrCode })
+            body: JSON.stringify({ fullName, userIdOrCode }),
         });
 
+        // ✅ Fix JSON Parsing Error: Ensure response is JSON before parsing
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Login failed. Please try again.");
 
-        // Store user session
+        if (!response.ok) throw new Error(data.message || "Login failed. Try again.");
+
+        // ✅ Store user session
         localStorage.setItem("currentUser", JSON.stringify(data));
 
         document.getElementById('userDetails').innerHTML = `
@@ -7069,14 +7073,14 @@ document.getElementById('loginBtn').addEventListener('click', async function () 
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = ''; // Clear previous exams
 
-        // Ensure "CHM101-F1" is included in the user's exam allocations
+        // ✅ Ensure "CHM101-F1" is included in the user's exam allocations
         if (!data.exams.some(exam => exam.id === "CHM101-F1")) {
             data.exams.push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
         }
 
         console.log("Exam Allocations for", data.userId, data.exams);
 
-        // Display assigned exams
+        // ✅ Display assigned exams
         data.exams.forEach(exam => {
             const examItem = document.createElement('button');
             examItem.innerText = exam.title;
@@ -7095,34 +7099,20 @@ document.getElementById('loginBtn').addEventListener('click', async function () 
             examsList.appendChild(examItem);
         });
 
-        // Show the pop-up modal
+        // ✅ Show the pop-up modal
         document.getElementById('popup').classList.add('active');
 
-        // Hide login section, show exam section
+        // ✅ Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
         document.getElementById('toggle-calculator').classList.remove('hidden');
         document.getElementById('calculator-popup').classList.remove('hidden');
 
-        // Prompt to set up a 5-figure code if not already set
-        if (!data.fiveFigureCode) {
-            const newCode = prompt("Please set up a 5-figure code for future logins:");
-            if (newCode && newCode.length === 5) {
-                await fetch("https//examguide.vercel.app/new-index.html", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId: data.userId, fiveFigureCode: newCode })
-                });
-                alert("5-figure code set up successfully!");
-            } else {
-                alert("Invalid code, please input exactly 5 characters.");
-            }
-        }
-
     } catch (error) {
-        alert(error.message);
+        alert(`❌ Error: ${error.message}`);
     }
 });
+
             
 
 // Close Popup Functionality
