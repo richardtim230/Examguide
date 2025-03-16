@@ -9,9 +9,11 @@ const db = new sqlite3.Database('users.db', (err) => {
 // Create users table if not exists
 db.run(`CREATE TABLE IF NOT EXISTS users (
     userId INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    email TEXT NOT NULL
+    fullName TEXT NOT NULL,
+    facultyCode TEXT NOT NULL,
+    faculty TEXT NOT NULL,
+    department TEXT NOT NULL,
+    level TEXT NOT NULL
 )`);
 
 module.exports = db;
