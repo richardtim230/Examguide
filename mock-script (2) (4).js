@@ -6936,17 +6936,17 @@ function generateUserID(facultyCode) {
 document.getElementById('registerAccountBtn').addEventListener('click', async function () {
     const fullName = document.getElementById('registerFullName').value.trim();
     const facultySelect = document.getElementById('faculty');
-    const facultyCode = facultySelect.value; // Selected faculty code
+    const facultyCode = facultySelect.value;
     const department = document.getElementById('department').value.trim();
     const level = document.getElementById('level').value.trim();
 
     if (!fullName || !facultyCode || !department || !level) {
-        alert('Please fill in all fields to register.');
+        alert('⚠️ Please fill in all fields to register.');
         return;
     }
 
     if (hasReachedRegistrationLimit()) {
-        alert("You have reached the registration limit. You can't register more accounts.");
+        alert("🚫 You have reached the registration limit. You can't register more accounts.");
         return;
     }
 
@@ -6960,39 +6960,40 @@ document.getElementById('registerAccountBtn').addEventListener('click', async fu
     };
 
     try {
-        // Send registration data to backend
-        const response = await fetch("https://examguide.vercel.app/new-index.html", {
+        // Send user details to backend
+        const response = await fetch("/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userDetails)
+            body: JSON.stringify(userDetails),
         });
 
         const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || "Registration failed. Try again.");
-        }
+        if (!response.ok) throw new Error(data.message || "Registration failed.");
 
-        // Store user details in localStorage
+        // ✅ Store user details in localStorage
         localStorage.setItem('userDetails', JSON.stringify(userDetails));
         localStorage.setItem('currentUser', JSON.stringify(userDetails));
 
-        // Automatically assign exam ID "CHM101-F1" to the new user
+        // ✅ Automatically assign exam "CHM101-F1"
         const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
         examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
         localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
-        // Track number of registrations
+        // ✅ Track number of registrations
         const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
         registrations.push(userId);
         localStorage.setItem("userRegistrations", JSON.stringify(registrations));
 
-        document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
-        alert('Registration successful! Your User ID is: ' + userId);
+        // ✅ Display User ID & Redirect
+        document.getElementById('userIdDisplay').innerText = `Your User ID: ${userId}`;
+        alert(`✅ Registration successful! Your User ID: ${userId}`);
         window.location.href = 'new-index.html';
+
     } catch (error) {
-        alert(error.message);
+        alert(`❌ Error: ${error.message}`);
     }
 });
+
 
 
 
