@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         showLogin();
     }
 });
-                    
 
 window.onpopstate = function(event) {
             // Logic to reload the app to the previous page
@@ -6961,20 +6960,25 @@ function generateUserID(facultyCode) {
 }
 
 // ✅ Prevent users from registering more than 2 accounts
-document.getElementById('registerAccountBtn').addEventListener('click', async function () {
+function hasReachedRegistrationLimit() {
+    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+    return registrations.length >= 4; // Limit to 2 accounts per user
+}
+// Register User
+document.getElementById('registerAccountBtn').addEventListener('click', function () {
     const fullName = document.getElementById('registerFullName').value.trim();
     const facultySelect = document.getElementById('faculty');
-    const facultyCode = facultySelect.value;
+    const facultyCode = facultySelect.value; // Selected faculty code
     const department = document.getElementById('department').value.trim();
     const level = document.getElementById('level').value.trim();
 
     if (!fullName || !facultyCode || !department || !level) {
-        alert('⚠️ Please fill in all fields to register.');
+        alert('Please fill in all fields to register.');
         return;
     }
 
     if (hasReachedRegistrationLimit()) {
-        alert("🚫 You have reached the registration limit. You can't register more accounts.");
+        alert("You have reached the registration limit. You can't register more accounts.");
         return;
     }
 
@@ -6987,44 +6991,24 @@ document.getElementById('registerAccountBtn').addEventListener('click', async fu
         userId 
     };
 
-    try {
-        // Send user details to backend using relative path
-        const response = await fetch("/register", { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userDetails),
-        });
+    // Store user details in localStorage
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+    localStorage.setItem('currentUser', JSON.stringify(userDetails));
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Registration failed.");
+    // Automatically assign exam ID "BOT203-T2" to the new user
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
+    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
-        // ✅ Store user details in localStorage
-        localStorage.setItem('userDetails', JSON.stringify(userDetails));
-        localStorage.setItem('currentUser', JSON.stringify(userDetails));
+    // Track number of registrations
+    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+    registrations.push(userId);
+    localStorage.setItem("userRegistrations", JSON.stringify(registrations));
 
-        // ✅ Automatically assign exam "CHM101-F1"
-        const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-        examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
-        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
-
-        // ✅ Track number of registrations
-        const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-        registrations.push(userId);
-        localStorage.setItem("userRegistrations", JSON.stringify(registrations));
-
-        // ✅ Display User ID & Redirect
-        document.getElementById('userIdDisplay').innerText = `Your User ID: ${userId}`;
-        alert(`✅ Registration successful! Your User ID: ${userId}`);
-        window.location.href = 'new-index.html';
-
-    } catch (error) {
-        alert(`❌ Error: ${error.message}`);
-    }
+    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
+    alert('Registration successful! Your User ID is: ' + userId);
+    window.location.href = 'new-index.html';
 });
-
-
-
-
 
 
 
@@ -7038,50 +7022,47 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 
     
 // Login User
-document.getElementById('loginBtn').addEventListener('click', async function () {
+document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
     const userIdOrCode = document.getElementById('userID').value.trim();
 
-    if (!fullName || !userIdOrCode) {
-        alert("⚠️ Please enter both your Full Name and User ID.");
+    const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    let userId = storedDetails ? storedDetails.userId : null;
+
+    if (!storedDetails) {
+        alert("No registered user found. Please register first.");
         return;
     }
 
-    try {
-        // Send login request to backend (relative path)
-        const response = await fetch("/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ fullName, userIdOrCode }),
-        });
-
-        // ✅ Fix JSON Parsing Error: Ensure response is JSON before parsing
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.message || "Login failed. Try again.");
-
-        // ✅ Store user session
-        localStorage.setItem("currentUser", JSON.stringify(data));
+    if (storedDetails.fullName === fullName && (storedDetails.userId === userIdOrCode || storedDetails.fiveFigureCode === userIdOrCode)) {
+        // Store logged-in session
+        localStorage.setItem("currentUser", JSON.stringify(storedDetails));
 
         document.getElementById('userDetails').innerHTML = `
-            <strong>Full Name:</strong> ${data.fullName} <br>
-            <strong>Faculty:</strong> ${data.faculty} <br>
-            <strong>Department:</strong> ${data.department} <br>
-            <strong>Level:</strong> ${data.level}
+            <strong>Full Name:</strong> ${storedDetails.fullName} <br>
+            <strong>Faculty:</strong> ${storedDetails.faculty} <br>
+            <strong>Department:</strong> ${storedDetails.department} <br>
+            <strong>Level:</strong> ${storedDetails.level}
         `;
 
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = ''; // Clear previous exams
 
-        // ✅ Ensure "CHM101-F1" is included in the user's exam allocations
-        if (!data.exams.some(exam => exam.id === "CHM101-F1")) {
-            data.exams.push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
+        // Ensure "CHM101-F1" is included in the user's exam allocations
+        if (!examAllocations[userId]) {
+            examAllocations[userId] = [];
         }
 
-        console.log("Exam Allocations for", data.userId, data.exams);
+        if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM10 1-F1")) {
+            examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
+        }
 
-        // ✅ Display assigned exams
-        data.exams.forEach(exam => {
+        console.log("Exam Allocations for", userId, examAllocations[userId]);
+        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+
+        // Display assigned exams
+        examAllocations[userId].forEach(exam => {
             const examItem = document.createElement('button');
             examItem.innerText = exam.title;
             examItem.className = 'styled-btn';
@@ -7096,24 +7077,37 @@ document.getElementById('loginBtn').addEventListener('click', async function () 
                 document.getElementById("selectCourseBtn").click();
             });
 
+            // Hide the popup correctly
+            document.getElementById('popup').classList.remove('active');
+
             examsList.appendChild(examItem);
         });
 
-        // ✅ Show the pop-up modal
-        document.getElementById('popup').classList.add('active');
+        // Show the pop-up modal
+        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
 
-        // ✅ Hide login section, show exam section
+        // Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
         document.getElementById('toggle-calculator').classList.remove('hidden');
         document.getElementById('calculator-popup').classList.remove('hidden');
 
-    } catch (error) {
-        alert(`❌ Error: ${error.message}`);
+        // Prompt to set up 5-figure code if not already set
+        if (!storedDetails.fiveFigureCode) {
+            const newCode = prompt("Please set up a 5-figure code for future logins:");
+            if (newCode && newCode.length === 5) {
+                storedDetails.fiveFigureCode = newCode;
+                localStorage.setItem("userDetails", JSON.stringify(storedDetails));
+                alert("5-figure code set up successfully!");
+            } else {
+                alert("Invalid code, Kindly input just 5 characters.");
+            }
+        }
+
+    } else {
+        alert("Invalid User ID or Full Name. Please try again.");
     }
 });
-
-            
 
 // Close Popup Functionality
 const closePopupBtn = document.getElementById('closePopup');
