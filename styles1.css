@@ -12,17 +12,23 @@ body {
 header {
     background: linear-gradient(to right, #002147, #003366);
     color: white;
-    padding: 40px 20px;
+    padding: 20px 20px;
+    text-align: center;
 }
 
-.header-content h1 {
-    font-size: 2.1rem;
-    margin: 10px 0;
+/* Logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
-.header-content p {
-    font-size: 1.0rem;
+.logo-container img {
+    width: 100px;
+    height: auto;
 }
+
+
 
 /* Navigation Menu */
 .menu {
@@ -69,10 +75,11 @@ header {
 }
 
 
+
 /* Image Slider */
 .slider-container {
     width: 100%;
-    height: 400px;
+    height: 300px;  /* Reduced height */
     overflow: hidden;
     position: relative;
 }
@@ -89,6 +96,13 @@ header {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/* Keyframe Animation for Smooth Loop (Fix Blank Space) */
+@keyframes slide {
+    0%, 33% { transform: translateX(0); }
+    34%, 66% { transform: translateX(-100%); }
+    67%, 100% { transform: translateX(-200%); }
 }
 
 /* News Section */
