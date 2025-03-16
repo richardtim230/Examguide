@@ -1,0 +1,6 @@
+git add package.json
+git commit -m "Added package.json"
+git push origin main
+git add package.json package-lock.json
+git commit -m "Installed sqlite3"
+git push origin main
