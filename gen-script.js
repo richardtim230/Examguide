@@ -25,15 +25,39 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Open Modal
-function openModal(src) {
+function openModal(imgElement) {
     var modal = document.getElementById("imageModal");
     var modalImg = document.getElementById("modalImage");
     modal.style.display = "block";
-    modalImg.src = src;
+    modalImg.src = imgElement.src;
+    modalImg.style.width = imgElement.naturalWidth + "px";
+    modalImg.style.height = imgElement.naturalHeight + "px";
 }
 
 // Close Modal
 function closeModal() {
     var modal = document.getElementById("imageModal");
     modal.style.display = "none";
-                }
+}
+
+// Show More Images
+function showMoreImages() {
+    var galleryItems = document.querySelectorAll('.gallery-item');
+    var showMoreBtn = document.getElementById('showMoreBtn');
+    galleryItems.forEach((item, index) => {
+        if (index >= 4) {
+            item.style.display = 'block';
+        }
+    });
+    showMoreBtn.style.display = 'none';
+}
+
+// Initial setup to limit gallery items to 4
+document.addEventListener('DOMContentLoaded', () => {
+    var galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach((item, index) => {
+        if (index >= 4) {
+            item.style.display = 'none';
+        }
+    });
+});
