@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"  // Add this line to define the test script
+    "test": "mocha"  
   },
   "author": "Your Name",
   "license": "ISC",
@@ -14,6 +14,6 @@
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
-    "mocha": "^9.0.0"  // Add this line to include mocha as a dev dependency
+    "mocha": "^9.0.0" 
   }
 }
