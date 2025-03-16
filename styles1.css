@@ -102,7 +102,7 @@ header {
 @keyframes slide {
     0%, 33% { transform: translateX(0); }
     34%, 66% { transform: translateX(-100%); }
-    67%, 100% { transform: translateX(-200%); }
+    67%, 100% { transform: translateX(-50%); }
 }
 
 /* News Section */
