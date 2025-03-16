@@ -141,26 +141,61 @@ header {
     background: #002147;
     color: white;
     padding: 50px 20px;
-    overflow-x: auto;
+    text-align: center;
 }
 
-.grid {
+/* Feature Container with Horizontal Scroll */
+.features-container {
+    overflow-x: auto;
     display: flex;
     justify-content: center;
-    gap: 20px;
-    overflow-x: auto;
+    padding: 10px;
 }
 
-.grid img {
+.features-slider {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 10px;
+}
+
+.features-slider a {
+    flex: 0 0 auto;
     width: 250px;
+}
+
+.features-slider img {
+    width: 100%;
     height: 150px;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
 }
 
-.grid img:hover {
+/* Hover Effect */
+.features-slider img:hover {
     transform: scale(1.1);
 }
+
+/* Hide Scrollbar */
+.features-container::-webkit-scrollbar {
+    display: none;
+}
+
+.features-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .features-container {
+        padding: 0 10px;
+    }
+
+    .features-slider {
+        gap: 10px;
+    }
+}
+
 
 /* About Author */
 .about-author {
