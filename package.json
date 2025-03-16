@@ -1,6 +1,16 @@
-git add package.json
-git commit -m "Added package.json"
-git push origin main
-git add package.json package-lock.json
-git commit -m "Installed sqlite3"
-git push origin main
+{
+  "name": "examguide",
+  "version": "1.0.0",
+  "description": "An application for exam preparation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
+  }
+}
