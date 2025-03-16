@@ -27,10 +27,12 @@ header {
 /* Navigation Menu */
 .menu {
     display: flex;
+    flex-wrap: wrap;  /* Allows breaking into new lines */
     justify-content: center;
-    gap: 15px;
-    background: linear-gradient(to right, #002147, #004080);
+    gap: 10px;
+    background: linear-gradient(to right, #001f3f, #003366);
     padding: 15px;
+    border-bottom: 4px solid #ff5e62;
 }
 
 .menu button {
@@ -42,12 +44,30 @@ header {
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    flex: 1;
+    min-width: 120px;  /* Ensures buttons are evenly sized */
+    max-width: 180px;
 }
 
+/* Hover Effect */
 .menu button:hover {
     background: linear-gradient(to right, #ff5e62, #ff9966);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+    .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .menu button {
+        flex-grow: 1;  /* Ensures buttons take full width on small screens */
+        text-align: center;
+    }
+}
+
 
 /* Image Slider */
 .slider-container {
