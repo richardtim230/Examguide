@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"  // Add this line to define the test script
   },
   "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^9.0.0"  // Add this line to include mocha as a dev dependency
   }
 }
