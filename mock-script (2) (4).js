@@ -6985,31 +6985,46 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     const userId = generateUserID(facultyCode);
     const userDetails = { 
         fullName, 
+        facultyCode,
         faculty: facultySelect.options[facultySelect.selectedIndex].text, 
         department, 
         level, 
         userId 
     };
 
-    // Store user details in localStorage
-    localStorage.setItem('userDetails', JSON.stringify(userDetails));
-    localStorage.setItem('currentUser', JSON.stringify(userDetails));
+    // Send user details to the server
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userDetails)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert('Error: ' + data.error);
+        } else {
+            // Automatically assign exam ID "CHM101-F1" to the new user
+            const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+            examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
+            localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
-    // Automatically assign exam ID "BOT203-T2" to the new user
-    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-    examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
-    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+            // Track number of registrations
+            const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+            registrations.push(userId);
+            localStorage.setItem("userRegistrations", JSON.stringify(registrations));
 
-    // Track number of registrations
-    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    registrations.push(userId);
-    localStorage.setItem("userRegistrations", JSON.stringify(registrations));
-
-    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
-    alert('Registration successful! Your User ID is: ' + userId);
-    window.location.href = 'new-index.html';
+            document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
+            alert('Registration successful! Your User ID is: ' + userId);
+            window.location.href = 'new-index.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred during registration.');
+    });
 });
-
 
 
 
