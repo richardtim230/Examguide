@@ -6933,12 +6933,7 @@ function generateUserID(facultyCode) {
 }
 
 // ✅ Prevent users from registering more than 2 accounts
-function hasReachedRegistrationLimit() {
-    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    return registrations.length >= 4; // Limit to 2 accounts per user
-}
-// Register User
-document.getElementById('registerAccountBtn').addEventListener('click', function () {
+document.getElementById('registerAccountBtn').addEventListener('click', async function () {
     const fullName = document.getElementById('registerFullName').value.trim();
     const facultySelect = document.getElementById('faculty');
     const facultyCode = facultySelect.value; // Selected faculty code
@@ -6964,24 +6959,41 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         userId 
     };
 
-    // Store user details in localStorage
-    localStorage.setItem('userDetails', JSON.stringify(userDetails));
-    localStorage.setItem('currentUser', JSON.stringify(userDetails));
+    try {
+        // Send registration data to backend
+        const response = await fetch("http://localhost:5000/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userDetails)
+        });
 
-    // Automatically assign exam ID "BOT203-T2" to the new user
-    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-    examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
-    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || "Registration failed. Try again.");
+        }
 
-    // Track number of registrations
-    const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
-    registrations.push(userId);
-    localStorage.setItem("userRegistrations", JSON.stringify(registrations));
+        // Store user details in localStorage
+        localStorage.setItem('userDetails', JSON.stringify(userDetails));
+        localStorage.setItem('currentUser', JSON.stringify(userDetails));
 
-    document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
-    alert('Registration successful! Your User ID is: ' + userId);
-    window.location.href = 'new-index.html';
+        // Automatically assign exam ID "CHM101-F1" to the new user
+        const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+        examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
+        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+
+        // Track number of registrations
+        const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
+        registrations.push(userId);
+        localStorage.setItem("userRegistrations", JSON.stringify(registrations));
+
+        document.getElementById('userIdDisplay').innerText = "Your User ID: " + userId;
+        alert('Registration successful! Your User ID is: ' + userId);
+        window.location.href = 'new-index.html';
+    } catch (error) {
+        alert(error.message);
+    }
 });
+
 
 
 
@@ -6995,47 +7007,48 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 
     
 // Login User
-document.getElementById('loginBtn').addEventListener('click', function () {
+document.getElementById('loginBtn').addEventListener('click', async function () {
     const fullName = document.getElementById('fullName').value.trim();
     const userIdOrCode = document.getElementById('userID').value.trim();
 
-    const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
-    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-    let userId = storedDetails ? storedDetails.userId : null;
-
-    if (!storedDetails) {
-        alert("No registered user found. Please register first.");
+    if (!fullName || !userIdOrCode) {
+        alert("Please enter both your Full Name and User ID.");
         return;
     }
 
-    if (storedDetails.fullName === fullName && (storedDetails.userId === userIdOrCode || storedDetails.fiveFigureCode === userIdOrCode)) {
-        // Store logged-in session
-        localStorage.setItem("currentUser", JSON.stringify(storedDetails));
+    try {
+        // Fetch user details from MongoDB backend
+        const response = await fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fullName, userIdOrCode })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Login failed. Please try again.");
+
+        // Store user session
+        localStorage.setItem("currentUser", JSON.stringify(data));
 
         document.getElementById('userDetails').innerHTML = `
-            <strong>Full Name:</strong> ${storedDetails.fullName} <br>
-            <strong>Faculty:</strong> ${storedDetails.faculty} <br>
-            <strong>Department:</strong> ${storedDetails.department} <br>
-            <strong>Level:</strong> ${storedDetails.level}
+            <strong>Full Name:</strong> ${data.fullName} <br>
+            <strong>Faculty:</strong> ${data.faculty} <br>
+            <strong>Department:</strong> ${data.department} <br>
+            <strong>Level:</strong> ${data.level}
         `;
 
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = ''; // Clear previous exams
 
         // Ensure "CHM101-F1" is included in the user's exam allocations
-        if (!examAllocations[userId]) {
-            examAllocations[userId] = [];
+        if (!data.exams.some(exam => exam.id === "CHM101-F1")) {
+            data.exams.push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
         }
 
-        if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM10 1-F1")) {
-            examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
-        }
-
-        console.log("Exam Allocations for", userId, examAllocations[userId]);
-        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+        console.log("Exam Allocations for", data.userId, data.exams);
 
         // Display assigned exams
-        examAllocations[userId].forEach(exam => {
+        data.exams.forEach(exam => {
             const examItem = document.createElement('button');
             examItem.innerText = exam.title;
             examItem.className = 'styled-btn';
@@ -7050,14 +7063,11 @@ document.getElementById('loginBtn').addEventListener('click', function () {
                 document.getElementById("selectCourseBtn").click();
             });
 
-            // Hide the popup correctly
-            document.getElementById('popup').classList.remove('active');
-
             examsList.appendChild(examItem);
         });
 
         // Show the pop-up modal
-        document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
+        document.getElementById('popup').classList.add('active');
 
         // Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
@@ -7065,22 +7075,26 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         document.getElementById('toggle-calculator').classList.remove('hidden');
         document.getElementById('calculator-popup').classList.remove('hidden');
 
-        // Prompt to set up 5-figure code if not already set
-        if (!storedDetails.fiveFigureCode) {
+        // Prompt to set up a 5-figure code if not already set
+        if (!data.fiveFigureCode) {
             const newCode = prompt("Please set up a 5-figure code for future logins:");
             if (newCode && newCode.length === 5) {
-                storedDetails.fiveFigureCode = newCode;
-                localStorage.setItem("userDetails", JSON.stringify(storedDetails));
+                await fetch("http://localhost:5000/update-code", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ userId: data.userId, fiveFigureCode: newCode })
+                });
                 alert("5-figure code set up successfully!");
             } else {
-                alert("Invalid code, Kindly input just 5 characters.");
+                alert("Invalid code, please input exactly 5 characters.");
             }
         }
 
-    } else {
-        alert("Invalid User ID or Full Name. Please try again.");
+    } catch (error) {
+        alert(error.message);
     }
 });
+            
 
 // Close Popup Functionality
 const closePopupBtn = document.getElementById('closePopup');
