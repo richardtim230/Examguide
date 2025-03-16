@@ -6993,7 +6993,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     };
 
     // Send user details to the server
-    fetch('/register', {
+    fetch('/register-user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
