@@ -88,7 +88,7 @@ header {
     display: flex;
     width: 300%;
     height: 100%;
-    animation: slide 12s infinite ease-in-out;
+    animation: slide 6s infinite ease-in-out;
 }
 
 .slider img {
