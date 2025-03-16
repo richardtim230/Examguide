@@ -79,29 +79,32 @@ ology with education.</p>
         </div>
     </section>
 
-    <!-- Gallery Section -->
+<!-- Gallery Section -->
 <section class="gallery" id="gallery">
     <h2>Gallery</h2>
-    <div class="gallery-grid">
+    <div class="gallery-grid" id="galleryGrid">
         <div class="gallery-item">
-            <img src="mcb2.jpg" alt="Gallery Image 1" onclick="openModal(this.src)">
+            <img src="mcb2.jpg" alt="Gallery Image 1" onclick="openModal(this)">
         </div>
         <div class="gallery-item">
-            <img src="geology2.jpg" alt="Gallery Image 2" onclick="openModal(this.src)">
+            <img src="geology2.jpg" alt="Gallery Image 2" onclick="openModal(this)">
         </div>
         <div class="gallery-item">
-            <img src="zoo2.jpg" alt="Gallery Image 3" onclick="openModal(this.src)">
+            <img src="zoo2.jpg" alt="Gallery Image 3" onclick="openModal(this)">
+        </div>
+        <div class="gallery-item">
+            <img src="csc2.webp" alt="Gallery Image 4" onclick="openModal(this)">
         </div>
         <!-- Add more gallery items as needed -->
     </div>
+    <button id="showMoreBtn" onclick="showMoreImages()">Show More</button>
 </section>
 
 <!-- Modal for Image Preview -->
 <div id="imageModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImage">
-</div>
-    
+                                                   </div>
 <!-- Footer Section -->
 <footer>
     <div class="footer-container">
