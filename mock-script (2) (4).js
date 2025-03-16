@@ -6984,8 +6984,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
 
     const userId = generateUserID(facultyCode);
     const userDetails = { 
-        username: fullName,  // Assuming fullName is used as username
-        password: 'defaultPassword123',  // Use a default or generated password
+        fullName, 
         facultyCode,
         faculty: facultySelect.options[facultySelect.selectedIndex].text, 
         department, 
@@ -6994,7 +6993,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     };
 
     // Send user details to the server
-    fetch('/register', {
+    fetch('/register-user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -7026,7 +7025,6 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         alert('An error occurred during registration.');
     });
 });
-
 
 
 // ✅ Back to Login Button
