@@ -6961,7 +6961,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', async fu
 
     try {
         // Send registration data to backend
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("https://examguide.vercel.app/new-index.html", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userDetails)
@@ -7018,7 +7018,7 @@ document.getElementById('loginBtn').addEventListener('click', async function () 
 
     try {
         // Fetch user details from MongoDB backend
-        const response = await fetch("http://localhost:5000/login", {
+        const response = await fetch("https://examguide.vercel.app/new-index.html", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ fullName, userIdOrCode })
@@ -7079,7 +7079,7 @@ document.getElementById('loginBtn').addEventListener('click', async function () 
         if (!data.fiveFigureCode) {
             const newCode = prompt("Please set up a 5-figure code for future logins:");
             if (newCode && newCode.length === 5) {
-                await fetch("http://localhost:5000/update-code", {
+                await fetch("https//examguide.vercel.app/new-index.html", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ userId: data.userId, fiveFigureCode: newCode })
