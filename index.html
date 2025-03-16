@@ -78,6 +78,30 @@
 ology with education.</p>
         </div>
     </section>
+
+    <!-- Gallery Section -->
+<section class="gallery" id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="image1.jpg" alt="Gallery Image 1" onclick="openModal(this.src)">
+        </div>
+        <div class="gallery-item">
+            <img src="image2.jpg" alt="Gallery Image 2" onclick="openModal(this.src)">
+        </div>
+        <div class="gallery-item">
+            <img src="image3.jpg" alt="Gallery Image 3" onclick="openModal(this.src)">
+        </div>
+        <!-- Add more gallery items as needed -->
+    </div>
+</section>
+
+<!-- Modal for Image Preview -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+    
 <!-- Footer Section -->
 <footer>
     <div class="footer-container">
