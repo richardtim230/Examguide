@@ -35,14 +35,13 @@ header {
 }
 
 .gallery-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 10px;
-    justify-content: center;
+    justify-items: center;
 }
 
 .gallery-item {
-    flex: 1 1 200px;
     max-width: 200px;
 }
 
@@ -55,6 +54,23 @@ header {
 
 .gallery-item img:hover {
     transform: scale(1.05);
+}
+
+/* "Show More" Button */
+#showMoreBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #ff9966, #ff5e62);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#showMoreBtn:hover {
+    background: linear-gradient(to right, #ff5e62, #ff9966);
 }
 
 /* Modal Styles */
@@ -74,8 +90,8 @@ header {
 .modal-content {
     margin: auto;
     display: block;
-    width: 50%;
-    max-width: 500px;
+    max-width: 90%;
+    height: auto;
 }
 
 .close {
