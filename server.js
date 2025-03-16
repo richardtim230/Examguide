@@ -1,78 +1,138 @@
-const express = require('express');
-const { MongoClient } = require('mongodb');
-const bodyParser = require('body-parser');
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(express.json()); // Middleware for JSON parsing
 
-app.use(bodyParser.json());
+// ✅ CORS Configuration (Allowing frontend access)
+const corsOptions = {
+  origin: ["https://examguide.vercel.app"], // Change this if your frontend URL changes
+  methods: "GET,POST",
+  allowedHeaders: "Content-Type",
+};
+app.use(cors(corsOptions));
 
-const uri = 'mongodb+srv://Richard:<Glorifiedbby1$>@oauife.klbem.mongodb.net/?retryWrites=true&w=majority&appName=OAUife'; // Replace with your MongoDB connection string
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// ✅ Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-let db;
-client.connect(err => {
-  if (err) {
-    console.error('Failed to connect to MongoDB:', err);
-    process.exit(1);
-  }
-  db = client.db('examguide');
-  console.log('Connected to MongoDB');
+// ✅ User Schema (Stores registered users)
+const UserSchema = new mongoose.Schema({
+  fullName: String,
+  faculty: String,
+  department: String,
+  level: String,
+  userId: { type: String, unique: true },
+  fiveFigureCode: String, // Optional 5-character login code
+  exams: [{ id: String, title: String }], // Array of assigned exams
 });
 
-// Endpoint to register a new user
-app.post('/register', async (req, res) => {
-  const { fullName, department, level, faculty } = req.body;
-  const userId = generateUserId(); // Implement this function to generate a unique user ID
-  const newUser = { fullName, department, level, faculty, userId, scores: [] };
+const User = mongoose.model("User", UserSchema);
 
-  try {
-    await db.collection('users').insertOne(newUser);
-    console.log('User registered successfully:', newUser);
-    res.status(201).send({ userId });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).send({ error: 'Failed to register user' });
-  }
+// ✅ Exam Results Schema
+const ResultSchema = new mongoose.Schema({
+  userId: String,
+  fullName: String,
+  examCode: String,
+  score: Number,
+  totalQuestions: Number,
+  scorePercent: String,
+  timeSpent: Number,
+  answers: Array,
+  timestamp: { type: Date, default: Date.now },
 });
 
-// Endpoint to save test score
-app.post('/saveScore', async (req, res) => {
-  const { userId, score } = req.body;
+const Result = mongoose.model("Result", ResultSchema);
 
+// ✅ Register User
+app.post("/register", async (req, res) => {
   try {
-    await db.collection('users').updateOne(
-      { userId },
-      { $push: { scores: score } }
-    );
-    console.log('Score saved successfully for user:', userId);
-    res.status(200).send({ message: 'Score saved successfully' });
-  } catch (error) {
-    console.error('Error saving score:', error);
-    res.status(500).send({ error: 'Failed to save score' });
-  }
-});
+    const { fullName, faculty, department, level, userId } = req.body;
 
-// Endpoint to get user details and progress
-app.get('/user/:userId', async (req, res) => {
-  const userId = req.params.userId;
-
-  try {
-    const user = await db.collection('users').findOne({ userId });
-    if (user) {
-      res.status(200).send(user);
-    } else {
-      res.status(404).send({ error: 'User not found' });
+    // Check if user already exists
+    const existingUser = await User.findOne({ userId });
+    if (existingUser) {
+      return res.status(400).json({ message: "User ID already exists. Try again." });
     }
+
+    // Assign default exam
+    const exams = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
+
+    const newUser = new User({ fullName, faculty, department, level, userId, exams });
+    await newUser.save();
+
+    res.json({ message: "Registration successful!", userId });
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).send({ error: 'Failed to fetch user data' });
+    res.status(500).json({ message: "Server error. Try again later." });
   }
 });
 
-function generateUserId() {
-  return 'U' + Math.floor(Math.random() * 1000000); // Simple user ID generation logic
-}
+// ✅ Login User
+app.post("/login", async (req, res) => {
+  try {
+    const { fullName, userIdOrCode } = req.body;
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    // Check user by ID or 5-figure code
+    const user = await User.findOne({ $or: [{ userId: userIdOrCode }, { fiveFigureCode: userIdOrCode }] });
+    if (!user || user.fullName !== fullName) {
+      return res.status(400).json({ message: "Invalid User ID or Full Name." });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
 });
+
+// ✅ Update 5-Figure Code
+app.post("/update-code", async (req, res) => {
+  try {
+    const { userId, fiveFigureCode } = req.body;
+    if (!fiveFigureCode || fiveFigureCode.length !== 5) {
+      return res.status(400).json({ message: "Code must be exactly 5 characters long." });
+    }
+
+    await User.findOneAndUpdate({ userId }, { fiveFigureCode });
+    res.json({ message: "5-figure code updated successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
+});
+
+// ✅ Submit Exam Results
+app.post("/submit-result", async (req, res) => {
+  try {
+    const { userId, fullName, examCode, score, totalQuestions, scorePercent, timeSpent, answers } = req.body;
+
+    if (!userId || !examCode) {
+      return res.status(400).json({ message: "User ID and Exam Code are required." });
+    }
+
+    const newResult = new Result({ userId, fullName, examCode, score, totalQuestions, scorePercent, timeSpent, answers });
+    await newResult.save();
+    res.json({ message: "Exam results saved successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
+});
+
+// ✅ Get User Exam Results
+app.get("/results/:userId", async (req, res) => {
+  try {
+    const results = await Result.find({ userId: req.params.userId });
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching results." });
+  }
+});
+
+// ✅ Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
