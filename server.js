@@ -1,89 +1,48 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const bodyParser = require('body-parser');
+const db = require('./db');  // Import SQLite connection
 
 const app = express();
-app.use(express.json());
+app.use(bodyParser.json());
 
-// ✅ Allow Frontend Requests (CORS)
-const corsOptions = {
-  origin: true, // Automatically allows the frontend origin
-  methods: "GET,POST",
-  allowedHeaders: "Content-Type",
-};
-app.use(cors(corsOptions));
+// SIGNUP: Register a new user
+app.post('/signup', async (req, res) => {
+    const { username, password } = req.body;
 
-// ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ MongoDB Connection Error:", err));
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-// ✅ User Schema
-const UserSchema = new mongoose.Schema({
-  fullName: String,
-  faculty: String,
-  department: String,
-  level: String,
-  userId: { type: String, unique: true },
-  exams: [{ id: String, title: String }]
+    // Insert user into database
+    db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, hashedPassword], function(err) {
+        if (err) return res.status(400).json({ error: 'User already exists' });
+        res.json({ message: 'User registered successfully', userId: this.lastID });
+    });
 });
 
-const User = mongoose.model("User", UserSchema);
+// LOGIN: Authenticate user
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
 
-// ✅ Registration API (Handles Relative Paths)
-app.post("/register", async (req, res) => {
-  try {
-    const { fullName, faculty, department, level, userId } = req.body;
+    db.get(`SELECT * FROM users WHERE username = ?`, [username], async (err, user) => {
+        if (err || !user) return res.status(400).json({ error: 'Invalid username or password' });
 
-    if (!fullName || !faculty || !department || !level || !userId) {
-      return res.status(400).json({ message: "⚠️ All fields are required." });
-    }
+        // Compare hashed password
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ userId });
-    if (existingUser) {
-      return res.status(400).json({ message: "🚫 User ID already exists. Try again." });
-    }
-
-    // Assign default exam
-    const exams = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
-    const newUser = new User({ fullName, faculty, department, level, userId, exams });
-
-    await newUser.save();
-    res.json({ message: "✅ Registration successful!", userId });
-
-  } catch (error) {
-    console.error("❌ Registration Error:", error);
-    res.status(500).json({ message: "⚠️ Server error. Try again later." });
-  }
+        res.json({ message: 'Login successful', userId: user.id });
+    });
 });
 
-// ✅ Start Server
-const PORT = process.env.PORT || 5000;
-app.list
-en(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
-app.post("/login", async (req, res) => {
-    try {
-        const { fullName, userIdOrCode } = req.body;
-
-        if (!fullName || !userIdOrCode) {
-            return res.status(400).json({ message: "⚠️ Both Full Name and User ID are required." });
-        }
-
-        // Check user by ID or 5-figure code
-        const user = await User.findOne({ $or: [{ userId: userIdOrCode }, { fiveFigureCode: userIdOrCode }] });
-
-        if (!user || user.fullName !== fullName) {
-            return res.status(400).json({ message: "🚫 Invalid User ID or Full Name." });
-        }
-
+// GET USER INFO: Retrieve user by ID
+app.get('/user/:id', (req, res) => {
+    db.get(`SELECT id, username FROM users WHERE id = ?`, [req.params.id], (err, user) => {
+        if (err || !user) return res.status(404).json({ error: 'User not found' });
         res.json(user);
-    } catch (error) {
-        console.error("❌ Login Error:", error);
-        res.status(500).json({ message: "⚠️ Server error. Try again later." });
-    }
+    });
 });
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
