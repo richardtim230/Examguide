@@ -6984,7 +6984,8 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
 
     const userId = generateUserID(facultyCode);
     const userDetails = { 
-        fullName, 
+        username: fullName,  // Assuming fullName is used as username
+        password: 'defaultPassword123',  // Use a default or generated password
         facultyCode,
         faculty: facultySelect.options[facultySelect.selectedIndex].text, 
         department, 
@@ -6993,7 +6994,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
     };
 
     // Send user details to the server
-    fetch('/register-user', {
+    fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
