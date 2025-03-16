@@ -1,10 +1,10 @@
 name: Run SQLite with NPM
 
-on: [push, pull_request]  # Runs on every push or PR
+on: [push, pull_request]
 
 jobs:
   sqlite-test:
-    runs-on: ubuntu-latest  # Use Linux for better SQLite support
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
@@ -13,18 +13,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Specify Node.js version
+          node-version: '18'
 
-      - name: Install Dependencies
+      - name: Check for package.json
+        run: test -f package.json && echo "package.json exists" || echo "package.json missing"
+
+      - name: Install Dependencies (Only if package.json exists)
+        if: hashFiles('package.json') != ''
         run: npm install
 
       - name: Setup SQLite
         run: |
-          sudo apt-get install sqlite3  # Install SQLite
-          sqlite3 database.db "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT);"  # Create table
+          sudo apt-get install sqlite3
+          sqlite3 database.db "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT);"
 
       - name: Run Database Script
-        run: node db-script.js  # Runs your SQLite script
+        run: node db-script.js
 
-      - name: Run Tests
-        run: npm test  # If you have test scripts
+      - name: Run Tests (Optional)
+        run: npm test
