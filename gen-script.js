@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         index++;
         if (index > 2) index = 0;
         slider.style.transform = `translateX(-${index * 90}%)`;
-    }, 4000);
+    }, 3000);
 
     // News section - one at a time
     let newsItems = document.querySelectorAll(".news-item");
