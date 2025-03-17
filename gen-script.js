@@ -7,17 +7,17 @@ function toggleMenu() {
             }
 }
 
-let sliderIndex = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
+document.addEventListener("DOMContentLoaded", function() {
+    let slider = document.querySelector(".slider");
+    let index = 0;
 
-        function showNextSlide() {
-            sliderIndex = (sliderIndex + 1) % totalSlides;
-            document.querySelector('.slides').style.transform = `translateX(-${sliderIndex * 100}%)`;
-        }
+    // Automatic slider transition
+    setInterval(() => {
+        index++;
+        if (index > 2) index = 0;
+        slider.style.transform = `translateX(-${index * 90}%)`;
+    }, 3000);
 
-        setInterval(showNextSlide, 2000); // Change slide every 2 seconds
-    
     // News section - one at a time
     let newsItems = document.querySelectorAll(".news-item");
     let newsIndex = 0;
