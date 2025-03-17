@@ -21,6 +21,16 @@ body {
             flex-direction: column;
             gap: 10px;
         }
+/* Hide the menu by default */
+.menu {
+    display: none;
+}
+
+/* Show the menu when the 'active' class is added */
+.menu.active {
+    display: flex;
+    flex-direction: column;
+}
         .menu a {
             text-decoration: none;
             color: white;
