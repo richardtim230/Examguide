@@ -9671,6 +9671,347 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   questions: [
     
   {
+    text: "Which of the following salts typically appears white?",
+    options: ["CuSO₄", "NiCl₂", "ZnSO₄", "KMnO₄"],
+    correct: 2,
+    explanation: "ZnSO₄ (Zinc sulfate) is generally a white crystalline solid."
+  },
+  {
+    text: "What color is typically associated with MnO₄⁻ ions in solution?",
+    options: ["Blue", "Green", "Pink/Purple", "Yellow"],
+    correct: 2,
+    explanation: "MnO₄⁻ (Permanganate) ions are known for their characteristic pink or purple color in aqueous solution."
+  },
+  {
+    text: "A brick red flame is indicative of the presence of which ion?",
+    options: ["Na⁺", "K⁺", "Ca²⁺", "Li⁺"],
+    correct: 2,
+    explanation: "Ca²⁺ (Calcium) ions impart a brick red color to a flame."
+  },
+  {
+    text: "Which of these compounds is likely to be black in color?",
+    options: ["AgCl", "CuO", "ZnS", "BaSO₄"],
+    correct: 1,
+    explanation: "CuO (Copper(II) oxide) is commonly black in color."
+  },
+  {
+    text: "Which of the following is a Group 1 cation?",
+    options: ["Ca²⁺", "Ba²⁺", "Na⁺", "Mg²⁺"],
+    correct: 2,
+    explanation: "Na⁺ (Sodium) is an alkali metal and belongs to Group 1 of the periodic table."
+  },
+  {
+    text: "Which reagent is commonly used to precipitate Group 3 cations?",
+    options: ["HCl", "H₂SO₄", "NH₄OH/NH₄Cl", "HNO₃"],
+    correct: 2,
+    explanation: "A mixture of ammonium hydroxide (NH₄OH) and ammonium chloride (NH₄Cl) is used to precipitate Group 3 cations as hydroxides and/or sulfides."
+  },
+    {
+    text: "What is the oxidation state of Fe in FeCl₃?",
+    options: ["+1", "+2", "+3", "+4"],
+    correct: 2,
+    explanation: "In FeCl₃ (Iron(III) chloride), iron has an oxidation state of +3."
+  },
+  {
+    text: "Which of the following is a confirmatory test for chloride ions (Cl⁻)?",
+    options: ["Formation of a white precipitate with AgNO₃", "Formation of a yellow precipitate with K₂CrO₄", "Evolution of a gas with HCl", "A violet flame test"],
+    correct: 0,
+    explanation: "Chloride ions (Cl⁻) react with silver nitrate (AgNO₃) to form a white precipitate of silver chloride (AgCl)."
+  },
+  {
+    text: "Which of the following is NOT a common property of Group 5 cations (Ba²⁺, Sr²⁺, Ca²⁺)?",
+    options: ["They form insoluble carbonates", "They impart color to a flame", "Their sulfates are all soluble", "They are alkaline earth metals"],
+    correct: 2,
+    explanation: "Sulfates of Group 5 cations have varying solubilities. BaSO₄ is insoluble, SrSO₄ is sparingly soluble, and CaSO₄ is slightly soluble."
+  },
+  {
+    text: "What type of precipitate is formed by Group 2 cations?",
+    options: ["Chlorides", "Sulfates", "Hydroxides", "Sulfides"],
+    correct: 3,
+    explanation: "Group 2 cations form sulfides under appropriate conditions."
+  },
+  {
+    text: "Which of the following gases is produced when a carbonate (CO₃²⁻) reacts with an acid?",
+    options: ["O₂", "H₂", "CO₂", "SO₂"],
+    correct: 2,
+    explanation: "Carbonates (CO₃²⁻) react with acids to produce carbon dioxide (CO₂)."
+  },
+  {
+    text: "Which of the following ions can be identified using the brown ring test?",
+    options: ["Cl⁻", "SO₄²⁻", "NO₃⁻", "PO₄³⁻"],
+    correct: 2,
+    explanation: "The brown ring test is used to detect the presence of nitrate ions (NO₃⁻)."
+  },
+  {
+    text: "What color change is observed when starch is added to a solution containing iodine (I₂)?",
+    options: ["Yellow to blue", "Colorless to pink", "Colorless to blue-black", "Green to orange"],
+    correct: 2,
+    explanation: "Iodine (I₂) forms a characteristic blue-black complex with starch."
+  },
+  {
+    text: "Which of the following is a test for ammonium ions (NH₄⁺)?",
+    options: ["Evolution of a pungent gas when heated with NaOH", "Formation of a white precipitate with HCl", "A brick red flame test", "Formation of a brown ring with H₂SO₄"],
+    correct: 0,
+    explanation: "Ammonium ions (NH₄⁺) release ammonia gas (NH₃), which has a pungent odor, when heated with a base like NaOH."
+  },
+  {
+    text: "Which of the following is a test for sulphate ions (SO₄²⁻)?",
+    options: ["Evolution of a pungent gas when heated with NaOH", "Formation of a white precipitate with HCl", "A white precipitate with BaCl₂", "Formation of a brown ring with H₂SO₄"],
+    correct: 2,
+    explanation: "Sulphate ions (SO₄²⁻) reacts with barium chloride (BaCl₂) to form barium sulphate, therefore creating a white precipitate with BaCl₂"
+  },
+  {
+    text: "What color is a solution containing Cu²⁺ ions when ammonia is added dropwise, and then in excess?",
+    options: ["Green initially, then colorless", "Pale blue initially, then deep blue", "Colorless throughout", "Yellow initially, then green"],
+    correct: 1,
+    explanation: "Initially, a pale blue precipitate of Cu(OH)₂ forms.  Upon addition of excess ammonia, the tetramminecopper(II) complex forms, resulting in a deep blue solution."
+  },
+  {
+    text: "What happens to potassium dichromate (K₂Cr₂O₇) when it is reduced?",
+    options: ["The solution turns yellow", "The solution turns green", "The solution turns blue", "The solution turns pink"],
+    correct: 1,
+    explanation: "The Cr₂O₇²⁻ (dichromate) ion is orange. When reduced to Cr³⁺, the solution turns green."
+  },
+    {
+    text: "Which of these compounds is NOT a common laboratory reagent?",
+    options: ["NaOH", "HCl", "H₂O", "AuCl"],
+    correct: 3,
+    explanation: "AuCl is gold chloride, it is rarely used"
+  },
+    {
+    text: "What is used as the standard in quantitative analysis to identify organic substances",
+    options: ["Red orange precipitate", "White precipitate", "Organic materials", "Organic precipitate"],
+    correct: 3,
+    explanation: "What is used as the standard in quantitative analysis to identify organic substances is organic precipitate "
+  },
+    {
+    text: "What pH does ammonia have",
+    options: ["2", "7", "9.25", "14"],
+    correct: 2,
+    explanation: "What pH does ammonia have is about 9.25"
+  },
+    {
+    text: "What is the charge of copper in copper II",
+    options: ["-2", "-1", "+1", "+2"],
+    correct: 3,
+    explanation: "What is the charge of copper in copper II is +2"
+  },
+    {
+    text: "What is the charge of hydroxide",
+    options: ["-1", "-2", "-3", "+3"],
+    correct: 0,
+    explanation: "What is the charge of hydroxide -1"
+  },
+    {
+    text: "How many lone pairs does oxygen have",
+    options: ["0", "2", "4", "6"],
+    correct: 1,
+    explanation: "How many lone pairs does oxygen have? oxygen has 2 lone pairs."
+  },
+    {
+    text: "What does the prefix 'thio' mean?",
+    options: ["contains sulphur", "contains hydroxide", "contains oxygen", "contains carbon"],
+    correct: 0,
+    explanation: "prefix 'thio' mean is contains sulphur"
+  },
+    {
+    text: "Which element turns violet when heated",
+    options: ["Carbon", "Iodine", "Gold", "Copper"],
+    correct: 1,
+    explanation: "Which element turns violet when heated? the answer is Iodine"
+  },
+    {
+    text: "which of the following describes chromates",
+    options: ["CrO₄²⁻", "CrO₂²⁻", "CrO₂⁻", "CrO₄"],
+    correct: 0,
+    explanation: "which of the following describes chromates? CrO₄²⁻"
+  },
+    {
+    text: "How many unpaired electrons in iron",
+    options: ["1", "2", "3", "4"],
+    correct: 3,
+    explanation: "How many unpaired electrons in iron, the answer is 4"
+  },
+    {
+    text: "What shape is ammonium",
+    options: ["tetrahedral", "linear", "planar", "trigonal pyramidal"],
+    correct: 0,
+    explanation: "What shape is ammonium? the answer is tetrahedral"
+  },
+    {
+    text: "which of these descriptions describes copper II",
+    options: ["Cu²⁻", "Cu⁺", "Cu²⁺", "Cu₃"],
+    correct: 2,
+    explanation: "Which of these descriptions describes copper II? the answer is Cu²⁺"
+  },
+    {
+    text: "What state is bromine",
+    options: ["solid", "gas", "liquid", "plasma"],
+    correct: 2,
+    explanation: "What state is bromine? the answer is liquid"
+  },
+  {
+    text: "The following inorganic salts appear red except",
+    options: ["HgO", "HgI₂", "Cr³⁺", "Pb₃O₄"],
+    correct: 2,
+    explanation: "Cr³⁺ salts generally appear green or violet, not red, while the others can appear red under certain conditions."
+  },
+  {
+    text: "Which of the following appear blue in color",
+    options: ["Cu⁺", "Hydrated Cu²⁺", "Cu²⁺", "Ni²⁺"],
+    correct: 1,
+    explanation: "Hydrated Cu²⁺ ions give a characteristic blue color in aqueous solution."
+  },
+  {
+    text: "All of the following appear yellow except",
+    options: ["AgBr", "CuCrO₄", "Fe₂O₃", "Ferracyanide"],
+    correct: 2,
+    explanation: "Fe₂O₃ (Iron(III) oxide, rust) typically appears reddish-brown."
+  },
+  {
+    text: "Ferrocyanide appear __ in colour.",
+    options: ["Pink", "Orange", "Green", "Black"],
+    correct: 3,
+    explanation: "Ferrocyanide compounds typically appear black in color."
+  },
+  {
+    text: "Sulfites of Ag⁺, Cu⁺,Cu²⁺, Ni²⁺, Fe²⁺, Co²⁺ appear",
+    options: ["Black", "Green", "Light Pink", "Reddish pink"],
+    correct: 0,
+    explanation: "Sulfides of most of these metals are insoluble and black in color."
+  },
+  {
+    text: "Hydrated Co²⁺ salts and hydrated Mn²⁺ salts appear _ and ___ respectively.",
+    options: ["Reddish pink, orange", "Yellow, light pink", "Reddish pink, light pink", "Light Pink, reddish pink"],
+    correct: 2,
+    explanation: "Hydrated Co²⁺ salts are generally reddish pink, while hydrated Mn²⁺ salts tend to be light pink."
+  },
+  {
+    text: "All of the following appear green except",
+    options: ["CdO", "Cr³⁺", "Ni²⁺", "Hydrated Fe²⁺ salts"],
+    correct: 0,
+    explanation: "CdO (Cadmium Oxide) typically appears brown or reddish-brown, not green."
+  },
+  {
+    text: "MnO, FeO, MnO₂, Ni₂O₃ all appear",
+    options: ["Green", "Reddish pink", "light pink", "Black"],
+    correct: 3,
+    explanation: "These metal oxides (Manganese(II) oxide, Iron(II) oxide, Manganese(IV) oxide, Nickel(III) oxide) typically appear black."
+  },
+  {
+    text: "Anions are classified into _ groups",
+    options: ["3", "2", "4", "6"],
+    correct: 0,
+    explanation: "Anions are traditionally classified into 3 analytical groups based on their precipitation reactions."
+  },
+  {
+    text: "Cations are classified into _ groups",
+    options: ["5", "7", "4", "6"],
+    correct: 0,
+    explanation: "Cations are generally classified into 5 analytical groups for qualitative analysis."
+  },
+  {
+    text: "Group 2 cations form",
+    options: ["insoluble hydroxides", "insoluble chlorides", "acid-insoluble sulfides", "insoluble carbonates"],
+    correct: 2,
+    explanation: "Group 2 cations are characterized by forming sulfides that are insoluble in acidic solutions."
+  },
+  {
+    text: "The following cations are in group 6 except",
+    options: ["K⁺", "Pb²⁺", "Li⁺", "Mg²⁺"],
+    correct: 1,
+    explanation: "Pb²⁺ (Lead(II)) is a Group 1 cation, precipitating as PbCl₂. K⁺, Li⁺, and Mg²⁺ are Group 6 cations, typically analyzed by flame test."
+  },
+  {
+    text: "Which of the following is not correctly paired when subjected to flame test?",
+    options: ["Mg²⁺ - Colourless flame", "Na⁺ - bright yellow flame", "Li⁺ - red flame", "k⁺ - violet flame"],
+    correct: 0,
+    explanation: "Mg²⁺ (Magnesium) does not impart any colour to the flame; therefore, the flame is colourless."
+  },
+  {
+    text: "Magnesium metal burns with a",
+    options: ["Colourless flame", "orange flame", "red flame", "bright white flame"],
+    correct: 3,
+    explanation: "Magnesium metal, when ignited, burns with an intense bright white flame."
+  },
+  {
+    text: "Cations in group 3 form  which are _ even at low concentration",
+    options: ["chlorides, insoluble", "chlorides, soluble", "hydroxides, insoluble", "hydroxides, soluble"],
+    correct: 2,
+    explanation: "Group 3 cations form insoluble hydroxides that precipitate even at low concentrations in the presence of a suitable reagent."
+  },
+  {
+    text: "All precipitate except ____ are soluble in dilute nitric acid.",
+    options: ["CdS", "AgCl", "PbCl₂", "HgS"],
+    correct: 3,
+    explanation: "HgS (Mercury(II) sulfide) is notoriously insoluble and does not readily dissolve in dilute nitric acid."
+  },
+  {
+    text: "Aquaregia is used to separate",
+    options: ["Group 3 cations", "Group 2 anions", "Group 3 anions", "Group 2 cations"],
+    correct: 3,
+    explanation: "Aqua regia can dissolve some of the more difficult-to-dissolve Group 2 sulfide precipitates (e.g., HgS) to aid in separation and analysis."
+  },
+  {
+    text: "CuS dissolves in ammonia to give",
+    options: ["Colourless solution", "pale blue solution", "intense blue solution", "brown solution"],
+    correct: 2,
+    explanation: "CuS (Copper(II) sulfide) dissolves in ammonia to form the tetraamminecopper(II) complex, which has an intense blue color."
+  },
+  {    text: "The following except ___ are group 3 cations",
+    options: ["Cr³⁺", "Fe²⁺", "Fe³⁺", "Zn²⁺"],
+    correct: 3,
+    explanation: "Cr³⁺, Fe²⁺, and Fe³⁺ are common Group 3 cations, Zn²⁺ are group 4 cations."
+  },
+  {
+    text: "The reagent used for group 5 cations is",
+    options: ["Dil. HCl", "conc. H₂SO₄", "conc. HCl", "(NH₄)₂CO₃"],
+    correct: 3,
+    explanation: "(NH₄)₂CO₃ (Ammonium carbonate) is the reagent used to precipitate Group 5 cations (Ba²⁺, Sr²⁺, Ca²⁺) as carbonates."
+  },
+    {
+    text: "(NH₄)₂CO₃ has a __ pH.",
+    options: ["neutral", "acidic", "basic", "slightly acidic"],
+    correct: 2,
+    explanation: "(NH₄)₂CO₃ (Ammonium carbonate) is the salt of a weak acid and a weak base, it will hydrolyze in water, therefore making the solution basic."
+  },
+    {
+    text: "Flame test color is used to distinguish which group of cations?",
+    options: ["2", "6", "1", "5"],
+    correct: 1,
+    explanation: "The Flame test will be used to group cations 6, as most cations will have a distinct flame test in this region."
+  },
+    {
+    text: "Ammonium chloride is added to group 3 cations to",
+    options: ["ensure high concentration of hydroxide ions", "ensure equal concentration of hydroxide ions", "ensure no concentration of hydroxide ions", "ensure low concentration of hydroxide ions"],
+    correct: 3,
+    explanation: "Adding ammonium chloride to group 3 will ensure that the concentration of hydroxide ions is lowered."
+  },
+    {
+    text: "When are red orange precipitate is formed, ____ is present.",
+    options: ["Fe³⁺", "Ca²⁺", "Sb³⁺", "Cd²⁺"],
+    correct: 2,
+    explanation: "When a red orange precipitate is formed, Sb³⁺ or antimony is present."
+  },
+    {
+    text: "Cr³⁺ and Fe²⁺ can be distinguished by adding",
+    options: ["NaOH in drops", "HCl in excess", "NaOH in excess", "HCl in drops"],
+    correct: 2,
+    explanation: "Cr³⁺ and Fe²⁺ can be distinguished by adding NaOH in excess."
+  },
+    {
+    text: "AgCl dissolves in ammonia due to formation of",
+    options: ["Ferracyanide", "(NH₄)₂CO₃", "(CH₃COO)₂Pb", "[Ag(NH₃)₂]⁺"],
+    correct: 3,
+    explanation: "AgCl dissolves in ammonia due to formation of [Ag(NH₃)₂]⁺"
+  },
+    {
+    text: "Which of the following is soluble in hot water?",
+    options: ["AgCl", "PbCl₂", "ZnCl₂", "BaSO₄"],
+    correct: 1,
+    explanation: "PbCl₂ is soluble in hot water."
+  },
+  {
     text: "When sodium propionate is subjected to Kolbe's electrolysis, likely product(s) at the anode include:\n(I) ethane\n(II) hydrogen\n(III) propane\n(IV) sodium hydroxide\n(V) carbon(IV)oxide",
     options: ["I & III only", "II & III only", "III & IV only", "IV & V only", "None"],
     correct: 4,
