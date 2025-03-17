@@ -1,13 +1,11 @@
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.menu');
-
-        hamburger.addEventListener('click', function() {
-            menu.classList.toggle('active');
-        });
-    });
-
+function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "flex") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "flex";
+            }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     let slider = document.querySelector(".slider");
