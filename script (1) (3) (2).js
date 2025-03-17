@@ -10031,9 +10031,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
     },
     {
      text: "In what type of structure is sp hybridization most commonly found?",
-     options: ["Cyclic", "Branched", "Linear
-
-", "Tetrahedral"],
+     options: ["Cyclic", "Branched", "Linear", "Tetrahedral"],
      correct: 2,
      explanation: "sp hybridization is most commonly found in linear structures like alkynes."
     },
@@ -10402,7 +10400,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
      text: "Which is the most electrophilic carbonyl carbon?",
      options: ["Ketone", "Aldehyde", "Amide", "Carboxylic acid"],
      correct: 1,
-explanation: "Aldehydes tend to have more electrophilic carbonyl carbons because they have a single R group."
+     explanation: "Aldehydes tend to have more electrophilic carbonyl carbons because they have a single R group."
     },
     {
      text: "What makes carbon dioxide (CO₂) act as an electrophile?",
@@ -10690,9 +10688,7 @@ explanation: "Aldehydes tend to have more electrophilic carbonyl carbons because
     text: "Which statement about carbocations is incorrect?",
     options: ["Trigonal planar", "sp2 hybridization", "Stabilized by alkyl groups", "Electron rich species"],
     correct: 3,
-    explanation: "Carbocations are electron-deficient species and possess a positive charge on the carbon atom
-
-."
+    explanation: "Carbocations are electron-deficient species and possess a positive charge on the carbon atom."
   },
 {
     text: "What is the definition of a homologous series?",
