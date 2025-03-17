@@ -10915,7 +10915,7 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
   {
     text: "How many structural isomers are possible for alcohols with the molecular formula C₄H₁₀O?",
     options: ["2", "3", "4", "5"],
-    correct: 3,
+    correct: 2,
     explanation: "There are 4 structural isomers possible for alcohols with the molecular formula C₄H₁₀O: butan-1-ol, butan-2-ol, 2-methylpropan-1-ol, and 2-methylpropan-2-ol."
   },
   {
@@ -11619,12 +11619,6 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
     options: ["I only", "All of the above", "I & III", "I & IV only"],
     correct: 3,
     explanation: "The properties of homologous series include Consecutive members defer from each other by CH₂ group and Members have identical chemical properties"
-  },
-  {
-    text: "The IUPAC name of the compound below is:\n(See Image for Structure)",
-    options: ["4-(1,1-dimethylethyl)octane", "4-butyl octane", "4(1-methylpropyl)octane", "4(1-methylethyl)Octane"],
-    correct: 0,
-    explanation: "The longest continuous carbon chain is eight carbon atoms (octane) and the parent name is Octane. The substituent is the coloured part of the structure which is on position 4 of the parent skeleton/chain if numbered correctly. The naming of the substituent is 1,1-dimethylethyl."
   },
   {
     text: "The observation of prussian blue solution in a qualitative Lassaigne's sodium fusion test for nitrogen in an organic compound is as a result of the formation of:",
