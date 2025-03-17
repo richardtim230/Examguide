@@ -7,7 +7,39 @@ body {
     color: #333;
     text-align: center;
 }
-
+.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        .menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .menu a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 5px;
+        }
+        .hamburger {
+            cursor: pointer;
+            font-size: 24px;
+        }
+        @media (min-width: 768px) {
+            .menu {
+                display: flex;
+                flex-direction: row;
+            }
+            .hamburger {
+                display: none;
+            }
+}
 /* Header */
 header {
     background: linear-gradient(to right, #002147, #003366);
