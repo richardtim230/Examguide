@@ -48,6 +48,16 @@ header {
     text-align: center;
 }
 
+.header-content h1 {
+    font-size: 2.0rem;
+    margin: 10px 0;
+}
+
+.header-content p {
+    font-size: 1.0rem;
+}
+
+
 /* Logo */
 .logo-container {
     display: flex;
