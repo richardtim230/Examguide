@@ -799,7 +799,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["OAU-2iTtz", "OAU-FG3JH", "OAU-JL36e", "OAU-xupDN", "OAU-a19AX", "OAU-HkCcs", "OAU-iM1rP", "OAU-yPb1k", "OAU-Mafoa", "OAU-Yw4iq", "OAU-ustAs"];
+  const activeUserIDs = ["OAU-2iTtz", "OAU-HkCcs", "OAU-W3Ldz", "OAU-FG3JH", "OAU-JL36e", "OAU-xupDN", "OAU-a19AX", "OAU-HkCcs", "OAU-iM1rP", "OAU-yPb1k", "OAU-Mafoa", "OAU-Yw4iq", "OAU-ustAs"];
   const morningMessages = ["Good morning", "Rise and shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
