@@ -6968,12 +6968,12 @@ function hasReachedRegistrationLimit() {
 document.getElementById('registerAccountBtn').addEventListener('click', function () {
     const fullName = document.getElementById('registerFullName').value.trim();
     const facultySelect = document.getElementById('faculty');
-    const facultyCode = facultySelect.value; // Selected faculty code
+    const facultyCode = facultySelect.value;
     const department = document.getElementById('department').value.trim();
     const level = document.getElementById('level').value.trim();
 
-    if (!fullName || !facultyCode || !department || !level) {
-        alert('Please fill in all fields to register.');
+    if (!fullName || !facultyCode || !department || !level || isNaN(level)) {
+        alert('Please fill in all fields correctly.');
         return;
     }
 
@@ -6992,25 +6992,30 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         userId 
     };
 
-    // Send user details to the server
+    // Send data to the server
     fetch('/register-user', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userDetails)
     })
-    .then(response => response.json())
+    .then(response => response.text()) // Read response as text
+    .then(text => {
+        try {
+            return JSON.parse(text);
+        } catch (error) {
+            throw new Error("Invalid JSON response from server");
+        }
+    })
     .then(data => {
         if (data.error) {
             alert('Error: ' + data.error);
         } else {
-            // Automatically assign exam ID "CHM101-F1" to the new user
+            // Store exam allocations
             const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
             examAllocations[userId] = [{ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" }];
             localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 
-            // Track number of registrations
+            // Track registrations
             const registrations = JSON.parse(localStorage.getItem("userRegistrations")) || [];
             registrations.push(userId);
             localStorage.setItem("userRegistrations", JSON.stringify(registrations));
@@ -7025,6 +7030,7 @@ document.getElementById('registerAccountBtn').addEventListener('click', function
         alert('An error occurred during registration.');
     });
 });
+
 
 
 // ✅ Back to Login Button
