@@ -9670,6 +9670,1565 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
       title: "INTRODUCTORY CHEMISTRY 2",
   questions: [
     
+{
+    text: "What is the definition of structural isomers?",
+    options: ["Same molecular formula, different spatial arrangement of atoms", "Same molecular formula, same connectivity of atoms", "Same molecular formula, different connectivity of atoms", "Same connectivity, different molecular formula"],
+    correct: 2,
+    explanation: "Structural isomers (also known as constitutional isomers) have the same molecular formula but different connectivity of atoms."
+  },
+  {
+    text: "What is the definition of geometric isomers?",
+    options: ["Same molecular formula, different spatial arrangement around a rigid bond", "Same molecular formula, different arrangement around a chiral center", "Same connectivity, different molecular formula", "Different molecular formula, same spatial arrangement"],
+    correct: 0,
+    explanation: "Geometric isomers (also known as cis-trans isomers) have the same molecular formula but different spatial arrangements of atoms around a rigid bond, such as a double bond or a ring."
+  },
+  {
+    text: "What is the definition of optical isomers?",
+    options: ["Same molecular formula, different physical properties", "Same molecular formula, non-superimposable mirror images", "Same molecular formula, superimposable mirror images", "Same arrangement, different molecular formula"],
+    correct: 1,
+    explanation: "Optical isomers (also known as enantiomers) have the same molecular formula but are non-superimposable mirror images of each other. They are chiral molecules."
+  },
+  {
+    text: "Which type of isomerism is also known as 'cis-trans' isomerism?",
+    options: ["Structural", "Geometric", "Optical", "Conformational"],
+    correct: 1,
+    explanation: "Geometric isomerism is commonly known as cis-trans isomerism due to the spatial arrangement of atoms or groups on the same or opposite sides of a rigid bond."
+  },
+  {
+    text: "What is a chiral center?",
+    options: ["Atom bonded to two different groups", "Atom with a positive charge", "Atom bonded to four different atoms or groups", "Atom with a double bond"],
+    correct: 2,
+    explanation: "A chiral center (also known as a stereocenter or asymmetric center) is an atom, usually carbon, that is bonded to four different atoms or groups."
+  },
+  {
+    text: "What are enantiomers?",
+    options: ["Isomers with superimposable mirror images", "Isomers with identical physical properties", "Isomers with non-superimposable mirror images", "Isomers with the same connectivity"],
+    correct: 2,
+    explanation: "Enantiomers are stereoisomers that are non-superimposable mirror images of each other."
+  },
+  {
+    text: "What are diastereomers?",
+    options: ["Isomers that are mirror images of each other", "Isomers that are superimposable", "Stereoisomers that are not enantiomers", "Structural isomers"],
+    correct: 2,
+    explanation: "Diastereomers are stereoisomers that are not enantiomers, meaning they are not mirror images of each other."
+  },
+  {
+    text: "Which of the following compounds can exhibit geometric isomerism?",
+    options: ["Methane", "Ethane", "Ethene", "Propane"],
+    correct: 2,
+    explanation: "Ethene (C₂H₄) can exhibit geometric isomerism if each carbon of the double bond is bonded to two different groups, allowing for cis-trans arrangements."
+  },
+  {
+    text: "Which of the following compounds can exhibit optical isomerism?",
+    options: ["2-Chloropropane", "2-Chlorobutane", "1-Chlorobutane", "2-Methylpropene"],
+    correct: 1,
+    explanation: "2-Chlorobutane can exhibit optical isomerism because it has a chiral carbon atom (carbon 2) bonded to four different groups: H, Cl, CH₃, and CH₂CH₃."
+  },
+  {
+    text: "How many stereoisomers are possible for a molecule with two chiral centers?",
+    options: ["1", "2", "3", "4"],
+    correct: 3,
+    explanation: "A molecule with two chiral centers can have up to 2² = 4 stereoisomers (enantiomeric pairs)."
+  },
+  {
+    text: "What is a racemic mixture?",
+    options: ["Mixture of two structural isomers", "Mixture of two geometric isomers", "Equimolar mixture of two enantiomers", "Mixture of multiple diastereomers"],
+    correct: 2,
+    explanation: "A racemic mixture is an equimolar mixture of two enantiomers, resulting in no net optical rotation."
+  },
+  {
+    text: "What is the relationship between enantiomers in terms of physical properties?",
+    options: ["Same chemical properties", "Same physical properties except for the direction of rotation of plane-polarized light", "Different physical properties", "Same connectivity"],
+    correct: 1,
+    explanation: "Enantiomers have identical physical properties (melting point, boiling point, refractive index) except for the direction in which they rotate plane-polarized light."
+  },
+  {
+    text: "What is the relationship between diastereomers in terms of physical properties?",
+    options: ["Same chemical properties", "Same physical properties", "Different chemical and physical properties", "Same connectivity"],
+    correct: 2,
+    explanation: "Diastereomers have different chemical and physical properties due to the different spatial arrangements of atoms."
+  },
+  {
+    text: "Which of the following molecules is achiral despite having chiral centers?",
+    options: ["2,3-Dichloropentane", "2,3-Dichlorobutane", "2-Chloropentane", "3-Chloropentane"],
+    correct: 1,
+    explanation: "2,3-Dichlorobutane exhibits meso isomerism due to the presence of a plane of symmetry, making it achiral despite having two chiral centers."
+  },
+  {
+    text: "What is a meso compound?",
+    options: ["Chiral compound", "Achiral compound with chiral centers", "Racemic mixture", "Geometric Isomers"],
+    correct: 1,
+    explanation: "A meso compound is an achiral molecule that contains chiral centers but has an internal plane of symmetry."
+  },
+  {
+    text: "Which of the following is a chain isomer of butane?",
+    options: ["But-2-ene", "2-Methylpropane", "Cyclobutane", "1-Butanol"],
+    correct: 1,
+    explanation: "A chain isomer has the same molecular formula but a different arrangement of the carbon chain. 2-Methylpropane is a branched alkane with the same molecular formula as butane."
+  },
+  {
+    text: "Which of the following is a position isomer of 1-propanol?",
+    options: ["Propanone", "2-Propanol", "Ethyl methyl ether", "Propanal"],
+    correct: 1,
+    explanation: "A position isomer has the same carbon chain and functional group but a different position of the functional group. 2-Propanol is a positional isomer where the -OH is at C2."
+  },
+  {
+    text: "Which term describes a molecule that is non-superimposable on its mirror image?",
+    options: ["Achiral", "Meso", "Chiral", "Geometric"],
+    correct: 2,
+    explanation: "A molecule that is non-superimposable on its mirror image is said to be chiral."
+  },
+  {
+    text: "Which of the following is a functional group isomer of ethanol?",
+    options: ["Ethanal", "Dimethyl ether", "Acetaldehyde", "Ethanoic acid"],
+    correct: 1,
+    explanation: "Ethanol is an alcohol and dimethyl ether is an ether, which are functional group isomers of each other, as they have the same molecular formula but different functional groups."
+  },
+  {
+    text: "How does plane polarized light interact with a racemic mixture?",
+    options: ["Rotates the plane to the right", "Rotates the plane to the left", "Does not rotate the plane", "Rotates the plane randomly"],
+    correct: 2,
+    explanation: "A racemic mixture does not rotate plane-polarized light because the rotation caused by one enantiomer is exactly canceled out by the equal and opposite rotation caused by the other enantiomer."
+  },
+    {
+    text: "What is epimer?",
+    options: ["Compounds differing in configuration at all chiral carbons", "Compounds differing in configuration at a achiral centre", "Compounds differing in configuration at one chiral carbon", "Acyclic geometric isomers"],
+    correct: 2,
+    explanation: "An epimer is a pair of diastereomers that differ in configuration at only one stereogenic center."
+  },
+  {
+    text: "What is atropisomer?",
+    options: ["Isomers arising because of different connectivity of the same ligand", "Isomers arising because of restricted rotation about a single bond", "Isomers arising because of different geometric arrangement", "Isomers arising because of difference in atomic number"],
+    correct: 1,
+    explanation: "Atropisomers are stereoisomers resulting from restricted rotation about single bonds where the steric strain barrier to rotation is high enough to permit the isolation of the conformers."
+  },
+  {
+    text: "Which is not a structural isomer of C₅H₁₂?",
+    options: ["Pentane", "2-Methylbutane", "2,2-Dimethylpropane", "Butane"],
+    correct: 3,
+    explanation: "Butane has the formula C₄H₁₀ so cannot be an isomer."
+  },
+  {
+    text: "Which prefix is used to designate a substituent that projects upward from the general plane of a bicyclic system?",
+    options: ["cis-", "trans-", "endo-", "exo-"],
+    correct: 3,
+    explanation: "A substituent that projects upward, or on the same side as the longer or more important bridge, is designated exo-, whereas a substituent on the opposite side is endo-."
+  },
+  {
+    text: "In the Cahn-Ingold-Prelog priority rules, what is the order of priority for the following groups attached to a chiral center: -CH₃, -OH, -H, -COOH?",
+    options: ["-CH₃ > -OH > -H > -COOH", "-COOH > -OH > -CH₃ > -H", "-H > -CH₃ > -OH > -COOH", "-OH > -COOH > -CH₃ > -H"],
+    correct: 1,
+    explanation: "According to Cahn-Ingold-Prelog rules, higher atomic number takes precedence. -COOH > -OH > -CH₃ > -H"
+  },
+  {
+    text: "Which conformation of cyclohexane is chiral?",
+    options: ["Chair", "Boat", "Twist-boat", "Half-chair"],
+    correct: 2,
+    explanation: "The twist-boat conformation of cyclohexane is chiral."
+  },
+  {
+    text: "In the E/Z system for designating the stereochemistry of alkenes, which groups are compared to determine priority?",
+    options: ["The two groups on one end of the double bond are compared", "The two groups on each end of the double bond are compared independently", "All four groups around the double bond are compared", "Only the smallest and largest groups are compared"],
+    correct: 1,
+    explanation: "The E/Z system compares the priority of the two groups on each carbon of the double bond separately. If the highest priority groups are on the same side, it is Z. If they are on opposite sides, it is E."},
+  {
+    text: "In a Fischer projection, which bonds are understood to be projecting out of the plane of the paper towards the viewer?",
+    options: ["Horizontal bonds", "Vertical bonds", "All bonds", "No bonds"],
+    correct: 0,
+    explanation: "In a Fischer projection, horizontal bonds are understood to be projecting out of the plane of the paper towards the viewer, while vertical bonds are understood to be projecting away from the viewer."
+  },
+  {
+    text: "How are enantiomers separated?",
+    options: ["Chromatography", "Distillation", "Using chiral resolving agents", "All of the above"],
+    correct: 2,
+    explanation: "Enantiomers are separated using chiral resolving agents because they have identical physical properties (except for their effect on polarized light) and cannot be separated using traditional methods like chromatography or distillation."
+  },
+  {
+    text: "Which term describes when a compound that is initially optically active loses its optical activity over time?",
+    options: ["Racemization", "Resolution", "Enantiomeric excess", "Chiral inversion"],
+    correct: 0,
+    explanation: "Racemization is the conversion of an enantiomerically pure compound into a racemic mixture, resulting in the loss of optical activity."
+  },
+    {
+    text: "What type of isomers are epimers?",
+    options: ["Conformational isomers", "Enantiomers", "Diastereomers", "Structural isomers"],
+    correct: 2,
+    explanation: "Epimers are diastereomers because they are stereoisomers that are not mirror images of each other."
+  },
+  {
+    text: "What term describes the process of converting a racemic mixture into a mixture containing unequal amounts of enantiomers?",
+    options: ["Racemization", "Resolution", "Inversion", "Epimerization"],
+    correct: 1,
+    explanation: "Resolution is the process of separating a racemic mixture into its component enantiomers, resulting in a mixture containing unequal amounts of enantiomers (or even pure enantiomers)."
+  },
+  {
+    text: "What is the optical activity of a meso compound?",
+    options: ["Always positive", "Always negative", "Always zero", "Depends on the solvent"],
+    correct: 2,
+    explanation: "Meso compounds are achiral (non-optically active) due to an internal plane of symmetry that cancels out any rotation of plane-polarized light."
+  },
+  {
+    text: "Which of the following is the best method to separate a mixture of diastereomers?",
+    options: ["Distillation", "Sublimation", "Extraction", "Chromatography"],
+    correct: 3,
+    explanation: "Diastereomers can be separated using chromatography methods. Because diastereomers have different chemical and physical properties."
+  },
+  {
+    text: "Which type of isomer exhibits optical activity?",
+    options: ["Structural isomers", "Geometric isomers", "Enantiomers", "Diastereomers"],
+    correct: 2,
+    explanation: "Enantiomers are a form of isomers which are optical isomers and have the ability to rotate plane-polarized light."
+  },
+  {
+    text: "What is a “prochiral” molecule?",
+    options: ["Already chiral", "Capable of being rendered chiral", "Incapable of being rendered chiral", "Achiral, but contains a chiral center"],
+    correct: 1,
+    explanation: "A prochiral molecule is achiral (lacking chirality) but can be converted into a chiral molecule in a single chemical step."
+  },
+  {
+    text: "Which has greatest number of possible cyclic isomers?",
+    options: ["C₄H₈", "C₅H₁₀", "C₆H₁₂", "C₇H₁₄"],
+    correct: 3,
+    explanation: "The number of possible cyclic isomers generally increases with the number of carbon atoms in the molecule. C₇H₁₄ allows for the greatest variety of ring sizes and substitution patterns."
+  },
+  {
+    text: "What is a conformational isomer?",
+    options: ["Isomers that differ by substituent position", "Isomers that differ by bond connectivity", "Isomers that can only be interconverted by breaking bonds", "Isomers that interconvert via rotation about sigma bonds"],
+    correct: 3,
+    explanation: "Conformational isomers, also known as conformers or rotamers, are isomers that can be interconverted by rotation about sigma bonds."
+  },
+    {
+    text: "Which term describes the process of interconverting between two enantiomers?",
+    options: ["Racemization", "Resolution", "Epimerization", "Tautomerization"],
+    correct: 0,
+    explanation: "Racemization is the process of interconverting a single enantiomer into a racemic mixture, involving the formation of equal amounts of both enantiomers."
+  },
+  {
+    text: "Which type of isomers will have different melting points?",
+    options: ["Conformational isomers", "Enantiomers", "Diastereomers", "Atropisomers"],
+    correct: 2,
+    explanation: "Diastereomers will always have different melting points, unlike enantiomers who may have identical properties"
+  },
+{
+     text: "What is the hybridization of carbon in methane (CH₄)?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 2,
+     explanation: "In methane, carbon is bonded to four hydrogen atoms. This requires four equivalent hybrid orbitals, resulting in sp³ hybridization."
+    },
+    {
+     text: "What is the hybridization of carbon in ethene (C₂H₄)?",
+     options: ["sp", "sp²", "sp³", "sp³d"],
+     correct: 1,
+     explanation: "In ethene, each carbon is bonded to two hydrogen atoms and one other carbon atom with a double bond. This requires three hybrid orbitals, resulting in sp² hybridization."
+    },
+    {
+     text: "What is the hybridization of carbon in ethyne (C₂H₂)?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 0,
+     explanation: "In ethyne, each carbon is bonded to one hydrogen atom and one other carbon atom with a triple bond. This requires two hybrid orbitals, resulting in sp hybridization."
+    },
+    {
+     text: "Which hybridization results in a linear geometry around the carbon atom?",
+     options: ["sp", "sp²", "sp³", "sp³d"],
+     correct: 0,
+     explanation: "sp hybridization results in two hybrid orbitals arranged linearly around the carbon atom with a bond angle of 180°."
+    },
+    {
+     text: "Which hybridization results in a trigonal planar geometry around the carbon atom?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 1,
+     explanation: "sp² hybridization results in three hybrid orbitals arranged in a trigonal planar geometry around the carbon atom with bond angles of 120°."
+    },
+    {
+     text: "Which hybridization results in a tetrahedral geometry around the carbon atom?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 2,
+     explanation: "sp³ hybridization results in four hybrid orbitals arranged in a tetrahedral geometry around the carbon atom with bond angles of approximately 109.5°."
+    },
+    {
+     text: "How many sigma (σ) bonds and pi (π) bonds are present in ethene (C₂H₄)?",
+     options: ["5 σ, 1 π", "4 σ, 2 π", "3 σ, 3 π", "6 σ, 0 π"],
+     correct: 0,
+     explanation: "Ethene has five sigma bonds (four C-H and one C-C) and one pi bond (within the C=C double bond)."
+    },
+    {
+     text: "How many sigma (σ) bonds and pi (π) bonds are present in ethyne (C₂H₂)?",
+     options: ["3 σ, 2 π", "5 σ, 0 π", "2 σ, 3 π", "4 σ, 1 π"],
+     correct: 0,
+     explanation: "Ethyne has three sigma bonds (two C-H and one C-C) and two pi bonds (within the C≡C triple bond)."
+    },
+    {
+     text: "In benzene (C₆H₆), what is the hybridization of each carbon atom?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 1,
+     explanation: "Each carbon atom in benzene is sp² hybridized, allowing for the formation of sigma bonds with two other carbon atoms and one hydrogen atom, as well as a pi system delocalized around the ring."
+    },
+    {
+     text: "Which of the following molecules has sp hybridized carbon atoms?",
+     options: ["CO₂", "H₂O", "NH₃", "CH₄"],
+     correct: 0,
+     explanation: "In CO₂, the carbon atom is double-bonded to two oxygen atoms, requiring sp hybridization for linear geometry."
+    },
+    {
+     text: "What is the bond angle in a molecule with sp² hybridized carbon?",
+     options: ["180°", "109.5°", "120°", "90°"],
+     correct: 2,
+     explanation: "sp² hybridization leads to a trigonal planar arrangement with bond angles of approximately 120°."
+    },
+    {
+     text: "What orbitals overlap to form a sigma bond in sp³ hybridization?",
+     options: ["s + s", "p + p", "sp³ + sp³", "sp² + p"],
+     correct: 2,
+     explanation: "In sp³ hybridization, a sigma bond between two carbon atoms is formed by the overlap of two sp³ hybrid orbitals (sp³ + sp³)."
+    },
+    {
+     text: "Which type of hybridization is associated with single bonds only?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 2,
+     explanation: "sp³ hybridization is usually associated with carbon atoms forming four single bonds."
+    },
+    {
+     text: "What is the relationship between hybridization and the number of sigma bonds?",
+     options: ["Higher hybridization, fewer sigma bonds", "Lower hybridization, fewer sigma bonds", "Hybridization doesn't affect sigma bonds", "Higher hybridization, more sigma bonds"],
+     correct: 3,
+     explanation: "Higher hybridization (sp³ > sp² > sp) tends to mean more sigma bonds and fewer pi bonds."
+    },
+    {
+     text: "In which of the following compounds does carbon have the highest s-character in its hybrid orbitals?",
+     options: ["CH₄", "C₂H₄", "C₂H₂", "C₆H₆"],
+     correct: 2,
+     explanation: "sp hybridization has the highest s-character (50% s, 50% p) compared to sp² (33% s) and sp³ (25% s)."
+    },
+    {
+     text: "What is the hybridization of carbon in carbon monoxide (CO)?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 0,
+     explanation: "Carbon monoxide has a triple bond between carbon and oxygen, thus requiring sp hybridization for the carbon atom."
+    },
+    {
+     text: "Which of the following molecules is planar due to sp² hybridization?",
+     options: ["CH₄", "NH₃", "BF₃", "H₂O"],
+     correct: 2,
+     explanation: "BF₃ (boron trifluoride) is planar because the boron atom is sp² hybridized, resulting in a trigonal planar geometry."
+    },
+    {
+     text: "Which of the following is NOT a characteristic of sp³ hybridized carbon?",
+     options: ["Tetrahedral geometry", "Four sigma bonds", "Bond angle of ~109.5°", "Planar molecule"],
+     correct: 3,
+     explanation: "sp³ hybridized carbon has a tetrahedral geometry and is not planar."
+    },
+    {
+     text: "Which hybridization allows carbon to form the greatest number of pi bonds?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 0,
+     explanation: "sp hybridization allows carbon to form two pi bonds, as seen in alkynes."
+    },
+    {
+     text: "Which compound contains carbon atoms with both sp² and sp³ hybridization?",
+     options: ["Propane", "Propene", "Propyne", "Allene"],
+     correct: 1,
+     explanation: "Propene (CH₃-CH=CH₂) contains one sp³ hybridized carbon (CH₃) and two sp² hybridized carbons (CH=CH₂)."
+    },
+    {
+     text: "In what type of structure is sp hybridization most commonly found?",
+     options: ["Cyclic", "Branched", "Linear
+
+", "Tetrahedral"],
+     correct: 2,
+     explanation: "sp hybridization is most commonly found in linear structures like alkynes."
+    },
+    {
+     text: "What is the geometry around a carbon atom double-bonded to an oxygen and single-bonded to two other atoms?",
+     options: ["Tetrahedral", "Linear", "Trigonal planar", "Bent"],
+     correct: 2,
+     explanation: "The carbon will be sp² hybridized and the geometry around it will be trigonal planar."
+    },
+    {
+     text: "Which of the following describes the bond strength in relation to carbon hybridization (strongest to weakest)?",
+     options: ["sp > sp² > sp³", "sp³ > sp² > sp", "sp² > sp > sp³", "sp > sp³ > sp²"],
+     correct: 0,
+     explanation: "S character contributes to bond strength. Therefore, a higher S character means a stronger, shorter bond; this follows as sp > sp² > sp³."
+    },
+    {
+     text: "Which of the following contains a carbon-carbon triple bond?",
+     options: ["Ethene", "Ethane", "Ethyne", "Benzene"],
+     correct: 2,
+     explanation: "Ethyne contains a carbon-carbon triple bond (C≡C), which consists of one sigma bond and two pi bonds."
+    },
+    {
+     text: "Which carbon hybridization state gives the smallest bond angle?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 2,
+     explanation: "sp³ hybridization is about 109.5°, sp² is 120° and sp is 180°. Considering only these three options, sp³ has the smallest bond angle."
+    },
+    {
+     text: "In a molecule with alternating single and double bonds, the carbon atoms are typically what hybridization?",
+     options: ["sp", "sp²", "sp³", "d²sp³"],
+     correct: 1,
+     explanation: "Carbon atoms in conjugated systems with alternating single and double bonds are typically sp² hybridized."
+    },
+    {
+     text: "What is the effect of increasing the 's' character in the hybrid orbital?",
+     options: ["Increases bond length", "Decreases bond angle", "Increases bond angle", "No effect on bond angle or length"],
+     correct: 2,
+     explanation: "Increasing s-character in a hybrid orbital increases the bond angle because s orbitals are closer to the nucleus and more spherical compared to p orbitals."
+    },
+    {
+     text: "When a carbon atom is bonded to three other atoms, what is the hybridization?",
+     options: ["sp", "sp²", "sp³", "dsp²"],
+     correct: 1,
+     explanation: "The carbon atom is sp² hybridized when it is bonded to three other atoms."
+    },
+    {
+     text: "Which of the following molecules would have a carbon atom exhibiting sp hybridization?",
+     options: ["C₂H₆", "C₂H₄", "C₂H₂", "CH₂O"],
+     correct: 2,
+     explanation: "C₂H₂ has carbon atoms exhibiting sp hybridization because of the triple bond between them."
+    },
+    {
+     text: "Compared to sp³ orbitals, sp orbitals are?",
+     options: ["Longer and more directional", "Shorter and less directional", "Shorter and more directional", "Longer and less directional"],
+     correct: 2,
+     explanation: "Because sp orbitals have greater s character, they are shorter, hold electrons closer to the nucleus, and more directional."
+    },
+{
+     text: "How does bond order generally affect bond length?",
+     options: ["Higher bond order, longer bond length", "Higher bond order, shorter bond length", "Bond order has no effect on bond length", "Higher bond order, unpredictable bond length"],
+     correct: 1,
+     explanation: "Higher bond order (e.g., triple bond > double bond > single bond) leads to a stronger attraction between the atoms, pulling them closer together and resulting in a shorter bond length."
+    },
+    {
+     text: "How does bond energy relate to bond strength?",
+     options: ["Higher bond energy, weaker bond", "Higher bond energy, stronger bond", "Bond energy has no relation to bond strength", "Bond energy only affects reactivity"],
+     correct: 1,
+     explanation: "Bond energy is the energy required to break a bond. A higher bond energy indicates a stronger bond because more energy is needed to separate the atoms."
+    },
+    {
+     text: "Which bond is generally stronger: a sigma (σ) bond or a pi (π) bond?",
+     options: ["Sigma (σ) bond", "Pi (π) bond", "They are equally strong", "It depends on the atoms involved"],
+     correct: 0,
+     explanation: "Sigma bonds are formed by head-on overlap of atomic orbitals, resulting in greater electron density along the bond axis and thus greater strength compared to pi bonds."
+    },
+    {
+     text: "How does the presence of a pi (π) bond affect the rotation around a carbon-carbon bond?",
+     options: ["Increases free rotation", "Completely restricts rotation", "Slightly decreases rotation", "Has no effect on rotation"],
+     correct: 1,
+     explanation: "Pi bonds restrict rotation around a bond axis because the p orbitals must remain aligned for effective overlap. Breaking the pi bond would be required to allow rotation."
+    },
+    {
+     text: "What is the relationship between bond length and bond strength?",
+     options: ["Shorter bond, weaker bond", "Shorter bond, stronger bond", "Bond length has no effect on bond strength", "Longer bond, stronger bond"],
+     correct: 1,
+     explanation: "Shorter bonds generally indicate a stronger attraction between the atoms, resulting in a stronger bond and higher bond energy."
+    },
+    {
+     text: "How does electronegativity difference between two atoms influence bond polarity?",
+     options: ["Larger difference, less polar bond", "Smaller difference, more polar bond", "Larger difference, more polar bond", "Electronegativity has no effect on polarity"],
+     correct: 2,
+     explanation: "A larger electronegativity difference leads to a greater unequal sharing of electrons, creating a dipole moment and resulting in a more polar bond."
+    },
+    {
+     text: "Which factor affects the C-H bond length in organic molecules?",
+     options: ["Hybridization of carbon", "Size of the molecule", "Number of pi bonds", "Presence of heteroatoms"],
+     correct: 0,
+     explanation: "The hybridization of the carbon atom (sp, sp², sp³) directly affects the s-character of the C-H bond, which influences bond length. Higher s-character results in a shorter, stronger bond."
+    },
+    {
+     text: "How does resonance affect bond length in a molecule?",
+     options: ["Equalizes bond lengths", "Increases bond lengths", "Decreases bond lengths", "Has no effect on bond lengths"],
+     correct: 0,
+     explanation: "Resonance leads to delocalization of electrons, which can result in bond lengths that are intermediate between single and double bonds, effectively equalizing them."
+    },
+    {
+     text: "How does the size of the atoms involved affect bond length?",
+     options: ["Larger atoms, shorter bond length", "Smaller atoms, longer bond length", "Larger atoms, longer bond length", "Atomic size has no effect on bond length"],
+     correct: 2,
+     explanation: "Larger atoms have larger electron clouds, leading to a greater distance between the nuclei when they form a bond, resulting in a longer bond length."
+    },
+    {
+     text: "Which of the following has the shortest carbon-carbon single bond?",
+     options: ["Ethane", "Propane", "Cyclopropane", "Butane"],
+     correct: 2,
+     explanation: "Cyclopropane has the shortest C-C single bond due to increased s-character to minimize ring strain."
+    },
+    {
+     text: "How does bond polarity affect intermolecular forces?",
+     options: ["Increases dipole-dipole interactions", "Decreases London dispersion forces", "Reduces hydrogen bonding", "Has no effect on intermolecular forces"],
+     correct: 0,
+     explanation: "Polar bonds create partial charges (dipoles) that can lead to stronger dipole-dipole interactions between molecules, affecting physical properties such as boiling point."
+    },
+    {
+     text: "In which molecule is the carbon-oxygen bond strongest?",
+     options: ["Methanol (CH₃OH)", "Formaldehyde (CH₂O)", "Carbon Dioxide (CO₂)", "Acetic Acid (CH₃COOH)"],
+     correct: 2,
+     explanation: "Carbon dioxide has two C=O double bonds. While resonance does delocalize the electrons, these double bonds are still relatively strong."
+    },
+    {
+     text: "How does steric hindrance affect bond rotation?",
+     options: ["Increases rotation", "Decreases rotation", "Has no effect on rotation", "Only affects bond length"],
+     correct: 1,
+     explanation: "Bulky groups attached to atoms involved in a bond can hinder the rotation around that bond due to steric interactions."
+    },
+    {
+     text: "Which of the following has the longest carbon-carbon bond?",
+     options: ["Benzene", "Ethane", "Ethene", "Ethyne"],
+     correct: 1,
+     explanation: "Ethane has a single carbon-carbon bond with no additional pi bonding, making it the longest of the given options."
+    },
+    {
+     text: "How does hydrogen bonding affect the boiling point of a substance?",
+     options: ["Decreases boiling point", "Increases boiling point", "Has no effect on boiling point", "Only affects melting point"],
+     correct: 1,
+     explanation: "Hydrogen bonding is a strong intermolecular force that requires significant energy to overcome, resulting in a higher boiling point."
+    },
+    {
+     text: "Which type of bond is easiest to break?",
+     options: ["Single", "Double", "Triple", "Ionic"],
+     correct: 0,
+     explanation: "Of the covalent options, single bonds generally require the least amount of energy to break compared to double or triple bonds."
+    },
+
+{
+     text: "Which of the following is expected to have the highest boiling point?",
+     options: ["Methane (CH₄)", "Ethane (C₂H₆)", "Propane (C₃H₈)", "Butane (C₄H₁₀)"],
+     correct: 3,
+     explanation: "As molar mass increases, London dispersion forces become stronger, leading to higher boiling points. Butane is the heaviest of the options and therefore has the highest boiling point."
+    },
+    {
+     text: "How does branching in alkanes affect boiling point?",
+     options: ["Increases boiling point", "Decreases boiling point", "Has no effect on boiling point", "Only affects melting point"],
+     correct: 1,
+     explanation: "Branching in alkanes reduces the surface area available for intermolecular interactions (London dispersion forces), resulting in lower boiling points."
+    },
+    {
+     text: "Which conformation of cyclohexane is most stable?",
+     options: ["Chair", "Boat", "Twist-boat", "Half-chair"],
+     correct: 0,
+     explanation: "The chair conformation of cyclohexane is the most stable because it minimizes torsional strain and steric hindrance."
+    },
+    {
+     text: "How does the presence of bulky substituents on a cyclohexane ring affect its conformational equilibrium?",
+     options: ["Favors the axial position", "Favors the equatorial position", "Does not affect the equilibrium", "Destroys the ring"],
+     correct: 1,
+     explanation: "Bulky substituents prefer the equatorial position to minimize steric interactions with axial substituents on the same side of the ring."
+    },
+    {
+     text: "Which molecule will have the greatest dipole moment?",
+     options: ["CO₂", "BF₃", "H₂O", "CH₄"],
+     correct: 2,
+     explanation: "Water has a bent geometry with two polar O-H bonds that do not cancel out, resulting in a significant dipole moment."
+    },
+    {
+     text: "Which factor most directly affects the strength of London dispersion forces?",
+     options: ["Polarizability", "Dipole moment", "Hydrogen bonding", "Ionic charge"],
+     correct: 0,
+     explanation: "London dispersion forces depend on the ease with which the electron cloud of an atom or molecule can be polarized (distorted) to create temporary dipoles."
+    },
+    {
+     text: "How does the number of electrons in a molecule affect London dispersion forces?",
+     options: ["More electrons, weaker forces", "Fewer electrons, stronger forces", "More electrons, stronger forces", "Number of electrons has no effect"],
+     correct: 2,
+     explanation: "Molecules with more electrons tend to be more polarizable, leading to stronger London dispersion forces."
+    },
+    {
+     text: "Which halogen is most likely to form the strongest bond with carbon?",
+     options: ["Fluorine", "Chlorine", "Bromine", "Iodine"],
+     correct: 0,
+     explanation: "Fluorine is the smallest and most electronegative halogen, forming the shortest and strongest bond with carbon."
+    },
+    {
+     text: "Why is a triple bond stronger than a single bond?",
+     options: ["More pi bonds", "More sigma bonds", "Shorter length", "A combination of all the above"],
+     correct: 3,
+     explanation: "A triple bond has one sigma and two pi bonds. The multiple bonds, and reduced bond length make the triple bond stronger."
+    },
+    {
+     text: "How does the hybridization of the central atom influence molecular shape?",
+     options: ["Directly determines the shape", "Has no influence on the shape", "Only affects bond angles", "Only affects bond lengths"],
+     correct: 0,
+     explanation: "The hybridization of the central atom determines the number and arrangement of electron pairs, directly influencing the molecular shape."
+    },
+    {
+     text: "Which is the strongest type of intermolecular force?",
+     options: ["Hydrogen Bonding", "Dipole-Dipole", "London Dispersion", "Ion-Dipole"],
+     correct: 3,
+     explanation: "Ion-dipole interactions are generally stronger than hydrogen bonding, dipole-dipole, and London dispersion forces."
+    },
+    {
+     text: "How does increasing temperature affect the rate of bond rotation?",
+     options: ["Decreases the rate", "Increases the rate", "Has no effect", "Unpredictable effect"],
+     correct: 1,
+     explanation: "Increasing temperature provides more kinetic energy, making it easier to overcome rotational barriers and increasing the rate of bond rotation."
+    },
+    {
+     text: "Which of the following statements is generally true regarding rotational energy barriers?",
+     options: ["Larger groups, lower barriers", "Smaller groups, higher barriers", "Larger groups, higher barriers", "Group size is irrelevant"],
+     correct: 2,
+     explanation: "Larger groups introduce more steric hindrance, increasing the energy required to rotate around a bond and thus creating higher rotational energy barriers."
+    },
+    {
+     text: "What role does bond strength play in chemical reactivity?",
+     options: ["Stronger bonds, faster reactions", "Weaker bonds, faster reactions", "Bond strength has no effect", "Only affects equilibrium"],
+     correct: 1,
+     explanation: "Weaker bonds require less energy to break, making them more reactive and leading to faster reactions."
+    },
+{
+     text: "Which of the following is a characteristic of an electrophile?",
+     options: ["Electron-rich species", "Donates electron pairs", "Attracted to positive charge", "Electron-deficient species"],
+     correct: 3,
+     explanation: "Electrophiles are electron-deficient and seek to gain electrons to achieve stability."
+    },
+    {
+     text: "Which of the following is a characteristic of a nucleophile?",
+     options: ["Electron-deficient species", "Accepts electron pairs", "Attracted to negative charge", "Electron-rich species"],
+     correct: 3,
+     explanation: "Nucleophiles are electron-rich and donate electron pairs to form a bond."
+    },
+    {
+     text: "Which of the following is a strong electrophile?",
+     options: ["OH⁻", "NH₃", "H₂O", "NO₂⁺"],
+     correct: 3,
+     explanation: "NO₂⁺ (nitronium ion) is a strong electrophile due to the positive charge and electron deficiency on the nitrogen atom."
+    },
+    {
+     text: "Which of the following is a strong nucleophile?",
+     options: ["BF₃", "AlCl₃", "CN⁻", "H⁺"],
+     correct: 2,
+     explanation: "CN⁻ (cyanide ion) is a strong nucleophile because of its negative charge and lone pair of electrons available for bonding."
+    },
+    {
+     text: "According to Lewis definition, an acid is:",
+     options: ["Proton donor", "Proton acceptor", "Electron pair donor", "Electron pair acceptor"],
+     correct: 3,
+     explanation: "A Lewis acid accepts an electron pair to form a covalent bond."
+    },
+    {
+     text: "According to Lewis definition, a base is:",
+     options: ["Proton donor", "Proton acceptor", "Electron pair donor", "Electron pair acceptor"],
+     correct: 2,
+     explanation: "A Lewis base donates an electron pair to form a covalent bond."
+    },
+    {
+     text: "Which of the following is a Lewis acid?",
+     options: ["NH₃", "H₂O", "BF₃", "OH⁻"],
+     correct: 2,
+     explanation: "BF₃ (boron trifluoride) is a Lewis acid because it has an incomplete octet and can accept an electron pair."
+    },
+    {
+     text: "Which of the following is a Lewis base?",
+     options: ["H⁺", "AlCl₃", "SO₃", "NH₃"],
+     correct: 3,
+     explanation: "NH₃ (ammonia) is a Lewis base because it has a lone pair of electrons on the nitrogen atom that it can donate."
+    },
+    {
+     text: "What is the role of an electrophile in a chemical reaction?",
+     options: ["Accepts protons", "Donates protons", "Accepts electrons", "Donates electrons"],
+     correct: 2,
+     explanation: "An electrophile accepts electrons to form a new covalent bond in a chemical reaction."
+    },
+    {
+     text: "What is the role of a nucleophile in a chemical reaction?",
+     options: ["Accepts protons", "Donates protons", "Accepts electrons", "Donates electrons"],
+     correct: 3,
+     explanation: "A nucleophile donates electrons to form a new covalent bond in a chemical reaction."
+    },
+    {
+     text: "Which of the following reactions involves an electrophilic attack?",
+     options: ["SN1", "SN2", "Electrophilic Aromatic Substitution", "Elimination"],
+     correct: 2,
+     explanation: "Electrophilic aromatic substitution involves the attack of an electrophile on an aromatic ring."
+    },
+    {
+     text: "Which of the following reactions involves a nucleophilic attack?",
+     options: ["Electrophilic Aromatic Substitution", "SN1", "Carbocation Rearrangement", "Free Radical Halogenation"],
+     correct: 1,
+     explanation: "SN1 (Substitution Nucleophilic Unimolecular) involves a nucleophile attacking a carbocation intermediate."
+    },
+    {
+     text: "Which of the following is a bulky nucleophile?",
+     options: ["OH⁻", "CH₃O⁻", "t-BuO⁻", "CN⁻"],
+     correct: 2,
+     explanation: "t-BuO⁻ (tert-butoxide) is a bulky nucleophile due to the three methyl groups attached to the carbon bonded to the oxygen."
+    },
+    {
+     text: "How does steric hindrance affect nucleophilicity?",
+     options: ["Increases nucleophilicity", "Decreases nucleophilicity", "Has no effect", "Only affects electrophilicity"],
+     correct: 1,
+     explanation: "Steric hindrance reduces the ability of a nucleophile to approach and attack an electrophilic center."
+    },
+    {
+     text: "Which of the following solvents favors SN1 reactions?",
+     options: ["Polar aprotic", "Nonpolar", "Polar protic", "Hydrophobic"],
+     correct: 2,
+     explanation: "Polar protic solvents stabilize carbocations and promote ionization, favoring SN1 reactions."
+    },
+    {
+     text: "Which of the following solvents favors SN2 reactions?",
+     options: ["Polar protic", "Nonpolar", "Polar aprotic", "Acidic"],
+     correct: 2,
+     explanation: "Polar aprotic solvents enhance the nucleophilicity of the nucleophile by not solvating it strongly, favoring SN2 reactions."
+    },
+    {
+     text: "Which halide is the best leaving group?",
+     options: ["F⁻", "Cl⁻", "Br⁻", "I⁻"],
+     correct: 3,
+     explanation: "I⁻ (iodide) is the best leaving group because it is the largest halide and the most stable anion, making it the weakest base."
+    },
+    {
+     text: "Which of the following is a neutral nucleophile?",
+     options: ["OH⁻", "RO⁻", "NH₃", "CN⁻"],
+     correct: 2,
+     explanation: "NH₃ (ammonia) is a neutral nucleophile with a lone pair of electrons available for bonding."
+    },
+    {
+     text: "Which of the following is a charged electrophile?",
+     options: ["H₂O", "NH₃", "SO₃", "BH₃"],
+     correct: 2,
+     explanation: "SO₃ (sulfur trioxide) can act as an electrophile especially when reacting with nucleophiles in sulfonation reactions. "
+    },
+    {
+     text: "How does the strength of an acid relate to its conjugate base?",
+     options: ["Stronger acid, stronger conjugate base", "Stronger acid, weaker conjugate base", "Acid strength has no effect on conjugate base", "Only affects pH"],
+     correct: 1,
+     explanation: "A stronger acid readily donates a proton, resulting in a more stable (weaker) conjugate base."
+    },
+    {
+     text: "Which of the following is amphoteric?",
+     options: ["HCl", "NaOH", "H₂O", "NaCl"],
+     correct: 2,
+     explanation: "Water (H₂O) is amphoteric because it can act as both an acid (proton donor) and a base (proton acceptor)."
+    },
+    {
+     text: "Which is the most electrophilic carbonyl carbon?",
+     options: ["Ketone", "Aldehyde", "Amide", "Carboxylic acid"],
+     correct: 1,
+explanation: "Aldehydes tend to have more electrophilic carbonyl carbons because they have a single R group."
+    },
+    {
+     text: "What makes carbon dioxide (CO₂) act as an electrophile?",
+     options: ["The carbon-oxygen bond is non-polar", "The oxygen is highly electronegative", "Carbon has an octet", "Nothing, it is not an electrophile"],
+     correct: 1,
+     explanation: "Carbon dioxide can react with strong nucleophiles because its oxygen atoms are more electronegative making carbon partially positive."
+    },
+    {
+     text: "Why do aromatic rings undergo electrophilic substitution instead of addition reactions?",
+     options: ["Addition would destroy aromaticity", "They don't have pi electrons", "They're already saturated", "They're resistant to reaction"],
+     correct: 0,
+     explanation: "Addition reactions disrupt the stable aromatic system, whereas substitution preserves aromaticity."
+    },
+    {
+     text: "What is the first step in an SN1 reaction?",
+     options: ["Nucleophilic attack", "Proton transfer", "Carbocation formation", "Leaving group protonation"],
+     correct: 2,
+     explanation: "The first step in an SN1 reaction is the slow formation of a carbocation intermediate by the leaving group."
+    },
+    {
+     text: "Which of the following is a good leaving group?",
+     options: ["OH-", "NH₂-", "H-", "H₂O"],
+     correct: 3,
+     explanation: "Water is a good leaving group since it is a neutral, weak base."
+    },
+    {
+     text: "Which of the following is a good base but a poor nucleophile?",
+     options: ["CH₃O⁻", "t-BuO⁻", "HO⁻", "I⁻"],
+     correct: 1,
+     explanation: "t-BuO⁻ (tert-butoxide) is a strong, sterically hindered base that prefers to act as a base rather than a nucleophile."
+    },
+    {
+     text: "In the reaction of an alcohol with a strong acid, which role does the alcohol initially serve?",
+     options: ["Electrophile", "Nucleophile", "Catalyst", "Leaving group"],
+     correct: 1,
+     explanation: "The alcohol initially acts as a nucleophile, with the oxygen atom donating electrons to the proton from the acid."
+    },
+    {
+     text: "What feature makes grignard reagents so nucleophilic?",
+     options: ["The metal is extremely electronegative", "The magnesium-carbon bond is covalent", "The carbon is partially negative", "The metal is highly electropositive, making the carbon partially negative"],
+     correct: 3,
+     explanation: "Grignard reagents (RMgX) have a highly polarized C-Mg bond, with carbon acting as a nucleophile."
+    },
+    {
+     text: "Which step usually determines the rate of a reaction?",
+     options: ["The endothermic step", "The fastest step", "The first step", "The slowest step"],
+     correct: 3,
+     explanation: "The slowest step in a reaction mechanism is the rate-determining step, as it limits the overall rate of the reaction."
+    },
+{
+    text: "What is the key characteristic of homolytic bond fission?",
+    options: ["Unequal distribution of electrons", "Formation of ions", "Equal distribution of electrons", "Formation of a carbocation"],
+    correct: 2,
+    explanation: "Homolytic fission involves the symmetrical breakage of a covalent bond, with each atom retaining one electron, forming free radicals."
+  },
+  {
+    text: "What is the key characteristic of heterolytic bond fission?",
+    options: ["Equal distribution of electrons", "Formation of free radicals", "Unequal distribution of electrons", "No change in electron distribution"],
+    correct: 2,
+    explanation: "Heterolytic fission involves the unsymmetrical breakage of a covalent bond, with one atom receiving both electrons, forming ions."
+  },
+  {
+    text: "Which type of bond fission leads to the formation of free radicals?",
+    options: ["Heterolytic", "Homolytic", "Ionic", "Coordinate"],
+    correct: 1,
+    explanation: "Homolytic fission results in the formation of free radicals, which are highly reactive species with unpaired electrons."
+  },
+  {
+    text: "Which type of bond fission leads to the formation of ions?",
+    options: ["Homolytic", "Heterolytic", "Radical", "Nonpolar"],
+    correct: 1,
+    explanation: "Heterolytic fission results in the formation of ions (a cation and an anion)."
+  },
+  {
+    text: "Which factor promotes homolytic bond fission?",
+    options: ["Polar solvents", "Low temperature", "High temperature or UV light", "Acidic conditions"],
+    correct: 2,
+    explanation: "High temperatures and UV light provide the energy needed to break bonds symmetrically, promoting homolytic fission."
+  },
+  {
+    text: "Which factor promotes heterolytic bond fission?",
+    options: ["Nonpolar solvents", "High temperature", "UV light", "Polar solvents"],
+    correct: 3,
+    explanation: "Polar solvents stabilize the ions formed during heterolytic fission, making it more favorable."
+  },
+  {
+    text: "What is the inductive effect?",
+    options: ["Delocalization of pi electrons", "Permanent polarization of sigma bonds", "Steric hindrance", "Temporary polarization of pi bonds"],
+    correct: 1,
+    explanation: "The inductive effect is the transmission of charge through a chain of atoms in a molecule by the polarization of sigma bonds."
+  },
+  {
+    text: "What is the mesomeric effect?",
+    options: ["Polarization of sigma bonds", "Steric hindrance", "Delocalization of pi electrons", "Ion-dipole interactions"],
+    correct: 2,
+    explanation: "The mesomeric effect (also known as resonance effect) is the delocalization of pi electrons or lone pairs through a conjugated system."
+  },
+  {
+    text: "Which group exhibits a +I (positive inductive) effect?",
+    options: ["-Cl", "-NO₂", "-CH₃", "-CN"],
+    correct: 2,
+    explanation: "-CH₃ (methyl group) exhibits a +I effect, meaning it donates electron density through sigma bonds."
+  },
+  {
+    text: "Which group exhibits a -I (negative inductive) effect?",
+    options: ["-CH₃", "-OCH₃", "-NH₂", "-F"],
+    correct: 3,
+    explanation: "-F (fluorine) exhibits a -I effect, meaning it withdraws electron density through sigma bonds due to its high electronegativity."
+  },
+  {
+    text: "Which group exhibits a +M (positive mesomeric) effect?",
+    options: ["-NO₂", "-COOH", "-CN", "-NH₂"],
+    correct: 3,
+    explanation: "-NH₂ (amino group) exhibits a +M effect, meaning it donates electron density through pi systems or lone pairs."
+  },
+  {
+    text: "Which group exhibits a -M (negative mesomeric) effect?",
+    options: ["-OH", "-OCH₃", "-NHR", "-CHO"],
+    correct: 3,
+    explanation: "-CHO (aldehyde group) exhibits a -M effect, meaning it withdraws electron density through pi systems."
+  },
+  {
+    text: "What is steric hindrance?",
+    options: ["Repulsion between bonding electrons", "Attraction between atoms", "Crowding of atoms that affects reactivity", "Increased bond strength"],
+    correct: 2,
+    explanation: "Steric hindrance is the prevention or retardation of a chemical reaction due to the spatial arrangement of atoms or groups in the molecule."
+  },
+  {
+    text: "How does steric hindrance affect SN2 reactions?",
+    options: ["Speeds up the reaction", "Slows down the reaction", "Has no effect", "Only affects SN1 reactions"],
+    correct: 1,
+    explanation: "Steric hindrance slows down SN2 reactions because it makes it more difficult for the nucleophile to access the electrophilic carbon."
+  },
+  {
+    text: "How does steric hindrance affect elimination reactions?",
+    options: ["Favors substitution", "Favors elimination", "Has no effect", "Only affects addition"],
+    correct: 1,
+    explanation: "Steric hindrance often favors elimination reactions over substitution because a bulky base can more easily abstract a proton than approach a sterically hindered carbon for substitution."
+  },
+  {
+    text: "Which of the following carbocations is most stable?",
+    options: ["Methyl carbocation", "Primary carbocation", "Secondary carbocation", "Tertiary carbocation"],
+    correct: 3,
+    explanation: "Tertiary carbocations are the most stable due to hyperconjugation and the inductive effect of three alkyl groups donating electron density."
+  },
+  {
+    text: "Which of the following carbanions is most stable?",
+    options: ["Methyl carbanion", "Primary carbanion", "Secondary carbanion", "Tertiary carbanion"],
+    correct: 0,
+    explanation: "Methyl carbanions are the most stable carbanions, as carbanion stability decreases as alkyl substitution increases because of the electron-donating nature of alkyl groups intensifying the negative charge."
+  },
+  {
+    text: "What is hyperconjugation?",
+    options: ["Delocalization of sigma electrons into an adjacent empty or partially filled p-orbital", "Delocalization of pi electrons across a conjugated system", "Steric hindrance between adjacent groups", "Inductive effect through sigma bonds"],
+    correct: 0,
+    explanation: "Hyperconjugation involves the delocalization of sigma electrons from a C-H bond into an adjacent empty or partially filled p-orbital, which stabilizes carbocations and free radicals."
+  },
+  {
+    text: "Which of the following is a free-radical inhibitor?",
+    options: ["O₂", "ROOR", "BHT", "UV light"],
+    correct: 2,
+    explanation: "BHT (butylated hydroxytoluene) is a common free-radical inhibitor that donates a hydrogen atom to stabilize free radicals."
+  },
+  {
+    text: "Which of the following reactions is most likely to proceed via a free-radical mechanism?",
+    options: ["SN1", "SN2", "Addition of HBr to an alkene in the presence of peroxides", "E1"],
+    correct: 2,
+    explanation: "The addition of HBr to an alkene in the presence of peroxides proceeds via a free-radical mechanism, resulting in anti-Markovnikov addition."
+  },
+   {
+    text: "What is a carbene?",
+    options: ["A positively charged carbon", "A negatively charged carbon", "A neutral carbon with two bonds and two lone pairs", "A neutral carbon with two bonds and two unshared electrons"],
+    correct: 3,
+    explanation: "A carbene is a neutral molecule containing a carbon atom with only two bonds and two unshared electrons."
+  },
+  {
+    text: "What effect does increasing the dielectric constant of the solvent have on heterolytic bond cleavage?",
+    options: ["It has no effect", "It hinders it", "It promotes it", "It changes the mechanism"],
+    correct: 2,
+    explanation: "A solvent with high dielectric constant facilitates heterolytic bond cleavage by stabilizing the ions formed."
+  },
+  {
+    text: "Which type of bond is more polarized due to inductive effect?",
+    options: ["C-C", "C-H", "C-O", "C-S"],
+    correct: 2,
+    explanation: "The C-O bond is more polarized due to inductive effect because oxygen is more electronegative than carbon, leading to a significant dipole moment."
+  },
+  {
+    text: "How does the presence of electron withdrawing groups (EWG) affect the acidity of carboxylic acids?",
+    options: ["Increases acidity", "Decreases acidity", "Has no effect", "Only affects basicity"],
+    correct: 1,
+    explanation: "Electron withdrawing groups stabilize the carboxylate anion by dispersing the negative charge, leading to increased acidity."
+  },
+  {
+    text: "Which of the following molecules is most acidic?",
+    options: ["CH₃CH₂OH", "CH₃COOH", "CH₃CH₂NH₂", "CH₃CH₂CH₃"],
+    correct: 1,
+    explanation: "Carboxylic acids are typically more acidic than alcohols, amines, or alkanes."
+  },
+  {
+    text: "How does branching in the alkyl halide affect SN2 reactions?",
+    options: ["Speeds up the reaction", "Slows down the reaction", "Has no effect", "Reverses the mechanism"],
+    correct: 1,
+    explanation: "Branching, particularly at or near the reacting carbon, introduces steric hindrance, which slows down SN2 reactions."
+  },
+  {
+    text: "How does the planarity of a molecule affect its reactivity?",
+    options: ["Increases reactivity", "Decreases reactivity", "Facilitates certain reactions due to conjugation", "Only affects physical properties"],
+    correct: 2,
+    explanation: "Planarity allows for better overlap of p-orbitals, promoting conjugation and affecting reactivity, particularly in reactions involving pi systems."
+  },
+  {
+    text: "How do polar protic solvents affect SN1 reactions?",
+    options: ["They dissolve nonpolar compounds", "They stabilize the carbocation intermediate", "They increase the strength of the nucleophile", "They promote concerted mechanisms"],
+    correct: 2,
+    explanation: "Polar protic solvents such as water and alcohols stabilize the carbocation intermediate formed in SN1 reactions, thereby decreasing the activation energy and increasing the rate of the reaction."
+  },
+  {
+    text: "Why are tertiary alkyl halides not used in SN2 reactions?",
+    options: ["Too unreactive", "Too expensive", "Too sterically hindered", "Too unstable"],
+    correct: 2,
+    explanation: "Tertiary alkyl halides are too sterically hindered for SN2 reactions, where the nucleophile must attack the carbon atom from the backside."
+  },
+  {
+    text: "In free radical halogenation of alkanes, what is the propagation step?",
+    options: ["Bond homolysis by UV light", "Formation of a free radical", "Chain-carrying steps where radicals react with reactants to form new radicals", "Combination of radicals to form stable products"],
+    correct: 2,
+    explanation: "In free radical halogenation, the propagation step involves chain-carrying steps where radicals react with reactants to form new radicals, which continue the reaction."
+  },
+    {
+    text: "What is the effect of strain in cyclic molecules on their reactivity?",
+    options: ["Increases stability", "Decreases stability", "No effect on stability", "Unpredictable"],
+    correct: 1,
+    explanation: "Strain in cyclic molecules, such as in cyclopropane, decreases their stability, making them more reactive due to the high energy associated with bond angles deviating from ideal values."
+  },
+  {
+    text: "Which electronic effect predominates in toluene (+CH₃ on a benzene ring)?",
+    options: ["+I effect", "+M effect", "-I effect", "-M effect"],
+    correct: 1,
+    explanation: "In toluene, the methyl group primarily exerts a +I (inductive) effect, donating electron density to the ring. However, it can also exhibit a very weak +M (mesomeric) effect due to hyperconjugation."
+  },
+  {
+    text: "Why is the C-H bond of ethyne (acetylene) more acidic than that of ethane?",
+    options: ["sp hybridization of carbon in ethyne", "sp³ hybridization of carbon in ethyne", "Smaller atomic radius", "Weaker C-H bond"],
+    correct: 0,
+    explanation: "The C-H bond of ethyne is more acidic because the carbon atom is sp hybridized. This results in greater s-character, meaning the electrons in the C-H bond are held closer to the carbon nucleus, stabilizing the resulting carbanion and making the proton more acidic."
+  },
+  {
+    text: "How does solvation affect nucleophilicity?",
+    options: ["Increases nucleophilicity", "Decreases nucleophilicity", "Has no effect", "Only affects electrophilicity"],
+    correct: 1,
+    explanation: "Solvation, particularly by polar protic solvents, can decrease nucleophilicity by surrounding the nucleophile with solvent molecules, which hinders its ability to attack the electrophile."
+  },
+  {
+    text: "Which factor increases acidity of phenols?",
+    options: ["Electron donating groups", "Resonance stabilization of the phenoxide ion", "Alkyl groups", "Steric hindrance around the OH group"],
+    correct: 1,
+    explanation: "Resonance stabilization of the phenoxide ion increases the acidity of phenols by distributing the negative charge over the aromatic ring."
+  },
+  {
+    text: "Why is SN1 reaction not favored in polar aprotic solvent?",
+    options: ["Stabilize the carbocation", "Solvate and neutralize the carbocation", "Destabilize the carbocation", "None"],
+    correct: 2,
+    explanation: "Polar aprotic solvents fail to effectively solvate and stabilize the carbocation intermediate formed in SN1 reactions, resulting in a higher activation energy."
+  },
+  {
+    text: "How does strain affect reactivity of small ring compounds?",
+    options: ["They’re less reactive", "They’re more reactive", "Steric crowding increases reactivity", "Strain has no effect"],
+    correct: 1,
+    explanation: "Strain in small ring compounds increases reactivity because the high-energy states are less stable, reducing the energy required for reactions to occur."
+  },
+  {
+    text: "Which halide undergoes hydrolysis (SN1) fastest?",
+    options: ["CH₃F", "(CH₃)₃C-Cl", "CH₃I", "CH₃Br"],
+    correct: 1,
+    explanation: "(CH₃)₃C-Cl will undergo hydrolysis through SN1 fastest due to the carbocation being most stable (tertiary). Iodine is a better leaving group than Cl but Cl is on a better and more stable carbocation."
+  },
+  {
+    text: "Increasing the concentration of the substrate will increase the rate in?",
+    options: ["SN1 only", "SN2 only", "E1 only", "Both SN1 and SN2"],
+    correct: 1,
+    explanation: "In SN2 reactions, the rate-determining step depends on the concentration of both the substrate and the nucleophile, so the rate of the reaction increases with increasing substrate concentration."
+  },
+  {
+    text: "Which statement about carbocations is incorrect?",
+    options: ["Trigonal planar", "sp2 hybridization", "Stabilized by alkyl groups", "Electron rich species"],
+    correct: 3,
+    explanation: "Carbocations are electron-deficient species and possess a positive charge on the carbon atom
+
+."
+  },
+{
+    text: "What is the definition of a homologous series?",
+    options: ["Compounds with the same functional group and similar chemical properties, differing by a CH₂ group", "Compounds with different functional groups but similar chemical properties", "Isomers with the same molecular formula but different structures", "Polymers with repeating monomer units"],
+    correct: 0,
+    explanation: "A homologous series consists of a group of organic compounds with the same functional group and similar chemical properties, where each successive member differs by a CH₂ group."
+  },
+  {
+    text: "Which of the following is NOT a characteristic of a homologous series?",
+    options: ["Same general formula", "Gradual change in physical properties", "Different functional groups", "Similar chemical properties"],
+    correct: 2,
+    explanation: "Compounds in a homologous series must have the same functional group. Different functional groups would change the fundamental chemical behavior."
+  },
+  {
+    text: "Which of the following is the general formula for alkanes?",
+    options: ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙHₙ"],
+    correct: 1,
+    explanation: "The general formula for alkanes is CₙH₂ₙ₊₂, where 'n' represents the number of carbon atoms."
+  },
+  {
+    text: "Which of the following is the general formula for alkenes?",
+    options: ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙHₙ"],
+    correct: 1,
+    explanation: "The general formula for alkenes, which contain one carbon-carbon double bond, is CₙH₂ₙ."
+  },
+  {
+    text: "Which of the following is the general formula for alkynes?",
+    options: ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙHₙ"],
+    correct: 2,
+    explanation: "The general formula for alkynes, which contain one carbon-carbon triple bond, is CₙH₂ₙ₋₂."
+  },
+  {
+    text: "What is the functional group of alcohols?",
+    options: ["-COOH", "-CHO", "-OH", "-C=O"],
+    correct: 2,
+    explanation: "The functional group of alcohols is the hydroxyl group (-OH) attached to a carbon atom."
+  },
+  {
+    text: "What is the functional group of aldehydes?",
+    options: ["-COOH", "-CHO", "-OH", "-C=O"],
+    correct: 1,
+    explanation: "The functional group of aldehydes is the carbonyl group (-CHO) where the carbon is bonded to a hydrogen atom and an alkyl or aryl group."
+  },
+  {
+    text: "What is the functional group of ketones?",
+    options: ["-COOH", "-CHO", "-OH", "-C=O"],
+    correct: 3,
+    explanation: "The functional group of ketones is the carbonyl group (-C=O) where the carbon is bonded to two alkyl or aryl groups."
+  },
+  {
+    text: "What is the functional group of carboxylic acids?",
+    options: ["-COOH", "-CHO", "-OH", "-C=O"],
+    correct: 0,
+    explanation: "The functional group of carboxylic acids is the carboxyl group (-COOH), which consists of a carbonyl group bonded to a hydroxyl group."
+  },
+  {
+    text: "What is the functional group of ethers?",
+    options: ["-O-", "-C=O", "-NH₂", "-COOH"],
+    correct: 0,
+    explanation: "The functional group of ethers is an oxygen atom bonded to two alkyl or aryl groups (-O-)."
+  },
+  {
+    text: "What is the functional group of esters?",
+    options: ["-COOR", "-OR", "-COR", "-RCOR"],
+    correct: 0,
+    explanation: "The functional group of esters is -COOR, where a carbon is doubly bonded to an oxygen atom and singly bonded to another oxygen atom that's connected to a carbon group."
+  },
+  {
+    text: "What is the functional group of amines?",
+    options: ["-NH₂", "-OH", "-CHO", "-COOH"],
+    correct: 0,
+    explanation: "The functional group of amines is the amino group (-NH₂), which is a nitrogen atom bonded to one or more alkyl or aryl groups."
+  },
+  {
+    text: "What is the functional group of amides?",
+    options: ["-CONH₂", "-CHO", "-C=O", "-NH₂"],
+    correct: 0,
+    explanation: "The functional group of amides is the amide group (-CONH₂), which consists of a carbonyl group bonded to a nitrogen atom."
+  },
+  {
+    text: "Which functional group is present in a Grignard reagent?",
+    options: ["-MgX", "-OH", "-Li", "-Na"],
+    correct: 0,
+    explanation: "A Grignard reagent contains a carbon-magnesium bond (-MgX), where X is a halogen atom."
+  },
+  {
+    text: "What type of reaction is characteristic of alkenes?",
+    options: ["Substitution", "Addition", "Elimination", "Hydrolysis"],
+    correct: 1,
+    explanation: "Alkenes undergo addition reactions due to the presence of the carbon-carbon double bond, which can be broken to form new sigma bonds."
+  },
+  {
+    text: "Which type of reaction is characteristic of alcohols?",
+    options: ["Combustion", "Oxidation", "Reduction", "Halogenation"],
+    correct: 1,
+    explanation: "Alcohols can undergo oxidation reactions to form aldehydes, ketones, or carboxylic acids, depending on the structure of the alcohol and the oxidizing agent used."
+  },
+  {
+    text: "Which reagent can be used to reduce a carboxylic acid to an alcohol?",
+    options: ["H₂/Pd", "NaBH₄", "LiAlH₄", "KMnO₄"],
+    correct: 2,
+    explanation: "LiAlH₄ (lithium aluminum hydride) is a strong reducing agent that can reduce carboxylic acids to primary alcohols."
+  },
+  {
+    text: "Which reagent can be used to oxidize a primary alcohol to an aldehyde?",
+    options: ["KMnO₄", "H₂CrO₄", "PCC", "NaBH₄"],
+    correct: 2,
+    explanation: "PCC (pyridinium chlorochromate) is a mild oxidizing agent that can selectively oxidize primary alcohols to aldehydes without further oxidizing them to carboxylic acids."
+  },
+  {
+    text: "Which reagent can be used to convert an alcohol to an alkyl halide?",
+    options: ["H₂SO₄", "NaOH", "SOCl₂", "H₂/Ni"],
+    correct: 2,
+    explanation: "SOCl₂ (thionyl chloride) is commonly used to convert alcohols to alkyl chlorides."
+  },
+  {
+    text: "What is the product of the reaction between a carboxylic acid and an alcohol?",
+    options: ["Amide", "Ester", "Ether", "Ketone"],
+    correct: 1,
+    explanation: "The reaction between a carboxylic acid and an alcohol, typically under acidic conditions, forms an ester and water in a process called esterification."
+  },
+  {
+    text: "What is the product of the reaction between an amine and a carboxylic acid?",
+    options: ["Amide", "Ester", "Ether", "Ketone"],
+    correct: 0,
+    explanation: "The reaction between an amine and a carboxylic acid forms an amide and water."
+  },
+    {
+    text: "Which of the following functional groups can undergo hydrogen bonding?",
+    options: ["Alkanes", "Alkenes", "Alcohols", "Alkyl Halides"],
+    correct: 2,
+    explanation: "Alcohols contain a hydroxyl (-OH) group that can form hydrogen bonds with other alcohol molecules or other polar molecules."
+  },
+  {
+    text: "Which of the following functional groups can form dimers through hydrogen bonding?",
+    options: ["Alcohols", "Carboxylic acids", "Amines", "Esters"],
+    correct: 1,
+    explanation: "Carboxylic acids can form stable dimers through hydrogen bonding because they have both a hydrogen bond donor (OH) and a hydrogen bond acceptor (C=O)."
+  },
+  {
+    text: "Which of the following best describes the acidity of alcohols?",
+    options: ["More acidic than water", "Less acidic than water", "About as acidic as water", "Not acidic"],
+    correct: 1,
+    explanation: "Alcohols are generally less acidic than water because the alkyl group attached to the oxygen atom is electron-donating, which destabilizes the conjugate base (alkoxide ion)."
+  },
+  {
+    text: "What is the Lucas test used to distinguish?",
+    options: ["Aldehydes and ketones", "Primary, secondary, and tertiary alcohols", "Alkanes and alkenes", "Carboxylic acids and esters"],
+    correct: 1,
+    explanation: "The Lucas test (using HCl and ZnCl₂) is used to distinguish primary, secondary, and tertiary alcohols based on their rate of reaction with the reagent."
+  },
+  {
+    text: "What is the Tollen's reagent used to identify?",
+    options: ["Aldehydes", "Ketones", "Alcohols", "Carboxylic acids"],
+    correct: 0,
+    explanation: "Tollen's reagent is used to identify aldehydes. Positive Tollen's test results in the formation of silver metal."
+  },
+  {
+    text: "Which functional group gives a positive iodoform test?",
+    options: ["Ketones", "Aldehydes", "Alcohols", "Methyl ketones"],
+    correct: 3,
+    explanation: "Methyl ketones give a positive iodoform test, forming a yellow precipitate of iodoform (CHI₃)."
+  },
+  {
+    text: "Which of the following functional groups contains nitrogen?",
+    options: ["Ether", "Ester", "Amide", "Alcohol"],
+    correct: 2,
+    explanation: "An amide contains nitrogen bonded to a carbonyl carbon"
+  },
+  {
+    text: "What are the repeating units in polymers called?",
+    options: ["Monomers", "Dimers", "Oligomers", "Polymers"],
+    correct: 0,
+    explanation: "The repeating units in polymers are called monomers."
+  },
+  {
+    text: "Which is the most reduced functional group?",
+    options: ["Alcohol", "Aldehyde", "Alkane", "Carboxylic acid"],
+    correct: 2,
+    explanation: "Alkanes are the most reduced functional group because they only contain carbon-carbon and carbon-hydrogen single bonds."
+  },
+    {
+    text: "Which functional group is responsible for the sweet smell of fruits?",
+    options: ["Amines", "Ethers", "Esters", "Alcohols"],
+    correct: 2,
+    explanation: "Esters are responsible for the sweet smell of many fruits and flowers."
+  },
+  {
+    text: "What is the hybridization of the carbon atom in a carbonyl group?",
+    options: ["sp", "sp²", "sp³", "dsp²"],
+    correct: 1,
+    explanation: "The carbon atom in a carbonyl group is sp² hybridized, allowing for the formation of one sigma and one pi bond with the oxygen atom."
+  },
+  {
+    text: "Which reagent reduces ketones to secondary alcohols?",
+    options: ["LiAlH₄", "H₂CrO₄", "KMnO₄", "Jones Reagent"],
+    correct: 0,
+    explanation: "Lithium aluminum hydride (LiAlH₄) is a powerful reducing agent that reduces ketones to secondary alcohols."
+  },
+  {
+    text: "What type of bond is formed when an amine reacts with an acid chloride?",
+    options: ["Ester", "Amide", "Ether", "Ketone"],
+    correct: 1,
+    explanation: "An amine reacts with an acid chloride to form an amide and HCl."
+  },
+  {
+    text: "Which functional group is involved in the formation of peptide bonds in proteins?",
+    options: ["Alcohol", "Amine", "Amide", "Carboxylic acid"],
+    correct: 2,
+    explanation: "Peptide bonds in proteins are formed through a condensation reaction between the carboxyl group of one amino acid and the amino group of another, forming an amide bond."
+  },
+  {
+    text: "Which functional group is present in fats and oils?",
+    options: ["Amide", "Ester", "Alcohol", "Ketone"],
+    correct: 1,
+    explanation: "Fats and oils are triglycerides, which are esters formed from glycerol and three fatty acids."
+  },
+  {
+    text: "How can you distinguish a primary amine from a secondary amine?",
+    options: ["Oxidation", "Reduction", "Hinsberg's test", "Hydrolysis"],
+    correct: 2,
+    explanation: "Hinsberg's test is used to distinguish primary, secondary, and tertiary amines based on their reaction with benzenesulfonyl chloride."
+  },
+  {
+    text: "How many structural isomers are possible for alcohols with the molecular formula C₄H₁₀O?",
+    options: ["2", "3", "4", "5"],
+    correct: 3,
+    explanation: "There are 4 structural isomers possible for alcohols with the molecular formula C₄H₁₀O: butan-1-ol, butan-2-ol, 2-methylpropan-1-ol, and 2-methylpropan-2-ol."
+  },
+  {
+    text: "Which test distinguishes between ethanol and ethanoic acid?",
+    options: ["Sodium Bicarbonate Test", "Lucas Test", "Iodoform Test", "Bromine Water Test"],
+    correct: 0,
+    explanation: "Sodium Bicarbonate Test readily identifies carboxylic acids and their acidic nature"
+  },
+{
+    text: "Which compound would be most resistant to oxidation?",
+    options: ["1-Butanol", "2-Butanol", "2-Methyl-2-propanol", "Butanal"],
+    correct: 2,
+    explanation: "2-Methyl-2-propanol (a tertiary alcohol) is most resistant to oxidation because it lacks a hydrogen atom on the carbon bearing the hydroxyl group, which is necessary for oxidation to a carbonyl compound."
+  },
+  {
+    text: "Which of the following reactions would you use to convert a nitrile (R-CN) directly into a primary amine (R-CH₂NH₂)?",
+    options: ["Hydrolysis under acidic conditions", "Oxidation with KMnO₄", "Reduction with LiAlH₄", "Grignard reaction followed by hydrolysis"],
+    correct: 2,
+    explanation: "Reduction with LiAlH₄ directly converts nitriles into primary amines. Other methods would either hydrolyze the nitrile to a carboxylic acid or add additional carbon atoms."
+  },
+  {
+    text: "Which of the following compounds would react fastest with Lucas reagent?",
+    options: ["Ethanol", "1-Propanol", "2-Methyl-2-propanol", "1-Butanol"],
+    correct: 2,
+    explanation: "Lucas reagent (HCl/ZnCl₂) reacts fastest with tertiary alcohols because they form the most stable carbocation intermediates, leading to a rapid SN1 reaction. 2-Methyl-2-propanol is a tertiary alcohol."
+  },
+  {
+    text: "Which of the following is least likely to form hydrogen bonds with water?",
+    options: ["Diethyl ether", "1-Butanol", "Acetic acid", "Trimethylamine"],
+    correct: 0,
+    explanation: "While ethers have an oxygen atom that can accept hydrogen bonds, they lack a hydrogen atom bonded to the oxygen, making them less effective at forming hydrogen bonds with water compared to alcohols, carboxylic acids, or amines."
+  },
+  {
+    text: "Which statement is incorrect regarding the reactivity of carbonyl compounds?",
+    options: ["Aldehydes are generally more reactive than ketones towards nucleophilic attack", "Steric hindrance is a major factor in carbonyl reactivity", "Electron-withdrawing groups increase the electrophilicity of the carbonyl carbon", "Carbonyl groups are resistant to reduction"],
+    correct: 3,
+    explanation: "Carbonyl groups are readily reduced by reagents like NaBH₄ or LiAlH₄, making the statement that they are resistant to reduction incorrect."
+  },
+  {
+    text: "Which of the following reagents can distinguish between a terminal alkyne and a non-terminal alkyne?",
+    options: ["Bromine water", "Tollens' reagent", "Dilute H₂SO₄", "Lindlar's catalyst"],
+    correct: 1,
+    explanation: "Tollens' reagent (ammoniacal silver nitrate) reacts with terminal alkynes to form a silver acetylide precipitate, distinguishing them from non-terminal alkynes that do not have an acidic proton."
+  },
+  {
+    text: "Which of the following cannot undergo self-aldol condensation?",
+    options: ["Acetaldehyde", "Acetone", "Benzaldehyde", "Butanal"],
+    correct: 2,
+    explanation: "Benzaldehyde lacks an alpha-hydrogen, which is required for the enolization step in the aldol condensation, so it cannot undergo self-aldol condensation."
+  },
+  {
+    text: "What is the final product when excess ethanol reacts with acetic anhydride in the presence of sulfuric acid?",
+    options: ["Ethyl acetate", "Diethyl ether", "Ethane", "Ethanoic acid"],
+    correct: 0,
+    explanation: "Acetic anhydride reacts with ethanol to form ethyl acetate. The sulfuric acid acts as a catalyst."
+  },
+  {
+    text: "What would be the product when propanal reacts with semi-carbazide (NH₂-NH-CO-NH₂) and acid?",
+    options: ["Propyl semicarbazone", "Propanoic acid", "Propylamine", "Hydrazine"],
+    correct: 0,
+    explanation: "Propanal reacts with semicarbazide to form propyl semicarbazone, which is a derivative formed by the condensation reaction between the carbonyl group and the amine group of semicarbazide."
+  },
+  {
+    text: "Which compound exhibits the lowest C=O stretching frequency in an IR spectrum?",
+    options: ["Acetaldehyde", "Acetone", "Ethyl acetate", "Acetamide"],
+    correct: 3,
+    explanation: "Amides exhibit the lowest C=O stretching frequency due to resonance delocalization of the nitrogen lone pair into the carbonyl group, decreasing the C=O bond order."
+  },
+  {
+    text: "What is the IUPAC name for the compound CH₃-CH(OH)-CH₂-CHO?",
+    options: ["3-Hydroxybutanal", "2-Hydroxybutanal", "3-Hydroxybutanone", "1-Hydroxybutanone"],
+    correct: 0,
+    explanation: "According to IUPAC nomenclature, the aldehyde group has higher priority, so it's 3-Hydroxybutanal, as the carbonyl group is at carbon number 1."
+  },
+  {
+    text: "Which of the following is a hemiacetal?",
+    options: ["CH₃-O-CH₃", "CH₃-CH(OCH₃)₂", "CH₃-CH(OH)-OCH₃", "CH₃-CHO"],
+    correct: 2,
+    explanation: "A hemiacetal has one -OH group and one -OR group attached to the same carbon atom (CH₃-CH(OH)-OCH₃)."
+  },
+  {
+    text: "Which reaction converts an aldehyde to a geminal diol?",
+    options: ["Reaction with excess alcohol in the presence of acid", "Hydration", "Wolff-Kishner reduction", "Grignard reaction"],
+    correct: 1,
+    explanation: "An aldehyde can convert into a geminal diol (1,1 diol) by hydration in which 2 OH groups attach with same carbon."
+  },
+  {
+    text: "Which of the following statements regarding the acidity of terminal alkynes is correct?",
+    options: ["They are strong acids", "They are weaker acids than alkanes but stronger than alkenes", "They are weaker acids than both alkanes and alkenes", "Their acidity is comparable to that of alcohols"],
+    correct: 1,
+    explanation: "Terminal alkynes are more acidic than alkanes and alkenes because of the sp hybridization of the carbon atom bonded to the acidic proton, making the conjugate base (acetylide ion) more stable. However, they are still weak acids, much weaker than alcohols."
+  },
+  {
+    text: "What is the product of a Wittig reaction?",
+    options: ["Alcohol", "Alkene", "Alkane", "Ether"],
+    correct: 1,
+    explanation: "A Wittig reaction is used to form an alkene from a carbonyl compound and a phosphorus ylide."
+  },
+  {
+    text: "What is the key structural feature of a lactone?",
+    options: ["Cyclic amide", "Cyclic ether", "Cyclic ester", "Cyclic ketone"],
+    correct: 2,
+    explanation: "A lactone is a cyclic ester, formed by intramolecular esterification."
+  },
+  {
+    text: "Which of the following compounds can form intermolecular hydrogen bonds but not intramolecular hydrogen bonds?",
+    options: ["Ethylene glycol", "Glycerol", "o-Hydroxybenzoic acid", "p-Hydroxybenzoic acid"],
+    correct: 3,
+    explanation: "p-Hydroxybenzoic acid (para isomer) can form intermolecular hydrogen bonds, while o-Hydroxybenzoic acid (ortho isomer) forms intramolecular hydrogen bonds. Ethylene glycol and Glycerol can do both."
+  },
+  {
+    text: "What type of isomers are ethanol and dimethyl ether?",
+    options: ["Chain isomers", "Position isomers", "Functional group isomers", "Tautomers"],
+    correct: 2,
+    explanation: "Ethanol (an alcohol) and dimethyl ether (an ether) have the same molecular formula (C₂H₆O) but different functional groups, making them functional group isomers."
+  },
+  {
+    text: "Which of the following compounds is chiral?",
+    options: ["2-Methylpropane", "2-Chloropropane", "2-Chlorobutane", "2-Methylpropene"],
+    correct: 2,
+    explanation: "2-Chlorobutane is chiral because it has a carbon atom bonded to four different groups (H, Cl, CH₃, CH₂CH₃), making it a stereocenter."
+  },
+  {
+    text: "Which of the following statements regarding the Claisen condensation is most accurate?",
+    options: ["It forms a β-hydroxy ketone", "It forms a β-diketone", "It forms an α,β-unsaturated aldehyde", "It forms an α-hydroxy ester"],
+    correct: 1,
+    explanation: "The Claisen condensation involves the reaction of two esters in the presence of a strong base to form a β-diketone. A β-keto ester is also possible."
+  },
+{
+     text: "Which type of reaction involves the addition of a reagent to a multiple bond, decreasing its bond order?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 2,
+     explanation: "Addition reactions involve the joining of two or more molecules to form a larger molecule, typically at a multiple bond. This decreases the bond order of the multiple bond."
+    },
+    {
+     text: "Which type of reaction involves the removal of atoms or groups from a molecule, forming a multiple bond?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 1,
+     explanation: "Elimination reactions involve the removal of atoms or groups from a molecule, often resulting in the formation of a double or triple bond."
+    },
+    {
+     text: "Which type of reaction involves the replacement of one atom or group with another?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 0,
+     explanation: "Substitution reactions involve the replacement of one atom or group in a molecule with another atom or group."
+    },
+    {
+     text: "Which type of reaction involves changing the connectivity of atoms within a molecule?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 3,
+     explanation: "Rearrangement reactions involve the migration of an atom or group from one position to another within the same molecule."
+    },
+    {
+     text: "What type of reaction is the hydrogenation of an alkene?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 2,
+     explanation: "Hydrogenation of an alkene is an addition reaction where hydrogen atoms are added across the double bond, converting it to a single bond."
+    },
+    {
+     text: "What type of reaction is the dehydration of an alcohol to form an alkene?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 1,
+     explanation: "Dehydration of an alcohol involves the removal of water (H₂O) from the molecule, resulting in the formation of a double bond in an alkene."
+    },
+    {
+     text: "What type of reaction is the SN1 reaction?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 0,
+     explanation: "SN1 stands for Substitution Nucleophilic Unimolecular, indicating that it is a type of substitution reaction."
+    },
+    {
+     text: "What type of reaction is the SN2 reaction?",
+     options: ["Substitution", "Elimination", "Addition", "Rearrangement"],
+     correct: 0,
+     explanation: "SN2 stands for Substitution Nucleophilic Bimolecular, indicating that it is a type of substitution reaction."
+    },
+    {
+     text: "What type of reaction is the Diels-Alder reaction?",
+     options: ["Cycloaddition", "Elimination", "Substitution", "Polymerization"],
+     correct: 0,
+     explanation: "The Diels-Alder reaction is a cycloaddition reaction between a conjugated diene and a dienophile, forming a cyclic adduct."
+    },
+    {
+     text: "What type of reaction is the Grignard reaction?",
+     options: ["Addition", "Elimination", "Substitution", "Polymerization"],
+     correct: 0,
+     explanation: "The Grignard reaction involves the addition of an organomagnesium reagent (Grignard reagent) to a carbonyl compound."
+    },
+    {
+     text: "What type of reaction is esterification?",
+     options: ["Addition", "Elimination", "Substitution", "Condensation"],
+     correct: 3,
+     explanation: "Esterification, the reaction between a carboxylic acid and an alcohol, is a condensation reaction because it involves the formation of a new bond with the elimination of a small molecule (water)."
+    },
+    {
+     text: "What type of reaction is saponification?",
+     options: ["Hydrolysis", "Esterification", "Polymerization", "Reduction"],
+     correct: 0,
+     explanation: "Saponification is the hydrolysis of an ester (typically a triglyceride) under basic conditions to form a carboxylate salt (soap) and an alcohol (glycerol)."
+    },
+    {
+     text: "What type of reaction is polymerization?",
+     options: ["Addition", "Elimination", "Substitution", "Combination of many smaller molecules"],
+     correct: 3,
+     explanation: "Polymerization involves the joining of many small molecules (monomers) to form a large molecule (polymer)."
+    },
+    {
+     text: "What type of reaction is cracking in the petroleum industry?",
+     options: ["Polymerization", "Isomerization", "Decomposition", "Hydrogenation"],
+     correct: 2,
+     explanation: "Cracking is a decomposition reaction where large hydrocarbons are broken down into smaller, more useful hydrocarbons."
+    },
+    {
+     text: "What type of reaction is catalytic reforming?",
+     options: ["Isomerization", "Dehydrogenation", "Cyclization", "All of the above"],
+     correct: 3,
+     explanation: "Catalytic reforming involves various reactions, including isomerization, dehydrogenation, and cyclization, to convert low-octane naphthas into higher-octane aromatics."
+    },
+    {
+     text: "What type of reaction is halogenation of an alkane under UV light?",
+     options: ["SN1", "SN2", "Free-radical substitution", "Electrophilic addition"],
+     correct: 2,
+     explanation: "Halogenation of an alkane under UV light proceeds via a free-radical substitution mechanism."
+    },
+    {
+     text: "What type of reaction is the Friedel-Crafts alkylation?",
+     options: ["Electrophilic aromatic substitution", "Nucleophilic aromatic substitution", "Elimination", "Addition"],
+     correct: 0,
+     explanation: "Friedel-Crafts alkylation involves the substitution of a hydrogen atom on an aromatic ring with an alkyl group via an electrophilic aromatic substitution mechanism."
+    },
+    {
+     text: "What type of reaction is ozonolysis?",
+     options: ["Oxidative cleavage", "Reduction", "Polymerization", "Rearrangement"],
+     correct: 0,
+     explanation: "Ozonolysis is an oxidative cleavage reaction where an alkene or alkyne is cleaved with ozone to form carbonyl compounds."
+    },
+    {
+     text: "What type of reaction converts a cis-alkene to a trans-alkene?",
+     options: ["Hydrogenation", "Isomerization", "Hydrohalogenation", "Hydration"],
+     correct: 1,
+     explanation: "Isomerization involves converting one isomer into another, such as a cis-alkene to a trans-alkene."
+    },
+    {
+     text: "What type of reaction is the Wolff-Kishner reduction?",
+     options: ["Oxidation", "Reduction", "Addition", "Elimination"],
+     correct: 1,
+     explanation: "The Wolff-Kishner reduction reduces a carbonyl group (C=O) to a methylene group (CH₂)."
+    },
+    {
+     text: "What type of reaction is the Clemmensen reduction?",
+     options: ["Oxidation", "Reduction", "Addition", "Elimination"],
+     correct: 1,
+     explanation: "The Clemmensen reduction reduces a carbonyl group (C=O) to a methylene group (CH₂) using zinc amalgam and hydrochloric acid."
+    },
+    {
+     text: "What type of reaction is the Baeyer-Villiger oxidation?",
+     options: ["Rearrangement", "Elimination", "Addition", "Substitution"],
+     correct: 0,
+     explanation: "The Baeyer-Villiger oxidation is a rearrangement reaction where a ketone is converted to an ester using a peroxy acid."
+    },
+    {
+     text: "What type of reaction is the Fischer esterification?",
+     options: ["Condensation", "Addition", "Elimination", "Substitution"],
+     correct: 0,
+     explanation: "Fischer esterification, involving a carboxylic acid and an alcohol to form an ester, is a condensation reaction."
+    },
+    {
+     text: "What type of reaction is used to synthesize polyamides like nylon?",
+     options: ["Addition", "Condensation polymerization", "Chain-growth polymerization", "Ring-opening polymerization"],
+     correct: 1,
+     explanation: "Polyamides, like nylon, are synthesized via condensation polymerization, involving the elimination of water molecules as monomers link together."
+    },
+    {
+     text: "What is hydrohalogenation reaction?",
+     options: ["Reaction with water", "Addition of Hydrogen Halide", "Removal of Halogen", "Halogen-Hydrogen Exchange"],
+     correct: 1,
+     explanation: "Hydrohalogenation reaction is a chemical reaction in which hydrogen halide is added to the substrate."
+    },
+    {
+     text: "What is pyrolysis?",
+     options: ["Decomposition by heat", "Decomposition by radiation", "Decomposition by electric field", "Decomposition by catalyst"],
+     correct: 0,
+     explanation: "Pyrolysis is a thermochemical decomposition of organic material at elevated temperatures in the absence of oxygen (or any halogen). It involves the simultaneous change of chemical composition and physical phase, and is irreversible."
+    },
+    {
+     text: "What is metathesis?",
+     options: ["Rearrangement", "Recombination", "Addition", "Exchange of atoms"],
+     correct: 3,
+     explanation: "Metathesis is a specific kind of catalytic reaction that involves the redistribution (breaking and making of chemical bonds) of fragments of alkenes (olefins)."
+    },
+    {
+     text: "What best describes a cheletropic reaction?",
+     options: ["Elimination that creates a ring", "Addition that eliminates", "Cycloaddition that eliminates", "Addition to a pi-system"],
+     correct: 2,
+     explanation: "A cheletropic reaction is a type of pericyclic reaction where two sigma bonds are made or broken at a single atom."
+    },
+    {
+     text: "A Claisen Rearrangement belongs to which class of organic reactions?",
+     options: ["Electrocyclic", "Sigmatropic", "Group Transfer", "Chelotropic"],
+     correct: 1,
+     explanation: "The Claisen rearrangement is a [3,3]-sigmatropic rearrangement."
+    },
+    {
+     text: "Which reaction would convert a ketone to a methylene group?",
+     options: ["Wittig", "Clemmensen", "Wolff-Kishner", "Both Clemmensen and Wolff-Kishner"],
+     correct: 3,
+     explanation: "Both Clemmensen and Wolff-Kishner reactions can be used to reduce a ketone or aldehyde to a methylene group."
+    },
+    
   {
     text: "Which of the following salts typically appears white?",
     options: ["CuSO₄", "NiCl₂", "ZnSO₄", "KMnO₄"],
