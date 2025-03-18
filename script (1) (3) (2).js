@@ -9669,7 +9669,674 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
 "CHM102": {
       title: "INTRODUCTORY CHEMISTRY 2",
   questions: [
-    
+         
+        {
+          text: "What is the general formula for alkyl halides?",
+          options: ["RX", "ROH", "RCHO", "RCOOH"],
+          correct: 0,
+          explanation: "Alkyl halides have the general formula RX, where R is an alkyl group and X is a halogen (F, Cl, Br, I). ROH is an alcohol, RCHO is an aldehyde, and RCOOH is a carboxylic acid."
+        },
+        {
+          text: "Which of the following is the correct IUPAC name for CH₃CH₂CH₂Br?",
+          options: ["1-Bromopropane", "2-Bromopropane", "Bromomethane", "Bromoethane"],
+          correct: 0,
+          explanation: "The compound has a 3-carbon chain (propane) with a bromine atom attached to the first carbon, so the correct name is 1-bromopropane."
+        },
+        {
+          text: "What is the order of reactivity of alkyl halides in SN1 reactions?",
+          options: ["Primary > Secondary > Tertiary", "Tertiary > Secondary > Primary", "Primary > Tertiary > Secondary", "Secondary > Primary > Tertiary"],
+          correct: 1,
+          explanation: "SN1 reactions proceed via a carbocation intermediate, and the stability of carbocations follows the order: Tertiary > Secondary > Primary. More substituted carbocations are more stable and therefore more reactive in SN1 reactions."
+        },
+        {
+          text: "What is the order of reactivity of alkyl halides in SN2 reactions?",
+          options: ["Primary > Secondary > Tertiary", "Tertiary > Secondary > Primary", "Primary > Tertiary > Secondary", "Secondary > Primary > Tertiary"],
+          correct: 0,
+          explanation: "SN2 reactions proceed via a concerted mechanism with backside attack, and steric hindrance decreases the reactivity. Primary alkyl halides are the least hindered, making them the most reactive in SN2 reactions."
+        },
+        {
+          text: "Which of the following factors favors an SN1 reaction over an SN2 reaction?",
+          options: ["Strong nucleophile", "Polar aprotic solvent", "Primary alkyl halide", "Tertiary alkyl halide"],
+          correct: 3,
+          explanation: "Tertiary alkyl halides are sterically hindered, making SN2 reactions difficult. SN1 reactions are favored by tertiary alkyl halides, polar protic solvents, and weak nucleophiles."
+        },
+        {
+          text: "Which of the following factors favors an SN2 reaction over an SN1 reaction?",
+          options: ["Weak nucleophile", "Polar protic solvent", "Tertiary alkyl halide", "Strong nucleophile"],
+          correct: 3,
+          explanation: "Strong nucleophiles favor SN2 reactions because the nucleophile directly attacks the alkyl halide. Primary alkyl halides and polar aprotic solvents also favor SN2."
+        },
+        {
+          text: "What type of solvent favors SN1 reactions?",
+          options: ["Nonpolar", "Polar aprotic", "Polar protic", "Hydrophobic"],
+          correct: 2,
+          explanation: "Polar protic solvents (e.g., water, alcohols) favor SN1 reactions because they can stabilize the carbocation intermediate through solvation."
+        },
+        {
+          text: "What type of solvent favors SN2 reactions?",
+          options: ["Nonpolar", "Polar aprotic", "Polar protic", "Hydrophobic"],
+          correct: 1,
+          explanation: "Polar aprotic solvents (e.g., acetone, DMSO) favor SN2 reactions because they do not solvate the nucleophile as strongly as protic solvents, making the nucleophile more reactive."
+        },
+        {
+          text: "Which of the following is a strong nucleophile?",
+          options: ["H₂O", "CH₃OH", "Cl⁻", "OH⁻"],
+          correct: 3,
+          explanation: "Hydroxide ion (OH⁻) is a strong nucleophile. Water and methanol are weak nucleophiles, and chloride is a weaker nucleophile compared to hydroxide."
+        },
+        {
+          text: "What is the stereochemical outcome of an SN1 reaction at a chiral center?",
+          options: ["Inversion", "Retention", "Racemization", "Syn addition"],
+          correct: 2,
+          explanation: "SN1 reactions proceed via a carbocation intermediate, which is planar. The nucleophile can attack from either side, resulting in racemization (a mixture of both enantiomers)."
+        },
+        {
+          text: "What is the stereochemical outcome of an SN2 reaction at a chiral center?",
+          options: ["Inversion", "Retention", "Racemization", "Syn addition"],
+          correct: 0,
+          explanation: "SN2 reactions proceed with inversion of configuration at the chiral center because the nucleophile attacks from the backside, flipping the stereochemistry."
+        },
+        {
+          text: "What type of reaction is the elimination of HX from an alkyl halide to form an alkene?",
+          options: ["Addition", "Substitution", "Elimination", "Rearrangement"],
+          correct: 2,
+          explanation: "Elimination reactions involve the removal of atoms or groups from a molecule to form a double bond. In this case, HX is eliminated from the alkyl halide, forming an alkene."
+        },
+        {
+          text: "Which rule predicts the major product in an elimination reaction of an alkyl halide?",
+          options: ["Markovnikov's rule", "Zaitsev's rule", "Hund's rule", "Aufbau principle"],
+          correct: 1,
+          explanation: "Zaitsev's rule states that the major product in an elimination reaction is the more substituted alkene (the alkene with more alkyl groups attached to the double-bonded carbons). The more substituted alkene is generally more stable."
+        },
+        {
+          text: "What type of base is commonly used to promote E2 elimination reactions?",
+          options: ["Weak acid", "Strong acid", "Weak base", "Strong base"],
+          correct: 3,
+          explanation: "Strong bases (e.g., KOH, NaOEt) are commonly used to promote E2 elimination reactions. A strong base is needed to abstract the proton to allow the leaving group to be eliminated."
+        },
+        {
+          text: "What is the stereochemical requirement for an E2 elimination reaction?",
+          options: ["Syn addition", "Anti addition", "Syn elimination", "Anti-periplanar"],
+          correct: 3,
+          explanation: "E2 elimination reactions proceed with anti-periplanar geometry, where the leaving group (halide) and the hydrogen being removed are on opposite sides (180° dihedral angle) of the molecule. This minimizes steric hinderance."
+        },
+        {
+          text: "What is the product of the reaction of an alkyl halide with magnesium metal in ether?",
+          options: ["Alkane", "Alkene", "Grignard reagent", "Alcohol"],
+          correct: 2,
+          explanation: "Alkyl halides react with magnesium metal (Mg) in ether to form Grignard reagents (RMgX), which are useful for forming carbon-carbon bonds in a variety of reactions."
+        },
+        {
+          text: "What type of reaction is the formation of an alcohol from an alkyl halide using NaOH?",
+          options: ["SN1", "SN2", "E1", "E2"],
+          correct: 1,
+          explanation: "The reaction of an alkyl halide with NaOH to form an alcohol typically proceeds via an SN2 reaction (especially if the alkyl halide is primary or secondary). Hydroxide is a good nucleophile and will displace the halide, particularly when a primary substrate is used."
+        },
+        {
+          text: "What is the role of the Grignard reagent in a Grignard reaction with a carbonyl compound?",
+          options: ["Electrophile", "Nucleophile", "Acid", "Base"],
+          correct: 1,
+          explanation: "The Grignard reagent (RMgX) acts as a strong nucleophile, with the carbon directly attached to the magnesium carrying a partial negative charge. It attacks the electrophilic carbon of the carbonyl group, forming a new carbon-carbon bond."
+        },
+        {
+          text: "What product is formed when an alkyl halide is treated with a reducing agent such as LiAlH₄?",
+          options: ["Alkane", "Alkene", "Alcohol", "Ether"],
+          correct: 0,
+          explanation: "Treatment of an alkyl halide with a reducing agent like LiAlH₄ results in the replacement of the halogen with a hydrogen atom, forming an alkane."
+        },
+        {
+          text: "Which of the following alkyl halides would react fastest in an SN2 reaction?",
+          options: ["(CH₃)₃CBr", "(CH₃)₂CHBr", "CH₃CH₂Br", "CH₃Br"],
+          correct: 3,
+          explanation: "SN2 reactions are fastest with less sterically hindered alkyl halides. CH₃Br (methyl bromide) is the least hindered and therefore reacts fastest."
+        },
+        {
+          text: "What is the product of the reaction of chlorobenzene with NaNH₂?",
+          options: ["Benzene", "Phenol", "Aniline", "No reaction"],
+          correct: 2,
+          explanation: "Chlorobenzene reacts with NaNH₂ via an elimination-addition mechanism (benzyne intermediate) to form aniline (aminobenzene)."
+        },
+        {
+          text: "Which of the following is a vinyl halide?",
+          options: ["CH₃CH₂Cl", "CH₂=CHCl", "C₆H₅Cl", "CH₃Cl"],
+          correct: 1,
+          explanation: "A vinyl halide has a halogen atom directly attached to a carbon atom of a double bond (CH₂=CHCl). Aryl halides also have a halogen attached to a ring. "
+        },
+        {
+          text: "Which of the following is an aryl halide?",
+          options: ["CH₃CH₂Cl", "CH₂=CHCl", "C₆H₅Cl", "CH₃Cl"],
+          correct: 2,
+          explanation: "An aryl halide has a halogen atom directly attached to an aromatic ring (C₆H₅Cl, chlorobenzene)."
+        },
+        {
+          text: "Why are aryl halides generally unreactive in SN1 and SN2 reactions?",
+          options: ["Steric hindrance", "Resonance stabilization of the carbocation", "Strong carbon-halogen bond", "All of the above"],
+          correct: 3,
+          explanation: "Aryl halides are generally unreactive in SN1 and SN2 reactions due to a combination of factors: steric hindrance, resonance stabilization of the carbocation, and a strong carbon-halogen bond."
+        },
+        {
+          text: "Which of the following alkyl halides would undergo SN1 reaction most readily?",
+          options: ["CH₃Cl", "CH₃CH₂Cl", "(CH₃)₂CHCl", "(CH₃)₃CCl"],
+          correct: 3,
+          explanation: "SN1 reactions are favored by tertiary alkyl halides because they form more stable carbocations. (CH₃)₃CCl (tert-butyl chloride) forms a tertiary carbocation."
+        },
+        {
+          text: "What is the order of leaving group ability for halides?",
+          options: ["F⁻ > Cl⁻ > Br⁻ > I⁻", "I⁻ > Br⁻ > Cl⁻ > F⁻", "Cl⁻ > Br⁻ > I⁻ > F⁻", "Br⁻ > Cl⁻ > F⁻ > I⁻"],
+          correct: 1,
+          explanation: "Leaving group ability increases with the size and polarizability of the halide: I⁻ > Br⁻ > Cl⁻ > F⁻. Larger halides are better able to stabilize the negative charge in the transition state."
+        },
+        {
+          text: "What is the product of the reaction of 2-chloropropane with alcoholic KOH?",
+          options: ["Propane", "Propanol", "Propene", "Propyne"],
+          correct: 2,
+          explanation: "The reaction of 2-chloropropane with alcoholic KOH promotes an E2 elimination reaction, resulting in the formation of propene (CH₃CH=CH₂)."
+        },
+        {
+          text: "What is the product of the reaction of 1-bromobutane with sodium ethoxide (NaOEt)?",
+          options: ["Butane", "Butanol", "1-Butene", "Diethyl ether"],
+          correct: 2,
+          explanation: "The reaction of 1-bromobutane (a primary alkyl halide) with a small base (sodium ethoxide, NaOEt) promotes a E2 elimination reaction, resulting in the formation of 1-butene (CH₂=CHCH₂CH₃).",
+        },
+        {
+          text: "What is the IUPAC name of (CH₃)₂CHCH₂CH₂I?",
+          options: ["1-Iodo-3-methylbutane", "1-Iodo-2-methylbutane", "5-Iodo-2-methylbutane", "1-Iodo-4-methylbutane"],
+          correct: 0,
+          explanation: "The longest chain is a 4-carbon chain with a methyl group at position 3. The iodine is at position 1. Therefore, the name is 1-Iodo-3-methylbutane. Make the numbering so as to minimise the lowest number substituent."
+        },
+        {
+          text: "Which of the following is more water soluble?",
+          options: ["CH₃CH₂CH₂CH₂Cl", "CH₃CH₂CH₂Cl", "CH₃CH₂Cl", "CH₃CH₂CH₂CH₂CH₂Cl"],
+          correct: 2,
+          explanation: "The halogen functional group is not capable of good hydrogen bonding, unlike the OH group in alcohols, so water solubility will depend on minimising the carbon chain. CH₃CH₂Cl is the only option to be water-soluble due to the small length of the carbon chain."
+        },
+        {
+          text: "Which reagent is used for the conversion of alcohols to alkyl chlorides?",
+          options: ["NaBH4", "H2 / Pt", "SOCl2", "Grignard"],
+          correct: 2,
+          explanation: "Thionyl chloride (SOCl2) is used for the conversion of alcohols to alkyl chlorides. It generally proceeds with inversion of configuration. Other reagents are used to give other functional groups."
+        },
+        {
+          text: "What is the general formula for alkynes?",
+          options: ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙHₙ"],
+          correct: 2,
+          explanation: "Alkynes are unsaturated hydrocarbons with one carbon-carbon triple bond and the general formula CₙH₂ₙ₋₂. CₙH₂ₙ₊₂ is for alkanes, CₙH₂ₙ is for alkenes."
+        },
+        {
+          text: "Which of the following is the correct IUPAC name for HC≡CCH₂CH₃?",
+          options: ["Butene", "Butyne", "1-Butyne", "2-Butyne"],
+          correct: 2,
+          explanation: "The longest continuous chain containing the triple bond has 4 carbons, so it is a butyne derivative. The triple bond is located between carbons 1 and 2, so the correct name is 1-butyne."
+        },
+        {
+          text: "What is the geometry around each carbon atom involved in the triple bond of an alkyne?",
+          options: ["Tetrahedral", "Linear", "Trigonal planar", "Bent"],
+          correct: 1,
+          explanation: "The carbon atoms in a triple bond are sp hybridized, resulting in a linear geometry with a bond angle of 180°."
+        },
+        {
+          text: "Which of the following is a common method for preparing alkynes?",
+          options: ["Hydrogenation of alkanes", "Dehydrohalogenation of vicinal dihalides", "Hydration of alkenes", "Halogenation of alkanes"],
+          correct: 1,
+          explanation: "Alkynes can be prepared by the double dehydrohalogenation of vicinal or geminal dihalides using a strong base. Dehydrohalogenation removes two molecules of HX to form the triple bond. Hydrogenation and halogenation occur on alkenes, and hydration also occurs on alkenes."
+        },
+        {
+          text: "What type of base is required for the double dehydrohalogenation of a vicinal dihalide to form an alkyne?",
+          options: ["Weak acid", "Strong acid", "Weak base", "Strong base"],
+          correct: 3,
+          explanation: "A strong base (e.g., NaNH₂) is required for the double dehydrohalogenation of a vicinal dihalide to form an alkyne because two equivalents of HX must be removed. If terminal alkynes are to be formed then 3 equivalents are required to also deprotonate the alkyne."
+        },
+        {
+          text: "What is the name of the reaction used to couple two terminal alkynes?",
+          options: ["Grignard reaction", "Wurtz reaction", "Wittig reaction", "Glaser coupling"],
+          correct: 3,
+          explanation: "The Glaser coupling is used to couple two terminal alkynes using a copper(I) salt and oxygen, forming a conjugated diyne."
+        },
+        {
+          text: "What is the product of the partial hydrogenation of an alkyne using Lindlar's catalyst?",
+          options: ["Alkane", "Alkene (cis)", "Alkene (trans)", "Aldehyde"],
+          correct: 1,
+          explanation: "Lindlar's catalyst (Pd/CaCO₃ poisoned with quinoline) allows for the partial hydrogenation of an alkyne to a cis-alkene. The catalyst is poisoned to prevent further reduction to an alkane. The hydrogenation of an alkyne to an alkane requires different conditions."
+        },
+        {
+          text: "What is the product of the reaction of an alkyne with sodium or lithium in liquid ammonia?",
+          options: ["Alkane", "Alkene (cis)", "Alkene (trans)", "Aldehyde"],
+          correct: 2,
+          explanation: "Alkynes react with sodium or lithium in liquid ammonia (dissolving metal reduction) to form trans-alkenes. This reaction proceeds via a radical anion intermediate."
+        },
+        {
+          text: "What type of reaction is the addition of hydrogen halides (HX) to alkynes?",
+          options: ["Free radical substitution", "Electrophilic addition", "Nucleophilic substitution", "Elimination"],
+          correct: 1,
+          explanation: "The addition of hydrogen halides (HX) to alkynes is an electrophilic addition reaction. It follows Markovnikov's rule. The pi electrons of the alkyne act as a nucleophile and attack the proton in HX."
+        },
+        {
+          text: "What product is formed when 1-butyne reacts with 2 equivalents of HBr?",
+          options: ["1,1-Dibromobutane", "2,2-Dibromobutane", "1,2-Dibromobutane", "2-Bromobutene"],
+          correct: 1,
+          explanation: "The addition of 2 equivalents of HBr to 1-butyne yields 2,2-dibromobutane, following Markovnikov's rule (H adds to the carbon with more hydrogens, and Br adds to the more substituted carbon). Addition of HBr twice will be Markovnikov's."
+        },
+        {
+          text: "Which of the following reagents is used for the anti-Markovnikov addition of water to a terminal alkyne?",
+          options: ["H₂O/H₂SO₄", "BH₃/THF, then H₂O₂/NaOH", "HgSO₄/H₂SO₄/H₂O", "NaNH₂"],
+          correct: 1,
+          explanation: "Hydroboration-oxidation (BH₃/THF followed by H₂O₂/NaOH) results in the anti-Markovnikov addition of water to a terminal alkyne, forming an aldehyde after tautomerization. HgSO₄/H₂SO₄/H₂O with give a ketone."
+        },
+        {
+          text: "What is the product of the hydration of a terminal alkyne with HgSO₄/H₂SO₄/H₂O?",
+          options: ["Aldehyde", "Ketone", "Alcohol", "Carboxylic acid"],
+          correct: 2,
+          explanation: "The hydration of a terminal alkyne with HgSO₄/H₂SO₄/H₂O forms a ketone, following Markovnikov's rule. The initial enol intermediate tautomerizes to a ketone. A terminal alkyne is required here and the HgSO4/H2SO4 combination."
+        },
+        {
+          text: "What is a tautomer?",
+          options: ["Structural isomer", "Geometric isomer", "Constitutional isomer", "Isomers that readily interconvert by the migration of a proton"],
+          correct: 3,
+          explanation: "Tautomers are constitutional isomers (differing in connectivity) that readily interconvert by the migration of a proton. Common examples include keto-enol tautomerism."
+        },
+        {
+          text: "What is the acidity of terminal alkynes compared to alkanes and alkenes?",
+          options: ["More acidic", "Less acidic", "Equally acidic", "Non-acidic"],
+          correct: 0,
+          explanation: "Terminal alkynes (RC≡CH) are more acidic than alkanes and alkenes because the sp-hybridized carbon holds the negative charge of the conjugate base (acetylide ion) closer to the nucleus, stabilizing the anion. The pKa of a terminal alkyne is ~25, so strong bases such as NaNH₂ or Grignard reagents must be used."
+        },
+        {
+          text: "What product is formed when a terminal alkyne is treated with NaNH₂?",
+          options: ["Alkane", "Alkene", "Acetylide ion", "Carboxylic acid"],
+          correct: 2,
+          explanation: "Treatment of a terminal alkyne with a strong base like NaNH₂ (sodium amide) deprotonates the alkyne to form an acetylide ion (RC≡C⁻). This ion can then act as a nucleophile in subsequent reactions."
+        },
+        {
+          text: "What is the name of the reaction that forms a new carbon-carbon bond by reacting an acetylide ion with an alkyl halide?",
+          options: ["Grignard reaction", "Wurtz reaction", "SN1 reaction", "SN2 reaction"],
+          correct: 3,
+          explanation: "Acetylide ions react with primary alkyl halides via an SN2 reaction to form a new carbon-carbon bond, lengthening the carbon chain. Secondary or tertiary halides undergo elimination instead."
+        },
+        {
+          text: "Which of the following halides is most suitable for reaction with an acetylide ion?",
+          options: ["Tertiary halide", "Secondary halide", "Primary halide", "Aryl halide"],
+          correct: 2,
+          explanation: "Primary alkyl halides are most suitable for reaction with acetylide ions because the reaction proceeds via an SN2 mechanism, which is most effective with unhindered substrates. SN2 is not effective for aryl halides."
+        },
+        {
+          text: "What is the product formed upon ozonolysis of an internal alkyne (R-C≡C-R') followed by treatment with H₂O?",
+          options: ["Aldehyde", "Ketone", "Carboxylic acid", "Mixture of carboxylic acids"],
+          correct: 3,
+          explanation: "Ozonolysis of an alkyne followed by treatment with water results in the cleavage of the triple bond to yield carboxylic acids. For an internal alkyne R-C≡C-R', two different carboxylic acids can be formed."
+        },
+        {
+          text: "Which of the following is an example of a terminal alkyne?",
+          options: ["2-Butyne", "3-Hexyne", "Propyne", "2-Pentyne"],
+          correct: 2,
+          explanation: "A terminal alkyne has the triple bond at the end of the carbon chain (RC≡CH). Propyne (CH≡CCH₃) is a terminal alkyne."
+        },
+        {
+          text: "What is the name for cyclic alkynes?",
+          options: ["Cycloalkanes", "Cycloalkenes", "Cycloalkynes", "Aromatic compounds"],
+          correct: 2,
+          explanation: "Cyclic alkynes are called cycloalkynes, and they contain a triple bond in a ring structure. They are generally unstable unless the ring is sufficiently large due to ring strain."
+        },
+        {
+          text: "What is the minimum number of carbon atoms required for a stable cycloalkyne?",
+          options: ["4", "6", "8", "10"],
+          correct: 2,
+          explanation: "Cycloalkynes are generally unstable due to ring strain. A minimum of 8 carbon atoms is required for a cycloalkyne to be somewhat stable."
+        },
+        {
+          text: "What type of hybridization do carbon atoms NOT involved in the triple bond have in an alkyne molecule?",
+          options: ["sp", "sp²", "sp³", "d²sp³"],
+          correct: 2,
+          explanation: "Carbon atoms not involved in the triple bond in an alkyne molecule have sp³ hybridization and have 4 sigma bonds associated with them. This is because they are attached to four groups and are saturated. This is different from alkenes that are sp2 hybridised."
+        },
+        {
+          text: "What is the product formed when 2-butyne is reacted with H₂ over platinum?",
+          options: ["Butane", "1-Butene", "2-Butene", "1-Butyne"],
+          correct: 0,
+          explanation: "The reaction of 2-butyne with excess H₂ over a platinum catalyst results in complete hydrogenation to butane (CH₃CH₂CH₂CH₃)."
+        },
+        {
+          text: "Which of the following reactions allows for the synthesis of unsymmetrical internal alkynes?",
+          options: ["Hydrohalogenation", "Glaser Coupling", "Alkylation of acetylide ions", "Hydrogenation"],
+          correct: 2,
+          explanation: "The alkylation of acetylide ions (generated from terminal alkynes) allows for the synthesis of unsymmetrical internal alkynes by reacting the acetylide ion with different alkyl halides in sequential reactions."
+        },
+        {
+          text: "Which of the following is true regarding alkynes' boiling point?",
+          options: ["Alkynes have lower boiling points than alkanes of comparable molar mass", "Alkynes have similar boiling points to alkanes of comparable molar mass", "Alkynes have higher boiling points than alkanes of comparable molar mass", "There is no relation between the boiling points"],
+          correct: 2,
+          explanation: "Due to the presence of the pi electrons, alkynes have slightly higher van der Waals forces when compared with alkanes of comparable molar mass and therefore have higher boiling points."
+        },
+        {
+          text: "Which of the following properties is characteristic of alkynes?",
+          options: ["They are saturated hydrocarbons", "They are highly reactive due to the presence of triple bonds", "They are non-flammable", "They are nonpolar"],
+          correct: 2,
+          explanation: "Alkynes are highly reactive due to the presence of the pi bonds in the triple bond, which are weaker than sigma bonds and susceptible to electrophilic attack."
+        },
+        {
+          text: "Which of the following represents a carbon-carbon triple bond?",
+          options: ["σ bond only", "π bond only", "σ and π bond", "σ and 2π bonds"],
+          correct: 3,
+          explanation: "A carbon-carbon triple bond consists of one sigma (σ) bond and two pi (π) bonds. The sigma bond holds the atoms together, while the pi bonds contribute to the high electron density and reactivity."
+        },
+        {
+          text: "Which product is formed after the complete reduction of 2-butyne with excess hydrogen gas and a palladium catalyst?",
+          options: ["2-Butanol", "2-Butene", "Butane", "No reaction"],
+          correct: 2,
+          explanation: "The reaction of 2-butyne with excess H₂ over a platinum catalyst results in complete hydrogenation to butane (CH₃CH₂CH₂CH₃)."
+        },
+        {
+          text: "What is the hybridization of a carbon in a methyl group attached directly to a carbon in an alkyne?",
+          options: ["sp", "sp2", "sp3", "Not applicable"],
+          correct: 2,
+          explanation: "The methyl group will be sp3 hybridised and tetrahedrally coordinated. It will only have sigma bonds to its neighbouring carbons and/or hydrogens."
+        },
+        {
+          text: "Name the compound formed when propyne is reacted with 2 equivalents of chlorine gas in the presence of UV light.",
+          options: ["1,1-dichloropropene", "1,1,2,2-tetrachloropropane", "1,2-dichloropropene", "No reaction"],
+          correct: 1,
+          explanation: "Reaction of propyne with chlorine in the presence of UV light results in the electrophilic addition to both triple bonds. This results in the formation of 1,1,2,2-tetrachloropropane."
+        },
+   {
+          text: "Which of the following is NOT a characteristic of ionic compounds?",
+          options: ["High melting and boiling points", "Brittle crystalline structures", "Good electrical conductivity in solid state", "Solubility in polar solvents"],
+          correct: 2,
+          explanation: "Ionic compounds do NOT conduct electricity in the solid state because the ions are fixed in the lattice. \n A: Ionic compounds typically have high melting and boiling points due to strong electrostatic forces. \n B: The rigid arrangement of ions leads to brittle structures. \n D: Many ionic compounds are soluble in polar solvents like water due to ion-dipole interactions."
+        },
+        {
+          text: "Which of these cations is in the first group of qualitative inorganic analysis?",
+          options: ["Fe³⁺", "Ag⁺", "Zn²⁺", "Ba²⁺"],
+          correct: 1,
+          explanation: "Ag⁺ (Silver ion) is in the first group of qualitative inorganic analysis, which precipitates as insoluble chlorides. \n A: Iron(III) is usually tested in group III. \n C: Zinc(II) is typically tested in group IV. \n D: Barium(II) is usually tested in group V."
+        },
+        {
+          text: "Which of the following compounds is formed through coordinate covalent bonding?",
+          options: ["NaCl", "H₂O", "NH₄⁺", "CO₂"],
+          correct: 2,
+          explanation: "NH₄⁺ (ammonium ion) is formed through coordinate covalent bonding, where nitrogen donates its lone pair to a proton. \n A: NaCl is formed through ionic bonding. \n B: H₂O is formed through covalent bonding. \n D: CO₂ is formed through covalent bonding."
+        },
+        {
+          text: "The color of a hydrated copper(II) salt is typically:",
+          options: ["Yellow", "Green", "Blue", "Red"],
+          correct: 2,
+          explanation: "Hydrated copper(II) salts are typically blue due to the d-d transitions in the Cu²⁺ ion interacting with water ligands. \n A: Copper(II) salts are not typically yellow. \n B: Some copper(II) compounds might appear green due to mixing with other colors or different ligands. \n D: Copper(II) salts are not typically red."
+        },
+        {
+          text: "Which of the following anions gives effervescence with dilute sulfuric acid due to CO₂ gas evolution?",
+          options: ["SO₄²⁻", "NO₃⁻", "CO₃²⁻", "Cl⁻"],
+          correct: 2,
+          explanation: "CO₃²⁻ (carbonate ion) reacts with dilute sulfuric acid to produce carbon dioxide gas, causing effervescence.  The reaction is: CO₃²⁻ + 2H⁺ → H₂O + CO₂ \n A: Sulfate ions do not react with dilute sulfuric acid to produce a gas. \n B: Nitrate ions do not produce CO₂ with dilute sulfuric acid. \n D: Chloride ions react to form HCl gas, but this isn't effervescence due to CO₂."
+        },
+        {
+          text: "The reagent used to differentiate between AgCl and Hg₂Cl₂ is:",
+          options: ["Hydrochloric acid", "Ammonia solution", "Sodium hydroxide", "Sulfuric acid"],
+          correct: 1,
+          explanation: "Ammonia solution dissolves AgCl (forming a complex ion) but reacts with Hg₂Cl₂ to form a black precipitate. \n A: Hydrochloric acid won't differentiate them, both are insoluble. \n C: Sodium hydroxide will precipitate the metal ions of both but not in a differentiating way. \n D: Sulfuric acid won't significantly react with either."
+        },
+        {
+          text: "The electronic configuration of noble gases typically ends in:",
+          options: ["ns² np⁶", "ns² np⁴", "ns² np⁵", "ns² np³"],
+          correct: 0,
+          explanation: "Noble gases (except helium) have a full outer electron shell with the configuration ns² np⁶, making them stable. \n B: ns² np⁴ is the configuration of chalcogens (oxygen family). \n C: ns² np⁵ is the configuration of halogens. \n D: ns² np³ is the configuration of the nitrogen family."
+        },
+        {
+          text: "The hybridization of carbon in methane (CH₄) is:",
+          options: ["sp", "sp²", "sp³", "sp³d"],
+          correct: 2,
+          explanation: "Carbon in methane (CH₄) is sp³ hybridized, allowing it to form four sigma bonds with the four hydrogen atoms in a tetrahedral arrangement. \n A: sp hybridization results in linear geometry. \n B: sp² hybridization results in trigonal planar geometry. \n D: sp³d hybridization is seen in molecules with expanded octets, like some with central atoms from the third row or below."
+        },
+        {
+          text: "The flame test color for strontium (Sr²⁺) is:",
+          options: ["Yellow-green", "Brick red", "Crimson red", "Violet"],
+          correct: 2,
+          explanation: "Strontium (Sr²⁺) gives a crimson red color in a flame test. \n A: Yellow-green is associated with barium. \n B: Brick red is associated with calcium. \n D: Violet is associated with potassium."
+        },
+        {
+          text: "Which of the following elements is NOT an alkali metal?",
+          options: ["Lithium", "Potassium", "Calcium", "Cesium"],
+          correct: 2,
+          explanation: "Calcium (Ca) is an alkaline earth metal (Group 2), not an alkali metal (Group 1). \n A: Lithium (Li) is an alkali metal. \n B: Potassium (K) is an alkali metal. \n D: Cesium (Cs) is an alkali metal."
+        },
+        {
+          text: "Which of the following ions forms a yellow precipitate with silver nitrate?",
+          options: ["Cl⁻", "Br⁻", "I⁻", "NO₃⁻"],
+          correct: 2,
+          explanation: "I⁻ (iodide ion) forms a yellow precipitate of silver iodide (AgI) with silver nitrate. \n A: Chloride forms a white precipitate (AgCl). \n B: Bromide forms a pale yellow precipitate (AgBr). \n D: Nitrate does not form a precipitate with silver."
+        },
+        {
+          text: "The type of chemical bond formed when an atom donates one or more electrons to another atom is called:",
+          options: ["Covalent bond", "Ionic bond", "Metallic bond", "Hydrogen bond"],
+          correct: 1,
+          explanation: "An ionic bond is formed through the transfer of electrons from one atom to another. \n A: Covalent bond involves sharing of electrons. \n C: Metallic bond involves delocalized electrons among metal atoms. \n D: Hydrogen bond is an intermolecular force."
+        },
+        {
+          text: "The hybridization of Boron in BF₃ is:",
+          options: ["sp", "sp²", "sp³", "sp³d"],
+          correct: 1,
+          explanation: "Boron in BF₃ is sp² hybridized, resulting in a trigonal planar geometry. \n A: sp hybridization leads to linear geometry. \n C: sp³ hybridization leads to tetrahedral geometry. \n D: sp³d hybridization requires more than four electron groups."
+        },
+        {
+          text: "Which of the following noble gases is most abundant in the Earth's atmosphere?",
+          options: ["Helium", "Neon", "Argon", "Xenon"],
+          correct: 2,
+          explanation: "Argon (Ar) is the most abundant noble gas in the Earth's atmosphere. \n A: Helium is present, but in much smaller amounts. \n B: Neon is present, but in much smaller amounts. \n D: Xenon is present, but in trace amounts."
+        },
+        {
+          text: "Which of the following cations forms a green precipitate when reacted with sodium hydroxide?",
+          options: ["Fe²⁺", "Fe³⁺", "Cu²⁺", "Ag⁺"],
+          correct: 0,
+          explanation: "Fe²⁺ (Iron(II) ion) forms a green precipitate of iron(II) hydroxide, Fe(OH)₂. \n B: Fe³⁺ forms a brown precipitate. \n C: Cu²⁺ forms a blue precipitate. \n D: Ag⁺ forms a brown precipitate that quickly turns black due to the formation of Ag₂O."
+        },
+        {
+          text: "Which of these alkaline earth metals is the least reactive?",
+          options: ["Beryllium", "Magnesium", "Calcium", "Barium"],
+          correct: 0,
+          explanation: "Beryllium (Be) is the least reactive alkaline earth metal due to its small size and high ionization energy. \n B: Magnesium is more reactive than Beryllium. \n C: Calcium is more reactive than Magnesium. \n D: Barium is the most reactive of the given options."
+        },
+        {
+          text: "The strongest type of intermolecular force in water (H₂O) is:",
+          options: ["London dispersion forces", "Dipole-dipole interactions", "Hydrogen bonding", "Ionic bonding"],
+          correct: 2,
+          explanation: "Hydrogen bonding is the strongest type of intermolecular force in water. \n A: London dispersion forces are present in all molecules, but are weak. \n B: Dipole-dipole interactions are present, but weaker than hydrogen bonds in water. \n D: Ionic bonding is an *intramolecular* force (within a molecule), not intermolecular."
+        },
+        {
+          text: "Which of the following compounds is soluble in water?",
+          options: ["PbCl₂", "AgCl", "NaNO₃", "BaSO₄"],
+          correct: 2,
+          explanation: "NaNO₃ (sodium nitrate) is soluble in water, all nitrate salts are soluble. \n A: Lead(II) chloride is slightly soluble, but not generally considered soluble under typical conditions. \n B: Silver chloride is insoluble. \n D: Barium sulfate is insoluble."
+        },
+        {
+          text: "The reagent used to test for sulfate (SO₄²⁻) ions is:",
+          options: ["Silver nitrate", "Barium chloride", "Ammonium sulfate", "Sodium carbonate"],
+          correct: 1,
+          explanation: "Barium chloride (BaCl₂) is used to test for sulfate ions. It reacts to form a white precipitate of barium sulfate (BaSO₄). \n A: Silver nitrate is used to test for halide ions (e.g., Cl⁻). \n C: Ammonium sulfate is a sulfate salt itself and would not be used as a reagent. \n D: Sodium carbonate reacts with some metal ions, but not specifically for sulfate."
+        },
+        {
+          text: "The element that gives a bright yellow color in a flame test is:",
+          options: ["Potassium", "Sodium", "Calcium", "Lithium"],
+          correct: 1,
+          explanation: "Sodium (Na) gives a bright yellow color in a flame test. \n A: Potassium gives a lilac/violet color. \n C: Calcium gives a brick-red color. \n D: Lithium gives a crimson/red color."
+        },
+        {
+          text: "Which noble gas is commonly used in advertising lights?",
+          options: ["Helium", "Neon", "Argon", "Xenon"],
+          correct: 1,
+          explanation: "Neon (Ne) is commonly used in advertising lights to produce a bright reddish-orange glow. \n A: Helium is used in balloons. \n C: Argon is used in some lighting applications, but not typically in brightly colored signs. \n D: Xenon is used in high-intensity lamps."
+        },
+        {
+          text: "Which of these statements is true about VSEPR theory?",
+          options: ["Electron pairs repel each other", "Electrons do not affect molecular shape", "Lone pairs do not influence bond angles", "It only applies to ionic compounds"],
+          correct: 0,
+          explanation: "VSEPR (Valence Shell Electron Pair Repulsion) theory states that electron pairs (both bonding and non-bonding) repel each other and arrange themselves to minimize repulsion. \n B: Electrons are the fundamental aspect determining the molecular shape. \n C: Lone pairs have a greater repulsion effect, thus they influence bond angles. \n D: VSEPR applies to covalent molecules."
+        },
+        {
+          text: "Which of the following anions reacts with acidified potassium dichromate(VI) to produce a green solution?",
+          options: ["Sulfite (SO₃²⁻)", "Sulfate (SO₄²⁻)", "Carbonate (CO₃²⁻)", "Chloride (Cl⁻)"],
+          correct: 0,
+          explanation: "Sulfite (SO₃²⁻) reduces dichromate(VI) (Cr₂O₇²⁻, orange) to chromium(III) (Cr³⁺, green). \n A: Sulfite (SO₃²⁻) gets oxidised to sulphate (SO₄²⁻). \n B: Sulfate doesn't react. \n C: Carbonate doesn't reduce dichromate. \n D: Chloride is oxidised to Chlorine gas, although colourless, the solution isn't green."
+        },
+        {
+          text: "The noble gas that forms the most compounds is:",
+          options: ["Helium", "Neon", "Xenon", "Radon"],
+          correct: 2,
+          explanation: "Xenon (Xe) forms the most compounds of all the noble gases because it is larger and more polarizable than lighter noble gases. \n A: Helium is inert and does not readily form compounds. \n B: Neon is highly inert and forms very few, if any, stable compounds. \n D: Radon is radioactive and although it can form compounds, Xenon forms a more diverse range of them."
+        },
+        {
+          text: "The shape of methane (CH₄) is:",
+          options: ["Linear", "Trigonal planar", "Tetrahedral", "Octahedral"],
+          correct: 2,
+          explanation: "Methane (CH₄) has a tetrahedral shape due to the sp³ hybridization of the central carbon atom. \n A: Linear shapes exist when a central atom is bonded to two other atoms. \n B: Trigonal planar shapes exist when a central atom is bonded to three other atoms and has no lone pairs. \n D: Octahedral shapes occur when a central atom is bonded to six atoms or has six electron pairs surrounding it."
+        },
+        {
+          text: "Which of the following is NOT a property of alkali metals?",
+          options: ["High melting points", "Low ionization energy", "Good electrical conductivity", "High reactivity with water"],
+          correct: 0,
+          explanation: "Alkali metals have *low* melting points, not high. \n B: They have low ionization energies because they easily lose one electron to form a stable cation. \n C: They are good conductors of electricity because they have loosely held valence electrons. \n D: They are highly reactive with water, producing hydrogen gas and a metal hydroxide."
+        },
+        {
+          text: "Which of these cations produces a blue solution when dissolved in water?",
+          options: ["Fe³⁺", "Cu²⁺", "Zn²⁺", "Pb²⁺"],
+          correct: 1,
+          explanation: "Copper(II) ions (Cu²⁺) typically form blue solutions in water due to the formation of the [Cu(H₂O)₆]²⁺ complex. \n A: Iron(III) ions typically form yellow or brown solutions. \n C: Zinc(II) ions are colorless in solution. \n D: Lead(II) ions can be colorless, or form a white precipitate if they react with ions in the water."
+        },
+        {
+          text: "What is the oxidation state of xenon in XeF₆?",
+          options: ["+2", "+4", "+6", "+8"],
+          correct: 2,
+          explanation: "In XeF₆, fluorine has an oxidation state of -1. Since there are six fluorine atoms, the total negative charge is -6. To balance this, xenon must have an oxidation state of +6. \n A: Incorrect; +2 is too low. \n B: Incorrect; +4 is too low. \n D: Incorrect; +8 is too high, as Xenon only has eight valence electrons."
+        },
+        {
+          text: "Which of the following gases is used in deep-sea diving mixtures to prevent nitrogen narcosis?",
+          options: ["Argon", "Xenon", "Helium", "Neon"],
+          correct: 2,
+          explanation: "Helium is used in deep-sea diving mixtures because it is less soluble in blood than nitrogen and other gases, thus reducing the risk of nitrogen narcosis (the 'rapture of the deep'). \n A: Argon is not typically used due to its narcotic effects. \n B: Xenon is a narcotic and is not used in diving. \n D: Neon is also not commonly used."
+        },
+        {
+          text: "The compound that contains a dative (coordinate) covalent bond is:",
+          options: ["NaCl", "NH₄⁺", "O₂", "CH₄"],
+          correct: 1,
+          explanation: "NH₄⁺ (ammonium ion) contains a dative covalent bond because the nitrogen atom donates both electrons in the bond to one of the hydrogen atoms. \n A: NaCl is formed through ionic bonding. \n C: O₂ is formed through regular covalent bonding. \n D: CH₄ is formed through regular covalent bonding."
+        },
+        {
+          text: "The flame test color for potassium is:",
+          options: ["Yellow", "Brick red", "Violet", "Green"],
+          correct: 2,
+          explanation: "Potassium (K) produces a violet or lilac color in a flame test. The color is often faint and can be masked by sodium contamination (which gives a yellow color). \n A: Yellow is associated with sodium. \n B: Brick red is associated with calcium. \n D: Green is associated with barium or copper."
+        },
+        {
+          text: "Which of the following anions forms a white precipitate with silver nitrate that is soluble in ammonia?",
+          options: ["Chloride (Cl⁻)", "Bromide (Br⁻)", "Iodide (I⁻)", "Sulfate (SO₄²⁻)"],
+          correct: 0,
+          explanation: "Chloride (Cl⁻) forms a white precipitate of silver chloride (AgCl) with silver nitrate, which is soluble in dilute ammonia solution due to the formation of the diamminesilver(I) complex, [Ag(NH₃)₂]⁺. \n B: Bromide forms a pale yellow precipitate with silver nitrate that is sparingly soluble in concentrated ammonia. \n C: Iodide forms a yellow precipitate that is insoluble in ammonia. \n D: Sulfate generally does not form a precipitate with silver nitrate unless high concentrations are used, and any precipitate that forms would be silver sulfate, which is negligibly soluble in ammonia."
+        },
+        {
+          text: "What is the molecular geometry of ammonia (NH₃) according to VSEPR theory?",
+          options: ["Linear", "Trigonal planar", "Trigonal pyramidal", "Tetrahedral"],
+          correct: 2,
+          explanation: "Ammonia (NH₃) has a trigonal pyramidal molecular geometry. According to VSEPR theory, the nitrogen atom has three bonding pairs and one lone pair. The four electron pairs arrange themselves tetrahedrally, but the lone pair repels the bonding pairs more strongly, distorting the geometry to trigonal pyramidal. \n A: Linear geometry occurs when the central atom is bonded to two other atoms (with no lone pairs, or 3 lone pairs). \n B: Trigonal planar geometry occurs when there are 3 bonding pairs and no lone pairs around the central atom. \n D: While the *electron pair* geometry is tetrahedral, the *molecular* geometry is trigonal pyramidal, because we only describe the shape based on the atoms present."
+        },
+        {
+          text: "Which noble gas has the highest density?",
+          options: ["Neon", "Argon", "Krypton", "Radon"],
+          correct: 3,
+          explanation: "Radon (Rn) has the highest density among the given noble gases because density increases with increasing atomic mass. Radon has the highest atomic mass in this list. \n A: Neon has the lowest atomic mass. \n B: Argon has a lower atomic mass than Krypton or Radon. \n C: Krypton has a lower atomic mass than Radon."
+        },
+        {
+          text: "The strongest intermolecular force in liquid ammonia (NH₃) is:",
+          options: ["London dispersion forces", "Dipole-dipole interactions", "Hydrogen bonding", "Ionic bonding"],
+          correct: 2,
+          explanation: "Hydrogen bonding is the strongest intermolecular force in liquid ammonia. Ammonia has a highly electronegative nitrogen atom bonded to hydrogen atoms, allowing for strong hydrogen bonds. \n A: London dispersion forces are present in all molecules, but are weaker. \n B: Dipole-dipole interactions are present but are weaker than hydrogen bonds in NH₃. \n D: Ionic bonding is an intramolecular force (within a molecule or between ions), not intermolecular."
+        },
+        {
+          text: "Which of the following is a property of metals?",
+          options: ["Poor electrical conductivity", "Low melting point", "Malleability", "Brittle nature"],
+          correct: 2,
+          explanation: "Malleability is a characteristic property of metals, meaning they can be hammered into thin sheets. \n A: Metals are good conductors of electricity. \n B: Metals typically have high melting points. \n D: Metals are ductile and malleable, not brittle."
+        },
+        {
+          text: "Which of the following elements belongs to Group IIA (Alkaline Earth Metals)?",
+          options: ["Sodium", "Lithium", "Magnesium", "Cesium"],
+          correct: 2,
+          explanation: "Magnesium (Mg) is an alkaline earth metal and belongs to Group IIA (Group 2) of the periodic table. \n A: Sodium (Na) is an alkali metal (Group IA). \n B: Lithium (Li) is an alkali metal (Group IA). \n D: Cesium (Cs) is an alkali metal (Group IA)."
+        },
+        {
+          text: "Which anion reacts with hydrochloric acid to produce a rotten egg smell?",
+          options: ["Carbonate (CO₃²⁻)", "Sulfide (S²⁻)", "Nitrate (NO₃⁻)", "Sulfate (SO₄²⁻)"],
+          correct: 1,
+          explanation: "Sulfide (S²⁻) reacts with hydrochloric acid to produce hydrogen sulfide (H₂S) gas, which has a characteristic rotten egg smell. The reaction is: S²⁻ + 2HCl → H₂S + 2Cl⁻ \n A: Carbonate reacts to form CO₂. \n C: Nitrate may react to form toxic nitrogen oxides if conditions are right, but usually it's inert to HCl. \n D: Sulfate does not react with HCl."
+        },
+        {
+          text: "The hybridization of the central atom in SF₆ is:",
+          options: ["sp³", "sp²", "sp³d", "sp³d²"],
+          correct: 3,
+          explanation: "The central sulfur atom in SF₆ is sp³d² hybridized. Sulfur has six bonding pairs and no lone pairs, requiring six hybrid orbitals. \n A: sp³ hybridization results in four hybrid orbitals (tetrahedral geometry). \n B: sp² hybridization results in three hybrid orbitals (trigonal planar geometry). \n C: sp³d hybridization results in five hybrid orbitals (trigonal bipyramidal geometry)."
+        },
+        {
+          text: "The solubility of Group I hydroxides (LiOH, NaOH, KOH) in water generally:",
+          options: ["Decreases down the group", "Increases down the group", "Remains constant", "Is unpredictable"],
+          correct: 1,
+          explanation: "The solubility of Group I hydroxides increases down the group due to the decreasing lattice energy. The increase in ionic size from Li+ to Cs+ decreases the electrostatic attraction between the cation and hydroxide anion. \n A: The solubility does not decrease down the group. \n C: The solubility does not remain constant. \n D: The solubility follows a predictable trend."
+        },
+        {
+          text: "The presence of nitrate (NO₃⁻) ions can be confirmed by:",
+          options: ["Adding barium chloride", "Brown ring test with FeSO₄ and H₂SO₄", "Adding sodium hydroxide", "Performing a flame test"],
+          correct: 1,
+          explanation: "The brown ring test with iron(II) sulfate (FeSO₄) and concentrated sulfuric acid (H₂SO₄) is used to confirm the presence of nitrate ions. \n A: Barium chloride is used to test for sulfate ions. \n C: Sodium hydroxide will react with some cations but doesn't specifically confirm nitrate. \n D: Flame tests are used to identify certain metal cations."
+        },
+        {
+          text: "What is the shape of a molecule with sp hybridization?",
+          options: ["Tetrahedral", "Trigonal planar", "Linear", "Bent"],
+          correct: 2,
+          explanation: "A molecule with sp hybridization has a linear shape with a bond angle of 180 degrees. \n A: Tetrahedral shapes occur with sp³ hybridization. \n B: Trigonal planar shapes occur with sp² hybridization. \n D: Bent shapes occur when a central atom has sp³ hybridization with two bonding pairs and two lone pairs, or sp² hybridization with two bonding pairs and one lone pair."
+        },
+        {
+          text: "Which of the following noble gases is commonly used in high-intensity lamps and lasers?",
+          options: ["Helium", "Neon", "Argon", "Xenon"],
+          correct: 3,
+          explanation: "Xenon (Xe) is commonly used in high-intensity lamps (e.g., car headlights, strobe lights) and in certain types of lasers. \n A: Helium is used for cooling and in balloons. \n B: Neon is used in advertising lights. \n C: Argon is used in welding and incandescent light bulbs."
+        },
+        {
+          text: "The valency of calcium (Ca) in CaCl₂ is:",
+          options: ["1", "2", "3", "4"],
+          correct: 1,
+          explanation: "The valency of calcium (Ca) in CaCl₂ is 2. Calcium belongs to Group IIA (Group 2), and it forms ions with a +2 charge. \n A: Incorrect valency for Calcium \n C: Incorrect valency for Calcium \n D: Incorrect valency for Calcium."
+        },
+        {
+          text: "Which compound contains both covalent and ionic bonds?",
+          options: ["NaCl", "H₂O", "NaOH", "CO₂"],
+          correct: 2,
+          explanation: "NaOH (sodium hydroxide) contains both ionic bonds (between Na⁺ and OH⁻) and covalent bonds (within the hydroxide ion, OH⁻). \n A: NaCl contains only ionic bonds. \n B: H₂O contains only covalent bonds. \n D: CO₂ contains only covalent bonds."
+        },
+        {
+          text: "Which metal reacts most violently with water?",
+          options: ["Lithium", "Sodium", "Potassium", "Cesium"],
+          correct: 3,
+          explanation: "Cesium (Cs) reacts most violently with water among the given options due to its low ionization energy and large atomic size, making it the most reactive alkali metal. The reactivity of alkali metals increases down the group. \n A: Lithium reacts, but less violently. \n B: Sodium reacts more vigorously than Lithium. \n C: Potassium reacts more vigorously than Sodium, but less than Cesium."
+        },
+        {
+          text: "Which ion gives a white precipitate with barium chloride but no reaction with dilute hydrochloric acid?",
+          options: ["SO₄²⁻", "CO₃²⁻", "Cl⁻", "NO₃⁻"],
+          correct: 0,
+          explanation: "Sulfate (SO₄²⁻) ions react with barium chloride (BaCl₂) to form a white precipitate of barium sulfate (BaSO₄), which is insoluble in dilute hydrochloric acid. Carbonates, for example, *do* react with dilute Hydrochloric acid, thus not fitting our criteria. \n A: Barium chloride is used to test for sulfate ions. \n B: CO₃²⁻ reacts with hydrochloric acid to produce CO₂ gas and will dissolve. \n C: Cl⁻ would require silver ions and doesn't react with BaCl₂. \n D: NO₃⁻ does not form a precipitate with barium chloride."
+        },
+        {
+          text: "Which noble gas is used to provide an inert atmosphere in welding?",
+          options: ["Helium", "Neon", "Argon", "Krypton"],
+          correct: 2,
+          explanation: "Argon (Ar) is commonly used to provide an inert atmosphere in welding to prevent oxidation of the metals being joined. \n A: Helium is also used in inert atmosphere, but more expensive \n B: Neon is used more for signage \n D: Krypton is used for lighting."
+        },
+        {
+          text: "What is the hybridization of the carbon atoms in ethylene (C₂H₄)?",
+          options: ["sp", "sp²", "sp³", "sp³d"],
+          correct: 1,
+          explanation: "The carbon atoms in ethylene (C₂H₄) are sp² hybridized. Each carbon atom forms three sigma bonds (one to another carbon and two to hydrogen atoms) and one pi bond (to the other carbon). \n A: sp hybridization would result in a linear shape, which is not the case for each carbon in ethylene. \n C: sp³ hybridization would result in tetrahedral geometry and only single bonds. \n D: sp³d hybridization is not relevant to bonding in ethylene."
+        },
+        {
+          text: "Which of the following compounds is used in the production of fertilizers?",
+          options: ["NaCl", "K₂SO₄", "CH₄", "CO₂"],
+          correct: 1,
+          explanation: "Potassium sulfate (K₂SO₄) is used as a fertilizer because it provides potassium, an essential nutrient for plant growth. \n A: NaCl is table salt and is not typically used as a fertilizer. \n C: CH₄ (methane) is a fuel and is not used as a fertilizer. \n D: CO₂ is used by plants in photosynthesis, but is not added as a fertilizer."
+        },
+
         {
           text: "What is the general formula for alkenes?",
           options: ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙHₙ"],
