@@ -1,0 +1,165 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Auth Pages (Login & Registration) */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.auth-container button:hover {
+    background: #0056b3;
+}
+
+.auth-container p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.auth-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard Container */
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#user-info {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+#user-info p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Recharge & Test Sections */
+.hidden {
+    display: none;
+}
+
+#recharge-section, #redeem-section, #test-section {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+#recharge-section h2, #redeem-section h2, #test-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* WhatsApp Button */
+#whatsapp-btn {
+    background: #25d366;
+}
+
+#whatsapp-btn:hover {
+    background: #1ea755;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .container, .auth-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+}
