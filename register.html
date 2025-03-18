@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Exam Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Register</h1>
+        <input type="text" id="full-name" placeholder="Full Name" required>
+        <input type="text" id="department" placeholder="Department" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <button id="register-btn">Register</button>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script>
+        document.getElementById("register-btn").addEventListener("click", () => {
+            const fullName = document.getElementById("full-name").value.trim();
+            const department = document.getElementById("department").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+
+            if (fullName && department && phone) {
+                const userId = generateUserId();
+                const user = {
+                    fullName,
+                    department,
+                    phone,
+                    userId,
+                    credits: 100,
+                    usedPins: []
+                };
+
+                localStorage.setItem("user", JSON.stringify(user));
+                alert(`Registration successful! Your User ID: ${userId}. Save this ID.`);
+                window.location.href = "login.html";
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        function generateUserId() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let userId = "";
+            for (let i = 0; i < 6; i++) {
+                userId += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return userId;
+        }
+    </script>
+</body>
+</html>
