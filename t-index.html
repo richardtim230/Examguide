@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Exam Platform</h1>
+        <div id="user-info">
+            <p><strong>Full Name:</strong> <span id="full-name"></span></p>
+            <p><strong>Department:</strong> <span id="department"></span></p>
+            <p><strong>User ID:</strong> <span id="user-id"></span></p>
+            <p><strong>Phone:</strong> <span id="phone"></span></p>
+            <p><strong>Available Credits:</strong> <span id="credit-points"></span></p>
+        </div>
+
+        <button id="recharge-btn">Recharge</button>
+        <button id="redeem-btn">Redeem PIN</button>
+        <button id="take-test-btn">Take a Test</button>
+        <button id="whatsapp-btn">Contact Admin</button>
+
+        <div id="recharge-section" class="hidden">
+            <h2>Recharge Credits</h2>
+            <input type="number" id="recharge-amount" placeholder="Enter Amount">
+            <button id="generate-pin-btn">Generate Pin</button>
+            <p id="generated-pin"></p>
+        </div>
+
+        <div id="redeem-section" class="hidden">
+            <h2>Redeem Recharge PIN</h2>
+            <input type="text" id="redeem-pin" placeholder="Enter Recharge PIN">
+            <button id="redeem-credits-btn">Redeem</button>
+        </div>
+
+        <div id="test-section" class="hidden">
+            <h2>Take a Test</h2>
+            <input type="text" id="test-code" placeholder="Enter Test Code">
+            <button id="start-test-btn">Start Test</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
