@@ -9670,6 +9670,545 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
       title: "INTRODUCTORY CHEMISTRY 2",
   questions: [
     
+        {
+          text: "What is the general formula for alkenes?",
+          options: ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙHₙ"],
+          correct: 1,
+          explanation: "Alkenes are unsaturated hydrocarbons with one carbon-carbon double bond, and the general formula CₙH₂ₙ. CₙH₂ₙ₊₂ is for alkanes, CₙH₂ₙ₋₂ is for alkynes or dienes."
+        },
+        {
+          text: "Which of the following is the correct IUPAC name for CH₃CH=CHCH₃?",
+          options: ["Butane", "Butene", "2-Butene", "cis-Butene"],
+          correct: 2,
+          explanation: "The longest continuous chain containing the double bond has 4 carbons, so it is a butene derivative. The double bond is located between carbons 2 and 3, so the correct name is 2-butene. As it is a disubstituted alkene, it could be cis- or trans-."
+        },
+        {
+          text: "What is the geometry around each carbon atom involved in the double bond of an alkene?",
+          options: ["Tetrahedral", "Linear", "Trigonal planar", "Trigonal pyramidal"],
+          correct: 2,
+          explanation: "The carbon atoms in a double bond are sp² hybridized, resulting in a trigonal planar geometry with bond angles of approximately 120°. They are bound to 3 other atoms/groups."
+        },
+        {
+          text: "Which of the following is NOT a method for preparing alkenes?",
+          options: ["Dehydration of alcohols", "Dehydrohalogenation of alkyl halides", "Hydrogenation of alkynes", "Hydrohalogenation of alkanes"],
+          correct: 3,
+          explanation: "Hydrohalogenation adds H-X to alkenes. Alkenes are typically not prepared from alkanes. Dehydration of alcohols (E1 mechanism) and dehydrohalogenation of alkyl halides (E2 mechanism) are common methods for alkene synthesis. Hydrogenation of alkynes can yield alkenes if controlled."
+        },
+        {
+          text: "What type of reaction is the dehydration of an alcohol to form an alkene?",
+          options: ["Addition", "Substitution", "Elimination", "Rearrangement"],
+          correct: 2,
+          explanation: "Dehydration of an alcohol is an elimination reaction (specifically, an E1 mechanism) where water (H₂O) is removed, forming a double bond."
+        },
+        {
+          text: "Which rule predicts the major product in an elimination reaction of an alkyl halide or alcohol?",
+          options: ["Markovnikov's rule", "Zaitsev's rule", "Hund's rule", "Aufbau principle"],
+          correct: 1,
+          explanation: "Zaitsev's rule states that the major product in an elimination reaction is the more substituted alkene (the alkene with more alkyl groups attached to the double-bonded carbons)."
+        },
+        {
+          text: "Which of the following reagents is commonly used to dehydrate alcohols?",
+          options: ["H₂/Pd", "NaOH", "H₂SO₄", "KMnO₄"],
+          correct: 2,
+          explanation: "Concentrated sulfuric acid (H₂SO₄) is commonly used as a catalyst for the dehydration of alcohols. Phosphoric acid (H₃PO₄) is also used. H₂/Pd is a reducing agent and NaOH is a base."
+        },
+        {
+          text: "What is the stereochemistry of an E2 elimination reaction?",
+          options: ["Syn addition", "Anti addition", "Syn elimination", "Anti elimination"],
+          correct: 3,
+          explanation: "The E2 elimination reaction proceeds with anti elimination, where the leaving group (e.g., halide) and the hydrogen being removed are on opposite sides (180° dihedral angle) of the molecule. This allows for optimal overlap of the developing p orbitals to form the pi bond."
+        },
+        {
+          text: "What is the stereochemistry of an E1 elimination reaction?",
+          options: ["Syn addition", "Anti addition", "Syn elimination", "No stereochemical preference"],
+          correct: 3,
+          explanation: "The E1 elimination reaction has a carbocation intermediate, that is sp2 hybridized, and the proton can be removed from either face. This lack of stereospecificity comes from the sp2 hybridisation intermediate (carbocation)."
+        },
+        {
+          text: "What type of reaction is the addition of hydrogen halides (HX) to alkenes?",
+          options: ["Free radical substitution", "Electrophilic addition", "Nucleophilic substitution", "Elimination"],
+          correct: 1,
+          explanation: "The addition of hydrogen halides (HX) to alkenes is an electrophilic addition reaction. The pi electrons of the alkene attack the electrophilic proton of HX, forming a carbocation intermediate, which is then attacked by the halide ion."
+        },
+        {
+          text: "Which rule governs the regioselectivity of the addition of HBr to propene (CH₃CH=CH₂)?",
+          options: ["Hund's rule", "Zaitsev's rule", "Markovnikov's rule", "Aufbau principle"],
+          correct: 2,
+          explanation: "Markovnikov's rule states that in the addition of HX to an alkene, the hydrogen adds to the carbon with more hydrogens already (and the halide adds to the more substituted carbon)."
+        },
+        {
+          text: "What type of intermediate is formed during the addition of HX to an alkene?",
+          options: ["Carbanion", "Free radical", "Carbocation", "Carbene"],
+          correct: 2,
+          explanation: "The addition of HX to an alkene involves the formation of a carbocation intermediate in the rate-determining step, as the pi electrons act as a Lewis base to bind to the proton. The halide then acts as a Lewis base and binds to the positively charged carbocation."
+        },
+        {
+          text: "Which of the following reactions involves the addition of water to an alkene in the presence of an acid catalyst?",
+          options: ["Hydrogenation", "Halogenation", "Hydration", "Hydrohalogenation"],
+          correct: 2,
+          explanation: "Hydration involves the addition of water (H₂O) to an alkene, typically in the presence of an acid catalyst (like H₂SO₄), to form an alcohol."
+        },
+        {
+          text: "What is the product of the hydroboration-oxidation of propene (CH₃CH=CH₂)?",
+          options: ["1-Propanol", "2-Propanol", "Propanal", "Propanone"],
+          correct: 0,
+          explanation: "Hydroboration-oxidation of an alkene adds water across the double bond in an anti-Markovnikov fashion (hydrogen adds to the more substituted carbon), giving 1-propanol as the major product. Stereospecifically, hydroboration is a syn addition. Overall it is syn-anti."
+        },
+        {
+          text: "Which reagent is used in the oxidation step of hydroboration-oxidation?",
+          options: ["H₂/Pd", "NaOH", "H₂SO₄", "H₂O₂/NaOH"],
+          correct: 3,
+          explanation: "Hydrogen peroxide (H₂O₂) in the presence of sodium hydroxide (NaOH) is used in the oxidation step of hydroboration-oxidation to convert the alkylborane intermediate into an alcohol."
+        },
+        {
+          text: "What is the stereochemistry of the addition in hydroboration?",
+          options: ["Syn addition", "Anti addition", "Racemic mixture", "No stereochemical preference"],
+          correct: 0,
+          explanation: "Hydroboration proceeds with syn addition, meaning that the boron and hydrogen add to the same side of the double bond. Overall, it is syn-anti."
+        },
+        {
+          text: "What is the product of the reaction of an alkene with ozone followed by treatment with a reducing agent (e.g., Zn/H₂O)?",
+          options: ["Alkane", "Alcohol", "Aldehyde or ketone", "Carboxylic acid"],
+          correct: 2,
+          explanation: "Ozonolysis of an alkene followed by reductive workup (e.g., Zn/H₂O) cleaves the double bond to form aldehydes and/or ketones, depending on the substitution pattern of the alkene. If oxidative workup is used (e.g., H₂O₂), carboxylic acids would be formed."
+        },
+        {
+          text: "What is the name of the reaction where an alkene reacts with a peroxyacid (RCO₃H) to form an epoxide?",
+          options: ["Hydrogenation", "Halogenation", "Epoxidation", "Hydration"],
+          correct: 2,
+          explanation: "Epoxidation is the reaction of an alkene with a peroxyacid (like mCPBA) to form an epoxide (also known as an oxirane), a three-membered ring containing an oxygen atom. Stereospecifically, epoxidation is a syn addition."
+        },
+        {
+          text: "Which of the following reagents can be used to convert an alkene to a diol (two alcohol groups on adjacent carbons)?",
+          options: ["H₂/Pd", "OsO₄", "H₂SO₄", "HX"],
+          correct: 1,
+          explanation: "Osmium tetroxide (OsO₄) is commonly used to convert alkenes into vicinal diols (diol groups on adjacent carbon atoms) via syn addition. The product with OsO₄ is a cyclic osmate ester, that is then cleaved with NaHSO₃ to afford the diol."
+        },
+        {
+          text: "What is the term for the addition of a halogen (e.g., Br₂) to an alkene?",
+          options: ["Hydrogenation", "Halogenation", "Hydration", "Hydrohalogenation"],
+          correct: 1,
+          explanation: "Halogenation is the addition of a halogen (e.g., Cl₂, Br₂) to an alkene. It usually proceeds via an anti-addition mechanism with the formation of a cyclic halonium intermediate."
+        },
+        {
+          text: "What is the stereochemistry of the addition of Br₂ to an alkene?",
+          options: ["Syn addition", "Anti addition", "Racemic mixture", "No stereochemical preference"],
+          correct: 1,
+          explanation: "The addition of Br₂ to an alkene usually proceeds via anti addition, with the formation of a bromonium intermediate. This occurs as both Br atoms cannot approach from the same side."
+        },
+        {
+          text: "What type of polymer is formed from the addition polymerization of alkenes?",
+          options: ["Polyester", "Polyamide", "Polyalkane", "Polyalkene"],
+          correct: 3,
+          explanation: "The addition polymerization of alkenes results in the formation of polyalkenes, also known as addition polymers. Examples include polyethylene, polypropylene, and polystyrene."
+        },
+        {
+          text: "Which of the following alkenes is most stable?",
+          options: ["Ethene", "Propene", "1-Butene", "2-Methyl-2-butene"],
+          correct: 3,
+          explanation: "The stability of alkenes increases with the degree of substitution. A more substituted alkene (more alkyl groups attached to the double-bonded carbons) is more stable due to hyperconjugation. 2-Methyl-2-butene has four alkyl groups attached to the double bond carbons and it is thus the most substituted."
+        },
+        {
+          text: "Which type of isomerism is exhibited by alkenes?",
+          options: ["Structural isomerism", "Geometric isomerism", "Optical isomerism", "All of the above"],
+          correct: 3,
+          explanation: "Alkenes can exhibit structural isomerism (different connectivity), geometric isomerism (cis/trans), and optical isomerism (if they contain a chiral center). Geometric and optical isomers are stereoisomers."
+        },
+        {
+          text: "What is the name of the reaction of an alkene with cold, dilute KMnO₄?",
+          options: ["Baeyer's test", "Wurtz reaction", "Friedel-Crafts alkylation", "Williamson ether synthesis"],
+          correct: 0,
+          explanation: "Baeyer's test is the reaction of an alkene with cold, dilute KMnO₄ (potassium permanganate), resulting in the formation of a vicinal diol (syn addition) and the disappearance of the purple color of KMnO₄. It is a test for unsaturation."
+        },
+        {
+          text: "Which of the following has the highest priority according to Cahn-Ingold-Prelog (CIP) rules?",
+          options: ["-CH₃", "-CH₂CH₃", "-CH=CH₂", "-CH₂OH"],
+          correct: 3,
+          explanation: "According to CIP priority rules, atoms with higher atomic numbers have higher priority. Oxygen (in -CH₂OH) has a higher atomic number than carbon and hydrogen so alcohol gets the highest priority. When the CIP rule is applied to the carbon chains, each is bound to CHH but the alkene carbon is bound to CHC."
+        },
+        {
+          text: "What is the IUPAC name of (CH₃)₂C=CHCH₃?",
+          options: ["2-Methyl-2-butene", "3-Methyl-2-butene", "2-Methyl-3-butene", "3-Methyl-3-butene"],
+          correct: 0,
+          explanation: "The longest chain containing the double bond has 5 carbons (pentene). The double bond is between carbons 2 and 3. The methyl group is on carbon 2. Therefore, the correct name is 2-Methyl-2-butene."
+        },
+        {
+          text: "What is the product of the reaction of ethene (CH₂=CH₂) with H₂O in the presence of H₂SO₄?",
+          options: ["Ethane", "Ethanol", "Ethanal", "Ethyne"],
+          correct: 1,
+          explanation: "The reaction of ethene (CH₂=CH₂) with H₂O in the presence of H₂SO₄ (acid-catalyzed hydration) forms ethanol (CH₃CH₂OH)."
+        },
+        {
+          text: "Which reagent is used to test for unsaturation?",
+          options: ["Conc. H₂SO₄", "Br₂ in CCl₄", "NaOH(aq)", "HCl(aq)"],
+          correct: 1,
+          explanation: "Bromine in carbon tetrachloride (Br₂ in CCl₄) is used to test for unsaturation (presence of double or triple bonds). The disappearance of the reddish-brown color of bromine indicates that it has reacted with an unsaturated compound."
+        },
+        {
+          text: "What is the name of the reaction that forms polymers from alkene monomers?",
+          options: ["Cracking", "Hydrogenation", "Polymerization", "Halogenation"],
+          correct: 2,
+          explanation: "The process that forms polymers from alkene monomers is called polymerization. This involves the repeated addition of monomers to form a long chain or network of repeating units."
+        },
+        {
+          text: "What is the general formula for alkanes?",
+          options: ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙHₙ"],
+          correct: 1,
+          explanation: "Alkanes are saturated hydrocarbons with the general formula CₙH₂ₙ₊₂.  CₙH₂ₙ is for alkenes (one double bond). CₙH₂ₙ₋₂ is for alkynes (one triple bond) or dienes (two double bonds)."
+        },
+        {
+          text: "Which of the following is the correct IUPAC name for (CH₃)₂CHCH₂CH₃?",
+          options: ["2-Methylbutane", "3-Methylbutane", "2-Methylpentane", "3-Methylpentane"],
+          correct: 0,
+          explanation: "The longest continuous chain has 5 carbons, making it a pentane derivative. The methyl group is on the second carbon, so the correct name is 2-methylbutane. It is numbered so as to have the methyl group at the lowest number, making it 2-methyl, not 3-methyl."
+        },
+        {
+          text: "Which of the following is NOT a step in naming alkanes using IUPAC nomenclature?",
+          options: ["Identify the longest continuous carbon chain", "Number the carbon atoms in the parent chain", "Identify and name the substituents", "Name the parent chain as an alkene or alkyne"],
+          correct: 3,
+          explanation: "Alkanes are saturated hydrocarbons; the parent chain should be named as an alkane. Alkene and alkyne prefixes are reserved for molecules with those respective functional groups."
+        },
+        {
+          text: "What type of reaction is used to prepare alkanes from alkyl halides using a metal like sodium?",
+          options: ["Wurtz reaction", "Friedel-Crafts alkylation", "Grignard reaction", "Williamson ether synthesis"],
+          correct: 0,
+          explanation: "The Wurtz reaction involves coupling two alkyl halides with sodium metal to form a new carbon-carbon bond and an alkane. 2 R-X + 2 Na → R-R + 2 NaX. The Friedel-Crafts alkylation reaction is used to attach alkyl groups to aromatic rings. Grignard reaction is used for the reaction of a Grignard reagent with a carbonyl compound. The Williamson ether synthesis is the reaction between an alkoxide and an alkyl halide to form an ether."
+        },
+        {
+          text: "What is the product of the hydrogenation of ethene (CH₂=CH₂) using a palladium catalyst?",
+          options: ["Ethane", "Ethyne", "Methane", "Propane"],
+          correct: 0,
+          explanation: "Hydrogenation of an alkene (ethene) adds hydrogen across the double bond, converting it to an alkane (ethane). CH₂=CH₂ + H₂ → CH₃CH₃ in the presence of Pd. The mechanism of this reaction includes adsorption of the reactants onto the metal surface."
+        },
+        {
+          text: "What is the physical state of alkanes with 1-4 carbon atoms at room temperature?",
+          options: ["Solid", "Liquid", "Gas", "Wax"],
+          correct: 2,
+          explanation: "Alkanes with 1-4 carbon atoms (methane, ethane, propane, butane) are gases at room temperature. They have relatively low boiling points due to weak van der Waals forces."
+        },
+        {
+          text: "What happens to the boiling point of alkanes as the molecular weight increases?",
+          options: ["Boiling point increases", "Boiling point decreases", "Boiling point remains constant", "Boiling point fluctuates randomly"],
+          correct: 0,
+          explanation: "The boiling point of alkanes increases with increasing molecular weight (longer carbon chains) because of increased van der Waals forces between the molecules."
+        },
+        {
+          text: "Which of the following statements best describes the solubility of alkanes in water?",
+          options: ["Alkanes are highly soluble in water", "Alkanes are slightly soluble in water", "Alkanes are insoluble in water", "Alkanes react with water"],
+          correct: 2,
+          explanation: "Alkanes are nonpolar hydrocarbons and are essentially insoluble in water, which is a polar solvent ('like dissolves like')."
+        },
+        {
+          text: "Which of the following reactions is characteristic of alkanes?",
+          options: ["Addition", "Elimination", "Substitution", "Esterification"],
+          correct: 2,
+          explanation: "Alkanes primarily undergo substitution reactions (like halogenation) because they are saturated and cannot easily undergo addition or elimination. Esterification is specific to carboxylic acids."
+        },
+        {
+          text: "What is the general mechanism for the halogenation of alkanes?",
+          options: ["Electrophilic addition", "Nucleophilic substitution", "Free radical substitution", "Elimination"],
+          correct: 2,
+          explanation: "Halogenation of alkanes proceeds via a free radical substitution mechanism. It involves initiation, propagation, and termination steps. It starts with the homolytic cleavage of the halogen molecule (e.g., Cl₂) to form free radicals."
+        },
+        {
+          text: "Which of the following is the initiating step in the free radical chlorination of methane?",
+          options: ["CH₄ + Cl• → CH₃• + HCl", "Cl₂ → 2 Cl•", "CH₃• + Cl₂ → CH₃Cl + Cl•", "CH₃• + Cl• → CH₃Cl"],
+          correct: 1,
+          explanation: "The initiation step in free radical chlorination is the homolytic cleavage of the chlorine molecule (Cl₂) into two chlorine radicals (Cl•), usually initiated by UV light or heat."
+        },
+        {
+          text: "Which of the following is a propagation step in the free radical chlorination of methane?",
+          options: ["Cl₂ → 2 Cl•", "CH₄ + Cl• → CH₃• + HCl", "CH₃• + Cl• → CH₃Cl", "2 CH₃• → C₂H₆"],
+          correct: 1,
+          explanation: "Propagation steps involve the regeneration of radicals. In this case, CH₄ + Cl• → CH₃• + HCl is a propagation step where a chlorine radical abstracts a hydrogen from methane, forming a methyl radical.  CH₃• + Cl₂ → CH₃Cl + Cl• is another propagation step."
+        },
+        {
+          text: "What is a possible termination step in the free radical chlorination of methane?",
+          options: ["CH₄ + Cl• → CH₃• + HCl", "Cl₂ → 2 Cl•", "CH₃• + Cl₂ → CH₃Cl + Cl•", "CH₃• + Cl• → CH₃Cl"],
+          correct: 3,
+          explanation: "Termination steps involve the combination of two radicals to form a stable molecule, stopping the chain reaction.  CH₃• + Cl• → CH₃Cl combines a methyl radical and a chlorine radical to form chloromethane."
+        },
+        {
+          text: "What is the major product of the complete combustion of an alkane?",
+          options: ["Carbon monoxide", "Carbon", "Carbon dioxide and water", "Hydrogen"],
+          correct: 2,
+          explanation: "Complete combustion of an alkane in the presence of sufficient oxygen yields carbon dioxide (CO₂) and water (H₂O). CxHy + O₂ → CO₂ + H₂O + Heat.  Incomplete combustion produces carbon monoxide or carbon."
+        },
+        {
+          text: "What is the term for the cracking of large alkanes into smaller, more useful hydrocarbons?",
+          options: ["Hydrogenation", "Polymerization", "Cracking", "Isomerization"],
+          correct: 2,
+          explanation: "Cracking is the process of breaking down large alkanes into smaller alkanes and alkenes by heating them to high temperatures, often with a catalyst."
+        },
+        {
+          text: "Which of the following alkanes is a liquid at room temperature?",
+          options: ["Methane", "Ethane", "Propane", "Octane"],
+          correct: 3,
+          explanation: "Octane (C₈H₁₈) is a liquid at room temperature. Alkanes with 5-15 carbons are typically liquids at room temperature."
+        },
+        {
+          text: "What is the product of the reaction of methane (CH₄) with excess oxygen in a limited supply?",
+          options: ["CO₂ and H₂O", "CO and H₂O", "C and H₂O", "H₂ and CO₂"],
+          correct: 1,
+          explanation: "Incomplete combustion of methane in a limited oxygen supply produces carbon monoxide (CO) and water (H₂O). In extreme cases, carbon (C) and water might be formed instead of CO."
+        },
+        {
+          text: "What is the name for cyclic alkanes?",
+          options: ["Alkenes", "Alkynes", "Cycloalkanes", "Aromatic compounds"],
+          correct: 2,
+          explanation: "Cyclic alkanes are called cycloalkanes, and they have the general formula CₙH₂ₙ. They have carbon atoms arranged in a ring structure. Alkenes contain carbon-carbon double bonds and alkynes carbon-carbon triple bonds. Aromatic compounds are benzene-based structures with alternating double bonds."
+        },
+        {
+          text: "Which of the following is a characteristic of branched alkanes compared to straight-chain alkanes with similar molecular weights?",
+          options: ["Higher boiling points", "Lower boiling points", "Higher densities", "Higher melting points"],
+          correct: 1,
+          explanation: "Branched alkanes have lower boiling points compared to straight-chain alkanes of similar molecular weight because branching reduces the surface area available for intermolecular van der Waals interactions."
+        },
+        {
+          text: "Which of the following is the correct IUPAC name for a 5-carbon alkane?",
+          options: ["Butane", "Pentane", "Hexane", "Heptane"],
+          correct: 1,
+          explanation: "A 5-carbon alkane is called pentane. Butane has 4 carbons, hexane has 6 carbons and heptane has 7 carbons."
+        },
+        {
+          text: "What is the hybridization of carbon atoms in alkanes?",
+          options: ["sp", "sp²", "sp³", "dsp²"],
+          correct: 2,
+          explanation: "Carbon atoms in alkanes are sp³ hybridized, meaning each carbon is bonded to four other atoms (either carbon or hydrogen) via sigma bonds. The tetrahedral arrangement around each carbon results from sp³ hybridization."
+        },
+        {
+          text: "Which of the following reagents can be used to prepare alkanes from carbonyl compounds?",
+          options: ["KMnO₄", "H₂SO₄", "Zn(Hg)/HCl", "NaOH"],
+          correct: 2,
+          explanation: "The Clemmensen reduction uses Zn(Hg) in concentrated HCl to reduce carbonyl groups (C=O) in aldehydes and ketones to methylene groups (CH₂) thus forming alkanes."
+        },
+        {
+          text: "What is the general name for saturated hydrocarbons?",
+          options: ["Alkenes", "Alkynes", "Aromatics", "Alkanes"],
+correct: 3,
+          explanation: "Alkanes are saturated hydrocarbons, containing only single bonds between carbon atoms. Alkenes and Alkynes are unsaturated."
+        },
+        {
+          text: "Which of the following is the major product of the monochlorination of ethane?",
+          options: ["Methane", "Chloroethane", "1,1-Dichloroethane", "1,2-Dichloroethane"],
+          correct: 1,
+          explanation: "Monochlorination of ethane primarily yields chloroethane (CH₃CH₂Cl). The reaction proceeds via a free radical substitution mechanism. Further chlorination to dichlorinated or polychlorinated products can occur, but monochlorination is the major product under controlled conditions."
+        },
+        {
+          text: "What is the process of converting alkanes into aromatic hydrocarbons called?",
+          options: ["Polymerization", "Reforming", "Cracking", "Hydrogenation"],
+          correct: 1,
+          explanation: "Reforming is a process used in the petroleum industry to convert alkanes into aromatic hydrocarbons and branched alkanes, improving the octane rating of gasoline. It involves isomerization and dehydrogenation reactions, often with catalysts."
+        },
+        {
+          text: "What is the bond angle around carbon atoms in alkanes?",
+          options: ["90°", "120°", "180°", "109.5°"],
+          correct: 3,
+          explanation: "The carbon atoms in alkanes are sp³ hybridized, resulting in a tetrahedral geometry with bond angles of approximately 109.5°."
+        },
+        {
+          text: "What is the name for a hydrocarbon with the formula C₁₀H₂₂?",
+          options: ["Octane", "Nonane", "Decane", "Undecane"],
+          correct: 2,
+          explanation: "A hydrocarbon with the formula C₁₀H₂₂ is decane. The prefix 'dec-' indicates ten carbon atoms. The 'ane' ending denotes an alkane."
+        },
+        {
+          text: "Which statement about the stability of carbon radicals is true?",
+          options: ["Methyl radicals are most stable", "Primary carbon radicals are most stable", "Secondary carbon radicals are more stable than tertiary radicals", "Tertiary carbon radicals are most stable"],
+          correct: 3,
+          explanation: "The stability of carbon radicals increases with the degree of substitution: tertiary > secondary > primary > methyl. This is because alkyl groups stabilize the radical through hyperconjugation and inductive effects."
+        },
+        {
+          text: "Which of the following metals is often used as a catalyst in the hydrogenation of alkenes to alkanes?",
+          options: ["Sodium", "Potassium", "Platinum", "Magnesium"],
+          correct: 2,
+          explanation: "Platinum (Pt), palladium (Pd), and nickel (Ni) are commonly used as catalysts in the hydrogenation of alkenes to alkanes. These metals provide a surface for the adsorption of hydrogen and the alkene, facilitating the reaction."
+        },
+        {
+          text: "What is the IUPAC name of CH₃CH₂CH(CH₃)CH₂CH₂CH₃?",
+          options: ["2-Methylhexane", "3-Methylhexane", "2-Ethylpentane", "3-Ethylpentane"],
+          correct: 1,
+          explanation: "The longest continuous carbon chain has 7 carbons, making it a heptane derivative. The methyl group (CH₃) is attached to the third carbon atom of the parent chain. Numbering from the left gives the substituent the lowest number and has a name of 3-methylhexane. A name of 4-Ethylpentane is invalid as the longest chain would be numbered as a hexane and should be called 3-methylhexane."
+        },
+        {
+          text: "Which type of isomerism involves different connectivity of atoms?",
+          options: ["Geometric", "Optical", "Structural", "Conformational"],
+          correct: 2,
+          explanation: "Structural isomers have the same molecular formula but different arrangements of atoms."
+        },
+        {
+          text: "Which of the following compounds exhibits structural isomerism?",
+          options: ["CH₄", "C₂H₆", "C₃H₈", "C₄H₁₀"],
+          correct: 3,
+          explanation: "Butane (C₄H₁₀) can exist as n-butane or isobutane (2-methylpropane)."
+        },
+        {
+          text: "What is another name for structural isomers?",
+          options: ["Enantiomers", "Diastereomers", "Constitutional isomers", "Cis-trans isomers"],
+          correct: 2,
+          explanation: "Structural isomers are also called constitutional isomers."
+        },
+        {
+          text: "Which type of isomerism requires a rigid structure (e.g., a double bond or a ring) to prevent free rotation?",
+          options: ["Structural", "Optical", "Geometric", "Conformational"],
+          correct: 2,
+          explanation: "Geometric isomerism (cis-trans isomerism) requires restricted rotation."
+        },
+        {
+          text: "Which of the following alkenes can exhibit geometric isomerism?",
+          options: ["Ethene", "Propene", "1-Butene", "2-Butene"],
+          correct: 3,
+          explanation: "2-Butene has different groups attached to each carbon of the double bond, allowing for cis and trans isomers."
+        },
+        {
+          text: "In geometric isomers, what does 'cis' mean?",
+          options: ["Opposite sides", "Same side", "Mirror image", "Superimposable"],
+          correct: 1,
+          explanation: "'Cis' means that the substituents are on the same side of the double bond or ring."
+        },
+        {
+          text: "In geometric isomers, what does 'trans' mean?",
+          options: ["Same side", "Opposite sides", "Mirror image", "Identical"],
+          correct: 1,
+          explanation: "'Trans' means that the substituents are on opposite sides of the double bond or ring."
+        },
+        {
+          text: "What is the relationship between cis-2-butene and trans-2-butene?",
+          options: ["Structural isomers", "Enantiomers", "Geometric isomers", "Identical compounds"],
+          correct: 2,
+          explanation: "Cis-2-butene and trans-2-butene are geometric isomers."
+        },
+        {          text: "Which term describes isomers that are non-superimposable mirror images of each other?",
+          options: ["Structural isomers", "Geometric isomers", "Enantiomers", "Diastereomers"],
+          correct: 2,
+          explanation: "Enantiomers are stereoisomers that are non-superimposable mirror images."
+        },
+        {
+          text: "What is a chiral center?",
+          options: ["A carbon with two identical groups attached", "A carbon with a double bond", "A carbon with four different groups attached", "A carbon with a triple bond"],
+          correct: 2,
+          explanation: "A chiral center is a carbon atom bonded to four different groups."
+        },
+        {
+          text: "Which of the following molecules is chiral?",
+          options: ["CH₂Cl₂", "CHCl₃", "CHBrClF", "CCl₄"],
+          correct: 2,
+          explanation: "CHBrClF has a carbon bonded to four different substituents, making it chiral."
+        },
+        {
+          text: "What is another term for a chiral molecule?",
+          options: ["Achiral", "Asymmetric", "Symmetric", "Meso"],
+          correct: 1,
+          explanation: "Chiral molecules are also described as asymmetric."
+        },
+        {
+          text: "What is an achiral molecule?",
+          options: ["A molecule with a chiral center", "A molecule that rotates plane-polarized light", "A molecule that is superimposable on its mirror image", "A molecule with geometric isomers"],
+          correct: 2,
+          explanation: "Achiral molecules are superimposable on their mirror images."
+        },
+        {
+          text: "What is the relationship between enantiomers regarding plane-polarized light?",
+          options: ["They rotate light in the same direction", "They do not rotate light", "They rotate light in opposite directions", "They rotate light randomly"],
+          correct: 2,
+          explanation: "Enantiomers rotate plane-polarized light in equal but opposite directions."
+        },
+        {
+          text: "What is a racemic mixture?",
+          options: ["A mixture of structural isomers", "A mixture of geometric isomers", "An equimolar mixture of enantiomers", "A pure sample of one enantiomer"],
+          correct: 2,
+          explanation: "A racemic mixture contains equal amounts of both enantiomers."
+        },
+        {
+          text: "Does a racemic mixture rotate plane-polarized light?",
+          options: ["Yes, in the clockwise direction", "Yes, in the counterclockwise direction", "No", "Sometimes"],
+          correct: 2,
+          explanation: "A racemic mixture does not rotate plane-polarized light because the rotations of the two enantiomers cancel each other out."
+        },
+        {
+          text: "What are diastereomers?",
+          options: ["Isomers that are mirror images", "Isomers that are superimposable", "Stereoisomers that are not enantiomers", "Structural isomers"],
+          correct: 2,
+          explanation: "Diastereomers are stereoisomers that are not mirror images of each other."
+        },
+        {
+          text: "Which type of isomers have different physical properties (e.g., melting point, boiling point)?",
+          options: ["Enantiomers", "Conformational isomers", "Structural isomers", "All of the above"],
+          correct: 3,
+          explanation: "Structural isomers, geometric isomers, and diastereomers all have different physical properties due to their different structures and interactions."
+        },
+        {
+          text: "Which of the following represents chain isomerism?",
+          options: ["CH₃CH₂OH and CH₃OCH₃", "CH₃CH₂CH₂CH₃ and (CH₃)₂CHCH₃", "cis-2-butene and trans-2-butene", "D-glucose and L-glucose"],
+          correct: 1,
+          explanation: "Chain isomerism is a type of structural isomerism where the carbon skeleton differs (e.g., straight chain vs. branched chain)."
+        },
+        {
+          text: "Which of the following represents position isomerism?",
+          options: ["CH₃CH₂CH₂OH and CH₃CH(OH)CH₃", "CH₃CH₂OCH₂CH₃ and CH₃OCH₂CH₂CH₃", "cis-2-pentene and trans-2-pentene", "D-fructose and L-fructose"],
+          correct: 0,
+          explanation: "Position isomerism is a type of structural isomerism where the position of a functional group differs."
+        },
+        {
+          text: "Which of the following represents functional group isomerism?",
+          options: ["CH₃CH₂OH and CH₃OCH₃", "CH₃CH₂CH₂CH₃ and (CH₃)₂CHCH₃", "cis-2-butene and trans-2-butene", "D-glucose and L-glucose"],
+          correct: 0,
+          explanation: "Functional group isomerism involves different functional groups (e.g., alcohol vs. ether)."
+        },
+{
+          text: "A compound is found to rotate plane-polarized light. This indicates the presence of which type of isomer?",
+          options: ["Structural", "Geometric", "Optical", "Conformational"],
+          correct: 2,
+          explanation: "Optical isomers are chiral and can rotate plane-polarized light."
+        },
+        {
+          text: "What is the minimum number of carbon atoms required for an alkane to exhibit structural isomerism?",
+          options: ["2", "3", "4", "5"],
+          correct: 2,
+          explanation: "An alkane with 4 or more carbon atoms can exhibit structural isomerism. Butane (C₄H₁₀) is the smallest alkane exhibiting structural isomerism."
+        },
+        {
+          text: "How many stereoisomers are possible for a molecule with two chiral centers?",
+          options: ["1", "2", "3", "4"],
+          correct: 3,
+          explanation: "A molecule with n chiral centers can have a maximum of 2ⁿ stereoisomers. With 2 chiral centers, there can be up to 2² = 4 stereoisomers (enantiomers and diastereomers)."
+        },
+        {
+          text: "Which of the following is a necessary condition for a molecule to be optically active?",
+          options: ["Presence of a double bond", "Presence of a chiral center", "Presence of a plane of symmetry", "Presence of a polar bond"],
+          correct: 1,
+          explanation: "The most necessary condition for optical activity is the presence of a chiral center (although other forms of chirality are also possible)."
+        },
+        {
+          text: "A meso compound",
+          options: ["is a pair of enantiomers", "contains no chiral centers", "is achiral despite having chiral centers", "rotates plane-polarized light"],
+          correct: 2,
+          explanation: "A meso compound is achiral due to an internal plane of symmetry even though it contains chiral centers."
+        },
+{
+          text: "Which of the following prefixes is used to denote enantiomers?",
+          options: ["cis-", "trans-", "R- and S-", "ortho- and para-"],
+          correct: 2,
+          explanation: "The R and S prefixes are used to denote the absolute configuration of chiral centers in enantiomers."
+        },
+        {
+          text: "How are diastereomers related to each other?",
+          options: ["They are mirror images", "They are non-superimposable mirror images", "They are stereoisomers but not mirror images", "They have the same physical properties"],
+          correct: 2,
+          explanation: "Diastereomers are stereoisomers that are not related as object and mirror image."
+        },
+        {
+          text: "Which of the following terms describes isomers that are readily interconverted by rotation around single bonds?",
+          options: ["Structural isomers", "Geometric isomers", "Optical isomers", "Conformational isomers"],
+          correct: 3,
+          explanation: "Conformational isomers, or conformers, are interconverted by rotation around single bonds and are not considered different isomers in the strictest sense."
+        },
+{
+          text: "Which of the following is NOT a type of structural isomer?",
+          options: ["Chain Isomer", "Position Isomer", "Functional Group Isomer", "Optical Isomer"],
+          correct: 3,
+          explanation: "Optical Isomers are stereoisomers, not structural isomers. Structural isomers involve different connectivity between atoms."
+        },
 {
     text: "What is the definition of structural isomers?",
     options: ["Same molecular formula, different spatial arrangement of atoms", "Same molecular formula, same connectivity of atoms", "Same molecular formula, different connectivity of atoms", "Same connectivity, different molecular formula"],
