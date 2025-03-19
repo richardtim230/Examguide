@@ -13,6 +13,7 @@ body {
   position: relative;
   overflow: auto; /* Prevent scrolling */
   color: black;
+  align-items: center;
 }
 
 .modal-active {
@@ -1426,6 +1427,7 @@ color: white;
   text-align: center;
   color: white;
   width: 90%;
+  align-items: center;
   height: 90%;
   max-width: 99%;
   animation: fadeIn 0.7s ease-in-out;
