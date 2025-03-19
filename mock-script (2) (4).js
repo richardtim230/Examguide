@@ -1,29 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const authSection = document.getElementById("auth-section");
-    const registerSection = document.getElementById("registration-section");
 
-    function showLogin() {
-        authSection.classList.remove("hidden");
-        registerSection.classList.add("hidden");
-        window.history.pushState({}, "", "/Login"); // Update URL without reloading
-    }
-
-    function showRegister() {
-        authSection.classList.add("hidden");
-        registerSection.classList.remove("hidden");
-        window.history.pushState({}, "", "/register"); // Update URL without reloading
-    }
-
-    document.getElementById("registerBtn").addEventListener("click", showRegister);
-    document.getElementById("backToLoginBtn").addEventListener("click", showLogin);
-
-    // Check current URL and show the correct section
-    if (window.location.pathname === "/register") {
-        showRegister();
-    } else {
-        showLogin();
-    }
-});
 
 window.onpopstate = function(event) {
             // Logic to reload the app to the previous page
