@@ -1,9 +1,7 @@
 {
   "rewrites": [
     { "source": "/register", "destination": "/new-index.html" },
-    { "source": "/OAU-MOCK", "destination": "/new-index.html," },
-        { "source": "/register-studentsApp", "destination": "/index.html.htm," },
-        { "source": "/login-studentsApp", "destination": "/index.html.htm" },
-    { "source": "/studentsApp", "destination": "/index.html.htm" }
+    { "source": "/login", "destination": "/new-index.html" },
+    { "source": "/sss-login", "destination": "/index.html.htm" }
   ]
 }
