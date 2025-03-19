@@ -6938,9 +6938,9 @@ function allocateUsersToExams(users, exams) {
 
 // Assume this is your list of predefined exams with department assignments
 const exams = [
-    { id: "exam1", title: "Mathematics 101", department: "Zoology" },
-    { id: "exam2", title: "INTRODUCTORY CHEMISTRY TWO", department: "Microbiology" },
-    { id: "exam3", title: "History 101", department: "Zoology" },
+    { id: "exam1", title: "Mathematics 101", department: "Zooology" },
+    { id: "exam2", title: "INTRODUCTORY CHEMISTRY TWO", department: "Microbioology" },
+    { id: "exam3", title: "History 101", department: "Zooology" },
     { id: "exam4", title: "Biology 202", department: "SCIENCE" }
     // Add more exams as needed
 ];
