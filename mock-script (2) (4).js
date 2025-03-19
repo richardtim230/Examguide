@@ -7226,68 +7226,81 @@ const students = [
 
 ];
 
+
+// Helper function to get student's first and last name
+function getStudentNames(fullName) {
+  const names = fullName.toLowerCase().split(" ");
+  return names.length > 1 ? [names[0], names[names.length - 1]] : [names[0]];
+}
+
 // Function to authenticate user
 function authenticateUser(fullName, password) {
-    const student = students.find(student => student.fullName === fullName && student.matricNumber === password);
-    if (student) {
-        return student;
-    }
-    return null;
+  const userNames = getStudentNames(fullName);
+
+  const student = students.find(student => {
+    const studentNames = getStudentNames(student.fullName);
+    return studentNames.some(name => userNames.includes(name)) && student.matricNumber === password;
+  });
+
+  if (student) {
+    return student;
+  }
+  return null;
 }
 
 // Update the login function
 document.getElementById('loginBtn').addEventListener('click', function () {
-    const fullName = document.getElementById('fullName').value.trim();
-    const password = document.getElementById('userID').value.trim(); // Use matric number as password
+  const fullName = document.getElementById('fullName').value.trim();
+  const password = document.getElementById('userID').value.trim(); // Use matric number as password
 
-    const authenticatedStudent = authenticateUser(fullName, password);
+  const authenticatedStudent = authenticateUser(fullName, password);
 
-    if (authenticatedStudent) {
-        localStorage.setItem("currentUser", JSON.stringify(authenticatedStudent));
-        document.getElementById('userDetails').innerHTML = `
-            <strong>Full Name:</strong> ${authenticatedStudent.fullName} <br>
-            <strong>Faculty:</strong> ${authenticatedStudent.faculty} <br>
-            <strong>Department:</strong> ${authenticatedStudent.department} <br>
-            <strong>Level:</strong> ${authenticatedStudent.part}
-        `;
+  if (authenticatedStudent) {
+    localStorage.setItem("currentUser", JSON.stringify(authenticatedStudent));
+    document.getElementById('userDetails').innerHTML = `
+      <strong>Full Name:</strong> ${authenticatedStudent.fullName} <br>
+      <strong>Faculty:</strong> ${authenticatedStudent.faculty} <br>
+      <strong>Department:</strong> ${authenticatedStudent.department} <br>
+      <strong>Level:</strong> ${authenticatedStudent.part}
+    `;
 
-        const examsList = document.getElementById('examsList');
-        examsList.innerHTML = ''; // Clear previous exams
+    const examsList = document.getElementById('examsList');
+    examsList.innerHTML = ''; // Clear previous exams
 
-        // Ensure "CHM101-F1" is included in the user's exam allocations
-        const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-        if (!examAllocations[authenticatedStudent.matricNumber]) {
-            examAllocations[authenticatedStudent.matricNumber] = [];
-        }
-
-        if (!examAllocations[authenticatedStudent.matricNumber].some(exam => exam.id.trim() === "CHM101-F1")) {
-            examAllocations[authenticatedStudent.matricNumber].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
-        }
-
-        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
-
-        // Display assigned exams
-        examAllocations[authenticatedStudent.matricNumber].forEach(exam => {
-            const examItem = document.createElement('button');
-            examItem.innerText = exam.title;
-            examItem.className = 'styled-btn';
-
-            examItem.addEventListener('click', function () {
-                document.getElementById("courseCode").value = exam.id;
-                document.getElementById("selectCourseBtn").click();
-            });
-
-            examsList.appendChild(examItem);
-        });
-
-        document.getElementById('popup').classList.add('active');
-        document.getElementById('auth-section').classList.add('hidden');
-        document.getElementById('course-code-section').classList.remove('hidden');
-        document.getElementById('toggle-calculator').classList.remove('hidden');
-        document.getElementById('calculator-popup').classList.remove('hidden');
-    } else {
-        alert("Invalid Full Name or Matric Number. Please try again.");
+    // Ensure "CHM101-F1" is included in the user's exam allocations
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    if (!examAllocations[authenticatedStudent.matricNumber]) {
+      examAllocations[authenticatedStudent.matricNumber] = [];
     }
+
+    if (!examAllocations[authenticatedStudent.matricNumber].some(exam => exam.id.trim() === "CHM101-F1")) {
+      examAllocations[authenticatedStudent.matricNumber].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
+    }
+
+    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+
+    // Display assigned exams
+    examAllocations[authenticatedStudent.matricNumber].forEach(exam => {
+      const examItem = document.createElement('button');
+      examItem.innerText = exam.title;
+      examItem.className = 'styled-btn';
+
+      examItem.addEventListener('click', function () {
+        document.getElementById("courseCode").value = exam.id;
+        document.getElementById("selectCourseBtn").click();
+      });
+
+      examsList.appendChild(examItem);
+    });
+
+    document.getElementById('popup').classList.add('active');
+    document.getElementById('auth-section').classList.add('hidden');
+    document.getElementById('course-code-section').classList.remove('hidden');
+    document.getElementById('toggle-calculator').classList.remove('hidden');
+    document.getElementById('calculator-popup').classList.remove('hidden');
+  } else {
+    alert("Invalid Full Name or Matric Number. Please try again.");
+  }
 });
 
 // Close Popup Functionality
