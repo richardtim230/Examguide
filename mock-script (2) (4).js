@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function showLogin() {
         authSection.classList.remove("hidden");
         registerSection.classList.add("hidden");
-        window.history.pushState({}, "", "/login"); // Update URL without reloading
+        window.history.pushState({}, "", "/Login"); // Update URL without reloading
     }
 
     function showRegister() {
