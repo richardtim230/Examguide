@@ -9742,6 +9742,2644 @@ const students = [
     { "fullName": "Sanusi Samuel Olalekan", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/254", "faculty": "Science" },
     { "fullName": "Seidu Fathia Oluwatosin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/255", "faculty": "Science" },         
 
+
+        
+
+    {
+        "fullName": "Kazeem Munirat Morayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441074260IA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ademola Inioluwa Philemon",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441170196FF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abawonse Adebayo Samuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441171021BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Taiwo Ayomide Adewale",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441180749BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyemi Might Amioluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441197164CA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adejumon Mary Adejoke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441253187GJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Lawal Rofiat Ajoke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441386400EA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olajide Promise Israel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441389350BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adejumon Evangel Adeolu",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441395370DA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ademola Joseph Ibukun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441656540FA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oladimeji Favour Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441722262EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Anjorin Abraham Oluwaseun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "202441875579BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "George Oludotun Lekki",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "86049773HJ",
+        "faculty": "Science"
+    },
+    {        "fullName": "Olabisi Marvellous Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "86093033IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Popoola Jide Abiodun",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2008/204",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojo Oluwafolakemi Grace",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2009/129",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojumoola John Ifeolu",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2009/131",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olubode Mustapha Olumide",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2011/192",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwafemi Eniola Dorcas",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2012/178",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Faboyede Stephen Muyiwa",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2013/099",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adu Sylvester",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2015/062",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Araromi Sulaimon Olawale",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2015/118",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odubunmi Abdul Lateef",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2015/217",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owolabi Emmanuel Oluwafunminiyi",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2015/306",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oduntan Afolashade Busayo",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2016/216",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olagoke Faith Iyanuoluwa",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2016/421",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Adegoroye Adefolarin",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2018/273",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abdul Semiat Olaide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abdul-Azeez Aishat Oyinkansola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abdulhamid Roqeebah Folasade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/003",
+        "faculty": "Science"
+    },
+   {
+        "fullName": "Abilewa Ifeoluwa Samuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/004",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Abimbola Eniola Oluwapemipo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/005",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abiola Jane Kehinde",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abioye Adeola Rachael",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebanjo Babara Darasimi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Deborah Oyinkansola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Eniola Opeyemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Ifeloluwa Emmanuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/011",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Oluwatobi David",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebimpe Daniel Adetayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/013",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Elizabeth Ifeoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/014",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Janet Omowumi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/015",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Peter Iyanuoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/016",
+        "faculty": "Science"
+    },
+    {        "fullName": "Adebeye Goodluck Adedamola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/017",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adedeji John Samuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/018",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adedeji Oluwafemi Miracle",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adedeji Tosin Omotola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/020",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adedoyin Daniel Adeolu",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/021",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adefioye Inioluwa Oluwaferanmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/022",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegbernigun Abiodun Mercy",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/023",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegbola Benedict Oluwaferanmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/024",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegbola Enoch Adeniyi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/025",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegboye Eniola Oreoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/026",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegboyega Marvellous Moyinoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/027",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegoke Damilare Samuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/028",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegoke Fridaos Adenike",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/029",         "faculty": "Science"
+    },
+    {
+        "fullName": "Adegoke Mary Ayanfeoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/030",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adejumo Fathiat Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/031",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adekeye Oluwafunmito Omolara",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/032",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adelabu Muminat Adewumi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/033",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adelanwa Daniel Imoleayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/034",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Adeleye Bimimore",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/035",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adelugba Olasubomi Sarah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/036",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ademiluyi Boluwatife Michael",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/037",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ademuyiwa Oreoluwa Oluwabukunmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/038",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniyi Oluwadarasimi Imisioluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/039",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeoye Ayodeji",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/040",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adepoju Abdul Samad Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/041",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aderemi Blessing Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/042",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aderibigbe Adetomiwa Fortune",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/043",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesanya Precious Oluwadarasimi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/044",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesina Ifeoluwa Toluwase",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/045",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesina Isaiah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/046",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesola Samuel Adedayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/047",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesuyi Damilare Samuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/048",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewale Aisha Oyinkansola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/049",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewoyin Barakat Fikayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/050",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewoyin Grace Adeola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/051",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewumi Elizabeth Oluwadamilola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/052",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyemi Deborah Adewumi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/053",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyemo Abdul-Qohaar Olabisi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/054",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyera Oluwatimilehin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/055",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adio Aliyah Olajumoke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/056",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adisa Eunice Anuoluwapo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/057",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adodo Temiloluwa Mary",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/058",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adu Praise Folashade", "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/059",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Afolabi Favour Kayinsola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/060",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Afolabi Victoria Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/061",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Afuwape Christiana",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/062",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agbetiloye Precious Adenike",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/063",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agboola Ayomide Kolawole",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/064",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agbossaga Kpedetin Oluwadarasimi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/065",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajagbe Titilope Rachael",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/066",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajagbe-Fayemi Samson Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/067",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajasa Tunbosun Oluwatunmise",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/068",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Emmanuel Temidayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/069",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Precious Abosede",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/070",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Sunday Damilola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/071",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Victor Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/072",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajenifuja Olamide Joseph",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/073",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajibade Esther Adesola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/074",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajibola Mujeeb Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/075",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajibola Samuel Remilekun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/076",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajiboye Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/077",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajiboye Wuraoluwa Deborah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/078",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajifowobaje Ajibola Damilare",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/079",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akanbi Samad Abiola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/080",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akande Faith Oluwaseun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/081",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akande Promise Oluwaferanmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/082",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akano Aisha Oyindamola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/083",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinade Motunrayo Deborah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/084",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akin-Akinnate Ololade Evangelin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/085",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinbiola Joy Opeyemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/086",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akindele Omotolani Jesutofunmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/087",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinduro Mercy Moses",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/088",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akindurodemi David Kayode",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/089",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akingbesote Anjoluwapo Ibukunoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/090",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinloye Temiloluwa Christiana",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/091",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinluyi Esther Bidemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/092",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinmola Honour Wuraola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/093",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinola Aminat Ajoke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/094",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinpelu Paulina Elizabeth",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/095",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinremi Ibrahim Ademola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/096",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinrinlola Emmanuel Abolahan",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/097",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akintola Fathia Omobolaji",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/098",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akintoye Balqees Dolapo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/099",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinyeju Emmanuel Akinsola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/100",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinyele Ebunoluwa Temitayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/101",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinyemi Wisdom Timileyin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/102",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alabi Deborah Fiyinfoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/103",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alabi Fiyinfoluwa Akinkunmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/104",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alake Oluwamuyiwa Emmanuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/105",
+        "faculty": "Science"     },
+    {
+        "fullName": "Alani Faridat Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/106",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alani Mariam Abiola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/107",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aluko Joy Mary",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/108",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aminu Precious Opeoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/109",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Amonioge Olamide David",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/110",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Amure Aduragbemi Elizabeth",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/111",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Amusire Mary Ilerioluwakintye",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/112",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Animashaun Aisha Abike",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/113",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Anthony Nora Isioma",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/114",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arigbede Oluwafunmilayo Christianah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/115",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arinloye Abayomi Charles",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/116",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ariyibi Ifeoluwa Dorcas",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/117",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ariyo Precious Deborah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/118",         "faculty": "Science"
+    },
+    {
+        "fullName": "Arogunjo Fisayomi Adebola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/119",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arowolo Deborah Omorinsola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/120",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arogu Sarah Chisom",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/121",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Asiru Michael Oluwatobi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/122",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Atilade Marvellous Esther",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/123",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Avuzorie Abigail Oghenekaro",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/124",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awe Blessing Rachael",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/125",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awolola Omotola Victoria",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/126",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awotidoye Precious Adesewa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/127",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awowoyin Timilehin Fisayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/128",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayeni Abdulfatai Oyekolapo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/129",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babalola Mutmainat Funmilayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/130",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babatunde Micheal Success",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/131",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Badru Ademola Sultan",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/132",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Baldoo Mercy Ifeyinwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/133",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bakare Saidat Bisola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/134",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Balogun Favour Aanuoluwatomiwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/135",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Balogun Joy Eniola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/136",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Balogun Oluwasegun Elisha",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/137",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Banire Tanioluwa Olasunkanmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/138",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bankole Deborah Olaoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/139",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bolarinwa Oluwafunmilola Ajoke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/140",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Chukwubuike Jessica Ijeoma",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/141",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dada Busola Elizabeth",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/142",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dada Oluwafunmike Eunice",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/143",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "David Tomiwa Favour",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/144",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Edun Olawale David",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/145",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Eegunlusi Ajoke Bosede",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/146",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Egbaibon Julianah Aderonke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/147",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Egbewole Esther",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/148",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Egunfemi Precious Oluwafisayomi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/149",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ejidokun Joshua Oluwadamilola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/150",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ejiwale Samuel Kolawole",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/151",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ekundayo Gloria Oluwatimileyin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/152",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Eleyinmi Comfort Ifeoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/153",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Elulade Faramade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/154",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Eluwole Rukoyah Omolade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/155",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Eluyemi Anjola Abigall",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/156",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ema Uforo Idiongo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/157",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Emmanuel Matthew Onome",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/158",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Emmanuel Mofiyinfoluwa Ebunoluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/159",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Emmanuel Solomon Greatness",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/160",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Enenche Alice Ogbene",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/161",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ezeh Christianah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/162",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fabunmi Esther Feyisetan",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/163",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fadeyi Oluwadamisi Joshua",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/164",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Faloba Ayomide Micheal",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/165",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Faloye Grace Oluwasetemipe",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/166",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Falusi Olamiposi Mopeiola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/167",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Farinola Togbega Joseph",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/168",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fasogbon Victoria Motunrayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/169",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fasoranti Oluwatetisimi Temidara",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/170",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fatolu Elizabeth Aderoju",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/171",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Gabriel Samuel Oluwa Samuel Oluwatimileyin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/172",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ganiyu Lawai Olayinka",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/173",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ganiyu Omolabake Aminat",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/174",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Gere Oghenemine Favour",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/175",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Hammed Abdulmalik Oladotun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/176",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Hammed Ayisat Abisola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/177",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Hamzat Moyosola Zainab",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/178",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Holo Temiloluwa Tamilore",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/179",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ibitoye Mary Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/180",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ibrahim Fathia Oluwafeisayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/181",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Idubor Olurotimi Osaretin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/182",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ifeanyi Marvellous Victor",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/183",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ikeh Princess Chizaram",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/184",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ikpoemezie Racheal Ugochukwu",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/185",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Inaolaji-Kazim Zeenat Abisola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/186",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Isaac Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/187",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Isaiimi Emmanuel Ayoola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/188",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Jimoh Taoheed Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/189",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Joda Abimbola Opeyemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/190",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Johnson Judith Damilola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/191",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kasimu Aisha Kofoworola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/192",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kikiowo Oluwavemimo Odunayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/193",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kolapo Abdulazeez Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/194",
+        "faculty": "Science"
+    },
+    {        "fullName": "Kowu Miracle Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/195",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Lawal Celestina Imoleoayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/196",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Luqman Mutmaheenah Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/197",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Makinde Oluwasinaayomi Akinsanmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/198",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Misbaudeen Naimah Olufunmilayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/199",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Moses Abigall Folashade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/200",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Moses Oluwafikemi Emmanuella",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/201",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ndabai Success Ifeayinchukwu",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/202",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Njila Chinyere Victoria",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/203",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Nuberu Olamiposi Khamilah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/204",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odeniyi Eunice Eniola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/205",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oderinu Opeyemi Grace",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/206",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odeyemi Ayomide Babatunde",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/207",         "faculty": "Science"
+    },
+    {
+        "fullName": "Odubiyi Donald Damilola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/208",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odukojo Opeyemi Thauban",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/209",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odunyemi Florence Folakemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/210",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oduola Favour Oluwatunmise",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/211",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odusole Oluwatimilehin Abosede",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/212",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogundele Moyosore Clementina",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/213",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunleye Sarah Atoke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/214",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunniran Faith Oluwadarasimi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/215",
+        "faculty": "Science"
+    },
+{
+        "fullName": "Oguntade Oluwafikunayomi Blessing",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/216",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunwole Temitope Dorcas",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/217",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojo Moses Odunayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/218",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojo Oluwadamilare David",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/219",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojotola Mercy Oluwaseun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/220",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojuoko Abolade Ridwan",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/221",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oke Folarin Olayemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/222",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oke Itunu Oluwafeyikemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/223",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oke Oluwatitofunmi Opeyemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/224",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okegade Esther Adedoyin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/225",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okeowo Bukola Helene",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/226",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okere Royal Festus",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/227",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okunyade Joy Oluwatunmise",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/228",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olabanji Boluwatife Rebecca",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/229",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olabode Imoleloluwa Hannah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/230",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olabode Tobi Taiwo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/231",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oladiran Michael Ayobami",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/232",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oladosu Toheeb Babatunde",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/233",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olafare Philip",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/234",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olajide Praise Toluope",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/235",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olalekan Esther Oluwatimileyin",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/236",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniran Elizabeth Olajumoke", "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/237",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniran Iyanuoluwa Grace",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/238",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniyan Glory Oluwanifemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/239",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniyan Kunle Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/240",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniyan Oluwamayowa Precious",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/241",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniyan Oyindamola Grace",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/242",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaniyi Opeyemi Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/243",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olanrewaju Oluwanifemi Mercy",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/244",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaolu Praise Darasimi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/245",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olasunkanmi Elizabeth Feyisara",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/246",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatayo Precious Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/247",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatoye Oluwadamilola Deborah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/248",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatunde Omotola Racheal",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/249",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatunji Deborah Oluwafunke",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/250",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatunjiowoka Oluwanifemi Eyitayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/251",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olawaie Fiyinfoluwa Havilah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/252",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olawole Emmanuel Feranmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/253",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ologbenla Adedeji Olusegun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/254",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ologbosere Victoria Folashade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/255",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olorunfemi Faith Tumininu",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/256",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olotu Temitope Oreofe",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/257",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olowoyeye Ayomide Odunayo", "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/258",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oloyede Ridwanullahi Oyebanji",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/259",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olufemi Abigeal Omotola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/260",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olufemi-Joseph Omotola-Gold Ifekiye",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/261",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwadare Jesutofunmi Oluwadarasimi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/262",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwakoku Dominion Precious",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/263",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwalonimi Oluwapelumi Deborah",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/264",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwasegun Peter Aanuoluwapo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/265",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwatuyi Aduragbemi Precious",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/266",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwayomi Boluwatife Victoria",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/267",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluyemi Taiwo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/268",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omale Victor Ojonugwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/269",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omidiran Maryam Adeola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/270",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omisore Iretimiwa Prosper",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/271",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omisore Omitope Oluwatobiloba",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/272",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omisore Timileyin Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/273",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omoge Mary Titilope",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/274",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omolaja Omotola Oluwaseun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/275",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omotayo Odunayo comfort",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/276",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omughene Wilfred Onanefe",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/277",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oni Mary Bukola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/278",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oni Monireti Oluwaseun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/279",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Onwudiwe Jessica Chisom",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/280",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Onyia Victor Alexander",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/281",
+        "faculty": "Science"
+    },
+    {        "fullName": "Opakunle Rukayat Keji",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/282",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oriola Oluwasewasemi Abiigail",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/283",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Orojo John ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/284",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Osatuyi Gods-Favour",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/285",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oseni Omotara Ayomide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/286",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Osho Nimotalahi Omolade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/287",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Osikilo Sharon Onome",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/288",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owoeye Olamitide Samuel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/289",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owoeye Ayindamola Eniola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/290",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owonike Aishat Oyindamola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/291",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyebanji Adesewa Erititobioluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/292",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyebisi Kehinde Temilade",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/293",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyedele Jubril Ajibola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/294",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyelade Oluwaseyifunmi Elizabeth",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/295",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeleke Ebenezer Adebayo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/296",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniran Shadrach Temiloluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/297",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniyi Jesse Oyesile",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/298",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniyi Noah Ayodeji",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/299",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniyi Noah Ayodeji",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/300",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniyi Praise Elizabeth",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/301",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyetoro Marvellous Mopeiola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/302",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owoole Anouluwanitemi Anthonia",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/303",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Paul Faith Oyinkansola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/304",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Paulinus Sandra Ada",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/305",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Raheem Naheemot Abiodun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/306",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Raji Precious Wonderful",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/307",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Rowland Nicholas Ayomipo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/308",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Rufus Toluwalase Rufus",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/309",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Saheed-Bashiru Fareedah Eniola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/310",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Saminu Nafisat Opeyemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/311",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Samuel Adeola Oluwaremilekun",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/312",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Samuel Temiloluwa",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/313",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Sani Hafsoh Omodolapo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/314",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Sanusi Michael Onisomi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/315",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Simon Richard Echewofunmi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/316",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Siyanbola Aishat Boluwatife",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/317",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Sulaimon Somod Olamide",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/318",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Taiwo Love Damilola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/319",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Taiwo Toluwani Rachel",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/320",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tella Oluwafemi Peter",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/321",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tiamiyu Fatimah Adeola",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/322",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tijani Mustapha Ayomiposi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/323",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tobi Divine Godson",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/324",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tomoloju Elizabeth Opeyemi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/325",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ugoh Favour Uche",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/326",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Vincent Rita Amarachi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/327",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Wasiu Latifat Oyenike",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/328",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Yedupe Olamide Mary",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/329",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Yusuff Abdulwahab Folawiyo",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/347",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olusesi Oluwafiremi Asabi",
+        "department": "Microbiology",
+        "part": "100",
+        "matricNumber": "MCB/2023/349",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Akinwole Abibat Oreoluwa",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "202210998626JA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oni Olalekan Korede",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "202290009791FF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegbule Oluwatimilehin Kehinde",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "HND/2022/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaleye Williams Gbemibori",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2016/260",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fayemi Rokibat Iyabo",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2021/132",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Sanusi Ibrahim Olamilekan",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2021/256",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abdulkareem Aishah Eniola",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abdullahi Hameedah Apeke",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abel Divine Gift",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/003",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abiola Faith Precious",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/004",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abiola Love Oluwaseyi",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/005",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abubakar Saidat Omotayo",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abudu Abisoye Paulina",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abuduwahab Latifat",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adaralegbe Oluwatobiloba Henry",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeagbo Adeamola Barakat",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeagbo Maryam Oluwakemi",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/011",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeagbo Sofiat Adejoke",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Ademola Samuel",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/013",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyayo Oluwafunmilayo Timothy",
+        "department": "Microbiology",
+        "part": "200",
+        "matricNumber": "MCB/2022/014",
+        "faculty": "Science"
+    },
 ];
 
 
