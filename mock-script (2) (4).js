@@ -12419,6 +12419,2566 @@ const students = [
         "matricNumber": "MCB/2022/014",
         "faculty": "Science"
     },
+
+
+      
+    {
+        "fullName": "Soroye Abdulmalik Oluwatobiloba",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440064247EA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dada Modupe Inioluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440611403HJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Onifade Matthew Toyosi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440915503EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatinsu Oluwanifemi Mercy",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440919537BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kareem Zainab Aduke",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441041933CF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omoyemi Olamide Jephthah",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441207919BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Shittu Opeyemi Sodiq",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441287991IA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebiyi Daniel Oluwaferanmi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441321772IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okoli Emmanuel Mmuokuchukwu",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441621302BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oboh Victor Enifome",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441660990DJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olutola Oladimeji Israel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441671954CF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adekunle Daniel, Oluwadamilare",
+        "department": "Physics and Engineering Physics",
+        "part": "100",         "matricNumber": "202441728236AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akande Abdulakeem Temitayo",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441792798AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayegbusi Tunde Rhema",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2013/013",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abidogun Abdulqudus Omoyanju",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Olamidekan Abdulbasit",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Adeola Rachael",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/003",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniyi Rachael Oyinade",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/005",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesoye Oluwapelumi Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewole Paul Opemipo",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyemo Joan Temiloluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Afolabi-Oni Michelle Moyosoreoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/011",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agboola Martins",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/014",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ake Moses Olayinka",         "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/015",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinbunmi Omobolaji Deborah",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/016",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akingboye Ezekiel Olusegun",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/017",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinwole Samson Oluwatimileyin",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/018",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinyemi Halimat Oluwatobi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinyemi Olayinka Semilore",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/020",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Amusan Mofileoluwalowo Nathan",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/021",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Anaedo Michael Chizoba",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/022",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ariyo Aliyah Gbamisola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/024",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awe Samuel Kayode",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/026",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayeni Emmanuel Mayowa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/028",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayodele Rachel Oluwaseun",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/029",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayorinde Samuel Oluwapamilerin",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/030",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babalola Samuel Ayomide",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/031",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babatunde Kolade Jesulayomi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/032",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bassey Emmanuel Ekpangedoho",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/033",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bello Alameen Ayokunmi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/034",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dare Banjoko Hephzibah Ebunoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/035",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dosumu Ayomide Lordswill",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/037",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Emiloye Isaac Ayotomiwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/039",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fabunmi George Goodluck",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/041",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fajojuto Henry Oyindamola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/043",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ganiyu Oluwabukunmi Rofiyat",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/045",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Igie Emmanuel Uchenna",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/046",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ilori Darius Oluwaferanmi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/047",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Isiolaotan Jesukimbati Eritoju",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/048",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kolawole Elijah Oluwadamilola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/049",
+        "faculty": "Science"
+    },
+{
+        "fullName": "Komolafe Temiloluwa Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/050",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Musa Jehoshua Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/053",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Obindo Roar Teribafunjesu",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/056",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunsinya Kehinde Helen",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/059",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olalere Abdulmaliq Olatunde",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/064",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Aderibigbe Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440454146EA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "AbdulKareem Mariam Dolapo",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440457923GJ",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Yussuff Ibrahim O.",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "86171042CC",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Asigoh Esther Ebunoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2015/016",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agabi Boaz Aidonokhai",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Daud Habeeb Akanni",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/036",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Eghosaseere Godsglory Imienfan",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/038",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Emmanuel Victor Charles",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/040",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Monday John Wonderful",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/052",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Nworah Winner Chidimma",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/054",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogbonna Blessed",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/057",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okikioposu Idris Olamilekan",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/061",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatayo Oluwaferanmi Jesse",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/066",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Onifade Oluwapelumi Rebecca",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/071",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Yusuf Hafeez Olawale",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/079",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ejimudaro Ufuoma Isaac",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "21759570EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Falade Joseph Precious",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "CSC/2019/138",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Nwanga Emmanuel Monday",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "GLY/2021/083",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwakoya Tijesunimi Peace",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "GLY/2021/148",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adekola Martins Oladotun",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/004",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adelabu Samuel",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/005",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeleke Oluwatobi Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeoye Adetomiwa Michelle",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aderemi Abolahan Siriku",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesina Adedolapo Ayobami",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/011",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adetoro David Smart",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adigun Oreoluwa Akintomiwa",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/016",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Gandhi Omitosin Aminat",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202440229143GF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bankole Nancy Nifemi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441095929DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinola Oluwaferanmi Taiwo",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441195078JF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olabisi Pelumi Williams",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "202441267549HJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adedeji Oluwadarasimi Anne",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/004",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adepoju Maryam Aderoju",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesiyan Precious Ayomide",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agbeniga Precious Omolola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/013",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aremu Tolulope Christianah",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/023",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arogundade Esther Tolulope",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/025",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awoyemi Gbolahan Samuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/027",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fadahunsi Oluwatimilehin Alexander",
+        "department": "Physics and Engineering Physics",
+        "part": "100",         "matricNumber": "PHY/2023/042",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Faloye Ibukunoluwa Victoria",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/044",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Lawal Aishat Oyinkansola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/051",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Obatunde Faidat Oluwamayowa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/055",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogundiji Fikunayomi Grace",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/058",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunseye Inumidun Florence",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/060",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oladejo Comfort Olabisi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/062",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olajuyigbe Mary Oritire",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/063",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olasunkanmi Oladotun Martins",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/065",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyebamiji Peace Damilola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/073",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olubode Oluseyi Silas",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/067",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluborode Isaac Favour",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/068",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olusanya Emmanuel Oluwaloni",         "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/069",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwole Victoria Oyinkansola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/070",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oriabure Joel Damilola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/072",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeleke Oyedeji Ayomide",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/074",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Samuel Precious Morenikeji",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/075",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Temitope Oluwaseyitan Praise",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/076",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Utemerue Precious Ogheneefe",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/077",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Wale-Atolagbe Samuel Fiyin",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/078",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Akinyemi Halimat Oluwatobi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinyemi Olayinka Semilore",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/020",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Amusan Mofileoluwalowo Nathan",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/021",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Anaedo Michael Chizoba",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/022",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ariyo Aliyah Gbamisola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/024",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awe Samuel Kayode",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/026",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayeni Emmanuel Mayowa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/028",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayodele Rachel Oluwaseun",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/029",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayorinde Samuel Oluwapamilerin",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/030",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babalola Samuel Ayomide",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/031",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babatunde Kolade Jesulayomi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/032",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bassey Emmanuel Expangedoho",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/033",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bello Alameen Ayokunmi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/034",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dare Banjoko Hephzibah Ebunoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/035",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dosumu Ayomide Lordswill",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/037",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Emiloye Isaac Ayotomiwa",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/039",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fabunmi George Goodluck",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/041",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fajojuto Henry Oyindamola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/043",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ganiyu Oluwabukunmi Rofiyat",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/045",
+        "faculty": "Science"
+    },
+{
+        "fullName": "Igie Emmanuel Uchenna",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/046",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ilori Darius Oluwaferanmi",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/047",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Isiolaotan Jesukimbati Eritoju",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/048",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kolawole Elijah Oluwadamilola",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/049",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Komolafe Temiloluwa Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/050",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Musa Jehoshua Emmanuel",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/053",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Obindo Roar Teribafunjesu",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/056",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunsinya Kehinde Helen",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/059",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olalere Abdulmaliq Olatunde",
+        "department": "Physics and Engineering Physics",
+        "part": "100",
+        "matricNumber": "PHY/2023/064",
+        "faculty": "Science"
+    },
+   {
+        "fullName": "Adegboye Oluwafiyisayo Andrew",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegboyega Precious Ayomikun",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/003",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeleke Oluwapelumi Jeremaih",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ademiluyi Ebunoluwa Taiwo",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesiyan Obafemi Adetunji",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewunmi Mozeedat Adetutu",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/014",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyemi Victor Oluwasijibomi",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/015",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agboola Rowland Iyanuoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/017",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayake Emmanuel Ayomikun",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/018",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Paul Olubunmi",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Stephen Oluwadarasimi",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/020",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Victor Oluwatimileyin",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/021",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akande Oluwadarasimi Ayomiposi",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/022",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinjire Akinwande Oladimeji",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/023",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akintunde Temidayo Adesoji",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/025",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arayomi Olusegun Idowu",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/026",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Asimiyu Wasilat Abisola",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/027",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awodibu Janet Ifeoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/028",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awolola Hannah Opeoluwa",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/029",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayeni Moyosore Phebe",
+        "department": "Physics and Engineering Physics",
+        "part": "200",
+        "matricNumber": "PHY/2022/030",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odulowo Adewunmi Rachael",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440028210BJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owuda Farouq Ozovehe",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440052138HJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunsola Grace Oluwafisayomi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440157376IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ehimhen Oseseojie Elias",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440214126AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeleye Worship David",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440300651BA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oduronbi Delight Anjolaoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440396108AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayotunde Esther Fiyinfoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440491880EA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tella Mariam Oluwadamilola",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440513896GF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Igbinyemi Ekiki Christianah",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440539138BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Irem Anita Ogechi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440731820JF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oziegbe Laureen Onomo-Adesua",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440771283JF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Hope Oluwaferanmi Akpochimora",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440782531JF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olawale Opeyemi Olamilekan",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440821111EF",
+        "faculty": "Science"
+    },
+    {        "fullName": "Owolabi Toluwani Victoria",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440883200GA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alli Blessing Oyine",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440978186DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oni Oluwatobi Winner",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202440999513IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agboola Abdulsomad Olawale",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441067955GF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Robert Chimezie Favour",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441086761IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Sonuga Temilayo Adebobola",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441118460FA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Iliyode Kehinde Nafisat",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "2024411282484GF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akindoyin Samuel Tibi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441372116CA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Owopade Rich Eyinoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441594787GF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kodaolu Timileyin Peter",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441762827EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo King David",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441846828DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Asiyanbi Peace Kehinde",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "202441896025AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olanrewaju Samuel Oladimeji",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2009/091",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Mokolade Emmanuel Oluwaseun",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2010/068",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunlowo Semiah Olabimpe",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2015/041",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Tomisin Isaac",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniji Adedolapo Adesubomi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Famoriyo Joshua Oluwagbemileke",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/032",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ganiyu Kaosarat Eunice",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/033",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Isaac Emmanuel Oladipupo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/034",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Itedo Daniel Marvelous",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/035",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "James Unity Opeoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/036",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Jinadu Ibukunoluwa Azeezat",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/037",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Johnson Francis Oluwasijibomi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/038",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Joseph Victoria Oluebubechi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/039",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kolade Oyinkansola Ifeoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/040",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Moshood Suliyat Omowumi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/041",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odusola Fiyinfoluwa Christianah",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/042",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojaoba Anointing Temiloluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/043",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olagoke Jadesola Victoria",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/044",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olakanmi Janet Anuoluwa",         "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/045",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaleru Opeyemi Qudrat",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/046",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olanbiwoninu Victor Oluwaseyi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/047",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaogun Aminah Olawumi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/048",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaosebikan Emmanuel Oluwafemi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/049",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olasoji Nifemi Ifeoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/050",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatilu Ayanfeoluwa Beulah",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/051",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olatimilehin Oluwapelumi Esther",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/052",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olokede Mary Temidayo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/053",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oloniyo Joy Eniola",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/054",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluseye Mercy Oluwatobi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/055",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwafemi Damilola Feyisayo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/056",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omoniyi Gladys Oluwadumope",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/057",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omoniyi Temilola Precious",
+        "department": "Botany",         "part": "100",
+        "matricNumber": "BOT/2023/058",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Omoregbee-Efosa Owen Osarumwense",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/059",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Osunba Raphael Toyosi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/060",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Oyeniyi Boboye Oladehinde",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/061",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniyi Oyedotun Folarin",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/062",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyetunji Toluwaniimi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/063",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Raimi Mutiyat Arike",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/064",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Shehu Similoluwa Daniel",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/065",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Suleiman Damilola Hamdat",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/066",
+        "faculty": "Science"
+    },
+    {"fullName": "Sunday Priscilla Semilore",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/067",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Taiwo Adesewa Naomi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/068",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Taiwo Oluwapelumi Rosemary",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/069",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Tijani Tawakalt Ekundayo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/070",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Zack Jessica Iremosze",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/071",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adenlyi Inioluwa Mumidebe",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/003",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeolu Israel Oluwatosin",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/004",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aderemi Adesola Favour",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/005",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesanya Rachael Oluwabunmi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewoyin Aderonke Ceclia",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyemi Miracle Adesewa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyinka Deborah Oluwafoyekemi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeyinka Oluwatosin Fortune",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Afolabi Wonders Olawale",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/011",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Agboola Covenant Joshua",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinola Adesewa MutMoheenah",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/013",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinwale Deborah Ifeoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/014",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinwale Fathia Bisola",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/015",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinwale Rofiat Inumidun",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/016",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alarape Mariam Dolapo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/017",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alimi Mariam Olamide",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/018",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aramide Oluwasesemi Darasimi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Atoyebi Zainab Motunrayo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/020",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awelewa Oyinkansola Olamide",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/021",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awoma Oyinkansola Daniella",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/022",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aworefa Afolakemi Dorcas",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/023",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayodele Ifeoluwa Susan",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/024",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babatunde Ayomide Ezekiel",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/025",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Balogun Precious Oluwadarasimi",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/026",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dare Deborah Ifeoluwa",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/027",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Elugbaju Temitope Oluwaseun",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/028",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Elusoji Motilola Abigeal",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/029",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Eretiloye Oluwakayode Matthew",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/030",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fawora Praise Oladepo",
+        "department": "Botany",
+        "part": "100",
+        "matricNumber": "BOT/2023/031",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Adeyemo David Opeyemi",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "202210588298BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojolo Jeremiah Boluwaye",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "202211513196DJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ejimokun Peculiar Toluwanimoje",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "202330042874DB",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Falayi Oluwadunsin Praise",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2015/117",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Fakowajo Teslim Ayodeji",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2021/046",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abraham Oluwaseun Olasunkanmi",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abubakar Hafeezah Eniola",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Rebecca Adeshola",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/003",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Taiwo Mercy",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/004",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adedeji Afolabi Valentine",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/005",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adekeye-hassan Musab Ayokunmi",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adekunle Eunice Sandra",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeleke Uswat Tobilooba",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniran Tiffany",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniyi Oluwaseyi Paul",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeoye Dickson Adetade",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/011",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesanmi Folasade Deborah",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/012",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adetayo Fathia Olashile",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/013",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adewale Oluwafemi David",
+        "department": "Botany",
+        "part": "200",
+        "matricNumber": "BOT/2022/014",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dada Martins Ayodeji",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202440051837FF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adepoju Micheal Oluwapemi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202440346649BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Gbolagade David Olamilekan",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202440486126CF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oloyede Olamide Deborah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202440591024DJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oche Ehikondo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441091465DG",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunleye Sharon Oladapo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441095658GJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Onifade David Ayodeji",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441327396IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyebanji Philip Oghenekaro",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441481968FA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Uzoka Kamsiyochukwu Angel",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441572254GJ",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajayi Oluwatobiloba Simon",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441967719GI",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Rofiyat Kehinde",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "202441982769FF",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Coker Olasunkanmi Samson",
+        "department": "Chemistry",
+        "part": "200",
+        "matricNumber": "CHM/2002/023",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abiodun Peace Abisola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/003",
+        "faculty": "Science"
+    },
+    {        "fullName": "Abudu Abigail Aanuoluwapo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebambo Jane Toluwani",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/007",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebayo Barokah Opeyemi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebagju Christianah Oluwatobiloba",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/015",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegoke Peter Ajolaoluwa",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/016",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegoke Peter Adeboye",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/018",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adegunte Samuel Oluwatobiloba",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adejumo Victoria Nifemi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/020",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniran Adedamola Felicia",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/023",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeoye Samuel Ademola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/025",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesina Ifeoluwa Eyitayo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/026",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adetola Oyindamola Faridat",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/027",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adesoro Monsurat Adeola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/028",
+        "faculty": "Science"
+    },
+    {        "fullName": "Aina Boluwatife Oyindamola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/045",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajibade Oluwadayo Paul",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/048",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akinade Babatunde Matthew",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/050",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Akintole Precious Ilemobayo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/053",
+        "faculty": "Science"
+    },
+   {
+        "fullName": "Akinwale Covenant Feyi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/054",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alabi Oluwakayode",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/057",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alade Shukurat Omolara",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/058",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alasi Samiat Timileyin",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/060",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Arogundade Adedoyin Adebanke",
+        "department": "Chemistry", "part": "100",
+        "matricNumber": "CHM/2023/065",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Awofadeju Emmanuel Ololade",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/067",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ayeni Omotayo Hannah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/069",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Azeez Adeniyi Muiz",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/070",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babalola Esther Oluwakemi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/071",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Babalola Ramat Damilola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/072",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Bala Princess Deborah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/075",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Chukwu Favour Ezinwa",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/077",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dada Fisayo Rhoda",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/078",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fatai Abhafeez",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/083",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fayomi Iyiola Adeniyi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/084",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ilupeju Micheal Oluwagbemiga",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/088",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "John Emmanuel Morayomi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/091",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Jubril Jamiu Oyewola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/093",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kingsley-Ogba Chibukem Best",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/095",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kuku Temitayo Nofisat",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/096",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Kuoye Muhammed-Awwal Bolade",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/097",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Lawal Oluwadamilola Olamide",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/099",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Lucky Ogheneosivwime Deborah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/100",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Moyinolwa Faith Esther",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/102",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Muhammad Khodijatul Qoonitah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/103",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odungun Oluwaferanmi Esther",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/107",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odunola Korede Christianah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/108",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunleye Oyindamola Ebunoluwa",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/110",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojo Juwon John",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/114",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okonkwo Samuel Chikosolo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/116",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okoro Blessing Chibuoyim",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/117",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Okunola Abosede Sarah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/119",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olagbaju Ayomide Johnson",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/124",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaoluwa Adeola Oluwabukunmi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/129",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olayinka Opeyemi Deborah",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/132",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olubunmi Anuoluwayimika Ayanfe",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/134",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwajuyigbe Olamilekan Ayobami",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/135",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwakayode Oluwamayowa Samuel",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/136",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Osiyenza Possible Yaberem",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/139",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyebade Ife James",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/144",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyenuga Ololajumoke Aramide",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/146",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Saka Qoyumah Eniola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/148",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Salako Solomon Adetola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/149",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Yussuf Aishat Ayomiposi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/155",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Yusuf Karimot Ololade",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2023/156",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Abdullah Awwal Abiola",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/002",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abilewa Oluwamayowa Oluwatope",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/006",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abiola Abdul-Lateef Ayonitemi",
+        "department": "Chemistry",
+        "part": "100", "matricNumber": "CHM/2022/008",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adams Favour Esther",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/009",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebisi Sofiyat Taiwo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/014",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adebodun Esther Funmilayo",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/015",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adefisayo Temilade Precious",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/019",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adelowo Janet Oluwaferanmi",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/024",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ademoroti Maxwell Oluwatumise",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/028",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adenigbagbe Timothy Oluwatimileyin",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/029",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeniyi Mubarak Oyebanji",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/032",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Aderibigbe Peter Ayodele",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/035",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adeshola Isaac Boluwatife",
+        "department": "Chemistry",
+        "part": "100",
+        "matricNumber": "CHM/2022/036",
+        "faculty": "Science"
+    },
 ];
 
 
