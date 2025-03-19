@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/register", "destination": "/new-index.html" },
     { "source": "/login", "destination": "/new-index.html," },
-        { "source": "/sss-login", "destination": "/index.html.htm" }
+        { "source": "/register-studentsApp", "destination": "/index.html.htm," },
+        { "source": "/login-studentsApp", "destination": "/index.html.htm" }
   ]
 }
