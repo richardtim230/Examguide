@@ -1,4 +1,29 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const authSection = document.getElementById("login-box");
+    const registerSection = document.getElementById("register-box");
 
+    function showLogin() {
+        authSection.classList.remove("hidden");
+        registerSection.classList.add("hidden");
+        window.history.pushState({}, "", "/login-studentsApp"); // Update URL without reloading
+    }
+
+    function showRegister() {
+        authSection.classList.add("hidden");
+        registerSection.classList.remove("hidden");
+        window.history.pushState({}, "", "/register-studentsApp"); // Update URL without reloading
+    }
+
+    document.getElementById("register-btn").addEventListener("click", showRegister);
+    document.getElementById("back-to-login").addEventListener("click", showLogin);
+
+    // Check current URL and show the correct section
+    if (window.location.pathname === "/register-studentsApp") {
+        showRegister();
+    } else {
+        showLogin();
+    }
+});
 
 function openDatabase() {
   return new Promise((resolve, reject) => {
