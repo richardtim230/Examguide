@@ -15174,7 +15174,7 @@ function loadExamQuestions(examId) {
         alert("No questions available for this course. Please try another course code.");
         return;
     }
-
+document.getElementById("courseCode").value = "";
     // Initialize the exam environment
     initializeExam();
 }
