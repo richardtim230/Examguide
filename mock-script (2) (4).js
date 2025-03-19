@@ -7224,6 +7224,2524 @@ const students = [
     { fullName: "Bolarinwa Balqees Ayomide", department: "Zoology", part: "200", matricNumber: "ZOO/2022/032", faculty: "Science" },
     { fullName: "EBELOKU Ramat Oyinade", department: "Zoology", part: "200", matricNumber: "ZOO/2022/033", faculty: "Science" },
 
+
+   
+    {
+        "fullName": "Leramo Ayoola David",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440003598EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Dauda Rafiat Odunayo",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440050132DA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Udeh Juliet Chioma",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440207490DA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ajao Precious Iseoluwa",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440223577GA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Balogun Esther Temitope",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440406944YH",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Amuda Opeyemi Miracle",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440407234EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyeniran Alimot Sadia",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440456754BF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaosebikan Olamiposi Elijah",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440458523AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunjide Elizabeth Ifeoluwa",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440458912FF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okeke Sarah Chioma",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440484172BA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ojo Samuel Ojo",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440485502BA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyekunle Isaac Oluwashina",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",         "matricNumber": "202440547237IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olawore Elijah Toluwalope",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440615894DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Onwu Peter Egbe",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440675841CF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abubakar Victoria Oyinola",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440686932FA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ariie Alimat Oluwatoyosi",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440688876CA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Sulaimon Temitope Elizabeth",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440715084IA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olusegun-Joseph Enoch Jesuloba",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440799683CF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Animashaun Muhammed Olamide",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202440849962JF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odmegwu-Udodi Divine Chimaecherem",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441021219EF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olashile Zainab Olamide",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441081547DA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Shofolahan Marvellous Samuel",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441096024DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Alabi Oluwagbotemi Temitope",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441177374HF",
+        "faculty": "Science"
+    },
+    {        "fullName": "Kolawole Esther Eniola",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441182607DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abduljelil Abubakry Ayomide",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441193377FA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Ogunwale Oluwashina Timothy",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441355836AF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Okechukwu Sorochi Grace",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441363620DF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Odiari Nwabundo Grace",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441405751JA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Hammed Rukayat Opeyemi",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441515645af",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Wiliki Kehinde Sunday",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441565215BA",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Olaoluwa Kamaldeen Olakunle",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441703627CF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oluwatola Mercy Abigeal",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "202441945257IF",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "aderogba opsoluwa ayoade",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2010/010",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Orojo Taiwo Oluwaseun",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2010/079",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Asere Damilola Ayomide",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2013/027",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Fidimaye Kehinde Habibat",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2014/058",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Oyekanmi Kehinde Taofeeq",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2014/111",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Adekunle Ayomide Suliyat",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2022/024",
+        "faculty": "Science"
+    },
+     {
+        "fullName": "Aba Glory Nifemi",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2023/001",
+        "faculty": "Science"
+    },
+    {
+        "fullName": "Abbas Aishat Bright",
+        "department": "Biochemistry and Molecular Biology",
+        "part": "100",
+        "matricNumber": "BCH/2023/002",
+        "faculty": "Science"
+    },
+  {
+    "fullName": "Abdulazeez Aishah Temitope",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/003",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Abimbola Oluwamumiposi Michael",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/004",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Abolude Sodiq Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/005",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adamolekun Tinuola Ayinke",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/006",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebayo Anuoluwapo Abiodun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/007",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebayo Mololuwa Eniola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/008",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebayo Sharon Oluwajomiloju",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/009",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebesin Anointing Adedeji",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/010",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebiyl Adegboyega Emmanuel",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/011",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebowale Adewale Favour",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/012",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebowale Florence Oluwadamilola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/013",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adediran Mercy Abisola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/014",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adefisan Ayomide Precious",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/015",
+    "faculty": "Science"
+  },
+  {    "fullName": "Adefisoye Oluwanifemi Beatrice",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/016",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adegoke Adeola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/017",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adegoke Marvellous Temiloluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/018",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adejumo Tobiloba Iteoluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/019",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adekanbi David Adedoyin",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/020",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adekunle Blessing Adenike",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/021",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adelekan Adewunmi Lukman",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/022",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adelekan Aishat Wuraola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/023",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeleye Ayomide Oluwayemisi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/024",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeleye Kehinde Aanuoluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/025",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ademola Esther Adesewa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/026",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ademola Muhammed Adewale",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/027",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adenuga Afolabi Saheed",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/028",
+    "faculty": "Science"
+  },
+  {    "fullName": "Adeoye Bunmi Toluwalase",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/029",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeoye Israel Oluwanifemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/030",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aderibigbe Sunday Adewale",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/031",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aderoju Oreoluwa Esther",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/032",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adetunji Deborah Oluwabukunmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/033",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adetunji Olamide Oluwasegun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/034",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adewole Eunice Oluwadarasimi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/035",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adewumi Olamidotun Marvellous",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/036",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeyefa Adegoke Micheal", "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/037",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeyemi Anifat Adewumi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/038",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeyemo David Opeyemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/039",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adigun Faridah Ajoke",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/040",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adio Israel Kayode",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/041",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adisa Johnson Adekola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/042",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adisa Toluope Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/043",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Afolabi Enoch Tijesuni",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/044",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Agboola Julius Oladele",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/045",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aguye Elizabeth Oluwaseyi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/046",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aigbekhai Joy Oluwatishe",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/047",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aina Gift Oluwabukunmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/048",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajanaku Oore-Ofe Oluwaseunfunmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/049",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajayi Deborah Promise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/050",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajayi Oluwaseun Mercy",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/051",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajenifuja Oluwaseye Richard",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/052",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajibade Promise Toluwalase",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/053",
+    "faculty": "Science"
+  },
+   {
+    "fullName": "Ajibade Success Omotolani",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/054",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajiboye Muhammed Fawaz",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/055",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ajifoluse Iyanuoluwa Ayomiposi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/056",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akande Ibukunoluwa Precious",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/057",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinbola Subuola Adeola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/058",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinboro Moyosoreoluwa Ayomi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/059",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinlalu Miracle Olasunkanmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/060",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinsanmi Eniola Faith",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/061",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinwale Elijah Oluwasegun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/062",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinyede Kanyinsola Mary",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/063",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinyemi Oluwafunmi Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/064",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Alalade Aishat Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/065",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aliyu Favour Ayotunde",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/066",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aluko Oluwatoyosi Isiah",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/067",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Amojo Hope Oluwafunmilayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/068",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Amos Favour Damilola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/069",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Amusan Titilayo Christianah",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/070",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Anunobi Daniel Chimaobi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/071",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aregbesola Oluwanifemi Precious",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/072",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aringbangba Oluwanifemi Victoria",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/073",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Arowolo Precious Olamide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/074",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Asaolu Emmanuel Oluwaseyi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/075",
+    "faculty": "Science"
+  },
+  {    "fullName": "Asiru Sekinah Oluwatomisin",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/076",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Attah Miracle Temitope",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/077",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aworeni Mercy Dorcas",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/078",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awotoya Ayomide Lekan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/079",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awoyemi Taiwo Ayobami",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/080",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awoyejo Wareezat",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/081",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awoyemi Hellen Damilola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/082",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayodele Fiyinfoluwa Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/083",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Babafemi Aanuoluwapo Emmanuella",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/084",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Babalola Kanyinsola Adeloye",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/085",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Babarinde Daniel Oyindamola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/086",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Babatunde Abdullaleem Omogbolayan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/087",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Badmus Ayokunle Waris",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/088",
+    "faculty": "Science"
+  },
+  {    "fullName": "Bakare Mubarakat Boluwatife",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/089",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bakare Naimot Abiodun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/090",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bakare Oluwadarasimi Joseph",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/091",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bakare Oluwalanuofunmi Mary",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/092",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Balogun Oluwagbenga Holiness",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/093",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bamilosin Michael",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/094",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bashiru Oyindamola Mariam",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/095",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Beji Hope Oritsetserundede",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/096",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Brown Elizabeth Temitope",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/097",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Chukwudi-Okeke Divine Chinenye",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/098",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Dada Joseph Olamilekan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/099",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Daud Idowu Oyinkansola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/100",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Davis Naomi Oluwafunmike",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/101",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Dennis Praise Toluwalase",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/102",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ebijimi Bright Isaac",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/103",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Eke Emmanuel Chibuike",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/104",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ekundayo Marvelous Esther",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/105",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Enebi Ann Ojonugwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/106",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Enogie Peace Osamagbe",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/107",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Etim Victor Etim",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/108",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ewesuji Oluwafisayomi Rachael",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/109",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Eyinade Kayode Olamiposi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/110",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fadare Martha Oluwatunmishe",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/111",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fadehan Ganiyat Oluwaferanmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/112",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fadipe Omowumi Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/113",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fakunle Michael Ifeoluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/114",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Famuyide Oluwajoju Iyiola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/115",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fasakin Omotola Rodiat",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/116",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fasasi Qazeem Ayobami",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/117",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fasola Oyinkansola Praise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/118",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fatile Pelumi Esther",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/119",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fawole Esther Ololade Mosebolatan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/120",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fayemi Olusegun Paul",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/121",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Folaranmi Dorcas Aanuoluwapo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/122",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Folorunso Iremide Dorcas",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/123",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Gbadebo Folashade Esther",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/124",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "George Ebube Nelson",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/125",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Idoko Janet Ojoma",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/126",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Igbarumah Peace Oluwafeyikemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/127",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ige Paul Oluwapelumi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/128",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ikielu Promise Oshioayemhai",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/129",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ikuyinminu Martins Sola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/130",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Iloka-Chigozie Ebuka Stephen",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/131",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Iyoha Prevail Oluwanifemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/132",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Jamiu Faithia Ibukun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/133",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Kazeem Ameedat Mojisola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/134",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Kehinde Ayitayo Daniel",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/135",
+    "faculty": "Science"
+  },
+  {    "fullName": "Komolafe Blessing Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/136",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Lawal Abdulhameed Olalekan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/137",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Lawal Oreoluwa Adedolapo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/138",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Longe Christianah Oluwakemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/139",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Mafimidiwo Christianah Temitope",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/140",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Makinde Oluwapelumi Timileyin",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/141",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Mordi Kamenechukwu Stephanie",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/142",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Morris Mercy Chioma",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/143",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Moyegun Desmond Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/144",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Muhammad Auwal Faozan Olamilekan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/145",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Muritala Sodik Olakunle",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/146",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Mutiullah Aaliyah Boluwatife",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/147",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Nelson Unwana Abasifreke",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/148",     "faculty": "Science"
+  },
+  {
+    "fullName": "Noah Monday Rachael Enobong",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/149",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Obaiola Gideon Oyekola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/150",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Obasola Praise Toluwani",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/151",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Obiaju Rejoice Nmesoma",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/152",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oduwumi Oluwapelumi Oluwaseun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/153",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Odey Charity Ebenyin Odey",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/154",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Odu Azizat Ifeoluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/155",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Odunewu Irebami Joshua",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/156",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Odunigba Esther Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/157",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ofili David Tobechukwu",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/158",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogbo Precious Romiwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/159",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogundiran Elizabeth Teniola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/160",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogunmola Eunice Sinmiloluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/161",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogunniran Azeezat Motunrayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/162",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogunniyi Eniola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/163",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogunranti Lois Oluwasayofunmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/164",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ojo Daniel Oluwanifemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/165",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ojo Linus Ayoola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/166",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ojo Oluwabukola Samson",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/167",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ojo Precious Emmanuel",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/168",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oke Sharon Adeola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/169",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Okediji Temitayo Reward",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/170",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Okewo Precious Uzenezi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/171",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Okolie Emmanuella Ekene",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/172",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Okoye Favour Ogechi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/173",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olabode Ayodeji Kehinde",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/174",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladeji Nehemiah Ayobami",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/175",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladele Opeyemi Afolabi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/176",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladele Similoluwa Esther",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/177",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladimeji Dorcas Oluwatunmise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/178",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladipo Olashile Odunayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/179",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladipupo Oluwanifemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/180",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oladun Praise Olamiposi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/181",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olagbaju Ebenezer Oluwabamise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/182",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olagunju Praise Oluwasemilore",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/183",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaitan Blessing Oluwafunmilayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/184",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaitan Oyindamola Itunuayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/185",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaiya Omoshalewa Grace",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/186",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olajide Boluwatife Witness",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/187",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaleye Hussein Tolamise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/188",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olalomi Aminat Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/189",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaniyi Isaiah Oluwafunso",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/190",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaniyi Simeon Temitayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/191",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olanrewaju Amidat Adewumi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/192",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olarewaju Olawale Peter",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/193",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olasoji Abimbola Martha",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/194",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olasupo Ikimot Jumoke",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/195",
+    "faculty": "Science"
+  },
+  {    "fullName": "Olawale Abdulazeez Gbolahan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/196",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olawusi Timothy Oluwatobiloba",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/197",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olayemi Oyindamola Blessing",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/198",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olayosoye Ruqoyah Adeola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/199",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olorode Oluwatomisin Favour",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/200",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olorundare Eniola Samuel",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/201",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olubiyi Suliat Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/202",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olufemi Joshua Oluwaseun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/203",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olusola Emmanuel Ayooluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/204",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olatuyo Rebecca Oluwadunsin",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/205",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oluwadamilare Folasade Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/206",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oluwagbamila Amazinggrace Oyinola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/207",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oluwajemi Sylvia Motunrola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/208",     "faculty": "Science"
+  },
+  {
+    "fullName": "Omasere Emmanuel Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/209",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Omonibinu Olayinka Abiodun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/210",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Omotayo Olajumoke Rosemary",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/211",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Omotosho Joshua Dolapo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/212",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oni Mercy Oluwafunmilayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/213",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Onibon Aminat Oluwapelumi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/214",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Opadotun Olwaferanmi Isaiah",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/215",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Opakunle Joy Abike",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/216",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Orukotan Blessing Josephine",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/217",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Osho Fathia Ajoke",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/218",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Osungbohun Oluwabamise Adebukola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/219",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Owokalade Adeola Grace",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/220",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyediran Michael Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/221",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyekan Emmanuel",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/222",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyekunle Favour Gbemisola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/223",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyekunle Success Ayomide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/224",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyeleye Mercy Tinuoye",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/225",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyerinde Emmanuel Favour",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/226",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyesiji Taiwo Faruq",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/227",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Oyewale Praise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/228",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Pamoghan Israel Aanuoluwapo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/229",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Paul Gift Ebubechi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/230",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Popoola Olamide Oyenike",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/231",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Raheem Alia Folawe",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/232",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Sarumi Rukayat Mosopefoluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/233",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Soremi Ifeoluwa Uthman",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/234",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Sylvanus Favour Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/235",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Taiwo Elizabeth Oluwadamilola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/236",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Taiwo Praise Oluwaferanmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/237",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Taiwo Success Oluwasunmisola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/238",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Taofeek Aishat Motunrayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/239",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Tijani Abisoye Abiodun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/240",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Timothy Peace Oyinye",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/241",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Tolani Michael Teniola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "100",
+    "matricNumber": "BCH/2023/242",
+    "faculty": "Science"
+  },
+
+  {
+    "fullName": "Akinlade Sarat Oribukola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/070",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinlolu Daniel Darasimi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/071",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinola Emmanuel Olumide",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/072",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinola Temitayo Promise",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/073",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinsoji Testimony Elizabeth",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/074",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akintan Emmanuel Oluwatimilehin",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/075",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinwale Faruq Gbolahan",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/076",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinwole Victor Favour",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/077",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinwole Ayomide Pelumi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/078",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinyemi Abimbola Christiana",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/079",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akinyemi Isaiah Oluwapelumi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/080",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Akomolafe Covenant Miracle",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/082",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Alaafin Blessing Justina",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/083",
+    "faculty": "Science"
+  },
+  {    "fullName": "Alani Rosheedat Busayo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/084",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Alao Feyisayo Aanuoluwapo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/085",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Alliu Omotola Omolabake",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/086",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Amao Islamiat Abidemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/087",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Anjola Oluwapelumi Esther",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/088",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Apya Promise Washima",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/089",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Arawande Samuel Boluwatife",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/090",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Aremu Oluwamayowa Mosadoluwa",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/091",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Arowolo Donald Folahanmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/093",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awodiran Emmanuel Taiwo",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/094",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awodire Emmanuel Ololade",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/095",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awojola Ifeoluwa Precious",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/096",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awoleye Martin Boluwatife",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/097",
+    "faculty": "Science"
+  },
+  {    "fullName": "Ayeto Korede Success",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/098",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayinde Ridwan Abimbola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/099",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayoade Precious Adeola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/100",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayodeji Precious Oluwanifemi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/101",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayodeji Zeinab Abiola",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/102",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayodele Mary Oluwabunmi",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/103",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayodele Oyindamola Mary",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/104",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayomide Favour Mercy",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/105",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ayonuga Aolatulahi Success",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/106",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Babatunde Ayotunde Nafisat",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/107",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bamidele Daniel Oluwashina",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/108",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bello Esther Oluwaseun",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/109",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bello Zeinab Aderonke",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/110",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Bolarinwa Henry Tomileye",
+    "department": "Biochemistry and Molecular Biology",
+    "part": "200",
+    "matricNumber": "BCH/2022/111",
+    "faculty": "Science"
+  },
+    { "fullName": "Abandy Joy Chineye", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/001", "faculty": "Science" },
+    { "fullName": "Abdulsalam Ideraoluwa Fikayomi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/002", "faculty": "Science" },
+    { "fullName": "ABE JOSHUA OLAMIDE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/003", "faculty": "Science" },
+    { "fullName": "Abisoye Nimotallahi Opeyemi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/004", "faculty": "Science" },
+    { "fullName": "Abisoye Ebunoluwa Elim Darasimi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/005", "faculty": "Science" },
+    { "fullName": "Aboderin Muibah Olayinka", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/006", "faculty": "Science" },
+    { "fullName": "Aboderin Oluwakemi Adewumi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/007", "faculty": "Science" },
+    { "fullName": "Abolarin Serah Mayowa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/008", "faculty": "Science" },
+    { "fullName": "Adebayo Jamiu Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/009", "faculty": "Science" },
+    { "fullName": "ADEBAYO MARY MOYINOLUWA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/010", "faculty": "Science" },
+    { "fullName": "ADEBAYO QULTHUM OYINDAMOLA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/011", "faculty": "Science" },
+    { "fullName": "Adebayo Rodiat Oyewunmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/012", "faculty": "Science" },
+   { "fullName": "ADEBIYI ADEOYO SAMUEL", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/014", "faculty": "Science" },
+    { "fullName": "Adeboye Tolu Joy", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/015", "faculty": "Science" },
+    { "fullName": "Adeboyejo Deborah Adedamola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/016", "faculty": "Science" },
+    { "fullName": "Dedeji Morolayo Precious", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/017", "faculty": "Science" },
+   { "fullName": "ADEDOKUN BABATUNDE OPEYEMI", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/018", "faculty": "Science" },
+    { "fullName": "Adedokun Oluwapelumi Kayode", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/019", "faculty": "Science" },
+    { "fullName": "Adefeyisan Kehinde Susan", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/020", "faculty": "Science" },
+    { "fullName": "Adegboye favour oluwakayode", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/021", "faculty": "Science" },
+    { "fullName": "Adegboyega Ayomide Becky", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/022", "faculty": "Science" },
+    { "fullName": "Adekoya Mariam oluwaferanmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/023", "faculty": "Science" },
+    { "fullName": "Adekunle Emmanuel Ireoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/025", "faculty": "Science" },
+    { "fullName": "Adelaja Adewunmi oluwadamilola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/026", "faculty": "Science" },
+    { "fullName": "Adeleke Abibat Omolola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/027", "faculty": "Science" },
+    { "fullName": "Adeleye Ayodeji Ifeoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/028", "faculty": "Science" },
+   { "fullName": "Adenaya Khadijah Adeola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/029", "faculty": "Science" },
+    { "fullName": "Adenekan Kehinde Anjolaoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/030", "faculty": "Science" },
+    { "fullName": "Adeneye Esther Moyinoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/031", "faculty": "Science" },
+    { "fullName": "Adeniji Azeez Adedamola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/032", "faculty": "Science" },
+    { "fullName": "Adeniyi Adefemi Emmanuel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/033", "faculty": "Science" },
+    { "fullName": "Adeniyi Oyindamola Franklin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/034", "faculty": "Science" },
+    { "fullName": "Adeosun Oluwakemi Rachel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/035", "faculty": "Science" },
+    { "fullName": "Aderibigbe Precious Temiloluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/036", "faculty": "Science" },
+    { "fullName": "Adesete Hameerah Tolupe", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/037", "faculty": "Science" },
+    { "fullName": "Adeshola Faridah Eniola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/038", "faculty": "Science" },
+    { "fullName": "Adesina Victor ayomikun", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/039", "faculty": "Science" },
+    { "fullName": "Adewale Abigael Mofiyinfoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/040", "faculty": "Science" },
+    { "fullName": "Adewole Mofiyinfoluwa Peace", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/041", "faculty": "Science" },
+    { "fullName": "Adeyan Taiwo Oluwadamilola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/042", "faculty": "Science" },
+    { "fullName": "Adeyemi Sherifat Oluwadunsun", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/043", "faculty": "Science" },
+    { "fullName": "Adeyemo Adetayo Emmanuel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/044", "faculty": "Science" },
+    { "fullName": "Adeyemo Kehinde Mujeeb", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/045", "faculty": "Science" },
+    { "fullName": "ADEYEMO MICHAEL OLUWATOBILOBA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/046", "faculty": "Science" },
+    { "fullName": "Adeyera Adetola Moyinoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/047", "faculty": "Science" },
+    { "fullName": "Adeyeye Fareedah Adesewa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/048", "faculty": "Science" },
+   { "fullName": "Abdul Kareem Farouq Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "ANS/2022/002", "faculty": "Science" },
+  { "fullName": "ADEBAYO AKINDELE OLUMIDE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2011/007", "faculty": "Science" },
+    { "fullName": "AJAYI FEYIKEMI MABEL", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2013/015", "faculty": "Science" },
+    { "fullName": "KOLAPO OLAKUNLE ABIODUN", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2013/048", "faculty": "Science" },
+   { "fullName": "Uba Cephas Nduka", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/243", "faculty": "Science" },
+   { "fullName": "Udo-Udo Joseph imaobong", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/244", "faculty": "Science" },
+   { "fullName": "Ugorji Kenneth Onwuchekwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/245", "faculty": "Science" },
+    { "fullName": "Uneke Miracle Chukwuma", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/246", "faculty": "Science" },
+     { "fullName": "Akinpelu Ayomide Michael", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "202330549724HI", "faculty": "Science" },
+      { "fullName": "EFUKOR URUKPEOGHENE ULRIC", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "202440278112DF", "faculty": "Science" },
+       { "fullName": "Nwabueze Chioma Ireti", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "202440628791ft", "faculty": "Science" },
+        { "fullName": "Ojuolape Esther Toyin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "202441359165IA", "faculty": "Science" },
+         { "fullName": "Omole Precious Temitope", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "20628752CA", "faculty": "Science" },
+    { "fullName": "Adung Janet Ushang", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/049", "faculty": "Science" },
+    { "fullName": "AFOLABI KOLAWOLE OLAIDE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/050", "faculty": "Science" },
+    { "fullName": "AFOLABI ROSELINE OYINDAMOLA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/051", "faculty": "Science" },
+    { "fullName": "Afolayan Oluwafolakemi Adeola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/052", "faculty": "Science" },
+    { "fullName": "Agbeleye Oluwadarasimi Gladness", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/053", "faculty": "Science" },
+    { "fullName": "Agboola Michael Oluwagbenga", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/054", "faculty": "Science" },
+    { "fullName": "Agunlejika Adeoreofe Adeife", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/055", "faculty": "Science" },
+    { "fullName": "Ahmad Khawlah Oyinkansola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/056", "faculty": "Science" },
+    { "fullName": "Aibor Ninilolaoluwa Joan", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/057", "faculty": "Science" },
+    { "fullName": "Ajayi Esther Temidire", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/058", "faculty": "Science" },
+    { "fullName": "Ajegoke Favour Deborah", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/059", "faculty": "Science" },
+    { "fullName": "Ajibola Jesujuwon Oluwafemi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/060", "faculty": "Science" },
+    { "fullName": "Ajiboye Ifeoluwa Mary", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/061", "faculty": "Science" },
+    { "fullName": "Ajileye Temiloluwa Rena", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/062", "faculty": "Science" },
+    { "fullName": "Ajimodu Tomiwa Owolanke", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/063", "faculty": "Science" },
+    { "fullName": "Ajongolo Deborah Oluwapelumi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/064", "faculty": "Science" },
+    { "fullName": "Ajulo Esther Opemipo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/065", "faculty": "Science" },
+    { "fullName": "Ajumobi Anjolaoluwa Ajoke", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/066", "faculty": "Science" },
+    { "fullName": "Akakpo John Nifemi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/067", "faculty": "Science" },
+    { "fullName": "AKINDELE BUKUNMI RIDWON", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/068", "faculty": "Science" },
+    { "fullName": "APYA PROMISE WASHIMA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/089", "faculty": "Science" },
+    { "fullName": "Arawande Samuel Boluwatife", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/090", "faculty": "Science" },
+    { "fullName": "Aremu Oluwamayowa Mosadoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/091", "faculty": "Science" },
+    { "fullName": "Arowolo Donald Folahanmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/093", "faculty": "Science" },
+    { "fullName": "Awodiran Emmanuel Taiwo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/094", "faculty": "Science" },
+    { "fullName": "Awodire Emmanuel Ololade", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/095", "faculty": "Science" },
+    { "fullName": "Awojala Ifeoluwa precious", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/096", "faculty": "Science" },
+    { "fullName": "Awoleye Martin Boluwatife", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/097", "faculty": "Science" },
+    { "fullName": "Ayeto Korede success", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/098", "faculty": "Science" },
+    { "fullName": "Ayinde Ridwan Abimbade", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/099", "faculty": "Science" },
+    { "fullName": "AYOADE PRECIOUS ADEOLA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/100", "faculty": "Science" },
+    { "fullName": "Ayodeji Precious Oluwanifemi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/101", "faculty": "Science" },
+    { "fullName": "Ayodeji Zainab Abiola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/102", "faculty": "Science" },
+    { "fullName": "Ayodele Mary Oluwabunmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/103", "faculty": "Science" },
+    { "fullName": "AYODELE OYINDAMOLA MARY", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/104", "faculty": "Science" },
+    { "fullName": "Ayomide Favour Mercy", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/105", "faculty": "Science" },
+    { "fullName": "Ayonuga Aolatulahi Success", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/106", "faculty": "Science" },
+    { "fullName": "Babatunde Ayotunde Nafisat", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/107", "faculty": "Science" },
+    { "fullName": "BAMIDELE DANIEL OLUWASHINA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/108", "faculty": "Science" },
+    { "fullName": "Bello Esther Oluwaseun", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/109", "faculty": "Science" },
+    { "fullName": "BELLO ZAINAB ADERONKE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/110", "faculty": "Science" },
+    { "fullName": "Bolarinwa Henry Tomileye", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/111", "faculty": "Science" },
+     { "fullName": "Akinlade Sarat Oribukola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/070", "faculty": "Science" },
+    { "fullName": "AKINLOLU DANIEL DARASIMI", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/071", "faculty": "Science" },
+    { "fullName": "AKINOLA EMMANUEL OLUMIDE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/072", "faculty": "Science" },
+    { "fullName": "Akinola Temitayo Promise", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/073", "faculty": "Science" },
+    { "fullName": "Akinsoji Testimony Elizabeth", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/074", "faculty": "Science" },
+    { "fullName": "Akintan Emmanuel Oluwatimilehin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/075", "faculty": "Science" },
+    { "fullName": "Akinwale Faruq Gbolahan", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/076", "faculty": "Science" },
+            { "fullName": "FAMUYIBO SHARIFAT OPEYEMI", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/128", "faculty": "Science" },
+    { "fullName": "Faranpojo Samuel Chidozie", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/129", "faculty": "Science" },
+    { "fullName": "Farinloye Eniola Rebecca", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/130", "faculty": "Science" },
+    { "fullName": "FASEYI OLUWATOBILOBA ESTHER", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/131", "faculty": "Science" },
+    { "fullName": "Fashoyin Oluwagbotemi Idunuoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/132", "faculty": "Science" },
+    { "fullName": "Fatile John Tolulope", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/133", "faculty": "Science" },
+    { "fullName": "SUNDAY Ololade Victory", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/134", "faculty": "Science" },
+    { "fullName": "Fawale Ibukunoluwa Emmanuel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/135", "faculty": "Science" },
+    { "fullName": "Fawola Oluwadamilola Motunrayo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/136", "faculty": "Science" },
+    { "fullName": "Folarin Oore-Ofeoluwa Mercy", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/137", "faculty": "Science" },
+    { "fullName": "GANIYU ISMAIL OLAMILEKAN", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/138", "faculty": "Science" },
+    { "fullName": "Gbadegesin Toluwani Adebukola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/139", "faculty": "Science" },
+    { "fullName": "Hamed Tomiwa Armstrong", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/140", "faculty": "Science" },
+    { "fullName": "IBIDUN TAYO JOSEPH", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/141", "faculty": "Science" },
+    { "fullName": "Ibrahim Moyosore Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/142", "faculty": "Science" },
+    { "fullName": "IBRAHIM OLAMIDE SOFIAT", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/143", "faculty": "Science" },
+    { "fullName": "Idiaghe Osaremen Gift", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/144", "faculty": "Science" },
+    { "fullName": "Iloba Emmanuel Chukwudi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/145", "faculty": "Science" },
+    { "fullName": "Ilori Dusin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/146", "faculty": "Science" },
+    { "fullName": "Ipadeola Emmanuel Oluwasegun", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/147", "faculty": "Science" },
+    { "fullName": "ISSA KAWTHAR OLUWAFUNMILAYO", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/149", "faculty": "Science" },
+    { "fullName": "James Joseph Olayinka", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/150", "faculty": "Science" },
+    { "fullName": "John Emmanuel Ayo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/151", "faculty": "Science" },
+    { "fullName": "Katbi Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/152", "faculty": "Science" },
+    { "fullName": "Kayode Damilola Deborah", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/153", "faculty": "Science" },
+    { "fullName": "Kayode lyinoluwakitan Erioluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/154", "faculty": "Science" },
+    { "fullName": "Kayode Olusola Amos", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/155", "faculty": "Science" },
+    { "fullName": "Kayode Oluwatimilehin Elizabeth", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/156", "faculty": "Science" },
+    { "fullName": "Kazeem Abiola Mariam", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/157", "faculty": "Science" },
+    { "fullName": "Lateef Kudirat Ajoke", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/159", "faculty": "Science" },
+    { "fullName": "LAWAL Jesutofunmi Rachael", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/160", "faculty": "Science" },
+    { "fullName": "LAWAL Memunat Ajoke", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/161", "faculty": "Science" },
+    { "fullName": "LAWAL OPEYEMI SHUKURAT", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/162", "faculty": "Science" },
+    { "fullName": "Lawal Rasheedat Adebola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/163", "faculty": "Science" },
+    { "fullName": "Lawal Samuel Temitope", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/164", "faculty": "Science" },
+    { "fullName": "LAZEEZ MONISOLA OLAMIDE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/165", "faculty": "Science" },
+    { "fullName": "MARTINS OLAMIDE OPEOLUWA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/166", "faculty": "Science" },
+    { "fullName": "MICHAEL CHIOMA PROSPER", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/167", "faculty": "Science" },
+    { "fullName": "Micheal Joshua Pelumi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/168", "faculty": "Science" },
+    { "fullName": "Mohammed Umamah Ouneneh", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/169", "faculty": "Science" },
+    { "fullName": "Moruf Rasheed Oluwajuwon", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/170", "faculty": "Science" },
+    { "fullName": "Mosunmola Temitope Christianah", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/171", "faculty": "Science" },
+    { "fullName": "Mumeen Sodeeq Adebayo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/172", "faculty": "Science" },
+    { "fullName": "Muritala Bashiru Ayinde", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/173", "faculty": "Science" },
+    { "fullName": "Muritala Selimot Agbeke", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/174", "faculty": "Science" },
+    { "fullName": "Nwanzuluahu Chukwudi Iyanuoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/175", "faculty": "Science" },
+{ "fullName": "OLAKANMI ROSEMARY TOBILOBA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/205", "faculty": "Science" },
+    { "fullName": "Olayeye Elizabeth Iyanuoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/206", "faculty": "Science" },
+    { "fullName": "Olamijulo Eniola Favour", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/207", "faculty": "Science" },
+    { "fullName": "OLANIYI Precious Aanuoluwapo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/209", "faculty": "Science" },
+    { "fullName": "Olaoye Marvelous Tosin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/210", "faculty": "Science" },
+    { "fullName": "Olapade Abdullahi Oyeyemi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/211", "faculty": "Science" },
+    { "fullName": "OLAREWAJU BLESSING SHETEMI", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/212", "faculty": "Science" },
+    { "fullName": "Olasesan Oluwatomiwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/213", "faculty": "Science" },
+    { "fullName": "Olatoye Wuraola Elizabeth", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/214", "faculty": "Science" },
+    { "fullName": "Olatunji Isreal Ayobami", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/215", "faculty": "Science" },
+    { "fullName": "Olatunji Joseph lyinoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/216", "faculty": "Science" },
+    { "fullName": "Olawale Princess Mariam", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/217", "faculty": "Science" },
+    { "fullName": "OLAWOTE TENIOLA RHODA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/218", "faculty": "Science" },
+    { "fullName": "OLAWOTIN Richard Taiwo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/219", "faculty": "Science" },
+  { "fullName": "OLAYIWOLA KEHINDE MICHAEL", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/221", "faculty": "Science" },
+    { "fullName": "Olisa Opemipo Isaac", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/222", "faculty": "Science" },
+    { "fullName": "OLOKUN DANIEL OLUWATOSIN", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/223", "faculty": "Science" },
+    { "fullName": "Olorunfemi Oluwaseun Precious", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/225", "faculty": "Science" },
+    { "fullName": "OLOWOGUNLE ROSELINE DAMILOLA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/226", "faculty": "Science" },
+    { "fullName": "Olowookere Samuel Timileyin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/227", "faculty": "Science" },
+    { "fullName": "Olufayo Omolara Favour", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/228", "faculty": "Science" },
+    { "fullName": "Olugbemi David Oluwatobiloba", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/229", "faculty": "Science" },
+    { "fullName": "Olukotun Deborah Busayiba", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/230", "faculty": "Science" },
+    { "fullName": "Olupinla Inioluwa Shalom", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/231", "faculty": "Science" },
+    { "fullName": "Olusola Eniola Rhoda", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/232", "faculty": "Science" },
+    { "fullName": "OLUWALONIMI KEHINDE ESTHER", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/234", "faculty": "Science" },
+    { "fullName": "Oluwayemi Mary Oluwaseyi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/235", "faculty": "Science" },
+    { "fullName": "Omowale Oluwasegun Michael", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/236", "faculty": "Science" },
+    { "fullName": "OMOYENI ELIZABETH AYOOLA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/237", "faculty": "Science" },
+    { "fullName": "Onele Friday Michael", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/238", "faculty": "Science" },
+    { "fullName": "Opayinka Temiloluwa Emmanuel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/239", "faculty": "Science" },
+    { "fullName": "Osamatie David Abisola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/240", "faculty": "Science" },
+    { "fullName": "Dokun-Talabi Samuel Oluwatosin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/113", "faculty": "Science" },
+    { "fullName": "EFUNKUNLE VICTOR OLUMAYOWA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/114", "faculty": "Science" },
+    { "fullName": "Ejigbo Glory Ojimaojo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/116", "faculty": "Science" },
+    { "fullName": "Emmanuel Boluwatife Ifeoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/117", "faculty": "Science" },
+    { "fullName": "Emmanuel Faith Victoria", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/118", "faculty": "Science" },
+    { "fullName": "Esho Mary Ayooluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/119", "faculty": "Science" },
+    { "fullName": "ESHO VICTOR AYOMIDE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/120", "faculty": "Science" },
+    { "fullName": "Esuola Afolayan Oluwafisolanmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/121", "faculty": "Science" },
+    { "fullName": "Etumudor Jeffery Chukwuka", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/122", "faculty": "Science" },
+    { "fullName": "EYIMONYE CHRISTIANA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/123", "faculty": "Science" },
+    { "fullName": "EYITAYO DELIGHT BOLUWATIFE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/124", "faculty": "Science" },
+    { "fullName": "FADARE ENIOLA DEBORAH", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/125", "faculty": "Science" },
+    { "fullName": "Fajuyi Esther Ibukunoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/126", "faculty": "Science" },
+    { "fullName": "Falode Israel Oyeleke", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/127", "faculty": "Science" },
+{ "fullName": "Ogunseye Bethsheba Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/190", "faculty": "Science" },
+    { "fullName": "Oguntade Oluwapelumi Mary", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/191", "faculty": "Science" },
+    { "fullName": "OGUNTIMEHIN Adekunle Ebenezer", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/192", "faculty": "Science" },
+    { "fullName": "Ogunwusi Ayooluwa Adebayo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/193", "faculty": "Science" },
+    { "fullName": "Ojo Deborah Tofunmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/194", "faculty": "Science" },
+    { "fullName": "Ojo Mercy Ifeoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/195", "faculty": "Science" },
+    { "fullName": "Okerinde Prevail Akorede", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/196", "faculty": "Science" },
+    { "fullName": "Olabisi Aanuoluwapo Hannah", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/197", "faculty": "Science" },
+    { "fullName": "Olabisi Boluwatife Christianah", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/198", "faculty": "Science" },
+    { "fullName": "Oladapo Michael Oladayo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/200", "faculty": "Science" },
+    { "fullName": "Oladele Oluwaseunfunmi Praise", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/201", "faculty": "Science" },
+    { "fullName": "Oladiji Esther Oluwaferanmi", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/202", "faculty": "Science" },
+    { "fullName": "Oladosu Miracle OkikiJesu", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/203", "faculty": "Science" },
+    { "fullName": "Oladuja Eniola Bridget", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/204", "faculty": "Science" },
+    { "fullName": "Obidake Lydia Ebisindor", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/176", "faculty": "Science" },
+    { "fullName": "OBODETI FORTUNE EFEMENA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/177", "faculty": "Science" },
+    { "fullName": "Odesanya Victoria Moyosoreoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/178", "faculty": "Science" },
+    { "fullName": "Odufeso Samih Moyinoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/179", "faculty": "Science" },
+    { "fullName": "Oduola David Ifeoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/180", "faculty": "Science" },
+    { "fullName": "Odusola Tehila Fiyinfoluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/181", "faculty": "Science" },
+    { "fullName": "Ogah Samuel Emmanuel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/182", "faculty": "Science" },
+    { "fullName": "OGU Chinenye Favour", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/183", "faculty": "Science" },
+    { "fullName": "Ogunbo Latifat Kikelomo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/184", "faculty": "Science" },
+    { "fullName": "OGUNFOLAKAN PETER IFEOLUWA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/185", "faculty": "Science" },
+    { "fullName": "OGUNFUYI EYIMOFE CHOICE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/186", "faculty": "Science" },
+    { "fullName": "OGUNJIMI AYOMIDE VICTOR", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/187", "faculty": "Science" },
+    { "fullName": "Ogunkoya Abel Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/188", "faculty": "Science" },
+    { "fullName": "Ogunremi Halimat Adeola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/189", "faculty": "Science" },
+    { "fullName": "SIMEON John Ogbokpo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/256", "faculty": "Science" },
+    { "fullName": "Taiwo Adeshewa Inioluwa", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/257", "faculty": "Science" },
+    { "fullName": "Taofeek Esther Favour", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/258", "faculty": "Science" },
+    { "fullName": "Timothy Taiwo Faith", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/259", "faculty": "Science" },
+    { "fullName": "UDEH DELIGHT UZOAMAKA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/260", "faculty": "Science" },
+    { "fullName": "Williams David Ikechukwu", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/261", "faculty": "Science" },
+    { "fullName": "Yekini Yusuf Boluwatife", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/262", "faculty": "Science" },
+    { "fullName": "Yusuf Bintu Fatimah", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/263", "faculty": "Science" },
+    { "fullName": "Yusuf Rodiat Temitope", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/264", "faculty": "Science" },
+    { "fullName": "ISAFIDIE ELIJAH ADEKOYEOJO", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/303", "faculty": "Science" },
+    { "fullName": "Owoeye Kemi Mary", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/305", "faculty": "Science" },
+    { "fullName": "Dada Anjolaoluwa Moyosore", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/306", "faculty": "Science" },
+    { "fullName": "Ademola Adepeju Ololade", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/247", "faculty": "Science" },
+    { "fullName": "ADEREMI OLUWATOMISIN JOSHUA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/248", "faculty": "Science" },
+    { "fullName": "ADERETI Naheemoh Adeola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/249", "faculty": "Science" },
+    { "fullName": "ADISA Faith Idowu", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/250", "faculty": "Science" },
+    { "fullName": "AIGHOMAGBE DESTINY BOLUWATIFE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/251", "faculty": "Science" },
+    { "fullName": "AJAYI JOY OLASUBOMI", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/252", "faculty": "Science" },
+    { "fullName": "AJIFOWOBAJE ESTHER BUSAYO", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/253", "faculty": "Science" },
+    { "fullName": "AKINOLA ELIJAH OLUWADAMILARE", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/254", "faculty": "Science" },
+    { "fullName": "Akinsola Oyinwonuola Purpose", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/255", "faculty": "Science" },
+    { "fullName": "Folowosele Oluwanifemi Racheal", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/256", "faculty": "Science" },
+    { "fullName": "Idris Hikmot Mobolape", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/257", "faculty": "Science" },
+    { "fullName": "Ipadedola Abigael Olayinka", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/258", "faculty": "Science"},
+   { "fullName": "OLAJIDE MOSES PEPOLUWA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/259", "faculty": "Science" },
+    { "fullName": "OLAJIDE PHEBE TOMISIN", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/260", "faculty": "Science" },
+    { "fullName": "Olatunji Aduragbemi Enoch", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/261", "faculty": "Science" },
+    { "fullName": "Tokede Oreoluwa Avberosuohene", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2023/262", "faculty": "Science" },
+   { "fullName": "Afolabi Oluwatimilehin Peter", "department": "Zoology", "part": "100", "matricNumber": "DEN/2022/040", "faculty": "Science" },
+   { "fullName": "Adebayo Gabriel Adedamola", "department": "Zoology", "part": "100", "matricNumber": "T0414", "faculty": "Science" },
+    { "fullName": "Kiadese Usman Ayomide", "department": "Zoology", "part": "100", "matricNumber": "T0415", "faculty": "Science" },
+    { "fullName": "Egbeleke Oluwasegun Bolu", "department": "Zoology", "part": "100", "matricNumber": "T0418", "faculty": "Science" },
+    { "fullName": "Akowgwu Wisdom Inalegwu", "department": "Zoology", "part": "100", "matricNumber": "T0423", "faculty": "Science" },
+    { "fullName": "Afolabi Abdulrasheed Adeola", "department": "Zoology", "part": "100", "matricNumber": "T1492", "faculty": "Science" },
+   { "fullName": "Ayodeji Gbenga Oluwasegun", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2019/086", "faculty": "Science" },
+   { "fullName": "Abasilim Michael Onyekachukwu", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/001", "faculty": "Science" },
+    { "fullName": "Abdulhameed Abdulrasaq Adetunji", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/003", "faculty": "Science" },
+    { "fullName": "Adakole Joshua Kelvin", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/004", "faculty": "Science" },
+    { "fullName": "Adebayo Adewale Aanuoluwapo", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/005", "faculty": "Science" },
+    { "fullName": "ADEBAYO Olalekan Abdullahi", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/006", "faculty": "Science" },
+    { "fullName": "ADEBAYO REDEMPTION OLUBISI", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/007", "faculty": "Science" },
+    { "fullName": "Adebitan Adedolapo Ebunoluwa", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/008", "faculty": "Science" },
+    { "fullName": "Adebiyi Adekunle Boluwatife", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/009", "faculty": "Science" },
+    { "fullName": "ADEBOLA Daniel Ihemrioriochi", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/010", "faculty": "Science" },
+    { "fullName": "ADEGBAYE MICHAEL SUCCESS", "department": "Biochemistry and Molecular Biology", "part": "300", "matricNumber": "BCH/2021/011", "faculty": "Science" },
+    { "fullName": "Owolabi Mercy Ayomide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/241", "faculty": "Science" },
+    { "fullName": "OWOLABI PEACE JOSHUA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/242", "faculty": "Science" },
+    { "fullName": "Owoyokun Happiness Adebayo", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/243", "faculty": "Science" },
+    { "fullName": "Oyalana Ibukun Oyindamola", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/244", "faculty": "Science" },
+    { "fullName": "Oyaronbi Oluwademilade Usman", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/245", "faculty": "Science" },
+    { "fullName": "Oyebamiji Olamide Samuel", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/246", "faculty": "Science" },
+    { "fullName": "Oyediwura Racheal Olamide", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/247", "faculty": "Science" },
+    { "fullName": "OYELAMI ABRAHAM AKINBOLA", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/248", "faculty": "Science" },
+    { "fullName": "Oyeniran Taiwo Nimota", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/249", "faculty": "Science" },
+    { "fullName": "RICHARD Marvelous-Praise Onoroghene", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/251", "faculty": "Science" },
+    { "fullName": "Rotimi Kikelomo Olashina", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/252", "faculty": "Science" },
+    { "fullName": "Salau Gbenga", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/253", "faculty": "Science" },
+    { "fullName": "Sanusi Samuel Olalekan", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/254", "faculty": "Science" },
+    { "fullName": "Seidu Fathia Oluwatosin", "department": "Biochemistry and Molecular Biology", "part": "200", "matricNumber": "BCH/2022/255", "faculty": "Science" },         
+
 ];
 
 
