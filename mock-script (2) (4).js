@@ -7040,17 +7040,16 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 });
 
 
-    
-// Define the list of predefined students
+    // Define the list of predefined students
 const students = [
-    { fullName: "Richard Ochuko", department: "NASS", part: "1", matricNumber: "NASS-0874", firstName: "Richard" },
-    { fullName: "Charlie Brown", department: "TECH", part: "2", matricNumber: "TECH-M7XJ", firstName: "Charlie" },
+    { fullName: "Richard Ochuko", department: "NASS", part: "200", matricNumber: "ZOO/2022/081", faculty: "Science" },
+    { fullName: "Charlie Brown", department: "TECH", part: "2", matricNumber: "TECH-M7XJ", faculty: "Engineering" },
     // Add more students as needed
 ];
 
 // Function to authenticate user
 function authenticateUser(fullName, password) {
-    const student = students.find(student => student.fullName === fullName && student.firstName === password);
+    const student = students.find(student => student.fullName === fullName && student.matricNumber === password);
     if (student) {
         return student;
     }
@@ -7060,7 +7059,7 @@ function authenticateUser(fullName, password) {
 // Update the login function
 document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
-    const password = document.getElementById('userID').value.trim(); // Use password instead of userID
+    const password = document.getElementById('userID').value.trim(); // Use matric number as password
 
     const authenticatedStudent = authenticateUser(fullName, password);
 
@@ -7068,7 +7067,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         localStorage.setItem("currentUser", JSON.stringify(authenticatedStudent));
         document.getElementById('userDetails').innerHTML = `
             <strong>Full Name:</strong> ${authenticatedStudent.fullName} <br>
-            <strong>Faculty:</strong> ${authenticatedStudent.department} <br>
+            <strong>Faculty:</strong> ${authenticatedStudent.faculty} <br>
             <strong>Department:</strong> ${authenticatedStudent.department} <br>
             <strong>Level:</strong> ${authenticatedStudent.part}
         `;
@@ -7108,7 +7107,7 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         document.getElementById('toggle-calculator').classList.remove('hidden');
         document.getElementById('calculator-popup').classList.remove('hidden');
     } else {
-        alert("Invalid Full Name or Password. Please try again.");
+        alert("Invalid Full Name or Matric Number. Please try again.");
     }
 });
 
