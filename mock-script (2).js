@@ -2484,121 +2484,7 @@ correct: 1,
         options: ["In the center of the yolk.", "In the vegetal pole.", "In a small cap at the animal pole.", "In the blastocoel."],
         correct: 2,
         explanation: "In eggs with a large amount of yolk, such as in birds and reptiles, the blastodisc is typically located in a small cap at the animal pole. The large yolk mass limits the cytoplasm to this region where the blastodisc forms."
-     },
-    {
-       text: "The presence of a polar body suggests that which process has recently occurred?",
-        options: ["Meiosis I", "Meiosis II", "Mitosis", "Fertilization"],
-       correct: 0,
-        explanation: "The presence of a polar body indicates that Meiosis I has occurred. The first meiotic division is asymmetrical, creating the secondary oocyte and a small polar body."
-    },
-    {
-         text: "If the oocyte is at metaphase II, what process is required to complete its division?",
-        options: ["Ovulation", "Meiosis I", "Fertilization", "Gastrulation"],
-        correct: 2,
-        explanation: "If the oocyte is arrested at metaphase II, fertilization is required to complete its division. The entry of the sperm triggers the oocyte to finish meiosis II and become a mature ovum."
-    },
-    {
-         text: "If cleavage proceeds holoblastically, what would be a correct conclusion?",
-        options: ["It has a large amount of yolk concentrated in one pole", "It has partial cell division", "The egg has a relatively small amount of yolk", "The cell undergoes incomplete cytoplasmic division"],
-        correct: 2,
-        explanation: "If cleavage is holoblastic, it indicates that the egg has a relatively small amount of yolk. This allows the cell to divide completely during cleavage without the yolk interfering. Eggs with more yolk, undergo meroblastic cleavage."
-    },
-    {
-        text: "What is the relationship between the amount of yolk in an egg and the type of cleavage it exhibits?",
-        options: ["They are independent of each other", "Eggs with more yolk always have holoblastic cleavage", "Eggs with less yolk always have meroblastic cleavage", "Yolk content often influences the pattern of cleavage"],
-        correct: 3,
-         explanation: "The amount of yolk in an egg is a key factor that influences the pattern of cleavage. Eggs with less yolk tend to exhibit holoblastic cleavage, while eggs with more yolk tend to exhibit meroblastic cleavage."
-    },
-   {
-         text: "If an embryo forms a blastocoel during development, what is a reasonable inference?",
-         options: ["The embryo is undergoing radial cleavage", "The embryo is undergoing meroblastic cleavage", "The embryo has reached the blastula stage", "The embryo has reached the gastrula stage"],
-       correct: 2,
-         explanation: "The presence of a blastocoel, a fluid-filled cavity within a hollow sphere of cells, is a clear indicator that the embryo has reached the blastula stage, which is a key stage before gastrulation."
-    }, 
-    {
-        text: "What can be concluded from a species whose fertilized egg divides to form a mass of blastomeres with different sizes and the cleavage is incomplete?",
-        options: ["It has a microlecithal egg", "It has a holoblastic cleavage pattern", "It has a meroblastic cleavage pattern", "It has a very small blastocoel"],
-        correct: 2,
-        explanation: "If a fertilized egg divides to form a mass of blastomeres with different sizes and the cleavage is incomplete, this suggests the egg has a large amount of yolk that hinders full division. This type of cleavage is called meroblastic cleavage, where the division is only partial due to the presence of a large yolk mass. Microlecithal eggs will not exhibit this pattern, and holoblastic cleavage indicates a complete division."
-    }, 
-   {
-        text: "A mutation in the cumulus oophorus would directly affect what process?",
-        options: ["Ovulation", "Fertilization", "Meiosis II", "Cleavage"],
-        correct: 0,
-        explanation: "A mutation in the cumulus oophorus would directly affect ovulation. The cumulus oophorus helps guide the oocyte into the fallopian tube, and any malfunction will hinder the process of ovulation."
-    },
-    {
-         text: "If the egg exhibits holoblastic cleavage, but the blastomeres end up being of different sizes, what is likely the cause?",
-        options: ["An error in meiosis.", "Radial cleavage.", "Uneven distribution of yolk.", "Lack of a zona pellucida."],
-        correct: 2,
-        explanation: "If holoblastic cleavage results in blastomeres of different sizes, the likely cause is an uneven distribution of yolk. Although the cleavage is complete, the yolk impedes cell division in the yolky pole, causing different sizes."
-    },
-    {
-         text: "An egg cell has its cleavage furrows inhibited in the yolky part of the egg. What type of cleavage is this?",
-        options: ["Holoblastic", "Meroblastic", "Radial", "Spiral"],
-        correct: 1,
-        explanation: "If the cleavage furrows are inhibited in the yolky part of the egg, this indicates meroblastic cleavage. The large amount of yolk in meroblastic eggs limits cytoplasmic division during cleavage."
-    },
-    {
-        text: "In a hypothetical situation, a drug inhibits the formation of the blastocoel. What effect will this have?",
-         options: ["Cleavage will be prevented", "Gastrulation will be impaired", "The number of blastomeres will be reduced", "Fertilization will not occur"],
-        correct: 1,
-        explanation: "If a drug inhibits the formation of the blastocoel, gastrulation will be impaired. The blastocoel is crucial for providing space for cell movements during gastrulation."
-    },
-    {
-       text: "An animal has microlecithal eggs, what does this imply about its life style?",
-        options: ["It needs more yolk to allow for development outside the mother", "It needs an extensive period of development inside the mother", "It needs a less extensive period of development inside the mother", "Its offspring do not require parental care"],
-        correct: 1,
-        explanation: "Animals with microlecithal eggs, which have very little yolk, typically require an extensive period of development inside the mother. This is because they rely on the mother for nutrients during the development process through a placenta, rather than relying on the egg's yolk."
-    },
-     {
-        text: "If the polar body is located outside the zona pellucida, what does this suggest about its function?",
-        options: ["It has a role in providing nutrition to the oocyte.", "It is a developmental cell with high importance.", "It is a cell without further developmental purpose", "It has a role in fertilization."],
-        correct: 2,
-        explanation: "If the polar body is located outside the zona pellucida, it suggests that it's a cell without a further developmental purpose. Polar bodies are essentially a way for the oocyte to discard unneeded chromosomes and cytoplasm, therefore are eventually degraded."
-    },
-    {
-         text: "A researcher observes radial cleavage in a developing embryo. What is the most likely conclusion they can make about the organism's phylogeny?",
-         options: ["It is likely to be a protostome", "It is likely to be a mollusc", "It is likely to be a deuterostome", "It is likely to be a nematoda"],
-        correct: 2,
-        explanation: "If a researcher observes radial cleavage in a developing embryo, the most likely conclusion is that the organism is a deuterostome. Radial cleavage is a characteristic feature of deuterostomes, which include echinoderms and chordates. Protosomes include molluscs and nematodes and follow spiral cleavage."
-    },
-    {
-         text: "If an egg has a large amount of yolk and the cleavage furrows are incomplete, what can you conclude about its likely developmental pattern?",
-        options: ["It will have equal blastomeres", "It will have holoblastic cleavage", "It will have meroblastic cleavage", "It will have no cytoplasmic division"],
-        correct: 2,
-        explanation: "If an egg has a large amount of yolk and the cleavage furrows are incomplete, you can conclude that it will have meroblastic cleavage. The presence of significant yolk interferes with cytoplasmic division."
-    },
-     {
-        text: "If a species has very small microlecithal eggs, what can you conclude about its early development?",
-        options: ["The developing embryo is independent and does not need yolk", "The developing embryo requires external nutrients", "The developing embryo has small nutritional requirements", "The developing embryo will be able to survive outside the mother"],
-       correct: 1,
-        explanation: "If a species has very small microlecithal eggs, you can conclude that its early development requires external nutrients. Microlecithal eggs have minimal yolk, so development requires access to nutrients from another source, such as the mother through a placenta."
-    },
-    {
-         text: "If a species has a heavy telolecithal egg, what can you conclude about its cleavage pattern?",
-        options: ["It will have holoblastic cleavage", "It will have radial cleavage", "It will have meroblastic cleavage", "It will have spiral cleavage"],
-        correct: 2,
-        explanation: "If a species has a heavy telolecithal egg (a large amount of yolk at one pole), you can conclude that its cleavage pattern will be meroblastic. The significant amount of yolk impedes complete cell division."
-    },
-    {
-         text: "How does the arrangement of blastomeres in the eight-cell stage differ between radial and other types of cleavage?",
-        options: ["Blastomeeres in the eight-cell stage are the same size in all cleavages.", "Blastomeeres in the eight-cell stage are arranged radially in radial cleavage", "Blastomeeres in the eight-cell stage are arranged spirally in radial cleavage", "Blastomeeres in the eight-cell stage have different sizes in radial cleavage"],
-       correct: 1,
-        explanation: "During radial cleavage, the blastomeres in the eight-cell stage are arranged radially, meaning they are directly on top of one another. This contrasts with spiral cleavage where cells are offset."
-   },
-   {
-        text: "How does the presence of a large blastocoel in a blastula relate to the developmental strategy of an animal?",
-        options: ["A larger blastocoel means a slower rate of development.", "A larger blastocoel provides a larger space for gastrulation.", "A larger blastocoel means a faster rate of cell division.", "The presence of the blastocoel is independent of the animal's development"],
-       correct: 1,
-        explanation: "A larger blastocoel in a blastula provides a larger space for the cell movements that occur during gastrulation, suggesting an important role for cell migration within this space during the development of the organism."
-    },
-    {
-         text: "What is the functional relationship between the cytoplasm and yolk in eggs?",
-        options: ["Yolk is independent of the cytoplasm", "Cytoplasm stores the yolk", "Yolk is part of the cytoplasm", "Yolk and cytoplasm are not related in any way"],
-        correct: 2,
-         explanation: "The yolk is an integral part of the cytoplasm in eggs. The yolk is not independent from the cytoplasm but rather a component that stores nutrients within the cytoplasm of the ovum."
-    },  
+         },  
   ],
 
     "PHYS-1": [
@@ -3090,20 +2976,22 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 
 
     
-document.getElementById('loginBtn').addEventListener('click', function () {
+
+  document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
-    const userId = document.getElementById('userID').value.trim();
+    const userIdOrCode = document.getElementById('userID').value.trim();
 
     const storedDetails = JSON.parse(localStorage.getItem('userDetails'));
     const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    let userId = storedDetails ? storedDetails.userId : null;
 
     if (!storedDetails) {
         alert("No registered user found. Please register first.");
         return;
     }
 
-    if (storedDetails.fullName === fullName && storedDetails.userId === userId) {
-        // ✅ Store logged-in session
+    if (storedDetails.fullName === fullName && (storedDetails.userId === userIdOrCode || storedDetails.fiveFigureCode === userIdOrCode)) {
+        // Store logged-in session
         localStorage.setItem("currentUser", JSON.stringify(storedDetails));
 
         document.getElementById('userDetails').innerHTML = `
@@ -3116,46 +3004,65 @@ document.getElementById('loginBtn').addEventListener('click', function () {
         const examsList = document.getElementById('examsList');
         examsList.innerHTML = ''; // Clear previous exams
 
+        // Ensure "CHM101-F1" is included in the user's exam allocations
+        if (!examAllocations[userId]) {
+            examAllocations[userId] = [];
+        }
+
+        if (!examAllocations[userId].some(exam => exam.id.trim() === "CHM10 1-F1")) {
+            examAllocations[userId].push({ id: "CHM101-F1", title: "INTRODUCTORY CHEMISTRY ONE" });
+        }
+
+        console.log("Exam Allocations for", userId, examAllocations[userId]);
+        localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+
+        // Display assigned exams
         examAllocations[userId].forEach(exam => {
-    const examItem = document.createElement('button');
-    examItem.innerText = exam.title;
-    examItem.className = 'styled-btn';
-    
-    examItem.addEventListener('click', function () {
-        console.log(`Exam clicked: ${exam.id} - ${exam.title}`); // Debugging log
-        
-        // Hide the popup correctly
-        document.getElementById('popup').classList.remove('active');
+            const examItem = document.createElement('button');
+            examItem.innerText = exam.title;
+            examItem.className = 'styled-btn';
 
-        // Hide course code section if it's visible
-        document.getElementById('course-code-section').classList.add('hidden');
+            examItem.addEventListener('click', function () {
+                console.log(`Exam Clicked: ${exam.id} - ${exam.title}`);
 
-        // Start the exam directly
-        startExam(exam.id, exam.title);
-    });
-    
-    examsList.appendChild(examItem);
-});
-      
+                // Auto-fill the course code input
+                document.getElementById("courseCode").value = exam.id;
 
-      
+                // Simulate clicking the course selection button
+                document.getElementById("selectCourseBtn").click();
+            });
 
-// ✅ Show the pop-up modal
+            // Hide the popup correctly
+            document.getElementById('popup').classList.remove('active');
+
+            examsList.appendChild(examItem);
+        });
+
+        // Show the pop-up modal
         document.getElementById('popup').classList.add('active'); // Add 'active' class to make it visible
 
-        // ✅ Hide login section, show exam section
+        // Hide login section, show exam section
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('course-code-section').classList.remove('hidden');
+        document.getElementById('toggle-calculator').classList.remove('hidden');
+        document.getElementById('calculator-popup').classList.remove('hidden');
+
+        // Prompt to set up 5-figure code if not already set
+        if (!storedDetails.fiveFigureCode) {
+            const newCode = prompt("Please set up a 5-figure code for future logins:");
+            if (newCode && newCode.length === 5) {
+                storedDetails.fiveFigureCode = newCode;
+                localStorage.setItem("userDetails", JSON.stringify(storedDetails));
+                alert("5-figure code set up successfully!");
+            } else {
+                alert("Invalid code, Kindly input just 5 characters.");
+            }
+        }
 
     } else {
         alert("Invalid User ID or Full Name. Please try again.");
     }
 });
-
-document.getElementById('closePopup').addEventListener('click', function () {
-    document.getElementById('popup').classList.remove('active'); // ✅ Hide pop-up
-});
-
 
 function displayExamSection(examId) {
     alert('Displaying exam section for exam ID: ' + examId);
