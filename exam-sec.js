@@ -1,3 +1,59 @@
+// Function to display session details
+function displaySessionDetails(session) {
+  const historyContent = document.getElementById('exam-history-content');
+  historyContent.innerHTML = ''; // Clear current content
+
+  if (!session.questions || session.questions.length === 0) {
+    historyContent.innerHTML = '<p>No questions available for this session.</p>';
+    return;
+  }
+
+  session.questions.forEach((question, qIndex) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+
+    // Display question text
+    const questionText = document.createElement('p');
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
+    questionDiv.appendChild(questionText);
+
+    // Create list for options
+    const optionsList = document.createElement('ul');
+
+    // Loop through options
+    question.options.forEach((option, index) => {
+      const optionItem = document.createElement('li');
+      optionItem.textContent = option;
+
+      // User's answer
+      if (session.answers[qIndex] === index) {
+        optionItem.classList.add('user-answer');
+      }
+
+      // Correct answer
+      if (index === question.correct) {
+        optionItem.classList.add('correct-answer');
+      }
+
+      optionsList.appendChild(optionItem);
+    });
+
+    questionDiv.appendChild(optionsList);
+
+    // Display explanation
+    const explanationText = document.createElement('p');
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation || 'No explanation available'}`;
+    questionDiv.appendChild(explanationText);
+
+    historyContent.appendChild(questionDiv);
+  });
+
+  // Add "Back to History" button
+  const backButton = document.createElement('button');
+  backButton.textContent = 'Back to History';
+  backButton.addEventListener('click', displayExamHistory);
+  historyContent.appendChild(backButton);
+                             }
 
 // Use debounce to limit frequent state updates
 function debounce(func, delay) {
