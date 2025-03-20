@@ -14954,6 +14954,3678 @@ const students = [
         "matricNumber": "CHM/2022/036",
         "faculty": "Science"
     },
+
+
+      
+  {
+    "fullName": "Osuolabe Zainab",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/018",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Owolabi Busayo Olufunmi",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/019",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Raj Kamaludeen Adeola",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/020",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "ADUMUJO JOHN ADEDEJ",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "202491032082HF",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Samuel Glory Prosper",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2013/035",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Salami Taiwo Afeaz",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/001",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Adeboyejo Dorcas Oluwafunmi",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/002",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "AJERIAGBEMI TAIWO TOULOPE",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/003",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Adigbola Ayomipe Janet",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/004",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Akinsola Ayomide",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/005",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Akinfolarin John Faith",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/006",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Anyanwu Chidima",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/007",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Aikaire Grace Sunday",     "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/008",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Babigbola Precious Dorcas",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/009",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Eluigun Ayomide Comfort",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/010",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Fasan Olufunmilola Esther",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/011",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Gabriel Yetunde Favour",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/012",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Igbalaye Khadijat Oluomoke",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/013",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Oduola Feyisayo Victoria",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/014",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "OGUNSanya PRECIOUS MOI UNRAYO",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/015",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Ohijoh Michael Emmanuel",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/016",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Ojukumeme Oluwatoyin Ohireme",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/017",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Okorofor Wisdom Temiloluwa",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/018",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Omolafe Faith Elizabeth",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/019",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {    "fullName": "Taiwo Aderamola Elliot",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/020",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Taiwo Olamide Isaac",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/021",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "ADEYEMI FOSADE KRISTEN",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/029",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Adesigin Tolsin",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/030",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Agimu Anita Oluwaju",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/031",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Adebenyo Faith Adewumi",
+    "department": "Food Science and Technology",
+    "part": "200",
+    "matricNumber": "FST/2022/032",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Obi Abigail Ishioma",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202440339311IA",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Okiti Araoluwa Shalom",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202440566935BF",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "SABENA ISHOMA",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202440822678BF",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Taiwo Damilola Esther",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441016230DA",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Saitutu Deniide Hafsat",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441062266AF",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "AKINBAYEMI TOBI",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441096375BF",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Abdulwakeem Kehinde Ajao",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441162636IF",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Samuel Adenike",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441171369HF",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "OLUWADENIKE Eunice",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "20244151384FF",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Alabi Oluwapumpo Elizabeth",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441596746FF",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Olatogbe Oladipupo Olamide",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "202441895811DA",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "ADEMOYEGA Anike Maureen",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "85860700DD",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Dasouza Ayomide Aderoju",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/005",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Abudukair Aimot Deborah",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/001",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Adefala Ayomide Alake",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/002",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "AFOLABI ABDULMALIK TOPE",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/003",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Adekunle Taiwo Ayomide",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/004",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Akanbi Deborah Similoluwa",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/005",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Alabi Mofogbohuluwa Favour",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/006",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Amele Adetomiwa",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/007",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Ayinla Jubril Adeyanju",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/008",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Bolatoba Godesfavour Anthony",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/009",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Christoper Oluwabukola Esther",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/010",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "DAWDA EBENEZER OLAYINKA",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/011",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Matthew Oluwabukunmi Joseph",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/012",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Ogunbanwo Julius Olayinka",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/013",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Olayelu Elizabeth Temitope",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/014",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Olatunji Boluwatife",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/015",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Oluwapamilerin Oluwadarasimi",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/016",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Oluwatunmi Daniel",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/017",
+    "faculty": "Technology",
+    "sex": "Male"
+  },
+  {
+    "fullName": "Osiyiola Aishat Motunrayo",
+    "department": "Food Science and Technology",
+    "part": "100",
+    "matricNumber": "FST/2023/018",
+    "faculty": "Technology",
+    "sex": "Female"
+  },
+  {
+    "fullName": "Oladedeji Rebecca Aanuoluwapo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/012",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olaniyi Zainab Eniola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/013",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olarewaju Janet Omolola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/014",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olasoji Victoria Oluwatimileyin",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/015",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "OLASUNKANMI Morenikeji Funmilayo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/016",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olatunde Mojolaoluwa Elizabeth",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/017",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oluwalowo Hannah Faith",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/018",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Omodeyin Favour Adeife",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/019",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oriolowo Oluwasekemi",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/020",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Osifeso Mololuwa Beloved",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/021",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "SANU ESTHER OLUWAFUNMILAYO",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/022",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "SHOFILE AISHAT ABIODUN",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/023",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "SIAKPERE Oghenekevwe Bose",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",     "matricNumber": "FNC/2023/024",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Sunboye Ayomide Margret",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/025",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "TITILOLA ESTHER MORENIKEJI",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/026",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Yunus Roheemot Omolara",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/027",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Popoola Peace Wuraola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202441385439JF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Ajagbe Mercy Esther",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202441486310JF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "AYANDA AYOMIDE ESTHER",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202491009319IA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "ODENIYI ISAIAH VICTOR",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202491024093CF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Owolabi Mercy Boluwatife",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202440680363CF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Akinbode Taiwo Goodness",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441279350GA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Osunwoye Funmilola Janet",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441380432FA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "OLAOYE BRIGHT OLUWASOLA",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441695753GF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oladiji Precious Ololade",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441839512EA",
+    "faculty": "Agriculture"
+  },
+  {    "fullName": "AKINTUNDE FAITHFUL ANUOLUWAPO",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441855744BA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Ojebunmi Oladimeji",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441891233CF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "OLADUNJOYE OLUWASEYI EBUNOLUWA",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2014/018",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Adetowo Kehinde Dunmininu",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/001",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Ajagbe Yemisi Elizabeth",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/002",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Akawu Blessing Awobiwom",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/003",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Akinyemi Adeola Esther",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/004",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Aluko Emmanuel Dickson",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/005",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Brown-Adeleye Oluwasindara, Eniola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/006",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Esan Olamilekan Clement",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/007",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Fakunle Faith Adebisi",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/008",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Kuponiyi Boluwatife Matthew",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/009",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Odeyemi Jesutofunmi Odunayo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/010",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oguntuase Marvellous Deborah",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/011",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oladedeji Rebecca Aanuoluwapo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/012",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oladedeji Rebecca Aanuoluwapo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/012",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olaniyi Zainab Eniola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/013",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olarewaju Janet Omolola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/014",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olasoji Victoria Oluwatimileyin",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/015",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "OLASUNKANMI Morenikeji Funmilayo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/016",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Olatunde Mojolaoluwa Elizabeth",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/017",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oluwalowo Hannah Faith",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/018",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Omodeyin Favour Adeife",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/019",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oriolowo Oluwasekemi",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/020",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Osifeso Mololuwa Beloved",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/021",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "SANU ESTHER OLUWAFUNMILAYO",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/022",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "SHOFILE AISHAT ABIODUN",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/023",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "SIAKPERE Oghenekevwe Bose",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",     "matricNumber": "FNC/2023/024",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Sunboye Ayomide Margret",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/025",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "TITILOLA ESTHER MORENIKEJI",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/026",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Yunus Roheemot Omolara",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/027",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Popoola Peace Wuraola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202441385439JF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Ajagbe Mercy Esther",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202441486310jfj",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "AYANDA AYOMIDE ESTHER",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202491009319IA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "ODENIYI ISAIAH VICTOR",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "200",
+    "matricNumber": "202491024093CF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Owolabi Mercy Boluwatife",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202440680363CF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Akinbode Taiwo Goodness",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441279350GA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Osunwoye Funmilola Janet",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441380432FA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "OLAOYE BRIGHT OLUWASOLA",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441695753GF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oladiji Precious Ololade",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441839512EA",
+    "faculty": "Agriculture"
+  },
+  {    "fullName": "AKINTUNDE FAITHFUL ANUOLUWAPO",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441855744BA",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Ojebunmi Oladimeji",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "202441891233CF",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "OLADUNJOYE OLUWASEYI EBUNOLUWA",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2014/018",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Adetowo Kehinde Dunmininu",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/001",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Ajagbe Yemisi Elizabeth",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/002",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Akawu Blessing Awobiwom",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/003",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Akinyemi Adeola Esther",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/004",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Aluko Emmanuel Dickson",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/005",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Brown-Adeleye Oluwasindara, Eniola",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/006",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Esan Olamilekan Clement",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/007",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Fakunle Faith Adebisi",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/008",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Kuponiyi Boluwatife Matthew",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/009",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Odeyemi Jesutofunmi Odunayo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/010",
+    "faculty": "Agriculture"
+  },
+  {
+    "fullName": "Oguntuase Marvellous Deborah",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/011",
+    "faculty": "Agriculture"
+  },
+    {
+    "fullName": "Oladedeji Rebecca Aanuoluwapo",
+    "department": "Family Nutrition and Consumer Science",
+    "part": "100",
+    "matricNumber": "FNC/2023/012",
+    "faculty": "Agriculture"
+  },
+    {
+        "fullName": "AKINNUGBA ELIZABETH OPEYEMI",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/009",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akintayo Finyin Victorious",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/010",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Atobatele Oluwapelumi Emmanuel",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/011",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Bamidele Gideon Folorunso",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/012",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "BORIWAYE HELEN AYONITEMI",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/013",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Elusogbon Muhammed Ayomide",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/014",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Esan Elizabeth Temidayo",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/015",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OHI Rhoda Aghogho",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/016",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OLAMOYEGUN ISRAEL GOODNESS",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/017",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Olawoyin Michael Ayomide",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/018",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Olawunmi Temidayo Rebecca",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/019",         "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Omoniyi Grace Timileyin",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/020",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oyebamiji Esther Opeyemi",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/021",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ozuem Adaeze Deborah",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/022",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "FAGBENLE LAWAL ABIOLA",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "200",
+        "matricNumber": "AXR/2008/035",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "FAWUNMI HANNAH FOLASHADE",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "200",
+        "matricNumber": "AXR/2008/039",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Williams Ibukun Timothy",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "200",
+        "matricNumber": "202330953554FF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ajayi Faith Oluwaseyi",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "200",
+        "matricNumber": "202440983688HI",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Johnson Precious Chidera",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "200",
+        "matricNumber": "202491009139DA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adubiaro Favour, Samuel",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "202440582624EA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ademiju-Aderoju Al-amin Ademurewa",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "202440756983GA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Okoro Victor Chukwuebuka",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",         "matricNumber": "202441122615IA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Dada Olagoke Faith",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "202441173928BF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ALABI DOMINION GLADLUYS",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "202441626176GA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akano Opeyemi Aanuoluwapo",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "202441921781EF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oyebamiji Akeem Opeyemi",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "86088485FC",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OGUNDANA Oluwaseun Opeyemi",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2009/041",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OLAGUNJU IDRIS BOLUWATIFE",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2013/024",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ABIFARIN NASEEF ALABA",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/001",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Abodunrin Joshua Oluwasegun",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/002",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adebayo Toluwalope Ruth",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/003",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Defajo Treasure Eniola",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/004",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adefioye Adetunji Omoniyi",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/005",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADEGBOYEGA TENIOLA IYANUOLUWA",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/006",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adesina Ayomide Ifeoluwa",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/007",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adetola Mary Peluola",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/008",
+        "faculty": "Agriculture"
+    },
+        {
+        "fullName": "AKINNUGBA ELIZABETH OPEYEMI",
+        "department": "Agricultural Extension and Rural Development",
+        "part": "100",
+        "matricNumber": "AXD/2023/009",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oguntoyinbo Tomiwa Samuel",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440163387FA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oladipupo Esther Ajibola",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440213124HF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Shaibu Eremosele Urah",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440351163FF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oladokun Kehinde Grace",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440617255HJ",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OFFOR DANIELLA OLUWAFERANMI",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440669699FA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akinsola Praise Korede",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440749661JF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADENAGBE SAMUEL AYODEJI",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440751482BF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oyelabi lyiola akande",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202440862365CA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Obunadike Lynda Chidera",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202441468199CA",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Bello Hassan Adetayo",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "202441951102CF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Salimon Akolawo Ayomide",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "85869041EF",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Afolabi Saratu Oluwakemi",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "86113019HD",
+        "faculty": "Agriculture"
+    },
+    {        "fullName": "Olanrewaju Olawale Toyyib",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "86127013JC",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "SOYELE OREOLUWA DEBORAH",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2013/044",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADETOKUNBO SAMUEL SEGUN",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2015/008",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Abayomi Ayomide Segun",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/001",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Abdullahi Fahidat Ayomide",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/002",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Abimbola Adam Opeyemi",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/003",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Abiola Emmanuel Ayoola",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/004",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adaramaja Titilope Grace",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/005",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adejumo Isaac Aremu",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/006",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADEKANOLA EXCEL DANIEL",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/007",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adeleke Alimat Omobolanle",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/008",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adeleke Mariam Eniola",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/009",
+        "faculty": "Agriculture"
+    },
+    {        "fullName": "Ademola Marvellous Adekola",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/010",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adeniran Adedamola Henry",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/011",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adewale Kayode Samson",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/012",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adeyemi Ademola Oluwasegun",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/013",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Agboola Glory Oluwapamilerin",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/014",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akinola Goodnews Esther",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/015",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akinrinola Priscilla Ayomide",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/016",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ariyibi Olabamiji",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/017", "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ATOKI Kevin Akimgbade",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/018",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Awe Abass Olumide",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/019",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ayeni Isaac Ayotunde",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/020",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Babalola Khairat ayomide",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/021",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "CLEMENT GODSWILL CHIKA",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/022",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Dauda Azeezat Kofoworola",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/023",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Edwin Favour Joy",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/024",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Famakin Peter Oluwakayode",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/025",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "FAMOUS DREOLUWA QUEEN",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/026",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Fatoyinbo Ayomide Deborah",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/027",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ibrahim Monsurat Oluwatoyin",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/028",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Idowu Esther Omowumi",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/029",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ljadele Jesutofunmi Esther",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/030",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ishola Pelumi Ayanfejesu",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/031",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Kings Richard Daniel",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/032",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Lawal Daniel Eshozemah",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/033",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Likinyo olayinka",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/034",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ogunbanwo Oluwateniola Ayomikun",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/035",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ogunmode Eniola Grace",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/036",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Okunade Oluwakemi Ifeoluwa",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/037",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OLA ADEDOLAPO FELIX",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/038",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Olademomi Elizabeth",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/039",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oladipo Idris oluwakorede",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/040",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oladosu Jesutofunmi Grace",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/041",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Olawore Sarah Ayomiposi",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/042",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ologuntoye Oluwabukunmi Felicia",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/043",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "OLUKOYA AYOMIDE MARVELOUS",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/044",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oluwadugba Kolawole Daniel",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/045",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oluwafemi Ololade Mary",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/046",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oluwafemi Ololade Mary",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/047",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ormisakin Ayomide Christopher",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/047",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oreagba Aishat Ojumirayo",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/048",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Osotimehin Daniel Adeboye",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/049",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Owolabi Ayomikun Mercy",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/050",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oyebamiji Ruth Temitope",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/051",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Oyebode Ismatu-Liah Titilope",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/052",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Popoola Kehinde Mary",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/053",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Roheem Adewale Wasiu",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/054",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Saka Blessing Mariam",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/055",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "SALAWUDEEN AZEEZAT OMOWUMI",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/056",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Timothy Gimbiya Queen",
+        "department": "Agricultural Economics",
+        "part": "100",
+        "matricNumber": "AEC/2023/057",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADEWOYIN TOLULOPE TOSIN",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2006/053",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ABASS Olabisi Oyinkansola",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/001",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Abayomi Eniola Glory",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/002",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adebanjo Emmanuel Oluwademilade",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/004",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adediran Israel Olajiire",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/005",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADEKUNLE E DAVID ADELEKAN",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/006",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "ADEYEYE ADEOLA ADURAGBEMI",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/008",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adigun Oluwaseyi Esther",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/009",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Adubi Favour Funmilayo",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/010",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Agbeniyi Oluwabukunmi Felicia",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/011",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "AJAYI Abdulhafeez Bolaji",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/012",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Ajumobi Omotola Favour",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/013",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Aka Dominion",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/014",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akeeb Titilope Osuolale",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/015",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akinola Pelumi Ayotunde",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/016",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "AKINWUMI AYOMIDE HENRY",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/017",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Akinyonbo Miracle Sunday",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/018",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Alabi Tumininu Fisolami",
+        "department": "Agricultural Economics",
+        "part": "200",
+        "matricNumber": "AEC/2022/019",
+        "faculty": "Agriculture"
+    },
+    {
+        "fullName": "Odinigwe Benitta Oluomachukwu",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/026",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Odunayo Oluwafemi John",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/027",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ogunnubi Adedamola Isaac",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/028",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "OKENAH KEHINDE OLAMIDE",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/029",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Olaniyi Saheed Kayode",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/032",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Oyebode Precious Rukayat",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/034",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Oyedeji Mercy Joanna",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/035",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Rahmon Sekinat Temitope",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/037",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Taiwo Deborah Ololade",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/038",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "SANNI ROHEEMAT OLAIDE",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "202491025991DF",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "OLOWODASA FUNMILOLA",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "CHM/2017/128",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Whesin Joanah Eniola",
+        "department": "Science, Technology and Education",
+        "part": "200",         "matricNumber": "CHM/2021/211",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Abdulrosheed Shukuroh Opeyemi",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/002",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adedeji Kazeem",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/006",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adedokun Oluwatosin Precious",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/007",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adesiyan Praise Eniola",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/012",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adisa Anjolaoluwa Janet",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/015",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ajayi Joseph Oluwafisayo",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/017",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ajayi Tolani Esther",
+        "department": "Science, Technology and Education",
+        "part": "200",
+        "matricNumber": "STE/2022/018",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ogundare Adenike Christianah",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "202441211724IF",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Emmanuel Esther Ifetoluwa",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "202441349948JA",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Umoren Precious Idara",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "202441379289GF",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ojo Emmanuel Ayobami",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "86678206HC",
+        "faculty": "Education"
+    },
+    {        "fullName": "Adekola Ifeoluwa Adedoyin",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/002",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adesanmi Oluwaseyi Iyanuoluwa",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/003",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adosiyan Precious Towo",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/004",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Adeyemi Happiness",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/006",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Afolabi Joy Faith",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/008",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ajayi Anuoluwapo Victoria",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/009",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ajayi Deborah Oluwatobi",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/010",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ajimati Deborah Oluwaseun",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/011",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Alamu Oluwabukola Jadesola",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/012",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Ayandiran Abdulrahman Abiodun",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/017",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Bamigboye Esther Adeola",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/018",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Haroon Hanifat Olamide",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/021",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Jesuwunmi Paul Pelumi",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/023",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "Madu Rita Chioma",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/024",
+        "faculty": "Education"
+    },
+    {
+        "fullName": "MONDAY PRECIOUS INIOBONG",
+        "department": "Science, Technology and Education",
+        "part": "100",
+        "matricNumber": "STE/2023/025",
+        "faculty": "Education"
+    },
+  {
+    "fullName": "Afolabi Fridaus Oluwatoyin",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440472386EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OLAGOKE HABEEBULLAH AKINKUNMI",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440474974CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ayoola Blessing Abisola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440476704BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oladejo Eniola Patricia",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440477346DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OYEWOLE MICHAEL IFEOLUWA",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440478579EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OLADELE ENOCH GBEMILEKE",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440479437DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oluwatope Ojurereoluwa Oluwanititomi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440485748BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Jimoh Alamin Abolahan",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440487347JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adesiyan Kelvin Oyeleke",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440488032JA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OKEWOLE PRAISE AYOMIDE",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440490427IF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adebiyi Joseph Adebimpe",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440498051GA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Folorunsho Victoria Odunayo",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440510717JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akinlabi Mercy Oluwadarasimi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440511105FF",
+    "faculty": "Clinical Sciences"
+  },
+  {    "fullName": "Obayemi Bright David",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440527740AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Tajudeen Abdulyeqeen Olamide",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440544282EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Nurein Jamiu Babatunde",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440548861EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Fagbohun Oluwaseun Sarah",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440564559CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Agha Matthew Obinna",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440567347EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adeleke Marvellous Oluwadamilola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440575570GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Onoja Praise Joshua",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440576995GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olajide Oluwadarasimi Triumph",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440598163FF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oluwajobi Moyinoluwa Oluwaloni",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440602594DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akwete Oluwagbemisola Temiloluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440603235GA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Idowu Mofifoluwa Olanrewaju",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440617411FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ogunlakin Aisha Dolapo",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440619077IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OLATUNDE JOY BOSEDE",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440663555IF",
+    "faculty": "Clinical Sciences"
+  },
+  {    "fullName": "Adewinbi Abdulbasit Olasile",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440677719EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Babalola Favour Oyinkansola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440718933CF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ayankunle Ayomide Christianah",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440734843IF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Abolarin Solomon Oluwafemi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440011986JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Babatunde Peter Adeleke",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440025339CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olaoye Praise Samuel",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440051993DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "AKOBI OMOWONUOLA ANTHONIA",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440071950JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Otung Imani Kelvin",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440075348BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "ABDULYAKEEN ABDULSALAM ADEDAMOLA", "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440081792JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akogun Moyosore Esther",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440117622CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "FADEYI DORCAS OPEYEMI",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440166586BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Abimbola Abdulbasit Olanrewaju",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440196626BA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Igwe Mary Ukamaka",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440238035GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Agboola Hephzibah Ayomide",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440238965HI",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olawale Marvellous Aanuoluwapo",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440274295CF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adeyeye Isaac Olumide",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440304037IF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "DUNMOYE DAVID OLANREWAJU",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440320410BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Awode Deborah Ifeoluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440320651EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olapade Mariam Abolaji",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440324098AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adesokun Tiwaloluwa Inioluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440330985FF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "obayopo olaitan",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440365475DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ibrahim Abdulmujeeb Ayomide",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440366902CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akinrinmade Ernest Oluwawonmiwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440379133EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Asunmo Halimat Adebimpe",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440384719EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Fabunmi Opeyemi Sunday",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440404804DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Rufus Covenant Oluwatemilorun",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440411176JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Omidiora Happiness Adeneke",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440440462GA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adebayo Zacheaus Oluwamayowa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440441566FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "ADEKUNLE LEVI OLUWAGBEMIGA",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440443881GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OJO PRECIOUS PERPETUAL",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440449831FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Agboola Cyril Oluwabusola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440450719HF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Lawal Promise Bamidele",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441906609JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adeyemo Iyanuoluwa Samuel",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441949020IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ayodeji Precious Oluwafemi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441954699JA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Raji Mubarak Abiola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441959851HF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajayi Esther, Temidire",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441967812HF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Gbadura Emmanuel Oluwamayokun",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "86063763BD",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "ZUBAIR ABDULGAFAR",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2010/059",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "ABIRI IFEOLUWA GRACE",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2011/003",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "LATEEF MUSTAPHA ALABI",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2012/041",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "MUSTAPHA WASIU",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2012/043",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "ABEGUNRIN AANUOLUWA FEYISIKE",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2015/001",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "MUSARI TITILOPE OLADEJI",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2015/108",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Fatunla Oladepesoye Venus",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2022/028",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olubode Demola Muheez",     "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2022/046",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Babajide Ayomide Temiloluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2023/001",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Owojori Eniola Pelumi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "MRH/2023/002",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ibidapo Ayomide Favour",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202440831719BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "ODETOLA PRECIOUS AYOMIDE",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202441127677EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Osinowo Oluwadamilola Favour",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "2024411733443GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Robert Williams Oluwademilade",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202441293707JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajiboye Precious Oluwatomiwa",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202441334123IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Muogbo Emmanuel Ikechukwu",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202441733836DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "AKINTAYO HIQMOT OYINDAMOLA",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491002513AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Hassan Saidat Omolabake",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491005529DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Lawani Bright Ereshi",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491007995FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Solarin Oluwafemi Emmanuel",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491008239GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Fashina Oluwatofunmi Jeniffer",     "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491009952FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "JEGEDE AMOS AYOMIDE",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491019530EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "EHOMUNU PRINCE KELECHI",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "202491020140DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Popoola Jesutofunmi Mary",
+    "department": "Medical Rehabilitation",
+    "part": "200",
+    "matricNumber": "AXD/2021/080",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Kareem Mariam Blessing",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441319368EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajiboye Precious Oluwatomiwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441334123IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Eluyera Oluwabukunmi Hiqmat",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441339783JA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oladoye Yetunde favour",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441342165FF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oladejo Oyeyemiowa Joseph",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441352701AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Kappo Oluwadarasimi David",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441386387BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Abimbola Faith Omonike",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441390188AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akinola Quwiyat Temidayo",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441453202FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Lawal Olamide Joshua",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441495178CF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Abdulateef Islamiat Omotola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441496225BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adesina Adebola Samuel",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441506341HA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olajuyigbe Afolashade Mary",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441530367CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Mosekola Esther Imolemide",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441556495AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Bamidele Success Motunrayo",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441596239CF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Nuga Blossom Tirenioluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441597362BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adediwura Sandra Oluwanifemi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441636840DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OGUNTIMEHIN Adekunle Ebenezer",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441652440DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adegbite Balikis Yetunde",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441669686GA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Elufisoye Ifeoluwa Peter",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441670608BA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Afolabi Oluwafemi Theophilus",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441705981DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Kudaisi Isreal Godsends",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441716480HF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Obasa Oluwaseun Adewale",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441719643DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajaja Anjolaoluwa Esther",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441742564JA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adeyemo Oluwaferanmi Martins",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441770438IF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Jegede Oluwatimilehin Lucas",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441810989GA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Sonibare Paul Ayo",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441822554JA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OJO TEMILOLUWA MARVELLOUS",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441855230BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "IJIYODE ADEMOLA JOSEPH",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441892787EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Alege Favour Ayomiposi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441893573BA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ogundolie Ayomide Esmond",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441897048CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Bamigboye Samuel Demilade",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440753272JA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adefila Daniel Fayokunmi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440765662IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adefisoye Ifeoluwa Adejoke",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440821145GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Abdulazeez Habeeb Abiodun",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440837799BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ojedele Fiyinfoluwa Marvelous",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440846994CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Lawal Ibrahim Kolawole",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440855939EA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adeyemi Oluwasegun Akinola",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440875067GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akinkunle Akinwole Micheal",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440877420IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oluwasegun Miracle Abidemi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440921729HF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akintayo Promise Jeremiah",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440931628HI",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Adebisi Adedoyin Emmanuel",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440939664IA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Kareem Adeola Balikis",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202440994505EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Agbenu Toritse Ayokunmi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441011153CF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ornidiora Precious Folakemi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441015842EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Fatile Joshua Ayomide",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441017553EF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "OPADOKUN ABDULAZEEZ AKOREDE",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441040788FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Arinola Mercy Boluwatife",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441088465CA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Alabi Tumininu Fisolami",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441089193IF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Jegede Oluwagbemisola Imisioluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441118195GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Olasupo Rachel Semilore",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441118305GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Oladejo Oreoluwa precious",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441134784DF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Akanmu OluwaseyI Goodness",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441192807FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajayi Israel Iseoluwa",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441216548JF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajisafe Ifeoluwa Oluwafunbi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441234996AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Thomas Mabel Omotolani",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441237841DA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Ajibade Damilola stephen",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441257623BF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Makinde Oladapo Daniel",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441271749GF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Okunola Precious Opemiposi",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441288320FA",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Onita Judah Oluwatimilehin",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441294599AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "MARTINS OLAMIDE OPEOLUWA",
+    "department": "Medical Rehabilitation",
+    "part": "100",
+    "matricNumber": "202441318938AF",
+    "faculty": "Clinical Sciences"
+  },
+  {
+    "fullName": "Emmanuel Joseph Etuno",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/015",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fabiyi Olajumoke Aishat",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/016",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fatundimu Oluwaseun Precious",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/017",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ishola Mercy Monioluwa",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/019",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "JIMOH FESTUS OLAKUNLE",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/020",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "KOLEDOYE DAVID OLUWATIMILEHIN",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/021",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Komolafe Jeremiah Oluwatamilore",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/022",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Lamidi Emmanuel Olamilekan",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/023",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "MOGAJI Aishah Aderonke",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/024",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ojo David Temitope",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/026",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Okunubi Oyindamola Rebecca",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/027",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olaoge Naheemot Olaide",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/030",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olarinde Emmanuel Oluwadamilare",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/031",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "OLASUPO-KAZEEM ABDULMUTAAL OLUWAMAYOWA",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/032",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Sadiq Abdul qayyum Ikekulehin",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/034",
+    "faculty": "Science"
+  },
+  {    "fullName": "Adenuga Ifeoluwa Favour",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "202441530658IF1",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADESINA KEHINDE NASIRUDEEN",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "202491017300Hf",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "OLUOJO ADE-JUMOKE OLANIPEKUN",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "202491036948GF",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Abdulfatai Jamiu Olaniyi",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/001",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeniji Adewumi Opeyemi",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/006",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADEJUMO EMMANUEL OLASUNKANMI",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/007",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADEKUNLE Emmanuel Adewale",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/008",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ademuyiwa Godson Adeleke",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/009",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adereti Miracle Oluwatosin",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/010",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adesina Bashir Taiwo",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/011",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adesokan Muideen Adeniyi",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/012",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeyemo Adesewa Cecilia",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/014",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Afolabi Victor",
+    "department": "Geology",
+    "part": "200",
+    "matricNumber": "GLY/2022/015",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Abdulroheem Mariam Kofoworola",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202440063465FF",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Olufunmilayo Titilayo Josephine",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202440205282FA",
+    "faculty": "Science"
+  },
+  {    "fullName": "OMOGE Folabomi Patrick",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202440728537HI",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ogundele Daniel Oladimeji",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202441021833BF",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "llori Moses Oluwapeganmire",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202441087727AF",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awotide Tohirat Ajoke",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202441198418CA",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adenusi Precious Oluwadarasimi",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202441253844AF",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Alika David Temisan",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202441256656AF",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADESINA OLUWATUNMISE GOODLUCK",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "202441587591EA",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adebayo Anjolaoluwa Oluwatomisin",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2008/002",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADEDIRAN TOSIN ABIODUN",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2009/003",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ahmed Olusegun Ezekiel",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2010/045",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ijeh Dennis Oruhu",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2011/039",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ODELADE JESULONA JOSHUA",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2014/027",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "JOSHUA Oluwatomisin Jesse",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2018/035",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ABDULAZEEZ Modinat Adeola",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/001",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADEGBJI MARVELLOUS Ayomide",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/003",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADEMAKIN OLUWAMUYIWA",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/004",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ADENIRAN AZEEZAT AYOMIDE",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/007",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adeniyi Monjolaoluwa Joseph",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/008",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Adewale Oluwasijibomi Dolapo",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/009",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Alo Aanuoluwa Taiwo",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/011",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "ASEIN GLORY EKATA",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/013",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Awosanya Oluwafifehansimi Hannah",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/014",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Emmanuel Joseph Eloho",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/015",
+    "faculty": "Science"
+  },
+    {
+    "fullName": "Fabiyi Olajumoke Aishat",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/016",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Fatundimu Oluwaseun Precious",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/017",
+    "faculty": "Science"
+  },
+  {
+    "fullName": "Ishola Mercy Monioluwa",
+    "department": "Geology",
+    "part": "100",
+    "matricNumber": "GLY/2023/019",
+    "faculty": "Science"
+  },
+  { "fullName": "Akintonde Nifemi Peter", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/025", "faculty": "Science" },
+    { "fullName": "Akintoyese Abdulhameed olamilekan", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/026", "faculty": "Science" },
+    { "fullName": "Albert Oluwadamilola Emmanuel", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/028", "faculty": "Science" },
+    { "fullName": "Aluko Ezekiel Oluwadamilare", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/029", "faculty": "Science" },
+    { "fullName": "Anifowose Marvelous", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/030", "faculty": "Science" },
+    { "fullName": "Asibor Rodney", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/031", "faculty": "Science" },
+    { "fullName": "Awe Israel Ayomide", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/032", "faculty": "Science" },
+    { "fullName": "Awonlyi William Oluwadamilare", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/033", "faculty": "Science" },
+    { "fullName": "Babalola Kehinde Daniel", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/034", "faculty": "Science" },
+    { "fullName": "Bamigboye Obaloluwa", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/035", "faculty": "Science" },
+    { "fullName": "Idowu Esther Anjolaoluwa", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/038", "faculty": "Science" },
+    { "fullName": "Iyidah Benjamin", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/041", "faculty": "Science" },
+    { "fullName": "Jegede Oluwaseyi Elijah", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/042", "faculty": "Science" },
+    { "fullName": "Kolapo Sodiq Ayomide", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/045", "faculty": "Science" },
+    { "fullName": "Koyi Jeremiah Adeshina", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/047", "faculty": "Science" },
+    { "fullName": "Lawal Al-Harth Olatunde", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/048", "faculty": "Science" },
+    { "fullName": "Mamora Israel Oluwapeyibomi", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/049", "faculty": "Science" },
+    { "fullName": "Ogundare Moses Oluwatimilehin", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/051", "faculty": "Science" },
+    { "fullName": "Ogunleye Emmanuel Ayoade", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/052", "faculty": "Science" },
+    { "fullName": "Okafor Chiegozie Louis", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/053", "faculty": "Science" },
+    { "fullName": "Okoli Linus Jolley", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/055", "faculty": "Science" },
+    { "fullName": "Ofadapo Israel Abiola", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/056", "faculty": "Science" },
+    { "fullName": "Oladele Inioluwa Famoroti", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/057", "faculty": "Science" },
+    { "fullName": "OLOWOYEYE OLUWADAMISI DANIEL", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/058", "faculty": "Science" },
+    { "fullName": "Dahikoya Afolabi Ayomide", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/060", "faculty": "Science" },
+    { "fullName": "Oyegbite Daniel Adetola", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/061", "faculty": "Science" },
+    { "fullName": "Robert Jesse Kewangbe", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/063", "faculty": "Science" },
+    { "fullName": "Saka Suzan Opemiposi", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/064", "faculty": "Science" },
+    { "fullName": "Sotonwa Eri-Ifeoluwa Praise", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/067", "faculty": "Science" },
+    { "fullName": "Udoeh Noel Sebaotio", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/070", "faculty": "Science" },
+ { "fullName": "Williams Daniel Miracle", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/070", "faculty": "Science" },
+    { "fullName": "Oludare Toluwani Isaac", "department": "Mathematics", "part": "200", "matricNumber": "MEE/2017/066", "faculty": "Science" },
+    { "fullName": "Adebayo Daniel Oluwagbemiga", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/003", "faculty": "Science" },
+    { "fullName": "Adedoja Alex Ayomide", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/004", "faculty": "Science" },
+    { "fullName": "ADEGBOYE ABDUL-RAHEEM ADEMILEKAN", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/005", "faculty": "Science" },
+    { "fullName": "Aderemi Wasiu Ayomipo", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/008", "faculty": "Science" },
+    { "fullName": "ADEYEMI Adesewa Precious", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/010", "faculty": "Science" },
+   { "fullName": "Akinlosotu Akinkunmi Oluwafemisi", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/011", "faculty": "Science" },
+    { "fullName": "Akinosun Olanilyi Abel", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/012", "faculty": "Science" },
+    { "fullName": "AKINPELU STEPHEN OLUWAFEMI", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/013", "faculty": "Science" },
+    { "fullName": "Akinsanya Iyanuoluwa Moses", "department": "Mathematics", "part": "200", "matricNumber": "MTH/2022/014", "faculty": "Science" },
+    { "fullName": "Morenikeji Eniade Gospel", "department": "Mathematics", "part": "100", "matricNumber": "202440148085IF", "faculty": "Science" },
+    { "fullName": "Elusakin Emmanuel Ayomide", "department": "Mathematics", "part": "100", "matricNumber": "202440602343FF", "faculty": "Science" },
+    { "fullName": "SULEIMAN DAMILOLA AHMED", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2010/042", "faculty": "Science" },
+    { "fullName": "OGUNTADE IBRAHEEM ADESOYE", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2013/017", "faculty": "Science" },
+    { "fullName": "Abayomi Ayomide Samuel", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/001", "faculty": "Science" },
+    { "fullName": "Adebayo Basheet Adegoke", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/004", "faculty": "Science" },
+    { "fullName": "Adebayo Jeremiah", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/005", "faculty": "Science" },
+    { "fullName": "Adedayo Adebowale Olamide", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/006", "faculty": "Science" },
+    { "fullName": "Adegoke Emmanuel Olumuyiwa", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/009", "faculty": "Science" },
+    { "fullName": "Adekanye Victory", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/010", "faculty": "Science" },
+    { "fullName": "Adeniran Mubarak Temidayo", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/015", "faculty": "Science" },
+    { "fullName": "Adeyeye Ibrahim Timilehin", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/019", "faculty": "Science" },
+    { "fullName": "Adigun Joshua Boluwatife", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/020", "faculty": "Science" },
+    { "fullName": "Adunola Abdulazeez Oluwafolajimi", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/021", "faculty": "Science" },
+    { "fullName": "Akinade Ayomikun Deborah", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/023", "faculty": "Science" },
+    { "fullName": "AKINOLA Tolulope Emmanuel", "department": "Mathematics", "part": "100", "matricNumber": "MTH/2023/024", "faculty": "Science" },
+             
 ];
 
 
