@@ -413,58 +413,64 @@ function displayExamHistory() {
 
 // Function to display session details
 function displaySessionDetails(session) {
+  console.log("Session details clicked:", session);
+
   const historyContent = document.getElementById('exam-history-content');
   historyContent.innerHTML = ''; // Clear current content
 
+  // Check if the session contains questions
   if (!session.questions || session.questions.length === 0) {
+    console.log("No questions found in session:", session);
     historyContent.innerHTML = '<p>No questions available for this session.</p>';
     return;
   }
 
+  // Loop through each question and display details
   session.questions.forEach((question, qIndex) => {
+    console.log(`Question ${qIndex + 1}:`, question);
+
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
 
     // Display question text
     const questionText = document.createElement('p');
-    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text}`;
+    questionText.innerHTML = `<strong>Q${qIndex + 1}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
     questionDiv.appendChild(questionText);
 
-    // Create list for options
+    // Display options
     const optionsList = document.createElement('ul');
-
-    // Loop through options
     question.options.forEach((option, index) => {
       const optionItem = document.createElement('li');
       optionItem.textContent = option;
 
-      // User's answer
+      // Highlight user's answer and correct answer
       if (session.answers[qIndex] === index) {
-        optionItem.classList.add('user-answer');
+        optionItem.style.color = 'blue'; // User's answer
+        optionItem.style.fontWeight = 'bold';
       }
-
-      // Correct answer
       if (index === question.correct) {
-        optionItem.classList.add('correct-answer');
+        optionItem.style.color = 'green'; // Correct answer
+        optionItem.style.fontWeight = 'bold';
       }
 
       optionsList.appendChild(optionItem);
     });
-
     questionDiv.appendChild(optionsList);
 
     // Display explanation
     const explanationText = document.createElement('p');
-    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation || 'No explanation available'}`;
+    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation.replace(/\n/g, '<br>') || 'No explanation available'}`;
     questionDiv.appendChild(explanationText);
 
+    // Append question details to the content
     historyContent.appendChild(questionDiv);
   });
 
-  // Add "Back to History" button
+  // Add a "Back to History" button
   const backButton = document.createElement('button');
   backButton.textContent = 'Back to History';
   backButton.addEventListener('click', displayExamHistory);
+  backButton.style.marginTop = '20px';
   historyContent.appendChild(backButton);
 }
 
