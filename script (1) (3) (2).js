@@ -20684,6 +20684,7 @@ function updateExamResults(score, totalQuestions, percentage) {
     document.getElementById("examScore").innerText = `Score: ${score}/${totalQuestions}`;
     document.getElementById("examPercentage").innerText = `Percentage: ${percentage}%`;
 }
+  
 
 // Show a notification popup
 function showAnimatedPopup(message) {
@@ -20739,21 +20740,21 @@ console.log("Exam session saved:", examSession);
     // Show results
     showSection(summarySection);
     summaryContent.innerHTML = `
-      <h3>Score: ${score}/${totalQuestions} (${percentage}%)</h3>
-      <p>${getRemark(percentage)}</p>
-      ${questions
-        .map(
-          (q, i) => `
-        <p>
-          ${i + 1}. ${q.text} <br>
-          Your Answer: <strong> ${q.options[answers[i]] || "Unanswered"} </strong><br><br>
-         <strong> Correct Answer: ${q.options[q.correct]} </strong><br><br>
-          Explanation: ${q.explanation} <br><br><br>
-        </p>`
-        )
-        .join("")}
-    `;
-  };
+    <h3>Score: ${score}/${totalQuestions} (${percentage}%)</h3>
+    <p>${getRemark(percentage)}</p>
+    ${questions
+      .map(
+        (q, i) => `
+      <p>
+        ${i + 1}. ${q.text.replace(/\n/g, '<br>')} <br>
+        Your Answer: <strong> ${q.options[answers[i]] || "Unanswered"} </strong><br><br>
+        <strong> Correct Answer: ${q.options[q.correct]} </strong><br><br>
+        Explanation: ${q.explanation.replace(/\n/g, '<br>')} <br><br><br>
+      </p>`
+      )
+      .join("")}
+  `;
+}
 
 
    function displayExamHistory() {
