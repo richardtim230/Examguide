@@ -6913,30 +6913,30 @@ function allocateUsersToExams(users, exams) {
 
 
 
-// Define the list of exams with department and part specifications
+// Define the list of predefined exams with department and part assignments
 const exams = [
-  { id: "exam1", title: "Mathematics 101", department: "Zoology", part: "200" },
-  { id: "exam2", title: "Physics 201", department: "TECH", part: "2" },
-  { id: "exam3", title: "History 101", department: "ARTS", part: "1" },
-  { id: "exam4", title: "Biology 202", department: "SCIENCE", part: "2" },
-  // Add more exams as needed
+    { id: "exam1", title: "Mathematics 101", department: "NASS", part: "1" },
+    { id: "exam2", title: "Physics 201", department: "TECH", part: "2" },
+    { id: "exam3", title: "History 101", department: "ARTS", part: "1" },
+    { id: "exam4", title: "Biology 202", department: "SCIENCE", part: "2" }
+    // Add more exams as needed
 ];
-
 
 // Function to allocate exams based on department and part
 function allocateExamsByDepartmentAndPart() {
-  const examAllocations = {};
+    const examAllocations = {};
 
-  students.forEach(student => {
-    const availableExams = exams.filter(exam => exam.department === student.department && exam.part === student.part);
-    examAllocations[student.matricNumber] = availableExams;
+    exams.forEach(exam => {
+        if (!examAllocations[exam.department]) {
+            examAllocations[exam.department] = {};
+        }
+        if (!examAllocations[exam.department][exam.part]) {
+            examAllocations[exam.department][exam.part] = [];
+        }
+        examAllocations[exam.department][exam.part].push(exam);
+    });
 
-    if (availableExams.length === 0) {
-      examAllocations[student.matricNumber] = [{ id: "no-exams", title: "No available or assigned exams yet." }];
-    }
-  });
-
-  localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
 }
 
 // Call this function to allocate exams on page load or when needed
@@ -6944,33 +6944,59 @@ allocateExamsByDepartmentAndPart();
 
 // Function to display exams for a specific user based on their department and part
 function displayExamsForUser(department, part) {
-  const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-  const authenticatedStudent = JSON.parse(localStorage.getItem('currentUser'));
-  const userExams = examAllocations[authenticatedStudent.matricNumber] || [];
+    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+    const assignedExams = (examAllocations[department] && examAllocations[department][part]) || [];
+    const examsList = document.getElementById('examsList');
+    examsList.innerHTML = ''; // Clear previous exams
 
-  const examsList = document.getElementById('examsList');
-  examsList.innerHTML = ''; // Clear previous exams
+    if (assignedExams.length === 0) {
+        const noExamsMessage = document.createElement('p');
+        noExamsMessage.innerText = "No available or assigned exams yet.";
+        examsList.appendChild(noExamsMessage);
+    } else {
+        assignedExams.forEach(exam => {
+            const examItem = document.createElement('button');
+            examItem.innerText = exam.title;
+            examItem.className = 'styled-btn';
 
-  if (userExams.length === 0 || (userExams.length === 1 && userExams[0].id === "no-exams")) {
-    const noExamsMessage = document.createElement('p');
-    noExamsMessage.innerText = "No available or assigned exams yet.";
-    examsList.appendChild(noExamsMessage);
-  } else {
-    userExams.forEach(exam => {
-      const examItem = document.createElement('button');
-      examItem.innerText = exam.title;
-      examItem.className = 'styled-btn';
+            examItem.addEventListener('click', function () {
+                document.getElementById("courseCode").value = exam.id;
+                document.getElementById("selectCourseBtn").click();
+            });
 
-      examItem.addEventListener('click', function () {
-        document.getElementById("courseCode").value = exam.id;
-        document.getElementById("selectCourseBtn").click();
-      });
-
-      examsList.appendChild(examItem);
-    });
-  }
+            examsList.appendChild(examItem);
+        });
+    }
 }
 
+// Update the login function to include department and part-based exam display
+document.getElementById('loginBtn').addEventListener('click', function () {
+    const fullName = document.getElementById('fullName').value.trim();
+    const password = document.getElementById('userID').value.trim(); // Use matric number as password
+
+    const authenticatedStudent = authenticateUser(fullName, password);
+
+    if (authenticatedStudent) {
+        localStorage.setItem("currentUser", JSON.stringify(authenticatedStudent));
+        document.getElementById('userDetails').innerHTML = `
+            <strong>Full Name:</strong> ${authenticatedStudent.fullName} <br>
+            <strong>Faculty:</strong> ${authenticatedStudent.faculty} <br>
+            <strong>Department:</strong> ${authenticatedStudent.department} <br>
+            <strong>Level:</strong> ${authenticatedStudent.part}
+        `;
+
+        // Display exams based on the user's department and part
+        displayExamsForUser(authenticatedStudent.department, authenticatedStudent.part);
+
+        document.getElementById('popup').classList.add('active');
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('course-code-section').classList.remove('hidden');
+        document.getElementById('toggle-calculator').classList.remove('hidden');
+        document.getElementById('calculator-popup').classList.remove('hidden');
+    } else {
+        alert("Invalid Full Name or Matric Number. Please try again.");
+    }
+});
 
 
 
@@ -18660,34 +18686,7 @@ function authenticateUser(fullName, password) {
   return null;
 }
 
-// Update the login function to include department and part-based exam display
-document.getElementById('loginBtn').addEventListener('click', function () {
-  const fullName = document.getElementById('fullName').value.trim();
-  const password = document.getElementById('userID').value.trim(); // Use matric number as password
 
-  const authenticatedStudent = authenticateUser(fullName, password);
-
-  if (authenticatedStudent) {
-    localStorage.setItem("currentUser", JSON.stringify(authenticatedStudent));
-    document.getElementById('userDetails').innerHTML = `
-      <strong>Full Name:</strong> ${authenticatedStudent.fullName} <br>
-      <strong>Faculty:</strong> ${authenticatedStudent.faculty} <br>
-      <strong>Department:</strong> ${authenticatedStudent.department} <br>
-      <strong>Level:</strong> ${authenticatedStudent.part}
-    `;
-
-    // Display exams based on the user's department and part
-    displayExamsForUser(authenticatedStudent.department, authenticatedStudent.part);
-
-    document.getElementById('popup').classList.add('active');
-    document.getElementById('auth-section').classList.add('hidden');
-    document.getElementById('course-code-section').classList.remove('hidden');
-    document.getElementById('toggle-calculator').classList.remove('hidden');
-    document.getElementById('calculator-popup').classList.remove('hidden');
-  } else {
-    alert("Invalid Full Name or Matric Number. Please try again.");
-  }
-});
 
 // Close Popup Functionality
 const closePopupBtn = document.getElementById('closePopup');
