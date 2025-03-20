@@ -6915,8 +6915,8 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "exam1", title: "Mathematics 101", department: "NASS", part: "1" },
-    { id: "exam2", title: "Physics 201", department: "TECH", part: "2" },
+    { id: "BOT203-T2", title: "INTRODUCTORY GENETICS ONE", department: "Zoology", part: "200" },
+    { id: "BOT203-T3", title: "INTRODUCTORY GENETICS TWO", department: "Zoology", part: "200" },
     { id: "exam3", title: "History 101", department: "ARTS", part: "1" },
     { id: "exam4", title: "Biology 202", department: "SCIENCE", part: "2" }
     // Add more exams as needed
