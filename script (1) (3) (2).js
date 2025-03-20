@@ -445,7 +445,7 @@ function displaySessionDetails(session) {
 
       // Highlight user's answer and correct answer
       if (session.answers[qIndex] === index) {
-        optionItem.style.color = 'blue'; // User's answer
+        optionItem.style.color = 'red'; // User's answer
         optionItem.style.fontWeight = 'bold';
       }
       if (index === question.correct) {
@@ -457,15 +457,15 @@ function displaySessionDetails(session) {
     });
     questionDiv.appendChild(optionsList);
 
-    // Display explanation
+// Display explanation
     const explanationText = document.createElement('p');
-    explanationText.innerHTML = `<strong>Explanation:</strong> ${question.explanation.replace(/\n/g, '<br>') || 'No explanation available'}`;
+    explanationText.innerHTML = `<strong>Explanation:</strong> <em>${question.explanation.replace(/\n/g, '<br>') || 'No explanation available'}</em>`;
     questionDiv.appendChild(explanationText);
 
     // Append question details to the content
     historyContent.appendChild(questionDiv);
   });
-
+    
   // Add a "Back to History" button
   const backButton = document.createElement('button');
   backButton.textContent = 'Back to History';
@@ -20755,7 +20755,7 @@ console.log("Exam session saved:", examSession);
         ${i + 1}. ${q.text.replace(/\n/g, '<br>')} <br>
         Your Answer: <strong> ${q.options[answers[i]] || "Unanswered"} </strong><br><br>
         <strong> Correct Answer: ${q.options[q.correct]} </strong><br><br>
-        Explanation: ${q.explanation.replace(/\n/g, '<br>')} <br><br><br>
+       <strong> Explanation:</strong> ${q.explanation.replace(/\n/g, '<br>')} <br><br><br>
       </p>`
       )
       .join("")}
