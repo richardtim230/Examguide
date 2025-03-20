@@ -6922,6 +6922,7 @@ const exams = [
   // Add more exams as needed
 ];
 
+
 // Function to allocate exams based on department and part
 function allocateExamsByDepartmentAndPart() {
   const examAllocations = {};
@@ -6944,12 +6945,13 @@ allocateExamsByDepartmentAndPart();
 // Function to display exams for a specific user based on their department and part
 function displayExamsForUser(department, part) {
   const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
+  const authenticatedStudent = JSON.parse(localStorage.getItem('currentUser'));
+  const userExams = examAllocations[authenticatedStudent.matricNumber] || [];
+
   const examsList = document.getElementById('examsList');
   examsList.innerHTML = ''; // Clear previous exams
 
-  const userExams = exams.filter(exam => exam.department === department && exam.part === part);
-
-  if (userExams.length === 0) {
+  if (userExams.length === 0 || (userExams.length === 1 && userExams[0].id === "no-exams")) {
     const noExamsMessage = document.createElement('p');
     noExamsMessage.innerText = "No available or assigned exams yet.";
     examsList.appendChild(noExamsMessage);
