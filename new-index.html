@@ -650,6 +650,7 @@
         <button id="closeNotification" class="close-btn">Close</button>
     </div>                                                             
 </div>
+
 <!-- Authentication Section -->
 <div id="auth-section" class="container">
     <div class="welcome-header">
@@ -659,11 +660,16 @@
     </div>
     
     <input type="text" id="fullName" placeholder="Enter Full Name" class="input-field">
-    <input type="text" id="userID" placeholder="Enter User ID" class="input-field">
+    <input type="text" id="userID" placeholder="Enter Matric Number" class="input-field">
     <button id="loginBtn" class="styled-btn">Login</button>
-    <button id="registerBtn" class="styled-btn">Register</button> <!-- Add Register Button -->
+    <button id="registerBtn" class="styled-btn">Register</button>
 </div>
 
+<!-- Menu Widget -->
+<div class="menu-widget">
+    <a href="#faculties-section" onclick="showSection('faculties-section')">Faculties</a>
+    <a href="#exam-section" onclick="showSection('course-code-section')">Exam Dashboard</a>
+          </div>
 
 <!-- Registration Section -->
 <div id="registration-section" class="container hidden">
@@ -838,11 +844,7 @@
         <!-- Add more Departments as needed -->
     </div>
             </div>
-  <!-- Menu Widget -->
-<div class="menu-widget">
-    <a href="#faculties-section" onclick="showSection('faculties-section')">Faculties</a>
-    <a href="#exam-section" onclick="showSection('exam-section')">Exam Dashboard</a>
-                </div>
+  
 
 <!-- Include pdf-lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
