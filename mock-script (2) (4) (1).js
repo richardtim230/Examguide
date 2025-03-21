@@ -20,20 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Example function to show exam section after login
-document.getElementById('loginBtn').addEventListener('click', () => {
-    showSection('exam-section');
-});
-
-document.getElementById('registerBtn').addEventListener('click', () => {
-    showSection('registration-section');
-});
-
-document.getElementById('backToLoginBtn').addEventListener('click', () => {
-    showSection('auth-section');
-});
-
-
 
 window.onpopstate = function(event) {
             // Logic to reload the app to the previous page
