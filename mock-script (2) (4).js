@@ -18769,6 +18769,13 @@ function initializeExam() {
   examSection.classList.remove("hidden");
 }
 
+function shuffleOptions(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+            }
 
 // Load Current Question
 function loadQuestion() {
@@ -18779,11 +18786,15 @@ function loadQuestion() {
 
   const question = questions[currentQuestionIndex];
 
+  // Shuffle the options
+  const shuffledOptions = shuffleOptions([...question.options]);
+  
+
   // Add question number dynamically with proper formatting
   questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
 
   // Populate Answer Options with correct numbering and line breaks
-  answerOptions.innerHTML = question.options
+  answerOptions.innerHTML = shuffledOptions
     .map((option, index) => `
       <button class="answer-btn" onclick="selectAnswer(${index}, this)">
         ${option.replace(/\n/g, '<br>')}
