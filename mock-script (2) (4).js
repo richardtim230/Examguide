@@ -18840,7 +18840,6 @@ function selectAnswer(answerIdx, button) {
   button.classList.add("selected");
 }
 
-
 // Start Exam Function
        function startExam(examId, examTitle) {
          examId = examId.trim(); 
