@@ -18769,13 +18769,7 @@ function initializeExam() {
   examSection.classList.remove("hidden");
 }
 
-function shuffleOptions(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-            }
+
 
 // Load Current Question
 function loadQuestion() {
@@ -18788,7 +18782,6 @@ function loadQuestion() {
 
   // Shuffle the options
   const shuffledOptions = shuffleOptions([...question.options]);
-  
 
   // Add question number dynamically with proper formatting
   questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
@@ -18806,12 +18799,46 @@ function loadQuestion() {
   updateButtons();
   updateProgressBar();
 }
+
 // Shuffle questions randomly
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
-  
 
+// Helper function to shuffle an array and return both shuffled array and the original indices
+function shuffleOptions(options) {
+  const originalIndices = options.map((_, index) => index); // Create an array of original indices
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+    [originalIndices[i], originalIndices[j]] = [originalIndices[j], originalIndices[i]]; // Swap indices accordingly
+  }
+  return options;
+}
+
+// Highlight Previously Selected Answer
+function highlightSelectedAnswer() {
+  const selectedAnswer = userAnswers[currentQuestionIndex];
+  if (selectedAnswer !== undefined) {
+    const buttons = document.querySelectorAll(".answer-btn");
+    buttons.forEach((button, idx) => {
+      if (questions[currentQuestionIndex].originalIndices[idx] === selectedAnswer) {
+        button.classList.add("selected");
+      }
+    });
+  }
+}
+
+// Select Answer
+function selectAnswer(answerIdx, button) {
+  const originalIndex = questions[currentQuestionIndex].originalIndices[answerIdx];
+  userAnswers[currentQuestionIndex] = originalIndex;
+
+  const buttons = document.querySelectorAll(".answer-btn");
+  buttons.forEach(btn => btn.classList.remove("selected"));
+
+  button.classList.add("selected");
+}
 
 
 // Start Exam Function
@@ -18881,28 +18908,7 @@ function shuffleArray(array) {
 
 
 
-// Highlight Previously Selected Answer
-function highlightSelectedAnswer() {
-  const selectedAnswer = userAnswers[currentQuestionIndex];
-  if (selectedAnswer !== undefined) {
-    const buttons = document.querySelectorAll(".answer-btn");
-    buttons.forEach((button, idx) => {
-      if (idx === selectedAnswer) {
-        button.classList.add("selected");
-      }
-    });
-  }
-}
 
-// Select Answer
-function selectAnswer(answerIdx, button) {
-  userAnswers[currentQuestionIndex] = answerIdx;
-
-  const buttons = document.querySelectorAll(".answer-btn");
-  buttons.forEach(btn => btn.classList.remove("selected"));
-
-  button.classList.add("selected");
-}
 
 // Update Navigation Buttons
 function updateButtons() {
