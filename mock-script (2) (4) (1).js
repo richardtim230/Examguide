@@ -1,4 +1,25 @@
 
+function showSection(sectionId) {
+    document.querySelectorAll('.container').forEach(section => {
+        section.classList.add('hidden');
+    });
+    document.getElementById(sectionId).classList.remove('hidden');
+    
+    // Hide the menu widget on the authentication page
+    if (sectionId === 'auth-section') {
+        document.querySelector('.menu-widget').style.transform = 'translateY(100%)';
+    } else {
+        document.querySelector('.menu-widget').style.transform = 'translateY(0)';
+    }
+}
+
+// Initially hide the menu widget on page load if on the authentication page
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('auth-section') && !document.getElementById('auth-section').classList.contains('hidden')) {
+        document.querySelector('.menu-widget').style.transform = 'translateY(100%)';
+    }
+});
+
 
 window.onpopstate = function(event) {
             // Logic to reload the app to the previous page
