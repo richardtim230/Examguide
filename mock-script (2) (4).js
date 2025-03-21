@@ -18967,38 +18967,38 @@ function submitExam() {
 
   // Results Content
   resultsContent.innerHTML = questions.map((q, i) => {
-    const userAnswerIdx = userAnswers[i];
-    const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
-    const correctAnswer = q.options[q.correct];
-    const isCorrect = userAnswerIdx === q.correct;
-    const result = isCorrect ? "✅ Correct" : "❌ Wrong";
+        const userAnswerIdx = userAnswers[i];
+        const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
+        const correctAnswer = q.options[q.correct];
+        const isCorrect = userAnswerIdx === q.correct;
+        const result = isCorrect ? "✅ Correct" : "❌ Wrong";
 
-    return `
-      <p>
-        ${i + 1}. ${q.text}<br>
-        Your Answer: <b>${userAnswer}</b> - ${result}<br>
-        <b>Correct Answer:</b> ${correctAnswer}<br>
-        <i>Explanation:</i> ${q.explanation}
-      </p>
-    `;
-  }).join("");
+        return `
+          <p>
+            ${i + 1}. ${q.text}<br>
+            Your Answer: <b>${userAnswer}</b> - ${result}<br>
+            <b>Correct Answer:</b> ${correctAnswer}<br>
+            <i>Explanation:</i> ${q.explanation}
+          </p>
+        `;
+      }).join("");
 
-  examSection.classList.add("hidden");
-  resultsSection.classList.remove("hidden");
+      examSection.classList.add("hidden");
+      resultsSection.classList.remove("hidden");
 
-  // Automatically generate and download PDF
-  generatePDF();
-}
+      // Automatically generate and download PDF
+      generatePDF();
+    }
 
-// Modified generatePDF function
-async function generatePDF() {
-  const { jsPDF } = window.jspdf; // Import jsPDF
-  const logo = 'logo.png'; // Base64 encoded logo image
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "px",
-    format: "a4"
-  });
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf; // Import jsPDF
+      const logo = 'logo.png'; // Base64 encoded logo image
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: "a4"
+      });
+
 
   // Constants
   const pageWidth = doc.internal.pageSize.getWidth();
