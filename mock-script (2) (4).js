@@ -18967,28 +18967,27 @@ function submitExam() {
 
   // Results Content
   resultsContent.innerHTML = questions.map((q, i) => {
-        const userAnswerIdx = userAnswers[i];
-        const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
-        const correctAnswer = q.options[q.correct];
-        const isCorrect = userAnswerIdx === q.correct;
-        const result = isCorrect ? "✅ Correct" : "❌ Wrong";
+    const userAnswerIdx = userAnswers[i];
+    const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
+    const correctAnswer = q.options[q.correct];
+    const isCorrect = userAnswerIdx === q.correct;
+    const result = isCorrect ? "✅ Correct" : "❌ Wrong";
 
-        return `
-          <p>
-            ${i + 1}. ${q.text}<br>
-            Your Answer: <b>${userAnswer}</b> - ${result}<br>
-            <b>Correct Answer:</b> ${correctAnswer}<br>
-            <i>Explanation:</i> ${q.explanation}
-          </p>
-        `;
-      }).join("");
+    return `
+      <p>
+        ${i + 1}. ${q.text.replace(/\n/g, '<br>')}<br>
+        Your Answer: <b>${userAnswer.replace(/\n/g, '<br>')}</b> - ${result}<br>
+        <b>Correct Answer:</b> ${correctAnswer.replace(/\n/g, '<br>')}<br>
+        <i>Explanation:</i> ${q.explanation.replace(/\n/g, '<br>')}
+      </p>
+    `;
+  }).join("");
 
-      examSection.classList.add("hidden");
-      resultsSection.classList.remove("hidden");
+  examSection.classList.add("hidden");
+  resultsSection.classList.remove("hidden");
 
-      // Automatically generate and download PDF
-      generatePDF();
-    }
+  downloadPDF.addEventListener("click", generatePDF);
+}
 
     async function generatePDF() {
       const { jsPDF } = window.jspdf; // Import jsPDF
