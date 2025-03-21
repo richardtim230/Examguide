@@ -125,6 +125,39 @@
     font-weight: bold;
     border: 2px solid #1e7e34;
 }
+
+  .faculties-grid, .departments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+.faculty, .department {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+.placeholder {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+    margin: 0 auto 10px;
+}
+.menu-widget {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+.menu-widget a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+}
     /* Blog Section Styling */
 .blog-section {
   margin-top: 20px;
@@ -754,6 +787,52 @@
         <button id="retakeExamBtn" class="styled-btn">Retake or Take Another Exam</button>
     </div>
 </div>
+  <!-- Faculties Section -->
+<div id="faculties-section" class="container hidden">
+    <div class="faculties-grid">
+        <div class="faculty">
+            <div class="placeholder"></div>
+            <h3>Faculty of Science</h3>
+            <a href="#department-science">View Departments</a>
+        </div>
+        <div class="faculty">
+            <div class="placeholder"></div>
+            <h3>Faculty of Engineering</h3>
+            <a href="#department-engineering">View Departments</a>
+        </div>
+        <!-- Add more Faculties as needed -->
+    </div>
+
+    <!-- Departments Sections -->
+    <div id="department-science" class="departments-grid hidden">
+        <div class="department">
+            <div class="placeholder"></div>
+            <h3>Department of Biology</h3>
+        </div>
+        <div class="department">
+            <div class="placeholder"></div>
+            <h3>Department of Physics</h3>
+        </div>
+        <!-- Add more Departments as needed -->
+    </div>
+
+    <div id="department-engineering" class="departments-grid hidden">
+        <div class="department">
+            <div class="placeholder"></div>
+            <h3>Department of Mechanical Engineering</h3>
+        </div>
+        <div class="department">
+            <div class="placeholder"></div>
+            <h3>Department of Civil Engineering</h3>
+        </div>
+        <!-- Add more Departments as needed -->
+    </div>
+            </div>
+  <!-- Menu Widget -->
+<div class="menu-widget">
+    <a href="#faculties-section" onclick="showSection('faculties-section')">Faculties</a>
+    <a href="#exam-section" onclick="showSection('exam-section')">Exam Dashboard</a>
+                </div>
 
 <!-- Include pdf-lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
