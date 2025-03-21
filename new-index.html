@@ -144,19 +144,29 @@
     background-color: #ddd;
     margin: 0 auto 10px;
 }
+/* Add this to your existing styles */
 .menu-widget {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #333;
+    background-color: #4CAF50; /* Green background */
     color: #fff;
     text-align: center;
-    padding: 10px 0;
+    padding: 15px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    z-index: 1000; /* Ensure it is above other elements */
+    transition: transform 0.3s ease-in-out;
 }
 .menu-widget a {
     color: #fff;
-    margin: 0 15px;
+    margin: 0 20px;
     text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+.menu-widget a:hover {
+    color: #FFEB3B; /* Yellow color on hover */
 }
     /* Blog Section Styling */
 .blog-section {
