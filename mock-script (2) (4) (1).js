@@ -6,19 +6,33 @@ function showSection(sectionId) {
     document.getElementById(sectionId).classList.remove('hidden');
     
     // Hide the menu widget on the authentication page
-    if (sectionId === 'auth-section') {
-        document.querySelector('.menu-widget').style.transform = 'translateY(100%)';
+    if (sectionId === 'auth-section' || sectionId === 'registration-section') {
+        document.querySelector('.menu-widget').style.display = 'none';
     } else {
-        document.querySelector('.menu-widget').style.transform = 'translateY(0)';
+        document.querySelector('.menu-widget').style.display = 'block';
     }
 }
 
 // Initially hide the menu widget on page load if on the authentication page
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('auth-section') && !document.getElementById('auth-section').classList.contains('hidden')) {
-        document.querySelector('.menu-widget').style.transform = 'translateY(100%)';
+    if (!document.getElementById('auth-section').classList.contains('hidden')) {
+        document.querySelector('.menu-widget').style.display = 'none';
     }
 });
+
+// Example function to show exam section after login
+document.getElementById('loginBtn').addEventListener('click', () => {
+    showSection('exam-section');
+});
+
+document.getElementById('registerBtn').addEventListener('click', () => {
+    showSection('registration-section');
+});
+
+document.getElementById('backToLoginBtn').addEventListener('click', () => {
+    showSection('auth-section');
+});
+
 
 
 window.onpopstate = function(event) {
