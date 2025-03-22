@@ -635,7 +635,6 @@ button:disabled {
 
 .article-share button,
 .article-share a {
-    background: linear-gradient(to right, #ff9966, #ff5e62);
     color: white;
     border: none;
     padding: 10px;
@@ -653,11 +652,15 @@ button:disabled {
 
 .article-share button:hover,
 .article-share a:hover {
-    background: linear-gradient(to right, #ff5e62, #ff9966);
     transform: scale(1.1);
 }
 
-.share-whatsapp {
+/* Unique colors for each share button */
+.article-share .share-copy {
+    background-color: #ff9966;
+}
+
+.article-share .share-whatsapp {
     background-color: #25D366;
 }
 
