@@ -6,6 +6,7 @@ function toggleMenu() {
         }
     document.addEventListener('DOMContentLoaded', (event) => {
     const articles = document.querySelectorAll('.blog-post');
+    const headers = document.querySelectorAll('.blog-post h2');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     let currentPage = 1;
@@ -14,9 +15,13 @@ function toggleMenu() {
     function showPage(page) {
         const start = (page - 1) * articlesPerPage;
         const end = start + articlesPerPage;
+        let count = 0;
+
         articles.forEach((article, index) => {
-            if (index >= start && index < end) {
+            const headerIndex = Array.from(headers).indexOf(article.querySelector('h2'));
+            if (headerIndex >= start && headerIndex < end && count < articlesPerPage) {
                 article.style.display = 'block';
+                count++;
             } else {
                 article.style.display = 'none';
             }
@@ -25,7 +30,7 @@ function toggleMenu() {
 
     function updateButtons() {
         prevBtn.disabled = currentPage === 1;
-        nextBtn.disabled = currentPage * articlesPerPage >= articles.length;
+        nextBtn.disabled = currentPage * articlesPerPage >= headers.length;
     }
 
     prevBtn.addEventListener('click', () => {
@@ -37,7 +42,7 @@ function toggleMenu() {
     });
 
     nextBtn.addEventListener('click', () => {
-        if (currentPage * articlesPerPage < articles.length) {
+        if (currentPage * articlesPerPage < headers.length) {
             currentPage++;
             showPage(currentPage);
             updateButtons();
