@@ -17,40 +17,7 @@ body {
     width:95%;
         }
         .menu {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-        }
-/* Hide the menu by default */
-.menu {
-    display: none;
-}
 
-/* Show the menu when the 'active' class is added */
-.menu.active {
-    display: flex;
-    flex-direction: column;
-}
-        .menu a {
-            text-decoration: none;
-            color: white;
-            padding: 10px;
-            background-color: #444;
-            border-radius: 5px;
-        }
-        .hamburger {
-            cursor: pointer;
-            font-size: 24px;
-        }
-        @media (min-width: 768px) {
-            .menu {
-                display: flex;
-                flex-direction: row;
-            }
-            .hamburger {
-                display: none;
-            }
-}
 /* Header */
 header {
     background: linear-gradient(to right, #002147, #003366);
@@ -402,3 +369,82 @@ footer {
     font-size: 1rem;
     opacity: 0.8;
 }
+
+
+
+        /* Hamburger Button */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .menu-button div {
+            width: 35px;
+            height: 4px;
+            background: white;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        /* Menu Container */
+        .menu-container {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: 0.5s ease-in-out;
+            border-radius: 0 20px 20px 0;
+        }
+
+        /* Menu Buttons */
+        .menu-container button {
+            width: 180px;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            background: linear-gradient(45deg, #ff5733, #ffcc00);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .menu-container button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #ffcc00, #ff5733);
+        }
+
+        /* Menu Open */
+        .menu-open {
+            left: 0;
+        }
+
+        /* Hamburger Icon Animation */
+        .menu-button.open div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-button.open div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.open div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+    
+
+    
+        
