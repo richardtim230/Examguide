@@ -18783,6 +18783,7 @@ function initializeExam() {
     alert("No questions available for this course. Please try another course code.");
     return;
   }
+document.getElementById('courseCode').value = '';
 
   startTime = Date.now();
   startTimer();
@@ -18847,6 +18848,7 @@ function shuffleArray(array) {
         alert("No questions available for this exam.");
         return;
     }                      
+document.getElementById('courseCode').value = '';
 
     // Randomize and select up to 50 questions
     questions = shuffleArray(questionBanks[examId]).slice(0, 50);
