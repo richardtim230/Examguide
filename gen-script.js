@@ -1,3 +1,44 @@
+function copyLink(articleId) {
+    const article = document.getElementById(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard');
+    });
+}
+
+function getArticleMeta(articleId) {
+    const article = document.getElementById(articleId);
+    const date = article.querySelector('.article-date').textContent;
+    const time = article.querySelector('.article-time').textContent;
+    const title = article.querySelector('h2').textContent;
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    return `${title} - Published on ${date} at ${time}. Read more at: ${url}`;
+}
+
+function shareWhatsApp(articleId) {
+    const meta = getArticleMeta(articleId);
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(meta)}`;
+    window.open(url, '_blank');
+}
+
+function shareFacebook(articleId) {
+    const meta = getArticleMeta(articleId);
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(meta)}`;
+    window.open(url, '_blank');
+}
+
+function shareInstagram(articleId) {
+    // Instagram does not support direct sharing via URL, so we redirect to Instagram's website
+    const meta = getArticleMeta(articleId);
+    alert(`Instagram does not support direct sharing. Copy the following text and share it on Instagram:\n\n${meta}`);
+}
+
+function shareTelegram(articleId) {
+    const meta = getArticleMeta(articleId);
+    const url = `https://telegram.me/share/url?url=${encodeURIComponent(meta)}`;
+    window.open(url, '_blank');
+}
+
 function toggleMenu() {
             const menu = document.querySelector('.menu-container');
             const button = document.querySelector('.menu-button');
