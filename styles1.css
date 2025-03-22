@@ -220,16 +220,15 @@ header {
 
         .carousel-track {
             display: flex;
-            width: 200%;
+            width: max-content; /* Ensures the track expands based on images */
             animation: scroll 10s linear infinite;
         }
 
         .carousel-track img {
-            width: 300px;
-            height: 200px;
+            width: 100vw; /* Each image takes full screen width */
+            height: 300px;
             object-fit: cover;
-            margin: 0 5px;
-            border-radius: 5px;
+            flex-shrink: 0; /* Prevents shrinking */
         }
 
         @keyframes scroll {
