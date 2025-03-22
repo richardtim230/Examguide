@@ -657,7 +657,7 @@ button:disabled {
     transform: scale(1.1);
 }
 
-.article-share .share-whatsapp {
+.share-whatsapp {
     background-color: #25D366;
 }
 
