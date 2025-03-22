@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-   function updateMetaTags(articleId) {
+    function updateMetaTags(articleId) {
         const article = document.getElementById(articleId);
         const title = article.querySelector('h2').innerText;
         const description = article.querySelector('.article-content p').innerText;
         const image = article.querySelector('img').src;
         const url = window.location.href.split('#')[0] + '#' + articleId;
+
+        console.log(`Updating meta tags for article: ${articleId}`);
+        console.log(`Title: ${title}`);
+        console.log(`Description: ${description}`);
+        console.log(`Image: ${image}`);
+        console.log(`URL: ${url}`);
 
         // Update Open Graph meta tags
         document.getElementById('og-title').setAttribute('content', title);
