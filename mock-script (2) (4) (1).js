@@ -18776,7 +18776,14 @@ function initializeExam() {
     return;
   }
 
-  userDetails.textContent = `Candidate: ${currentUser.fullName} | Course: ${selectedCourseCode}`;
+      // Use the course code as the title if the title is not available
+    const examTitle = currentExam.title || currentExam.id;
+
+    // Display user and exam details
+    document.getElementById('user-details').textContent = 
+        `Candidate: ${currentUser.fullName} | Exam: ${examTitle}`;
+
+    
   
   // Check if questions are populated
   if (questions.length === 0) {
@@ -18831,7 +18838,8 @@ function shuffleArray(array) {
     console.log(`Starting exam: ${examTitle}`); // Debugging log
 
     // Store the selected exam for later use
-    localStorage.setItem("currentExam", JSON.stringify({ id: examId, title: examTitle }));
+    localStorage.setItem("currentExam", JSON.stringify({ id: examId, title: examTitle || examId }));
+
 
     // Hide the popup
     document.getElementById('popup').classList.remove('active');
