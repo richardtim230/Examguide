@@ -15,25 +15,29 @@ function getArticleMeta(articleId) {
     return `${title} - Published on ${date} at ${time}. Read more at: ${url}`;
 }
 
-function shareWhatsApp(articleId) {
+function shareWhatsApp(articleId, event) {
+    event.preventDefault();
     const meta = getArticleMeta(articleId);
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(meta)}`;
     window.open(url, '_blank');
 }
 
-function shareFacebook(articleId) {
+function shareFacebook(articleId, event) {
+    event.preventDefault();
     const meta = getArticleMeta(articleId);
     const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(meta)}`;
     window.open(url, '_blank');
 }
 
-function shareInstagram(articleId) {
+function shareInstagram(articleId, event) {
+    event.preventDefault();
     // Instagram does not support direct sharing via URL, so we redirect to Instagram's website
     const meta = getArticleMeta(articleId);
     alert(`Instagram does not support direct sharing. Copy the following text and share it on Instagram:\n\n${meta}`);
 }
 
-function shareTelegram(articleId) {
+function shareTelegram(articleId, event) {
+    event.preventDefault();
     const meta = getArticleMeta(articleId);
     const url = `https://telegram.me/share/url?url=${encodeURIComponent(meta)}`;
     window.open(url, '_blank');
