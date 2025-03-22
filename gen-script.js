@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    function updateMetaTags(articleId) {
+   function updateMetaTags(articleId) {
         const article = document.getElementById(articleId);
         const title = article.querySelector('h2').innerText;
         const description = article.querySelector('.article-content p').innerText;
