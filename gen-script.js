@@ -5,7 +5,7 @@ function toggleMenu() {
             button.classList.toggle('open');
         }
     document.addEventListener('DOMContentLoaded', (event) => {
-    const articles = document.querySelectorAll('.article');
+    const articles = document.querySelectorAll('.blog-post');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     let currentPage = 1;
