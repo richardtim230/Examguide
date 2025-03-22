@@ -518,10 +518,11 @@ h2, h3 {
 /* Custom styles for <li> elements */
     .article-content li {
             font-size: 18px;
-            color: #333;
+            color: blue;
             background-color: #f5f5f5;
             padding: 10px;
             margin: 5px 0;
             border-radius: 5px;
+        text-align: justify;
             list-style-type: square; /* Example of changing the bullet style */
 }
