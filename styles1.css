@@ -638,16 +638,37 @@ button:disabled {
     background: linear-gradient(to right, #ff9966, #ff5e62);
     color: white;
     border: none;
-    padding: 10px 15px;
-    font-size: 0.9rem;
-    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
 }
 
 .article-share button:hover,
 .article-share a:hover {
     background: linear-gradient(to right, #ff5e62, #ff9966);
-    transform: scale(1.05);
-    }
+    transform: scale(1.1);
+}
+
+.article-share .share-whatsapp {
+    background-color: #25D366;
+}
+
+.article-share .share-facebook {
+    background-color: #3b5998;
+}
+
+.article-share .share-instagram {
+    background-color: #E1306C;
+}
+
+.article-share .share-telegram {
+    background-color: #0088cc;
+}
