@@ -1,46 +1,56 @@
-function copyLink(articleId) {
+function updateMetaTags(articleId) {
     const article = document.getElementById(articleId);
+    const title = article.querySelector('h2').innerText;
+    const description = article.querySelector('.article-content p').innerText;
+    const image = article.querySelector('img').src;
     const url = window.location.href.split('#')[0] + '#' + articleId;
-    navigator.clipboard.writeText(url).then(() => {
-        alert('Link copied to clipboard');
-    });
-}
 
-function getArticleMeta(articleId) {
-    const article = document.getElementById(articleId);
-    const date = article.querySelector('.article-date').textContent;
-    const time = article.querySelector('.article-time').textContent;
-    const title = article.querySelector('h2').textContent;
-    const url = window.location.href.split('#')[0] + '#' + articleId;
-    return `${title} - Published on ${date} at ${time}. Read more at: ${url}`;
+    // Update Open Graph meta tags
+    document.getElementById('og-title').setAttribute('content', title);
+    document.getElementById('og-description').setAttribute('content', description);
+    document.getElementById('og-image').setAttribute('content', image);
+    document.getElementById('og-url').setAttribute('content', url);
+
+    // Update Twitter Card meta tags
+    document.getElementById('twitter-title').setAttribute('content', title);
+    document.getElementById('twitter-description').setAttribute('content', description);
+    document.getElementById('twitter-image').setAttribute('content', image);
 }
 
 function shareWhatsApp(articleId, event) {
     event.preventDefault();
-    const meta = getArticleMeta(articleId);
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(meta)}`;
-    window.open(url, '_blank');
+    updateMetaTags(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
 }
 
 function shareFacebook(articleId, event) {
     event.preventDefault();
-    const meta = getArticleMeta(articleId);
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(meta)}`;
-    window.open(url, '_blank');
+    updateMetaTags(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
 }
 
 function shareInstagram(articleId, event) {
     event.preventDefault();
-    // Instagram does not support direct sharing via URL, so we redirect to Instagram's website
-    const meta = getArticleMeta(articleId);
-    alert(`Instagram does not support direct sharing. Copy the following text and share it on Instagram:\n\n${meta}`);
+    updateMetaTags(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    // Instagram does not have direct sharing via URL, you might need to handle this differently
 }
 
 function shareTelegram(articleId, event) {
     event.preventDefault();
-    const meta = getArticleMeta(articleId);
-    const url = `https://telegram.me/share/url?url=${encodeURIComponent(meta)}`;
-    window.open(url, '_blank');
+    updateMetaTags(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    window.open(`https://telegram.me/share/url?url=${encodeURIComponent(url)}`, '_blank');
+}
+
+function copyLink(articleId) {
+    updateMetaTags(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard');
+    });
 }
 function toggleMenu() {
             const menu = document.querySelector('.menu-container');
