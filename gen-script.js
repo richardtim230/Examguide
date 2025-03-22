@@ -1,57 +1,95 @@
-function updateMetaTags(articleId) {
-    const article = document.getElementById(articleId);
-    const title = article.querySelector('h2').innerText;
-    const description = article.querySelector('.article-content p').innerText;
-    const image = article.querySelector('img').src;
-    const url = window.location.href.split('#')[0] + '#' + articleId;
+document.addEventListener('DOMContentLoaded', (event) => {
+    function updateMetaTags(articleId) {
+        const article = document.getElementById(articleId);
+        const title = article.querySelector('h2').innerText;
+        const description = article.querySelector('.article-content p').innerText;
+        const image = article.querySelector('img').src;
+        const url = window.location.href.split('#')[0] + '#' + articleId;
 
-    // Update Open Graph meta tags
-    document.getElementById('og-title').setAttribute('content', title);
-    document.getElementById('og-description').setAttribute('content', description);
-    document.getElementById('og-image').setAttribute('content', image);
-    document.getElementById('og-url').setAttribute('content', url);
+        // Update Open Graph meta tags
+        document.getElementById('og-title').setAttribute('content', title);
+        document.getElementById('og-description').setAttribute('content', description);
+        document.getElementById('og-image').setAttribute('content', image);
+        document.getElementById('og-url').setAttribute('content', url);
 
-    // Update Twitter Card meta tags
-    document.getElementById('twitter-title').setAttribute('content', title);
-    document.getElementById('twitter-description').setAttribute('content', description);
-    document.getElementById('twitter-image').setAttribute('content', image);
-}
+        // Update Twitter Card meta tags
+        document.getElementById('twitter-title').setAttribute('content', title);
+        document.getElementById('twitter-description').setAttribute('content', description);
+        document.getElementById('twitter-image').setAttribute('content', image);
+    }
 
-function shareWhatsApp(articleId, event) {
-    event.preventDefault();
-    updateMetaTags(articleId);
-    const url = window.location.href.split('#')[0] + '#' + articleId;
-    window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
-}
+    function shareWhatsApp(articleId, event) {
+        event.preventDefault();
+        updateMetaTags(articleId);
+        const url = window.location.href.split('#')[0] + '#' + articleId;
+        window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
+    }
 
-function shareFacebook(articleId, event) {
-    event.preventDefault();
-    updateMetaTags(articleId);
-    const url = window.location.href.split('#')[0] + '#' + articleId;
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-}
+    function shareFacebook(articleId, event) {
+        event.preventDefault();
+        updateMetaTags(articleId);
+        const url = window.location.href.split('#')[0] + '#' + articleId;
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    }
 
-function shareInstagram(articleId, event) {
-    event.preventDefault();
-    updateMetaTags(articleId);
-    const url = window.location.href.split('#')[0] + '#' + articleId;
-    // Instagram does not have direct sharing via URL, you might need to handle this differently
-}
+    function shareInstagram(articleId, event) {
+        event.preventDefault();
+        updateMetaTags(articleId);
+        const url = window.location.href.split('#')[0] + '#' + articleId;
+        // Instagram does not have direct sharing via URL, you might need to handle this differently
+    }
 
-function shareTelegram(articleId, event) {
-    event.preventDefault();
-    updateMetaTags(articleId);
-    const url = window.location.href.split('#')[0] + '#' + articleId;
-    window.open(`https://telegram.me/share/url?url=${encodeURIComponent(url)}`, '_blank');
-}
+    function shareTelegram(articleId, event) {
+        event.preventDefault();
+        updateMetaTags(articleId);
+        const url = window.location.href.split('#')[0] + '#' + articleId;
+        window.open(`https://telegram.me/share/url?url=${encodeURIComponent(url)}`, '_blank');
+    }
 
-function copyLink(articleId) {
-    updateMetaTags(articleId);
-    const url = window.location.href.split('#')[0] + '#' + articleId;
-    navigator.clipboard.writeText(url).then(() => {
-        alert('Link copied to clipboard');
+    function copyLink(articleId) {
+        updateMetaTags(articleId);
+        const url = window.location.href.split('#')[0] + '#' + articleId;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Link copied to clipboard');
+        });
+    }
+
+    // Attach event listeners to buttons
+    document.querySelectorAll('.share-whatsapp').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const articleId = button.closest('.blog-post').id;
+            shareWhatsApp(articleId, event);
+        });
     });
-}
+
+    document.querySelectorAll('.share-facebook').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const articleId = button.closest('.blog-post').id;
+            shareFacebook(articleId, event);
+        });
+    });
+
+    document.querySelectorAll('.share-instagram').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const articleId = button.closest('.blog-post').id;
+            shareInstagram(articleId, event);
+        });
+    });
+
+    document.querySelectorAll('.share-telegram').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const articleId = button.closest('.blog-post').id;
+            shareTelegram(articleId, event);
+        });
+    });
+
+    document.querySelectorAll('.share-copy').forEach(button => {
+        button.addEventListener('click', () => {
+            const articleId = button.closest('.blog-post').id;
+            copyLink(articleId);
+        });
+    });
+});
 function toggleMenu() {
             const menu = document.querySelector('.menu-container');
             const button = document.querySelector('.menu-button');
