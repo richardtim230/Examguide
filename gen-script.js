@@ -1,106 +1,47 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const articles = document.querySelectorAll('.article');
-    
-    articles.forEach(article => {
-        article.addEventListener('click', function() {
-            const title = this.getAttribute('data-title');
-            const description = this.getAttribute('data-description');
-            const image = this.getAttribute('data-image');
-            const url = window.location.href;
-
-            // Update Open Graph meta tags
-            document.getElementById('og-title').setAttribute('content', title);
-            document.getElementById('og-description').setAttribute('content', description);
-            document.getElementById('og-image').setAttribute('content', image);
-            document.getElementById('og-url').setAttribute('content', url);
-
-            // Update Twitter Card meta tags
-            document.getElementById('twitter-title').setAttribute('content', title);
-            document.getElementById('twitter-description').setAttribute('content', description);
-            document.getElementById('twitter-image').setAttribute('content', image);
-        });
+function copyLink(articleId) {
+    const article = document.getElementById(articleId);
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard');
     });
-});
-document.querySelectorAll('.share-button').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();
-        const articleId = this.closest('.blog-post').id;
-        updateMetaTags(articleId);
-    });
-});
-    
-    function shareWhatsApp(articleId, event) {
-        event.preventDefault();
-        updateMetaTags(articleId);
-        const url = window.location.href.split('#')[0] + '#' + articleId;
-        window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
-    }
+}
 
-    function shareFacebook(articleId, event) {
-        event.preventDefault();
-        updateMetaTags(articleId);
-        const url = window.location.href.split('#')[0] + '#' + articleId;
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-    }
+function getArticleMeta(articleId) {
+    const article = document.getElementById(articleId);
+    const date = article.querySelector('.article-date').textContent;
+    const time = article.querySelector('.article-time').textContent;
+    const title = article.querySelector('h2').textContent;
+    const url = window.location.href.split('#')[0] + '#' + articleId;
+    return `${title} - Published on ${date} at ${time}. Read more at: ${url}`;
+}
 
-    function shareInstagram(articleId, event) {
-        event.preventDefault();
-        updateMetaTags(articleId);
-        const url = window.location.href.split('#')[0] + '#' + articleId;
-        // Instagram does not have direct sharing via URL, you might need to handle this differently
-    }
+function shareWhatsApp(articleId, event) {
+    event.preventDefault();
+    const meta = getArticleMeta(articleId);
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(meta)}`;
+    window.open(url, '_blank');
+}
 
-    function shareTelegram(articleId, event) {
-        event.preventDefault();
-        updateMetaTags(articleId);
-        const url = window.location.href.split('#')[0] + '#' + articleId;
-        window.open(`https://telegram.me/share/url?url=${encodeURIComponent(url)}`, '_blank');
-    }
+function shareFacebook(articleId, event) {
+    event.preventDefault();
+    const meta = getArticleMeta(articleId);
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(meta)}`;
+    window.open(url, '_blank');
+}
 
-    function copyLink(articleId) {
-        updateMetaTags(articleId);
-        const url = window.location.href.split('#')[0] + '#' + articleId;
-        navigator.clipboard.writeText(url).then(() => {
-            alert('Link copied to clipboard');
-        });
-    }
+function shareInstagram(articleId, event) {
+    event.preventDefault();
+    // Instagram does not support direct sharing via URL, so we redirect to Instagram's website
+    const meta = getArticleMeta(articleId);
+    alert(`Instagram does not support direct sharing. Copy the following text and share it on Instagram:\n\n${meta}`);
+}
 
-    // Attach event listeners to buttons
-    document.querySelectorAll('.share-whatsapp').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const articleId = button.closest('.blog-post').id;
-            shareWhatsApp(articleId, event);
-        });
-    });
-
-    document.querySelectorAll('.share-facebook').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const articleId = button.closest('.blog-post').id;
-            shareFacebook(articleId, event);
-        });
-    });
-
-    document.querySelectorAll('.share-instagram').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const articleId = button.closest('.blog-post').id;
-            shareInstagram(articleId, event);
-        });
-    });
-
-    document.querySelectorAll('.share-telegram').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const articleId = button.closest('.blog-post').id;
-            shareTelegram(articleId, event);
-        });
-    });
-
-    document.querySelectorAll('.share-copy').forEach(button => {
-        button.addEventListener('click', () => {
-            const articleId = button.closest('.blog-post').id;
-            copyLink(articleId);
-        });
-    });
-});
+function shareTelegram(articleId, event) {
+    event.preventDefault();
+    const meta = getArticleMeta(articleId);
+    const url = `https://telegram.me/share/url?url=${encodeURIComponent(meta)}`;
+    window.open(url, '_blank');
+}
 function toggleMenu() {
             const menu = document.querySelector('.menu-container');
             const button = document.querySelector('.menu-button');
