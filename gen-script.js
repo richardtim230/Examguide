@@ -33,11 +33,16 @@ function toggleMenu() {
         nextBtn.disabled = currentPage * articlesPerPage >= headers.length;
     }
 
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     prevBtn.addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
             showPage(currentPage);
             updateButtons();
+            scrollToTop();
         }
     });
 
@@ -46,6 +51,7 @@ function toggleMenu() {
             currentPage++;
             showPage(currentPage);
             updateButtons();
+            scrollToTop();
         }
     });
 
