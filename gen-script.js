@@ -38,7 +38,6 @@ function shareTelegram(articleId) {
     const url = `https://telegram.me/share/url?url=${encodeURIComponent(meta)}`;
     window.open(url, '_blank');
 }
-
 function toggleMenu() {
             const menu = document.querySelector('.menu-container');
             const button = document.querySelector('.menu-button');
