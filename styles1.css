@@ -562,3 +562,66 @@ button:disabled {
     color: #8c8c8c;
     cursor: not-allowed;
     }
+/* Add this to your styles1.css file */
+
+/* Styling for the article meta info */
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+    color: #555; /* Gray color */
+    margin-bottom: 10px;
+    background-color: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Styling for the date and time */
+.article-date, .article-time {
+    font-weight: bold;
+    color: #007bff; /* Blue color */
+}
+
+/* Styling for the article author */
+.article-author {
+    text-align: right;
+    font-size: 0.9em;
+    color: #555; /* Gray color */
+    margin-top: 10px;
+    background-color: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border-top: 1px solid #ddd;
+}
+
+/* Additional styling for articles */
+.blog-post {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+/* Styling for article headers */
+.blog-post h2 {
+    font-size: 1.5em;
+    color: #333; /* Dark gray color */
+    margin-bottom: 10px;
+}
+
+/* Styling for article content */
+.article-content {
+    font-size: 1em;
+    color: #333; /* Dark gray color */
+    line-height: 1.6;
+}
+
+/* Styling for images in articles */
+.article-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+}
