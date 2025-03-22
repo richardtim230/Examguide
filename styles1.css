@@ -625,3 +625,29 @@ button:disabled {
     border-radius: 5px;
     margin: 10px 0;
 }
+/* Styling for the share buttons */
+.article-share {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.article-share button,
+.article-share a {
+    background: linear-gradient(to right, #ff9966, #ff5e62);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.article-share button:hover,
+.article-share a:hover {
+    background: linear-gradient(to right, #ff5e62, #ff9966);
+    transform: scale(1.05);
+    }
