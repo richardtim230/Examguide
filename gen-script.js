@@ -1,28 +1,26 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    function updateMetaTags(articleId) {
-        const article = document.getElementById(articleId);
-        const title = article.querySelector('h2').innerText;
-        const description = article.querySelector('.article-content p').innerText;
-        const image = article.querySelector('img').src;
-        const url = window.location.href.split('#')[0] + '#' + articleId;
+document.addEventListener('DOMContentLoaded', function() {
+    const articles = document.querySelectorAll('.article');
+    
+    articles.forEach(article => {
+        article.addEventListener('click', function() {
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+            const image = this.getAttribute('data-image');
+            const url = window.location.href;
 
-        console.log(`Updating meta tags for article: ${articleId}`);
-        console.log(`Title: ${title}`);
-        console.log(`Description: ${description}`);
-        console.log(`Image: ${image}`);
-        console.log(`URL: ${url}`);
+            // Update Open Graph meta tags
+            document.getElementById('og-title').setAttribute('content', title);
+            document.getElementById('og-description').setAttribute('content', description);
+            document.getElementById('og-image').setAttribute('content', image);
+            document.getElementById('og-url').setAttribute('content', url);
 
-        // Update Open Graph meta tags
-        document.getElementById('og-title').setAttribute('content', title);
-        document.getElementById('og-description').setAttribute('content', description);
-        document.getElementById('og-image').setAttribute('content', image);
-        document.getElementById('og-url').setAttribute('content', url);
-
-        // Update Twitter Card meta tags
-        document.getElementById('twitter-title').setAttribute('content', title);
-        document.getElementById('twitter-description').setAttribute('content', description);
-        document.getElementById('twitter-image').setAttribute('content', image);
-    }
+            // Update Twitter Card meta tags
+            document.getElementById('twitter-title').setAttribute('content', title);
+            document.getElementById('twitter-description').setAttribute('content', description);
+            document.getElementById('twitter-image').setAttribute('content', image);
+        });
+    });
+});
 document.querySelectorAll('.share-button').forEach(button => {
     button.addEventListener('click', function(event) {
         event.preventDefault();
