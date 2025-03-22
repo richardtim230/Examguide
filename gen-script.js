@@ -1,11 +1,10 @@
 function toggleMenu() {
-            var menu = document.getElementById("menu");
-            if (menu.style.display === "flex") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "flex";
-            }
-}
+            const menu = document.querySelector('.menu-container');
+            const button = document.querySelector('.menu-button');
+            menu.classList.toggle('menu-open');
+            button.classList.toggle('open');
+        }
+    
 
 document.addEventListener("DOMContentLoaded", function() {
     let slider = document.querySelector(".slider");
