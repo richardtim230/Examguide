@@ -4,7 +4,50 @@ function toggleMenu() {
             menu.classList.toggle('menu-open');
             button.classList.toggle('open');
         }
-    
+    document.addEventListener('DOMContentLoaded', (event) => {
+    const articles = document.querySelectorAll('.article');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentPage = 1;
+    const articlesPerPage = 2;
+
+    function showPage(page) {
+        const start = (page - 1) * articlesPerPage;
+        const end = start + articlesPerPage;
+        articles.forEach((article, index) => {
+            if (index >= start && index < end) {
+                article.style.display = 'block';
+            } else {
+                article.style.display = 'none';
+            }
+        });
+    }
+
+    function updateButtons() {
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage * articlesPerPage >= articles.length;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+            updateButtons();
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentPage * articlesPerPage < articles.length) {
+            currentPage++;
+            showPage(currentPage);
+            updateButtons();
+        }
+    });
+
+    // Initialize the page
+    showPage(currentPage);
+    updateButtons();
+});
 
 document.addEventListener("DOMContentLoaded", function() {
     let slider = document.querySelector(".slider");
