@@ -212,10 +212,8 @@ header {
 
 /* Image Slider */
 .carousel-container {
-            width: 600px;
+            width: 100vw;
             overflow: hidden;
-            border: 5px solid #333;
-            border-radius: 10px;
             position: relative;
             background: white;
         }
