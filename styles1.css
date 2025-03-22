@@ -481,6 +481,9 @@ footer {
 
 
 
+main {
+    padding: 1rem;
+}
 
 .blog-post {
     background-color: #fff;
@@ -508,6 +511,4 @@ h2, h3 {
     text-align: center;
 }
 
-p {
-    text-align: justify;
-    }
+
