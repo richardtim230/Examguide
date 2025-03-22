@@ -23,7 +23,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('twitter-description').setAttribute('content', description);
         document.getElementById('twitter-image').setAttribute('content', image);
     }
-
+document.querySelectorAll('.share-button').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const articleId = this.closest('.blog-post').id;
+        updateMetaTags(articleId);
+    });
+});
+    
     function shareWhatsApp(articleId, event) {
         event.preventDefault();
         updateMetaTags(articleId);
