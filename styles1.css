@@ -208,11 +208,11 @@ header {
     }
 }
 
-/* Container for the menu */
-.menu-widget {
+/* Menu Container (Initially Hidden) */
+.menu-container {
     position: fixed;
     top: 0;
-    left: -260px; /* Initially hidden */
+    left: -260px; /* Starts off-screen */
     width: 250px;
     height: 100vh;
     background: rgba(0, 0, 0, 0.9);
@@ -226,13 +226,13 @@ header {
     z-index: 1000;
 }
 
-/* Open menu state */
-.menu-widget.menu-open {
+/* Menu Open State */
+.menu-container.menu-open {
     left: 0;
 }
 
 /* Hamburger Button */
-.menu-widget-button {
+.menu-button {
     position: fixed;
     top: 20px;
     left: 20px;
@@ -246,7 +246,7 @@ header {
 }
 
 /* Hamburger Lines */
-.menu-widget-button div {
+.menu-button div {
     width: 35px;
     height: 4px;
     background: white;
@@ -254,20 +254,20 @@ header {
 }
 
 /* Menu Open Animation */
-.menu-widget-button.open div:nth-child(1) {
+.menu-button.open div:nth-child(1) {
     transform: rotate(-45deg) translate(-5px, 6px);
 }
 
-.menu-widget-button.open div:nth-child(2) {
+.menu-button.open div:nth-child(2) {
     opacity: 0;
 }
 
-.menu-widget-button.open div:nth-child(3) {
+.menu-button.open div:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Menu Buttons */
-.menu-widget button {
+.menu-container button {
     width: 180px;
     padding: 10px;
     font-size: 18px;
@@ -279,7 +279,7 @@ header {
     transition: transform 0.3s, background 0.3s;
 }
 
-.menu-widget button:hover {
+.menu-container button:hover {
     transform: scale(1.1);
     background: linear-gradient(45deg, #ffcc00, #ff5733);
 }
