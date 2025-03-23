@@ -603,6 +603,15 @@ button:disabled {
     border-radius: 10px;
     background-color: #fff;
 }
+.blog-post h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.0em;
+            color: #4CAF50; /* Radiant green color */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for a 3D effect */
+            background: linear-gradient(45deg, #FFC107, #FF5722); /* Gradient background */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
 /* Styling for article headers */
 .blog-post h2 {
