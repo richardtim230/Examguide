@@ -32,7 +32,9 @@ function getArticleMeta(articleId) {
     const time = article.querySelector('.article-time').textContent;
     const title = article.querySelector('h2').textContent;
     const url = window.location.href.split('#')[0] + '#' + articleId;
-    return `${title} - Published on ${date} at ${time}. Read more at: ${url}`;
+    
+    // Customize the message format here
+    return `🌟 *${title}* 🌟\n🗓️ Published on: ${date} at ${time}\n🔗 Read more: ${url}\n\n🔥 Discover more exciting content on our website!`;
 }
 
 function shareWhatsApp(articleId, event) {
