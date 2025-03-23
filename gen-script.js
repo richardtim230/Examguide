@@ -6,6 +6,9 @@ function loadArticle() {
         const articleElement = document.getElementById(articleId);
         if (articleElement) {
             articleElement.style.display = 'block';
+            // Update the URL to include the article title
+            const title = articleElement.getAttribute('data-title');
+            history.pushState(null, '', `${window.location.pathname}#${title}`);
         } else {
             console.error(`Article with ID '${articleId}' not found.`);
         }
