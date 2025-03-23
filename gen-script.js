@@ -1,3 +1,21 @@
+        // Function to load the article based on the URL's article ID parameter
+        function loadArticle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('article');
+            if (articleId) {
+                const articleElement = document.getElementById(articleId);
+                if (articleElement) {
+                    articleElement.style.display = 'block';
+                } else {
+                    console.error(`Article with ID '${articleId}' not found.`);
+                }
+            }
+        }
+
+        // Call the function to load the article when the page loads
+        window.onload = loadArticle;
+    
+
 function copyLink(articleId) {
     const article = document.getElementById(articleId);
     const url = window.location.href.split('#')[0] + '#' + articleId;
