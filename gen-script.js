@@ -1,19 +1,19 @@
-        // Function to load the article based on the URL's article ID parameter
-        function loadArticle() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleId = urlParams.get('article');
-            if (articleId) {
-                const articleElement = document.getElementById(articleId);
-                if (articleElement) {
-                    articleElement.style.display = 'block';
-                } else {
-                    console.error(`Article with ID '${articleId}' not found.`);
-                }
-            }
+        // Function to load the article based on the URL's article ID parameter or fragment
+function loadArticle() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('article') || window.location.hash.substring(1);
+    if (articleId) {
+        const articleElement = document.getElementById(articleId);
+        if (articleElement) {
+            articleElement.style.display = 'block';
+        } else {
+            console.error(`Article with ID '${articleId}' not found.`);
         }
+    }
+}
 
-        // Call the function to load the article when the page loads
-        window.onload = loadArticle;
+// Call the function to load the article when the page loads
+window.onload = loadArticle;
     
 
 function copyLink(articleId) {
