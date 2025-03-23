@@ -603,18 +603,19 @@ button:disabled {
     border-radius: 10px;
     background-color: #fff;
 }
-.blog-post h1 {
+.blog-post h2 {
             font-family: 'Arial', sans-serif;
-            font-size: 2.0em;
+            font-size: 1.5em;
             color: #4CAF50; /* Radiant green color */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for a 3D effect */
             background: linear-gradient(45deg, #FFC107, #FF5722); /* Gradient background */
             -webkit-background-clip: text;
+    margin-bottom: 10px;
             -webkit-text-fill-color: transparent;
         }
 
 /* Styling for article headers */
-.blog-post h2 {
+.blog-post h {
     font-size: 1.5em;
     color: #333; /* Dark gray color */
     margin-bottom: 10px;
