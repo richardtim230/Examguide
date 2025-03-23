@@ -1,4 +1,4 @@
-        // Function to load the article based on the URL's article ID parameter or fragment
+// Function to load the article based on the URL's article ID parameter or fragment
 function loadArticle() {
     const urlParams = new URLSearchParams(window.location.search);
     const articleId = urlParams.get('article') || window.location.hash.substring(1);
@@ -14,7 +14,6 @@ function loadArticle() {
 
 // Call the function to load the article when the page loads
 window.onload = loadArticle;
-    
 
 function copyLink(articleId) {
     const article = document.getElementById(articleId);
@@ -60,13 +59,15 @@ function shareTelegram(articleId, event) {
     const url = `https://telegram.me/share/url?url=${encodeURIComponent(meta)}`;
     window.open(url, '_blank');
 }
+
 function toggleMenu() {
-            const menu = document.querySelector('.menu-container');
-            const button = document.querySelector('.menu-button');
-            menu.classList.toggle('menu-open');
-            button.classList.toggle('open');
-        }
-    document.addEventListener('DOMContentLoaded', (event) => {
+    const menu = document.querySelector('.menu-container');
+    const button = document.querySelector('.menu-button');
+    menu.classList.toggle('menu-open');
+    button.classList.toggle('open');
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
     const articles = document.querySelectorAll('.blog-post');
     const headers = document.querySelectorAll('.blog-post h2');
     const prevBtn = document.getElementById('prevBtn');
