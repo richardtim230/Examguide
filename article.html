@@ -89,9 +89,13 @@
 <div id="filter">
   <select id="categorySelect" onchange="populateAuthors()">
     <option value="">Select Category</option>
-    <option value="category1">Category 1</option>
-    <option value="category2">Category 2</option>
-    <option value="category3">Category 3</option>
+    <option value="category1">Technology</option>
+    <option value="category2">Health</option>
+    <option value="category3">Education</option>
+      <option value="category4">Travel</option>
+      <option value="category5">Finance</option>
+      <option value="category6">Sport</option>
+      <option value="category7">Lifestyle</option>
   </select>
 
   <select id="authorSelect">
@@ -105,7 +109,11 @@
   const categories = {
     "category1": ["author1", "author2"],
     "category2": ["author3", "author4"],
-    "category3": ["author5", "author6"]
+    "category3": ["author5", "author6"],
+      "category4": ["author5", "author6"],
+    "category5": ["author5", "author6"],
+    "category6": ["author5", "author6"],
+    "category7": ["author5", "author6"]
   };
 
   function populateAuthors() {
