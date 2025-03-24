@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const headers = document.querySelectorAll('.blog-post h2');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    let currentPage = 1;
+    let currentPage = parseInt(localStorage.getItem('currentPage')) || 1; // Retrieve saved page or default to 1
     const articlesPerPage = 2;
 
     function showPage(page) {
@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     prevBtn.addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
+            localStorage.setItem('currentPage', currentPage); // Save current page
             showPage(currentPage);
             updateButtons();
             scrollToTop();
@@ -117,6 +118,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     nextBtn.addEventListener('click', () => {
         if (currentPage * articlesPerPage < headers.length) {
             currentPage++;
+            localStorage.setItem('currentPage', currentPage); // Save current page
             showPage(currentPage);
             updateButtons();
             scrollToTop();
