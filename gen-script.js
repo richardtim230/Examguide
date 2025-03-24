@@ -124,7 +124,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Initialize the page
     showPage(currentPage);
     updateButtons();
+    scrollToTop(); // Scroll to top after initializing
 });
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     let slider = document.querySelector(".slider");
