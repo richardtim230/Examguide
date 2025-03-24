@@ -21,12 +21,11 @@ function loadArticle() {
                 history.pushState(null, '', `${window.location.pathname}#${firstArticleId}`);
             }
         }
-    } else if (firstArticle) {
-        firstArticle.style.display = 'block';
-        const firstArticleId = firstArticle.getAttribute('id');
-        history.pushState(null, '', `${window.location.pathname}#${firstArticleId}`);
+    } else {
+        console.log('No article ID provided.');
     }
 }
+
 // Call the function to load the article when the page loads
 window.onload = loadArticle;
 
