@@ -1,8 +1,4 @@
-(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-    ml('account', '1405769');
+
 
 // Function to load the article based on the URL's article ID parameter or fragment
 function loadArticle() {
@@ -38,9 +34,12 @@ function getArticleMeta(articleId) {
     const time = article.querySelector('.article-time').textContent;
     const title = article.querySelector('h2').textContent;
     const url = window.location.href.split('#')[0] + '#' + articleId;
-    
+
+    // Extract the first passage
+    const firstPassage = article.querySelector('p').textContent;
+
     // Customize the message format here
-    return `🌟 *${title}* 🌟\n🗓️ Published on: ${date} at ${time}\n🔗 Read more: ${url}\n\n🔥 Discover more exciting content on our website!`;
+    return `🌟 *${title}* 🌟\n🗓️ Published on: ${date} at ${time}\n\n${firstPassage}\n\n🔗 Read more: ${url}\n\n🔥 Discover more exciting content on our website!`;
 }
 
 function shareWhatsApp(articleId, event) {
