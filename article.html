@@ -85,7 +85,51 @@
     <header>
         <h1>ARTICLES CATEGORIES</h1>
     </header>
+<!-- HTML for the filter feature -->
+<div id="filter">
+  <select id="categorySelect" onchange="populateAuthors()">
+    <option value="">Select Category</option>
+    <option value="category1">Category 1</option>
+    <option value="category2">Category 2</option>
+    <option value="category3">Category 3</option>
+  </select>
 
+  <select id="authorSelect">
+    <option value="">Select Author</option>
+  </select>
+
+  <button onclick="searchAuthor()">Search</button>
+</div>
+
+<script>
+  const categories = {
+    "category1": ["author1", "author2"],
+    "category2": ["author3", "author4"],
+    "category3": ["author5", "author6"]
+  };
+
+  function populateAuthors() {
+    const category = document.getElementById("categorySelect").value;
+    const authorSelect = document.getElementById("authorSelect");
+    authorSelect.innerHTML = '<option value="">Select Author</option>';
+
+    if (category) {
+      categories[category].forEach(author => {
+        const option = document.createElement("option");
+        option.value = author;
+        option.textContent = author;
+        authorSelect.appendChild(option);
+      });
+    }
+  }
+
+  function searchAuthor() {
+    const author = document.getElementById("authorSelect").value;
+    if (author) {
+      window.location.href = author + ".html";
+    }
+  }
+</script>
     <div class="grid-container">
         <div class="grid-item">
             <img src="examsec.jpg" alt="Category 1">
