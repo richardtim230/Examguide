@@ -109,9 +109,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (currentPage > 1) {
             currentPage--;
             localStorage.setItem('currentPage', currentPage); // Save current page
-            showPage(currentPage);
-            updateButtons();
-            scrollToTop();
+            location.reload(); // Reload the page
         }
     });
 
@@ -119,9 +117,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (currentPage * articlesPerPage < headers.length) {
             currentPage++;
             localStorage.setItem('currentPage', currentPage); // Save current page
-            showPage(currentPage);
-            updateButtons();
-            scrollToTop();
+            location.reload(); // Reload the page
         }
     });
 
