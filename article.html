@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Categories</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+            padding: 10px 0;
+        }
+        .menu a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .grid-item {
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .grid-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Examguide</h1>
+    </div>
+    <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="grid-container">
+        <div class="grid-item">
+            <img src="placeholder.jpg" alt="Category 1">
+            <h2>Technology</h2>
+            <p>Latest updates and news in the tech world.</p>
+        </div>
+        <div class="grid-item">
+            <img src="placeholder.jpg" alt="Category 2">
+            <h2>Health</h2>
+            <p>Tips and news about health and wellness.</p>
+        </div>
+        <div class="grid-item">
+            <img src="placeholder.jpg" alt="Category 3">
+            <h2>Education</h2>
+            <p>Resources and articles on education.</p>
+        </div>
+        <div class="grid-item">
+            <img src="placeholder.jpg" alt="Category 4">
+            <h2>Travel</h2>
+            <p>Guides and stories from around the globe.</p>
+        </div>
+        <div class="grid-item">
+            <img src="placeholder.jpg" alt="Category 5">
+            <h2>Finance</h2>
+            <p>Advice and updates on financial matters.</p>
+        </div>
+        <div class="grid-item">
+            <img src="placeholder.jpg" alt="Category 6">
+            <h2>Sports</h2>
+            <p>All about the latest in the sports world.</p>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2025 Examguide. All rights reserved.</p>
+    </div>
+</body>
+</html>
