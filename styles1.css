@@ -163,7 +163,35 @@ header {
     text-decoration: none;
     cursor: pointer;
 }
+/* Filter Feature Styles */
+#filter {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
 
+#filter select, #filter button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+#filter button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#filter button:hover {
+    background-color: #45a049;
+    }
 /* Navigation Menu */
 .menu {
     display: flex;
