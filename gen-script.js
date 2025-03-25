@@ -4,8 +4,6 @@
 function loadArticle() {
     const urlParams = new URLSearchParams(window.location.search);
     const articleId = urlParams.get('article') || window.location.hash.substring(1);
-    const firstArticle = document.querySelector('.blog-post');
-
     if (articleId) {
         const articleElement = document.getElementById(articleId);
         if (articleElement) {
@@ -14,17 +12,13 @@ function loadArticle() {
             const title = articleElement.getAttribute('data-title');
             history.pushState(null, '', `${window.location.pathname}#${title}`);
         } else {
-            console.error(`Article with ID '${articleId}' not found. Redirecting to the first article.`);
-            if (firstArticle) {
-                firstArticle.style.display = 'block';
-                const firstArticleId = firstArticle.getAttribute('id');
-                history.pushState(null, '', `${window.location.pathname}#${firstArticleId}`);
-            }
+            console.error(`Article with ID '${articleId}' not found.`);
         }
-    } else {
-        console.log('No article ID provided.');
     }
 }
+
+// Call the function to load the article when the page loads
+window.onload = loadArticle;
 
 function copyLink(articleId) {
     const article = document.getElementById(articleId);
