@@ -181,7 +181,7 @@ let questions = [];
 
 function startExam() {
     alert("startExam function called");
-    let userData = JSON.parse(localStorage.getItem("userData"));
+    let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
     alert("userData retrieved");
 
     let examCode = document.getElementById("examCode").value.toUpperCase();
@@ -197,10 +197,9 @@ function startExam() {
         return;
     }
 
-
     // Deduct 5 credit points
     userData.creditPoints -= 5;
-    localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("userDetails", JSON.stringify(userData));  // Corrected key
 
     // Hide Dashboard & Show Exam Container
     document.getElementById("dashboard-container").style.display = "none";
