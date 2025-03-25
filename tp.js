@@ -139,9 +139,9 @@ function redeemCredits() {
     let storedPin = localStorage.getItem("generatedPin");
 
     const adminPins = {
-        "6017080446": 50000,   // Admin set PIN 1
-        "1234567890": 100,  // Admin set PIN 2
-        "0987654321": 150   // Admin set PIN 3
+        "6017080446": 50000,  // Admin set PIN 1
+        "1234567890": 100,    // Admin set PIN 2
+        "0987654321": 150     // Admin set PIN 3
     };
 
     if (inputPin === storedPin && adminPins.hasOwnProperty(inputPin)) {
@@ -150,6 +150,10 @@ function redeemCredits() {
         userData.creditPoints += creditsToAdd;
         localStorage.setItem("userDetails", JSON.stringify(userData));
         alert(`Recharge Successful! ${creditsToAdd} points added.`);
+        
+        // Delete the redeemed pin from local storage
+        localStorage.removeItem("generatedPin");
+
         loadDashboard();
     } else {
         alert("Invalid PIN. Please try again.");
