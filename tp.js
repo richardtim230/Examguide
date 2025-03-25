@@ -1,3 +1,4 @@
+
 function showRegister() {
     document.getElementById('auth-container').style.display = 'none';
     document.getElementById('register-container').style.display = 'block';
@@ -53,6 +54,8 @@ function registerUser() {
 
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
     alert('Registration successful');
+    window.location.reload();  // Reload the page
+    showLogin();  // Redirect to login page
 }
 
 function loadDashboard() {
