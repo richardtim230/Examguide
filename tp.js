@@ -234,7 +234,7 @@ function loadQuestion() {
     currentQuestion.options.forEach(option => {
         let btn = document.createElement("button");
         btn.innerText = option;
-        btn.onclick = () => selectAnswer(option);
+        btn.onclick = (event) => selectAnswer(option, event);
         optionsContainer.appendChild(btn);
     });
 
@@ -252,11 +252,19 @@ function loadQuestion() {
     }, 1000);
 }
 
-function selectAnswer(answer) {
+function selectAnswer(answer, event) {
     selectedAnswer = answer;
     document.getElementById("confirm-btn").disabled = false;
-}
 
+    // Remove the 'selected-answer' class from all option buttons
+    let options = document.getElementById("options-container").getElementsByTagName("button");
+    for (let option of options) {
+        option.classList.remove("selected-answer");
+    }
+
+    // Add the 'selected-answer' class to the clicked button
+    event.target.classList.add("selected-answer");
+}
 function confirmAnswer() {
     clearInterval(timer);
     showCorrectAnswer();
