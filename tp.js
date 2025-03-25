@@ -45,7 +45,7 @@ function purchaseCredits() {
     localStorage.setItem("generatedPin", rechargePin);
 
     let userData = JSON.parse(localStorage.getItem("userData"));
-    let whatsappLink = `https://wa.me/1234567890?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20${amount}%0APIN:%20${rechargePin}`;
+    let whatsappLink = `https://wa.me/+2349155127634?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20${amount}%0APIN:%20${rechargePin}`;
     
     alert("Recharge PIN Generated: " + rechargePin);
     window.open(whatsappLink, "_blank");
