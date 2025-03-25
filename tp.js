@@ -6914,83 +6914,78 @@ function returnToLogin() {
 }
 
 
-// ✅ Function to allocate exams based on User ID
-function allocateUsersToExams(users, exams) {
-    const examAllocations = {};
 
-    users.forEach(user => {
-        const allocatedExams = [];
-        while (allocatedExams.length < 3) { // Each user gets 4 random exams
-            const randomExam = exams[Math.floor(Math.random() * exams.length)];
-            if (!allocatedExams.some(exam => exam.id === randomExam.id)) {
-                allocatedExams.push(randomExam);
-            }
-        }
-        examAllocations[user.userId] = allocatedExams; // Store exams per user ID
-    });
 
-    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
+// Predefined admin pins
+const adminPins = ['1234567890', '0987654321', '1122334455', '5566778899', '6677889900'];
+
+// Initialize credit points for new users
+function initializeCreditPoints() {
+    if (!localStorage.getItem('creditPoints')) {
+        localStorage.setItem('creditPoints', 100);
+    }
+    document.getElementById('credit-points').textContent = localStorage.getItem('creditPoints');
 }
 
-
-
-// Define the list of predefined exams with department and part assignments
-const exams = [
-    { id: "BOT203-T2", title: "INTRODUCTORY GENETICS ONE", department: "Zoology", part: "200" },
-    { id: "BOT203-T3", title: "INTRODUCTORY GENETICS TWO", department: "Zoology", part: "200" },
-    { id: "exam3", title: "History 101", department: "ARTS", part: "1" },
-    { id: "exam4", title: "Biology 202", department: "SCIENCE", part: "2" }
-    // Add more exams as needed
-];
-
-// Function to allocate exams based on department and part
-function allocateExamsByDepartmentAndPart() {
-    const examAllocations = {};
-
-    exams.forEach(exam => {
-        if (!examAllocations[exam.department]) {
-            examAllocations[exam.department] = {};
-        }
-        if (!examAllocations[exam.department][exam.part]) {
-            examAllocations[exam.department][exam.part] = [];
-        }
-        examAllocations[exam.department][exam.part].push(exam);
-    });
-
-    localStorage.setItem('examAllocations', JSON.stringify(examAllocations));
-}
-
-// Call this function to allocate exams on page load or when needed
-allocateExamsByDepartmentAndPart();
-
-// Function to display exams for a specific user based on their department and part
-function displayExamsForUser(department, part) {
-    const examAllocations = JSON.parse(localStorage.getItem('examAllocations')) || {};
-    const assignedExams = (examAllocations[department] && examAllocations[department][part]) || [];
-    const examsList = document.getElementById('examsList');
-    examsList.innerHTML = ''; // Clear previous exams
-
-    if (assignedExams.length === 0) {
-        const noExamsMessage = document.createElement('p');
-        noExamsMessage.innerText = "No available or assigned exams yet.";
-        examsList.appendChild(noExamsMessage);
+// Generate a recharge pin and save it to local storage
+function generateRechargePin() {
+    const amount = document.getElementById('amount').value;
+    if (amount) {
+        const rechargePin = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+        localStorage.setItem('rechargePin', rechargePin);
+        alert(`Your recharge pin is ${rechargePin}. Proceed to payment.`);
+        // Redirect to payment page or open WhatsApp with payment details
+        window.location.href = `https://wa.me/<admin-number>?text=User%20Details:%0AName:%20${localStorage.getItem('userName')}%0AEmail:%20${localStorage.getItem('userEmail')}%0AAmount:%20${amount}%0ARecharge%20Pin:%20${rechargePin}`;
     } else {
-        assignedExams.forEach(exam => {
-            const examItem = document.createElement('button');
-            examItem.innerText = exam.title;
-            examItem.className = 'styled-btn';
-
-            examItem.addEventListener('click', function () {
-                document.getElementById("courseCode").value = exam.id;
-                document.getElementById("selectCourseBtn").click();
-            });
-
-            examsList.appendChild(examItem);
-        });
+        alert('Please enter the amount.');
     }
 }
 
-// Update the login function to include department and part-based exam display
+// Redeem credits using the input pin
+function redeemCredits() {
+    const inputPin = document.getElementById('recharge-pin').value;
+    const storedPin = localStorage.getItem('rechargePin');
+
+    if (adminPins.includes(inputPin) && inputPin === storedPin) {
+        let creditPoints = parseInt(localStorage.getItem('creditPoints')) || 100;
+        creditPoints += 50; // Example: Add 50 credit points
+        localStorage.setItem('creditPoints', creditPoints);
+        document.getElementById('credit-points').textContent = creditPoints;
+        alert('Credit points redeemed successfully.');
+    } else {
+        alert('Invalid recharge pin.');
+    }
+}
+
+// Deduct 5 credit points whenever a user wants to take a test
+function deductCreditPoints() {
+    let creditPoints = parseInt(localStorage.getItem('creditPoints')) || 100;
+    if (creditPoints >= 5) {
+        creditPoints -= 5;
+        localStorage.setItem('creditPoints', creditPoints);
+        document.getElementById('credit-points').textContent = creditPoints;
+    } else {
+        alert('Insufficient credit points.');
+    }
+}
+
+// Initialize user dashboard with user details and credit points
+document.addEventListener('DOMContentLoaded', (event) => {
+    initializeCreditPoints();
+    
+    // Example user details, replace with actual user data
+    localStorage.setItem('userName', 'John Doe');
+    localStorage.setItem('userEmail', 'john.doe@example.com');
+    
+    document.getElementById('user-name').textContent = localStorage.getItem('userName');
+    document.getElementById('user-email').textContent = localStorage.getItem('userEmail');
+});
+
+document.getElementById('closePopup').addEventListener('click', () => {
+    document.getElementById('popup').classList.add('hidden');
+});
+
+// Update the login function to display the user dashboard
 document.getElementById('loginBtn').addEventListener('click', function () {
     const fullName = document.getElementById('fullName').value.trim();
     const password = document.getElementById('userID').value.trim(); // Use matric number as password
@@ -6999,24 +6994,24 @@ document.getElementById('loginBtn').addEventListener('click', function () {
 
     if (authenticatedStudent) {
         localStorage.setItem("currentUser", JSON.stringify(authenticatedStudent));
-        document.getElementById('userDetails').innerHTML = `
+        document.getElementById('user-details').innerHTML = `
             <strong>Full Name:</strong> ${authenticatedStudent.fullName} <br>
             <strong>Faculty:</strong> ${authenticatedStudent.faculty} <br>
             <strong>Department:</strong> ${authenticatedStudent.department} <br>
             <strong>Level:</strong> ${authenticatedStudent.part}
         `;
 
-        // Display exams based on the user's department and part
-        displayExamsForUser(authenticatedStudent.department, authenticatedStudent.part);
-
         document.getElementById('popup').classList.add('active');
         document.getElementById('auth-section').classList.add('hidden');
-        document.getElementById('course-code-section').classList.remove('hidden');
-        document.getElementById('toggle-calculator').classList.remove('hidden');
-        document.getElementById('calculator-popup').classList.remove('hidden');
+        document.getElementById('userDetailsSection').classList.remove('hidden');
     } else {
         alert("Invalid Full Name or Matric Number. Please try again.");
     }
+});
+
+document.getElementById('closePopup').addEventListener('click', () => {
+    document.getElementById('popup').classList.add('hidden');
+    document.getElementById('auth-section').classList.remove('hidden');
 });
 
 
