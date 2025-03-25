@@ -180,8 +180,12 @@ let timeLeft = 10;
 let questions = [];
 
 function startExam() {
+    alert("startExam function called");
     let userData = JSON.parse(localStorage.getItem("userData"));
+    alert("userData retrieved");
+
     let examCode = document.getElementById("examCode").value.toUpperCase();
+    alert("examCode retrieved: " + examCode);
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
@@ -192,6 +196,7 @@ function startExam() {
         alert("Invalid exam code. Please enter a valid code.");
         return;
     }
+
 
     // Deduct 5 credit points
     userData.creditPoints -= 5;
