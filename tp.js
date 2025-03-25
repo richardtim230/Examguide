@@ -139,7 +139,7 @@ function redeemCredits() {
     let storedPin = localStorage.getItem("generatedPin");
 
     const adminPins = {
-        "9367159039": 50000,   // Admin set PIN 1
+        "6017080446": 50000,   // Admin set PIN 1
         "1234567890": 100,  // Admin set PIN 2
         "0987654321": 150   // Admin set PIN 3
     };
