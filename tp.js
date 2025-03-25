@@ -55,11 +55,11 @@ function purchaseCredits() {
 function redeemCredits() {
     let inputPin = document.getElementById("rechargePin").value;
     let storedPin = localStorage.getItem("generatedPin");
-    let predefinedPin = "1234567890";  // Admin set PIN
+    let predefinedPin = "4057210395";  // Admin set PIN
 
     if (inputPin === storedPin && inputPin === predefinedPin) {
         let userData = JSON.parse(localStorage.getItem("userData"));
-        userData.creditPoints += 50;  // Adding 50 credits
+        userData.creditPoints += 500;  // Adding 50 credits
         localStorage.setItem("userData", JSON.stringify(userData));
         alert("Recharge Successful! 50 points added.");
         loadDashboard();
