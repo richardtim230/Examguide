@@ -1,39 +1,84 @@
-// User Data Storage
-function registerUser() {
-    let fullName = document.getElementById("fullName").value;
-    let department = document.getElementById("department").value;
-    let faculty = document.getElementById("faculty").value;
-    let level = document.getElementById("level").value;
-    let phone = document.getElementById("phone").value;
 
-    if (!fullName || !department || !faculty || !level || !phone) {
-        alert("Please fill in all fields");
-        return;
+    function showRegister() {
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('register-container').style.display = 'block';
     }
 
-    let userData = { fullName, department, faculty, level, phone, creditPoints: 100 };
-    localStorage.setItem("userData", JSON.stringify(userData));
+    function showLogin() {
+        document.getElementById('register-container').style.display = 'none';
+        document.getElementById('auth-container').style.display = 'block';
+    }
 
-    loadDashboard();
-}
+    function loginUser() {
+        var fullName = document.getElementById('loginFullName').value;
+        var phone = document.getElementById('loginPhone').value;
 
-// Load Dashboard
-function loadDashboard() {
-    let userData = JSON.parse(localStorage.getItem("userData"));
-    if (!userData) return;
+        if (!fullName || !phone) {
+            showRegister();
+            return;
+        }
 
-    document.getElementById("auth-container").style.display = "none";
-    document.getElementById("dashboard-container").style.display = "block";
+        // Retrieve user details from local storage
+        var storedUser = JSON.parse(localStorage.getItem('userDetails'));
+        
+        if (storedUser && storedUser.fullName === fullName && storedUser.phone === phone) {
+            alert('Login successful');
+            loadDashboard();  // Load the dashboard on successful login
+        } else {
+            alert('User not found. Please register.');
+            showRegister();
+        }
+    }
 
-    document.getElementById("user-name").innerText = userData.fullName;
-    document.getElementById("user-department").innerText = userData.department;
-    document.getElementById("user-faculty").innerText = userData.faculty;
-    document.getElementById("user-level").innerText = userData.level;
-    document.getElementById("user-phone").innerText = userData.phone;
-    document.getElementById("credit-points").innerText = userData.creditPoints;
-}
+    function registerUser() {
+        var fullName = document.getElementById('regFullName').value;
+        var department = document.getElementById('regDepartment').value;
+        var faculty = document.getElementById('regFaculty').value;
+        var level = document.getElementById('regLevel').value;
+        var phone = document.getElementById('regPhone').value;
 
-// Purchase Credit Points
+        if (!fullName || !department || !faculty || !level || !phone) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Save user details to local storage
+        var userDetails = {
+            fullName: fullName,
+            department: department,
+            faculty: faculty,
+            level: level,
+            phone: phone
+        };
+        
+        localStorage.setItem('userDetails', JSON.stringify(userDetails));
+        alert('Registration successful');
+    }
+
+    function loadDashboard() {
+        var userData = JSON.parse(localStorage.getItem('userDetails'));
+        if (!userData) return;
+
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('register-container').style.display = 'none';
+        document.getElementById('dashboard-container').style.display = 'block';
+
+        document.getElementById('user-name').innerText = userData.fullName;
+        document.getElementById('user-department').innerText = userData.department;
+        document.getElementById('user-faculty').innerText = userData.faculty;
+        document.getElementById('user-level').innerText = userData.level;
+        document.getElementById('user-phone').innerText = userData.phone;
+        document.getElementById('credit-points').innerText = userData.creditPoints || 100;  // Default to 100 if undefined
+    }
+
+    // Auto-load Dashboard if user is logged in
+    window.onload = function () {
+        if (localStorage.getItem('userDetails')) {
+            loadDashboard();
+        }
+    };
+
+
 // Purchase Credit Points
 function purchaseCredits() {
     let amount = document.getElementById("purchaseAmount").value;
