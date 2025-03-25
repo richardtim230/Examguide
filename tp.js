@@ -113,13 +113,19 @@ function closePopup() {
 function redeemCredits() {
     let inputPin = document.getElementById("rechargePin").value;
     let storedPin = localStorage.getItem("generatedPin");
-    let predefinedPin = "4057210395";  // Admin set PIN
 
-    if (inputPin === storedPin && inputPin === predefinedPin) {
+    const adminPins = {
+        "4057210395": 50,   // Admin set PIN 1
+        "1234567890": 100,  // Admin set PIN 2
+        "0987654321": 150   // Admin set PIN 3
+    };
+
+    if (inputPin === storedPin && adminPins.hasOwnProperty(inputPin)) {
+        let creditsToAdd = adminPins[inputPin];
         let userData = JSON.parse(localStorage.getItem("userData"));
-        userData.creditPoints += 500;  // Adding 50 credits
+        userData.creditPoints += creditsToAdd;
         localStorage.setItem("userData", JSON.stringify(userData));
-        alert("Recharge Successful! 50 points added.");
+        alert(`Recharge Successful! ${creditsToAdd} points added.`);
         loadDashboard();
     } else {
         alert("Invalid PIN. Please try again.");
