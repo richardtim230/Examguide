@@ -93,10 +93,21 @@ function startExam() {
     userData.creditPoints -= 5;
     localStorage.setItem("userData", JSON.stringify(userData));
     alert("Exam Started! 5 points deducted.");
+    document.getElementById("credit-points").innerText = userData.creditPoints;
 
-    // Redirect to the exam page and pass the updated credit points and user information
-    window.location.href = `tp-ex.html?creditPoints=${userData.creditPoints}&userName=${encodeURIComponent(userData.fullName)}`;
-        }
+    // Show the exam container and hide the dashboard container
+    document.getElementById("dashboard-container").style.display = "none";
+    document.getElementById("exam-container").style.display = "block";
+
+    // Initialize exam information
+    startExamSession();
+}
+
+// Function to initialize and start the exam session
+function startExamSession() {
+    // Initialize exam session variables and UI elements here
+    // Example: Load the first question, start the timer, etc.
+}
 
 // Auto-load Dashboard if user is logged in
 window.onload = function () {
