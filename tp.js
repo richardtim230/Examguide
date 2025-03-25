@@ -264,7 +264,7 @@ function confirmAnswer() {
 
 function showCorrectAnswer() {
     let currentQuestion = questions[currentQuestionIndex];
-    let feedback = document.getElementById("feedback");
+    let feedback = document.getElementById("answer-feedback");
 
     if (selectedAnswer === currentQuestion.answer) {
         score++;
@@ -273,8 +273,14 @@ function showCorrectAnswer() {
         feedback.innerHTML = "<span style='color:red;'>Incorrect.</span> The correct answer is <strong>" + currentQuestion.answer + "</strong>.<br>" + currentQuestion.explanation;
     }
 
+    document.getElementById("answer-modal").style.display = "block";
     document.getElementById("next-btn").style.display = "block";
 }
+
+function closeAnswerModal() {
+    document.getElementById("answer-modal").style.display = "none";
+}
+
 
 function nextQuestion() {
     currentQuestionIndex++;
