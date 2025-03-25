@@ -9,7 +9,30 @@ body {
     justify-content: center;
     height: 100vh;
 }
+/* User details styling */
+.user-details {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    margin: 25px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+.user-details h3 {
+    color: #ff6f61;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.user-details p {
+    color: #333;
+    margin: 5px 0;
+    font-size: 1.1em;
+}
 input, button {
     display: block;
     margin: 10px auto;
