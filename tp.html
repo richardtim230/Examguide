@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Exam Platform</title>
     <link rel="stylesheet" href="tp.css">
+    <link rel="stylesheet" href="tp-ex.css">
     <style>
         /* Payment Popup Styles */
         .popup {
@@ -95,6 +96,20 @@
         </div>
     </div>
 
+    <div id="exam-container" style="display: none;">
+        <h2>Exam Session</h2>
+        <p>Time Remaining: <span id="timer">10</span> sec</p>
+        <p><strong>Question <span id="question-number"></span>/50</strong></p>
+        <p id="question-text"></p>
+
+        <div id="options-container"></div>
+
+        <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
+        <p id="feedback"></p>
+
+        <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
+            </div>
     <script src="tp.js"></script>
+        <script src="tp-ex-script.js"></script>
 </body>
 </html>
