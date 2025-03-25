@@ -184,12 +184,12 @@ let timeLeft = 10;
 let questions = [];
 
 function startExam() {
-    alert("startExam function called");
+    
     let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
-    alert("userData retrieved");
+    
 
     let examCode = document.getElementById("examCode").value.toUpperCase();
-    alert("examCode retrieved: " + examCode);
+    
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
