@@ -50,17 +50,25 @@
 </head>
 <body>
     <div id="auth-container">
-        <h2>Login / Register</h2>
-        <input type="text" id="fullName" placeholder="Full Name">
-        <input type="text" id="department" placeholder="Department">
-        <input type="text" id="faculty" placeholder="Faculty">
-        <input type="text" id="level" placeholder="Level">
-        <input type="text" id="phone" placeholder="Phone Number">
-        <button onclick="registerUser()">Register / Login</button>
+        <h2>Login</h2>
+        <input type="text" id="loginFullName" placeholder="Full Name">
+        <input type="text" id="loginPhone" placeholder="Phone Number">
+        <button onclick="loginUser()">Login</button>
+        <p>Don't have an account? <button onclick="showRegister()">Register here</button></p>
+    </div>
+
+    <div id="register-container" style="display: none;">
+        <h2>Register</h2>
+        <input type="text" id="regFullName" placeholder="Full Name">
+        <input type="text" id="regDepartment" placeholder="Department">
+        <input type="text" id="regFaculty" placeholder="Faculty">
+        <input type="text" id="regLevel" placeholder="Level">
+        <input type="text" id="regPhone" placeholder="Phone Number">
+        <button onclick="registerUser()">Register</button>
+        <p>Already have an account? <button onclick="showLogin()">Login here</button></p>
     </div>
 
     <div id="dashboard-container" class="user-details" style="display: none;">
-
         <h2>Welcome, <span id="user-name"></span></h2>
         <p>Department: <span id="user-department"></span></p>
         <p>Faculty: <span id="user-faculty"></span></p>
@@ -111,13 +119,69 @@
         <p id="feedback"></p>
 
         <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
-            </div>
+    </div>
     <div id="review-container" style="display: none;">
         <h2>Exam Completed!</h2>
         <p>Your Score: <span id="final-score"></span>/50</p>
         <button onclick="returnToDashboard()">Return to Dashboard</button>
     </div>
     <script src="tp.js"></script>
-        <script src="tp-ex-script.js"></script>
+    <script src="tp-ex-script.js"></script>
+    <script>
+    function showRegister() {
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('register-container').style.display = 'block';
+    }
+
+    function showLogin() {
+        document.getElementById('register-container').style.display = 'none';
+        document.getElementById('auth-container').style.display = 'block';
+    }
+
+    function loginUser() {
+        var fullName = document.getElementById('loginFullName').value;
+        var phone = document.getElementById('loginPhone').value;
+
+        if (!fullName || !phone) {
+            showRegister();
+            return;
+        }
+
+        // Retrieve user details from local storage
+        var storedUser = JSON.parse(localStorage.getItem('userDetails'));
+        
+        if (storedUser && storedUser.fullName === fullName && storedUser.phone === phone) {
+            alert('Login successful');
+        } else {
+            alert('User not found. Please register.');
+            showRegister();
+        }
+    }
+
+    function registerUser() {
+        var fullName = document.getElementById('regFullName').value;
+        var department = document.getElementById('regDepartment').value;
+        var faculty = document.getElementById('regFaculty').value;
+        var level = document.getElementById('regLevel').value;
+        var phone = document.getElementById('regPhone').value;
+
+        if (!fullName || !department || !faculty || !level || !phone) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Save user details to local storage
+        var userDetails = {
+            fullName: fullName,
+            department: department,
+            faculty: faculty,
+            level: level,
+            phone: phone
+        };
+        
+        localStorage.setItem('userDetails', JSON.stringify(userDetails));
+        alert('Registration successful');
+    }
+</script>
 </body>
 </html>
