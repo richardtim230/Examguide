@@ -26,9 +26,6 @@ function loadArticle() {
     }
 }
 
-// Call the function to load the article when the page loads
-window.onload = loadArticle;
-
 function copyLink(articleId) {
     const article = document.getElementById(articleId);
     const url = window.location.href.split('#')[0] + '#' + articleId;
