@@ -93,8 +93,10 @@ function startExam() {
     userData.creditPoints -= 5;
     localStorage.setItem("userData", JSON.stringify(userData));
     alert("Exam Started! 5 points deducted.");
-    loadDashboard();
-}
+
+    // Redirect to the exam page and pass the updated credit points and user information
+    window.location.href = `tp-ex.html?creditPoints=${userData.creditPoints}&userName=${encodeURIComponent(userData.fullName)}`;
+        }
 
 // Auto-load Dashboard if user is logged in
 window.onload = function () {
