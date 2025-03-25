@@ -133,9 +133,9 @@ function redeemCredits() {
         alert("Invalid PIN. Please try again.");
     }
 }
-// Start Exam
+
 function startExam() {
-    let userData = JSON.parse(localStorage.getItem("userData"));
+    let userData = JSON.parse(localStorage.getItem("userDetails"));
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
@@ -143,7 +143,7 @@ function startExam() {
     }
 
     userData.creditPoints -= 5;
-    localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("userDetails", JSON.stringify(userData));
     alert("Exam Started! 5 points deducted.");
     document.getElementById("dashboard-container").style.display = "none";
     document.getElementById("exam-container").style.display = "block";
@@ -151,7 +151,6 @@ function startExam() {
     // Initialize exam information
     startExamSession();
 }
-
 // Function to initialize and start the exam session
 function startExamSession() {
     // Initialize exam session variables and UI elements here
