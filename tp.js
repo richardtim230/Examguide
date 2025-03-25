@@ -135,22 +135,32 @@ function redeemCredits() {
 }
 
 function startExam() {
-    let userData = JSON.parse(localStorage.getItem("userDetails"));
+    let userData = JSON.parse(localStorage.getItem("userData"));
+    let examCode = document.getElementById("examCode").value.toUpperCase();
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
         return;
     }
 
+    if (!examSets[examCode]) {
+        alert("Invalid exam code. Please enter a valid code.");
+        return;
+    }
+
+    // Deduct 5 credit points
     userData.creditPoints -= 5;
-    localStorage.setItem("userDetails", JSON.stringify(userData));
-    alert("Exam Started! 5 points deducted.");
+    localStorage.setItem("userData", JSON.stringify(userData));
+
+    // Hide Dashboard & Show Exam Container
     document.getElementById("dashboard-container").style.display = "none";
     document.getElementById("exam-container").style.display = "block";
 
-    // Initialize exam information
-    startExamSession();
+    // Select 50 random questions from the chosen exam set
+    questions = examSets[examCode].sort(() => 0.5 - Math.random()).slice(0, 50);
+    loadQuestion();
 }
+
 // Function to initialize and start the exam session
 function startExamSession() {
     // Initialize exam session variables and UI elements here
