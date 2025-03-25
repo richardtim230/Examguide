@@ -1,3 +1,16 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // Get query parameters from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const creditPoints = urlParams.get('creditPoints');
+    const userName = urlParams.get('userName');
+
+    // Update the credit points and user name on the exam page
+    if (creditPoints !== null && userName !== null) {
+        document.getElementById("credit-points").innerText = creditPoints;
+        document.getElementById("user-name").innerText = userName;
+    }
+});
+
 // Exam code mapping to question sets
 const examSets = {
     "MATH101": [
