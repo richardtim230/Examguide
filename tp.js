@@ -34,6 +34,7 @@ function loadDashboard() {
 }
 
 // Purchase Credit Points
+// Purchase Credit Points
 function purchaseCredits() {
     let amount = document.getElementById("purchaseAmount").value;
     if (!amount || amount <= 0) {
@@ -53,6 +54,9 @@ function purchaseCredits() {
     document.getElementById("popup-pin").innerText = rechargePin;
 
     document.getElementById("payment-popup").style.display = "block";
+
+    let whatsappLink = `https://wa.me/+2349155127634?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20${amount}%0APIN:%20${rechargePin}`;
+    window.open(whatsappLink, "_blank");
 }
 
 // Close the payment pop-up
