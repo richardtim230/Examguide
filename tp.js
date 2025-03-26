@@ -212,7 +212,6 @@ function getTopicFromExamCode(examCode) {
     };
     return topics[examCode] || 'Unknown Topic';
 }
-
 function loadQuestion() {
     if (currentQuestionIndex >= questions.length) {
         showReview();
