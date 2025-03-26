@@ -179,18 +179,14 @@ let timer;
 let timeLeft = 10;
 let questions = [];
 
-// Function to initialize and start the exam session
-function startExamSession() {
-    // Initialize exam session variables and UI elements here
-    // Example: Load the first question, start the timer, etc.
-}
-
-// Function to start the exam
 function startExam() {
-    let userData = JSON.parse(localStorage.getItem("userDetails"));  // Retrieve user details
+    
+    let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
+    
 
     let examCode = document.getElementById("examCode").value.toUpperCase();
     
+
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
         return;
@@ -203,7 +199,7 @@ function startExam() {
 
     // Deduct 5 credit points
     userData.creditPoints -= 5;
-    localStorage.setItem("userDetails", JSON.stringify(userData));
+    localStorage.setItem("userDetails", JSON.stringify(userData));  // Corrected key
 
     // Hide Dashboard & Show Exam Container
     document.getElementById("dashboard-container").style.display = "none";
@@ -211,15 +207,9 @@ function startExam() {
 
     // Select 50 random questions from the chosen exam set
     questions = examSets[examCode].sort(() => 0.5 - Math.random()).slice(0, 50);
-
-    // Display the user's full name and exam topic
-    document.getElementById("user-fullname").innerText = userData.fullName;
-    document.getElementById("exam-topic").innerText = examSets[examCode].topic;
-
     loadQuestion();
 }
 
-// Function to load a question
 function loadQuestion() {
     if (currentQuestionIndex >= questions.length) {
         showReview();
@@ -227,7 +217,7 @@ function loadQuestion() {
     }
 
     clearTimeout(timer);
-    timeLeft = 15;
+    timeLeft = 10;
     document.getElementById("timer").innerText = timeLeft;
 
     let currentQuestion = questions[currentQuestionIndex];
@@ -237,10 +227,7 @@ function loadQuestion() {
     let optionsContainer = document.getElementById("options-container");
     optionsContainer.innerHTML = "";
 
-    // Shuffle the options
-    let shuffledOptions = currentQuestion.options.sort(() => 0.5 - Math.random());
-
-    shuffledOptions.forEach(option => {
+    currentQuestion.options.forEach(option => {
         let btn = document.createElement("button");
         btn.innerText = option;
         btn.onclick = (event) => selectAnswer(option, event);
@@ -258,7 +245,7 @@ function loadQuestion() {
             clearInterval(timer);
             showCorrectAnswer();
         }
-    }, 1500);
+    }, 1000);
 }
 
 function selectAnswer(answer, event) {
