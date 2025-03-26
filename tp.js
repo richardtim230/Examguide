@@ -130,7 +130,7 @@ function redeemCredits() {
     let storedPin = localStorage.getItem("generatedPin");
 
     const adminPins = {
-        "1272171664": 50000,  // Admin set PIN 1
+        "8760869513": 5000,  // Admin set PIN 1
         "1234567890": 100,    // Admin set PIN 2
         "0987654321": 150     // Admin set PIN 3
     };
@@ -219,7 +219,7 @@ function loadQuestion() {
     }
 
     clearTimeout(timer);
-    timeLeft = 10;
+    timeLeft = 15;
     document.getElementById("timer").innerText = timeLeft;
 
     let currentQuestion = questions[currentQuestionIndex];
