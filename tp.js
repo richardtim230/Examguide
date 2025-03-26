@@ -208,7 +208,7 @@ function getTopicFromExamCode(examCode) {
     const topics = {
         'QLTA102': 'QUALITATIVE ANALYSIS OF INORGANIC COMPOUNDS',
         'CBD102': 'CHEMICAL BONDING',
-        'CBDD102': 'CHEMICAL BONDING'
+        'CHOFH102': 'CHEMICAL BONDING'
     };
     return topics[examCode] || 'Unknown Topic';
 }
