@@ -98,8 +98,10 @@ button:hover {
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
+        width: 100%; /* Ensure full viewport width */
+    max-width: 100%; /* Prevent exceeding viewport width */
+    box-sizing: border-box; 
     
-    width: 100vw;
 }
 
 h2 {
