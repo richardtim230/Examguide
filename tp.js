@@ -1,3 +1,5 @@
+// Existing code...
+
 function showRegister() {
     document.getElementById('auth-container').style.display = 'none';
     document.getElementById('register-container').style.display = 'block';
@@ -212,6 +214,7 @@ function getTopicFromExamCode(examCode) {
     };
     return topics[examCode] || 'Unknown Topic';
 }
+
 function loadQuestion() {
     if (currentQuestionIndex >= questions.length) {
         showReview();
@@ -252,6 +255,7 @@ function loadQuestion() {
         }
     }, 1500);
 }
+
 function selectAnswer(answer, event) {
     selectedAnswer = answer;
     document.getElementById("confirm-btn").disabled = false;
@@ -316,4 +320,38 @@ window.onload = function () {
     if (localStorage.getItem("userDetails")) {
         loadDashboard();
     }
+};
+
+// Add the new script for the exam topics toggle section
+const examTopics = [
+    { topic: 'QUALITATIVE ANALYSIS OF INORGANIC COMPOUNDS', code: 'QLTA102' },
+    { topic: 'CHEMICAL BONDING', code: 'CBD102' },
+    { topic: 'CHEMICAL BONDING', code: 'CHOFH102' },
+    // Add more exam topics and codes here
+];
+
+function toggleExamSection() {
+    const examSection = document.getElementById('examSection');
+    if (examSection.style.display === 'none') {
+        examSection.style.display = 'block';
+    } else {
+        examSection.style.display = 'none';
+    }
+}
+
+function populateExamList() {
+    const examList = document.getElementById('examList');
+    examTopics.forEach(exam => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${exam.topic}: ${exam.code}`;
+        examList.appendChild(listItem);
+    });
+}
+
+// Populate the exam list on page load
+window.onload = function () {
+    if (localStorage.getItem('userDetails')) {
+        loadDashboard();
+    }
+    populateExamList();
 };
