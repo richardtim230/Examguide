@@ -186,20 +186,19 @@
         </div>
     </div>
 
-    <div id="exam-container" style="display: none;">
-        <h2>Exam Session</h2>
-            
-        <p>Time Remaining: <span id="timer">10</span> sec</p>
-        <p><strong>Question <span id="question-number"></span>/50</strong></p>
-        <p id="question-text"></p>
-
-        <div id="options-container"></div>
-
-        <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
-        <p id="feedback"></p>
-
-        <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
-    </div>
+    <!-- Exam container -->
+<div id="exam-container" style="display: none;">
+    <h2>Exam Session</h2>
+    <p><strong>Name:</strong> <span id="exam-user-name"></span></p> <!-- Add this line -->
+    <p><strong>Topic:</strong> <span id="exam-topic"></span></p> <!-- Add this line -->
+    <p>Time Remaining: <span id="timer">10</span> sec</p>
+    <p><strong>Question <span id="question-number"></span>/50</strong></p>
+    <p id="question-text"></p>
+    <div id="options-container"></div>
+    <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
+    <p id="feedback"></p>
+    <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
+</div>
     <div id="review-container" style="display: none;">
         <h2>Exam Completed!</h2>
         <p>Your Score: <span id="final-score"></span>/50</p>
