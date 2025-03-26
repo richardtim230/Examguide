@@ -149,25 +149,31 @@
     </div>
 
     <div id="dashboard-container" class="user-details" style="display: none;">
-        <h2>Welcome, <span id="user-name"></span></h2>
-        <p>Department: <span id="user-department"></span></p>
-        <p>Faculty: <span id="user-faculty"></span></p>
-        <p>Level: <span id="user-level"></span></p>
-        <p>Phone: <span id="user-phone"></span></p>
-        <p>Available Credit Points: <span id="credit-points">100</span></p>
+    <h3>Take Exam</h3>
+    <input type="text" id="examCode" placeholder="Enter Exam Code">
+    <button id="start-exam-btn">Start Exam (5 Points)</button>
+</div>
 
-        <h3>Purchase Credit Points</h3>
-        <input type="number" id="purchaseAmount" placeholder="Enter amount in Naira">
-        <button onclick="purchaseCredits()">Generate Recharge PIN</button>
+<div id="exam-container" style="display: none;">
+    <h2>Exam Session</h2>
+    <p><strong>Student:</strong> <span id="user-fullname"></span></p>
+    <p><strong>Topic:</strong> <span id="exam-topic"></span></p>
+    <p>Time Remaining: <span id="timer">10</span> sec</p>
+    <p><strong>Question <span id="question-number"></span>/50</strong></p>
+    <p id="question-text"></p>
 
-        <h3>Redeem Credits</h3>
-        <input type="text" id="rechargePin" placeholder="Enter Recharge PIN">
-        <button onclick="redeemCredits()">Redeem</button>
+    <div id="options-container"></div>
 
-        <h3>Take Exam</h3>
-        <input type="text" id="examCode" placeholder="Enter Exam Code">
-        <button onclick="startExam()">Start Exam (5 Points)</button>
-    </div>
+    <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
+    <p id="feedback"></p>
+
+    <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
+</div>
+
+<!-- Add this script to attach the event listener to the startExam button -->
+<script>
+    document.getElementById("start-exam-btn").addEventListener("click", startExam);
+</script>
 
     <!-- Payment Pop-up -->
     <div id="payment-popup" class="popup">
