@@ -169,7 +169,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 let selectedAnswer = "";
 let timer;
-let timeLeft = 10;
+let timeLeft = 15;
 let questions = [];
 
 function startExam() {
@@ -250,7 +250,7 @@ function loadQuestion() {
             clearInterval(timer);
             showCorrectAnswer();
         }
-    }, 1000);
+    }, 1500);
 }
 function selectAnswer(answer, event) {
     selectedAnswer = answer;
