@@ -16,6 +16,7 @@ async function loadExamData() {
     results.forEach(result => {
         Object.assign(examSets, result.examSets);
     });
+    console.log('Exam data loaded:', examSets); // Debug print to verify exam data loading
 }
 
 // Call loadExamData when the page loads
@@ -196,6 +197,7 @@ let questions = [];
 function startExam() {
     let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
     let examCode = document.getElementById("examCode").value.toUpperCase();
+    console.log('Exam code entered:', examCode); // Debug print to verify exam code
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
@@ -203,6 +205,7 @@ function startExam() {
     }
 
     if (!examSets[examCode]) {
+        console.log('Exam code not found in examSets:', examSets); // Debug print to verify examSets content
         alert("Invalid exam code. Please enter a valid code.");
         return;
     }
