@@ -1,6 +1,8 @@
+console.log("math.js is loaded");
+
 // Exam code mapping to question sets
 const examSets = {
-    "MATH101": [
+    "MATH01": [
         { question: "What is 5 + 3?", options: ["6", "7", "8", "9"], answer: "8", explanation: "5 + 3 = 8" },
         { question: "Solve for x: 2x = 10", options: ["3", "5", "6", "8"], answer: "5", explanation: "Divide both sides by 2: x = 5" },
         { question: "What is the square root of 49?", options: ["5", "6", "7", "8"], answer: "7", explanation: "√49 = 7" },
