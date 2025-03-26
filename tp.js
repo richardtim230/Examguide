@@ -217,7 +217,7 @@ function loadQuestion() {
     }
 
     clearTimeout(timer);
-    timeLeft = 10;
+    timeLeft = 15;
     document.getElementById("timer").innerText = timeLeft;
 
     let currentQuestion = questions[currentQuestionIndex];
@@ -227,7 +227,10 @@ function loadQuestion() {
     let optionsContainer = document.getElementById("options-container");
     optionsContainer.innerHTML = "";
 
-    currentQuestion.options.forEach(option => {
+    // Shuffle the options
+    let shuffledOptions = currentQuestion.options.sort(() => 0.5 - Math.random());
+
+    shuffledOptions.forEach(option => {
         let btn = document.createElement("button");
         btn.innerText = option;
         btn.onclick = (event) => selectAnswer(option, event);
@@ -245,7 +248,7 @@ function loadQuestion() {
             clearInterval(timer);
             showCorrectAnswer();
         }
-    }, 1000);
+    }, 1500);
 }
 
 function selectAnswer(answer, event) {
