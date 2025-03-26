@@ -1,14 +1,47 @@
-
-    
-    body {
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #f4f6f9, #c9d6ff);
     color: #333;
     margin: 0;
     padding: 0;
-        
     height: 100vh;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Header */
+header {
+    display: block;
+    width: 100%;
+    background: linear-gradient(to right, #002147, #003366);
+    color: white;
+    padding: 20px 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.header-content h1 {
+    font-size: 1.8rem;
+    margin: 10px 0;
+}
+
+.header-content p {
+    font-size: 0.9rem;
+}
+
+/* Logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.logo-container img {
+    width: 100px;
+    height: auto;
+}
 
 /* User details styling */
 .user-details {
@@ -20,7 +53,6 @@
     max-width: 600px;
     width: 100%;
     margin: 25px auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .user-details h3 {
@@ -34,6 +66,7 @@
     margin: 5px 0;
     font-size: 1.1em;
 }
+
 input, button {
     display: block;
     margin: 10px auto;
@@ -60,7 +93,7 @@ button:hover {
 #auth-container, #dashboard-container, #payment-popup, #exam-container {
     background: linear-gradient(135deg, #ffffff, #e0eafc);
     padding: 25px;
-    margin: 25px;
+    margin: 25px auto;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -120,7 +153,7 @@ p {
     display: none;
     background: linear-gradient(135deg, #ffffff, #e0eafc);
     padding: 25px;
-    margin: 25px;
+    margin: 25px auto;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -176,7 +209,7 @@ p {
     display: none;
     background: linear-gradient(135deg, #ffffff, #e0eafc);
     padding: 25px;
-    margin: 25px;
+    margin: 25px auto;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
