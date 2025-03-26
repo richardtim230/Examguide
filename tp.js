@@ -179,14 +179,18 @@ let timer;
 let timeLeft = 10;
 let questions = [];
 
+// Function to initialize and start the exam session
+function startExamSession() {
+    // Initialize exam session variables and UI elements here
+    // Example: Load the first question, start the timer, etc.
+}
+
+// Function to start the exam
 function startExam() {
-    
-    let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
-    
+    let userData = JSON.parse(localStorage.getItem("userDetails"));  // Retrieve user details
 
     let examCode = document.getElementById("examCode").value.toUpperCase();
     
-
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
         return;
@@ -199,7 +203,7 @@ function startExam() {
 
     // Deduct 5 credit points
     userData.creditPoints -= 5;
-    localStorage.setItem("userDetails", JSON.stringify(userData));  // Corrected key
+    localStorage.setItem("userDetails", JSON.stringify(userData));
 
     // Hide Dashboard & Show Exam Container
     document.getElementById("dashboard-container").style.display = "none";
@@ -207,9 +211,15 @@ function startExam() {
 
     // Select 50 random questions from the chosen exam set
     questions = examSets[examCode].sort(() => 0.5 - Math.random()).slice(0, 50);
+
+    // Display the user's full name and exam topic
+    document.getElementById("user-fullname").innerText = userData.fullName;
+    document.getElementById("exam-topic").innerText = examSets[examCode].topic;
+
     loadQuestion();
 }
 
+// Function to load a question
 function loadQuestion() {
     if (currentQuestionIndex >= questions.length) {
         showReview();
