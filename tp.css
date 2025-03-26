@@ -91,7 +91,7 @@ button:hover {
     background-color: #0056b3;
 }
 
-#auth-container, #dashboard-container, #payment-popup, #exam-container {
+#auth-container, #dashboard-container, #payment-popup, #exam-container, #review-container {
     background: linear-gradient(135deg, #ffffff, #e0eafc);
     padding: 25px;
     margin: 25px auto;
@@ -113,44 +113,7 @@ p {
     margin: 15px 0;
 }
 
-.popup {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.popup-content {
-    background: linear-gradient(135deg, #ffffff, #e0eafc);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    max-width: 500px;
-    width: 100%;
-}
-
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
 #exam-container {
     display: none;
