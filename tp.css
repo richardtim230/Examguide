@@ -91,7 +91,7 @@ button:hover {
     background-color: #0056b3;
 }
 
-#auth-container, #dashboard-container, #payment-popup, #exam-container, #review-container {
+#auth-container, #register-container, #dashboard-container, #payment-popup, #exam-container, #review-container {
     background: linear-gradient(135deg, #ffffff, #e0eafc);
     padding: 25px;
     margin: 25px auto;
