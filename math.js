@@ -8,7 +8,7 @@ const examSets = {
         { question: "What is the square root of 49?", options: ["5", "6", "7", "8"], answer: "7", explanation: "√49 = 7" },
         // Add more math questions...
     ],
-    "ENG202": [
+    "ENG22": [
         { question: "Who wrote 'To Kill a Mockingbird'?", options: ["Hemingway", "Orwell", "Harper Lee", "Fitzgerald"], answer: "Harper Lee", explanation: "Harper Lee is the author of 'To Kill a Mockingbird'." },
         { question: "What is a synonym for 'Happy'?", options: ["Sad", "Elated", "Angry", "Bored"], answer: "Elated", explanation: "A synonym for Happy is Elated." },
         { question: "Which word is an adjective?", options: ["Run", "Beautiful", "Quickly", "Jump"], answer: "Beautiful", explanation: "Adjectives describe nouns. 'Beautiful' is an adjective." },
