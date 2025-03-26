@@ -103,8 +103,127 @@ const examSets = {
     { question: "What is the bond angle in a trigonal planar molecule?", options: ["90°", "109.5°", "120°", "180°"], answer: "120°", explanation: "In a trigonal planar molecule, the bond angles are 120° due to the symmetrical arrangement of three bonding pairs." },
     { question: "What is the bond angle in an octahedral molecule?", options: ["90°", "109.5°", "120°", "180°"], answer: "90°", explanation: "In an octahedral molecule, the bond angles are 90° due to the symmetrical arrangement of six bonding pairs." },
     { question: "What is the molecular geometry of methane (CH₄)?", options: ["Linear", "Bent", "Trigonal planar", "Tetrahedral"], answer: "Tetrahedral", explanation: "Methane (CH₄) has a tetrahedral geometry with bond angles of 109.5° due to the symmetrical arrangement of bonding pairs." },
-],
-"CBDD102": [
+    
+    { 
+        question: "Which of the following molecules exhibits dative covalent bonding?", 
+        options: ["H₂O", "NH₃", "CO₂", "NH₄⁺"], 
+        answer: "NH₄⁺", 
+        explanation: "In NH₄⁺, the nitrogen atom donates a lone pair to form a bond with an H⁺ ion, creating a dative covalent bond.<br><br><strong>'H₂O'</strong>: Incorrect, H₂O has regular covalent bonds with shared electrons.<br><strong>'NH₃'</strong>: Incorrect, NH₃ has regular covalent bonds and lone pairs.<br><strong>'CO₂'</strong>: Incorrect, CO₂ has double bonds but no dative covalent bonds." 
+    },
+    { 
+        question: "Which type of bonding explains the high melting points of metallic substances?", 
+        options: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Hydrogen bonding"], 
+        answer: "Metallic bonding", 
+        explanation: "Metallic bonding involves a lattice of positive ions surrounded by delocalized electrons, which accounts for high melting points.<br><br><strong>'Ionic bonding'</strong>: Incorrect, while ionic compounds also have high melting points, metallic bonding specifically applies to metals.<br><strong>'Covalent bonding'</strong>: Incorrect, covalent bonds do not typically result in high melting points.<br><strong>'Hydrogen bonding'</strong>: Incorrect, hydrogen bonding is an intermolecular force and does not apply to metallic substances." 
+    },
+    { 
+        question: "Which of the following compounds has a trigonal bipyramidal geometry?", 
+        options: ["CH₄", "SF₆", "PCl₅", "BF₃"], 
+        answer: "PCl₅", 
+        explanation: "PCl₅ has a trigonal bipyramidal geometry due to sp³d hybridization.<br><br><strong>'CH₄'</strong>: Incorrect, CH₄ has a tetrahedral geometry.<br><strong>'SF₆'</strong>: Incorrect, SF₆ has an octahedral geometry.<br><strong>'BF₃'</strong>: Incorrect, BF₃ has a trigonal planar geometry." 
+    },
+    { 
+        question: "Which type of bond is formed by the overlap of atomic orbitals?", 
+        options: ["Ionic bond", "Covalent bond", "Metallic bond", "Hydrogen bond"], 
+        answer: "Covalent bond",
+        explanation: "Covalent bonds are formed by the overlap of atomic orbitals, allowing electrons to be shared between atoms.<br><br><strong>'Ionic bond'</strong>: Incorrect, ionic bonds involve the transfer of electrons.<br><strong>'Metallic bond'</strong>: Incorrect, metallic bonds involve delocalized electrons.<br><strong>'Hydrogen bond'</strong>: Incorrect, hydrogen bonding is an intermolecular force." 
+    },
+    { 
+        question: "Which of the following compounds exhibits resonance?", 
+        options: ["CH₄", "C₆H₆", "NaCl", "H₂"], 
+        answer: "C₆H₆", 
+        explanation: "C₆H₆ (benzene) exhibits resonance due to the delocalization of π-electrons in its ring structure.<br><br><strong>'CH₄'</strong>: Incorrect, methane has single bonds and no delocalized electrons.<br><strong>'NaCl'</strong>: Incorrect, NaCl is an ionic compound without covalent bonds or resonance.<br><strong>'H₂'</strong>: Incorrect, hydrogen has a single covalent bond with no resonance structures." 
+    },
+    { 
+        question: "Which of the following best explains the concept of hybridization?", 
+        options: ["Transfer of electrons between atoms", "Mixing of atomic orbitals to form new hybrid orbitals", "Formation of ionic bonds", "Delocalization of electrons"], 
+        answer: "Mixing of atomic orbitals to form new hybrid orbitals", 
+        explanation: "Hybridization involves the mixing of atomic orbitals to form new hybrid orbitals with equal energy.<br><br><strong>'Transfer of electrons between atoms'</strong>: Incorrect, this describes ionic bonding.<br><strong>'Formation of ionic bonds'</strong>: Incorrect, ionic bonds do not involve hybridization.<br><strong>'Delocalization of electrons'</strong>: Incorrect, delocalization occurs in metallic bonding and resonance structures, not hybridization." 
+    },
+    { 
+        question: "Which type of bond involves the sharing of electrons between two atoms?", 
+        options: ["Ionic bond", "Covalent bond", "Metallic bond", "Hydrogen bond"], 
+        answer: "Covalent bond", 
+        explanation: "Covalent bonds involve the sharing of electrons between atoms, typically between nonmetals.<br><br><strong>'Ionic bond'</strong>: Incorrect, ionic bonds involve the transfer of electrons.<br><strong>'Metallic bond'</strong>: Incorrect, metallic bonds involve delocalized electrons.<br><strong>'Hydrogen bond'</strong>: Incorrect, hydrogen bonding is an intermolecular force." 
+    },
+    { 
+        question: "Which of the following molecules has a square planar geometry?", 
+        options: ["CH₄", "SF₄", "XeF₄", "BF₃"], 
+        answer: "XeF₄", 
+        explanation: "XeF₄ has a square planar geometry due to sp³d² hybridization with lone pairs on xenon.<br><br><strong>'CH₄'</strong>: Incorrect, CH₄ has a tetrahedral geometry.<br><strong>'SF₄'</strong>: Incorrect, SF₄ has a see-saw geometry.<br><strong>'BF₃'</strong>: Incorrect, BF₃ has a trigonal planar geometry." 
+    },
+    { 
+        question: "Which type of bond is formed when one atom donates both electrons in a bond?", 
+        options: ["Ionic bond", "Covalent bond", "Metallic bond", "Coordinate bond"], 
+        answer: "Coordinate bond", 
+        explanation: "A coordinate bond, or dative covalent bond, is formed when one atom donates both electrons to form a bond.<br><br><strong>'Ionic bond'</strong>: Incorrect, ionic bonds involve the transfer of electrons.<br><strong>'Covalent bond'</strong>: Incorrect, covalent bonds involve the sharing of electrons.<br><strong>'Metallic bond'</strong>: Incorrect, metallic bonds involve delocalized electrons." 
+    },
+    { 
+        question: "Which of the following explains the high electrical conductivity of metals?", 
+        options: ["Strong covalent bonds", "Presence of ionic bonds", "Delocalized electrons", "Hydrogen bonding"], 
+        answer: "Delocalized electrons", 
+        explanation: "Metals have high electrical conductivity due to the presence of delocalized electrons that can move freely.<br><br><strong>'Strong covalent bonds'</strong>: Incorrect, covalent bonds do not typically result in high conductivity.<br><strong>'Presence of ionic bonds'</strong>: Incorrect, ionic compounds conduct electricity only when molten or dissolved.<br><strong>'Hydrogen bonding'</strong>: Incorrect, hydrogen bonding is an intermolecular force and does not apply to metals." 
+    },
+    { 
+        question: "Which of the following explains why metallic bonds allow metals to be malleable?", 
+        options: ["Presence of covalent bonds between atoms", "Presence of ionic bonds between atoms", "Delocalized electrons allow layers to slide", "Strong intermolecular forces"], 
+        answer: "Delocalized electrons allow layers to slide", 
+        explanation: "In metallic bonding, delocalized electrons act as a 'glue' that holds metal ions together, allowing layers to slide without breaking bonds.<br><br><strong>'Presence of covalent bonds between atoms'</strong>: Incorrect, metals do not have covalent bonds.<br><strong>'Presence of ionic bonds between atoms'</strong>: Incorrect, ionic bonds are rigid and do not allow malleability.<br><strong>'Strong intermolecular forces'</strong>: Incorrect, metallic bonding involves intramolecular forces, not intermolecular forces." 
+    },
+    { 
+        question: "Which of the following compounds has the highest lattice energy?", 
+        options: ["NaCl", "MgO", "KCl", "LiF"], 
+        answer: "MgO", 
+        explanation: "MgO has the highest lattice energy due to the higher charge on Mg²⁺ and O²⁻ ions, and smaller ionic radii.<br><br><strong>'NaCl'</strong>: Incorrect, Na⁺ and Cl⁻ ions have lower charges and larger radii compared to MgO.<br><strong>'KCl'</strong>: Incorrect, K⁺ is larger than Na⁺, resulting in lower lattice energy.<br><strong>'LiF'</strong>: Incorrect, while Li⁺ and F⁻ are small, their charge is lower than Mg²⁺ and O²⁻." 
+    },
+    { 
+        question: "Which of the following molecules has a bent geometry?", 
+        options: ["CO₂", "CH₄", "H₂O", "BF₃"], 
+        answer: "H₂O", 
+        explanation: "H₂O has a bent geometry due to the repulsion between two lone pairs on oxygen.<br><br><strong>'CO₂'</strong>: Incorrect, CO₂ is linear due to the absence of lone pairs on the central atom.<br><strong>'CH₄'</strong>: Incorrect, CH₄ is tetrahedral with no lone pairs.<br><strong>'BF₃'</strong>: Incorrect, BF₃ is trigonal planar and has no lone pairs." 
+    },
+    { 
+        question: "Which of the following molecules can form hydrogen bonds?", 
+        options: ["CH₄", "NH₃", "CO₂", "CCl₄"], 
+        answer: "NH₃", 
+        explanation: "NH₃ can form hydrogen bonds because it has a highly electronegative nitrogen atom bonded to hydrogen.<br><br><strong>'CH₄'</strong>: Incorrect, CH₄ has no electronegative atoms to form hydrogen bonds.<br><strong>'CO₂'</strong>: Incorrect, CO₂ is linear and nonpolar, so it cannot form hydrogen bonds.<br><strong>'CCl₄'</strong>: Incorrect, CCl₄ is nonpolar and does not form hydrogen bonds." 
+    },
+    { 
+        question: "Which of the following hybridizations is found in the central atom of SF₆?", 
+        options: ["sp³", "sp³d", "sp³d²", "sp²"], 
+        answer: "sp³d²", 
+        explanation: "SF₆ has sp³d² hybridization, resulting in an octahedral geometry with bond angles of 90°.<br><br><strong>'sp³'</strong>: Incorrect, sp³ hybridization leads to tetrahedral geometry.<br><strong>'sp³d'</strong>: Incorrect, sp³d hybridization leads to trigonal bipyramidal geometry.<br><strong>'sp²'</strong>: Incorrect, sp² hybridization leads to trigonal planar geometry." 
+    },
+    { 
+        question: "Which of the following molecules has delocalized π-electrons?", 
+        options: ["CH₄", "CO₂", "C₆H₆", "NH₃"], 
+        answer: "C₆H₆", 
+        explanation: "C₆H₆ (benzene) has delocalized π-electrons in its conjugated ring structure.<br><br><strong>'CH₄'</strong>: Incorrect, CH₄ has only single bonds and no delocalization.<br><strong>'CO₂'</strong>: Incorrect, CO₂ has localized double bonds and no delocalization.<br><strong>'NH₃'</strong>: Incorrect, NH₃ has lone pairs and single bonds but no π-electrons." 
+    },
+    { 
+        question: "Which of the following compounds exhibits coordinate bonding?", 
+        options: ["H₂O", "NH₄⁺", "NaCl", "CH₄"], 
+        answer: "NH₄⁺", 
+        explanation: "NH₄⁺ exhibits coordinate bonding, where one nitrogen atom donates both electrons to form a bond with hydrogen.<br><br><strong>'H₂O'</strong>: Incorrect, H₂O has covalent bonds but no coordinate bonding.<br><strong>'NaCl'</strong>: Incorrect, NaCl has ionic bonds, not coordinate bonds.<br><strong>'CH₄'</strong>: Incorrect, CH₄ has covalent bonds with shared electrons, not donated." 
+    },
+    { 
+        question: "Which of the following molecules has the strongest dipole moment?", 
+        options: ["CO₂", "CH₄", "H₂O", "CCl₄"], 
+        answer: "H₂O", 
+        explanation: "H₂O has the strongest dipole moment due to its bent geometry and highly polar O-H bonds.<br><br><strong>'CO₂'</strong>: Incorrect, CO₂ is linear, so dipole moments cancel.<br><strong>'CH₄'</strong>: Incorrect, CH₄ is tetrahedral and nonpolar.<br><strong>'CCl₄'</strong>: Incorrect, CCl₄ is symmetrical and nonpolar." 
+    },
+    { 
+        question: "Which of the following compounds has a metallic lattice?", 
+        options: ["NaCl", "Cu", "H₂O", "CH₄"], 
+        answer: "Cu", 
+        explanation: "Copper (Cu) has a metallic lattice with delocalized electrons allowing conductivity.<br><br><strong>'NaCl'</strong>: Incorrect, NaCl has an ionic lattice.<br><strong>'H₂O'</strong>: Incorrect, H₂O is a molecular compound with covalent bonds.<br><strong>'CH₄'</strong>: Incorrect, CH₄ is a molecular compound and does not have a lattice structure." 
+    },
+    { 
+        question: "Which of the following explains the polarity of HCl?", 
+        options: ["Equal sharing of electrons", "Unequal sharing of electrons due to electronegativity difference", "Formation of ionic bonds", "Delocalization of π-electrons"], 
+        answer: "Unequal sharing of electrons due to electronegativity difference", 
+        explanation: "HCl is polar because chlorine is more electronegative than hydrogen, causing unequal sharing of electrons.<br><br><strong>'Equal sharing of electrons'</strong>: Incorrect, this describes nonpolar covalent bonds.<br><strong>'Formation of ionic bonds'</strong>: Incorrect, HCl forms covalent bonds, not ionic bonds.<br><strong>'Delocalization of π-electrons'</strong>: Incorrect, HCl has no π-electrons or resonance." 
+    },
     { 
         question: "Which of the following statements best describes why atoms form bonds?", 
         options: ["To increase their atomic mass", "To achieve a lower energy state", "To become isotopes", "To create free radicals"], 
