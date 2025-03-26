@@ -229,7 +229,10 @@ function loadQuestion() {
     let optionsContainer = document.getElementById("options-container");
     optionsContainer.innerHTML = "";
 
-    currentQuestion.options.forEach(option => {
+    // Shuffle the options
+    let shuffledOptions = currentQuestion.options.sort(() => 0.5 - Math.random());
+
+    shuffledOptions.forEach(option => {
         let btn = document.createElement("button");
         btn.innerText = option;
         btn.onclick = (event) => selectAnswer(option, event);
@@ -249,7 +252,6 @@ function loadQuestion() {
         }
     }, 1000);
 }
-
 function selectAnswer(answer, event) {
     selectedAnswer = answer;
     document.getElementById("confirm-btn").disabled = false;
