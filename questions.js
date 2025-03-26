@@ -104,10 +104,65 @@ const examSets = {
     { question: "What is the bond angle in an octahedral molecule?", options: ["90°", "109.5°", "120°", "180°"], answer: "90°", explanation: "In an octahedral molecule, the bond angles are 90° due to the symmetrical arrangement of six bonding pairs." },
     { question: "What is the molecular geometry of methane (CH₄)?", options: ["Linear", "Bent", "Trigonal planar", "Tetrahedral"], answer: "Tetrahedral", explanation: "Methane (CH₄) has a tetrahedral geometry with bond angles of 109.5° due to the symmetrical arrangement of bonding pairs." },
 ],
-    "SCI123": [
-        { question: "What is the chemical symbol for water?", options: ["H2O", "CO2", "O2", "H2"], answer: "H2O", explanation: "H2O is the chemical formula for water." },
-        { question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], answer: "Mars", explanation: "Mars is called the Red Planet because of its reddish appearance." },
-        { question: "What is the powerhouse of the cell?", options: ["Nucleus", "Ribosome", "Mitochondria", "Golgi body"], answer: "Mitochondria", explanation: "Mitochondria generate energy for the cell." },
-        // Add more science questions...
-    ],
+"CBDD102": [
+    { 
+        question: "Which of the following statements best describes why atoms form bonds?", 
+        options: ["To increase their atomic mass", "To achieve a lower energy state", "To become isotopes", "To create free radicals"], 
+        answer: "To achieve a lower energy state", 
+        explanation: "Atoms bond to achieve a lower energy state by forming stable configurations.<br><br><strong>'To increase their atomic mass'</strong>: Incorrect, as bonding does not affect the atomic mass, which depends on protons and neutrons.<br><strong>'To become isotopes'</strong>: Incorrect, isotopes are formed by changes in the number of neutrons, not bonding.<br><strong>'To create free radicals'</strong>: Incorrect, free radicals are unstable species formed during chemical reactions, not bonding." 
+    },
+    { 
+        question: "In an ionic bond, what happens to the electrons?", 
+        options: ["They are shared equally between atoms", "They are transferred from a nonmetal to a metal", "They are transferred from a metal to a nonmetal", "They are delocalized across the lattice"], 
+        answer: "They are transferred from a metal to a nonmetal", 
+        explanation: "Electrons are transferred from a metal (low electronegativity) to a nonmetal (high electronegativity) in ionic bonding.<br><br><strong>'They are shared equally between atoms'</strong>: Incorrect, this describes covalent bonding.<br><strong>'They are transferred from a nonmetal to a metal'</strong>: Incorrect, nonmetals gain electrons, not donate them.<br><strong>'They are delocalized across the lattice'</strong>: Incorrect, this describes metallic bonding." 
+    },
+    { 
+        question: "Which of the following molecules is most likely to exhibit resonance?", 
+        options: ["CH₄", "CO₃²⁻", "NaCl", "H₂"], 
+        answer: "CO₃²⁻", 
+        explanation: "Resonance occurs in molecules with delocalized electrons, such as CO₃²⁻, where the double bond can shift between oxygen atoms.<br><br><strong>'CH₄'</strong>: Incorrect, methane has single bonds and no delocalized electrons.<br><strong>'NaCl'</strong>: Incorrect, NaCl is an ionic compound without covalent bonds or delocalized electrons.<br><strong>'H₂'</strong>: Incorrect, hydrogen has a single covalent bond with no resonance structures." 
+    },
+    { 
+        question: "Which type of hybridization results in a molecule with bond angles of 120°?", 
+        options: ["sp", "sp²", "sp³", "sp³d"],
+        answer: "sp²", 
+        explanation: "sp² hybridization occurs in trigonal planar molecules, resulting in bond angles of 120°.<br><br><strong>'sp'</strong>: Incorrect, sp hybridization results in linear geometry with bond angles of 180°.<br><strong>'sp³'</strong>: Incorrect, sp³ hybridization results in tetrahedral geometry with bond angles of 109.5°.<br><strong>'sp³d'</strong>: Incorrect, sp³d hybridization results in trigonal bipyramidal geometry with bond angles of 90° and 120°." 
+    },
+    { 
+        question: "Which of the following compounds exhibits both ionic and covalent bonding?", 
+        options: ["NaCl", "H₂O", "NH₄Cl", "CH₄"], 
+        answer: "NH₄Cl", 
+        explanation: "NH₄Cl contains covalent bonds within the NH₄⁺ ion and ionic bonds between NH₄⁺ and Cl⁻.<br><br><strong>'NaCl'</strong>: Incorrect, NaCl has purely ionic bonding.<br><strong>'H₂O'</strong>: Incorrect, H₂O has purely covalent bonding.<br><strong>'CH₄'</strong>: Incorrect, CH₄ has purely covalent bonding." 
+    },
+    { 
+        question: "Which of the following best explains the high melting point of ionic compounds?", 
+        options: ["Strong covalent bonds between atoms", "Weak intermolecular forces", "Electrostatic attraction between ions", "Delocalized electrons in the lattice"], 
+        answer: "Electrostatic attraction between ions", 
+        explanation: "Ionic compounds have high melting points due to strong electrostatic forces between oppositely charged ions.<br><br><strong>'Strong covalent bonds between atoms'</strong>: Incorrect, ionic compounds do not have covalent bonds.<br><strong>'Weak intermolecular forces'</strong>: Incorrect, ionic compounds have strong forces, not weak.<br><strong>'Delocalized electrons in the lattice'</strong>: Incorrect, this describes metallic bonding, not ionic bonding." 
+    },
+    { 
+        question: "Which of the following molecules has a dipole moment?", 
+        options: ["CO₂", "CH₄", "H₂O", "CCl₄"], 
+        answer: "H₂O", 
+        explanation: "H₂O has a dipole moment due to its bent geometry and polar bonds.<br><br><strong>'CO₂'</strong>: Incorrect, CO₂ is linear, so the dipole moments cancel.<br><strong>'CH₄'</strong>: Incorrect, CH₄ is tetrahedral and nonpolar.<br><strong>'CCl₄'</strong>: Incorrect, CCl₄ is tetrahedral and symmetrical, so it is nonpolar." 
+    },
+    {         question: "Which type of bonding is responsible for the electrical conductivity of metals?", 
+        options: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Hydrogen bonding"], 
+        answer: "Metallic bonding", 
+        explanation: "Metallic bonding involves delocalized electrons that allow metals to conduct electricity.<br><br><strong>'Ionic bonding'</strong>: Incorrect, ionic compounds conduct electricity only when molten or dissolved.<br><strong>'Covalent bonding'</strong>: Incorrect, covalent compounds do not typically conduct electricity.<br><strong>'Hydrogen bonding'</strong>: Incorrect, hydrogen bonding is an intermolecular force, not a type of bonding within metals." 
+    },
+    { 
+        question: "Which of the following molecules has sp³ hybridization?", 
+        options: ["CH₄", "CO₂", "BF₃", "C₂H₂"], 
+        answer: "CH₄", 
+        explanation: "CH₄ has sp³ hybridization, resulting in a tetrahedral geometry.<br><br><strong>'CO₂'</strong>: Incorrect, CO₂ has sp hybridization.<br><strong>'BF₃'</strong>: Incorrect, BF₃ has sp² hybridization.<br><strong>'C₂H₂'</strong>: Incorrect, C₂H₂ has sp hybridization." 
+    },
+    { 
+        question: "Which of the following molecules has polar bonds but no net dipole moment?", 
+        options: ["H₂O", "CO₂", "NH₃", "CH₃Cl"], 
+        answer: "CO₂", 
+        explanation: "CO₂ has polar bonds, but its linear geometry causes the dipole moments to cancel out.<br><br><strong>'H₂O'</strong>: Incorrect, H₂O has a bent geometry, resulting in a net dipole moment.<br><strong>'NH₃'</strong>: Incorrect, NH₃ has a trigonal pyramidal geometry, resulting in a net dipole moment.<br><strong>'CH₃Cl'</strong>: Incorrect, CH₃Cl is polar due to the asymmetrical distribution of electrons." 
+    },
+],
 };
