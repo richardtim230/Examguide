@@ -53,7 +53,7 @@ const examSets = {
         { question: "Which word is an adjective?", options: ["Run", "Beautiful", "Quickly", "Jump"], answer: "Beautiful", explanation: "Adjectives describe nouns. 'Beautiful' is an adjective." },
         // Add more English questions...
     ],
-    "QLTA102": {
+    "QLTA2": {
         topic: "Qualitative Analysis",
         questions: [
         { question: "What is the chemical symbol for water?", options: ["H2O", "CO2", "O2", "H2"], answer: "H2O", explanation: "H2O is the chemical formula for water." },
