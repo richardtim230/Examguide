@@ -116,13 +116,29 @@ function purchaseCredits() {
 
     let userData = JSON.parse(localStorage.getItem("userDetails"));
 
+    function showPopup() {
+    const popup = document.getElementById('payment-popup');
+    popup.style.display = 'flex';
+    setTimeout(() => {
+        popup.style.opacity = 1;
+    }, 10); // Small delay to trigger transition
+}
+
+function closePopup() {
+    const popup = document.getElementById('payment-popup');
+    popup.style.opacity = 0;
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 300); // Match this with the CSS transition duration
+}
+
     // Display the payment pop-up with user and payment details
     document.getElementById("popup-fullName").innerText = userData.fullName;
     document.getElementById("popup-phone").innerText = userData.phone;
     document.getElementById("popup-amount").innerText = amount;
     document.getElementById("popup-pin").innerText = rechargePin;
 
-    document.getElementById("payment-popup").style.display = "block";
+    
 
     let whatsappLink = `https://wa.me/+2349155127634?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20${amount}%0APIN:%20${rechargePin}`;
     window.open(whatsappLink, "_blank");
