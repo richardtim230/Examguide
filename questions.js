@@ -284,4 +284,204 @@ const examSets = {
         explanation: "CO₂ has polar bonds, but its linear geometry causes the dipole moments to cancel out.<br><br><strong>'H₂O'</strong>: Incorrect, H₂O has a bent geometry, resulting in a net dipole moment.<br><strong>'NH₃'</strong>: Incorrect, NH₃ has a trigonal pyramidal geometry, resulting in a net dipole moment.<br><strong>'CH₃Cl'</strong>: Incorrect, CH₃Cl is polar due to the asymmetrical distribution of electrons." 
     },
 ],
+    "CHOFH102": [
+    { 
+        question: "What is the oxidation state of hydrogen in metal hydrides like NaH?", 
+        options: ["+1", "-1", "0", "+2"], 
+        answer: "-1", 
+        explanation: "In metal hydrides like NaH, hydrogen has an oxidation state of -1 because it gains an electron from the metal.<br><br><strong>'+1'</strong>: Incorrect, hydrogen has a +1 oxidation state in most compounds like H₂O.<br><strong>'0'</strong>: Incorrect, hydrogen has an oxidation state of 0 in its molecular form (H₂).<br><strong>'+2'</strong>: Incorrect, hydrogen never exhibits a +2 oxidation state." 
+    },
+    { 
+        question: "Which of the following is a property of hydrogen peroxide (H₂O₂)?", 
+        options: ["It is a strong reducing agent only", "It is a strong oxidizing agent only", "It acts as both an oxidizing and reducing agent", "It is completely inert"], 
+        answer: "It acts as both an oxidizing and reducing agent", 
+        explanation: "Hydrogen peroxide (H₂O₂) can act as both an oxidizing agent and a reducing agent depending on the reaction.<br><br><strong>'It is a strong reducing agent only'</strong>: Incorrect, H₂O₂ can also act as an oxidizing agent.<br><strong>'It is a strong oxidizing agent only'</strong>: Incorrect, H₂O₂ can also act as a reducing agent.<br><strong>'It is completely inert'</strong>: Incorrect, H₂O₂ is highly reactive." 
+    },
+    { 
+        question: "Which of the following is a use of hydrogen in the food industry?", 
+        options: ["Hydrogenation of oils", "Preservation of food", "Production of carbonated drinks", "Sterilization"], 
+        answer: "Hydrogenation of oils", 
+        explanation: "Hydrogen is used to hydrogenate unsaturated oils to produce margarine and other solid fats.<br><br><strong>'Preservation of food'</strong>: Incorrect, hydrogen is not used for food preservation.<br><strong>'Production of carbonated drinks'</strong>: Incorrect, carbon dioxide is used for carbonation, not hydrogen.<br><strong>'Sterilization'</strong>: Incorrect, hydrogen is not typically used for sterilization." 
+    },
+    { 
+        question: "Which of the following compounds contains hydrogen in its -1 oxidation state?", 
+        options: ["H₂O", "H₂", "NaH", "CH₄"], 
+        answer: "NaH",
+        explanation: "In metal hydrides like NaH, hydrogen has a -1 oxidation state because it gains an electron from the metal.<br><br><strong>'H₂O'</strong>: Incorrect, hydrogen has a +1 oxidation state in water.<br><strong>'H₂'</strong>: Incorrect, hydrogen has an oxidation state of 0 in its molecular form.<br><strong>'CH₄'</strong>: Incorrect, hydrogen has a +1 oxidation state in methane." 
+    },
+    { 
+        question: "Which of the following is a binary compound of hydrogen?", 
+        options: ["H₂SO₄", "H₂O", "HCl", "NaH"], 
+        answer: "HCl", 
+        explanation: "HCl is a binary compound of hydrogen because it contains only two elements: hydrogen and chlorine.<br><br><strong>'H₂SO₄'</strong>: Incorrect, H₂SO₄ is a ternary compound with three elements (H, S, O).<br><strong>'H₂O'</strong>: Incorrect, H₂O is also a ternary compound (H, O).<br><strong>'NaH'</strong>: Incorrect, while NaH contains hydrogen, it is considered a hydride." 
+    },
+    { 
+        question: "Which of the following is a test for the presence of hydrogen gas?", 
+        options: ["Glowing splint test", "Pop sound test", "Limewater test", "Blue litmus paper test"], 
+        answer: "Pop sound test", 
+        explanation: "The 'pop sound' test is used to identify hydrogen gas when it burns with a characteristic sound.<br><br><strong>'Glowing splint test'</strong>: Incorrect, this test is used for oxygen gas.<br><strong>'Limewater test'</strong>: Incorrect, this test is used for carbon dioxide gas.<br><strong>'Blue litmus paper test'</strong>: Incorrect, this test is used for acids." 
+    },
+    { 
+        question: "Which of the following is formed when hydrogen reacts with halogens?", 
+        options: ["Hydrides", "Halides", "Hydrocarbons", "Oxides"], 
+        answer: "Halides", 
+        explanation: "When hydrogen reacts with halogens like chlorine, it forms hydrogen halides such as HCl.<br><br><strong>'Hydrides'</strong>: Incorrect, hydrides are formed when hydrogen reacts with metals.<br><strong>'Hydrocarbons'</strong>: Incorrect, hydrocarbons are formed from hydrogen and carbon.<br><strong>'Oxides'</strong>: Incorrect, oxides are formed from oxygen and metals or nonmetals." 
+    },
+    { 
+        question: "Which of the following methods is used to produce heavy water (D₂O)?", 
+        options: ["Electrolysis of water", "Fractional distillation of liquid hydrogen", "Reaction of deuterium with oxygen", "Reaction of hydrogen with halogens"], 
+        answer: "Electrolysis of water", 
+        explanation: "Heavy water (D₂O) is produced by electrolysis of ordinary water, where deuterium is enriched.<br><br><strong>'Fractional distillation of liquid hydrogen'</strong>: Incorrect, this is used for separating hydrogen isotopes, not producing heavy water.<br><strong>'Reaction of deuterium with oxygen'</strong>: Incorrect, while this produces D₂O, it is not the primary method.<br><strong>'Reaction of hydrogen with halogens'</strong>: Incorrect, this forms hydrogen halides, not heavy water." 
+    },
+    { 
+        question: "Which of the following describes the combustion of hydrogen gas?", 
+        options: ["Exothermic and forms water", "Endothermic and forms water", "Exothermic and forms hydrogen peroxide", "Endothermic and forms hydrogen peroxide"], 
+        answer: "Exothermic and forms water", 
+        explanation: "The combustion of hydrogen gas is an exothermic reaction that produces water.<br><br><strong>'Endothermic and forms water'</strong>: Incorrect, combustion is exothermic.<br><strong>'Exothermic and forms hydrogen peroxide'</strong>: Incorrect, hydrogen peroxide is not formed during combustion.<br><strong>'Endothermic and forms hydrogen peroxide'</strong>: Incorrect, combustion is not endothermic." 
+    },
+    { 
+        question: "Which of the following is a property of heavy water (D₂O)?", 
+        options: ["Lighter than ordinary water", "Higher boiling point than ordinary water", "Highly flammable", "Nonpolar"], 
+        answer: "Higher boiling point than ordinary water", 
+        explanation: "Heavy water (D₂O) has a higher boiling point than ordinary water due to stronger hydrogen bonding.<br><br><strong>'Lighter than ordinary water'</strong>: Incorrect, heavy water is denser than ordinary water.<br><strong>'Highly flammable'</strong>: Incorrect, heavy water is not flammable.<br><strong>'Nonpolar'</strong>: Incorrect, heavy water is polar, just like ordinary water." 
+    },
+    { 
+        question: "Which of the following is a compound of hydrogen used as rocket fuel?", 
+        options: ["H₂O", "H₂", "NH₃", "H₂O₂"], 
+        answer: "H₂", 
+        explanation: "Hydrogen (H₂) is used as a rocket fuel due to its high energy content.<br><br><strong>'H₂O'</strong>: Incorrect, water is not a fuel.<br><strong>'NH₃'</strong>: Incorrect, ammonia is not commonly used as rocket fuel.<br><strong>'H₂O₂'</strong>: Incorrect, hydrogen peroxide is used as an oxidizer, not as a primary fuel." 
+    },
+    { 
+        question: "Which of the following describes the structure of molecular hydrogen (H₂)?", 
+        options: ["Linear", "Bent", "Trigonal planar", "Tetrahedral"], 
+        answer: "Linear", 
+        explanation: "Molecular hydrogen (H₂) is linear because it consists of only two atoms bonded by a single covalent bond.<br><br><strong>'Bent'</strong>: Incorrect, bent geometry occurs in molecules like H₂O.<br><strong>'Trigonal planar'</strong>: Incorrect, trigonal planar geometry occurs in molecules like BF₃.<br><strong>'Tetrahedral'</strong>: Incorrect, tetrahedral geometry occurs in molecules like CH₄." 
+    },
+    { 
+        question: "Which of the following reactions is an example of hydrogenation?", 
+        options: ["Reaction of hydrogen with oxygen", "Addition of hydrogen to alkenes", "Reaction of hydrogen with nitrogen", "Reaction of hydrogen with metal oxides"], 
+        answer: "Addition of hydrogen to alkenes", 
+        explanation: "Hydrogenation involves the addition of hydrogen to unsaturated hydrocarbons like alkenes and alkynes to form saturated hydrocarbons.<br><br><strong>'Reaction of hydrogen with oxygen'</strong>: Incorrect, this is combustion, not hydrogenation.<br><strong>'Reaction of hydrogen with nitrogen'</strong>: Incorrect, this forms ammonia in the Haber process.<br><strong>'Reaction of hydrogen with metal oxides'</strong>: Incorrect, this is a reduction reaction, not hydrogenation." 
+    },
+    { 
+        question: "Which of the following is a physical property of hydrogen gas?", 
+        options: ["Colorless and odorless", "Highly soluble in water", "Heavy molecular weight", "Non-flammable"], 
+        answer: "Colorless and odorless", 
+        explanation: "Hydrogen gas is colorless, odorless, and highly flammable.<br><br><strong>'Highly soluble in water'</strong>: Incorrect, hydrogen is sparingly soluble in water.<br><strong>'Heavy molecular weight'</strong>: Incorrect, hydrogen has a very low molecular weight (2 g/mol).<br><strong>'Non-flammable'</strong>: Incorrect, hydrogen is highly flammable." 
+    },
+    { 
+        question: "Which of the following methods can be used for industrial hydrogen production?", 
+        options: ["Reaction of zinc with dilute HCl", "Electrolysis of water", "Reaction of sodium with ethanol", "Reaction of hydrogen with nitrogen"], 
+        answer: "Electrolysis of water",
+        explanation: "Electrolysis of water is an industrial method to produce hydrogen gas.<br><br><strong>'Reaction of zinc with dilute HCl'</strong>: Incorrect, this is a laboratory method.<br><strong>'Reaction of sodium with ethanol'</strong>: Incorrect, this produces hydrogen but is not an industrial method.<br><strong>'Reaction of hydrogen with nitrogen'</strong>: Incorrect, this produces ammonia, not pure hydrogen." 
+    },
+    { 
+        question: "Which of the following statements about hydrogen is true?", 
+        options: ["Hydrogen is heavier than air", "Hydrogen is the most abundant element in the universe", "Hydrogen is non-reactive", "Hydrogen has three electrons"], 
+        answer: "Hydrogen is the most abundant element in the universe", 
+        explanation: "Hydrogen is the most abundant element in the universe, making up about 75% of its mass.<br><br><strong>'Hydrogen is heavier than air'</strong>: Incorrect, hydrogen is lighter than air.<br><strong>'Hydrogen is non-reactive'</strong>: Incorrect, hydrogen is highly reactive.<br><strong>'Hydrogen has three electrons'</strong>: Incorrect, hydrogen has only one electron." 
+    },
+    { 
+        question: "Which of the following is a chemical property of hydrogen?", 
+        options: ["Colorless", "Odorless", "Combustion with oxygen", "Sparingly soluble in water"], 
+        answer: "Combustion with oxygen", 
+        explanation: "Combustion with oxygen to form water (H₂O) is a chemical property of hydrogen.<br><br><strong>'Colorless'</strong>: Incorrect, this is a physical property.<br><strong>'Odorless'</strong>: Incorrect, this is a physical property.<br><strong>'Sparingly soluble in water'</strong>: Incorrect, this is a physical property." 
+    },
+    { 
+        question: "Which of the following is an isotope of hydrogen?", 
+        options: ["Helium", "Protium", "Carbon", "Oxygen"], 
+        answer: "Protium", 
+        explanation: "Protium (¹H) is the most common isotope of hydrogen.<br><br><strong>'Helium'</strong>: Incorrect, helium is a noble gas and not an isotope of hydrogen.<br><strong>'Carbon'</strong>: Incorrect, carbon is a separate element.<br><strong>'Oxygen'</strong>: Incorrect, oxygen is a separate element." 
+    },
+    { 
+        question: "Which of the following reactions is an example of hydrogen acting as an oxidizing agent?", 
+        options: ["Reaction with chlorine to form HCl", "Reaction with copper oxide to form copper", "Reaction with oxygen to form water", "Reaction with nitrogen to form ammonia"], 
+        answer: "Reaction with chlorine to form HCl", 
+        explanation: "Hydrogen acts as an oxidizing agent when reacting with chlorine to form hydrogen chloride (HCl).<br><br><strong>'Reaction with copper oxide to form copper'</strong>: Incorrect, hydrogen acts as a reducing agent here.<br><strong>'Reaction with oxygen to form water'</strong>: Incorrect, this is a combustion reaction.<br><strong>'Reaction with nitrogen to form ammonia'</strong>: Incorrect, this is a combination reaction in the Haber process." 
+    },
+    { 
+        question: "Which of the following is a major use of hydrogen in industry?", 
+        options: ["Preservation of food", "Production of ammonia", "Filling balloons", "Catalyst in reactions"], 
+        answer: "Production of ammonia", 
+        explanation: "Hydrogen is used in the Haber process for the production of ammonia.<br><br><strong>'Preservation of food'</strong>: Incorrect, hydrogen is not used for food preservation.<br><strong>'Filling balloons'</strong>: Incorrect, while hydrogen can fill balloons, it is dangerous due to its flammability.<br><strong>'Catalyst in reactions'</strong>: Incorrect, hydrogen is not a catalyst; it is a reactant." 
+    },
+    { 
+        question: "Which of the following reactions describes the water-gas shift reaction?", 
+        options: ["CO + H₂O → CO₂ + H₂", "H₂ + O₂ → H₂O", "N₂ + H₂ → NH₃", "HCl + Zn → ZnCl₂ + H₂"], 
+        answer: "CO + H₂O → CO₂ + H₂", 
+        explanation: "The water-gas shift reaction involves the reaction of carbon monoxide (CO) with steam (H₂O) to produce hydrogen gas and carbon dioxide.<br><br><strong>'H₂ + O₂ → H₂O'</strong>: Incorrect, this is a combustion reaction.<br><strong>'N₂ + H₂ → NH₃'</strong>: Incorrect, this is the Haber process for ammonia production.<br><strong>'HCl + Zn → ZnCl₂ + H₂'</strong>: Incorrect, this is a laboratory reaction for hydrogen production." 
+    },
+    { 
+        question: "Which of the following gases is used in hydrogen fuel cells?", 
+        options: ["Nitrogen", "Hydrogen", "Oxygen", "Carbon dioxide"], 
+        answer: "Hydrogen", 
+        explanation: "Hydrogen gas is used in fuel cells as a source of energy.<br><br><strong>'Nitrogen'</strong>: Incorrect, nitrogen is not used in fuel cells.<br><strong>'Oxygen'</strong>: Incorrect, oxygen is used as the oxidizing agent but not the fuel source.<br><strong>'Carbon dioxide'</strong>: Incorrect, carbon dioxide is not involved in hydrogen fuel cells." 
+    },
+    { 
+        question: "Which of the following reactions describes the formation of hydrogen gas from metal hydrides?", 
+        options: ["CaH₂ + H₂O → Ca(OH)₂ + H₂", "Zn + HCl → ZnCl₂ + H₂", "CO + H₂O → CO₂ + H₂", "H₂ + O₂ → H₂O"], 
+        answer: "CaH₂ + H₂O → Ca(OH)₂ + H₂", 
+        explanation: "Metal hydrides like CaH₂ react with water to produce hydrogen gas.<br><br><strong>'Zn + HCl → ZnCl₂ + H₂'</strong>: Incorrect, this reaction involves zinc and acid, not metal hydrides.<br><strong>'CO + H₂O → CO₂ + H₂'</strong>: Incorrect, this is the water-gas shift reaction.<br><strong>'H₂ + O₂ → H₂O'</strong>: Incorrect, this is a combustion reaction." 
+    },
+    { 
+        question: "Which isotope of hydrogen is radioactive?", 
+        options: ["Protium", "Deuterium", "Tritium", "None of the above"], 
+        answer: "Tritium", 
+        explanation: "Tritium (³H) is a radioactive isotope of hydrogen with one proton and two neutrons.<br><br><strong>'Protium'</strong>: Incorrect, Protium (¹H) is the most common isotope and is non-radioactive.<br><strong>'Deuterium'</strong>: Incorrect, Deuterium (²H) is also non-radioactive.<br><strong>'None of the above'</strong>: Incorrect, Tritium is radioactive." 
+    },
+    { 
+        question: "Which gas is formed when hydrogen reacts with nitrogen under high pressure and temperature?", 
+        options: ["Ammonia", "Methane", "Hydrogen chloride", "Nitrogen dioxide"], 
+        answer: "Ammonia", 
+        explanation: "Hydrogen reacts with nitrogen under high pressure and temperature in the Haber process to form ammonia (NH₃).<br><br><strong>'Methane'</strong>: Incorrect, methane (CH₄) is formed from carbon and hydrogen, not nitrogen.<br><strong>'Hydrogen chloride'</strong>: Incorrect, hydrogen chloride (HCl) is formed from hydrogen and chlorine.<br><strong>'Nitrogen dioxide'</strong>: Incorrect, nitrogen dioxide (NO₂) is formed from nitrogen and oxygen, not hydrogen." 
+    },
+    { 
+        question: "Which of the following methods is used to prepare hydrogen gas in the laboratory?", 
+        options: ["Electrolysis of water", "Reaction of zinc with dilute HCl", "Reaction of sodium with ethanol", "Reaction of carbon monoxide with steam"], 
+        answer: "Reaction of zinc with dilute HCl", 
+        explanation: "Hydrogen gas is prepared in the laboratory by reacting zinc with dilute hydrochloric acid (HCl).<br><br><strong>'Electrolysis of water'</strong>: Incorrect, this is an industrial method rather than a laboratory method.<br><strong>'Reaction of sodium with ethanol'</strong>: Incorrect, this produces ethoxide ions, not pure hydrogen gas.<br><strong>'Reaction of carbon monoxide with steam'</strong>: Incorrect, this describes the water-gas shift reaction used in industrial hydrogen production." 
+    },
+    { 
+        question: "Which of the following is the most stable hydride of hydrogen?", 
+        options: ["H₂O", "NH₃", "CH₄", "HF"], 
+        answer: "H₂O", 
+        explanation: "Water (H₂O) is the most stable hydride of hydrogen due to strong hydrogen bonding and its widespread occurrence.<br><br><strong>'NH₃'</strong>: Incorrect, ammonia is stable but less stable than water.<br><strong>'CH₄'</strong>: Incorrect, methane is stable but lacks hydrogen bonding.<br><strong>'HF'</strong>: Incorrect, hydrogen fluoride is less stable due to its reactivity." 
+    },
+    { 
+        question: "Which of the following reactions involves hydrogen acting as a reducing agent?", 
+        options: ["Reaction with oxygen to form water", "Reaction with chlorine to form HCl", "Reaction with copper oxide to form copper", "Reaction with nitrogen to form ammonia"], 
+        answer: "Reaction with copper oxide to form copper", 
+        explanation: "Hydrogen acts as a reducing agent when it reacts with copper oxide (CuO) to form copper (Cu) and water.<br><br><strong>'Reaction with oxygen to form water'</strong>: Incorrect, this is a combustion reaction where hydrogen is oxidized.<br><strong>'Reaction with chlorine to form HCl'</strong>: Incorrect, this is a synthesis reaction, not a reduction.<br><strong>'Reaction with nitrogen to form ammonia'</strong>: Incorrect, this is a combination reaction in the Haber process." 
+    },
+    { 
+        question: "What is the bond angle in a water molecule?", 
+        options: ["90°", "104.5°", "120°", "180°"], 
+        answer: "104.5°", 
+        explanation: "The bond angle in a water molecule (H₂O) is 104.5° due to the repulsion between lone pairs on oxygen.<br><br><strong>'90°'</strong>: Incorrect, this bond angle is found in square planar molecules.<br><strong>'120°'</strong>: Incorrect, this bond angle is found in trigonal planar molecules.<br><strong>'180°'</strong>: Incorrect, this bond angle is found in linear molecules." 
+    },
+    { 
+        question: "Which of the following compounds contains hydrogen in its +1 oxidation state?", 
+        options: ["H₂", "NaH", "H₂O", "CaH₂"], 
+        answer: "H₂O", 
+        explanation: "In water (H₂O), hydrogen has an oxidation state of +1 due to its bonding with oxygen.<br><br><strong>'H₂'</strong>: Incorrect, hydrogen in molecular form has an oxidation state of 0.<br><strong>'NaH'</strong>: Incorrect, hydrogen has an oxidation state of -1 in metal hydrides.<br><strong>'CaH₂'</strong>: Incorrect, hydrogen has an oxidation state of -1 in metal hydrides." 
+    },
+    { 
+        question: "Which of the following describes the isotopes of hydrogen?", 
+        options: ["Same number of protons, different number of neutrons", "Same number of neutrons, different number of protons", "Same number of electrons, different number of neutrons", "Different number of electrons and protons"], 
+        answer: "Same number of protons, different number of neutrons", 
+        explanation: "Hydrogen isotopes (Protium, Deuterium, Tritium) have the same number of protons (1) but different numbers of neutrons.<br><br><strong>'Same number of neutrons, different number of protons'</strong>: Incorrect, isotopes differ in their neutrons, not protons.<br><strong>'Same number of electrons, different number of neutrons'</strong>: Incorrect, isotopes have identical electron configurations.<br><strong>'Different number of electrons and protons'</strong>: Incorrect, this describes ions, not isotopes." 
+    },
+    { 
+        question: "Which of the following is a use of hydrogen gas?", 
+        options: ["Preservation of food", "Filling balloons", "Catalyst in reactions", "Production of ammonia"], 
+        answer: "Production of ammonia", 
+        explanation: "Hydrogen gas is used in the Haber process for the production of ammonia.<br><br><strong>'Preservation of food'</strong>: Incorrect, hydrogen is not used for food preservation.<br><strong>'Filling balloons'</strong>: Incorrect, while hydrogen can fill balloons, it is dangerous due to its flammability.<br><strong>'Catalyst in reactions'</strong>: Incorrect, hydrogen is not a catalyst; it is a reactant in many reactions." 
+    },
+    { 
+        question: "Which of the following describes the role of hydrogen in fuel cells?", 
+        options: ["Oxidizing agent", "Reducing agent", "Catalyst", "Electrolyte"], 
+        answer: "Reducing agent", 
+        explanation: "Hydrogen acts as a reducing agent in fuel cells, where it donates electrons to produce electricity.<br><br><strong>'Oxidizing agent'</strong>: Incorrect, hydrogen is not an oxidizing agent.<br><strong>'Catalyst'</strong>: Incorrect, hydrogen is a reactant, not a catalyst.<br><strong>'Electrolyte'</strong>: Incorrect, hydrogen is not an electrolyte; the electrolyte is typically a solution like KOH." 
+    },
+],
 };
