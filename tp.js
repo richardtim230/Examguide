@@ -1,6 +1,33 @@
+let examSets = {};
 
+// List of JSON files to load
+const jsonFiles = ['math.json', 'english.json', 'science.json'];
 
+// Function to load a single JSON file
+async function loadJsonFile(fileName) {
+    const response = await fetch(fileName);
+    return response.json();
+}
 
+// Function to load all JSON files and merge their contents
+async function loadExamData() {
+    const promises = jsonFiles.map(loadJsonFile);
+    const results = await Promise.all(promises);
+    results.forEach(result => {
+        Object.assign(examSets, result.examSets);
+    });
+}
+
+// Call loadExamData when the page loads
+window.onload = async function () {
+    await loadExamData();
+
+    if (localStorage.getItem('userDetails')) {
+        loadDashboard();
+    }
+};
+
+// Rest of your tp.js code
 function showRegister() {
     document.getElementById('auth-container').style.display = 'none';
     document.getElementById('register-container').style.display = 'block';
@@ -20,7 +47,6 @@ function loginUser() {
         return;
     }
 
-    // Retrieve user details from local storage
     var storedUser = JSON.parse(localStorage.getItem('userDetails'));
 
     if (storedUser && storedUser.fullName === fullName && storedUser.phone === phone) {
@@ -44,7 +70,6 @@ function registerUser() {
         return;
     }
 
-    // Save user details to local storage
     var userDetails = {
         fullName: fullName,
         department: department,
@@ -76,13 +101,6 @@ function loadDashboard() {
     document.getElementById('credit-points').innerText = userData.creditPoints;  // Display current credit points
 }
 
-// Auto-load Dashboard if user is logged in
-window.onload = function () {
-    if (localStorage.getItem('userDetails')) {
-        loadDashboard();
-    }
-};
-
 // Purchase Credit Points
 function purchaseCredits() {
     let amount = document.getElementById("purchaseAmount").value;
@@ -97,28 +115,26 @@ function purchaseCredits() {
     let userData = JSON.parse(localStorage.getItem("userDetails"));
 
     function showPopup() {
-    const popup = document.getElementById('payment-popup');
-    popup.style.display = 'flex';
-    setTimeout(() => {
-        popup.style.opacity = 1;
-    }, 10); // Small delay to trigger transition
-}
+        const popup = document.getElementById('payment-popup');
+        popup.style.display = 'flex';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+        }, 10); // Small delay to trigger transition
+    }
 
-function closePopup() {
-    const popup = document.getElementById('payment-popup');
-    popup.style.opacity = 0;
-    setTimeout(() => {
-        popup.style.display = 'none';
-    }, 300); // Match this with the CSS transition duration
-}
+    function closePopup() {
+        const popup = document.getElementById('payment-popup');
+        popup.style.opacity = 0;
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300); // Match this with the CSS transition duration
+    }
 
     // Display the payment pop-up with user and payment details
     document.getElementById("popup-fullName").innerText = userData.fullName;
     document.getElementById("popup-phone").innerText = userData.phone;
     document.getElementById("popup-amount").innerText = amount;
     document.getElementById("popup-pin").innerText = rechargePin;
-
-    
 
     let whatsappLink = `https://wa.me/+2349155127634?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20${amount}%0APIN:%20${rechargePin}`;
     window.open(whatsappLink, "_blank");
@@ -146,7 +162,7 @@ function redeemCredits() {
         userData.creditPoints += creditsToAdd;
         localStorage.setItem("userDetails", JSON.stringify(userData));
         alert(`Recharge Successful! ${creditsToAdd} points added.`);
-        
+
         // Delete the redeemed pin from local storage
         localStorage.removeItem("generatedPin");
 
@@ -169,8 +185,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
-
 // Global Variables
 let currentQuestionIndex = 0;
 let score = 0;
@@ -180,12 +194,8 @@ let timeLeft = 10;
 let questions = [];
 
 function startExam() {
-    
     let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
-    
-
     let examCode = document.getElementById("examCode").value.toUpperCase();
-    
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
@@ -261,6 +271,7 @@ function selectAnswer(answer, event) {
     // Add the 'selected-answer' class to the clicked button
     event.target.classList.add("selected-answer");
 }
+
 function confirmAnswer() {
     clearInterval(timer);
     showCorrectAnswer();
@@ -285,7 +296,6 @@ function closeAnswerModal() {
     document.getElementById("answer-modal").style.display = "none";
 }
 
-
 function nextQuestion() {
     currentQuestionIndex++;
     loadQuestion();
@@ -301,7 +311,6 @@ function returnToDashboard() {
     location.reload();
 }
 
-
 // Function to initialize and start the exam session
 function startExamSession() {
     // Initialize exam session variables and UI elements here
@@ -309,8 +318,10 @@ function startExamSession() {
 }
 
 // Auto-load Dashboard if user is logged in
-window.onload = function () {
-    if (localStorage.getItem("userDetails")) {
+window.onload = async function () {
+    await loadExamData();
+
+    if (localStorage.getItem('userDetails')) {
         loadDashboard();
     }
 };
