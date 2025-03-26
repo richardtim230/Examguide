@@ -187,7 +187,7 @@ function startExam() {
     }
 
     // Deduct 5 credit points
-    userData.creditPoints -= 5;
+    userData.creditPoints -= 10;
     localStorage.setItem("userDetails", JSON.stringify(userData));  // Corrected key
 
     // Hide Dashboard & Show Exam Container
@@ -206,8 +206,8 @@ function startExam() {
 
 function getTopicFromExamCode(examCode) {
     const topics = {
-        'QLTA102': 'Chemistry',
-        'ENG202': 'English',
+        'QLTA102': 'QUALITATIVE ANALYSIS OF INORGANIC COMPOUNDS',
+        'CBD102': 'CHEMICAL BONDING',
         'SCI123': 'Science'
     };
     return topics[examCode] || 'Unknown Topic';
