@@ -1,6 +1,3 @@
-
-
-
 function showRegister() {
     document.getElementById('auth-container').style.display = 'none';
     document.getElementById('register-container').style.display = 'block';
@@ -97,28 +94,26 @@ function purchaseCredits() {
     let userData = JSON.parse(localStorage.getItem("userDetails"));
 
     function showPopup() {
-    const popup = document.getElementById('payment-popup');
-    popup.style.display = 'flex';
-    setTimeout(() => {
-        popup.style.opacity = 1;
-    }, 10); // Small delay to trigger transition
-}
+        const popup = document.getElementById('payment-popup');
+        popup.style.display = 'flex';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+        }, 10); // Small delay to trigger transition
+    }
 
-function closePopup() {
-    const popup = document.getElementById('payment-popup');
-    popup.style.opacity = 0;
-    setTimeout(() => {
-        popup.style.display = 'none';
-    }, 300); // Match this with the CSS transition duration
-}
+    function closePopup() {
+        const popup = document.getElementById('payment-popup');
+        popup.style.opacity = 0;
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300); // Match this with the CSS transition duration
+    }
 
     // Display the payment pop-up with user and payment details
     document.getElementById("popup-fullName").innerText = userData.fullName;
     document.getElementById("popup-phone").innerText = userData.phone;
     document.getElementById("popup-amount").innerText = amount;
     document.getElementById("popup-pin").innerText = rechargePin;
-
-    
 
     let whatsappLink = `https://wa.me/+2349155127634?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20${amount}%0APIN:%20${rechargePin}`;
     window.open(whatsappLink, "_blank");
@@ -169,8 +164,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
-
 // Global Variables
 let currentQuestionIndex = 0;
 let score = 0;
@@ -180,12 +173,8 @@ let timeLeft = 10;
 let questions = [];
 
 function startExam() {
-    
     let userData = JSON.parse(localStorage.getItem("userDetails"));  // Corrected key
-    
-
     let examCode = document.getElementById("examCode").value.toUpperCase();
-    
 
     if (userData.creditPoints < 5) {
         alert("Not enough credit points. Please purchase more.");
@@ -207,7 +196,21 @@ function startExam() {
 
     // Select 50 random questions from the chosen exam set
     questions = examSets[examCode].sort(() => 0.5 - Math.random()).slice(0, 50);
+
+    // Set the user's full name and the topic of the question set
+    document.getElementById("exam-user-name").innerText = userData.fullName;
+    document.getElementById("exam-topic").innerText = getTopicFromExamCode(examCode);
+
     loadQuestion();
+}
+
+function getTopicFromExamCode(examCode) {
+    const topics = {
+        'QLTA102': 'Chemistry',
+        'ENG202': 'English',
+        'SCI123': 'Science'
+    };
+    return topics[examCode] || 'Unknown Topic';
 }
 
 function loadQuestion() {
@@ -261,6 +264,7 @@ function selectAnswer(answer, event) {
     // Add the 'selected-answer' class to the clicked button
     event.target.classList.add("selected-answer");
 }
+
 function confirmAnswer() {
     clearInterval(timer);
     showCorrectAnswer();
@@ -285,7 +289,6 @@ function closeAnswerModal() {
     document.getElementById("answer-modal").style.display = "none";
 }
 
-
 function nextQuestion() {
     currentQuestionIndex++;
     loadQuestion();
@@ -300,7 +303,6 @@ function showReview() {
 function returnToDashboard() {
     location.reload();
 }
-
 
 // Function to initialize and start the exam session
 function startExamSession() {
