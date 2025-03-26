@@ -79,6 +79,48 @@
     cursor: pointer;
 }
 
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.toggle-button {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #007BFF;
+    text-decoration: underline;
+}
+
+#examSection {
+    display: none; /* Initially hidden */
+    margin-top: 20px;
+}
+
+#examSection h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#examList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#examList li {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+    }
         /* Modal Styles */
         .modal {
             display: none; /* Hidden by default */
@@ -167,6 +209,15 @@
         <h3>Take Exam</h3>
         <input type="text" id="examCode" placeholder="Enter Exam Code">
         <button onclick="startExam()">Start Exam (5 Points)</button>
+    </div>
+   <div class="container">
+        <span class="toggle-button" onclick="toggleExamSection()">📚 Exam Topics</span>
+        <div id="examSection">
+            <h2>Available Exam Topics</h2>
+            <ul id="examList">
+                <!-- Exam topics and codes will be populated here -->
+            </ul>
+        </div>
     </div>
 
     <!-- Payment Pop-up -->
