@@ -204,7 +204,7 @@ header {
 }
 
 .menu button {
-    background: #FFC300;
+    background: rgb(244, 187, 68);
     color: white;
     border: none;
     padding: 12px 20px;
