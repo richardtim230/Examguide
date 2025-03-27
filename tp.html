@@ -196,28 +196,28 @@
         }
         
 
-        /* Toggle Button Styles */
-        #toggleButton {
-            position: fixed;
+/* Toggle Button Styles */
+#toggleButton {
+    position: fixed;
     bottom: 10px;
     left: 10px;
-    width: 50px;
+    width: auto; /* Adjusted to auto */
     height: 50px;
     background: linear-gradient(to right, #002147, #003366);
     border-radius: 50%;
     text-align: center;
-        align-item: center;
-            justify-item: center;
+    align-items: center; /* Corrected from align-item */
+    justify-content: center; /* Corrected from justify-item */
     line-height: 50px;
     font-size: 24px;
     cursor: pointer;
-        z-index: 1001;
+    z-index: 1001;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-        #toggleButton:hover {
-            background-color: orange;
-        }
+#toggleButton:hover {
+    background-color: orange;
+}
     </style>
 </head>
 <body>
