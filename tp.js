@@ -340,9 +340,9 @@ function loadQuestion() {
         document.getElementById("timer").innerText = timeLeft;
         if (timeLeft === 0) {
             clearInterval(timer);
-            showFeedback();
+            showCorrectAnswer();
         }
-    }, 1000);
+    }, 1500);
 }
 
 function selectAnswer(answer, event) {
@@ -381,24 +381,6 @@ function confirmAnswer() {
         correctAnswer: currentQuestion.answer,
         explanation: currentQuestion.explanation,
         isCorrect: isCorrect
-    });
-
-    document.getElementById("answer-modal").style.display = "block";
-    document.getElementById("next-btn").style.display = "block";
-}
-function showFeedback() {
-    let currentQuestion = questions[currentQuestionIndex];
-    let feedback = document.getElementById("answer-feedback");
-
-    feedback.innerHTML = `<span style='color:red;'>Time's up!</span> The correct answer is <strong>${currentQuestion.answer}</strong>.<br>${currentQuestion.explanation}`;
-
-    // Store the attempted question data
-    attemptedQuestions.push({
-        question: currentQuestion.question,
-        selectedOption: "No Answer",
-        correctAnswer: currentQuestion.answer,
-        explanation: currentQuestion.explanation,
-        isCorrect: false
     });
 
     document.getElementById("answer-modal").style.display = "block";
@@ -474,4 +456,3 @@ window.onload = function () {
         loadDashboard();
     }
 };
-
