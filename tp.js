@@ -144,7 +144,7 @@ function redeemCredits() {
 
         loadDashboard();
     } else {
-        alert("Invalid PIN. Please try again.");
+        alert("Invalid PIN. Please try again. Refresh your browser and retry if pin is already validated by Admin");
     }
 }
 
@@ -179,7 +179,7 @@ function startExam() {
     }
 
     if (!examSets[examCode]) {
-        alert("Invalid exam code. Please enter a valid code.");
+        alert("Invalid exam code or not yet uploaded. Please enter a valid code.");
         return;
     }
 
