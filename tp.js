@@ -387,7 +387,19 @@ function confirmAnswer() {
     document.getElementById("next-btn").style.display = "block";
 }
 
-// The rest of the code remains unchanged...
+    // Add the "Close" button to the feedback modal
+    let closeButton = document.createElement("button");
+    closeButton.innerText = "Close";
+    closeButton.onclick = closeAnswerModalAndNextQuestion;  // Add event listener for the "Close" button
+    feedback.appendChild(closeButton);
+
+    document.getElementById("answer-modal").style.display = "block";
+}
+
+function closeAnswerModalAndNextQuestion() {
+    document.getElementById("answer-modal").style.display = "none";
+    nextQuestion();  // Load the next question
+}
 
 function showSummary() {
     const summaryContainer = document.getElementById('summary-results');
