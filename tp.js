@@ -120,7 +120,7 @@ function redeemCredits() {
     let storedPin = localStorage.getItem("generatedPin");
 
     const adminPins = {
-        "8760869513": 5000,  // Admin set PIN 1
+        "7998725107": 5000,  // Admin set PIN 1
         "1234567890": 100,    // Admin set PIN 2
         "0987654321": 150     // Admin set PIN 3
     };
@@ -310,36 +310,3 @@ window.onload = function () {
     }
 };
 
-// Add the new script for the exam topics toggle section
-const examTopics = [
-    { topic: 'QUALITATIVE ANALYSIS OF INORGANIC COMPOUNDS', code: 'QLTA102' },
-    { topic: 'CHEMICAL BONDING', code: 'CBD102' },
-    { topic: 'CHEMICAL BONDING', code: 'CHOFH102' },
-    // Add more exam topics and codes here
-];
-
-function toggleExamSection() {
-    const examSection = document.getElementById('examSection');
-    if (examSection.style.display === 'none') {
-        examSection.style.display = 'block';
-    } else {
-        examSection.style.display = 'none';
-    }
-}
-
-function populateExamList() {
-    const examList = document.getElementById('examList');
-    examTopics.forEach(exam => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${exam.topic}: ${exam.code}`;
-        examList.appendChild(listItem);
-    });
-}
-
-// Populate the exam list on page load
-window.onload = function () {
-    if (localStorage.getItem('userDetails')) {
-        loadDashboard();
-    }
-    populateExamList();
-};
