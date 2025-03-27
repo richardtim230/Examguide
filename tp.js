@@ -340,7 +340,7 @@ function loadQuestion() {
         document.getElementById("timer").innerText = timeLeft;
         if (timeLeft === 0) {
             clearInterval(timer);
-            confirmAnswer();  // Call confirmAnswer to show feedback immediately
+            confirmAnswer();
         }
     }, 1000);
 }
@@ -387,6 +387,17 @@ function confirmAnswer() {
     document.getElementById("next-btn").style.display = "block";
 }
 
+function closeAnswerModal() {
+    document.getElementById("answer-modal").style.display = "none";
+    nextQuestion(); // Call nextQuestion when the modal is closed
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+}
+
+// The rest of the code remains unchanged...
 
 
 function showSummary() {
