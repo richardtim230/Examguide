@@ -39,82 +39,59 @@
             width: 100px;
             height: auto;
         }
-      
-/* Payment Popup Styles */
-.popup {
-    display: none; /* Initially hidden */
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.9); /* Light background */
-    padding: 20px;
-    z-index: 1;
-    opacity: 0;
-    overflow: auto;
-    transition: opacity 0.3s ease-in-out;
-}
-.popup-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    text-align: center;
-}
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-.close-btn:hover,
-.close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
-
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
+        /* Full-Screen Popup Styles */
+        .full-screen-popup {
+            display: none; /* Initially hidden */
+            position: fixed;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8); /* Dark background */
+            padding: 20px;
+            z-index: 1000;
+            overflow: auto;
         }
-        .modal-content {
+        .popup-content {
             background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
+            margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-            max-width: 500px; /* Maximum width of modal */
+            width: 80%;
+            max-width: 800px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             text-align: center;
         }
-        .close {
+        .close-btn {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-        .close:hover,
-        .close:focus {
+        .close-btn:hover,
+        .close-btn:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        /* Toggle Button Styles */
+        #toggleButton {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        #toggleButton:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -169,7 +146,23 @@
         <input type="text" id="examCode" placeholder="Enter Exam Code">
         <button onclick="startExam()">Start Exam (5 Points)</button>
     </div>
-   
+
+    <!-- Toggle Button for Exam Topics -->
+    <button id="toggleButton">Show Exam Topics</button>
+
+    <!-- Full-Screen Popup for Exam Topics -->
+    <div id="examTopics" class="full-screen-popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="togglePopup()">&times;</span>
+            <h2>Available Exam Topics</h2>
+            <ul>
+                <li>Math - Code: MATH101</li>
+                <li>Physics - Code: PHY201</li>
+                <li>Chemistry - Code: CHEM301</li>
+                <!-- Add more exam topics here -->
+            </ul>
+        </div>
+    </div>
 
     <!-- Payment Pop-up -->
     <div id="payment-popup" class="popup">
@@ -188,21 +181,21 @@
         </div>
     </div>
 
-<!-- Exam container -->
-<div id="exam-container" style="display: none;">
-    <div class="exam-header">
-        <p><strong>Name:</strong> <span id="exam-user-name"></span></p>
-        <p><strong>Topic:</strong> <span id="exam-topic"></span></p>
+    <!-- Exam container -->
+    <div id="exam-container" style="display: none;">
+        <div class="exam-header">
+            <p><strong>Name:</strong> <span id="exam-user-name"></span></p>
+            <p><strong>Topic:</strong> <span id="exam-topic"></span></p>
+        </div>
+        <h2>Exam Session</h2>
+        <p>Time Remaining: <span id="timer">10</span> sec</p>
+        <p><strong>Question <span id="question-number"></span>/50</strong></p>
+        <p id="question-text"></p>
+        <div id="options-container"></div>
+        <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
+        <p id="feedback"></p>
+        <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
     </div>
-    <h2>Exam Session</h2>
-    <p>Time Remaining: <span id="timer">10</span> sec</p>
-    <p><strong>Question <span id="question-number"></span>/50</strong></p>
-    <p id="question-text"></p>
-    <div id="options-container"></div>
-    <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
-    <p id="feedback"></p>
-    <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
-</div>
     <div id="review-container" style="display: none;">
         <h2>Exam Completed!</h2>
         <p>Your Score: <span id="final-score"></span>/50</p>
@@ -218,6 +211,17 @@
     </div>
     <script src="tp.js"></script>
     <script src="questions.js"></script>
-    
+    <script>
+        function togglePopup() {
+            const examTopics = document.getElementById('examTopics');
+            if (examTopics.style.display === 'none' || examTopics.style.display === '') {
+                examTopics.style.display = 'block';
+            } else {
+                examTopics.style.display = 'none';
+            }
+        }
+
+        document.getElementById('toggleButton').addEventListener('click', togglePopup);
+    </script>
 </body>
 </html>
