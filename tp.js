@@ -130,11 +130,15 @@ function redeemCredits() {
         "5081795677": 200,  // Admin set PIN 1
         "7660798196": 200,    // Admin set PIN 2
         "4763094902": 200,   // Admin set PIN 3
-        "473094902": 200,     // Admin set PIN 3
-    "47630902": 200,  // Admin set PIN 3
-    "476394902": 200,    // Admin set PIN 3
-    "476309402": 200,   // Admin set PIN 3
+        "7542533555": 200,     // Admin set PIN 3
+    "2280281834": 200,  // Admin set PIN 3
+    "1333744582": 200,    // Admin set PIN 3
+    "6472415768": 20000,   // Admin set PIN 3
     "476304902": 200,     // Admin set PIN 3
+        "476304902": 200,     // Admin set PIN 3
+        "476304902": 200,     // Admin set PIN 3
+        "476304902": 200,     // Admin set PIN 3
+        "476304902": 200,     // Admin set PIN 3
     "476304902": 200     // Admin set PIN 3
     };
 
