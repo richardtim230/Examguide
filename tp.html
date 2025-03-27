@@ -42,17 +42,17 @@
       
 /* Payment Popup Styles */
 .popup {
-       display: none; /* Initially hidden */
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8); /* Dark background */
-            padding: 20px;
-            z-index: 10;
-            overflow: auto;
-        }
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Dark background */
+    padding: 20px;
+    z-index: 10;
+    overflow: auto;
+}
 .popup-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -369,22 +369,21 @@
         </ul>
     </div>
 </div>
-
-    <!-- Payment Pop-up -->
-    <div id="payment-popup" class="popup">
-        <div class="popup-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <h2>Payment Details</h2>
-            <p><strong>Name:</strong> <span id="popup-fullName"></span></p>
-            <p><strong>Phone:</strong> <span id="popup-phone"></span></p>
-            <p><strong>Amount:</strong> <span id="popup-amount"></span></p>
-            <p><strong>PIN:</strong> <span id="popup-pin"></span></p>
-            <h3>Bank Details</h3>
-            <p><strong>Bank Name:</strong> Opay</p>
-            <p><strong>Account Number:</strong> 9070962822</p>
-            <p><strong>Account Name:</strong> Ochuko Timothy</p>
-            <p><strong>Note:</strong> N100 is equivalent to 50 points.</p>
-        </div>
+<!-- Payment Pop-up -->
+<div id="payment-popup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Payment Details</h2>
+        <p><strong>Name:</strong> <span id="popup-fullName"></span></p>
+        <p><strong>Phone:</strong> <span id="popup-phone"></span></p>
+        <p><strong>Amount:</strong> <span id="popup-amount"></span></p>
+        <p><strong>PIN:</strong> <span id="popup-pin"></span></p>
+        <h3>Bank Details</h3>
+        <p><strong>Bank Name:</strong> Opay</p>
+        <p><strong>Account Number:</strong> 9070962822</p>
+        <p><strong>Account Name:</strong> Ochuko Timothy</p>
+        <p><strong>Note:</strong> N100 is equivalent to 50 points.</p>
+    </div>
     </div>
 
     <!-- Exam container -->
