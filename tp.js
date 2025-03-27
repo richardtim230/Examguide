@@ -342,7 +342,7 @@ function loadQuestion() {
             clearInterval(timer);
             showCorrectAnswer();
         }
-    }, 1500);
+    }, 1000);
 }
 
 function selectAnswer(answer, event) {
@@ -386,6 +386,8 @@ function confirmAnswer() {
     document.getElementById("answer-modal").style.display = "block";
     document.getElementById("next-btn").style.display = "block";
 }
+
+// The rest of the code remains unchanged...
 
 function showSummary() {
     const summaryContainer = document.getElementById('summary-results');
