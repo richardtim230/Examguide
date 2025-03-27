@@ -486,6 +486,9 @@
     <div id="examCode" data-intro="This is where you can take exams." data-step="3">
         <!-- Take exams content -->
     </div>
+    <div id="toggleButton" data-intro="This is where you can take exam topic codes." data-step="3">
+        <!-- Take exams content -->
+    </div>
 
     <!-- Start Tour Button -->
     <button onclick="startTour()">Start Tour</button>
@@ -497,19 +500,23 @@
         introJs().setOptions({
             steps: [
                 {
-                    intro: "Welcome to the platform! This tour will guide you through the main features."
+                    intro: "Welcome to the platform! This tour will guide you through the main features of this platform, you can always use the start tour button if you're confused."
                 },
                 {
                     element: '#purchaseAmount',
-                    intro: "This is where you can recharge your account to gain more credits."
+                    intro: "This is where you can recharge your account to gain more credit points whenever you're running out of credit points. Credit points are deducted whenever you take a test."
                 },
                 {
                     element: '#rechargePin',
-                    intro: "This is where you can redeem your credits for various rewards."
+                    intro: "This is where you can redeem your credits for more points. Note that your Recharge PIN must have been validated by an Admin."
                 },
                 {
                     element: '#examCode',
-                    intro: "This is where you can take exams to test your knowledge."
+                    intro: "This is where you can take exams to test your knowledge on each topic."
+                },
+                {
+                    element: '#toggleButton',
+                    intro: "This is where you can take exam topic code for practice."
                 }
             ],
             showProgress: true,
