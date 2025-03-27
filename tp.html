@@ -96,7 +96,7 @@
             margin: 15% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 100%; /* Could be more or less, depending on screen size */
             max-width: 500px; /* Maximum width of modal */
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -118,15 +118,17 @@
 
         /* Full-Screen Popup Styles */
         .full-screen-popup {
-            background: linear-gradient(135deg, #ffffff, #e0eafc);
-    padding: 25px;
-    margin: 25px auto;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-        width: 100%; /* Ensure full viewport width */
-    max-width: 100%; /* Prevent exceeding viewport width */
-    box-sizing: border-box; 
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            background: rgba(0, 0, 0, 0.8); /* Dark background */
+            padding: 20px;
+            z-index: 1000;
+            overflow: auto;
         }
         .popup-content {
             background-color: #fefefe;
@@ -134,7 +136,7 @@
             padding: 20px;
             border: 1px solid #888;
             width: 100%;
-            max-width: 800px;
+            max-width: 100%;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             text-align: left;
