@@ -345,6 +345,47 @@ function loadQuestion() {
     }, 1000);
 }
 
+function selectAnswer(answer, event) {
+    selectedAnswer = answer;
+    document.getElementById("confirm-btn").disabled = false;
+
+    // Remove the 'selected-answer' class from all option buttons
+    let options = document.getElementById("options-container").getElementsByTagName("button");
+    for (let option of options) {
+        option.classList.remove("selected-answer");
+    }
+
+    // Add the 'selected-answer' class to the clicked button
+    event.target.classList.add("selected-answer");
+}
+
+function confirmAnswer() {
+    clearInterval(timer);
+
+    let currentQuestion = questions[currentQuestionIndex];
+    let feedback = document.getElementById("answer-feedback");
+
+    let isCorrect = false;
+    if (selectedAnswer === currentQuestion.answer) {
+        score++;
+        feedback.innerHTML = "<span style='color:green;'>Correct!</span><br>" + currentQuestion.explanation;
+        isCorrect = true;
+    } else {
+        feedback.innerHTML = "<span style='color:red;'>Incorrect.</span> The correct answer is <strong>" + currentQuestion.answer + "</strong>.<br>" + currentQuestion.explanation;
+    }
+
+    // Store the attempted question data
+    attemptedQuestions.push({
+        question: currentQuestion.question,
+        selectedOption: selectedAnswer,
+        correctAnswer: currentQuestion.answer,
+        explanation: currentQuestion.explanation,
+        isCorrect: isCorrect
+    });
+
+    document.getElementById("answer-modal").style.display = "block";
+    document.getElementById("next-btn").style.display = "block";
+}
 function showFeedback() {
     let currentQuestion = questions[currentQuestionIndex];
     let feedback = document.getElementById("answer-feedback");
