@@ -142,7 +142,7 @@
         }
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
+            margin: 30% auto; /* 15% from the top and centered */
             padding: 20px;
             right: 40px;
             left: 40px;
@@ -464,13 +464,14 @@
     </div>
     </div>
     <!-- Modal for showing correct answer and explanation -->
-    <div id="answer-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAnswerModal()">&times;</span>
-            <h2>Answer Explanation</h2>
-            <p id="answer-feedback"></p>
-        </div>
+<div id="answer-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAnswerModal()">&times;</span>
+        <h2>Answer Explanation</h2>
+        <p id="answer-feedback"></p>
+        <button onclick="nextQuestion()">Close</button> <!-- Added Close button -->
     </div>
+</div>
     
     <!-- Recharge Section -->
     <div id="purchaseAmount" data-intro="This is where you can recharge your account." data-step="1">
