@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT PRACTICE</title>
+
+    <!-- Intro.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.0.0/introjs.min.css">
+
+    <!-- Intro.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.0.0/intro.min.js"></script>
+    
+    <link rel="stylesheet" href="tp.css">
+    <style>
+        /* CSS for highlighting the selected answer */
+        .selected-answer {
+            background-color: #d1e7dd; /* Light green background */
+            border: 2px solid #0f5132; /* Dark green border */
+            color: #0f5132; /* Dark green text */
+        }
+        /* Header */
+        header {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to right, #002147, #003366);
+            color: white;
+            padding: 20px 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .header-content h1 {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+        .header-content p {
+            font-size: 0.9rem;
+        }
+
+        /* Styles for the summary section */
+#summary-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
+.summary-question {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary-question p {
+    margin: 5px 0;
+}
+
+.summary-question strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.summary-question.correct {
+    border-color: #0f5132;
+    background-color: #d1e7dd;
+}
+
+.summary-question.incorrect {
+    border-color: #842029;
+    background-color: #f8d7da;
+}
+
+.summary-question .explanation {
+    font-style: italic;
+    color: #555;
+}
+        /* Logo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .logo-container img {
+            width: 100px;
+            height: auto;
+        }
+      
+/* Payment Popup Styles */
+.popup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Dark background */
+    padding: 20px;
+    z-index: 10;
+    overflow: auto;
+}
+.popup-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+}
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            right: 40px;
+            left: 40px;
+            border: 1px solid #888;
+            width: 90%; /* Could be more or less, depending on screen size */
+            max-width: 500px; /* Maximum width of modal */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    
+
+        /* Full-Screen Popup Styles */
+        .full-screen-popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .popup-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            right: 40px;
+            left: 40px;
+            border: 1px solid #888;
+            width: 90%; /* Could be more or less, depending on screen size */
+            max-width: 500px; /* Maximum width of modal */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: left;
+            
+        }
+        
+
+        /* Toggle Button Styles */
+        #toggleButton {
+            position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(to right, #002147, #003366);
+    border-radius: 50%;
+    text-align: center;
+        align-item: center;
+            justify-item: center;
+    line-height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+        z-index: 1001;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+        #toggleButton:hover {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Logo Design Templates_1729880876625.jpg" alt="DE-BRAINSTORMERS">
+        </div>
+        <div class="header-content">
+            <h1>DE-BRAINSTORMERS' ACADEMY</h1>
+            <p><i>Obafemi Awolowo University, Ile Ife</i></p>
+            <p>Email: dbsife@gmail.com | Phone: (234) 9155127634</p>
+        </div>
+    </header>
+
+    <div id="auth-container">
+        <h2>Login</h2>
+        <input type="text" id="loginFullName" placeholder="Full Name">
+        <input type="text" id="loginPhone" placeholder="Phone Number">
+        <button onclick="loginUser()">Login</button>
+        <p>Don't have an account? <button onclick="showRegister()">Register here</button></p>
+    </div>
+
+    <div id="register-container" style="display: none;">
+        <h2>Register</h2>
+        <input type="text" id="regFullName" placeholder="Full Name">
+        <input type="text" id="regDepartment" placeholder="Department">
+        <input type="text" id="regFaculty" placeholder="Faculty">
+        <input type="text" id="regLevel" placeholder="Level">
+        <input type="text" id="regPhone" placeholder="Phone Number">
+        <button onclick="registerUser()">Register</button>
+        <p>Already have an account? <button onclick="showLogin()">Login here</button></p>
+    </div>
+
+    <div id="dashboard-container" class="user-details" style="display: none;">
+        <h2>Welcome, <span id="user-name"></span></h2>
+        <p>Department: <span id="user-department"></span></p>
+        <p>Faculty: <span id="user-faculty"></span></p>
+        <p>Level: <span id="user-level"></span></p>
+        <p>Phone: <span id="user-phone"></span></p>
+        <p>Available Credit Points: <span id="credit-points">100</span></p>
+
+        <h3>Purchase Credit Points</h3>
+        <input type="number" id="purchaseAmount" placeholder="Enter amount in ₦">
+        <button onclick="purchaseCredits()">Generate Recharge PIN</button>
+
+        <h3>Redeem Credits</h3>
+        <input type="text" id="rechargePin" placeholder="Enter Recharge PIN">
+        <button onclick="redeemCredits()">Redeem</button>
+
+        <h3>Take Exam</h3>
+        <input type="text" id="examCode" placeholder="Enter Exam Code">
+        <button onclick="startExam()">Start Exam (8 Points)</button>
+    </div>
+
+    <!-- Toggle Button for Exam Topics -->
+    <button id="toggleButton">📑</button>
+
+    <!-- Full-Screen Popup for Exam Topics -->
+    <div id="examTopics" class="full-screen-popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="togglePopup()">&times;</span>
+        <h2>Available Exam Topics</h2>
+        <ul>
+            <h3>Introductory Chemistry II</h3>
+            <li>Test for Simple Cations and Anions - Code: EXAM001</li>
+
+            <!-- Identification of Organic Compounds -->
+            <li>Isolation and Purification - Code: EXAM002</li>
+            <li>Qualitative Analysis: Test for Common Elements (e.g., Carbon, Hydrogen, Nitrogen, Sulphur, Halogens) - Code: EXAM003</li>
+            <li>Quantitative Analysis Using Dumas, Kjeldahl’s, and Carius Methods - Code: EXAM004</li>
+
+            <!-- Chemical Bonding -->
+            <li>Why and How Atoms Combine? - Code: EXAM005</li>
+            <li>The Molecule and Chemical Bonding - Code: EXAM006</li>
+            <li>Electrons in Molecules: Ionic, Covalent, Dative, and Complex Bonding - Code: EXAM007</li>
+            <li>Polarity of Bonds - Code: EXAM008</li>
+            <li>Coordinate Bonds - Code: EXAM009</li>
+            <li>Metallic Bonds - Code: EXAM010</li>
+            <li>Basic Crystalline Structure (e.g., NaCl and Metallic Lattices) - Code: EXAM011</li>
+            <li>Hybridization and Resonance in Chemical Bonding - Code: EXAM012</li>
+
+            <!-- Chemistry of Hydrogen, Noble Gases, Alkali Metals & Alkali Earth Metals -->
+            <li>Chemistry of Hydrogen - Code: EXAM013</li>
+            <li>Chemistry of Noble Gases - Code: EXAM014</li>
+            <li>Chemistry of Alkali Metals (Group I) - Code: EXAM015</li>
+            <li>Chemistry of Alkali Earth Metals (Group II) - Code: EXAM016</li>
+
+            <!-- Introduction to Organic Chemistry -->
+            <li>Introduction to the Term "Organic Chemistry" - Code: EXAM017</li>
+            <li>Hybridization in Carbon: sp³, sp², and sp - Code: EXAM018</li>
+            <li>Physical Properties Related to Structures: Bond Length, Strength, Rotation, etc. - Code: EXAM019</li>
+            <li>Electrophiles and Nucleophiles - Code: EXAM020</li>
+            <li>Factors Influencing Organic Reactions (Inductive and Mesomeric Effects, Steric Factors, etc.) - Code: EXAM021</li>
+
+            <!-- Homologous Series & Functional Groups -->
+            <li>Homologous Series - Code: EXAM022</li>
+            <li>Functional Groups Chemistry - Code: EXAM023</li>
+
+            <!-- Types of Organic Reactions -->
+            <li>Types of Organic Reactions - Code: EXAM024</li>
+
+            <!-- Isomerism -->
+            <li>Structural, Geometric, and Optical Isomerism - Code: EXAM025</li>
+
+            <!-- Chemistry of Hydrocarbons -->
+            <li>Chemistry of Alkanes - Code: EXAM026</li>
+            <li>Chemistry of Alkenes - Code: EXAM027</li>
+            <li>Chemistry of Alkynes - Code: EXAM028</li>
+            <li>Chemistry of Alkyl Halides - Code: EXAM029</li>
+            <li>Chemistry of Grignard Reagents - Code: EXAM030</li>
+            <li>Nomenclature (IUPAC Rules) - Code: EXAM031</li>
+            <li>Preparation of Hydrocarbons - Code: EXAM032</li>
+            <li>Physical Properties of Hydrocarbons - Code: EXAM033</li>
+            <li>Chemical Reactions with Simple Mechanisms - Code: EXAM034</li>
+            <li>Applications of Hydrocarbons - Code: EXAM035</li>
+
+            <!-- Main Group Chemistry (Groups III-V) -->
+            <li>Trends in Properties of Elements (Structures, Ionization Energy, Physical and Chemical Properties) - Code: EXAM036</li>
+            <li>Properties of Selected Types of Compounds: Hydrides, Oxides, Acids, and Bases - Code: EXAM037</li>
+            <li>Chemistry of Boron and Aluminum - Code: EXAM038</li>
+            <li>Chemistry of Carbon and Lead - Code: EXAM039</li>
+            <li>Chemistry of Nitrogen and Bismuth - Code: EXAM040</li>
+
+            <!-- Transition Metal Chemistry (Groups VI-VII) -->
+            <li>Trends in Properties of Elements - Code: EXAM041</li>
+            <li>Properties of Selected Types of Compounds - Code: EXAM042</li>
+            <li>Chemistry of Oxygen and Sulfur - Code: EXAM043</li>
+            <li>Chemistry of Fluorine and Chlorine - Code: EXAM044</li>
+            <li>Properties of d-Block Elements, Lanthanides, and Actinides - Code: EXAM045</li>
+            <li>Electronic Configuration, Complexes, and IUPAC Nomenclature of Complexes - Code: EXAM046</li>
+            <li>Chemistry of Chromium, Iron, Cobalt, Nickel, and Copper - Code: EXAM047</li>
+
+            <!-- Chemistry of Alcohols, Ethers, Aldehydes, Ketones, Carboxylic Acids, Derivatives, and Amines -->
+            <li>Nomenclature (IUPAC Rules) - Code: EXAM048</li>
+            <li>Preparation of Alcohols, Ethers, Aldehydes, Ketones, Carboxylic Acids, Derivatives & Amines - Code: EXAM049</li>
+            <li>Structure and Physical Properties - Code: EXAM050</li>
+            <li>General Reactions - Code: EXAM051</li>
+            <li>Introduction to Aromatic Compounds - Code: EXAM052</li>
+
+            <!-- Carbohydrates, Proteins, and Lipids -->
+            <li>Simple Treatment of Carbohydrates: Monosaccharides (e.g., Glucose and Fructose) - Code: EXAM053</li>
+            <li>Disaccharides and Polysaccharides - Code: EXAM054</li>
+            <li>Proteins: Amino Acids, Peptide Bonds, etc. - Code: EXAM055</li>
+            <li>Lipids: Fats and Oils, Soap and Detergents - Code: EXAM056</li>
+
+             
+        <h3>Introductory Botany II</h3>
+        
+            
+            <li>Classification and Evolution in the Plant Kingdom - Code: EXAM057</li>
+
+            <!-- Elementary Treatment of Cryptogams -->
+            <li>Elementary Treatment of Cryptogams: Algae - Code: EXAM058</li>
+            <li>Elementary Treatment of Cryptogams: Fungi - Code: EXAM059</li>
+            <li>Elementary Treatment of Cryptogams: Bryophytes - Code: EXAM060</li>
+
+            <!-- Pteridophytes -->
+            <li>Pteridophytes: Distribution and Classification - Code: EXAM061</li>
+            <li>Pteridophytes: Morphology and Reproduction - Code: EXAM062</li>
+            <li>Pteridophytes: Economic Importance - Code: EXAM063</li>
+            <li>Significance of the Seed Habit in Spermatophytes (Non-Flowering and Flowering Seed Plants) - Code: EXAM064</li>
+
+            <!-- Elementary Treatment of the Anatomy and Morphology of Angiosperms -->
+            <li>Simple and Complex Tissue Systems in Roots, Stems, and Leaves - Code: EXAM065</li>
+            <li>Scope of Morphology: External and Internal Morphology - Code: EXAM066</li>
+            <li>Morphology of Plant Organs: Root Morphology and Variations - Code: EXAM067</li>
+            <li>Morphology of Plant Organs: Leaf Morphology and Variations - Code: EXAM068</li>
+            <li>Morphology of Inflorescence and Flowers - Code: EXAM069</li>
+            <li>Fruit Morphology and Variations - Code: EXAM070</li>
+          
+        
+        <h3>Introductory Zoology II</h3>
+        
+        
+            <li>Introduction to Concepts in Ecology - Code: EXAM071</li>
+            <li>Definition of Ecology: The Environment and Climate - Code: EXAM072</li>
+            <li>Habitat and Niche - Code: EXAM073</li>
+            <li>Autecology - Code: EXAM074</li>
+            <li>Synecology, Ecosystem, and Communities - Code: EXAM075</li>
+            <li>Biomes, Pollution, and Global Warming - Code: EXAM076</li>
+
+            <!-- Introductory Genetics -->
+            <li>Historical Development of Science of Genetics - Code: EXAM077</li>
+            <li>Life Cycles and Reproduction - Code: EXAM078</li>
+            <li>Mendelian Genetics - Code: EXAM079</li>
+            <li>Chemical Composition of the Gene - Code: EXAM080</li>
+            <li>Molecular Basis of Heredity - Code: EXAM081</li>
+
+            <!-- Introductory Physiology -->
+            <li>Introductory Physiology of Animals - Code: EXAM082</li>
+            <li>Nutrition in Animals - Code: EXAM083</li>
+            <li>Excretions in Animals - Code: EXAM084</li>
+            <li>Respiration in Animals - Code: EXAM085</li>
+            <li>Reproduction in Animals - Code: EXAM086</li>
+
+            <!-- Introductory Vertebrate Biology -->
+            <li>Introductory Vertebrate Biology - Code: EXAM087</li>
+        </ul>
+    </div>
+</div>
+<!-- Payment Pop-up -->
+<div id="payment-popup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Payment Details</h2>
+        <p><strong>Name:</strong> <span id="popup-fullName"></span></p>
+        <p><strong>Phone:</strong> <span id="popup-phone"></span></p>
+        <p><strong>Amount:</strong> <span id="popup-amount"></span></p>
+        <p><strong>PIN:</strong> <span id="popup-pin"></span></p>
+        <h3>Bank Details</h3>
+        <p><strong>Bank Name:</strong> Opay</p>
+        <p><strong>Account Number:</strong> 9070962822</p>
+        <p><strong>Account Name:</strong> Ochuko Timothy</p>
+        <p><strong>Note:</strong> N100 is equivalent to 75 points.</p>
+        <p><strong>Note:</strong>You'll be redirected to WhatsApp for activation of PIN, kindly attach the receipt of your transaction.</p>
+        <button onclick="activatePin()">Activate Pin</button> <!-- New button -->
+    </div>
+</div>
+
+    <!-- Exam container -->
+    <div id="exam-container" style="display: none;">
+        <div class="exam-header">
+            <p><strong>Name:</strong> <span id="exam-user-name"></span></p>
+            <p><strong>Topic:</strong> <span id="exam-topic"></span></p>
+        </div>
+        <h2>Exam Session</h2>
+        <p>Time Remaining: <span id="timer">10</span> sec</p>
+        <p><strong>Question <span id="question-number"></span>/50</strong></p>
+        <p id="question-text"></p>
+        <div id="options-container"></div>
+        <button id="confirm-btn" onclick="confirmAnswer()" disabled>Confirm Answer</button>
+        <p id="feedback"></p>
+        <button id="next-btn" onclick="nextQuestion()" style="display: none;">Next</button>
+    </div>
+    <div id="review-container" style="display: none;">
+    <h2>Exam Completed!</h2>
+    <p>Your Score: <span id="final-score"></span>/50</p>
+    <button onclick="returnToDashboard()">Return to Dashboard</button>
+
+    <!-- Summary of Results -->
+    <h3>Summary of Results</h3>
+    <div id="summary-container">
+        <div id="summary-results"></div>
+    </div>
+    </div>
+    <!-- Modal for showing correct answer and explanation -->
+    <div id="answer-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAnswerModal()">&times;</span>
+            <h2>Answer Explanation</h2>
+            <p id="answer-feedback"></p>
+        </div>
+    </div>
+    
+    <!-- Recharge Section -->
+    <div id="recharge" data-intro="This is where you can recharge your account." data-step="1">
+        <!-- Recharge content -->
+    </div>
+
+    <!-- Redeem Credits Section -->
+    <div id="redeem" data-intro="This is where you can redeem your credits." data-step="2">
+        <!-- Redeem content -->
+    </div>
+
+    <!-- Take Exams Section -->
+    <div id="take-exams" data-intro="This is where you can take exams." data-step="3">
+        <!-- Take exams content -->
+    </div>
+
+    <!-- Start Tour Button -->
+    <button onclick="startTour()">Start Tour</button>
+        
+    <script src="tp.js"></script>
+    <script src="questions.js"></script>
+    <script>
+    function startTour() {
+        introJs().setOptions({
+            steps: [
+                {
+                    intro: "Welcome to the platform! This tour will guide you through the main features."
+                },
+                {
+                    element: '#recharge',
+                    intro: "This is where you can recharge your account to gain more credits."
+                },
+                {
+                    element: '#redeem',
+                    intro: "This is where you can redeem your credits for various rewards."
+                },
+                {
+                    element: '#take-exams',
+                    intro: "This is where you can take exams to test your knowledge."
+                }
+            ],
+            showProgress: true,
+            showBullets: false,
+            exitOnOverlayClick: false,
+            exitOnEsc: false,
+            nextLabel: 'Next',
+            prevLabel: 'Back',
+            skipLabel: 'Skip',
+            doneLabel: 'Done'
+        }).start();
+    }
+</script>
+    <script>
+        function togglePopup() {
+            const examTopics = document.getElementById('examTopics');
+            if (examTopics.style.display === 'none' || examTopics.style.display === '') {
+                examTopics.style.display = 'block';
+            } else {
+                examTopics.style.display = 'none';
+            }
+        }
+
+        document.getElementById('toggleButton').addEventListener('click', togglePopup);
+    </script>
+</body>
+</html>
