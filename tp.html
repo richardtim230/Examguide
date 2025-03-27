@@ -29,6 +29,48 @@
         .header-content p {
             font-size: 0.9rem;
         }
+
+        /* Styles for the summary section */
+#summary-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
+.summary-question {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary-question p {
+    margin: 5px 0;
+}
+
+.summary-question strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.summary-question.correct {
+    border-color: #0f5132;
+    background-color: #d1e7dd;
+}
+
+.summary-question.incorrect {
+    border-color: #842029;
+    background-color: #f8d7da;
+}
+
+.summary-question .explanation {
+    font-style: italic;
+    color: #555;
+}
         /* Logo */
         .logo-container {
             display: flex;
@@ -409,8 +451,10 @@
 
     <!-- Summary of Results -->
     <h3>Summary of Results</h3>
-    <div id="summary-results"></div>
-</div>
+    <div id="summary-container">
+        <div id="summary-results"></div>
+    </div>
+    </div>
     <!-- Modal for showing correct answer and explanation -->
     <div id="answer-modal" class="modal">
         <div class="modal-content">
