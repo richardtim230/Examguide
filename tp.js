@@ -385,6 +385,12 @@ function showSummary() {
         const questionElement = document.createElement('div');
         questionElement.classList.add('summary-question');
 
+        if (attempt.isCorrect) {
+            questionElement.classList.add('correct');
+        } else {
+            questionElement.classList.add('incorrect');
+        }
+
         const questionText = document.createElement('p');
         questionText.innerHTML = `<strong>Question ${index + 1}:</strong> ${attempt.question}`;
         questionElement.appendChild(questionText);
@@ -398,18 +404,13 @@ function showSummary() {
         questionElement.appendChild(correctAnswerText);
 
         const explanationText = document.createElement('p');
+        explanationText.classList.add('explanation');
         explanationText.innerHTML = `<strong>Explanation:</strong> ${attempt.explanation}`;
         questionElement.appendChild(explanationText);
 
-        if (attempt.isCorrect) {
-            questionElement.style.color = 'green';
-        } else {
-            questionElement.style.color = 'red';
-        }
-
         summaryContainer.appendChild(questionElement);
     });
-    }
+}
 
 function closeAnswerModal() {
     document.getElementById("answer-modal").style.display = "none";
