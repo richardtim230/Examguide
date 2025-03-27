@@ -394,7 +394,7 @@ function confirmAnswer() {
     feedback.appendChild(closeButton);
 
     document.getElementById("answer-modal").style.display = "block";
-}
+
 
 function closeAnswerModalAndNextQuestion() {
     document.getElementById("answer-modal").style.display = "none";
