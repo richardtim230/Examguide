@@ -128,7 +128,7 @@ function redeemCredits() {
 
     const adminPins = {
         "7998725107": 5000,  // Admin set PIN 1
-        "1234567890": 100,    // Admin set PIN 2
+        "1667075692": 150,    // Admin set PIN 2
         "0987654321": 150     // Admin set PIN 3
     };
 
@@ -184,7 +184,7 @@ function startExam() {
     }
 
     // Deduct 5 credit points
-    userData.creditPoints -= 10;
+    userData.creditPoints -= 8;
     localStorage.setItem("userDetails", JSON.stringify(userData));  // Corrected key
 
     // Hide Dashboard & Show Exam Container
