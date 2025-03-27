@@ -203,7 +203,7 @@ function startExam() {
 
 function getTopicFromExamCode(examCode) {
     const topics = {
-        'EXAM001': 'QUALITATIVE ANALYSIS OF INORGANIC COMPOUNDS',
+        'EXAM001': 'TEST FOR SIMPLE CATIONS AND ANIONS',
         'EXAM005': 'CHEMICAL BONDING',
         'CHOFH102': 'CHEMICAL BONDING'
     };
