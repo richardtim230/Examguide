@@ -85,6 +85,7 @@ button {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-buttom: 20px;
 }
 
 button:hover {
