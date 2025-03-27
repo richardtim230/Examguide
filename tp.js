@@ -127,9 +127,15 @@ function redeemCredits() {
     let storedPin = localStorage.getItem("generatedPin");
 
     const adminPins = {
-        "7998725107": 5000,  // Admin set PIN 1
-        "1667075692": 150,    // Admin set PIN 2
-        "0987654321": 150     // Admin set PIN 3
+        "5081795677": 200,  // Admin set PIN 1
+        "7660798196": 200,    // Admin set PIN 2
+        "4763094902": 200,   // Admin set PIN 3
+        "473094902": 200,     // Admin set PIN 3
+    "47630902": 200,  // Admin set PIN 3
+    "476394902": 200,    // Admin set PIN 3
+    "476309402": 200,   // Admin set PIN 3
+    "476304902": 200,     // Admin set PIN 3
+    "476304902": 200     // Admin set PIN 3
     };
 
     if (inputPin === storedPin && adminPins.hasOwnProperty(inputPin)) {
