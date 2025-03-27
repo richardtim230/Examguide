@@ -118,16 +118,15 @@
 
         /* Full-Screen Popup Styles */
         .full-screen-popup {
-            display: none; /* Initially hidden */
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8); /* Dark background */
-            padding: 20px;
-            z-index: 1000;
-            overflow: auto;
+            background: linear-gradient(135deg, #ffffff, #e0eafc);
+    padding: 25px;
+    margin: 25px auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+        width: 100%; /* Ensure full viewport width */
+    max-width: 100%; /* Prevent exceeding viewport width */
+    box-sizing: border-box; 
         }
         .popup-content {
             background-color: #fefefe;
