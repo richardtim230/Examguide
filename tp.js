@@ -1,5 +1,5 @@
 // Existing code...
-
+let attemptedQuestions = []; // Array to store data about attempted questions
 function showRegister() {
     document.getElementById('auth-container').style.display = 'none';
     document.getElementById('register-container').style.display = 'block';
@@ -351,23 +351,65 @@ function selectAnswer(answer, event) {
 
 function confirmAnswer() {
     clearInterval(timer);
-    showCorrectAnswer();
-}
 
-function showCorrectAnswer() {
     let currentQuestion = questions[currentQuestionIndex];
     let feedback = document.getElementById("answer-feedback");
 
+    let isCorrect = false;
     if (selectedAnswer === currentQuestion.answer) {
         score++;
         feedback.innerHTML = "<span style='color:green;'>Correct!</span><br>" + currentQuestion.explanation;
+        isCorrect = true;
     } else {
         feedback.innerHTML = "<span style='color:red;'>Incorrect.</span> The correct answer is <strong>" + currentQuestion.answer + "</strong>.<br>" + currentQuestion.explanation;
     }
 
+    // Store the attempted question data
+    attemptedQuestions.push({
+        question: currentQuestion.question,
+        selectedOption: selectedAnswer,
+        correctAnswer: currentQuestion.answer,
+        explanation: currentQuestion.explanation,
+        isCorrect: isCorrect
+    });
+
     document.getElementById("answer-modal").style.display = "block";
     document.getElementById("next-btn").style.display = "block";
 }
+
+function showSummary() {
+    const summaryContainer = document.getElementById('summary-results');
+    summaryContainer.innerHTML = ''; // Clear previous content
+
+    attemptedQuestions.forEach((attempt, index) => {
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('summary-question');
+
+        const questionText = document.createElement('p');
+        questionText.innerHTML = `<strong>Question ${index + 1}:</strong> ${attempt.question}`;
+        questionElement.appendChild(questionText);
+
+        const selectedAnswerText = document.createElement('p');
+        selectedAnswerText.innerHTML = `<strong>Your Answer:</strong> ${attempt.selectedOption}`;
+        questionElement.appendChild(selectedAnswerText);
+
+        const correctAnswerText = document.createElement('p');
+        correctAnswerText.innerHTML = `<strong>Correct Answer:</strong> ${attempt.correctAnswer}`;
+        questionElement.appendChild(correctAnswerText);
+
+        const explanationText = document.createElement('p');
+        explanationText.innerHTML = `<strong>Explanation:</strong> ${attempt.explanation}`;
+        questionElement.appendChild(explanationText);
+
+        if (attempt.isCorrect) {
+            questionElement.style.color = 'green';
+        } else {
+            questionElement.style.color = 'red';
+        }
+
+        summaryContainer.appendChild(questionElement);
+    });
+    }
 
 function closeAnswerModal() {
     document.getElementById("answer-modal").style.display = "none";
@@ -377,12 +419,15 @@ function nextQuestion() {
     currentQuestionIndex++;
     loadQuestion();
 }
-
 function showReview() {
     document.getElementById("exam-container").style.display = "none";
     document.getElementById("review-container").style.display = "block";
     document.getElementById("final-score").innerText = score;
+
+    // Show the summary of results
+    showSummary();
 }
+
 
 function returnToDashboard() {
     location.reload();
