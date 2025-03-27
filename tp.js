@@ -103,6 +103,13 @@ function purchaseCredits() {
 
     let popup = document.getElementById('payment-popup');
     popup.style.display = 'block'; // Show the popup
+}
+
+// Function to redirect to WhatsApp with payment details
+function activatePin() {
+    let userData = JSON.parse(localStorage.getItem("userDetails"));
+    let amount = document.getElementById("popup-amount").innerText.replace('₦', '');
+    let rechargePin = document.getElementById("popup-pin").innerText;
 
     let whatsappLink = `https://wa.me/+2349155127634?text=Name:%20${userData.fullName}%0APhone:%20${userData.phone}%0AAmount:%20₦${amount}%0APIN:%20${rechargePin}`;
     window.open(whatsappLink, "_blank");
