@@ -1,6 +1,6 @@
 // Exam code mapping to question sets
 const examSets = {
-    "QLTA102": [
+    "EXAM001": [
     { question: "Which reagent is used to confirm the presence of iodide ions?", options: ["Cl₂", "AgNO₃", "BaCl₂", "NaOH"], answer: "Cl₂", explanation: "Iodide ions (I⁻) react with chlorine (Cl₂) to release iodine, which can be detected by its characteristic violet coloration in organic solvents." },
     { question: "What is the color of the precipitate formed when silver ions react with Cl⁻?", options: ["White", "Yellow", "Green", "Blue"], answer: "White", explanation: "Silver ions (Ag⁺) react with chloride ions (Cl⁻) to form a white precipitate of silver chloride (AgCl)." },
     { question: "Which ion produces a golden-yellow flame in a flame test?", options: ["Na⁺", "K⁺", "Ca²⁺", "Li⁺"], answer: "Na⁺", explanation: "Sodium ions (Na⁺) produce a golden-yellow flame when subjected to a flame test." },
@@ -43,7 +43,7 @@ const examSets = {
     { question: "Which reagent is used to confirm the presence of carbonate ions?", options: ["Dilute HCl", "AgNO₃", "BaCl₂", "NaOH"], answer: "Dilute HCl", explanation: "Carbonates react with dilute hydrochloric acid (HCl) to release carbon dioxide (CO₂), which can be detected by passing it through lime water." },
     { question: "What is the color of the precipitate formed when aluminum ions react with NaOH?", options: ["White", "Blue", "Green", "Yellow"], answer: "White", explanation: "Aluminum ions (Al³⁺) react with sodium hydroxide (NaOH) to form a white precipitate of aluminum hydroxide (Al(OH)₃)." },
     ],
-"CBD102": [
+"EXAM005": [
     { question: "What type of bond is formed when electrons are shared between atoms?", options: ["Covalent bond", "Ionic bond", "Metallic bond", "Hydrogen bond"], answer: "Covalent bond", explanation: "Covalent bonds are formed when atoms share pairs of electrons to achieve stability, typically between nonmetals." },
     { question: "What is the bond angle in a tetrahedral molecule like CH₄?", options: ["90°", "109.5°", "120°", "180°"], answer: "109.5°", explanation: "In a tetrahedral molecule, the bond angles are 109.5° due to the symmetrical arrangement of bonds around the central atom." },
     { question: "Which type of bond involves the transfer of electrons from one atom to another?", options: ["Ionic bond", "Covalent bond", "Metallic bond", "Van der Waals bond"], answer: "Ionic bond", explanation: "Ionic bonds occur when electrons are transferred from a metal to a nonmetal, forming positively and negatively charged ions." },
