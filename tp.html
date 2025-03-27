@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CBT PRACTICE</title>
+
+    <!-- Intro.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.0.0/introjs.min.css">
+
+    <!-- Intro.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.0.0/intro.min.js"></script>
+    
     <link rel="stylesheet" href="tp.css">
     <style>
         /* CSS for highlighting the selected answer */
@@ -464,8 +471,65 @@
             <p id="answer-feedback"></p>
         </div>
     </div>
+    
+    <!-- Recharge Section -->
+    <div id="purchaseAmount" data-intro="This is where you can recharge your account." data-step="1">
+        <!-- Recharge content -->
+    </div>
+
+    <!-- Redeem Credits Section -->
+    <div id="rechargePin" data-intro="This is where you can redeem your credits." data-step="2">
+        <!-- Redeem content -->
+    </div>
+
+    <!-- Take Exams Section -->
+    <div id="examCode" data-intro="This is where you can take exams." data-step="3">
+        <!-- Take exams content -->
+    </div>
+    <div id="examTopics" data-intro="This is where you can take exam topic codes." data-step="3">
+        <!-- Take exams content -->
+    </div>
+
+    <!-- Start Tour Button -->
+    <button onclick="startTour()">Start Tour</button>
+        
     <script src="tp.js"></script>
     <script src="questions.js"></script>
+    <script>
+    function startTour() {
+        introJs().setOptions({
+            steps: [
+                {
+                    intro: "Welcome to the platform! This tour will guide you through the main features of this platform, you can always use the start tour button if you're confused."
+                },
+                {
+                    element: '#purchaseAmount',
+                    intro: "This is where you can recharge your account to gain more credit points whenever you're running out of credit points. Credit points are deducted whenever you take a test."
+                },
+                {
+                    element: '#rechargePin',
+                    intro: "This is where you can redeem your credits for more points. Note that your Recharge PIN must have been validated by an Admin."
+                },
+                {
+                    element: '#examCode',
+                    intro: "This is where you can take exams to test your knowledge on each topic."
+                },
+                {
+                    element: '#examTopics',
+                    intro: "This is where you can take exam topic code for practice."
+                }
+            ],
+            showProgress: true,
+            showBullets: false,
+            exitOnOverlayClick: false,
+            exitOnEsc: false,
+            nextLabel: 'Next',
+            prevLabel: 'Back',
+            skipLabel: 'Skip',
+            doneLabel: 'Done'
+        }).start();
+    }
+</script>
     <script>
         function togglePopup() {
             const examTopics = document.getElementById('examTopics');
