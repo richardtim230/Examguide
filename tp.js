@@ -340,7 +340,7 @@ function loadQuestion() {
         document.getElementById("timer").innerText = timeLeft;
         if (timeLeft === 0) {
             clearInterval(timer);
-            showCorrectAnswer();
+            confirmAnswer();  // Call confirmAnswer to show feedback immediately
         }
     }, 1000);
 }
