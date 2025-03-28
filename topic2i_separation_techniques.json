@@ -1,0 +1,62 @@
+"CHM102_ISOLATION_AND_PURIFICATION": [
+    {
+        question: "Which separation technique is most suitable for separating a mixture of two volatile liquids with a large difference in boiling points?",
+        options: ["Simple Distillation", "Fractional Distillation", "Sublimation", "Chromatography"],
+        answer: "Simple Distillation",
+        explanation: "<b>Correct Answer:</b> Simple Distillation<br>Simple distillation is used when the boiling point difference between two volatile liquids is greater than 25°C. It separates the liquids based on their boiling points.<br><br><b>Why other options are incorrect:</b><br><b>Fractional Distillation:</b> Fractional distillation is used for separating liquids with close boiling points (less than 25°C difference).<br><b>Sublimation:</b> Sublimation is used to separate solids that sublimate directly into gas, not volatile liquids.<br><b>Chromatography:</b> Chromatography is used for separating components of a mixture based on their movement through a stationary phase, not for volatile liquid mixtures."
+    },
+    {
+        question: "Which separation technique is best for purifying a solid that sublimes on heating?",
+        options: ["Sublimation", "Crystallization", "Distillation", "Extraction"],
+        answer: "Sublimation",
+        explanation: "<b>Correct Answer:</b> Sublimation<br>Sublimation is used to purify solids that change directly from solid to gas upon heating, bypassing the liquid phase. Examples include iodine and naphthalene.<br><br><b>Why other options are incorrect:</b><br><b>Crystallization:</b> Crystallization is used for purifying solids that dissolve in solvents and recrystallize upon cooling, not subliming solids.<br><b>Distillation:</b> Distillation is used for separating liquids based on boiling points, not solids.<br><b>Extraction:</b> Extraction is used to separate components based on solubility in different solvents, not for subliming solids."
+    },
+    {
+        question: "What principle is chromatography based on?",
+        options: ["Boiling point differences", "Differential solubility", "Magnetic properties", "Particle size"],
+        answer: "Differential solubility",
+        explanation: "<b>Correct Answer:</b> Differential solubility<br>Chromatography separates components of a mixture based on their differing solubilities in the stationary and mobile phases.<br><br><b>Why other options are incorrect:</b><br><b>Boiling point differences:</b> Boiling point differences are the basis of distillation, not chromatography.<br><b>Magnetic properties:</b> Magnetic properties are used in magnetic separation, not chromatography.<br><b>Particle size:</b> Particle size is a factor in filtration, not chromatography."
+    },
+    {
+        question: "Which separation technique is used to separate immiscible liquids?",
+        options: ["Separating Funnel", "Distillation", "Filtration", "Crystallization"],
+        answer: "Separating Funnel",
+        explanation: "<b>Correct Answer:</b> Separating Funnel<br>Immiscible liquids, such as oil and water, can be separated using a separating funnel based on their densities.<br><br><b>Why other options are incorrect:</b><br><b>Distillation:</b> Distillation is used for separating miscible liquids based on boiling points, not immiscible liquids.<br><b>Filtration:</b> Filtration is used for separating solids from liquids, not immiscible liquids.<br><b>Crystallization:</b> Crystallization is used to purify solids, not to separate liquids."
+    },
+    {
+        question: "What is the purpose of adding activated charcoal during recrystallization?",
+        options: ["To remove colored impurities", "To increase solubility", "To reduce evaporation", "To act as a catalyst"],
+        answer: "To remove colored impurities",
+        explanation: "<b>Correct Answer:</b> To remove colored impurities<br>Activated charcoal adsorbs colored impurities from the solution, ensuring a pure recrystallized product.<br><br><b>Why other options are incorrect:</b><br><b>To increase solubility:</b> Activated charcoal does not affect solubility.<br><b>To reduce evaporation:</b> Activated charcoal does not reduce evaporation.<br><b>To act as a catalyst:</b> Activated charcoal is not a catalyst in recrystallization."
+    },
+    {
+        question: "Which method is most suitable for separating a mixture of a solid and a liquid when the solid is insoluble?",
+        options: ["Filtration", "Distillation", "Extraction", "Crystallization"],
+        answer: "Filtration",
+        explanation: "<b>Correct Answer:</b> Filtration<br>Filtration separates insoluble solids from liquids by passing the mixture through a porous medium like filter paper.<br><br><b>Why other options are incorrect:</b><br><b>Distillation:</b> Distillation is used for separating liquid mixtures, not insoluble solids.<br><b>Extraction:</b> Extraction separates components based on solubility in different solvents, not insoluble solids.<br><b>Crystallization:</b> Crystallization purifies solids that dissolve in solvents, not insoluble solids."
+    },
+    {
+        question: "Which separation technique is used to obtain pure water from a saltwater solution?",
+        options: ["Distillation", "Filtration", "Chromatography", "Sublimation"],
+        answer: "Distillation",
+        explanation: "<b>Correct Answer:</b> Distillation<br>Distillation separates water from saltwater by evaporating the water and condensing it back to liquid form, leaving the salt behind.<br><br><b>Why other options are incorrect:</b><br><b>Filtration:</b> Filtration cannot separate dissolved salts from water.<br><b>Chromatography:</b> Chromatography is not used for separating water from salts.<br><b>Sublimation:</b> Sublimation is used for solids that sublime, not for liquid separation."
+    },
+    {
+        question: "What is the stationary phase in paper chromatography?",
+        options: ["Water in the paper", "The solvent", "The glass plate", "The sample"],
+        answer: "Water in the paper",
+        explanation: "<b>Correct Answer:</b> Water in the paper<br>The stationary phase in paper chromatography is water molecules trapped in the cellulose fibers of the paper.<br><br><b>Why other options are incorrect:</b><br><b>The solvent:</b> The solvent is the mobile phase, not the stationary phase.<br><b>The glass plate:</b> The glass plate is not involved in paper chromatography.<br><b>The sample:</b> The sample is what is being separated, not the stationary phase."
+    },
+    {
+        question: "Which technique is used to separate pigments in ink?",
+        options: ["Paper Chromatography", "Filtration", "Distillation", "Crystallization"],
+        answer: "Paper Chromatography",
+        explanation: "<b>Correct Answer:</b> Paper Chromatography<br>Paper chromatography separates pigments in ink based on their solubility and affinity for the stationary and mobile phases.<br><br><b>Why other options are incorrect:</b><br><b>Filtration:</b> Filtration cannot separate dissolved pigments.<br><b>Distillation:</b> Distillation is not suitable for separating pigments.<br><b>Crystallization:</b> Crystallization is used to purify solids, not to separate pigments."
+    },
+    {
+        question: "Which separation technique involves the use of a Soxhlet apparatus?",
+        options: ["Extraction", "Distillation", "Filtration", "Sublimation"],
+        answer: "Extraction",
+        explanation: "<b>Correct Answer:</b> Extraction<br>The Soxhlet apparatus is used for extracting a compound from a solid using a solvent. This is commonly employed in organic extractions.<br><br><b>Why other options are incorrect:</b><br><b>Distillation:</b> Distillation is not performed using a Soxhlet apparatus.<br><b>Filtration:</b> Filtration does not use a Soxhlet apparatus.<br><b>Sublimation:</b> Sublimation does not involve a Soxhlet apparatus."
+    }
+]
