@@ -399,7 +399,6 @@ function nextQuestion() {
 
 // The rest of the code remains unchanged...
 
-
 function showSummary() {
     const summaryContainer = document.getElementById('summary-results');
     summaryContainer.innerHTML = ''; // Clear previous content
@@ -435,14 +434,6 @@ function showSummary() {
     });
 }
 
-function closeAnswerModal() {
-    document.getElementById("answer-modal").style.display = "none";
-}
-
-function nextQuestion() {
-    currentQuestionIndex++;
-    loadQuestion();
-}
 function showReview() {
     document.getElementById("exam-container").style.display = "none";
     document.getElementById("review-container").style.display = "block";
@@ -451,7 +442,6 @@ function showReview() {
     // Show the summary of results
     showSummary();
 }
-
 
 function returnToDashboard() {
     location.reload();
