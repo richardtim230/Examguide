@@ -484,4 +484,305 @@ const examSets = {
         explanation: "Hydrogen acts as a reducing agent in fuel cells, where it donates electrons to produce electricity.<br><br><strong>'Oxidizing agent'</strong>: Incorrect, hydrogen is not an oxidizing agent.<br><strong>'Catalyst'</strong>: Incorrect, hydrogen is a reactant, not a catalyst.<br><strong>'Electrolyte'</strong>: Incorrect, hydrogen is not an electrolyte; the electrolyte is typically a solution like KOH." 
     },
 ],
+
+    "EXAM015": [
+    { 
+        question: "Which alkali metal exhibits diagonal relationship with magnesium?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium exhibits a diagonal relationship with magnesium due to similarities in ionic size, electronegativity, and polarization effects. Both form nitrides and have similar solubilities for their compounds.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium does not exhibit a diagonal relationship with magnesium.<br><b>Potassium (K):</b> Potassium does not share these similarities with magnesium.<br><b>Cesium (Cs):</b> Cesium is too large to exhibit such a relationship."
+    },
+    { 
+        question: "Which alkali metal has the highest tendency to form complexes?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Due to its small ionic size and high charge density, lithium has the highest tendency to form complexes, such as with ethylenediamine or crown ethers.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium can form complexes but lacks the high charge density of lithium.<br><b>Potassium (K):</b> Potassium forms fewer complexes due to its larger ionic size.<br><b>Cesium (Cs):</b> Cesium forms very few complexes due to its low charge density."
+    },
+    { 
+        question: "Which alkali metal has the strongest reducing power in aqueous solution?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>In aqueous solutions, lithium exhibits the strongest reducing power because its high hydration energy compensates for its high ionization energy, making it highly reactive.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has lower hydration energy, making it less reducing than lithium.<br><b>Potassium (K):</b> Potassium has even lower hydration energy, reducing its reducing power.<br><b>Cesium (Cs):</b> Cesium, with the lowest hydration energy, is the weakest reducing agent among the alkali metals."
+    },
+    { 
+        question: "Which alkali metal forms the least stable hydride?",
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium hydride (CsH) is the least stable hydride among alkali metals due to the weak bonding caused by cesium's large ionic size.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium hydride (LiH) is highly stable due to strong ionic bonding.<br><b>Sodium (Na):</b> Sodium hydride (NaH) is more stable than cesium hydride.<br><b>Potassium (K):</b> Potassium hydride (KH) is stable but less so compared to lithium hydride."
+    },
+    { 
+        question: "Which alkali metal reacts most violently with chlorine gas?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium reacts most violently with chlorine gas due to its low ionization energy and large atomic size, making the reaction highly exothermic.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium reacts less violently due to its higher ionization energy.<br><b>Sodium (Na):</b> Sodium reacts moderately with chlorine gas.<br><b>Potassium (K):</b> Potassium reacts violently but less so compared to cesium."
+    },
+    { 
+        question: "Which alkali metal has the lowest standard electrode potential?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium has the lowest standard electrode potential (-3.04 V), making it the strongest reducing agent among alkali metals.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has a higher electrode potential (-2.71 V) than lithium.<br><b>Potassium (K):</b> Potassium's standard electrode potential (-2.93 V) is higher than lithium's.<br><b>Cesium (Cs):</b> Cesium has a higher electrode potential (-2.92 V) than lithium."
+    },
+    { 
+        question: "Which alkali metal reacts with oxygen to form a simple oxide?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium reacts with oxygen to form a simple oxide (Li₂O) due to its small ionic size and high charge density.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium forms a peroxide (Na₂O₂) instead of a simple oxide.<br><b>Potassium (K):</b> Potassium forms a superoxide (KO₂) due to its larger ionic size.<br><b>Rubidium (Rb):</b> Rubidium also forms a superoxide (RbO₂) instead of a simple oxide."
+    },
+    { 
+        question: "Which alkali metal has the highest thermal conductivity?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium has the highest thermal conductivity among alkali metals due to its small atomic size and strong metallic bonding.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has lower thermal conductivity compared to lithium.<br><b>Potassium (K):</b> Potassium's thermal conductivity is lower than sodium's.<br><b>Cesium (Cs):</b> Cesium has the lowest thermal conductivity among alkali metals."
+    },
+    { 
+        question: "Which alkali metal has the strongest metallic bonding?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Due to its small atomic size and high charge density, lithium exhibits the strongest metallic bonding among alkali metals.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has weaker metallic bonding than lithium due to its larger atomic size.<br><b>Potassium (K):</b> Potassium has even weaker metallic bonding.<br><b>Cesium (Cs):</b> Cesium has the weakest metallic bonding due to its large atomic size."
+    },
+    { 
+        question: "Which alkali metal forms the most soluble nitrate?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium nitrate (CsNO₃) is the most soluble nitrate among alkali metals due to the large ionic size of cesium, which reduces lattice energy.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium nitrate (LiNO₃) is less soluble due to its high lattice energy.<br><b>Sodium (Na):</b> Sodium nitrate (NaNO₃) is more soluble than lithium nitrate but less so than cesium nitrate.<br><b>Potassium (K):</b> Potassium nitrate (KNO₃) is less soluble than cesium nitrate."
+    },
+    { 
+        question: "What happens to the density of alkali metals as you move down the group?", 
+        options: ["Increases", "Decreases", "Remains constant", "Varies irregularly"], 
+        answer: "Increases", 
+        explanation: "<b>Correct Answer:</b> Increases<br>The density of alkali metals generally increases down the group due to the increasing atomic mass overcoming the effect of increasing atomic size.<br><br><b>Why other options are incorrect:</b><br><b>Decreases:</b> While atomic size increases, the atomic mass also increases significantly, leading to higher densities.<br><b>Remains constant:</b> Density does not remain constant because atomic mass increases down the group.<br><b>Varies irregularly:</b> Density shows a clear trend of increase and does not vary irregularly."
+    },
+    { 
+        question: "What is the trend of ionization energy in alkali metals?", 
+        options: ["Increases down the group", "Decreases down the group", "Remains constant", "Varies irregularly"], 
+        answer: "Decreases down the group", 
+        explanation: "<b>Correct Answer:</b> Decreases down the group<br>The ionization energy of alkali metals decreases down the group due to increasing atomic size and weaker attraction between the nucleus and the outermost electron.<br><br><b>Why other options are incorrect:</b><br><b>Increases down the group:</b> This is incorrect because the outer electron becomes easier to remove as atomic size increases.<br><b>Remains constant:</b> Ionization energy does not remain constant; it clearly decreases down the group.<br><b>Varies irregularly:</b> Ionization energy follows a predictable trend and does not vary irregularly."
+    },
+    { 
+        question: "Which alkali metal has the highest melting point?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium has the highest melting point among alkali metals due to its small atomic size and strong metallic bonding.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has a lower melting point than lithium due to weaker metallic bonding.<br><b>Potassium (K):</b> Potassium has an even lower melting point than sodium.<br><b>Cesium (Cs):</b> Cesium has the lowest melting point among alkali metals due to its large atomic size and weak metallic bonding."
+    },
+    {        question: "What is the nature of oxides formed by alkali metals?", 
+        options: ["Acidic", "Basic", "Neutral", "Amphoteric"], 
+        answer: "Basic", 
+        explanation: "<b>Correct Answer:</b> Basic<br>Oxides of alkali metals are basic in nature because they react with water to form metal hydroxides, which are strong bases. For example, Na₂O + H₂O → 2NaOH.<br><br><b>Why other options are incorrect:</b><br><b>Acidic:</b> Acidic oxides are formed by non-metals, not alkali metals.<br><b>Neutral:</b> Neutral oxides, such as CO or N₂O, are not formed by alkali metals.<br><b>Amphoteric:</b> Amphoteric oxides, such as Al₂O₃, are formed by certain metals but not alkali metals."
+    },
+    { 
+        question: "Which alkali metal forms the most stable carbonate?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium forms the most stable carbonate due to its large ionic size, which reduces lattice energy and stabilizes the carbonate ion.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium carbonate is less stable due to the small ionic size of lithium, leading to higher lattice energy.<br><b>Sodium (Na):</b> Sodium carbonate is stable but less so compared to cesium carbonate.<br><b>Potassium (K):</b> Potassium carbonate is stable but not as stable as cesium carbonate."
+    },
+    { 
+        question: "What happens to the atomic radius of alkali metals as you move down the group?", 
+        options: ["Increases", "Decreases", "Remains constant", "Varies irregularly"], 
+        answer: "Increases", 
+        explanation: "<b>Correct Answer:</b> Increases<br>The atomic radius of alkali metals increases down the group due to the addition of electron shells, which outweighs the effect of increasing nuclear charge.<br><br><b>Why other options are incorrect:</b><br><b>Decreases:</b> Atomic radius does not decrease because electron shells are added as you move down the group.<br><b>Remains constant:</b> Atomic radius clearly increases and does not remain constant.<br><b>Varies irregularly:</b> The atomic radius follows a predictable trend and does not vary irregularly."
+    },
+    {         question: "Which alkali metal forms the strongest ionic bond in its compounds?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium forms the strongest ionic bonds due to its small ionic radius and high charge density, which leads to strong electrostatic attraction.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium forms weaker ionic bonds compared to lithium due to its larger ionic size.<br><b>Potassium (K):</b> Potassium forms even weaker ionic bonds than sodium.<br><b>Cesium (Cs):</b> Cesium forms the weakest ionic bonds among alkali metals due to its large ionic size."
+    },
+    { 
+        question: "Which alkali metal has the lowest electronegativity?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium has the lowest electronegativity among alkali metals due to its large atomic size and weak attraction to electrons.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium has the highest electronegativity among alkali metals due to its small atomic size.<br><b>Sodium (Na):</b> Sodium has a higher electronegativity than cesium but lower than lithium.<br><b>Potassium (K):</b> Potassium has a higher electronegativity than cesium but lower than sodium."
+    },
+    { 
+        question: "Which alkali metal forms the least soluble sulfate in water?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium sulfate (Li₂SO₄) is the least soluble sulfate among alkali metals due to its high lattice energy and low hydration energy.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium sulfate (Na₂SO₄) is highly soluble in water.<br><b>Potassium (K):</b> Potassium sulfate (K₂SO₄) is more soluble than lithium sulfate.<br><b>Cesium (Cs):</b> Cesium sulfate (Cs₂SO₄) is extremely soluble in water."
+    },
+    { 
+        question: "Which alkali metal forms the least stable chloride?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium chloride (CsCl) is the least stable chloride among alkali metals due to the weak lattice energy caused by its large ionic size.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium chloride (LiCl) is highly stable due to its high lattice energy.<br><b>Sodium (Na):</b> Sodium chloride (NaCl) is very stable and widely used.<br><b>Potassium (K):</b> Potassium chloride (KCl) is stable but less so compared to sodium chloride."
+    },
+    { 
+        question: "Which alkali metal shows the highest hydration energy?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium has the highest hydration energy among alkali metals due to its small ionic size and high charge density, allowing it to strongly attract water molecules.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has a larger ionic size than lithium, so its hydration energy is lower.<br><b>Potassium (K):</b> Potassium has an even larger ionic size, leading to further reduced hydration energy.<br><b>Cesium (Cs):</b> Cesium, being the largest alkali metal, has the lowest hydration energy of all."
+    },
+    { 
+        question: "Which alkali metal forms the most stable complex with crown ethers?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Potassium (K)", 
+        explanation: "<b>Correct Answer:</b> Potassium (K)<br>Potassium forms the most stable complex with crown ethers due to its optimal ionic size, which fits well within the cavity of crown ethers.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium is too small to effectively fit into the crown ether cavity.<br><b>Sodium (Na):</b> Sodium can form complexes, but they are less stable compared to potassium.<br><b>Rubidium (Rb):</b> Rubidium is too large for the crown ether cavity, making the complex less stable."
+    },
+    { 
+        question: "Which alkali metal has the lowest boiling point?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium has the lowest boiling point among alkali metals due to its large atomic size and weak metallic bonding.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium has the highest boiling point among alkali metals due to its small atomic size and strong metallic bonding.<br><b>Sodium (Na):</b> Sodium has a higher boiling point than cesium but lower than lithium.<br><b>Potassium (K):</b> Potassium has a lower boiling point than sodium but higher than cesium."
+    },
+    { 
+        question: "Which alkali metal is commonly used in liquid-metal cooling systems for nuclear reactors?",
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Sodium (Na)", 
+        explanation: "<b>Correct Answer:</b> Sodium (Na)<br>Sodium is used in liquid-metal cooling systems for nuclear reactors due to its high thermal conductivity and low viscosity.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium is not used in such systems due to its reactivity and low density.<br><b>Potassium (K):</b> Potassium could be used, but it is less efficient than sodium.<br><b>Rubidium (Rb):</b> Rubidium is too reactive and expensive for practical use in cooling systems."
+    },
+    { 
+        question: "Which alkali metal is used in atomic clocks?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium is used in atomic clocks due to the precise frequency of radiation emitted by its isotopes during electron transitions.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium is not used in atomic clocks as its electron transitions do not produce stable frequencies.<br><b>Sodium (Na):</b> Sodium's transitions are not as stable and precise as cesium's.<br><b>Potassium (K):</b> Potassium is sometimes used in experimental clocks but is less common than cesium."
+    },
+    { 
+        question: "Which alkali metal reacts directly with nitrogen at room temperature?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium reacts directly with nitrogen at room temperature to form lithium nitride (Li₃N). This is due to lithium's high charge density and strong attraction to nitrogen.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium does not react with nitrogen under standard conditions.<br><b>Potassium (K):</b> Potassium does not react with nitrogen at room temperature.<br><b>Rubidium (Rb):</b> Rubidium also does not react with nitrogen under normal conditions."
+    },
+    { 
+        question: "Which alkali metal forms the least soluble hydroxide in water?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium hydroxide (LiOH) is the least soluble hydroxide among alkali metals due to the high lattice energy of LiOH compared to the hydration energy.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium hydroxide (NaOH) is highly soluble in water.<br><b>Potassium (K):</b> Potassium hydroxide (KOH) is even more soluble than NaOH.<br><b>Rubidium (Rb):</b> Rubidium hydroxide (RbOH) is extremely soluble in water."
+    },
+    { 
+        question: "Which alkali metal is used in the manufacture of heat-resistant glass?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium compounds, such as lithium carbonate (Li₂CO₃), are used in heat-resistant glass production because they reduce the melting point and improve thermal shock resistance.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium is used in ordinary glass but not in heat-resistant glass.<br><b>Potassium (K):</b> Potassium is not commonly used in heat-resistant glass.<br><b>Cesium (Cs):</b> Cesium is not used in glass manufacturing due to its high cost and reactivity."
+    },
+    { 
+        question: "Which alkali metal forms the most stable peroxide?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Sodium (Na)", 
+        explanation: "<b>Correct Answer:</b> Sodium (Na)<br>Sodium forms the most stable peroxide (Na₂O₂) due to its optimal ionic size and charge density.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium forms only simple oxides, not peroxides.<br><b>Potassium (K):</b> Potassium forms peroxides, but they are less stable than sodium peroxides.<br><b>Rubidium (Rb):</b> Rubidium peroxides are even less stable than potassium peroxides."
+    },
+    { 
+        question: "Which alkali metal is used in anti-depression medications?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium salts, such as lithium carbonate, are widely used in medications for depression and bipolar disorder.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium has no direct application in psychiatric treatments.<br><b>Potassium (K):</b> Potassium is essential for physiological functions but is not used in medications for depression.<br><b>Rubidium (Rb):</b> Rubidium has limited medical applications and is not used in psychiatric treatments."
+    },
+    { 
+        question: "What is the product formed when alkali metals react with water?", 
+        options: ["Metal Oxide", "Metal Hydroxide", "Metal Carbonate", "Metal Sulfate"], 
+        answer: "Metal Hydroxide", 
+        explanation: "<b>Correct Answer:</b> Metal Hydroxide<br>When alkali metals react with water, they form metal hydroxides and release hydrogen gas. For example: Na + H₂O → NaOH + H₂.<br><br><b>Why other options are incorrect:</b><br><b>Metal Oxide:</b> Metal oxides are formed when alkali metals react with oxygen, not water.<br><b>Metal Carbonate:</b> Metal carbonates are formed when alkali metals react with carbon dioxide or carbonate ions, not water.<br><b>Metal Sulfate:</b> Metal sulfates are formed when alkali metals react with sulfuric acid (H₂SO₄), not water."
+    },
+    { 
+        question: "Which alkali metal is used in the treatment of bipolar disorder?", 
+        options: ["Sodium (Na)", "Potassium (K)", "Lithium (Li)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "<b>Correct Answer:</b> Lithium (Li)<br>Lithium compounds, particularly lithium carbonate, are widely used as mood stabilizers in the treatment of bipolar disorder.<br><br><b>Why other options are incorrect:</b><br><b>Sodium (Na):</b> Sodium is essential for physiological functions but is not used as a treatment for bipolar disorder.<br><b>Potassium (K):</b> Potassium plays a vital role in maintaining cellular functions but does not have applications in psychiatric treatments.<br><b>Rubidium (Rb):</b> Rubidium has limited medical applications and is not used in treating bipolar disorder."
+    },
+    { 
+        question: "Which alkali metal forms a superoxide when reacting with oxygen?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Potassium (K)", 
+        explanation: "<b>Correct Answer:</b> Potassium (K)<br>Potassium reacts with oxygen to form a superoxide (KO₂), which contains the superoxide ion (O₂⁻). This ability is due to potassium's larger atomic size and lower ionization energy.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium reacts with oxygen to form a simple oxide (Li₂O), not a superoxide.<br><b>Sodium (Na):</b> Sodium reacts with oxygen to form a peroxide (Na₂O₂), not a superoxide.<br><b>Rubidium (Rb):</b> Rubidium can form superoxides like potassium, but potassium is more commonly used for this reaction."
+    },
+    { 
+        question: "What is the flame color observed when lithium is burned?", 
+        options: ["Yellow", "Red", "Green", "Blue"], 
+        answer: "Red", 
+        explanation: "<b>Correct Answer:</b> Red<br>Lithium burns with a red flame due to the excitation of electrons in the lithium atoms and subsequent emission of light in the red region of the spectrum.<br><br><b>Why other options are incorrect:</b><br><b>Yellow:</b> Yellow flame is characteristic of sodium, not lithium.<br><b>Green:</b> Green flame is typically observed for elements like barium or boron compounds.<br><b>Blue:</b> Blue flame is observed for copper or certain hydrocarbons, but not lithium."
+    },
+    { 
+        question: "What is the trend of melting points in alkali metals?", 
+        options: ["Increases down the group", "Decreases down the group", "No trend", "Varies irregularly"], 
+        answer: "Decreases down the group", 
+        explanation: "<b>Correct Answer:</b> Decreases down the group<br>The melting points of alkali metals decrease down the group due to weaker metallic bonding as atomic size increases.<br><br><b>Why other options are incorrect:</b><br><b>Increases down the group:</b> This is incorrect as alkali metals show a decreasing trend in melting points due to weaker bonds in larger atoms.<br><b>No trend:</b> There is a clear trend, so this option is incorrect.<br><b>Varies irregularly:</b> The melting points follow a predictable trend and do not vary irregularly."
+    },
+    { 
+        question: "Which alkali metal reacts most vigorously with water?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "<b>Correct Answer:</b> Cesium (Cs)<br>Cesium reacts most vigorously with water because it has the largest atomic size among alkali metals, resulting in the lowest ionization energy. This makes it easier for cesium to lose its outermost electron, leading to an extremely exothermic reaction.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium reacts the least vigorously with water due to its small atomic size, which gives it the highest ionization energy among alkali metals.<br><b>Sodium (Na):</b> Sodium reacts moderately with water, producing hydrogen gas and sodium hydroxide (NaOH), but it is less reactive than cesium.<br><b>Potassium (K):</b> Potassium is more reactive than sodium but still less reactive than cesium due to its smaller atomic size compared to cesium."
+    },
+    { 
+        question: "What is the flame color observed when sodium is burned?", 
+        options: ["Yellow", "Red", "Green", "Blue"], 
+        answer: "Yellow", 
+        explanation: "<b>Correct Answer:</b> Yellow<br>Sodium imparts a bright yellow color to the flame due to the excitation of electrons to higher energy levels. When these electrons return to their ground state, they emit light in the yellow region of the visible spectrum.<br><br><b>Why other options are incorrect:</b><br><b>Red:</b> A red flame is typically observed for elements like lithium or strontium, not sodium.<br><b>Green:</b> Green flame is characteristic of elements like barium or boron compounds.<br><b>Blue:</b> A blue flame is observed for elements like copper or certain hydrocarbons, but not for sodium."
+    },
+    { 
+        question: "What is the general electronic configuration of alkali metals?", 
+        options: ["ns¹", "ns²", "np¹", "np²"], 
+        answer: "ns¹",
+        explanation: "<b>Correct Answer:</b> ns¹<br>The electronic configuration of alkali metals is ns¹, where 'n' represents the principal quantum number of the outermost shell. This configuration corresponds to the presence of a single electron in their outermost shell.<br><br><b>Why other options are incorrect:</b><br><b>ns²:</b> This configuration is characteristic of alkaline earth metals, not alkali metals.<br><b>np¹:</b> This configuration corresponds to elements in the p-block, such as boron or aluminum.<br><b>np²:</b> This configuration is also characteristic of p-block elements, such as carbon or silicon, not alkali metals."
+    },
+    { 
+        question: "Which alkali metal is the most abundant in Earth's crust?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Sodium (Na)", 
+        explanation: "<b>Correct Answer:</b> Sodium (Na)<br>Sodium is the most abundant alkali metal in Earth's crust, primarily found in the form of sodium chloride (NaCl) in oceans and salt deposits.<br><br><b>Why other options are incorrect:</b><br><b>Lithium (Li):</b> Lithium is much less abundant in the Earth's crust compared to sodium and is primarily found in minerals like spodumene.<br><b>Potassium (K):</b> Potassium is more abundant than lithium but less abundant than sodium. It is commonly found in feldspar and other minerals.<br><b>Rubidium (Rb):</b> Rubidium is a trace element in the Earth's crust and is much less abundant than sodium, potassium, or lithium."
+    },
+    { 
+        question: "What is the trend of reactivity in alkali metals?", 
+        options: ["Increases down the group", "Decreases down the group", "No trend", "Varies irregularly"], 
+        answer: "Increases down the group", 
+        explanation: "<b>Correct Answer:</b> Increases down the group<br>The reactivity of alkali metals increases down the group due to their larger atomic size and lower ionization energy, which makes it easier for them to lose their outermost electron.<br><br><b>Why other options are incorrect:</b><br><b>Decreases down the group:</b> This is incorrect because smaller alkali metals like lithium are less reactive than larger ones like cesium.<br><b>No trend:</b> There is a clear trend of increasing reactivity down the group, so this option is incorrect.<br><b>Varies irregularly:</b> Reactivity follows a predictable trend and does not vary irregularly in alkali metals."
+    },
+    { 
+        question: "Which alkali metal is the lightest element?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "Lithium is the lightest alkali metal and has the lowest atomic mass among the alkali metals (approximately 6.94 g/mol)." 
+    },
+    { 
+        question: "What is the oxidation state of alkali metals in their compounds?", 
+        options: ["+1", "+2", "0", "-1"], 
+        answer: "+1", 
+        explanation: "Alkali metals always show a +1 oxidation state in their compounds because they have one electron in their outermost shell, which they readily lose to form cations." 
+    },
+    { 
+        question: "Which alkali metal reacts most vigorously with water?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Cesium (Cs)"], 
+        answer: "Cesium (Cs)", 
+        explanation: "Cesium reacts most vigorously with water due to its larger atomic size and lower ionization energy, making the reaction highly exothermic." 
+    },
+    { 
+        question: "What is the flame color observed when sodium is burned?", 
+        options: ["Yellow", "Red", "Green", "Blue"], 
+        answer: "Yellow", 
+        explanation: "Sodium imparts a bright yellow color to the flame due to the excitation of electrons and subsequent emission of light in the yellow region." 
+    },
+    { 
+        question: "Which alkali metal is used in the treatment of bipolar disorder?", 
+        options: ["Sodium (Na)", "Potassium (K)", "Lithium (Li)", "Rubidium (Rb)"], 
+        answer: "Lithium (Li)", 
+        explanation: "Lithium compounds, particularly lithium carbonate, are widely used in the treatment of bipolar disorder as mood stabilizers." 
+    },
+    { 
+        question: "What is the general electronic configuration of alkali metals?", 
+        options: ["ns¹", "ns²", "np¹", "np²"], 
+        answer: "ns¹", 
+        explanation: "Alkali metals have a general electronic configuration of ns¹, where 'n' represents the principal quantum number of the outermost shell." 
+    },
+    { 
+        question: "Which alkali metal is the most abundant in Earth's crust?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Sodium (Na)", 
+        explanation: "Sodium is the most abundant alkali metal in Earth's crust and is primarily found in the form of sodium chloride (NaCl)." 
+    },
+    { 
+        question: "What is the product formed when alkali metals react with water?", 
+        options: ["Metal Oxide", "Metal Hydroxide", "Metal Carbonate", "Metal Sulfate"], 
+        answer: "Metal Hydroxide", 
+        explanation: "When alkali metals react with water, they form metal hydroxides and release hydrogen gas. For example, Na + H₂O → NaOH + H₂." 
+    },
+    { 
+        question: "Which alkali metal forms a superoxide when reacting with oxygen?", 
+        options: ["Lithium (Li)", "Sodium (Na)", "Potassium (K)", "Rubidium (Rb)"], 
+        answer: "Potassium (K)", 
+        explanation: "Potassium reacts with oxygen to form a superoxide (KO₂) due to its larger atomic size and ability to stabilize the superoxide ion (O₂⁻)." 
+    },
+    { 
+        question: "What is the characteristic property of alkali metals in terms of density?", 
+        options: ["High Density", "Low Density", "Medium Density", "Variable Density"], 
+        answer: "Low Density", 
+        explanation: "Alkali metals have low density compared to other metals due to their large atomic size and relatively low atomic mass." 
+    },
+        ],
 };
