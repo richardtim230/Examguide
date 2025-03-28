@@ -134,8 +134,8 @@ function redeemCredits() {
     "2280281834": 200,  // Admin set PIN 3
     "1333744582": 200,    // Admin set PIN 3
     "6472415768": 20000,   // Admin set PIN 3
-    "1899501691": 200,     // Admin set PIN 3
-        "2535410145": 200,     // Admin set PIN 3
+    "5310613899": 300,     // Admin set PIN 3
+        "9479187153": 300,     // Admin set PIN 3
         "476304902": 200,     // Admin set PIN 3
         "476304902": 200,     // Admin set PIN 3
         "476304902": 200,     // Admin set PIN 3
