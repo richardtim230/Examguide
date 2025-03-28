@@ -311,7 +311,7 @@ function loadQuestion() {
     }
 
     clearTimeout(timer);
-    timeLeft = 15;
+    timeLeft = 20;
     document.getElementById("timer").innerText = timeLeft;
 
     let currentQuestion = questions[currentQuestionIndex];
@@ -322,7 +322,7 @@ function loadQuestion() {
     optionsContainer.innerHTML = "";
 
     // Shuffle the options
-    let shuffledOptions = currentQuestion.options.sort(() => 0.5 - Math.random());
+    let shuffledOptions = currentQuestion.options.sort(() => 0.7 - Math.random());
 
     shuffledOptions.forEach(option => {
         let btn = document.createElement("button");
