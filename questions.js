@@ -785,7 +785,7 @@ const examSets = {
         explanation: "Alkali metals have low density compared to other metals due to their large atomic size and relatively low atomic mass." 
     },
         ],
-    "CHM102_ISOLATION_AND_PURIFICATION": [
+    "EXAM002": [
     {
         question: "Which separation technique is most suitable for separating a mixture of two volatile liquids with a large difference in boiling points?",
         options: ["Simple Distillation", "Fractional Distillation", "Sublimation", "Chromatography"],
@@ -845,6 +845,296 @@ const examSets = {
         options: ["Extraction", "Distillation", "Filtration", "Sublimation"],
         answer: "Extraction",
         explanation: "<b>Correct Answer:</b> Extraction<br>The Soxhlet apparatus is used for extracting a compound from a solid using a solvent. This is commonly employed in organic extractions.<br><br><b>Why other options are incorrect:</b><br><b>Distillation:</b> Distillation is not performed using a Soxhlet apparatus.<br><b>Filtration:</b> Filtration does not use a Soxhlet apparatus.<br><b>Sublimation:</b> Sublimation does not involve a Soxhlet apparatus."
-    }
+    },
+        
+    { 
+        question: "What is the primary purpose of centrifugation in the separation of mixtures?", 
+        options: ["To separate suspended particles from a solution", "To separate immiscible liquids", "To purify solids based on solubility", "To remove volatile components"], 
+        answer: "To separate suspended particles from a solution", 
+        explanation: "Centrifugation is used to separate suspended particles from a solution by spinning them at high speeds.<br>Other options describe techniques for separating immiscible liquids, purifying solids, or removing volatile components." 
+    },
+    { 
+        question: "In chromatography, what determines the separation of compounds?", 
+        options: ["Their affinity for the mobile and stationary phases", "Their boiling points", "Their solubility in water", "Their density differences"], 
+        answer: "Their affinity for the mobile and stationary phases", 
+        explanation: "Chromatography separates compounds based on their differing affinities for the mobile and stationary phases.<br>Other options misinterpret the separation mechanism by referencing boiling points, solubility, or density." 
+    },
+    { 
+        question: "During solvent extraction, what does a low partition coefficient (Kₐ) indicate?", 
+        options: ["The solute prefers the aqueous solvent over the organic solvent", "The solute prefers the organic solvent over the aqueous solvent", "The solute is equally distributed between the solvents", "The solute remains insoluble in both solvents"], 
+        answer: "The solute prefers the aqueous solvent over the organic solvent", 
+        explanation: "A low Kₐ value indicates that the solute has a stronger affinity for the aqueous solvent compared to the organic solvent.<br>Other options misinterpret the significance of Kₐ or describe incorrect scenarios." 
+    },
+    { 
+        question: "Which technique uses steam to separate immiscible organic compounds?", 
+        options: ["Steam distillation", "Simple distillation", "Fractional distillation", "Sublimation"], 
+        answer: "Steam distillation", 
+        explanation: "Steam distillation uses steam to separate immiscible organic compounds.<br>Simple distillation and fractional distillation separate based on boiling points.<br>Sublimation separates solids that transition directly to gas." 
+    },
+    { 
+        question: "What is the purpose of using a fractionating column in fractional distillation?",
+        options: ["To increase the efficiency of separation by repeated condensation and vaporization", "To lower the boiling point of the mixture", "To remove impurities from the liquid", "To facilitate sublimation"], 
+        answer: "To increase the efficiency of separation by repeated condensation and vaporization", 
+        explanation: "A fractionating column increases the efficiency of separation by providing surfaces for repeated condensation and vaporization.<br>Other options misinterpret the function of the column or describe unrelated processes." 
+    },
+    { 
+        question: "What happens to the boiling point of components in steam distillation?", 
+        options: ["The boiling point is lowered due to combined vapor pressures", "The boiling point remains unchanged", "The boiling point increases due to higher atmospheric pressure", "The boiling point is determined solely by the organic compound"], 
+        answer: "The boiling point is lowered due to combined vapor pressures", 
+        explanation: "In steam distillation, the boiling point of components is lowered because the combined vapor pressures exceed the atmospheric pressure.<br>Other options incorrectly attribute the change to atmospheric pressure, solubility, or the organic compound alone." 
+    },
+    { 
+        question: "Which technique is used to separate mixtures based on their boiling points?", 
+        options: ["Simple distillation", "Filtration", "Centrifugation", "Chromatography"], 
+        answer: "Simple distillation", 
+        explanation: "Simple distillation separates mixtures based on their boiling points.<br>Filtration separates solids from liquids.<br>Centrifugation separates suspended particles.<br>Chromatography separates based on affinity." 
+    },
+    { 
+        question: "In solvent extraction, what does the partition coefficient (Kₐ) express?", 
+        options: ["The ratio of solute concentration in two immiscible solvents", "The boiling point difference between two solvents", "The density difference between solvents", "The solubility of the solute in one solvent"], 
+        answer: "The ratio of solute concentration in two immiscible solvents", 
+        explanation: "Kₐ represents the ratio of solute concentration in two immiscible solvents.<br>Other options misinterpret the concept by referencing boiling points, density, or solubility." 
+    },
+    {         question: "If Kₐ = 10, what is the distribution ratio of solute concentration between solvent X and solvent Y?", 
+        options: ["10:1", "1:10", "5:5", "20:2"], 
+        answer: "10:1", 
+        explanation: "Kₐ = 10 means the solute concentration in solvent X is 10 times higher than in solvent Y.<br>Other options incorrectly interpret the coefficient or reverse the ratio." 
+    },
+    { 
+        question: "A solution contains 20 g of organic compound A in 200 cm³ of water. When 80 cm³ of ether is added (Kₐ = 10), what is the mass of A transferred to the ether layer?", 
+        options: ["12.5 g", "10 g", "7.5 g", "13 g"], 
+        answer: "12.5 g", 
+        explanation: "Using the formula:<br>Kₐ = (mass in ether ÷ volume of ether) ÷ (mass in water ÷ volume of water),<br>The mass of A transferred to the ether layer is calculated as 12.5 g.<br>Other options result from errors in formula application or assumptions." 
+    },
+    { 
+        question: "Why is batch extraction more effective than single extraction?", 
+        options: ["It increases the total mass of solute extracted", "It reduces the vapor pressure of the solvents", "It minimizes solvent usage", "It decreases the boiling point of the solvents"], 
+        answer: "It increases the total mass of solute extracted", 
+        explanation: "Batch extraction redistributes the solute between solvents more effectively, resulting in higher total extraction.<br>Other options describe unrelated effects or incorrect assumptions." 
+    },
+    { 
+        question: "What happens to the solubility of a solute in recrystallization as the temperature decreases?", 
+        options: ["The solubility decreases, allowing the solute to crystallize", "The solubility increases, dissolving more solute", "The solubility remains constant", "The solubility fluctuates unpredictably"], 
+        answer: "The solubility decreases, allowing the solute to crystallize", 
+        explanation: "As the temperature decreases, the solubility of the solute decreases, causing it to crystallize out of the solution.<br>Other options misinterpret the relationship between temperature and solubility." 
+    },
+    { 
+        question: "What is the molecular mass of compound A if mₐ = 15 g, Pₐ = 30 mmHg, Pₕ₂ₒ = 720 mmHg, Mₕ₂ₒ = 18 g/mol, and mₕ₂ₒ = 50 g?", 
+        options: ["129.60 g/mol", "135.90 g/mol", "125.40 g/mol", "140.00 g/mol"], 
+        answer: "129.60 g/mol", 
+        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>Mₐ = (15 × 720 × 18) / (30 × 50) = 129.60 g/mol.<br>Other options arise from calculation errors or incorrect formula application." 
+    },
+    { 
+        question: "In solvent extraction, what is the effect of increasing the volume of the organic solvent?", 
+        options: ["It increases the amount of solute extracted into the organic solvent", "It decreases the partition coefficient (Kₐ)", "It reduces the solubility of the solute", "It increases the boiling point of the organic solvent"], 
+        answer: "It increases the amount of solute extracted into the organic solvent", 
+        explanation: "Increasing the volume of the organic solvent generally increases the amount of solute extracted into it.<br>Other options incorrectly describe the effects on Kₐ, solubility, or boiling point." 
+    },
+    { 
+        question: "Which technique is used to separate compounds based on their affinity for mobile and stationary phases?", 
+        options: ["Chromatography", "Filtration", "Centrifugation", "Evaporation"], 
+        answer: "Chromatography", 
+        explanation: "Chromatography separates compounds based on their differing affinities for the mobile and stationary phases.<br>Filtration separates solids from liquids.<br>Centrifugation separates suspended particles.<br>Evaporation removes liquids from mixtures." 
+    },
+    { 
+        question: "Why is steam distillation preferred for separating heat-sensitive compounds?", 
+        options: ["It allows separation at lower temperatures", "It increases the boiling point of the mixture", "It removes impurities effectively", "It enhances solubility of the compounds"], 
+        answer: "It allows separation at lower temperatures", 
+        explanation: "Steam distillation allows separation at lower temperatures, preventing decomposition of heat-sensitive compounds.<br>Other options misinterpret the benefits or describe unrelated processes." 
+    },
+    { 
+        question: "What is the primary advantage of using fractional distillation over simple distillation?", 
+        options: ["It provides better separation for components with close boiling points", "It requires less energy", "It is faster", "It can separate immiscible liquids"], 
+        answer: "It provides better separation for components with close boiling points", 
+        explanation: "Fractional distillation provides better separation for components with close boiling points due to the use of a fractionating column.<br>Other options incorrectly describe the advantages or misinterpret the technique." 
+    },
+    { 
+        question: "Which technique is used to separate suspended particles from a solution?", 
+        options: ["Centrifugation", "Filtration", "Recrystallization", "Chromatography"], 
+        answer: "Centrifugation", 
+        explanation: "Centrifugation separates suspended particles from a solution by spinning them at high speeds.<br>Filtration separates solids from liquids.<br>Recrystallization purifies solids.<br>Chromatography separates compounds based on affinity." 
+    },
+    { 
+        question: "In steam distillation, if the atmospheric pressure is 760 mmHg and the vapor pressure of water is 720 mmHg, what is the vapor pressure of the organic compound?", 
+        options: ["40 mmHg", "720 mmHg", "760 mmHg", "780 mmHg"], 
+        answer: "40 mmHg", 
+        explanation: "The vapor pressure of the organic compound is calculated as:<br>760 mmHg (atmospheric pressure) - 720 mmHg (vapor pressure of water) = 40 mmHg.<br>Other options arise from misinterpretation or incorrect subtraction." 
+    },
+    { 
+        question: "What is the molecular mass of compound B if mₐ = 20 g, Pₐ = 25 mmHg, Pₕ₂ₒ = 750 mmHg, Mₕ₂ₒ = 18 g/mol, and mₕ₂ₒ = 55 g?", 
+        options: ["122.73 g/mol", "130.50 g/mol", "118.20 g/mol", "135.00 g/mol"], 
+        answer: "122.73 g/mol", 
+        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>Mₐ = (20 × 750 × 18) / (25 × 55) = 122.73 g/mol.<br>Other options arise from calculation errors or incorrect formula application." 
+    },
+    { 
+        question: "Which technique is suitable for separating liquid mixtures with boiling points close to one another?", 
+        options: ["Fractional distillation", "Simple distillation", "Steam distillation", "Filtration"], 
+        answer: "Fractional distillation", 
+        explanation: "Fractional distillation is used for mixtures with boiling points close to one another as it utilizes a fractionating column for effective separation.<br>Simple distillation is used for mixtures with boiling points far apart.<br>Steam distillation separates immiscible compounds.<br>Filtration separates solids from liquids." 
+    },
+    { 
+        question: "What is the significance of a fractionating column in fractional distillation?", 
+        options: [
+            "It increases the surface area for vapor condensation.", 
+            "It reduces the boiling point of the mixture.", 
+            "It allows sublimation of the compounds.", 
+            "It removes impurities from the liquid."
+        ], 
+        answer: "It increases the surface area for vapor condensation.", 
+        explanation: "The fractionating column increases the surface area for vapor condensation and re-evaporation, enhancing the separation of components.<br>Other options misinterpret the function of the column or describe unrelated processes." 
+    },
+    { 
+        question: "Which technique is ideal for purifying a solid by removing insoluble impurities?", 
+        options: ["Recrystallization", "Filtration", "Evaporation", "Chromatography"], 
+        answer: "Recrystallization", 
+        explanation: "Recrystallization purifies a solid by dissolving it in a solvent and allowing it to crystallize upon cooling.<br>Filtration separates solids from liquids.<br>Evaporation removes liquids.<br>Chromatography separates based on affinity." 
+    },
+    { 
+        question: "In steam distillation, why does the boiling point of the mixture decrease?", 
+        options: [
+            "Due to the combined vapor pressure of immiscible components.", 
+            "Due to the reduced atmospheric pressure.", 
+            "Due to the high solubility of components.", 
+            "Due to the sublimation of the solid component."
+        ], 
+        answer: "Due to the combined vapor pressure of immiscible components.",
+        explanation: "The boiling point decreases because the combined vapor pressure of the immiscible components exceeds the atmospheric pressure.<br>Other options incorrectly attribute the change to solubility, sublimation, or atmospheric pressure changes." 
+    },
+    { 
+        question: "What is the role of water in steam distillation?", 
+        options: [
+            "It provides steam to lower the boiling point of the mixture.", 
+            "It acts as a solvent for the organic compound.", 
+            "It removes impurities from the organic compound.", 
+            "It increases the vapor pressure of the organic compound."
+        ], 
+        answer: "It provides steam to lower the boiling point of the mixture.", 
+        explanation: "Water in steam distillation generates steam, which lowers the boiling point of the mixture by increasing the combined vapor pressure.<br>Other options misinterpret its role or describe unrelated functions." 
+    },
+    { 
+        question: "In solvent extraction, what happens if the partition coefficient (Kₐ) is very high?", 
+        options: [
+            "The solute prefers the organic solvent over the aqueous solvent.", 
+            "The solute is equally distributed between the two solvents.", 
+            "The solute prefers the aqueous solvent over the organic solvent.", 
+            "The solute remains insoluble in both solvents."
+        ], 
+        answer: "The solute prefers the organic solvent over the aqueous solvent.", 
+        explanation: "A high Kₐ value indicates that the solute has a strong affinity for the organic solvent and prefers it over the aqueous solvent.<br>Other options misinterpret the significance of Kₐ or describe incorrect scenarios." 
+    },
+    { 
+        question: "Which factor affects the efficiency of solvent extraction?", 
+        options: [
+            "The partition coefficient (Kₐ) of the solute.", 
+            "The boiling point of the solvents.", 
+            "The atmospheric pressure during extraction.", 
+            "The density difference between solvents."
+        ], 
+        answer: "The partition coefficient (Kₐ) of the solute.", 
+        explanation: "The efficiency of solvent extraction is primarily determined by the partition coefficient (Kₐ), which measures the solute's preference for one solvent over another.<br>Other factors like boiling point, atmospheric pressure, or density are secondary and less relevant." 
+    },
+    { 
+        question: "Why is extraction in multiple batches more effective than single extraction?", 
+        options: [
+            "It increases the total mass of solute extracted.", 
+            "It reduces the vapor pressure of the solvents.", 
+            "It minimizes solvent usage.", 
+            "It decreases the boiling point of the solvents."
+        ], 
+        answer: "It increases the total mass of solute extracted.", 
+        explanation: "Batch extraction redistributes the solute between solvents more effectively, resulting in higher total extraction.<br>Other options describe unrelated effects or incorrect assumptions." 
+    },
+    { 
+        question: "What happens to the solubility of a solute in recrystallization as the temperature decreases?", 
+        options: [
+            "The solubility decreases, allowing the solute to crystallize.", 
+            "The solubility increases, dissolving more solute.", 
+            "The solubility remains constant.", 
+            "The solubility fluctuates unpredictably."
+        ], 
+        answer: "The solubility decreases, allowing the solute to crystallize.", 
+        explanation: "As the temperature decreases, the solubility of the solute decreases, causing it to crystallize out of the solution.<br>Other options misinterpret the relationship between temperature and solubility." 
+    },
+    { 
+        question: "What is the molecular mass of compound A if mₐ = 15 g, Pₐ = 30 mmHg, Pₕ₂ₒ = 720 mmHg, Mₕ₂ₒ = 18 g/mol, and mₕ₂ₒ = 50 g?", 
+        options: ["129.60 g/mol", "135.90 g/mol", "125.40 g/mol", "140.00 g/mol"], 
+        answer: "129.60 g/mol", 
+        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>Mₐ = (15 × 720 × 18) / (30 × 50) = 129.60 g/mol.<br>Other options arise from calculation errors or incorrect formula application." 
+    },
+    { 
+        question: "Which technique separates immiscible organic compounds using water vapor?", 
+        options: ["Simple distillation", "Fractional distillation", "Steam distillation", "Chromatography"], 
+        answer: "Steam distillation", 
+        explanation: "Steam distillation is used to separate immiscible organic compounds by passing steam through the mixture.<br>Simple distillation is for mixtures with significantly different boiling points.<br>Fractional distillation is for mixtures with close boiling points.<br>Chromatography separates compounds based on their affinity for mobile and stationary phases." 
+    },
+    { 
+        question: "When calculating the molecular mass of a compound in steam distillation, what is the role of water's molar mass (Mₕ₂ₒ)?", 
+        options: [
+            "It accounts for the proportional vapor pressure of water.", 
+            "It balances the organic compound's mass.", 
+            "It determines the boiling point of the mixture.", 
+            "It is unrelated to the calculation."
+        ], 
+        answer: "It accounts for the proportional vapor pressure of water.", 
+        explanation: "Water's molar mass (Mₕ₂ₒ) is used in the calculation to account for its proportional vapor pressure during the distillation.<br>Other options either misinterpret the role of Mₕ₂ₒ or describe unrelated factors." 
+    },
+    { 
+        question: "A liquid mixture is subjected to distillation. If the vapor pressure of water is 740 mmHg and the atmospheric pressure is 760 mmHg, what is the vapor pressure of the organic compound?", 
+        options: ["20 mmHg", "740 mmHg", "760 mmHg", "780 mmHg"], 
+        answer: "20 mmHg", 
+        explanation: "The vapor pressure of the organic compound is calculated as:<br>760 mmHg (atmospheric pressure) - 740 mmHg (vapor pressure of water) = 20 mmHg.<br>Other options arise from misinterpretation or incorrect subtraction." 
+    },
+    { 
+        question: "Which separation technique is based on differences in solubility at varying temperatures?", 
+        options: ["Recrystallization", "Filtration", "Centrifugation", "Sublimation"], 
+        answer: "Recrystallization",
+        explanation: "Recrystallization purifies solids by dissolving them in a solvent at high temperatures and allowing them to crystallize out upon cooling.<br>Filtration separates solids from liquids.<br>Centrifugation separates suspended particles.<br>Sublimation separates solids that transition directly to gas." 
+    },
+    { 
+        question: "What does the partition coefficient (Kₐ) represent in solvent extraction?", 
+        options: [
+            "The ratio of solute concentration between two immiscible solvents.", 
+            "The boiling point difference between solvents.", 
+            "The density difference between solvents.", 
+            "The solubility of the solute in one solvent."
+        ], 
+        answer: "The ratio of solute concentration between two immiscible solvents.", 
+        explanation: "Kₐ represents the ratio of solute concentration in two immiscible solvents.<br>Other options misinterpret the concept by referencing boiling points, density, or solubility." 
+    },
+    { 
+        question: "If Kₐ = 10, what is the distribution ratio of solute concentration between solvent X and solvent Y?", 
+        options: ["10:1", "1:10", "5:5", "20:2"], 
+        answer: "10:1", 
+        explanation: "Kₐ = 10 means the solute concentration in solvent X is 10 times higher than in solvent Y.<br>Other options incorrectly interpret the coefficient or reverse the ratio." 
+    },
+    { 
+        question: "A solution contains 20 g of organic compound A in 200 cm³ of water. When 80 cm³ of ether is added (Kₐ = 10), what is the mass of A transferred to the ether layer?", 
+        options: ["12.5 g", "10 g", "7.5 g", "13 g"], 
+        answer: "12.5 g", 
+        explanation: "Using the formula:<br>Kₐ = (mass in ether ÷ volume of ether) ÷ (mass in water ÷ volume of water),<br>The mass of A transferred to the ether layer is calculated as 12.5 g.<br>Other options result from errors in formula application or assumptions." 
+    },
+    { 
+        question: "Why is batch extraction more effective than single extraction?", 
+        options: [
+            "It maximizes the distribution of solute between solvents.", 
+            "It minimizes solvent usage.", 
+            "It reduces the boiling point of the solute.", 
+            "It increases the solubility of the solute."
+        ], 
+        answer: "It maximizes the distribution of solute between solvents.", 
+        explanation: "Batch extraction enhances the distribution of solute between solvents, increasing the total mass extracted.<br>Other options describe unrelated effects or incorrect assumptions." 
+    },
+    { 
+        question: "Which technique is used to separate suspended particles from a solution or solvent?", 
+        options: ["Centrifugation", "Filtration", "Chromatography", "Evaporation"], 
+        answer: "Centrifugation", 
+        explanation: "Centrifugation separates suspended particles by spinning them at high speeds.<br>Filtration separates solids from liquids.<br>Chromatography separates compounds based on affinity.<br>Evaporation removes liquids from mixtures." 
+    },
+    { 
+        question: "What is the molecular mass of compound A if mₐ = 10 g, Pₐ = 20 mmHg, Pₕ₂ₒ = 740 mmHg, Mₕ₂ₒ = 18 g/mol, and mₕ₂ₒ = 60 g?", 
+        options: ["121.89 g/mol", "115.42 g/mol", "130.00 g/mol", "110.50 g/mol"], 
+        answer: "121.89 g/mol", 
+        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>The molecular mass of compound A is calculated as:<br>Mₐ = (10 × 740 × 18) / (20 × 60) = 121.89 g/mol.<br>Other options result from calculation errors or incorrect formula application." 
+    },
 ],
 };
