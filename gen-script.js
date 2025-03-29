@@ -38,7 +38,7 @@ function scheduleNotifications() {
     scheduleNotification(14, 0, 0, afternoonReading); // 2:00 PM
     scheduleNotification(16, 0, 0, afternoonRest); // 4:00 PM
     scheduleNotification(19, 0, 0, eveningReading); // 7:00 PM
-    scheduleNotification(21, 55, 0, nightRest); // 9:00 PM
+    scheduleNotification(21, 57, 0, nightRest); // 9:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -83,12 +83,34 @@ function showNotification(article) {
         registration.showNotification("QUICK REMINDER", {
             body: `"${article.title}"`,
             icon: "logo.png", // Optional: Path to an icon image
-            image: article.image // Image to display in the notification
+            image: resizeImage(article.image, 128, 128) // Resize the image
         });
     }).catch(error => {
         console.error("Service Worker is not ready:", error);
     });
 }
+
+// Function to resize image
+function resizeImage(imagePath, width, height) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+
+    img.src = imagePath;
+    canvas.width = width;
+    canvas.height = height;
+
+    return new Promise((resolve, reject) => {
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL());
+        };
+        img.onerror = (err) => {
+            reject(err);
+        };
+    });
+}
+
 
 // Function to remove a notification from local storage after it has been shown
 function removeNotificationFromStorage(notificationTime) {
