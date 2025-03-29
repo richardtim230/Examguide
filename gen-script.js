@@ -38,7 +38,7 @@ function scheduleNotifications() {
     scheduleNotification(14, 0, 0, afternoonReading); // 2:00 PM
     scheduleNotification(16, 0, 0, afternoonRest); // 4:00 PM
     scheduleNotification(19, 0, 0, eveningReading); // 7:00 PM
-    scheduleNotification(21, 57, 0, nightRest); // 9:00 PM
+    scheduleNotification(22, 07, 0, nightRest); // 9:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -66,15 +66,16 @@ function scheduleNotification(hour, minute, second, article) {
     notifications.push(notificationData);
     localStorage.setItem('scheduledNotifications', JSON.stringify(notifications));
 
-    setTimeout(() => {
-        showNotification(article);
+    setTimeout(async () => {
+        const resizedImage = await resizeImage(article.image, 128, 128);
+        showNotification(article, resizedImage);
         // Remove the notification from local storage after showing it
         removeNotificationFromStorage(notificationTime.getTime());
     }, timeout);
 }
 
 // Function to show the notification
-function showNotification(article) {
+function showNotification(article, resizedImage) {
     console.log(`Showing notification: ${article.title}`);
 
     // Send push notification through the service worker
@@ -83,7 +84,7 @@ function showNotification(article) {
         registration.showNotification("QUICK REMINDER", {
             body: `"${article.title}"`,
             icon: "logo.png", // Optional: Path to an icon image
-            image: resizeImage(article.image, 128, 128) // Resize the image
+            image: resizedImage // Resized image to display in the notification
         });
     }).catch(error => {
         console.error("Service Worker is not ready:", error);
@@ -92,15 +93,15 @@ function showNotification(article) {
 
 // Function to resize image
 function resizeImage(imagePath, width, height) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-
-    img.src = imagePath;
-    canvas.width = width;
-    canvas.height = height;
-
     return new Promise((resolve, reject) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+
+        img.src = imagePath;
+        canvas.width = width;
+        canvas.height = height;
+
         img.onload = () => {
             ctx.drawImage(img, 0, 0, width, height);
             resolve(canvas.toDataURL());
@@ -110,7 +111,6 @@ function resizeImage(imagePath, width, height) {
         };
     });
 }
-
 
 // Function to remove a notification from local storage after it has been shown
 function removeNotificationFromStorage(notificationTime) {
