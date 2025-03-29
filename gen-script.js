@@ -27,8 +27,9 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 
 // Function to schedule notifications at specified times
 function scheduleNotifications() {
+    console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
-    scheduleNotification(16, 0, 0, afternoonArticle); // 2:57 PM
+    scheduleNotification(16, 15, 0, afternoonArticle); // 4:00 PM
     scheduleNotification(18, 0, 0, eveningArticle); // 6:00 PM
 }
 
@@ -60,11 +61,14 @@ function showNotification(article) {
 
     // Send push notification through the service worker
     navigator.serviceWorker.ready.then(registration => {
+        console.log("Sending notification through service worker...");
         registration.showNotification("Reminder", {
             body: `It's time to read: "${article.title}"`,
             icon: "logo.png", // Optional: Path to an icon image
             image: article.image // Image to display in the notification
         });
+    }).catch(error => {
+        console.error("Service Worker is not ready:", error);
     });
 }
 
