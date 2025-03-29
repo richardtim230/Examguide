@@ -13,6 +13,74 @@
     
     <link rel="stylesheet" href="tp.css">
     <style>
+        /* Notification Pop-up Styles */
+#notificationPopup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Light background */
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#notificationPopup.active {
+    display: block !important;
+    opacity: 1;
+}
+
+#notificationPopup .popup-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+    #notificationPopup h2 {
+    font-size: 15px;
+  color: blue;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+    }
+
+#notificationPopup ul {
+    list-style: inside disc;
+    margin-bottom: 20px;
+    text-align: left;
+  font-size: 13px;
+}
+
+#notificationPopup button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+    #whatsappBtn {
+    background: #25D366; /* WhatsApp green color */
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+#whatsappBtn:hover {
+    background: #20b058; /* Darker green on hover */
+    }
         /* CSS for highlighting the selected answer */
         .selected-answer {
             background-color: #d1e7dd; /* Light green background */
