@@ -1,3 +1,42 @@
+// Check if the browser supports notifications
+if ("Notification" in window) {
+    // Request notification permission from the user
+    Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+            scheduleDailyNotification();
+        }
+    });
+}
+
+// Function to schedule a daily notification at 3:00 pm
+function scheduleDailyNotification() {
+    const now = new Date();
+    const notificationTime = new Date();
+
+    notificationTime.setHours(15, 0, 0, 0); // Set time to 3:00 pm
+
+    // If time has already passed today, set for the next day
+    if (now.getTime() > notificationTime.getTime()) {
+        notificationTime.setDate(now.getDate() + 1);
+    }
+
+    const timeout = notificationTime.getTime() - now.getTime();
+
+    setTimeout(() => {
+        showNotification();
+        // Schedule next notification
+        setInterval(showNotification, 24 * 60 * 60 * 1000);
+    }, timeout);
+}
+
+// Function to show the notification
+function showNotification() {
+    new Notification("Reminder", {
+        body: "It's 3:00 pm! Time to read an article.",
+        icon: "path/to/icon.png" // Optional: Path to an icon image
+    });
+}
+
 // Existing code...
 let attemptedQuestions = []; // Array to store data about attempted questions
 function showRegister() {
