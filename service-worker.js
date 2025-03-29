@@ -16,6 +16,7 @@ self.addEventListener('push', event => {
     const options = {
         body: data.body,
         icon: 'logo.png', // Path to an icon image
+        image: data.image // Path to the image to display in the notification
     };
 
     event.waitUntil(
