@@ -12,7 +12,7 @@ const scheduleNotifications = [
     { time: "5:00 PM", title: "Rest and leisure time", image: "rest.jpg" },
     { time: "6:00 PM", title: "Dinner", image: "dinner.jpg" },
     { time: "7:00 PM", title: "Fifth study session", image: "study5.jpg" },
-    { time: "8:30 PM", title: "Short break", image: "break.jpg" },
+    { time: "8:37 PM", title: "Short break", image: "break.jpg" },
     { time: "9:15 PM", title: "Review and recap session", image: "review.jpg" },
     { time: "10:00 PM", title: "Relax and wind down", image: "relax.jpg" },
     { time: "10:30 PM", title: "Sleep", image: "sleep.jpg" }
