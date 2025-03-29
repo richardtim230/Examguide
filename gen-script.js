@@ -29,8 +29,8 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 function scheduleNotifications() {
     console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
-    scheduleNotification(16, 15, 0, afternoonArticle); // 4:00 PM
-    scheduleNotification(18, 0, 0, eveningArticle); // 6:00 PM
+    scheduleNotification(16, 25, 0, afternoonArticle); // 4:00 PM
+    scheduleNotification(16, 30, 0, eveningArticle); // 6:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
