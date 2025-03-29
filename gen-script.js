@@ -4,7 +4,7 @@ const morningRest = { title: "Take a break!", image: "rest.jpg" };
 const afternoonReading = { title: "Afternoon reading time!", image: "reading.jpg" };
 const afternoonRest = { title: "Rest for a while!", image: "rest.jpg" };
 const eveningReading = { title: "Evening study session!", image: "reading.jpg" };
-const nightRest = { title: "Rest well!", image: "rest.jpg" };
+const nightRest = { title: "Rest well!", image: "good night 3.webp" };
 
 // Check if the browser supports notifications and service workers
 if ("Notification" in window && "serviceWorker" in navigator) {
@@ -38,7 +38,7 @@ function scheduleNotifications() {
     scheduleNotification(14, 0, 0, afternoonReading); // 2:00 PM
     scheduleNotification(16, 0, 0, afternoonRest); // 4:00 PM
     scheduleNotification(19, 0, 0, eveningReading); // 7:00 PM
-    scheduleNotification(21, 35, 0, nightRest); // 9:00 PM
+    scheduleNotification(21, 55, 0, nightRest); // 9:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
