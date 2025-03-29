@@ -1,7 +1,7 @@
 // Array of article titles and corresponding images for different times
 const morningArticle = { title: "Our new science lab is open for students!", image: "deo1.jpg" };
 const afternoonArticle = { title: "Congratulations to the debate team for winning regionals!", image: "csc1.webp" };
-const eveningArticle = { title: "Annual sports day event was a huge success!", image: "happy-man-throw-papers-office-success-winning-business-celebration-news-goals-happy-bonus-computer-night-winner-african-person-with-fist-pump-documents-celebrate-opportunity_590464-198843.jpg" };
+const eveningArticle = { title: "Annual sports day event was a huge success!", image: "happy-man-throw-papers-office-success-winning-business-celebration-news-goals-happy-bonus-computer-night-winner.jpg" };
 
 // Check if the browser supports notifications and service workers
 if ("Notification" in window && "serviceWorker" in navigator) {
@@ -15,6 +15,8 @@ if ("Notification" in window && "serviceWorker" in navigator) {
             console.log(`Notification permission: ${permission}`);
             if (permission === "granted") {
                 scheduleNotifications();
+                checkMissedNotifications(); // Check for missed notifications
+                setInterval(checkMissedNotifications, 60000); // Check every minute
             }
         });
     })
@@ -29,8 +31,8 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 function scheduleNotifications() {
     console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
-    scheduleNotification(15, 25, 0, afternoonArticle); // 4:00 PM
-    scheduleNotification(16, 35, 0, eveningArticle); // 6:00 PM
+    scheduleNotification(16, 45, 0, afternoonArticle); // 3:25 PM
+    scheduleNotification(18, 0, 0, eveningArticle); // 6:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -47,6 +49,16 @@ function scheduleNotification(hour, minute, second, article) {
 
     const timeout = notificationTime.getTime() - now.getTime();
     console.log(`Scheduling notification at ${notificationTime} with a timeout of ${timeout} ms.`);
+
+    const notificationData = {
+        time: notificationTime.getTime(),
+        article: article
+    };
+
+    // Store the notification in local storage
+    const notifications = JSON.parse(localStorage.getItem('scheduledNotifications')) || [];
+    notifications.push(notificationData);
+    localStorage.setItem('scheduledNotifications', JSON.stringify(notifications));
 
     setTimeout(() => {
         showNotification(article);
@@ -70,6 +82,22 @@ function showNotification(article) {
     }).catch(error => {
         console.error("Service Worker is not ready:", error);
     });
+}
+
+// Function to check for missed notifications
+function checkMissedNotifications() {
+    const now = Date.now();
+    const notifications = JSON.parse(localStorage.getItem('scheduledNotifications')) || [];
+
+    const remainingNotifications = notifications.filter(notification => {
+        if (notification.time <= now) {
+            showNotification(notification.article);
+            return false;
+        }
+        return true;
+    });
+
+    localStorage.setItem('scheduledNotifications', JSON.stringify(remainingNotifications));
 }
 
 // Function to load the article based on the URL's article ID parameter or fragment
@@ -203,8 +231,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     updateButtons();
     scrollToTop(); // Scroll to top after initializing
 });
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
     let slider = document.querySelector(".slider");
