@@ -37,7 +37,7 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 // Function to schedule notifications at specified times
 function scheduleNotifications() {
     scheduleNotification(6, 0, 0); // 6:00 AM
-    scheduleNotification(15, 15, 0); // 2:57 PM
+    scheduleNotification(15, 30, 0); // 2:57 PM
     scheduleNotification(18, 0, 0); // 6:00 PM
 }
 
