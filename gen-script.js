@@ -38,7 +38,7 @@ function scheduleNotifications() {
     scheduleNotification(14, 0, 0, afternoonReading); // 2:00 PM
     scheduleNotification(16, 0, 0, afternoonRest); // 4:00 PM
     scheduleNotification(19, 0, 0, eveningReading); // 7:00 PM
-    scheduleNotification(22, 07, 0, nightRest); // 9:00 PM
+    scheduleNotification(22, 22, 0, nightRest); // 9:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
