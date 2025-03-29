@@ -32,7 +32,7 @@ function scheduleNotifications() {
     console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
     scheduleNotification(15, 45, 0, afternoonArticle); // 3:45 PM
-    scheduleNotification(17, 05, 0, eveningArticle); // 4:55 PM
+    scheduleNotification(17, 15, 0, eveningArticle); // 4:55 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
