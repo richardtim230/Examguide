@@ -12,20 +12,32 @@ const articleTitles = [
     "Using Local Storage in Web Applications"
 ];
 
-// Check if the browser supports notifications
-if ("Notification" in window) {
-    // Request notification permission from the user
-    Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-            scheduleNotifications();
-        }
+// Check if the browser supports notifications and service workers
+if ("Notification" in window && "serviceWorker" in navigator) {
+    console.log("Browser supports notifications and service workers.");
+    // Register the service worker
+    navigator.serviceWorker.register('/service-worker.js')
+    .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+        // Request notification permission from the user
+        Notification.requestPermission().then(permission => {
+            console.log(`Notification permission: ${permission}`);
+            if (permission === "granted") {
+                scheduleNotifications();
+            }
+        });
+    })
+    .catch(error => {
+        console.log('Service Worker registration failed:', error);
     });
+} else {
+    console.error("Browser does not support notifications or service workers.");
 }
 
 // Function to schedule notifications at specified times
 function scheduleNotifications() {
     scheduleNotification(6, 0, 0); // 6:00 AM
-    scheduleNotification(15, 05, 0); // 3:05 PM
+    scheduleNotification(15, 15, 0); // 2:57 PM
     scheduleNotification(18, 0, 0); // 6:00 PM
 }
 
@@ -42,6 +54,7 @@ function scheduleNotification(hour, minute, second) {
     }
 
     const timeout = notificationTime.getTime() - now.getTime();
+    console.log(`Scheduling notification at ${notificationTime} with a timeout of ${timeout} ms.`);
 
     setTimeout(() => {
         showNotification();
@@ -54,10 +67,14 @@ function scheduleNotification(hour, minute, second) {
 function showNotification() {
     const randomIndex = Math.floor(Math.random() * articleTitles.length);
     const randomTitle = articleTitles[randomIndex];
+    console.log(`Showing notification: ${randomTitle}`);
 
-    new Notification("Reminder", {
-        body: `It's time to read: "${randomTitle}"`,
-        icon: "logo.png" // Optional: Path to an icon image
+    // Send push notification through the service worker
+    navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification("Reminder", {
+            body: `It's time to read: "${randomTitle}"`,
+            icon: "logo.png" // Optional: Path to an icon image
+        });
     });
 }
 
