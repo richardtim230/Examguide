@@ -1,4 +1,65 @@
+// Array of article titles
+const articleTitles = [
+    "Understanding JavaScript Closures",
+    "A Guide to HTML5 Semantic Elements",
+    "CSS Grid Layout: A Comprehensive Guide",
+    "Best Practices for Responsive Web Design",
+    "Introduction to ES6 and Beyond",
+    "Building Accessible Web Applications",
+    "Optimizing Web Performance",
+    "Exploring the Fetch API",
+    "JavaScript Promises: An Introduction",
+    "Using Local Storage in Web Applications"
+];
 
+// Check if the browser supports notifications
+if ("Notification" in window) {
+    // Request notification permission from the user
+    Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+            scheduleNotifications();
+        }
+    });
+}
+
+// Function to schedule notifications at specified times
+function scheduleNotifications() {
+    scheduleNotification(6, 0, 0); // 6:00 AM
+    scheduleNotification(15, 00, 0); // 2:57 PM
+    scheduleNotification(18, 0, 0); // 6:00 PM
+}
+
+// Function to schedule a notification at the specified hour, minute, and second
+function scheduleNotification(hour, minute, second) {
+    const now = new Date();
+    const notificationTime = new Date();
+
+    notificationTime.setHours(hour, minute, second, 0);
+
+    // If time has already passed today, set for the next day
+    if (now.getTime() > notificationTime.getTime()) {
+        notificationTime.setDate(now.getDate() + 1);
+    }
+
+    const timeout = notificationTime.getTime() - now.getTime();
+
+    setTimeout(() => {
+        showNotification();
+        // Schedule next notification
+        setInterval(showNotification, 24 * 60 * 60 * 1000);
+    }, timeout);
+}
+
+// Function to show the notification
+function showNotification() {
+    const randomIndex = Math.floor(Math.random() * articleTitles.length);
+    const randomTitle = articleTitles[randomIndex];
+
+    new Notification("Reminder", {
+        body: `It's time to read: "${randomTitle}"`,
+        icon: "logo.png" // Optional: Path to an icon image
+    });
+}
 
 // Function to load the article based on the URL's article ID parameter or fragment
 function loadArticle() {
