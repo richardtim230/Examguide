@@ -1,7 +1,7 @@
 // Array of article titles and corresponding images for different times
 const morningArticle = { title: "Our new science lab is open for students!", image: "deo1.jpg" };
 const afternoonArticle = { title: "Congratulations to the debate team for winning regionals!", image: "csc1.webp" };
-const eveningArticle = { title: "Annual sports day event was a huge success!", image: "happy-man-throw-papers-office-success-winning-business-celebration-news-goals-happy-bonus-computer-night-winner.jpg" };
+const eveningArticle = { title: "THANK YOU FOR SUBSCRIBING!", image: "deo1.jpg" };
 
 // Check if the browser supports notifications and service workers
 if ("Notification" in window && "serviceWorker" in navigator) {
@@ -32,7 +32,7 @@ function scheduleNotifications() {
     console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
     scheduleNotification(15, 45, 0, afternoonArticle); // 3:45 PM
-    scheduleNotification(17, 15, 0, eveningArticle); // 4:55 PM
+    scheduleNotification(18, 0, 0, eveningArticle); // 4:55 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
