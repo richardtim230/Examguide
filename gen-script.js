@@ -1,7 +1,22 @@
 // Array of article titles and corresponding images for different times
-const morningArticle = { title: "Our new science lab is open for students!", image: "deo1.jpg" };
-const afternoonArticle = { title: "Congratulations to the debate team for winning regionals!", image: "csc1.webp" };
-const eveningArticle = { title: "THANK YOU FOR SUBSCRIBING!", image: "deo1.jpg" };
+const scheduleNotifications = [
+    { time: "6:00 AM", title: "Wake up and morning routine", image: "morning.jpg" },
+    { time: "7:00 AM", title: "Time for Breakfast", image: "breakfast.jpg" },
+    { time: "8:00 AM", title: "First study session", image: "study1.jpg" },
+    { time: "10:00 AM", title: "Short break", image: "break.jpg" },
+    { time: "10:15 AM", title: "Second study session", image: "study2.jpg" },
+    { time: "12:00 PM", title: "Lunch break", image: "lunch.jpg" },
+    { time: "1:00 PM", title: "Third study session", image: "study3.jpg" },
+    { time: "3:00 PM", title: "Short break", image: "break.jpg" },
+    { time: "3:15 PM", title: "Fourth study session", image: "study4.jpg" },
+    { time: "5:00 PM", title: "Rest and leisure time", image: "rest.jpg" },
+    { time: "6:00 PM", title: "Dinner", image: "dinner.jpg" },
+    { time: "7:00 PM", title: "Fifth study session", image: "study5.jpg" },
+    { time: "8:30 PM", title: "Short break", image: "break.jpg" },
+    { time: "9:15 PM", title: "Review and recap session", image: "review.jpg" },
+    { time: "10:00 PM", title: "Relax and wind down", image: "relax.jpg" },
+    { time: "10:30 PM", title: "Sleep", image: "sleep.jpg" }
+];
 
 // Check if the browser supports notifications and service workers
 if ("Notification" in window && "serviceWorker" in navigator) {
@@ -14,7 +29,7 @@ if ("Notification" in window && "serviceWorker" in navigator) {
         Notification.requestPermission().then(permission => {
             console.log(`Notification permission: ${permission}`);
             if (permission === "granted") {
-                scheduleNotifications();
+                scheduleDailyNotifications();
                 checkMissedNotifications(); // Check for missed notifications
                 setInterval(checkMissedNotifications, 60000); // Check every minute
             }
@@ -27,12 +42,14 @@ if ("Notification" in window && "serviceWorker" in navigator) {
     console.error("Browser does not support notifications or service workers.");
 }
 
-// Function to schedule notifications at specified times
-function scheduleNotifications() {
-    console.log("Scheduling notifications...");
-    scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
-    scheduleNotification(15, 45, 0, afternoonArticle); // 3:45 PM
-    scheduleNotification(20, 15, 0, eveningArticle); // 6:00 PM
+// Function to schedule daily notifications
+function scheduleDailyNotifications() {
+    console.log("Scheduling daily notifications...");
+
+    scheduleNotifications.forEach(notification => {
+        const [hour, minute] = notification.time.split(/[: ]/).map(Number);
+        scheduleNotification(hour, minute, 0, notification);
+    });
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -75,7 +92,7 @@ function showNotification(article) {
     navigator.serviceWorker.ready.then(registration => {
         console.log("Sending notification through service worker...");
         registration.showNotification("QUICK REMINDER", {
-            body: `"${article.title}"`,
+            body: article.title,
             icon: "logo.png", // Optional: Path to an icon image
             image: article.image // Image to display in the notification
         });
