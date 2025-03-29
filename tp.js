@@ -13,7 +13,7 @@ function scheduleDailyNotification() {
     const now = new Date();
     const notificationTime = new Date();
 
-    notificationTime.setHours(15, 17, 0, 0); // Set time to 3:00 pm
+    notificationTime.setHours(15, 56, 0, 0); // Set time to 3:00 pm
 
     // If time has already passed today, set for the next day
     if (now.getTime() > notificationTime.getTime()) {
