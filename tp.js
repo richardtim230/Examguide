@@ -50,7 +50,7 @@ function registerUser() {
         faculty: faculty,
         level: level,
         phone: phone,
-        creditPoints: 100 // Default to 100 points on registration
+        creditPoints: 80 // Default to 100 points on registration
     };
 
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
@@ -176,7 +176,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 let selectedAnswer = "";
 let timer;
-let timeLeft = 15;
+let timeLeft = 25;
 let questions = [];
 
 function startExam() {
@@ -202,7 +202,7 @@ function startExam() {
     document.getElementById("exam-container").style.display = "block";
 
     // Select 50 random questions from the chosen exam set
-    questions = examSets[examCode].sort(() => 0.5 - Math.random()).slice(0, 50);
+    questions = examSets[examCode].sort(() => 0.7 - Math.random()).slice(0, 30);
 
     // Set the user's full name and the topic of the question set
     document.getElementById("exam-user-name").innerText = userData.fullName;
@@ -311,7 +311,7 @@ function loadQuestion() {
     }
 
     clearTimeout(timer);
-    timeLeft = 20;
+    timeLeft = 25;
     document.getElementById("timer").innerText = timeLeft;
 
     let currentQuestion = questions[currentQuestionIndex];
@@ -342,7 +342,7 @@ function loadQuestion() {
             clearInterval(timer);
             confirmAnswer();
         }
-    }, 1000);
+    }, 2500);
 }
 
 function selectAnswer(answer, event) {
