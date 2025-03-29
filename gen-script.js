@@ -12,7 +12,7 @@ const scheduleNotifications = [
     { time: "5:00 PM", title: "Rest and leisure time", image: "rest.jpg" },
     { time: "6:00 PM", title: "Dinner", image: "dinner.jpg" },
     { time: "7:00 PM", title: "Fifth study session", image: "study5.jpg" },
-    { time: "8:37 PM", title: "Short break", image: "break.jpg" },
+    { time: "8:47 PM", title: "Short break", image: "biochem2.webp" },
     { time: "9:15 PM", title: "Review and recap session", image: "review.jpg" },
     { time: "10:00 PM", title: "Relax and wind down", image: "relax.jpg" },
     { time: "10:30 PM", title: "Sleep", image: "sleep.jpg" }
@@ -94,7 +94,10 @@ function showNotification(article) {
         registration.showNotification("QUICK REMINDER", {
             body: article.title,
             icon: "logo.png", // Optional: Path to an icon image
-            image: article.image // Image to display in the notification
+            image: article.image, // Image to display in the notification
+            data: {
+                url: window.location.href
+            }
         });
     }).catch(error => {
         console.error("Service Worker is not ready:", error);
