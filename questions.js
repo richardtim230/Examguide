@@ -962,9 +962,9 @@ const examSets = {
     },
     { 
         question: "What is the molecular mass of compound B if mₐ = 20 g, Pₐ = 25 mmHg, Pₕ₂ₒ = 750 mmHg, Mₕ₂ₒ = 18 g/mol, and mₕ₂ₒ = 55 g?", 
-        options: ["122.73 g/mol", "130.50 g/mol", "118.20 g/mol", "135.00 g/mol"], 
-        answer: "122.73 g/mol", 
-        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>Mₐ = (20 × 750 × 18) / (25 × 55) = 122.73 g/mol.<br>Other options arise from calculation errors or incorrect formula application." 
+        options: ["196.4 g/mol", "130.50 g/mol", "118.20 g/mol", "135.00 g/mol"], 
+        answer: "196.4 g/mol", 
+        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>Mₐ = (20 × 750 × 18) / (25 × 55) = 196.4 g/mol.<br>Other options arise from calculation errors or incorrect formula application." 
     },
     { 
         question: "Which technique is suitable for separating liquid mixtures with boiling points close to one another?", 
@@ -1132,9 +1132,9 @@ const examSets = {
     },
     { 
         question: "What is the molecular mass of compound A if mₐ = 10 g, Pₐ = 20 mmHg, Pₕ₂ₒ = 740 mmHg, Mₕ₂ₒ = 18 g/mol, and mₕ₂ₒ = 60 g?", 
-        options: ["121.89 g/mol", "115.42 g/mol", "130.00 g/mol", "110.50 g/mol"], 
-        answer: "121.89 g/mol", 
-        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>The molecular mass of compound A is calculated as:<br>Mₐ = (10 × 740 × 18) / (20 × 60) = 121.89 g/mol.<br>Other options result from calculation errors or incorrect formula application." 
+        options: ["121.89 g/mol", "115.42 g/mol", "130.00 g/mol", "111.00 g/mol"], 
+        answer: "111.00 g/mol", 
+        explanation: "Using the formula:<br>Mₐ = (mₐ × Pₕ₂ₒ × Mₕ₂ₒ) / (Pₐ × mₕ₂ₒ),<br>The molecular mass of compound A is calculated as:<br>Mₐ = (10 × 740 × 18) / (20 × 60) = 111.00 g/mol.<br>Other options result from calculation errors or incorrect formula application." 
     },
 ],
 };
