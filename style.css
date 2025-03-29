@@ -1,3 +1,59 @@
+/* Add this CSS to your styles.css file or within a <style> tag in your HTML */
+
+@media screen and (min-width: 768px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-size: 2em;
+  }
+
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #login-box, #register-box, #paymentPage, #tour-modal, #welcome-popup, #exam-history-section, #rewardPopup, .notification {
+    width: 50%;
+    margin: 20px auto;
+  }
+
+  #courses-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  #exam-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #questions-container {
+    width: 80%;
+  }
+
+  #navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+  }
+}
+
+
 .hidden-section {
   display: none;
 }
