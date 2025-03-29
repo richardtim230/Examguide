@@ -1,7 +1,10 @@
 // Array of article titles and corresponding images for different times
-const morningArticle = { title: "Our new science lab is open for students!", image: "deo1.jpg" };
-const afternoonArticle = { title: "Congratulations to the debate team for winning regionals!", image: "csc1.webp" };
-const eveningArticle = { title: "THANK YOU FOR SUBSCRIBING!", image: "deo1.jpg" };
+const morningReading = { title: "Time to read!", image: "reading.jpg" };
+const morningRest = { title: "Take a break!", image: "rest.jpg" };
+const afternoonReading = { title: "Afternoon reading time!", image: "reading.jpg" };
+const afternoonRest = { title: "Rest for a while!", image: "rest.jpg" };
+const eveningReading = { title: "Evening study session!", image: "reading.jpg" };
+const nightRest = { title: "Rest well!", image: "good morning 4.webp" };
 
 // Check if the browser supports notifications and service workers
 if ("Notification" in window && "serviceWorker" in navigator) {
@@ -30,9 +33,12 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 // Function to schedule notifications at specified times
 function scheduleNotifications() {
     console.log("Scheduling notifications...");
-    scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
-    scheduleNotification(15, 45, 0, afternoonArticle); // 3:45 PM
-    scheduleNotification(21, 15, 0, eveningArticle); // 6:00 PM
+    scheduleNotification(7, 0, 0, morningReading); // 7:00 AM
+    scheduleNotification(10, 0, 0, morningRest); // 10:00 AM
+    scheduleNotification(14, 0, 0, afternoonReading); // 2:00 PM
+    scheduleNotification(16, 0, 0, afternoonRest); // 4:00 PM
+    scheduleNotification(19, 0, 0, eveningReading); // 7:00 PM
+    scheduleNotification(21, 24, 0, nightRest); // 9:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -106,6 +112,8 @@ function checkMissedNotifications() {
 
     localStorage.setItem('scheduledNotifications', JSON.stringify(remainingNotifications));
 }
+
+
 
 // Function to load the article based on the URL's article ID parameter or fragment
 function loadArticle() {
