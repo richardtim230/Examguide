@@ -32,7 +32,7 @@ function scheduleNotifications() {
     console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
     scheduleNotification(15, 45, 0, afternoonArticle); // 3:45 PM
-    scheduleNotification(18, 0, 0, eveningArticle); // 4:55 PM
+    scheduleNotification(20, 15, 0, eveningArticle); // 6:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -62,8 +62,8 @@ function scheduleNotification(hour, minute, second, article) {
 
     setTimeout(() => {
         showNotification(article);
-        // Schedule next notification
-        setInterval(() => showNotification(article), 24 * 60 * 60 * 1000);
+        // Remove the notification from local storage after showing it
+        removeNotificationFromStorage(notificationTime.getTime());
     }, timeout);
 }
 
@@ -75,13 +75,20 @@ function showNotification(article) {
     navigator.serviceWorker.ready.then(registration => {
         console.log("Sending notification through service worker...");
         registration.showNotification("QUICK REMINDER", {
-            body: `It's time to read: "${article.title}"`,
+            body: `"${article.title}"`,
             icon: "logo.png", // Optional: Path to an icon image
             image: article.image // Image to display in the notification
         });
     }).catch(error => {
         console.error("Service Worker is not ready:", error);
     });
+}
+
+// Function to remove a notification from local storage after it has been shown
+function removeNotificationFromStorage(notificationTime) {
+    const notifications = JSON.parse(localStorage.getItem('scheduledNotifications')) || [];
+    const updatedNotifications = notifications.filter(notification => notification.time !== notificationTime);
+    localStorage.setItem('scheduledNotifications', JSON.stringify(updatedNotifications));
 }
 
 // Function to check for missed notifications
