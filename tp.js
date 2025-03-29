@@ -33,7 +33,7 @@ function scheduleDailyNotification() {
 function showNotification() {
     new Notification("Reminder", {
         body: "It's 3:00 pm! Time to read an article.",
-        icon: "path/to/icon.png" // Optional: Path to an icon image
+        icon: "logo.png" // Optional: Path to an icon image
     });
 }
 
