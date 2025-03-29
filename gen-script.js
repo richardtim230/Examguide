@@ -31,8 +31,8 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 function scheduleNotifications() {
     console.log("Scheduling notifications...");
     scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
-    scheduleNotification(16, 45, 0, afternoonArticle); // 3:25 PM
-    scheduleNotification(18, 0, 0, eveningArticle); // 6:00 PM
+    scheduleNotification(15, 45, 0, afternoonArticle); // 3:25 PM
+    scheduleNotification(16, 55, 0, eveningArticle); // 6:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
@@ -74,7 +74,7 @@ function showNotification(article) {
     // Send push notification through the service worker
     navigator.serviceWorker.ready.then(registration => {
         console.log("Sending notification through service worker...");
-        registration.showNotification("Reminder", {
+        registration.showNotification("QUICK REMINDER", {
             body: `It's time to read: "${article.title}"`,
             icon: "logo.png", // Optional: Path to an icon image
             image: article.image // Image to display in the notification
