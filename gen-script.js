@@ -1,16 +1,7 @@
-// Array of article titles
-const articleTitles = [
-    "Understanding JavaScript Closures",
-    "A Guide to HTML5 Semantic Elements",
-    "CSS Grid Layout: A Comprehensive Guide",
-    "Best Practices for Responsive Web Design",
-    "Introduction to ES6 and Beyond",
-    "Building Accessible Web Applications",
-    "Optimizing Web Performance",
-    "Exploring the Fetch API",
-    "JavaScript Promises: An Introduction",
-    "Using Local Storage in Web Applications"
-];
+// Array of article titles and corresponding images for different times
+const morningArticle = { title: "Our new science lab is open for students!", image: "deo1.jpg" };
+const afternoonArticle = { title: "Congratulations to the debate team for winning regionals!", image: "csc1.webp" };
+const eveningArticle = { title: "Annual sports day event was a huge success!", image: "biochem2.webp" };
 
 // Check if the browser supports notifications and service workers
 if ("Notification" in window && "serviceWorker" in navigator) {
@@ -36,13 +27,13 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 
 // Function to schedule notifications at specified times
 function scheduleNotifications() {
-    scheduleNotification(6, 0, 0); // 6:00 AM
-    scheduleNotification(15, 30, 0); // 2:57 PM
-    scheduleNotification(18, 0, 0); // 6:00 PM
+    scheduleNotification(6, 0, 0, morningArticle); // 6:00 AM
+    scheduleNotification(16, 0, 0, afternoonArticle); // 2:57 PM
+    scheduleNotification(18, 0, 0, eveningArticle); // 6:00 PM
 }
 
 // Function to schedule a notification at the specified hour, minute, and second
-function scheduleNotification(hour, minute, second) {
+function scheduleNotification(hour, minute, second, article) {
     const now = new Date();
     const notificationTime = new Date();
 
@@ -57,23 +48,22 @@ function scheduleNotification(hour, minute, second) {
     console.log(`Scheduling notification at ${notificationTime} with a timeout of ${timeout} ms.`);
 
     setTimeout(() => {
-        showNotification();
+        showNotification(article);
         // Schedule next notification
-        setInterval(showNotification, 24 * 60 * 60 * 1000);
+        setInterval(() => showNotification(article), 24 * 60 * 60 * 1000);
     }, timeout);
 }
 
 // Function to show the notification
-function showNotification() {
-    const randomIndex = Math.floor(Math.random() * articleTitles.length);
-    const randomTitle = articleTitles[randomIndex];
-    console.log(`Showing notification: ${randomTitle}`);
+function showNotification(article) {
+    console.log(`Showing notification: ${article.title}`);
 
     // Send push notification through the service worker
     navigator.serviceWorker.ready.then(registration => {
         registration.showNotification("Reminder", {
-            body: `It's time to read: "${randomTitle}"`,
-            icon: "logo.png" // Optional: Path to an icon image
+            body: `It's time to read: "${article.title}"`,
+            icon: "logo.png", // Optional: Path to an icon image
+            image: article.image // Image to display in the notification
         });
     });
 }
