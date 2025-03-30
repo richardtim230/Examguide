@@ -1,5 +1,3 @@
-
-
 /* Add this CSS to your styles.css file or within a <style> tag in your HTML */
 
 @media screen and (min-width: 768px) {
@@ -1449,14 +1447,6 @@ color: white;
 }
 
 
-
-/* Modal styles */
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
    
 /* Main application (no styling effect) */
 #app {
@@ -2052,4 +2042,3 @@ text-align: center;
   background: #d32f2f;
 
 }
-
