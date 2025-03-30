@@ -1,7 +1,4 @@
-/* CSS to hide the overflow */
-body.modal-active {
-  overflow: hidden;
-}
+
 
 /* Add this CSS to your styles.css file or within a <style> tag in your HTML */
 
@@ -1451,16 +1448,7 @@ color: white;
   color: white;
 }
 
-/* CSS to hide overflow when modal is active */
-body.modal-active {
-  overflow: hidden;
-}
 
-
-
-#overlay.hidden {
-  display: none;
-}
 
 /* Modal styles */
 .modal {
