@@ -1,34 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-      var loginBox = document.getElementById('loginBox');
-      var overlay = document.getElementById('overlay');
 
-      function showModal() {
-        overlay.classList.remove('hidden');
-        document.body.classList.add('modal-active');
-      }
-
-      function hideModal() {
-        overlay.classList.add('hidden');
-        document.body.classList.remove('modal-active');
-      }
-
-      // Show login box (example: you might have a button to trigger this)
-      document.getElementById('showLogin').addEventListener('click', function() {
-        showModal();
-      });
-
-      // Hide login box (example: you might have a close button inside the modal)
-      document.getElementById('closeLogin').addEventListener('click', function() {
-        hideModal();
-      });
-
-      // Example: hide modal when clicking outside of it
-      overlay.addEventListener('click', function(event) {
-        if (event.target === overlay) {
-          hideModal();
-        }
-      });
-    });
 
 document.addEventListener("DOMContentLoaded", function () {
     const authSection = document.getElementById("login-box");
