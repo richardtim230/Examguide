@@ -56,18 +56,19 @@
 
       
   <!-- Overlay for login and registration -->
-<div id="overlay" class="hidden">
-  <!-- Login Section -->
-  <div id="loginBox" class="modal">
-    <h2>Login</h2>
-    <div class="content">
-      <img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
+  <div id="overlay">
+    <!-- Login Section -->
+    <div id="login-box">
+      <h2>Login</h2>
+      <div class="content">
+
+<img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
+
+      </div>
+      <input type="text" id="user-id" placeholder="Enter your User ID">
+      <button id="login-btn">Login</button>
+      <p style="margin-top: 10px;">Don't have an User ID? <button id="register-btn" class="back-btn">Register</button></p>
     </div>
-    <input type="text" id="user-id" placeholder="Enter your User ID">
-    <button id="login-btn">Login</button>
-    <p style="margin-top: 10px;">Don't have an User ID? <button id="register-btn" class="back-btn">Register</button></p>
-  </div>
-</div>
 
     <div id="receipt-container">
         <canvas id="receiptCanvas"></canvas>
@@ -115,7 +116,6 @@
   <button id="back-to-login-payment">Back to Login</button>
 </div>
         
-
 
     
     <!-- Welcome Popup -->
@@ -182,7 +182,7 @@
 <div id="rewardPopupMessage" class="popup">You earned ₦0!</div>
 
     <section id="course-selection-section">
-
+<div><button id="switch-mode-btn" class="icon-btn">🛠️</button></div>
       <h3>Select a Department and enter the Access Code to Practice Related Examination Questions</h3>
       
       <div id="courses-container">
@@ -259,5 +259,7 @@
 
 
 </html>
+
+
 </body>
   </html>
