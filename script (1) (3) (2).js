@@ -1,3 +1,39 @@
+// Example JavaScript to add and remove the modal-active class
+document.addEventListener('DOMContentLoaded', function() {
+  var loginBox = document.getElementById('loginBox');
+  var registerBox = document.getElementById('registerBox');
+
+  function showModal(modal) {
+    modal.style.display = 'block';
+    document.body.classList.add('modal-active');
+  }
+
+  function hideModal(modal) {
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-active');
+  }
+
+  // Show login box (example: you might have a button to trigger this)
+  document.getElementById('showLogin').addEventListener('click', function() {
+    showModal(loginBox);
+  });
+
+  // Hide login box (example: you might have a close button inside the modal)
+  document.getElementById('closeLogin').addEventListener('click', function() {
+    hideModal(loginBox);
+  });
+
+  // Show register box (example: you might have a button to trigger this)
+  document.getElementById('showRegister').addEventListener('click', function() {
+    showModal(registerBox);
+  });
+
+  // Hide register box (example: you might have a close button inside the modal)
+  document.getElementById('closeRegister').addEventListener('click', function() {
+    hideModal(registerBox);
+  });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const authSection = document.getElementById("login-box");
     const registerSection = document.getElementById("register-box");
