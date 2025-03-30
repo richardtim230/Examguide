@@ -18,8 +18,6 @@ if ("Notification" in window && "serviceWorker" in navigator) {
             console.log(`Notification permission: ${permission}`);
             if (permission === "granted") {
                 scheduleNotifications();
-                checkMissedNotifications(); // Check for missed notifications
-                setInterval(checkMissedNotifications, 60000); // Check every minute
             }
         });
     })
@@ -56,26 +54,16 @@ function scheduleNotification(hour, minute, second, article) {
     const timeout = notificationTime.getTime() - now.getTime();
     console.log(`Scheduling notification at ${notificationTime} with a timeout of ${timeout} ms.`);
 
-    const notificationData = {
-        time: notificationTime.getTime(),
-        article: article
-    };
-
-    // Store the notification in local storage
-    const notifications = JSON.parse(localStorage.getItem('scheduledNotifications')) || [];
-    notifications.push(notificationData);
-    localStorage.setItem('scheduledNotifications', JSON.stringify(notifications));
-
-    setTimeout(async () => {
-        const resizedImage = await resizeImage(article.image, 128, 128);
-        showNotification(article, resizedImage);
-        // Remove the notification from local storage after showing it
-        removeNotificationFromStorage(notificationTime.getTime());
+    setTimeout(() => {
+        const currentTime = new Date().getTime();
+        if (currentTime - notificationTime.getTime() <= 300000) { // 5 minutes in milliseconds
+            showNotification(article, article.image);
+        }
     }, timeout);
 }
 
 // Function to show the notification
-function showNotification(article, resizedImage) {
+function showNotification(article, imagePath) {
     console.log(`Showing notification: ${article.title}`);
 
     // Send push notification through the service worker
@@ -84,55 +72,11 @@ function showNotification(article, resizedImage) {
         registration.showNotification("QUICK REMINDER", {
             body: `"${article.title}"`,
             icon: "logo.png", // Optional: Path to an icon image
-            image: resizedImage // Resized image to display in the notification
+            image: imagePath // Use the original image path
         });
     }).catch(error => {
         console.error("Service Worker is not ready:", error);
     });
-}
-
-// Function to resize image
-function resizeImage(imagePath, width, height) {
-    return new Promise((resolve, reject) => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-
-        img.src = imagePath;
-        canvas.width = width;
-        canvas.height = height;
-
-        img.onload = () => {
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL());
-        };
-        img.onerror = (err) => {
-            reject(err);
-        };
-    });
-}
-
-// Function to remove a notification from local storage after it has been shown
-function removeNotificationFromStorage(notificationTime) {
-    const notifications = JSON.parse(localStorage.getItem('scheduledNotifications')) || [];
-    const updatedNotifications = notifications.filter(notification => notification.time !== notificationTime);
-    localStorage.setItem('scheduledNotifications', JSON.stringify(updatedNotifications));
-}
-
-// Function to check for missed notifications
-function checkMissedNotifications() {
-    const now = Date.now();
-    const notifications = JSON.parse(localStorage.getItem('scheduledNotifications')) || [];
-
-    const remainingNotifications = notifications.filter(notification => {
-        if (notification.time <= now) {
-            showNotification(notification.article);
-            return false;
-        }
-        return true;
-    });
-
-    localStorage.setItem('scheduledNotifications', JSON.stringify(remainingNotifications));
 }
 
 // Function to load the article based on the URL's article ID parameter or fragment
