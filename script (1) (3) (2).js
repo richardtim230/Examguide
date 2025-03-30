@@ -477,26 +477,6 @@ function displaySessionDetails(session) {
 }
 
 
-// Function to switch modes
-function switchMode() {
-    isPracticeMode = !isPracticeMode;
-    if (isPracticeMode) {
-        alert("Coming Up Soon!.");
-        // Set the timer to 30 seconds for practice mode
-        timeRemaining = 30;
-        startTimer();
-    } else {
-        alert("Switched to Exam Mode.");
-        // Set the timer to default for exam mode
-        timeRemaining = 3000;
-        startTimer();
-    }
-}
-
-// Event listener for the switch mode button
-document.getElementById("switch-mode-btn").addEventListener("click", switchMode);
-
-
 window.addEventListener('load', () => {
   // Show the first notification on page load
   const notification1 = document.getElementById('notification1');
