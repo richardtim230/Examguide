@@ -1,3 +1,8 @@
+/* CSS to hide the overflow */
+body.modal-active {
+  overflow: hidden;
+}
+
 /* Add this CSS to your styles.css file or within a <style> tag in your HTML */
 
 @media screen and (min-width: 768px) {
