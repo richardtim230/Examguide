@@ -1,4 +1,38 @@
+// Example JavaScript to add and remove the modal-active class
+document.addEventListener('DOMContentLoaded', function() {
+  var loginBox = document.getElementById('loginBox');
+  var registerBox = document.getElementById('registerBox');
 
+  function showModal(modal) {
+    modal.style.display = 'block';
+    document.body.classList.add('modal-active');
+  }
+
+  function hideModal(modal) {
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-active');
+  }
+
+  // Show login box (example: you might have a button to trigger this)
+  document.getElementById('showLogin').addEventListener('click', function() {
+    showModal(loginBox);
+  });
+
+  // Hide login box (example: you might have a close button inside the modal)
+  document.getElementById('closeLogin').addEventListener('click', function() {
+    hideModal(loginBox);
+  });
+
+  // Show register box (example: you might have a button to trigger this)
+  document.getElementById('showRegister').addEventListener('click', function() {
+    showModal(registerBox);
+  });
+
+  // Hide register box (example: you might have a close button inside the modal)
+  document.getElementById('closeRegister').addEventListener('click', function() {
+    hideModal(registerBox);
+  });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const authSection = document.getElementById("login-box");
@@ -476,129 +510,6 @@ function displaySessionDetails(session) {
   historyContent.appendChild(backButton);
 }
 
-
-
-// Tour Data
-
-const tourSteps = [
-
-  {
-
-    title: "Welcome to Students Support System Exam Section",
-
-    description: "Get started with our intuitive dashboard and tools.",
-
-    image: "logo.png"
-
-  },
-
-  {
-
-    title: "Homepage and Department Selection",
-
-    description: "This is where you select the course you want to practice questions from, either chemistry,physics, biology and others. It doesn't necessarily indicate the department you belong to but the department rendering the course you want to take.",
-
-    image: "deo1.jpg"
-
-  },
-
-  {
-
-    title: "Course Management",
-
-    description: "This is where you indicate the exact course you want to practice. All you have to do is input the course code which is the access code. Take for instance you selected or clicked on -Botany- at the home page, the access code for introductory botany one is 'BOT101'. Take note that it's capitalized with no space otherwise it won't work.",
-
-    image: "accesp.jpg"
-
-  },
-
-  {
-
-    title: "Exam and Summary Section",
-
-    description: "You can now practice your select departmental course and also preview corrections with explanations.",
-
-    image: "examsec.jpg"
-
-  }
-
-];
-
-let currentStep = 0;
-
-// DOM Elements
-
-const tourTitle = document.getElementById('tour-title');
-
-const tourDescription = document.getElementById('tour-description');
-
-const tourImage = document.getElementById('tour-image');
-
-const prevBtn = document.getElementById('prev-btn');
-
-const nextBtn = document.getElementById('next-btn');
-
-const closeBtn = document.getElementById('close-btn');
-
-const overlay = document.getElementById('tour-overlay');
-
-// Initialize Tour
-
-function showStep(step) {
-
-  const { title, description, image } = tourSteps[step];
-
-  tourTitle.innerText = title;
-
-  tourDescription.innerText = description;
-
-  tourImage.src = image;
-
-  // Toggle Button Visibility
-
-  prevBtn.style.display = step === 0 ? 'none' : 'inline-block';
-
-  nextBtn.style.display = step === tourSteps.length - 1 ? 'none' : 'inline-block';
-
-}
-
-// Event Listeners
-
-nextBtn.addEventListener('click', () => {
-
-  if (currentStep < tourSteps.length - 1) {
-
-    currentStep++;
-
-    showStep(currentStep);
-
-  }
-
-});
-
-prevBtn.addEventListener('click', () => {
-
-  if (currentStep > 0) {
-
-    currentStep--;
-
-    showStep(currentStep);
-
-  }
-
-});
-
-closeBtn.addEventListener('click', () => {
-
-  overlay.style.display = 'none';
-
-  document.body.style.overflow = 'auto';
-
-});
-
-// Start Tour
-
-showStep(currentStep);
 
 // Function to switch modes
 function switchMode() {
