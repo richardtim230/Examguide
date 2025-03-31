@@ -7358,11 +7358,16 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "BOT203-T2", title: "INTRODUCTORY GENETICS ONE", department: "Zoology", part: "200" },
-    { id: "BOT203-T3", title: "INTRODUCTORY GENETICS TWO", department: "Zoology", part: "200" },
-    { id: "CHM102-CLW", title: "INTRODUCTORY CHEMISTRY 2", department: "Zoology", part: "200" },
-    { id: "exam4", title: "Biology 202", department: "SCIENCE", part: "2" }
-    // Add more exams as needed
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Agricultural Economics", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Family Nutrition and Consumer Science", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Zoology", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Chemistry", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Physics and Engineering Physics", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Microbiology", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Botany", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Biochemistry and Molecular Biology", part: "100" }
+    
+    
 ];
 
 // Function to allocate exams based on department and part
