@@ -7365,7 +7365,13 @@ const exams = [
     { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Physics and Engineering Physics", part: "100" },
     { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Microbiology", part: "100" },
     { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Botany", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Biochemistry and Molecular Biology", part: "100" }
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Biochemistry and Molecular Biology", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Geology", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Human Nutrition and Dietetics", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Nursing", part: "100" },
+    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Mathematics", part: "100" }
+    
+    
     
     
 ];
