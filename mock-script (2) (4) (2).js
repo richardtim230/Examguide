@@ -19817,7 +19817,11 @@ function generatePdf() {
 
     y += lineHeight * 2;
 
-    
+    // Example detailed results
+    const exampleResults = [
+        { question: "What is 2+2?", userAnswer: "4", correctAnswer: "4", explanation: "Basic arithmetic" },
+        { question: "What is the capital of France?", userAnswer: "Paris", correctAnswer: "Paris", explanation: "Capital city" }
+    ];
 
     exampleResults.forEach((result, index) => {
         if (y > pdfDoc.internal.pageSize.height - margin * 2) {
