@@ -19750,60 +19750,138 @@ document.getElementById('downloadPDF').addEventListener('click', generatePdf);
 
 function generatePdf() {
     const { jsPDF } = window.jspdf;
-    const pdfDoc = new jsPDF();
+    const pdfDoc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'pt',
+        format: 'a4'
+    });
 
-    // Example content for the PDF
-    pdfDoc.text("OAU-IFE EXAMS", 10, 10);
-    pdfDoc.text("Exam Results", 10, 20);
+    // Set some default styles
+    pdfDoc.setFontSize(12);
+    const lineHeight = 14;
+    const margin = 40;
+    let y = margin;
 
-    // User details
-    const userDetails = document.getElementById('user-details').innerText;
-    pdfDoc.text(`User Details: ${userDetails}`, 10, 30);
+    // Add title
+    pdfDoc.setFontSize(18);
+    pdfDoc.setTextColor(0, 0, 255);
+    pdfDoc.text("OAU-IFE EXAMS", margin, y);
+    y += lineHeight + 10;
 
-    // Exam details
-    const examTitle = document.getElementById('exam-title').innerText;
-    pdfDoc.text(`Exam Title: ${examTitle}`, 10, 40);
+    pdfDoc.setFontSize(16);
+    pdfDoc.setTextColor(0, 0, 0);
+    pdfDoc.text("Exam Results", margin, y);
+    y += lineHeight * 2;
+
+    // User details section
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(255, 0, 0);
+    pdfDoc.text("User Details:", margin, y);
+    y += lineHeight;
+
+    pdfDoc.setFontSize(12);
+    pdfDoc.setTextColor(0, 0, 0);
+    const userDetails = document.getElementById('user-details').innerText.split('\n');
+    userDetails.forEach(line => {
+        if (y > pdfDoc.internal.pageSize.height - margin) {
+            pdfDoc.addPage();
+            y = margin;
+        }
+        pdfDoc.text(line, margin, y);
+        y += lineHeight;
+    });
+
+    y += lineHeight * 2;
+
+    // Exam details section
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(255, 0, 0);
+    pdfDoc.text("Exam Details:", margin, y);
+    y += lineHeight;
+
+    pdfDoc.setFontSize(12);
+    pdfDoc.setTextColor(0, 0, 0);
+    const examTitle = document.getElementById('exam-title').innerText.split('\n');
+    examTitle.forEach(line => {
+        if (y > pdfDoc.internal.pageSize.height - margin) {
+            pdfDoc.addPage();
+            y = margin;
+        }
+        pdfDoc.text(line, margin, y);
+        y += lineHeight;
+    });
+
+    y += lineHeight * 2;
 
     // Result Summary Header
-    pdfDoc.text("Exam Result Summary:", 10, 50);
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(255, 0, 0);
+    pdfDoc.text("Exam Result Summary:", margin, y);
+    y += lineHeight;
 
-    // Assuming you have an element with id 'results-summary' containing the summary
-    const resultsSummary = document.getElementById('results-summary').innerText;
-    pdfDoc.text(resultsSummary, 10, 60);
+    pdfDoc.setFontSize(12);
+    pdfDoc.setTextColor(0, 0, 0);
+    const resultsSummary = document.getElementById('results-summary').innerText.split('\n');
+    resultsSummary.forEach(line => {
+        if (y > pdfDoc.internal.pageSize.height - margin) {
+            pdfDoc.addPage();
+            y = margin;
+        }
+        pdfDoc.text(line, margin, y);
+        y += lineHeight;
+    });
 
-    // Detailed results
-    const resultsContent = document.getElementById('results-content').innerText;
-    pdfDoc.text(resultsContent, 10, 70);
+    y += lineHeight * 2;
+
+    // Detailed results section
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(255, 0, 0);
+    pdfDoc.text("Detailed Exam Results:", margin, y);
+    y += lineHeight;
+
+    pdfDoc.setFontSize(12);
+    pdfDoc.setTextColor(0, 0, 0);
+    const resultsContent = document.getElementById('results-content').innerText.split('\n');
+    resultsContent.forEach(line => {
+        if (y > pdfDoc.internal.pageSize.height - margin) {
+            pdfDoc.addPage();
+            y = margin;
+        }
+        pdfDoc.text(line, margin, y);
+        y += lineHeight;
+    });
+
+    y += lineHeight * 2;
+
+    // Example detailed results
+    const exampleResults = [
+        { question: "What is 2+2?", userAnswer: "4", correctAnswer: "4", explanation: "Basic arithmetic" },
+        { question: "What is the capital of France?", userAnswer: "Paris", correctAnswer: "Paris", explanation: "Capital city" }
+    ];
+
+    exampleResults.forEach((result, index) => {
+        if (y > pdfDoc.internal.pageSize.height - margin * 2) {
+            pdfDoc.addPage();
+            y = margin;
+        }
+
+        pdfDoc.setFontSize(12);
+        pdfDoc.setTextColor(0, 0, 0);
+        pdfDoc.text(`Q${index + 1}: ${result.question}`, margin, y);
+        y += lineHeight;
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.text(`Your Answer: ${result.userAnswer}`, margin, y);
+        y += lineHeight;
+        pdfDoc.setFont("helvetica", "normal");
+        pdfDoc.text(`Correct Answer: ${result.correctAnswer}`, margin, y);
+        y += lineHeight;
+        pdfDoc.text(`Explanation: ${result.explanation}`, margin, y);
+        y += lineHeight * 2;
+    });
 
     // Save the PDF
     pdfDoc.save('ExamResults.pdf');
 }
-
-function appendToPdf(pdfDoc, text, x, y) {
-    pdfDoc.text(text, x, y);
-}
-
-// Example function to format and add detailed exam results
-function formatExamResults(pdfDoc, results) {
-    let y = 80; // Starting y position for detailed results
-    results.forEach((result, index) => {
-        const question = `Q${index + 1}: ${result.question}`;
-        const userAnswer = `Your Answer: ${result.userAnswer}`;
-        const correctAnswer = `Correct Answer: ${result.correctAnswer}`;
-        const explanation = `Explanation: ${result.explanation}`;
-        
-        appendToPdf(pdfDoc, question, 10, y);
-        y += 10;
-        appendToPdf(pdfDoc, userAnswer, 10, y);
-        y += 10;
-        appendToPdf(pdfDoc, correctAnswer, 10, y);
-        y += 10;
-        appendToPdf(pdfDoc, explanation, 10, y);
-        y += 20; // Adding extra space before the next question
-    });
-}
-
-
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
   // Reset user answers and navigation
