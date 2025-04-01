@@ -19764,87 +19764,74 @@ function generatePdf() {
     const pageHeight = pdfDoc.internal.pageSize.height;
     let y = margin;
 
-    // Function to add centered text
-    function addCenteredText(text, fontSize = 14, fontStyle = 'normal', textColor = [0, 0, 0], yOffset = 0) {
+    // Function to add properly centered text inside a box
+    function addBoxWithText(title, content, boxHeight = 50, fontSize = 12) {
+        pdfDoc.setFillColor(240, 240, 240); // Light gray box
+        pdfDoc.roundedRect(margin, y, maxWidth, boxHeight, 8, 8, "F"); // Rounded rectangle
+
+        // Calculate text position for perfect centering
+        const titleY = y + boxHeight / 2 - lineHeight / 2 - 2;
+        const contentY = titleY + lineHeight + 5; 
+
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.setFontSize(14);
+        pdfDoc.setTextColor(0, 0, 0);
+        pdfDoc.text(title, pageWidth / 2 - pdfDoc.getTextWidth(title) / 2, titleY);
+
+        pdfDoc.setFont("helvetica", "normal");
         pdfDoc.setFontSize(fontSize);
-        pdfDoc.setFont("helvetica", fontStyle);
-        pdfDoc.setTextColor(...textColor);
-        const textWidth = pdfDoc.getTextWidth(text);
-        pdfDoc.text(text, (pageWidth - textWidth) / 2, y + yOffset);
-        return y + yOffset + lineHeight;
+        pdfDoc.setTextColor(50, 50, 50);
+        pdfDoc.text(content, margin + 10, contentY);
+
+        y += boxHeight + 15; // Move Y down after each section
     }
 
-    // Function to add text with wrapping
-    function addText(text, x, y, fontSize = 12, fontStyle = 'normal', textColor = [0, 0, 0]) {
+    // Function to add a centered header
+    function addHeader(title, fontSize = 16) {
+        pdfDoc.setFillColor(0, 102, 204); // Blue header background
+        pdfDoc.rect(0, 0, pageWidth, 70, "F"); // Header box
+
+        const titleY = 40; // Adjust for perfect vertical centering
+
+        pdfDoc.setFont("helvetica", "bold");
         pdfDoc.setFontSize(fontSize);
-        pdfDoc.setFont("helvetica", fontStyle);
-        pdfDoc.setTextColor(...textColor);
-        const lines = pdfDoc.splitTextToSize(text, maxWidth);
-        lines.forEach(line => {
-            if (y > pageHeight - margin) {
-                pdfDoc.addPage();
-                y = margin;
-            }
-            pdfDoc.text(line, x, y);
-            y += lineHeight;
-        });
-        return y;
+        pdfDoc.setTextColor(255, 255, 255);
+        pdfDoc.text(title, pageWidth / 2 - pdfDoc.getTextWidth(title) / 2, titleY);
+
+        y += 80; // Move Y below header
     }
 
-    // Add a gradient-styled header
-    pdfDoc.setFillColor(0, 102, 204); // Deep blue background
-    pdfDoc.rect(0, 0, pageWidth, 70, "F"); // Gradient header box
-    pdfDoc.setTextColor(255, 255, 255); // White text
-    y = addCenteredText("OAU-IFE EXAMS", 20, 'bold', [255, 255, 255], 30);
-    y = addCenteredText("Exam Results", 16, 'normal', [255, 255, 255], 10);
-    y += 20;
+    // Add properly centered header
+    addHeader("OAU-IFE EXAMS", 20);
+    addHeader("Exam Results", 16);
 
-    // Add user details section with a styled box
-    pdfDoc.setFillColor(240, 240, 240); // Light gray background
-    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F"); // Rounded box
-    y = addCenteredText("User Details", 14, 'bold', [0, 0, 0], 10);
+    // Add properly centered User Details section
     const userDetails = document.getElementById('user-details').innerText;
-    y = addText(userDetails, margin + 10, y, 12, 'normal', [0, 0, 0]);
-    y += 20;
+    addBoxWithText("User Details", userDetails, 60);
 
-    // Add exam details section with padding
-    pdfDoc.setFillColor(240, 240, 240);
-    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F");
-    y = addCenteredText("Exam Details", 14, 'bold', [0, 0, 0], 10);
+    // Add properly centered Exam Details section
     const examTitle = document.getElementById('exam-title').innerText;
-    y = addText(examTitle, margin + 10, y);
+    addBoxWithText("Exam Details", examTitle, 60);
 
-    y += 20;
-
-    // Exam results summary section
-    pdfDoc.setFillColor(230, 230, 230);
-    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F");
-    y = addCenteredText("Exam Result Summary", 14, 'bold', [0, 0, 0], 10);
+    // Add properly centered Exam Summary section
     const resultsSummary = document.getElementById('results-summary').innerText;
-    y = addText(resultsSummary, margin + 10, y);
+    addBoxWithText("Exam Result Summary", resultsSummary, 70);
 
-    y += 20;
-
-    // Detailed Exam Results section
-    pdfDoc.setFillColor(240, 240, 240);
-    pdfDoc.roundedRect(margin, y, maxWidth, 80, 8, 8, "F");
-    y = addCenteredText("Detailed Exam Results", 14, 'bold', [255, 0, 0], 10);
+    // Add properly centered Detailed Results section
     const resultsContent = document.getElementById('results-content').innerText;
-    y = addText(resultsContent, margin + 10, y);
+    addBoxWithText("Detailed Exam Results", resultsContent, 80);
 
-    y += 20;
-
-    // Footer
+    // Footer with perfect centering
     pdfDoc.setFillColor(0, 102, 204);
     pdfDoc.rect(0, pageHeight - 40, pageWidth, 40, "F");
     pdfDoc.setTextColor(255, 255, 255);
     pdfDoc.setFontSize(10);
-    pdfDoc.text("Generated by OAU-IFE Exams System", pageWidth / 2 - 70, pageHeight - 15);
+    pdfDoc.text("Generated by OAU-IFE Exams System", pageWidth / 2 - 70, pageHeight - 20);
 
     // Save the PDF
     pdfDoc.save('ExamResults.pdf');
 }
-
+    
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
   // Reset user answers and navigation
