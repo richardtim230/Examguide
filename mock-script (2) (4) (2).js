@@ -20390,5 +20390,5 @@ document.getElementById("retakeExamBtn").addEventListener("click", () => {
 
   // Hide results and show course code selection
   resultsSection.classList.add("hidden");
-  courseCodeSection.classList.remove("hidden");
+  userDetails.classList.remove("hidden");
 });
