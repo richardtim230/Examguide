@@ -19762,8 +19762,8 @@ function generatePdf() {
     const maxWidth = pdfDoc.internal.pageSize.width - 2 * margin;
     let y = margin;
 
-    // Function to add text with wrapping
-    function addText(text, x, y, fontSize = 12, fontStyle = 'normal', textColor = [0, 0, 0]) {
+    // Function to add text with wrapping and optional styling
+    function addText(text, x, y, fontSize = 12, fontStyle = 'normal', textColor = [0, 0, 0], align = 'left') {
         pdfDoc.setFontSize(fontSize);
         pdfDoc.setFont("helvetica", fontStyle);
         pdfDoc.setTextColor(...textColor);
@@ -19773,20 +19773,29 @@ function generatePdf() {
                 pdfDoc.addPage();
                 y = margin;
             }
-            pdfDoc.text(line, x, y);
+            pdfDoc.text(line, x, y, { align });
             y += lineHeight;
         });
         return y;
     }
 
+    // Function to add a gradient background
+    function addGradientBackground(x, y, width, height, color1, color2) {
+        const gradient = pdfDoc.createLinearGradient(x, y, x + width, y);
+        gradient.addColorStop(0, color1);
+        gradient.addColorStop(1, color2);
+        pdfDoc.setFillColor(gradient);
+        pdfDoc.rect(x, y, width, height, 'F');
+    }
+
     // Add title
-    y = addText("OAU-IFE EXAMS", margin, y, 18, 'bold', [0, 0, 255]);
+    y = addText("OAU-IFE EXAMS", pdfDoc.internal.pageSize.width / 2, y, 18, 'bold', [0, 0, 255], 'center');
     y += 10;
-    y = addText("Exam Results", margin, y, 16, 'normal', [0, 0, 0]);
+    y = addText("Exam Results", pdfDoc.internal.pageSize.width / 2, y, 16, 'normal', [0, 0, 0], 'center');
     y += lineHeight * 2;
 
     // User details section
-    y = addText("User Details:", margin, y, 14, 'bold', [255, 0, 0]);
+    y = addText("User Details:", pdfDoc.internal.pageSize.width / 2, y, 14, 'bold', [255, 0, 0], 'center');
     y += lineHeight;
     const userDetails = document.getElementById('user-details').innerText;
     y = addText(userDetails, margin, y);
@@ -19794,7 +19803,7 @@ function generatePdf() {
     y += lineHeight * 2;
 
     // Exam details section
-    y = addText("Exam Details:", margin, y, 14, 'bold', [255, 0, 0]);
+    y = addText("Exam Details:", pdfDoc.internal.pageSize.width / 2, y, 14, 'bold', [255, 0, 0], 'center');
     y += lineHeight;
     const examTitle = document.getElementById('exam-title').innerText;
     y = addText(examTitle, margin, y);
@@ -19812,23 +19821,18 @@ function generatePdf() {
     // Detailed results section
     y = addText("Detailed Exam Results:", margin, y, 14, 'bold', [255, 0, 0]);
     y += lineHeight;
-    const resultsContent = document.getElementById('results-content').innerText;
-    y = addText(resultsContent, margin, y);
 
-    y += lineHeight * 2;
-
-    // Example detailed results
-    const exampleResults = [
-        { question: "What is 2+2?", userAnswer: "4", correctAnswer: "4", explanation: "Basic arithmetic" },
-        { question: "What is the capital of France?", userAnswer: "Paris", correctAnswer: "Paris", explanation: "Capital city" }
-    ];
-
-    exampleResults.forEach((result, index) => {
+    const resultsContent = JSON.parse(document.getElementById('results-content').innerText); // Assuming the content is a JSON string
+    resultsContent.forEach((result, index) => {
         if (y > pdfDoc.internal.pageSize.height - margin * 2) {
             pdfDoc.addPage();
             y = margin;
         }
 
+        // Gradient background for each result
+        addGradientBackground(margin - 10, y, maxWidth + 20, lineHeight * 4, '#6dd5ed', '#2193b0');
+
+        y += 10;
         y = addText(`Q${index + 1}: ${result.question}`, margin, y);
         y = addText(`Your Answer: ${result.userAnswer}`, margin, y, 12, 'bold');
         y = addText(`Correct Answer: ${result.correctAnswer}`, margin, y);
