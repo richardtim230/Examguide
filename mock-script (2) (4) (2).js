@@ -19756,12 +19756,23 @@ function generatePdf() {
         format: 'a4'
     });
 
-    // Default styles
-    const lineHeight = 14;
+    // Styling constants
+    const lineHeight = 16;
     const margin = 40;
     const maxWidth = pdfDoc.internal.pageSize.width - 2 * margin;
     const pageWidth = pdfDoc.internal.pageSize.width;
+    const pageHeight = pdfDoc.internal.pageSize.height;
     let y = margin;
+
+    // Function to add centered text
+    function addCenteredText(text, fontSize = 14, fontStyle = 'normal', textColor = [0, 0, 0], yOffset = 0) {
+        pdfDoc.setFontSize(fontSize);
+        pdfDoc.setFont("helvetica", fontStyle);
+        pdfDoc.setTextColor(...textColor);
+        const textWidth = pdfDoc.getTextWidth(text);
+        pdfDoc.text(text, (pageWidth - textWidth) / 2, y + yOffset);
+        return y + yOffset + lineHeight;
+    }
 
     // Function to add text with wrapping
     function addText(text, x, y, fontSize = 12, fontStyle = 'normal', textColor = [0, 0, 0]) {
@@ -19770,7 +19781,7 @@ function generatePdf() {
         pdfDoc.setTextColor(...textColor);
         const lines = pdfDoc.splitTextToSize(text, maxWidth);
         lines.forEach(line => {
-            if (y > pdfDoc.internal.pageSize.height - margin) {
+            if (y > pageHeight - margin) {
                 pdfDoc.addPage();
                 y = margin;
             }
@@ -19780,76 +19791,61 @@ function generatePdf() {
         return y;
     }
 
-    // Function to add a centered header
-    function addCenteredHeader(title, fontSize = 18, bgColor = [0, 102, 204], textColor = [255, 255, 255]) {
-        pdfDoc.setFillColor(...bgColor);
-        pdfDoc.rect(0, y, pageWidth, 50, "F"); // Header background
+    // Add a gradient-styled header
+    pdfDoc.setFillColor(0, 102, 204); // Deep blue background
+    pdfDoc.rect(0, 0, pageWidth, 70, "F"); // Gradient header box
+    pdfDoc.setTextColor(255, 255, 255); // White text
+    y = addCenteredText("OAU-IFE EXAMS", 20, 'bold', [255, 255, 255], 30);
+    y = addCenteredText("Exam Results", 16, 'normal', [255, 255, 255], 10);
+    y += 20;
 
-        const textWidth = pdfDoc.getTextWidth(title);
-        const textX = (pageWidth - textWidth) / 2; // Centering text horizontally
-        const textY = y + 30; // Adjusted for vertical centering
-
-        pdfDoc.setFont("helvetica", "bold");
-        pdfDoc.setFontSize(fontSize);
-        pdfDoc.setTextColor(...textColor);
-        pdfDoc.text(title, textX, textY);
-
-        y += 60; // Move Y down after header
-    }
-
-    // Function to add a properly padded and aligned section
-    function addPaddedSection(title, content) {
-        pdfDoc.setFillColor(240, 240, 240); // Light gray background
-        pdfDoc.roundedRect(margin, y, maxWidth, 60, 8, 8, "F");
-
-        const textX = margin + 10;
-        const titleY = y + 25; // Vertical centering inside box
-        const contentY = y + 40;
-
-        pdfDoc.setFont("helvetica", "bold");
-        pdfDoc.setFontSize(14);
-        pdfDoc.setTextColor(0, 0, 0);
-        pdfDoc.text(title, textX, titleY);
-
-        pdfDoc.setFont("helvetica", "normal");
-        pdfDoc.setFontSize(12);
-        pdfDoc.setTextColor(50, 50, 50);
-        pdfDoc.text(content, textX, contentY);
-
-        y += 75; // Move Y down
-    }
-
-    // Add centered headers
-    addCenteredHeader("OAU-IFE EXAMS", 20);
-    addCenteredHeader("Exam Results", 16);
-
-    // User details section
+    // Add user details section with a styled box
+    pdfDoc.setFillColor(240, 240, 240); // Light gray background
+    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F"); // Rounded box
+    y = addCenteredText("User Details", 14, 'bold', [0, 0, 0], 10);
     const userDetails = document.getElementById('user-details').innerText;
-    addPaddedSection("User Details", userDetails);
+    y = addText(userDetails, margin + 10, y, 12, 'normal', [0, 0, 0]);
+    y += 20;
 
-    // Exam details section
+    // Add exam details section with padding
+    pdfDoc.setFillColor(240, 240, 240);
+    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F");
+    y = addCenteredText("Exam Details", 14, 'bold', [0, 0, 0], 10);
     const examTitle = document.getElementById('exam-title').innerText;
-    addPaddedSection("Exam Details", examTitle);
+    y = addText(examTitle, margin + 10, y);
 
-    // Result Summary Header
+    y += 20;
+
+    // Exam results summary section
+    pdfDoc.setFillColor(230, 230, 230);
+    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F");
+    y = addCenteredText("Exam Result Summary", 14, 'bold', [0, 0, 0], 10);
     const resultsSummary = document.getElementById('results-summary').innerText;
-    addPaddedSection("Exam Result Summary", resultsSummary);
+    y = addText(resultsSummary, margin + 10, y);
 
-    // Detailed results section
+    y += 20;
+
+    // Detailed Exam Results section
+    pdfDoc.setFillColor(240, 240, 240);
+    pdfDoc.roundedRect(margin, y, maxWidth, 80, 8, 8, "F");
+    y = addCenteredText("Detailed Exam Results", 14, 'bold', [255, 0, 0], 10);
     const resultsContent = document.getElementById('results-content').innerText;
-    addPaddedSection("Detailed Exam Results", resultsContent);
+    y = addText(resultsContent, margin + 10, y);
 
-    // Footer with perfect centering
+    y += 20;
+
+    // Footer
     pdfDoc.setFillColor(0, 102, 204);
-    pdfDoc.rect(0, pdfDoc.internal.pageSize.height - 40, pageWidth, 40, "F");
+    pdfDoc.rect(0, pageHeight - 40, pageWidth, 40, "F");
     pdfDoc.setTextColor(255, 255, 255);
     pdfDoc.setFontSize(10);
-    pdfDoc.text("Generated by OAU-IFE Exams System", pageWidth / 2 - 70, pdfDoc.internal.pageSize.height - 20);
+    pdfDoc.text("Generated by OAU-IFE Exams System", pageWidth / 2 - 70, pageHeight - 15);
 
     // Save the PDF
     pdfDoc.save('ExamResults.pdf');
 }
 
+    
     
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
