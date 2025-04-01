@@ -19746,7 +19746,62 @@ document.addEventListener("DOMContentLoaded", function() {
     downloadPDFBtn.addEventListener('click', generatePDF);
   }
 });
+document.getElementById('downloadPDF').addEventListener('click', generatePdf);
 
+function generatePdf() {
+    const { jsPDF } = window.jspdf;
+    const pdfDoc = new jsPDF();
+
+    // Example content for the PDF
+    pdfDoc.text("OAU-IFE EXAMS", 10, 10);
+    pdfDoc.text("Exam Results", 10, 20);
+
+    // User details
+    const userDetails = document.getElementById('user-details').innerText;
+    pdfDoc.text(`User Details: ${userDetails}`, 10, 30);
+
+    // Exam details
+    const examTitle = document.getElementById('exam-title').innerText;
+    pdfDoc.text(`Exam Title: ${examTitle}`, 10, 40);
+
+    // Result Summary Header
+    pdfDoc.text("Exam Result Summary:", 10, 50);
+
+    // Assuming you have an element with id 'results-summary' containing the summary
+    const resultsSummary = document.getElementById('results-summary').innerText;
+    pdfDoc.text(resultsSummary, 10, 60);
+
+    // Detailed results
+    const resultsContent = document.getElementById('results-content').innerText;
+    pdfDoc.text(resultsContent, 10, 70);
+
+    // Save the PDF
+    pdfDoc.save('ExamResults.pdf');
+}
+
+function appendToPdf(pdfDoc, text, x, y) {
+    pdfDoc.text(text, x, y);
+}
+
+// Example function to format and add detailed exam results
+function formatExamResults(pdfDoc, results) {
+    let y = 80; // Starting y position for detailed results
+    results.forEach((result, index) => {
+        const question = `Q${index + 1}: ${result.question}`;
+        const userAnswer = `Your Answer: ${result.userAnswer}`;
+        const correctAnswer = `Correct Answer: ${result.correctAnswer}`;
+        const explanation = `Explanation: ${result.explanation}`;
+        
+        appendToPdf(pdfDoc, question, 10, y);
+        y += 10;
+        appendToPdf(pdfDoc, userAnswer, 10, y);
+        y += 10;
+        appendToPdf(pdfDoc, correctAnswer, 10, y);
+        y += 10;
+        appendToPdf(pdfDoc, explanation, 10, y);
+        y += 20; // Adding extra space before the next question
+    });
+}
 
 
 // Handle Retake Exam Button
