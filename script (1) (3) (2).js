@@ -1,4 +1,14 @@
+document.getElementById("next-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex++;
+  updateQuestion();
+});
 
+document.getElementById("prev-question").addEventListener("click", () => {
+  saveAnswer();
+  currentQuestionIndex--;
+  updateQuestion();
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const authSection = document.getElementById("login-box");
