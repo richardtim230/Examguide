@@ -273,12 +273,6 @@ const questionBanks = {
   explanation: "Sodium chloride (NaCl) reacts with silver nitrate (AgNO₃) to form silver chloride (AgCl), which is a white precipitate soluble in dilute ammonia."
  },
  {
-  text: "Salt X produces a yellow precipitate when reacted with K₂CrO₄. What is salt X?,
-  options: ["Pb(NO₃)₂", "NaCl", "Na₂CO₃", "MgSO₄"],
-  correct: 0,
-  explanation: "Lead nitrate (Pb(NO₃)₂) reacts with potassium chromate (K₂CrO₄) to form yellow lead chromate (PbCrO₄) precipitate."
- },
- {
   text: "Salt X produces a blue solution when dissolved in ammonia. What is salt X?",
   options: ["CuSO₄", "FeCl₃", "ZnCl₂", "Na₂CO₃"],
   correct: 0,
