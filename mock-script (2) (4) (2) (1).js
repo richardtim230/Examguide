@@ -136,7 +136,305 @@ const questionBanks = {
     explanation: "Aniline blue stains tissue a blue color."
   },
   ],
-    
+
+
+    "ASSIGNMENT TWO": [
+  {
+    text: "Salt X produces brown fumes when heated with concentrated H₂SO₄. What is salt X?",
+    options: ["NaNO₃", "NaCl", "Na₂SO₄", "NaBr"],
+    correct: 0,
+    explanation: "When sodium nitrate (NaNO₃) is heated with concentrated sulfuric acid (H₂SO₄), it decomposes to produce brown nitrogen dioxide (NO₂) gas. This is a characteristic reaction of nitrates, which release NO₂ fumes upon heating with strong acids."
+  },
+  {
+    text: "Salt X produces a white precipitate with AgNO₃, but the precipitate is insoluble in ammonia. What is salt X?",
+    options: ["NaCl", "NaBr", "NaI", "Na₂SO₄"],
+    correct: 2,
+    explanation: "Sodium iodide (NaI) reacts with silver nitrate (AgNO₃) to form a white precipitate of silver iodide (AgI). This precipitate is insoluble in ammonia, distinguishing it from silver chloride (AgCl) and silver bromide (AgBr), which are soluble in ammonia."
+  },
+  {
+    text: "Salt X forms a yellow crystalline precipitate with ammonium molybdate. What is salt X?",
+    options: ["Na₃PO₄", "Na₂SO₄", "NaCl", "Na₂CO₃"],
+    correct: 0,
+    explanation: "Sodium phosphate (Na₃PO₄) reacts with ammonium molybdate to form a yellow crystalline precipitate of ammonium phosphomolybdate. This reaction serves as a qualitative test for phosphates in solution."
+  },
+  {
+    text: "Salt X forms a black precipitate with Pb(CH₃COO)₂. What is salt X?",
+    options: ["Na₂S", "NaCl", "Na₂SO₄", "NaNO₃"],
+    correct: 0,
+    explanation: "Sodium sulfide (Na₂S) reacts with lead(II) acetate (Pb(CH₃COO)₂) to produce a black precipitate of lead(II) sulfide (PbS). This reaction is characteristic of sulfides, which typically form black precipitates with lead compounds."
+  },
+  {
+    text: "Salt X produces a green precipitate with NaOH. The precipitate dissolves in excess NaOH. What is salt X?",
+    options: ["CrCl₃", "FeCl₂", "AlCl₃", "ZnCl₂"],
+    correct: 0,
+    explanation: "Chromium(III) chloride (CrCl₃) reacts with sodium hydroxide (NaOH) to form a green precipitate of chromium(III) hydroxide (Cr(OH)₃). This precipitate is soluble in excess NaOH, forming a green solution of sodium chromite, confirming the presence of chromium."
+  },
+  {
+    text: "Salt X gives a yellow precipitate when reacted with BaCl₂. What is salt X?",
+    options: ["Na₂CrO₄", "Na₂CO₃", "NaCl", "Na₂SO₄"],
+    correct: 0,
+    explanation: "Sodium chromate (Na₂CrO₄) reacts with barium chloride (BaCl₂) to form a yellow precipitate of barium chromate (BaCrO₄). This reaction is a specific test for chromate ions, which are known to produce yellow precipitates with barium salts."
+  },
+  {
+    text: "Salt X produces white fumes when heated with concentrated H₂SO₄. What is salt X?",
+    options: ["NaCl", "NaBr", "NaI", "Na₂SO₄"],
+    correct: 0,
+    explanation: "When sodium chloride (NaCl) is heated with concentrated sulfuric acid (H₂SO₄), it produces hydrochloric acid (HCl) gas, which appears as white fumes. This reaction is a characteristic test for chlorides."
+  },
+  {
+    text: "Salt X produces green flames when burned. What is salt X?",
+    options: ["CuCl₂", "BaCl₂", "NaCl", "SrCl₂"],
+    correct: 1,
+    explanation: "Barium chloride (BaCl₂) produces green flames when burned in a flame test. This color is indicative of barium and is used to identify its presence in samples."
+  },
+  {
+    text: "Which group of cations is identified using the chromyl chloride test?",
+    options: ["Group 1", "Group 2", "Group 3", "Group 4"],
+    correct: 1,
+    explanation: "The chromyl chloride test is used to identify Group 2 cations (alkaline earth metals) such as lead (Pb²⁺) and barium (Ba²⁺). When these cations react with concentrated hydrochloric acid, they form chromyl chloride (CrO₂Cl₂), which can be detected."
+  },
+  {
+    text: "What is the result of adding ammonium molybdate to phosphates?",
+    options: ["Blue precipitate", "Yellow crystalline precipitate", "White precipitate", "Red precipitate"],
+    correct: 1,
+    explanation: "When ammonium molybdate is added to a solution containing phosphate ions (PO₄³⁻), it produces a yellow crystalline precipitate of ammonium phosphomolybdate. This reaction is used as a test for the presence of phosphates."
+  },
+  {
+    text: "Which cation is confirmed by a yellow precipitate with K₂CrO₄?",
+    options: ["Ag⁺", "Pb²⁺", "Na⁺", "K⁺"],
+    correct: 1,
+    explanation: "Lead ions (Pb²⁺) react with potassium chromate (K₂CrO₄) to form a yellow precipitate of lead(II) chromate (PbCrO₄). This is a specific test for lead cations."
+  },
+  {
+    text: "Salt X is treated with dilute HCl, and bubbles of a colorless gas are observed. The gas turns limewater milky. What is salt X?",
+    options: ["Na₂CO₃", "NaCl", "CaSO₄", "KNO₃"],
+    correct: 0,
+    explanation: "When sodium carbonate (Na₂CO₃) is treated with dilute hydrochloric acid (HCl), it produces carbon dioxide (CO₂) gas, which is colorless. The CO₂ gas turns limewater milky due to the formation of calcium carbonate (CaCO₃) when it reacts with calcium hydroxide."
+  },
+  {
+    text: "Salt X is heated with concentrated H₂SO₄, producing reddish-brown fumes. These fumes turn a solution of KI and starch blue. What is salt X?",
+    options: ["Na₂SO₄", "NaNO₂", "NaCO₃", "NaCl"],
+    correct: 1,
+    explanation: "Sodium nitrite (NaNO₂) when heated with concentrated sulfuric acid (H₂SO₄) produces reddish-brown nitrogen dioxide (NO₂) fumes. These fumes react with potassium iodide (KI) in the presence of starch to form a blue complex, confirming the presence of nitrites."
+  },
+  {
+    text: "Salt X gives a white precipitate when reacted with AgNO₃. The precipitate dissolves in dilute NH₃. What is salt X?",
+    options: ["NaCl", "NaBr", "NaI", "Na₂SO₄"],
+    correct: 0,
+    explanation: "Sodium chloride (NaCl) reacts with silver nitrate (AgNO₃) to form a white precipitate of silver chloride (AgCl). This precipitate is soluble in dilute ammonia (NH₃), confirming the presence of chloride ions."
+  },
+  {
+    text: "Salt X produces a yellow precipitate when reacted with K₂CrO₄. What is salt X?",
+    options: ["Pb(NO₃)₂", "NaCl", "Na₂CO₃", "MgSO₄"],
+    correct: 0,
+    explanation: "Lead(II) nitrate (Pb(NO₃)₂) reacts with potassium chromate (K₂CrO₄) to produce a yellow precipitate of lead(II) chromate (PbCrO₄). This reaction is used to identify lead cations."
+  },
+  {
+    text: "Salt X produces a blue solution when dissolved in ammonia. What is salt X?",
+    options: ["CuSO₄", "FeCl₃", "ZnCl₂", "Na₂CO₃"],
+    correct: 0,
+    explanation: "Copper sulfate (CuSO₄) when dissolved in ammonia forms a blue solution due to the formation of the complex ion [Cu(NH₃)₄]²⁺. This is a distinctive feature of copper ions in solution."
+  },
+  {
+    text: "Salt X gives a reddish-brown precipitate when reacted with NaOH. What is salt X?",
+    options: ["FeCl₃", "AlCl₃", "ZnCl₂", "CuSO₄"],
+    correct: 0,
+    explanation: "Ferric chloride (FeCl₃) reacts with sodium hydroxide (NaOH) to form a reddish-brown precipitate of iron(III) hydroxide (Fe(OH)₃). This reaction is characteristic of ferric ions."
+  },
+  {
+    text: "Salt X produces yellow-green flames in a flame test. What is salt X?",
+    options: ["BaCl₂", "NaCl", "SrCl₂", "KCl"],
+    correct: 0,
+    explanation: "Barium chloride (BaCl₂) produces yellow-green flames when burned in a flame test. This color is specific to barium and is used for its identification."
+  },
+  {
+    text: "Salt X produces crimson red flames in a flame test. What is salt X?",
+    options: ["SrCl₂", "NaCl", "KCl", "LiCl"],
+    correct: 0,
+    explanation: "Strontium chloride (SrCl₂) produces crimson red flames during a flame test. This color is characteristic of strontium and is used for its identification."
+  },
+  {
+    text: "Salt X gives a white gelatinous precipitate when reacted with NaOH. What is salt X?",
+    options: ["AlCl₃", "FeCl₃", "CuSO₄", "ZnCl₂"],
+    correct: 0,
+    explanation: "Aluminum chloride (AlCl₃) reacts with sodium hydroxide (NaOH) to form a white gelatinous precipitate of aluminum hydroxide (Al(OH)₃). This reaction is used to confirm the presence of aluminum ions."
+  },
+  {
+    text: "Salt X produces a violet flame in a flame test. What is salt X?",
+    options: ["KCl", "NaCl", "SrCl₂", "MgCl₂"],
+    correct: 0,
+    explanation: "Potassium chloride (KCl) produces a violet flame when subjected to a flame test. This distinctive color is used to identify potassium in samples."
+  },
+  {
+    text: "Salt X gives a white precipitate with BaCl₂ in the presence of dilute HCl. What is salt X?",
+    options: ["Na₂SO₄", "NaCl", "Na₂CO₃", "NaNO₃"],
+    correct: 0,
+    explanation: "Sodium sulfate (Na₂SO₄) reacts with barium chloride (BaCl₂) to form a white precipitate of barium sulfate (BaSO₄). This reaction is used to identify sulfate ions."
+  },
+  {
+    text: "Salt X produces a blue-green solution when dissolved in water. What is salt X?",
+    options: ["NiCl₂", "CuSO₄", "FeCl₃", "ZnCl₂"],
+    correct: 0,
+    explanation: "Nickel chloride (NiCl₂) forms a blue-green solution when dissolved in water. This color is characteristic of nickel salts and is used for their identification."
+  },
+  {
+    text: "Which of the following cations forms a white precipitate with chloride ions?",
+    options: ["Ag⁺", "Na⁺", "K⁺", "Mg²⁺"],
+    correct: 0,
+    explanation: "Silver ions (Ag⁺) react with chloride ions (Cl⁻) to form silver chloride (AgCl), which is a white precipitate. This reaction is a classic test for the presence of chloride ions."
+  },
+  {
+    text: "What color flame does lithium produce in a flame test?",
+    options: ["Yellow", "Violet", "Red", "Green"],
+    correct: 2,
+    explanation: "Lithium ions (Li⁺) produce a characteristic red flame when subjected to a flame test. This red color is due to the excitation of lithium atoms and their subsequent return to ground state."
+  },
+  {
+    text: "Which group of cations is known for forming insoluble hydroxides even at low concentrations?",
+    options: ["Group 1", "Group 3", "Group 4", "Group 6"],
+    correct: 1,
+    explanation: "Group 3 cations, such as Al³⁺ and Fe³⁺, are known for forming insoluble hydroxides (e.g., Al(OH)₃ and Fe(OH)₃) even at low concentrations. This property is used in qualitative analysis to separate these cations."
+  },
+  {
+    text: "Which cation forms a blue solution when dissolved in ammonia?",
+    options: ["Cu²⁺", "Fe²⁺", "Al³⁺", "Zn²⁺"],
+    correct: 0,
+    explanation: "Copper(II) ions (Cu²⁺) form a deep blue solution when dissolved in ammonia, resulting in the complex ion [Cu(NH₃)₄]²⁺. This complex is a distinctive feature of copper in solution."
+  },
+  {
+    text: "What is the characteristic smell of H₂S gas?",
+    options: ["Fruity", "Rotten egg", "Pungent", "Sweet"],
+    correct: 1,
+    explanation: "Hydrogen sulfide (H₂S) gas is well-known for its distinct smell, which is often described as that of rotten eggs. This is due to the presence of sulfur in the compound."
+  },
+  {
+    text: "Which cation gives a brick red flame in a flame test?",
+    options: ["Ba²⁺", "Ca²⁺", "Sr²⁺", "Li⁺"],
+    correct: 1,
+    explanation: "Calcium ions (Ca²⁺) produce a brick red flame during a flame test. This color is characteristic of calcium and is used to identify its presence in samples."
+  },
+  {
+    text: "What reagent is used to confirm the presence of sulfide ions?",
+    options: ["Silver nitrate", "Lead(II) acetate", "Sodium hydroxide", "Ammonium chloride"],
+    correct: 1,
+    explanation: "Lead(II) acetate reacts with sulfide ions (S²⁻) to produce a black precipitate of lead(II) sulfide (PbS). This reaction is used to confirm the presence of sulfide ions in a solution."
+  },
+  {
+    text: "Which cation forms a green precipitate with sodium hydroxide, which dissolves on adding excess?",
+    options: ["Fe²⁺", "Cu²⁺", "Cr³⁺", "Co²⁺"],
+    correct: 2,
+    explanation: "Chromium(III) ions (Cr³⁺) react with sodium hydroxide (NaOH) to form a green precipitate of chromium(III) hydroxide (Cr(OH)₃). This precipitate is soluble in excess NaOH, forming a green solution of chromite."
+  },
+  {
+    text: "What is the color of the precipitate formed by Ba²⁺ with sulfate ions?",
+    options: ["White", "Blue", "Yellow", "Black"],
+    correct: 0,
+    explanation: "Barium ions (Ba²⁺) react with sulfate ions (SO₄²⁻) to form barium sulfate (BaSO₄), which is a white precipitate. This reaction is used to identify the presence of sulfate ions."
+  },
+  {
+    text: "Which anion releases CO₂ gas when treated with an acid?",
+    options: ["NO₃⁻", "SO₄²⁻", "CO₃²⁻", "Cl⁻"],
+    correct: 2,
+    explanation: "Carbonate ions (CO₃²⁻) react with acids to produce carbon dioxide (CO₂) gas, water, and a salt. The evolution of gas is a characteristic test for the presence of carbonate ions."
+  },
+  {
+    text: "What color is the precipitate formed when Ag⁺ reacts with Cl⁻?",
+    options: ["Yellow", "White", "Black", "Red"],
+    correct: 1,
+    explanation: "When silver ions (Ag⁺) react with chloride ions (Cl⁻), they form silver chloride (AgCl), which appears as a white precipitate. This reaction is commonly used in qualitative analysis."
+  },
+  {
+    text: "Which cation can be identified by the formation of a black precipitate with lead acetate?",
+    options: ["Pb²⁺", "S²⁻", "Cl⁻", "CO₃²⁻"],
+    correct: 1,
+    explanation: "Sulfide ions (S²⁻) react with lead(II) acetate to form a black precipitate of lead(II) sulfide (PbS). This reaction is a characteristic test for sulfide ions in a sample."
+  },
+  {
+    text: "Which of the following anions forms a red-orange precipitate with Sb³⁺?",
+    options: ["Sulfite", "Sulfide", "Nitrate", "Phosphate"],
+    correct: 1,
+    explanation: "Sulfide ions (S²⁻) react with antimony(III) ions (Sb³⁺) to form a red-orange precipitate of antimony sulfide (Sb₂S₃). This is a specific test for sulfide ions."
+  },
+  {    text: "What is the main reagent used to separate Group 1 cations?",
+    options: ["Ammonium hydroxide", "Hydrochloric acid", "Sodium hydroxide", "Sulfuric acid"],
+    correct: 1,
+    explanation: "Hydrochloric acid (HCl) is used to separate Group 1 cations (alkali metals) from other cations in qualitative analysis. The group is characterized by the formation of soluble chlorides."
+  },
+  {
+    text: "Which ion gives a violet flame in a flame test?",
+    options: ["Na⁺", "K⁺", "Mg²⁺", "Ca²⁺"],
+    correct: 1,
+    explanation: "Potassium ions (K⁺) produce a violet flame when subjected to a flame test. This distinctive color is used to identify potassium in samples."
+  },
+  {
+    text: "Which anion produces brown fumes when treated with concentrated sulfuric acid?",
+    options: ["NO₃⁻", "CO₃²⁻", "SO₄²⁻", "Cl⁻"],
+    correct: 0,
+    explanation: "Nitrate ions (NO₃⁻) decompose when treated with concentrated sulfuric acid (H₂SO₄) to produce brown nitrogen dioxide (NO₂) gas. This reaction is characteristic of nitrates."
+  },
+  {
+    text: "What color is the flame produced by strontium ions?",
+    options: ["Yellow", "Green", "Crimson red", "Blue"],
+    correct: 2,
+    explanation: "Strontium ions (Sr²⁺) produce a crimson red flame during a flame test. This color is specific to strontium and is used for its identification."
+  },
+  {
+    text: "Which cation forms a gelatinous white precipitate with hydroxide ions?",
+    options: ["Al³⁺", "Fe³⁺", "Ni²⁺", "Cu²⁺"],
+    correct: 0,
+    explanation: "Aluminum ions (Al³⁺) react with hydroxide ions (OH⁻) to form a gelatinous white precipitate of aluminum hydroxide (Al(OH)₃). This precipitate is a characteristic feature of aluminum in qualitative analysis."
+  },
+  {
+    text: "Salt X produces brown fumes when heated with concentrated H₂SO₄. What is salt X?",
+    options: ["NaNO₃", "NaCl", "Na₂SO₄", "NaBr"],
+    correct: 0,
+    explanation: "When sodium nitrate (NaNO₃) is heated with concentrated sulfuric acid (H₂SO₄), it decomposes to produce brown nitrogen dioxide (NO₂) gas. This is a characteristic reaction of nitrates, which are known to release NO₂ fumes when heated with strong acids."
+  },
+  {
+    text: "Salt X produces a white precipitate with AgNO₃, but the precipitate is insoluble in ammonia. What is salt X?",
+    options: ["NaCl", "NaBr", "NaI", "Na₂SO₄"],
+    correct: 2,
+    explanation: "Sodium iodide (NaI) reacts with silver nitrate (AgNO₃) to form a white precipitate of silver iodide (AgI). This precipitate is insoluble in ammonia, unlike silver chloride (AgCl) and silver bromide (AgBr) which are soluble in ammonia. Thus, NaI is the correct answer."
+  },
+  {
+    text: "Salt X forms a yellow crystalline precipitate with ammonium molybdate. What is salt X?",
+    options: ["Na₃PO₄", "Na₂SO₄", "NaCl", "Na₂CO₃"],
+    correct: 0,
+    explanation: "Sodium phosphate (Na₃PO₄) reacts with ammonium molybdate to form a yellow precipitate of ammonium phosphomolybdate, which is a well-known test for phosphates. Therefore, Na₃PO₄ is the correct answer."
+  },
+  {
+    text: "Salt X forms a black precipitate with Pb(CH₃COO)₂. What is salt X?",
+    options: ["Na₂S", "NaCl", "Na₂SO₄", "NaNO₃"],
+    correct: 0,
+    explanation: "Sodium sulfide (Na₂S) reacts with lead(II) acetate (Pb(CH₃COO)₂) to produce a black precipitate of lead(II) sulfide (PbS). This reaction is characteristic of sulfides, which typically form black precipitates with lead compounds."
+  },
+  {
+    text: "Salt X produces a green precipitate with NaOH. The precipitate dissolves in excess NaOH. What is salt X?",
+    options: ["CrCl₃", "FeCl₂", "AlCl₃", "ZnCl₂"],
+    correct: 0,
+    explanation: "Chromium(III) chloride (CrCl₃) reacts with sodium hydroxide (NaOH) to form a green precipitate of chromium(III) hydroxide (Cr(OH)₃). This precipitate is soluble in excess NaOH, forming a green solution of sodium chromite. Hence, CrCl₃ is the correct answer."
+  },
+  {
+    text: "Salt X gives a yellow precipitate when reacted with BaCl₂. What is salt X?",
+    options: ["Na₂CrO₄", "Na₂CO₃", "NaCl", "Na₂SO₄"],
+    correct: 0,
+    explanation: "Sodium chromate (Na₂CrO₄) reacts with barium chloride (BaCl₂) to form a yellow precipitate of barium chromate (BaCrO₄). This reaction is specific to chromates, which are known to produce yellow precipitates with barium salts."
+  },
+  {
+    text: "Salt X produces white fumes when heated with concentrated H₂SO₄. What is salt X?",
+    options: ["NaCl", "NaBr", "NaI", "Na₂SO₄"],
+    correct: 0,
+    explanation: "When sodium chloride (NaCl) is heated with concentrated sulfuric acid (H₂SO₄), it produces hydrochloric acid (HCl) gas, which appears as white fumes. This reaction is characteristic of chlorides, making NaCl the correct answer."
+  },
+  {
+    text: "Salt X produces green flames when burned. What is salt X?",
+    options: ["CuCl₂", "BaCl₂", "NaCl", "SrCl₂"],
+    correct: 1,
+    explanation: "Barium chloride (BaCl₂) produces green flames when burned. This is due to the excitation of barium ions when they are heated, which emit green light upon returning to their ground state. Therefore, BaCl₂ is the correct answer."
+  },
+],
+
+
   "BOT101-T1": [
     
   {
@@ -7358,18 +7656,18 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Agricultural Economics", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Zoology", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Chemistry", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Physics and Engineering Physics", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Microbiology", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Botany", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Geology", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Human Nutrition and Dietetics", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Nursing", part: "100" },
-    { id: "CHM102-CLW", title: "CHM102 CLASS ASSESSMENT", department: "Mathematics", part: "100" }
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Agricultural Economics", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Family Nutrition and Consumer Science", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Zoology", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Chemistry", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Physics and Engineering Physics", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Microbiology", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Botany", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Biochemistry and Molecular Biology", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Geology", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Human Nutrition and Dietetics", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Nursing", part: "100" },
+    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Mathematics", part: "100" }
     
     
     
