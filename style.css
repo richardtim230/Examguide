@@ -16,9 +16,7 @@ body {
   align-items: center;
 }
 
-.modal-active {
-  overflow: hidden;
-        }
+
 body {
   max-width: 1200px; /* Set this to the original size you want */
   width: 100%;
@@ -745,7 +743,7 @@ canvas {
     background: #f9f9f9;
         }
 
-/* Overlay styling *
+/* Overlay styling */
 .overlay {
     display: flex;
     justify-content: center;
