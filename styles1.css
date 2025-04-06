@@ -7,6 +7,13 @@ body {
     color: #333;
     text-align: center;
 }
+
+* {
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+}
+
 .navbar {
             display: flex;
             justify-content: space-between;
