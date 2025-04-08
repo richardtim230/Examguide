@@ -433,7 +433,306 @@ const questionBanks = {
     explanation: "Barium chloride (BaCl₂) produces green flames when burned. This is due to the excitation of barium ions when they are heated, which emit green light upon returning to their ground state. Therefore, BaCl₂ is the correct answer."
   },
 ],
-
+"TUES-MOCK": [
+    {
+        text: "How many sigma (σ) bonds are present in a molecule of ethene (ethylene)?",
+        options: ["4", "5", "6", "7"],
+        correct: 1,
+        explanation: "There are 4 C-H sigma bonds and 1 C-C sigma bond, for a total of 5."
+    },
+    {
+        text: "How many pi (π) bonds are present in ethyne (acetylene)?",
+        options: ["0", "1", "2", "3"],
+        correct: 2,
+        explanation: "Ethyne has a triple bond, which consists of 1 sigma bond and 2 pi bonds."
+    },
+    {
+        text: "Which type of overlap leads to the formation of a sigma bond?",
+        options: ["Parallel overlap of p orbitals.", "Linear overlap of s orbitals.", "Linear overlap of hybridized orbitals.", "Both b and c"],
+        correct: 3,
+        explanation: "Check your slides"
+    },
+    {
+        text: "Which of the following carbon-carbon bonds would have the shortest bond length?",
+        options: ["A single bond between two sp³ hybridized carbons", "A double bond between two sp² hybridized carbons", "A triple bond between two sp hybridized carbons", "All carbon-carbon bonds are the same length."],
+        correct: 2,
+        explanation: "Triple bonds are shorter than double bonds, which are shorter than single bonds."
+    },
+    {
+        text: "In ethane, what is the hybridization of each carbon atom and the type of bonds formed with hydrogen?",
+        options: ["sp², σ bond", "sp, π bond", "sp³, σ bond", "sp², π bond"],
+        correct: 2,
+        explanation: "Check your slides"
+    },
+    {
+        text: "Which of the following is a true statement regarding the strength of sigma and pi bonds?",
+        options: ["Sigma bonds are always weaker than pi bonds.", "Sigma bonds are always stronger than pi bonds.", "Sigma and pi bonds have equal strength.", "The relative strength depends on the specific molecule."],
+        correct: 1,
+        explanation: "Sigma bonds are generally stronger due to greater overlap."
+    },
+    {
+        text: "Considering carbon's electronic configuration, which of the following best explains its tetravalency?",
+        options: ["Carbon readily forms ions with a +4 charge.", "Carbon undergoes hybridization, promoting an electron and allowing for four bonding orbitals.", "Carbon's ground state configuration already has four unpaired electrons.", "Carbon only forms single bonds, limiting it to four connections."],
+        correct: 1,
+        explanation: "Check your slides"
+    },
+    {
+        text: "Why is the number of organic compounds far greater than the number of inorganic compounds?",
+        options: ["Carbon is more abundant than all other elements combined.", "Carbon can form strong bonds with any element in the periodic table.", "Carbon's ability to catenate and form multiple bonds leads to structural diversity.", "Organic compounds are generally more stable than inorganic compounds."],
+        correct: 2,
+        explanation: "Check your slides"
+    },
+    {
+        text: "Which of the following molecules contains the most sp³ hybridized carbon atoms?",
+        options: ["Ethyne", "Ethene", "Propane", "Benzene"],
+        correct: 2,
+        explanation: "Propane is CH₃CH₂CH₃, so it has three sp³ hybridized carbons. Ethyne has 2 sp hybridized carbons, Ethene has 2 sp² hybridized carbon atoms and benzene has 6 sp² hybridized carbons."
+    },
+    {
+        text: "If a hypothetical molecule had only carbon atoms with sp² hybridization and each carbon was bonded to three other atoms (either carbon or hydrogen), what general shape would you expect for the molecule?",
+        options: ["Linear", "Tetrahedral", "Planar", "Pyramidal"],
+        correct: 2,
+        explanation: "sp² hybridization leads to trigonal planar geometry at each carbon, thus the entire molecule would tend to be planar."
+    },
+    {
+        text: "Which of the following statements best describes the historical concept of 'vital force' in relation to organic compounds?",
+        options: ["It was the belief that organic compounds could only be synthesized in the laboratory.", "It was the idea that a special force from non-living things was required to create organic compounds.", "It was the prevailing theory that organic compounds could only be produced by living organisms.", "It stated that organic compounds are made up of metallic and non-metallic elements."],
+        correct: 2,
+        explanation: "The vital force theory posited that organic compounds could only be created by living organisms."
+    },
+    {
+        text: "What was Wöhler's significant contribution to the field of organic chemistry?",
+        options: ["He disproved the concept of inorganic compounds.", "He demonstrated the synthesis of an organic compound (urea) from an inorganic compound (ammonium cyanate).", "He proved the importance of carbon in organic compounds.", "He introduced the concept of carbon catenation."],
+        correct: 1,
+        explanation: "Wöhler's synthesis of urea was a key moment in disproving the vital force theory."
+    },
+    {
+        text: "Which characteristic of carbon is primarily responsible for the vast diversity of organic compounds?",
+        options: ["Its low atomic mass.", "Its tendency to form ionic bonds.", "Its ability to catenate and form multiple covalent bonds.", "Its inertness."],
+        correct: 2,
+        explanation: "Catenation (chain formation) and the ability to form multiple bonds are crucial for the variety."
+    },
+    {
+        text: "Which of the following does not directly contribute to the unique nature of carbon and its ability to form diverse organic molecules?",
+        options: ["The ability to form strong covalent bonds with other elements.", "The ability to form multiple bonds with itself and other elements.", "Its relatively high electronegativity compared to hydrogen.", "Tetravalency."],
+        correct: 2,
+        explanation: "While electronegativity differences affect bond polarity, it is not directly responsible for the overall diversity of carbon compounds."
+    },
+    {
+        text: "Which term describes the mixing of atomic orbitals to form new hybrid orbitals?",
+        options: ["Ionization", "Catenation", "Hybridization", "Polymerization"],
+        correct: 2,
+        explanation: ""
+    },
+    {        text: "What is the shape and bond angle associated with sp³ hybridization in carbon?",
+        options: ["Trigonal planar, 120°", "Linear, 180°", "Tetrahedral, 109°", "Bent, 104.5°"],
+        correct: 2,
+        explanation: ""
+    },
+    {
+        text: "A carbon atom involved in a triple bond (like in ethyne) typically exhibits what type of hybridization?",
+        options: ["sp³", "sp²", "sp", "dsp²"],
+        correct: 2,
+        explanation: ""
+    },
+    {
+        text: "Which hybridization state of carbon would result in the formation of a molecule with the smallest bond angle?",
+        options: ["sp³", "sp²", "sp", "The bond angle would be the same for all hybridizations."],
+        correct: 0,
+        explanation: "sp³ hybridization has a tetrahedral geometry with bond angles of approximately 109.5°."
+    },
+    {
+        text: "Which statement accurately describes the difference between sigma (σ) and pi (π) bonds?",
+        options: ["Sigma bonds are formed by parallel overlap, while pi bonds are formed by linear overlap.", "Sigma bonds are weaker than pi bonds.", "Sigma bonds are formed by linear overlap, while pi bonds are formed by parallel overlap.", "Sigma bonds are only found in single bonds, while pi bonds are only found in double bonds."],
+        correct: 2,
+        explanation: ""
+    },
+    {
+        text: "In which molecule is the carbon-carbon bond the strongest?",
+        options: ["Ethane", "Ethene", "Ethyne", "All the carbon-carbon bonds are of equal strength."],
+        correct: 2,
+        explanation: "Ethyne has a triple bond, which is stronger than the double bond in ethene or the single bond in ethane."
+    },
+    {
+        text: "Which of the following techniques is most suitable for separating two liquids with significantly different boiling points (e.g., 50°C difference)?",
+        options: ["Fractional distillation", "Simple distillation", "Steam distillation", "Recrystallization"],
+        correct: 1,
+        explanation: "Simple distillation is sufficient when boiling points are well-separated. Fractional distillation is for closer boiling points."
+    },
+    {
+        text: "Steam distillation is particularly useful for compounds that:",
+        options: ["Are highly soluble in water.", "Decompose at or below their boiling point.", "Have very high vapor pressures.", "Are solids at room temperature."],
+        correct: 1,
+        explanation: "Steam distillation allows for lower temperatures, preventing decomposition of the compound of interest."
+    },
+    {
+        text: "In the steam distillation equation provided, what does Pₐ represent?",
+        options: ["The total atmospheric pressure.", "The vapor pressure of water at the distillation temperature.", "The vapor pressure of the organic compound (A) at the distillation temperature.", "The partial pressure of air in the system."],
+        correct: 2,
+        explanation: "Pₐ specifically represents the vapor pressure of the organic compound A."
+    },
+    {
+        text: "If the atmospheric pressure is 750 mmHg and the vapor pressure of water at the distillation temperature is 730 mmHg, what is the vapor pressure of the organic compound at that temperature during steam distillation?",
+        options: ["750 mmHg", "730 mmHg", "20 mmHg", "1480 mmHg"],
+        correct: 2,
+        explanation: "The total pressure (atmospheric pressure) equals the sum of the vapor pressures of the organic compound and water. So, P(organic compound) = 750 mmHg - 730 mmHg = 20 mmHg."
+    },
+    {
+        text: "Recrystallization is based on the principle of differences in:",
+        options: ["Boiling points.", "Solubilities.", "Vapor pressures.", "Densities."],
+        correct: 1,
+        explanation: "Recrystallization works because the desired compound and impurities have different solubilities in a given solvent at different temperatures."
+    },
+    {
+        text: "For a solid containing an insoluble impurity, which of the following techniques would be the most appropriate first step to purify it?",
+        options: ["Recrystallization", "Distillation", "Filtration", "Sublimation"],
+        correct: 2,
+        explanation: "Filtration is ideal for removing an insoluble solid."
+    },
+    {
+        text: "Which separation technique is most suitable for separating suspended particles?",
+        options: ["Fractional crystallization", "Sublimation", "Evaporation", "Centrifugation"],
+        correct: 3,
+        explanation: "Check your slides"
+    },
+    {
+        text: "In solvent extraction, the distribution coefficient (Kd) represents the ratio of the solute's:",
+        options: ["Densities in the two solvents.", "Concentrations in the two solvents.", "Vapor pressures in the two solvents.", "Polarities in the two solvents."],
+        correct: 1,
+        explanation: "K<sub>D</sub> is defined as the ratio of concentrations."
+    },
+    {
+        text: "If a compound has a K<sub>D</sub> of 5 between solvent X and solvent Y, this indicates that the compound:",
+        options: ["Is five times more soluble in solvent Y than in solvent X.", "Is equally soluble in both solvents.", "Is five times more soluble in solvent X than in solvent Y.", "Decomposes in solvent Y."],
+        correct: 2,
+        explanation: "K<sub>D</sub> = [Concentration in X]/[Concentration in Y] = 5, meaning the concentration in X is five times higher than in Y."
+    },
+    {
+        text: "Which method is best suited for purifying a solid that transitions directly from solid to gas phase?",
+        options: ["Steam distillation", "Evaporation", "Sublimation", "Decantation"],
+        correct: 2,
+        explanation: "Sublimation is specifically designed for compounds that undergo this phase change."
+    },
+    {
+        text: "What is the primary purpose of the sodium fusion test in qualitative organic analysis?",
+        options: ["To determine the melting point of the organic compound.", "To determine the mass percentage of each element in the organic compound.", "To convert covalently bonded elements (N, S, halogens) into ionic forms for easier detection.", "To measure the heat of combustion of the organic compound."],
+        correct: 2,
+        explanation: "Sodium fusion converts N, S, and halogens into NaCN, Na₂S, and NaX, respectively, which are water-soluble and easier to identify."
+    },
+    {
+        text: "In the sodium fusion test, if a Prussian blue solution is formed after adding iron(II) sulfate and then iron(III) chloride, what element is indicated as being present in the original organic compound?",
+        options: ["Sulfur", "Halogen", "Nitrogen", "Oxygen"],
+        correct: 2,
+        explanation: "The formation of Prussian blue (ferric ferrocyanide) is a specific test for the presence of cyanide ions, which originate from nitrogen in the organic compound."
+    },
+    {
+        text: "The reaction between Na₂S and lead acetate in the test for sulfur produces:",
+        options: ["A white precipitate of lead sulfate.", "A black precipitate of lead sulfide.", "A yellow precipitate of sulfur.", "No precipitate."],
+        correct: 1,
+        explanation: "Lead sulfide (PbS) is a characteristic black precipitate."
+    },
+    {
+        text: "Why is the filtrate from the sodium fusion experiment acidified with nitric acid before adding silver nitrate in the test for halogens?",
+        options: ["To increase the solubility of silver halides.", "To neutralize any excess sodium used in the fusion.", "To eliminate any cyanide or sulfide ions that would also precipitate with silver.", "To oxidize the halogens to their elemental form."],
+        correct: 2,
+        explanation: "The nitric acid removes cyanide and sulfide which interfere with the silver halide precipitation."
+    },
+    {
+        text: "In the test for halogens, a precipitate that is soluble in excess ammonium hydroxide suggests the presence of:",
+        options: ["Chloride", "Bromide", "Iodide", "Fluoride"],
+        correct: 0,
+        explanation: "Silver chloride (AgCl) dissolves in excess ammonium hydroxide due to the formation of a soluble complex ion."
+    },
+    {        text: "A yellow precipitate that is insoluble in excess ammonium hydroxide after the halogen test indicates the presence of:",
+        options: ["Chloride", "Bromide", "Iodide", "Fluoride"],
+        correct: 2,
+        explanation: "Check your slides"
+    },
+    {
+        text: "In quantitative analysis by combustion, the products are:",
+        options: ["Carbon monoxide and water", "Carbon dioxide and water", "Carbon and hydrogen gas", "Carbon dioxide and hydrogen gas"],
+        correct: 1,
+        explanation: "Check your slides"
+    },
+    {
+        text: "In the combustion method for quantitative analysis, what happens to unreacted oxygen?",
+        options: ["It is absorbed by potassium hydroxide solution.", "It reacts with the products to form ozone.", "It is collected and measured directly.", "It doesn't matter; it has no impact on the result"],
+        correct: 0,
+        explanation: "Check your slides"
+    },
+    {
+        text: "What key principle is used to relate volumes in the quantitative combustion analysis example (C<sub>x</sub>H<sub>y</sub> + O₂ -> CO₂ + H₂O) ?",
+        options: ["Avogadro's Law", "Gay-Lussac's Law", "Boyle's Law", "Charles's Law"],
+        correct: 1,
+        explanation: "Gay-Lussac's Law (law of combining volumes) states that gases combine in simple whole number ratios by volume."
+    },
+    {
+        text: "What is the purpose of passing the combustion products over pre-weighed bottles containing anhydrous calcium chloride?",
+        options: ["To absorb carbon dioxide.", "To absorb water.", "To oxidize any remaining carbon monoxide.", "To catalyze the combustion reaction."],
+        correct: 1,
+        explanation: "Anhydrous calcium chloride is a desiccant (drying agent) and absorbs water."
+    },
+    {
+        text: "Why is excess oxygen used in combustion analysis?",
+        options: ["To prevent the formation of soot (unburnt carbon).", "To ensure complete combustion of the organic compound.", "To provide a means of measuring the volume of hydrocarbon used.", "Both a and b."],
+        correct: 3,
+        explanation: "Check your slides"
+    },
+    {
+        text: "What does the Dumas method primarily determine?",
+        options: ["Percentage of carbon in a compound.", "Percentage of nitrogen in a compound.", "Percentage of hydrogen in a compound.", "Percentage of oxygen in a compound."],
+        correct: 1,
+        explanation: "Check your slides"
+    },
+    {
+        text: "What type of compound is produced in the Dumas method?",
+        options: ["water", "carbon dioxide", "nitrogen gas", "sulfur gas"],
+        correct: 2,
+        explanation: "Check your slides"
+    },
+    {
+        text: "If a qualitative test for nitrogen is negative but the compound contains an amine group, what might be the reason for the false negative?",
+        options: ["The amine group is protonated and unreactive.", "The amine is present in very low concentration.", "The sodium fusion was not complete.", "All of the above."],
+        correct: 3,
+        explanation: "Check your slides"
+    },
+    {
+        text: "If the volume of oxygen used in the complete combustion of a hydrocarbon is greater than the volume of carbon dioxide produced, what does this indicate about the hydrocarbon's formula?",
+        options: ["It must contain more carbon than hydrogen.", "It must contain more hydrogen than carbon.", "It must contain a heteroatom such as oxygen.", "The volumes are not related to the hydrocarbon's formula."],
+        correct: 1,
+        explanation: "A higher consumption of oxygen compared to the volume of CO₂ produced suggests a higher hydrogen content relative to carbon."
+    },
+    {
+        text: "In the example provided, a gaseous hydrocarbon is combusted. After explosion and cooling, the volume is reduced by 34 cm³ after passing it through a bottle containing potassium hydroxide solution. What does this reduction of volume (34cm³) represent?",
+        options: ["The volume of unreacted oxygen.", "The volume of water produced.", "The volume of carbon dioxide produced.", "The total volume of products minus the volume of oxygen."],
+        correct: 2,
+        explanation: "Potassium hydroxide (KOH) absorbs CO₂, so the reduction in volume is due to the CO₂ being removed."
+    },
+    {
+        text: "In the combustion of equal volumes of an alkane (i) and an alkyne (ii) each containing n carbon atoms, the volume of steam produced was found to be in the ratio 2:1. Which statement regarding the value of n is correct?",
+        options: ["n must be equal to 0", "n must be equal to 1", "n must be equal to 2", "n must be equal to 3"],
+        correct: 3,
+        explanation: "Check your slides"
+    },
+    {
+        text: "What assumption is made when applying Gay-Lussac's Law in these types of problems?",
+        options: ["All reactants and products are in the same phase.", "All reactants and products are gases at the same temperature and pressure.", "The reaction proceeds slowly.", "The total number of moles remains constant during the reaction."],
+        correct: 1,
+        explanation: ""
+    },
+    {
+        text: "Why is it important to ensure complete combustion in quantitative analysis?",
+        options: ["Incomplete combustion may result in soot formation, that affects the products volume", "Incomplete combustion may result in the formation of byproducts (e.g., CO), leading to inaccurate results.", "Complete combustion allows for better recovery of heat, thereby affecting volume.", "All of the above."],
+        correct: 1,
+        explanation: "Check your slides"
+    },
+    {
+        text: "What is the role of acetic acid in the test for sulfur, prior to adding lead acetate?",
+        options: ["As a catalyst", "As a buffer", "To neutralize", "To ensure the right acidic environment for the reaction"],
+        correct: 3,
+        explanation: "Check your slides"
+    },
+],
 
   "BOT101-T1": [
     
@@ -7656,18 +7955,18 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Agricultural Economics", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Zoology", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Chemistry", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Physics and Engineering Physics", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Microbiology", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Botany", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Geology", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Human Nutrition and Dietetics", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Nursing", part: "100" },
-    { id: "ASSIGNMENT TWO", title: "CHM102 CLASS ASSESSMENT TWO", department: "Mathematics", part: "100" }
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Agricultural Economics", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Family Nutrition and Consumer Science", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Zoology", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Chemistry", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Physics and Engineering Physics", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Microbiology", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Botany", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Biochemistry and Molecular Biology", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Geology", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Human Nutrition and Dietetics", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Nursing", part: "100" },
+    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Mathematics", part: "100" }
     
     
     
