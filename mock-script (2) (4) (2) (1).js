@@ -8315,18 +8315,18 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Agricultural Economics", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Zoology", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Chemistry", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Physics and Engineering Physics", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Microbiology", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Botany", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Geology", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Human Nutrition and Dietetics", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Nursing", part: "100" },
-    { id: "TUES-MOCK", title: "CHM102 CLASS ASSESSMENT THREE", department: "Mathematics", part: "100" }
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Agricultural Economics", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Family Nutrition and Consumer Science", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Zoology", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Chemistry", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Physics and Engineering Physics", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Microbiology", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Botany", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Biochemistry and Molecular Biology", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Geology", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Human Nutrition and Dietetics", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Nursing", part: "100" },
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Mathematics", part: "100" }
     
     
     
