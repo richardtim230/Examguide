@@ -163,10 +163,15 @@ ology with education.</p>
     <img class="modal-content" id="modalImage">
                                                    </div>
 <!-- Footer Section -->
-
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8296874482515167"
-     crossorigin="anonymous"></script>
-
+<div id="popupNotification" class="popup-notification">
+  <div class="popup-content">
+    <img src="https://via.placeholder.com/150" alt="Notification" />
+    <h2>Welcome to Our Website</h2>
+    <p>Stay updated with the latest features, updates, and announcements. We're glad to have you here!</p>
+    <button onclick="closePopup()">Got it!</button>
+  </div>
+</div>
+        
         <footer>
     <div class="footer-container">
         <!-- Quick Links -->
@@ -215,6 +220,17 @@ ology with education.</p>
 
     <p class="footer-bottom">&copy; 2025 DE-BRAINSTORMERS' ACADEMY. All rights reserved.</p>
 </footer>
-        
+
+        <script>
+  function closePopup() {
+    document.getElementById('popupNotification').style.display = 'none';
+  }
+
+  // Show popup on every reload
+  window.onload = () => {
+    document.getElementById('popupNotification').style.display = 'flex';
+  };
+                            </script>
+                                              
 </body>
 </html>
