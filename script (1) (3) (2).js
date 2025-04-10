@@ -6058,7 +6058,368 @@ explanation: "tan θ = 4/3; θ = arctan(4/3) ≈ 53.1°.  The closest answer is 
           { text: "What is 3 x 3?", options: ["6", "9", "12", "15"], correct: 1, explanation: "3 x 3 equals 9." },
         ]
       },
-
+         "ZOO102": {
+        title: "INTRODUCTORY ZOOLOGY II",
+        questions: [
+  {
+    text: "Which of the following examples illustrates protective covering as an adaptation of prey?",
+    options: ["Green coloration in grasshoppers", "Armouring in turtles", "Colour change in chameleons", "Mimicry in butterflies"],
+    correct: 1,
+    explanation: "Protective covering includes physical structures like shells, armouring in turtles, or spines in porcupines that defend prey from predators."
+  },
+  {
+    text: "What distinguishes cryptic colouration from mimicry in prey adaptations?",
+    options: ["Cryptic colouration involves imitating other species, while mimicry involves blending into the environment", "Cryptic colouration is static, while mimicry requires behavioral changes", "Cryptic colouration conceals prey by matching the environment, while mimicry imitates traits of other species", "Cryptic colouration is exclusive to amphibians, while mimicry occurs in insects only"],
+    correct: 2,
+    explanation: "Cryptic colouration involves blending into the environment to avoid detection, while mimicry involves imitating traits of other species."
+  },
+  {
+    text: "Which type of mimicry involves a harmless species resembling a harmful or unpalatable species?",
+    options: ["Batesian mimicry", "Müllerian mimicry", "Cryptic mimicry", "Chemical mimicry"],
+    correct: 0,
+    explanation: "Batesian mimicry occurs when a harmless species mimics a harmful or distasteful species to avoid predation."
+  },
+  {
+    text: "How does Müllerian mimicry differ from Batesian mimicry?",
+    options: ["Müllerian mimicry involves mutual resemblance between harmful species, while Batesian mimicry involves resemblance of a harmless species to a harmful species", "Müllerian mimicry occurs only in amphibians, while Batesian mimicry occurs in insects", "Müllerian mimicry relies on chemical defenses, while Batesian mimicry relies on physical adaptations", "Müllerian mimicry enhances reproduction rates, while Batesian mimicry reduces predation rates"],
+    correct: 0,
+    explanation: "Müllerian mimicry involves mutual resemblance between harmful species, providing collective protection, while Batesian mimicry involves harmless species mimicking harmful ones."
+  },
+  {
+    text: "Which of the following adaptations is NOT considered cryptic colouration?",
+    options: ["Green coloration matching the environment", "Changing colour with seasons", "Imitating a predator's appearance", "Covering oneself with materials from the environment"],
+    correct: 2,
+    explanation: "Imitating a predator's appearance falls under mimicry, whereas cryptic colouration involves blending into the environment or changing colour."
+  },
+  {
+    text: "What is an example of chemical protection as an adaptation of prey?",
+    options: ["Sticky secretion of slugs and snails", "Green coloration in grasshoppers", "Armouring in turtles", "Group herding by mammals and fishes"],
+    correct: 0,
+    explanation: "Chemical protection includes sticky secretions or toxins released by prey to deter predators, such as those seen in slugs and snails."
+  },
+  {
+    text: "Which prey adaptation involves behavioral mimicry to escape predation?",
+    options: ["Chameleons changing colour with seasons", "Nocturnal moths mimicking butterfly activity patterns", "Spines in hedgehogs deterring predators", "Herding by mammals to confuse predators"],
+    correct: 1,
+    explanation: "Behavioral mimicry includes adaptations like nocturnal moths mimicking butterfly activity patterns to avoid predation."
+  },
+  {
+    text: "Which of the following adaptations is most likely to facilitate group protection in prey species?",
+    options: ["Cryptic colouration in individual prey", "Chemical secretion by slugs", "Herding behavior in mammals", "Mimicry in solitary insects"],
+    correct: 2,
+    explanation: "Group protection often involves herding behavior, where prey species collectively confuse or deter predators."
+  },
+  {
+    text: "What is a key limitation of Batesian mimicry as a survival strategy?",
+    options: ["It requires the mimic to be harmful", "It depends on the abundance of harmful species in the environment", "It is ineffective against predators with poor vision", "It is limited to aquatic ecosystems"],
+    correct: 1,
+    explanation: "Batesian mimicry relies on the presence of harmful species; if harmful species are scarce, predators may not learn to avoid the mimic."
+  },
+  {
+    text: "Which adaptation enables prey to avoid detection by predators through matching the colour of stones and bark?",
+    options: ["Chemical protection", "Cryptic colouration", "Müllerian mimicry", "Group herding"],
+    correct: 1,
+    explanation: "Cryptic colouration allows prey to blend into their environment by matching colours of objects like stones or bark."
+  },
+  {
+    text: "Which of the following scenarios best illustrates interference competition?",
+    options: ["Two species consuming the same resource without interaction", "A species aggressively preventing access to a shared resource", "A predator feeding on prey in a shared habitat", "Two species benefiting mutually by sharing resources"],
+    correct: 1,
+    explanation: "Interference competition occurs when organisms directly interact aggressively to prevent access to a resource, even if it isn’t scarce."
+  },
+  {
+    text: "What distinguishes exploitation competition from interference competition?",
+    options: ["Exploitation involves direct aggression, while interference does not", "Exploitation occurs through resource depletion, while interference involves direct harm", "Exploitation is limited to intraspecific competition, while interference occurs in interspecific interactions", "Exploitation benefits both species, while interference harms one"],
+    correct: 1,
+    explanation: "Exploitation competition occurs indirectly through resource depletion, whereas interference involves direct harm or aggression."
+  },
+  {
+    text: "Which type of competition is observed between members of the same population?",
+    options: ["Interspecific competition", "Intraspecific competition", "Exploitation competition", "Competitive exclusion"],
+    correct: 1,
+    explanation: "Intraspecific competition occurs between members of the same species competing for shared resources."
+  },
+  {
+    text: "What is the primary consequence of competitive exclusion in interspecific competition?",
+    options: ["Coexistence of species with overlapping niches", "Extinction or displacement of one species", "Formation of mutualistic relationships", "Reduction in resource availability for both species"],
+    correct: 1,
+    explanation: "Competitive exclusion leads to the extinction or displacement of one species when two species cannot coexist in the same niche."
+  },
+  {
+    text: "Which of the following behaviors is an example of ritualistic aggression in intraspecific competition?",
+    options: ["Predators hunting juvenile prey", "Male gorillas displaying vocal and gestural communication", "Cannibalism within a population", "Territorial defense by members of different species"],
+    correct: 1,
+    explanation: "Ritualistic aggression includes vocal and gestural displays, such as those seen in male gorillas, to avoid physical harm during competition."
+  },
+  {    text: "What is the main ecological principle demonstrated by Gause’s study on Paramecium species?",
+    options: ["Mutualism principle", "Competitive exclusion principle", "Resource partitioning principle", "Predator-prey equilibrium principle"],
+    correct: 1,
+    explanation: "Gause’s study demonstrated the Competitive Exclusion Principle, showing that two species with overlapping niches cannot coexist indefinitely."
+  },
+  {
+    text: "Which of the following outcomes is NOT associated with intraspecific competition?",
+    options: ["Territorial defense", "Dominance hierarchies", "Resource partitioning between species", "Emigration due to resource scarcity"],
+    correct: 2,
+    explanation: "Resource partitioning typically occurs in interspecific competition, not intraspecific competition."
+  },
+  {
+    text: "Which of the following best describes cannibalism in predator-prey interactions?",
+    options: ["A predator feeding exclusively on herbivores", "Members of the same species consuming each other", "A predator feeding on prey of a different species", "A species benefiting mutually by feeding on shared resources"],
+    correct: 1,
+    explanation: "Cannibalism occurs when members of the same species consume each other, often under stressful conditions such as resource scarcity."
+  },
+  {
+    text: "In predator-prey interactions, what factor primarily determines the efficiency of hunting?",
+    options: ["Prey abundance", "Predator morphology and age", "Availability of shelter for prey", "Presence of competing predators"],
+    correct: 1,
+    explanation: "Predator morphology, age, and experience significantly influence hunting efficiency and prey capture rates."
+  },
+  {
+    text: "Which of the following is NOT a characteristic of invasive species in competition?",
+    options: ["Displacement of native species", "Enhancement of biodiversity", "Aggressive resource utilization", "Alteration of ecosystem dynamics"],
+    correct: 1,
+    explanation: "Invasive species typically reduce biodiversity by displacing native species and altering ecosystem dynamics."
+  },
+  {
+    text: "Which scenario best illustrates interspecific competition?",
+    options: ["Two male gorillas competing for dominance within a group", "Two bird species competing for nesting sites in the same area", "A predator feeding on juvenile prey", "A plant species benefiting from pollination provided by insects"],
+    correct: 1,
+    explanation: "Interspecific competition occurs between members of different species, such as birds competing for nesting sites."
+  },
+  {
+    text: "How does territoriality influence intraspecific competition?",
+    options: ["It reduces access to resources for all individuals", "It ensures equal resource distribution among competitors", "It promotes reproductive success by limiting competition", "It minimizes encounters between species with overlapping niches"],
+    correct: 2,
+    explanation: "Territoriality promotes reproductive success by securing access to resources for individuals defending their territory."
+  },
+  {
+    text: "Which of the following is NOT a factor influencing predator efficiency in prey capture?",
+    options: ["Prey morphology and habitat", "Age and experience of predators", "Presence of predators in the same ecosystem", "Genetic mutation rates in prey species"],
+    correct: 3,
+    explanation: "Genetic mutation rates in prey do not directly impact predator efficiency, which is influenced by prey morphology, habitat, and predator age."
+  },
+  {
+    text: "Which of the following is a potential consequence of invasive species introduction?",
+    options: ["Coexistence with native species", "Increased genetic diversity in native populations", "Extinction of endemic species due to competition", "Formation of mutualistic relationships with native species"],
+    correct: 2,
+    explanation: "Invasive species often lead to the extinction of endemic species by outcompeting them for resources."
+  },
+  {
+    text: "Which type of competition involves resource depletion without direct interaction between competing organisms?",
+    options: ["Interference competition", "Exploitation competition", "Intraspecific competition", "Competitive exclusion"],
+    correct: 1,
+    explanation: "Exploitation competition occurs indirectly as organisms deplete shared resources without direct interaction."
+  },
+  {
+    text: "Which type of population interaction involves one species benefiting while the other remains unaffected?",
+    options: ["Mutualism", "Commensalism", "Amensalism", "Predation"],
+    correct: 1,
+    explanation: "Commensalism is a type of interaction where one species benefits without affecting the other."
+  },
+  {
+    text: "In which population interaction does one species suffer harm while the other species is unaffected?",
+    options: ["Predation", "Competition", "Amensalism", "Commensalism"],
+    correct: 2,
+    explanation: "Amensalism occurs when one species is negatively impacted while the other remains unaffected."
+  },
+  {
+    text: "Which interaction involves both species benefiting mutually by providing resources or services to each other?",
+    options: ["Facultative mutualism", "Obligate mutualism", "Commensalism", "Predation"],
+    correct: 0,
+    explanation: "Mutualism refers to interactions where both species derive benefits, such as pollination or nutrient exchange."
+  },
+  {
+    text: "Which of the following is an example of obligate mutualism?",
+    options: ["The greater honey guide and humans of East Africa", "Ants and acacia trees", "Yucca moths and Yucca plants", "Pollination by animal pollinators"],
+    correct: 1,
+    explanation: "Obligate mutualism is exemplified by ants and acacia trees, where survival depends on the interaction."
+  },
+  {
+    text: "What is the primary difference between facultative and obligate mutualism?",
+    options: ["Facultative mutualism involves competition, while obligate mutualism does not", "Facultative mutualism is optional for survival, while obligate mutualism is essential", "Obligate mutualism occurs only in plants, while facultative mutualism occurs in animals", "Facultative mutualism requires abiotic factors, while obligate mutualism requires biotic factors"],
+    correct: 1,
+    explanation: "Facultative mutualism is beneficial but not essential for survival, whereas obligate mutualism is critical for the life of one or both associates."
+  },
+  {
+    text: "Which of the following factors does NOT play a role in increasing competition among organisms?",
+    options: ["Limited availability of nesting sites", "Abundance of predators", "Overlapping resource utilization", "Scarcity of food and water"],
+    correct: 1,
+    explanation: "While predators impact survival, they do not directly increase competition, which is driven by resource scarcity and overlap."
+  },
+  {    text: "How does competition ultimately affect populations?",
+    options: ["It increases reproductive rates", "It enhances growth and survivorship", "It lowers survivorship, growth, and reproduction", "It leads to mutual benefits between competing organisms"],
+    correct: 2,
+    explanation: "Competition reduces survivorship, growth, and reproduction, which impacts population distribution and abundance."
+  },
+  {
+    text: "Which condition is essential for competition among plants but not animals?",
+    options: ["Utilizing a common resource at the same time", "Spacing between individuals", "Resource sharing with predators", "Being mobile to access resources"],
+    correct: 1,
+    explanation: "Spacing is crucial for plants in competition because they are immobile, unlike animals that can move to access resources."
+  },
+  {
+    text: "Which interaction involves one species feeding on another, often resulting in the death of the prey?",
+    options: ["Amensalism", "Competition", "Predation", "Parasitism"],
+    correct: 2,
+    explanation: "Predation involves one species consuming another, typically leading to the prey's death."
+  },
+  {
+    text: "Which interaction affects both species negatively due to the shared use of limited resources?",
+    options: ["Mutualism", "Competition", "Commensalism", "Predation"],
+    correct: 1,
+    explanation: "Competition negatively impacts both species by reducing access to shared resources such as food or shelter."
+  },
+  {
+    text: "Which population interaction is represented by a '+' effect on one species and a '-' effect on the other?",
+    options: ["Commensalism", "Mutualism", "Predation", "Amensalism"],
+    correct: 2,
+    explanation: "Predation results in a positive effect for the predator (+) and a negative effect for the prey (-)."
+  },
+  {
+    text: "What is the primary role of mutualism in ecosystems?",
+    options: ["Increasing competition among species", "Enhancing fitness of both interacting species", "Reducing the population size of one species", "Creating isolated populations"],
+    correct: 1,
+    explanation: "Mutualism enhances the fitness of both species by providing resources or services that benefit each other."
+  },
+  {
+    text: "Which of the following examples best illustrates commensalism?",
+    options: ["Ants protecting acacia trees", "Epiphytic plants growing on trees without harming them", "Yucca moths pollinating Yucca plants", "Predators hunting prey in shared habitats"],
+    correct: 1,
+    explanation: "Epiphytic plants growing on trees benefit from support without harming the host, illustrating commensalism."
+  },
+  {
+    text: "Which ecological interaction is characterized by parasitic relationships?",
+    options: ["One species benefiting at the expense of another", "Both species benefiting mutually", "Both species being negatively affected", "One species benefiting while the other remains unaffected"],
+    correct: 0,
+    explanation: "Parasitism involves one species benefiting by feeding on another, often harming the host in the process."
+  },
+  {
+    text: "Which of the following statements about competition is FALSE?",
+    options: ["It can lower survival and reproduction rates", "It only occurs when resources are scarce", "It impacts population distribution and abundance", "It plays a role in determining carrying capacity"],
+    correct: 1,
+    explanation: "Competition can occur even when resources are abundant if they are shared or overlapping."
+  },
+  {
+    text: "Which branch of ecology focuses specifically on the study of organism populations and their various interactions within the same area?",
+    options: ["Autecology", "Synecology", "Population Ecology", "Ecosystem Ecology"],
+    correct: 1,
+    explanation: "Synecology is the branch of ecology that studies the interactions of organism populations within the same area."
+  },
+  {
+    text: "Which of the following is NOT typically considered a subfield of Synecology?",
+    options: ["Community ecology", "Biome ecology", "Ecosystem ecology", "Molecular ecology"],
+    correct: 3,
+    explanation: "Molecular ecology is not a subfield of Synecology; Synecology includes Community ecology, Biome ecology, and Ecosystem ecology."
+  },
+  {
+    text: "In Synecology, how is a 'Population' characterized?",
+    options: ["A group of individuals of various species living in the same area", "A group of individuals of the same species living in the same area", "Interactions between different species", "A community of populations sharing resources"],
+    correct: 1,
+    explanation: "A Population is characterized as a group of individuals of the same species living in the same area, potentially interacting."
+  },
+  {
+    text: "Which term describes a group of populations of different species living in the same area, potentially interacting at a certain time?",
+    options: ["Population", "Ecosystem", "Community", "Habitat"],
+    correct: 2,
+    explanation: "A Community describes a group of populations of different species living in the same area, potentially interacting at a certain time."
+  },
+  {
+    text: "Which of the following characteristics is NOT typically used to describe animal and plant populations in Synecology?",
+    options: ["Geographic distribution", "Size and density", "Growth rate", "Trophic interactions"],
+    correct: 3,
+    explanation: "Trophic interactions are not typically used to describe populations in Synecology; the focus is on geographic distribution, size, density, and growth rate."
+  },
+  {
+    text: "Which of the following factors is crucial in determining the growth rate of animal populations?",
+    options: ["Genetic diversity", "Availability of resources such as food and shelter", "Climate conditions", "Species interactions"],
+    correct: 1,
+    explanation: "Availability of resources such as food, water, mates, and shelter is crucial in determining the growth rate of animal populations."
+  },
+  {    text: "Population interactions in Synecology have several effects. Which effect is NOT typically associated with these interactions?",
+    options: ["Affects distribution and abundance", "Influences evolutionary processes", "Impacts population growth rate", "Determines genetic mutation rates"],
+    correct: 3,
+    explanation: "Population interactions do not typically determine genetic mutation rates but affect distribution, abundance, evolutionary processes, and growth rate."
+  },
+  {
+    text: "What does population density measure in the context of Synecology?",
+    options: ["The total number of individuals in a population", "The number of individuals per unit area", "The geographic range of a species", "The diversity of species within a community"],
+    correct: 1,
+    explanation: "Population density measures the number of individuals of a species per unit area."
+  },
+  {
+    text: "Which of the following is NOT an effect of population interactions in a community?",
+    options: ["Influences population size", "Affects growth rate", "Determines genetic mutation rates", "Impacts distribution and abundance"],
+    correct: 2,
+    explanation: "Population interactions do not determine genetic mutation rates but influence population size, growth rate, and distribution."
+  },
+  {
+    text: "Which factor is NOT directly related to influencing population growth rate in Synecology?",
+    options: ["Predation and diseases", "Geographic distribution", "Availability of resources", "Human ecological disturbances"],
+    correct: 1,
+    explanation: "Geographic distribution is not directly related to influencing population growth rate; factors like predation, diseases, resources, and human disturbances are."
+  },
+  {
+    text: "What is the alternative name for Autecology?",
+    options: ["Population Ecology", "Species Ecology", "Community Ecology", "Ecological Taxonomy"],
+    correct: 1,
+    explanation: "Autecology is also known as Species Ecology because it focuses on the study of interactions of individual organisms or single species with the environment."
+  },
+  {
+    text: "Which of the following factors is studied in Autecology?",
+    options: ["Molecular genetics of species", "Interactions with biotic and abiotic factors", "Evolutionary relationships between species", "Ecological modeling techniques"],
+    correct: 1,
+    explanation: "Autecology studies the interactions of individual organisms or single species with biotic and abiotic factors affecting survival and reproduction."
+  },
+  {
+    text: "Which aspect is NOT typically included in the detailed study of Autecology?",
+    options: ["Geographical distribution", "Morphology", "Taxonomic position", "Molecular composition"],
+    correct: 3,
+    explanation: "Molecular composition is not a primary focus in Autecology, which emphasizes geographical distribution, morphology, and taxonomic position."
+  },
+  {
+    text: "Why is Autecology considered important?",
+    options: ["It studies molecular biology of species", "It explains species-specific ecological mechanisms", "It focuses exclusively on evolutionary processes", "It excludes responses to human disturbances"],
+    correct: 1,
+    explanation: "Autecology is important as it explains species-specific ecological mechanisms and life processes unique to individual species."
+  },
+  {
+    text: "Which of the following is an example of anthropogenic disturbance studied in Autecology?",
+    options: ["Natural disasters", "Pollution", "Predation", "Geographical barriers"],
+    correct: 1,
+    explanation: "Pollution is an anthropogenic disturbance studied in Autecology, as it affects individual species' habitat preference and distribution."
+  },
+  {
+    text: "Which mechanism studied in Autecology involves obtaining nutrients and energy?",
+    options: ["Migration", "Foraging", "Adaptation to abiotic conditions", "Reproductive strategies"],
+    correct: 1,
+    explanation: "Foraging is a mechanism studied in Autecology that involves resource acquisition for survival."
+  },
+  {
+    text: "What is one of the eco-physiological adaptations studied in Autecology?",
+    options: ["Response to abiotic conditions like temperature", "Development of complex social structures", "Predator-prey dynamics", "Formation of ecological niches"],
+    correct: 0,
+    explanation: "Eco-physiological adaptations such as response to abiotic conditions like temperature are studied in Autecology."
+  },
+  {
+    text: "Which process is NOT studied in Autecology?",
+    options: ["Migration", "Foraging", "Community interactions", "Adaptations for movement"],
+    correct: 2,
+    explanation: "Community interactions are typically studied in Synecology, not Autecology, which focuses on individual species' mechanisms."
+  },
+  {
+    text: "Which field studies species-specific adaptations for survival in varied environmental conditions?",
+    options: ["Autecology", "Synecology", "Evolutionary Biology", "Population Genetics"],
+    correct: 0,
+    explanation: "Autecology studies species-specific adaptations for survival, focusing on interactions with biotic and abiotic factors."
+  },
+  {
+    text: "Which of the following is NOT a focus of Autecology?",
+    options: ["Life cycle of individual species", "Geographical distribution", "Community dynamics", "Morphology of species"],
+    correct: 2,
+    explanation: "Community dynamics are studied in Synecology, whereas Autecology focuses on individual species' life cycle, morphology, and geographical distribution."
+  },
+]
+      },
   "Arthropods": {
         title: "Phylum Arthropoda",
         questions: [
