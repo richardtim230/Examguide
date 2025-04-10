@@ -23,8 +23,8 @@
 }
 
 .popup-content img {
-  width: 120px;
-  height: 120px;
+  width: 90%;
+  height: auto;
   margin-bottom: 20px;
   border-radius: 10px;
 }
