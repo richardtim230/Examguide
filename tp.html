@@ -296,6 +296,83 @@
 #toggleButton:hover {
     background-color: orange;
 }
+        .popup-notification {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.popup-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.popup-content img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.popup-content h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #0d47a1;
+}
+
+.popup-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.popup-buttons button {
+  background: #0d47a1;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  min-width: 120px;
+}
+
+.popup-buttons button:hover {
+  background: #1565c0;
+    }
+        
+
+/* Desktop-specific enhancements */
+@media (min-width: 768px) {
+  .popup-notification {
+    width: 600px;
+    height: auto;
+    top: 10%;
+    left: calc(50% - 300px);
+  }
+}
+
     </style>
 </head>
 <body>
@@ -309,7 +386,19 @@
             <p>Email: dbsife@gmail.com | Phone: (234) 9155127634</p>
         </div>
     </header>
-
+<div id="popupNotification" class="popup-notification">
+  <div class="popup-content">
+    <img src="https://via.placeholder.com/150" alt="Notification" />
+    <h2>Welcome to Our Website</h2>
+    <p>Explore the features of our platform with a quick tour. Ready to get started?</p>
+    
+    <div class="popup-buttons">
+      <button onclick="startTour()">Start Tour</button>
+      <button onclick="closePopup()">Maybe Later</button>
+    </div>
+  </div>
+                </div>
+        
     <div id="auth-container">
         <h2>Login</h2>
         <input type="text" id="loginFullName" placeholder="Full Name">
