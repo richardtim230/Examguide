@@ -297,8 +297,7 @@
     background-color: orange;
 }
 
-#welcomePopup{
-        .popup-notification {
+.popup-notification {
   position: fixed;
   top: 5%;
   left: 5%;
@@ -307,8 +306,8 @@
   background: linear-gradient(145deg, #e3f2fd, #bbdefb);
   color: #333;
   font-family: 'Segoe UI', sans-serif;
-  z-index: 100000;
-  display: flex;
+  z-index: 1000;
+  display: none;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
@@ -323,8 +322,8 @@
 }
 
 .popup-content img {
-  width: 80%;
-  height: auto;
+  width: 120px;
+  height: 120px;
   margin-bottom: 20px;
   border-radius: 10px;
 }
@@ -360,12 +359,10 @@
   min-width: 120px;
 }
 
-.oopup-buttons button:hover {
+.popup-buttons button:hover {
   background: #1565c0;
-    }
-        }
+}
 
-/* Desktop-specific enhancements */
 @media (min-width: 768px) {
   .popup-notification {
     width: 600px;
@@ -390,7 +387,7 @@
     </header>
 <div id="welcomePopup" class="popup-notification">
   <div class="popup-content">
-    <img src="csc2.webp" alt="Notification" />
+    <img src="csc2.webp" alt="Welcome Notification" />
     <h2>Welcome to Our Website</h2>
     <p>Explore the features of our platform with a quick tour. Ready to get started?</p>
     
@@ -400,6 +397,7 @@
     </div>
   </div>
 </div>
+
 
     <div id="auth-container">
         <h2>Login</h2>
