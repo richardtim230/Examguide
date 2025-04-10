@@ -7,8 +7,7 @@
 
     <!-- Intro.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.0.0/introjs.min.css"> 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8296874482515167"
-     crossorigin="anonymous"></script>
+    
 <script type='text/javascript'>
   window.smartlook||(function(d) {
     var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
@@ -22,6 +21,73 @@
     
     <link rel="stylesheet" href="tp.css">
     <style>
+        .popup-notification {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.popup-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.popup-content img {
+  width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.popup-content h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #0d47a1;
+}
+
+.popup-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.popup-content button {
+  background: #0d47a1;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.popup-content button:hover {
+  background: #1565c0;
+}
+
+/* Desktop-specific enhancements */
+@media (min-width: 768px) {
+  .popup-notification {
+    width: 600px;
+    height: auto;
+    top: 10%;
+    left: calc(50% - 300px);
+  }
+    }
+        
         /* Notification Pop-up Styles */
 #notificationPopup {
     display: none; /* Initially hidden */
@@ -571,7 +637,15 @@
 
     <!-- Start Tour Button -->
     <button onclick="startTour()">Start Tour</button>
-        
+        <div id="popupNotification" class="popup-notification">
+  <div class="popup-content">
+    <img src="good morning 5.webp" alt="Notification" />
+    <h2>Welcome to Our Website</h2>
+    <p>Stay updated with the latest features, updates, and announcements. We're glad to have you here!</p>
+    <button onclick="closePopup()">Got it!</button>
+  </div>
+        </div>
+    
     <script src="tp.js"></script>
     <script src="questions.js"></script>
     <script>
@@ -609,6 +683,17 @@
         }).start();
     }
 </script>
+    <script>
+  function closePopup() {
+    document.getElementById('popupNotification').style.display = 'none';
+  }
+
+  // Show popup on every reload
+  window.onload = () => {
+    document.getElementById('popupNotification').style.display = 'flex';
+  };
+    </script>
+    
     <script>
 
         function togglePopup() {
