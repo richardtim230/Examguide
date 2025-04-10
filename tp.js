@@ -6,7 +6,6 @@
   function startTour() {
     closeWelcomePopup();
 
-    // Trigger your tour logic here
     if (typeof startAppTour === 'function') {
       startAppTour();
     } else {
@@ -15,8 +14,16 @@
   }
 
   window.onload = () => {
+    // Hide all other popups first
+    const allPopups = document.querySelectorAll('.popup-notification');
+    allPopups.forEach(popup => {
+      if (popup.id !== 'welcomePopup') popup.style.display = 'none';
+    });
+
+    // Then show the welcome popup
     document.getElementById('welcomePopup').style.display = 'flex';
   };
+
 
 // Check if the browser supports notifications
 if ("Notification" in window) {
