@@ -1,13 +1,12 @@
 
-  function closePopup() {
-    document.getElementById('popupNotification').style.display = 'none';
+  function closeWelcomePopup() {
+    document.getElementById('welcomePopup').style.display = 'none';
   }
 
   function startTour() {
-    closePopup();
+    closeWelcomePopup();
 
-    // Kick off your tour here
-    // Example: if you're using intro.js or similar
+    // Trigger your tour logic here
     if (typeof startAppTour === 'function') {
       startAppTour();
     } else {
@@ -16,9 +15,8 @@
   }
 
   window.onload = () => {
-    document.getElementById('popupNotification').style.display = 'flex';
+    document.getElementById('welcomePopup').style.display = 'flex';
   };
-
 
 // Check if the browser supports notifications
 if ("Notification" in window) {
