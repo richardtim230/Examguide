@@ -1,3 +1,25 @@
+
+  function closePopup() {
+    document.getElementById('popupNotification').style.display = 'none';
+  }
+
+  function startTour() {
+    closePopup();
+
+    // Kick off your tour here
+    // Example: if you're using intro.js or similar
+    if (typeof startAppTour === 'function') {
+      startAppTour();
+    } else {
+      console.log("Tour started!");
+    }
+  }
+
+  window.onload = () => {
+    document.getElementById('popupNotification').style.display = 'flex';
+  };
+
+
 // Check if the browser supports notifications
 if ("Notification" in window) {
     // Request notification permission from the user
