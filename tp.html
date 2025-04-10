@@ -296,7 +296,9 @@
 #toggleButton:hover {
     background-color: orange;
 }
-        .Popup-notification {
+
+#welcomePopup{
+        .popup-notification {
   position: fixed;
   top: 5%;
   left: 5%;
@@ -314,31 +316,31 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.Popup-content {
+.popup-content {
   text-align: center;
   max-width: 500px;
   padding: 20px;
 }
 
-.Popup-content img {
+.popup-content img {
   width: 120px;
   height: 120px;
   margin-bottom: 20px;
   border-radius: 10px;
 }
 
-.Popup-content h2 {
+.popup-content h2 {
   margin-bottom: 10px;
   font-size: 24px;
   color: #0d47a1;
 }
 
-.Popup-content p {
+.popup-content p {
   font-size: 16px;
   margin-bottom: 20px;
 }
 
-.Popup-buttons {
+.popup-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -346,7 +348,7 @@
   flex-wrap: wrap;
 }
 
-.Popup-buttons button {
+.popup-buttons button {
   background: #0d47a1;
   color: #fff;
   border: none;
@@ -358,10 +360,10 @@
   min-width: 120px;
 }
 
-.Popup-buttons button:hover {
+.oopup-buttons button:hover {
   background: #1565c0;
     }
-        
+        }
 
 /* Desktop-specific enhancements */
 @media (min-width: 768px) {
@@ -386,19 +388,19 @@
             <p>Email: dbsife@gmail.com | Phone: (234) 9155127634</p>
         </div>
     </header>
-<div id="popupNotification" class="popup-notification">
-  <div class="Popup-content">
+<div id="welcomePopup" class="popup-notification">
+  <div class="popup-content">
     <img src="https://via.placeholder.com/150" alt="Notification" />
     <h2>Welcome to Our Website</h2>
     <p>Explore the features of our platform with a quick tour. Ready to get started?</p>
     
-    <div class="Popup-buttons">
+    <div class="popup-buttons">
       <button onclick="startTour()">Start Tour</button>
-      <button onclick="closePopup()">Maybe Later</button>
+      <button onclick="closeWelcomePopup()">Maybe Later</button>
     </div>
   </div>
-                </div>
-        
+</div>
+
     <div id="auth-container">
         <h2>Login</h2>
         <input type="text" id="loginFullName" placeholder="Full Name">
