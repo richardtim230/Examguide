@@ -296,7 +296,7 @@
 #toggleButton:hover {
     background-color: orange;
 }
-        .popup-notification {
+        .Popup-notification {
   position: fixed;
   top: 5%;
   left: 5%;
@@ -305,7 +305,7 @@
   background: linear-gradient(145deg, #e3f2fd, #bbdefb);
   color: #333;
   font-family: 'Segoe UI', sans-serif;
-  z-index: 1000;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,31 +314,31 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.popup-content {
+.Popup-content {
   text-align: center;
   max-width: 500px;
   padding: 20px;
 }
 
-.popup-content img {
+.Popup-content img {
   width: 120px;
   height: 120px;
   margin-bottom: 20px;
   border-radius: 10px;
 }
 
-.popup-content h2 {
+.Popup-content h2 {
   margin-bottom: 10px;
   font-size: 24px;
   color: #0d47a1;
 }
 
-.popup-content p {
+.Popup-content p {
   font-size: 16px;
   margin-bottom: 20px;
 }
 
-.popup-buttons {
+.Popup-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -346,7 +346,7 @@
   flex-wrap: wrap;
 }
 
-.popup-buttons button {
+.Popup-buttons button {
   background: #0d47a1;
   color: #fff;
   border: none;
@@ -358,7 +358,7 @@
   min-width: 120px;
 }
 
-.popup-buttons button:hover {
+.Popup-buttons button:hover {
   background: #1565c0;
     }
         
@@ -387,12 +387,12 @@
         </div>
     </header>
 <div id="popupNotification" class="popup-notification">
-  <div class="popup-content">
+  <div class="Popup-content">
     <img src="https://via.placeholder.com/150" alt="Notification" />
     <h2>Welcome to Our Website</h2>
     <p>Explore the features of our platform with a quick tour. Ready to get started?</p>
     
-    <div class="popup-buttons">
+    <div class="Popup-buttons">
       <button onclick="startTour()">Start Tour</button>
       <button onclick="closePopup()">Maybe Later</button>
     </div>
@@ -658,9 +658,7 @@
         <!-- Take exams content -->
     </div>
 
-    <!-- Start Tour Button -->
-    <button onclick="startTour()">Start Tour</button>
-        
+     
     <script src="tp.js"></script>
     <script src="questions.js"></script>
     <script>
@@ -711,5 +709,27 @@
 
         document.getElementById('toggleButton').addEventListener('click', togglePopup);
     </script>
+    <script>
+  function closePopup() {
+    document.getElementById('popupNotification').style.display = 'none';
+  }
+
+  function startTour() {
+    closePopup();
+
+    // Kick off your tour here
+    // Example: if you're using intro.js or similar
+    if (typeof startAppTour === 'function') {
+      startAppTour();
+    } else {
+      console.log("Tour started!");
+    }
+  }
+
+  window.onload = () => {
+    document.getElementById('popupNotification').style.display = 'flex';
+  };
+    </script>
+    
 </body>
 </html>
