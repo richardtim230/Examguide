@@ -1,13 +1,27 @@
-document.getElementById("next-question").addEventListener("click", () => {
-  saveAnswer();
-  currentQuestionIndex++;
-  updateQuestion();
+// Event Listeners
+
+nextBtn.addEventListener('click', () => {
+
+  if (currentStep < tourSteps.length - 1) {
+
+    currentStep++;
+
+    showStep(currentStep);
+
+  }
+
 });
 
-document.getElementById("prev-question").addEventListener("click", () => {
-  saveAnswer();
-  currentQuestionIndex--;
-  updateQuestion();
+prevBtn.addEventListener('click', () => {
+
+  if (currentStep > 0) {
+
+    currentStep--;
+
+    showStep(currentStep);
+
+  }
+
 });
 
 document.addEventListener("DOMContentLoaded", function () {
