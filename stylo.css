@@ -1,0 +1,1989 @@
+.hidden-section {
+  display: none;
+}
+
+/* General Styling */
+        
+body {
+  background-image: url('./examguide_bg1.webp');
+  background-size: 100%, 100%;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: auto; /* Prevent scrolling */
+  color: black;
+  align-items: center;
+}
+
+.modal-active {
+  overflow: hidden;
+        }
+body {
+  max-width: 1200px; /* Set this to the original size you want */
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: -1;
+        overflow: auto;
+}
+
+button {
+  position: relative;
+  z-index: 10;
+}
+button {
+  pointer-events: auto;
+}
+
+#icon-btn {
+  
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+        background: none;
+        border-radius: 25%;
+  right: 1px;
+}
+
+.icon-btn:hover {
+  color: yellow; /* Change color on hover for better UX */
+        }
+
+/* Circular Reward Icon */
+#rewardIcon {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    text-align: center;
+        align-item: center;
+    line-height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+        z-index: 1000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* =============================
+   🎉 Enhanced Rewards Popup UI
+   ============================= */
+
+/* Timer Display */
+#timeSpent {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #007bff;
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Popup UI */
+.reward-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    height: 97%;
+    background: #fff;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button */
+.reward-popup .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff4b5c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.reward-popup .close-btn:hover {
+    background: #d63a4a;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 90%;
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#progressFill {
+    width: 0%;
+    height: 12px;
+    background: linear-gradient(90deg, #28a745, #007bff);
+    transition: width 0.5s ease-in-out;
+}
+
+/* Notification Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: slideInRight 0.4s ease-in-out;
+}
+
+/* Withdrawal Section */
+.withdrawal-container {
+    text-align: center;
+    background: blue;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 30px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.withdrawal-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.withdrawal-container input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.withdrawal-container button {
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.withdrawal-container button:hover {
+    background: #1e7e34;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+
+
+/* Progress Bar */
+#ex-progress-container {
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+}
+
+#ex-progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+#ex-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6600, #ffcc00);
+    transition: width 0.5s ease-in-out;
+}
+
+/* Notification covers 90% of the screen */
+.notification {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: linear-gradient(145deg, #ffffff, #f1f1f1);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.notification-image {
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.notification-content {
+  padding: 20px;
+}
+
+.notification h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.notification p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: #fff;
+}
+
+.btn.secondary {
+  background: linear-gradient(90deg, #ff512f, #f09819);
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+    #notification {
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: fade-in 1s ease forwards;
+      z-index: 1000;
+      text-align: left;
+    }
+    #notification img {
+      width: 100%;
+      height: auto;
+    }
+    #notification-content {
+      padding: 15px;
+    }
+    #notification h3 {
+      margin: 0 0 10px 0;
+      font-size: 20px;
+      color: #333;
+    }
+    #notification p {
+      font-size: 16px;
+      color: #555;
+      margin: 10px 0;
+    }
+    #close-btn {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background-color: #ff5722;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    #close-btn:hover {
+      background-color: #e64a19;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+/* ===== Exam History Section ===== */
+#exam-history-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 95%;
+  height: 98%;
+  background-color: white;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 20px;
+        border-radius: 8px;
+  text-align: left; /* Align all texts to the left */
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-buttom: 10px;
+}
+
+
+#exam-history-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Style each session */
+.exam-session {
+    background: #007bff;
+    color: white;
+    padding: 12px;
+        width: 90%;
+    border-radius: 6px;
+        margin: 2px 0;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.exam-session:hover {
+    background: #0056b3;
+}
+
+/* ===== Session Details ===== */
+#exam-history-content .question {
+    background: #fff;
+    padding: 15px;
+    border-left: 5px solid #007bff;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Highlight correct and user-selected answers */
+#exam-history-content .question ul {
+    list-style: none;
+    padding: 0;
+}
+
+#exam-history-content .question li {
+    padding: 8px;
+    border-radius: 4px;
+    margin: 2px 0;
+        width: 90%;
+    background: #f4f4f4;
+}
+
+/* User's Answer */
+#exam-history-content .question li.user-answer {
+    background: #cce5ff;
+    font-weight: bold;
+    color: #004085;
+}
+
+/* Correct Answer */
+#exam-history-content .question li.correct-answer {
+    background: #d4edda;
+    font-weight: bold;
+    color: #155724;
+}
+
+/* Back Button */
+#exam-history-content button {
+    display: block;
+    width: 50%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+   margin-bottom: 15px;
+    transition: background 0.3s ease;
+}
+
+#exam-history-content button:hover {
+    background: #0056b3;
+}
+
+/* ===== Floating History Button ===== */
+.floating-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #007bff;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease-in-out;
+}
+
+.floating-btn:hover {
+    background: #0056b3;
+}
+
+
+.question {
+  margin-bottom: 20px;
+}
+
+/* Custom Modal Styles */
+.custom-modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.custom-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close-custom-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-custom-modal:hover,
+.close-custom-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*Logo*/
+
+.content {
+  text-align: center;
+  font-family: Arial, sans-serif;
+    }
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-top: 1rem;
+  top: 50px;
+  position: center;
+    }
+
+
+header {
+  background-image: url('./oau.jpeg');
+  color: #fff;
+  padding: 1.5rem;
+  background-size: 100% 100%;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+header h3 {
+  margin: 0;
+  font-size: 0.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+header h2 {
+  margin: 0;
+  font-size: 0.5rem;
+  font-weight: bold;
+ text-align: center;
+}
+/* Footer Styling */
+
+.footer {
+
+  text-align: center;
+
+  padding: 20px;
+
+  background: #333;
+
+  color: #ccc;
+
+  margin-top: 40px;
+
+  font-size: 0.9rem;
+
+}
+
+.footer a,
+
+.footer button {
+
+  color: #4caf50;
+
+  text-decoration: none;
+
+  font-size: 1rem;
+
+  font-weight: bold;
+
+}
+
+.footer a:hover,
+
+.footer button:hover {
+
+  color: #81c784;
+
+        }
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+/* Popup Content */
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-content p {
+  margin: 10px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.popup-content ul {
+  text-align: left;
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.close-popup-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-popup-btn:hover {
+  background-color: #45a049;
+        }
+#receipt-container {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+}
+canvas {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 2px solid #007BFF;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: #f9f9f9;
+        }
+
+/* Overlay styling *
+.overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(to right, #FF512F, #DD2476);
+    z-index: 10000; /* Ensure it covers all content */
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 50%;
+    padding: 5px;
+    margin: 10px 0;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Main content styling */
+.main-content {
+    display: none;
+    padding: 20px;
+    text-align: center;
+}
+
+.main-content.visible {
+    display: block;
+}
+
+
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 10px;
+  background-image: url('./row-bookcases_23-2147679267.webp');
+  background-color: rgba(0, 0.1, 0.2, 5); /* Semi-transparent black overlay */
+  z-index: -1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+main {
+  padding: 10px;
+  max-width: 1200px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Visibility Control */
+.hidden {
+  display: none;
+}
+
+/* Exam Section */
+#exam-section {
+  background: #fffaf0;
+  font-size: 1.0rem;
+  padding: 7px;
+  font-weight: light;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#subject-title {
+  margin: 0;
+  padding: 10px;
+  background: orange;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+#question-container {
+  margin: 1rem 0;
+  font-size: 1.0rem;
+  padding: 8px;
+}
+
+
+.hidden {
+  display: none;
+}
+
+#question-image {
+  max-width: 10px;
+        height: 10px;
+  margin-top: 10px;
+        }
+
+#options-container button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.7rem;
+  padding: 0.6rem;
+  gap: 1.0rem;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  transition: background 0.9s, color 0.3s;
+}
+
+#options-container button:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+#options-container button.selected {
+  background: green;
+  color: white;
+  border-color: green;
+}
+#prev-question:hover, #next-question:hover, #end-exam:hover {
+  background: #555;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+}
+
+#timer-display {
+  color: #fff;
+  background-color: yellow;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  top: 20px;
+}
+
+#questionText h3 {
+  font-size: 1.0rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+#optionsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  width: 90%;
+  margin-top: 1rem;
+}
+
+/* Individual option button */
+.option-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Option button hover effects */
+.option-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+  .option-button.selected {
+    background-color: green;
+    color: white;
+  }
+
+
+/* Progress container styling */
+#progressContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.progress-item {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.progress-item.current {
+  background: #007bff;
+  transform: scale(1.2);
+}
+
+.progress-item.answered {
+  background: #28a745;
+}
+
+/* Navigation buttons */
+#prev-question, #next-question, #end-exam {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  margin: 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  gap: 0.3rem;
+}
+
+#prev-question:hover, #next-question:hover, #end-exam:hover {
+  background: #555;
+  gap: 0.3rem;
+  padding: 0.5rem;
+}
+
+
+
+/* Button Styles */
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: #2563eb;
+  color: blue;
+}
+
+button.primary:hover {
+  background: #1d4ed8;
+}
+
+button.secondary {
+  background: #f59e0b;
+  color: white;
+}
+
+button.secondary:hover {
+  background: #d97706;
+}
+
+button.danger {
+  background: #dc2626;
+  color: white;
+}
+
+button.danger:hover {
+  background: #b91c1c;
+}
+
+/* Course Selection Page */
+#courses-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.2rem;
+}
+
+#course-selection-section h3 {
+  font-size: 1.0rem;
+  color: #1d4ed8;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.course {
+  padding: 1rem;
+  height: 150px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.course:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.course:nth-child(1) {
+  background-image: url('./mathematics-science-concept_1284-10155.webp');
+  width: 100%;
+ background-size: 100% 100%;
+ color: black;
+        font-weight: bold;
+}
+
+.course:nth-child(2) {
+  background-image: url('./scientific-laboratory-design-concept_1284-9382.webp');
+  width: 100%;
+  background-size: 100% 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  color: black;
+        font-weight: bold;
+}
+
+.course:nth-child(3) {
+  background-image: url('./biology-concept-realistic-microscope-plant-seedling-pot_208581-1520.webp');
+  width: 100%;
+  background-size: 100% 100%;
+  color: black;
+        font-weight: bold;
+}
+
+.course:nth-child(4) {
+
+  background-image: url('./growth-fresh-green-plant-natures-lap-generative-ai_188544-7961.webp');
+ 
+  width: 100%;
+  background-size: 100% 100%;
+ background-color: rgba(1, 2, 2, 15); /* Semi-transparent black overlay */
+  z-index: 0.5;
+        font-weight: bold;
+}
+
+.course:nth-child(5) {
+
+  background-image: url('./microbiology.webp');
+  width: 100%;
+  background-size: 100% 100%;
+        font-weight: bold;
+}
+
+
+
+.course:nth-child(6) {
+
+  background-image: url('./physics-textbook-school-chalkboard-background_8071-53388.webp');
+  width: 100%;
+  background-size: 100% 100%;
+        font-weight: bold;
+}
+
+.course:nth-child(7) {
+
+background-image: url('./animal-lizard-nature-multi-colored-close-up-generative-ai_188544-9072.webp');
+width: 100%;
+background-size: 100% 100%;
+        font-weight: bold;
+
+}
+
+.course:nth-child(8) {
+  background-image: url('./geology.jpg');
+  background-size: 100% 100%;
+  width: 100%;
+  color: black;
+        font-weight: bold;
+        }
+.course:nth-child(9) {
+  background-image: url('./ssc1.jpg');
+  background-size: 100% 100%;
+  width: 100%;
+  color: white;
+        font-weight: bold;
+        }
+.course:nth-child(10) {
+  background-image: url('./ser1.jpg');
+  background-size: 100% 100%;
+  width: 100%;
+  color: white;
+        font-weight: bold;
+        }
+.course:nth-child(11) {
+  background-image: url('./csc1.webp');
+  background-size: 100% 100%;
+  width: 100%;
+  color: white;
+        font-weight: bold;
+        }
+
+.course:nth-child(12) {
+  background-image: url('./knowledge-learning-education-technology-student-with-afro-hairstyle-solving-mathematical-problems-sitting-cafe-table-with-textbooks-electronic-device_273609-7498.webp');
+  background-size: 100% 100%;
+  width: 100%;
+  color: white;
+        height: 160px;
+        font-weight: bold;
+        }
+
+/* Access Code Section */
+#access-code-section {
+  background-image: url('./science-realistic-icons-set_1284-9379.webp');
+  background-size: 100% 100%;
+  background-color: rgba(0, 3, 6, 25); /* Semi-transparent black overlay */
+  z-index: -1;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#access-code-section input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  width: 90%;
+  margin: 1rem 0;
+}
+#access-code-section h2 {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background-color: green;
+color: white;
+}
+        
+
+#access-code-section.Mathematics {
+  background-image: url('mth2.jpg');
+}
+
+#access-code-section.Chemistry {
+  background-image: url('chm2.webp');
+}
+
+#access-code-section.Biology {
+  background-image: url('biochem2.webp');
+}
+#access-code-section.Botany {
+  background-image: url('bot21.jpg');
+        }
+#access-code-section.Microbiology {
+  background-image: url('mcb2.jpg');
+          }
+#access-code-section.Physics {
+  background-image: url('physics2.jpg');
+}
+#access-code-section.Zoology {
+  background-image: url('zoo2.jpg');
+}
+#access-code-section.Geology {
+  background-image: url('geology2.jpg');
+}
+#access-code-section.Sociology {
+  background-image: url('ssc101-2.jpg');
+}
+#access-code-section.English {
+  background-image: url('ser1.jpg');
+        }
+#access-code-section.Computer {
+  background-image: url('csc2.webp');
+}
+#timer-display {
+  font-weight: bold;
+  color: #dc2626;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Progress Bar */
+#progress-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.progress-item {
+  width: 20px;
+  height: 14px;
+  background: #e2e8f0;
+  border-radius: 10%;
+  border: 2px solid transparent;
+  display: inline-block;
+  overflow-x: auto;
+}
+
+.progress-item.answered {
+  background: #4caf50;
+}
+
+.progress-item.current {
+  border: 2px solid #1e40af;
+}
+
+
+/* Summary Section */
+#summary-section {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  text-align: margin;
+}
+
+#summary-section h3 {
+  font-size: 1.5rem;
+  color: #1d4ed8;
+  margin-bottom: 3rem;
+}
+
+#summary-section p {
+  margin: 0rem 0;
+  font-size: 1.0rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.remark {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;}
+
+.remark.excellent {
+  color: green;
+  font-weight: bold;
+
+.remark.good 
+  color: blue;
+  font-weight: bold;
+
+
+.remark.poor 
+  color: red;
+}
+
+    .option {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.option.selected {
+  background-color: #007bff;
+  color: white;
+}
+.noncopiable {
+    user-select: none; /* Prevents text selection */
+    -webkit-user-select: none; /* For Safari */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+}
+
+
+/* Modal container (hidden by default) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#confirmYes {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#confirmNo {
+  background-color: #f44336;
+  color: white;
+}
+
+
+   
+/* Main application (no styling effect) */
+#app {
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Fullscreen overlay */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1e3d59;
+  background-size: cover; /* Ensures background image covers the whole area without stretching */
+  max-width: 1200px; /* Adjust this value to your preferred maximum width */
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Ensure it sits above all other content */
+}
+
+
+/* Glassy container */
+#login-box{
+  background-image: url('./login_bg.jpg');
+  backdrop-filter: blur(15px);
+  background-size: 100% 100%;
+  border-radius: 12px;
+  padding: 20px 40px;
+  text-align: center;
+  color: white;
+  width: 90%;
+  align-items: center;
+  height: 90%;
+  max-width: 99%;
+  animation: fadeIn 0.7s ease-in-out;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#welcome-popup {
+  
+  background-image: url('./red-light-round-podium-black-background-mock-up_43614-950.webp');
+  background-color: rgba(3, 3, 3, 6); /* Semi-transparent black overlay */
+  z-index: -1;
+  background-size: 100% 100%;
+  backdrop-filter: blur(60px);
+  border-radius: 12px;
+  padding: 20px 40px;
+  text-align: center;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;   
+  width: 340px;
+  height: 91%;
+  overflow-y: auto;
+  animation: fadeIn 0.7s ease-in-out;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  }
+        
+#register-box {
+  background-image: url('./closeup-little-schoolchild-writing-mathematics-homework-notebook-classroom-lesson-sitting-desk-table-living-room-concept-home-schooling-distance-learning-online-education_482257-29308.jpg');
+  backdrop-filter: blur(19px);
+  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black overlay */
+  z-index: -1;
+  background-size: 100% 100%;
+  border-radius: 40px;
+  color: white;
+  padding: 20px 40px;
+  text-align: center;
+  width: 90%;
+  height: 90%;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  
+  animation: fadeIn 0.7s ease-in-out;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  overflow-y:auto;
+}    
+
+#register-box h2, #agree-checkbox {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+#login-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+register-box input {
+  width: 90%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+input::placeholder {
+  color: #ddd;
+}
+
+#register-box button {
+  width: 90%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #09203F;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn {
+  background: #C33764;
+  color: red;
+  margin-top: 5px;
+  border: 2px solid white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: white;
+  color: #6e8efb;
+}
+
+  #student-details {
+    margin-top: 20px;
+    line-height: 2.8;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    padding: 15px; 
+    background: white;
+    margin-bottom: 5rem;
+   font-weight: bold;
+    font-size: 50px;
+border-radius: 25px;
+
+}
+
+#login-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#welcome-popup button {
+  width: 50%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-buttom: 10px;
+  left: 27%;
+  background: #09203F;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: fixed;
+}
+
+
+button:hover {
+  background: linear-gradient(135deg, #a777e3, #6e8efb);
+}
+
+/* Profile Picture */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Hide elements */
+.hidden {
+  display: none;
+}
+
+
+/* Paragraph text for general use */
+#welcome-popup p {
+  font-size: 15px;
+  color: white;
+  margin-top: 5px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-align: left;
+        padding: 30px;
+        background: blue;
+        border-radius: 25px;
+        overflow-y: auto;
+
+}
+
+/* Checkbox label for agreement */
+#agree-checkbox {
+  font-size: 7px;
+  color: white;
+  display: block;
+  margin-top: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+        font-weight: bold;
+}
+
+/* Styling for the agreement terms link inside label (if needed) */
+#agree-checkbox label a {
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+#agree-checkbox label a:hover {
+  color: #a777e3;
+}
+
+
+/* Payment Page Styling */
+#paymentPage {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f3f8ff);
+  border: 2px solid #e0e6f0;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  text-align: left;
+  animation: fadeIn 1s ease-in-out;
+  height: 95%;
+  overflow-y: auto;
+  top: 5px;
+
+}
+
+/* Title */
+#paymentPage h1 {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+        padding: 15px;
+        background: black;
+border-radius: 19px;
+
+}
+
+/* H2 (University Name) */
+#paymentPage h2 {
+  font-size: 15px;
+  font-style: italic;
+  color: #2C3E50;
+
+text-align: center;
+  margin-bottom: 10px;
+}
+
+/* H3 (Session Fee Details) */
+#paymentPage h3 {
+  font-size: 12px;
+  color: white;
+  margin-bottom: 15px;
+  font-weight: bold;
+text-align: center;
+        padding: 15px;
+        background: blue;
+        border-radius: 20px;
+
+}
+
+/* Paragraph Styling */
+#paymentPage p {
+  font-size: 10px;
+  color: #555;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* Highlight Important Details */
+#paymentPage p strong {
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+/* Payment Details Box */
+.payment-details {
+  background: #f9fafc;
+  border: 1px solid #dce7f1;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px 0;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Upload Receipt */
+#receipt-upload {
+  margin: 15px 0;
+  padding: 8px;
+  width: 80%;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+/* Buttons Styling */
+#paymentPage button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #4CAF50, #388E3C);
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+#paymentPage button:hover {
+  background: linear-gradient(90deg, #388E3C, #2E7D32);
+  transform: translateY(-2px);
+}
+
+/* Footer Note */
+#paymentPage .footer-note {
+  margin-top: 25px;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+}
+
+/* Invoice Button */
+#generate-invoice-btn {
+  background: linear-gradient(90deg, #FF9800, #F57C00);
+}
+
+#generate-invoice-btn:hover {
+  background: linear-gradient(90deg, #F57C00, #E64A19);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Use GPU-accelerated animations */
+.element {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+          }
+
+        
+
+/* Tour Overlay */
+
+#tour-overlay {
+
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 10001;
+        overflow-y: auto;
+
+}
+
+#tour-modal {
+
+  width: 90%;
+
+  max-width: 800px;
+
+  height: 80%;
+
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+
+  border-radius: 15px;
+
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  text-align: center;
+        overflow-y: auto;
+
+}
+
+/* Tour Content */
+
+.tour-content {
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  padding: 20px;
+
+}
+
+.tour-image {
+
+  width: 90%;
+
+  height: 60%;
+
+  margin-bottom: 20px;
+
+}
+
+.tour-image img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 25px;
+
+}
+
+.tour-text h2 {
+
+  font-size: 20px;
+
+  margin-bottom: 8px;
+
+  color: #444;
+
+}
+
+.tour-text p {
+
+  font-size: 12px;
+
+  color: #666;
+
+}
+
+/* Tour Controls */
+
+.tour-controls {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 15px 30px;
+
+  background: #f7f7f7;
+
+  border-top: 1px solid #ddd;
+        
+  gap: 0.6rem;
+
+
+}
+
+.tour-controls button {
+
+  padding: 5px 12px;
+
+  font-size: 10px;
+
+  font-weight: bold;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: background 0.3s ease;
+
+  gap: 0.6rem;
+
+}
+
+#prev-btn {
+
+  background: #ccc;
+
+}
+
+#prev-btn:hover {
+
+  background: #bbb;
+
+}
+
+#next-btn {
+
+  background: #4caf50;
+
+  color: #fff;
+
+}
+
+#next-btn:hover {
+
+  background: #388e3c;
+
+}
+
+#close-btn {
+
+  background: #f44336;
+
+  color: #fff;
+
+}
+
+#close-btn:hover {
+
+  background: #d32f2f;
+
+}
+
