@@ -652,4 +652,4 @@ const questionBanks = {
     explanation: "Ionic bonds form due to electrostatic attraction between ions formed by electron transfer."
 },
 ],
-  },
+  };
