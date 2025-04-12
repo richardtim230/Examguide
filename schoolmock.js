@@ -1,3 +1,5 @@
+const questionBanks = {
+
 "CHM102-CLW2": [
   {
     text: "What causes the bond angle in methane (CH₄) to be 109.5°?",
@@ -650,3 +652,4 @@
     explanation: "Ionic bonds form due to electrostatic attraction between ions formed by electron transfer."
 },
 ],
+  },
