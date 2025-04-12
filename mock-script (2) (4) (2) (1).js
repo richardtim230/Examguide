@@ -8329,7 +8329,21 @@ const exams = [
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Geology", part: "100" },
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Dean's Office (Pharmacy)", part: "100" },
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Nursing", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Mathematics", part: "100" }
+    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Mathematics", part: "100" },
+        { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Agricultural Economics", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Zoology", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Chemistry", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Physics and Engineering Physics", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Microbiology", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Botany", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Biochemistry and Molecular Biology", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Geology", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Dean's Office (Pharmacy)", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Nursing", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Mathematics", part: "100" },
+        { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Family Nutrition and Consumer Science", part: "100" },
+    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Human Nutrition and Dietetics", part: "100" }
+    
     
     
     
