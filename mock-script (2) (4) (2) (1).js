@@ -1,3 +1,6 @@
+const params = new URLSearchParams(window.location.search);
+const page = params.get('page');
+document.title = `Exam Guide - Page ${page}`;
 
 function showSection(sectionId) {
     document.querySelectorAll('.container').forEach(section => {
