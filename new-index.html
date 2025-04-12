@@ -18,7 +18,14 @@
   <meta name="twitter:title" content="De-Brainstormers Exam Page">
   <meta name="twitter:description" content="Log in to De-Brainstormers Exam Page to take your exams seamlessly. A platform designed for easy and professional exam management.">
   <meta name="twitter:image" content="logo.png">
-
+<script type='text/javascript'>
+  window.smartlook||(function(d) {
+    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '424bfe466de56c64d867be2f4112259c1c07021b', { region: 'eu' });
+    </script>
   <style>
 
     * {
@@ -850,14 +857,15 @@
         <!-- Add more Departments as needed -->
     </div>
             </div>
-  <script>document.addEventListener("DOMContentLoaded", function () {
+  <script
+    document.addEventListener("DOMContentLoaded", function () {
     const authSection = document.getElementById("auth-section");
     const registerSection = document.getElementById("registration-section");
 
     function showLogin() {
         authSection.classList.remove("hidden");
         registrationSection.classList.add("hidden");
-        window.history.pushState({}, "", "/schoolmock"); // Update URL without reloading
+        window.history.pushState({}, "", "/school-mock"); // Update URL without reloading
     }
 
     function showRegister() {
