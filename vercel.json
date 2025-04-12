@@ -6,8 +6,8 @@
     { "source": "/past-questions", "destination": "/index.html.htm" },
     { "source": "/register-studentsApp", "destination": "/index.html.htm" },
     { "source": "/login-studentsApp", "destination": "/index.html.htm" },
-    { "source": "/enter-pin", "destination": "/enter-pin.html" },
-    { "source": "/results", "destination": "/results.html" },
+    { "source": "/cbt-exam?oau", "destination": "/tp.html" },
+    { "source": "/general-articles", "destination": "/blog.html" },
     { "source": "/login", "destination": "/login.html" },
     { "source": "/profile-menu", "destination": "/profile-menu.html" },
     { "source": "/communication", "destination": "/mmsg.html" }
@@ -18,8 +18,8 @@
     { "source": "/old-school-mock", "destination": "/school-mock", "permanent": true },
     { "source": "/old-register-studentsApp", "destination": "/register-studentsApp", "permanent": true },
     { "source": "/old-login-studentsApp", "destination": "/login-studentsApp", "permanent": true },
-    { "source": "/old-enter-pin", "destination": "/enter-pin", "permanent": true },
-    { "source": "/old-results", "destination": "/results", "permanent": true },
+    { "source": "/old-cbt-exam?oau", "destination": "/cbt-exam?oau", "permanent": true },
+    { "source": "/old-general-articles", "destination": "/general-articles", "permanent": true },
     { "source": "/old-profile-menu", "destination": "/profile-menu", "permanent": true },
     { "source": "/old-communication", "destination": "/communication", "permanent": true }
       
