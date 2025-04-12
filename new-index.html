@@ -677,7 +677,6 @@
 </div>
 
 
-
 <!-- Registration Section -->
 <div id="registration-section" class="container hidden">
       <div class="welcome-header">
@@ -851,7 +850,33 @@
         <!-- Add more Departments as needed -->
     </div>
             </div>
-  
+  <script>document.addEventListener("DOMContentLoaded", function () {
+    const authSection = document.getElementById("auth-section");
+    const registerSection = document.getElementById("registration-section");
+
+    function showLogin() {
+        authSection.classList.remove("hidden");
+        registrationSection.classList.add("hidden");
+        window.history.pushState({}, "", "/schoolmock"); // Update URL without reloading
+    }
+
+    function showRegister() {
+        authSection.classList.add("hidden");
+        registerSection.classList.remove("hidden");
+        window.history.pushState({}, "", "/mock-registration"); // Update URL without reloading
+    }
+
+    document.getElementById("registerAccountBtn").addEventListener("click", showRegister);
+    document.getElementById("backToLoginBtn").addEventListener("click", showLogin);
+
+    // Check current URL and show the correct section
+    if (window.location.pathname === "/mock-registration") {
+        showRegister();
+    } else {
+        showLogin();
+    }
+});
+  </script>
 
 <!-- Include pdf-lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
