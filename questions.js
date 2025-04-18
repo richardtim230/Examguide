@@ -43,6 +43,179 @@ const examSets = {
     { question: "Which reagent is used to confirm the presence of carbonate ions?", options: ["Dilute HCl", "AgNO₃", "BaCl₂", "NaOH"], answer: "Dilute HCl", explanation: "Carbonates react with dilute hydrochloric acid (HCl) to release carbon dioxide (CO₂), which can be detected by passing it through lime water." },
     { question: "What is the color of the precipitate formed when aluminum ions react with NaOH?", options: ["White", "Blue", "Green", "Yellow"], answer: "White", explanation: "Aluminum ions (Al³⁺) react with sodium hydroxide (NaOH) to form a white precipitate of aluminum hydroxide (Al(OH)₃)." },
     ],
+
+    
+"EXAM007": [
+        {
+        question: "Which of the following is the strongest type of intermolecular force?",
+        options: ["Van der Waals forces", "Dipole-dipole interactions", "Hydrogen bonding", "London dispersion forces"],
+        answer: "Hydrogen bonding",
+        explanation: "Hydrogen bonding is a strong type of dipole-dipole interaction that occurs between hydrogen and highly electronegative atoms like oxygen, nitrogen, or fluorine. <br>Van der Waals forces are a general term encompassing dipole-dipole, dipole-induced dipole, and London dispersion forces. <br>London dispersion forces are the weakest intermolecular forces, arising from temporary fluctuations in electron distribution. <br>Dipole-dipole interactions occur between polar molecules but are weaker than hydrogen bonds."
+        },
+        {
+        question: "Which of the following compounds is most likely to exhibit hydrogen bonding?",
+        options: ["CH₄", "H₂S", "NH₃", "HCl"],
+        answer: "NH₃",
+        explanation: "Hydrogen bonding requires a hydrogen atom bonded to a highly electronegative atom (N, O, or F). <br>NH₃ contains a hydrogen atom bonded to nitrogen, allowing for hydrogen bonding. <br>CH₄ is nonpolar and exhibits only London dispersion forces. <br>H₂S exhibits dipole-dipole interactions, but the electronegativity difference is not high enough for significant hydrogen bonding. <br>HCl exhibits dipole-dipole interactions, but the electronegativity difference is not high enough for significant hydrogen bonding."
+        },
+        {
+        question: "Hydrogen bonding is responsible for the unusually high boiling point of which of the following?",
+        options: ["H₂S", "H₂Se", "H₂Te", "H₂O"],
+        answer: "H₂O",
+        explanation: "Water (H₂O) exhibits strong hydrogen bonding due to the high electronegativity of oxygen. <br>This hydrogen bonding requires more energy to break, resulting in a higher boiling point compared to other group 16 hydrides. <br>H₂S, H₂Se, and H₂Te exhibit weaker intermolecular forces (primarily dipole-dipole and London dispersion forces) and thus have lower boiling points."
+        },
+        {
+        question: "In which of the following pairs can hydrogen bonding occur?",
+        options: ["CH₄ and CH₄", "H₂O and CH₄", "H₂O and NH₃", "H₂S and H₂S"],
+        answer: "H₂O and NH₃",
+        explanation: "Hydrogen bonding can occur between a hydrogen atom bonded to N, O, or F in one molecule and a lone pair on N, O, or F in another molecule. <br>H₂O has hydrogen atoms bonded to oxygen and lone pairs on oxygen, while NH₃ has hydrogen atoms bonded to nitrogen and a lone pair on nitrogen. <br>CH₄ is nonpolar and cannot participate in hydrogen bonding. H₂S has hydrogen atoms bonded to sulfur, but sulfur is not electronegative enough to form strong hydrogen bonds."
+        },
+        {
+        question: "Which of the following properties is NOT influenced by hydrogen bonding?",
+        options: ["Boiling point", "Surface tension", "Viscosity", "Molar mass"],
+        answer: "Molar mass",
+        explanation: "Boiling point, surface tension, and viscosity are all influenced by intermolecular forces, including hydrogen bonding. Stronger intermolecular forces lead to higher boiling points, surface tension, and viscosity. <br>Molar mass is an intrinsic property of a molecule determined by the sum of the atomic masses of its constituent atoms and is independent of intermolecular forces."
+        },
+        {
+        question: "What is the primary reason ice is less dense than liquid water?",
+        options: ["Covalent bonds break upon freezing.", "Hydrogen bonds force water molecules to be closer together in the solid phase.", "Hydrogen bonds force water molecules to be farther apart in the solid phase.", "Ice has a lower molar mass than water."],
+        answer: "Hydrogen bonds force water molecules to be farther apart in the solid phase.",
+        explanation: "In ice, water molecules form a crystal lattice structure due to hydrogen bonding. <br>This structure forces the molecules to be farther apart than in liquid water, where the hydrogen bonds are constantly breaking and reforming, allowing the molecules to pack more closely. <br>Covalent bonds do not break upon freezing. Ice doesn't have a lower molar mass."
+        },
+        {
+        question: "Which of the following statements about hydrogen bonding is FALSE?",
+        options: ["It is a type of intermolecular force.", "It is stronger than a covalent bond.", "It involves a hydrogen atom bonded to a highly electronegative atom.", "It is responsible for the high boiling point of water."],
+        answer: "It is stronger than a covalent bond.",
+        explanation: "Hydrogen bonds are intermolecular forces, which are significantly weaker than intramolecular forces like covalent bonds. Covalent bonds involve the sharing of electrons between atoms, while hydrogen bonds are electrostatic attractions between molecules. The other statements are true about hydrogen bonding."
+        },
+        {
+        question: "In DNA, hydrogen bonds are responsible for:",
+        options: ["Linking amino acids together.", "Connecting sugars and phosphates in the backbone.", "Holding the two strands of the double helix together.", "Catalyzing enzymatic reactions."],
+        answer: "Holding the two strands of the double helix together.",
+        explanation: "Hydrogen bonds form between the nitrogenous bases (adenine, thymine, guanine, and cytosine) on the two strands of the DNA double helix. <br>These bonds hold the two strands together in a complementary fashion (A with T, and G with C). <br>Amino acids are linked by peptide bonds. Sugars and phosphates are linked by phosphodiester bonds. Enzymes catalyze reactions, but hydrogen bonds are not directly involved in catalysis."
+        },
+        {
+        question: "Which of the following molecules CANNOT act as a hydrogen bond donor?",
+        options: ["HF", "H₂O", "CH₃OCH₃", "NH₃"],
+        answer: "CH₃OCH₃",
+        explanation: "A hydrogen bond donor must have a hydrogen atom bonded to a highly electronegative atom (N, O, or F). <br>HF, H₂O, and NH₃ all have hydrogen atoms bonded to F, O, and N respectively, making them hydrogen bond donors. <br>CH₃OCH₃ (dimethyl ether) does not have a hydrogen atom directly bonded to the oxygen atom. The hydrogens are bonded to carbon, so it can only act as a hydrogen bond acceptor through the lone pairs on the oxygen atom."
+        },
+        {
+        question: "Which of the following is a hydrogen bond acceptor but NOT a hydrogen bond donor?",
+        options: ["H₂O", "NH₃", "HF", "Diethyl ether (CH₃CH₂OCH₂CH₃)"],
+        answer: "Diethyl ether (CH₃CH₂OCH₂CH₃)",
+        explanation: "A hydrogen bond acceptor must have a lone pair on a highly electronegative atom (N, O, or F). A hydrogen bond donor must have a hydrogen atom bonded to a highly electronegative atom (N, O, or F). <br>H₂O, NH₃, and HF all have hydrogen atoms bonded to electronegative atoms and lone pairs on electronegative atoms, so they are both hydrogen bond donors and acceptors. <br>Diethyl ether has an oxygen atom with lone pairs but no hydrogen atoms bonded to the oxygen atom, so it is only a hydrogen bond acceptor."
+        },
+        {
+        question: "Which of the following affects the strength of a hydrogen bond?",
+        options: ["The distance between the donor and acceptor atoms", "The angle between the donor, hydrogen, and acceptor atoms", "The electronegativity of the donor and acceptor atoms", "All of the above"],
+        answer: "All of the above",
+        explanation: "The strength of a hydrogen bond is influenced by several factors: <br><b>Distance:</b> Shorter distances between the donor and acceptor atoms lead to stronger interactions. <br><b>Angle:</b> A linear arrangement (180°) between the donor, hydrogen, and acceptor atoms maximizes the electrostatic interaction and results in a stronger hydrogen bond. Deviations from linearity weaken the bond. <br><b>Electronegativity:</b> Higher electronegativity of the donor and acceptor atoms increases the polarity of the bond and strengthens the hydrogen bond."
+        },
+        {
+        question: "Which of the following functional groups is MOST likely to participate in strong hydrogen bonding?",
+        options: ["-CH₃", "-SH", "-OH", "-Cl"],
+        answer: "-OH",
+        explanation: "The -OH (hydroxyl) group is highly polar and capable of both donating and accepting hydrogen bonds. <br>The electronegativity difference between oxygen and hydrogen is significant, leading to a strong dipole moment. <br>-CH₃ (methyl) is nonpolar and does not participate in hydrogen bonding. <br>-SH (thiol) can participate in hydrogen bonding, but sulfur is less electronegative than oxygen, resulting in weaker hydrogen bonds. <br>-Cl (chloride) can act as a hydrogen bond acceptor, but the hydrogen bonds are typically weaker than those involving oxygen or nitrogen."
+        },
+        {
+        question: "In proteins, hydrogen bonds are crucial for:",
+        options: ["Primary structure", "Secondary structure", "Tertiary structure", "All of the above"],
+        answer: "All of the above",
+        explanation: "Hydrogen bonds play a crucial role in all levels of protein structure: <br><b>Primary structure:</b> Although peptide bonds are the main force, hydrogen bonds contribute to the specific arrangement of amino acids. <br><b>Secondary structure:</b> Hydrogen bonds between the carbonyl oxygen and amide hydrogen atoms in the polypeptide backbone stabilize structures like alpha-helices and beta-sheets. <br><b>Tertiary structure:</b> Hydrogen bonds between side chains of amino acids contribute to the overall three-dimensional folding of the protein."
+        },
+        {
+        question: "Which of the following solvents is most likely to disrupt hydrogen bonding between solute molecules?",
+        options: ["Hexane (C₆H₁₄)", "Benzene (C₆H₆)", "Ethanol (CH₃CH₂OH)", "Carbon tetrachloride (CCl₄)"],
+        answer: "Ethanol (CH₃CH₂OH)",
+        explanation: "Solvents that can form hydrogen bonds themselves are effective at disrupting hydrogen bonds between solute molecules. <br>Ethanol (CH₃CH₂OH) has a hydroxyl group (-OH) and can participate in hydrogen bonding with both the donor and acceptor sites of the solute molecules, effectively competing with the solute-solute hydrogen bonds. <br>Hexane (C₆H₁₄), Benzene (C₆H₆) and Carbon tetrachloride (CCl₄) are nonpolar solvents and cannot form hydrogen bonds, so they are less effective at disrupting hydrogen bonding between solute molecules."
+        },
+        {
+        question: "Which of the following molecules is capable of intramolecular hydrogen bonding?",
+        options: ["Ethanol", "Water", "o-Nitrophenol", "Methane"],
+        answer: "o-Nitrophenol",
+        explanation: "Intramolecular hydrogen bonding occurs when a hydrogen bond forms between atoms within the same molecule. <br><i>o</i>-Nitrophenol has a hydroxyl group (-OH) and a nitro group (-NO₂) positioned close enough to each other on the benzene ring to allow for a hydrogen bond to form between the hydrogen of the -OH group and an oxygen of the -NO₂ group. <br>Ethanol and water exhibit intermolecular hydrogen bonding. Methane does not exhibit hydrogen bonding."
+        },
+        {
+        question: "Which of the following interactions is most important for the structure of alpha-helices in proteins?",
+        options: ["Hydrophobic interactions", "Ionic bonds", "Van der Waals forces", "Hydrogen bonds"],
+        answer: "Hydrogen bonds",
+        explanation: "Alpha-helices are stabilized primarily by hydrogen bonds. These hydrogen bonds form between the carbonyl oxygen of one amino acid residue and the amide hydrogen of another amino acid residue four residues down the chain. <br>Hydrophobic interactions, ionic bonds, and Van der Waals forces contribute to protein structure, especially tertiary structure, but are not the primary stabilizing force in alpha-helices."
+        },
+        {
+        question: "What is the effect of hydrogen bonding on the viscosity of a liquid?",
+        options: ["Decreases viscosity", "Increases viscosity", "Has no effect on viscosity", "Only affects viscosity at high temperatures"],
+        answer: "Increases viscosity",
+        explanation: "Viscosity is a measure of a liquid's resistance to flow. <br>Hydrogen bonding increases the intermolecular forces between molecules, making it more difficult for them to move past each other. <br>This increased resistance to flow results in a higher viscosity."
+        },
+        {
+        question: "Which of the following alcohols would have the highest boiling point?",
+        options: ["Methanol (CH₃OH)", "Ethanol (CH₃CH₂OH)", "Propanol (CH₃CH₂CH₂OH)", "Butanol (CH₃CH₂CH₂CH₂OH)"],
+        answer: "Butanol (CH₃CH₂CH₂CH₂OH)",
+        explanation: "Boiling point increases with increasing molar mass and increasing strength of intermolecular forces. <br>All the given alcohols can form hydrogen bonds. <br>As the carbon chain length increases (from methanol to butanol), the molar mass increases, and the London dispersion forces become stronger. <br>Therefore, butanol, with the longest carbon chain and the highest molar mass, will have the highest boiling point due to the combined effects of hydrogen bonding and stronger London dispersion forces."
+        },
+        {
+        question: "Which of the following statements best describes the nature of hydrogen bonding?",
+        options: ["A strong covalent bond between hydrogen and a highly electronegative atom.", "A weak ionic bond between hydrogen and a highly electronegative atom.", "An electrostatic attraction between a hydrogen atom bonded to a highly electronegative atom and a lone pair of electrons on another electronegative atom.", "A temporary dipole-induced dipole interaction."],
+        answer: "An electrostatic attraction between a hydrogen atom bonded to a highly electronegative atom and a lone pair of electrons on another electronegative atom.",
+        explanation: "Hydrogen bonding is an electrostatic attraction, not a covalent or ionic bond. <br>It occurs when a hydrogen atom bonded to a highly electronegative atom (such as O, N, or F) experiences a strong attraction to a lone pair of electrons on another electronegative atom in a different molecule or in a different part of the same molecule. <br>It's stronger than temporary dipole-induced dipole interactions (London dispersion forces) but weaker than covalent or ionic bonds."
+        },
+        {
+        question: "Which of the following factors does NOT contribute to the strength of hydrogen bonds?",
+        options: ["Electronegativity of the participating atoms", "Distance between the atoms", "Geometry of the bond", "Polarizability of the participating atoms"],
+        answer: "Polarizability of the participating atoms",
+        explanation: "While polarizability is important for van der Waals forces, electronegativity, distance, and bond geometry are the most significant contributors to the strength of hydrogen bonds. Higher electronegativity difference leads to stronger dipoles and stronger attraction. The closer the atoms and the more linear the bond, the stronger the interaction. Polarizability is related to the ease with which electron clouds are distorted, influencing dispersion forces more than hydrogen bonds."
+        },
+        {
+        question: "Which of the following is an example of hydrogen bonding playing a crucial role in biological systems?",
+        options: ["The reaction of an acid with a base.", "The formation of a metallic bond.", "The base pairing in DNA.", "The dissolution of NaCl in water."],
+        answer: "The base pairing in DNA.",
+        explanation: "Hydrogen bonding is essential for the specific base pairing in DNA (adenine with thymine, guanine with cytosine). These hydrogen bonds hold the two strands of the double helix together, allowing for accurate replication and transcription of genetic information. Acid-base reactions involve proton transfer. Metallic bonds involve the sharing of electrons in a metal lattice. Dissolution of NaCl involves ion-dipole interactions."
+        },
+        {
+        question: "Which molecule can form the most hydrogen bonds with water?",
+        options: ["Methane (CH₄)", "Ethanol (CH₃CH₂OH)", "Diethyl ether (CH₃CH₂OCH₂CH₃)", "Ethane (C₂H₆)"],
+        answer: "Ethanol (CH₃CH₂OH)",
+        explanation: "To form the most hydrogen bonds with water, a molecule needs to be both a good hydrogen bond donor and a good hydrogen bond acceptor. Ethanol can donate a hydrogen bond through its -OH group and accept hydrogen bonds through the oxygen atom. Diethyl ether can only accept hydrogen bonds through its oxygen atom. Methane and ethane are nonpolar and cannot participate in hydrogen bonding. Therefore, ethanol can form the most hydrogen bonds with water compared to the other options."
+        },
+        {
+        question: "What is the impact of hydrogen bonding on the surface tension of water?",
+        options: ["It decreases surface tension.", "It increases surface tension.", "It has no effect on surface tension.", "It only affects surface tension at very low temperatures."],
+        answer: "It increases surface tension.",
+        explanation: "Surface tension is the tendency of liquid surfaces to minimize their area. <br>Water molecules at the surface experience a net inward pull due to the cohesive forces (hydrogen bonding) between them. <br>This inward pull increases the surface tension, making it more difficult to break the surface."
+        },
+        {
+        question: "Which of the following requires breaking hydrogen bonds?",
+        options: ["Condensing water vapor into liquid water", "Melting ice into liquid water", "Freezing liquid water into ice", "Sublimation of dry ice (solid CO₂)"],
+        answer: "Melting ice into liquid water",
+        explanation: "Melting ice requires energy to overcome the hydrogen bonds holding the water molecules in the rigid crystal lattice of ice. Condensing water vapor forms hydrogen bonds. Freezing water forms more hydrogen bonds, releasing energy. Sublimation of dry ice (solid CO₂) involves overcoming intermolecular forces (London dispersion forces) between CO₂ molecules, not hydrogen bonds."
+        },
+        {
+        question: "Arrange the following compounds in increasing order of boiling point: CH₄, H₂O, H₂S",
+        options: ["H₂O < H₂S < CH₄", "CH₄ < H₂S < H₂O", "H₂S < CH₄ < H₂O", "CH₄ < H₂O < H₂S"],
+        answer: "CH₄ < H₂S < H₂O",
+        explanation: "Boiling point depends on the strength of intermolecular forces. CH₄ has only London dispersion forces (weakest). H₂S has dipole-dipole interactions and London dispersion forces. H₂O has hydrogen bonds (strongest), dipole-dipole interactions, and London dispersion forces. Therefore, the boiling point order is CH₄ < H₂S < H₂O."
+        },
+        {
+        question: "Consider a mixture of ethanol (CH₃CH₂OH) and water. Which type of intermolecular force would be present?",
+        options: ["London dispersion forces only", "Dipole-dipole interactions only", "Hydrogen bonding only", "London dispersion forces, dipole-dipole interactions, and hydrogen bonding"],
+        answer: "London dispersion forces, dipole-dipole interactions, and hydrogen bonding",
+        explanation: "Ethanol and water are polar molecules. All molecules exhibit London dispersion forces. Since both ethanol and water are polar, they will have dipole-dipole interactions. Due to the presence of -OH group in both molecules, hydrogen bonding will occur. Therefore, all these forces will be present."
+        },
+        {
+        question: "Which of the following molecules has the highest potential for hydrogen bonding with itself?",
+        options: ["CH₃Cl", "CH₃OCH₃", "CH₃COOH", "CH₃CH₂CH₃"],
+        answer: "CH₃COOH",
+        explanation: "The potential for hydrogen bonding depends on the presence of both a hydrogen bond donor (H bonded to O, N, or F) and a hydrogen bond acceptor (lone pair on O, N, or F). <br>CH₃COOH (acetic acid) has both a hydroxyl group (-OH) that can donate a hydrogen bond and a carbonyl oxygen (C=O) that can accept a hydrogen bond. It can even form a dimer with itself through two hydrogen bonds. CH₃Cl has dipole-dipole interactions but no hydrogen bonding. CH₃OCH₃ can only act as a hydrogen bond acceptor. CH₃CH₂CH₃ is nonpolar and exhibits only London dispersion forces."
+        },
+        {
+        question: "Why does hydrogen fluoride (HF) have a higher boiling point than hydrogen chloride (HCl) despite fluorine being smaller than chlorine?",
+        options: ["HCl has stronger dipole-dipole interactions", "HF exhibits hydrogen bonding, which is stronger than the dipole-dipole interactions in HCl", "The molar mass of HF is greater than HCl", "HCl is more polar than HF"],
+        answer: "HF exhibits hydrogen bonding, which is stronger than the dipole-dipole interactions in HCl",
+        explanation: "While both HF and HCl are polar molecules, HF exhibits hydrogen bonding due to the high electronegativity of fluorine. <br>Hydrogen bonding is a stronger intermolecular force than the dipole-dipole interactions present in HCl. <br>The hydrogen bonding in HF leads to stronger intermolecular attractions and a higher boiling point, even though HCl has a larger molar mass (which would generally increase the boiling point due to increased London dispersion forces)."
+        },
+    ],
+    
 "EXAM005": [
     { question: "What type of bond is formed when electrons are shared between atoms?", options: ["Covalent bond", "Ionic bond", "Metallic bond", "Hydrogen bond"], answer: "Covalent bond", explanation: "Covalent bonds are formed when atoms share pairs of electrons to achieve stability, typically between nonmetals." },
     { question: "What is the bond angle in a tetrahedral molecule like CH₄?", options: ["90°", "109.5°", "120°", "180°"], answer: "109.5°", explanation: "In a tetrahedral molecule, the bond angles are 109.5° due to the symmetrical arrangement of bonds around the central atom." },
