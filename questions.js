@@ -1,5 +1,205 @@
 // Exam code mapping to question sets
-const examSets = {
+const examSets =  {
+"EXAM009": [
+        {
+        question: "What is the defining characteristic of a coordinate (dative) bond?",
+        options: ["Equal sharing of electrons between two atoms", "Transfer of electrons from one atom to another", "One atom provides both electrons for the bond", "Attraction between oppositely charged ions"],
+        answer: "One atom provides both electrons for the bond",
+        explanation: "In a coordinate bond, one atom donates both electrons to form the shared pair, while the other atom contributes no electrons to the bond. This is in contrast to covalent bonds where each atom contributes one electron."
+        },
+        {
+        question: "Which species acts as the Lewis base in the formation of a coordinate bond?",
+        options: ["The electron acceptor", "The electron donor", "The proton acceptor", "The proton donor"],
+        answer: "The electron donor",
+        explanation: "A Lewis base is a species that donates a pair of electrons. In coordinate bond formation, the atom donating the electron pair acts as the Lewis base. The electron acceptor is a Lewis acid."
+        },
+        {
+        question: "Which species acts as the Lewis acid in the formation of a coordinate bond?",
+        options: ["The electron acceptor", "The electron donor", "The proton acceptor", "The proton donor"],
+        answer: "The electron acceptor",
+        explanation: "A Lewis acid is a species that accepts a pair of electrons. In coordinate bond formation, the atom accepting the electron pair acts as the Lewis acid."
+        },
+        {
+        question: "In the ammonium ion (NH₄⁺), how many of the N-H bonds are coordinate bonds?",
+        options: ["0", "1", "2", "4"],
+        answer: "0",
+        explanation: "While the formation of NH₄⁺ involves a coordinate bond initially (NH₃ + H⁺ → NH₄⁺), once formed, all four N-H bonds are equivalent and indistinguishable. The positive charge is delocalized over the entire ion. So the final product doesn't have coordinate bonds anymore."
+        },
+        {
+        question: "Which of the following compounds contains a coordinate bond?",
+        options: ["NaCl", "H₂O", "BF₃", "O₃"],
+        answer: "O₃",
+        explanation: "Ozone (O₃) contains a coordinate bond. One oxygen atom forms a double bond with another oxygen atom, and then donates a lone pair of electrons to a third oxygen atom to form a coordinate bond. NaCl is ionic. H₂O has covalent bonds. BF₃ can accept a coordinate bond but doesn't inherently possess one."
+        },
+        {
+        question: "Which of the following describes the bonding in aluminum chloride dimer (Al₂Cl₆)?",
+        options: ["Ionic bonds only", "Covalent bonds only", "Coordinate bonds only", "Covalent and coordinate bonds"],
+        answer: "Covalent and coordinate bonds",
+        explanation: "In Al₂Cl₆, each aluminum atom is covalently bonded to two terminal chlorine atoms. To achieve an octet, each aluminum atom also forms a coordinate bond with a chlorine atom from the other AlCl₃ unit, forming a bridge. Thus, Al₂Cl₆ contains both covalent and coordinate bonds."
+        },
+        {
+        question: "What is the hybridization of the nitrogen atom in NH₃?",
+        options: ["sp", "sp²", "sp³", "dsp²"],
+        answer: "sp³",
+        explanation: "Nitrogen in NH₃ has three bonding pairs and one lone pair, totaling four electron domains. This leads to sp³ hybridization."
+        },
+        {
+        question: "What is the role of transition metal ions in forming coordinate complexes?",
+        options: ["They act as Lewis bases", "They act as Lewis acids", "They form ionic bonds with ligands", "They form hydrogen bonds with ligands"],
+        answer: "They act as Lewis acids",
+        explanation: "Transition metal ions often have empty d-orbitals and act as Lewis acids, accepting electron pairs from ligands to form coordinate complexes. Ligands act as Lewis bases."
+        },
+        {
+        question: "Which of the following ligands is a monodentate ligand?",
+        options: ["Ethylenediamine (en)", "Oxalate (C₂O₄²⁻)", "Ammonia (NH₃)", "Ethylenediaminetetraacetate (EDTA)"],
+        answer: "Ammonia (NH₃)",
+        explanation: "A monodentate ligand binds to a central metal ion through only one donor atom. Ammonia (NH₃) binds through the nitrogen atom. Ethylenediamine (en) is bidentate. Oxalate (C₂O₄²⁻) is bidentate. EDTA is hexadentate."
+        },
+        {
+        question: "Which of the following ligands is a bidentate ligand?",
+        options: ["Cl⁻", "H₂O", "Ethylenediamine (en)", "NH₃"],
+        answer: "Ethylenediamine (en)",
+        explanation: "A bidentate ligand binds to a central metal ion through two donor atoms. Ethylenediamine (en) has two nitrogen atoms that can each donate a lone pair. Cl⁻, H₂O, and NH₃ are monodentate."
+        },
+        {
+        question: "What is the coordination number of the central metal ion in [Ag(NH₃)₂]⁺?",
+        options: ["1", "2", "3", "4"],
+        answer: "2",
+        explanation: "The coordination number is the number of ligand atoms directly bonded to the central metal ion. In [Ag(NH₃)₂]⁺, two ammonia (NH₃) molecules are bonded to the silver ion (Ag⁺), so the coordination number is 2."
+        },
+        {
+        question: "What is the coordination number of the central metal ion in [Fe(en)₃]³⁺?",
+        options: ["3", "4", "6", "12"],
+        answer: "6",
+        explanation: "In [Fe(en)₃]³⁺, the iron(III) ion (Fe³⁺) is coordinated by three ethylenediamine (en) ligands. Each ethylenediamine ligand is bidentate, meaning it binds to the metal ion through two donor atoms (nitrogen atoms). Therefore, the coordination number is 3 ligands x 2 donor atoms/ligand = 6."
+        },
+        {
+        question: "Which of the following is a chelating ligand?",
+        options: ["Cl⁻", "NH₃", "H₂O", "EDTA"],
+        answer: "EDTA",
+        explanation: "A chelating ligand is a multidentate ligand that can form a ring structure with the central metal ion. EDTA (ethylenediaminetetraacetate) is a hexadentate ligand and forms strong complexes with metal ions by 'grabbing' them with multiple donor atoms. Cl⁻, NH₃, and H₂O are monodentate ligands."
+        },
+        {
+        question: "What is the shape of the [Cu(NH₃)₄]²⁺ complex ion?",
+        options: ["Tetrahedral", "Square planar", "Linear", "Octahedral"],
+        answer: "Square planar",
+        explanation: "The [Cu(NH₃)₄]²⁺ complex ion typically adopts a square planar geometry. While tetrahedral is common, Cu²⁺ in this configuration often favors square planar due to electronic effects (Jahn-Teller distortion)."
+        },
+        {
+        question: "Which of the following factors influences the stability of a coordination complex?",
+        options: ["Charge of the metal ion", "Size of the metal ion", "Nature of the ligand", "All of the above"],
+        answer: "All of the above",
+        explanation: "The stability of a coordination complex is affected by: <br><b>Charge of the metal ion:</b> Higher charge generally leads to greater stability. <br><b>Size of the metal ion:</b> Smaller size generally leads to greater stability. <br><b>Nature of the ligand:</b> Stronger Lewis bases and chelating ligands generally form more stable complexes."
+        },
+        {
+        question: "Which of the following complexes is likely to be the most stable?",
+        options: ["[FeCl₆]³⁻", "[Fe(CN)₆]³⁻", "[Fe(H₂O)₆]³⁺", "[FeF₆]³⁻"],
+        answer: "[Fe(CN)₆]³⁻",
+        explanation: "The stability of a complex depends on the nature of the ligand. CN⁻ (cyanide) is a strong-field ligand and forms strong coordinate bonds with transition metal ions, leading to a more stable complex. The other ligands (Cl⁻, H₂O, and F⁻) are weaker field ligands."
+        },
+        {
+        question: "What type of isomerism is possible for [Pt(NH₃)₂Cl₂]?",
+        options: ["Optical isomerism", "Geometric isomerism", "Linkage isomerism", "Ionization isomerism"],
+        answer: "Geometric isomerism",
+        explanation: "[Pt(NH₃)₂Cl₂] can exist as *cis* and *trans* isomers, which are examples of geometric isomerism. The *cis* isomer has the two NH₃ ligands and the two Cl ligands next to each other, while the *trans* isomer has them opposite each other. Square planar complexes can exhibit geometrical isomerism. Tetrahedral complexes generally do not. "
+        },
+        {
+        question: "What is the IUPAC name for K₄[Fe(CN)₆]?",
+        options: ["Potassium hexacyanoferrate(II)", "Potassium hexacyanoiron(II)", "Potassium hexacyanideferrate(II)", "Potassium hexacyanoferrate(III)"],
+        answer: "Potassium hexacyanoferrate(II)",
+        explanation: "The correct IUPAC name is Potassium hexacyanoferrate(II). There are four potassium ions (K⁺), giving a +4 charge. To balance this, the [Fe(CN)₆] must have a -4 charge, resulting in Fe having a +2 oxidation state. Hexacyano indicates six cyanide (CN⁻) ligands, and ferrate is used when the complex is an anion, followed by the oxidation state of iron in Roman numerals."
+        },
+        {
+        question: "Which of the following is an example of a complex used in chemotherapy?",
+        options: ["Hemoglobin", "Chlorophyll", "Vitamin B₁₂", "Cisplatin"],
+        answer: "Cisplatin",
+        explanation: "Cisplatin ([Pt(NH₃)₂Cl₂]) is a platinum-based chemotherapy drug that binds to DNA and interferes with cell division. Hemoglobin and chlorophyll are biological molecules that contain metal ions but are not used in chemotherapy. Vitamin B₁₂ contains cobalt but is a vitamin, not a chemotherapeutic agent."
+        },
+        {
+        question: "Which of the following complexes would you expect to be colored?",
+        options: ["[Zn(NH₃)₄]²⁺", "[Ti(H₂O)₆]³⁺", "[Al(H₂O)₆]³⁺", "[Ca(H₂O)₆]²⁺"],
+        answer: "[Ti(H₂O)₆]³⁺",
+        explanation: "Color in transition metal complexes arises from d-d transitions, where electrons in d-orbitals absorb energy (light) to move to higher energy d-orbitals. This requires partially filled d-orbitals. Ti³⁺ has a d¹ configuration, so it exhibits d-d transitions and is colored. Zn²⁺ has a d¹⁰ configuration, Al³⁺ has no d electrons, and Ca²⁺ has no d electrons so they are colorless."
+        },
+        {
+        question: "What is the general electronic configuration of transition metals?",
+        options: ["ns²np⁶", "(n-1)d¹⁻¹⁰ns⁰⁻²", "ns¹⁻²np⁰⁻⁶", "(n-2)f¹⁻¹⁴(n-1)d⁰⁻¹ns²"],
+        answer: "(n-1)d¹⁻¹⁰ns⁰⁻²",
+        explanation: "Transition metals are characterized by having partially filled d-orbitals. Their general electronic configuration is (n-1)d¹⁻¹⁰ns⁰⁻², where n is the principal quantum number of the outermost shell. The (n-1)d orbitals are filled after the ns orbitals."
+        },
+        {
+        question: "What does Crystal Field Theory (CFT) explain about coordination complexes?",
+        options: ["The types of bonds formed between metal and ligand", "The shapes of the complexes", "The magnetic properties and colors of the complexes", "All of the above"],
+        answer: "The magnetic properties and colors of the complexes",
+        explanation: "Crystal Field Theory (CFT) explains the splitting of d-orbitals in transition metal complexes due to the electrostatic interactions with the ligands. This splitting determines the energy of d-d transitions, which leads to the color and magnetic properties of the complexes. While CFT gives insight into the shape, it's better explained by other theories. It doesn't explain the type of bonding."
+        },
+        {
+        question: "What is the spectrochemical series?",
+        options: ["A list of metal ions arranged by their reducing strength", "A list of ligands arranged by their ability to split d-orbitals", "A list of complexes arranged by their stability constants", "A list of complexes arranged by their colors"],
+        answer: "A list of ligands arranged by their ability to split d-orbitals",
+        explanation: "The spectrochemical series is a ranking of ligands based on their ability to split the d-orbitals of a metal ion in a coordination complex. Ligands that cause a large splitting are called strong-field ligands, while those that cause a small splitting are called weak-field ligands."
+        },
+        {
+        question: "Which of the following ligands is considered a strong-field ligand?",
+        options: ["I⁻", "Br⁻", "Cl⁻", "CN⁻"],
+        answer: "CN⁻",
+        explanation: "Cyanide (CN⁻) is a strong-field ligand, meaning it causes a large splitting of the d-orbitals. The halide ions (I⁻, Br⁻, Cl⁻) are weak-field ligands."
+        },
+        {
+        question: "A complex with a large crystal field splitting energy (Δ) will likely be:",
+        options: ["High spin and weakly colored", "High spin and strongly colored", "Low spin and weakly colored", "Low spin and strongly colored"],
+        answer: "Low spin and strongly colored",
+        explanation: "A large crystal field splitting energy (Δ) means that the energy gap between the d-orbitals is large. This favors low-spin complexes because it requires less energy to pair electrons in the lower energy d-orbitals than to promote them to the higher energy orbitals. Also, a larger Δ means that the complex will absorb higher energy (shorter wavelength) light and will be more intensely colored."
+        },
+        {
+        question: "Which of the following is a common application of coordination complexes?",
+        options: ["Catalysis", "Pigments and dyes", "Medicine", "All of the above"],
+        answer: "All of the above",
+        explanation: "Coordination complexes have diverse applications: <br><b>Catalysis:</b> Many industrial catalysts are coordination complexes (e.g., Wilkinson's catalyst). <br><b>Pigments and dyes:</b> Many colored compounds used as pigments and dyes are coordination complexes. <br><b>Medicine:</b> Some coordination complexes are used as drugs (e.g., cisplatin), and MRI contrast agents."
+        },
+        {
+        question: "What is the oxidation state of cobalt in [Co(NH₃)₅Cl]Cl₂?",
+        options: ["+1", "+2", "+3", "+4"],
+        answer: "+3",
+        explanation: "The complex is [Co(NH₃)₅Cl]Cl₂. The counter ions are 2 Cl⁻, so the complex has a +2 charge. NH₃ is neutral. Cl is -1 in the complex. Hence Co + 5(0) + (-1) = +2, so Co = +3."
+        },
+        {
+        question: "Which type of isomerism arises from different connectivity sequences of the same ligands?",
+        options: ["Geometric", "Optical", "Linkage", "Ionization"],
+        answer: "Linkage",
+        explanation: "Linkage isomerism occurs when an ambidentate ligand (a ligand that can bind through more than one atom) coordinates to a metal ion through different donor atoms. For instance, the thiocyanate ion (SCN⁻) can bind through sulfur or nitrogen."
+        },
+        {
+        question: "Which of the following coordination complexes exhibits optical isomerism?",
+        options: ["[PtCl₂](NH₃)₂", "trans-[CoCl₂(en)₂]⁺", "cis-[CoCl₂(en)₂]⁺", "[Zn(NH₃)₄]²⁺"],
+        answer: "cis-[CoCl₂(en)₂]⁺",
+        explanation: "Optical isomers are non-superimposable mirror images of each other (enantiomers). cis-[CoCl₂(en)₂]⁺ is chiral and can exist as enantiomers. trans-[CoCl₂(en)₂]⁺ is achiral because it has a plane of symmetry. [PtCl₂](NH₃)₂ is square planar, therefore doesn't have optical isomers and [Zn(NH₃)₄]²⁺ is tetrahedral, therefore it cannot exhibit optical isomerism."
+        },
+        {
+        question: "What is the denticity of the ligand EDTA⁴⁻?",
+        options: ["Monodentate", "Bidentate", "Tridentate", "Hexadentate"],
+        answer: "Hexadentate",
+        explanation: "EDTA⁴⁻ (ethylenediaminetetraacetate) is a hexadentate ligand, meaning it can bind to a central metal ion through six donor atoms (two nitrogen atoms and four oxygen atoms)."
+        },
+        {
+        question: "What is the relationship between chelation and the stability of a coordination complex?",
+        options: ["Chelation decreases stability", "Chelation increases stability", "Chelation has no effect on stability", "Chelation only affects the rate of complex formation"],
+        answer: "Chelation increases stability",
+        explanation: "The chelate effect refers to the increased stability of complexes formed with chelating ligands (multidentate ligands) compared to complexes formed with similar monodentate ligands. This is primarily due to an increase in entropy upon complex formation."
+        },
+        {
+        question: "Which of the following complexes is most likely to exhibit a square planar geometry?",
+        options: ["[FeCl₄]²⁻", "[Ni(CN)₄]²⁻", "[MnCl₄]²⁻", "[CoCl₄]²⁻"],
+        answer: "[Ni(CN)₄]²⁻",
+        explanation: "Square planar geometry is commonly observed for d⁸ metal ions, particularly Ni²⁺, Pt²⁺, and Au³⁺ with strong-field ligands. [Ni(CN)₄]²⁻ fits this description. The other complexes are more likely to be tetrahedral."
+        },
+        {
+        question: "What is the primary reason for the color of transition metal complexes?",
+        options: ["Ligand to metal charge transfer (LMCT)", "Metal to ligand charge transfer (MLCT)", "d-d transitions", "Vibrational transitions"],
+        answer: "d-d transitions",
+        explanation: "The colors of transition metal complexes arise primarily from d-d transitions. These are electronic transitions where electrons in d-orbitals absorb energy (light) to move to higher energy d-orbitals. The energy of these transitions falls within the visible region of the electromagnetic spectrum. LMCT and MLCT are charge transfer transitions that can also contribute to color, but d-d transitions are the most common reason. Vibrational transitions occur in the infrared region."
+        },
+    ],
 "EXAM008": [
         {
         question: "What determines the polarity of a chemical bond?",
