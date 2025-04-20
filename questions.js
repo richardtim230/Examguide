@@ -1,5 +1,169 @@
 // Exam code mapping to question sets
 const examSets =  {
+    "EXAM010": [
+        {
+        question: "What is the 'sea of electrons' model used to describe?",
+        options: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Hydrogen bonding"],
+        answer: "Metallic bonding",
+        explanation: "The 'sea of electrons' model describes metallic bonding, where valence electrons are delocalized and free to move throughout the metal lattice, creating a 'sea' of electrons surrounding positively charged metal ions."
+        },
+        {
+        question: "In metallic bonding, what are the positively charged ions?",
+        options: ["Anions", "Cations", "Atoms", "Molecules"],
+        answer: "Cations",
+        explanation: "In metallic bonding, metal atoms lose their valence electrons, becoming positively charged ions (cations). These cations are arranged in a lattice structure, surrounded by the 'sea' of delocalized electrons."
+        },
+        {
+        question: "Which of the following is a characteristic property of metals due to metallic bonding?",
+        options: ["Brittleness", "Low electrical conductivity", "High melting point", "Poor thermal conductivity"],
+        answer: "High melting point",
+        explanation: "Metals typically have high melting points because the metallic bonds are strong and require significant energy to break. Metals are also known for their malleability (not brittleness), and high electrical and thermal conductivity."
+        },
+        {
+        question: "Which of the following best explains the electrical conductivity of metals?",
+        options: ["Fixed electrons within the metal lattice", "Delocalized electrons that can move freely", "Repulsion between metal cations", "Attraction between metal cations and anions"],
+        answer: "Delocalized electrons that can move freely",
+        explanation: "The delocalized electrons in the 'sea of electrons' model can move freely throughout the metal lattice, carrying an electrical charge when a voltage is applied. This is what allows metals to conduct electricity efficiently."
+        },
+        {
+        question: "What is malleability?",
+        options: ["The ability to be stretched into a wire", "The ability to be hammered or rolled into a sheet", "The ability to conduct electricity", "The ability to conduct heat"],
+        answer: "The ability to be hammered or rolled into a sheet",
+        explanation: "Malleability is the ability of a material to be deformed under compressive stress, such as being hammered or rolled into a thin sheet. Ductility is the ability to be stretched into a wire."
+        },
+        {
+        question: "What is ductility?",
+        options: ["The ability to be stretched into a wire", "The ability to be hammered or rolled into a sheet", "The ability to conduct electricity", "The ability to conduct heat"],
+        answer: "The ability to be stretched into a wire",
+        explanation: "Ductility is the ability of a material to be deformed under tensile stress, such as being stretched into a wire. Malleability is the ability to be hammered into a sheet."
+        },
+        {
+        question: "Why are metals malleable and ductile?",
+        options: ["Strong ionic bonds prevent dislocation movement", "Delocalized electrons allow atoms to slide past each other", "Covalent bonds are easily broken", "Metals have a rigid crystal structure"],
+        answer: "Delocalized electrons allow atoms to slide past each other",
+        explanation: "The delocalized electrons in metallic bonding act as a 'glue', allowing metal atoms to slide past each other without breaking the bonds completely. This makes metals malleable and ductile. Ionic and covalent bonds would hinder this movement, making materials brittle."
+        },
+        {
+        question: "What happens to the strength of metallic bonding as the number of valence electrons increases (within the same period)?",
+        options: ["Decreases", "Increases", "Remains the same", "Depends on the atomic size"],
+        answer: "Increases",
+        explanation: "Generally, the strength of metallic bonding increases with the number of valence electrons because there are more electrons contributing to the 'sea of electrons', leading to stronger attractions between the cations and the electron sea. This is true within the same period; transition metals deviate."
+        },
+        {
+        question: "Which of the following metals is expected to have the highest melting point?",
+        options: ["Sodium (Na)", "Potassium (K)", "Iron (Fe)", "Aluminum (Al)"],
+        answer: "Iron (Fe)",
+        explanation: "Iron (Fe) is a transition metal with a high number of valence electrons and strong metallic bonding, resulting in a high melting point. Sodium (Na) and Potassium (K) are alkali metals with weaker metallic bonding. Aluminum (Al) has more valence electrons than Na and K, so it would generally be higher than them, but iron has more valence electrons."
+        },
+        {
+        question: "What is an alloy?",
+        options: ["A compound formed between two nonmetals", "A mixture of two or more metals", "A mixture of a metal and a nonmetal", "A crystalline form of a pure metal"],
+        answer: "A mixture of two or more metals",
+        explanation: "An alloy is a metallic substance composed of two or more elements (at least one of which is a metal) that are intimately mixed. Alloys are often created to improve the properties of the base metal."
+        },
+        {
+        question: "What is a substitutional alloy?",
+        options: ["An alloy where atoms of one metal replace atoms of another metal in the lattice", "An alloy where atoms of one metal are located in the spaces between atoms of another metal", "A compound formed between two metals", "A pure metal with altered crystal structure"],
+        answer: "An alloy where atoms of one metal replace atoms of another metal in the lattice",
+        explanation: "In a substitutional alloy, atoms of the solute metal replace atoms of the solvent metal in the crystal lattice. This typically occurs when the atoms of the two metals are similar in size and have similar chemical properties."
+        },
+        {
+        question: "What is an interstitial alloy?",
+        options: ["An alloy where atoms of one metal replace atoms of another metal in the lattice", "An alloy where small atoms are located in the spaces between larger atoms in the lattice", "A compound formed between two metals", "A pure metal with altered crystal structure"],
+        answer: "An alloy where small atoms are located in the spaces between larger atoms in the lattice",
+        explanation: "In an interstitial alloy, small atoms (like carbon) occupy the interstitial spaces between the larger atoms of the host metal. This often increases the hardness and strength of the metal."
+        },
+        {
+        question: "What is the effect of adding carbon to iron to form steel?",
+        options: ["Decreases the strength and hardness", "Increases the malleability and ductility", "Increases the strength and hardness", "Has no effect on the properties of iron"],
+        answer: "Increases the strength and hardness",
+        explanation: "Adding carbon to iron forms steel, which is an interstitial alloy. The carbon atoms occupy the interstitial spaces in the iron lattice, hindering the movement of dislocations and increasing the strength and hardness of the material. It does reduce the malleability and ductility."
+        },
+        {
+        question: "What determines the color of a metal?",
+        options: ["The type of ions in the metal lattice", "The energy of photons absorbed and emitted by the delocalized electrons", "The size of the metal atoms", "The number of valence electrons"],
+        answer: "The energy of photons absorbed and emitted by the delocalized electrons",
+        explanation: "The color of a metal is determined by the specific wavelengths of light that are absorbed and emitted by the delocalized electrons. When light shines on a metal, the delocalized electrons can absorb photons and jump to higher energy levels. When these electrons return to their ground state, they emit photons of specific wavelengths. The wavelengths that are not absorbed are reflected, giving the metal its characteristic color."
+        },
+        {
+        question: "What is metallic luster?",
+        options: ["The ability to conduct electricity", "The ability to conduct heat", "The shiny appearance of metals", "The ability to be stretched into a wire"],
+        answer: "The shiny appearance of metals",
+        explanation: "Metallic luster refers to the characteristic shiny appearance of metals. This is due to the delocalized electrons, which can easily absorb and re-emit photons of light, giving metals their reflective surface."
+        },
+        {
+        question: "What happens to the electrical conductivity of a metal as temperature increases?",
+        options: ["Increases", "Decreases", "Remains the same", "Depends on the metal"],
+        answer: "Decreases",
+        explanation: "As temperature increases, the metal ions in the lattice vibrate more vigorously. These vibrations disrupt the flow of delocalized electrons, increasing resistance and decreasing electrical conductivity."
+        },
+        {
+        question: "Why are alkali metals (Group 1) generally softer than transition metals?",
+        options: ["Alkali metals have stronger metallic bonds", "Alkali metals have fewer valence electrons", "Alkali metals have smaller atomic radii", "Transition metals have a simpler crystal structure"],
+        answer: "Alkali metals have fewer valence electrons",
+        explanation: "Alkali metals have only one valence electron, which contributes to weaker metallic bonding. Transition metals generally have more valence electrons and can also use d-electrons in bonding, leading to stronger metallic bonds and greater hardness."
+        },
+        {
+        question: "Which of the following statements about the strength of metallic bonds is generally true?",
+        options: ["Strength decreases with increasing atomic number", "Strength increases with decreasing atomic radius", "Strength is independent of atomic properties", "Strength decreases with increasing number of valence electrons"],
+        answer: "Strength increases with decreasing atomic radius",
+        explanation: "Generally, for elements within the same group, as atomic radius decreases, the valence electrons are held closer to the nucleus, resulting in a stronger attraction between the positive ions and the electron sea. This leads to a stronger metallic bond."
+        },
+        {
+        question: "Which type of bond involves delocalized electrons?",
+        options: ["Ionic bond", "Covalent bond", "Metallic bond", "All of the above"],
+        answer: "Metallic bond",
+        explanation: "Metallic bonds are characterized by delocalized electrons, which are not associated with any particular atom but are free to move throughout the metal lattice. This is in contrast to ionic bonds (transfer of electrons) and covalent bonds (sharing of electrons between specific atoms)."
+        },
+        {
+        question: "What is the coordination number of a metal atom in a face-centered cubic (FCC) lattice?",
+        options: ["4", "6", "8", "12"],
+        answer: "12",
+        explanation: "In a face-centered cubic (FCC) lattice, each atom is surrounded by 12 nearest neighbors, giving it a coordination number of 12."
+        },
+        {
+        question: "What is the coordination number of a metal atom in a body-centered cubic (BCC) lattice?",
+        options: ["4", "6", "8", "12"],
+        answer: "8",
+        explanation: "In a body-centered cubic (BCC) lattice, each atom is surrounded by 8 nearest neighbors, giving it a coordination number of 8."
+        },
+        {
+        question: "Which of the following crystal structures generally results in a more ductile metal?",
+        options: ["Body-centered cubic (BCC)", "Face-centered cubic (FCC)", "Simple cubic (SC)", "All are equally ductile"],
+        answer: "Face-centered cubic (FCC)",
+        explanation: "FCC structures generally exhibit greater ductility than BCC structures. This is because FCC structures have more slip systems (planes and directions along which dislocations can move), allowing for easier deformation without fracture."
+        },
+        {
+        question: "Which factor is LEAST influential on the strength of metallic bonding?",
+        options: ["Number of valence electrons", "Atomic Radius", "Nuclear Spin", "Charge of the cation"],
+        answer: "Nuclear Spin",
+        explanation: "Number of valence electrons, atomic radius, and the charge of the cation are all significant factors in determining the strength of metallic bonding. Nuclear spin has a negligible impact on metallic bond strength."
+        },
+        {
+        question: "Why is Tungsten (W) used as the filament in incandescent light bulbs?",
+        options: ["It is a good conductor of electricity", "It is highly malleable", "It has a very high melting point", "It is inexpensive"],
+        answer: "It has a very high melting point",
+        explanation: "Tungsten (W) has an extremely high melting point (3422 °C), allowing it to withstand the high temperatures required for incandescence without melting or vaporizing. While it's a decent electrical conductor, its high melting point is the key factor for this application."
+        },
+        {
+        question: "Which statement best describes how electrons behave in metals?",
+        options: ["Tightly bound to individual atoms", "Shared equally between two atoms", "Localized around individual atoms", "Delocalized and free to move throughout the structure"],
+        answer: "Delocalized and free to move throughout the structure",
+        explanation: "In metallic bonding, valence electrons are not bound to individual atoms but are delocalized, forming a 'sea of electrons' that can move freely throughout the metallic structure. This mobility explains the high electrical and thermal conductivity of metals."
+        },
+        {
+        question: "Which of the following factors generally leads to stronger metallic bonding?",
+        options: ["Larger atomic size and fewer valence electrons", "Smaller atomic size and fewer valence electrons", "Larger atomic size and more valence electrons", "Smaller atomic size and more valence electrons"],
+        answer: "Smaller atomic size and more valence electrons",
+        explanation: "Smaller atomic size means the valence electrons are held more tightly by the nucleus, and more valence electrons contribute to a stronger 'sea of electrons', both leading to stronger metallic bonding."
+        },
+        {
+        question: "Why do metals tend to be good conductors of heat?",
+        options: ["They have strong ionic bonds", "They have tightly held electrons", "The delocalized electrons can efficiently transfer kinetic energy", "The metal atoms vibrate readily"],
+        answer: "The delocalized electrons can efficiently transfer kinetic energy",
+        explanation: "The delocalized electrons in a metal can readily absorb kinetic energy and transfer it throughout the lattice by colliding with other electrons and metal ions. This allows heat to be conducted efficiently."
+        },
+    ],
 "EXAM009": [
         {
         question: "What is the defining characteristic of a coordinate (dative) bond?",
