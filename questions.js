@@ -1,6 +1,67 @@
 // Exam code mapping to question sets
 const examSets =  {
     "EXAM010": [
+        
+        {
+        question: "Which of the following elements would you expect to have the 'lowest' melting point?",
+        options: ["Osmium (Os)", "Mercury (Hg)", "Iridium (Ir)", "Tungsten (W)"],
+        answer: "Mercury (Hg)",
+        explanation: "Mercury (Hg) is a liquid at room temperature, indicating very weak metallic bonding and thus the lowest melting point among the listed elements. The other elements are all solid at room temperature with very high melting points."
+        },
+        {
+        question: "Why are metals good reflectors of light?",
+        options: ["Their atoms are very closely packed.", "They contain a high concentration of free electrons.", "Their crystal structure is very regular.", "They absorb all wavelengths of light equally."],
+        answer: "They contain a high concentration of free electrons.",
+        explanation: "The free (delocalized) electrons in a metal can readily absorb and re-emit light across a wide range of frequencies. This re-emission is what gives metals their reflective properties. This is why they appear shiny."
+        },
+        {
+        question: "What is the primary difference between a solid solution and an intermetallic compound?",
+        options: ["Solid solutions are always ordered, intermetallic compounds are disordered.", "Intermetallic compounds have a fixed stoichiometry, solid solutions can have a variable composition.", "Solid solutions are formed at high temperatures, intermetallic compounds at low temperatures.", "Intermetallic compounds are always more ductile than solid solutions."],
+        answer: "Intermetallic compounds have a fixed stoichiometry, solid solutions can have a variable composition.",
+        explanation: "Intermetallic compounds are alloys with a definite stoichiometric ratio and a specific crystal structure, behaving much like a typical chemical compound. Solid solutions, on the other hand, have a range of compositions where the solute atoms are randomly distributed within the solvent lattice."
+        },
+        {
+        question: "Which of the following factors would likely *decrease* the strength of metallic bonding?",
+        options: ["Increasing the charge on the metal cation.", "Decreasing the atomic radius of the metal.", "Increasing the number of delocalized electrons.", "Increasing the distance between metal atoms."],
+        answer: "Increasing the distance between metal atoms.",
+        explanation: "Increasing the distance between metal atoms weakens the attractive forces between the cations and the sea of delocalized electrons, therefore weakening the metallic bond."
+        },
+        {
+        question: "What happens to the energy bands of a metal when it is heated?",
+        options: ["The energy bands become narrower.", "The energy bands become wider.", "The energy bands disappear.", "The energy bands remain unchanged."],
+        answer: "The energy bands become wider.",
+        explanation: "Increasing the temperature of a metal increases the vibrational motion of the atoms. This, in turn, broadens the range of energies available to the electrons, effectively widening the energy bands."
+        },
+        {
+        question: "Why are alkali metals good reducing agents?",
+        options: ["They have high ionization energies.", "They have low electronegativities.", "They have a strong attraction for electrons.", "They form strong covalent bonds."],
+        answer: "They have low electronegativities.",
+        explanation: "Alkali metals have low ionization energies (they readily lose their valence electron) and low electronegativities (they don't attract electrons strongly). This means they easily lose an electron to another species, thereby reducing that species and being oxidized themselves. That is what makes them good reducing agents."
+        },
+        {
+        question: "Which of the following is NOT a typical characteristic of metallic bonding?",
+        options: ["High electrical conductivity", "High thermal conductivity", "High ionization energy", "Malleability and ductility"],
+        answer: "High ionization energy",
+        explanation: "Metals have *low* ionization energies, meaning they readily lose electrons to form the 'sea of electrons.' High electrical conductivity, high thermal conductivity, malleability, and ductility are all typical properties of metallic bonding."
+        },
+        {
+        question: "How does the size difference between the constituent atoms affect the properties of a substitutional alloy?",
+        options: ["A large size difference increases ductility.", "A small size difference decreases strength.", "A large size difference increases hardness and reduces ductility.", "Size difference has no effect on alloy properties."],
+        answer: "A large size difference increases hardness and reduces ductility.",
+        explanation: "If there's a significant size difference between the atoms in a substitutional alloy, the larger or smaller atoms distort the crystal lattice, hindering the movement of dislocations. This increases the hardness and strength of the alloy but reduces its ductility."
+        },
+        {
+        question: "In the band theory of solids, what is a 'band gap'?",
+        options: ["The range of energies that electrons are allowed to have.", "The energy required to break a metallic bond.", "The range of energies that electrons cannot have.", "The energy difference between the core and valence electrons."],
+        answer: "The range of energies that electrons cannot have.",
+        explanation: "In the band theory, electrons in a solid can only occupy certain energy levels, which form bands. A band gap is a range of energies between two allowed bands where no electron states exist. The size of the band gap determines whether a material is a conductor, semiconductor, or insulator."
+        },
+        {
+        question: "Why are transition metals able to form multiple oxidation states?",
+        options: ["They have completely filled d-orbitals.", "They readily form ionic bonds.", "The energy levels of the (n-1)d and ns orbitals are very close.", "They have very high electronegativities."],
+        answer: "The energy levels of the (n-1)d and ns orbitals are very close.",
+        explanation: "The (n-1)d and ns orbitals in transition metals have similar energy levels. This means that transition metals can lose varying numbers of electrons from both the s and d orbitals without requiring a large amount of energy for each ionization, leading to the formation of multiple oxidation states."
+        },
         {
         question: "What is the 'sea of electrons' model used to describe?",
         options: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Hydrogen bonding"],
