@@ -52,6 +52,127 @@ const examSets = {
         answer: "Hydrogen bonding",
         explanation: "Hydrogen bonding is a strong type of dipole-dipole interaction that occurs between hydrogen and highly electronegative atoms like oxygen, nitrogen, or fluorine. <br>Van der Waals forces are a general term encompassing dipole-dipole, dipole-induced dipole, and London dispersion forces. <br>London dispersion forces are the weakest intermolecular forces, arising from temporary fluctuations in electron distribution. <br>Dipole-dipole interactions occur between polar molecules but are weaker than hydrogen bonds."
         },
+    
+        {
+        question: "What type of bond is formed by the sharing of electrons between two atoms?",
+        options: ["Ionic bond", "Covalent bond", "Metallic bond", "Hydrogen bond"],
+        answer: "Covalent bond",
+        explanation: "Covalent bonds are formed when atoms share electrons to achieve a stable electron configuration. Ionic bonds involve the transfer of electrons. Metallic bonds involve the sharing of electrons in a 'sea' of electrons. Hydrogen bonds are intermolecular forces."
+        },
+        {
+        question: "Which of the following compounds is held together by covalent bonds?",
+        options: ["NaCl", "MgO", "CO₂", "KCl"],
+        answer: "CO₂",
+        explanation: "CO₂ (carbon dioxide) is formed by the sharing of electrons between carbon and oxygen atoms, resulting in covalent bonds. NaCl, MgO, and KCl are all ionic compounds formed by the transfer of electrons between a metal and a nonmetal."
+        },
+        {
+        question: "What is the primary difference between a polar and a nonpolar covalent bond?",
+        options: ["Polar bonds involve sharing of electrons equally, nonpolar bonds involve unequal sharing.", "Polar bonds involve unequal sharing of electrons, nonpolar bonds involve equal sharing.", "Polar bonds are stronger than nonpolar bonds.", "Polar bonds exist only in diatomic molecules."],
+        answer: "Polar bonds involve unequal sharing of electrons, nonpolar bonds involve equal sharing.",
+        explanation: "In a polar covalent bond, electrons are shared unequally between atoms due to a difference in electronegativity, creating a dipole moment. In a nonpolar covalent bond, electrons are shared equally because the atoms have similar electronegativities."
+        },
+        {
+        question: "Which of the following molecules contains a triple covalent bond?",
+        options: ["H₂O", "NH₃", "N₂", "CH₄"],
+        answer: "N₂",
+        explanation: "N₂ (nitrogen gas) consists of two nitrogen atoms joined by a triple covalent bond (N≡N). H₂O has two single covalent bonds. NH₃ has three single covalent bonds. CH₄ has four single covalent bonds."
+        },
+        {
+        question: "What is a dative covalent bond (also known as a coordinate covalent bond)?",
+        options: ["A bond formed by equal sharing of electrons.", "A bond formed when one atom donates both electrons to the bond.", "A bond formed by the transfer of electrons.", "A bond formed between metals."],
+        answer: "A bond formed when one atom donates both electrons to the bond.",
+        explanation: "In a dative covalent bond, one atom provides both of the electrons for the shared pair, while the other atom contributes no electrons to the bond. The resulting bond is still a covalent bond, but the origin of the electrons is different."
+        },
+        {
+        question: "Which of the following is an example of a molecule that exhibits a dative covalent bond?",
+        options: ["NaCl", "H₂O", "NH₄⁺", "CH₄"],
+        answer: "NH₄⁺",
+        explanation: "In the ammonium ion (NH₄⁺), the nitrogen atom in ammonia (NH₃) donates its lone pair of electrons to a proton (H⁺) to form a dative covalent bond. NaCl is ionic. H₂O and CH₄ have regular covalent bonds."
+        },
+        {
+        question: "Which of the following best describes an ionic bond?",
+        options: ["Sharing of electrons between two atoms.", "Attraction between oppositely charged ions.", "Sharing of electrons in a 'sea' of electrons.", "A weak intermolecular force."],
+        answer: "Attraction between oppositely charged ions.",
+        explanation: "Ionic bonds are formed by the electrostatic attraction between positively charged ions (cations) and negatively charged ions (anions). These ions are formed when one or more electrons are transferred from one atom to another."
+        },
+        {
+        question: "Which of the following compounds is most likely to be formed through ionic bonding?",
+        options: ["CH₄", "H₂O", "NaCl", "CO₂"],
+        answer: "NaCl",
+        explanation: "NaCl (sodium chloride) is formed by the transfer of an electron from sodium (Na) to chlorine (Cl), resulting in Na⁺ and Cl⁻ ions held together by an ionic bond. CH₄, H₂O, and CO₂ are formed through covalent bonding."
+        },
+        {
+        question: "What is the role of electronegativity in determining the type of bond formed between two atoms?",
+        options: ["Electronegativity has no role in bond formation.", "Large electronegativity difference leads to covalent bonds.", "Large electronegativity difference leads to ionic bonds.", "Electronegativity only affects the strength of the bond."],
+        answer: "Large electronegativity difference leads to ionic bonds.",
+        explanation: "A large difference in electronegativity between two atoms indicates that one atom has a much stronger attraction for electrons than the other. This leads to the transfer of electrons and the formation of ions, resulting in an ionic bond. Small or negligible electronegativity differences lead to covalent bonds."
+        },
+        {
+        question: "Which of the following properties is characteristic of ionic compounds?",
+        options: ["Low melting points", "Good electrical conductivity in the solid state", "High solubility in nonpolar solvents", "High melting points"],
+        answer: "High melting points",
+        explanation: "Ionic compounds have high melting points because significant energy is required to overcome the strong electrostatic attractions between the ions in the crystal lattice. They typically have poor electrical conductivity in the solid state but conduct electricity when molten or dissolved in water. They are generally soluble in polar solvents and insoluble in nonpolar solvents."
+        },
+        {
+        question: "In the formation of a dative covalent bond, which species is known as the Lewis base?",
+        options: ["The electron acceptor", "The electron donor", "The proton donor", "The proton acceptor"],
+        answer: "The electron donor",
+        explanation: "A Lewis base is defined as a species that donates a pair of electrons. In a dative covalent bond, the atom or molecule that donates the electron pair is acting as a Lewis base. The electron acceptor is known as a Lewis acid."
+        },
+        {
+        question: "Which of the following statements is true regarding the strength of different types of bonds?",
+        options: ["Covalent bonds are always stronger than ionic bonds.", "Ionic bonds are always stronger than covalent bonds.", "Covalent bonds are generally stronger than intermolecular forces.", "Intermolecular forces are stronger than ionic and covalent bonds."],
+        answer: "Covalent bonds are generally stronger than intermolecular forces.",
+        explanation: "Covalent and ionic bonds are intramolecular forces, meaning they hold atoms together within a molecule. Intermolecular forces are attractions *between* molecules. Covalent and ionic bonds generally require more energy to break than intermolecular forces like hydrogen bonds, dipole-dipole interactions, and London dispersion forces. Ionic and covalent bond strengths can vary greatly."
+        },
+        {
+        question: "Which of the following molecules does NOT obey the octet rule?",
+        options: ["H₂O", "CO₂", "BF₃", "CH₄"],
+        answer: "BF₃",
+        explanation: "BF₃ (boron trifluoride) is an exception to the octet rule. Boron only has six electrons in its valence shell. H₂O, CO₂, and CH₄ all obey the octet rule."
+        },
+        {
+        question: "Which of the following is the correct order of bond strength from strongest to weakest?",
+        options: ["Covalent > Ionic > Hydrogen bond", "Ionic > Covalent > Hydrogen bond", "Covalent > Hydrogen bond > Ionic", "Ionic > Hydrogen bond > Covalent"],
+        answer: "Ionic > Covalent > Hydrogen bond",
+        explanation: "In general, ionic bonds are the strongest, followed by covalent bonds, and then hydrogen bonds. However, there can be exceptions depending on specific molecules and conditions."
+        },
+        {
+        question: "Which of the following would you expect to be the most polar bond?",
+        options: ["C-H", "C-C", "O-H", "N-H"],
+        answer: "O-H",
+        explanation: "Polarity depends on the electronegativity difference between the atoms. Oxygen is the most electronegative of the given elements, so O-H has the greatest electronegativity difference, and thus the most polar bond."
+        },
+        {
+        question: "Which of the following is not a typical property of covalent compounds?",
+        options: ["Low melting point", "High volatility", "Poor electrical conductivity", "Good electrical conductivity when dissolved in water"],
+        answer: "Good electrical conductivity when dissolved in water",
+        explanation: "Covalent compounds typically do not conduct electricity in solution because they do not form ions. Ionic compounds dissociate into ions in water, allowing them to conduct electricity. Covalent compounds generally have low melting points and are volatile."
+        },
+        {
+        question: "What is the formal charge on nitrogen in the ammonium ion (NH₄⁺) assuming all bonds are purely covalent?",
+        options: ["-1", "0", "+1", "+2"],
+        answer: "+1",
+        explanation: "Formal charge = (Valence electrons) - (Non-bonding electrons) - (1/2 × Bonding electrons). For nitrogen: 5 - 0 - (1/2 × 8) = +1"
+        },
+        {
+        question: "Which of the following pairs of elements is most likely to form an ionic bond?",
+        options: ["Carbon and Oxygen", "Nitrogen and Hydrogen", "Sodium and Chlorine", "Phosphorus and Sulfur"],
+        answer: "Sodium and Chlorine",
+        explanation: "Sodium (Na) is a metal with low electronegativity, and chlorine (Cl) is a nonmetal with high electronegativity. This large difference in electronegativity (Pauling scale Na: 0.93, Cl: 3.16) leads to the transfer of an electron from Na to Cl, forming Na⁺ and Cl⁻ ions held together by an ionic bond."
+        },
+        {
+        question: "Which of the following compounds has the lowest melting point?",
+        options: ["NaCl", "MgO", "SiO₂", "H₂O"],
+        answer: "H₂O",
+        explanation: "NaCl and MgO are ionic compounds with high melting points due to strong electrostatic forces. SiO₂ is a network covalent solid with a high melting point. H₂O is a molecular compound with relatively weak intermolecular forces (hydrogen bonding), thus having the lowest melting point of the given options. Although water exhibits hydrogen bonding, ionic and network covalent bonds are considerably stronger."
+        },
+        {
+        question: "The coordinate covalent bond in [Cu(NH₃)₄]²⁺ is formed between:",
+        options: ["Cu²⁺ and H", "N and H", "Cu²⁺ and N", "H and H"],
+        answer: "Cu²⁺ and N",
+        explanation: "In the complex ion [Cu(NH₃)₄]²⁺, the four ammonia (NH₃) molecules act as ligands, donating their lone pairs of electrons to the central copper(II) ion (Cu²⁺) to form coordinate covalent (dative) bonds. The copper(II) ion accepts these electron pairs. Therefore, the coordinate covalent bond is formed between Cu²⁺ and N."
+        },
         {
         question: "Which of the following compounds is most likely to exhibit hydrogen bonding?",
         options: ["CH₄", "H₂S", "NH₃", "HCl"],
