@@ -1,5 +1,205 @@
 // Exam code mapping to question sets
 const examSets = {
+"EXAM008": [
+        {
+        question: "What determines the polarity of a chemical bond?",
+        options: ["The size of the atoms involved", "The number of electrons shared", "The electronegativity difference between the atoms", "The number of protons in the atoms"],
+        answer: "The electronegativity difference between the atoms",
+        explanation: "The polarity of a bond arises from the unequal sharing of electrons due to differences in electronegativity between the bonded atoms. The greater the difference, the more polar the bond."
+        },
+        {
+        question: "What is the range of electronegativity difference that typically indicates a nonpolar covalent bond?",
+        options: ["Greater than 2.0", "Between 0.4 and 2.0", "Less than 0.4", "Exactly 0"],
+        answer: "Less than 0.4",
+        explanation: "An electronegativity difference less than 0.4 generally signifies a nonpolar covalent bond, where electrons are shared relatively equally. Some sources cite 0.5 as the upper limit. A difference of exactly 0 indicates a perfectly nonpolar bond."
+        },
+        {
+        question: "What is the range of electronegativity difference that typically indicates a polar covalent bond?",
+        options: ["Greater than 2.0", "Between 0.4 and 2.0", "Less than 0.4", "Exactly 0"],
+        answer: "Between 0.4 and 2.0",
+        explanation: "An electronegativity difference between 0.4 and 2.0 usually suggests a polar covalent bond, where electrons are shared unequally, creating a dipole moment."
+        },
+        {
+        question: "What is the range of electronegativity difference that typically indicates an ionic bond?",
+        options: ["Greater than 2.0", "Between 0.4 and 2.0", "Less than 0.4", "Exactly 0"],
+        answer: "Greater than 2.0",
+        explanation: "An electronegativity difference greater than 2.0 generally indicates that one atom is much more electronegative than the other, leading to the transfer of electrons and the formation of ions, resulting in an ionic bond."
+        },
+        {
+        question: "Which of the following bonds is the most polar?",
+        options: ["C-H", "N-H", "O-H", "F-H"],
+        answer: "F-H",
+        explanation: "Fluorine (F) is the most electronegative element. Therefore, the F-H bond has the largest electronegativity difference and is the most polar. Electronegativity values are approximately: F (3.98), O (3.44), N (3.04), C (2.55), H (2.20). Difference for F-H = 1.78; O-H=1.24; N-H = 0.84, C-H = 0.35."
+        },
+        {
+        question: "Which of the following bonds is the least polar?",
+        options: ["C-H", "N-H", "O-H", "F-H"],
+        answer: "C-H",
+        explanation: "Carbon and hydrogen have relatively similar electronegativities. The C-H bond has a small electronegativity difference (approximately 0.35) and is therefore considered relatively nonpolar."
+        },
+        {
+        question: "Which of the following molecules is nonpolar despite having polar bonds?",
+        options: ["H₂O", "NH₃", "CO₂", "HF"],
+        answer: "CO₂",
+        explanation: "CO₂ has two polar C=O bonds. However, due to its linear geometry, the bond dipoles cancel each other out, resulting in a nonpolar molecule. H₂O and NH₃ are polar molecules because their bent and pyramidal geometries, respectively, do not allow for complete cancellation of bond dipoles. HF is a diatomic molecule with a polar bond, making the molecule polar."
+        },
+        {
+        question: "What is a dipole moment?",
+        options: ["A measure of the overall charge of a molecule", "A measure of the separation of positive and negative charges in a molecule", "The total number of electrons in a molecule", "The total number of protons in a molecule"],
+        answer: "A measure of the separation of positive and negative charges in a molecule",
+        explanation: "A dipole moment is a measure of the polarity of a molecule. It arises from the separation of positive and negative charges due to unequal sharing of electrons in polar bonds. It is a vector quantity, having both magnitude and direction."
+        },
+        {
+        question: "Which of the following factors affects the magnitude of a dipole moment?",
+        options: ["Bond length only", "Electronegativity difference only", "Bond length and electronegativity difference", "Number of atoms in the molecule only"],
+        answer: "Bond length and electronegativity difference",
+        explanation: "The magnitude of a dipole moment is directly proportional to both the bond length (the distance between the charges) and the electronegativity difference between the atoms. Dipole moment (μ) = charge (q) × distance (d)."
+        },
+        {
+        question: "What is the direction of the dipole moment in a polar bond?",
+        options: ["From the more electronegative atom to the less electronegative atom", "From the less electronegative atom to the more electronegative atom", "Along the bond axis with no specific direction", "Perpendicular to the bond axis"],
+        answer: "From the less electronegative atom to the more electronegative atom",
+        explanation: "The dipole moment vector points from the partially positive (δ+) atom (the less electronegative atom) to the partially negative (δ-) atom (the more electronegative atom)."
+        },
+        {
+        question: "Which of the following statements about polar molecules is correct?",
+        options: ["They are always soluble in nonpolar solvents.", "They have a symmetrical distribution of charge.", "They have a net dipole moment.", "They only contain nonpolar bonds."],
+        answer: "They have a net dipole moment.",
+        explanation: "Polar molecules have an uneven distribution of electron density, resulting in a net dipole moment. They are generally more soluble in polar solvents than in nonpolar solvents. They do not have a symmetrical distribution of charge. They must contain at least one polar bond, but may also contain nonpolar bonds."
+        },
+        {
+        question: "Which of the following molecules is polar?",
+        options: ["CCl₄", "BF₃", "H₂S", "CO₂"],
+        answer: "H₂S",
+        explanation: "H₂S (hydrogen sulfide) has a bent molecular geometry. The S-H bonds are polar, and the bond dipoles do not cancel each other out, resulting in a net dipole moment, making the molecule polar. CCl₄ is tetrahedral and the bond dipoles cancel out. BF₃ is trigonal planar and the bond dipoles cancel out. CO₂ is linear and the bond dipoles cancel out."
+        },
+        {
+        question: "How does bond polarity affect intermolecular forces?",
+        options: ["Polar bonds decrease the strength of intermolecular forces.", "Polar bonds increase the strength of intermolecular forces.", "Bond polarity has no effect on intermolecular forces.", "Bond polarity only affects the strength of London dispersion forces."],
+        answer: "Polar bonds increase the strength of intermolecular forces.",
+        explanation: "Polar bonds lead to dipole-dipole interactions between molecules, which are stronger than London dispersion forces (present in all molecules) and thus increase the overall strength of intermolecular forces. Stronger intermolecular forces result in higher boiling points, melting points, and viscosity."
+        },
+        {
+        question: "Which of the following statements about electronegativity is correct?",
+        options: ["Electronegativity increases down a group and decreases across a period.", "Electronegativity decreases down a group and increases across a period.", "Electronegativity increases both down a group and across a period.", "Electronegativity decreases both down a group and across a period."],
+        answer: "Electronegativity decreases down a group and increases across a period.",
+        explanation: "Electronegativity generally increases across a period (from left to right) because the nuclear charge increases, and the atomic radius decreases, leading to a stronger attraction for electrons. Electronegativity generally decreases down a group because the atomic radius increases, and the valence electrons are farther from the nucleus, resulting in a weaker attraction for electrons."
+        },
+        {
+        question: "Which of the following molecules has a zero dipole moment?",
+        options: ["H₂O", "CHCl₃", "NH₃", "CS₂"],
+        answer: "CS₂",
+        explanation: "CS₂ (carbon disulfide) has a linear geometry with two polar C=S bonds oriented 180° apart. These bond dipoles cancel each other out, resulting in a zero net dipole moment. H₂O (bent), CHCl₃ (tetrahedral, but not symmetrical), and NH₃ (pyramidal) all have net dipole moments due to their molecular geometries and the polarity of their bonds."
+        },
+        {
+        question: "If a molecule contains only carbon and hydrogen atoms, what can you generally conclude about its polarity?",
+        options: ["It is always polar.", "It is always nonpolar.", "It can be either polar or nonpolar depending on the arrangement of atoms.", "It always has a large dipole moment."],
+        answer: "It can be either polar or nonpolar depending on the arrangement of atoms.",
+        explanation: "While the C-H bond is considered relatively nonpolar, the overall polarity of a hydrocarbon molecule depends on its geometry. Symmetrical hydrocarbons like methane (CH₄) are nonpolar because the C-H bond dipoles cancel out. However, if the molecule contains other substituents or has a specific geometry, it can be slightly polar (e.g., methyl chloride CH₃Cl)."
+        },
+        {
+        question: "Which of the following is the most important factor determining whether a molecule with polar bonds is polar overall?",
+        options: ["The strength of the polar bonds", "The number of polar bonds", "The molecular geometry", "The size of the molecule"],
+        answer: "The molecular geometry",
+        explanation: "The molecular geometry determines whether the individual bond dipoles cancel each other out or add together to create a net dipole moment. Even if a molecule has strong and numerous polar bonds, it will be nonpolar overall if its geometry is such that the bond dipoles cancel."
+        },
+        {
+        question: "Which of the following molecules would you expect to have the highest boiling point?",
+        options: ["CH₄", "CF₄", "CCl₄", "CBr₄"],
+        answer: "CBr₄",
+        explanation: "All of the molecules are nonpolar due to their tetrahedral geometry, but the strength of London dispersion forces increases with increasing molar mass. CBr₄ has the highest molar mass, therefore strongest LDF and hence highest boiling point."
+        },
+        {
+        question: "Which of the following would have the largest dipole moment?",
+        options: ["HF", "HCl", "HBr", "HI"],
+        answer: "HF",
+        explanation: "Dipole moment depends on both charge separation (electronegativity difference) and distance. Fluorine is the most electronegative, creating the largest charge separation. While bond length increases down the group, the change in electronegativity is the dominant factor here. HF has the greatest difference in electronegativity, even though it has the shortest bond."
+        },
+        {
+        question: "What is the relationship between bond polarity and miscibility (ability to mix) of two liquids?",
+        options: ["Polar and nonpolar liquids are always miscible.", "Polar liquids are miscible with other polar liquids, and nonpolar liquids are miscible with other nonpolar liquids.", "Polar liquids are miscible with nonpolar liquids.", "Bond polarity has no impact on miscibility."],
+        answer: "Polar liquids are miscible with other polar liquids, and nonpolar liquids are miscible with other nonpolar liquids.",
+        explanation: "The general rule is 'like dissolves like'. Polar liquids tend to dissolve in other polar liquids because the intermolecular forces (dipole-dipole, hydrogen bonding) between them are similar and can form favorable interactions. Nonpolar liquids tend to dissolve in other nonpolar liquids because the intermolecular forces (London dispersion forces) are similar."
+        },
+        {
+        question: "Which of the following best describes a polar molecule?",
+        options: ["A molecule with a symmetrical shape and nonpolar bonds", "A molecule with an asymmetrical shape and nonpolar bonds", "A molecule with a symmetrical shape and polar bonds", "A molecule with an asymmetrical shape and polar bonds"],
+        answer: "A molecule with an asymmetrical shape and polar bonds",
+        explanation: "A polar molecule requires both polar bonds AND an asymmetrical shape such that the bond dipoles do not cancel each other out, resulting in a net dipole moment."
+        },
+        {
+        question: "Which of the following molecules is most soluble in water?",
+        options: ["CH₄", "C₆H₁₄", "CH₃OH", "CCl₄"],
+        answer: "CH₃OH",
+        explanation: "Water (H₂O) is a polar solvent. 'Like dissolves like,' so polar molecules are more soluble in water. CH₃OH (methanol) is a polar molecule that can also form hydrogen bonds with water, increasing its solubility. CH₄, C₆H₁₄, and CCl₄ are nonpolar and have low solubility in water."
+        },
+        {
+        question: "In a molecule of water (H₂O), which atom carries a partial negative charge (δ-)?",
+        options: ["Hydrogen", "Oxygen", "Both hydrogen and oxygen", "Neither hydrogen nor oxygen"],
+        answer: "Oxygen",
+        explanation: "Oxygen is more electronegative than hydrogen. In a water molecule, oxygen pulls the shared electrons closer to itself, resulting in a partial negative charge (δ-) on the oxygen atom and partial positive charges (δ+) on the hydrogen atoms."
+        },
+        {
+        question: "What is the effect of increasing bond polarity on the electrical conductivity of a substance in the liquid state?",
+        options: ["Increases electrical conductivity", "Decreases electrical conductivity", "No effect on electrical conductivity", "Only affects electrical conductivity at high temperatures"],
+        answer: "Increases electrical conductivity",
+        explanation: "Increasing bond polarity leads to greater ion formation and charge separation when the substance dissolves, allowing it to more readily conduct electricity. Substances with greater ionic character will disassociate into ions in solution, which is what makes them conductive. However, if the substance doesn't disassociate in the liquid state, polarity has minimal impact on conductivity."
+        },
+        {
+        question: "Which of the following molecules has the largest bond angle?",
+        options: ["H₂O", "NH₃", "CH₄", "BF₃"],
+        answer: "BF₃",
+        explanation: "BF₃ is trigonal planar with bond angles of 120°. CH₄ is tetrahedral (109.5°). NH₃ is pyramidal (~107°). H₂O is bent (~104.5°). Therefore, BF₃ has the largest bond angle."
+        },
+        {
+        question: "Which of the following statements about London Dispersion Forces (LDF) is correct?",
+        options: ["LDF are stronger in small molecules", "LDF are only present in polar molecules", "LDF are stronger in molecules with larger molar mass", "LDF are stronger than covalent bonds"],
+        answer: "LDF are stronger in molecules with larger molar mass",
+        explanation: "London dispersion forces (LDF) are temporary, induced dipole-dipole interactions that exist between all molecules (polar and nonpolar). The strength of LDF increases with increasing molar mass because larger molecules have more electrons that can be temporarily polarized."
+        },
+        {
+        question: "The C-Cl bond is polar. In which of the following molecules would the dipole moment NOT be zero?",
+        options: ["CCl₄", "trans-1,2-dichloroethene", "cis-1,2-dichloroethene", "1,4-dichlorobenzene"],
+        answer: "cis-1,2-dichloroethene",
+        explanation: "cis-1,2-dichloroethene has both chlorines on the same side of the double bond. The C-Cl bond dipoles point in the same general direction, resulting in a net dipole moment. In CCl₄ (tetrahedral), trans-1,2-dichloroethene, and 1,4-dichlorobenzene, the C-Cl bond dipoles cancel each other out due to symmetry."
+        },
+        {
+        question: "Which of the following is a direct consequence of water's polarity?",
+        options: ["Its low density in solid form (ice)", "Its high boiling point compared to similar molecules", "Its inability to dissolve ionic compounds", "Its lack of surface tension"],
+        answer: "Its high boiling point compared to similar molecules",
+        explanation: "Water's polarity enables hydrogen bonding between water molecules, which significantly increases its boiling point compared to other molecules of similar size and mass. The polarity also contributes to its ability to dissolve ionic compounds and its high surface tension. The low density of ice is also a consequence of hydrogen bonding, but not directly the polarity."
+        },
+        {
+        question: "Which of the following best describes the trend of bond polarity in the hydrogen halides (HF, HCl, HBr, HI)?",
+        options: ["Bond polarity increases from HF to HI", "Bond polarity decreases from HF to HI", "Bond polarity remains constant across the series", "Bond polarity is highest for HCl and lowest for HI"],
+        answer: "Bond polarity decreases from HF to HI",
+        explanation: "Electronegativity decreases down the halogen group (F > Cl > Br > I). Therefore, the electronegativity difference between hydrogen and the halogen decreases from HF to HI. Consequently, the bond polarity decreases in the same order."
+        },
+        {
+        question: "The addition of a highly electronegative substituent to a molecule generally...",
+        options: ["Decreases the molecule's dipole moment", "Increases the molecule's dipole moment", "Does not affect the molecule's dipole moment", "Causes the molecule to become non-reactive"],
+        answer: "Increases the molecule's dipole moment",
+        explanation: "Adding a highly electronegative substituent will pull electron density towards itself, increasing the separation of charge within the molecule and thus increasing the molecule's overall dipole moment."
+        },
+        {
+        question: "Which of the following explains why water can dissolve ionic compounds?",
+        options: ["Water is non-polar", "Water forms covalent bonds with ions", "Water is a good reducing agent", "Water molecules can surround ions via ion-dipole interactions"],
+        answer: "Water molecules can surround ions via ion-dipole interactions",
+        explanation: "The partial charges on water (δ+ on hydrogen, δ- on oxygen) allow it to interact favorably with ions. The water molecules surround the ions, with the oxygen atoms oriented towards cations and the hydrogen atoms oriented towards anions. This ion-dipole interaction helps to stabilize the ions in solution and overcome the lattice energy of the ionic compound, leading to dissolution."
+        },
+        {
+        question: "Which of the following molecules is most likely to be a gas at room temperature?",
+        options: ["H₂O", "NaCl", "CH₃OH", "CH₄"],
+        answer: "CH₄",
+        explanation: "CH₄ (methane) is a nonpolar molecule with weak London dispersion forces, resulting in a low boiling point and making it a gas at room temperature. H₂O exhibits hydrogen bonding, resulting in a relatively high boiling point. NaCl is an ionic compound with strong electrostatic forces, leading to a high melting and boiling point. CH₃OH exhibits hydrogen bonding and dipole-dipole interactions, leading to a higher boiling point than CH₄."
+        },
+        {
+        question: "Considering the electronegativity difference, which bond is least likely to form?",
+        options: ["Li-F", "C-O", "Mg-O", "He-He"],
+        answer: "He-He",
+        explanation: "Helium (He) is a noble gas and has a full valence shell of electrons. It is extremely stable and does not readily form chemical bonds with other atoms, including itself. Noble gases do not need to gain or lose electrons in order to achieve a stable electron configuration. The other options all can form bonds."
+        },
+    ] ,
     "EXAM001": [
     { question: "Which reagent is used to confirm the presence of iodide ions?", options: ["Cl₂", "AgNO₃", "BaCl₂", "NaOH"], answer: "Cl₂", explanation: "Iodide ions (I⁻) react with chlorine (Cl₂) to release iodine, which can be detected by its characteristic violet coloration in organic solvents." },
     { question: "What is the color of the precipitate formed when silver ions react with Cl⁻?", options: ["White", "Yellow", "Green", "Blue"], answer: "White", explanation: "Silver ions (Ag⁺) react with chloride ions (Cl⁻) to form a white precipitate of silver chloride (AgCl)." },
