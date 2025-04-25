@@ -130,6 +130,310 @@ let selectedCourseCode = null;
 
 // Predefined question banks by course codes
 const questionBanks = {
+"ZOO102-WKTST2": [
+  {
+    text: "Ecology is derived from the Greek words 'Oikos' and 'Logy'. What do these words respectively mean?",
+    options: ["Home and study", "Environment and life", "Nature and science", "Habitat and analysis"],
+    correct: 0,
+    explanation: "'Oikos' means 'house' or 'at home', and 'Logy' means 'study'."
+  },
+  {
+    text: "Which of the following is NOT a primary focus of the study of ecology?",
+    options: ["Inter-relationship between living organisms", "Abiotic environment interactions", "Regulation of organism distribution and abundance", "Chemical composition of rocks"],
+    correct: 3,
+    explanation: "Ecology primarily focuses on the relationships between living organisms and their environment. Chemical composition of rocks falls under geology/geochemistry."
+  },
+  {
+    text: "Applied ecology focuses primarily on?",
+    options: ["Restoring damaged ecosystems", "Studying urban environments", "Maintaining conditions necessary for continuation of present day life", "Application of ecological principles for biodiversity conservation"],
+    correct: 2,
+    explanation: "Applied ecology aims to use ecological principles to maintain conditions necessary for the continuation of present day life on Earth."
+  },
+  {
+    text: "Which aspect of ecology focuses on restoring deteriorated ecosystems to their original state?",
+    options: ["Conservation Biology", "Landscape Ecology", "Restoration Biology", "Urban Ecology"],
+    correct: 2,
+    explanation: "Restoration Biology specifically involves applying ecological principles to restore deteriorated ecosystems."
+  },
+  {
+    text: "The study of spatial patterns of ecosystems and their anthropogenic impacts is primarily the focus of:",
+    options: ["Urban Ecology", "Conservation Ecology", "Landscape Ecology", "Applied Ecology"],
+    correct: 2,
+    explanation: "Landscape Ecology is concerned with spatial patterns in the landscape and how they develop, including anthropogenic impacts."
+  },
+  {
+    text: "Urban ecology is the study of:",
+    options: ["Pollution in cities", "Ecology in urban areas", "Migration patterns of birds in cities", "The effect of cities on global climate change"],
+    correct: 1,
+    explanation: "Urban ecology studies the relationships, interactions, types and numbers of species specifically found in urban habitats."
+  },
+  {
+    text: "The sum total of living and non-living components surrounding an organism constitutes its:",
+    options: ["Habitat", "Environment", "Ecosystem", "Niche"],
+    correct: 1,
+    explanation: "The environment is defined as the total of living (biotic) and non-living (abiotic) components surrounding an organism."
+  },
+  {
+    text: "Non-living, physical and chemical elements in the environment are known as:",
+    options: ["Biotic components", "Abiotic components", "Organic components", "Inorganic components"],
+    correct: 1,
+    explanation: "Abiotic components are the non-living physical and chemical elements in the environment, such as temperature, pH, and mineral nutrients."
+  },
+  {
+    text: "Which of the following is considered a biotic component of the environment?",
+    options: ["Sunlight", "Water", "Plants", "Soil"],
+    correct: 2,
+    explanation: "Biotic components are living or once-living organisms in the environment. Plants are living organisms."
+  },
+  {
+    text: "Parasitism, disease, and predation are examples of:",
+    options: ["Abiotic interactions", "Biotic interactions", "Atmospheric phenomena", "Geological processes"],
+    correct: 1,
+    explanation: "Parasitism, disease, and predation are interactions between organisms and therefore are biotic interactions."
+  },
+  {
+    text: "The layer closest to the Earth's surface is known as the:",
+    options: ["Stratosphere", "Mesosphere", "Troposphere", "Lithosphere"],
+    correct: 2,
+    explanation: "The troposphere is the layer closest to the Earth's surface, where weather occurs."
+  },
+  {
+    text: "The stratosphere is important because it contains:",
+    options: ["High concentration of nitrogen", "High concentration of water vapor", "High concentration of ozone gas", "High concentration of carbon dioxide"],
+    correct: 2,
+    explanation: "The stratosphere contains a high concentration of ozone gas (O₃), which is crucial for protecting Earth from ultraviolet rays."
+  },
+   {
+    text: "Which of the following is NOT one of the four interconnected geospheres near the surface of the Earth?",
+    options: ["Atmosphere", "Hydrosphere", "Lithosphere", "Ionosphere"],
+    correct: 3,
+    explanation: "The four interconnected geospheres are the atmosphere, biosphere, hydrosphere, and lithosphere. The ionosphere is part of the atmosphere."
+  },
+  {
+    text: "The atmosphere primarily influences the weather and:",
+    options: ["Ocean currents", "Long-term climate of the planet", "Tectonic plate movement", "Volcanic eruptions"],
+    correct: 1,
+    explanation: "The atmosphere influences the weather and, on the long term, the climate of the planet."
+  },
+    {
+    text: "Which of the following refers to the coldest part of the atmosphere?",
+    options: ["Troposphere", "Stratosphere", "Mesosphere", "Thermosphere"],
+    correct: 2,
+    explanation: "The mesosphere is the coldest part of the atmosphere."
+  },
+  {
+    text: "Which branch of Ecology is focused on studying the effects of pollution in cities",
+    options: ["Ecosystem Ecology", "Urban Ecology", "Population Ecology", "Community Ecology"],
+    correct: 1,
+    explanation: "Urban ecology specifically examines the relationships, interactions, types, and numbers of species found in urban habitats, this also includes the effects of pollution."
+  },
+  {
+    text: "What is the main purpose of Conservation Biology?",
+    options: ["Restoring habitats", "Conserving biodiversity", "Studying urban ecology", "Understanding evolutionary relationships"],
+    correct: 1,
+    explanation: "Conservation Biology is specifically about the application of diverse fields and disciplines to the conservation of biological diversity."
+  },
+  {
+    text: "Which component of the environment includes factors such as energy, water, oxygen and shelter?",
+    options: ["Biotic", "Abiotic", "Organic", "Inorganic"],
+    correct: 1,
+    explanation: "Abiotic components are non-living physical and chemical elements in the environment that organisms depend on."
+  },
+  {
+   text: "The study of ecology involves the transport and transformation of which of the following?",
+    options: ["Species", "Energy", "Matter", "Both Energy and Matter"],
+    correct: 3,
+    explanation: "Ecology includes the study of how organisms in turn mediate the transport and transformation of energy and matter in the biosphere."
+  },
+
+  {
+        text: "Which of the following statements best describes the relationship between the biotic and abiotic components of an ecosystem?",
+        options: ["They exist independently of each other.", "Biotic components influence abiotic components, but not vice versa.", "Abiotic components influence biotic components, but not vice versa.", "They interact and influence each other."],
+        correct: 3,
+        explanation: "Biotic and abiotic components are interconnected and influence each other within an ecosystem."
+    },
+  {
+    text: "Which of the following best describes the 'indirect' link between ozone layer depletion and the eco-tourism industry?",
+    options: ["Increased tourist spending due to warmer climates.", "Heightened awareness leading to more sustainable tourism practices.", "Reduced appeal of destinations due to health concerns and environmental damage.", "Government subsidies offsetting revenue losses in the tourism sector."],
+    correct: 2,
+    explanation: "Ozone depletion accelerates global warming, causing environmental damage that reduces the appeal of eco-tourism destinations due to health and environmental damage concerns."
+  },
+  {
+    text: "A primary challenge in achieving 'sustainable use' of environmental resources lies in balancing:",
+    options: ["Technological innovation and resource extraction rates.", "Economic development with long-term ecological health.", "Short-term profits with equitable resource distribution.", "Government regulation with individual freedoms."],
+    correct: 1,
+    explanation: "Balancing environmental safety with economic prosperity remains a large challenge in sustainably."
+  },
+  {
+    text: "Why might simply 'enforcing government regulations' be insufficient to fully address environmental degradation?",
+    options: ["Regulations are always economically inefficient.", "Regulations only address the symptoms, not the root causes.", "Regulations stifle technological innovation.", "Regulations are easily circumvented by corporations."],
+    correct: 1,
+    explanation: "This is because regulations are not effective towards addressing root causes."
+  },
+  {
+    text: "What is a *potential* unintended consequence of promoting recycling as a solution to environmental problems?",
+    options: ["Increased demand for recycled products.", "Reduced consumption of virgin materials.", "A false sense of security that reduces overall environmental responsibility.", "Greater public awareness of environmental issues."],
+    correct: 2,
+    explanation: "This is because some people become complacent."
+  },
+  {
+    text: "In the context of environmental responsibility, 'enlightening and educating the general public' is most effective when it:",
+    options: ["Focuses solely on scientific data and technical solutions.", "Emphasizes individual guilt and sacrifices.", "Empowers individuals to take informed action and advocate for change.", "Promotes a passive acceptance of government policies."],
+    correct: 2,
+    explanation: "Empowering the populace creates greater results than any other alternative."
+  },
+  {
+    text: "A potential *drawback* of focusing solely on the sustainable use of forest resources is that it may:",
+    options: ["Increase carbon sequestration and biodiversity.", "Reduce timber production and economic opportunities.", "Overlook the importance of marine and freshwater ecosystems.", "Promote community-based conservation efforts."],
+    correct: 2,
+    explanation: "Sustainability needs to be looked at from many angles and not merely from forests alone."
+  },
+  {
+    text: "What is a significant challenge in persuading individuals to reduce their plastic use?",
+    options: ["Plastics are always more expensive than alternatives.", "Convenience and ingrained habits often outweigh environmental concerns.", "There are no readily available alternatives to plastic products.", "The environmental impact of plastic is negligible."],
+    correct: 1,
+    explanation: "People are habitual and therefore convenience makes it difficult."
+  },
+  {
+    text: "Which of the following describes the *most comprehensive* approach to mitigating the economic impacts of environmental degradation?",
+    options: ["Investing solely in renewable energy technologies.", "Implementing strict environmental regulations regardless of economic consequences.", "Adopting integrated strategies that balance economic development with environmental protection.", "Relying on technological solutions to fix environmental problems without addressing consumption patterns."],
+    correct: 2,
+    explanation: "There are several things that must happen for the economic impact to be mitigated."
+  },
+  {
+    text: "What is the most significant barrier to the *global* enforcement of environmental regulations?",
+    options: ["Lack of scientific consensus on environmental problems.", "Conflicting national interests and priorities.", "Insufficient funding for international environmental organizations.", "The inherent complexity of environmental issues."],
+    correct: 1,
+    explanation: "Due to conflicting interests, there is no one global agreement on protecting the environment."
+  },
+  {
+    text: "Why might technological solutions alone be insufficient to address environmental degradation effectively?",
+    options: ["Technology is inherently unreliable.", "Technological solutions often create new environmental problems.", "Technology is too expensive to implement on a large scale.", "Technological solutions do not address underlying consumption patterns and societal values."],
+    correct: 3,
+    explanation: "Technology should be looked at alongside other things to be effective."
+  },
+  {
+    text: "Which atmospheric layer is characterized by its crucial role in absorbing harmful ultraviolet (UV) radiation?",
+    options: ["Troposphere due to its weather patterns", "Stratosphere due to its ozone concentration", "Mesosphere due to its extremely low temperature", "Thermosphere due to its high-energy particles"],
+    correct: 1,
+    explanation: "The stratosphere contains a high concentration of ozone (O₃) which effectively absorbs UV radiation. The troposphere is where weather occurs. The mesosphere is the coldest layer. The thermosphere is characterized by high temperatures due to radiation absorption, but not specifically UV.",
+  },
+  {
+    text: "What key characteristic distinguishes the hydrosphere from the other Earth spheres?",
+    options: ["It's the only sphere inhabited by living organisms.", "It encompasses all the Earth's frozen regions.", "It comprises all forms of water, both liquid and solid.", "It's primarily composed of solid rock and minerals."],
+    correct: 2,
+    explanation: "The hydrosphere is defined by the presence of water in all its forms (liquid, solid, and gas). The biosphere contains living organisms. The cryosphere contains all forms of ice. The lithosphere is comprised of rocks and minerals."
+  },
+  {
+    text: "The process of weathering plays a critical role in the lithosphere by:",
+    options: ["Creating new landforms through volcanic activity.", "Breaking down rocks to form soil and sediments.", "Preventing erosion and stabilizing mountain ranges.", "Absorbing excess carbon dioxide from the atmosphere."],
+    correct: 1,
+    explanation: "Weathering breaks down rocks into smaller pieces, contributing to soil formation and sediment production. Volcanic activity creates landforms. Erosion is separate from weathering. CO₂ absorption is primarily the role of the atmosphere and oceans.",
+  },
+  {
+    text: "Metamorphic rocks provide insights into Earth's geological history primarily because they:",
+    options: ["Contain fossilized remains of ancient organisms.", "Are formed directly from volcanic eruptions.", "Undergo transformation due to intense pressure and temperature.", "Are resistant to weathering and erosion."],
+    correct: 2,
+    explanation: "Metamorphic rocks form from pre-existing rocks altered by heat and pressure, recording changes in Earth's crust. Fossils are mostly in sedimentary rocks. Igneous rocks form from eruptions. Resistance to weathering doesn't define metamorphic rocks.",
+  },
+  {
+    text: "Which of the following best explains the limited vertical range of most life forms within the biosphere?",
+    options: ["Organisms compete for limited space on Earth's surface.", "Extreme temperatures and pressure limit survival at great depths or heights.", "The majority of Earth's biomass is concentrated in the polar regions.", "Most organisms are adapted to live in specific types of rock formations."],
+    correct: 1,
+    explanation: "Extreme conditions of temperature, pressure, and limited resources constrain life at very high altitudes or deep within the Earth. Limited space is less limiting than extreme conditions. Biomass is not concentrated in polar regions. Rock formations are not a primary factor."
+  },
+  {
+    text: "What fundamental process links producers, consumers, and decomposers in an ecosystem?",
+    options: ["Competition for limited resources.", "The flow of energy and nutrients.", "Mutualistic symbiotic relationships.", "The constant recycling of water."],
+    correct: 1,
+    explanation: "Energy and nutrients flow from producers to consumers, and then to decomposers, creating an interconnected web of life. Competition, symbiosis, and water cycling are important, but the energy/nutrient flow is the central link."
+  },
+  {
+    text: "Which ecological role is exclusively performed by autotrophs?",
+    options: ["Decomposition of organic matter.", "Consumption of other organisms.", "Conversion of inorganic compounds into organic molecules.", "Regulation of population sizes."],
+    correct: 2,
+    explanation: "Only autotrophs (producers) can convert inorganic compounds (like CO₂) into organic molecules through photosynthesis or chemosynthesis. Decomposers break down organic matter. Consumers eat other organisms. Population regulation is a shared process."
+  },
+  {
+    text: "In the context of environmental degradation, 'land disturbance' primarily refers to:",
+    options: ["Natural disasters such as earthquakes and volcanoes.", "Human activities that disrupt or alter the landscape.", "The gradual erosion of coastlines by ocean waves.", "The seasonal flooding of river valleys."],
+    correct: 1,
+    explanation: "Land disturbance refers to anthropogenic activities like deforestation, mining, and construction that disrupt landscapes. Natural disasters are not the primary meaning. Erosion and flooding are natural processes, but 'disturbance' implies human action."
+  },
+  {
+    text: "Which of the following presents the most significant long-term challenge related to water degradation?",
+    options: ["The increasing cost of bottled water.", "The depletion of freshwater resources and harm to aquatic ecosystems.", "The aesthetic impact of pollution on lakes and rivers.", "The disruption of international shipping routes."],
+    correct: 1,
+    explanation: "Water degradation threatens the availability of clean water and the health of aquatic life, which are fundamental concerns. While the cost of bottled water and aesthetic impacts are problems, they are secondary to the core issue of resource depletion and ecosystem damage. Disrupted shipping is not a primary concern related to water quality."
+  },
+  {
+    text: "How does atmospheric degradation contribute to global climate change?",
+    options: ["By increasing the amount of oxygen in the atmosphere.", "By reducing the amount of solar radiation reaching the Earth's surface.", "By trapping heat and enhancing the greenhouse effect.", "By accelerating the process of cloud formation."],
+    correct: 2,
+    explanation: "Atmospheric degradation releases greenhouse gasses, which trap heat within the atmosphere. Increasing oxygen and reducing solar radiation would mitigate global warming. Cloud formation isn't the primary mechanism of atmospheric degradation's impact."
+  },
+  {
+    text: "Which of the following is a key distinction between anthropogenic and natural causes of environmental degradation?",
+    options: ["Natural causes always have more severe consequences.", "Anthropogenic causes are always preventable.", "Anthropogenic causes are primarily driven by human activities.", "Natural causes have no impact on human populations."],
+    correct: 2,
+    explanation: "Anthropogenic causes are, by definition, the result of human actions. Natural causes can be severe and are often not preventable, but the source is the key difference. Natural causes can definitely impact human populations."
+  },
+  {
+    text: "Overpopulation exacerbates environmental degradation primarily by:",
+    options: ["Increasing the Earth's albedo and reflecting more sunlight.", "Reducing the demand for natural resources and ecosystem services.", "Intensifying the strain on resources and waste management systems.", "Promoting sustainable lifestyles and conservation efforts."],
+    correct: 2,
+    explanation: "A larger population requires more resources and generates more waste, putting pressure on the environment. Increased albedo would cool the planet. Overpopulation doesn't reduce demand or promote sustainability."
+  },
+  {
+    text: "How are natural disasters linked to human actions as a cause of environmental degradation?",
+    options: ["Natural disasters are entirely independent of human activities.", "Human activities can increase the frequency or intensity of certain natural disasters.", "Human actions can prevent all natural disasters from occurring.", "Natural disasters primarily affect uninhabited areas with little ecological value."],
+    correct: 1,
+    explanation: "Human actions, like deforestation or unsustainable development, can worsen the impact of events such as floods or landslides. While not causing all disasters, they can amplify them. Disasters affect humans and valuable ecosystems."
+  },
+  {
+    text: "What distinguishes metamorphic rocks from igneous and sedimentary rocks in terms of their formation?",
+    options: ["Metamorphic rocks are formed from molten lava, while the others are not.", "Metamorphic rocks are formed only on the Earth's surface.", "Metamorphic rocks are formed by changes to existing rocks under pressure and heat.", "Metamorphic rocks are composed of organic materials, while the others are not."],
+    correct: 2,
+    explanation: "Metamorphic rocks are the result of existing rocks being changed by pressure and heat. Igneous rocks cool from lava, sedimentary rocks are the result of deposited material, and none of the rock types are made of solely organic materials."
+  },
+  {
+    text: "Why are producers considered essential to the biosphere?",
+    options: ["They consume all the waste products generated by other organisms.", "They provide a habitat for a variety of animal species.", "They convert inorganic compounds into energy-rich organic molecules.", "They regulate the Earth's climate by controlling cloud formation."],
+    correct: 2,
+    explanation: "Producers, through photosynthesis, create energy-rich organic compounds. Consumers would only consume, not produce energy. Producers do not specifically control climates."
+  },
+  {
+    text: "What is the most important factor that limits the abundance and distribution of organisms within the biosphere?",
+    options: ["The presence of predators and competitors.", "The availability of essential resources such as food, water, and shelter.", "The intensity of solar radiation and the length of the growing season.", "The pH of the soil and the presence of essential nutrients."],
+    correct: 1,
+    explanation: "The most limiting factor is what an organism needs to survive, and they cannot without water, food and shelter."
+  },
+  {
+    text: "What is the ultimate source of energy that fuels most ecosystems on Earth?",
+    options: ["Geothermal energy from the Earth's core.", "Chemical energy from deep-sea hydrothermal vents.", "Nuclear energy from radioactive decay in rocks.", "Solar energy from the Sun."],
+    correct: 3,
+    explanation: "Virtually all food chains and life depends on the sun."
+  },
+  {
+    text: "Which process is primarily responsible for the long-term removal of carbon dioxide from the atmosphere?",
+    options: ["Deforestation and burning of fossil fuels.", "Ocean acidification and release of CO₂ from seawater.", "Photosynthesis by plants and algae, followed by burial of organic matter.", "Volcanic eruptions and release of CO₂ from the Earth's interior."],
+    correct: 2,
+    explanation: "Photosynthesis consumes the co2 and is stored as organic material. Fossile fuels release CO2, the oceans and volcanoes are neutral and do not remove CO2."
+  },
+  {
+    text: "How does the interdependence of Earth's spheres contribute to the overall stability of the planet?",
+    options: ["Each sphere operates independently without affecting the others.", "The spheres interact and regulate each other's processes, maintaining a dynamic equilibrium.", "The spheres are constantly competing for resources, leading to instability.", "The spheres are gradually merging into a single, uniform entity."],
+    correct: 1,
+    explanation: "The interaction among the biosphere, the atmosphere, the lithosphere, and the hydrosphere contribute to a balance system of Earth."
+  },
+  {
+    text: "Which factor poses the greatest challenge to effectively addressing environmental degradation on a global scale?",
+    options: ["A lack of scientific knowledge about the causes and consequences of environmental problems.", "The inherent complexity of ecological systems and their resistance to change.", "The difficulty of coordinating international efforts and balancing competing interests.", "The limited availability of technological solutions and sustainable alternatives."],
+    correct: 2,
+    explanation: "The biggest reason is the differing interests and goals of different peoples and governments in the world that make global cooperation difficult."
+  },
+],
+    
 "CHM102-CLW2": [
   {
     text: "What causes the bond angle in methane (CH₄) to be 109.5°?",
