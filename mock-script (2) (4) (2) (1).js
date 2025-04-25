@@ -130,6 +130,296 @@ let selectedCourseCode = null;
 
 // Predefined question banks by course codes
 const questionBanks = {
+"ZOO102-WKTST3": [
+{
+    text: "What is the defining characteristic that differentiates a 'habitat' from an 'ecosystem'?",
+    options: ["A habitat includes only the living organisms", "A habitat describes the non-living components only", "A habitat focuses on the geographic location and its characterizing abiotic and biotic conditions, while an ecosystem describes the interaction within this geographical area", "An ecosystem is smaller than a habitat"],
+    correct: 2,
+    explanation: "A habitat is the place where organisms live, defined by the abiotic and biotic conditions. An ecosystem is a community of interacting organisms (plants, animals, and microbes) and their physical environment, so it includes both living and non-living components and the interactions between them within that specific geographical area."
+},
+{
+    text: "Why are soil characteristics and climate important considerations when defining a habitat?",
+    options: ["Because they determine the types of buildings that can be constructed", "Because they are primary factors influencing the distribution and survival of plants and animals in that location", "Because they only affect the aesthetics of the environment", "Because they are solely influenced by animal populations"],
+    correct: 1,
+    explanation: "Soil characteristics, such as nutrient content and drainage, and climate, including temperature and rainfall patterns, are key abiotic factors that directly influence what kinds of plants and animals can survive and thrive in a particular location. These factors provide the necessary resources and conditions for life."
+},
+{
+    text: "What key feature distinguishes forests from other terrestrial habitats?",
+    options: ["Dominance by grass cover", "Prevalence of sandy soils", "Large areas dominated by trees", "Absence of animal life"],
+    correct: 2,
+    explanation: "The defining characteristic of forests is that they are large areas dominated by trees. While other types of vegetation may be present, the prevalence of trees is the key feature that classifies a habitat as a forest."
+},
+{
+    text: "Which factor is LEAST likely to determine which type of forest is present in a given location?",
+    options: ["Temperature", "Rainfall patterns", "Soil composition", "Proximity to urban areas"],
+    correct: 3,
+    explanation: "The distribution of different forest types (tropical, temperate, boreal, plantation) is primarily determined by climatic factors such as temperature and rainfall, as well as soil composition. Proximity to urban areas is a human influence that might affect the forest's presence and composition, but it does not naturally determine the type of forest."
+},
+{
+    text: "Monocotyledons are specifically mentioned in the context of grasslands. What characteristic of monocotyledons is highlighted in the text?",
+    options: ["Broad leaves with branching veins", "Plants with narrow leaves growing from the base", "Tall woody stems", "Brightly colored flowers"],
+    correct: 1,
+    explanation: "The text specifically mentions that grasslands consist of monocotyledons, plants with narrow leaves growing from the base. This is a distinguishing morphological feature of many grasses and grass-like plants found in grassland ecosystems."
+},
+{
+    text: "Why are mountain goats, sheep, yak, and snow leopard mentioned in the context of mountain and polar regions?",
+    options: ["They are the only animals that can survive in these habitats", "They are commonly found in deserts", "They are some of the animals found in those regions, adapted to cold and often high-altitude conditions", "They are migratory birds that visit these regions seasonally"],
+    correct: 2,
+    explanation: "Mountain goats, sheep, yak, and snow leopards are examples of animals that have adapted to survive in the harsh conditions of mountain and polar regions. Their adaptations, such as thick fur and efficient respiratory systems, allow them to thrive in cold and often oxygen-poor environments."
+},
+{
+    text: "What is a key difference between 'lotic' and 'lentic' aquatic habitats?",
+    options: ["Lotic waters have higher salinity", "Lentic waters are continuously flowing while lotic waters are standing", "Lotic waters are continuously flowing while lentic waters are standing", "Lentic waters are found only in polar regions"],
+    correct: 2,
+    explanation: "Lotic waters are defined as running water bodies that flow continuously in a specific direction, such as rivers and streams. Lentic waters, on the other hand, are standing or stagnant waters that do not flow or move, such as lakes, ponds, and swamps."
+},
+{
+    text: "Why are estuaries considered 'unique habitats'?",
+    options: ["Completely isolated from saltwater influence", "Characterized by freshwater only", "Partially enclosed coastal bodies where freshwater mixes with saltwater", "Located exclusively in desert regions"],
+    correct: 2,
+    explanation: "Estuaries are partially enclosed, coastal water bodies where freshwater from rivers and streams mixes with saltwater from the ocean."
+},
+{
+    text: "What is the primary source of water in freshwater habitats?",
+    options: ["Ocean water", "Rainwater mainly from inland waters", "Desalinated seawater", "Volcanic activity"],
+    correct: 1,
+    explanation: "The text indicates that freshwater habitats are formed mainly from inland waters which have very low level of salinity, compared to the ocean. Rivers, lakes, ponds, and streams are examples of freshwater habitats. And this inland waters came from the rain."
+},
+{
+    text: "What is the primary distinction between a 'marine habitat' and a 'freshwater habitat'?",
+    options: ["Marine habitats are smaller than freshwater habitats.", "Freshwater habitats have high salinity compared to marine.", "Marine habitats are salt water bodies and support different organisms compared to freshwater habitats", "Freshwater habitats support larger organism compared to marine habitats."],
+    correct: 2,
+    explanation: "Marine habitats are defined as saltwater bodies that make up majority of water on the planet (70%), while freshwater habitats have low salinity and contain other freshwater organism."
+},
+{
+    text: "What is the global significance of freshwater ecosystems?",
+    options: ["They are the largest ecosystems on Earth.", "They support less than 100 species of organisms.", "They support more than 100,000 species of organisms, playing a critical role in biodiversity", "They make up 70% of the Earth's surface."],
+    correct: 2,
+    explanation: "Although they account for less than 0.01% of the Earth's surface area, freshwater ecosystems support over 100,000 species of organisms. This highlights their immense importance for biodiversity conservation."
+},
+{
+    text: "According to the information, what environmental challenge is a significant characteristic of desert habitats?",
+    options: ["Excessive moisture", "High temperatures only", "Moisture deficit and higher evaporation than precipitation", "Consistent cloud cover"],
+    correct: 2,
+    explanation: "Deserts are characterized by their moisture deficit, where they lose more moisture through evaporation than they receive through precipitation. This results in arid conditions and poses a significant challenge for organisms that inhabit these environments."
+},
+{
+    text: "What is the primary focus of the term 'ecological niche'?",
+    options: ["The physical location of a species.", "The set of resources available in an ecosystem.", "The conditions necessary for a species' survival and its role within an ecosystem.", "The competition between species for resources."],
+    correct: 2,
+    explanation: "The ecological niche encompasses both the environmental conditions a species needs to persist and its functional role within the ecosystem, including its interactions with other species and its contribution to ecosystem processes."
+},
+{
+    text: "Which concept is most closely associated with Grinnell's initial definition of the ecological niche?",
+    options: ["The trophic position of a species.", "The habitat requirements of a species.", "The multi-dimensional space of resources utilized by a species.", "The interactions between species in an ecosystem."],
+    correct: 1,
+    explanation: "Grinnell's early concept of the ecological niche focused primarily on the habitat requirements of a species—the specific environmental conditions and resources needed for its survival and reproduction."
+},
+{
+    text: "What distinguishes the 'fundamental niche' from the 'realized niche'?",
+    options: ["The fundamental niche includes biotic interactions, while the realized niche only considers abiotic factors.", "The fundamental niche is the niche a species occupies in the presence of competition and other interactions, while the realized niche is its potential niche in the absence of those interactions.", "The fundamental niche is the potential niche a species could occupy in the absence of interactions, while the realized niche is its actual niche in the presence of competition and other interactions.", "The fundamental niche is smaller than the realized niche."],
+    correct: 2,
+    explanation: "The fundamental niche represents the full range of environmental conditions and resources a species *could* potentially occupy and use, if there were no limiting factors like competition. The realized niche is the portion of the fundamental niche that a species *actually* occupies, considering competition and other interactions that restrict its distribution and resource use."
+},
+{
+    text: "What is the primary principle behind the 'Competitive Exclusion Principle'?",
+    options: ["Two species can coexist indefinitely in the same niche.", "Competition for resources always leads to extinction.", "Two species cannot coexist in the same ecological niche if resources are limited.", "Species always evolve to occupy different niches."],
+    correct: 2,
+    explanation: "The Competitive Exclusion Principle states that if two species are competing for the exact same limited resources in the same ecological niche, the species with even a slight advantage will eventually outcompete and exclude the other, leading to its local extinction."
+},
+{
+    text: "What is the primary focus of the term 'ecological niche'?",
+    options: ["The physical location of a species.", "The set of resources available in an ecosystem.", "The conditions necessary for a species' survival and its role within an ecosystem.", "The competition between species for resources."],
+    correct: 2,
+    explanation: "The ecological niche encompasses both the environmental conditions a species needs to persist and its functional role within the ecosystem, including its interactions with other species and its contribution to ecosystem processes."
+},
+{
+    text: "Which concept is most closely associated with Grinnell's initial definition of the ecological niche?",
+    options: ["The trophic position of a species.", "The habitat requirements of a species.", "The multi-dimensional space of resources utilized by a species.", "The interactions between species in an ecosystem."],
+    correct: 1,
+    explanation: "Grinnell's early concept of the ecological niche focused primarily on the habitat requirements of a species—the specific environmental conditions and resources needed for its survival and reproduction."
+},
+{
+    text: "What distinguishes the 'fundamental niche' from the 'realized niche'?",
+    options: ["The fundamental niche includes biotic interactions, while the realized niche only considers abiotic factors.", "The fundamental niche is the niche a species occupies in the presence of competition and other interactions, while the realized niche is its potential niche in the absence of those interactions.", "The fundamental niche is the potential niche a species could occupy in the absence of interactions, while the realized niche is its actual niche in the presence of competition and other interactions.", "The fundamental niche is smaller than the realized niche."],
+    correct: 2,
+    explanation: "The fundamental niche represents the full range of environmental conditions and resources a species *could* potentially occupy and use, if there were no limiting factors like competition. The realized niche is the portion of the fundamental niche that a species *actually* occupies, considering competition and other interactions that restrict its distribution and resource use."
+},
+{
+    text: "What is the primary principle behind the 'Competitive Exclusion Principle'?",
+    options: ["Two species can coexist indefinitely in the same niche.", "Competition for resources always leads to extinction.", "Two species cannot coexist in the same ecological niche if resources are limited.", "Species always evolve to occupy different niches."],
+    correct: 2,
+    explanation: "The Competitive Exclusion Principle states that if two species are competing for the exact same limited resources in the same ecological niche, the species with even a slight advantage will eventually outcompete and exclude the other, leading to its local extinction."
+},
+{
+    text: "How does 'niche partitioning' contribute to species coexistence?",
+    options: ["It eliminates competition for resources.", "It allows competing species to use the same resources at the same time.", "It allows competing species to use resources in slightly different ways or at different times, reducing direct competition.", "It always leads to the extinction of one of the competing species."],
+    correct: 2,
+    explanation: "Niche partitioning involves the evolutionary process where competing species evolve to utilize resources in slightly different ways (e.g., different food sizes, different foraging locations, different activity times). This reduces direct competition and allows them to coexist within the same habitat."
+},
+{
+    text: "According to the provided information, what is the likely outcome if two species occupy the same ecological niche and compete for limited resources?",
+    options: ["Both species will thrive.", "One species will eventually be favored by natural selection, while the other may face extinction.", "Both species will evolve to occupy a new niche.", "The resources will increase to support both species."],
+    correct: 1,
+    explanation: "When two species compete for the same limited resources, natural selection will favor the species with traits that allow it to more efficiently acquire or utilize those resources. Over time, this can lead to the decline and potential extinction of the less competitive species."
+},
+{
+    text: "What defines a 'community' in an ecological context?",
+    options: ["A group of individuals of the same species living in the same area.", "A group of interacting populations of different species living in the same area.", "A single population of a dominant species.", "All the living and non-living components of an ecosystem."],
+    correct: 1,
+    explanation: "An ecological community consists of all the populations of different species that interact within a particular environment or habitat. It emphasizes the interactions among different species."
+},
+{
+    text: "What is the primary energy source for autotrophic communities?",
+    options: ["Chemical compounds.", "Organic matter.", "Sunlight.", "Other organisms."],
+    correct: 2,
+    explanation: "Autotrophs, such as plants and algae, are organisms that can produce their own food using energy from sunlight through the process of photosynthesis. This energy then forms the base of the food web for the entire community."
+},
+{
+    text: "What describes the flow of energy and matter in an ecosystem?",
+    options: ["Matter and energy are both created within the ecosystem.", "Matter cycles within the ecosystem, while energy flows through it.", "Energy cycles within the ecosystem, while matter flows through it.", "Both matter and energy flow through the ecosystem only once."],
+    correct: 1,
+    explanation: "Ecosystems follow the principle of matter cycling and energy flow. Matter, like nutrients, is recycled within the ecosystem through processes like decomposition and consumption. Energy, however, flows through the ecosystem in a one-way direction, from the sun to producers to consumers, and is eventually lost as heat."
+},
+{
+    text: "What is the key characteristic of a 'closed ecosystem'?",
+    options: ["It exchanges both energy and matter with its surroundings.", "It exchanges only energy with its surroundings.", "It exchanges only matter with its surroundings.", "It does not exchange either energy or matter with its surroundings."],
+    correct: 3,
+    explanation: "A closed ecosystem is a theoretical concept that refers to an ecosystem that is completely self-contained and does not exchange matter or energy with its surrounding environment. In reality, truly closed ecosystems are very rare or non-existent."
+},
+{
+    text: "Which of the following best describes a biome?",
+    options: ["A small, localized habitat.", "A large geographic area characterized by a specific climate and associated plant and animal communities.", "A group of interacting populations of different species.", "A single self-contained ecosystem."],
+    correct: 1,
+    explanation: "A biome is a large-scale ecological unit characterized by a distinctive climate, vegetation type, and associated animal communities. Examples include tundra, forests, grasslands, and deserts."
+},
+{
+    text: "What primarily determines the type of biome found in a particular region?",
+    options: ["The types of animals present.", "The length of the day.", "The latitude of the area only.", "Climate, including average temperature and precipitation."],
+    correct: 3,
+    explanation: "The distribution of biomes across the globe is primarily determined by climate, particularly temperature and precipitation patterns. These factors influence the types of plants that can grow in a region, which in turn support specific animal communities."
+},
+{
+        text: "Which of the following is an example of a terrestrial ecosystem?",
+        options: ["Lakes", "Ponds", "Forest", "Swamps"],
+        correct: 2,
+        explanation: "Terrestrial ecosystems are land-based communities of organisms and their physical environment. Forests are land-based and thus fits this description."
+},
+{
+        text: "Which of the following is NOT a basic component of all ecosystems?",
+        options: ["Autotrophs", "Heterotrophs", "Detritivores", "Consumers"],
+        correct: 2,
+        explanation: "All ecosystems have three basic components and they are autotrophs, the consumers and abiotic matter. Detritivores are consumers."
+},
+{
+        text: "Which of the following is an example of an ecosystem?",
+        options: ["Lotic waters", "Aquatic ecosystem", "Terrestrial ecosystem", "All of the above"],
+        correct: 3,
+        explanation: "Types of ecosystem include Natural ecosystem, Terrestrial ecosystem. Aquatic ecosystem. Lotic ecosystem i.e., lakes ponds, swampy while Lotic ecosystem are rivers, streams, springs, etc."
+},
+{
+        text: "What is a basic feature of a biome?",
+        options: ["Small geographic area", "Different climate", "Uniform climate", "none of the above"],
+        correct: 2,
+        explanation: "Biomes of the World - Scientists find it useful to divide the biosphere into biomes. A biome is a large geographical area with a somewhat uniform climate. The length of the season is similar in all parts of each biome as well as the length of days. The biomes include"
+},
+{
+        text: "Which of the following is NOT a forest biome?",
+        options: ["Deciduous Forest Biome", "Chapparal and Wood Land Biomes", "Coniferous Forest Biome", "Savana Biome"],
+        correct: 3,
+        explanation: "Deciduous Forest Biome, Chapparal and Wood Land Biomes, Coniferous Forest Biome are forest biomes but savanna is not."
+},
+{
+        text: "Which of the following requires the energy of the sun to drive the process of photosynthesis?",
+        options: ["Community", "Autotrophs", "Heterotrophic communities", "Animals"],
+        correct: 1,
+        explanation: "They require only the energy of the sun to drive the process of photosynthesis"
+},
+{
+        text: "Which of the following is responsible for exchange of energy and matter?",
+        options: ["Biome", "Community", "Ecosystem", "Animals"],
+        correct: 2,
+        explanation: "The ecosystem is a physical, self-supporting unit of interacting organisms and their surrounding environment. In other words, it is the functioning system of both biotic, community and its abiotic environment. The primary focus of ecosystem ecology is the exchange of energy and matter."
+},
+{
+        text: "A group of animals or people with a common characteristics or interests living together within a larger society are referred to as?",
+        options: ["Ecosystem", "Biome", "Community", "Society"],
+        correct: 2,
+        explanation: "Hence, a group of animals or people with a common characteristics or interests living together within a larger society are referred to as a community. Plants and grasslands are examples of autotrophic communities. They require only the energy of the sun to drive the process of photosynthesis"
+},
+{
+    text: "What distinguishes a 'habitat' from an 'ecosystem'?",
+    options: ["A habitat includes only living organisms.", "A habitat describes only non-living components.", "A habitat focuses on a geographic location and its conditions, while an ecosystem describes the interactions within that area.", "An ecosystem is smaller than a habitat."],
+    correct: 2,
+    explanation: "A habitat is the place where organisms live, defined by abiotic and biotic conditions. An ecosystem is a community of interacting organisms (plants, animals, and microbes) and their physical environment, including both living and non-living components and the interactions between them within that geographic area."
+},
+{
+    text: "Why are soil characteristics and climate important considerations when studying where plants and animals live?",
+    options: ["They determine building construction.", "They influence the distribution and survival of plants and animals.", "They only affect the aesthetics of the environment.", "They are solely influenced by animal populations."],
+    correct: 1,
+    explanation: "Soil characteristics, such as nutrient content and drainage, and climate, including temperature and rainfall patterns, are key factors influencing what kinds of plants and animals can survive and thrive in a particular location. These factors provide the necessary resources and conditions for life."
+},
+{
+    text: "What key feature primarily defines a forest as a distinct type of habitat?",
+    options: ["Dominance by grass cover.", "Prevalence of sandy soils.", "Large areas dominated by trees.", "Absence of animal life."],
+    correct: 2,
+    explanation: "The defining characteristic of forests is that they are large areas dominated by trees. While other types of vegetation may be present, the prevalence of trees is the key feature that classifies a habitat as a forest."
+},
+{
+    text: "Which factor is LEAST likely to determine the specific type of forest present in a given location?",
+    options: ["Temperature.", "Rainfall patterns.", "Soil composition.", "Proximity to urban areas."],
+    correct: 3,
+    explanation: "The distribution of different forest types (tropical, temperate, boreal, plantation) is primarily determined by climatic factors such as temperature and rainfall, as well as soil composition. Proximity to urban areas is a human influence that might affect the forest's presence and composition, but it does not naturally determine the type of forest."
+},
+{     text: "What characteristic of monocotyledons is associated with grassland ecosystems?",
+    options: ["Broad leaves with branching veins.", "Plants with narrow leaves growing from the base.", "Tall woody stems.", "Brightly colored flowers."],
+    correct: 1,
+    explanation: "Grasslands often contain monocotyledons, which are plants with narrow leaves growing from the base. This is a distinguishing morphological feature of many grasses and grass-like plants found in grassland ecosystems."
+},
+{
+    text: "Why are animals like mountain goats, sheep, yak, and snow leopards commonly associated with mountain and polar regions?",
+    options: ["They are the only animals that can survive in these habitats.", "They are commonly found in deserts.", "They are adapted to cold and often high-altitude conditions.", "They are migratory birds that visit these regions seasonally."],
+    correct: 2,
+    explanation: "Mountain goats, sheep, yak, and snow leopards are examples of animals that have adapted to survive in the harsh conditions of mountain and polar regions. Their adaptations, such as thick fur and efficient respiratory systems, allow them to thrive in cold and often oxygen-poor environments."
+},
+{
+    text: "What is the primary difference between 'lotic' and 'lentic' aquatic ecosystems?",
+    options: ["Lotic waters have higher salinity.", "Lentic waters are continuously flowing while lotic waters are standing.", "Lotic waters are continuously flowing while lentic waters are standing.", "Lentic waters are found only in polar regions."],
+    correct: 2,
+    explanation: "Lotic waters are defined as running water bodies that flow continuously in a specific direction, such as rivers and streams. Lentic waters, on the other hand, are standing or stagnant waters that do not flow or move, such as lakes, ponds, and swamps."
+},
+{
+    text: "What makes estuaries unique ecosystems?",
+    options: ["They contain only freshwater species.", "They are transition zones where freshwater and saltwater mix, creating unique environmental conditions.", "They are located far from any human influence.", "They are always very deep."],
+    correct: 2,
+    explanation: "Estuaries are unique because they are transitional environments where freshwater from rivers and streams mixes with saltwater from the ocean. This mixing creates brackish water and fluctuating salinity levels, leading to unique habitat conditions and supporting a diverse range of plant and animal life adapted to these specific conditions."
+},
+{
+    text: "What is the main source of water in freshwater habitats?",
+    options: ["Ocean water", "Rainwater mainly from inland waters", "Desalinated seawater", "Volcanic activity"],
+    correct: 1,
+    explanation: "Freshwater habitats are formed mainly from inland waters which have very low level of salinity, compared to the ocean. Rivers, lakes, ponds, and streams are examples of freshwater habitats. And this inland waters came from the rain."
+},
+{
+    text: "What is the primary distinction between marine and freshwater ecosystems?",
+    options: ["Marine ecosystems are smaller than freshwater.", "Freshwater ecosystems have high salinity.", "Marine ecosystems are saltwater and support different organisms compared to freshwater ecosystems.", "Freshwater ecosystems support larger organisms compared to marine ecosystems."],
+    correct: 2,
+    explanation: "Marine ecosystems are defined as saltwater bodies that make up majority of water on the planet (70%), while freshwater ecosystems have low salinity and contain other freshwater organism."
+},
+{
+    text: "What is the global significance of freshwater ecosystems?",
+    options: ["They are the largest ecosystems on Earth.", "They support less than 100 species of organisms.", "They support over 100,000 species of organisms, playing a critical role in biodiversity.", "They make up 70% of the Earth's surface."],
+    correct: 2,
+    explanation: "Although they account for a very small percentage of the Earth's surface area, freshwater ecosystems support a disproportionately large number of species. This highlights their immense importance for biodiversity conservation."
+},
+{
+    text: "What environmental characteristic is a key feature of desert habitats?",
+    options: ["Excessive moisture.", "High temperatures only.", "Moisture deficit and higher evaporation than precipitation.", "Consistent cloud cover."],
+    correct: 2,
+    explanation: "Deserts are characterized by their moisture deficit, where they lose more moisture through evaporation than they receive through precipitation. This results in arid conditions and poses a significant challenge for organisms that inhabit these environments."
+},
+],
+    
 "ZOO102-WKTST2": [
   {
     text: "Ecology is derived from the Greek words 'Oikos' and 'Logy'. What do these words respectively mean?",
