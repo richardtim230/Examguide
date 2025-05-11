@@ -18,7 +18,38 @@
     
   <title>Students Support System</title>
   <link rel="stylesheet" href="./stylo.css">
+<style>
+  .container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 900px; /* Increased max width for larger screens */
+    width: 100%;
+    margin: 0 auto; /* Center horizontally */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+  }
 
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      max-width: 700px; /* Maintain smaller width on medium screens */
+      padding: 30px 20px; /* Adjust padding for smaller screens */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      max-width: 100%; /* Full width for mobile devices */
+      padding: 20px 15px; /* Further reduce padding */
+    }
+  }
+</style>
 </head>
 <body>
 <!-- partial:index.partial.html -->
