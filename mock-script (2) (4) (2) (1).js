@@ -1739,6 +1739,67 @@ const questionBanks = {
 
 
   "PHY102": [
+      {
+          text: "The top of a swimming pool is at ground level. If the pool is 2.00 m deep, how far below ground level does the bottom of the pool appear to be located when the pool is completely filled with water?",
+          options: ["1.00 m", "1.33 m", "1.50 m", "2.00 m"],
+          correct: 2,
+          explanation: "Using the formula \\( q = -(\\frac{n₂}{n₁})p \\), where \\( n₁ = 1.333 \\) (water), \\( n₂ = 1.00 \\) (air), and \\( p = 2.00 \\) m, we get \\( q = -(\\frac{1.00}{1.333}) × 2.00 \\) m = -1.50 m. Therefore, the correct answer is (c) 1.50 m"
+        },
+        {
+          text: " The top of a swimming pool is at ground level. If the pool is 2.00 m deep, how far below ground level does the bottom of the pool appear to be located when the pool is filled halfway with water?",
+          options: ["0.50 m", "0.75 m", "1.00 m", "1.50 m"],
+          correct: 3,
+          explanation: "When the pool is half-filled, \\( p = 1.00 \\) m. Using the same formula, \\( q = -(\\frac{1.00}{1.333}) × 1.00 \\) m = -0.75 m. The bottom appears to be 0.75 m below the water surface, which is 1.00 m (half the pool) + 0.75 m = 1.75 m below ground level. Therefore, the correct answer is (e) 1.75 m"
+        },
+        {
+          text: "A transparent sphere of unknown composition is observed to form an image of the Sun on its surface opposite the Sun. What is the refractive index of the sphere material?",
+          options: ["1.00", "1.33", "1.50", "2.00"],
+          correct: 3,
+          explanation: "Using the formula \\( \\frac{n₁}{p} + \\frac{n₂}{q} = \\frac{n₂ - n₁}{R} \\) and the given conditions \\( p → ∞ \\) and \\( q = 2R \\), we find that \\( n = 2.00 \\). Therefore, the correct answer is (d) 2.00"
+        },
+        {
+          text: "A flint glass plate (n = 1.66) rests on the bottom of an aquarium tank. The plate is 8.00 cm thick (vertical dimension) and covered with water (n = 1.33) to a depth of 12.0 cm. Calculate the apparent thickness of the plate as viewed from above the water. (Assume nearly normal incidence of light rays.)",
+          options: ["2.4 cm", "3.6 cm", "4.8 cm", "6.0 cm"],
+          correct: 2,
+          explanation: "The apparent thickness of the plate is found by considering two refractions: one at the glass-water interface and another at the water-air interface. The apparent thickness \\( Δy = |q_{ia}| - |q_i| = 13.8 \\) cm - 9.00 cm = 4.8 cm. Therefore, the correct answer is (c) 4.8 cm"
+        },
+{
+          text: "When a particular inductor is connected to a source of sinusoidally varying voltage with constant amplitude and a frequency of 60.0 Hz, the rms current is 3.0 A. What is the rms current if the source frequency is doubled?",
+          options: ["12 A", "6.0 A", "4.2 A", "3.0 A"],
+          correct: 4,
+          explanation: "When the frequency doubles, the rms current \\(I_{rms} = \\frac{ΔV_{rms}}{2π f L}\\) is cut in half. Thus, the new current is \\(I_{rms} = 3.0 \\, \\\\text{A} / 2 = 1.5 \\, \\\\text{A}\\), and (e) is the correct answer."
+        },
+        {
+          text: "A series *RLC* circuit contains a resistor of 20 Ω, a capacitor of 0.75 μF, and an inductor of 120 mH. If a sinusoidally varying rms voltage of 120 V is applied across this combination of elements, what is the rms current in the circuit when operating at its resonance frequency?",
+          options: ["2.4 A", "6.0 A", "10 A", "17 A"],
+          correct: 1,
+          explanation: "At the resonance frequency, \\(X_L = X_C\\) and the impedance is \\(Z = \\sqrt{R² + (X_L - X_C)²} = R\\). Thus, the rms current is \\(I_{rms} = ΔV_{rms} / Z = (120 \\, \\\\text{V}) / (20 \\, Ω) = 6.0 \\, \\\\text{A}\\), and (b) is the correct choice."
+        },
+        {
+          text: "Find the voltage across a \\((1.0/2π)\\)-H inductor when it carries 2.0 A of rms current at 60.0 Hz.",
+          options: ["160 V", "140 V", "120 V", "95 V"],
+          correct: 2,
+          explanation: "\\(ΔV_{rms} = I_{rms} X_L = I_{rms} (2π f L) = (2.0 \\, \\\\text{A}) (2π (60.0 \\, \\\\text{Hz})) [(1.0/2π) \\, \\\\text{H}] = 120 \\, \\\\text{V}\\), and the correct answer is choice (c)."
+        },
+        {
+          text: "What is the rms voltage across a capacitor with capacitance \\((1.00/2π) \\, μ\\\\text{F}\\) carrying 1.00-mA rms AC current at 60.0 Hz?",
+          options: ["15.7 V", "13.2 V", "32.2 V", "0.560 V"],
+          correct: 0,
+          explanation: "\\(ΔV_{rms} = I_{rms} X_C = \\frac{I_{rms}}{2π f C} = \\frac{1.00 × 10⁻³ \\, \\\\text{A}}{2π (60.0 \\, \\\\text{Hz}) [(1.00/2π) × 10⁻⁶ \\, \\\\text{F}]} = 16.7 \\, \\\\text{V}\\), so choice (a) is correct."
+        },
+        {
+          text: "A 6.0-V battery is connected across the primary coil of the transformer having 50 turns. If the secondary coil of the transformer has 100 turns, what voltage appears across the secondary?",
+          options: ["24 V", "12 V", "6.0 V", "3.0 V"],
+          correct: 4,
+          explanation: "The battery produces a constant current in the primary coil, which generates a constant flux through the secondary coil. With no change in flux through the secondary coil, there is no induced voltage across the secondary coil, and choice (e) is the correct answer."
+        },
+        {
+          text: "A typical microwave oven operates at a frequency of 2.45 GHz. What is the wavelength associated with the electromagnetic waves in the oven?",
+          options: ["8.20 m", "12.2 cm", "\\(1.20 × 10⁸\\) m", "\\(8.20 × 10⁻⁹\\) m"],
+          correct: 1,
+          explanation: "The speed c, frequency f, and wavelength \\(λ\\) of an electromagnetic wave are related by \\(c = fλ\\). The wavelength of the waves in the oven is then \\n\\(λ = \\frac{c}{f} = \\frac{3.00 × 10⁸ \\, \\\\text{m/s}}{2.45 × 10⁹ \\, \\\\text{Hz}} = 0.122 \\, \\\\text{m} = 12.2 \\, \\\\text{cm}\\)\\nand (b) is the correct choice."
+        },
+
     {
       text: "The magnitude of the electric force between two protons is 2.3 × 10⁻²⁶ N. How far apart are they?",
       options: ["0.10 m", "0.022 m", "3.1 m", "0.0057 m", "0.48 m"],
@@ -1767,19 +1828,19 @@ const questionBanks = {
       text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
       options: ["1.15 N/C", "-2.24 N/C", "3.91 N/C", "-1.15 N/C", "0.863 N/C"],
       correct: 3,
-      explanation: "r = √((x₂ - x₁)² + (y₂ - y₁)²) = √((4.00)² + (-3.00)²) = 5.00 m and its direction is θ = tan⁻¹(ry/rx) = -36.9°\\\\\\\\nEx = E cos θ = (k q / r²) cos θ = ((8.99 × 10⁹ N·m²/C²)(-4.00 × 10⁻⁹ C) / (5.00 m)²) cos(-36.9°) = -1.15 N/C"
+      explanation: "r = √((x₂ - x₁)² + (y₂ - y₁)²) = √((4.00)² + (-3.00)²) = 5.00 m and its direction is θ = tan⁻¹(ry/rx) = -36.9°\nEx = E cos θ = (k q / r²) cos θ = ((8.99 × 10⁹ N·m²/C²)(-4.00 × 10⁻⁹ C) / (5.00 m)²) cos(-36.9°) = -1.15 N/C"
     },
     {
       text: "Two point charges attract each other with an electric force of magnitude F. If one charge is reduced to one-third its original value and the distance between the charges is doubled, what is the resulting magnitude of the electric force between them?",
       options: ["F/12", "F/3", "F/6", "3F/4", "3F/2"],
       correct: 0,
-      explanation: "F = (k q₁ q₂) / r²\\\\\\\\nIf changes are made so q₁' = q₁/3 and r' = 2r, the magnitude of the new force will be:\\\\\\\\nF' = (k (q₁/3) q₂) / (2r)² = (k q₁ q₂) / (3 × 4 r²) = (1/12) (k q₁ q₂ / r²) = F/12"
+      explanation: "F = (k q₁ q₂) / r²\nIf changes are made so q₁' = q₁/3 and r' = 2r, the magnitude of the new force will be:\nF' = (k (q₁/3) q₂) / (2r)² = (k q₁ q₂) / (3 × 4 r²) = (1/12) (k q₁ q₂ / r²) = F/12"
     },
     {
       text: "In deep space, two spheres, each with a radius of 5.00 m, are connected by a 3.00 × 10² m nonconducting cord. If a uniformly distributed charge of 35.0 mC resides on the surface of each sphere, what is the tension in the cord?",
       options: ["57.5 N", "115 N", "230 N", "345 N", "460 N"],
       correct: 1,
-      explanation: "The tension in the cord is equal to the electrostatic force between the two charged spheres. We use Coulomb's Law to calculate this force:\\\\\\\\\\\\\\\\nF = k(q₁ q₂) / r²\\\\\\\\\\\\\\\\nWhere:\\\\\\\\\\\\\\\\nF is the electrostatic force (tension in the cord)\\\\\\\\\\\\\\\\nk = 8.99 × 10⁹ N · m²/C² (Coulomb's constant)\\\\\\\\\\\\\\\\nq₁ = q₂ = 35.0 × 10⁻³ C (charge on each sphere)\\\\\\\\\\\\\\\\nr = 3.10 × 10² m (distance between the spheres, which is the length of the cord)\\\\\\\\\\\\\\\\nPlugging in the values:\\\\\\\\\\\\\\\\nF = (8.99 × 10⁹) ((35.0 × 10⁻³)² / (3.10 × 10²)²) = 115 N"
+      explanation: "The tension in the cord is equal to the electrostatic force between the two charged spheres. We use Coulomb's Law to calculate this force: \nF = k(q₁ q₂) / r² \nWhere:\nF is the electrostatic force (tension in the cord)\nk = 8.99 × 10⁹ N · m²/C² (Coulomb's constant) \nq₁ = q₂ = 35.0 × 10⁻³ C (charge on each sphere) \nr = 3.10 × 10² m (distance between the spheres, which is the length of the cord) \nPlugging in the values:\nF = (8.99 × 10⁹) ((35.0 × 10⁻³)² / (3.10 × 10²)²) = 115 N"
     },
     {
       text: "A nonconducting, thin plane sheet of charge carries a uniform charge per unit area of 5.20 μC/m². What is the electric field at a distance of 8.70 cm from the plate?",
