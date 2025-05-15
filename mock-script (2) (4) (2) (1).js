@@ -22369,7 +22369,7 @@ function submitExam() {
   const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
 
   // Performance Summary
-document.getElementById("report").innerHTML = `
+   resultsSummary.innerHTML = `
   <p><strong>Performance Report:</strong></p>
   <p>Total Questions Answered: ${totalAnswered}</p>
   <p>Total Questions Not Answered: ${totalNotAnswered}</p>
