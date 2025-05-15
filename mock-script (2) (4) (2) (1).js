@@ -22179,27 +22179,34 @@ document.getElementById('courseCode').value = '';
 
 function loadQuestion() {
   if (questions.length === 0) {
-    alert("No questions available.");
+    alert("No questions available to load.");
     return;
   }
 
   const question = questions[currentQuestionIndex];
+  const safeText = question.text.replace(/\n/g, '<br>');
 
-  questionTitle.innerHTML = `
-    <div class="question-text"><strong>${currentQuestionIndex + 1}.</strong> ${formatText(question.text)}</div>
-  `;
+  // Render Question Text
+  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${safeText}`;
 
-  answerOptions.innerHTML = question.options.map((opt, idx) => `
-    <button class="answer-btn" onclick="selectAnswer(${idx}, this)">
-      ${formatText(opt)}
-    </button>
-  `).join("");
+  // Render Options
+  answerOptions.innerHTML = question.options
+    .map((option, index) => `
+      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+        ${option.replace(/\n/g, '<br>')}
+      </button>
+    `)
+    .join("");
 
   highlightSelectedAnswer();
   updateButtons();
   updateProgressBar();
-  if (window.MathJax) MathJax.typeset();
-        }
+
+  // Re-render Math
+  if (window.MathJax) {
+    MathJax.typeset();
+  }
+}
 
 // Shuffle questions randomly
 function shuffleArray(array) {
