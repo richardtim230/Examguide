@@ -1740,6 +1740,132 @@ const questionBanks = {
 
   "PHY102": [
       {
+    text: "When an image of a real object is formed by a flat mirror, which of the following statements are always true?<br><br>I. The image is larger than the object.<br>II. The image is the same size as the object.<br>III. The image is virtual.<br>IV. The image is smaller than the object.<br>V. The image is upright.",
+    options: ["I, II, and III", "II, III, and V", "I and IV", "III and V"],
+    correct: 1,
+    explanation: "The image formed by a flat mirror of a real object is always upright, virtual, and the same size as the object and located as far behind the mirror as the object is in front of the mirror. Thus, statements (b), (c), and (e) are all true, while statements (a) and (d) are false.nTherefore, the correct answer is (b) II, III, and V"
+},
+{
+    text: "If Josh's face is 30.0 cm in front of a concave shaving mirror creating an upright image 1.50 times as large as the object, what is the mirror's focal length?",
+    options: ["12.0 cm", "20.0 cm", "70.0 cm", "90.0 cm"],
+    correct: 3,
+    explanation: "Since the size of the image is 1.50 times the size of the object, the magnitude of the magnification is |M| = 1.50. Because the image is upright, M > 0. Thus, M = -q/p = +1.50, which gives q = -1.50p. Then from the mirror equation, we have<br><br>\(f = \frac{R}{2} = \frac{qp}{p+q} = \frac{(-1.50p)p}{p-1.50p} = +3.00p = +3.00(30.0 \text{ cm}) = +90.0 \text{ cm}\)<br><br>and the correct choice is (d).<br>Therefore, the correct answer is (d) 90.0 cm"
+},
+{
+    text: "A thin, convergent lens has a focal length of 8.00 cm. If a real, inverted image is located 12.0 cm to the right of the lens, where is the object located?",
+    options: ["12.0 cm to the left of the lens", "24.0 cm to the right of the lens", "24.0 cm to the left of the lens", "18.0 cm to the right of the lens"],
+    correct: 2,
+    explanation: "For a convergent lens, \(f > 0\), and because the image is real, \(q > 0\). The thin-lens equation, \(\frac{1}{p} + \frac{1}{q} = \frac{1}{f}\), then gives<br><br>\(p = \frac{qf}{q-f} = \frac{(12.0 \text{ cm})(8.00 \text{ cm})}{12.0 \text{ cm} - 8.00 \text{ cm}} = +24.0 \text{ cm}\)<br><br>Since \(p > 0\), the object is in front (in this case, to the left) of the lens, and the correct choice is (c).<br>Therefore, the correct answer is (c) 24.0 cm to the left of the lens"
+},
+{
+    text: "An object is placed 16.0 cm away from a convex mirror with a focal length of magnitude 6.00 cm. What is the location of the image?",
+    options: ["9.60 cm in front of the mirror", "4.36 cm in front of the mirror", "9.60 cm behind the mirror", "4.36 cm behind the mirror"],
+    correct: 3,
+    explanation: "From the mirror equation, \(\frac{1}{p} + \frac{1}{q} = \frac{2}{R} = \frac{1}{f}\), with \(f < 0\) since the mirror is convex, the image distance is found to be<br><br>\(q = \frac{pf}{p-f} = \frac{(16.0 \text{ cm})(-6.00 \text{ cm})}{16.0 \text{ cm} - (-6.00 \text{ cm})} = -4.36 \text{ cm}\)<br><br>Since \(q < 0\), the image is virtual and located 4.36 cm behind the mirror. Choice (d) is the correct answer.nTherefore, the correct answer is (d) 4.36 cm behind the mirror"
+},
+{
+    text: "A real object is 10.0 cm to the left of a thin, diverging lens having a focal length of magnitude 16.0 cm. What is the location of the image?",
+    options: ["6.15 cm to the right of the lens", "6.15 cm to the left of the lens", "26.7 cm to the right of the lens", "26.7 cm to the left of the lens"],
+    correct: 1,
+    explanation: "For a divergent lens, \(f < 0\), and because the object is real, \(p > 0\). The thin-lens equation, \(\frac{1}{p} + \frac{1}{q} = \frac{1}{f}\), then gives<br><br>\(q = \frac{pf}{p-f} = \frac{(10.0 \text{ cm})(-16.0 \text{ cm})}{10.0 \text{ cm} - (-16.0 \text{ cm})} = -6.15 \text{ cm}\)<br><br>Since \(q < 0\), the image is in front (in this case, to the left) of the lens, and the correct choice is (b)."
+},
+{
+    text: "Therefore, the correct answer is (b) 6.15 cm to the left of the lens<br><br>Question 24: The top of a swimming pool is at ground level. If the pool is 2.00 m deep, how far below ground level does the bottom of the pool appear to be located when the pool is completely filled with water?",
+    options: ["1.00 m", "1.33 m", "1.50 m", "2.00 m"],
+    correct: 2,
+    explanation: "Using the formula \\( q = -(\\frac{n_2}{n_1})p \\), where \\( n_1 = 1.333 \\) (water), \\( n_2 = 1.00 \\) (air), and \\( p = 2.00 \\) m, we get \\( q = -(\\frac{1.00}{1.333}) \\times 2.00 \\) m = -1.50 m.<br><br>Therefore, the correct answer is (c) 1.50 m"
+},
+{
+    text: "Question 24 (Part B): The top of a swimming pool is at ground level. If the pool is 2.00 m deep, how far below ground level does the bottom of the pool appear to be located when the pool is filled halfway with water?",
+    options: ["0.50 m", "0.75 m", "1.00 m", "1.50 m"],
+    correct: 4,
+    explanation: "When the pool is half-filled, \\( p = 1.00 \\) m. Using the same formula, \\( q = -(\\frac{1.00}{1.333}) \\times 1.00 \\) m = -0.75 m. The bottom appears to be 0.75 m below the water surface, which is 1.00 m (half the pool) + 0.75 m = 1.75 m below ground level.<br><br>Therefore, the correct answer is (e) 1.75 m"
+},
+{
+    text: "Question 25: A transparent sphere of unknown composition is observed to form an image of the Sun on its surface opposite the Sun. What is the refractive index of the sphere material?",
+    options: ["1.00", "1.33", "1.50", "2.00"],
+    correct: 3,
+    explanation: "Using the formula \\( \\frac{n_1}{p} + \\frac{n_2}{q} = \\frac{n_2 - n_1}{R} \\) and the given conditions \\( p \\rightarrow \\infty \\) and \\( q = 2R \\), we find that \\( n = 2.00 \\).<br><br>Therefore, the correct answer is (d) 2.00"
+},
+{
+    text: "Question 26: A flint glass plate (n = 1.66) rests on the bottom of an aquarium tank. The plate is 8.00 cm thick (vertical dimension) and covered with water (n = 1.33) to a depth of 12.0 cm. Calculate the apparent thickness of the plate as viewed from above the water. (Assume nearly normal incidence of light rays.)",
+    options: ["2.4 cm", "3.6 cm", "4.8 cm", "6.0 cm"],
+    correct: 2,
+    explanation: "The apparent thickness of the plate is found by considering two refractions: one at the glass-water interface and another at the water-air interface. The apparent thickness \\( \\Delta y = |q_{ia}| - |q_i| = 13.8 \\) cm - 9.00 cm = 4.8 cm.<br><br>Therefore, the correct answer is (c) 4.8 cm"
+},
+{
+    text: "If a battery is rated at 60.0 A\\(\\cdot\\)h, how much total charge can it deliver before it goes 'dead'?",
+    options: ["2.16 x 10<sup>3</sup> C", "2.16 x 10<sup>4</sup> C", "2.16 x 10<sup>5</sup> C", "2.16 x 10<sup>6</sup> C"],
+    correct: 2,
+    explanation: "Q = I \\(\\cdot\\) \\(\\Delta\\)t = (60.0 A)(1 h) = (60.0 C/s)(3600 s) = 2.16 x 10<sup>5</sup> C"
+},
+{
+    text: "A car owner forgets to turn off the headlights of his car while it is parked in his garage. If the 12.0-V battery in his car is rated at 90.0 A\\(\\cdot\\)h and each headlight requires 36.0 W of power, how long will it take the battery to completely discharge?",
+    options: ["10.0 h", "12.0 h", "15.0 h", "18.0 h"],
+    correct: 2,
+    explanation: "Energy stored = P \\(\\cdot\\) \\(\\Delta\\)t = (12.0 V)(90.0 A\\(\\cdot\\)h) = 1.08 x 10<sup>4</sup> W\\(\\cdot\\)h. The two headlights together consume a total power of P = 2(36.0 W) = 72.0 W, so the time required to completely discharge the battery is \\(\\Delta\\)t = Energy stored/P = (1.08 x 10<sup>4</sup> W\\(\\cdot\\)h) / (72.0 W) = 15.0 h"
+},
+{
+    text: "Consider an aluminum wire of diameter 0.600 mm and length 15.0 m. The resistivity of aluminum at 20.0°C is 2.82 x 10<sup>-8</sup> \\(\\Omega\\) \\(\\cdot\\)m. What is the resistance of the wire?",
+    options: ["0.75 \\(\\Omega\\)", "1.00 \\(\\Omega\\)", "1.50 \\(\\Omega\\)", "2.00 \\(\\Omega\\)"],
+    correct: 2,
+    explanation: "R = \\(\\rho\\)L/A = \\(\\rho\\)L/(πd<sup>2</sup>/4) = 4\\(\\rho\\)L/(πd<sup>2</sup>) = 4(2.82 x 10<sup>-8</sup> \\(\\Omega\\) \\(\\cdot\\)m)(15.0 m)/(π(0.600 x 10<sup>-3</sup> m)<sup>2</sup>) = 1.50 \\(\\Omega\\)"
+},
+{
+    text: "In deep space, two spheres, each of radius 5.00 m, are connected by a 3.00 x 10<sup>2</sup> m nonconducting cord. If a uniformly distributed charge of 35.0 mC resides on the surface of each sphere, calculate the tension in the cord.",
+    options: ["57.5 N", "115 N", "230 N", "345 N"],
+    correct: 1,
+    explanation: "Assume the spheres act as point charges. The force between them is:<br>F = k<sub>e</sub>q<sup>2</sup>/r<sup>2</sup> = (8.99 x 10<sup>9</sup> N\\(\\cdot\\)m<sup>2</sup>/C<sup>2</sup>)(35.0 x 10<sup>-3</sup> C)<sup>2</sup> / (3.10 x 10<sup>2</sup> m)<sup>2</sup> = 115 N<br>Thus, the tension in the cord is 115 N."
+},
+{
+    text: "A nonconducting, thin sheet of charge carries a uniform charge per unit area of 5.20 \\(\\mu\\)C/m<sup>2</sup>. What is the electric field at a distance of 8.70 cm from the plate?",
+    options: ["1.47 x 10<sup>5</sup> N/C", "2.94 x 10<sup>5</sup> N/C", "5.88 x 10<sup>5</sup> N/C", "8.82 x 10<sup>5</sup> N/C"],
+    correct: 1,
+    explanation: "The electric field due to an infinite sheet of charge is:<br>E = \\(\\sigma\\)/(2\\(\\epsilon\\)<sub>0</sub>) = (5.20 x 10<sup>-6</sup> C/m<sup>2</sup>)/(2(8.85 x 10<sup>-12</sup> C<sup>2</sup>/N\\(\\cdot\\)m<sup>2</sup>)) = 2.94 x 10<sup>5</sup> N/C"
+},
+{
+    text: "Three point charges are aligned along the x-axis. A -4.0 nC charge is at x = -0.5 m, a 5.0 nC charge is at x = 0.8 m, and a 3.0 nC charge is at x = 3.0 m. Find the electric field at x = +2.0 m, y = 0.",
+    options: ["+12 N/C", "+24 N/C", "-12 N/C", "-24 N/C"],
+    correct: 1,
+    explanation: "Calculate the electric field due to each charge and sum them as vectors:<br>E<sub>x</sub> = k<sub>e</sub> \\(\\sum\\) q<sub>i</sub>/r<sub>i</sub><sup>2</sup> = (8.99 x 10<sup>9</sup>)(4.0x10<sup>-9</sup>/(2.5)<sup>2</sup> + 5.0x10<sup>-9</sup>/(1.2)<sup>2</sup> + 3.0x10<sup>-9</sup>/(1.2)<sup>2</sup>) = +24 N/C"
+},
+{
+    text: "The magnitude of the electric force between two protons is 2.3 x 10<sup>-26</sup> N. How far apart are they?",
+    options: ["0.10 m", "0.022 m", "3.1 m", "0.0057 m"],
+    correct: 0,
+    explanation: "F = k<sub>e</sub>q<sup>2</sup> / r<sup>2</sup>, therefore r = \\(\sqrt{k_eq^2/F}\\) = \\(\sqrt{8.99 x 10^9 × (1.602 x 10^{-19})² / 2.3 x 10^{-26}}\\) = 0.10 m"
+},
+{
+    text: "A uniform electric field of 1.0 N/C is set up by a uniform distribution of charge in the xy-plane. What is the electric field inside a metal ball placed 0.50 m above the xy-plane?",
+    options: ["1.0 N/C", "-1.0 N/C", "0", "0.25 N/C"],
+    correct: 2,
+    explanation: "The ball is made of metal, so free charges within the ball will very quickly rearrange themselves to produce electrostatic equilibrium at all points within the ball. As soon as electrostatic equilibrium exists inside the ball, the electric field is zero at all points within the ball."
+},
+{
+    text: "Charges of 3.0 nC, -2.0 nC, -7.0 nC, and 1.0 nC are contained inside a rectangular box with length 1.0 m, width 2.0 m, and height 2.5 m. Outside the box are charges of 1.0 nC and 4.0 nC. What is the electric flux through the surface of the box?",
+    options: ["-560 N m<sup>2</sup>/C", "-340 N m<sup>2</sup>/C", "0", "170 N m<sup>2</sup>/C"],
+    correct: 0,
+    explanation: "Net charge inside the box is: 3 - 2 - 7 + 1 = -5 nC = -5×10<sup>-9</sup> C. \\(\Phi\\) = Q<sub>enc</sub>/\\(\epsilon_0\\) = -5×10<sup>-9</sup>/8.85×10<sup>-12</sup> = -560 N m<sup>2</sup>/C"
+},
+{
+    text: "An electron with a speed of 3.00 x 10<sup>6</sup> m/s moves into a uniform electric field of magnitude 1.00 x 10<sup>3</sup> N/C. The field lines are parallel to the electron's velocity and pointing in the same direction as the velocity. How far does the electron travel before it is brought to rest?",
+    options: ["2.56 cm", "5.12 cm", "11.2 cm", "3.34 m"],
+    correct: 0,
+    explanation: "The acceleration of the electron will be a = qE/m = -1.6×10<sup>-19</sup> × 10<sup>3</sup>/9.11 × 10<sup>-31</sup> = -1.76 x 10<sup>14</sup> m/s<sup>2</sup>. The kinematics equation v_f<sup>2</sup> = v_i<sup>2</sup> + 2ax gives \\(\Delta x\\) = -v_i<sup>2</sup>/2a = 0 - (3 x 10<sup>6</sup>)<sup>2</sup>/2 ×(-1.76 x 10<sup>14</sup>) = 2.56 cm"
+},
+{
+    text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
+    options: ["1.15 N/C", "-2.24 N/C", "3.91 N/C", "-1.15 N/C"],
+    correct: 3,
+    explanation: "The displacement from the -4.00 nC charge at point (0, 1.00) m to the point (4.00, -2.00) m has components r<sub>x</sub> = (4.00 - 0.00) = 4.00 m and r<sub>y</sub> = (-2.00 - 1.00) = -3.00 m. the magnitude of this displacement is r = \\(\sqrt{r_x^2 + r_y^2}\\) = 5.00 m and its direction is \\(\theta\\) = tan<sup>-1</sup>(r<sub>y</sub>/r<sub>x</sub>) = -36.9 deg. Then E<sub>x</sub> = Ecos\\(\theta\\) = k<sub>e</sub>q/r<sup>2</sup> × cos\\(\theta\\) = 8.99×10<sup>9</sup> × -4×10<sup>-9</sup>/(5<sup>2</sup>×cos(-36.9) = -1.15 N/C"
+},
+{
+    text: "Two point charges attract each other with an electric force of magnitude F. If one charge is reduced to one-third its original value and the distance between the charges is doubled, what is the resulting magnitude of the electric force between them?",
+    options: ["F/12", "F/3", "F/6", "3F/4"],
+    correct: 0,
+    explanation: "F = k<sub>e</sub>q₁q₂/r<sup>2</sup>. If q₁ -> q₁/3 and r -> 2r, the magnitude of the new force will be F<sub>new</sub> = k<sub>e</sub>(q₁/3)q2/(2r)<sup>2</sup> = (1/12) k<sub>e</sub>q₁q₂/r<sup>2</sup> = F/12"
+},
+      {
           text: "The top of a swimming pool is at ground level. If the pool is 2.00 m deep, how far below ground level does the bottom of the pool appear to be located when the pool is completely filled with water?",
           options: ["1.00 m", "1.33 m", "1.50 m", "2.00 m"],
           correct: 2,
@@ -9684,7 +9810,7 @@ function allocateUsersToExams(users, exams) {
 const exams = [
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Agricultural Economics", part: "100" },
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Zoology", part: "100" },
+    { id: "PHY102", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Zoology", part: "200" },
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Chemistry", part: "100" },
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Physics and Engineering Physics", part: "100" },
     { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Microbiology", part: "100" },
@@ -22254,7 +22380,7 @@ function submitExam() {
 
     return `
       <p>
-        ${i + 1}. ${q.text.replace(/(?:\r\n|\r|\n)/g, '<br>')}<br>
+        ${i + 1}. ${q.text.replace(/(?:\r\n|\r|\n|\r\\n)/g, '<br>')}<br>
         Your Answer: <b>${userAnswer}</b> - ${result}<br>
         <b>Correct Answer:</b> ${correctAnswer}<br>
         <i>Explanation:</i> ${q.explanation.replace(/(?:\r\n|\r|\n)/g, '<br>')}
