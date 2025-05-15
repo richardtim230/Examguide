@@ -1737,6 +1737,63 @@ const questionBanks = {
   },
 ],
 
+
+  "PHY102": [
+    {
+      text: "The magnitude of the electric force between two protons is 2.3 × 10⁻²⁶ N. How far apart are they?",
+      options: ["0.10 m", "0.022 m", "3.1 m", "0.0057 m", "0.48 m"],
+      correct: 0,
+      explanation: "r = √(k q²/F) = √((8.99 × 10⁹ N·m²/C²)(1.60 × 10⁻¹⁹ C)² / (2.3 × 10⁻²⁶ N)) = 0.10 m"
+    },
+    {
+      text: "A uniform electric field of 1.0 N/C is set up by a uniform distribution of charge in the xy-plane. What is the electric field inside a metal ball placed 0.50 m above the xy-plane?",
+      options: ["1.0 N/C", "-1.0 N/C", "0", "0.25 N/C", "It varies depending on the position inside the ball."],
+      correct: 2,
+      explanation: "The electric field inside a metal ball in electrostatic equilibrium is zero."
+    },
+    {
+      text: "Charges of 3.0 nC, -2.0 nC, -7.0 nC, and 1.0 nC are contained inside a rectangular box with length 1.0 m, width 2.0 m, and height 2.5 m. Outside the box are charges of 1.0 nC and 4.0 nC. What is the electric flux through the surface of the box?",
+      options: ["0", "-560 N·m²/C", "-340 N·m²/C", "260 N·m²/C", "170 N·m²/C"],
+      correct: 1,
+      explanation: "Φelectric = Qencl/ε₀ = ((3.0 - 2.0 - 7.0 + 1.0) × 10⁻⁹ C) / (8.85 × 10⁻¹² C²/N·m²) = -5.6 × 10² N·m²/C"
+    },
+    {
+      text: "An electron with a speed of 3.00 × 10⁶ m/s moves into a uniform electric field of magnitude 1.00 × 10³ N/C. The field lines are parallel to the electron's velocity and pointing in the same direction as the velocity. How far does the electron travel before it is brought to rest?",
+      options: ["2.56 cm", "5.12 cm", "11.2 cm", "3.34 cm", "4.24 cm"],
+      correct: 0,
+      explanation: "ax = Fe/m = ((-1.60 × 10⁻¹⁹ C)(1.00 × 10³ N/C)) / (9.11 × 10⁻³¹ kg) = -1.76 × 10¹⁴ m/s²\\\\\\\\nΔx = (vf² - vi²) / (2ax) = (0 - (3.00 × 10⁶ m/s)²) / (2(-1.76 × 10¹⁴ m/s²)) = 2.56 × 10⁻² m = 2.56 cm"
+    },
+    {
+      text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
+      options: ["1.15 N/C", "-2.24 N/C", "3.91 N/C", "-1.15 N/C", "0.863 N/C"],
+      correct: 3,
+      explanation: "r = √((x₂ - x₁)² + (y₂ - y₁)²) = √((4.00)² + (-3.00)²) = 5.00 m and its direction is θ = tan⁻¹(ry/rx) = -36.9°\\\\\\\\nEx = E cos θ = (k q / r²) cos θ = ((8.99 × 10⁹ N·m²/C²)(-4.00 × 10⁻⁹ C) / (5.00 m)²) cos(-36.9°) = -1.15 N/C"
+    },
+    {
+      text: "Two point charges attract each other with an electric force of magnitude F. If one charge is reduced to one-third its original value and the distance between the charges is doubled, what is the resulting magnitude of the electric force between them?",
+      options: ["F/12", "F/3", "F/6", "3F/4", "3F/2"],
+      correct: 0,
+      explanation: "F = (k q₁ q₂) / r²\\\\\\\\nIf changes are made so q₁' = q₁/3 and r' = 2r, the magnitude of the new force will be:\\\\\\\\nF' = (k (q₁/3) q₂) / (2r)² = (k q₁ q₂) / (3 × 4 r²) = (1/12) (k q₁ q₂ / r²) = F/12"
+    },
+    {
+      text: "In deep space, two spheres, each with a radius of 5.00 m, are connected by a 3.00 × 10² m nonconducting cord. If a uniformly distributed charge of 35.0 mC resides on the surface of each sphere, what is the tension in the cord?",
+      options: ["57.5 N", "115 N", "230 N", "345 N", "460 N"],
+      correct: 1,
+      explanation: "The tension in the cord is equal to the electrostatic force between the two charged spheres. We use Coulomb's Law to calculate this force:\\\\\\\\\\\\\\\\nF = k(q₁ q₂) / r²\\\\\\\\\\\\\\\\nWhere:\\\\\\\\\\\\\\\\nF is the electrostatic force (tension in the cord)\\\\\\\\\\\\\\\\nk = 8.99 × 10⁹ N · m²/C² (Coulomb's constant)\\\\\\\\\\\\\\\\nq₁ = q₂ = 35.0 × 10⁻³ C (charge on each sphere)\\\\\\\\\\\\\\\\nr = 3.10 × 10² m (distance between the spheres, which is the length of the cord)\\\\\\\\\\\\\\\\nPlugging in the values:\\\\\\\\\\\\\\\\nF = (8.99 × 10⁹) ((35.0 × 10⁻³)² / (3.10 × 10²)²) = 115 N"
+    },
+    {
+      text: "A nonconducting, thin plane sheet of charge carries a uniform charge per unit area of 5.20 μC/m². What is the electric field at a distance of 8.70 cm from the plate?",
+      options: ["1.47 × 10⁵ N/C", "2.94 × 10⁵ N/C", "5.88 × 10⁵ N/C", "1.00 × 10⁶ N/C", "The electric field varies with distance."],
+      correct: 1,
+      explanation: "The electric field due to an infinite nonconducting sheet of charge is given by:\\\\\\\\\\\\\\\\nE = σ / (2ε₀)\\\\\\\\\\\\\\\\nWhere:\\\\\\\\\\\\\\\\nE is the electric field\\\\\\\\\\\\\\\\nσ = 5.20 × 10⁻⁶ C/m² (surface charge density)\\\\\\\\\\\\\\\\nε₀ = 8.85 × 10⁻¹² C²/N · m² (permittivity of free space)\\\\\\\\\\\\\\\\nPlugging in the values:\\\\\\\\\\\\\\\\nE = (5.20 × 10⁻⁶) / (2 × 8.85 × 10⁻¹²) = 2.94 × 10⁵ N/C\\\\\\\\\\\\\\\\nThe electric field is uniform and does not depend on the distance from the sheet."
+    },
+    {
+      text: "Three point charges are aligned along the x-axis: a -4.0 nC charge at x = -0.50 m, a +5.0 nC charge at x = 0 m, and a +3.0 nC charge at x = 0.80 m. What is the electric field at the position x = +2.0 m, y = 0?",
+      options: ["-24 N/C", "12 N/C", "24 N/C", "36 N/C", "48 N/C"],
+      correct: 2,
+      explanation: "The electric field at a point due to multiple charges is the vector sum of the electric fields due to each individual charge. We calculate the electric field due to each charge and then add them up, considering their directions.\\\\\\\\\\\\\\\\nCharge 1: q₁ = -4.0 × 10⁻⁹ C at x₁ = -0.50 m\\\\\\\\\\\\\\\\nCharge 2: q₂ = +5.0 × 10⁻⁹ C at x₂ = 0 m\\\\\\\\\\\\\\\\nCharge 3: q₃ = +3.0 × 10⁻⁹ C at x₃ = 0.80 m\\\\\\\\\\\\\\\\nThe point of interest is at x = 2.0 m.\\\\\\\\\\\\\\\\nThe distances from each charge to the point of interest are:\\\\\\\\\\\\\\\\nr₁ = 2.0 - (-0.50) = 2.5 m\\\\\\\\\\\\\\\\nr₂ = 2.0 - 0 = 2.0 m\\\\\\\\\\\\\\\\nr₃ = 2.0 - 0.80 = 1.2 m\\\\\\\\\\\\\\\\nThe electric field due to each charge is:\\\\\\\\\\\\\\\\nE₁ = k |q₁| / r₁² = (8.99 × 10⁹) (4.0 × 10⁻⁹ / (2.5)²) = 5.75 N/C (directed to the left, so negative)\\\\\\\\\\\\\\\\nE₂ = k |q₂| / r₂² = (8.99 × 10⁹) (5.0 × 10⁻⁹ / (2.0)²) = 11.24 N/C (directed to the right, so positive)\\\\\\\\\\\\\\\\nE₃ = k |q₃| / r₃² = (8.99 × 10⁹) (3.0 × 10⁻⁹ / (1.2)²) = 18.73 N/C (directed to the right, so positive)\\\\\\\\\\\\\\\\nThe net electric field is:\\\\\\\\\\\\\\\\nE = -E₁ + E₂ + E₃ = -5.75 + 11.24 + 18.73 = 24.22 N/C\\\\\\\\\\\\\\\\nRounding to two significant figures, the electric field is approximately 24 N/C in the positive x-direction."
+    }
+  ],
     "BOTBOT": [
           {
     text: "What color does aniline blue stain <br><img src='logo.png' alt='Aniline Blue Image'><\br>?",
