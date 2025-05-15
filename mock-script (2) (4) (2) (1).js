@@ -22176,8 +22176,6 @@ document.getElementById('courseCode').value = '';
   examSection.classList.remove("hidden");
 }
 
-
-// Load Current Question
 function loadQuestion() {
   if (questions.length === 0) {
     alert("No questions available to load.");
@@ -22185,11 +22183,12 @@ function loadQuestion() {
   }
 
   const question = questions[currentQuestionIndex];
+  const safeText = question.text.replace(/\n/g, '<br>');
 
-  // Add question number dynamically with proper formatting
-  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${question.text.replace(/\n/g, '<br>')}`;
+  // Render Question Text
+  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${safeText}`;
 
-  // Populate Answer Options with correct numbering and line breaks
+  // Render Options
   answerOptions.innerHTML = question.options
     .map((option, index) => `
       <button class="answer-btn" onclick="selectAnswer(${index}, this)">
@@ -22201,7 +22200,14 @@ function loadQuestion() {
   highlightSelectedAnswer();
   updateButtons();
   updateProgressBar();
-}
+
+  // Re-render Math
+  if (window.MathJax) {
+    MathJax.typeset();
+  }
+    }
+      
+
 // Shuffle questions randomly
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
@@ -22362,31 +22368,41 @@ function submitExam() {
   const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
   const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
 
-  resultsSummary.innerHTML = `
-    <p><strong>Performance Report:</strong></p>
-    <p>Total Questions Answered: ${totalAnswered}</p>
-    <p>Total Questions Not Answered: ${totalNotAnswered}</p>
-    <p>Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)</p>
-    <p>Average Time Spent per Question: ${avgTimePerQuestion} seconds</p>
+  // Performance Summary
+document.getElementById("report").innerHTML = `
+  <p><strong>Performance Report:</strong></p>
+  <p>Total Questions Answered: ${totalAnswered}</p>
+  <p>Total Questions Not Answered: ${totalNotAnswered}</p>
+  <p>Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)</p>
+  <p>Average Time Spent per Question: ${avgTimePerQuestion} seconds</p>
+`;
+
+// Results Content with LaTeX Rendering
+resultsContent.innerHTML = questions.map((q, i) => {
+  const userAnswerIdx = userAnswers[i];
+  const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
+  const correctAnswer = q.options[q.correct];
+  const isCorrect = userAnswerIdx === q.correct;
+  const result = isCorrect ? "✅ Correct" : "❌ Wrong";
+
+  const safeText = q.text.replace(/\n/g, '<br>');
+  const safeExplanation = q.explanation.replace(/\n/g, '<br>');
+
+  return `
+    <div class="result-question">
+      <p><strong>${i + 1}.</strong> ${safeText}</p>
+      <p><strong>Your Answer:</strong> ${userAnswer} - ${result}</p>
+      <p><strong>Correct Answer:</strong> ${correctAnswer}</p>
+      <p><i>Explanation:</i> ${safeExplanation}</p>
+    </div>
   `;
+}).join("");
 
-  // Results Content
-  resultsContent.innerHTML = questions.map((q, i) => {
-    const userAnswerIdx = userAnswers[i];
-    const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
-    const correctAnswer = q.options[q.correct];
-    const isCorrect = userAnswerIdx === q.correct;
-    const result = isCorrect ? "✅ Correct" : "❌ Wrong";
+// Trigger MathJax rendering
+if (window.MathJax) {
+  MathJax.typeset();
+}
 
-    return `
-      <p>
-        ${i + 1}. ${q.text.replace(/(?:\r\n|\r|\n|\r\\n)/g, '<br>')}<br>
-        Your Answer: <b>${userAnswer}</b> - ${result}<br>
-        <b>Correct Answer:</b> ${correctAnswer}<br>
-        <i>Explanation:</i> ${q.explanation.replace(/(?:\r\n|\r|\n)/g, '<br>')}
-      </p>
-    `;
-  }).join("");
 
   examSection.classList.add("hidden");
   resultsSection.classList.remove("hidden");
