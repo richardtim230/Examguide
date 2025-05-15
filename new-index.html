@@ -22,13 +22,20 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
-  <script>
+  
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <!-- MathJax Setup -->
+<script>
   window.MathJax = {
-    tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']]
+    },
     svg: { fontCache: 'global' }
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+
   
 <script type='text/javascript'>
   window.smartlook||(function(d) {
@@ -51,7 +58,25 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-    }body {
+    }
+    <!-- Styling (adjust as needed) -->
+
+  .result-question {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 10px;
+  }
+
+  .correct { color: green; font-weight: bold; }
+  .wrong { color: red; font-weight: bold; }
+  .not-answered { color: orange; font-weight: bold; }
+  .explanation { font-style: italic; color: #333; margin-top: 5px; }
+
+  .question-text, .option-text {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+    
+    body {
     font-family: 'Poppins', sans-serif;
     background-image: url('./close-up-stack-books_1098-1352.jpg');
     background-size: cover; /* Ensures the image covers the entire background */
