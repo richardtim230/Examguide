@@ -22177,6 +22177,12 @@ document.getElementById('courseCode').value = '';
 }
 
 
+function renderMarkdownMathSafe(rawText) {
+  // Parse Markdown to HTML using marked
+  const html = marked.parse(rawText || "");
+  return html;
+}
+
 function loadQuestion() {
   if (questions.length === 0) {
     alert("No questions available to load.");
@@ -22184,16 +22190,17 @@ function loadQuestion() {
   }
 
   const question = questions[currentQuestionIndex];
-  const safeText = question.text.replace(/\n/g, '<br>');
 
-  // Render Question Text
-  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${safeText}`;
+  // Render Question Text with Markdown + Math support
+  questionTitle.innerHTML = `
+    ${currentQuestionIndex + 1}. ${renderMarkdownMathSafe(question.text)}
+  `;
 
-  // Render Options
+  // Render Options safely with Markdown + Math
   answerOptions.innerHTML = question.options
     .map((option, index) => `
       <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-        ${option.replace(/\n/g, '<br>')}
+        ${renderMarkdownMathSafe(option)}
       </button>
     `)
     .join("");
@@ -22202,11 +22209,12 @@ function loadQuestion() {
   updateButtons();
   updateProgressBar();
 
-  // Re-render Math
+  // Trigger MathJax after DOM update
   if (window.MathJax) {
     MathJax.typeset();
   }
 }
+
 
 // Shuffle questions randomly
 function shuffleArray(array) {
