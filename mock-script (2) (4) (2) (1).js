@@ -22176,37 +22176,30 @@ document.getElementById('courseCode').value = '';
   examSection.classList.remove("hidden");
 }
 
+
 function loadQuestion() {
   if (questions.length === 0) {
-    alert("No questions available to load.");
+    alert("No questions available.");
     return;
   }
 
   const question = questions[currentQuestionIndex];
-  const safeText = question.text.replace(/\n/g, '<br>');
 
-  // Render Question Text
-  questionTitle.innerHTML = `${currentQuestionIndex + 1}. ${safeText}`;
+  questionTitle.innerHTML = `
+    <div class="question-text"><strong>${currentQuestionIndex + 1}.</strong> ${formatText(question.text)}</div>
+  `;
 
-  // Render Options
-  answerOptions.innerHTML = question.options
-    .map((option, index) => `
-      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
-        ${option.replace(/\n/g, '<br>')}
-      </button>
-    `)
-    .join("");
+  answerOptions.innerHTML = question.options.map((opt, idx) => `
+    <button class="answer-btn" onclick="selectAnswer(${idx}, this)">
+      ${formatText(opt)}
+    </button>
+  `).join("");
 
   highlightSelectedAnswer();
   updateButtons();
   updateProgressBar();
-
-  // Re-render Math
-  if (window.MathJax) {
-    MathJax.typeset();
-  }
-    }
-      
+  if (window.MathJax) MathJax.typeset();
+        }
 
 // Shuffle questions randomly
 function shuffleArray(array) {
@@ -22367,7 +22360,15 @@ function submitExam() {
   const totalNotAnswered = questions.length - totalAnswered;
   const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
   const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
-
+     
+function formatText(rawText) {
+  return rawText
+    .replace(/\\\\n/g, '<br>')       // escape line breaks
+    .replace(/\\n/g, '<br>')
+    .replace(/\\\\/g, '\\')          // double-escaped backslashes
+    .replace(/\n/g, '<br>');
+        }
+        
   // Performance Summary
    resultsSummary.innerHTML = `
   <p><strong>Performance Report:</strong></p>
@@ -22382,26 +22383,33 @@ resultsContent.innerHTML = questions.map((q, i) => {
   const userAnswerIdx = userAnswers[i];
   const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
   const correctAnswer = q.options[q.correct];
-  const isCorrect = userAnswerIdx === q.correct;
-  const result = isCorrect ? "✅ Correct" : "❌ Wrong";
 
-  const safeText = q.text.replace(/\n/g, '<br>');
-  const safeExplanation = q.explanation.replace(/\n/g, '<br>');
+  let resultLabel = '';
+  let resultClass = '';
+
+  if (userAnswerIdx === undefined) {
+    resultLabel = "❌ Not Answered";
+    resultClass = "not-answered";
+  } else if (userAnswerIdx === q.correct) {
+    resultLabel = "✅ Correct";
+    resultClass = "correct";
+  } else {
+    resultLabel = "❌ Wrong";
+    resultClass = "wrong";
+  }
 
   return `
     <div class="result-question">
-      <p><strong>${i + 1}.</strong> ${safeText}</p>
-      <p><strong>Your Answer:</strong> ${userAnswer} - ${result}</p>
-      <p><strong>Correct Answer:</strong> ${correctAnswer}</p>
-      <p><i>Explanation:</i> ${safeExplanation}</p>
+      <div class="question-text"><strong>${i + 1}.</strong> ${formatText(q.text)}</div>
+      <div><strong>Your Answer:</strong> <span class="${resultClass}">${userAnswer}</span> - ${resultLabel}</div>
+      <div><strong>Correct Answer:</strong> ${correctAnswer}</div>
+      <div class="explanation"><strong>Explanation:</strong><br>${formatText(q.explanation)}</div>
     </div>
   `;
 }).join("");
 
-// Trigger MathJax rendering
-if (window.MathJax) {
-  MathJax.typeset();
-}
+if (window.MathJax) MathJax.typeset();
+
 
 
   examSection.classList.add("hidden");
