@@ -1738,23 +1738,90 @@ const questionBanks = {
 ],
 
 "PHY106":[
+    
+        {
+          text: "What is the resistance in a series AC circuit with an impedance of 2.40 kΩ, an inductive reactance of 47.1 Ω, and a capacitive reactance of 637 Ω?",
+          options: ["47.1 Ω", "637 Ω", "2.33 kΩ", "2.40 kΩ"],
+          correct: 2,
+          explanation: "The resistance (\\(R\\)) is calculated as: <br> \\(R = \\sqrt{Z^2 - (X_L - X_C)^2}\\) <br> Where: <br> \\(Z = 2400 \\, \\Omega\\) (impedance) <br> \\(X_L = 47.1 \\, \\Omega\\) (inductive reactance) <br> \\(X_C = 637 \\, \\Omega\\) (capacitive reactance) <br> Substituting the values: <br> \\(R = \\sqrt{2400^2 - (47.1 - 637)^2} \\approx 2330 \\, \\Omega = 2.33 \\, \\text{k}\\Omega\\)"
+        },
+        {
+          text: "What is the phase angle between the current and the generator voltage in a series AC circuit with an inductive reactance of 47.1 Ω, a capacitive reactance of 637 Ω, and a resistance of 2.33 kΩ?",
+          options: ["-14.2°", "14.2°", "-45°", "45°"],
+          correct: 0,
+          explanation: "The phase angle (\\(\\phi\\)) is calculated as: <br> \\(\\phi = \\tan^{-1}\\left(\\frac{X_L - X_C}{R}\\right)\\) <br> Where: <br> \\(X_L = 47.1 \\, \\Omega\\) (inductive reactance) <br> \\(X_C = 637 \\, \\Omega\\) (capacitive reactance) <br> \\(R = 2330 \\, \\Omega\\) (resistance) <br> Substituting the values: <br> \\(\\phi = \\tan^{-1}\\left(\\frac{47.1 - 637}{2330}\\right) \\approx -14.2^\\circ\\)"
+        },
+        {
+          text: "At what frequency does the inductive reactance of a 57.0 μH inductor equal the capacitive reactance of a 57.0 μF capacitor?",
+          options: ["2.79 Hz", "27.9 Hz", "279 Hz", "2.79 kHz"],
+          correct: 3,
+          explanation: "The resonance frequency (\\(f_r\\)) is calculated as: <br> \\(f_r = \\frac{1}{2π\\sqrt{LC}}\\) <br> Where: <br> \\(L = 57.0 \\times 10^{-6}\\) H (inductance) <br> \\(C = 57.0 \\times 10^{-6}\\) F (capacitance) <br> Substituting the values: <br> \\(f_r = \\frac{1}{2π\\sqrt{57.0 \\times 10^{-6} \\times 57.0 \\times 10^{-6}}} \\approx 2.79 \\, \\text{kHz}\\)"
+        },
+        {
+          text: "What is the capacitive reactance of a circuit with a 30.0 μF capacitor operating at 60.0 Hz?",
+          options: ["44.2 Ω", "60.0 Ω", "88.4 Ω", "107 Ω"],
+          correct: 2,
+          explanation: "The capacitive reactance (\\(X_C\\)) is calculated as: <br> \\(X_C = \\frac{1}{2πfC}\\) <br> Where: <br> \\(f = 60.0\\) Hz (frequency) <br> \\(C = 30.0 \\times 10^{-6}\\) F (capacitance) <br> Substituting the values: <br> \\(X_C = \\frac{1}{2π \\times 60.0 \\times 30.0 \\times 10^{-6}} \\approx 88.4 \\, \\Omega\\)"
+        },
+        {
+          text: "What is the impedance of a series circuit with a 60.0 Ω resistor and a capacitive reactance of 88.4 Ω?",
+          options: ["60.0 Ω", "88.4 Ω", "107 Ω", "120 Ω"],
+          correct: 2,
+          explanation: "The impedance (\\(Z\\)) of a series RC circuit is: <br> \\(Z = \\sqrt{R^2 + X_C^2}\\) <br> Where: <br> \\(R = 60.0 \\, \\Omega\\) (resistance) <br> \\(X_C = 88.4 \\, \\Omega\\) (capacitive reactance) <br> Substituting the values: <br> \\(Z = \\sqrt{60.0^2 + 88.4^2} \\approx 107 \\, \\Omega\\)"
+        },
+        {
+          text: "What is the maximum current in a circuit with a maximum voltage of \\(1.20 \\times 10^2\\) V and an impedance of 107 Ω?",
+          options: ["0.56 A", "0.80 A", "1.12 A", "1.50 A"],
+          correct: 2,
+          explanation: "The maximum current (\\(I_{max}\\)) is calculated using Ohm's law: <br> \\(I_{max} = \\frac{V_{max}}{Z}\\) <br> Where: <br> \\(V_{max} = 1.20 \\times 10^2\\) V (maximum voltage) <br> \\(Z = 107 \\, \\Omega\\) (impedance) <br> Substituting the values: <br> \\(I_{max} = \\frac{1.20 \\times 10^2}{107} \\approx 1.12 \\, \\text{A}\\)"
+        },
+        {
+          text: "In a series RC circuit, if the phase angle is -55.8°, does the voltage lead or lag the current?",
+          options: ["Voltage leads the current by 55.8°", "Voltage lags behind the current by 55.8°", "Voltage is in phase with the current", "Voltage leads the current by 90°"],
+          correct: 1,
+          explanation: "In a series RC circuit, the voltage lags behind the current. The negative phase angle confirms this."
+        },
+        {
+          text: "How will putting an inductor in series with an existing capacitor and resistor affect the current if the inductive reactance (\\(X_L\\)) is less than twice the capacitive reactance (\\(2X_C\\))?",
+          options: ["The current will decrease.", "The current will increase.", "The current will remain the same.", "The effect on the current cannot be determined."],
+          correct: 1,
+          explanation: "If \\(X_L < 2X_C\\), the overall impedance of the circuit decreases, leading to an increase in current."
+        },
+        {
+          text: "What is the inductive reactance of a 150 mH inductor operating at 50.0 Hz?",
+          options: ["23.6 Ω", "47.1 Ω", "318 Ω", "637 Ω"],
+          correct: 1,
+          explanation: "The inductive reactance (\\(X_L\\)) is calculated as: <br> \\(X_L = 2πfL\\) <br> Where: <br> \\(f = 50.0\\) Hz (frequency) <br> \\(L = 150 \\times 10^{-3}\\) H (inductance) <br> Substituting the values: <br> \\(X_L = 2π \\times 50.0 \\times 150 \\times 10^{-3} \\approx 47.1 \\, \\Omega\\)"
+        },
+        {
+          text: "What is the capacitive reactance of a 5.00 μF capacitor operating at 50.0 Hz?",
+          options: ["47.1 Ω", "318 Ω", "637 Ω", "2400 Ω"],
+          correct: 2,
+          explanation: "The capacitive reactance (\\(X_C\\)) is calculated as: <br> \\(X_C = \\frac{1}{2πfC}\\) <br> Where: <br> \\(f = 50.0\\) Hz (frequency) <br> \\(C = 5.00 \\times 10^{-6}\\) F (capacitance) <br> Substituting the values: <br> \\(X_C = \\frac{1}{2π \\times 50.0 \\times 5.00 \\times 10^{-6}} \\approx 637 \\, \\Omega\\)"
+        },
+        {
+          text: "What is the impedance of a circuit with a maximum voltage of 240 V and a maximum current of 100 mA?",
+          options: ["47.1 Ω", "637 Ω", "2.33 kΩ", "2.40 kΩ"],
+          correct: 3,
+          explanation: "The impedance (\\(Z\\)) is calculated using Ohm's law: <br> \\(Z = \\frac{V_{max}}{I_{max}}\\) <br> Where: <br> \\(V_{max} = 240\\) V (maximum voltage) <br> \\(I_{max} = 100 \\times 10^{-3}\\) A (maximum current) <br> Substituting the values: <br> \\(Z = \\frac{240}{100 \\times 10^{-3}} = 2400 \\, \\Omega = 2.40 \\, \\text{k}\\Omega\\)"
+        },
 {
     text: "A wire of length 0.50 m carries a current of 0.10 A in the positive x-direction, parallel to the ground. If the wire has a weight of 1.0 \\(\times\\) 10<sup>-4</sup> N, what is the minimum magnitude magnetic field that exerts a magnetic force on the wire equal to the wire's weight?",
     options: ["0.20 T", "0.30 T", "0.40 T", "0.50 T"],
     correct: 0,
-    explanation: "B = \\(\frac{F}{IL}\\) = \\(\frac{1.0 \\(\times\\) 10^{-4} N}{(0.10 A)(0.50 m)}\\) = 0.20 T"
+    explanation: "B = \\(\\frac{F}{IL}\\) = \\(\\frac{1.0 \\(\\times\\) 10^{-4} N}{(0.10 A)(0.50 m)}\\) = 0.20 T"
 },
 {
     text: "A rectangular coil of wire consisting of ten loops, each with length 0.20 m and width 0.30 m, lies in the xy-plane. If the coil carries a current of 2.0 A, what is the torque exerted by a magnetic field of magnitude 0.010 T directed at an angle of 30.0° with respect to the positive z-axis?",
-    options: ["1.2 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m", "2.4 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m", "6.0 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m", "4.0 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m"],
+    options: ["1.2 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m", "2.4 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m", "6.0 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m", "4.0 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m"],
     correct: 2,
     explanation: "\\(\tau\\) = BIAN sin \\(\theta\\) = (0.010 T)(2.0 A)[(0.20 m)(0.30 m)](10) sin 30.0° = 6.0 \\(\times\\) 10<sup>-3</sup> N \\(\cdot\\) m"
 },
 {
     text: "A long wire carries a current of 1 A. Find the magnitude of the magnetic field 2 m away from the wire.",
-    options: ["1 \\(\times\\) 10<sup>-5</sup> T", "1 \\(\times\\) 10<sup>-4</sup> T", "1 \\(\times\\) 10<sup>-6</sup> T", "1 \\(\times\\) 10<sup>-7</sup> T"],
+    options: ["1 \\(\\times\\) 10<sup>-5</sup> T", "1 \\(\\times\\) 10<sup>-4</sup> T", "1 \\(\\times\\) 10<sup>-6</sup> T", "1 \\(\\times\\) 10<sup>-7</sup> T"],
     correct: 3,
-    explanation: "B = \\(\frac{\\(\mu\\)_0 I}{2\\(\pi\\) r}\\) = \\(\frac{(4\\(\pi\\) \\(\times\\) 10^{-7} T \\(\cdot\\) m/A)(1 A)}{2\\(\pi\\) (2 m)}\\) = 1 \\(\times\\) 10^{-7} T"
+    explanation: "B = \\(\frac{\\(\\mu\\)_0 I}{2\\(\\pi\\) r}\\) = \\(\\frac{(4\\(\\pi\\) \\(\\times\\) 10^{-7} T \\(\\cdot\\) m/A)(1 A)}{2\\(\\pi\\) (2 m)}\\) = 1 \\(\\times\\) 10^{-7} T"
 },
 {
     text: "A proton enters a constant magnetic field of magnitude 0.050 T and traverses a semicircle of radius 1.0 mm before leaving the field. What is the proton's speed?",
