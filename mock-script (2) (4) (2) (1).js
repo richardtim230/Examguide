@@ -1833,7 +1833,7 @@ const questionBanks = {
     text: "Estimate the magnitude of the magnetic force per unit length between a pair of parallel wires separated by 2 m if they each carry a current of 3 A.",
     options: ["1 \\(\times\\) 10<sup>-1</sup> N/m", "1 \\(\times\\) 10<sup>-5</sup> N/m", "1 \\(\times\\) 10<sup>-6</sup> N/m", "1 \\(\times\\) 10<sup>-8</sup> N/m"],
     correct: 2,
-    explanation: "\\(\frac{F}{l}\\) = \\(\frac{\\(\mu\\)_0 I_1 I_2}{2\\(\pi\\) d}\\) = \\(\frac{(4\\(\pi\\) \\(\times\\) 10^{-7} T \\(\cdot\\) m/A)(3 A)^2}{2\\(\pi\\) (2 m)}\\) = 9 \\(\times\\) 10^{-7} N/m \\(\approx\\) 1 \\(\times\\) 10^{-6} N/m"
+    explanation: "Answer: (d) is the best choice for this question. \\( \\frac{F}{l} = \\frac{\\mu_0 I_1 I_2}{2\\pi d} = \\frac{(4\\pi \\times 10^{-7} T \\cdot m/A)(3 A)^2}{2\\pi (2 m)} = 9 \\times 10^{-7} N \\approx 1 \\times 10^{-6} N \\)"
 },
 {
     text: "What is the magnitude of the magnetic field at the core of a 120-turn solenoid of length 0.50 m carrying a current of 2.0 A?",
