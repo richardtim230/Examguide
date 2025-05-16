@@ -1994,7 +1994,7 @@ const questionBanks = {
     text: "A rectangular coil of wire consisting of ten loops, each with length 0.20 m and width 0.30 m, lies in the xy-plane. If the coil carries a current of 2.0 A, what is the torque exerted by a magnetic field of magnitude 0.010 T directed at an angle of 30.0° with respect to the positive z-axis?",
     options: ["1.2 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m", "2.4 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m", "6.0 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m", "4.0 \\(\\times\\) 10<sup>-3</sup> N\\(\\cdot\\)m"],
     correct: 2,
-    explanation: "\\(\tau\\) = BIAN sin \\(\theta\\) = (0.010 T)(2.0 A)[(0.20 m)(0.30 m)](10) sin 30.0° = 6.0 \\(\times\\) 10<sup>-3</sup> N \\(\cdot\\) m"
+    explanation: "\\(\\tau\\) = BIAN sin \\(\\theta\\) = (0.010 T)(2.0 A)[(0.20 m)(0.30 m)](10) sin 30.0° = 6.0 \\(\\times\\) 10<sup>-3</sup> N \\(\cdot\\) m"
 },
 {
     text: "A long wire carries a current of 1 A. Find the magnitude of the magnetic field 2 m away from the wire.",
@@ -2006,7 +2006,7 @@ const questionBanks = {
     text: "A proton enters a constant magnetic field of magnitude 0.050 T and traverses a semicircle of radius 1.0 mm before leaving the field. What is the proton's speed?",
     options: ["1.6 \\(\times\\) 10<sup>3</sup> m/s", "2.3 \\(\times\\) 10<sup>3</sup> m/s", "2.8 \\(\times\\) 10<sup>4</sup> m/s", "1.8 \\(\times\\) 10<sup>2</sup> m/s"],
     correct: 0,
-    explanation: "v = \\(\frac{qBr}{m}\\) = \\(\frac{(1.6 \\(\times\\) 10^{-19} C)(0.050 T)(1.0 \\(\times\\) 10^{-3} m)}{1.67 \\(\times\\) 10^{-27} kg}\\) = 4.8 \\(\times\\) 10^{3} m/s"
+    explanation: "v = \\(\\frac{qBr}{m}\\) = \\(\frac{(1.6 \\(\times\\) 10^{-19} C)(0.050 T)(1.0 \\(\times\\) 10^{-3} m)}{1.67 \\(\times\\) 10^{-27} kg}\\) <br>  = 4.8 \\(\times\\) 10^{3} m/s"
 },
 {
     text: "Estimate the magnitude of the magnetic force per unit length between a pair of parallel wires separated by 2 m if they each carry a current of 3 A.",
@@ -2018,7 +2018,7 @@ const questionBanks = {
     text: "What is the magnitude of the magnetic field at the core of a 120-turn solenoid of length 0.50 m carrying a current of 2.0 A?",
     options: ["2.4 \\(\times\\) 10<sup>-4</sup> T", "4.8 \\(\times\\) 10<sup>-5</sup> T", "1.2 \\(\times\\) 10<sup>-6</sup> T", "3.6 \\(\times\\) 10<sup>-5</sup> T"],
     correct: 0,
-    explanation: "B = \\(\frac{\\(\mu\\)_0 I N}{l}\\) = \\(\frac{(4\\(\pi\\) \\(\times\\) 10^{-7} T \\(\cdot\\) m/A)(120)(2.0 A)}{0.50 m}\\) = 6.0 \\(\times\\) 10<sup>-4</sup> T"
+    explanation: "B = \\(\\frac{\\(\mu\\)_0 I N}{l}\\) = \\(\\frac{(4\\(\\pi\\) \\(\\times\\) 10^{-7} T \\(\\cdot\\) m/A)(120)(2.0 A)}{0.50 m}\\) <br> = 6.0 \\(\\times\\) 10<sup>-4</sup> T"
 },
 {
     text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
@@ -2036,7 +2036,7 @@ const questionBanks = {
     text: "The magnitude of the electric force between two protons is \\\\(2.3 \\\\times 10^{-26}\\\\) N. How far apart are they?",
     options: ["0.10 m", "0.022 m", "3.1 m", "0.0057 m"],
     correct: 0,
-    explanation: "The magnitude of the electric force between two protons separated by distance \\\\(r\\\\) is \\\\(F = \\\\frac{ke^2}{r^2}\\\\), so the distance of separation must be: \\\\(r = \\\\sqrt{\\\\frac{ke^2}{F}} = \\\\sqrt{\\\\frac{(8.99 \\\\times 10^9 \\\\, \\\\text{N}\\\\cdot\\\\text{m}^2/\\\\text{C}^2) \\\\times (1.60 \\\\times 10^{-19} \\\\, \\\\text{C})^2}{2.3 \\\\times 10^{-26} \\\\, \\\\text{N}}} = 0.10 \\\\, \\\\text{m}\\\\)"
+    explanation: "The magnitude of the electric force between two protons separated by distance \\\\(r\\\\) is \\\\(F = \\\\frac{ke^2}{r^2}\\\\), <br> so the distance of separation must be: \\\\(r = \\\\sqrt{\\\\frac{ke^2}{F}} <br> = \\\\sqrt{\\\\frac{(8.99 \\\\times 10^9 \\\\, \\\\text{N}\\\\cdot\\\\text{m}^2/\\\\text{C}^2) \\\\times (1.60 \\\\times 10^{-19} \\\\, \\\\text{C})^2}{2.3 \\\\times 10^{-26} \\\\, \\\\text{N}}} <br> = 0.10 \\\\, \\\\text{m}\\\\)"
 },
 {
     text: "A uniform electric field of 1.0 N/C is set up by a uniform distribution of charge in the xy-plane. What is the electric field inside a metal ball placed 0.50 m above the xy-plane?",
@@ -2054,7 +2054,7 @@ const questionBanks = {
     text: "An electron with a speed of \\\\(3.00 \\\\times 10^6\\\\) m/s moves into a uniform electric field of magnitude \\\\(1.00 \\\\times 10^3\\\\) N/C. The field lines are parallel to the electron's velocity and pointing in the same direction as the velocity. How far does the electron travel before it is brought to rest?",
     options: ["2.56 cm", "5.12 cm", "11.2 cm", "3.34 m"],
     correct: 0,
-    explanation: "The acceleration of the electron will be: \\\\(a_e = \\\\frac{F_E}{m} = \\\\frac{(-1.60 \\\\times 10^{-19} \\\\, \\\\text{C}) (1.00 \\\\times 10^3 \\\\, \\\\text{N/C})}{9.11 \\\\times 10^{-31} \\\\, \\\\text{kg}} = -1.76 \\\\times 10^{14} \\\\, \\\\text{m/s}^2\\\\)The kinematics equation \\\\(v_f^2 = v_i^2 + 2a_e\\\\Delta x\\\\), with \\\\(v_f = 0\\\\), gives the stopping distance as: \\\\(\\Delta x = \\\\frac{-v_i^2}{2a_e} = \\\\frac{-(3.00 \\\\times 10^6 \\\\, \\\\text{m/s})^2}{2(-1.76 \\\\times 10^{14} \\\\, \\\\text{m/s}^2)} = 2.56 \\\\times 10^{-2} \\\\, \\\\text{m} = 2.56 \\\\, \\\\text{cm}\\\\)"
+    explanation: "The acceleration of the electron will be: \\\\(a_e = \\\\frac{F_E}{m} = \\\\frac{(-1.60 \\\\times 10^{-19} \\\\, \\\\text{C}) (1.00 \\\\times 10^3 \\\\, \\\\text{N/C})}{9.11 \\\\times 10^{-31} \\\\, <br> \\\\text{kg}} = -1.76 \\\\times 10^{14} \\\\, \\\\text{m/s}^2\\\\)The kinematics equation \\\\(v_f^2 = v_i^2 + 2a_e\\\\Delta x\\\\), with \\\\(v_f = 0\\\\), <br> gives the stopping distance as: \\\\(\\Delta x = \\\\frac{-v_i^2}{2a_e} = \\\\frac{-(3.00 \\\\times 10^6 \\\\, \\\\text{m/s})^2}{2(-1.76 \\\\times 10^{14} \\\\, \\\\text{m/s}^2)} = 2.56 \\\\times 10^{-2} \\\\, \\\\text{m} = 2.56 \\\\, \\\\text{cm}\\\\)"
 },
 {
     text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
