@@ -1737,7 +1737,87 @@ const questionBanks = {
   },
 ],
 
-
+"PHY106":[
+{
+    text: "A wire of length 0.50 m carries a current of 0.10 A in the positive x-direction, parallel to the ground. If the wire has a weight of 1.0 \\(\times\\) 10<sup>-4</sup> N, what is the minimum magnitude magnetic field that exerts a magnetic force on the wire equal to the wire's weight?",
+    options: ["0.20 T", "0.30 T", "0.40 T", "0.50 T"],
+    correct: 0,
+    explanation: "B = \\(\frac{F}{IL}\\) = \\(\frac{1.0 \\(\times\\) 10^{-4} N}{(0.10 A)(0.50 m)}\\) = 0.20 T"
+},
+{
+    text: "A rectangular coil of wire consisting of ten loops, each with length 0.20 m and width 0.30 m, lies in the xy-plane. If the coil carries a current of 2.0 A, what is the torque exerted by a magnetic field of magnitude 0.010 T directed at an angle of 30.0° with respect to the positive z-axis?",
+    options: ["1.2 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m", "2.4 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m", "6.0 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m", "4.0 \\(\times\\) 10<sup>-3</sup> N\\(\cdot\\)m"],
+    correct: 2,
+    explanation: "\\(\tau\\) = BIAN sin \\(\theta\\) = (0.010 T)(2.0 A)[(0.20 m)(0.30 m)](10) sin 30.0° = 6.0 \\(\times\\) 10<sup>-3</sup> N \\(\cdot\\) m"
+},
+{
+    text: "A long wire carries a current of 1 A. Find the magnitude of the magnetic field 2 m away from the wire.",
+    options: ["1 \\(\times\\) 10<sup>-5</sup> T", "1 \\(\times\\) 10<sup>-4</sup> T", "1 \\(\times\\) 10<sup>-6</sup> T", "1 \\(\times\\) 10<sup>-7</sup> T"],
+    correct: 3,
+    explanation: "B = \\(\frac{\\(\mu\\)_0 I}{2\\(\pi\\) r}\\) = \\(\frac{(4\\(\pi\\) \\(\times\\) 10^{-7} T \\(\cdot\\) m/A)(1 A)}{2\\(\pi\\) (2 m)}\\) = 1 \\(\times\\) 10^{-7} T"
+},
+{
+    text: "A proton enters a constant magnetic field of magnitude 0.050 T and traverses a semicircle of radius 1.0 mm before leaving the field. What is the proton's speed?",
+    options: ["1.6 \\(\times\\) 10<sup>3</sup> m/s", "2.3 \\(\times\\) 10<sup>3</sup> m/s", "2.8 \\(\times\\) 10<sup>4</sup> m/s", "1.8 \\(\times\\) 10<sup>2</sup> m/s"],
+    correct: 0,
+    explanation: "v = \\(\frac{qBr}{m}\\) = \\(\frac{(1.6 \\(\times\\) 10^{-19} C)(0.050 T)(1.0 \\(\times\\) 10^{-3} m)}{1.67 \\(\times\\) 10^{-27} kg}\\) = 4.8 \\(\times\\) 10^{3} m/s"
+},
+{
+    text: "Estimate the magnitude of the magnetic force per unit length between a pair of parallel wires separated by 2 m if they each carry a current of 3 A.",
+    options: ["1 \\(\times\\) 10<sup>-1</sup> N/m", "1 \\(\times\\) 10<sup>-5</sup> N/m", "1 \\(\times\\) 10<sup>-6</sup> N/m", "1 \\(\times\\) 10<sup>-8</sup> N/m"],
+    correct: 2,
+    explanation: "\\(\frac{F}{l}\\) = \\(\frac{\\(\mu\\)_0 I_1 I_2}{2\\(\pi\\) d}\\) = \\(\frac{(4\\(\pi\\) \\(\times\\) 10^{-7} T \\(\cdot\\) m/A)(3 A)^2}{2\\(\pi\\) (2 m)}\\) = 9 \\(\times\\) 10^{-7} N/m \\(\approx\\) 1 \\(\times\\) 10^{-6} N/m"
+},
+{
+    text: "What is the magnitude of the magnetic field at the core of a 120-turn solenoid of length 0.50 m carrying a current of 2.0 A?",
+    options: ["2.4 \\(\times\\) 10<sup>-4</sup> T", "4.8 \\(\times\\) 10<sup>-5</sup> T", "1.2 \\(\times\\) 10<sup>-6</sup> T", "3.6 \\(\times\\) 10<sup>-5</sup> T"],
+    correct: 0,
+    explanation: "B = \\(\frac{\\(\mu\\)_0 I N}{l}\\) = \\(\frac{(4\\(\pi\\) \\(\times\\) 10^{-7} T \\(\cdot\\) m/A)(120)(2.0 A)}{0.50 m}\\) = 6.0 \\(\times\\) 10<sup>-4</sup> T"
+},
+{
+    text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
+    options: ["1.15 N/C", "-2.24 N/C", "3.91 N/C", "-1.15 N/C"],
+    correct: 3,
+    explanation: "The displacement from the -4.00 nC charge at (0, 1.00) m to the point (4.00, -2.00) m is described. The x-component of the electric field is calculated as:<br>\\\\(E_x = E \\\\cos \\\\theta = \\\\frac{kq}{r^2} \\\\cos \\\\theta = \\\\frac{(8.99 \\\\times 10^9 \\\\, \\\\text{N}\\\\cdot\\\\text{m}^2/\\\\text{C}^2) (-4.00 \\\\times 10^{-9} \\\\, \\\\text{C})}{(5.00 \\\\, \\\\text{m})^2} \\\\cos (-36.9^\\\\circ) = -1.15 \\\\, \\\\text{N/C}\\\\)<br>Therefore, the correct response is (d)."
+},
+{
+    text: "Two point charges attract each other with an electric force of magnitude \\\\(F\\\\). If one charge is reduced to one-third its original value and the distance between the charges is doubled, what is the resulting magnitude of the electric force between them?",
+    options: ["F/12", "F/3", "F/6", "3F/4"],
+    correct: 0,
+    explanation: "The magnitude of the electric force between charges \\\\(Q_1\\\\) and \\\\(Q_2\\\\) separated by distance \\\\(r\\\\) is \\\\(F = k\\\\frac{Q_1Q_2}{r^2}\\\\. If \\\\(Q_1' = Q_1/3\\\\), and \\\\(r' = 2r\\\\), then the new force \\\\(F'\\\\) is:<br> \\\\(F' = k\\\\frac{Q_1'Q_2'}{r'^2} = k\\\\frac{(Q_1/3)Q_2}{(2r)^2} = \\\\frac{kQ_1Q_2}{3(4)r^2} = \\\\frac{1}{12}F\\\\)<br>Therefore, the correct answer is (a)."
+}, 
+{
+    text: "The magnitude of the electric force between two protons is \\\\(2.3 \\\\times 10^{-26}\\\\) N. How far apart are they?",
+    options: ["0.10 m", "0.022 m", "3.1 m", "0.0057 m"],
+    correct: 0,
+    explanation: "The magnitude of the electric force between two protons separated by distance \\\\(r\\\\) is \\\\(F = \\\\frac{ke^2}{r^2}\\\\), so the distance of separation must be: \\\\(r = \\\\sqrt{\\\\frac{ke^2}{F}} = \\\\sqrt{\\\\frac{(8.99 \\\\times 10^9 \\\\, \\\\text{N}\\\\cdot\\\\text{m}^2/\\\\text{C}^2) \\\\times (1.60 \\\\times 10^{-19} \\\\, \\\\text{C})^2}{2.3 \\\\times 10^{-26} \\\\, \\\\text{N}}} = 0.10 \\\\, \\\\text{m}\\\\)"
+},
+{
+    text: "A uniform electric field of 1.0 N/C is set up by a uniform distribution of charge in the xy-plane. What is the electric field inside a metal ball placed 0.50 m above the xy-plane?",
+    options: ["1.0 N/C", "-1.0 N/C", "0", "0.25 N/C"],
+    correct: 2,
+    explanation: "The ball is made of a metal, so free charges within the ball will very quickly rearrange themselves to produce electrostatic equilibrium at all points within the ball. As soon as electrostatic equilibrium exists inside the ball, the electric field is zero at all points within the ball."
+},
+{
+    text: "Charges of 3.0 nC, -2.0 nC, -7.0 nC, and 1.0 nC are contained inside a rectangular box with length 1.0 m, width 2.0 m, and height 2.5 m. Outside the box are charges of 1.0 nC and 4.0 nC. What is the electric flux through the surface of the box?",
+    options: ["0", "-560 N\\\\(\\cdot\\\\)m²/C", "-340 N\\\\(\\cdot\\\\)m²/C", "260 N\\\\(\\cdot\\\\)m²/C"],
+    correct: 1,
+    explanation: "The net electric flux through the surface of the box is: \\\\(\\Phi_E = \\\\frac{Q_{enc}}{\\\\epsilon_0} = \\\\frac{(3.0 - 2.0 - 7.0 + 1.0) \\\\times 10^{-9} \\\\, \\\\text{C}}{8.85 \\\\times 10^{-12} \\\\, \\\\text{C}^2/\\\\text{N}\\\\cdot\\\\text{m}^2} = -560 \\\\, \\\\text{N}\\\\cdot\\\\text{m}^2/\\\\text{C}\\\\)"
+},
+{
+    text: "An electron with a speed of \\\\(3.00 \\\\times 10^6\\\\) m/s moves into a uniform electric field of magnitude \\\\(1.00 \\\\times 10^3\\\\) N/C. The field lines are parallel to the electron's velocity and pointing in the same direction as the velocity. How far does the electron travel before it is brought to rest?",
+    options: ["2.56 cm", "5.12 cm", "11.2 cm", "3.34 m"],
+    correct: 0,
+    explanation: "The acceleration of the electron will be: \\\\(a_e = \\\\frac{F_E}{m} = \\\\frac{(-1.60 \\\\times 10^{-19} \\\\, \\\\text{C}) (1.00 \\\\times 10^3 \\\\, \\\\text{N/C})}{9.11 \\\\times 10^{-31} \\\\, \\\\text{kg}} = -1.76 \\\\times 10^{14} \\\\, \\\\text{m/s}^2\\\\)The kinematics equation \\\\(v_f^2 = v_i^2 + 2a_e\\\\Delta x\\\\), with \\\\(v_f = 0\\\\), gives the stopping distance as: \\\\(\\Delta x = \\\\frac{-v_i^2}{2a_e} = \\\\frac{-(3.00 \\\\times 10^6 \\\\, \\\\text{m/s})^2}{2(-1.76 \\\\times 10^{14} \\\\, \\\\text{m/s}^2)} = 2.56 \\\\times 10^{-2} \\\\, \\\\text{m} = 2.56 \\\\, \\\\text{cm}\\\\)"
+},
+{
+    text: "A charge of -4.00 nC is located at (0, 1.00) m. What is the x-component of the electric field at (4.00, -2.00) m?",
+    options: ["1.15 N/C", "-2.24 N/C", "3.91 N/C", "-1.15 N/C"],
+    correct: 3,
+    explanation: "The displacement from the -4.00 nC charge at point (0, 1.00) m to the point (4.00, -2.00) m has components \\\\(r_x = (x_2 - x_1) = +4.00\\\\) m and \\\\(r_y = (y_2 - y_1) = -3.00\\\\) m, so the magnitude of this displacement is \\\\(r = \\\\sqrt{r_x^2 + r_y^2} = 5.00\\\\) m and its direction is \\\\(\\theta = \\\\tan^{-1}(r_y/r_x) = -36.9^\\\\circ\\\\). "
+},
+],
+    
   "PHY102": [
       {
     text: "When an image of a real object is formed by a flat mirror, which of the following statements are always true?<br><br>I. The image is larger than the object.<br>II. The image is the same size as the object.<br>III. The image is virtual.<br>IV. The image is smaller than the object.<br>V. The image is upright.",
