@@ -10134,59 +10134,21 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Agricultural Economics", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "PHY102", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Zoology", part: "200" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Chemistry", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Physics and Engineering Physics", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Microbiology", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Botany", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Geology", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Dean's Office (Pharmacy)", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Nursing", part: "100" },
-    { id: "ZOO102-CLW1", title: "ZOO102 CLASS ASSESSMENT ONE", department: "Mathematics", part: "100" },
-        { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Agricultural Economics", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Zoology", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Chemistry", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Physics and Engineering Physics", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Microbiology", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Botany", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Geology", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Dean's Office (Pharmacy)", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Nursing", part: "100" },
-    { id: "ZOO102-WKTST2", title: "ZOO102 CLASS ASSESSMENT TWO", department: "Mathematics", part: "100" },
-        { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Agricultural Economics", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Zoology", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Chemistry", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Physics and Engineering Physics", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Microbiology", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Botany", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Geology", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Dean's Office (Pharmacy)", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Nursing", part: "100" },
-    { id: "ZOO102-WKTST3", title: "ZOO102 CLASS ASSESSMENT THREE", department: "Mathematics", part: "100" },
-        { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Agricultural Economics", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Zoology", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Chemistry", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Physics and Engineering Physics", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Microbiology", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Botany", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Geology", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Dean's Office (Pharmacy)", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Nursing", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Mathematics", part: "100" },
-        { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "CHM102-CLW2", title: "CHM102 WEEKEND MOCK TEST", department: "Human Nutrition and Dietetics", part: "100" }
-    
-    
-    
-    
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Agricultural Economics", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Family Nutrition and Consumer Science", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Zoology", part: "100" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Chemistry", part: "100" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Physics and Engineering Physics", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Microbiology", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Botany", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Biochemistry and Molecular Biology", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Geology", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Dean's Office (Pharmacy)", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Zoology", part: "200" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Mathematics", part: "100" },
+        { id: "PHY106", title: "PHY106 MOCK TEST", department: "Agricultural Economics", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Family Nutrition and Consumer Science", part: "100" }
+
     
 ];
 
@@ -22540,7 +22502,7 @@ function loadQuestion() {
     MathJax.typeset();
   }
 }
-
+if (window.MathJax) MathJax.typeset();
 
 // Shuffle questions randomly
 function shuffleArray(array) {
