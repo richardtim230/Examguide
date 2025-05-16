@@ -1740,6 +1740,54 @@ const questionBanks = {
 "PHY106":[
     
         {
+          text: "A proton is released at the origin in a constant electric field of 850 N/C acting in the positive x-direction. Find the change in the electric potential energy associated with the proton after it travels to x = 2.5 m.",
+          options: ["\\(3.4 \\times 10^{-16}\\) J", "\\(-3.4 \\times 10^{-16}\\) J", "\\(2.5 \\times 10^{-16}\\) J", "\\(-2.5 \\times 10^{-16}\\) J", "\\(-1.6 \\times 10^{-19}\\) J"],
+          correct: 1,
+          explanation: "The change in electric potential energy (\\(\\Delta U\\)) is given by: <br> \\(\\Delta U = -qEd\\) <br> where: <br> \\(q\\) = charge of the proton = \\(1.60 \\times 10^{-19}\\) C <br> \\(E\\) = electric field = 850 N/C <br> \\(d\\) = distance traveled = 2.5 m <br> \\(\\Delta U = -(1.60 \\times 10^{-19} \\text{ C}) \\times (850 \\text{ N/C}) \\times (2.5 \\text{ m})\\) <br> \\(\\Delta U = -3.4 \\times 10^{-16} \\text{ J}\\) <br> So the answer is (b) \\(-3.4 \\times 10^{-16}\\) J"
+        },
+        {
+          text: "An electron in an X-ray machine is accelerated through a potential difference of \\(1.00 \\times 10^4\\) V before it hits the target. What is the kinetic energy of the electron in electron volts?",
+          options: ["\\(1.00 \\times 10^4\\) eV", "\\(1.60 \\times 10^{-15}\\) eV", "\\(1.60 \\times 10^{-22}\\) eV", "\\(6.25 \\times 10^{22}\\) eV", "\\(1.60 \\times 10^{-19}\\) eV"],
+          correct: 0,
+          explanation: "The kinetic energy (KE) gained by the electron is equal to the electric potential energy it loses, which is given by: <br> \\(KE = qV\\) <br> where: <br> \\(q\\) = charge of the electron = 1 e (elementary charge) <br> \\(V\\) = potential difference = \\(1.00 \\times 10^4\\) V <br> Since we want the answer in electron volts (eV), and 1 eV is the energy gained by an electron when it moves through a potential difference of 1 V, the kinetic energy in eV is simply: <br> \\(KE = 1 \\times (1.00 \\times 10^4) \\text{ eV} = 1.00 \\times 10^4 \\text{ eV}\\) <br> So the answer is (a) \\(1.00 \\times 10^4\\) eV"
+        },
+        {
+          text: "The electric potential at x = 3.0 m is 120 V, and the electric potential at x = 5.0 m is 190 V. What is the electric field in this region, assuming it's constant?",
+          options: ["140 N/C", "-140 N/C", "35 N/C", "-35 N/C", "75 N/C"],
+          correct: 3,
+          explanation: "The electric field (E) is related to the electric potential (V) by: <br> \\(E = -\\frac{\\Delta V}{\\Delta x}\\) <br> where: <br> \\(\\Delta V\\) = change in electric potential = \\(V_2 - V_1 = 190 \\text{ V} - 120 \\text{ V} = 70 \\text{ V}\\) <br> \\(\\Delta x\\) = change in position = \\(x_2 - x_1 = 5.0 \\text{ m} - 3.0 \\text{ m} = 2.0 \\text{ m}\\) <br> \\(E = -\\frac{70 \\text{ V}}{2.0 \\text{ m}} = -35 \\text{ N/C}\\) <br> So the answer is (d) -35 N/C"
+        },
+        {
+          text: "A helium nucleus (charge = 2e, mass = \\(6.63 \\times 10^{-27}\\) kg) traveling at a speed of \\(6.20 \\times 10^5\\) m/s enters an electric field, traveling from point A, at a potential of \\(1.50 \\times 10^3\\) V, to point B, at \\(4.00 \\times 10^3\\) V. What is its speed at point B?",
+          options: ["\\(7.91 \\times 10^5\\) m/s", "\\(3.78 \\times 10^5\\) m/s", "\\(2.13 \\times 10^5\\) m/s", "\\(2.52 \\times 10^6\\) m/s", "\\(3.01 \\times 10^8\\) m/s"],
+          correct: 0,
+          explanation: "We can use the conservation of energy principle: <br> \\(KE_A + PE_A = KE_B + PE_B\\) <br> where: <br> \\(KE = \\frac{1}{2}mv^2\\) (kinetic energy) <br> \\(PE = qV\\) (potential energy) <br> So, <br> \\(\\frac{1}{2}mv_A^2 + qV_A = \\frac{1}{2}mv_B^2 + qV_B\\) <br> \\(\\frac{1}{2}mv_B^2 = \\frac{1}{2}mv_A^2 + q(V_A - V_B)\\) <br> \\(v_B^2 = v_A^2 + \\frac{2q}{m}(V_A - V_B)\\) <br> Given: <br> \\(q = 2e = 2 \\times 1.60 \\times 10^{-19} \\text{ C} = 3.20 \\times 10^{-19} \\text{ C}\\) <br> \\(m = 6.63 \\times 10^{-27} \\text{ kg}\\) <br> \\(v_A = 6.20 \\times 10^5 \\text{ m/s}\\) <br> \\(V_A = 1.50 \\times 10^3 \\text{ V}\\) <br> \\(V_B = 4.00 \\times 10^3 \\text{ V}\\) <br> \\(v_B^2 = (6.20 \\times 10^5)^2 + \\frac{2 \\times 3.20 \\times 10^{-19}}{6.63 \\times 10^{-27}}(1.50 \\times 10^3 - 4.00 \\times 10^3)\\)"
+        },
+        {
+          text: "Four point charges are positioned on the rim of a circle. The charge on each of the four is +0.5 μC, +1.5 μC, -1.0 μC, and -0.5 μC. If the electrical potential at the center of the circle due to the +0.5 μC charge alone is \\(4.5 \\times 10^4\\) V, what is the total electric potential at the center due to the four charges?",
+          options: ["\\(18.0 \\times 10^4\\) V", "\\(4.5 \\times 10^4\\) V", "0", "\\(-4.5 \\times 10^4\\) V", "\\(9.0 \\times 10^4\\) V"],
+          correct: 1,
+          explanation: "The electric potential due to a point charge is given by: <br> \\(V = \\frac{kQ}{r}\\) <br> where: <br> \\(k\\) = Coulomb's constant <br> \\(Q\\) = charge <br> \\(r\\) = distance from the charge to the point <br> Since all charges are at the same distance \\(r\\) from the center, the total potential at the center is the sum of the potentials due to each charge: <br> \\(V_{total} = \\frac{k}{r}(Q_1 + Q_2 + Q_3 + Q_4)\\) <br> Given that the potential due to the +0.5 μC charge is \\(4.5 \\times 10^4\\) V, we can write: <br> \\(4.5 \\times 10^4 = \\frac{k(0.5 \\times 10^{-6})}{r}\\) <br> Now, let's find the total charge: <br> \\(Q_{total} = 0.5 \\text{ μC} + 1.5 \\text{ μC} - 1.0 \\text{ μC} - 0.5 \\text{ μC} = 0.5 \\times 10^{-6} \\text{ C} + 1.5 \\times 10^{-6} \\text{ C} - 1.0 \\times 10^{-6} \\text{ C} - 0.5 \\times 10^{-6} \\text{ C} = 0.5 \\times 10^{-6} \\text{ C}\\) <br> So, the total potential is: <br> \\(V_{total} = \\frac{k(0.5 \\times 10^{-6})}{r} = 4.5 \\times 10^4 \\text{ V}\\) <br> So the answer is (b) \\(4.5 \\times 10^4\\) V"
+        },
+        {
+          text: "An electronics technician wishes to construct a parallel-plate capacitor using rutile (\\(\\kappa = 1.00 \\times 10^2\\)) as the dielectric. If the cross-sectional area of the plates is 1.00 cm², what is the capacitance if the rutile thickness is 1.00 mm?",
+          options: ["88.5 pF", "177.0 pF", "8.85 μF", "100.0 μF", "354 μF"],
+          correct: 0,
+          explanation: "The capacitance of a parallel-plate capacitor with a dielectric is given by: <br> \\(C = \\frac{\\kappa \\epsilon_0 A}{d}\\) <br> where: <br> \\(\\kappa\\) = dielectric constant = \\(1.00 \\times 10^2 = 100\\) <br> \\(\\epsilon_0\\) = permittivity of free space = \\(8.85 \\times 10^{-12} \\text{ F/m}\\) <br> \\(A\\) = area of the plates = \\(1.00 \\text{ cm}^2 = 1.00 \\times 10^{-4} \\text{ m}^2\\) <br> \\(d\\) = distance between the plates = \\(1.00 \\text{ mm} = 1.00 \\times 10^{-3} \\text{ m}\\) <br> \\(C = \\frac{100 \\times 8.85 \\times 10^{-12} \\times 1.00 \\times 10^{-4}}{1.00 \\times 10^{-3}}\\) <br> \\(C = \\frac{8.85 \\times 10^{-14}}{1.00 \\times 10^{-3}} = 8.85 \\times 10^{-11} \\text{ F}\\) <br> \\(C = 88.5 \\times 10^{-12} \\text{ F} = 88.5 \\text{ pF}\\) <br> So the answer is (a) 88.5 pF"
+        },
+        {
+          text: "A parallel-plate capacitor is connected to a battery. What happens to the stored energy if the plate separation is doubled while the capacitor remains connected to the battery?",
+          options: ["It remains the same.", "It is doubled.", "It decreases by a factor of 2.", "It decreases by a factor of 4.", "It increases by a factor of 4."],
+          correct: 2,
+          explanation: "Since the capacitor remains connected to the battery, the voltage (V) across the capacitor remains constant. The energy stored in a capacitor is given by: <br> \\(U = \\frac{1}{2}CV^2\\) <br> The capacitance (C) of a parallel-plate capacitor is given by: <br> \\(C = \\frac{\\epsilon_0 A}{d}\\) <br> where: <br> \\(\\epsilon_0\\) = permittivity of free space <br> \\(A\\) = area of the plates <br> \\(d\\) = separation between the plates <br> If the plate separation (d) is doubled, the new capacitance (C') becomes: <br> \\(C' = \\frac{\\epsilon_0 A}{2d} = \\frac{1}{2}C\\) <br> So, the new energy stored (U') is: <br> \\(U' = \\frac{1}{2}C'V^2 = \\frac{1}{2}(\\frac{1}{2}C)V^2 = \\frac{1}{2} \\times \\frac{1}{2}CV^2 = \\frac{1}{2}U\\) <br> Therefore, the stored energy decreases by a factor of 2. <br> So the answer is (c) It decreases by a factor of 2."
+        },
+        {
+          text: "A parallel-plate capacitor filled with air carries a charge Q. The battery is disconnected, and a slab of material with dielectric constant (\\(\\kappa = 2\\)) is inserted between the plates. Which of the following statements is correct?",
+          options: ["The voltage across the capacitor decreases by a factor of 2.", "The voltage across the capacitor is doubled.", "The charge on the plates is doubled.", "The charge on the plates decreases by a factor of 2.", "The electric field is doubled."],
+          correct: 0,
+          explanation: "Since the battery is disconnected, the charge (Q) on the capacitor remains constant. When a dielectric material is inserted, the capacitance increases by a factor of \\(\\kappa\\): <br> \\(C' = \\kappa C\\) <br> The voltage across the capacitor is given by: <br> \\(V = \\frac{Q}{C}\\) <br> So, the new voltage (V') is: <br> \\(V' = \\frac{Q}{C'} = \\frac{Q}{\\kappa C} = \\frac{1}{\\kappa} \\times \\frac{Q}{C} = \\frac{1}{\\kappa}V\\) <br> Since \\(\\kappa = 2\\), the new voltage is: <br> \\(V' = \\frac{1}{2}V\\) <br> Therefore, the voltage across the capacitor decreases by a factor of 2. <br> So the answer is (a) The voltage across the capacitor decreases by a factor of 2."
+        },
+        {
           text: "What is the resistance in a series AC circuit with an impedance of 2.40 kΩ, an inductive reactance of 47.1 Ω, and a capacitive reactance of 637 Ω?",
           options: ["47.1 Ω", "637 Ω", "2.33 kΩ", "2.40 kΩ"],
           correct: 2,
