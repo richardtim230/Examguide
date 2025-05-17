@@ -9,202 +9,206 @@
     body {
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #e6ebee;
+  background: #e7eaec;
 }
 
-/* Simulated Top Bar */
+/* Top Bar */
 .top-bar {
-  background: #4e666f;
+  background: #5d707a;
   color: #fff;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   padding: 8px 24px;
-  font-size: 1.06em;
-  border-bottom: 5px solid #829ba8;
+  font-size: 1em;
+  border-bottom: 4px solid #aebcc6;
 }
 .top-bar span {
   cursor: pointer;
-  margin: 0 5px;
 }
 
-/* Practice Container */
-.practice-container {
+/* Main Box */
+.practice-box {
   background: #fff;
-  max-width: 830px;
+  max-width: 900px;
   margin: 48px auto 0 auto;
-  border-radius: 5px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
-  padding: 0;
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.09);
   overflow: hidden;
 }
 
 .practice-header {
-  background: #5e7580;
+  background: #5d707a;
   color: #fff;
   font-size: 1.23em;
   font-weight: bold;
-  padding: 18px 0;
+  padding: 16px 0;
   text-align: center;
-  border-bottom: 4px solid #a9b4c1;
+  border-bottom: 4px solid #aebcc6;
 }
 
-/* Major Form Layout */
 .practice-form {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.practice-columns {
   display: flex;
-  flex-wrap: wrap;
-  padding: 24px 24px 32px 24px;
-  gap: 30px;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
-/* Subjects Panel */
-.subjects-panel {
-  flex: 2 1 310px;
-  display: flex;
-  flex-direction: column;
-  min-width: 220px;
-  max-width: 340px;
+/* Left Panel (Subjects) */
+.practice-left {
+  flex: 1 1 220px;
+  min-width: 200px;
+  max-width: 260px;
 }
-
-.subjects-title {
+.subjects-block {
+  margin-bottom: 18px;
+}
+.block-label {
   font-weight: bold;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
+  color: #2e3538;
 }
-
-.subjects-checkboxes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px 22px;
-  margin-bottom: 17px;
-  font-size: 1em;
+.subjects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 16px;
+  font-size: 0.98em;
 }
-.subjects-checkboxes label {
-  min-width: 120px;
-  margin-bottom: 3px;
+.subjects-grid label {
   cursor: pointer;
+  margin-bottom: 2px;
+  padding-left: 2px;
 }
-
-.subjects-summary {
-  margin-top: 8px;
+.subject-list {
+  margin-top: 14px;
 }
-.subject-summary-row {
-  background: #5e7580;
+.subject-item {
+  background: #5d707a;
   color: #fff;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   border-radius: 3px;
-  padding: 8px 16px;
-  font-size: 1em;
+  padding: 8px 13px;
+  font-size: 0.98em;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.subject-summary-row span {
-  font-size: 0.89em;
-  opacity: 0.88;
-  margin-left: 9px;
+.subject-item span {
+  font-size: 0.91em;
+  opacity: 0.86;
 }
 
-/* User Panel */
-.user-panel {
-  flex: 1 1 170px;
+/* Center Panel (User) */
+.practice-center {
+  flex: 0 0 180px;
+  min-width: 150px;
+  max-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 140px;
-  max-width: 210px;
-  gap: 12px;
-  padding-top: 18px;
+  gap: 11px;
+  margin-top: 10px;
 }
 .avatar {
   background: linear-gradient(135deg, #18b2e0 40%, #1d81a2 100%);
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  margin-bottom: 9px;
-  margin-top: 6px;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 8px;
   box-shadow: 0 2px 8px rgba(24,178,224,0.15);
 }
-.username-section {
+.username-block {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  text-align: left;
 }
-.username-section label {
+.username-block label {
   font-size: 0.98em;
   color: #444;
 }
-.username-section select {
+.username-block select {
   padding: 4px 7px;
   border-radius: 3px;
-  border: 1px solid #ccc;
+  border: 1px solid #bbb;
   font-size: 1em;
+  width: 100%;
+  margin-top: 2px;
 }
 .get-started-btn {
   background: #2045b2;
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 9px 0;
+  padding: 10px 0;
   width: 100%;
   font-weight: bold;
   font-size: 1em;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 .get-started-btn:hover {
   background: #3766e0;
 }
 
-/* Settings Panel */
-.settings-panel {
-  flex: 2 1 230px;
+/* Right Panel (Settings) */
+.practice-right {
+  flex: 1 1 220px;
+  min-width: 200px;
+  max-width: 260px;
   display: flex;
   flex-direction: column;
-  min-width: 180px;
-  gap: 18px;
-  border-left: 2px solid #d2e0ee;
-  padding-left: 18px;
+  gap: 12px;
+  border-left: 2px solid #e2e8ef;
+  padding-left: 22px;
 }
-.setting-row {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+
+.setting-block {
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-.setting-row label {
-  font-weight: 500;
-  margin-bottom: 3px;
-}
-#mode, #totaltime {
-  padding: 3px 7px;
+.setting-block select,
+.setting-block input[type="time"] {
+  padding: 4px 7px;
   border-radius: 3px;
   border: 1px solid #bbb;
   font-size: 1em;
   width: 100%;
-  max-width: 180px;
+  max-width: 170px;
+}
+.setting-block label {
+  font-weight: 500;
+}
+.setting-block input[type="checkbox"] {
+  margin-right: 6px;
 }
 .mode-desc {
-  font-size: 0.96em;
+  font-size: 0.95em;
   color: #333;
-  opacity: 0.83;
-  margin-top: 3px;
-}
-.setting-row input[type="checkbox"] {
-  margin-right: 5px;
+  opacity: 0.82;
+  margin-top: 2px;
 }
 .quick-tips-btn {
   background: #4bb543;
   color: #fff;
   border: none;
   border-radius: 3px;
-  padding: 7px 0;
-  width: 140px;
+  padding: 8px 0;
+  width: 130px;
   font-weight: bold;
   font-size: 1em;
-  margin-top: 3px;
+  margin-top: 2px;
   cursor: pointer;
   transition: background 0.12s;
 }
@@ -213,28 +217,37 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1050px) {
-  .practice-container {
-    max-width: 98vw;
+@media (max-width: 950px) {
+  .practice-box {
+    max-width: 99vw;
+    margin: 24px 1vw 0 1vw;
   }
   .practice-form {
+    padding: 18px 2vw;
+  }
+  .practice-columns {
     flex-direction: column;
     align-items: stretch;
-    gap: 22px;
-    padding: 24px 5vw 32px 5vw;
+    gap: 18px;
   }
-  .settings-panel {
+  .practice-left, .practice-right, .practice-center {
+    max-width: 100vw;
     border-left: none;
-    border-top: 2px solid #d2e0ee;
     padding-left: 0;
-    padding-top: 12px;
+    margin-top: 0;
+  }
+  .practice-right {
+    border-left: none;
+    border-top: 2px solid #e2e8ef;
+    padding-top: 13px;
+    padding-left: 0;
   }
 }
 
 @media (max-width: 600px) {
   .top-bar {
-    font-size: 0.97em;
-    gap: 10px;
+    font-size: 0.94em;
+    gap: 8px;
     padding: 8px 2vw;
   }
   .practice-header {
@@ -242,35 +255,24 @@
     padding: 13px 0;
   }
   .practice-form {
-    padding: 12px 2vw 18px 2vw;
-    gap: 16px;
+    padding: 10px 2vw;
   }
-  .subjects-panel, .settings-panel, .user-panel {
-    min-width: 0;
-    max-width: 100vw;
-    padding: 0;
-  }
-  .subjects-summary {
-    font-size: 0.96em;
-  }
-  .user-panel {
-    gap: 7px;
-    padding-top: 7px;
-  }
-  .avatar {
+  .practice-center .avatar {
     width: 50px; height: 50px;
-    margin-bottom: 6px;
-    margin-top: 3px;
+    margin-bottom: 5px;
   }
   .get-started-btn, .quick-tips-btn {
-    font-size: 0.97em;
+    font-size: 0.96em;
     padding: 7px 0;
+  }
+  .block-label, .subject-item, .subject-item span {
+    font-size: 0.97em;
   }
 }
   </style>
 </head>
 <body>
-  <!-- Simulated Top Bar/Menu -->
+  <!-- Simulated Top Menu Bar -->
   <div class="top-bar">
     <span>Feedback</span>
     <span>Like Us</span>
@@ -281,90 +283,76 @@
     <span>Profile</span>
   </div>
 
-  <div class="practice-container">
-    <div class="practice-header">Practice For UTME</div>
-    <form class="practice-form" autocomplete="off">
-      <div class="subjects-panel">
-        <div class="subjects-list">
-          <p class="subjects-title">Select One or More Subjects</p>
-          <div class="subjects-checkboxes">
-            <label><input type="checkbox" checked> English</label>
-            <label><input type="checkbox"> In Dependence</label>
-            <label><input type="checkbox"> Accounts</label>
-            <label><input type="checkbox"> Agriculture</label>
-            <label><input type="checkbox"> Chemistry</label>
-            <label><input type="checkbox"> Commerce</label>
-            <label><input type="checkbox"> Arabic</label>
-            <label><input type="checkbox"> CRK</label>
-            <label><input type="checkbox"> Economics</label>
-            <label><input type="checkbox"> Fine Art</label>
-            <label><input type="checkbox"> French</label>
-            <label><input type="checkbox" checked> Biology</label>
-            <!-- Add more as needed -->
+  <main>
+    <section class="practice-box">
+      <div class="practice-header">Practice For UTME</div>
+      <form class="practice-form" autocomplete="off">
+        <div class="practice-columns">
+          <!-- Left: Subjects and List -->
+          <div class="practice-left">
+            <div class="subjects-block">
+              <div class="block-label">Select One or More Subjects</div>
+              <div class="subjects-grid">
+                <label><input type="checkbox" checked> English</label>
+                <label><input type="checkbox"> In Dependence</label>
+                <label><input type="checkbox"> Accounts</label>
+                <label><input type="checkbox"> Agriculture</label>
+                <label><input type="checkbox"> Chemistry</label>
+                <label><input type="checkbox"> Commerce</label>
+                <label><input type="checkbox"> CRK</label>
+                <label><input type="checkbox"> Biology</label>
+              </div>
+            </div>
+            <div class="subject-list">
+              <div class="subject-item">English <span>2010 | 100 Questions</span></div>
+              <div class="subject-item">Chemistry <span>2010 | 50 Questions</span></div>
+              <div class="subject-item">Biology <span>2010 | 50 Questions</span></div>
+              <div class="subject-item">Mathematics <span>2010 | 50 Questions</span></div>
+            </div>
+          </div>
+          <!-- Center: User info -->
+          <div class="practice-center">
+            <div class="avatar"></div>
+            <div class="username-block">
+              <label for="username">Username (E.g. KEN)</label>
+              <select id="username" name="username">
+                <option>James Okpara</option>
+                <option>Jane Doe</option>
+                <option>Mary Ann</option>
+                <option>KEN</option>
+              </select>
+            </div>
+            <button type="button" class="get-started-btn">Get Started</button>
+          </div>
+          <!-- Right: Settings -->
+          <div class="practice-right">
+            <div class="setting-block">
+              <div class="block-label">Mode</div>
+              <select>
+                <option>Practice</option>
+                <option>Exam</option>
+              </select>
+              <div class="mode-desc">Get timed, view result and get corrections.</div>
+            </div>
+            <div class="setting-block">
+              <div class="block-label">Total Time</div>
+              <input type="time" value="03:00:00" step="1">
+            </div>
+            <div class="setting-block">
+              <div class="block-label">Options</div>
+              <label><input type="checkbox"> Shuffle Questions</label>
+              <label><input type="checkbox" checked> Shuffle Options</label>
+            </div>
+            <div class="setting-block">
+              <div class="block-label">Quick Tips</div>
+              <button type="button" class="quick-tips-btn">Click To View</button>
+            </div>
           </div>
         </div>
-        <div class="subjects-summary">
-          <div class="subject-summary-row">English <span>2010 | 100 Questions</span></div>
-          <div class="subject-summary-row">Chemistry <span>2010 | 50 Questions</span></div>
-          <div class="subject-summary-row">Biology <span>2010 | 50 Questions</span></div>
-          <div class="subject-summary-row">Mathematics <span>2010 | 50 Questions</span></div>
-        </div>
-      </div>
+      </form>
+    </section>
+  </main>
 
-      <div class="user-panel">
-        <div class="avatar"></div>
-        <div class="username-section">
-          <label for="username">Username (E.g. KEN)</label>
-          <select id="username" name="username">
-            <option>James Okpara</option>
-            <option>Jane Doe</option>
-            <option>Mary Ann</option>
-            <option>KEN</option>
-          </select>
-        </div>
-        <button type="button" class="get-started-btn">Get Started</button>
-      </div>
-
-      <div class="settings-panel">
-        <div class="setting-row">
-          <label for="mode">Mode</label>
-          <select id="mode" name="mode">
-            <option>Practice</option>
-            <option>Exam</option>
-          </select>
-          <div class="mode-desc">Get timed, view result and get corrections.</div>
-        </div>
-        <div class="setting-row">
-          <label for="totaltime">Total Time</label>
-          <input type="time" id="totaltime" name="totaltime" value="03:00:00" step="1">
-        </div>
-        <div class="setting-row">
-          <label>Options</label>
-          <div>
-            <input type="checkbox" id="shuffle-questions"><label for="shuffle-questions">Shuffle Questions</label>
-          </div>
-          <div>
-            <input type="checkbox" id="shuffle-options" checked><label for="shuffle-options">Shuffle Options</label>
-          </div>
-        </div>
-        <div class="setting-row">
-          <label>Quick Tips</label>
-          <button type="button" class="quick-tips-btn">Click To View</button>
-        </div>
-      </div>
-    </form>
-  </div>
-<script>
-  // Example: Get Started button handler
-document.querySelector('.get-started-btn').addEventListener('click', function() {
-  alert('Starting practice... (link this to your question page)');
-});
-
-// Example: Quick Tips button
-document.querySelector('.quick-tips-btn').addEventListener('click', function() {
-  alert('Display your quick tips here!');
-});
-</script>
   <script src="practice.js"></script>
 </body>
 </html>
