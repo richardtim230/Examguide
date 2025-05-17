@@ -5,7 +5,7 @@
   <title>UTME Dashboard Clone</title>
   <link rel="stylesheet" href="stylesgg.css">
 <style>
-  body {
+body {
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
   background: #eaf4e0;
@@ -20,6 +20,7 @@
   align-items: center;
   padding: 8px 32px;
   font-size: 1.05em;
+  flex-wrap: wrap;
 }
 .top-nav .nav-icon, .top-nav .nav-user {
   margin-right: 18px;
@@ -36,15 +37,17 @@
   padding: 8px 24px;
   font-size: 1em;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   border-top: 3px solid #256d36;
   border-bottom: 3px solid #256d36;
+  gap: 10px;
 }
 .banner-warning {
   margin-right: 8px;
 }
 .product-key-label {
-  margin-left: 20px;
+  margin-left: 10px;
   font-weight: 600;
 }
 .product-key {
@@ -71,6 +74,7 @@
   margin: 32px auto 0 auto;
   max-width: 1100px;
   gap: 32px;
+  flex-wrap: wrap;
 }
 .dashboard-tiles {
   display: grid;
@@ -88,6 +92,8 @@
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,0.09);
   transition: transform 0.08s;
+  text-align: center;
+  padding: 10px;
 }
 .tile:hover {
   transform: scale(1.04);
@@ -107,6 +113,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 }
 .widget-header {
   background: #fead38;
@@ -151,6 +158,7 @@
   font-size: 0.93em;
   color: #1658a2;
   margin-bottom: 4px;
+  text-align: center;
 }
 .score-value {
   font-size: 2.1em;
@@ -162,6 +170,7 @@
   font-size: 0.93em;
   color: #2673be;
   margin-top: 6px;
+  text-align: center;
 }
 
 /* Info Banner */
@@ -198,6 +207,87 @@
 }
 .chat-btn:hover {
   background: #ad1457;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .performance-widget {
+    width: 90vw;
+    min-width: 250px;
+    max-width: 400px;
+  }
+  .dashboard-tiles {
+    grid-template-columns: repeat(3, 110px);
+    grid-template-rows: repeat(3, 70px);
+  }
+  .tile {
+    font-size: 1em;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 650px) {
+  .top-nav, .activation-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 7vw;
+    font-size: 0.97em;
+    row-gap: 8px;
+  }
+  .dashboard {
+    margin-top: 16px;
+    gap: 12px;
+  }
+  .performance-widget {
+    width: 98vw;
+    max-width: 99vw;
+    padding: 9vw 2vw;
+    margin-top: 10px;
+  }
+  .dashboard-tiles {
+    grid-template-columns: repeat(2, 48vw);
+    grid-template-rows: repeat(5, 15vw);
+    gap: 7px;
+    width: 99vw;
+    justify-items: center;
+  }
+  .tile {
+    width: 97%;
+    min-width: 110px;
+    font-size: 0.97em;
+    padding: 4vw 0;
+  }
+  .info-banner {
+    font-size: 0.98em;
+    padding: 8px 0;
+    margin-top: 22px;
+  }
+  .chat-btn {
+    right: 14px;
+    bottom: 18px;
+    padding: 10px 18px;
+    font-size: 0.94em;
+  }
+}
+
+@media (max-width: 400px) {
+  .dashboard-tiles {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(9, 16vw);
+    width: 99vw;
+  }
+  .tile {
+    font-size: 0.93em;
+    padding: 3vw 0;
+  }
+  .performance-widget {
+    padding: 2vw 1vw;
+  }
 }
 </style>
 </head>
