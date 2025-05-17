@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UTME Dashboard Clone</title>
+  <link rel="stylesheet" href="stylesgg.css">
+<style>
+  body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #eaf4e0;
+}
+
+/* Top Nav Bar */
+.top-nav {
+  background: #256d36;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 32px;
+  font-size: 1.05em;
+}
+.top-nav .nav-icon, .top-nav .nav-user {
+  margin-right: 18px;
+  cursor: pointer;
+}
+.top-nav .nav-user:last-child {
+  margin-right: 0;
+}
+
+/* Activation Banner */
+.activation-banner {
+  background: #e7f8e2;
+  color: #256d36;
+  padding: 8px 24px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  border-top: 3px solid #256d36;
+  border-bottom: 3px solid #256d36;
+}
+.banner-warning {
+  margin-right: 8px;
+}
+.product-key-label {
+  margin-left: 20px;
+  font-weight: 600;
+}
+.product-key {
+  background: #e5e5e5;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+.activate-btn {
+  margin-left: 15px;
+  background: #f39c12;
+  border: none;
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Main Dashboard Layout */
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 32px auto 0 auto;
+  max-width: 1100px;
+  gap: 32px;
+}
+.dashboard-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 160px);
+  grid-template-rows: repeat(3, 90px);
+  gap: 10px;
+}
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.14em;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.09);
+  transition: transform 0.08s;
+}
+.tile:hover {
+  transform: scale(1.04);
+}
+.tile-blue { background: #283890; color: #fff; }
+.tile-green { background: #059c81; color: #fff; }
+.tile-brown { background: #7f5a36; color: #fff; }
+.tile-orange { background: #f9a825; color: #fff; }
+
+/* Performance Widget */
+.performance-widget {
+  background: #eaf6fe;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  padding: 16px 24px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.widget-header {
+  background: #fead38;
+  color: #1658a2;
+  font-weight: 700;
+  margin-bottom: 14px;
+  padding: 7px 10px;
+  width: 100%;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.05em;
+}
+.widget-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.user-name {
+  background: #2673be;
+  color: #fff;
+  padding: 3px 12px;
+  border-radius: 5px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.user-id {
+  color: #2673be;
+  font-size: 0.98em;
+}
+.widget-scores {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 12px;
+}
+.score-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score-label {
+  font-size: 0.93em;
+  color: #1658a2;
+  margin-bottom: 4px;
+}
+.score-value {
+  font-size: 2.1em;
+  font-weight: 700;
+}
+.score-blue { color: #2673be; }
+.score-orange { color: #fead38; }
+.widget-footer {
+  font-size: 0.93em;
+  color: #2673be;
+  margin-top: 6px;
+}
+
+/* Info Banner */
+.info-banner {
+  background: #4bb543;
+  color: #fff;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 1.06em;
+  margin-top: 38px;
+}
+.info-answer {
+  margin-left: 18px;
+  color: #ffd700;
+  font-weight: 600;
+}
+
+/* Chat Widget */
+.chat-btn {
+  position: fixed;
+  bottom: 38px;
+  right: 38px;
+  background: #e91e63;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 18px 30px;
+  font-size: 1.05em;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background 0.12s;
+}
+.chat-btn:hover {
+  background: #ad1457;
+}
+</style>
+</head>
+<body>
+  <!-- Top Nav Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <span class="nav-icon" title="Result History">&#128196;</span>
+      <span class="nav-icon" title="Bookmarks">&#128278;</span>
+      <span class="nav-icon" title="Leaderboard">&#127942;</span>
+      <span class="nav-icon" title="Feedback">&#128172;</span>
+      <span class="nav-icon" title="Like Us">&#128077;</span>
+    </div>
+    <div class="nav-right">
+      <span class="nav-user">&#128100;</span>
+      <span class="nav-user">Xxxx</span>
+      <span class="nav-user" style="color:#e74c3c;">&#10006;</span>
+    </div>
+  </header>
+
+  <!-- Product Activation Banner -->
+  <div class="activation-banner">
+    <span class="banner-warning">&#9888;</span>
+    <span>You have not activated this product. </span>
+    <span class="product-key-label">Product Key:</span>
+    <span class="product-key">VYH5L26K9LUTM4C</span>
+    <button class="activate-btn">Activate</button>
+  </div>
+
+  <!-- Main Content -->
+  <main class="dashboard">
+    <!-- Left Grid -->
+    <section class="dashboard-tiles">
+      <div class="tile tile-blue">Practice For UTME</div>
+      <div class="tile tile-blue">Question Search</div>
+      <div class="tile tile-blue">Performance Analysis</div>
+      <div class="tile tile-green">Educational Games</div>
+      <div class="tile tile-green">Leaderboard</div>
+      <div class="tile tile-green">UTME Literature Books</div>
+      <div class="tile tile-brown">UTME Challenge</div>
+      <div class="tile tile-orange">Career And Institutions</div>
+      <div class="tile tile-orange">Dictionary</div>
+    </section>
+    <!-- Right Widget -->
+    <section class="performance-widget">
+      <div class="widget-header">HOW TESTDRILLER UTME CHALLENGE HELP USERS</div>
+      <div class="widget-user">
+        <span class="user-name">Nwaokebuogor Emmanuel A.</span>
+        <span class="user-id">10028685EH</span>
+      </div>
+      <div class="widget-scores">
+        <div class="score-bar">
+          <span class="score-label">TESTDRILLER UTME CHALLENGE SCORE</span>
+          <span class="score-value score-blue">329</span>
+        </div>
+        <div class="score-bar">
+          <span class="score-label">JAMB SCORE</span>
+          <span class="score-value score-orange">325</span>
+        </div>
+      </div>
+      <div class="widget-footer">Private Practice Predicts Public Performance</div>
+    </section>
+  </main>
+
+  <!-- Quiz Banner -->
+  <div class="info-banner">
+    <span>What world capital city is heated by volcanic springs</span>
+    <span class="info-answer">Answer: Reykjavik (Iceland)</span>
+  </div>
+
+  <!-- Chat Widget -->
+  <button class="chat-btn" id="chatBtn">Chat with Clara</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
