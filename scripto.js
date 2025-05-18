@@ -15342,7 +15342,7 @@ Botany: {
     explanation: "A) The most accurate distinction is that aggregate fruits develop from a single flower containing multiple separate ovaries, while multiple fruits are formed from the fusion of ovaries from multiple flowers (an inflorescence).  B) Both can be fleshy or dry. C) Both can have many seeds. D) Aggregate fruits develop from single carpel while multiple fruits are formed from multiple flowers in an inflorescence."
   },
   {
-    text: "In a drupe, which layer of the pericarp forms the hard \"stone\" that encloses the seed?",
+    text: "In a drupe, which layer of the pericarp forms the hard stone that encloses the seed?",
     options: ["Exocarp", "Mesocarp", "Endocarp", "Epicarp"],
     correct: 2,
     explanation: "C) In a drupe, the endocarp is the hard, stony layer that directly surrounds and encloses the seed. A) The exocarp is the outermost skin, B) the mesocarp is the fleshy middle layer, and D) Epicarp is another term for Exocarp."
@@ -15364,85 +15364,7 @@ Botany: {
     correct: 1,
     explanation: "B) The edible portion of an apple is primarily derived from the receptacle, which expands and becomes fleshy. The ovary forms the core containing the seeds, making apple an accessory fruit."
   },
-  {
-    text: "Which of the following is NOT a characteristic of a berry?",
-    options: [
-      "Develops from a single ovary",
-      "Contains multiple seeds",
-      "Has a fleshy pericarp",
-      "Has a stony endocarp"
-    ],
-    correct: 3,
-    explanation: "D) Having a stony endocarp is NOT a characteristic of a berry. That is the defining characteristic of a drupe. Berries A) develop from a single ovary, B) typically contain multiple seeds, and C) have a fleshy pericarp."
-  },
-  {
-    text: "What is the primary function of the pericarp?",
-    options: [
-      "Attracting pollinators",
-      "Protecting the seed",
-      "Providing nutrients to the developing embryo",
-      "Facilitating seed dispersal"
-    ],
-    correct: 1,
-    explanation: "B) The primary function of the pericarp is to protect the developing seed. While it can also play a role in D) facilitating seed dispersal, its primary function is protection. A) Pollinators are involved with flower, not fruit, and C) Nutrients are supplied by plant."
-  },
-  {
-    text: "A fruit that develops from a single carpel or several fused carpels in a single flower is classified as:",
-    options: ["Simple fruit", "Aggregate fruit", "Multiple fruit", "Accessory fruit"],
-    correct: 0,
-    explanation: "A) A simple fruit develops from a single carpel or several fused carpels within a single flower. B) An aggregate fruit comes from many ovaries. C) A multiple fruits comes from multiple flowers. D) An accessory fruit features additional plant parts like the receptacle."
-  },
-  {
-    text: "Which of the following best describes the exocarp?",
-    options: [
-      "The innermost layer of the pericarp",
-      "The fleshy, middle layer of the pericarp",
-      "The outermost layer of the pericarp, often the skin",
-      "The layer that directly surrounds the seed"
-    ],
-    correct: 2,
-    explanation: "C) The exocarp is the outermost layer of the pericarp, often referred to as the skin or rind of the fruit. A) The innermost layer of pericarp is the endocarp, B) the fleshy, middle layer is the mesocarp and D) this is the seed coat."
-  },
-  {
-    text: "Which of these fruits is derived from an entire inflorescence?",
-    options: ["Raspberry", "Pineapple", "Peach", "Tomato"],
-    correct: 1,
-    explanation: "B) Pineapple is a classic example of a multiple fruit derived from an entire inflorescence, the fused ovaries of many flowers. Raspberry is an aggregate fruit, and peach and tomato are simple fruits."
-  },
-  {
-    text: "In fruit development, what is the primary distinction between a pepo and a berry?",
-    options: [
-      "Pepos develop from superior ovaries, while berries develop from inferior ovaries.",
-      "Pepos have a hardened exocarp, while berries have a fleshy pericarp throughout.",
-      "Pepos are always indehiscent, while berries are always dehiscent.",
-      "Pepos develop from multiple carpels, while berries develop from a single carpel."
-    ],
-    correct: 1,
-    explanation: "B) The key distinction is that pepos have a hardened exocarp (rind), while berries have a fleshy pericarp throughout.  A) Both pepos and berries typically develop from inferior ovaries. C) Both are indehiscent. D) Both usually develop from multiple carpels."
-  },
-  {
-    text: "Which of the following structures is NOT a part of the pericarp?",
-    options: ["Exocarp", "Mesocarp", "Endocarp", "Seed coat"],
-    correct: 3,
-    explanation: "D) The seed coat is not part of the pericarp. The pericarp is the fruit wall, derived from the ovary wall, and is composed of three layers: A) the exocarp (outer layer), B) the mesocarp (middle layer), and C) the endocarp (inner layer)."
-  },
-  {
-    text: "A fruit is classified as an accessory fruit when:",
-    options: [
-      "It develops from multiple ovaries within a single flower.",
-      "It develops from the fusion of multiple flowers.",
-      "A significant portion of the fruit is derived from tissues other than the ovary.",
-      "It has a dry, dehiscent pericarp."
-    ],
-    correct: 2,
-    explanation: "C) Accessory fruits are those in which a significant portion of the fruit is derived from tissues other than the ovary, such as the receptacle or hypanthium.  A) That describes aggregate fruits. B) That describes multiple fruits. D) Accessory fruits can be fleshy or dry and have various dehiscence patterns."
-  },
-  {
-    text: "What is the developmental origin of the fleshy part of a strawberry?",
-    options: ["Ovary wall", "Receptacle", "Hypanthium", "Calyx"],
-    correct: 1,
-    explanation: "B) The fleshy part of a strawberry is primarily derived from the receptacle, the expanded end of the flower stalk. The tiny 'seeds' on the surface are actually achenes, each containing a single seed and derived from one of the many ovaries of the flower."
-  },
+
   {
     text: "Which of the following fruits is most likely to have originated from an inferior ovary?",
     options: ["Cherry", "Apple", "Grape", "Peach"],
@@ -15450,7 +15372,7 @@ Botany: {
     explanation: "B) Apples are well-known for originating from an inferior ovary, where the other flower parts fuse with the ovary. Cherries (A), Grapes (C), and Peaches (D) generally develop from superior ovaries."
   },
   {
-    text: "The term "indehiscent" refers to a fruit that:",
+    text: "The term indehiscent refers to a fruit that:",
     options: [
       "Splits open to release its seeds",
       "Remains closed at maturity",
@@ -15577,7 +15499,7 @@ Botany: {
     explanation: "C) Legumes develop from a monocarpellary pistil (a single carpel) and characteristically split open along both the dorsal and ventral sutures. A) It is not formed from a bicarpellary pistil. B) It dehisces along both sutures. D) It is a dehiscent fruit, not indehiscent."
   },
   {
-    text: "Which of the following best describes a \"true berry\" as opposed to other types of berries?",
+    text: "Which of the following best describes a true berry as opposed to other types of berries?",
     options: [
       "It always has a hard exocarp.",
       "It originates from a superior or inferior ovary and has merged thalamus and pericarp.",
