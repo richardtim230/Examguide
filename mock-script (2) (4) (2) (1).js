@@ -2130,7 +2130,7 @@ const questionBanks = {
 "PHY106":[
     {
   text: "What is the magnification of this concave mirror setup?",
-  image: "https://example.com/images/concave_mirror_diagram.png",
+  image: "Screenshot_20250515-102706~3.png",
   options: ["-0.67", "-1.67", "0.67", "1.67", "-2.5"],
   correct: 0,
   explanation: "..."
@@ -23290,7 +23290,8 @@ function formatText(rawText) {
   return rawText
     .replace(/\\\\n/g, '<br>')       // escape line breaks
     .replace(/\\n/g, '<br>')
-    .replace(/\\\\/g, '\\')          // double-escaped backslashes
+    .replace(/\\\\/g, '\\')
+    .replace(/\/g, '\\')// double-escaped backslashes
     .replace(/\n/g, '<br>');
         }
         
