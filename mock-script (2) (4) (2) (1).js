@@ -23354,104 +23354,53 @@ document.addEventListener("DOMContentLoaded", function() {
     downloadPDFBtn.addEventListener('click', generatePDF);
   }
 });
-document.getElementById('downloadPDF').addEventListener('click', generatePdf);
 
-function generatePdf() {
-    const { jsPDF } = window.jspdf;
-    const pdfDoc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'pt',
-        format: 'a4'
+function generatePDF() {
+  const resultsElement = document.getElementById("results-section");
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous User" };
+  const now = new Date().toLocaleString();
+
+  // Inject metadata
+  document.getElementById("pdf-meta").innerHTML = `Candidate: ${currentUser.fullName}`;
+  document.getElementById("pdf-date").innerText = now;
+
+  const clone = resultsElement.cloneNode(true);
+  clone.classList.remove("hidden");
+
+  document.body.appendChild(clone);
+
+  // Add pagination manually using html2pdf
+  html2pdf()
+    .set({
+      margin: 0.5,
+      filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+    })
+    .from(clone)
+    .toPdf()
+    .get('pdf')
+    .then(pdf => {
+      const totalPages = pdf.internal.getNumberOfPages();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(9);
+        pdf.setTextColor(150);
+        pdf.text(`Page ${i} of ${totalPages}`, pageWidth - 50, pageHeight - 10);
+      }
+    })
+    .save()
+    .then(() => {
+      document.body.removeChild(clone);
     });
-
-    // Styling constants
-    const lineHeight = 16;
-    const margin = 40;
-    const maxWidth = pdfDoc.internal.pageSize.width - 2 * margin;
-    const pageWidth = pdfDoc.internal.pageSize.width;
-    const pageHeight = pdfDoc.internal.pageSize.height;
-    let y = margin;
-
-    // Function to add centered text
-    function addCenteredText(text, fontSize = 14, fontStyle = 'normal', textColor = [0, 0, 0], yOffset = 0) {
-        pdfDoc.setFontSize(fontSize);
-        pdfDoc.setFont("helvetica", fontStyle);
-        pdfDoc.setTextColor(...textColor);
-        const textWidth = pdfDoc.getTextWidth(text);
-        pdfDoc.text(text, (pageWidth - textWidth) / 2, y + yOffset);
-        return y + yOffset + lineHeight;
-    }
-
-    // Function to add text with wrapping
-    function addText(text, x, y, fontSize = 12, fontStyle = 'normal', textColor = [0, 0, 0]) {
-        pdfDoc.setFontSize(fontSize);
-        pdfDoc.setFont("helvetica", fontStyle);
-        pdfDoc.setTextColor(...textColor);
-        const lines = pdfDoc.splitTextToSize(text, maxWidth);
-        lines.forEach(line => {
-            if (y > pageHeight - margin) {
-                pdfDoc.addPage();
-                y = margin;
-            }
-            pdfDoc.text(line, x, y);
-            y += lineHeight;
-        });
-        return y;
-    }
-
-    // Add a gradient-styled header
-    pdfDoc.setFillColor(0, 102, 204); // Deep blue background
-    pdfDoc.rect(0, 0, pageWidth, 70, "F"); // Gradient header box
-    pdfDoc.setTextColor(255, 255, 255); // White text
-    y = addCenteredText("OAU-IFE EXAMS", 20, 'bold', [255, 255, 255], 30);
-    y = addCenteredText("Exam Results", 16, 'normal', [255, 255, 255], 10);
-    y += 20;
-
-    // Add user details section with a styled box
-    pdfDoc.setFillColor(240, 240, 240); // Light gray background
-    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F"); // Rounded box
-    y = addCenteredText("User Details", 14, 'bold', [0, 0, 0], 10);
-    const userDetails = document.getElementById('user-details').innerText;
-    y = addText(userDetails, margin + 10, y, 12, 'normal', [0, 0, 0]);
-    y += 20;
-
-    // Add exam details section with padding
-    pdfDoc.setFillColor(240, 240, 240);
-    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F");
-    y = addCenteredText("Exam Details", 14, 'bold', [0, 0, 0], 10);
-    const examTitle = document.getElementById('exam-title').innerText;
-    y = addText(examTitle, margin + 10, y);
-
-    y += 20;
-
-    // Exam results summary section
-    pdfDoc.setFillColor(230, 230, 230);
-    pdfDoc.roundedRect(margin, y, maxWidth, 50, 8, 8, "F");
-    y = addCenteredText("Exam Result Summary", 14, 'bold', [0, 0, 0], 10);
-    const resultsSummary = document.getElementById('results-summary').innerText;
-    y = addText(resultsSummary, margin + 10, y);
-
-    y += 20;
-
-    // Detailed Exam Results section
-    pdfDoc.setFillColor(240, 240, 240);
-    pdfDoc.roundedRect(margin, y, maxWidth, 80, 8, 8, "F");
-    y = addCenteredText("Detailed Exam Results", 14, 'bold', [255, 0, 0], 10);
-    const resultsContent = document.getElementById('results-content').innerText;
-    y = addText(resultsContent, margin + 10, y);
-
-    y += 20;
-
-    // Footer
-    pdfDoc.setFillColor(0, 102, 204);
-    pdfDoc.rect(0, pageHeight - 40, pageWidth, 40, "F");
-    pdfDoc.setTextColor(255, 255, 255);
-    pdfDoc.setFontSize(10);
-    pdfDoc.text("Generated by OAU-IFE Exams System", pageWidth / 2 - 70, pageHeight - 15);
-
-    // Save the PDF
-    pdfDoc.save('ExamResults.pdf');
 }
+
+        
 
     
     
