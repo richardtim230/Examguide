@@ -10525,20 +10525,20 @@ function allocateUsersToExams(users, exams) {
 
 // Define the list of predefined exams with department and part assignments
 const exams = [
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Agricultural Economics", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Family Nutrition and Consumer Science", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Zoology", part: "100" },
-    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Chemistry", part: "100" },
-    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Physics and Engineering Physics", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Microbiology", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Botany", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Biochemistry and Molecular Biology", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Geology", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Dean's Office (Pharmacy)", part: "100" },
-    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Zoology", part: "200" },
-    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Mathematics", part: "100" },
-        { id: "PHY106", title: "PHY106 MOCK TEST", department: "Agricultural Economics", part: "100" },
-    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Industrial Chemistry", part: "100" }
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Agricul tural Economics", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Family Nutr ition and Consumer Science", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Zoolo gy", part: "100" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Chemis try", part: "100" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Physics and Engineer ing Physics", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Micro biology", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Botany ", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Bioch emistry and Molecular Biology", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Geol ogy", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Dean 's Office (Pharmacy)", part: "100" },
+    { id: "PHY106", title: "PHY106 MOCK TEST", department: "Zoolo gy", part: "200" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Mathema tics", part: "100" },
+        { id: "PHY106", title: "PHY106 MOCK TEST", department: "Agricu ltural Economics", part: "100" },
+    { id: "PHY106", title: "PHY102 MOCK TEST", department: "Indust rial Chemistry", part: "100" }
 
     
 ];
@@ -23359,29 +23359,33 @@ async function generatePDF() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous" };
   const now = new Date().toLocaleString();
 
-  const original = document.getElementById("results-section");
-
-  // Inject metadata
+  // Prepare metadata
   document.getElementById("pdf-meta").innerText = `Candidate: ${currentUser.fullName} | Date: ${now}`;
 
-  // Clone and show
-  const clone = original.cloneNode(true);
+  const resultsSection = document.getElementById("results-section");
+
+  // Clone the results-section content
+  const clone = resultsSection.cloneNode(true);
   clone.classList.remove("hidden");
-  clone.style.position = "relative";
-  clone.style.zIndex = "1000"; // On top of watermark
+  clone.style.position = "static"; // Ensure it's fully visible
+  clone.style.zIndex = "9999";
+  clone.style.maxWidth = "800px";
+  clone.style.margin = "0 auto";
+  clone.style.background = "#fff";
+  clone.id = "pdf-clone";
 
   document.body.appendChild(clone);
 
-  // Re-render MathJax in the clone
-  await new Promise((resolve) => {
+  // Wait for MathJax to finish rendering (especially subscripts/superscripts)
+  await new Promise(resolve => {
     if (window.MathJax && typeof MathJax.typesetPromise === "function") {
-      MathJax.typesetPromise([clone]).then(resolve);
+      MathJax.typesetPromise([clone]).then(resolve).catch(resolve);
     } else {
       resolve();
     }
   });
 
-  // Wait a moment to ensure rendering (especially for images/MathJax)
+  // Generate and style PDF
   setTimeout(() => {
     html2pdf()
       .set({
@@ -23395,13 +23399,13 @@ async function generatePDF() {
       .toPdf()
       .get("pdf")
       .then((pdf) => {
-        const pageCount = pdf.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
           pdf.setPage(i);
           pdf.setFontSize(10);
-          pdf.setTextColor(150);
+          pdf.setTextColor(120);
           pdf.text(
-            `Page ${i} of ${pageCount}`,
+            `Page ${i} of ${totalPages}`,
             pdf.internal.pageSize.getWidth() - 50,
             pdf.internal.pageSize.getHeight() - 10
           );
@@ -23411,7 +23415,7 @@ async function generatePDF() {
       .then(() => {
         document.body.removeChild(clone);
       });
-  }, 500); // Delay to ensure DOM settles
+  }, 500);
 }
 
 // Handle Retake Exam Button
