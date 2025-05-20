@@ -2128,7 +2128,14 @@ const questionBanks = {
 ],
 
 "PHY106":[
-    
+    {
+  text: "What is the magnification of this concave mirror setup?",
+  image: "https://example.com/images/concave_mirror_diagram.png",
+  options: ["-0.67", "-1.67", "0.67", "1.67", "-2.5"],
+  correct: 0,
+  explanation: "..."
+    },
+              
         {
           text: "According to Coulomb's Law, how does the electrostatic force between two charged objects change if the distance between them is doubled?",
           options: ["The force is doubled.", "The force is halved.", "The force is quadrupled.", "The force is reduced to one-fourth.", "The force remains the same."],
@@ -23080,41 +23087,49 @@ function renderMarkdownMathSafe(rawText) {
 
 
 function loadQuestion() {
-  if (questions.length === 0) {
+  if (!questions || questions.length === 0) {
     alert("No questions available to load.");
     return;
   }
 
   const question = questions[currentQuestionIndex];
 
-  // Render Question Text with Markdown + Math support
-  questionTitle.innerHTML = `
-    ${currentQuestionIndex + 1}. ${renderMarkdownMathSafe(question.text)}
+  // Render the question text
+  let questionHtml = `
+    <div class="question-number">${currentQuestionIndex + 1}.</div>
+    <div class="question-text">${renderMarkdownMathSafe(question.text)}</div>
   `;
 
-  // Render Options safely with Markdown + Math
-  answerOptions.innerHTML = question.options
-    .map((option, index) => `
-      <button class="answer-btn" onclick="selectAnswer(${index}, this)">
+  // If image is provided, include it
+  if (question.image) {
+    questionHtml += `
+      <div class="question-image">
+        <img src="${question.image}" alt="Question image" style="max-width: 100%; margin-top: 10px; border-radius: 8px;" />
+      </div>
+    `;
+  }
+
+  questionTitle.innerHTML = questionHtml;
+
+  // Render options
+  answerOptions.innerHTML = question.options.map((option, index) => {
+    const isSelected = userAnswers[currentQuestionIndex] === index;
+    return `
+      <button class="answer-btn ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${index}, this)">
         ${renderMarkdownMathSafe(option)}
       </button>
-    `)
-    .join("");
+    `;
+  }).join("");
 
-  highlightSelectedAnswer();
   updateButtons();
   updateProgressBar();
 
-  // Trigger MathJax after DOM update
-  if (window.MathJax) {
+  // Trigger MathJax rendering
+  if (window.MathJax && typeof MathJax.typeset === "function") {
     MathJax.typeset();
   }
 }
 
-// Shuffle questions randomly
-function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
   
 
 
