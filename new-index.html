@@ -32,7 +32,7 @@
 <script>
   window.MathJax = {
     tex: {
-      inlineMath: [['\\(', '\\)']],
+      inlineMath: [['\\(', '\\)']], [['\(', '\)']], 
       displayMath: [['\\[', '\\]'], ['$$', '$$']]
     },
     svg: { fontCache: 'global' }
@@ -53,7 +53,14 @@
     smartlook('init', '424bfe466de56c64d867be2f4112259c1c07021b', { region: 'eu' });
     </script>
   <style>
-
+.question-image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 10px;
+  }
+  
     * {
     user-select: none;
     -webkit-user-select: none; /* Safari */
