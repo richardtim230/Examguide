@@ -23361,48 +23361,35 @@ function generatePDF() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous User" };
   const now = new Date().toLocaleString();
 
-  // Inject metadata
+  // Inject metadata into the visible DOM
   document.getElementById("pdf-meta").innerHTML = `Candidate: ${currentUser.fullName}`;
   document.getElementById("pdf-date").innerText = now;
 
+  // Clone and prepare the content
   const clone = resultsElement.cloneNode(true);
   clone.classList.remove("hidden");
-
   document.body.appendChild(clone);
 
-  // Add pagination manually using html2pdf
-  html2pdf()
-    .set({
-      margin: 0.5,
-      filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-    })
-    .from(clone)
-    .toPdf()
-    .get('pdf')
-    .then(pdf => {
-      const totalPages = pdf.internal.getNumberOfPages();
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
+  const opt = {
+    margin: 0.5,
+    filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+  };
 
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        pdf.setFontSize(9);
-        pdf.setTextColor(150);
-        pdf.text(`Page ${i} of ${totalPages}`, pageWidth - 50, pageHeight - 10);
-      }
-    })
-    .save()
-    .then(() => {
-      document.body.removeChild(clone);
-    });
+  html2pdf().set(opt).from(clone).toPdf().outputPdf('bloburl').then((pdfUrl) => {
+    // Create a link and trigger download manually
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = opt.filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    document.body.removeChild(clone); // Clean up the DOM
+  });
 }
 
-        
-
-    
     
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
