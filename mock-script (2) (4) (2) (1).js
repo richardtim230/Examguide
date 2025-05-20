@@ -2230,36 +2230,30 @@ const questionBanks = {
           correct: 3,
           explanation: "For a concave mirror, the nature of the image depends on the object's distance from the mirror relative to the focal length. When the object distance is greater than the focal length, the image formed is real and inverted. If the object distance is less than the focal length, the image is virtual, upright, and magnified."
         },
-        {
-          text: "An object is located 50 cm from a converging lens having a focal length of 15 cm. Which of the following is closest to the image distance?",
-          options: ["10.5 cm", "17.6 cm", "21.4 cm", "30.0 cm", "8.57 cm"],
-          correct: 2,
-          explanation: "Given: <br> Object distance, \( p = 50 \) cm <br> Focal length, \( f = 15 \) cm <br> Using the lens equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{15} = \frac{1}{50} + \frac{1}{q} \] <br> \[ \frac{1}{q} = \frac{1}{15} - \frac{1}{50} \] <br> \[ \frac{1}{q} = \frac{10 - 3}{150} = \frac{7}{150} \] <br> \[ q = \frac{150}{7} \approx 21.4 \text{ cm} \] <br> The image distance is approximately 21.4 cm."
-        },
-        {
-          text: "A concave mirror has a focal length of 10 cm. An object is placed 25 cm from the mirror. What is the magnification of the image?",
-          options: ["-0.67", "-1.67", "0.67", "1.67", "-2.5"],
-          correct: 0,
-          explanation: "Given: <br> Focal length, \( f = 10 \) cm <br> Object distance, \( p = 25 \) cm <br> First, find the image distance \( q \) using the mirror equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{10} = \frac{1}{25} + \frac{1}{q} \] <br> \[ \frac{1}{q} = \frac{1}{10} - \frac{1}{25} \] <br> \[ \frac{1}{q} = \frac{5 - 2}{50} = \frac{3}{50} \] <br> \[ q = \frac{50}{3} \approx 16.67 \text{ cm} \] <br> Now, find the magnification \( M \): <br> \[ M = -\frac{q}{p} = -\frac{16.67}{25} \approx -0.67 \] <br> The magnification is approximately -0.67."
-        },
-        {
-          text: "A virtual image is formed 15 cm from a convex lens with a focal length of 30 cm. What is the object distance?",
-          options: ["10 cm", "15 cm", "20 cm", "30 cm", "45 cm"],
-          correct: 0,
-          explanation: "Given: <br> Focal length, \( f = 30 \) cm <br> Image distance, \( q = -15 \) cm (virtual image) <br> Using the lens equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{30} = \frac{1}{p} + \frac{1}{-15} \] <br> \[ \frac{1}{p} = \frac{1}{30} + \frac{1}{15} \] <br> \[ \frac{1}{p} = \frac{1 + 2}{30} = \frac{3}{30} = \frac{1}{10} \] <br> \[ p = 10 \text{ cm} \] <br> The object distance is 10 cm."
-        },
-        {
-          text: "An object is placed 20 cm from a concave lens with a focal length of 10 cm. What is the image distance?",
-          options: ["-6.67 cm", "6.67 cm", "-20 cm", "20 cm", "-30 cm"],
-          correct: 0,
-          explanation: "Given: <br> Object distance, \( p = 20 \) cm <br> Focal length, \( f = -10 \) cm (concave lens) <br> Using the lens equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{-10} = \frac{1}{20} + \frac{1}{q} \] <br> \[ \frac{1}{q} = \frac{1}{-10} - \frac{1}{20} \] <br> \[ \\frac{1}{q} = \\frac{-2 - 1}{20} = \\frac{-3}{20} \\] <br> \\[ q = \\frac{-20}{3} \\approx -6.67 \\text{ cm} \\] <br> The image distance is approximately -6.67 cm."
-        },
-        {
-          text: "A candle is placed 36 cm from a concave mirror with a focal length of 12 cm. Determine the image distance.",
-          options: ["18 cm", "24 cm", "36 cm", "48 cm", "12 cm"],
-          correct: 0,
-          explanation: "Given: <br> Object distance, \\( p = 36 \\) cm <br> Focal length, \\( f = 12 \\) cm <br> Using the mirror equation: <br> \\[ \\frac{1}{f} = \\frac{1}{p} + \\frac{1}{q} \\] <br> \\[ \\frac{1}{12} = \\frac{1}{36} + \\frac{1}{q} \\] <br> \\[ \frac{1}{q} = \\frac{1}{12} - \\frac{1}{36} \\] <br> \\[ \\frac{1}{q} = \\frac{3 - 1}{36} = \\frac{2}{36} = \\frac{1}{18} \\] <br> \\[ q = 18 \\text{ cm} \\] <br> The image distance is 18 cm."
-        },
+    {
+        text: "An object is located 50 cm from a converging lens having a focal length of 15 cm. Which of the following is closest to the image distance?",
+        options: ["10.5 cm", "17.6 cm", "21.4 cm", "30.0 cm", "8.57 cm"],
+        correct: 2,
+        explanation: "Given: <br> Object distance, \\\\( p = 50 \\\\) cm <br> Focal length, \\\\( f = 15 \\\\) cm <br> Using the lens equation: <br> \\\\[ \\\\frac{1}{f} = \\\\frac{1}{p} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{15} = \\\\frac{1}{50} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{q} = \\\\frac{1}{15} - \\\\frac{1}{50} \\\\] <br> \\\\[ \\\\frac{1}{q} = \\\\frac{10 - 3}{150} = \\\\frac{7}{150} \\\\] <br> \\\\[ q = \\\\frac{150}{7} \\\\approx 21.4 \\\\text{ cm} \\\\] <br> The image distance is approximately 21.4 cm."
+    },
+    {
+        text: "A concave mirror has a focal length of 10 cm. An object is placed 25 cm from the mirror. What is the magnification of the image?",
+        options: ["-0.67", "-1.67", "0.67", "1.67", "-2.5"],
+        correct: 0,
+        explanation: "Given: <br> Focal length, \\\\( f = 10 \\\\) cm <br> Object distance, \\\\( p = 25 \\\\) cm <br> First, find the image distance \\\\( q \\\\) using the mirror equation: <br> \\\\[ \\\\frac{1}{f} = \\\\frac{1}{p} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{10} = \\\\frac{1}{25} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{q} = \\\\frac{1}{10} - \\\\frac{1}{25} \\\\] <br> \\\\[ \\\\frac{1}{q} = \\\\frac{5 - 2}{50} = \\\\frac{3}{50} \\\\] <br> \\\\[ q = \\\\frac{50}{3} \\\\approx 16.67 \\\\text{ cm} \\\\] <br> Now, find the magnification \\\\( M \\\\): <br> \\\\[ M = -\\\\frac{q}{p} = -\\\\frac{16.67}{25} \\\\approx -0.67 \\\\] <br> The magnification is approximately -0.67."
+    },
+    {
+        text: "A virtual image is formed 15 cm from a convex lens with a focal length of 30 cm. What is the object distance?",
+        options: ["10 cm", "15 cm", "20 cm", "30 cm", "45 cm"],
+        correct: 0,
+        explanation: "Given: <br> Focal length, \\\\( f = 30 \\\\) cm <br> Image distance, \\\\( q = -15 \\\\) cm (virtual image) <br> Using the lens equation: <br> \\\\[ \\\\frac{1}{f} = \\\\frac{1}{p} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{30} = \\\\frac{1}{p} + \\\\frac{1}{-15} \\\\] <br> \\\\[ \\\\frac{1}{p} = \\\\frac{1}{30} + \\\\frac{1}{15} \\\\] <br> \\\\[ \\\\frac{1}{p} = \\\\frac{1 + 2}{30} = \\\\frac{3}{30} = \\\\frac{1}{10} \\\\] <br> \\\\[ p = 10 \\\\text{ cm} \\\\] <br> The object distance is 10 cm."
+    },
+    {
+        text: "An object is placed 20 cm from a concave lens with a focal length of 10 cm. What is the image distance?",
+        options: ["-6.67 cm", "6.67 cm", "-20 cm", "20 cm", "-30 cm"],
+        correct: 0,
+        explanation: "Given: <br> Object distance, \\\\( p = 20 \\\\) cm <br> Focal length, \\\\( f = -10 \\\\) cm (concave lens) <br> Using the lens equation: <br> \\\\[ \\\\frac{1}{f} = \\\\frac{1}{p} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{-10} = \\\\frac{1}{20} + \\\\frac{1}{q} \\\\] <br> \\\\[ \\\\frac{1}{q} = \\\\frac{1}{-10} - \\\\frac{1}{20} \\\\] <br> \\\\[ \\\\frac{1}{q} = \\\\frac{-2 - 1}{20} = \\\\frac{-3}{20} \\\\] <br> \\\\[ q = \\\\frac{-20}{3} \\\\approx -6.67 \\\\text{ cm} \\\\] <br> The image distance is approximately -6.67 cm."
+    },
         {
           text: "A proton is released at the origin in a constant electric field of 850 N/C acting in the positive x-direction. Find the change in the electric potential energy associated with the proton after it travels to x = 2.5 m.",
           options: ["\\(3.4 \\times 10^{-16}\\) J", "\\(-3.4 \\times 10^{-16}\\) J", "\\(2.5 \\times 10^{-16}\\) J", "\\(-2.5 \\times 10^{-16}\\) J", "\\(-1.6 \\times 10^{-19}\\) J"],
