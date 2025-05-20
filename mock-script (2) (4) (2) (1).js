@@ -23288,10 +23288,9 @@ function submitExam() {
      
 function formatText(rawText) {
   return rawText
-    .replace(/\\\\n/g, '<br>')       // escape line breaks
+    .replace(/\\\\n/g, '<br>')  // escape line breaks
     .replace(/\\n/g, '<br>')
     .replace(/\\\\/g, '\\')
-    .replace(/\/g, '\\')// double-escaped backslashes
     .replace(/\n/g, '<br>');
         }
         
