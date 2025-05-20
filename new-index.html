@@ -52,6 +52,8 @@
     })(document);
     smartlook('init', '424bfe466de56c64d867be2f4112259c1c07021b', { region: 'eu' });
     </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
   <style>
 .question-image img {
   display: block;
@@ -766,6 +768,43 @@
   position: center;
   background: #002147;
     }
+    /* Show only during PDF rendering */
+.pdf-header, .pdf-footer {
+  display: none;
+}
+
+@media print {
+  .pdf-header, .pdf-footer {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .pdf-logo {
+    width: 60px;
+    margin-bottom: 10px;
+  }
+
+  .results-actions {
+    display: none;
+  }
+}
+
+/* Watermark (light logo in background) */
+.results-section::before {
+  content: "";
+  background: url('images/university-logo.png') no-repeat center center;
+  background-size: 200px;
+  opacity: 0.05;
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+    }
+    
   </style>
 </head>
 <body>
@@ -936,6 +975,16 @@
         <button id="downloadPDF" class="pdf-btn">Download Results as PDF</button>
         <button id="retakeExamBtn" class="styled-btn">Retake or Take Another Exam</button>
     </div>
+  <div class="pdf-header">
+  <img src="images/university-logo.png" class="pdf-logo" alt="Logo" />
+  <h1>Exam Performance Report</h1>
+  <p id="pdf-meta"></p>
+</div>
+
+<div class="pdf-footer">
+  <p>© DE-BRAINSTORMERS TUTORIALS — Generated on <span id="pdf-date"></span></p>
+  </div>
+                
 </div>
   <!-- Faculties Section -->
 <div id="faculties-section" class="container hidden">
