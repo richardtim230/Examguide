@@ -2252,13 +2252,13 @@ const questionBanks = {
           text: "An object is placed 20 cm from a concave lens with a focal length of 10 cm. What is the image distance?",
           options: ["-6.67 cm", "6.67 cm", "-20 cm", "20 cm", "-30 cm"],
           correct: 0,
-          explanation: "Given: <br> Object distance, \( p = 20 \) cm <br> Focal length, \( f = -10 \) cm (concave lens) <br> Using the lens equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{-10} = \frac{1}{20} + \frac{1}{q} \] <br> \[ \frac{1}{q} = \frac{1}{-10} - \frac{1}{20} \] <br> \[ \frac{1}{q} = \frac{-2 - 1}{20} = \frac{-3}{20} \] <br> \[ q = \frac{-20}{3} \approx -6.67 \text{ cm} \] <br> The image distance is approximately -6.67 cm."
+          explanation: "Given: <br> Object distance, \( p = 20 \) cm <br> Focal length, \( f = -10 \) cm (concave lens) <br> Using the lens equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{-10} = \frac{1}{20} + \frac{1}{q} \] <br> \[ \frac{1}{q} = \frac{1}{-10} - \frac{1}{20} \] <br> \[ \\frac{1}{q} = \\frac{-2 - 1}{20} = \\frac{-3}{20} \\] <br> \\[ q = \\frac{-20}{3} \\approx -6.67 \\text{ cm} \\] <br> The image distance is approximately -6.67 cm."
         },
         {
           text: "A candle is placed 36 cm from a concave mirror with a focal length of 12 cm. Determine the image distance.",
           options: ["18 cm", "24 cm", "36 cm", "48 cm", "12 cm"],
           correct: 0,
-          explanation: "Given: <br> Object distance, \( p = 36 \) cm <br> Focal length, \( f = 12 \) cm <br> Using the mirror equation: <br> \[ \frac{1}{f} = \frac{1}{p} + \frac{1}{q} \] <br> \[ \frac{1}{12} = \frac{1}{36} + \frac{1}{q} \] <br> \[ \frac{1}{q} = \frac{1}{12} - \frac{1}{36} \] <br> \[ \frac{1}{q} = \frac{3 - 1}{36} = \frac{2}{36} = \frac{1}{18} \] <br> \[ q = 18 \text{ cm} \] <br> The image distance is 18 cm."
+          explanation: "Given: <br> Object distance, \\( p = 36 \\) cm <br> Focal length, \\( f = 12 \\) cm <br> Using the mirror equation: <br> \\[ \\frac{1}{f} = \\frac{1}{p} + \\frac{1}{q} \\] <br> \\[ \\frac{1}{12} = \\frac{1}{36} + \\frac{1}{q} \\] <br> \\[ \frac{1}{q} = \\frac{1}{12} - \\frac{1}{36} \\] <br> \\[ \\frac{1}{q} = \\frac{3 - 1}{36} = \\frac{2}{36} = \\frac{1}{18} \\] <br> \\[ q = 18 \\text{ cm} \\] <br> The image distance is 18 cm."
         },
         {
           text: "A proton is released at the origin in a constant electric field of 850 N/C acting in the positive x-direction. Find the change in the electric potential energy associated with the proton after it travels to x = 2.5 m.",
