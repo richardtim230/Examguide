@@ -23357,38 +23357,63 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function generatePDF() {
   const resultsElement = document.getElementById("results-section");
+  const spinnerOverlay = document.getElementById("spinner-overlay");
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous User" };
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous" };
   const now = new Date().toLocaleString();
+  document.getElementById("pdf-meta").innerText = `Candidate: ${currentUser.fullName} | Date: ${now}`;
 
-  // Inject metadata into the visible DOM
-  document.getElementById("pdf-meta").innerHTML = `Candidate: ${currentUser.fullName}`;
-  document.getElementById("pdf-date").innerText = now;
-
-  // Clone and prepare the content
+  // Clone and style
   const clone = resultsElement.cloneNode(true);
   clone.classList.remove("hidden");
+  clone.style.maxWidth = "800px";
+  clone.style.margin = "auto";
+  clone.style.boxShadow = "none";
+  clone.style.backgroundColor = "#fff";
+  clone.style.zIndex = "9999";
+  clone.style.position = "fixed";
+  clone.style.top = "0";
+  clone.style.left = "0";
+
   document.body.appendChild(clone);
+  spinnerOverlay.classList.remove("hidden");
 
-  const opt = {
-    margin: 0.5,
-    filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-  };
-
-  html2pdf().set(opt).from(clone).toPdf().outputPdf('bloburl').then((pdfUrl) => {
-    // Create a link and trigger download manually
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.download = opt.filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    document.body.removeChild(clone); // Clean up the DOM
-  });
+  // Wait for paint
+  setTimeout(() => {
+    try {
+      html2pdf()
+        .set({
+          margin: 0.5,
+          filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
+          image: { type: "jpeg", quality: 0.95 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+        })
+        .from(clone)
+        .toPdf()
+        .get('pdf')
+        .then(pdf => {
+          const pageCount = pdf.internal.getNumberOfPages();
+          for (let i = 1; i <= pageCount; i++) {
+            pdf.setPage(i);
+            pdf.setFontSize(10);
+            pdf.setTextColor(150);
+            pdf.text(`Page ${i} of ${pageCount}`, pdf.internal.pageSize.getWidth() - 50, pdf.internal.pageSize.getHeight() - 10);
+          }
+        })
+        .save()
+        .then(() => {
+          spinnerOverlay.classList.add("hidden");
+          document.body.removeChild(clone);
+        });
+    } catch (err) {
+      console.error("PDF generation failed", err);
+      spinnerOverlay.classList.add("hidden");
+      document.body.removeChild(clone);
+    }
+  }, 300);
 }
+
 
     
 // Handle Retake Exam Button
