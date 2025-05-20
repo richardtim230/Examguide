@@ -23356,57 +23356,62 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 async function generatePDF() {
-  const resultsElement = document.getElementById("results-section");
-  const spinnerOverlay = document.getElementById("spinner-overlay");
-
   const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous" };
   const now = new Date().toLocaleString();
+
+  const original = document.getElementById("results-section");
+
+  // Inject metadata
   document.getElementById("pdf-meta").innerText = `Candidate: ${currentUser.fullName} | Date: ${now}`;
 
-  // Clone and prepare
-  const clone = resultsElement.cloneNode(true);
+  // Clone and show
+  const clone = original.cloneNode(true);
   clone.classList.remove("hidden");
-  clone.id = "pdf-clone";
-  clone.style.position = "absolute";
-  clone.style.left = "-9999px"; // offscreen but still rendered
-  clone.style.width = "800px";
+  clone.style.position = "relative";
+  clone.style.zIndex = "1000"; // On top of watermark
+
   document.body.appendChild(clone);
 
-  // Show loading
-  spinnerOverlay.classList.remove("hidden");
-
-  try {
-    await new Promise(resolve => setTimeout(resolve, 300)); // wait for paint cycle
-
-    const opt = {
-      margin: 0.5,
-      filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, logging: false },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-    };
-
-    const worker = html2pdf().set(opt).from(clone);
-
-    const pdf = await worker.toPdf().get('pdf');
-
-    const pageCount = pdf.internal.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-      pdf.setPage(i);
-      pdf.setFontSize(10);
-      pdf.setTextColor(150);
-      pdf.text(`Page ${i} of ${pageCount}`, pdf.internal.pageSize.getWidth() - 50, pdf.internal.pageSize.getHeight() - 10);
+  // Re-render MathJax in the clone
+  await new Promise((resolve) => {
+    if (window.MathJax && typeof MathJax.typesetPromise === "function") {
+      MathJax.typesetPromise([clone]).then(resolve);
+    } else {
+      resolve();
     }
+  });
 
-    await pdf.save();
-
-  } catch (err) {
-    console.error("PDF generation error:", err);
-  } finally {
-    // Cleanup
-    spinnerOverlay.classList.add("hidden");
-    document.body.removeChild(clone);
-  }
+  // Wait a moment to ensure rendering (especially for images/MathJax)
+  setTimeout(() => {
+    html2pdf()
+      .set({
+        margin: 0.5,
+        filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+      })
+      .from(clone)
+      .toPdf()
+      .get("pdf")
+      .then((pdf) => {
+        const pageCount = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(10);
+          pdf.setTextColor(150);
+          pdf.text(
+            `Page ${i} of ${pageCount}`,
+            pdf.internal.pageSize.getWidth() - 50,
+            pdf.internal.pageSize.getHeight() - 10
+          );
+        }
+      })
+      .save()
+      .then(() => {
+        document.body.removeChild(clone);
+      });
+  }, 500); // Delay to ensure DOM settles
 }
 
 // Handle Retake Exam Button
