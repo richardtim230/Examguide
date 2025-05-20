@@ -23074,10 +23074,16 @@ document.getElementById('courseCode').value = '';
 
 
 function renderMarkdownMathSafe(rawText) {
-  // Parse Markdown to HTML using marked
-  const html = marked.parse(rawText || "");
-  return html;
+  const markdownHtml = marked.parse(rawText || "");
+
+  // Wrap unescaped math manually using RegEx (basic pattern)
+  const mathWrapped = markdownHtml.replace(/(\d+\.?\d*\s*\\times\s*10\^\{-?\d+\})/g, (match) => {
+    return `\\(${match}\\)`;
+  });
+
+  return mathWrapped;
 }
+
 
 function loadQuestion() {
   if (questions.length === 0) {
