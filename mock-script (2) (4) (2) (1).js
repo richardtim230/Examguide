@@ -23325,13 +23325,17 @@ resultsContent.innerHTML = questions.map((q, i) => {
 
   return `
     <div class="result-question">
-      <div class="question-text"><strong>${i + 1}.</strong> ${formatText(q.text)}</div>
+      <div class="question-text">
+        <strong>${i + 1}.</strong> ${formatText(q.text)}
+        ${q.image ? `<div class="question-image"><img src="${q.image}" alt="Question Image" style="max-width:100%; margin-top: 10px; border-radius: 8px;" /></div>` : ""}
+      </div>
       <div><strong>Your Answer:</strong> <span class="${resultClass}">${userAnswer}</span> - ${resultLabel}</div>
       <div><strong>Correct Answer:</strong> ${correctAnswer}</div>
       <div class="explanation"><strong>Explanation:</strong><br>${formatText(q.explanation)}</div>
     </div>
   `;
 }).join("");
+
 
 if (window.MathJax) MathJax.typeset();
 
