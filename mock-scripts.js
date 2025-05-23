@@ -24939,30 +24939,17 @@ document.getElementById('courseCode').value = '';
 
 
 
-function renderMarkdownMathSafe(rawText = "") {
-  // Step 1: Preserve existing LaTeX blocks (\[...\] and \(...\)) before Markdown parsing
-  const preservedMath = [];
-  const placeholder = '%%MATH%%';
+function renderMarkdownMathSafe(rawText) {
+  const markdownHtml = marked.parse(rawText || "");
 
-  const textWithPlaceholders = rawText.replace(/\\\[.*?\\\]|\\\(.*?\\\)/gs, match => {
-    preservedMath.push(match);
-    return placeholder;
+  // Wrap unescaped math manually using RegEx (basic pattern)
+  const mathWrapped = markdownHtml.replace(/(\d+\.?\d*\s*\\times\s*10\^\{-?\d+\})/g, (match) => {
+    return `\\(${match}\\)`;
   });
 
-  // Step 2: Convert Markdown (bold, italics, etc.)
-  let html = marked.parse(textWithPlaceholders);
-
-  // Step 3: Restore LaTeX placeholders
-  html = html.replace(new RegExp(placeholder, 'g'), () => preservedMath.shift());
-
-  // Step 4: Wrap bare scientific notation that wasn't already wrapped
-  html = html.replace(
-    /(?<!\\)\b(\d+(\.\d+)?\s*\\times\s*10\^\{-?\d+\})\b/g,
-    match => `\\(${match}\\)`
-  );
-
-  return html;
+  return mathWrapped;
 }
+
 
 function loadQuestion() {
   if (!questions || questions.length === 0) {
@@ -24975,7 +24962,7 @@ function loadQuestion() {
   // Render the question text
   let questionHtml = `
     <div class="question-number">${currentQuestionIndex + 1}.</div>
-    <div class="question-text">${renderMarkdownMathSafe(question.text)}</div>
+    <div class="question-text">${formatText(question.text)}</div>
   `;
 
   // If image is provided, include it
