@@ -25261,6 +25261,7 @@ function submitExam() {
           <strong>${i + 1}.</strong> ${formatText(q.text)}
           ${q.image ? `<div class="question-image"><img src="${q.image}" alt="Question Image" style="max-width:100%; margin-top: 10px; border-radius: 8px;" /></div>` : ""}
         </div>
+
         <div><strong>Your Answer:</strong> <span class="${resultClass}">${userAnswer}</span> - ${resultLabel}</div>
         <div><strong>Correct Answer:</strong> ${correctAnswer}</div>
         <div><strong>Your Confidence:</strong> ${confidence} / 5</div>
@@ -25268,6 +25269,58 @@ function submitExam() {
       </div>
     `;
   }).join("");
+        
+// CONFIDENCE HEATMAP
+const heatmapCtx = document.getElementById('confidenceHeatmap').getContext('2d');
+const heatColors = userConfidence.map(val => {
+  if (val === undefined) return 'rgba(200,200,200,0.4)';
+  const green = Math.floor((val / 5) * 255);
+  return `rgba(${255 - green}, ${green}, 100, 0.8)`;
+});
+new Chart(heatmapCtx, {
+  type: 'bar',
+  data: {
+    labels: questions.map((_, i) => `Q${i + 1}`),
+    datasets: [{
+      label: 'Confidence',
+      data: userConfidence.map(v => v || 0),
+      backgroundColor: heatColors
+    }]
+  },
+  options: {
+    plugins: { title: { display: true, text: 'Confidence Heatmap' }},
+    scales: {
+      y: { min: 0, max: 5, title: { display: true, text: 'Confidence (1–5)' } }
+    }
+  }
+});
+
+// CONFIDENCE vs CORRECTNESS
+const barCtx = document.getElementById('confidenceBarChart').getContext('2d');
+new Chart(barCtx, {
+  type: 'bar',
+  data: {
+    labels: questions.map((_, i) => `Q${i + 1}`),
+    datasets: [
+      {
+        label: 'Confidence',
+        data: userConfidence.map(v => v || 0),
+        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+      },
+      {
+        label: 'Correct (1 = Correct, 0 = Wrong)',
+        data: questions.map((q, i) => (userAnswers[i] === q.correct ? 1 : 0)),
+        backgroundColor: 'rgba(75, 192, 192, 0.5)'
+      }
+    ]
+  },
+  options: {
+    plugins: { title: { display: true, text: 'Confidence vs Correctness' }},
+    scales: {
+      y: { min: 0, max: 5, title: { display: true, text: 'Value' } }
+    }
+  }
+});
 
   if (window.MathJax) MathJax.typeset();
 
