@@ -25200,71 +25200,76 @@ nextBtn.addEventListener("click", () => {
 submitBtn.addEventListener("click", submitExam);
 
 function submitExam() {
-  clearInterval(timerInterval); // Stop the timer
+  clearInterval(timerInterval);
   const endTime = Date.now();
-  const timeSpent = (endTime - startTime) / 1000; // Total time spent in seconds
+  const timeSpent = (endTime - startTime) / 1000;
   const avgTimePerQuestion = (timeSpent / questions.length).toFixed(2);
 
-  // Performance Report
-  const totalAnswered = userAnswers.filter(answer => answer !== undefined).length;
+  // Performance Stats
+  const totalAnswered = userAnswers.filter(a => a !== undefined).length;
   const totalNotAnswered = questions.length - totalAnswered;
   const totalCorrect = questions.filter((q, i) => userAnswers[i] === q.correct).length;
   const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
-     
-function formatText(rawText) {
-  return rawText
-    .replace(/\\\\n/g, '<br>')  // escape line breaks
-    .replace(/\\n/g, '<br>')
-    .replace(/\\\\/g, '\\')
-    .replace(/\n/g, '<br>');
-        }
-        
-  // Performance Summary
-   resultsSummary.innerHTML = `
-  <p><strong>Performance Report:</strong></p>
-  <p>Total Questions Answered: ${totalAnswered}</p>
-  <p>Total Questions Not Answered: ${totalNotAnswered}</p>
-  <p>Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)</p>
-  <p>Average Time Spent per Question: ${avgTimePerQuestion} seconds</p>
-`;
 
-// Results Content with LaTeX Rendering
-resultsContent.innerHTML = questions.map((q, i) => {
-  const userAnswerIdx = userAnswers[i];
-  const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
-  const correctAnswer = q.options[q.correct];
+  // Confidence Stats
+  const totalConfidence = userConfidence.reduce((sum, val) => sum + (val || 0), 0);
+  const avgConfidence = (totalConfidence / questions.length).toFixed(2);
 
-  let resultLabel = '';
-  let resultClass = '';
-
-  if (userAnswerIdx === undefined) {
-    resultLabel = "❌ Not Answered";
-    resultClass = "not-answered";
-  } else if (userAnswerIdx === q.correct) {
-    resultLabel = "✅ Correct";
-    resultClass = "correct";
-  } else {
-    resultLabel = "❌ Wrong";
-    resultClass = "wrong";
+  // Format Utility
+  function formatText(rawText) {
+    return rawText
+      .replace(/\\\\n/g, '<br>')
+      .replace(/\\n/g, '<br>')
+      .replace(/\\\\/g, '\\')
+      .replace(/\n/g, '<br>');
   }
 
-  return `
-    <div class="result-question">
-      <div class="question-text">
-        <strong>${i + 1}.</strong> ${formatText(q.text)}
-        ${q.image ? `<div class="question-image"><img src="${q.image}" alt="Question Image" style="max-width:100%; margin-top: 10px; border-radius: 8px;" /></div>` : ""}
-      </div>
-      <div><strong>Your Answer:</strong> <span class="${resultClass}">${userAnswer}</span> - ${resultLabel}</div>
-      <div><strong>Correct Answer:</strong> ${correctAnswer}</div>
-      <div class="explanation"><strong>Explanation:</strong><br>${formatText(q.explanation)}</div>
-    </div>
+  // Summary Overview
+  resultsSummary.innerHTML = `
+    <p><strong>Performance Report:</strong></p>
+    <p>Total Questions Answered: ${totalAnswered}</p>
+    <p>Total Questions Not Answered: ${totalNotAnswered}</p>
+    <p>Score: ${totalCorrect} / ${questions.length} (${scorePercent}%)</p>
+    <p>Average Time Spent per Question: ${avgTimePerQuestion} seconds</p>
+    <p>Average Confidence: ${avgConfidence} / 5</p>
   `;
-}).join("");
 
+  // Detailed Question Results
+  resultsContent.innerHTML = questions.map((q, i) => {
+    const userAnswerIdx = userAnswers[i];
+    const userAnswer = userAnswerIdx !== undefined ? q.options[userAnswerIdx] : "Not Answered";
+    const correctAnswer = q.options[q.correct];
+    const confidence = userConfidence[i] ?? 'Not Set';
 
-if (window.MathJax) MathJax.typeset();
+    let resultLabel = '';
+    let resultClass = '';
 
+    if (userAnswerIdx === undefined) {
+      resultLabel = "❌ Not Answered";
+      resultClass = "not-answered";
+    } else if (userAnswerIdx === q.correct) {
+      resultLabel = "✅ Correct";
+      resultClass = "correct";
+    } else {
+      resultLabel = "❌ Wrong";
+      resultClass = "wrong";
+    }
 
+    return `
+      <div class="result-question">
+        <div class="question-text">
+          <strong>${i + 1}.</strong> ${formatText(q.text)}
+          ${q.image ? `<div class="question-image"><img src="${q.image}" alt="Question Image" style="max-width:100%; margin-top: 10px; border-radius: 8px;" /></div>` : ""}
+        </div>
+        <div><strong>Your Answer:</strong> <span class="${resultClass}">${userAnswer}</span> - ${resultLabel}</div>
+        <div><strong>Correct Answer:</strong> ${correctAnswer}</div>
+        <div><strong>Your Confidence:</strong> ${confidence} / 5</div>
+        <div class="explanation"><strong>Explanation:</strong><br>${formatText(q.explanation)}</div>
+      </div>
+    `;
+  }).join("");
+
+  if (window.MathJax) MathJax.typeset();
 
   examSection.classList.add("hidden");
   resultsSection.classList.remove("hidden");
