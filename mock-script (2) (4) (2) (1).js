@@ -130,8 +130,7 @@ let selectedCourseCode = null;
 
 // Predefined question banks by course codes
 const questionBanks = {
-"CHM102-MKTST2024":
-[
+"CHM102-MKTST2024":[
   {
     text: "Identify the catalyst 'X' required for the following transformation:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH=CH}_2 + \\\\\\\\text{H}_2 \\\\\\\\xrightarrow{\\\\\\\\text{X}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 \\\\\\\\]",
     options: ["H₂SO₄", "NaOH", "Pd/C", "AlCl₃"],
@@ -923,13 +922,6 @@ const questionBanks = {
     options: ["AlCl₃", "H₂SO₄", "Pt or Pd", "NaOH"],
     correct: 2,
     explanation: "Catalytic hydrogenation of alkenes (addition of H₂) requires a metal catalyst, commonly platinum (Pt), palladium (Pd), or nickel (Ni). AlCl₃ and H₂SO₄ are common acid catalysts used in other reactions like Friedel-Crafts or hydration. NaOH is a strong base."
-  },
-  {
-    text: "What are the reactants required to synthesize ethyl acetate (CH₃COOCH₂CH₃) via Fischer esterification?",
-    options: ["Acetic acid and ethanol", "Ethanol and ethanoic acid", "Ethanal and ethanol", "Acetic acid and diethyl ether"],
-    correct: 0,
-    explanation: "Fischer esterification is the reaction between a carboxylic acid and an alcohol, catalyzed by an acid, to form an ester and water. Ethyl acetate is formed from acetic acid (CH₃COOH) and ethanol (CH₃CH₂OH). Option 1 and 2 are essentially the same reactants, just named differently. Option 1 uses common names, Option 2 uses IUPAC names. Let's check the options again. Option 1: Acetic acid and ethanol. Correct. Option 2: Ethanol and ethanoic acid. Ethanoic acid is the IUPAC name for acetic acid. So, Option 2 is also correct. This question has two correct answers. Let's assume the question intends to use common names as in Option 1. However, Option 2 is also chemically correct. This is a flawed question. Let's assume the question intends to test the common names association. Let's select Option 0 (Acetic acid and ethanol).
-Let's rephrase the question to avoid ambiguity."
   },
   {
     text: "Which pair of reactants, under acidic conditions, will yield ethyl acetate (CH₃COOCH₂CH₃)?",
