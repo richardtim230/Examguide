@@ -24948,6 +24948,27 @@ function renderMarkdownMathSafe(rawText) {
 
   return mathWrapped;
 }
+  return text
+    .replace(/\$\$([\s\S]*?)\$\$/g, (_, expr) => `\`\`\`\n$$${expr}$$$\n\`\`\``) // format block math in markdown
+    .replace(/\\\((.*?)\\\)/g, (_, expr) => `\\\\(${expr}\\\\)`); // escape inline
+}
+// Auto-wraps LaTeX expressions for MathJax rendering
+function autoWrapMath(text) {
+  // Preserve already formatted LaTeX blocks
+  text = text.replace(/\$\$([\s\S]*?)\$\$/g, '%%BLOCK_MATH%%$1%%BLOCK_MATH%%');
+  text = text.replace(/\\\((.*?)\\\)/g, '%%INLINE_MATH%%$1%%INLINE_MATH%%');
+
+  // Wrap patterns like (\frac{...}) with \( ... \)
+  text = text.replace(/\((\\[a-zA-Z]+{[^(){}]+})\)/g, (_, math) => `\\(${math}\\)`);
+
+  // Restore preserved blocks
+  text = text
+    .replace(/%%BLOCK_MATH%%([\s\S]*?)%%BLOCK_MATH%%/g, (_, math) => `$$${math}$$`)
+    .replace(/%%INLINE_MATH%%(.*?)%%INLINE_MATH%%/g, (_, math) => `\\(${math}\\)`);
+
+  return text;
+}
+
 
 
 function loadQuestion() {
@@ -24974,7 +24995,7 @@ function loadQuestion() {
   }
 
   questionTitle.innerHTML = questionHtml;
-
+const cleanText = autoWrapMath(text);
   // Render options
   answerOptions.innerHTML = question.options.map((option, index) => {
     const isSelected = userAnswers[currentQuestionIndex] === index;
@@ -25155,6 +25176,7 @@ function formatText(rawText) {
     .replace(/\\\\n/g, '<br>')  // escape line breaks
     .replace(/\\n/g, '<br>')
     .replace(/\\\\/g, '\\')
+    .replace(/\/g, '\\')
     .replace(/\n/g, '<br>');
         }
         
