@@ -24985,7 +24985,13 @@ function renderMarkdownMathSafe(rawText) {
 
   return mathWrapped;
 }
+const userConfidence = []; // Index matches currentQuestionIndex
 
+function updateConfidence(value) {
+  userConfidence[currentQuestionIndex] = parseInt(value, 10);
+  document.getElementById("confidence-value").innerText = value;
+      }
+      
 
 function loadQuestion() {
   if (!questions || questions.length === 0) {
@@ -25011,6 +25017,22 @@ let questionHtml = `
       </div>
     `;
   }
+// Load existing confidence or default to 3
+const currentConfidence = userConfidence[currentQuestionIndex] ?? 3;
+
+questionHtml += `
+  <div class="confidence-container">
+    <label for="confidence-slider">Confidence: <span id="confidence-value">${currentConfidence}</span>/5</label>
+    <input
+      type="range"
+      id="confidence-slider"
+      min="1"
+      max="5"
+      value="${currentConfidence}"
+      oninput="updateConfidence(this.value)"
+    />
+  </div>
+`;
 
   questionTitle.innerHTML = questionHtml;
 
