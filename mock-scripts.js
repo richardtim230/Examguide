@@ -24962,7 +24962,7 @@ function loadQuestion() {
   // Render the question text
   let questionHtml = `
     <div class="question-number">${currentQuestionIndex + 1}.</div>
-    <div class="question-text">${formatText(question.text)}</div>
+    <div class="question-text">${renderMarkdownMathSafe(question.text)}</div>
   `;
 
   // If image is provided, include it
