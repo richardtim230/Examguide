@@ -25332,33 +25332,43 @@ new Chart(barCtx, {
 
 
 
+
 function generatePDF() {
-  // Pause MathJax typeset if needed
-  if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
-    MathJax.typesetPromise().then(() => startPDF());
-  } else {
-    startPDF();
-  }
+  const wrapper = document.getElementById('resultsPDFWrapper');
+  const downloadBtn = document.getElementById("downloadPDF");
 
-  function startPDF() {
-    const element = document.getElementById('resultsPDFWrapper');
-    const opt = {
-      margin: 0.5,
-      filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true
-      },
-      jsPDF: {
-        unit: 'in',
-        format: 'a4',
-        orientation: 'portrait'
-      }
-    };
+  downloadBtn.style.display = "none";
+  const wasHidden = wrapper.classList.contains("hidden");
+  if (wasHidden) wrapper.classList.remove("hidden");
 
-    html2pdf().from(element).set(opt).save();
-  }
+  // Delay to allow DOM to update and MathJax to render
+  setTimeout(() => {
+    if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
+      MathJax.typesetPromise().then(() => {
+        html2pdf().from(wrapper).set({
+          margin: 0.5,
+          filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        }).save().then(() => {
+          if (wasHidden) wrapper.classList.add("hidden");
+          downloadBtn.style.display = "block";
+        });
+      });
+    } else {
+      html2pdf().from(wrapper).set({
+        margin: 0.5,
+        filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      }).save().then(() => {
+        if (wasHidden) wrapper.classList.add("hidden");
+        downloadBtn.style.display = "block";
+      });
+    }
+  }, 200);
 }
 
 
