@@ -12579,7 +12579,7 @@ document.getElementById("backToLoginBtn").addEventListener("click", () => {
 const students = [
 
     { "fullName": "Oladimeji Gbolahan Olaoluwa", "department": "Dean's Office (Pharmacy)", "part": "1", "matricNumber": "PHA/2007/110", "faculty": "Pharmacy" },
-    { "fullName": "Makinwa Abidemi Anthonia", "department": "Dean's Office (Pharmacy)", "part": "1", "matricNumber": "PHA/2010/070", "faculty": "Pharmacy" },
+    { "fullName": "Babatunde Ahmed Chukwudi", "department": "Dean's Office (Pharmacy)", "part": "100", "matricNumber": "PHA/2070/070", "faculty": "Pharmacy" },
     { "fullName": "Ibosiola Ayomide Enoch", "department": "Dean's Office (Pharmacy)", "part": "1", "matricNumber": "PHA/2011/065", "faculty": "Pharmacy" },
     { "fullName": "Ojelabi Jesujoba Akinyemi", "department": "Dean's Office (Pharmacy)", "part": "1", "matricNumber": "PHA/2013/089", "faculty": "Pharmacy" },
     { "fullName": "Adegbola Folake Weyinmi", "department": "Dean's Office (Pharmacy)", "part": "1", "matricNumber": "PHA/2014/010", "faculty": "Pharmacy" },
