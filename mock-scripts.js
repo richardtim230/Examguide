@@ -25334,42 +25334,43 @@ new Chart(barCtx, {
 
 
 function generatePDF() {
-  const wrapper = document.getElementById('resultsPDFWrapper');
   const downloadBtn = document.getElementById("downloadPDF");
+  const original = document.getElementById("resultsPDFWrapper");
 
-  downloadBtn.style.display = "none";
-  const wasHidden = wrapper.classList.contains("hidden");
-  if (wasHidden) wrapper.classList.remove("hidden");
+  // Create a visible clone
+  const cloned = original.cloneNode(true);
+  cloned.style.display = "block";
+  cloned.style.position = "absolute";
+  cloned.style.left = "-9999px"; // Move it offscreen but keep in flow
+  document.body.appendChild(cloned);
 
-  // Delay to allow DOM to update and MathJax to render
+  // Wait for MathJax and DOM update
   setTimeout(() => {
     if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
-      MathJax.typesetPromise().then(() => {
-        html2pdf().from(wrapper).set({
-          margin: 0.5,
-          filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-        }).save().then(() => {
-          if (wasHidden) wrapper.classList.add("hidden");
-          downloadBtn.style.display = "block";
-        });
-      });
+      MathJax.typesetPromise([cloned]).then(() => startPDF(cloned));
     } else {
-      html2pdf().from(wrapper).set({
-        margin: 0.5,
-        filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      }).save().then(() => {
-        if (wasHidden) wrapper.classList.add("hidden");
-        downloadBtn.style.display = "block";
-      });
+      startPDF(cloned);
     }
-  }, 200);
+  }, 100);
+
+  function startPDF(elementToPrint) {
+    html2pdf().from(elementToPrint).set({
+      margin: 0.5,
+      filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        logging: true
+      },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    }).save().then(() => {
+      document.body.removeChild(elementToPrint);
+      downloadBtn.style.display = "block";
+    });
+  }
 }
+
 
 
 // Handle Retake Exam Button
