@@ -24938,17 +24938,31 @@ document.getElementById('courseCode').value = '';
 }
 
 
-function renderMarkdownMathSafe(rawText) {
-  const markdownHtml = marked.parse(rawText || "");
 
-  // Wrap unescaped math manually using RegEx (basic pattern)
-  const mathWrapped = markdownHtml.replace(/(\d+\.?\d*\s*\\times\s*10\^\{-?\d+\})/g, (match) => {
-    return `\\(${match}\\)`;
+function renderMarkdownMathSafe(rawText = "") {
+  // Step 1: Preserve existing LaTeX blocks (\[...\] and \(...\)) before Markdown parsing
+  const preservedMath = [];
+  const placeholder = '%%MATH%%';
+
+  const textWithPlaceholders = rawText.replace(/\\\[.*?\\\]|\\\(.*?\\\)/gs, match => {
+    preservedMath.push(match);
+    return placeholder;
   });
 
-  return mathWrapped;
-}
+  // Step 2: Convert Markdown (bold, italics, etc.)
+  let html = marked.parse(textWithPlaceholders);
 
+  // Step 3: Restore LaTeX placeholders
+  html = html.replace(new RegExp(placeholder, 'g'), () => preservedMath.shift());
+
+  // Step 4: Wrap bare scientific notation that wasn't already wrapped
+  html = html.replace(
+    /(?<!\\)\b(\d+(\.\d+)?\s*\\times\s*10\^\{-?\d+\})\b/g,
+    match => `\\(${match}\\)`
+  );
+
+  return html;
+}
 
 function loadQuestion() {
   if (!questions || questions.length === 0) {
