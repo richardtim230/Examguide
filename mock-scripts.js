@@ -25330,76 +25330,37 @@ new Chart(barCtx, {
   downloadPDF.addEventListener("click", generatePDF);
 }
 
-// Ensure the document is fully loaded before attaching event listeners
-document.addEventListener("DOMContentLoaded", function() {
-  const downloadPDFBtn = document.getElementById('downloadPDF');
-  if (downloadPDFBtn) {
-    downloadPDFBtn.addEventListener('click', generatePDF);
+
+
+function generatePDF() {
+  // Pause MathJax typeset if needed
+  if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
+    MathJax.typesetPromise().then(() => startPDF());
+  } else {
+    startPDF();
   }
-});
 
-async function generatePDF() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { fullName: "Anonymous" };
-  const now = new Date().toLocaleString();
+  function startPDF() {
+    const element = document.getElementById('resultsPDFWrapper');
+    const opt = {
+      margin: 0.5,
+      filename: `Exam_Results_${new Date().toISOString().split('T')[0]}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: 'in',
+        format: 'a4',
+        orientation: 'portrait'
+      }
+    };
 
-  // Prepare metadata
-  document.getElementById("pdf-meta").innerText = `Candidate: ${currentUser.fullName} | Date: ${now}`;
-
-  const resultsSection = document.getElementById("results-section");
-
-  // Clone the results-section content
-  const clone = resultsSection.cloneNode(true);
-  clone.classList.remove("hidden");
-  clone.style.position = "static"; // Ensure it's fully visible
-  clone.style.zIndex = "9999";
-  clone.style.maxWidth = "800px";
-  clone.style.margin = "0 auto";
-  clone.style.background = "#fff";
-  clone.id = "pdf-clone";
-
-  document.body.appendChild(clone);
-
-  // Wait for MathJax to finish rendering (especially subscripts/superscripts)
-  await new Promise(resolve => {
-    if (window.MathJax && typeof MathJax.typesetPromise === "function") {
-      MathJax.typesetPromise([clone]).then(resolve).catch(resolve);
-    } else {
-      resolve();
-    }
-  });
-
-  // Generate and style PDF
-  setTimeout(() => {
-    html2pdf()
-      .set({
-        margin: 0.5,
-        filename: `Results_${currentUser.fullName.replace(/\s/g, "_")}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-      })
-      .from(clone)
-      .toPdf()
-      .get("pdf")
-      .then((pdf) => {
-        const totalPages = pdf.internal.getNumberOfPages();
-        for (let i = 1; i <= totalPages; i++) {
-          pdf.setPage(i);
-          pdf.setFontSize(10);
-          pdf.setTextColor(120);
-          pdf.text(
-            `Page ${i} of ${totalPages}`,
-            pdf.internal.pageSize.getWidth() - 50,
-            pdf.internal.pageSize.getHeight() - 10
-          );
-        }
-      })
-      .save()
-      .then(() => {
-        document.body.removeChild(clone);
-      });
-  }, 500);
+    html2pdf().from(element).set(opt).save();
+  }
 }
+
 
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
