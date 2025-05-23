@@ -24937,6 +24937,39 @@ document.getElementById('courseCode').value = '';
   examSection.classList.remove("hidden");
 }
 
+function playQuestionAudio() {
+  const question = questions[currentQuestionIndex];
+
+  // Strip LaTeX and clean text
+  let plainText = question.text
+    .replace(/\\\[.*?\\\]/gs, '')
+    .replace(/\\\(.*?\\\)/gs, '')
+    .replace(/\\text\{([^}]+)\}/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Add dramatic pauses and emphasis
+  plainText = `Now listen carefully... Question ${currentQuestionIndex + 1}. ${plainText}. Pay attention to the structure...`;
+
+  const utterance = new SpeechSynthesisUtterance(plainText);
+  utterance.lang = 'en-GB'; // British English sounds closer to Nigerian lecture style
+  utterance.pitch = 0.85;
+  utterance.rate = 0.85;
+  utterance.volume = 1;
+
+  // Pick a deeper male voice if available
+  const voices = speechSynthesis.getVoices();
+  const nigerianVibeVoice = voices.find(v =>
+    v.name.toLowerCase().includes('english') &&
+    v.name.toLowerCase().includes('male')
+  );
+  if (nigerianVibeVoice) {
+    utterance.voice = nigerianVibeVoice;
+  }
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utterance);
+}
 
 
 function renderMarkdownMathSafe(rawText) {
@@ -24960,11 +24993,13 @@ function loadQuestion() {
   const question = questions[currentQuestionIndex];
 
   // Render the question text
-  let questionHtml = `
-    <div class="question-number">${currentQuestionIndex + 1}.</div>
-    <div class="question-text">${renderMarkdownMathSafe(question.text)}</div>
-  `;
-
+  
+let questionHtml = `
+  <div class="question-number">${currentQuestionIndex + 1}.</div>
+  <div class="question-text">${renderMarkdownMathSafe(question.text)}</div>
+  <button class="audio-btn" onclick="playQuestionAudio()">🔊 Listen</button>
+`;
+      
   // If image is provided, include it
   if (question.image) {
     questionHtml += `
