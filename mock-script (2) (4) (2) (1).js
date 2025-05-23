@@ -25146,8 +25146,8 @@ function formatText(rawText) {
     .replace(/\\\\n/g, '<br>')  // escape line breaks
     .replace(/\\n/g, '<br>')
     .replace(/\\\\/g, '\\')
-    .replace(/\n/g, '<br>')
-    .replace(/\/g, '\\');
+    .replace(/\n/g, '<br>');
+    
         }
         
   // Performance Summary
