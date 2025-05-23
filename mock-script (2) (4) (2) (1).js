@@ -24948,13 +24948,13 @@ function loadQuestion() {
 
   const question = questions[currentQuestionIndex];
 
-  // Render the question text
+  // Build question HTML with formatted text
   let questionHtml = `
     <div class="question-number">${currentQuestionIndex + 1}.</div>
     <div class="question-text">${formatText(question.text)}</div>
   `;
 
-  // If image is provided, include it
+  // Include image if available
   if (question.image) {
     questionHtml += `
       <div class="question-image">
@@ -24962,17 +24962,16 @@ function loadQuestion() {
       </div>
     `;
   }
-questionTitle.innerHTML = questionHtml;
-  
-        
 
+  // Insert into DOM
+  questionTitle.innerHTML = questionHtml;
 
-  // Render options
+  // Render answer options
   answerOptions.innerHTML = question.options.map((option, index) => {
     const isSelected = userAnswers[currentQuestionIndex] === index;
     return `
       <button class="answer-btn ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${index}, this)">
-        ${renderMarkdownMathSafe(option)}
+        ${formatText(option)}
       </button>
     `;
   }).join("");
@@ -24980,11 +24979,12 @@ questionTitle.innerHTML = questionHtml;
   updateButtons();
   updateProgressBar();
 
-  // Trigger MathJax rendering
+  // Trigger MathJax
   if (window.MathJax && typeof MathJax.typeset === "function") {
     MathJax.typeset();
   }
 }
+
 
   
 
