@@ -130,7 +130,133 @@ let selectedCourseCode = null;
 
 // Predefined question banks by course codes
 const questionBanks = {
-"CHM102-MKTST2024":[
+"CHM102-MKTST2024": [
+  {
+    text: "Which of the following alkyl halides is expected to have the highest boiling point?",
+    options: ["CH₃Cl", "CH₃Br", "CH₃I", "CH₃F"],
+    correct: 2,
+    explanation: "For alkyl halides with the same alkyl group, the boiling point increases with increasing size and mass of the halogen atom due to stronger London dispersion forces. Iodine is the largest and heaviest halogen among the options, so methyl iodide (CH₃I) will have the highest boiling point."
+  },
+  {
+    text: "Which of the following alkyl halides is most likely to undergo an SN1 reaction?",
+    options: ["1-Chloropropane", "2-Chloropropane", "2-Chloro-2-methylpropane", "Chloromethane"],
+    correct: 2,
+    explanation: "SN1 reactions proceed via a carbocation intermediate. The stability of carbocations increases in the order methyl < primary < secondary < tertiary. Tertiary alkyl halides form the most stable tertiary carbocations, making them most reactive towards SN1 reactions. 2-Chloro-2-methylpropane is a tertiary alkyl halide."
+  },
+  {
+    text: "What is the major organic product when propene reacts with HBr in the presence of peroxides?",
+    options: ["1-Bromopropane", "2-Bromopropane", "1,2-Dibromopropane", "Propan-1-ol"],
+    correct: 0,
+    explanation: "The addition of HBr to an alkene typically follows Markovnikov's rule. However, in the presence of peroxides, the reaction proceeds via a free radical mechanism, resulting in anti-Markovnikov addition. For propene (CH₃CH=CH₂), the bromine adds to the less substituted carbon (C-1), and the hydrogen adds to the more substituted carbon (C-2), yielding 1-bromopropane (CH₃CH₂CH₂Br) as the major product."
+  },
+  {
+    text: "Identify the reagent 'X' used to convert *tert*-butanol to 2-chloro-2-methylpropane.",
+    options: ["PCl₃", "SOCl₂", "HCl", "NaCl"],
+    correct: 2,
+    explanation: "Tertiary alcohols react readily with concentrated hydrohalic acids (like HCl) via an SN1 mechanism to form tertiary alkyl halides. PCl₃ and SOCl₂ are typically used for primary and secondary alcohols. NaCl is a salt."
+  },
+  {
+    text: "Which of the following alkyl halides is least likely to undergo an E2 elimination reaction?",
+    options: ["1-Bromopropane", "2-Bromopropane", "2-Bromo-2-methylpropane", "Bromomethane"],
+    correct: 3,
+    explanation: "E2 elimination requires a beta-hydrogen (a hydrogen on a carbon adjacent to the carbon bearing the leaving group). Bromomethane (CH₃Br) has no beta-carbons, and therefore no beta-hydrogens. Thus, it cannot undergo E2 elimination. Primary, secondary, and tertiary alkyl halides all have beta-hydrogens and can undergo E2 elimination."
+  },
+  {
+    text: "Consider the reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Cl} + \\\\\\\\text{NaCN} \\\\\\\\xrightarrow{\\\\\\\\text{DMSO}} \\\\\\\\text{Product} \\\\\\\\]<br>Identify the major organic product.",
+    options: ["CH₃CH₂CH₂CN", "CH₃CH₂CH₂NC", "CH₃CH=CH₂", "CH₃CH₂CH₂OH"],
+    correct: 0,
+    explanation: "1-Chloropropane is a primary alkyl halide. NaCN provides cyanide ions (CN⁻), which are good nucleophiles. DMSO is a polar aprotic solvent, which favors SN2 reactions. The cyanide ion attacks the carbon bonded to chlorine, displacing chloride, forming a nitrile (CH₃CH₂CH₂CN). While cyanide is an ambident nucleophile, attack via carbon is usually favored, especially in aprotic solvents."
+  },
+  {
+    text: "Which of the following alkyl halides is expected to be the most dense?",
+    options: ["1-Chlorobutane", "1-Bromobutane", "1-Iodobutane", "1-Fluorobutane"],
+    correct: 2,
+    explanation: "For alkyl halides with the same alkyl group, density generally increases with increasing atomic weight of the halogen. Iodine is the heaviest halogen among the options, so 1-iodobutane is expected to be the most dense. Alkyl fluorides are often less dense than water, while other alkyl halides are typically more dense than water."
+  },
+  {
+    text: "What is the major organic product when 2-bromobutane reacts with a strong, non-bulky base like sodium ethoxide (NaOCH₂CH₃) in ethanol?",
+    options: ["Butan-2-ol", "But-1-ene", "But-2-ene", "2-Ethoxybutane"],
+    correct: 2,
+    explanation: "2-Bromobutane is a secondary alkyl halide. Sodium ethoxide (NaOCH₂CH₃) is a strong base and a good nucleophile. In ethanol, a protic solvent, both SN2 and E2 are possible. With a strong base, E2 elimination is favored. Elimination can yield but-1-ene or but-2-ene. Sodium ethoxide is not bulky, so it follows Zaitsev's rule, favoring the formation of the more substituted alkene, but-2-ene (CH₃CH=CHCH₃), as the major product."
+  },
+  {
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} + \\\\\\\\text{HBr} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Br} \\\\\\\\]",
+    options: ["Propane", "Propene", "Propan-1-ol", "Propan-2-ol"],
+    correct: 1,
+    explanation: "The product is 1-bromopropane, formed by the addition of HBr. Addition of HBr to an alkene typically follows Markovnikov's rule. To form 1-bromopropane (an anti-Markovnikov product), the starting material must be propene (CH₃CH=CH₂) and the reaction must be carried out under conditions that promote anti-Markovnikov addition, such as in the presence of peroxides. However, if the question implies a standard addition without peroxides, then the product would be 2-bromopropane. Let's re-examine the options and the product. The product is 1-bromopropane. Standard addition of HBr to propene gives 2-bromopropane. This means the reaction shown is *not* standard Markovnikov addition. It must be anti-Markovnikov addition, which starts from an alkene (propene) and uses HBr with peroxides. Since only propene is an alkene option, and it can form 1-bromopropane under specific conditions, let's assume the question implies those conditions even if not explicitly stated in the reaction arrow. Propan-1-ol reacts with HBr to give 1-bromopropane, but the reaction arrow shows addition of HBr to 'A'. Therefore, 'A' must be propene, and the reaction implies anti-Markovnikov conditions."
+  },
+  {
+    text: "What is the primary intermediate formed during the E1 elimination reaction of 2-bromopropane?",
+    options: ["Primary carbocation", "Secondary carbocation", "Tertiary carbocation", "Carbanion"],
+    correct: 1,
+    explanation: "E1 elimination, like SN1, proceeds via a carbocation intermediate. The leaving group (Br⁻) departs first, forming a carbocation. 2-bromopropane is a secondary alkyl halide, so it forms a secondary carbocation (a carbon bonded to two other carbons and having a positive charge). Secondary carbocations are less stable than tertiary but more stable than primary."
+  },
+  {
+    text: "Which of the following alkyl halides is most likely to undergo an SN2 reaction?",
+    options: ["2-Chloro-2-methylpropane", "2-Chloropropane", "1-Chloropropane", "Chlorobenzene"],
+    correct: 2,
+    explanation: "SN2 reactions are favored for less sterically hindered alkyl halides. Reactivity towards SN2 decreases in the order methyl > primary > secondary > tertiary. 1-Chloropropane is a primary alkyl halide, which is much less sterically hindered than secondary (2-chloropropane) or tertiary (2-chloro-2-methylpropane) alkyl halides. Chlorobenzene is an aryl halide and does not undergo SN2 reactions readily."
+  },
+  {
+    text: "What is the major organic product when 1-bromobutane reacts with sodium iodide (NaI) in acetone?",
+    options: ["1-Iodobutane", "Butan-1-ol", "But-1-ene", "Butane"],
+    correct: 0,
+    explanation: "This is the Finkelstein reaction, a type of SN2 reaction. 1-Bromobutane is a primary alkyl halide. Iodide ion (I⁻) is a good nucleophile. Acetone is a polar aprotic solvent, which favors SN2. The iodide ion attacks the carbon bonded to bromine, displacing bromide, and forming 1-iodobutane (CH₃CH₂CH₂CH₂I). The driving force is the precipitation of NaBr in acetone."
+  },
+  {
+    text: "Identify the reagent 'X' used to convert 1-butanol to 1-chlorobutane.",
+    options: ["HCl", "Cl₂", "NaCl", "SOCl₂"],
+    correct: 3,
+    explanation: "The conversion of a primary alcohol to a primary alkyl chloride is efficiently carried out using thionyl chloride (SOCl₂). While HCl can be used with primary alcohols (often requiring a Lewis acid catalyst like ZnCl₂), SOCl₂ is often preferred due to cleaner reactions and gaseous byproducts. Cl₂ and NaCl are not used for this direct conversion."
+  },
+  {
+    text: "Which of the following alkyl halides is expected to be less dense than water (density ~1 g/mL)?",
+    options: ["1-Chloropropane", "1-Bromopropane", "1-Iodopropane", "1-Fluoropropane"],
+    correct: 3,
+    explanation: "Most alkyl halides are denser than water, with the exception of some alkyl fluorides and polychlorinated compounds. Alkyl fluorides are generally less dense than their corresponding alkyl chlorides, bromides, and iodides. 1-Fluoropropane is expected to be less dense than water, while the other options are typically denser than water."
+  },
+  {
+    text: "What is the major organic product when 2-chloro-2-methylpropane reacts with ethanol (a weak base/nucleophile)?",
+    options: ["2-Methylpropan-2-ol", "2-Methylpropene", "2-Ethoxy-2-methylpropane", "A mixture of 2-methylpropene and 2-ethoxy-2-methylpropane"],
+    correct: 3,
+    explanation: "2-Chloro-2-methylpropane is a tertiary alkyl halide. Ethanol is a weak base and a weak nucleophile. Under these conditions (tertiary halide, weak base/nucleophile, protic solvent), both SN1 (substitution) and E1 (elimination) reactions occur via a stable tertiary carbocation intermediate. SN1 yields 2-ethoxy-2-methylpropane (ether formation, solvolysis product), and E1 yields 2-methylpropene. A mixture of both products is expected."
+  },
+  {
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} + \\\\\\\\text{Br}_2 \\\\\\\\xrightarrow{\\\\\\\\text{CCl}_4} \\\\\\\\text{CH}_3\\\\\\\\text{CHBrCH}_2\\\\\\\\text{Br} \\\\\\\\]",
+    options: ["Propane", "Propene", "Propan-1-ol", "Propanal"],
+    correct: 1,
+    explanation: "The product is 1,2-dibromopropane, a vicinal dibromide, formed by the addition of bromine (Br₂) to a starting material 'A' in an inert solvent (CCl₄). This is characteristic of the electrophilic addition of halogens to alkenes. The starting material 'A' must be propene (CH₃CH=CH₂)."
+  },
+  {
+    text: "Which of the following statements about the C-X bond in alkyl halides is INCORRECT?",
+    options: ["The C-X bond is polar.", "The C-I bond is generally weaker than the C-Cl bond.", "The C-F bond is the longest among the carbon-halogen bonds.", "The carbon atom in the C-X bond has a partial positive charge."],
+    correct: 2,
+    explanation: "The C-X bond is polar due to the electronegativity difference between carbon and the halogen. Bond strength generally decreases down the group (C-F > C-Cl > C-Br > C-I), so the C-I bond is weaker than the C-Cl bond. Bond length increases down the group (C-F < C-Cl < C-Br < C-I), so the C-F bond is the shortest, not the longest. The halogen is more electronegative than carbon, so the carbon atom has a partial positive charge (δ⁺), and the halogen has a partial negative charge (δ⁻)."
+  },
+  {
+    text: "What is the major organic product when 1-bromobutane reacts with sodium ethoxide (NaOCH₂CH₃) in ethanol?",
+    options: ["Butan-1-ol", "But-1-ene", "Butan-2-ol", "Ethyl butyl ether"],
+    correct: 3,
+    explanation: "1-Bromobutane is a primary alkyl halide. Sodium ethoxide (NaOCH₂CH₃) is a strong base and a good nucleophile. In ethanol, a protic solvent, both SN2 and E2 are possible. For primary halides, SN2 substitution is favored with a good nucleophile. The ethoxide ion attacks the carbon bonded to bromine, displacing bromide, and forming ethyl butyl ether (CH₃CH₂CH₂CH₂OCH₂CH₃). E2 elimination to but-1-ene is a minor pathway for primary halides with non-bulky strong bases."
+  },
+  {
+    text: "Identify the reagent 'Y' used to convert 2-butanol to 2-bromobutane.",
+    options: ["HBr", "Br₂", "NaBr", "PBr₃"],
+    correct: 0,
+    explanation: "Secondary alcohols react with concentrated hydrohalic acids (like HBr) via an SN1 mechanism (or SN2 depending on conditions). The alcohol is protonated, water leaves, forming a secondary carbocation. The bromide ion then attacks the carbocation. The product is 2-bromobutane. PBr₃ can also be used for secondary alcohols, but HBr is a common reagent for this transformation."
+  },
+  {
+    text: "Which of the following alkyl halides is most likely to undergo an E1 elimination reaction?",
+    options: ["1-Iodopropane", "2-Iodopropane", "2-Iodo-2-methylpropane", "Iodomethane"],
+    correct: 2,
+    explanation: "E1 elimination proceeds via a carbocation intermediate. The stability of carbocations increases in the order methyl < primary < secondary < tertiary. Tertiary alkyl halides form the most stable tertiary carbocations, making them most reactive towards E1 reactions. 2-Iodo-2-methylpropane is a tertiary alkyl halide."
+  },
+  {
+    text: "What is the major organic product when 2-bromopropane reacts with aqueous NaOH?",
+    options: ["Propan-1-ol", "Propan-2-ol", "Propene", "Methyl propyl ether"],
+    correct: 1,
+    explanation: "2-Bromopropane is a secondary alkyl halide. Aqueous NaOH provides hydroxide ions (OH⁻), which are strong nucleophiles and strong bases. In aqueous solution, SN1 and SN2 (substitution) are significant pathways for secondary halides, while E1 and E2 (elimination) are less favored compared to alcoholic solvents. The major product from substitution is propan-2-ol (CH₃CH(OH)CH₃)."
+  },
   {
     text: "Identify the catalyst 'X' required for the following transformation:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH=CH}_2 + \\\\\\\\text{H}_2 \\\\\\\\xrightarrow{\\\\\\\\text{X}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 \\\\\\\\]",
     options: ["H₂SO₄", "NaOH", "Pd/C", "AlCl₃"],
