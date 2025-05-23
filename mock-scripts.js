@@ -24949,7 +24949,7 @@ function playQuestionAudio() {
     .trim();
 
   // Add dramatic pauses and emphasis
-  plainText = `Now listen carefully... Question ${currentQuestionIndex + 1}. ${plainText}. Pay attention to the structure...`;
+  plainText = `Now listen carefully... Question ${currentQuestionIndex + 1}. ${plainText}. Pay attention to the question...`;
 
   const utterance = new SpeechSynthesisUtterance(plainText);
   utterance.lang = 'en-GB'; // British English sounds closer to Nigerian lecture style
@@ -24971,6 +24971,9 @@ function playQuestionAudio() {
   speechSynthesis.speak(utterance);
 }
 
+window.speechSynthesis.onvoiceschanged = () => {
+  speechSynthesis.getVoices(); // populates voice list
+};
 
 function renderMarkdownMathSafe(rawText) {
   const markdownHtml = marked.parse(rawText || "");
