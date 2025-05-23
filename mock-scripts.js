@@ -162,7 +162,7 @@ const questionBanks = {
     explanation: "E2 elimination requires a beta-hydrogen (a hydrogen on a carbon adjacent to the carbon bearing the leaving group). Bromomethane (CH₃Br) has no beta-carbons, and therefore no beta-hydrogens. Thus, it cannot undergo E2 elimination. Primary, secondary, and tertiary alkyl halides all have beta-hydrogens and can undergo E2 elimination."
   },
   {
-    text: "Consider the reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Cl} + \\\\\\\\text{NaCN} \\\\\\\\xrightarrow{\\\\\\\\text{DMSO}} \\\\\\\\text{Product} \\\\\\\\]<br>Identify the major organic product.",
+    text: "Consider the reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{Cl} + \\\\text{NaCN} \\\\xrightarrow{\\\\text{DMSO}} \\\\text{Product} \\\\]<br>Identify the major organic product.",
     options: ["CH₃CH₂CH₂CN", "CH₃CH₂CH₂NC", "CH₃CH=CH₂", "CH₃CH₂CH₂OH"],
     correct: 0,
     explanation: "1-Chloropropane is a primary alkyl halide. NaCN provides cyanide ions (CN⁻), which are good nucleophiles. DMSO is a polar aprotic solvent, which favors SN2 reactions. The cyanide ion attacks the carbon bonded to chlorine, displacing chloride, forming a nitrile (CH₃CH₂CH₂CN). While cyanide is an ambident nucleophile, attack via carbon is usually favored, especially in aprotic solvents."
@@ -294,7 +294,7 @@ const questionBanks = {
     explanation: "Hydrogenation of an alkyne with H₂ and a regular metal catalyst (like Pt) reduces it all the way to an alkane. Lindlar's catalyst is used for partial hydrogenation to *cis* alkenes. Reduction with sodium metal in liquid ammonia (Na/NH₃) is a dissolving metal reduction that yields *trans* alkenes via anti addition of hydrogen."
   },
   {
-    text: "Identify the missing reactant 'X' in the following preparation of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 + \\\\\\\\text{X} \\\\\\\\xrightarrow{\\\\\\\\text{h}\\\\\\\\nu} \\\\\\\\text{CH}_3\\\\\\\\text{CHBrCH}_3 + \\\\\\\\text{HBr} \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following preparation of an alkyl halide:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_3 + \\\\text{X} \\\\xrightarrow{\\\\text{h}\\\\nu} \\\\text{CH}_3\\\\text{CHBrCH}_3 + \\\\text{HBr} \\\\]",
     options: ["HBr", "Br₂", "NaBr", "PBr₃"],
     correct: 1,
     explanation: "This reaction shows the free radical halogenation of propane to form 2-bromopropane. This reaction is initiated by light (hν) and involves the substitution of a hydrogen atom on the alkane by a halogen atom. The halogen source is the diatomic halogen molecule. Since the product is a bromide, the missing reactant 'X' must be bromine (Br₂)."
