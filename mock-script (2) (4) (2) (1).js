@@ -24940,7 +24940,6 @@ document.getElementById('courseCode').value = '';
 
 
 
-
 function loadQuestion() {
   if (!questions || questions.length === 0) {
     alert("No questions available to load.");
@@ -24964,7 +24963,11 @@ function loadQuestion() {
     `;
   }
 
-  questionTitle.innerHTML = questionHtml;
+  questionTitle.innerHTML = `
+  ${currentQuestionIndex + 1}. ${formatText(question.text)}
+`;
+        
+
 
   // Render options
   answerOptions.innerHTML = question.options.map((option, index) => {
@@ -25142,13 +25145,15 @@ function submitExam() {
   const scorePercent = ((totalCorrect / questions.length) * 100).toFixed(2);
      
 function formatText(rawText) {
+  // Preserve LaTeX blocks like \[...\]
   return rawText
-    .replace(/\\\\n/g, '<br>')  // escape line breaks
+    .replace(/\\\\n/g, '<br>')
     .replace(/\\n/g, '<br>')
-    .replace(/\\\\/g, '\\')
-    .replace(/\n/g, '<br>');
-    
-        }
+    .replace(/(?<!\\)\\\[/g, '\\[')  // Keep LaTeX \[...\]
+    .replace(/(?<!\\)\\\]/g, '\\]')
+    .replace(/\n/g, '<br>');  // Normal line breaks to <br>
+}
+
         
   // Performance Summary
    resultsSummary.innerHTML = `
