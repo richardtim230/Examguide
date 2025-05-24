@@ -180,7 +180,7 @@ const questionBanks = {
     explanation: "2-Bromobutane is a secondary alkyl halide. Sodium ethoxide (NaOCH₂CH₃) is a strong base and a good nucleophile. In ethanol, a protic solvent, both SN2 and E2 are possible. With a strong base, E2 elimination is favored. Elimination can yield but-1-ene or but-2-ene. Sodium ethoxide is not bulky, so it follows Zaitsev's rule, favoring the formation of the more substituted alkene, but-2-ene (CH₃CH=CHCH₃), as the major product."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} + \\\\\\\\text{HBr} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Br} \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\[ \\\\text{A} + \\\\text{HBr} \\\\rightarrow \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{Br} \\\\]",
     options: ["Propane", "Propene", "Propan-1-ol", "Propan-2-ol"],
     correct: 1,
     explanation: "The product is 1-bromopropane, formed by the addition of HBr. Addition of HBr to an alkene typically follows Markovnikov's rule. To form 1-bromopropane (an anti-Markovnikov product), the starting material must be propene (CH₃CH=CH₂) and the reaction must be carried out under conditions that promote anti-Markovnikov addition, such as in the presence of peroxides. However, if the question implies a standard addition without peroxides, then the product would be 2-bromopropane. Let's re-examine the options and the product. The product is 1-bromopropane. Standard addition of HBr to propene gives 2-bromopropane. This means the reaction shown is *not* standard Markovnikov addition. It must be anti-Markovnikov addition, which starts from an alkene (propene) and uses HBr with peroxides. Since only propene is an alkene option, and it can form 1-bromopropane under specific conditions, let's assume the question implies those conditions even if not explicitly stated in the reaction arrow. Propan-1-ol reacts with HBr to give 1-bromopropane, but the reaction arrow shows addition of HBr to 'A'. Therefore, 'A' must be propene, and the reaction implies anti-Markovnikov conditions."
@@ -222,7 +222,7 @@ const questionBanks = {
     explanation: "2-Chloro-2-methylpropane is a tertiary alkyl halide. Ethanol is a weak base and a weak nucleophile. Under these conditions (tertiary halide, weak base/nucleophile, protic solvent), both SN1 (substitution) and E1 (elimination) reactions occur via a stable tertiary carbocation intermediate. SN1 yields 2-ethoxy-2-methylpropane (ether formation, solvolysis product), and E1 yields 2-methylpropene. A mixture of both products is expected."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} + \\\\\\\\text{Br}_2 \\\\\\\\xrightarrow{\\\\\\\\text{CCl}_4} \\\\\\\\text{CH}_3\\\\\\\\text{CHBrCH}_2\\\\\\\\text{Br} \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\[ \\\\text{A} + \\\\text{Br}_2 \\\\xrightarrow{\\\\text{CCl}_4} \\\\text{CH}_3\\\\text{CHBrCH}_2\\\\text{Br} \\\\]",
     options: ["Propane", "Propene", "Propan-1-ol", "Propanal"],
     correct: 1,
     explanation: "The product is 1,2-dibromopropane, a vicinal dibromide, formed by the addition of bromine (Br₂) to a starting material 'A' in an inert solvent (CCl₄). This is characteristic of the electrophilic addition of halogens to alkenes. The starting material 'A' must be propene (CH₃CH=CH₂)."
@@ -258,7 +258,7 @@ const questionBanks = {
     explanation: "2-Bromopropane is a secondary alkyl halide. Aqueous NaOH provides hydroxide ions (OH⁻), which are strong nucleophiles and strong bases. In aqueous solution, SN1 and SN2 (substitution) are significant pathways for secondary halides, while E1 and E2 (elimination) are less favored compared to alcoholic solvents. The major product from substitution is propan-2-ol (CH₃CH(OH)CH₃)."
   },
   {
-    text: "Identify the catalyst 'X' required for the following transformation:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH=CH}_2 + \\\\\\\\text{H}_2 \\\\\\\\xrightarrow{\\\\\\\\text{X}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 \\\\\\\\]",
+    text: "Identify the catalyst 'X' required for the following transformation:<br>\\\\[ \\\\text{CH}_3\\\\text{CH=CH}_2 + \\\\text{H}_2 \\\\xrightarrow{\\\\text{X}} \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_3 \\\\]",
     options: ["H₂SO₄", "NaOH", "Pd/C", "AlCl₃"],
     correct: 2,
     explanation: "This is the catalytic hydrogenation of propene to propane. The addition of hydrogen to an alkene to form an alkane requires a metal catalyst, commonly Palladium supported on carbon (Pd/C), Platinum (Pt), or Nickel (Ni). H₂SO₄ is an acid catalyst, NaOH is a base, and AlCl₃ is a Lewis acid catalyst used in reactions like Friedel-Crafts."
@@ -270,7 +270,7 @@ const questionBanks = {
     explanation: "Heating a primary alcohol with a strong acid like concentrated phosphoric acid (H₃PO₄) or sulfuric acid (H₂SO₄) causes dehydration, forming an alkene. For butan-1-ol, elimination can yield but-1-ene or but-2-ene. According to Zaitsev's rule, the more substituted alkene, but-2-ene, is the major product because it is more stable."
   },
   {
-    text: "Identify the reagent 'Y' needed to complete the following synthesis:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{OH} \\\\\\\\xrightarrow{\\\\\\\\text{Y}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{Br} \\\\\\\\]",
+    text: "Identify the reagent 'Y' needed to complete the following synthesis:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{OH} \\\\xrightarrow{\\\\text{Y}} \\\\text{CH}_3\\\\text{CH}_2\\\\text{Br} \\\\]",
     options: ["NaBr", "HBr", "Br₂", "PBr₃"],
     correct: 3,
     explanation: "The conversion of a primary alcohol to a primary alkyl bromide is efficiently carried out using Phosphorus tribromide (PBr₃). While HBr can also be used, PBr₃ is often preferred as it avoids potential carbocation rearrangements and gives better yields for primary and secondary alcohols. NaBr is a salt and not reactive enough. Br₂ is used for halogenation of alkanes or addition to alkenes."
@@ -282,7 +282,7 @@ const questionBanks = {
     explanation: "The conversion of a vicinal dihalide (like 1,2-dichloropropane) to an alkyne requires two successive dehydrohalogenation reactions. This typically requires a very strong base, such as sodium amide (NaNH₂), and often heating to achieve the second elimination, which forms the alkyne triple bond. Excess base is used to ensure both elimination steps occur and to deprotonate the terminal alkyne if formed. Aqueous NaOH or alkoxides are generally not strong enough to effect the second elimination to form an alkyne."
   },
   {
-    text: "Identify the starting material 'A' in the following reaction sequence:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{Mg in ether}} \\\\\\\\text{RMgX} \\\\\\\\xrightarrow{\\\\\\\\text{H}_2\\\\\\\\text{O}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_3 \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following reaction sequence:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{Mg in ether}} \\\\text{RMgX} \\\\xrightarrow{\\\\text{H}_2\\\\text{O}} \\\\text{CH}_3\\\\text{CH}_3 \\\\]",
     options: ["CH₃Cl", "CH₃CH₂Cl", "CH₂Cl₂", "CH₃CH₃"],
     correct: 0,
     explanation: "The reaction sequence shows the formation of a Grignard reagent (RMgX) from a starting material 'A' using Mg in ether, followed by reaction with water to produce ethane (CH₃CH₃). The reaction of a Grignard reagent with water (a protic source) yields an alkane with the same alkyl group as the Grignard reagent (RMgX + H₂O → RH + MgX(OH)). To produce ethane (CH₃CH₃), the Grignard reagent must be ethylmagnesium halide (CH₃CH₂MgX). This Grignard reagent is formed from an ethyl halide. Therefore, the starting material 'A' must be an ethyl halide, such as ethyl chloride (CH₃CH₂Cl)."
@@ -306,7 +306,7 @@ const questionBanks = {
     explanation: "Terminal alkynes have a relatively acidic hydrogen atom bonded to the sp-hybridized carbon. Strong bases, such as sodium amide (NaNH₂), can deprotonate terminal alkynes, forming a metal acetylide salt (RC≡C⁻ Na⁺) and ammonia (NH₃). This reaction is often used to prepare nucleophilic acetylides for carbon-carbon bond formation."
   },
   {
-    text: "Identify the reagent 'R' used to convert an alkyl halide to an alkane:<br>\\\\\\\\[ \\\\\\\\text{RCl} \\\\\\\\xrightarrow{\\\\\\\\text{R}} \\\\\\\\text{RH} \\\\\\\\]",
+    text: "Identify the reagent 'R' used to convert an alkyl halide to an alkane:<br>\\\\[ \\\\text{RCl} \\\\xrightarrow{\\\\text{R}} \\\\text{RH} \\\\]",
     options: ["NaOH (aq)", "Mg in ether, then H₂O", "KCN", "Br₂"],
     correct: 1,
     explanation: "This transformation is the reduction of an alkyl halide to an alkane. Option 0 (NaOH aq) would lead to substitution (alcohol) or elimination (alkene). Option 2 (KCN) would lead to substitution (nitrile). Option 3 (Br₂) would lead to further halogenation. Option 1 involves forming a Grignard reagent (RCl + Mg → RMgCl) followed by reaction with a protic source like water (RMgCl + H₂O → RH + MgCl(OH)), which effectively replaces the halogen with a hydrogen, forming the alkane."
@@ -318,7 +318,7 @@ const questionBanks = {
     explanation: "The conversion of an alkyl halide to an alkene is an elimination reaction (dehydrohalogenation). 2-Bromopropane is a secondary alkyl halide. Using a strong base, such as sodium methoxide (NaOCH₃), in an alcoholic solvent (like methanol, CH₃OH) favors E2 elimination, yielding propene. Aqueous NaOH can lead to both substitution and elimination. H₂SO₄ is used for alcohol dehydration. H₂/Pt is for hydrogenation."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkene:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{Conc. H}_2\\\\\\\\text{SO}_4, \\\\\\\\text{heat}} \\\\\\\\text{CH}_3\\\\\\\\text{CH=CH}_2 \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkene:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{Conc. H}_2\\\\text{SO}_4, \\\\text{heat}} \\\\text{CH}_3\\\\text{CH=CH}_2 \\\\]",
     options: ["Propane", "Propanal", "Propan-1-ol", "1-Chloropropane"],
     correct: 2,
     explanation: "Heating a compound with concentrated sulfuric acid is a common method for dehydration. Alcohols undergo dehydration to form alkenes. To form propene (CH₃CH=CH₂), the starting material 'A' must be an alcohol with three carbon atoms, either propan-1-ol or propan-2-ol. Dehydration of propan-1-ol or propan-2-ol both yield propene as the major product. However, the question asks for *the* starting material, implying one specific compound from the options. Propan-1-ol (CH₃CH₂CH₂OH) is a primary alcohol that dehydrates to propene. Propanal is an aldehyde. Propane is an alkane. 1-Chloropropane is an alkyl halide. Propan-1-ol is the correct starting material from the options that undergoes dehydration to form propene."
@@ -330,7 +330,7 @@ const questionBanks = {
     explanation: "Lindlar's catalyst is a specifically poisoned palladium catalyst used for the partial hydrogenation of alkynes to *cis* alkenes via syn addition of hydrogen. Raney Ni and Pd/C are more active and would reduce the alkyne all the way to an alkane. Na/NH₃ yields *trans* alkenes."
   },
   {
-    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 + \\\\\\\\text{X} \\\\\\\\xrightarrow{\\\\\\\\text{h}\\\\\\\\nu} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Cl} + \\\\\\\\text{HCl} \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{CH}_3 + \\\\text{X} \\\\xrightarrow{\\\\text{h}\\\\nu} \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{CH}_2\\\\text{Cl} + \\\\text{HCl} \\\\]",
     options: ["HCl", "Cl₂", "NaCl", "PCl₃"],
     correct: 1,
     explanation: "This is the free radical chlorination of butane. The reaction is initiated by light (hν) and involves the substitution of a hydrogen atom on the alkane by a chlorine atom. The source of chlorine atoms is the chlorine molecule (Cl₂)."
@@ -342,7 +342,7 @@ const questionBanks = {
     explanation: "2-Chloro-2-methylpropane is a tertiary alkyl halide. Tertiary alkyl halides undergo E2 elimination readily with strong bases. Sodium ethoxide (NaOCH₂CH₃) is a strong base. E2 elimination removes a beta-hydrogen and the chloride leaving group, forming an alkene. The product is 2-methylpropene ((CH₃)₂C=CH₂)."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{HBr}} \\\\\\\\text{CH}_3\\\\\\\\text{CHBrCH}_3 \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{HBr}} \\\\text{CH}_3\\\\text{CHBrCH}_3 \\\\]",
     options: ["Propane", "Propene", "Propan-1-ol", "Propan-2-ol"],
     correct: 1,
     explanation: "The product is 2-bromopropane, formed by the addition of HBr. Addition of HBr to an alkene follows Markovnikov's rule. To form 2-bromopropane, HBr must add to propene (CH₃CH=CH₂). The hydrogen adds to C-1, and the bromine adds to C-2, forming the more stable secondary carbocation intermediate."
@@ -354,7 +354,7 @@ const questionBanks = {
     explanation: "Terminal alkynes can be deprotonated by a strong base like NaNH₂ to form a nucleophilic acetylide anion (RC≡C⁻). This acetylide anion can then react with a primary alkyl halide (R'X) in an SN2 reaction, forming a new carbon-carbon bond and extending the carbon chain, resulting in an internal alkyne (RC≡CR')."
   },
   {
-    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{OH} + \\\\\\\\text{X} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Cl} \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{OH} + \\\\text{X} \\\\rightarrow \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{Cl} \\\\]",
     options: ["HCl", "Cl₂", "NaCl", "SOCl₂"],
     correct: 3,
     explanation: "This reaction is the conversion of a primary alcohol to a primary alkyl chloride. While HCl can be used with primary alcohols (often requiring a Lewis acid catalyst like ZnCl₂), thionyl chloride (SOCl₂) is a more common and efficient reagent for this transformation, producing gaseous byproducts (SO₂ and HCl) that are easy to remove."
@@ -366,7 +366,7 @@ const questionBanks = {
     explanation: "The conversion of a geminal dihalide (like 1,1-dibromopropane) to an alkyne requires two successive dehydrohalogenation reactions. This typically requires a very strong base, such as sodium amide (NaNH₂), and often heating to achieve the second elimination, which forms the alkyne triple bond. Excess base is used to ensure both elimination steps occur and to deprotonate the terminal alkyne if formed. Aqueous NaOH or alkoxides are generally not strong enough to effect the second elimination to form an alkyne."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkane:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{H}_2, \\\\\\\\text{Pd/C}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkane:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{H}_2, \\\\text{Pd/C}} \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{CH}_3 \\\\]",
     options: ["But-1-ene", "Butan-1-ol", "Butanal", "1-Chlorobutane"],
     correct: 0,
     explanation: "This reaction is the catalytic hydrogenation of a compound to form butane. Hydrogenation (addition of H₂) with a metal catalyst (Pd/C) reduces pi bonds (double or triple bonds) to single bonds. To form butane, the starting material 'A' must be a hydrocarbon with four carbon atoms containing a double or triple bond, such as but-1-ene, but-2-ene, or but-1-yne, or but-2-yne. Among the options, but-1-ene is an alkene with four carbons that would be reduced to butane."
@@ -378,7 +378,7 @@ const questionBanks = {
     explanation: "The reaction of an alcohol with thionyl chloride (SOCl₂) typically proceeds with inversion of configuration via an SN2-like mechanism. However, if the reaction is carried out without a base (like pyridine), a different mechanism can operate that leads to retention of configuration. PCl₃ and HCl generally lead to inversion or carbocation rearrangements. SOCl₂ with pyridine leads to inversion."
   },
   {
-    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{C}\\\\\\\\equiv\\\\\\\\text{CH} + \\\\\\\\text{X} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{C}\\\\\\\\equiv\\\\\\\\text{C}^- \\\\\\\\text{Na}^+ \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{C}\\\\equiv\\\\text{CH} + \\\\text{X} \\\\rightarrow \\\\text{CH}_3\\\\text{C}\\\\equiv\\\\text{C}^- \\\\text{Na}^+ \\\\]",
     options: ["NaOH", "NaOCH₃", "NaNH₂", "NaH"],
     correct: 2,
     explanation: "This reaction shows the deprotonation of a terminal alkyne (propyne) to form a sodium acetylide salt. This requires a very strong base, stronger than alkoxides or hydroxides. Sodium amide (NaNH₂) is a sufficiently strong base to deprotonate a terminal alkyne."
@@ -390,7 +390,7 @@ const questionBanks = {
     explanation: "2-Bromobutane is a secondary alkyl halide. Potassium *tert*-butoxide (KO*t*-Bu) is a strong and bulky base. Bulky bases favor E2 elimination, and due to steric hindrance, they preferentially abstract a proton from the less substituted beta-carbon, leading to the formation of the less substituted (anti-Zaitsev) alkene. In this case, the less substituted alkene is but-1-ene (CH₂=CHCH₂CH₃)."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkyne:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{Excess NaNH}_2, \\\\\\\\text{heat}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{C}\\\\\\\\equiv\\\\\\\\text{CH} \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkyne:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{Excess NaNH}_2, \\\\text{heat}} \\\\text{CH}_3\\\\text{CH}_2\\\\text{C}\\\\equiv\\\\text{CH} \\\\]",
     options: ["1-Chlorobutane", "1,1-Dichlorobutane", "1,2-Dichlorobutane", "But-1-ene"],
     correct: 2,
     explanation: "The reaction shows the formation of but-1-yne from a starting material 'A' using excess NaNH₂ and heat. These conditions are characteristic of the dehydrohalogenation of a dihalide to form an alkyne. To form a terminal alkyne like but-1-yne, the starting material must be a dihalide with the halogens on adjacent carbons (vicinal dihalide) or the same carbon (geminal dihalide) on the first two carbons of the chain. 1,2-Dichlorobutane (CH₃CH₂CHClCH₂Cl) is a vicinal dihalide that will undergo two eliminations to form but-1-yne. 1,1-Dichlorobutane would also work. 1-Chlorobutane is a monohalide. But-1-ene is an alkene."
@@ -654,7 +654,7 @@ const questionBanks = {
     explanation: "1-Bromobutane is a primary alkyl halide. Aqueous NaOH provides hydroxide ions (OH⁻), which are strong nucleophiles and strong bases. For primary alkyl halides in aqueous solution, SN2 substitution is favored over E2 elimination. The hydroxide ion attacks the carbon bonded to bromine, displacing bromide, and forming butan-1-ol (CH₃CH₂CH₂CH₂OH)."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{HCl}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{Cl} \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{HCl}} \\\\text{CH}_3\\\\text{CH}_2\\\\text{Cl} \\\\]",
     options: ["Ethane", "Ethene", "Ethanol", "Chloroethane"],
     correct: 2,
     explanation: "The product is chloroethane (ethyl chloride). This can be formed by the reaction of ethanol (CH₃CH₂OH) with HCl. This is a substitution reaction where the hydroxyl group of the alcohol is replaced by a chlorine atom. Ethene reacts with HCl via addition to form chloroethane, but ethanol reacting with HCl is a more direct synthesis of an alkyl halide from an alcohol."
@@ -666,7 +666,7 @@ const questionBanks = {
     explanation: "The conversion of a vicinal dihalide (halogens on adjacent carbons) to an alkyne requires two successive dehydrohalogenation reactions. This is achieved using a very strong base, such as excess sodium amide (NaNH₂), often with heating."
   },
   {
-    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH=CH}_2 + \\\\\\\\text{X} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{CHBrCH}_2\\\\\\\\text{Br} \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{CH=CH}_2 + \\\\text{X} \\\\rightarrow \\\\text{CH}_3\\\\text{CHBrCH}_2\\\\text{Br} \\\\]",
     options: ["HBr", "Br₂", "H₂O/Br₂", "NaBr"],
     correct: 1,
     explanation: "This reaction shows the addition of bromine to propene, forming a vicinal dibromide (1,2-dibromopropane). This is an electrophilic addition reaction where the missing reactant 'X' is bromine (Br₂)."
@@ -678,7 +678,7 @@ const questionBanks = {
     explanation: "This is the acid-catalyzed hydration of but-2-ene (CH₃CH=CHCH₃). Water adds across the double bond, following Markovnikov's rule (though but-2-ene is symmetrical). The product is butan-2-ol (CH₃CH(OH)CH₂CH₃)."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkane:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{H}_2, \\\\\\\\text{Pd/C}} \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_3 \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkane:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{H}_2, \\\\text{Pd/C}} \\\\\\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_3 \\\\]",
     options: ["Propane", "Propene", "Propan-1-ol", "1-Chloropropane"],
     correct: 1,
     explanation: "This reaction is the catalytic hydrogenation of a compound to form propane. Hydrogenation (addition of H₂) with a metal catalyst (Pd/C) reduces pi bonds (double or triple bonds) to single bonds. To form propane, the starting material 'A' must be a hydrocarbon with three carbon atoms containing a double or triple bond, such as propene (CH₃CH=CH₂) or propyne (CH₃C≡CH). Among the options, propene is an alkene with three carbons that would be reduced to propane."
@@ -690,7 +690,7 @@ const questionBanks = {
     explanation: "The reaction of an alcohol with Phosphorus tribromide (PBr₃) is a common method to synthesize alkyl bromides, and it typically proceeds via an SN2-like mechanism, resulting in inversion of configuration at the carbon center bonded to the hydroxyl group. HBr can lead to SN1 or SN2 depending on the alcohol type and conditions, and SN1 involves a carbocation which can lead to racemization or rearrangement. Br₂ and NaBr are not used for this direct conversion."
   },
   {
-    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{C}\\\\\\\\equiv\\\\\\\\text{CH} + \\\\\\\\text{X} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{C}\\\\\\\\equiv\\\\\\\\text{C}^- \\\\\\\\text{Li}^+ \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{C}\\\\equiv\\\\text{CH} + \\\\text{X} \\\\rightarrow \\\\text{CH}_3\\\\text{CH}_2\\\\text{C}\\\\equiv\\\\text{C}^- \\\\text{Li}^+ \\\\]",
     options: ["NaOH", "LiOH", "LiH", "Butyllithium (BuLi)"],
     correct: 3,
     explanation: "This reaction shows the deprotonation of a terminal alkyne to form a lithium acetylide salt. This requires a very strong base, even stronger than NaNH₂. Organolithium reagents like butyllithium (BuLi) are sufficiently strong bases to deprotonate terminal alkynes."
@@ -702,7 +702,7 @@ const questionBanks = {
     explanation: "1-Bromopropane is a primary alkyl halide. Sodium ethoxide (NaOCH₂CH₃) is a strong base and a good nucleophile. In ethanol, a protic solvent, E2 elimination is favored for primary halides with strong bases. The product is propene (CH₃CH=CH₂)."
   },
   {
-    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\\\\\[ \\\\\\\\text{A} \\\\\\\\xrightarrow{\\\\\\\\text{Br}_2, h\\\\\\\\nu} \\\\\\\\text{CH}_3\\\\\\\\text{CHBrCH}_3 + \\\\\\\\text{HBr} \\\\\\\\]",
+    text: "Identify the starting material 'A' in the following synthesis of an alkyl halide:<br>\\\\[ \\\\text{A} \\\\xrightarrow{\\\\text{Br}_2, h\\\\nu} \\\\text{CH}_3\\\\text{CHBrCH}_3 + \\\\text{HBr} \\\\]",
     options: ["Propane", "Propene", "Propan-1-ol", "Propan-2-ol"],
     correct: 0,
     explanation: "This reaction shows the free radical bromination of a starting material 'A' to form 2-bromopropane. Free radical halogenation occurs with alkanes in the presence of light (hν) or heat. The starting material must be an alkane with three carbon atoms, which is propane (CH₃CH₂CH₃). Bromination of propane yields a mixture of 1-bromopropane and 2-bromopropane, with 2-bromopropane being the major product due to the higher stability of the secondary radical intermediate."
@@ -714,7 +714,7 @@ const questionBanks = {
     explanation: "The addition of a halogen molecule (like Br₂) to an alkene in an inert solvent (like CCl₄) results in the formation of a vicinal dihalide (two halogen atoms on adjacent carbons) via electrophilic addition."
   },
   {
-    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\\\\\[ \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{Cl} + \\\\\\\\text{X} \\\\\\\\rightarrow \\\\\\\\text{CH}_3\\\\\\\\text{CH}_2\\\\\\\\text{CH}_2\\\\\\\\text{OH} \\\\\\\\]",
+    text: "Identify the missing reactant 'X' in the following reaction:<br>\\\\[ \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{Cl} + \\\\text{X} \\\\rightarrow \\\\text{CH}_3\\\\text{CH}_2\\\\text{CH}_2\\\\text{OH} \\\\]",
     options: ["NaOH (aq)", "NaOCH₃", "H₂O/H⁺", "LiAlH₄"],
     correct: 0,
     explanation: "This reaction is the conversion of a primary alkyl chloride to a primary alcohol. This is a nucleophilic substitution reaction. Aqueous NaOH provides hydroxide ions (OH⁻), which are strong nucleophiles. For primary alkyl halides in aqueous solution, SN2 reaction with OH⁻ is favored, yielding the primary alcohol. NaOCH₃ is a strong base favoring elimination. H₂O/H⁺ would hydrate alkenes or catalyze alcohol reactions. LiAlH₄ is a reducing agent."
