@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBT Platform</title>
+  <link rel="stylesheet" href="style.css">
+<style>
+body {
+  font-family: Arial;
+  background: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+}
+
+.page {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+#quiz-box {
+  margin: 20px 0;
+}
+
+.option {
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.option.selected {
+  background: #a0d8ef;
+}
+</style>
+</head>
+<body>
+  <div id="app">
+    <!-- Login/Register Section -->
+    <div id="auth-page" class="page">
+      <h2>CBT Login</h2>
+      <input type="text" id="username" placeholder="Username"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button onclick="login()">Login</button>
+      <button onclick="register()">Register</button>
+      <p id="auth-msg"></p>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz-page" class="page hidden">
+      <div id="quiz-header">
+        <span id="timer">Time: 00:00</span>
+        <button onclick="logout()">Logout</button>
+      </div>
+      <div id="quiz-box"></div>
+      <button id="next-btn">Next</button>
+    </div>
+
+    <!-- Results Section -->
+    <div id="result-page" class="page hidden">
+      <h2>Result Summary</h2>
+      <canvas id="result-chart" width="300" height="200"></canvas>
+      <div id="summary"></div>
+      <button onclick="exportPDF()">Export PDF</button>
+      <button onclick="restart()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- Libraries -->
+  <script src="libs/chart.min.js"></script>
+  <script src="libs/html2pdf.bundle.min.js"></script>
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
