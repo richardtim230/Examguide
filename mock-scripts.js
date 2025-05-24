@@ -25330,27 +25330,7 @@ new Chart(barCtx, {
   downloadPDF.addEventListener("click", generatePDF);
 }
 
-function printSummary() {
-  const printContent = document.getElementById("resultsPDFWrapper");
-  const originalContents = document.body.innerHTML;
 
-  const cloned = printContent.cloneNode(true);
-  document.body.innerHTML = "";
-  document.body.appendChild(cloned);
-
-  // Wait for MathJax to render
-  if (window.MathJax && typeof MathJax.typesetPromise === "function") {
-    MathJax.typesetPromise().then(() => {
-      window.print();
-      document.body.innerHTML = originalContents;
-      location.reload();
-    });
-  } else {
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload();
-  }
-}
 
 
 
@@ -25392,7 +25372,30 @@ function generatePDF() {
   }
 }
 
+function printSummary() {
+  document.getElementById('pdf-date').innerText = new Date().toLocaleString();
+  document.getElementById('pdf-footer-date').innerText = new Date().toLocaleString();
 
+  const wrapper = document.getElementById("resultsPDFWrapper");
+  const original = document.body.innerHTML;
+  const clone = wrapper.cloneNode(true);
+
+  document.body.innerHTML = "";
+  document.body.appendChild(clone);
+
+  if (window.MathJax && typeof MathJax.typesetPromise === "function") {
+    MathJax.typesetPromise([clone]).then(() => {
+      window.print();
+      document.body.innerHTML = original;
+      location.reload();
+    });
+  } else {
+    window.print();
+    document.body.innerHTML = original;
+    location.reload();
+  }
+      }
+    
 
 // Handle Retake Exam Button
 document.getElementById("retakeExamBtn").addEventListener("click", () => {
