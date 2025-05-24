@@ -1,265 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CBT Platform</title>
-
+  <meta charset="UTF-8">
+  <title>CBT Platform - Login/Register</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f0f0f0;
-      text-align: center;
+    }
+
+    .auth-container {
+      width: 300px;
+      margin: 100px auto;
       padding: 20px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
-    .page {
-      display: none;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    #quiz-box {
-      margin: 20px 0;
-    }
-
-    .option {
+    .auth-container input {
       display: block;
-      margin: 10px;
+      width: 90%;
       padding: 10px;
-      background: #eee;
-      cursor: pointer;
-      border-radius: 5px;
+      margin: 10px auto;
     }
 
-    .option.selected {
-      background: #a0d8ef;
-    }
-
-    #quiz-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    input {
-      margin: 5px;
-      padding: 10px;
-      width: 80%;
-    }
-
-    button {
+    .auth-container button {
       padding: 10px 20px;
-      margin: 10px;
+      margin-top: 10px;
       cursor: pointer;
+    }
+
+    #auth-toggle button {
+      margin: 5px;
+    }
+
+    #auth-message {
+      color: red;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div id="app">
-    <!-- Login/Register -->
-    <div id="auth-page" class="page">
-      <h2>CBT Login</h2>
-      <input type="text" id="username" placeholder="Username"><br>
-      <input type="password" id="password" placeholder="Password"><br>
-      <button onclick="login()">Login</button>
-      <button onclick="register()">Register</button>
-      <p id="auth-msg"></p>
+  <div class="auth-container">
+    <h2>CBT Platform</h2>
+
+    <div id="auth-toggle">
+      <button onclick="toggleForm('login')">Login</button>
+      <button onclick="toggleForm('register')">Register</button>
     </div>
 
-    <!-- Quiz -->
-    <div id="quiz-page" class="page hidden">
-      <div id="quiz-header">
-        <span id="timer">Time: 00:00</span>
-        <button onclick="logout()">Logout</button>
-      </div>
-      <div id="quiz-box"></div>
-      <button id="next-btn">Next</button>
-    </div>
+    <form id="login-form" onsubmit="login(event)">
+      <h3>Login</h3>
+      <input type="text" id="login-username" placeholder="Username" required>
+      <input type="password" id="login-password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
 
-    <!-- Results -->
-    <div id="result-page" class="page hidden">
-      <h2>Result Summary</h2>
-      <canvas id="result-chart" width="300" height="200"></canvas>
-      <div id="summary"></div>
-      <button onclick="exportPDF()">Export PDF</button>
-      <button onclick="restart()">Try Again</button>
-    </div>
+    <form id="register-form" onsubmit="register(event)" style="display:none;">
+      <h3>Register</h3>
+      <input type="text" id="register-username" placeholder="Username" required>
+      <input type="password" id="register-password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+
+    <p id="auth-message"></p>
   </div>
 
-  <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-  <!-- Questions -->
   <script>
-    const questions = [
-      {
-        question: "What does HTML stand for?",
-        options: [
-          "Hyper Text Markup Language",
-          "Home Tool Markup Language",
-          "Hyperlinks and Text Markup Language",
-          "Hyper Tool Multi Language"
-        ],
-        answer: 0,
-        explanation: "HTML stands for Hyper Text Markup Language."
-      },
-      {
-        question: "What is used for styling web pages?",
-        options: ["HTML", "CSS", "Python", "SQL"],
-        answer: 1,
-        explanation: "CSS is used for styling web pages."
+    function toggleForm(type) {
+      const loginForm = document.getElementById("login-form");
+      const registerForm = document.getElementById("register-form");
+      const message = document.getElementById("auth-message");
+      message.textContent = "";
+
+      if (type === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
       }
-    ];
-  </script>
-
-  <!-- Script -->
-  <script>
-    const pages = {
-      auth: document.getElementById("auth-page"),
-      quiz: document.getElementById("quiz-page"),
-      result: document.getElementById("result-page")
-    };
-    const quizBox = document.getElementById("quiz-box");
-    const nextBtn = document.getElementById("next-btn");
-    const summaryDiv = document.getElementById("summary");
-
-    let currentUser = null;
-    let currentQuestion = 0;
-    let score = 0;
-    let shuffledQuestions = [];
-
-    function showPage(pageName) {
-      Object.values(pages).forEach(p => p.classList.add("hidden"));
-      pages[pageName].classList.remove("hidden");
     }
 
-    function register() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      if (!user || !pass) return alert("Enter both fields");
-      if (localStorage.getItem(`user-${user}`)) {
-        document.getElementById("auth-msg").innerText = "User already exists!";
+    function register(event) {
+      event.preventDefault();
+      const username = document.getElementById("register-username").value.trim();
+      const password = document.getElementById("register-password").value.trim();
+
+      if (localStorage.getItem(username)) {
+        document.getElementById("auth-message").textContent = "User already exists!";
+      } else {
+        const user = { username, password };
+        localStorage.setItem(username, JSON.stringify(user));
+        document.getElementById("auth-message").textContent = "Registration successful!";
+        toggleForm('login');
+      }
+    }
+
+    function login(event) {
+      event.preventDefault();
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+
+      const userData = localStorage.getItem(username);
+      if (!userData) {
+        document.getElementById("auth-message").textContent = "User not found!";
         return;
       }
-      localStorage.setItem(`user-${user}`, pass);
-      document.getElementById("auth-msg").innerText = "Registration successful!";
-    }
 
-    function login() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      if (localStorage.getItem(`user-${user}`) === pass) {
-        currentUser = user;
-        startQuiz();
-      } else {
-        document.getElementById("auth-msg").innerText = "Invalid credentials!";
+      const user = JSON.parse(userData);
+      if (user.password !== password) {
+        document.getElementById("auth-message").textContent = "Incorrect password!";
+        return;
       }
+
+      localStorage.setItem("currentUser", username);
+      window.location.href = "test.html";
     }
-
-    function logout() {
-      currentUser = null;
-      location.reload();
-    }
-
-    function startQuiz() {
-      showPage("quiz");
-      currentQuestion = 0;
-      score = 0;
-      shuffledQuestions = questions.map(q => ({
-        ...q,
-        options: q.options.map(opt => ({ text: opt }))
-      })).sort(() => Math.random() - 0.5);
-      shuffledQuestions.forEach(q => q.options = shuffle(q.options));
-      showQuestion();
-      startTimer();
-    }
-
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    function showQuestion() {
-      const q = shuffledQuestions[currentQuestion];
-      quizBox.innerHTML = `<h3>${q.question}</h3>` +
-        q.options.map((opt, i) =>
-          `<div class="option" data-index="${i}">${opt.text}</div>`
-        ).join('');
-      document.querySelectorAll('.option').forEach(opt => {
-        opt.addEventListener('click', () => {
-          document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-          opt.classList.add('selected');
-        });
-      });
-    }
-
-    nextBtn.onclick = () => {
-      const selected = document.querySelector('.option.selected');
-      if (!selected) return alert("Please select an option.");
-      const selectedIndex = parseInt(selected.dataset.index);
-      const correctIndex = shuffledQuestions[currentQuestion].answer;
-      if (shuffledQuestions[currentQuestion].options[selectedIndex].text === questions[currentQuestion].options[correctIndex]) {
-        score++;
-      }
-      currentQuestion++;
-      if (currentQuestion < shuffledQuestions.length) {
-        showQuestion();
-      } else {
-        endQuiz();
-      }
-    };
-
-    function endQuiz() {
-      showPage("result");
-      summaryDiv.innerHTML = `
-        <p><strong>User:</strong> ${currentUser}</p>
-        <p>Total Questions: ${questions.length}</p>
-        <p>Correct Answers: ${score}</p>
-        <p>Wrong Answers: ${questions.length - score}</p>
-      `;
-      generateChart(score, questions.length - score);
-    }
-
-    function generateChart(correct, wrong) {
-      const ctx = document.getElementById("result-chart").getContext("2d");
-      new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["Correct", "Wrong"],
-          datasets: [{
-            data: [correct, wrong],
-            backgroundColor: ["#4caf50", "#f44336"]
-          }]
-        }
-      });
-    }
-
-    function exportPDF() {
-      html2pdf().from(summaryDiv).save("CBT_Result.pdf");
-    }
-
-    function restart() {
-      location.reload();
-    }
-
-    let timerInterval, seconds = 0;
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        seconds++;
-        document.getElementById("timer").innerText = `Time: ${Math.floor(seconds/60)}:${String(seconds%60).padStart(2, '0')}`;
-      }, 1000);
-    }
-
-    // Show auth page by default
-    showPage("auth");
   </script>
 </body>
 </html>
