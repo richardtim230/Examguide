@@ -25330,6 +25330,27 @@ new Chart(barCtx, {
   downloadPDF.addEventListener("click", generatePDF);
 }
 
+function printSummary() {
+  const printContent = document.getElementById("resultsPDFWrapper");
+  const originalContents = document.body.innerHTML;
+
+  const cloned = printContent.cloneNode(true);
+  document.body.innerHTML = "";
+  document.body.appendChild(cloned);
+
+  // Wait for MathJax to render
+  if (window.MathJax && typeof MathJax.typesetPromise === "function") {
+    MathJax.typesetPromise().then(() => {
+      window.print();
+      document.body.innerHTML = originalContents;
+      location.reload();
+    });
+  } else {
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload();
+  }
+}
 
 
 
