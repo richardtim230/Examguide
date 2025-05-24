@@ -122,7 +122,34 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none;     /* Internet Explorer/Edge */
 }
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+  }
 
+  #downloadPDF,
+  .audio-btn,
+  .answer-btn,
+  .nav-buttons {
+    display: none !important;
+  }
+
+  .question-image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .result-question {
+    page-break-inside: avoid;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+  }
+  
     /* Global Styles */
     * {
         box-sizing: border-box;
@@ -1034,7 +1061,8 @@
     <canvas id="confidenceBarChart" height="150" style="margin-top: 30px;"></canvas>
   </div>
     <div class="results-actions">
-        <button id="downloadPDF" class="pdf-btn">Download Results as PDF</button>
+        <button id="downloadPDF" onclick="printSummary()">Print / Save as PDF</button>
+
         <button id="retakeExamBtn" class="styled-btn">Retake or Take Another Exam</button>
     </div>
   <div class="pdf-header">
