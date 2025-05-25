@@ -217,7 +217,6 @@
     const currentUser = localStorage.getItem('current_user') || 'Guest';
     document.getElementById('candidateName').innerText += currentUser;
 // Prevent unauthorized access
-const currentUser = localStorage.getItem('current_user');
 if (!currentUser || currentUser === "Guest") {
   // Redirect to login page (adjust the path as needed)
   window.location.href = "mock.html";
