@@ -5,7 +5,7 @@
     "questions": [
   {
     "id": 1,
-    "question": "A classification system that groups organisms based on a \\"multiplicity of criteria\\" is fundamentally described as:",
+    "question": "A classification system that groups organisms based on a 'multiplicity of criteria' is fundamentally described as:",
     "options": [
       {"text": "Artificial"},
       {"text": "Evolutionary"},
@@ -18,7 +18,7 @@
   },
   {
     "id": 2,
-    "question": "The human tendency to \\"order or classify his experience\\" in the environment primarily reflects a basic need for:",
+    "question": "The human tendency to 'order or classify his experience' in the environment primarily reflects a basic need for:",
     "options": [
       {"text": "Resource management"},
       {"text": "Cognitive organization"},
@@ -109,7 +109,7 @@
   },
   {
     "id": 9,
-    "question": "The statement that \\"the generic and sub-generic levels of classification do not exhaust the levels of hierarchy\\" implies the existence of:",
+    "question": "The statement that 'the generic and sub-generic levels of classification do not exhaust the levels of hierarchy' implies the existence of:",
     "options": [
       {"text": "Only two primary taxonomic ranks"},
       {"text": "More inclusive taxonomic ranks above the genus"},
@@ -122,7 +122,7 @@
   },
   {
     "id": 10,
-    "question": "A classification system that aims to reveal \\"relationships by descent\\" among organisms is fundamentally based on:",
+    "question": "A classification system that aims to reveal 'relationships by descent' among organisms is fundamentally based on:",
     "options": [
       {"text": "Artificial criteria"},
       {"text": "Evolutionary principles"},
@@ -200,7 +200,7 @@
   },
   {
     "id": 16,
-    "question": "For a classification of organisms to be considered \\"natural,\\" it must primarily rely on:",
+    "question": "For a classification of organisms to be considered 'natural,' it must primarily rely on:",
     "options": [
       {"text": "A limited set of easily observable traits"},
       {"text": "The economic value of the organisms"},
@@ -252,7 +252,7 @@
   },
   {
     "id": 20,
-    "question": "Classifications that aim to show \\"relationships by descent\\" are primarily focused on elucidating:",
+    "question": "Classifications that aim to show 'relationships by descent' are primarily focused on elucidating:",
     "options": [
       {"text": "The current ecological niches of species"},
       {"text": "The historical evolutionary pathways and common ancestry of organisms"},
@@ -338,7 +338,7 @@
       {"text": "Alfred Russel Wallace"}
     ],
     "answer": "Carolus Linnaeus",
-    "explanation": "The notes explicitly state that 'The idea of two names (<strong>binomial system</strong>) was popularized by a Swedish naturalist <strong>Carolus Linnaeus</strong>'. This system is fundamental to modern biological nomenclature.",
+    "explanation": "'The idea of two names (<strong>binomial system</strong>) was popularized by a Swedish naturalist <strong>Carolus Linnaeus</strong>'. This system is fundamental to modern biological nomenclature.",
     "questionImage": ""
   },
   {
@@ -351,7 +351,7 @@
       {"text": "A sub-species designation."}
     ],
     "answer": "The original describer of the species.",
-    "explanation": "The text clarifies that 'The <strong>L after the name refers to Linnaeus who described the species</strong>'. This 'L' is an abbreviation for the botanist Linnaeus, serving as the <strong>authority</strong> who first formally published the description of that species.",
+    "explanation": "The <strong>L after the name refers to Linnaeus who described the species</strong>'. This 'L' is an abbreviation for the botanist Linnaeus, serving as the <strong>authority</strong> who first formally published the description of that species.",
     "questionImage": ""
   },
   {
@@ -377,7 +377,7 @@
       {"text": "Poaceae"}
     ],
     "answer": "Convolvulaceae",
-    "explanation": "The notes explicitly state that 'related families such as <strong>Solanaceae and Convolvulaceae belong to the same order (Polemoniales)</strong>'. This means they share the same immediate higher taxonomic rank, which is the Order.",
+    "explanation": "'Related families such as <strong>Solanaceae and Convolvulaceae belong to the same order (Polemoniales)</strong>'. This means they share the same immediate higher taxonomic rank, which is the Order.",
     "questionImage": ""
   },
   {
@@ -390,7 +390,7 @@
       {"text": "Fabaceae"}
     ],
     "answer": "Solanaceae",
-    "explanation": "The notes explicitly state that 'the tobacco genus, pepper genus, tomato genus and garden egg genus (<i>Nicotiana</i>, <i>Capsicum</i>, <i>Lycopersicum</i> and <i>Solanum</i> respectively) all belong in the family <strong>Solanaceae</strong>'.",
+    "explanation": "The 'tobacco genus, pepper genus, tomato genus and garden egg genus (<i>Nicotiana</i>, <i>Capsicum</i>, <i>Lycopersicum</i> and <i>Solanum</i> respectively) all belong in the family <strong>Solanaceae</strong>'.",
     "questionImage": ""
   },
   {
@@ -429,7 +429,7 @@
       {"text": "True leaves"}
     ],
     "answer": "Seeds",
-    "explanation": "The notes introduce Spermatophyta as 'The Angiospermae (the flowering <strong>seed plants</strong>)'. Furthermore, the classes listed under Spermatophyta are Gymnospermae and Angiospermae, both of which are characterized by producing seeds.",
+    "explanation": "The lecturer introduce Spermatophyta as 'The Angiospermae (the flowering <strong>seed plants</strong>)'. Furthermore, the classes listed under Spermatophyta are Gymnospermae and Angiospermae, both of which are characterized by producing seeds.",
     "questionImage": ""
   },
   {
@@ -486,7 +486,7 @@
   },
   {
     "id": 38,
-    "question": "A classification system that is considered \\\\"artificial\\\\" is typically based on:",
+    "question": "A classification system that is considered 'artificial' is typically based on:",
     "options": [
       {"text": "Evolutionary relationships."},
       {"text": "A limited number of criteria."},
@@ -494,7 +494,7 @@
       {"text": "Relationships by descent."}
     ],
     "answer": "A limited number of criteria.",
-    "explanation": "The notes state that '<strong>Very few criteria</strong> or a multiplicity of criteria may be used to classify organisms: the former is said to be <strong>artificial</strong> while the latter is said to be natural'. 'The former' refers to 'very few criteria'.",
+    "explanation": "It was stated that '<strong>Very few criteria</strong> or a multiplicity of criteria may be used to classify organisms: the former is said to be <strong>artificial</strong> while the latter is said to be natural'. 'The former' refers to 'very few criteria'.",
     "questionImage": ""
   },
   {
@@ -507,12 +507,12 @@
       {"text": "Genera"}
     ],
     "answer": "Classes",
-    "explanation": "The notes describe the hierarchical structure, stating that 'different groups of <strong>classes</strong> belong in different divisions which make the Plant Kingdom'. This indicates that classes are the direct components that form the divisions, which in turn form the Kingdom.",
+    "explanation": "The hierarchical structure, stating that 'different groups of <strong>classes</strong> belong in different divisions which make the Plant Kingdom'. This indicates that classes are the direct components that form the divisions, which in turn form the Kingdom.",
     "questionImage": ""
   },
   {
     "id": 40,
-    "question": "In the family Solanaceae, <i>Solanum</i> serves as the \\\\"type genus,\\\\" indicating its role as a:",
+    "question": "In the family Solanaceae, <i>Solanum</i> serves as the 'type genus,' indicating its role as a:",
     "options": [
       {"text": "Recently discovered genus."},
       {"text": "Genus with the highest number of species."},
