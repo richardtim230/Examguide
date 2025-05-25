@@ -234,7 +234,7 @@
       }
     }
 
-    @media(max-width: 600px) {
+    @media(max-width: 800px) {
       .container {
         max-width: 96vw;
         padding: 5vw 2vw;
@@ -276,7 +276,7 @@
     <div class="header-inner">
       <div class="header-left">
         <span class="exam-title" id="examTitle">Loading Exam...</span>
-        <span class="candidate-name" id="candidateName">User: </span>
+        <span class="candidate-name" id="candidateName">CANDIDATE:  </span>
       </div>
       <div class="header-center">
         <img src="logo.png" alt="School Logo" class="school-logo" />
@@ -413,7 +413,7 @@
       }
       const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
       const secs = String(timeRemaining % 60).padStart(2, '0');
-      document.getElementById("timer").innerText = `Time: ${mins}:${secs}`;
+      document.getElementById("timer").innerText = `Time Remaining: ${mins}:${secs}`;
       timeRemaining--;
     }
 
