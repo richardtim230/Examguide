@@ -13,14 +13,27 @@
     "explanation": "The derivative of $x^n$ is $nx^{n-1}$."
   },
   {
+  "id": 3,
+  "question": "Which of these is the flag of Nigeria?",
+  "questionImage": "biochem2.webp",
+  "options": [
+    { "text": "Option A", "image": "boy-doing-homework-with-use-laptop_23-2148880020.jpg" },
+    { "text": "Option B", "image": "biochem2.webp" },
+    { "text": "Option C", "image": "Screenshot_20250515-102706~3.png" },
+    { "text": "Option D", "image": "accesp.jpg" }
+  ],
+  "answer": "Option A",
+  "explanation": "The green-white-green is the national flag of Nigeria."
+  },
+  {
     "id": 2,
     "question": "Identify the graph of the function $y = \\sin(x)$.",
-    "questionImage": "images/sine_question.png",
+    "questionImage": "Screenshot_20250515-102706~3.png",
     "options": [
-      { "text": "Option A", "image": "images/option_a.png" },
-      { "text": "Option B", "image": "images/option_b.png" },
-      { "text": "Option C", "image": "images/option_c.png" },
-      { "text": "Option D", "image": "images/option_d.png" }
+      { "text": "Option A", "image": "biochem2.webp" },
+      { "text": "Option B", "image": "accesp.jpg" },
+      { "text": "Option C", "image": "boy-doing-homework-with-use-laptop_23-2148880020.jpg" },
+      { "text": "Option D", "image": "biochem2.webp" }
     ],
     "answer": "Option B",
     "explanation": "Option B correctly represents the sine wave."
