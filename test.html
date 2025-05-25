@@ -3,231 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CBT Test</title>
+  <title>Exam Interface</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #232526, #414345);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      color: #333;
     }
-
     header {
-      background: #1f1f1f;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
-
-    .branding {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    header img {
+      height: 50px;
+      vertical-align: middle;
+      margin-right: 10px;
     }
-
-    .branding img {
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .branding .titles {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .titles .exam-name {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .titles .username {
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    #timer {
-      font-weight: bold;
-      font-size: 15px;
-      background: #00c6ff;
-      padding: 8px 12px;
-      border-radius: 6px;
-      color: #000;
-      margin-top: 5px;
-    }
-
     .container {
-      flex: 1;
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-
-    .question-box {
-      margin-bottom: 20px;
-    }
-
     .question {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 1.2em;
       margin-bottom: 15px;
     }
-
+    .question img {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
     .options {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
     .options button {
-      padding: 12px 18px;
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      border: 2px solid transparent;
-      border-radius: 8px;
-      font-size: 16px;
-      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      font-size: 1em;
+      background-color: #e2e8f0;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: background-color 0.3s;
     }
-
-    .options button:hover {
-      background: #00c6ff;
-      color: #000;
-    }
-
     .options button.selected {
-      background: #00c6ff;
-      color: #000;
-      border-color: #0072ff;
+      background-color: #3b82f6;
+      color: white;
     }
-
-    .nav-buttons {
-      margin-top: 20px;
+    .options img {
+      max-height: 50px;
+      margin-left: 10px;
+      border-radius: 4px;
+    }
+    .navigation {
       display: flex;
       justify-content: space-between;
+      margin-top: 20px;
     }
-
-    .nav-buttons button {
+    .navigation button {
       padding: 10px 20px;
-      font-size: 15px;
+      font-size: 1em;
+      background-color: #1e3a8a;
+      color: white;
       border: none;
-      border-radius: 8px;
-      background: #0072ff;
-      color: #fff;
+      border-radius: 5px;
       cursor: pointer;
     }
-
-    .nav-buttons button:disabled {
-      background: #555;
-      cursor: not-allowed;
-    }
-
-    @media(max-width: 600px) {
-      header {
+    @media (max-width: 600px) {
+      .options button {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
       }
-
-      .question {
-        font-size: 16px;
-      }
-
-      .options button {
-        font-size: 14px;
-        padding: 10px 14px;
-      }
-
-      .nav-buttons {
-        flex-direction: column;
-        gap: 10px;
+      .options img {
+        margin-left: 0;
+        margin-top: 10px;
       }
     }
   </style>
+  <!-- MathJax for LaTeX rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
   <header>
-    <div class="branding">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/120px-HTML5_logo_and_wordmark.svg.png" alt="Logo">
-      <div class="titles">
-        <div class="exam-name">General Knowledge Exam</div>
-        <div class="username" id="candidateName">User: </div>
-      </div>
-    </div>
-    <div id="timer">Loading...</div>
+    <img src="logo.png" alt="Logo" />
+    <span>Candidate: <strong>John Doe</strong> | Exam: <strong>Mathematics 101</strong></span>
   </header>
-
   <div class="container">
-    <div class="question-box" id="questionBox">
-      <!-- Content loads here -->
+    <div id="questionBox">
+      <!-- Question and options will be injected here -->
     </div>
-    <div class="nav-buttons">
-      <button onclick="prevQuestion()" id="prevBtn">Previous</button>
-      <button onclick="nextQuestion()" id="nextBtn">Next</button>
+    <div class="navigation">
+      <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+      <button id="nextBtn" onclick="nextQuestion()">Next</button>
     </div>
   </div>
 
   <script>
-    const currentUser = localStorage.getItem('current_user') || 'Guest';
-    document.getElementById('candidateName').innerText += currentUser;
-
     let questions = [];
     let currentQuestionIndex = 0;
     let userAnswers = {};
-    let timeLimit = 180;
-    let timeRemaining = timeLimit;
-    let timerInterval;
 
-    async function loadQuestions() {
-      try {
-        const res = await fetch('/main-questions.json');
-        if (!res.ok) throw new Error("Could not load questions");
-        const data = await res.json();
-        questions = shuffle(data.map(q => ({
-          ...q,
-          options: shuffle([...q.options])
-        })));
+    // Fetch questions from JSON file
+    fetch('main-questions.json')
+      .then(response => response.json())
+      .then(data => {
+        questions = data;
         renderQuestion();
-        timerInterval = setInterval(updateTimer, 1000);
-      } catch (err) {
-        document.getElementById("questionBox").innerHTML =
-          `<p style="color:red;">Failed to load questions. Please refresh or try again later.</p>`;
-        document.getElementById("timer").innerText = "Error!";
-        console.error(err);
-      }
-    }
+      })
+      .catch(error => console.error('Error loading questions:', error));
 
     function renderQuestion() {
       const q = questions[currentQuestionIndex];
       const container = document.getElementById("questionBox");
+
+      // Construct question HTML
+      let questionHTML = `<div class="question">${currentQuestionIndex + 1}. ${q.question}</div>`;
+      if (q.questionImage) {
+        questionHTML += `<img src="${q.questionImage}" alt="Question Image" />`;
+      }
+
+      // Construct options HTML
+      const optionsHTML = q.options.map(opt => {
+        const isSelected = userAnswers[q.id] === opt.text;
+        const imgTag = opt.image ? `<img src="${opt.image}" alt="Option Image" />` : '';
+        return `
+          <button class="${isSelected ? 'selected' : ''}" onclick="selectAnswer(${q.id}, '${opt.text}', this)">
+            <span>${opt.text}</span>
+            ${imgTag}
+          </button>
+        `;
+      }).join('');
+
       container.innerHTML = `
-        <div class="question">${currentQuestionIndex + 1}. ${q.question}</div>
-        <div class="options">
-          ${q.options.map(opt => `
-            <button onclick="selectAnswer(${q.id}, '${opt}', this)"
-              class="${userAnswers[q.id] === opt ? 'selected' : ''}">
-              ${opt}
-            </button>
-          `).join('')}
-        </div>
+        ${questionHTML}
+        <div class="options">${optionsHTML}</div>
       `;
+
+      // Disable/enable navigation buttons
       document.getElementById("prevBtn").disabled = currentQuestionIndex === 0;
-      document.getElementById("nextBtn").innerText =
-        currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
+      document.getElementById("nextBtn").innerText = currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
+
+      // Re-render MathJax
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
     }
 
-    function selectAnswer(qid, answer, btn) {
-      userAnswers[qid] = answer;
-      document.querySelectorAll(".options button").forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
+    function selectAnswer(questionId, selectedText, buttonElement) {
+      userAnswers[questionId] = selectedText;
+      // Remove 'selected' class from all buttons
+      const buttons = buttonElement.parentElement.querySelectorAll('button');
+      buttons.forEach(btn => btn.classList.remove('selected'));
+      // Add 'selected' class to clicked button
+      buttonElement.classList.add('selected');
     }
 
     function nextQuestion() {
@@ -235,7 +174,9 @@
         currentQuestionIndex++;
         renderQuestion();
       } else {
-        submitTest();
+        // Submit logic here
+        alert('Exam submitted!');
+        console.log('User Answers:', userAnswers);
       }
     }
 
@@ -245,35 +186,6 @@
         renderQuestion();
       }
     }
-
-    function updateTimer() {
-      if (timeRemaining <= 0) {
-        submitTest();
-        return;
-      }
-      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
-      const secs = String(timeRemaining % 60).padStart(2, '0');
-      document.getElementById("timer").innerText = `Time: ${mins}:${secs}`;
-      timeRemaining--;
-    }
-
-    function submitTest() {
-      clearInterval(timerInterval);
-      localStorage.setItem(`answers_${currentUser}`, JSON.stringify(userAnswers));
-      localStorage.setItem(`questions_${currentUser}`, JSON.stringify(questions));
-      localStorage.setItem(`timeTaken_${currentUser}`, timeLimit - timeRemaining);
-      window.location.href = 'summary.html';
-    }
-
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    window.onload = loadQuestions;
   </script>
 </body>
 </html>
