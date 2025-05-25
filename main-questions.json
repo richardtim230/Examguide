@@ -1,6 +1,6 @@
 [
   {
-    "title": "INTRODUCTORY BOTANY",
+    "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
       {
@@ -14,7 +14,7 @@
         ],
         "answer": "Anther",
         "explanation": "The anther is the part of the stamen where pollen is produced.",
-        "questionImage": ""
+        "questionImage": "csc2.webp"
       },
       {
         "id": 2,
@@ -27,7 +27,7 @@
         ],
         "answer": "Attract pollinators",
         "explanation": "Petals are often brightly colored to attract insects and other pollinators.",
-        "questionImage": ""
+        "questionImage": "Screenshot_20250515-102706~3.png"
       },
       {
         "id": 3,
