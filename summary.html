@@ -4,13 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=0.90"/>
   <title>Exam Summary</title>
-  <script>
-// Prevent unauthorized access
-if (!currentUser || currentUser === "Guest") {
-  // Redirect to login page (adjust the path as needed)
-  window.location.href = "mock.html";
-}
-</script>
+  
   <style>
     body {
       font-family: 'Segoe UI', 'Tahoma', Geneva, Verdana, sans-serif;
@@ -336,7 +330,11 @@ if (!currentUser || currentUser === "Guest") {
     const totalQuestions = questions.length;
     const attemptedQuestions = Object.keys(answers).length;
     let score = 0;
-
+// Prevent unauthorized access
+if (!currentUser || currentUser === "Guest") {
+  // Redirect to login page (adjust the path as needed)
+  window.location.href = "mock.html";
+}
     questions.forEach(q => {
       if (answers[q.id] !== undefined && typeof answers[q.id] !== 'undefined' && answers[q.id] === q.answer) score++;
     });
