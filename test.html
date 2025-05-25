@@ -41,48 +41,109 @@
     }
 
     header {
-      background: #1f1f1f;
-      padding: 15px 20px;
+      background: linear-gradient(120deg, #141E30 0%, #2d6a99 100%);
+      padding: 0;
+      position: relative;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 18px 0 #001c3c44;
+    }
+
+    .header-inner {
+      max-width: 1050px;
+      margin: 0 auto;
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      align-items: stretch;
+      padding: 0 16px;
+      min-height: 110px;
+      position: relative;
     }
 
-    .branding {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .branding img {
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .branding .titles {
+    .header-left {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      min-width: 250px;
+      z-index: 2;
+      padding-left: 8px;
     }
-
-    .titles .exam-name {
-      font-size: 16px;
+    .exam-title {
+      font-size: 1.35rem;
       font-weight: bold;
+      letter-spacing: 0.5px;
+      color: #fff;
+      margin-bottom: 8px;
+      margin-top: 14px;
+      text-shadow: 0 2px 8px #001c3c44;
+    }
+    .candidate-name {
+      font-size: 1rem;
+      color: #bdeaff;
+      background: rgba(0,198,255,0.08);
+      border-radius: 6px;
+      padding: 5px 13px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: inline-block;
     }
 
-    .titles .username {
-      font-size: 13px;
-      color: #ccc;
+    .header-center {
+      flex: 1 0 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 220px;
+      z-index: 1;
+      padding: 14px 5px 10px 5px;
+      position: relative;
+    }
+    .school-logo {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 4px 24px #00c6ff33;
+      margin-bottom: 8px;
+      object-fit: cover;
+      border: 3px solid #0072ff44;
+      display: block;
+    }
+    .school-name {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 1.2px;
+      text-align: center;
+      text-shadow: 0 2px 8px #001c3c44;
+    }
+    .test-subtitle {
+      font-size: 1.01rem;
+      color: #bdeaff;
+      margin-top: 4px;
+      letter-spacing: 0.7px;
+      text-align: center;
+      font-weight: 500;
+      text-shadow: 0 1px 5px #001c3c44;
     }
 
     #timer {
       font-weight: bold;
-      font-size: 15px;
+      font-size: 1.01rem;
       background: #00c6ff;
-      padding: 8px 12px;
-      border-radius: 6px;
-      color: #000;
-      margin-top: 5px;
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: #002e53;
+      box-shadow: 0 2px 8px #00c6ff30;
+      margin-top: 13px;
+      margin-right: 18px;
+      align-self: flex-end;
+      z-index: 2;
+      position: absolute;
+      right: 0;
+      top: 13px;
     }
 
     .container {
@@ -154,25 +215,46 @@
       cursor: not-allowed;
     }
 
+    @media(max-width: 900px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 3vw;
+        min-height: unset;
+      }
+      .header-left {
+        align-items: center;
+        padding-left: 0;
+        margin-bottom: 6px;
+      }
+      #timer {
+        position: static;
+        margin: 12px 0 0 0;
+        align-self: center;
+      }
+    }
+
     @media(max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+      .container {
+        max-width: 96vw;
+        padding: 5vw 2vw;
       }
-
-      .question {
-        font-size: 16px;
+      .school-logo {
+        width: 46px;
+        height: 46px;
       }
-
-      .options button {
-        font-size: 14px;
-        padding: 10px 14px;
+      .school-name {
+        font-size: 1.08rem;
       }
-
-      .nav-buttons {
-        flex-direction: column;
-        gap: 10px;
+      .test-subtitle {
+        font-size: 0.92rem;
+      }
+      .exam-title {
+        font-size: 1rem;
+      }
+      .candidate-name {
+        font-size: 0.9rem;
+        padding: 5px 8px;
       }
     }
     .options button img {
@@ -191,14 +273,18 @@
 </head>
 <body>
   <header>
-    <div class="branding">
-      <img src="logo.png" alt="Logo">
-      <div class="titles">
-        <div class="exam-name" id="examTitle">Loading...</div>
-        <div class="username" id="candidateName">User: </div>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-title" id="examTitle">Loading Exam...</span>
+        <span class="candidate-name" id="candidateName">User: </span>
       </div>
+      <div class="header-center">
+        <img src="logo.png" alt="School Logo" class="school-logo" />
+        <div class="school-name">Obafemi Awolowo University</div>
+        <div class="test-subtitle">Central Mock Test</div>
+      </div>
+      <div id="timer">Loading...</div>
     </div>
-    <div id="timer">Loading...</div>
   </header>
 
   <div class="container">
