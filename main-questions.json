@@ -3,7 +3,656 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
-  
+  {
+    "id": 101,
+    "question": "Which characteristic is shared by both terrestrial plants and their green algal progenitors?",
+    "options": [
+      {"text": "Presence of stomata"},
+      {"text": "Cell wall composed of cellulose"},
+      {"text": "Development of cuticle"},
+      {"text": "Retention of embryo within parent"}
+    ],
+    "answer": "Cell wall composed of cellulose",
+    "explanation": "Terrestrial plants share several fundamental functions and structures with their green algal ancestors, including having a <strong>cell wall composed of cellulose</strong>, containing chloroplasts with chlorophylls a and b, and storing carbohydrate as starch.",
+    "questionImage": ""
+  },
+  {
+    "id": 102,
+    "question": "What is the primary function of stomata in terrestrial plants, addressing a challenge of land life?",
+    "options": [
+      {"text": "Preventing water loss"},
+      {"text": "Absorbing soil nutrients"},
+      {"text": "Facilitating gaseous exchange"},
+      {"text": "Providing structural rigidity"}
+    ],
+    "answer": "Facilitating gaseous exchange",
+    "explanation": "Living on land presents challenges, and terrestrial plants developed <strong>stomata for gaseous exchange</strong>, allowing for efficient intake of carbon dioxide and release of oxygen while minimizing water loss.",
+    "questionImage": ""
+  },
+  {
+    "id": 103,
+    "question": "In contrast to algae, what evolutionary change in land plants ensures the protection of delicate gametes from drying during their development?",
+    "options": [
+      {"text": "Dispersal of gametes via water currents"},
+      {"text": "Production of flagellated sperm"},
+      {"text": "Formation of gametangia with sterile jacket cells"},
+      {"text": "Non-retention of developing eggs"}
+    ],
+    "answer": "Formation of gametangia with sterile jacket cells",
+    "explanation": "Land plants produce their gametes within <strong>gametangia</strong>, which are specialized organs possessing <strong>protective jackets of sterile (non-reproductive) cells</strong>. These jackets are crucial for protecting the delicate gametes from desiccation in a non-aquatic environment.",
+    "questionImage": ""
+  },
+  {
+    "id": 104,
+    "question": "Which of the following is NOT explicitly listed as a direct usefulness of plants to man?",
+    "options": [
+      {"text": "Fiber production"},
+      {"text": "Mineral cycling"},
+      {"text": "Atmospheric nitrogen fixation"},
+      {"text": "Fuel source"}
+    ],
+    "answer": "Atmospheric nitrogen fixation",
+    "explanation": "Plants are useful for food, fiber, fuel, medicines, environmental amelioration, industrial materials, <strong>mineral cycling</strong>, and mediating chemical processes like fermentation. Atmospheric nitrogen fixation, while a biological process, is not explicitly listed as a general usefulness of plants to man in the provided text.",
+    "questionImage": ""
+  },
+  {
+    "id": 105,
+    "question": "In the alternation of generations, which generation is characterized as haploid and multicellular?",
+    "options": [
+      {"text": "Sporophyte"},
+      {"text": "Zygote"},
+      {"text": "Gametophyte"},
+      {"text": "Embryo"}
+    ],
+    "answer": "Gametophyte",
+    "explanation": "The life cycle of all plants includes a <strong>gametophyte</strong>, which is defined as a <strong>haploid, multicellular organism</strong> responsible for producing gametes.",
+    "questionImage": ""
+  },
+  {
+    "id": 106,
+    "question": "What is one of the main evolutionary trends in plants related to their life cycle, adapting to terrestrial environments?",
+    "options": [
+      {"text": "Increase in the haploid generation"},
+      {"text": "Dominance of the gametophyte"},
+      {"text": "Reduction of the diploid generation"},
+      {"text": "Dominance of the diploid generation"}
+    ],
+    "answer": "Dominance of the diploid generation",
+    "explanation": "One of the main trends in plant evolution, particularly as an adaptation to terrestrial environments, is the <strong>reduction of the haploid generation and the increasing dominance of the diploid</strong> (sporophyte) generation.",
+    "questionImage": ""
+  },
+  {
+    "id": 107,
+    "question": "During which geological period did the initial evolution of plants from aquatic ancestors (green algae) occur?",
+    "options": [
+      {"text": "Early Devonian Period"},
+      {"text": "Cretaceous Period"},
+      {"text": "Late Ordovician Period"},
+      {"text": "Mesozoic Era"}
+    ],
+    "answer": "Late Ordovician Period",
+    "explanation": "Fossil records indicate that the evolution of plants from their aquatic ancestors, green algae, took place during the <strong>Late Ordovician Period of the Paleozoic Era</strong>, approximately 460 million years ago.",
+    "questionImage": ""
+  },
+  {
+    "id": 108,
+    "question": "The earliest vascular plants, which appeared in the Early Devonian Period, notably lacked which crucial reproductive structure?",
+    "options": [
+      {"text": "Spores"},
+      {"text": "Seeds"},
+      {"text": "Flowers"},
+      {"text": "Cones"}
+    ],
+    "answer": "Seeds",
+    "explanation": "The <strong>Early Devonian Period</strong> (about 360 million years ago) marked the appearance of the earliest vascular plants. A defining characteristic of these early forms, still seen in ferns and other seedless vascular plants, was their <strong>lack of seeds</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 109,
+    "question": "What is the primary function of lignin in the cellulose matrix of plant cell walls, particularly for aerial support?",
+    "options": [
+      {"text": "Water absorption"},
+      {"text": "Photosynthesis"},
+      {"text": "Gaseous exchange"},
+      {"text": "Structural support"}
+    ],
+    "answer": "Structural support",
+    "explanation": "For the shoot system to stand upright in the air, plant cells must be able to accumulate <strong>lignin in the cellulose matrix of their walls</strong>. Lignin provides essential rigidity and <strong>structural support</strong>, enabling plants to grow tall and resist gravity.",
+    "questionImage": ""
+  },
+  {
+    "id": 110,
+    "question": "Which conducting tissue in vascular plants is a living tissue responsible for distributing sugars, amino acids, and other organic nutrients throughout the plant?",
+    "options": [
+      {"text": "Xylem"},
+      {"text": "Cortex"},
+      {"text": "Phloem"},
+      {"text": "Epidermis"}
+    ],
+    "answer": "Phloem",
+    "explanation": "The vascular system includes <strong>phloem</strong>, which is a <strong>living tissue</strong> primarily responsible for the <strong>translocation of sugars</strong> (products of photosynthesis), amino acids, and other organic nutrients from leaves to other parts of the plant.",
+    "questionImage": ""
+  },
+  {
+    "id": 111,
+    "question": "Which of the following plant groups is NOT classified as a seed plant?",
+    "options": [
+      {"text": "Cycads"},
+      {"text": "Pines"},
+      {"text": "Mosses"},
+      {"text": "Bamboos"}
+    ],
+    "answer": "Mosses",
+    "explanation": "The seed plants comprise Gymnosperms and Angiosperms, including examples like cycads, pines, palms, bamboos, and bananas. <strong>Mosses</strong> are bryophytes, which are non-vascular plants and reproduce via spores, not seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 112,
+    "question": "What is considered the most significant attribute of the seed habit, enabling the embryo to survive periods of unfavorable conditions?",
+    "options": [
+      {"text": "The presence of a protective seed coat"},
+      {"text": "The development of a flower"},
+      {"text": "The growth of the embryo within a megasporangium containing stored food"},
+      {"text": "The replacement of flagellated sperm by pollen"}
+    ],
+    "answer": "The growth of the embryo within a megasporangium containing stored food",
+    "explanation": "The most important attribute of the seed habit is the <strong>growth of the embryo within a megasporangium that contains stored food</strong>. This unique situation allows the embryo to enter a state of dormancy of various durations, which is a crucial evolutionary achievement for terrestrial survival.",
+    "questionImage": ""
+  },
+  {
+    "id": 113,
+    "question": "What is the distinguishing characteristic of Gymnosperms regarding their ovules at the time of pollination?",
+    "options": [
+      {"text": "Ovules are completely enclosed by sporophyte tissues."},
+      {"text": "Ovules are enclosed within a carpel."},
+      {"text": "Ovules are not completely enclosed by sporophyte tissues."},
+      {"text": "Ovules develop into fruits after fertilization."}
+    ],
+    "answer": "Ovules are not completely enclosed by sporophyte tissues.",
+    "explanation": "The defining feature of Gymnosperms is that their <strong>ovules are not completely enclosed by tissues of the sporophyte at pollination</strong>. This 'naked' condition of the ovules is what gives them their name.",
+    "questionImage": ""
+  },
+  {
+    "id": 114,
+    "question": "In gymnosperms, which part of the ovule is a megasporangium completely surrounded by a thick layer of cells called the integument?",
+    "options": [
+      {"text": "Micropyle"},
+      {"text": "Archegonium"},
+      {"text": "Nucellus"},
+      {"text": "Megagametophyte"}
+    ],
+    "answer": "Nucellus",
+    "explanation": "Each ovule in gymnosperms contains a megasporangium specifically called the <strong>nucellus</strong>, which is completely surrounded by a thick layer of cells known as the integument.",
+    "questionImage": ""
+  },
+  {
+    "id": 115,
+    "question": "After meiosis in the megasporangium of a gymnosperm, how many cells of the resulting linear tetrad typically degenerate?",
+    "options": [
+      {"text": "One"},
+      {"text": "Two"},
+      {"text": "Three"},
+      {"text": "All four"}
+    ],
+    "answer": "Three",
+    "explanation": "A single megaspore mother cell within each megasporangium undergoes meiosis, producing a linear tetrad of four cells. Of these, <strong>three typically degenerate</strong>, leaving only one functional megaspore to develop.",
+    "questionImage": ""
+  },
+  {
+    "id": 116,
+    "question": "How long does it take for the megagametophyte to fully develop in gymnosperms after the functional megaspore is formed?",
+    "options": [
+      {"text": "A few days"},
+      {"text": "One month"},
+      {"text": "Over one year"},
+      {"text": "Several years"}
+    ],
+    "answer": "Over one year",
+    "explanation": "The remaining functional megaspore, after the degeneration of others, develops into a megagametophyte over a significant period, specifically <strong>over one year</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 117,
+    "question": "What is the primary function of the pair of sacs found on the four-celled pollen grains of gymnosperms?",
+    "options": [
+      {"text": "Nutrient storage"},
+      {"text": "Attachment to the ovule"},
+      {"text": "Buoyancy for wind dispersal"},
+      {"text": "Protection from UV radiation"}
+    ],
+    "answer": "Buoyancy for wind dispersal",
+    "explanation": "Each microspore develops into a four-celled pollen grain equipped with a <strong>pair of sacs for buoyancy</strong>. These sacs are crucial for aiding the pollen's dispersal by wind.",
+    "questionImage": ""
+  },
+  {
+    "id": 118,
+    "question": "What is the distinguishing feature of Angiosperms regarding their ovules at the time of pollination?",
+    "options": [
+      {"text": "Ovules are naked and exposed."},
+      {"text": "Ovules are enclosed within diploid tissues."},
+      {"text": "Ovules are produced in cones."},
+      {"text": "Ovules are fertilized by flagellated sperm."}
+    ],
+    "answer": "Ovules are enclosed within diploid tissues.",
+    "explanation": "The distinguishing feature of the Angiosperms is that their <strong>ovules are enclosed within diploid tissues</strong> (specifically, the carpel) at the time of pollination, a key innovation that led to the evolution of the flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 119,
+    "question": "In the angiosperm life cycle, where does megasporogenesis (the meiotic process leading to egg cell formation) take place?",
+    "options": [
+      {"text": "Anther"},
+      {"text": "Stigma"},
+      {"text": "Ovary"},
+      {"text": "Pollen grain"}
+    ],
+    "answer": "Ovary",
+    "explanation": "In the angiosperm life cycle, meiosis takes place in two locations: in the anther (microsporogenesis) and in the <strong>ovary (megasporogenesis)</strong>, which leads to the formation of the female gametophyte (embryo sac).",
+    "questionImage": ""
+  },
+  {
+    "id": 120,
+    "question": "After three mitotic divisions of the functional megaspore in angiosperms, how many haploid nuclei are typically formed within the embryo sac?",
+    "options": [
+      {"text": "Four"},
+      {"text": "Six"},
+      {"text": "Eight"},
+      {"text": "Twelve"}
+    ],
+    "answer": "Eight",
+    "explanation": "The functional megaspore undergoes <strong>three successive mitotic divisions</strong>, which ultimately leads to the formation of <strong>8 haploid nuclei</strong> within the embryo sac (megagametophyte).",
+    "questionImage": ""
+  },
+  {
+    "id": 121,
+    "question": "In the angiosperm embryo sac, which specific nuclei cluster at the central position?",
+    "options": [
+      {"text": "Antipodal cells"},
+      {"text": "Polar nuclei"},
+      {"text": "Egg cell"},
+      {"text": "Synergids"}
+    ],
+    "answer": "Polar nuclei",
+    "explanation": "Within the angiosperm embryo sac, the 8 haploid nuclei arrange themselves into distinct groups. The <strong>two polar nuclei</strong> are specifically located and cluster at the center of the embryo sac.",
+    "questionImage": ""
+  },
+  {
+    "id": 122,
+    "question": "What is the ploidy level of the embryo formed as a direct result of double fertilization in angiosperms?",
+    "options": [
+      {"text": "n"},
+      {"text": "2n"},
+      {"text": "3n"},
+      {"text": "4n"}
+    ],
+    "answer": "2n",
+    "explanation": "During the process of double fertilization in angiosperms, one sperm nucleus fuses with the egg cell to form the <strong>embryo</strong>, which is <strong>diploid (2n)</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 123,
+    "question": "What structure forms the protective outer covering of the new seed in angiosperms?",
+    "options": [
+      {"text": "Ovary wall"},
+      {"text": "Endosperm"},
+      {"text": "Integuments"},
+      {"text": "Carpel"}
+    ],
+    "answer": "Integuments",
+    "explanation": "After fertilization, the <strong>integuments</strong>, which originally surrounded the ovule, develop and differentiate to form the <strong>coat of the new seed</strong>, providing essential protection.",
+    "questionImage": ""
+  },
+  {
+    "id": 124,
+    "question": "How many sperm nuclei are typically carried by a functional pollen tube to the embryo sac in angiosperms?",
+    "options": [
+      {"text": "One"},
+      {"text": "Two"},
+      {"text": "Three"},
+      {"text": "Four"}
+    ],
+    "answer": "Two",
+    "explanation": "Microsporogenesis in angiosperms produces pollen grains that, after germination, extrude a pollen tube. This tube carries <strong>two sperm nuclei</strong> to the embryo sac, both of which are involved in double fertilization.",
+    "questionImage": ""
+  },
+  {
+    "id": 125,
+    "question": "What is the precise botanical definition of a seed?",
+    "options": [
+      {"text": "A mature ovary"},
+      {"text": "A fertilized ovule"},
+      {"text": "A mature pollen grain"},
+      {"text": "A developing embryo"}
+    ],
+    "answer": "A fertilized ovule",
+    "explanation": "A <strong>seed is defined as a fertilized ovule</strong>. It contains the embryo, stored food reserves, and a protective seed coat, representing a crucial stage in the plant life cycle.",
+    "questionImage": ""
+  },
+  {
+    "id": 126,
+    "question": "In seed plants, what is the primary mechanism for transporting male sex cells to the female sex cells?",
+    "options": [
+      {"text": "Through water currents"},
+      {"text": "By flagellated sperm motility"},
+      {"text": "By wind or animals"},
+      {"text": "Through direct contact between plant parts"}
+    ],
+    "answer": "By wind or animals",
+    "explanation": "Unlike lower plants, the male sex cells in seed plants are not motile. They are transported to the female sex cells primarily by agents such as <strong>wind or animals</strong>, which is a key adaptation for terrestrial reproduction.",
+    "questionImage": ""
+  },
+  {
+    "id": 127,
+    "question": "What is the ploidy level of the sporophyte generation in the plant life cycle?",
+    "options": [
+      {"text": "n"},
+      {"text": "2n"},
+      {"text": "3n"},
+      {"text": "4n"}
+    ],
+    "answer": "2n",
+    "explanation": "The <strong>sporophyte</strong> is the <strong>diploid generation (2n)</strong> in the plant life cycle. It develops from the zygote and produces spores through meiosis.",
+    "questionImage": ""
+  },
+  {
+    "id": 128,
+    "question": "What is the primary role of the root system in a vascular plant, distinct from the shoot system?",
+    "options": [
+      {"text": "Photosynthesis"},
+      {"text": "Gaseous exchange"},
+      {"text": "Absorption of water and minerals"},
+      {"text": "Providing structural support for aerial parts"}
+    ],
+    "answer": "Absorption of water and minerals",
+    "explanation": "The body of a vascular plant is differentiated into an underground component (root) and aerial components (stem and leaves). The <strong>roots primarily absorb water and minerals</strong> from the soil.",
+    "questionImage": ""
+  },
+  {
+    "id": 129,
+    "question": "Which geological period, within the Mesozoic Era, is marked by the emergence of flowering plants?",
+    "options": [
+      {"text": "Paleozoic Era"},
+      {"text": "Early Devonian Period"},
+      {"text": "Cretaceous Period"},
+      {"text": "Jurassic Period"}
+    ],
+    "answer": "Cretaceous Period",
+    "explanation": "The <strong>Cretaceous Period in the Mesozoic Era</strong> (approximately 130 million years ago) witnessed the emergence of flowering plants (Angiosperms), a significant event in plant phylogeny.",
+    "questionImage": ""
+  },
+  {
+    "id": 130,
+    "question": "What is the fundamental difference in fertilization processes leading to seed formation between gymnosperms and angiosperms?",
+    "options": [
+      {"text": "Gymnosperms undergo double fertilization, angiosperms single fertilization."},
+      {"text": "Gymnosperm seeds are formed without fertilization, angiosperm seeds require it."},
+      {"text": "Gymnosperm seeds are produced from single fertilization, angiosperm seeds from double fertilization."},
+      {"text": "Gymnosperms use pollen tubes, angiosperms do not."}
+    ],
+    "answer": "Gymnosperm seeds are produced from single fertilization, angiosperm seeds from double fertilization.",
+    "explanation": "A key distinction in seed development is that <strong>gymnosperm seeds are produced from single fertilization</strong> (one sperm fuses with the egg), while <strong>angiosperm seeds are produced from double fertilization</strong> (one sperm fuses with the egg, another with polar nuclei).",
+    "questionImage": ""
+  },
+  {
+    "id": 131,
+    "question": "What is a crucial function of the shoot system in a vascular plant, besides making and storing food, that addresses a challenge of terrestrial life?",
+    "options": [
+      {"text": "Absorbing water from the air"},
+      {"text": "Anchoring the plant to the ground"},
+      {"text": "Providing support to stand upright in the air"},
+      {"text": "Transporting water from roots to leaves"}
+    ],
+    "answer": "Providing support to stand upright in the air",
+    "explanation": "The shoot system, comprising the stem and leaves, is responsible for making and storing food. Crucially, it must also have <strong>support to be able to stand straight in the air</strong>, which is achieved through lignified cell walls and vascular tissues.",
+    "questionImage": ""
+  },
+  {
+    "id": 132,
+    "question": "Which two major groups of plants are collectively referred to as 'seed plants' and are considered by some botanists as a single division, Spermatophyta?",
+    "options": [
+      {"text": "Mosses and Ferns"},
+      {"text": "Algae and Fungi"},
+      {"text": "Gymnosperms and Angiosperms"},
+      {"text": "Liverworts and Horsetails"}
+    ],
+    "answer": "Gymnosperms and Angiosperms",
+    "explanation": "The <strong>seed plants</strong> are specifically identified as the <strong>Gymnosperms and the Angiosperms</strong>. Some botanists treat these two groups as a single division, the Spermatophyta.",
+    "questionImage": ""
+  },
+  {
+    "id": 133,
+    "question": "What is the overarching purpose of meiosis in the angiosperm life cycle?",
+    "options": [
+      {"text": "To produce vegetative cells for growth"},
+      {"text": "To form the endosperm for nourishment"},
+      {"text": "To produce viable egg cells and pollen grains for fertilization"},
+      {"text": "To develop the embryo after fertilization"}
+    ],
+    "answer": "To produce viable egg cells and pollen grains",
+    "explanation": "The purpose of meiosis in angiosperms is to <strong>produce viable egg cells and pollen grains</strong>. These haploid reproductive cells are essential for the subsequent process of fertilization, which leads to the formation of a new zygote and seed.",
+    "questionImage": ""
+  },
+  {
+    "id": 134,
+    "question": "Which specific part of the angiosperm flower does a functional pollen grain land on to initiate germination and pollen tube extrusion?",
+    "options": [
+      {"text": "Anther"},
+      {"text": "Ovary"},
+      {"text": "Stigmatic surface"},
+      {"text": "Ovule"}
+    ],
+    "answer": "Stigmatic surface",
+    "explanation": "During fertilization, a functional pollen grain lands on the <strong>stigmatic surface</strong> of the pistil. This landing triggers its germination, leading to the extrusion of its protoplast as a pollen tube.",
+    "questionImage": ""
+  },
+  {
+    "id": 135,
+    "question": "What is the ploidy level of the endosperm, a nutritive tissue, formed during double fertilization in angiosperms?",
+    "options": [
+      {"text": "n"},
+      {"text": "2n"},
+      {"text": "3n"},
+      {"text": "4n"}
+    ],
+    "answer": "3n",
+    "explanation": "During double fertilization in angiosperms, one sperm nucleus fuses with the two polar nuclei. This fusion results in the formation of the <strong>endosperm</strong>, which is a <strong>triploid (3n)</strong> tissue that serves as a food reserve for the developing embryo.",
+    "questionImage": ""
+  },
+  {
+    "id": 136,
+    "question": "What is the precise botanical definition of an ovule?",
+    "options": [
+      {"text": "A fertilized egg cell"},
+      {"text": "A megasporangium covered by one, two, or more integuments"},
+      {"text": "A mature pollen grain"},
+      {"text": "A developing fruit"}
+    ],
+    "answer": "A megasporangium covered by one, two, or more integuments",
+    "explanation": "An <strong>ovule is defined as a megasporangium covered by one, two, or rarely more integuments</strong>. This structure contains the female gametophyte and, after fertilization, develops into a seed.",
+    "questionImage": ""
+  },
+  {
+    "id": 137,
+    "question": "Which group of plants is genetically considered by botanists to be the most advanced in the plant kingdom?",
+    "options": [
+      {"text": "Bryophytes"},
+      {"text": "Pteridophytes"},
+      {"text": "Gymnosperms"},
+      {"text": "Seed plants"}
+    ],
+    "answer": "Seed plants",
+    "explanation": "The <strong>seed plants</strong>, comprising both Gymnosperms and Angiosperms, are genetically believed by botanists to be the <strong>most advanced in the plant kingdom</strong> due to their complex adaptations for terrestrial life and successful reproductive strategies.",
+    "questionImage": ""
+  },
+  {
+    "id": 138,
+    "question": "What is the primary evolutionary problem solved by the development of a vascular system in land plants?",
+    "options": [
+      {"text": "Producing flowers for reproduction"},
+      {"text": "Providing overall structural support for the plant body"},
+      {"text": "Conduction of water, minerals, and photosynthetic products to distant organs"},
+      {"text": "Facilitating gaseous exchange with the atmosphere"}
+    ],
+    "answer": "Conduction of water, minerals, and photosynthetic products to distant organs",
+    "explanation": "A vascular system developed to solve the problem of <strong>conduction of water and minerals to distant organs from the roots and the translocation of the products of photosynthesis to the stem and root</strong>, enabling plants to grow larger and colonize diverse terrestrial habitats.",
+    "questionImage": ""
+  },
+  {
+    "id": 139,
+    "question": "Which type of plant is characterized by bearing seeds that are protected and nourished within ovaries?",
+    "options": [
+      {"text": "Gymnosperms"},
+      {"text": "Ferns"},
+      {"text": "Angiosperms"},
+      {"text": "Mosses"}
+    ],
+    "answer": "Angiosperms",
+    "explanation": "<strong>Angiosperms</strong>, also known as flowering plants, are characterized by their flowers, which are complex reproductive structures that bear <strong>seeds protected and nursed in the ovaries</strong>, a key distinguishing feature.",
+    "questionImage": ""
+  },
+  {
+    "id": 140,
+    "question": "What is the ploidy level of the gametophyte generation in the plant life cycle?",
+    "options": [
+      {"text": "n"},
+      {"text": "2n"},
+      {"text": "3n"},
+      {"text": "4n"}
+    ],
+    "answer": "n",
+    "explanation": "The <strong>gametophyte</strong> is the <strong>haploid (n)</strong>, multicellular organism in the plant life cycle. It produces gametes by mitosis.",
+    "questionImage": ""
+  },
+  {
+    "id": 141,
+    "question": "What is the primary difference in gamete dispersal strategy between algae and land plants?",
+    "options": [
+      {"text": "Algae disperse gametes in a non-aquatic environment, land plants in water."},
+      {"text": "Algae gametes are protected from desiccation, land plant gametes are not."},
+      {"text": "Algae disperse gametes in water, land plants in a non-aquatic environment."},
+      {"text": "Algae produce gametes in gametangia, land plants do not."}
+    ],
+    "answer": "Algae disperse gametes in water, land plants in a non-aquatic environment.",
+    "explanation": "A significant evolutionary change with movement to land is that, in contrast to algae, gametes of land plants now had to be <strong>dispersed in a non-aquatic environment</strong>, necessitating adaptations like pollen.",
+    "questionImage": ""
+  },
+  {
+    "id": 142,
+    "question": "Which specific group of plants represents the dominant plant form of the terrestrial habitat?",
+    "options": [
+      {"text": "Bryophytes"},
+      {"text": "Pteridophytes"},
+      {"text": "Seed plants"},
+      {"text": "Algae"}
+    ],
+    "answer": "Seed plants",
+    "explanation": "The <strong>seed plants</strong> (Gymnosperms and Angiosperms) are the <strong>dominant plant form of the terrestrial habitat</strong>, having successfully adapted to a wide range of environmental conditions.",
+    "questionImage": ""
+  },
+  {
+    "id": 143,
+    "question": "In gymnosperms, where are the male cones typically produced on the tree relative to the female cones?",
+    "options": [
+      {"text": "Upper branches"},
+      {"text": "Underground"},
+      {"text": "Lower branches"},
+      {"text": "On the main trunk"}
+    ],
+    "answer": "Lower branches",
+    "explanation": "In gymnosperms, <strong>male cones are typically produced at the lower branches</strong> of trees, while the larger female cones are found on the upper branches.",
+    "questionImage": ""
+  },
+  {
+    "id": 144,
+    "question": "What is the specific term for the megasporangium found within a gymnosperm ovule?",
+    "options": [
+      {"text": "Integument"},
+      {"text": "Micropyle"},
+      {"text": "Nucellus"},
+      {"text": "Archegonium"}
+    ],
+    "answer": "Nucellus",
+    "explanation": "Each ovule in gymnosperms contains a <strong>megasporangium called the nucellus</strong>, which is the central part of the ovule where the megaspore mother cell undergoes meiosis.",
+    "questionImage": ""
+  },
+  {
+    "id": 145,
+    "question": "How many archegonia, each containing a large egg, may be found at the micropylar end of a gymnosperm megagametophyte?",
+    "options": [
+      {"text": "One"},
+      {"text": "Two to six"},
+      {"text": "Seven to ten"},
+      {"text": "Thousands"}
+    ],
+    "answer": "Two to six",
+    "explanation": "The gymnosperm megagametophyte, which can consist of thousands of cells, typically contains <strong>2-6 archegonia</strong> at its micropylar end, with each archegonium housing a large egg.",
+    "questionImage": ""
+  },
+  {
+    "id": 146,
+    "question": "What is the fate of the second sperm and other associated cells after one sperm nucleus unites with the egg cell to form a zygote in gymnosperms?",
+    "options": [
+      {"text": "They form the endosperm."},
+      {"text": "They develop into a second embryo."},
+      {"text": "They degenerate."},
+      {"text": "They form the seed coat."}
+    ],
+    "answer": "They degenerate.",
+    "explanation": "In gymnosperms, which undergo single fertilization, after one sperm nucleus unites with the egg cell to form a zygote, the <strong>other sperm and associated cells degenerate</strong>, as there is no double fertilization process.",
+    "questionImage": ""
+  },
+  {
+    "id": 147,
+    "question": "What is the name of the diploid tissue that specifically covers the ovules of angiosperms at the time of pollination?",
+    "options": [
+      {"text": "Integument"},
+      {"text": "Nucellus"},
+      {"text": "Carpel"},
+      {"text": "Endosperm"}
+    ],
+    "answer": "Carpel",
+    "explanation": "The distinguishing feature of angiosperms is that their ovules are enclosed within diploid tissues. This specific tissue is the <strong>carpel</strong>, which covers the ovules and forms the ovary.",
+    "questionImage": ""
+  },
+  {
+    "id": 148,
+    "question": "To which phylum do all angiosperms belong?",
+    "options": [
+      {"text": "Bryophyta"},
+      {"text": "Pteridophyta"},
+      {"text": "Anthophyta"},
+      {"text": "Spermatophyta"}
+    ],
+    "answer": "Anthophyta",
+    "explanation": "The angiosperms, which constitute about 250,000 species of flowering plants, belong to phylum <strong>Anthophyta</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 149,
+    "question": "In angiosperm megasporogenesis, after the meiotic division in the ovary produces a linear tetrad of cells, how many of these cells typically degenerate?",
+    "options": [
+      {"text": "One"},
+      {"text": "Two"},
+      {"text": "Three"},
+      {"text": "All four"}
+    ],
+    "answer": "Three",
+    "explanation": "At the end of the meiotic division in the angiosperm ovary, a linear tetrad of four cells results. Of these, <strong>three of the cells degenerate</strong>, leaving only one functional megaspore to develop into the embryo sac.",
+    "questionImage": ""
+  },
+  {
+    "id": 150,
+    "question": "What is the specific process called when a functional pollen grain lands on the stigmatic surface and extrudes its protoplast as a pollen tube through a pore?",
+    "options": [
+      {"text": "Pollination"},
+      {"text": "Fertilization"},
+      {"text": "Germination"},
+      {"text": "Meiosis"}
+    ],
+    "answer": "Germination",
+    "explanation": "When a functional pollen grain lands on the stigmatic surface, it undergoes <strong>germination</strong>, which involves extruding its protoplast to form a pollen tube through a pore, initiating the fertilization process.",
+    "questionImage": ""
+  },
   {
     "id": 41,
     "question": "A colonial form of algae is best described as an aggregate of cells that are:",
