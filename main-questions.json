@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "question": "What is the derivative of $x^2$?",
+    "question": "What is the derivative of $$x^2$$?",
     "questionImage": "",
     "options": [
-      { "text": "$2x$", "image": "" },
-      { "text": "$x$", "image": "" },
-      { "text": "$x^2$", "image": "" },
-      { "text": "$\\frac{1}{x}$", "image": "" }
+      { "text": "$$2x$$", "image": "" },
+      { "text": "$$x$$", "image": "" },
+      { "text": "$$x^2$$", "image": "" },
+      { "text": "$$\\frac{1}{x}$", "image": "" }
     ],
     "answer": "$2x$",
     "explanation": "The derivative of $x^n$ is $nx^{n-1}$."
