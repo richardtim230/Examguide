@@ -5,32 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CBT Test</title>
   
+  <!-- MathJax and KaTeX for math rendering -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
-  
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <!-- MathJax Setup -->
-<!-- Marked.js -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-<!-- MathJax -->
-<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(', '\\)']], [['\(', '\)']], 
-      displayMath: [['\\[', '\\]'], ['$$', '$$']]
-    },
-    svg: { fontCache: 'global' }
-  };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <!-- Marked.js for Markdown (if needed) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Chart.js and html2pdf (if needed elsewhere) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+  <!-- MathJax Setup -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['\\[', '\\]'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -179,23 +176,25 @@
       }
     }
     .options button img {
-  float: right;
-  max-width: 40%;
-  border-radius: 6px;
+      float: right;
+      max-width: 40%;
+      border-radius: 6px;
     }
-    
+    #noActiveSet {
+      color: #ff4e55;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 40px;
+    }
   </style>
-  <!-- MathJax for LaTeX/math rendering -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <header>
     <div class="branding">
       <img src="logo.png" alt="Logo">
       <div class="titles">
-        <div class="exam-name">INTRODUCTORY BOTANY II</div>
+        <div class="exam-name" id="examTitle">Loading...</div>
         <div class="username" id="candidateName">User: </div>
       </div>
     </div>
@@ -203,59 +202,70 @@
   </header>
 
   <div class="container">
+    <div id="noActiveSet" style="display:none;">
+      No active question set is available. Please contact your instructor.
+    </div>
     <div class="question-box" id="questionBox">
       <!-- Content loads here -->
     </div>
-    <div class="nav-buttons">
+    <div class="nav-buttons" id="navButtons" style="display:none;">
       <button onclick="prevQuestion()" id="prevBtn">Previous</button>
       <button onclick="nextQuestion()" id="nextBtn">Next</button>
     </div>
   </div>
 
   <script>
-    
+    // User & Access
     const currentUser = localStorage.getItem('current_user') || 'Guest';
     document.getElementById('candidateName').innerText += currentUser;
-// Prevent unauthorized access
-if (!currentUser || currentUser === "Guest") {
-  // Redirect to login page (adjust the path as needed)
-  window.location.href = "mock.html";
+    if (!currentUser || currentUser === "Guest") {
+      window.location.href = "mock.html";
     }
+
+    // Questions logic
+    let allQuestionSets = [];
     let questions = [];
     let currentQuestionIndex = 0;
     let userAnswers = {};
-    let timeLimit = 180;
+    let timeLimit = 180; // seconds
     let timeRemaining = timeLimit;
     let timerInterval;
-    
-// Load question sets and render only the active set
-    fetch('main-questions.json')
-      .then(res => res.json())
-      .then(data => {
-        allQuestionSets = data;
-        const activeSet = allQuestionSets.find(set => set.status === "ACTIVE");
-        if (!activeSet) {
-          document.getElementById('examTitle').textContent = "No Active Exam";
-          document.getElementById('questionSection').style.display = "none";
-          document.getElementById('noActiveSet').style.display = "";
-          return;
-        }
-        questions = activeSet.questions;
-        if (!questions || questions.length === 0) {
-          document.getElementById('examTitle').textContent = activeSet.title + " (No Questions)";
-          document.getElementById('questionSection').style.display = "none";
-          document.getElementById('noActiveSet').style.display = "";
-          return;
-        }
-        document.getElementById('examTitle').textContent = activeSet.title;
-        document.getElementById('questionSection').style.display = "";
-        renderQuestion(0);
-        startTimer();
-      });
 
-    
-    
-function renderQuestion() {
+    async function loadQuestions() {
+      try {
+        const res = await fetch('main-questions.json');
+        if (!res.ok) throw new Error("Could not load questions");
+        const sets = await res.json();
+        allQuestionSets = sets;
+        // Find active set
+        const activeSet = allQuestionSets.find(set => set.status === "ACTIVE");
+        if (!activeSet || !activeSet.questions || activeSet.questions.length === 0) {
+          document.getElementById("examTitle").textContent = "No Active Exam";
+          document.getElementById("questionBox").innerHTML = "";
+          document.getElementById('navButtons').style.display = "none";
+          document.getElementById('noActiveSet').style.display = "";
+          document.getElementById("timer").innerText = "Error!";
+          return;
+        }
+        document.getElementById('examTitle').textContent = activeSet.title || "CBT Test";
+        questions = shuffle(activeSet.questions.map(q => ({
+          ...q,
+          options: shuffle([...q.options])
+        })));
+        document.getElementById('noActiveSet').style.display = "none";
+        document.getElementById('navButtons').style.display = "";
+        renderQuestion();
+        timerInterval = setInterval(updateTimer, 1000);
+      } catch (err) {
+        document.getElementById("questionBox").innerHTML =
+          `<p style="color:red;">Failed to load questions. Please refresh or try again later.</p>`;
+        document.getElementById("timer").innerText = "Error!";
+        document.getElementById('navButtons').style.display = "none";
+        console.error(err);
+      }
+    }
+
+    function renderQuestion() {
       const q = questions[currentQuestionIndex];
       const container = document.getElementById("questionBox");
 
@@ -267,7 +277,7 @@ function renderQuestion() {
         const isSelected = userAnswers[q.id] === opt.text;
         const hasImage = opt.image ? `<img src="${opt.image}" style="max-height:80px; margin-left:10px;">` : "";
         return `
-          <button onclick="selectAnswer(${q.id}, '${opt.text}', this)" class="${isSelected ? 'selected' : ''}">
+          <button onclick="selectAnswer(${q.id}, '${opt.text.replace(/'/g,"\\'")}', this)" class="${isSelected ? 'selected' : ''}">
             ${opt.text}${hasImage}
           </button>`;
       }).join('');
@@ -288,9 +298,6 @@ function renderQuestion() {
       }
     }
 
-
-    
-    
     function selectAnswer(qid, answer, btn) {
       userAnswers[qid] = answer;
       document.querySelectorAll(".options button").forEach(b => b.classList.remove('selected'));
