@@ -14,17 +14,34 @@
       display: flex;
       flex-direction: column;
     }
-    header {
-      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-      color: #fff;
-      padding: 28px 0 20px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-      flex-direction: column;
-      position: relative;
-    }
+    header, footer {
+  background: linear-gradient(-45deg, #0072ff, #00c6ff, #5e60ce, #f72585);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  color: #fff;
+  box-shadow: 0 4px 32px 0 #00c6ff44, 0 1.5px 0 #fff2;
+  position: relative;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media print {
+  header, footer {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+}
     header .logo-row {
       display: flex;
       align-items: center;
