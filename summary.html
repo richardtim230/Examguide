@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=0.90"/>
   <title>Exam Summary</title>
+  <script>
+// Prevent unauthorized access
+const currentUser = localStorage.getItem('current_user');
+if (!currentUser || currentUser === "Guest") {
+  // Redirect to login page (adjust the path as needed)
+  window.location.href = "mock.html";
+}
+</script>
   <style>
     body {
       font-family: 'Segoe UI', 'Tahoma', Geneva, Verdana, sans-serif;
