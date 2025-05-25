@@ -10,7 +10,7 @@
     { "source": "/general-articles", "destination": "/blog.html" },
     { "source": "/login", "destination": "/login.html" },
     { "source": "/profile-menu", "destination": "/profile-menu.html" },
-    { "source": "/communication", "destination": "/mmsg.html" }
+    { "source": "/mock-icthallb", "destination": "/mock.html" }
     
   ],
   "redirects": [
@@ -21,7 +21,7 @@
     { "source": "/old-cbt-examoau", "destination": "/cbt-examoau", "permanent": true },
     { "source": "/old-general-articles", "destination": "/general-articles", "permanent": true },
     { "source": "/old-profile-menu", "destination": "/profile-menu", "permanent": true },
-    { "source": "/old-communication", "destination": "/communication", "permanent": true }
+    { "source": "/old-mock-icthallb", "destination": "/ict-hallb", "permanent": true }
       
   ]
 }
