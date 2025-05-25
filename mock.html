@@ -6,44 +6,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       height: 100vh;
-      background: linear-gradient(135deg, #4b6cb7, #182848);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      position: relative;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .stars div {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 4s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
     }
 
     .login-container {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 16px;
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
       box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 40px 30px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       width: 100%;
       max-width: 400px;
-      color: #ffffff;
+      padding: 40px 30px;
       text-align: center;
-      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .login-container img.logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 20px;
     }
 
     .login-container h2 {
-      margin-bottom: 20px;
       font-size: 28px;
+      margin-bottom: 20px;
       font-weight: bold;
-      color: #ffffff;
     }
 
     input {
       width: 100%;
-      padding: 12px 15px;
+      padding: 12px;
       margin: 10px 0;
       border: none;
       border-radius: 8px;
@@ -51,7 +81,10 @@
       color: #fff;
       font-size: 16px;
       outline: none;
-      transition: background 0.3s;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
     }
 
     input:focus {
@@ -64,8 +97,7 @@
       margin-top: 15px;
       border: none;
       border-radius: 8px;
-      background: #00c6ff;
-      background: linear-gradient(to right, #0072ff, #00c6ff);
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       color: white;
       font-size: 16px;
       font-weight: bold;
@@ -74,7 +106,7 @@
     }
 
     button:hover {
-      background: linear-gradient(to right, #005bea, #00c6ff);
+      background: linear-gradient(to right, #0072ff, #00c6ff);
     }
 
     @media (max-width: 500px) {
@@ -82,18 +114,38 @@
         padding: 30px 20px;
       }
 
-      .login-container h2 {
-        font-size: 24px;
-      }
-
       input, button {
         font-size: 14px;
+      }
+
+      .login-container h2 {
+        font-size: 24px;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Animated background stars -->
+  <div class="stars">
+    <!-- Add 50 animated stars -->
+    <script>
+      for(let i=0; i<50; i++) {
+        let star = document.createElement('div');
+        let size = Math.random() * 4 + 1;
+        star.style.width = star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.animationDuration = `${Math.random() * 5 + 3}s`;
+        document.querySelector('.stars').appendChild(star);
+      }
+    </script>
+  </div>
+
   <div class="login-container">
+    <!-- Logo: Replace src with your actual logo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/120px-HTML5_logo_and_wordmark.svg.png" alt="CBT Logo" class="logo">
+    
     <h2>Welcome to CBT Portal</h2>
     <form id="authForm">
       <input type="text" id="username" placeholder="Username" required>
