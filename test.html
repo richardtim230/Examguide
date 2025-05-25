@@ -227,26 +227,33 @@ if (!currentUser || currentUser === "Guest") {
     let timeLimit = 180;
     let timeRemaining = timeLimit;
     let timerInterval;
+    
+// Load question sets and render only the active set
+    fetch('main-questions.json')
+      .then(res => res.json())
+      .then(data => {
+        allQuestionSets = data;
+        const activeSet = allQuestionSets.find(set => set.status === "ACTIVE");
+        if (!activeSet) {
+          document.getElementById('examTitle').textContent = "No Active Exam";
+          document.getElementById('questionSection').style.display = "none";
+          document.getElementById('noActiveSet').style.display = "";
+          return;
+        }
+        questions = activeSet.questions;
+        if (!questions || questions.length === 0) {
+          document.getElementById('examTitle').textContent = activeSet.title + " (No Questions)";
+          document.getElementById('questionSection').style.display = "none";
+          document.getElementById('noActiveSet').style.display = "";
+          return;
+        }
+        document.getElementById('examTitle').textContent = activeSet.title;
+        document.getElementById('questionSection').style.display = "";
+        renderQuestion(0);
+        startTimer();
+      });
 
-    async function loadQuestions() {
-      try {
-        const res = await fetch('/main-questions.json');
-        if (!res.ok) throw new Error("Could not load questions");
-        const data = await res.json();
-        questions = shuffle(data.map(q => ({
-          ...q,
-          options: shuffle([...q.options])
-        })));
-        renderQuestion();
-        timerInterval = setInterval(updateTimer, 1000);
-      } catch (err) {
-        document.getElementById("questionBox").innerHTML =
-          `<p style="color:red;">Failed to load questions. Please refresh or try again later.</p>`;
-        document.getElementById("timer").innerText = "Error!";
-        console.error(err);
-      }
-    }
-
+    
     
 function renderQuestion() {
       const q = questions[currentQuestionIndex];
@@ -281,6 +288,9 @@ function renderQuestion() {
       }
     }
 
+
+    
+    
     function selectAnswer(qid, answer, btn) {
       userAnswers[qid] = answer;
       document.querySelectorAll(".options button").forEach(b => b.classList.remove('selected'));
