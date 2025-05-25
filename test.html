@@ -158,6 +158,10 @@
     }
     
   </style>
+  <!-- MathJax for LaTeX/math rendering -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <header>
@@ -211,34 +215,39 @@
       }
     }
 
-    function renderQuestion() {
-  const q = questions[currentQuestionIndex];
-  const container = document.getElementById("questionBox");
+    
+function renderQuestion() {
+      const q = questions[currentQuestionIndex];
+      const container = document.getElementById("questionBox");
 
-  const questionImageHTML = q.questionImage
-    ? `<div style="margin: 10px 0;"><img src="${q.questionImage}" style="max-width:100%; border-radius:8px;"></div>`
-    : "";
+      const questionImageHTML = q.questionImage
+        ? `<div style="margin: 10px 0;"><img src="${q.questionImage}" style="max-width:100%; border-radius:8px;"></div>`
+        : "";
 
-  const optionsHTML = q.options.map(opt => {
-    const isSelected = userAnswers[q.id] === opt.text;
-    const hasImage = opt.image ? `<img src="${opt.image}" style="max-height:80px; margin-left:10px;">` : "";
-    return `
-      <button onclick="selectAnswer(${q.id}, '${opt.text}', this)" class="${isSelected ? 'selected' : ''}">
-        ${opt.text}${hasImage}
-      </button>`;
-  }).join('');
+      const optionsHTML = q.options.map(opt => {
+        const isSelected = userAnswers[q.id] === opt.text;
+        const hasImage = opt.image ? `<img src="${opt.image}" style="max-height:80px; margin-left:10px;">` : "";
+        return `
+          <button onclick="selectAnswer(${q.id}, '${opt.text}', this)" class="${isSelected ? 'selected' : ''}">
+            ${opt.text}${hasImage}
+          </button>`;
+      }).join('');
 
-  container.innerHTML = `
-    <div class="question">${currentQuestionIndex + 1}. ${q.question}</div>
-    ${questionImageHTML}
-    <div class="options">${optionsHTML}</div>
-  `;
+      container.innerHTML = `
+        <div class="question">${currentQuestionIndex + 1}. ${q.question}</div>
+        ${questionImageHTML}
+        <div class="options">${optionsHTML}</div>
+      `;
 
-  document.getElementById("prevBtn").disabled = currentQuestionIndex === 0;
-  document.getElementById("nextBtn").innerText =
-    currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
-}
+      document.getElementById("prevBtn").disabled = currentQuestionIndex === 0;
+      document.getElementById("nextBtn").innerText =
+        currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
 
+      // Trigger MathJax typesetting
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
 
     function selectAnswer(qid, answer, btn) {
       userAnswers[qid] = answer;
