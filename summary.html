@@ -6,44 +6,56 @@
   <title>Exam Summary</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', 'Tahoma', Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #232526, #414345);
       color: #fff;
       margin: 0;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     header {
-      background: #1f1f1f;
-      padding: 18px 20px;
+      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+      color: #fff;
+      padding: 28px 0 20px 0;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 16px;
-    }
-    header img {
-      height: 46px;
-      border-radius: 50%;
-    }
-    .summary-container {
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 28px 18px 24px 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      flex-direction: column;
       position: relative;
     }
-    #downloadPdfBtn {
-      background: #00c6ff;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
+    header .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    header img {
+      height: 62px;
+      border-radius: 12px;
+      background: #fff;
+      padding: 6px;
+      box-shadow: 0 2px 8px rgba(0,198,255,0.20);
+    }
+    header .main-title {
+      font-size: 2.2rem;
       font-weight: bold;
-      padding: 12px 18px;
-      cursor: pointer;
-      float: right;
-      margin-top: -10px;
-      margin-bottom: 20px;
+      letter-spacing: 1.5px;
+    }
+    header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.92;
+      margin-top: 5px;
+      font-weight: 400;
+    }
+    .summary-container {
+      max-width: 950px;
+      margin: 32px auto 32px auto;
+      background: rgba(255,255,255,0.09);
+      border-radius: 14px;
+      padding: 30px 22px 24px 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+      flex: 1 0 auto;
     }
     .section-title {
       font-size: 22px;
@@ -54,26 +66,27 @@
       margin-top: 24px;
     }
     .details-table-container {
-      margin-bottom: 30px;
+      margin-bottom: 32px;
       overflow-x: auto;
     }
     table.details-table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 0;
-      background: rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.11);
       border-radius: 10px;
       overflow: hidden;
       margin-top: 14px;
+      box-shadow: 0 2px 10px rgba(0,198,255,0.04);
     }
     .details-table th, .details-table td {
       padding: 14px 12px;
       text-align: left;
       font-size: 15px;
-      border-bottom: 1px solid rgba(0,198,255,0.08);
+      border-bottom: 1.2px solid rgba(0,198,255,0.12);
     }
     .details-table th {
-      background: rgba(0,198,255,0.12);
+      background: rgba(0,198,255,0.17);
       color: #00c6ff;
       font-weight: bold;
       width: 220px;
@@ -99,19 +112,20 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 36px;
     }
     .pie-chart-section canvas {
       background: rgba(255,255,255,0.10);
       border-radius: 50%;
-      margin-top: 7px;
+      margin-top: 13px;
+      box-shadow: 0 2px 12px rgba(0,198,255,0.10);
     }
     .question-review {
-      background: rgba(255,255,255,0.10);
-      margin: 18px 0;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      background: rgba(255,255,255,0.13);
+      margin: 18px 0 26px 0;
+      padding: 16px 16px 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .question-review .question {
       font-size: 17px;
@@ -128,7 +142,7 @@
     }
     .option-block .label {
       display: inline-block;
-      width: 110px;
+      width: 120px;
       font-weight: bold;
       color: #00c6ff;
     }
@@ -162,18 +176,78 @@
       border-radius: 6px;
       font-size: 15px;
     }
+    footer {
+      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+      color: #fff;
+      text-align: center;
+      padding: 22px 12px 30px 12px;
+      font-size: 1.13rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      box-shadow: 0 -2px 18px rgba(0,0,0,0.10);
+      margin-top: 32px;
+      position: relative;
+    }
+    #printBtn {
+      background: #fff;
+      color: #0072ff;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 13px 28px;
+      cursor: pointer;
+      margin: 0 auto 10px auto;
+      display: block;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px rgba(0,198,255,0.09);
+    }
+    #printBtn:hover {
+      background: #00c6ff;
+      color: #fff;
+    }
     @media (max-width: 800px) {
       .summary-container {
         padding: 12px 5px;
       }
-      #downloadPdfBtn {
-        float: none;
-        margin: 10px 0;
-        width: 100%;
-      }
       .details-table th, .details-table td {
         font-size: 13px;
         padding: 10px 6px;
+      }
+      .section-title {
+        font-size: 17px;
+      }
+      header .main-title {
+        font-size: 1.4rem;
+      }
+      header img {
+        height: 40px;
+      }
+    }
+    @media print {
+      #printBtn, footer {
+        display: none !important;
+      }
+      body, .summary-container, header {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      .pie-chart-section canvas, .question-review, .details-table, header img {
+        background: #fff !important;
+      }
+      header {
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      .correct-answer, .user-answer.correct, .user-answer.incorrect {
+        color: #000 !important;
+        background: #eee !important;
+      }
+      .explanation {
+        background: #f7faff !important;
+        color: #222 !important;
+        border-left: 4px solid #00c6ff !important;
       }
     }
   </style>
@@ -186,11 +260,15 @@
 </head>
 <body>
   <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/120px-HTML5_logo_and_wordmark.svg.png" alt="Logo">
-    <div style="font-size: 20px; font-weight: bold;">Exam Summary</div>
+    <div class="logo-row">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/120px-HTML5_logo_and_wordmark.svg.png" alt="Logo">
+      <div>
+        <div class="main-title">Exam Summary Report</div>
+        <div class="subtitle">Review your performance and answers below</div>
+      </div>
+    </div>
   </header>
   <div class="summary-container">
-    <button id="downloadPdfBtn">Download as PDF</button>
     <div class="section-title">Details</div>
     <div class="details-table-container">
       <table class="details-table" id="detailsTable">
@@ -204,23 +282,23 @@
     <div class="section-title">Attempt Review</div>
     <div id="reviewSection"></div>
   </div>
+  <footer>
+    <button id="printBtn">Print / Save as PDF</button>
+    &copy; <span id="year"></span> CBT Platform &mdash; Powered by ExamGuide
+  </footer>
   <script>
+    // Data and calculations
     const currentUser = localStorage.getItem('current_user') || 'Guest';
     const answers = JSON.parse(localStorage.getItem(`answers_${currentUser}`) || '{}');
     const questions = JSON.parse(localStorage.getItem(`questions_${currentUser}`) || '[]');
     const timeTaken = Number(localStorage.getItem(`timeTaken_${currentUser}`) || "0");
 
-    // Calculate stats
     const totalQuestions = questions.length;
     const attemptedQuestions = Object.keys(answers).length;
     let score = 0;
 
     questions.forEach(q => {
-      if (
-        answers[q.id] !== undefined &&
-        typeof answers[q.id] !== 'undefined' &&
-        answers[q.id] === q.answer
-      ) score++;
+      if (answers[q.id] !== undefined && typeof answers[q.id] !== 'undefined' && answers[q.id] === q.answer) score++;
     });
 
     const incorrect = attemptedQuestions - score;
@@ -348,54 +426,15 @@
         MathJax.typesetPromise();
       }
     }
-
     renderReview();
-  </script>
-  <!-- PDF dependencies -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- PDF logic -->
-  <script>
-    document.getElementById('downloadPdfBtn').addEventListener('click', function () {
-      const summaryEl = document.querySelector('.summary-container');
-      this.style.display = 'none';
 
-      html2canvas(summaryEl, {scale: 2, useCORS: true}).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new window.jspdf.jsPDF({
-          orientation: 'portrait',
-          unit: 'pt',
-          format: 'a4'
-        });
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = pageWidth - 30;
-        const imgHeight = canvas.height * imgWidth / canvas.width;
+    // Print button
+    document.getElementById('printBtn').onclick = function() {
+      window.print();
+    };
 
-        let position = 20;
-        pdf.addImage(imgData, 'PNG', 15, position, imgWidth, imgHeight);
-
-        let heightLeft = imgHeight;
-        while (heightLeft > pageHeight - 40) {
-          pdf.addPage();
-          position = 10;
-          heightLeft -= pageHeight - 40;
-          pdf.addImage(
-            imgData,
-            'PNG',
-            15,
-            position - heightLeft,
-            imgWidth,
-            imgHeight
-          );
-        }
-
-        pdf.save('exam-summary.pdf');
-        setTimeout(() => {
-          document.getElementById('downloadPdfBtn').style.display = '';
-        }, 500);
-      });
-    });
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
