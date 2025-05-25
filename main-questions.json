@@ -3,7 +3,396 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
-  
+  {
+    "id": 201,
+    "question": "What is a key evolutionary trend in vascular plants regarding the sporophyte generation?",
+    "options": [
+      {"text": "It becomes dependent."},
+      {"text": "It shows reduction."},
+      {"text": "It becomes dominant."},
+      {"text": "It produces gametes."}
+    ],
+    "answer": "It becomes dominant.",
+    "explanation": "In vascular plants, the <strong>sporophyte is the dominant generation</strong>, showing a progressive increase in size and complexity along the evolutionary ladder, unlike in bryophytes.",
+    "questionImage": ""
+  },
+  {
+    "id": 202,
+    "question": "Which primitive vascular plant obtains water and mineral salts from the soil primarily through rhizoids?",
+    "options": [
+      {"text": "<i>Lycopodium</i>"},
+      {"text": "<i>Selaginella</i>"},
+      {"text": "<i>Psilotum</i>"},
+      {"text": "A typical fern"}
+    ],
+    "answer": "<i>Psilotum</i>",
+    "explanation": "Species of <i>Psilotum</i>, a very primitive vascular plant, obtain water and mineral salts from the soil through <strong>rhizoids</strong>, similar to bryophytes, as their anatomy is root-like but lacks true roots.",
+    "questionImage": ""
+  },
+  {
+    "id": 203,
+    "question": "What is the characteristic branching pattern of the stem in primitive vascular forms like <i>Psilotum</i>?",
+    "options": [
+      {"text": "Monopodial"},
+      {"text": "Sympodial"},
+      {"text": "Dichotomous"},
+      {"text": "Alternate"}
+    ],
+    "answer": "Dichotomous",
+    "explanation": "Branching in primitive forms like <i>Psilotum</i> is described as <strong>dichotomous</strong>, where the stem forks into two equal branches.",
+    "questionImage": ""
+  },
+  {
+    "id": 204,
+    "question": "What is the maximum approximate height that species of <i>Psilotum</i> can attain?",
+    "options": [
+      {"text": "10 cm"},
+      {"text": "33 cm"},
+      {"text": "50 cm"},
+      {"text": "1 meter"}
+    ],
+    "answer": "33 cm",
+    "explanation": "Species of <i>Psilotum</i> are described as small plants, typically growing up to <strong>33 cm tall</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 205,
+    "question": "What is the nature of the spores produced by <i>Psilotum</i> regarding their uniformity?",
+    "options": [
+      {"text": "Heterosporous"},
+      {"text": "Isosporous"},
+      {"text": "Homosporous"},
+      {"text": "Anisosporous"}
+    ],
+    "answer": "Homosporous",
+    "explanation": "The spores produced by <i>Psilotum</i> are <strong>uniform in size and shape</strong>, indicating that the plant is <strong>homosporous</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 206,
+    "question": "From which specific cells do the spores of <i>Psilotum</i> originate?",
+    "options": [
+      {"text": "Haploid gametophyte cells"},
+      {"text": "Diploid stem cells"},
+      {"text": "Sterile jacket cells"},
+      {"text": "Rhizoid cells"}
+    ],
+    "answer": "Diploid stem cells",
+    "explanation": "The spores of <i>Psilotum</i> originate from <strong>diploid cells of the stem</strong>, which undergo meiosis within the sporangia.",
+    "questionImage": ""
+  },
+  {
+    "id": 207,
+    "question": "What is the primary nutritional mode of the gametophytes of <i>Psilotum</i>?",
+    "options": [
+      {"text": "Photosynthetic"},
+      {"text": "Parasitic"},
+      {"text": "Saprophytic"},
+      {"text": "Chemosynthetic"}
+    ],
+    "answer": "Saprophytic",
+    "explanation": "The gametophytes of <i>Psilotum</i> are <strong>saprophytic</strong>, meaning they obtain nutrients from decaying organic matter, and are often associated with mycorrhizal fungi.",
+    "questionImage": ""
+  },
+  {
+    "id": 208,
+    "question": "What is the specific location where archegonia are borne on the gametophyte of <i>Psilotum</i>?",
+    "options": [
+      {"text": "On protuberances"},
+      {"text": "At the base of rhizoids"},
+      {"text": "At terminal branch ends"},
+      {"text": "Within sporangia"}
+    ],
+    "answer": "At terminal branch ends",
+    "explanation": "At maturity, <strong>archegonia are borne at the terminal ends of the cylindrical branches</strong> of the <i>Psilotum</i> gametophyte.",
+    "questionImage": ""
+  },
+  {
+    "id": 209,
+    "question": "What type of sperms are produced by the antheridia of <i>Psilotum</i>?",
+    "options": [
+      {"text": "Non-flagellated"},
+      {"text": "Uniflagellate"},
+      {"text": "Biflagellate"},
+      {"text": "Multiflagellate"}
+    ],
+    "answer": "Biflagellate",
+    "explanation": "The antheridia of <i>Psilotum</i> produce numerous <strong>biflagellate sperms</strong>, which are released at maturity to swim and fertilize the eggs.",
+    "questionImage": ""
+  },
+  {
+    "id": 210,
+    "question": "What is the immediate product of the fusion of sperm and egg in <i>Psilotum</i>?",
+    "options": [
+      {"text": "Spore"},
+      {"text": "Gametophyte"},
+      {"text": "Zygote"},
+      {"text": "Sporangium"}
+    ],
+    "answer": "Zygote",
+    "explanation": "After fertilization, the <strong>zygote subsequently develops into a sporophyte</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 211,
+    "question": "Which genus is known as the 'so-called club mosses' and is found in wet highland locations?",
+    "options": [
+      {"text": "<i>Psilotum</i>"},
+      {"text": "<i>Selaginella</i>"},
+      {"text": "<i>Lycopodium</i>"},
+      {"text": "<i>Equisetum</i>"}
+    ],
+    "answer": "<i>Lycopodium</i>",
+    "explanation": "<strong><i>Lycopodium</i></strong> is the genus of the <strong>so-called club mosses</strong>, which are encountered in wet highland locations and other water parts of Nigeria.",
+    "questionImage": ""
+  },
+  {
+    "id": 212,
+    "question": "What is the nature of the spores produced by <i>Lycopodium</i> regarding their size?",
+    "options": [
+      {"text": "Heterosporous"},
+      {"text": "Isosporous"},
+      {"text": "Homosporous"},
+      {"text": "Anisosporous"}
+    ],
+    "answer": "Homosporous",
+    "explanation": "The spores of <i>Lycopodium</i> are <strong>homosporous</strong>, meaning they are uniform in size and produce a single type of gametophyte.",
+    "questionImage": ""
+  },
+  {
+    "id": 213,
+    "question": "What is the approximate length of the gametophyte of <i>Lycopodium</i> at maturity, under favorable conditions?",
+    "options": [
+      {"text": "Less than 1 mm"},
+      {"text": "2-3 mm long"},
+      {"text": "5-10 mm long"},
+      {"text": "Several centimeters"}
+    ],
+    "answer": "2-3 mm long",
+    "explanation": "Following spore discharge and under favorable conditions, the gametophyte of <i>Lycopodium</i> may be <strong>2-3 mm long</strong> at maturity.",
+    "questionImage": ""
+  },
+  {
+    "id": 214,
+    "question": "What is the nutritional mode of the gametophyte of <i>Lycopodium</i>?",
+    "options": [
+      {"text": "Photosynthetic"},
+      {"text": "Parasitic"},
+      {"text": "Saprophytic"},
+      {"text": "Symbiotic with algae"}
+    ],
+    "answer": "Saprophytic",
+    "explanation": "The gametophyte of <i>Lycopodium</i> is <strong>saprophytic</strong>, similar to <i>Psilotum</i>, and also has a mycorrhizal association for nutrient acquisition.",
+    "questionImage": ""
+  },
+  {
+    "id": 215,
+    "question": "In <i>Lycopodium</i>, where are both the antheridia and archegonia produced on the same plant?",
+    "options": [
+      {"text": "On separate gametophytes"},
+      {"text": "At the base of the stem"},
+      {"text": "On the same plant at the crown"},
+      {"text": "Underground on rhizomes"}
+    ],
+    "answer": "On the same plant at the crown",
+    "explanation": "In <i>Lycopodium</i>, both antheridia and archegonia are produced <strong>on the same plant at the crown</strong>, indicating a monoecious gametophyte.",
+    "questionImage": ""
+  },
+  {
+    "id": 216,
+    "question": "What type of sperms are produced by the antheridia of <i>Lycopodium</i>?",
+    "options": [
+      {"text": "Non-flagellated"},
+      {"text": "Uniflagellate"},
+      {"text": "Biflagellate"},
+      {"text": "Multiflagellate"}
+    ],
+    "answer": "Biflagellate",
+    "explanation": "The antheridia of <i>Lycopodium</i> produce numerous <strong>biflagellate sperms</strong>, which are released at maturity to fertilize eggs in the archegonia.",
+    "questionImage": ""
+  },
+  {
+    "id": 217,
+    "question": "Which genus is described as a large <i>Selaginella</i>-like genus with small leaves and a dichotomous or monopodial branching pattern?",
+    "options": [
+      {"text": "<i>Lycopodium</i>"},
+      {"text": "<i>Psilotum</i>"},
+      {"text": "<i>Selaginella</i>"},
+      {"text": "<i>Equisetum</i>"}
+    ],
+    "answer": "<i>Selaginella</i>",
+    "explanation": "<strong><i>Selaginella</i></strong> is described as a large <i>Selaginella</i>-like genus (referring to itself as the type genus for its group) with small leaves and a <strong>dichotomous or monopodial branching pattern</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 218,
+    "question": "What is a common characteristic of the stem branching pattern in <i>Selaginella</i>?",
+    "options": [
+      {"text": "Always dichotomous"},
+      {"text": "Always monopodial"},
+      {"text": "Mostly in one plane"},
+      {"text": "Irregular and sprawling"}
+    ],
+    "answer": "Mostly in one plane",
+    "explanation": "The branching of the stem in <i>Selaginella</i> is most commonly observed to occur <strong>in one plane</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 219,
+    "question": "In what type of locations are <i>Selaginella</i> plants primarily found?",
+    "options": [
+      {"text": "Arid deserts"},
+      {"text": "Deep freshwater lakes"},
+      {"text": "Wet open or shaded locations"},
+      {"text": "High altitude alpine regions"}
+    ],
+    "answer": "Wet open or shaded locations",
+    "explanation": "<i>Selaginella</i> plants are found mostly in <strong>wet open or shaded locations</strong>, indicating their preference for moist environments.",
+    "questionImage": ""
+  },
+  {
+    "id": 220,
+    "question": "What is a key characteristic of <i>Selaginella</i> leaves regarding their arrangement?",
+    "options": [
+      {"text": "Spirally arranged"},
+      {"text": "Opposite and decussate"},
+      {"text": "Sessile and two or four-ranked"},
+      {"text": "Whorled and petioled"}
+    ],
+    "answer": "Sessile and two or four-ranked",
+    "explanation": "The leaves of <i>Selaginella</i> are described as <strong>sessile</strong> (lacking a stalk) and arranged in a <strong>two or four-ranked</strong> pattern.",
+    "questionImage": ""
+  },
+  {
+    "id": 221,
+    "question": "What specific appendage do the leaves of <i>Selaginella</i> possess?",
+    "options": [
+      {"text": "A true root"},
+      {"text": "A vascular bundle"},
+      {"text": "A chlorophyllous adaxial appendage"},
+      {"text": "A protective cuticle"}
+    ],
+    "answer": "A chlorophyllous adaxial appendage",
+    "explanation": "The leaves of <i>Selaginella</i> have a <strong>chlorophyllous adaxial appendage</strong>, a unique structure on the upper surface of the leaf.",
+    "questionImage": ""
+  },
+  {
+    "id": 222,
+    "question": "Unlike <i>Lycopodium</i>, what type of root system is present in <i>Selaginella</i>?",
+    "options": [
+      {"text": "Rhizoids only"},
+      {"text": "Adventitious roots"},
+      {"text": "True roots"},
+      {"text": "Fibrous roots"}
+    ],
+    "answer": "True roots",
+    "explanation": "Unlike <i>Lycopodium</i>, <strong>true roots are present</strong> in <i>Selaginella</i>, indicating a more developed root system for anchorage and absorption.",
+    "questionImage": ""
+  },
+  {
+    "id": 223,
+    "question": "What two kinds of sporangia does <i>Selaginella</i> produce?",
+    "options": [
+      {"text": "Antheridia and Archegonia"},
+      {"text": "Microsporangia and Megasporangia"},
+      {"text": "Sporangia and Gametangia"},
+      {"text": "Homosporangia and Heterosporangia"}
+    ],
+    "answer": "Microsporangia and Megasporangia",
+    "explanation": "In <i>Selaginella</i>, there are two kinds of sporangia: <strong>megasporangia</strong>, which produce megaspores, and <strong>microsporangia</strong>, which produce microspores.",
+    "questionImage": ""
+  },
+  {
+    "id": 224,
+    "question": "What is the reproductive strategy observed in <i>Selaginella</i> regarding spore types?",
+    "options": [
+      {"text": "Homospory"},
+      {"text": "Isospory"},
+      {"text": "Heterospory"},
+      {"text": "Anisospory"}
+    ],
+    "answer": "Heterospory",
+    "explanation": "<i>Selaginella</i> produces both megaspores and microspores, clearly indicating that <strong>heterospory</strong> is observed in this genus, a significant evolutionary step.",
+    "questionImage": ""
+  },
+  {
+    "id": 225,
+    "question": "What is the nature of the gametophyte generation in <i>Selaginella</i>?",
+    "options": [
+      {"text": "Monoecious"},
+      {"text": "Dioecious"},
+      {"text": "Homosporous"},
+      {"text": "Saprophytic"}
+    ],
+    "answer": "Dioecious",
+    "explanation": "Because of the heterospory observed, the <strong>gametophyte generation in <i>Selaginella</i> is dioecious</strong>, meaning there are separate male and female gametophytes.",
+    "questionImage": ""
+  },
+  {
+    "id": 226,
+    "question": "How do motile sperm produced from the antheridia fertilize eggs in <i>Selaginella</i>?",
+    "options": [
+      {"text": "Via wind dispersal"},
+      {"text": "Through a pollen tube"},
+      {"text": "By swimming to the archegonia"},
+      {"text": "Through direct contact with the sporophyte"}
+    ],
+    "answer": "By swimming to the archegonia",
+    "explanation": "As in <i>Lycopodium</i>, motile sperm produced from the antheridia <strong>fertilize the eggs in the archegonia</strong>, implying they swim to reach the female gametes, requiring water for fertilization.",
+    "questionImage": ""
+  },
+  {
+    "id": 227,
+    "question": "Ferns are often assigned the status of an entire division by some botanists. What is the name of this division?",
+    "options": [
+      {"text": "Bryophyta"},
+      {"text": "Spermatophyta"},
+      {"text": "Pteridophyta"},
+      {"text": "Anthophyta"}
+    ],
+    "answer": "Pteridophyta",
+    "explanation": "Ferns, a very large group of vascular plants, are often assigned the status of the entire division <strong>Pteridophyta</strong> by some botanists.",
+    "questionImage": ""
+  },
+  {
+    "id": 228,
+    "question": "Which specific genus of fern is known to attain huge sizes and grow as tree ferns?",
+    "options": [
+      {"text": "<i>Pityrograma</i> sp."},
+      {"text": "<i>Ophioglossum</i> sp."},
+      {"text": "<i>Cyathea</i> sp."},
+      {"text": "<i>Lygodium</i> sp."}
+    ],
+    "answer": "<i>Cyathea</i> sp.",
+    "explanation": "Many species of ferns have well-developed stems and attain huge sizes, such as the tree ferns (<strong><i>Cyathea</i> sp.</strong>).",
+    "questionImage": ""
+  },
+  {
+    "id": 229,
+    "question": "Which two fern genera are specifically mentioned as being epiphytes?",
+    "options": [
+      {"text": "<i>Pityrograma</i> sp. and <i>Ophioglossum</i> sp."},
+      {"text": "<i>Cyathea</i> sp. and <i>Lygodium</i> sp."},
+      {"text": "<i>Oleandra</i> sp. and <i>Platycerium</i> sp."},
+      {"text": "<i>Arthopteris</i> sp. and <i>Lycopodium</i> sp."}
+    ],
+    "answer": "<i>Oleandra</i> sp. and <i>Platycerium</i> sp.",
+    "explanation": "Many species of <strong><i>Oleandra</i> sp. and <i>Platycerium</i> sp. are epiphytes</strong>, meaning they grow on other plants, typically trees, for support.",
+    "questionImage": ""
+  },
+  {
+    "id": 230,
+    "question": "What is the term for the smallest division of a fern frond, branching off the pinna?",
+    "options": [
+      {"text": "Axis"},
+      {"text": "Blade"},
+      {"text": "Pinnule"},
+      {"text": "Rhizome"}
+    ],
+    "answer": "Pinnule",
+    "explanation": "The diagram illustrating the structure of a fern frond shows that the <strong>pinnule</strong> is the smallest division, branching off the pinna, which in turn branches off the main axis.",
+    "questionImage": ""
+  },
   {
     "id": 151,
     "question": "Vascular plants are characterized by specialized internal tissues for conducting water and minerals, and for conducting the products of photosynthesis. What are these two tissue types, respectively?",
