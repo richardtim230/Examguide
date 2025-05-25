@@ -3,6 +3,787 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
+  
+  {
+    "id": 41,
+    "question": "A colonial form of algae is best described as an aggregate of cells that are:",
+    "options": [
+      {"text": "Highly differentiated into specialized tissues."},
+      {"text": "More or less similar and attached as a colony."},
+      {"text": "Always motile and independent."},
+      {"text": "Fused into a single, multinucleate mass."}
+    ],
+    "answer": "More or less similar and attached as a colony.",
+    "explanation": "Colonial forms of algae are defined as an aggregate of <strong>more or less similar cells</strong> which are attached together, forming a colony.",
+    "questionImage": ""
+  },
+  {
+    "id": 42,
+    "question": "Which of the following colonial green algae is characterized by non-motile cells?",
+    "options": [
+      {"text": "<i>Pandorina</i> sp."},
+      {"text": "<i>Volvox</i> sp."},
+      {"text": "<i>Pediastrum</i>"},
+      {"text": "<i>Chlamydomonas</i>"}
+    ],
+    "answer": "<i>Pediastrum</i>",
+    "explanation": "Among the listed colonial green algae, <i>Pediastrum</i> is specifically mentioned as having <strong>non-motile</strong> cells.",
+    "questionImage": ""
+  },
+  {
+    "id": 43,
+    "question": "<i>Pandorina</i> colonies are typically composed of how many individual cells?",
+    "options": [
+      {"text": "Eight"},
+      {"text": "Sixteen"},
+      {"text": "Thirty-two"},
+      {"text": "Thousands"}
+    ],
+    "answer": "Sixteen",
+    "explanation": "A <i>Pandorina</i> colony consistently consists of <strong>sixteen cells</strong>, which are attached to one another.",
+    "questionImage": ""
+  },
+  {
+    "id": 44,
+    "question": "Which specific phenomenon is <i>Pandorina</i> usually associated with in aquatic environments?",
+    "options": [
+      {"text": "Sedimentation"},
+      {"text": "Water bloom"},
+      {"text": "Oxygen depletion"},
+      {"text": "Bioaccumulation"}
+    ],
+    "answer": "Water bloom",
+    "explanation": "<i>Pandorina</i> usually occurs as species in <strong>water bloom</strong>, indicating its tendency to proliferate rapidly and visibly in aquatic environments.",
+    "questionImage": ""
+  },
+  {
+    "id": 45,
+    "question": "A cell from a <i>Pandorina</i> colony shares several attributes with <i>Chlamydomonas</i>. Which of these is NOT listed as a shared attribute?",
+    "options": [
+      {"text": "Nucleus"},
+      {"text": "Large chloroplast"},
+      {"text": "Cell wall"},
+      {"text": "Stigma"}
+    ],
+    "answer": "Cell wall",
+    "explanation": "The attributes explicitly listed as common between <i>Pandorina</i> and <i>Chlamydomonas</i> cells are: nucleus, large chloroplast, pyrenoid, flagella, and stigma. <strong>Cell wall</strong> is not mentioned in this specific list of shared attributes.",
+    "questionImage": ""
+  },
+  {
+    "id": 46,
+    "question": "Vegetative reproduction in <i>Pandorina</i> involves successive mitotic divisions of each cell in the colony. How many daughter colonies are produced from a single parent colony through this process?",
+    "options": [
+      {"text": "One"},
+      {"text": "Four"},
+      {"text": "Sixteen"},
+      {"text": "Thirty-two"}
+    ],
+    "answer": "Sixteen",
+    "explanation": "Vegetative reproduction in <i>Pandorina</i> is achieved through four successive mitotic divisions of each of the sixteen cells in the colony, thereby producing <strong>sixteen daughter colonies</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 47,
+    "question": "Sexual reproduction in <i>Pandorina</i> is characterized by what type of gamete pairing?",
+    "options": [
+      {"text": "Isogamous"},
+      {"text": "Oogamous"},
+      {"text": "Anisogamous"},
+      {"text": "Homogamous"}
+    ],
+    "answer": "Anisogamous",
+    "explanation": "Sexual reproduction in <i>Pandorina</i> is achieved by <strong>anisogamous pairing</strong>, which implies that the fusing gametes are morphologically dissimilar, typically differing in size.",
+    "questionImage": ""
+  },
+  {
+    "id": 48,
+    "question": "Under what specific conditions do single cells in <i>Pandorina</i> colonies assume gametic functions and pair for sexual reproduction?",
+    "options": [
+      {"text": "Nutrient scarcity"},
+      {"text": "Extreme temperatures"},
+      {"text": "Favourable conditions"},
+      {"text": "High light intensity"}
+    ],
+    "answer": "Favourable conditions",
+    "explanation": "Under <strong>favourable conditions</strong>, the single cells in <i>Pandorina</i> colonies assume gametic functions and pair for sexual reproduction.",
+    "questionImage": ""
+  },
+  {
+    "id": 49,
+    "question": "The genus <i>Volvox</i> is considered evolutionarily more advanced than <i>Pandorina</i> primarily due to its cells exhibiting:",
+    "options": [
+      {"text": "Greater motility."},
+      {"text": "Higher photosynthetic rates."},
+      {"text": "Greater levels of differentiation and specialization."},
+      {"text": "Simpler reproductive cycles."}
+    ],
+    "answer": "Greater levels of differentiation and specialization.",
+    "explanation": "<i>Volvox</i> is considered evolutionarily more advanced than <i>Pandorina</i> because its cells show <strong>greater levels of differentiation and specialization</strong>, indicating a more complex colonial organization.",
+    "questionImage": ""
+  },
+  {
+    "id": 50,
+    "question": "What structural feature connects the numerous cells within a <i>Volvox</i> colony?",
+    "options": [
+      {"text": "Cell walls"},
+      {"text": "Plasmodesmata"},
+      {"text": "Cytoplasmic strands"},
+      {"text": "Flagella"}
+    ],
+    "answer": "Cytoplasmic strands",
+    "explanation": "The many cells in a <i>Volvox</i> colony are connected with the <strong>cytoplasmic strands</strong> which run through the cells, facilitating communication and coordination.",
+    "questionImage": ""
+  },
+  {
+    "id": 51,
+    "question": "In the life cycle of algae, the haploid phase is denoted by which ploidy level?",
+    "options": [
+      {"text": "n"},
+      {"text": "2n"},
+      {"text": "3n"},
+      {"text": "4n"}
+    ],
+    "answer": "n",
+    "explanation": "In the life cycle, the <strong>haploid phase</strong> is denoted by the ploidy level <strong>(n)</strong>, representing a single set of chromosomes.",
+    "questionImage": ""
+  },
+  {
+    "id": 52,
+    "question": "The alternation of generation in algal life cycles refers to the sequential presence of which two distinct phases?",
+    "options": [
+      {"text": "Vegetative and reproductive"},
+      {"text": "Motile and non-motile"},
+      {"text": "Haploid and diploid"},
+      {"text": "Asexual and sexual"}
+    ],
+    "answer": "Haploid and diploid",
+    "explanation": "The alternation of generation refers to the two phases that alternate in the life cycle: the <strong>haploid phase (n)</strong> and the <strong>diploid phase (2n)</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 53,
+    "question": "In most lower plants, which phase of the life cycle is typically dominant?",
+    "options": [
+      {"text": "Diploid phase"},
+      {"text": "Sporophyte phase"},
+      {"text": "Haploid phase"},
+      {"text": "Gametophyte phase"}
+    ],
+    "answer": "Haploid phase",
+    "explanation": "In most of the lower plants, the <strong>haploid phase is the dominant generation</strong>, meaning it is typically larger, longer-lived, and more conspicuous.",
+    "questionImage": ""
+  },
+  {
+    "id": 54,
+    "question": "The term 'isogamous pairing' in algal sexual reproduction implies that the pairing cells (gametes) are:",
+    "options": [
+      {"text": "Of different sizes."},
+      {"text": "Non-motile."},
+      {"text": "Morphologically identical."},
+      {"text": "Genetically distinct."}
+    ],
+    "answer": "Morphologically identical.",
+    "explanation": "The pairing of cells (gametes) is said to be <strong>isogamous because the pairing cells (gametes) are morphologically identical</strong>, meaning they are indistinguishable in appearance.",
+    "questionImage": ""
+  },
+  {
+    "id": 55,
+    "question": "<i>Chlamydomonas</i> cells, which share attributes with <i>Pandorina</i> cells, possess a specialized organelle for light perception. What is this organelle called?",
+    "options": [
+      {"text": "Pyrenoid"},
+      {"text": "Vacuole"},
+      {"text": "Stigma"},
+      {"text": "Mitochondrion"}
+    ],
+    "answer": "Stigma",
+    "explanation": "The <strong>stigma (eyespot)</strong> is listed as an attribute of <i>Chlamydomonas</i> and is the specialized organelle responsible for light perception, aiding in phototaxis.",
+    "questionImage": ""
+  },
+  {
+    "id": 56,
+    "question": "The pyrenoid, a structure found in <i>Chlamydomonas</i> and <i>Pandorina</i> cells, is typically associated with which other large organelle?",
+    "options": [
+      {"text": "Nucleus"},
+      {"text": "Mitochondrion"},
+      {"text": "Vacuole"},
+      {"text": "Chloroplast"}
+    ],
+    "answer": "Chloroplast",
+    "explanation": "The diagram of <i>Chlamydomonas</i> shows the <strong>pyrenoid</strong> as a structure located within the <strong>chloroplast</strong>, where it is involved in starch synthesis and storage.",
+    "questionImage": ""
+  },
+  {
+    "id": 57,
+    "question": "The increase in size in multicellular organisms, as mentioned in the context of <i>Chlamydomonas</i> vegetative reproduction, is a result of what type of cell division?",
+    "options": [
+      {"text": "Meiotic divisions"},
+      {"text": "Mitotic divisions"},
+      {"text": "Binary fission"},
+      {"text": "Budding"}
+    ],
+    "answer": "Mitotic divisions",
+    "explanation": "Vegetative reproduction involves <strong>mitotic divisions</strong>, which are responsible for the increase in cell number in unicellular organisms and the <strong>increase in size in multicellular organisms</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 58,
+    "question": "What is the primary function of flagella in motile colonial algae like <i>Pandorina</i> and <i>Volvox</i>?",
+    "options": [
+      {"text": "Photosynthesis"},
+      {"text": "Anchorage"},
+      {"text": "Movement"},
+      {"text": "Nutrient absorption"}
+    ],
+    "answer": "Movement",
+    "explanation": "Cells in motile colonial forms like <i>Pandorina</i> and <i>Volvox</i> are described as flagellate, indicating that <strong>flagella</strong> are primarily used for <strong>movement</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 59,
+    "question": "The definition of colonial forms of algae emphasizes that the cells are 'more or less similar.' This suggests a lack of extensive:",
+    "options": [
+      {"text": "Photosynthesis"},
+      {"text": "Reproduction"},
+      {"text": "Specialization"},
+      {"text": "Motility"}
+    ],
+    "answer": "Specialization",
+    "explanation": "The description of colonial forms as an aggregate of '<strong>more or less similar cells</strong>' implies that there is a lack of extensive <strong>differentiation and specialization</strong> among the individual cells within the colony.",
+    "questionImage": ""
+  },
+  {
+    "id": 60,
+    "question": "If a <i>Pandorina</i> colony undergoes vegetative reproduction, and each of its sixteen cells divides four times mitotically, how many total cells would be present across all the newly formed daughter colonies?",
+    "options": [
+      {"text": "16"},
+      {"text": "64"},
+      {"text": "256"},
+      {"text": "1024"}
+    ],
+    "answer": "256",
+    "explanation": "A <i>Pandorina</i> colony consists of 16 cells. Vegetative reproduction produces 16 daughter colonies. If each of the original 16 cells undergoes 4 successive mitotic divisions, each original cell effectively produces 2⁴ = 16 cells. Therefore, the total number of cells across all 16 daughter colonies would be 16 colonies × 16 cells/colony = <strong>256 cells</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 61,
+    "question": "Filamentous algae exhibit cellular organization where cells can be either uninucleate or:",
+    "options": [
+      {"text": "Anucleate"},
+      {"text": "Binucleate"},
+      {"text": "Multinucleated"},
+      {"text": "Polyploid"}
+    ],
+    "answer": "Multinucleated",
+    "explanation": "In filamentous algae, the cells may be uninucleate (with one nucleus) or <strong>multinucleated</strong> (with many nuclei), indicating variation in their cellular organization.",
+    "questionImage": ""
+  },
+  {
+    "id": 62,
+    "question": "Which specific filamentous green alga is characterized by having many nuclei within its cells?",
+    "options": [
+      {"text": "<i>Ulothrix</i>"},
+      {"text": "<i>Oedogonium</i>"},
+      {"text": "<i>Cladophora</i>"},
+      {"text": "<i>Spirogyra</i>"}
+    ],
+    "answer": "<i>Cladophora</i>",
+    "explanation": "<i>Cladophora</i> is specifically mentioned as a filamentous green alga with <strong>multinucleated</strong> cells, distinguishing it from uninucleate forms like <i>Ulothrix</i> and <i>Oedogonium</i>.",
+    "questionImage": ""
+  },
+  {
+    "id": 63,
+    "question": "Vegetative reproduction in green filamentous algae occurs through fragmentation of filaments and the release of:",
+    "options": [
+      {"text": "Gametes"},
+      {"text": "Zygotes"},
+      {"text": "Zoospores"},
+      {"text": "Spores"}
+    ],
+    "answer": "Zoospores",
+    "explanation": "Vegetative reproduction in green filamentous algae occurs by means of fragmentation of filaments and by means of <strong>zoospores</strong>, which are motile spores released from vegetative cells and capable of growing into new filaments.",
+    "questionImage": ""
+  },
+  {
+    "id": 64,
+    "question": "Sexual reproduction in <i>Ulothrix</i> spp. involves gamete fusion described as:",
+    "options": [
+      {"text": "Oogamous"},
+      {"text": "Anisogamous"},
+      {"text": "Isogamous"},
+      {"text": "Heterogamous"}
+    ],
+    "answer": "Isogamous",
+    "explanation": "Sexual reproduction in <i>Ulothrix</i> spp. occurs through <strong>isogamous fusion of gametes</strong>, meaning the fusing gametes are morphologically identical in size and shape.",
+    "questionImage": ""
+  },
+  {
+    "id": 65,
+    "question": "What type of gamete fusion characterizes sexual reproduction in <i>Oedogonium</i>?",
+    "options": [
+      {"text": "Isogamous"},
+      {"text": "Anisogamous"},
+      {"text": "Oogamous"},
+      {"text": "Conjugation"}
+    ],
+    "answer": "Oogamous",
+    "explanation": "Sexual reproduction in <i>Oedogonium</i> is characterized by <strong>oogamous fusion of gametes</strong>, which involves the fusion of a large, non-motile egg with a smaller, motile sperm.",
+    "questionImage": ""
+  },
+  {
+    "id": 66,
+    "question": "<i>Spirogyra</i>, a well-known filamentous green alga, is typically found as green floating threads in what kind of aquatic environment?",
+    "options": [
+      {"text": "Rapidly flowing rivers"},
+      {"text": "Deep marine waters"},
+      {"text": "Stagnant bodies of water"},
+      {"text": "Brackish coastal areas"}
+    ],
+    "answer": "Stagnant bodies of water",
+    "explanation": "<i>Spirogyra</i> commonly occurs in <strong>stagnant bodies of water</strong>, where its unbranched filaments form characteristic green floating threads.",
+    "questionImage": ""
+  },
+  {
+    "id": 67,
+    "question": "A distinctive feature of <i>Spirogyra</i> cells is the presence of a chloroplast with what specific morphology?",
+    "options": [
+      {"text": "Cup-shaped"},
+      {"text": "Star-shaped"},
+      {"text": "Spiral ribbonlike"},
+      {"text": "Discoid"}
+    ],
+    "answer": "Spiral ribbonlike",
+    "explanation": "Each cell of <i>Spirogyra</i> contains a characteristic <strong>spiral ribbonlike chloroplast</strong> that extends along its entire length, a unique morphological feature.",
+    "questionImage": ""
+  },
+  {
+    "id": 68,
+    "question": "In the life cycle of <i>Spirogyra</i>, which generation is the dominant one?",
+    "options": [
+      {"text": "Diploid"},
+      {"text": "Sporophyte"},
+      {"text": "Haploid"},
+      {"text": "Gametophyte"}
+    ],
+    "answer": "Haploid",
+    "explanation": "The <strong>haploid generation is the dominant one</strong> in the life cycle of <i>Spirogyra</i>, meaning the filamentous plant body is primarily haploid.",
+    "questionImage": ""
+  },
+  {
+    "id": 69,
+    "question": "The dominant generation in <i>Spirogyra</i> alternates with a diploid generation that is described as unicellular and rather:",
+    "options": [
+      {"text": "Prominent"},
+      {"text": "Obscure"},
+      {"text": "Multicellular"},
+      {"text": "Photosynthetically active"}
+    ],
+    "answer": "Obscure",
+    "explanation": "The dominant haploid generation in <i>Spirogyra</i> alternates with a unicellular and rather <strong>obscure diploid generation</strong>, implying it is not easily noticeable or long-lived.",
+    "questionImage": ""
+  },
+  {
+    "id": 70,
+    "question": "Beyond unicellular, colonial, and filamentous forms, algae can develop more complex plant bodies where cells are differentiated to perform:",
+    "options": [
+      {"text": "Only reproductive roles."},
+      {"text": "A single, specialized function."},
+      {"text": "Various functions."},
+      {"text": "Only structural support."}
+    ],
+    "answer": "Various functions.",
+    "explanation": "In more complex algal forms, cells are <strong>differentiated to perform various functions</strong>, indicating a higher level of structural and functional complexity compared to simpler algal forms.",
+    "questionImage": ""
+  },
+  {
+    "id": 71,
+    "question": "In more complex algal forms, specific functions like reproduction may be concentrated in:",
+    "options": [
+      {"text": "Undifferentiated cells."},
+      {"text": "Specialized organelles."},
+      {"text": "Definite organs."},
+      {"text": "Entire filaments."}
+    ],
+    "answer": "Definite organs.",
+    "explanation": "In more complex algal forms, particular functions such as reproduction may be <strong>localized in definite organs</strong>, signifying a greater degree of specialization within the plant body.",
+    "questionImage": ""
+  },
+  {
+    "id": 72,
+    "question": "<i>Fucus</i> is a genus belonging to which specific group of algae?",
+    "options": [
+      {"text": "Green algae"},
+      {"text": "Red algae"},
+      {"text": "Brown algae"},
+      {"text": "Blue-green algae"}
+    ],
+    "answer": "Brown algae",
+    "explanation": "<i>Fucus</i> is explicitly identified as a genus of <strong>brown algae</strong>, a group known for its characteristic brown pigments and often larger, more complex thalli.",
+    "questionImage": ""
+  },
+  {
+    "id": 73,
+    "question": "Species of <i>Fucus</i> are commonly found attached to rocks in which particular marine habitat?",
+    "options": [
+      {"text": "The open ocean"},
+      {"text": "Deep-sea vents"},
+      {"text": "Intertidal zones"},
+      {"text": "Freshwater estuaries"}
+    ],
+    "answer": "Intertidal zones",
+    "explanation": "Species of <i>Fucus</i> are often found on rocks in the <strong>intertidal zones</strong> on the sea shores, which are coastal areas alternately exposed to air and submerged by tides.",
+    "questionImage": ""
+  },
+  {
+    "id": 74,
+    "question": "The length of <i>Fucus</i> species can range from a few centimeters up to approximately how many meters?",
+    "options": [
+      {"text": "One meter"},
+      {"text": "Two meters"},
+      {"text": "Five meters"},
+      {"text": "Ten meters"}
+    ],
+    "answer": "Two meters",
+    "explanation": "<i>Fucus</i> species vary in size from a few centimeters to about <strong>two meters</strong> in length, indicating they can form relatively large and massive plant bodies.",
+    "questionImage": ""
+  },
+  {
+    "id": 75,
+    "question": "Sexual reproduction in <i>Fucus</i> is characterized by what type of gamete fusion?",
+    "options": [
+      {"text": "Isogamous"},
+      {"text": "Anisogamous"},
+      {"text": "Oogamous"},
+      {"text": "Conjugation"}
+    ],
+    "answer": "Oogamous",
+    "explanation": "Sexual reproduction in <i>Fucus</i> is described as <strong>oogamous</strong>, a type of sexual reproduction where a large, non-motile egg is fertilized by a smaller, motile sperm.",
+    "questionImage": ""
+  },
+  {
+    "id": 76,
+    "question": "In <i>Fucus</i>, the specialized structures where sex cells are produced are called:",
+    "options": [
+      {"text": "Zoospores"},
+      {"text": "Gametangia"},
+      {"text": "Conceptacles"},
+      {"text": "Sporangia"}
+    ],
+    "answer": "Conceptacles",
+    "explanation": "In <i>Fucus</i>, the sex cells are produced in specialized, flask-shaped structures called <strong>conceptacles</strong>, which are embedded in the thallus.",
+    "questionImage": ""
+  },
+  {
+    "id": 77,
+    "question": "The growth of <i>Spirogyra</i> filaments is achieved through continuous cell division and what other process involving the filaments themselves?",
+    "options": [
+      {"text": "Budding"},
+      {"text": "Spore formation"},
+      {"text": "Fragmentation"},
+      {"text": "Sexual reproduction"}
+    ],
+    "answer": "Fragmentation",
+    "explanation": "<i>Spirogyra</i> filaments grow by continuous cell division and <strong>fragmentation</strong>, where pieces of the filament break off and develop into new, independent filaments.",
+    "questionImage": ""
+  },
+  {
+    "id": 78,
+    "question": "Zoospores, which are involved in vegetative reproduction in green filamentous algae, are released from what type of cells?",
+    "options": [
+      {"text": "Gametes"},
+      {"text": "Reproductive cells"},
+      {"text": "Vegetative cells"},
+      {"text": "Spore mother cells"}
+    ],
+    "answer": "Vegetative cells",
+    "explanation": "Zoospores are released from <strong>vegetative cells</strong> (the ordinary cells of the filament) either singly or in large numbers, and these zoospores then grow into new filaments.",
+    "questionImage": ""
+  },
+  {
+    "id": 79,
+    "question": "What is the ploidy level of the dominant generation in <i>Spirogyra</i>?",
+    "options": [
+      {"text": "2n"},
+      {"text": "n"},
+      {"text": "3n"},
+      {"text": "4n"}
+    ],
+    "answer": "n",
+    "explanation": "The <strong>haploid generation (n)</strong> is the dominant one in <i>Spirogyra</i>, meaning the primary filamentous body of the alga consists of haploid cells.",
+    "questionImage": ""
+  },
+  {
+    "id": 80,
+    "question": "The cells of <i>Ulothrix</i> and <i>Oedogonium</i> are specifically described as containing how many nuclei?",
+    "options": [
+      {"text": "Zero"},
+      {"text": "One"},
+      {"text": "Many"},
+      {"text": "A variable number"}
+    ],
+    "answer": "One",
+    "explanation": "The cells of <i>Ulothrix</i> and <i>Oedogonium</i> are specifically described as <strong>uninucleate</strong>, meaning each cell contains <strong>one nucleus</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 81,
+    "question": "What is the defining characteristic of the 'thalloid form' observed in Thallophytes?",
+    "options": [
+      {"text": "Extensive tissue specialization."},
+      {"text": "Differentiation into distinct roots and shoots."},
+      {"text": "Limited cellular differentiation and lack of axial differentiation."},
+      {"text": "Presence of vascular bundles."}
+    ],
+    "answer": "Limited cellular differentiation and lack of axial differentiation.",
+    "explanation": "Thallophytes are characterized by a <strong>thalloid form</strong>, meaning their cells exhibit <strong>limited differentiation</strong> and are generally not organized into distinct vertical and horizontal axes, unlike more complex plants.",
+    "questionImage": ""
+  },
+  {
+    "id": 82,
+    "question": "A fundamental distinction between algae and fungi, both grouped under Thallophyta, lies in their primary mode of obtaining nutrients. What is this distinction?",
+    "options": [
+      {"text": "Algae are saprophytic; fungi are photosynthetic."},
+      {"text": "Algae are parasitic; fungi are symbiotic."},
+      {"text": "Algae are photosynthetic; fungi are saprophytic."},
+      {"text": "Algae are chemosynthetic; fungi are predatory."}
+    ],
+    "answer": "Algae are photosynthetic; fungi are saprophytic.",
+    "explanation": "Algae are largely <strong>photosynthetic primary producers</strong>, meaning they create their own food using sunlight. In contrast, fungi are largely <strong>saprophytic decomposers</strong>, obtaining nutrients by breaking down dead organic matter.",
+    "questionImage": ""
+  },
+  {
+    "id": 83,
+    "question": "While algae are largely aquatic, what is generally true about the typical habitat of most fungi within the Thallophyta group?",
+    "options": [
+      {"text": "They are exclusively marine."},
+      {"text": "They are largely terrestrial."},
+      {"text": "They are largely aquatic."},
+      {"text": "They are restricted to moist environments."}
+    ],
+    "answer": "They are largely terrestrial.",
+    "explanation": "A key distinction in habitat is that while algae are largely aquatic, <strong>most fungi are not</strong>, implying they are predominantly found in terrestrial environments.",
+    "questionImage": ""
+  },
+  {
+    "id": 84,
+    "question": "The presence of which specific cellular components gives algae their characteristic colors (red, brown, green) and is crucial for their classification?",
+    "options": [
+      {"text": "Cell walls"},
+      {"text": "Nuclei"},
+      {"text": "Pigments"},
+      {"text": "Flagella"}
+    ],
+    "answer": "Pigments",
+    "explanation": "Algae possess <strong>chlorophyll and other pigments</strong>, which may be red or brown. These pigments are important in their classification, leading to groups like green algae, brown algae, and red algae.",
+    "questionImage": ""
+  },
+  {
+    "id": 85,
+    "question": "The efficiency of algae in utilizing radiant energy makes which specific environment a significant location for primary production?",
+    "options": [
+      {"text": "Freshwater lakes"},
+      {"text": "Moist rock surfaces"},
+      {"text": "The seas"},
+      {"text": "Intertidal zones"}
+    ],
+    "answer": "The seas",
+    "explanation": "Algae are highly efficient in utilizing the radiant energy of the sun, making <strong>the seas an important location of primary production</strong> due to their abundance and photosynthetic activity.",
+    "questionImage": ""
+  },
+  {
+    "id": 86,
+    "question": "Algae play a vital role in the food web of which two specific types of environments?",
+    "options": [
+      {"text": "Terrestrial and aerial"},
+      {"text": "Marine and freshwater"},
+      {"text": "Desert and polar"},
+      {"text": "Forest and grassland"}
+    ],
+    "answer": "Marine and freshwater",
+    "explanation": "Algae are very important in the food web of both <strong>marine and freshwater environments</strong>, serving as primary producers that form the base of these aquatic food chains.",
+    "questionImage": ""
+  },
+  {
+    "id": 87,
+    "question": "Beyond unicellular and colonial forms, algae can also exhibit which more complex structural organization?",
+    "options": [
+      {"text": "Vascular tissue systems"},
+      {"text": "Root and shoot systems"},
+      {"text": "Filamentous or more complex structures"},
+      {"text": "Specialized reproductive organs"}
+    ],
+    "answer": "Filamentous or more complex structures",
+    "explanation": "Algae exhibit a range of general habits, including unicellular, colonial, and <strong>filamentous</strong> forms, and they may also show <strong>more complex structures</strong> beyond these basic organizations.",
+    "questionImage": ""
+  },
+  {
+    "id": 88,
+    "question": "<i>Chlamydomonas</i>, a representative unicellular green alga, is typically found in what kind of water?",
+    "options": [
+      {"text": "Flowing rivers"},
+      {"text": "Deep ocean currents"},
+      {"text": "Stagnant water"},
+      {"text": "Brackish estuaries"}
+    ],
+    "answer": "Stagnant water",
+    "explanation": "<i>Chlamydomonas</i> is found in <strong>stagnant water</strong>, often alongside other algal forms.",
+    "questionImage": ""
+  },
+  {
+    "id": 89,
+    "question": "What are the two main forms of reproduction observed in <i>Chlamydomonas</i>?",
+    "options": [
+      {"text": "Budding and fragmentation"},
+      {"text": "Spore formation and binary fission"},
+      {"text": "Vegetative (asexual) and sexual"},
+      {"text": "Conjugation and sporulation"}
+    ],
+    "answer": "Vegetative (asexual) and sexual",
+    "explanation": "Reproduction in <i>Chlamydomonas</i> can be either <strong>vegetative (asexual) or sexual</strong>, allowing for different reproductive strategies depending on conditions.",
+    "questionImage": ""
+  },
+  {
+    "id": 90,
+    "question": "In <i>Chlamydomonas</i>, vegetative reproduction primarily results in what change in cell number for unicellular organisms?",
+    "options": [
+      {"text": "Decrease in cell number"},
+      {"text": "Increase in cell number"},
+      {"text": "Maintenance of cell number"},
+      {"text": "Formation of spores"}
+    ],
+    "answer": "Increase in cell number",
+    "explanation": "Vegetative reproduction in <i>Chlamydomonas</i> is responsible for the <strong>increase in number of cells in unicellular organisms</strong> through mitotic divisions.",
+    "questionImage": ""
+  },
+  {
+    "id": 91,
+    "question": "What happens to the amount and quality of genetic material in daughter cells during vegetative reproduction in <i>Chlamydomonas</i>?",
+    "options": [
+      {"text": "It is halved."},
+      {"text": "It is doubled."},
+      {"text": "It is maintained."},
+      {"text": "It undergoes recombination."}
+    ],
+    "answer": "It is maintained.",
+    "explanation": "Vegetative reproduction results in the production of daughter cells in which the <strong>amount and quality of genetic material in the nucleus of the mother cell is maintained</strong> in the daughter cells, due to mitotic divisions.",
+    "questionImage": ""
+  },
+  {
+    "id": 92,
+    "question": "The fundamental process involved in sexual reproduction in <i>Chlamydomonas</i> is the union of:",
+    "options": [
+      {"text": "Somatic cells"},
+      {"text": "Spores"},
+      {"text": "Sex cells (gametes)"},
+      {"text": "Vegetative cells"}
+    ],
+    "answer": "Sex cells (gametes)",
+    "explanation": "<strong>Sexual reproduction involves the union of sex cells (gametes)</strong>, which fuse to form a zygote.",
+    "questionImage": ""
+  },
+  {
+    "id": 93,
+    "question": "The pairing of cells in <i>Chlamydomonas</i> sexual reproduction is described as isogamous. What does this term imply about the pairing cells (gametes)?",
+    "options": [
+      {"text": "They are of different sizes."},
+      {"text": "They are motile and non-motile."},
+      {"text": "They are morphologically similar."},
+      {"text": "They are genetically identical."}
+    ],
+    "answer": "They are morphologically similar.",
+    "explanation": "The pairing of cells (gametes) in <i>Chlamydomonas</i> is said to be <strong>isogamous because the pairing cells (gametes) are morphologically identical</strong>, meaning they look alike despite potentially having different mating types.",
+    "questionImage": ""
+  },
+  {
+    "id": 94,
+    "question": "Under what specific environmental conditions does the aggregation of cells (clumping) occur in <i>Chlamydomonas</i> colonies for sexual reproduction?",
+    "options": [
+      {"text": "Unfavourable conditions"},
+      {"text": "Favourable conditions"},
+      {"text": "Extreme temperatures"},
+      {"text": "Nutrient depletion"}
+    ],
+    "answer": "Favourable conditions",
+    "explanation": "In <i>Chlamydomonas</i>, aggregation of cells (clumping) in a colony occurs under <strong>favourable conditions</strong>, which promotes sexual reproduction.",
+    "questionImage": ""
+  },
+  {
+    "id": 95,
+    "question": "Thallophytes are generally not differentiated into which two specific axes?",
+    "options": [
+      {"text": "Anterior and posterior"},
+      {"text": "Dorsal and ventral"},
+      {"text": "Vertical and horizontal"},
+      {"text": "Proximal and distal"}
+    ],
+    "answer": "Vertical and horizontal",
+    "explanation": "Thallophytes are generally not differentiated into <strong>vertical and horizontal axes</strong>, reflecting their limited cellular organization compared to more complex plants.",
+    "questionImage": ""
+  },
+  {
+    "id": 96,
+    "question": "What is a key difference in cellular components between algae and fungi, concerning their plastids?",
+    "options": [
+      {"text": "Fungi have coloured plastids, algae do not."},
+      {"text": "Algae generally have coloured plastids, fungi do not."},
+      {"text": "Both algae and fungi have coloured plastids."},
+      {"text": "Neither algae nor fungi have plastids."}
+    ],
+    "answer": "Algae generally have coloured plastids, fungi do not.",
+    "explanation": "A key distinction is that <strong>algae generally have coloured plastids</strong>, which are essential for photosynthesis, <strong>while fungi do not</strong>, reflecting their heterotrophic nature.",
+    "questionImage": ""
+  },
+  {
+    "id": 97,
+    "question": "In the Far East, certain species of algae are specifically harvested for which two economic purposes?",
+    "options": [
+      {"text": "Fuel and construction materials"},
+      {"text": "Food and cosmetics"},
+      {"text": "Fertilizers and pesticides"},
+      {"text": "Textiles and dyes"}
+    ],
+    "answer": "Food and cosmetics",
+    "explanation": "In the Far East, certain species of algae are harvested for <strong>food and cosmetics</strong>, demonstrating their economic importance beyond just ecological roles.",
+    "questionImage": ""
+  },
+  {
+    "id": 98,
+    "question": "The small size of algae contributes to their efficiency in utilizing what specific type of energy?",
+    "options": [
+      {"text": "Chemical energy from decomposition"},
+      {"text": "Geothermal energy from the earth"},
+      {"text": "Radiant energy from the sun"},
+      {"text": "Kinetic energy from water currents"}
+    ],
+    "answer": "Radiant energy from the sun",
+    "explanation": "Because of their small sizes, algae are efficient in the utilization of the <strong>radiant energy of the sun</strong>, which is crucial for their photosynthetic primary production.",
+    "questionImage": ""
+  },
+  {
+    "id": 99,
+    "question": "Filamentous algae can be described as either septate or coenocytic. What does 'septate' imply about their cellular organization?",
+    "options": [
+      {"text": "They lack cell walls."},
+      {"text": "They have cross-walls dividing cells."},
+      {"text": "They are multinucleate without cross-walls."},
+      {"text": "They are exclusively unicellular."}
+    ],
+    "answer": "They have cross-walls dividing cells.",
+    "explanation": "In filamentous algae, '<strong>septate</strong>' refers to the presence of <strong>cross-walls</strong> that divide the filaments into individual cells, each typically containing one nucleus.",
+    "questionImage": ""
+  },
+  {
+    "id": 100,
+    "question": "Vegetative reproduction, as observed in <i>Chlamydomonas</i>, is responsible for what change in multicellular organisms?",
+    "options": [
+      {"text": "Increase in cell number."},
+      {"text": "Increase in size."},
+      {"text": "Decrease in cell number."},
+      {"text": "Formation of gametes."}
+    ],
+    "answer": "Increase in size.",
+    "explanation": "Vegetative reproduction is responsible for the <strong>increase in size in multicellular organisms</strong>, as new cells are produced through mitotic divisions, contributing to growth.",
+    "questionImage": ""
+  },
   {
     "id": 1,
     "question": "A classification system that groups organisms based on a 'multiplicity of criteria' is fundamentally described as:",
@@ -26,7 +807,7 @@
       {"text": "Environmental control"}
     ],
     "answer": "Cognitive organization",
-    "explanation": "The text states that one of the most important preoccupations of man is the ordering or classification of his experience. This fundamental human activity serves to <strong>systematize and comprehend environmental observations</strong>, which is a core aspect of cognitive organization and making sense of the world around us.",
+    "explanation": "The lecturer stated that one of the most important preoccupations of man is the ordering or classification of his experience. This fundamental human activity serves to <strong>systematize and comprehend environmental observations</strong>, which is a core aspect of cognitive organization and making sense of the world around us.",
     "questionImage": ""
   },
   {
@@ -52,7 +833,7 @@
       {"text": "Phylogeny"}
     ],
     "answer": "Systematics",
-    "explanation": "The notes clearly state that <strong>systematics</strong> is 'the wider subject of taxonomy', which includes not only classification and identification (taxonomy) but also 'naming (nomenclature) and gathering and assessment of classification data'.",
+    "explanation": "<strong>Systematics</strong> is 'the wider subject of taxonomy', which includes not only classification and identification (taxonomy) but also 'naming (nomenclature) and gathering and assessment of classification data'.",
     "questionImage": ""
   },
   {
@@ -65,7 +846,7 @@
       {"text": "Ensure global uniformity in research funding"}
     ],
     "answer": "Facilitate clear communication and prevent confusion",
-    "explanation": "The text emphasizes that a system of naming (nomenclature) is 'usually needed to <strong>facilitate communication and avoid confusion</strong> among practitioners of trade, science, or profession'. This ensures that everyone refers to the same organism by the same name globally.",
+    "explanation": "A system of naming (nomenclature) is 'usually needed to <strong>facilitate communication and avoid confusion</strong> among practitioners of trade, science, or profession'. This ensures that everyone refers to the same organism by the same name globally.",
     "questionImage": ""
   },
   {
@@ -91,7 +872,7 @@
       {"text": "Grouping organisms solely by their use to man"}
     ],
     "answer": "Assigning two Latin names to each organism",
-    "explanation": "The notes explicitly state that 'The idea of two names (<strong>binomial system</strong>) was popularized by a Swedish naturalist <strong>Carolus Linnaeus</strong>'. This system is fundamental to modern biological nomenclature.",
+    "explanation": "'The idea of two names (<strong>binomial system</strong>) was popularized by a Swedish naturalist <strong>Carolus Linnaeus</strong>'. This system is fundamental to modern biological nomenclature.",
     "questionImage": ""
   },
   {
@@ -104,7 +885,7 @@
       {"text": "A sub-specific classification level"}
     ],
     "answer": "The authority who first formally described the species",
-    "explanation": "The text clarifies that 'The <strong>L after the name refers to Linnaeus who described the species</strong>'. This 'L' is an abbreviation for the botanist Linnaeus, serving as the <strong>authority</strong> who first formally published the description of that species.",
+    "explanation": "'The <strong>L after the name refers to Linnaeus who described the species</strong>'. This 'L' is an abbreviation for the botanist Linnaeus, serving as the <strong>authority</strong> who first formally published the description of that species.",
     "questionImage": ""
   },
   {
@@ -130,7 +911,7 @@
       {"text": "Morphological similarities alone"}
     ],
     "answer": "Evolutionary principles",
-    "explanation": "The notes state that 'As the theory of evolution developed, classifications of organisms that are supposed to show <strong>evolutionary relationships (i.e. relationships by descent)</strong> were also popularized'. This directly links 'relationships by descent' to the principles of evolution and common ancestry.",
+    "explanation": "'As the theory of evolution developed, classifications of organisms that are supposed to show <strong>evolutionary relationships (i.e. relationships by descent)</strong> were also popularized'. This directly links 'relationships by descent' to the principles of evolution and common ancestry.",
     "questionImage": ""
   },
   {
@@ -143,7 +924,7 @@
       {"text": "Specify the country where it was first found"}
     ],
     "answer": "Acknowledge the original authority for the name",
-    "explanation": "The text mentions that names are 'accompanied by the name of the person (<strong>authority</strong>) who first described the organism'. This practice ensures proper credit and traceability for the initial scientific description and naming.",
+    "explanation": "'Accompanied by the name of the person (<strong>authority</strong>) who first described the organism'. This practice ensures proper credit and traceability for the initial scientific description and naming.",
     "questionImage": ""
   },
   {
@@ -156,7 +937,7 @@
       {"text": "Funding expeditions for new species collection"}
     ],
     "answer": "Resolving naming disputes and standardizing nomenclature",
-    "explanation": "The notes explicitly state that 'In botanical and zoological sciences, problems of naming are usually addressed and <strong>resolved in international congresses and through publications</strong>'. This ensures a consistent and globally accepted system of nomenclature.",
+    "explanation": "'In botanical and zoological sciences, problems of naming are usually addressed and <strong>resolved in international congresses and through publications</strong>'. This ensures a consistent and globally accepted system of nomenclature.",
     "questionImage": ""
   },
   {
@@ -195,7 +976,7 @@
       {"text": "The process of creating new taxonomic groups"}
     ],
     "answer": "A practical application within the broader science of taxonomy",
-    "explanation": "The notes define <strong>taxonomy</strong> as 'the science of <strong>classification and identification</strong>'. This implies that identification is a fundamental process or a practical application that falls under the umbrella of taxonomy.",
+    "explanation": "<strong>Taxonomy</strong> as 'the science of <strong>classification and identification</strong>'. This implies that identification is a fundamental process or a practical application that falls under the umbrella of taxonomy.",
     "questionImage": ""
   },
   {
@@ -221,7 +1002,7 @@
       {"text": "Develop new agricultural practices"}
     ],
     "answer": "Systematize and comprehend environmental observations",
-    "explanation": "The text highlights that man's 'most important preoccupations' include 'the ordering or classification of his experience' in the environment. This is driven by the need to <strong>systematize and comprehend environmental observations</strong>, which helps in making sense of the complex natural world.",
+    "explanation": "Man's 'most important preoccupations' include 'the ordering or classification of his experience' in the environment. This is driven by the need to <strong>systematize and comprehend environmental observations</strong>, which helps in making sense of the complex natural world.",
     "questionImage": ""
   },
   {
@@ -247,7 +1028,7 @@
       {"text": "That names are difficult for non-scientists to pronounce"}
     ],
     "answer": "A universal, unambiguous, and stable naming convention",
-    "explanation": "The notes state that a system of naming is needed to 'facilitate communication and avoid confusion'. Latin names provide a <strong>universal, unambiguous, and stable</strong> system, ensuring that scientists and practitioners worldwide refer to the same organism consistently, regardless of local languages.",
+    "explanation": "A system of naming is needed to 'facilitate communication and avoid confusion'. Latin names provide a <strong>universal, unambiguous, and stable</strong> system, ensuring that scientists and practitioners worldwide refer to the same organism consistently, regardless of local languages.",
     "questionImage": ""
   },
   {
@@ -286,7 +1067,7 @@
       {"text": "Nomenclature"}
     ],
     "answer": "Systematics",
-    "explanation": "The notes clearly state that <strong>systematics</strong> is 'the wider subject of taxonomy', which includes not only classification and identification (taxonomy) but also 'naming (nomenclature) and gathering and assessment of classification data'.",
+    "explanation": "<strong>Systematics</strong> is 'the wider subject of taxonomy', which includes not only classification and identification (taxonomy) but also 'naming (nomenclature) and gathering and assessment of classification data'.",
     "questionImage": ""
   },
   {
@@ -312,7 +1093,7 @@
       {"text": "Catastrophism"}
     ],
     "answer": "Evolution",
-    "explanation": "The notes state that 'As the <strong>theory of evolution</strong> developed, classifications of organisms that are supposed to show <strong>evolutionary relationships (i.e. relationships by descent)</strong> were also popularized'. This directly links 'relationships by descent' to the principles of evolution and common ancestry.",
+    "explanation": " 'As the <strong>theory of evolution</strong> developed, classifications of organisms that are supposed to show <strong>evolutionary relationships (i.e. relationships by descent)</strong> were also popularized'. This directly links 'relationships by descent' to the principles of evolution and common ancestry.",
     "questionImage": ""
   },
   {
@@ -325,7 +1106,7 @@
       {"text": "Promote regional variations in terminology."}
     ],
     "answer": "Facilitate global scientific communication.",
-    "explanation": "The text emphasizes that a system of naming (nomenclature) is 'usually needed to <strong>facilitate communication and avoid confusion</strong> among practitioners of trade, science, or profession'. This ensures that everyone refers to the same organism by the same name globally.",
+    "explanation": "A system of naming (nomenclature) is 'usually needed to <strong>facilitate communication and avoid confusion</strong> among practitioners of trade, science, or profession'. This ensures that everyone refers to the same organism by the same name globally.",
     "questionImage": ""
   },
   {
