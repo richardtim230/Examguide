@@ -137,6 +137,35 @@
       border-radius: 6px;
       font-size: 15px;
     }
+    /* PRINT/PDF OVERRIDES */
+    @media print {
+      html, body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .summary-container {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      header {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      #downloadPdfBtn {
+        display: none !important;
+      }
+      .score, .attempted, .percentage, .correct-answer, .user-answer.correct, .user-answer.incorrect {
+        color: #000 !important;
+        background: none !important;
+      }
+      .question-review, .user-details div, .result-details div, .explanation {
+        background: #fff !important;
+        color: #000 !important;
+        border-left: none !important;
+        box-shadow: none !important;
+      }
+    }
     @media (max-width: 800px) {
       .summary-container {
         padding: 12px 5px;
@@ -249,12 +278,62 @@
   <!-- PDF dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- PDF logic -->
+  <!-- PDF logic with temporary style override -->
   <script>
+    function setPdfStyles() {
+      document.body.style.background = "#fff";
+      const cont = document.querySelector('.summary-container');
+      if (cont) {
+        cont.style.background = "#fff";
+        cont.style.color = "#000";
+        cont.style.boxShadow = "none";
+      }
+      const head = document.querySelector('header');
+      if (head) {
+        head.style.background = "#fff";
+        head.style.color = "#000";
+      }
+      document.querySelectorAll('.question-review, .user-details div, .result-details div, .explanation').forEach(el => {
+        el.style.background = "#fff";
+        el.style.color = "#000";
+        el.style.boxShadow = "none";
+        el.style.borderLeft = "none";
+      });
+      document.querySelectorAll('.score, .attempted, .percentage, .correct-answer, .user-answer.correct, .user-answer.incorrect').forEach(el => {
+        el.style.color = "#000";
+        el.style.background = "none";
+      });
+    }
+
+    function resetStyles() {
+      document.body.style.background = "";
+      const cont = document.querySelector('.summary-container');
+      if (cont) {
+        cont.style.background = "";
+        cont.style.color = "";
+        cont.style.boxShadow = "";
+      }
+      const head = document.querySelector('header');
+      if (head) {
+        head.style.background = "";
+        head.style.color = "";
+      }
+      document.querySelectorAll('.question-review, .user-details div, .result-details div, .explanation').forEach(el => {
+        el.style.background = "";
+        el.style.color = "";
+        el.style.boxShadow = "";
+        el.style.borderLeft = "";
+      });
+      document.querySelectorAll('.score, .attempted, .percentage, .correct-answer, .user-answer.correct, .user-answer.incorrect').forEach(el => {
+        el.style.color = "";
+        el.style.background = "";
+      });
+    }
+
     document.getElementById('downloadPdfBtn').addEventListener('click', function () {
       const summaryEl = document.querySelector('.summary-container');
-      // Hide the button for PDF
       this.style.display = 'none';
+      setPdfStyles();
 
       html2canvas(summaryEl, {scale: 2, useCORS: true}).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
@@ -289,9 +368,9 @@
         }
 
         pdf.save('exam-summary.pdf');
-        // Show the button again
         setTimeout(() => {
           document.getElementById('downloadPdfBtn').style.display = '';
+          resetStyles();
         }, 500);
       });
     });
