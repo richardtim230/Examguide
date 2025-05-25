@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Summary</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #232526, #414345);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header img {
+      height: 46px;
+      border-radius: 50%;
+    }
+    .summary-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 28px 18px 24px 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #00c6ff;
+      letter-spacing: 0.5px;
+      margin-top: 24px;
+    }
+    .user-details, .result-details {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .user-details div, .result-details div {
+      background: rgba(255,255,255,0.12);
+      padding: 12px 18px;
+      border-radius: 8px;
+      min-width: 180px;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    .score {
+      font-size: 20px;
+      font-weight: bold;
+      color: #00ffae;
+    }
+    .attempted {
+      color: #ffc107;
+      font-weight: bold;
+    }
+    .percentage {
+      color: #00c6ff;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    .question-review {
+      background: rgba(255,255,255,0.10);
+      margin: 18px 0;
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .question-review .question {
+      font-size: 17px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+    .question-review img {
+      max-width: 70%;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+    .option-block {
+      margin: 4px 0 4px 0;
+    }
+    .option-block .label {
+      display: inline-block;
+      width: 110px;
+      font-weight: bold;
+      color: #00c6ff;
+    }
+    .user-answer.correct {
+      background: #00ffae22;
+      color: #00ffae;
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-weight: 600;
+    }
+    .user-answer.incorrect {
+      background: #ff4e5522;
+      color: #ff4e55;
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-weight: 600;
+    }
+    .correct-answer {
+      background: #00c6ff22;
+      color: #00c6ff;
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-weight: 600;
+    }
+    .explanation {
+      margin-top: 7px;
+      background: rgba(0,198,255,0.08);
+      color: #bdeaff;
+      border-left: 4px solid #00c6ff;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    @media (max-width: 800px) {
+      .summary-container {
+        padding: 12px 5px;
+      }
+      .user-details, .result-details {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+  <!-- MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/120px-HTML5_logo_and_wordmark.svg.png" alt="Logo">
+    <div style="font-size: 20px; font-weight: bold;">Exam Summary</div>
+  </header>
+  <div class="summary-container">
+    <div class="section-title">User Details</div>
+    <div class="user-details" id="userDetails"></div>
+    <div class="section-title">Result Details</div>
+    <div class="result-details" id="resultDetails"></div>
+    <div class="section-title">Attempt Review</div>
+    <div id="reviewSection"></div>
+  </div>
+  <script>
+    const currentUser = localStorage.getItem('current_user') || 'Guest';
+    const answers = JSON.parse(localStorage.getItem(`answers_${currentUser}`) || '{}');
+    const questions = JSON.parse(localStorage.getItem(`questions_${currentUser}`) || '[]');
+    const timeTaken = Number(localStorage.getItem(`timeTaken_${currentUser}`) || "0");
+
+    // Calculate stats
+    const totalQuestions = questions.length;
+    const attemptedQuestions = Object.keys(answers).length;
+    let score = 0;
+
+    questions.forEach(q => {
+      if (
+        answers[q.id] !== undefined &&
+        typeof answers[q.id] !== 'undefined' &&
+        answers[q.id] === q.answer
+      ) score++;
+    });
+
+    const percentage = totalQuestions ? (score / totalQuestions * 100).toFixed(2) : 0;
+    const avgSpeed = totalQuestions ? (timeTaken / totalQuestions).toFixed(2) : 0;
+    const mins = Math.floor(timeTaken / 60);
+    const secs = timeTaken % 60;
+
+    // User Details
+    document.getElementById('userDetails').innerHTML = `
+      <div><strong>Username:</strong> <br/>${currentUser}</div>
+      <div><strong>Time Taken:</strong> <br/>${mins}m ${secs < 10 ? '0' : ''}${secs}s</div>
+    `;
+
+    // Result Details
+    document.getElementById('resultDetails').innerHTML = `
+      <div><strong>Total Questions:</strong> <br/>${totalQuestions}</div>
+      <div><strong>Attempted:</strong> <span class="attempted">${attemptedQuestions}</span></div>
+      <div><strong>Score:</strong> <span class="score">${score}</span></div>
+      <div><strong>Percentage:</strong> <span class="percentage">${percentage}%</span></div>
+      <div><strong>Avg Speed:</strong> <br/>${avgSpeed} sec/question</div>
+    `;
+
+    // Attempt Review
+    function renderReview() {
+      let html = '';
+      questions.forEach((q, idx) => {
+        const userAns = answers[q.id];
+        const isCorrect = userAns === q.answer;
+        const questionImage = q.questionImage ? `<img src="${q.questionImage}" alt="Question Image" />` : '';
+        html += `
+          <div class="question-review">
+            <div class="question">${idx + 1}. ${q.question}</div>
+            ${questionImage}
+            <div class="option-block">
+              <span class="label">Your Answer:</span>
+              <span class="user-answer ${typeof userAns === "undefined" ? "" : (isCorrect ? 'correct' : 'incorrect')}">
+                ${typeof userAns === "undefined" ? "<em>Not answered</em>" : userAns}
+              </span>
+            </div>
+            <div class="option-block">
+              <span class="label">Correct Answer:</span>
+              <span class="correct-answer">${q.answer}</span>
+            </div>
+            <div class="explanation">
+              <strong>Explanation:</strong> <br/>
+              ${q.explanation}
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById('reviewSection').innerHTML = html;
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    renderReview();
+  </script>
+</body>
+</html>
