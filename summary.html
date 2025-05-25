@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.90"/>
   <title>Exam Summary</title>
   <style>
     body {
@@ -108,17 +108,26 @@
       font-size: 17px;
       font-weight: bold;
     }
-    .pie-chart-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 36px;
-    }
-    .pie-chart-section canvas {
-      background: rgba(255,255,255,0.10);
-      border-radius: 50%;
-      margin-top: 13px;
-      box-shadow: 0 2px 12px rgba(0,198,255,0.10);
+.pie-chart-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 36px;
+  width: 100%;
+}
+.pie-chart-section canvas {
+  display: block;
+  margin: 16px auto 0 auto;
+  background: rgba(255,255,255,0.10);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0,198,255,0.10);
+  max-width: 100%;
+  height: auto;
+}
+      .pie-chart-section canvas {
+  max-width: 320px;
+  width: 100%;
     }
     .question-review {
       background: rgba(255,255,255,0.13);
