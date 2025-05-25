@@ -10,7 +10,74 @@
       padding: 0;
       box-sizing: border-box;
     }
+/* Notification Pop-up Styles */
+#notificationPopup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Light background */
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
 
+#notificationPopup.active {
+    display: block !important;
+    opacity: 1;
+}
+
+#notificationPopup .popup-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+    #notificationPopup h2 {
+    font-size: 15px;
+  color: blue;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+    }
+
+#notificationPopup ul {
+    list-style: inside disc;
+    margin-bottom: 20px;
+    text-align: left;
+  font-size: 13px;
+}
+
+#notificationPopup button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+    #whatsappBtn {
+    background: #25D366; /* WhatsApp green color */
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+#whatsappBtn:hover {
+    background: #20b058; /* Darker green on hover */
+    }
     body {
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -182,7 +249,23 @@
       }
     </script>
   </div>
-
+  <!-- Notification Pop-up -->
+<div id="notificationPopup" class="popup">
+    <div class="popup-content">
+      <img src="logo.png" alt="De-Brainstormers Logo" class="logo">
+        <h2>Welcome to the Mock Exam Platform</h2>
+        <ul>
+            <li>Ensure you have a stable internet connection.</li>
+            <li>Read all instructions carefully before starting the exam.</li>
+            <li>Contact the Admin desk if you encounter any issues.</li>
+          <li>Are you a tutorial coordinator or team leader who would love to use our online ICT? Click on the button below.</li>
+          <li>Our online ICT has multiple Exam Rooms so different examination sessions could take place at the same time without errors!.</li>
+          <li>Cheapest and super Personified experience!.</li>
+        </ul>
+        <button id="whatsappBtn" class="styled-btn">Contact Admin on WhatsApp</button>
+        <button id="closeNotification" class="close-btn">Close</button>
+    </div>                                                             
+</div>
   <div class="login-container">
     <img src="logo.png" alt="CBT Logo" class="logo">
     <div class="school-name">Obafemi Awolowo University</div>
