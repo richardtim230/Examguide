@@ -4,14 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CBT Test</title>
-  <script
-// Prevent unauthorized access
-const currentUser = localStorage.getItem('current_user');
-if (!currentUser || currentUser === "Guest") {
-  // Redirect to login page (adjust the path as needed)
-  window.location.href = "mock.html";
-}
-</script>
+  
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
@@ -220,9 +213,15 @@ if (!currentUser || currentUser === "Guest") {
   </div>
 
   <script>
+    
     const currentUser = localStorage.getItem('current_user') || 'Guest';
     document.getElementById('candidateName').innerText += currentUser;
-
+// Prevent unauthorized access
+const currentUser = localStorage.getItem('current_user');
+if (!currentUser || currentUser === "Guest") {
+  // Redirect to login page (adjust the path as needed)
+  window.location.href = "mock.html";
+    }
     let questions = [];
     let currentQuestionIndex = 0;
     let userAnswers = {};
