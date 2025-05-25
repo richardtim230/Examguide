@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CBT | Test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CBT Test</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,7 +18,7 @@
 
     header {
       background: #1f1f1f;
-      padding: 20px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -28,11 +28,11 @@
     .branding {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
     }
 
     .branding img {
-      height: 50px;
+      height: 40px;
       border-radius: 50%;
     }
 
@@ -42,29 +42,30 @@
     }
 
     .titles .exam-name {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
     }
 
     .titles .username {
-      font-size: 14px;
+      font-size: 13px;
       color: #ccc;
     }
 
     #timer {
       font-weight: bold;
-      font-size: 16px;
+      font-size: 15px;
       background: #00c6ff;
-      padding: 10px 15px;
-      border-radius: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
       color: #000;
+      margin-top: 5px;
     }
 
     .container {
       flex: 1;
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 15px;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
     }
@@ -74,7 +75,7 @@
     }
 
     .question {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       margin-bottom: 15px;
     }
@@ -86,14 +87,15 @@
     }
 
     .options button {
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.2);
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.15);
       color: #fff;
       border: 2px solid transparent;
       border-radius: 8px;
       font-size: 16px;
+      text-align: left;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: 0.2s ease;
     }
 
     .options button:hover {
@@ -129,8 +131,24 @@
     }
 
     @media(max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
       .question {
-        font-size: 18px;
+        font-size: 16px;
+      }
+
+      .options button {
+        font-size: 14px;
+        padding: 10px 14px;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        gap: 10px;
       }
     }
   </style>
@@ -149,7 +167,7 @@
 
   <div class="container">
     <div class="question-box" id="questionBox">
-      <!-- Question and options will load here -->
+      <!-- Content loads here -->
     </div>
     <div class="nav-buttons">
       <button onclick="prevQuestion()" id="prevBtn">Previous</button>
@@ -158,44 +176,33 @@
   </div>
 
   <script>
-    let currentUser = localStorage.getItem('current_user') || "guest";
+    const currentUser = localStorage.getItem('current_user') || 'Guest';
     document.getElementById('candidateName').innerText += currentUser;
-    
-    let timeLimit = 180;
-    let timeRemaining = timeLimit;
+
     let questions = [];
     let currentQuestionIndex = 0;
     let userAnswers = {};
+    let timeLimit = 180;
+    let timeRemaining = timeLimit;
     let timerInterval;
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     async function loadQuestions() {
-      const res = await fetch('main-questions.json');
-      const data = await res.json();
-      questions = shuffle(data.map(q => ({
-        ...q,
-        options: shuffle([...q.options])
-      })));
-      renderQuestion();
-      timerInterval = setInterval(updateTimer, 1000);
-    }
-
-    function updateTimer() {
-      if (timeRemaining <= 0) {
-        submitTest();
-        return;
+      try {
+        const res = await fetch('/questions.json');
+        if (!res.ok) throw new Error("Could not load questions");
+        const data = await res.json();
+        questions = shuffle(data.map(q => ({
+          ...q,
+          options: shuffle([...q.options])
+        })));
+        renderQuestion();
+        timerInterval = setInterval(updateTimer, 1000);
+      } catch (err) {
+        document.getElementById("questionBox").innerHTML =
+          `<p style="color:red;">Failed to load questions. Please refresh or try again later.</p>`;
+        document.getElementById("timer").innerText = "Error!";
+        console.error(err);
       }
-      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
-      const secs = String(timeRemaining % 60).padStart(2, '0');
-      document.getElementById("timer").innerText = `Time: ${mins}:${secs}`;
-      timeRemaining--;
     }
 
     function renderQuestion() {
@@ -205,7 +212,7 @@
         <div class="question">${currentQuestionIndex + 1}. ${q.question}</div>
         <div class="options">
           ${q.options.map(opt => `
-            <button onclick="selectAnswer(${q.id}, '${opt}', this)" 
+            <button onclick="selectAnswer(${q.id}, '${opt}', this)"
               class="${userAnswers[q.id] === opt ? 'selected' : ''}">
               ${opt}
             </button>
@@ -239,12 +246,31 @@
       }
     }
 
+    function updateTimer() {
+      if (timeRemaining <= 0) {
+        submitTest();
+        return;
+      }
+      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
+      const secs = String(timeRemaining % 60).padStart(2, '0');
+      document.getElementById("timer").innerText = `Time: ${mins}:${secs}`;
+      timeRemaining--;
+    }
+
     function submitTest() {
       clearInterval(timerInterval);
       localStorage.setItem(`answers_${currentUser}`, JSON.stringify(userAnswers));
       localStorage.setItem(`questions_${currentUser}`, JSON.stringify(questions));
       localStorage.setItem(`timeTaken_${currentUser}`, timeLimit - timeRemaining);
       window.location.href = 'summary.html';
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
     }
 
     window.onload = loadQuestions;
