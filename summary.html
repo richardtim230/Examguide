@@ -30,6 +30,20 @@
       border-radius: 12px;
       padding: 28px 18px 24px 18px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+      position: relative;
+    }
+    #downloadPdfBtn {
+      background: #00c6ff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px 18px;
+      cursor: pointer;
+      float: right;
+      margin-top: -10px;
+      margin-bottom: 20px;
     }
     .section-title {
       font-size: 22px;
@@ -127,6 +141,11 @@
       .summary-container {
         padding: 12px 5px;
       }
+      #downloadPdfBtn {
+        float: none;
+        margin: 10px 0;
+        width: 100%;
+      }
       .user-details, .result-details {
         flex-direction: column;
         gap: 12px;
@@ -144,6 +163,7 @@
     <div style="font-size: 20px; font-weight: bold;">Exam Summary</div>
   </header>
   <div class="summary-container">
+    <button id="downloadPdfBtn">Download as PDF</button>
     <div class="section-title">User Details</div>
     <div class="user-details" id="userDetails"></div>
     <div class="section-title">Result Details</div>
@@ -225,6 +245,56 @@
     }
 
     renderReview();
+  </script>
+  <!-- PDF dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- PDF logic -->
+  <script>
+    document.getElementById('downloadPdfBtn').addEventListener('click', function () {
+      const summaryEl = document.querySelector('.summary-container');
+      // Hide the button for PDF
+      this.style.display = 'none';
+
+      html2canvas(summaryEl, {scale: 2, useCORS: true}).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new window.jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'pt',
+          format: 'a4'
+        });
+        // Calculate width/height for A4
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pageWidth - 30; // 15pt margin each side
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+
+        let position = 20;
+        pdf.addImage(imgData, 'PNG', 15, position, imgWidth, imgHeight);
+
+        // Support for multi-page (if needed)
+        let heightLeft = imgHeight;
+        while (heightLeft > pageHeight - 40) {
+          pdf.addPage();
+          position = 10;
+          heightLeft -= pageHeight - 40;
+          pdf.addImage(
+            imgData,
+            'PNG',
+            15,
+            position - heightLeft,
+            imgWidth,
+            imgHeight
+          );
+        }
+
+        pdf.save('exam-summary.pdf');
+        // Show the button again
+        setTimeout(() => {
+          document.getElementById('downloadPdfBtn').style.display = '';
+        }, 500);
+      });
+    });
   </script>
 </body>
 </html>
