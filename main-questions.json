@@ -41,8 +41,98 @@
         "answer": "Tuber",
         "explanation": "A tuber is a modified stem, not a fruit.",
         "questionImage": ""
+      },
+      {
+        "id": 4,
+        "question": "In which part of the flower does fertilization take place?",
+        "options": [
+          {"text": "Ovary"},
+          {"text": "Stigma"},
+          {"text": "Style"},
+          {"text": "Petal"}
+        ],
+        "answer": "Ovary",
+        "explanation": "Fertilization occurs in the ovary where the ovules are located.",
+        "questionImage": ""
+      },
+      {
+        "id": 5,
+        "question": "What are the green leaf-like parts that protect a flower bud called?",
+        "options": [
+          {"text": "Sepals"},
+          {"text": "Petals"},
+          {"text": "Stamens"},
+          {"text": "Carpels"}
+        ],
+        "answer": "Sepals",
+        "explanation": "Sepals protect the developing flower bud.",
+        "questionImage": ""
+      },
+      {
+        "id": 6,
+        "question": "Which flower part develops into a fruit after fertilization?",
+        "options": [
+          {"text": "Ovary"},
+          {"text": "Anther"},
+          {"text": "Petal"},
+          {"text": "Sepal"}
+        ],
+        "answer": "Ovary",
+        "explanation": "The ovary swells and develops into a fruit after fertilization.",
+        "questionImage": ""
+      },
+      {
+        "id": 7,
+        "question": "Which of these fruits is classified as a berry?",
+        "options": [
+          {"text": "Tomato"},
+          {"text": "Apple"},
+          {"text": "Peach"},
+          {"text": "Cherry"}
+        ],
+        "answer": "Tomato",
+        "explanation": "A tomato is botanically classified as a berry.",
+        "questionImage": ""
+      },
+      {
+        "id": 8,
+        "question": "Which fruit develops from a single ovary and a single flower?",
+        "options": [
+          {"text": "Simple fruit"},
+          {"text": "Aggregate fruit"},
+          {"text": "Multiple fruit"},
+          {"text": "Accessory fruit"}
+        ],
+        "answer": "Simple fruit",
+        "explanation": "Simple fruits develop from a single ovary of a single flower.",
+        "questionImage": ""
+      },
+      {
+        "id": 9,
+        "question": "What is the male reproductive organ of a flower called?",
+        "options": [
+          {"text": "Stamen"},
+          {"text": "Carpel"},
+          {"text": "Petal"},
+          {"text": "Sepal"}
+        ],
+        "answer": "Stamen",
+        "explanation": "The stamen is the male reproductive organ of a flower.",
+        "questionImage": ""
+      },
+      {
+        "id": 10,
+        "question": "What is the function of the stigma in a flower?",
+        "options": [
+          {"text": "Receives pollen"},
+          {"text": "Produces ovules"},
+          {"text": "Attracts pollinators"},
+          {"text": "Protects the seed"}
+        ],
+        "answer": "Receives pollen",
+        "explanation": "The stigma is the sticky part that receives pollen.",
+        "questionImage": ""
       }
-      // ... (add remaining questions up to 30 for this set, as in previous examples)
     ]
   },
   {
@@ -87,8 +177,98 @@
         "answer": "Epidermis",
         "explanation": "The epidermis is the outermost layer of cells in plants.",
         "questionImage": ""
+      },
+      {
+        "id": 4,
+        "question": "Which part of the plant anchors it to the ground?",
+        "options": [
+          {"text": "Root"},
+          {"text": "Stem"},
+          {"text": "Leaf"},
+          {"text": "Flower"}
+        ],
+        "answer": "Root",
+        "explanation": "Roots anchor the plant and absorb water and minerals.",
+        "questionImage": ""
+      },
+      {
+        "id": 5,
+        "question": "What tissue moves food from leaves to other parts of the plant?",
+        "options": [
+          {"text": "Phloem"},
+          {"text": "Xylem"},
+          {"text": "Cortex"},
+          {"text": "Pith"}
+        ],
+        "answer": "Phloem",
+        "explanation": "Phloem is responsible for the translocation of food substances.",
+        "questionImage": ""
+      },
+      {
+        "id": 6,
+        "question": "Which plant organ is primarily responsible for photosynthesis?",
+        "options": [
+          {"text": "Leaf"},
+          {"text": "Root"},
+          {"text": "Stem"},
+          {"text": "Flower"}
+        ],
+        "answer": "Leaf",
+        "explanation": "Leaves contain chlorophyll and are the main site of photosynthesis.",
+        "questionImage": ""
+      },
+      {
+        "id": 7,
+        "question": "What is the main function of root hairs?",
+        "options": [
+          {"text": "Increase surface area for absorption"},
+          {"text": "Store food"},
+          {"text": "Anchor the plant"},
+          {"text": "Prevent water loss"}
+        ],
+        "answer": "Increase surface area for absorption",
+        "explanation": "Root hairs increase the surface area of roots for better absorption of water and minerals.",
+        "questionImage": ""
+      },
+      {
+        "id": 8,
+        "question": "Which part of the plant supports leaves and transports materials?",
+        "options": [
+          {"text": "Stem"},
+          {"text": "Root"},
+          {"text": "Flower"},
+          {"text": "Fruit"}
+        ],
+        "answer": "Stem",
+        "explanation": "The stem provides support and conducts water, minerals, and food.",
+        "questionImage": ""
+      },
+      {
+        "id": 9,
+        "question": "What is the function of stomata in plants?",
+        "options": [
+          {"text": "Gas exchange"},
+          {"text": "Water absorption"},
+          {"text": "Transport food"},
+          {"text": "Support"}
+        ],
+        "answer": "Gas exchange",
+        "explanation": "Stomata are pores for gas exchange and transpiration.",
+        "questionImage": ""
+      },
+      {
+        "id": 10,
+        "question": "Which of these is NOT a function of the stem?",
+        "options": [
+          {"text": "Absorption of water"},
+          {"text": "Support"},
+          {"text": "Conduction"},
+          {"text": "Storage"}
+        ],
+        "answer": "Absorption of water",
+        "explanation": "Absorption of water is mainly the function of roots.",
+        "questionImage": ""
       }
-      // ... (add more questions for this set)
     ]
   },
   {
@@ -133,8 +313,98 @@
         "answer": "Glucose",
         "explanation": "Glucose is the main product; oxygen is a byproduct.",
         "questionImage": ""
+      },
+      {
+        "id": 4,
+        "question": "Which part of the plant cell contains chlorophyll?",
+        "options": [
+          {"text": "Chloroplast"},
+          {"text": "Mitochondria"},
+          {"text": "Nucleus"},
+          {"text": "Cell wall"}
+        ],
+        "answer": "Chloroplast",
+        "explanation": "Chloroplasts contain chlorophyll, the green pigment.",
+        "questionImage": ""
+      },
+      {
+        "id": 5,
+        "question": "What is the energy source for photosynthesis?",
+        "options": [
+          {"text": "Sunlight"},
+          {"text": "Glucose"},
+          {"text": "Oxygen"},
+          {"text": "ATP"}
+        ],
+        "answer": "Sunlight",
+        "explanation": "Photosynthesis uses energy from sunlight to make food.",
+        "questionImage": ""
+      },
+      {
+        "id": 6,
+        "question": "What is released as a byproduct of photosynthesis?",
+        "options": [
+          {"text": "Oxygen"},
+          {"text": "Carbon dioxide"},
+          {"text": "Glucose"},
+          {"text": "Water"}
+        ],
+        "answer": "Oxygen",
+        "explanation": "Oxygen is released as a byproduct.",
+        "questionImage": ""
+      },
+      {
+        "id": 7,
+        "question": "What is the first step of photosynthesis?",
+        "options": [
+          {"text": "Absorption of light"},
+          {"text": "Production of glucose"},
+          {"text": "Release of oxygen"},
+          {"text": "Formation of ATP"}
+        ],
+        "answer": "Absorption of light",
+        "explanation": "The first step is the absorption of light by chlorophyll.",
+        "questionImage": ""
+      },
+      {
+        "id": 8,
+        "question": "Which organelle is called the 'kitchen of the cell'?",
+        "options": [
+          {"text": "Chloroplast"},
+          {"text": "Mitochondria"},
+          {"text": "Golgi body"},
+          {"text": "Nucleus"}
+        ],
+        "answer": "Chloroplast",
+        "explanation": "Chloroplasts produce food through photosynthesis.",
+        "questionImage": ""
+      },
+      {
+        "id": 9,
+        "question": "The process of converting light energy into chemical energy is known as?",
+        "options": [
+          {"text": "Photosynthesis"},
+          {"text": "Respiration"},
+          {"text": "Transpiration"},
+          {"text": "Glycolysis"}
+        ],
+        "answer": "Photosynthesis",
+        "explanation": "Photosynthesis converts light energy to chemical energy.",
+        "questionImage": ""
+      },
+      {
+        "id": 10,
+        "question": "Which of these is NOT required for photosynthesis?",
+        "options": [
+          {"text": "Oxygen"},
+          {"text": "Sunlight"},
+          {"text": "Water"},
+          {"text": "Carbon dioxide"}
+        ],
+        "answer": "Oxygen",
+        "explanation": "Oxygen is a byproduct, not a requirement.",
+        "questionImage": ""
       }
-      // ... (add more questions for this set)
     ]
   }
 ]
