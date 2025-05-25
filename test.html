@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CBT | Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #232526, #414345);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .branding {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .branding img {
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .branding .titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .titles .exam-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .titles .username {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    #timer {
+      font-weight: bold;
+      font-size: 16px;
+      background: #00c6ff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: #000;
+    }
+
+    .container {
+      flex: 1;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .question-box {
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .options button {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .options button:hover {
+      background: #00c6ff;
+      color: #000;
+    }
+
+    .options button.selected {
+      background: #00c6ff;
+      color: #000;
+      border-color: #0072ff;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      font-size: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #0072ff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .nav-buttons button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+
+    @media(max-width: 600px) {
+      .question {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="branding">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/120px-HTML5_logo_and_wordmark.svg.png" alt="Logo">
+      <div class="titles">
+        <div class="exam-name">General Knowledge Exam</div>
+        <div class="username" id="candidateName">User: </div>
+      </div>
+    </div>
+    <div id="timer">Loading...</div>
+  </header>
+
+  <div class="container">
+    <div class="question-box" id="questionBox">
+      <!-- Question and options will load here -->
+    </div>
+    <div class="nav-buttons">
+      <button onclick="prevQuestion()" id="prevBtn">Previous</button>
+      <button onclick="nextQuestion()" id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = localStorage.getItem('current_user') || "guest";
+    document.getElementById('candidateName').innerText += currentUser;
+    
+    let timeLimit = 180;
+    let timeRemaining = timeLimit;
+    let questions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let timerInterval;
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    async function loadQuestions() {
+      const res = await fetch('main-questions.json');
+      const data = await res.json();
+      questions = shuffle(data.map(q => ({
+        ...q,
+        options: shuffle([...q.options])
+      })));
+      renderQuestion();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      if (timeRemaining <= 0) {
+        submitTest();
+        return;
+      }
+      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
+      const secs = String(timeRemaining % 60).padStart(2, '0');
+      document.getElementById("timer").innerText = `Time: ${mins}:${secs}`;
+      timeRemaining--;
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestionIndex];
+      const container = document.getElementById("questionBox");
+      container.innerHTML = `
+        <div class="question">${currentQuestionIndex + 1}. ${q.question}</div>
+        <div class="options">
+          ${q.options.map(opt => `
+            <button onclick="selectAnswer(${q.id}, '${opt}', this)" 
+              class="${userAnswers[q.id] === opt ? 'selected' : ''}">
+              ${opt}
+            </button>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById("prevBtn").disabled = currentQuestionIndex === 0;
+      document.getElementById("nextBtn").innerText =
+        currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
+    }
+
+    function selectAnswer(qid, answer, btn) {
+      userAnswers[qid] = answer;
+      document.querySelectorAll(".options button").forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        submitTest();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+
+    function submitTest() {
+      clearInterval(timerInterval);
+      localStorage.setItem(`answers_${currentUser}`, JSON.stringify(userAnswers));
+      localStorage.setItem(`questions_${currentUser}`, JSON.stringify(questions));
+      localStorage.setItem(`timeTaken_${currentUser}`, timeLimit - timeRemaining);
+      window.location.href = 'summary.html';
+    }
+
+    window.onload = loadQuestions;
+  </script>
+</body>
+</html>
