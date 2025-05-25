@@ -6,7 +6,6 @@
   <title>Exam Summary</title>
   <script>
 // Prevent unauthorized access
-const currentUser = localStorage.getItem('current_user');
 if (!currentUser || currentUser === "Guest") {
   // Redirect to login page (adjust the path as needed)
   window.location.href = "mock.html";
