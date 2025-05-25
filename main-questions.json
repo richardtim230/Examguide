@@ -1,29 +1,29 @@
 [
   {
     "id": 1,
-    "question": "What is the capital of France?",
-    "options": ["Paris", "Rome", "Berlin", "Madrid"],
-    "answer": "Paris",
-    "explanation": "Paris is the capital and most populous city of France."
+    "question": "What is the derivative of $x^2$?",
+    "questionImage": "",
+    "options": [
+      { "text": "$2x$", "image": "" },
+      { "text": "$x$", "image": "" },
+      { "text": "$x^2$", "image": "" },
+      { "text": "$\\frac{1}{x}$", "image": "" }
+    ],
+    "answer": "$2x$",
+    "explanation": "The derivative of $x^n$ is $nx^{n-1}$."
   },
   {
     "id": 2,
-    "question": "Which planet is known as the Red Planet?",
-    "options": ["Venus", "Mars", "Jupiter", "Saturn"],
-    "answer": "Mars",
-    "explanation": "Mars is often called the 'Red Planet' due to its reddish appearance."
-  },
-  {
-    "id": 3,
-    "question": "What does HTML stand for?",
+    "question": "Identify the graph of the function $y = \\sin(x)$.",
+    "questionImage": "images/sine_question.png",
     "options": [
-      "Hyper Text Markup Language",
-      "HighText Machine Language",
-      "Hyper Tabular Markup Language",
-      "None of the above"
+      { "text": "Option A", "image": "images/option_a.png" },
+      { "text": "Option B", "image": "images/option_b.png" },
+      { "text": "Option C", "image": "images/option_c.png" },
+      { "text": "Option D", "image": "images/option_d.png" }
     ],
-    "answer": "Hyper Text Markup Language",
-    "explanation": "HTML stands for Hyper Text Markup Language."
+    "answer": "Option B",
+    "explanation": "Option B correctly represents the sine wave."
   }
-]
-
+    ]
+    
