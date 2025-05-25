@@ -3,136 +3,528 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
-      {
-        "id": 1,
-        "question": "Which part of the flower is responsible for producing pollen?",
-        "options": [
-          {"text": "Anther"},
-          {"text": "Stigma"},
-          {"text": "Petal"},
-          {"text": "Ovary"}
-        ],
-        "answer": "Anther",
-        "explanation": "The anther is the part of the stamen where pollen is produced.",
-        "questionImage": "csc2.webp"
-      },
-      {
-        "id": 2,
-        "question": "What is the main function of petals in a flower?",
-        "options": [
-          {"text": "Attract pollinators"},
-          {"text": "Produce seeds"},
-          {"text": "Absorb sunlight"},
-          {"text": "Protect the ovary"}
-        ],
-        "answer": "Attract pollinators",
-        "explanation": "Petals are often brightly colored to attract insects and other pollinators.",
-        "questionImage": "Screenshot_20250515-102706~3.png"
-      },
-      {
-        "id": 3,
-        "question": "Which of the following is NOT a type of fruit?",
-        "options": [
-          {"text": "Berry"},
-          {"text": "Drupe"},
-          {"text": "Tuber"},
-          {"text": "Pome"}
-        ],
-        "answer": "Tuber",
-        "explanation": "A tuber is a modified stem, not a fruit.",
-        "questionImage": ""
-      },
-      {
-        "id": 4,
-        "question": "In which part of the flower does fertilization take place?",
-        "options": [
-          {"text": "Ovary"},
-          {"text": "Stigma"},
-          {"text": "Style"},
-          {"text": "Petal"}
-        ],
-        "answer": "Ovary",
-        "explanation": "Fertilization occurs in the ovary where the ovules are located.",
-        "questionImage": ""
-      },
-      {
-        "id": 5,
-        "question": "What are the green leaf-like parts that protect a flower bud called?",
-        "options": [
-          {"text": "Sepals"},
-          {"text": "Petals"},
-          {"text": "Stamens"},
-          {"text": "Carpels"}
-        ],
-        "answer": "Sepals",
-        "explanation": "Sepals protect the developing flower bud.",
-        "questionImage": ""
-      },
-      {
-        "id": 6,
-        "question": "Which flower part develops into a fruit after fertilization?",
-        "options": [
-          {"text": "Ovary"},
-          {"text": "Anther"},
-          {"text": "Petal"},
-          {"text": "Sepal"}
-        ],
-        "answer": "Ovary",
-        "explanation": "The ovary swells and develops into a fruit after fertilization.",
-        "questionImage": ""
-      },
-      {
-        "id": 7,
-        "question": "Which of these fruits is classified as a berry?",
-        "options": [
-          {"text": "Tomato"},
-          {"text": "Apple"},
-          {"text": "Peach"},
-          {"text": "Cherry"}
-        ],
-        "answer": "Tomato",
-        "explanation": "A tomato is botanically classified as a berry.",
-        "questionImage": ""
-      },
-      {
-        "id": 8,
-        "question": "Which fruit develops from a single ovary and a single flower?",
-        "options": [
-          {"text": "Simple fruit"},
-          {"text": "Aggregate fruit"},
-          {"text": "Multiple fruit"},
-          {"text": "Accessory fruit"}
-        ],
-        "answer": "Simple fruit",
-        "explanation": "Simple fruits develop from a single ovary of a single flower.",
-        "questionImage": ""
-      },
-      {
-        "id": 9,
-        "question": "What is the male reproductive organ of a flower called?",
-        "options": [
-          {"text": "Stamen"},
-          {"text": "Carpel"},
-          {"text": "Petal"},
-          {"text": "Sepal"}
-        ],
-        "answer": "Stamen",
-        "explanation": "The stamen is the male reproductive organ of a flower.",
-        "questionImage": ""
-      },
-      {
-        "id": 10,
-        "question": "What is the function of the stigma in a flower?",
-        "options": [
-          {"text": "Receives pollen"},
-          {"text": "Produces ovules"},
-          {"text": "Attracts pollinators"},
-          {"text": "Protects the seed"}
-        ],
-        "answer": "Receives pollen",
-        "explanation": "The stigma is the sticky part that receives pollen.",
-        "questionImage": ""
-      }
+ [
+  {
+    "id": 1,
+    "question": "A classification system that groups organisms based on a \\"multiplicity of criteria\\" is fundamentally described as:",
+    "options": [
+      {"text": "Artificial"},
+      {"text": "Evolutionary"},
+      {"text": "Natural"},
+      {"text": "Hierarchical"}
+    ],
+    "answer": "Natural",
+    "explanation": "A <strong>natural classification</strong> system is defined as one that uses a 'multiplicity of criteria' or a comprehensive array of biological attributes to group organisms. This approach aims to reflect their inherent biological relationships, unlike artificial systems that use very few criteria.",
+    "questionImage": ""
+  },
+  {
+    "id": 2,
+    "question": "The human tendency to \\"order or classify his experience\\" in the environment primarily reflects a basic need for:",
+    "options": [
+      {"text": "Resource management"},
+      {"text": "Cognitive organization"},
+      {"text": "Predictive modeling"},
+      {"text": "Environmental control"}
+    ],
+    "answer": "Cognitive organization",
+    "explanation": "The text states that one of the most important preoccupations of man is the ordering or classification of his experience. This fundamental human activity serves to <strong>systematize and comprehend environmental observations</strong>, which is a core aspect of cognitive organization and making sense of the world around us.",
+    "questionImage": ""
+  },
+  {
+    "id": 3,
+    "question": "When a worker identifies an unknown organism, the core action involves:",
+    "options": [
+      {"text": "Discovering its unique genetic sequence"},
+      {"text": "Assigning it to an already established taxonomic group"},
+      {"text": "Determining its precise evolutionary origin"},
+      {"text": "Creating a new classification category for it"}
+    ],
+    "answer": "Assigning it to an already established taxonomic group",
+    "explanation": "Identification is explicitly defined as 'the process of <strong>assigning an unknown entity to a group that was already established</strong>'. This means fitting a newly encountered organism into the existing framework of classification.",
+    "questionImage": ""
+  },
+  {
+    "id": 4,
+    "question": "Which scientific discipline encompasses the processes of classification, identification, naming, and the comprehensive assessment of classification data?",
+    "options": [
+      {"text": "Taxonomy"},
+      {"text": "Nomenclature"},
+      {"text": "Systematics"},
+      {"text": "Phylogeny"}
+    ],
+    "answer": "Systematics",
+    "explanation": "The notes clearly state that <strong>systematics</strong> is 'the wider subject of taxonomy', which includes not only classification and identification (taxonomy) but also 'naming (nomenclature) and gathering and assessment of classification data'.",
+    "questionImage": ""
+  },
+  {
+    "id": 5,
+    "question": "The primary benefit of a standardized naming system in scientific and professional fields is to:",
+    "options": [
+      {"text": "Limit access to information to experts only"},
+      {"text": "Facilitate clear communication and prevent confusion"},
+      {"text": "Accelerate the rate of new species discovery"},
+      {"text": "Ensure global uniformity in research funding"}
+    ],
+    "answer": "Facilitate clear communication and prevent confusion",
+    "explanation": "The text emphasizes that a system of naming (nomenclature) is 'usually needed to <strong>facilitate communication and avoid confusion</strong> among practitioners of trade, science, or profession'. This ensures that everyone refers to the same organism by the same name globally.",
+    "questionImage": ""
+  },
+  {
+    "id": 6,
+    "question": "In the binomial system of nomenclature, the two Latin names assigned to an organism represent its:",
+    "options": [
+      {"text": "Family and order"},
+      {"text": "Genus and species"},
+      {"text": "Species and variety"},
+      {"text": "Kingdom and phylum"}
+    ],
+    "answer": "Genus and species",
+    "explanation": "The <strong>binomial system</strong>, popularized by Carolus Linnaeus, assigns 'two Latin names – a <strong>generic name</strong> and a <strong>specific name</strong>'. The generic name refers to the genus, and the specific name (or epithet) identifies the species within that genus.",
+    "questionImage": ""
+  },
+  {
+    "id": 7,
+    "question": "Carolus Linnaeus is widely recognized for popularizing the concept of:",
+    "options": [
+      {"text": "Classifying organisms based on their habitat"},
+      {"text": "Assigning two Latin names to each organism"},
+      {"text": "Using common names for all species"},
+      {"text": "Grouping organisms solely by their use to man"}
+    ],
+    "answer": "Assigning two Latin names to each organism",
+    "explanation": "The notes explicitly state that 'The idea of two names (<strong>binomial system</strong>) was popularized by a Swedish naturalist <strong>Carolus Linnaeus</strong>'. This system is fundamental to modern biological nomenclature.",
+    "questionImage": ""
+  },
+  {
+    "id": 8,
+    "question": "In the scientific name <i>Musa sapienttum L.</i>, the 'L' specifically indicates:",
+    "options": [
+      {"text": "The Latin language origin"},
+      {"text": "The geographical location of its first description"},
+      {"text": "The authority who first formally described the species"},
+      {"text": "A sub-specific classification level"}
+    ],
+    "answer": "The authority who first formally described the species",
+    "explanation": "The text clarifies that 'The <strong>L after the name refers to Linnaeus who described the species</strong>'. This 'L' is an abbreviation for the botanist Linnaeus, serving as the <strong>authority</strong> who first formally published the description of that species.",
+    "questionImage": ""
+  },
+  {
+    "id": 9,
+    "question": "The statement that \\"the generic and sub-generic levels of classification do not exhaust the levels of hierarchy\\" implies the existence of:",
+    "options": [
+      {"text": "Only two primary taxonomic ranks"},
+      {"text": "More inclusive taxonomic ranks above the genus"},
+      {"text": "A flexible system where new ranks can be invented"},
+      {"text": "A focus solely on species-level identification"}
+    ],
+    "answer": "More inclusive taxonomic ranks above the genus",
+    "explanation": "This statement directly indicates that the classification system extends beyond just genus and sub-genus. It implies the presence of <strong>higher taxonomic ranks</strong> such as family, order, class, and division, which group related genera into broader categories.",
+    "questionImage": ""
+  },
+  {
+    "id": 10,
+    "question": "A classification system that aims to reveal \\"relationships by descent\\" among organisms is fundamentally based on:",
+    "options": [
+      {"text": "Artificial criteria"},
+      {"text": "Evolutionary principles"},
+      {"text": "Practical utility"},
+      {"text": "Morphological similarities alone"}
+    ],
+    "answer": "Evolutionary principles",
+    "explanation": "The notes state that 'As the theory of evolution developed, classifications of organisms that are supposed to show <strong>evolutionary relationships (i.e. relationships by descent)</strong> were also popularized'. This directly links 'relationships by descent' to the principles of evolution and common ancestry.",
+    "questionImage": ""
+  },
+  {
+    "id": 11,
+    "question": "The practice of accompanying scientific names with the name of the person who first described the organism serves to:",
+    "options": [
+      {"text": "Provide historical context for its discovery"},
+      {"text": "Acknowledge the original authority for the name"},
+      {"text": "Indicate the organism's common name in Latin"},
+      {"text": "Specify the country where it was first found"}
+    ],
+    "answer": "Acknowledge the original authority for the name",
+    "explanation": "The text mentions that names are 'accompanied by the name of the person (<strong>authority</strong>) who first described the organism'. This practice ensures proper credit and traceability for the initial scientific description and naming.",
+    "questionImage": ""
+  },
+  {
+    "id": 12,
+    "question": "International congresses and publications are essential in botanical and zoological sciences for:",
+    "options": [
+      {"text": "Promoting the commercial trade of organisms"},
+      {"text": "Resolving naming disputes and standardizing nomenclature"},
+      {"text": "Documenting traditional uses of plants and animals"},
+      {"text": "Funding expeditions for new species collection"}
+    ],
+    "answer": "Resolving naming disputes and standardizing nomenclature",
+    "explanation": "The notes explicitly state that 'In botanical and zoological sciences, problems of naming are usually addressed and <strong>resolved in international congresses and through publications</strong>'. This ensures a consistent and globally accepted system of nomenclature.",
+    "questionImage": ""
+  },
+  {
+    "id": 13,
+    "question": "Considering <i>Musa parasidica</i>, which part of the name denotes a group of closely related species?",
+    "options": [
+      {"text": "<i>parasidica</i>"},
+      {"text": "<i>Musa</i>"},
+      {"text": "L."},
+      {"text": "The entire binomial"}
+    ],
+    "answer": "<i>Musa</i>",
+    "explanation": "In the binomial system, the first name, the <strong>generic name</strong> (e.g., <i>Musa</i>), represents the <strong>genus</strong>, which is a group of closely related species. The second name, the specific epithet (e.g., <i>parasidica</i>), distinguishes the particular species within that genus.",
+    "questionImage": ""
+  },
+  {
+    "id": 14,
+    "question": "The example <i>Vigna unguiculata var. unguiculata</i> demonstrates that:",
+    "options": [
+      {"text": "All species must have a varietal name"},
+      {"text": "Subdivisions can exist within a species"},
+      {"text": "Varietal names are always identical to the specific name"},
+      {"text": "Only cultivated plants have varietal names"}
+    ],
+    "answer": "Subdivisions can exist within a species",
+    "explanation": "The presence of '<strong>var.</strong>' (for variety) in the name <i>Vigna unguiculata var. unguiculata</i> indicates that there can be <strong>subdivisions within a species</strong>, allowing for more specific classification below the species level.",
+    "questionImage": ""
+  },
+  {
+    "id": 15,
+    "question": "The relationship between identification and taxonomy is best described as identification being:",
+    "options": [
+      {"text": "A historical precursor to taxonomy"},
+      {"text": "A practical application within the broader science of taxonomy"},
+      {"text": "A separate field unrelated to classification"},
+      {"text": "The process of creating new taxonomic groups"}
+    ],
+    "answer": "A practical application within the broader science of taxonomy",
+    "explanation": "The notes define <strong>taxonomy</strong> as 'the science of <strong>classification and identification</strong>'. This implies that identification is a fundamental process or a practical application that falls under the umbrella of taxonomy.",
+    "questionImage": ""
+  },
+  {
+    "id": 16,
+    "question": "For a classification of organisms to be considered \\"natural,\\" it must primarily rely on:",
+    "options": [
+      {"text": "A limited set of easily observable traits"},
+      {"text": "The economic value of the organisms"},
+      {"text": "A comprehensive array of biological attributes"},
+      {"text": "Their geographical distribution patterns"}
+    ],
+    "answer": "A comprehensive array of biological attributes",
+    "explanation": "A <strong>natural classification</strong> is contrasted with an artificial one by its reliance on a '<strong>multiplicity of criteria</strong>' or, more specifically, a <strong>comprehensive array of biological attributes</strong>. This approach aims to group organisms based on their inherent biological similarities and relationships.",
+    "questionImage": ""
+  },
+  {
+    "id": 17,
+    "question": "The fundamental human preoccupation with classifying organisms, as described, is rooted in the need to:",
+    "options": [
+      {"text": "Control environmental resources"},
+      {"text": "Systematize and comprehend environmental observations"},
+      {"text": "Predict future ecological disasters"},
+      {"text": "Develop new agricultural practices"}
+    ],
+    "answer": "Systematize and comprehend environmental observations",
+    "explanation": "The text highlights that man's 'most important preoccupations' include 'the ordering or classification of his experience' in the environment. This is driven by the need to <strong>systematize and comprehend environmental observations</strong>, which helps in making sense of the complex natural world.",
+    "questionImage": ""
+  },
+  {
+    "id": 18,
+    "question": "Systematics distinguishes itself from taxonomy by specifically including:",
+    "options": [
+      {"text": "The study of individual organism physiology"},
+      {"text": "The gathering and critical assessment of classification data"},
+      {"text": "The analysis of cellular and molecular structures"},
+      {"text": "The development of new methods for genetic engineering"}
+    ],
+    "answer": "The gathering and critical assessment of classification data",
+    "explanation": "While taxonomy focuses on classification and identification, <strong>systematics</strong> is described as the 'wider subject' that additionally includes 'the <strong>gathering and assessment of classification data</strong>'. This broader scope involves analyzing information to refine and understand evolutionary relationships.",
+    "questionImage": ""
+  },
+  {
+    "id": 19,
+    "question": "The use of Latin names in the binomial system is crucial because it ensures:",
+    "options": [
+      {"text": "That only trained linguists can understand the names"},
+      {"text": "A universal, unambiguous, and stable naming convention"},
+      {"text": "A direct link to ancient Roman botanical studies"},
+      {"text": "That names are difficult for non-scientists to pronounce"}
+    ],
+    "answer": "A universal, unambiguous, and stable naming convention",
+    "explanation": "The notes state that a system of naming is needed to 'facilitate communication and avoid confusion'. Latin names provide a <strong>universal, unambiguous, and stable</strong> system, ensuring that scientists and practitioners worldwide refer to the same organism consistently, regardless of local languages.",
+    "questionImage": ""
+  },
+  {
+    "id": 20,
+    "question": "Classifications that aim to show \\"relationships by descent\\" are primarily focused on elucidating:",
+    "options": [
+      {"text": "The current ecological niches of species"},
+      {"text": "The historical evolutionary pathways and common ancestry of organisms"},
+      {"text": "The population dynamics within a given ecosystem"},
+      {"text": "The immediate genetic makeup of individual organisms"}
+    ],
+    "answer": "The historical evolutionary pathways and common ancestry of organisms",
+    "explanation": "The phrase '<strong>relationships by descent</strong>' is explicitly equated with '<strong>evolutionary relationships</strong>' in the text. This means such classifications are concerned with tracing the historical lineage and common ancestry of organisms over time.",
+    "questionImage": ""
+  },
+  {
+    "id": 21,
+    "question": "A classification system that employs a broad range of biological attributes for grouping organisms is fundamentally categorized as:",
+    "options": [
+      {"text": "Artificial"},
+      {"text": "Evolutionary"},
+      {"text": "Natural"},
+      {"text": "Hierarchical"}
+    ],
+    "answer": "Natural",
+    "explanation": "A <strong>natural classification</strong> system is defined as one that uses a 'multiplicity of criteria' or a comprehensive array of biological attributes to group organisms. This approach aims to reflect their inherent biological relationships, unlike artificial systems that use very few criteria.",
+    "questionImage": ""
+  },
+  {
+    "id": 22,
+    "question": "The scientific discipline that encompasses the principles of classification, identification, and the comprehensive analysis of classification data, including nomenclature, is known as:",
+    "options": [
+      {"text": "Taxonomy"},
+      {"text": "Systematics"},
+      {"text": "Phylogeny"},
+      {"text": "Nomenclature"}
+    ],
+    "answer": "Systematics",
+    "explanation": "The notes clearly state that <strong>systematics</strong> is 'the wider subject of taxonomy', which includes not only classification and identification (taxonomy) but also 'naming (nomenclature) and gathering and assessment of classification data'.",
+    "questionImage": ""
+  },
+  {
+    "id": 23,
+    "question": "When an unknown organism is encountered, the process of assigning it to an already established group is termed:",
+    "options": [
+      {"text": "Systematization"},
+      {"text": "Identification"},
+      {"text": "Nomenclature"},
+      {"text": "Classification"}
+    ],
+    "answer": "Identification",
+    "explanation": "<strong>Identification</strong> is explicitly defined as 'the process of <strong>assigning an unknown entity to a group that was already established</strong>'. This means fitting a newly encountered organism into the existing framework of classification.",
+    "questionImage": ""
+  },
+  {
+    "id": 24,
+    "question": "Classifications that aim to depict relationships based on common ancestry became prominent with the advancement of which scientific theory?",
+    "options": [
+      {"text": "Spontaneous Generation"},
+      {"text": "Evolution"},
+      {"text": "Inheritance of Acquired Characteristics"},
+      {"text": "Catastrophism"}
+    ],
+    "answer": "Evolution",
+    "explanation": "The notes state that 'As the <strong>theory of evolution</strong> developed, classifications of organisms that are supposed to show <strong>evolutionary relationships (i.e. relationships by descent)</strong> were also popularized'. This directly links 'relationships by descent' to the principles of evolution and common ancestry.",
+    "questionImage": ""
+  },
+  {
+    "id": 25,
+    "question": "The primary purpose of a standardized naming system in biological sciences is to:",
+    "options": [
+      {"text": "Preserve ancient languages."},
+      {"text": "Facilitate global scientific communication."},
+      {"text": "Restrict access to taxonomic information."},
+      {"text": "Promote regional variations in terminology."}
+    ],
+    "answer": "Facilitate global scientific communication.",
+    "explanation": "The text emphasizes that a system of naming (nomenclature) is 'usually needed to <strong>facilitate communication and avoid confusion</strong> among practitioners of trade, science, or profession'. This ensures that everyone refers to the same organism by the same name globally.",
+    "questionImage": ""
+  },
+  {
+    "id": 26,
+    "question": "The two-part Latin naming convention for organisms, widely adopted in biology, was popularized by which Swedish naturalist?",
+    "options": [
+      {"text": "Charles Darwin"},
+      {"text": "Gregor Mendel"},
+      {"text": "Carolus Linnaeus"},
+      {"text": "Alfred Russel Wallace"}
+    ],
+    "answer": "Carolus Linnaeus",
+    "explanation": "The notes explicitly state that 'The idea of two names (<strong>binomial system</strong>) was popularized by a Swedish naturalist <strong>Carolus Linnaeus</strong>'. This system is fundamental to modern biological nomenclature.",
+    "questionImage": ""
+  },
+  {
+    "id": 27,
+    "question": "In the binomial name of an organism, the letter 'L' appended to the specific name signifies:",
+    "options": [
+      {"text": "The Latin origin of the name."},
+      {"text": "The location of the type specimen."},
+      {"text": "The original describer of the species."},
+      {"text": "A sub-species designation."}
+    ],
+    "answer": "The original describer of the species.",
+    "explanation": "The text clarifies that 'The <strong>L after the name refers to Linnaeus who described the species</strong>'. This 'L' is an abbreviation for the botanist Linnaeus, serving as the <strong>authority</strong> who first formally published the description of that species.",
+    "questionImage": ""
+  },
+  {
+    "id": 28,
+    "question": "The existence of taxonomic ranks above the generic and sub-generic levels indicates that classification forms a:",
+    "options": [
+      {"text": "Linear sequence."},
+      {"text": "Flexible framework."},
+      {"text": "Hierarchical structure."},
+      {"text": "Binary system."}
+    ],
+    "answer": "Hierarchical structure.",
+    "explanation": "This statement directly indicates that the classification system extends beyond just genus and sub-genus. It implies the presence of <strong>higher taxonomic ranks</strong> such as family, order, class, and division, which group related genera into broader categories, forming a <strong>hierarchy</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 29,
+    "question": "The family Solanaceae shares its immediate higher taxonomic rank with which other plant family?",
+    "options": [
+      {"text": "Convolvulaceae"},
+      {"text": "Fabaceae"},
+      {"text": "Rosaceae"},
+      {"text": "Poaceae"}
+    ],
+    "answer": "Convolvulaceae",
+    "explanation": "The notes explicitly state that 'related families such as <strong>Solanaceae and Convolvulaceae belong to the same order (Polemoniales)</strong>'. This means they share the same immediate higher taxonomic rank, which is the Order.",
+    "questionImage": ""
+  },
+  {
+    "id": 30,
+    "question": "The genera <i>Nicotiana</i> and <i>Lycopersicum</i> are both members of which specific plant family?",
+    "options": [
+      {"text": "Convolvulaceae"},
+      {"text": "Solanaceae"},
+      {"text": "Poaceae"},
+      {"text": "Fabaceae"}
+    ],
+    "answer": "Solanaceae",
+    "explanation": "The notes explicitly state that 'the tobacco genus, pepper genus, tomato genus and garden egg genus (<i>Nicotiana</i>, <i>Capsicum</i>, <i>Lycopersicum</i> and <i>Solanum</i> respectively) all belong in the family <strong>Solanaceae</strong>'.",
+    "questionImage": ""
+  },
+  {
+    "id": 31,
+    "question": "Within the Division Thallophyta, which class includes organisms commonly known as Fungi?",
+    "options": [
+      {"text": "Phycotinae"},
+      {"text": "Hepaticae"},
+      {"text": "Mycotionae"},
+      {"text": "Musci"}
+    ],
+    "answer": "Mycotionae",
+    "explanation": "Eichler's grouping table, presented in the notes, lists '<strong>Mycotionae (Fungi)</strong>' as a class under the Division Thallophyta.",
+    "questionImage": ""
+  },
+  {
+    "id": 32,
+    "question": "Which class, characterized by whisk ferns, is found within the Division Pteridophyta?",
+    "options": [
+      {"text": "Filicinae"},
+      {"text": "Lycopodinae"},
+      {"text": "Psilotinae"},
+      {"text": "Equisetinae"}
+    ],
+    "answer": "Psilotinae",
+    "explanation": "Eichler's grouping table lists '<strong>Psilotinae (Psilotum)</strong>' under the Division Pteridophyta. <i>Psilotum</i> is commonly known as whisk ferns.",
+    "questionImage": ""
+  },
+  {
+    "id": 33,
+    "question": "The Division Spermatophyta is fundamentally distinguished by the presence of:",
+    "options": [
+      {"text": "Flowers"},
+      {"text": "Vascular tissue"},
+      {"text": "Seeds"},
+      {"text": "True leaves"}
+    ],
+    "answer": "Seeds",
+    "explanation": "The notes introduce Spermatophyta as 'The Angiospermae (the flowering <strong>seed plants</strong>)'. Furthermore, the classes listed under Spermatophyta are Gymnospermae and Angiospermae, both of which are characterized by producing seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 34,
+    "question": "Which class within Spermatophyta encompasses plants whose seeds are not enclosed within a fruit?",
+    "options": [
+      {"text": "Angiospermae"},
+      {"text": "Gymnospermae"},
+      {"text": "Filicinae"},
+      {"text": "Bryophyta"}
+    ],
+    "answer": "Gymnospermae",
+    "explanation": "Eichler's grouping table lists '<strong>Gymnospermae (Gymnosperms)</strong>' under Spermatophyta. Gymnosperms are known for their 'naked seeds', meaning their seeds are not enclosed within an ovary (which develops into a fruit).",
+    "questionImage": ""
+  },
+  {
+    "id": 35,
+    "question": "Significant disagreement in plant classification primarily occurs at which taxonomic levels?",
+    "options": [
+      {"text": "Species and genus."},
+      {"text": "Family and order."},
+      {"text": "Above the family level."},
+      {"text": "Within the class level."}
+    ],
+    "answer": "Above the family level.",
+    "explanation": "The notes explicitly state: 'At the <strong>higher levels of classification (i.e. above family level)</strong>, there is considerable disagreement on how to put various groups together'.",
+    "questionImage": ""
+  },
+  {
+    "id": 36,
+    "question": "The classification of <i>Vigna unguiculata var. unguiculata</i> demonstrates that taxonomic organization can extend to levels more specific than the:",
+    "options": [
+      {"text": "Genus"},
+      {"text": "Family"},
+      {"text": "Species"},
+      {"text": "Order"}
+    ],
+    "answer": "Species",
+    "explanation": "The presence of '<strong>var.</strong>' (for variety) in the name <i>Vigna unguiculata var. unguiculata</i> indicates a <strong>varietal name</strong>. A variety is a subdivision within a species, showing that classification can be more specific than the species level itself.",
+    "questionImage": ""
+  },
+  {
+    "id": 37,
+    "question": "The comprehensive scope of systematics, beyond just classification and identification, includes the critical process of:",
+    "options": [
+      {"text": "Analyzing individual organism metabolism."},
+      {"text": "Assessing the economic value of species."},
+      {"text": "Gathering and evaluating classification data."},
+      {"text": "Predicting future ecological changes."}
+    ],
+    "answer": "Gathering and evaluating classification data.",
+    "explanation": "While taxonomy focuses on classification and identification, <strong>systematics</strong> is described as the 'wider subject' that additionally includes 'the <strong>gathering and assessment of classification data</strong>'. This broader scope involves analyzing information to refine and understand evolutionary relationships.",
+    "questionImage": ""
+  },
+  {
+    "id": 38,
+    "question": "A classification system that is considered \\\\"artificial\\\\" is typically based on:",
+    "options": [
+      {"text": "Evolutionary relationships."},
+      {"text": "A limited number of criteria."},
+      {"text": "A multiplicity of biological attributes."},
+      {"text": "Relationships by descent."}
+    ],
+    "answer": "A limited number of criteria.",
+    "explanation": "The notes state that '<strong>Very few criteria</strong> or a multiplicity of criteria may be used to classify organisms: the former is said to be <strong>artificial</strong> while the latter is said to be natural'. 'The former' refers to 'very few criteria'.",
+    "questionImage": ""
+  },
+  {
+    "id": 39,
+    "question": "The Plant Kingdom is ultimately composed of different groups of:",
+    "options": [
+      {"text": "Orders"},
+      {"text": "Families"},
+      {"text": "Classes"},
+      {"text": "Genera"}
+    ],
+    "answer": "Classes",
+    "explanation": "The notes describe the hierarchical structure, stating that 'different groups of <strong>classes</strong> belong in different divisions which make the Plant Kingdom'. This indicates that classes are the direct components that form the divisions, which in turn form the Kingdom.",
+    "questionImage": ""
+  },
+  {
+    "id": 40,
+    "question": "In the family Solanaceae, <i>Solanum</i> serves as the \\\\"type genus,\\\\" indicating its role as a:",
+    "options": [
+      {"text": "Recently discovered genus."},
+      {"text": "Genus with the highest number of species."},
+      {"text": "Representative genus for the family."},
+      {"text": "Genus with unique, uncharacteristic traits."}
+    ],
+    "answer": "Representative genus for the family.",
+    "explanation": "While 'type genus' isn't explicitly defined, its usage in the context of '<i>Solanum</i> as the <strong>type genus</strong>' for the family Solanaceae implies it serves as a <strong>representative or foundational example</strong> for that family, often being the genus from which the family name is derived.",
+    "questionImage": ""
+  }
+   
     ]
   },
   {
