@@ -7,7 +7,7 @@
       { "text": "$$2x$$", "image": "" },
       { "text": "$$x$$", "image": "" },
       { "text": "$$x^2$$", "image": "" },
-      { "text": "$$\\frac{1}{x}$", "image": "" }
+      { "text": "$$\\frac{1}{x}$$", "image": "" }
     ],
     "answer": "$2x$",
     "explanation": "The derivative of $x^n$ is $nx^{n-1}$."
