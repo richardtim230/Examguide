@@ -53,19 +53,33 @@
       letter-spacing: 0.5px;
       margin-top: 24px;
     }
-    .user-details, .result-details {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
+    .details-table-container {
+      margin-bottom: 30px;
+      overflow-x: auto;
     }
-    .user-details div, .result-details div {
-      background: rgba(255,255,255,0.12);
-      padding: 12px 18px;
-      border-radius: 8px;
-      min-width: 180px;
+    table.details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0;
+      background: rgba(255,255,255,0.09);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .details-table th, .details-table td {
+      padding: 14px 12px;
+      text-align: left;
       font-size: 15px;
-      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(0,198,255,0.08);
+    }
+    .details-table th {
+      background: rgba(0,198,255,0.12);
+      color: #00c6ff;
+      font-weight: bold;
+      width: 220px;
+    }
+    .details-table tr:last-child td {
+      border-bottom: none;
     }
     .score {
       font-size: 20px;
@@ -80,6 +94,17 @@
       color: #00c6ff;
       font-size: 17px;
       font-weight: bold;
+    }
+    .pie-chart-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .pie-chart-section canvas {
+      background: rgba(255,255,255,0.10);
+      border-radius: 50%;
+      margin-top: 7px;
     }
     .question-review {
       background: rgba(255,255,255,0.10);
@@ -137,35 +162,6 @@
       border-radius: 6px;
       font-size: 15px;
     }
-    /* PRINT/PDF OVERRIDES */
-    @media print {
-      html, body {
-        background: #fff !important;
-        color: #000 !important;
-      }
-      .summary-container {
-        background: #fff !important;
-        color: #000 !important;
-        box-shadow: none !important;
-      }
-      header {
-        background: #fff !important;
-        color: #000 !important;
-      }
-      #downloadPdfBtn {
-        display: none !important;
-      }
-      .score, .attempted, .percentage, .correct-answer, .user-answer.correct, .user-answer.incorrect {
-        color: #000 !important;
-        background: none !important;
-      }
-      .question-review, .user-details div, .result-details div, .explanation {
-        background: #fff !important;
-        color: #000 !important;
-        border-left: none !important;
-        box-shadow: none !important;
-      }
-    }
     @media (max-width: 800px) {
       .summary-container {
         padding: 12px 5px;
@@ -175,9 +171,9 @@
         margin: 10px 0;
         width: 100%;
       }
-      .user-details, .result-details {
-        flex-direction: column;
-        gap: 12px;
+      .details-table th, .details-table td {
+        font-size: 13px;
+        padding: 10px 6px;
       }
     }
   </style>
@@ -185,6 +181,8 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
@@ -193,10 +191,16 @@
   </header>
   <div class="summary-container">
     <button id="downloadPdfBtn">Download as PDF</button>
-    <div class="section-title">User Details</div>
-    <div class="user-details" id="userDetails"></div>
-    <div class="section-title">Result Details</div>
-    <div class="result-details" id="resultDetails"></div>
+    <div class="section-title">Details</div>
+    <div class="details-table-container">
+      <table class="details-table" id="detailsTable">
+        <!-- filled by JS -->
+      </table>
+    </div>
+    <div class="pie-chart-section">
+      <div style="font-size: 18px; color: #00c6ff; font-weight: bold;">Result Pie Chart</div>
+      <canvas id="resultPieChart" width="280" height="280"></canvas>
+    </div>
     <div class="section-title">Attempt Review</div>
     <div id="reviewSection"></div>
   </div>
@@ -219,25 +223,97 @@
       ) score++;
     });
 
+    const incorrect = attemptedQuestions - score;
+    const notAttempted = totalQuestions - attemptedQuestions;
     const percentage = totalQuestions ? (score / totalQuestions * 100).toFixed(2) : 0;
     const avgSpeed = totalQuestions ? (timeTaken / totalQuestions).toFixed(2) : 0;
     const mins = Math.floor(timeTaken / 60);
     const secs = timeTaken % 60;
 
-    // User Details
-    document.getElementById('userDetails').innerHTML = `
-      <div><strong>Username:</strong> <br/>${currentUser}</div>
-      <div><strong>Time Taken:</strong> <br/>${mins}m ${secs < 10 ? '0' : ''}${secs}s</div>
+    // Fill Table
+    document.getElementById('detailsTable').innerHTML = `
+      <tr>
+        <th>Username</th>
+        <td>${currentUser}</td>
+      </tr>
+      <tr>
+        <th>Total Questions</th>
+        <td>${totalQuestions}</td>
+      </tr>
+      <tr>
+        <th>Attempted</th>
+        <td class="attempted">${attemptedQuestions}</td>
+      </tr>
+      <tr>
+        <th>Correct Answers</th>
+        <td class="score">${score}</td>
+      </tr>
+      <tr>
+        <th>Incorrect Answers</th>
+        <td style="color:#ff4e55; font-weight:bold;">${incorrect}</td>
+      </tr>
+      <tr>
+        <th>Not Attempted</th>
+        <td style="color:#bdeaff; font-weight:bold;">${notAttempted}</td>
+      </tr>
+      <tr>
+        <th>Percentage</th>
+        <td class="percentage">${percentage}%</td>
+      </tr>
+      <tr>
+        <th>Avg Speed</th>
+        <td>${avgSpeed} sec/question</td>
+      </tr>
+      <tr>
+        <th>Time Taken</th>
+        <td>${mins}m ${secs < 10 ? '0' : ''}${secs}s</td>
+      </tr>
     `;
 
-    // Result Details
-    document.getElementById('resultDetails').innerHTML = `
-      <div><strong>Total Questions:</strong> <br/>${totalQuestions}</div>
-      <div><strong>Attempted:</strong> <span class="attempted">${attemptedQuestions}</span></div>
-      <div><strong>Score:</strong> <span class="score">${score}</span></div>
-      <div><strong>Percentage:</strong> <span class="percentage">${percentage}%</span></div>
-      <div><strong>Avg Speed:</strong> <br/>${avgSpeed} sec/question</div>
-    `;
+    // Pie Chart
+    window.addEventListener('DOMContentLoaded', function() {
+      const ctx = document.getElementById('resultPieChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Correct', 'Incorrect', 'Not Attempted'],
+          datasets: [{
+            data: [score, incorrect, notAttempted],
+            backgroundColor: [
+              '#00ffae', // Correct
+              '#ff4e55', // Incorrect
+              '#bdeaff'  // Not Attempted
+            ],
+            borderWidth: 2,
+            borderColor: '#232526'
+          }]
+        },
+        options: {
+          responsive: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#fff',
+                font: {size: 15}
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += context.parsed;
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+    });
 
     // Attempt Review
     function renderReview() {
@@ -278,62 +354,11 @@
   <!-- PDF dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- PDF logic with temporary style override -->
+  <!-- PDF logic -->
   <script>
-    function setPdfStyles() {
-      document.body.style.background = "#fff";
-      const cont = document.querySelector('.summary-container');
-      if (cont) {
-        cont.style.background = "#fff";
-        cont.style.color = "#000";
-        cont.style.boxShadow = "none";
-      }
-      const head = document.querySelector('header');
-      if (head) {
-        head.style.background = "#fff";
-        head.style.color = "#000";
-      }
-      document.querySelectorAll('.question-review, .user-details div, .result-details div, .explanation').forEach(el => {
-        el.style.background = "#fff";
-        el.style.color = "#000";
-        el.style.boxShadow = "none";
-        el.style.borderLeft = "none";
-      });
-      document.querySelectorAll('.score, .attempted, .percentage, .correct-answer, .user-answer.correct, .user-answer.incorrect').forEach(el => {
-        el.style.color = "#000";
-        el.style.background = "none";
-      });
-    }
-
-    function resetStyles() {
-      document.body.style.background = "";
-      const cont = document.querySelector('.summary-container');
-      if (cont) {
-        cont.style.background = "";
-        cont.style.color = "";
-        cont.style.boxShadow = "";
-      }
-      const head = document.querySelector('header');
-      if (head) {
-        head.style.background = "";
-        head.style.color = "";
-      }
-      document.querySelectorAll('.question-review, .user-details div, .result-details div, .explanation').forEach(el => {
-        el.style.background = "";
-        el.style.color = "";
-        el.style.boxShadow = "";
-        el.style.borderLeft = "";
-      });
-      document.querySelectorAll('.score, .attempted, .percentage, .correct-answer, .user-answer.correct, .user-answer.incorrect').forEach(el => {
-        el.style.color = "";
-        el.style.background = "";
-      });
-    }
-
     document.getElementById('downloadPdfBtn').addEventListener('click', function () {
       const summaryEl = document.querySelector('.summary-container');
       this.style.display = 'none';
-      setPdfStyles();
 
       html2canvas(summaryEl, {scale: 2, useCORS: true}).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
@@ -342,16 +367,14 @@
           unit: 'pt',
           format: 'a4'
         });
-        // Calculate width/height for A4
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = pageWidth - 30; // 15pt margin each side
+        const imgWidth = pageWidth - 30;
         const imgHeight = canvas.height * imgWidth / canvas.width;
 
         let position = 20;
         pdf.addImage(imgData, 'PNG', 15, position, imgWidth, imgHeight);
 
-        // Support for multi-page (if needed)
         let heightLeft = imgHeight;
         while (heightLeft > pageHeight - 40) {
           pdf.addPage();
@@ -370,7 +393,6 @@
         pdf.save('exam-summary.pdf');
         setTimeout(() => {
           document.getElementById('downloadPdfBtn').style.display = '';
-          resetStyles();
         }, 500);
       });
     });
