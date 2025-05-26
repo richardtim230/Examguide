@@ -5,6 +5,397 @@
     "questions": [
   
   {
+    "id": 311,
+    "question": "Which characteristic is the primary distinguishing feature of a dry fruit compared to a fleshy fruit?",
+    "options": [
+      {"text": "Dry fruits always contain a single seed, while fleshy fruits contain multiple seeds."},
+      {"text": "The pericarp of dry fruits is not differentiated into distinct layers, unlike fleshy fruits."},
+      {"text": "Dry fruits develop from multiple carpels, while fleshy fruits develop from a single carpel."},
+      {"text": "Dry fruits are always dehiscent, while fleshy fruits are always indehiscent."}
+    ],
+    "answer": "The pericarp of dry fruits is not differentiated into distinct layers, unlike fleshy fruits.",
+    "explanation": "Dry fruits are characterized by a pericarp (fruit wall) that is not fleshy and is not distinguished into three layers (exocarp, mesocarp, endocarp), which is a defining feature of fleshy fruits.",
+    "questionImage": ""
+  },
+  {
+    "id": 312,
+    "question": "A fruit whose pericarp ruptures after ripening to disperse its seeds is broadly classified as a:",
+    "options": [
+      {"text": "Indehiscent fruit"},
+      {"text": "Schizocarpic fruit"},
+      {"text": "Dehiscent fruit"},
+      {"text": "Fleshy fruit"}
+    ],
+    "answer": "Dehiscent fruit",
+    "explanation": "Dehiscent fruits (also known as Capsular Fruits) are particular in that their pericarp ruptures after ripening, and the seeds are dispersed.",
+    "questionImage": ""
+  },
+  {
+    "id": 313,
+    "question": "Which type of dry fruit is characterized by a pericarp that does NOT burst open upon ripening, meaning the seeds remain enclosed within the fruit wall?",
+    "options": [
+      {"text": "Capsule"},
+      {"text": "Follicle"},
+      {"text": "Indehiscent fruit"},
+      {"text": "Legume"}
+    ],
+    "answer": "Indehiscent fruit",
+    "explanation": "Indehiscent fruits (Achenial Fruits) are defined by a pericarp that does not burst open on ripening, and the seeds remain inside.",
+    "questionImage": ""
+  },
+  {
+    "id": 314,
+    "question": "A dry fruit formed from a monocarpellary pistil that dehisces along both dorsal and ventral sutures is specifically known as a:",
+    "options": [
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Legume"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Legume",
+    "explanation": "A Legume is a fruit formed from a monocarpellary pistil and dehisces along both dorsal and ventral sutures.",
+    "questionImage": ""
+  },
+  {
+    "id": 315,
+    "question": "Which dehiscent fruit type originates from a monocarpellary pistil but dehisces along only one suture?",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Silicula"}
+    ],
+    "answer": "Follicle",
+    "explanation": "A Follicle is a fruit formed from a monocarpellary pistil and dehisces along only one suture.",
+    "questionImage": ""
+  },
+  {
+    "id": 316,
+    "question": "A long, round dry fruit formed from a bicarpellary, syncarpous pistil with an ovary having two parietal placentas is a:",
+    "options": [
+      {"text": "Silicula"},
+      {"text": "Capsule"},
+      {"text": "Legume"},
+      {"text": "Siliqua"}
+    ],
+    "answer": "Siliqua",
+    "explanation": "A Siliqua is a long, round fruit formed from a bicarpellary, syncarpous pistil with an ovary having two parietal placentas.",
+    "questionImage": ""
+  },
+  {
+    "id": 317,
+    "question": "How does a Silicula differ morphologically from a Siliqua?",
+    "options": [
+      {"text": "A Silicula is formed from a monocarpellary pistil, while a Siliqua is bicarpellary."},
+      {"text": "A Silicula is indehiscent, while a Siliqua is dehiscent."},
+      {"text": "A Silicula is short and broad with fewer seeds, while a Siliqua is long and round."},
+      {"text": "A Silicula dehisces along one suture, while a Siliqua dehisces along two."}
+    ],
+    "answer": "A Silicula is short and broad with fewer seeds, while a Siliqua is long and round.",
+    "explanation": "A Silicula resembles a Siliqua; however, it is short and broad and includes fewer seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 318,
+    "question": "Which dehiscent fruit type originates from a polycarpellary, syncarpous pistil, sometimes even from an inferior ovary?",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Capsule",
+    "explanation": "A Capsule is a fruit originated from a polycarpellary, syncarpous pistil, often with an exceptional ovary, and sometimes it is formed from the inferior ovary.",
+    "questionImage": ""
+  },
+  {
+    "id": 319,
+    "question": "A dry fruit that splits into a number of one-seeded parts upon ripening, where these parts are indehiscent, is called a:",
+    "options": [
+      {"text": "Dehiscent fruit"},
+      {"text": "Indehiscent fruit"},
+      {"text": "Schizocarpic fruit"},
+      {"text": "Accessory fruit"}
+    ],
+    "answer": "Schizocarpic fruit",
+    "explanation": "Schizocarpic fruits (Splitting Fruits) are dry, lots of seeded fruits that split into a number of one-seeded parts (mericarp) on ripening. If these one-seeded parts are indehiscent, they are called mericarps.",
+    "questionImage": ""
+  },
+  {
+    "id": 320,
+    "question": "In succulent fruits, the pericarp is clearly distinguished into three layers. After the decay of the fleshy part, how are the seeds typically freed?",
+    "options": [
+      {"text": "Through dehiscence along sutures."},
+      {"text": "By the bursting of the endocarp."},
+      {"text": "By the decay of the flesh, as the fruits are indehiscent."},
+      {"text": "Through the splitting of mericarps."}
+    ],
+    "answer": "By the decay of the flesh, as the fruits are indehiscent.",
+    "explanation": "Succulent fruits are indehiscent, and seeds are freed after the decay of the flesh, rather than through active splitting mechanisms.",
+    "questionImage": ""
+  },
+  {
+    "id": 321,
+    "question": "Which type of fleshy fruit is characterized by a hard and woody pericarp, often with a leathery rind, and contains numerous seeds embedded in a juicy pulp, as seen in a pomegranate?",
+    "options": [
+      {"text": "Drupe"},
+      {"text": "Berry"},
+      {"text": "Amphisarca"},
+      {"text": "Balausta"}
+    ],
+    "answer": "Balausta",
+    "explanation": "A Balausta is a specific type of fleshy fruit, exemplified by the pomegranate, known for its hard, leathery rind and numerous seeds embedded in juicy pulp.",
+    "questionImage": ""
+  },
+  {
+    "id": 322,
+    "question": "A fleshy fruit with a hard, woody, or leathery pericarp that is not easily broken, and typically contains a soft, pulpy interior with seeds, is known as a/an:",
+    "options": [
+      {"text": "Pepo"},
+      {"text": "Drupe"},
+      {"text": "Amphisarca"},
+      {"text": "Hesperidium"}
+    ],
+    "answer": "Amphisarca",
+    "explanation": "An Amphisarca is a fleshy fruit characterized by a hard, woody, or leathery pericarp that is not easily broken, enclosing a soft, pulpy interior with seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 323,
+    "question": "Which of the following fruits is an example of a Balausta?",
+    "options": [
+      {"text": "Orange"},
+      {"text": "Watermelon"},
+      {"text": "Pomegranate"},
+      {"text": "Apple"}
+    ],
+    "answer": "Pomegranate",
+    "explanation": "Pomegranate is a classic example of a Balausta.",
+    "questionImage": ""
+  },
+  {
+    "id": 324,
+    "question": "The fruit of a pea plant is a classic example of a Legume. What is the defining characteristic of a Legume's dehiscence?",
+    "options": [
+      {"text": "It splits along only one suture."},
+      {"text": "It splits along both dorsal and ventral sutures."},
+      {"text": "It bursts irregularly to release seeds."},
+      {"text": "It remains closed, and seeds are dispersed by decay."}
+    ],
+    "answer": "It splits along both dorsal and ventral sutures.",
+    "explanation": "A Legume is a dehiscent fruit that splits along both dorsal and ventral sutures to release its seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 325,
+    "question": "If a dry fruit is formed from a polycarpellary, syncarpous pistil and dehisces, but its ovary is exceptional or inferior, it is most likely a:",
+    "options": [
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"},
+      {"text": "Schizocarp"}
+    ],
+    "answer": "Capsule",
+    "explanation": "A Capsule is a dehiscent fruit originating from a polycarpellary, syncarpous pistil, with the notable feature that its ovary can be exceptional or even inferior.",
+    "questionImage": ""
+  },
+  {
+    "id": 326,
+    "question": "The primary biological advantage of a dehiscent fruit over an indehiscent fruit lies in its mechanism for:",
+    "options": [
+      {"text": "Enhanced nutrient storage for the embryo."},
+      {"text": "Superior protection of the seeds from predators."},
+      {"text": "Active and efficient seed dispersal."},
+      {"text": "Attracting a wider range of pollinators."}
+    ],
+    "answer": "Active and efficient seed dispersal.",
+    "explanation": "Dehiscent fruits are characterized by their pericarp rupturing after ripening, which is a mechanism for active and efficient dispersal of the seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 327,
+    "question": "In a schizocarpic fruit, if the one-seeded parts that result from splitting are themselves dehiscent, what are these individual units called?",
+    "options": [
+      {"text": "Mericarps"},
+      {"text": "Achenes"},
+      {"text": "Cocci"},
+      {"text": "Capsules"}
+    ],
+    "answer": "Cocci",
+    "explanation": "Schizocarpic fruits are dry, lots of seeded fruits that split into a number of one-seeded parts. If these one-seeded parts are dehiscent, they are called cocci.",
+    "questionImage": ""
+  },
+  {
+    "id": 328,
+    "question": "A fruit formed from a monocarpellary pistil that opens along a single seam is botanically distinct from a fruit that opens along two seams. The latter, opening along both dorsal and ventral sutures, is characteristic of a:",
+    "options": [
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Legume"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Legume",
+    "explanation": "A Legume is a fruit formed from a monocarpellary pistil and dehisces along both dorsal and ventral sutures. A Follicle, in contrast, dehisces along only one suture.",
+    "questionImage": ""
+  },
+  {
+    "id": 329,
+    "question": "A botanist observes a dry fruit that is short, broad, and contains fewer seeds compared to its longer, rounder counterpart, yet both originate from a bicarpellary, syncarpous pistil with two parietal placentas. This fruit is most accurately identified as a:",
+    "options": [
+      {"text": "Siliqua"},
+      {"text": "Follicle"},
+      {"text": "Silicula"},
+      {"text": "Legume"}
+    ],
+    "answer": "Silicula",
+    "explanation": "A Silicula resembles a Siliqua in origin but is characterized by being short and broad and including fewer seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 330,
+    "question": "Among dehiscent fruits, which type is notable for originating from a polycarpellary, syncarpous pistil and can exceptionally form from an inferior ovary?",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Capsule",
+    "explanation": "A Capsule is a dehiscent fruit that originates from a polycarpellary, syncarpous pistil, and it is unique among these types for sometimes forming from an inferior ovary.",
+    "questionImage": ""
+  },
+  {
+    "id": 331,
+    "question": "What is the defining characteristic of an indehiscent fruit regarding its seed release mechanism?",
+    "options": [
+      {"text": "It bursts open irregularly to scatter seeds."},
+      {"text": "It splits along predefined sutures."},
+      {"text": "Its pericarp remains intact, and seeds are released only upon decay or external action."},
+      {"text": "It forms a 'stone' around the seed, which then splits."}
+    ],
+    "answer": "Its pericarp remains intact, and seeds are released only upon decay or external action.",
+    "explanation": "Indehiscent fruits are characterized by a pericarp that does not burst open upon ripening, meaning the seeds remain inside and are released only when the fruit wall decays or is broken by external forces.",
+    "questionImage": ""
+  },
+  {
+    "id": 332,
+    "question": "In succulent (fleshy) fruits, despite their varied structures, the common mechanism for seed dispersal is through:",
+    "options": [
+      {"text": "Active dehiscence along sutures."},
+      {"text": "The bursting of a hard endocarp."},
+      {"text": "The decay of the fleshy pericarp."},
+      {"text": "Wind dispersal of winged seeds."}
+    ],
+    "answer": "The decay of the fleshy pericarp.",
+    "explanation": "Succulent fruits are indehiscent, meaning their seeds are freed after the decay of the fleshy pericarp, rather than through active splitting mechanisms.",
+    "questionImage": ""
+  },
+  {
+    "id": 333,
+    "question": "A fruit with a hard, woody, or leathery pericarp that is difficult to break, yet contains a soft, pulpy interior with seeds, is specifically classified as a/an:",
+    "options": [
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Amphisarca"},
+      {"text": "Balausta"}
+    ],
+    "answer": "Amphisarca",
+    "explanation": "An Amphisarca is a fleshy fruit characterized by a hard, woody, or leathery pericarp that is not easily broken, enclosing a soft, pulpy interior with seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 334,
+    "question": "The Balausta, exemplified by the pomegranate, is unique among fleshy fruits due to its combination of a hard, woody pericarp and:",
+    "options": [
+      {"text": "A single, stony seed."},
+      {"text": "A leathery rind and numerous seeds embedded in juicy pulp."},
+      {"text": "A fleshy receptacle enclosing true fruits."},
+      {"text": "A leathery rind with oil glands and segmented pulp."}
+    ],
+    "answer": "A leathery rind and numerous seeds embedded in juicy pulp.",
+    "explanation": "A Balausta is a specific type of fleshy fruit, like the pomegranate, known for its hard, leathery rind and numerous seeds embedded in juicy pulp.",
+    "questionImage": ""
+  },
+  {
+    "id": 335,
+    "question": "Which specific fruit type is characteristic of the household Leguminosae, such as pea and bean, known for its dehiscence along two sutures?",
+    "options": [
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Legume"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Legume",
+    "explanation": "The Legume is the characteristic fruit of the household Leguminosae, known for its formation from a monocarpellary pistil and dehiscence along both dorsal and ventral sutures.",
+    "questionImage": ""
+  },
+  {
+    "id": 336,
+    "question": "Larkspur is provided as a characteristic example of which dehiscent fruit type, distinguished by its dehiscence along only one suture?",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Follicle",
+    "explanation": "Larkspur is an example of a Follicle, a fruit formed from a monocarpellary pistil that dehisces along only one suture.",
+    "questionImage": ""
+  },
+  {
+    "id": 337,
+    "question": "Iris and willow are given as examples of plants that produce which type of dehiscent fruit, originating from a polycarpellary, syncarpous pistil?",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Capsule",
+    "explanation": "Iris and willow are examples of a Capsule, a dehiscent fruit originating from a polycarpellary, syncarpous pistil.",
+    "questionImage": ""
+  },
+  {
+    "id": 338,
+    "question": "The pericarp of a fruit is botanically defined as the:",
+    "options": [
+      {"text": "Seed-bearing structure within the ovary."},
+      {"text": "Mature ovule after fertilization."},
+      {"text": "Fruit wall, derived from the ovary wall."},
+      {"text": "Fleshy part derived from the receptacle."}
+    ],
+    "answer": "Fruit wall, derived from the ovary wall.",
+    "explanation": "The pericarp is the fruit wall, which is actually the ovarian wall or the ovary from which the fruit developed.",
+    "questionImage": ""
+  },
+  {
+    "id": 339,
+    "question": "The pistil, a female reproductive organ of the flower, is directly involved in the formation of which primary part of the fruit?",
+    "options": [
+      {"text": "The seed"},
+      {"text": "The pericarp"},
+      {"text": "The ovule"},
+      {"text": "The stamen"}
+    ],
+    "answer": "The pericarp",
+    "explanation": "The pistil contains the ovary, and the ovary wall develops into the pericarp (fruit wall). The seed develops from the ovule, which is contained within the ovary.",
+    "questionImage": ""
+  },
+  {
+    "id": 340,
+    "question": "A schizocarpic fruit splits into one-seeded parts. What is the key difference between these parts being called 'mericarp' versus 'cocci'?",
+    "options": [
+      {"text": "Mericarps are dehiscent, while cocci are indehiscent."},
+      {"text": "Mericarps are indehiscent, while cocci are dehiscent."},
+      {"text": "Mericarps are fleshy, while cocci are dry."},
+      {"text": "Mericarps originate from monocarpellary pistils, while cocci originate from polycarpellary pistils."}
+    ],
+    "answer": "Mericarps are indehiscent, while cocci are dehiscent.",
+    "explanation": "In schizocarpic fruits, if the one-seeded parts are indehiscent, they are called mericarps. If they are dehiscent, they are called cocci.",
+    "questionImage": ""
+  },
+
+  {
     "id": 251,
     "question": "Which fundamental characteristic distinguishes a Racemose inflorescence from a Cymose inflorescence regarding the growth of the main axis?",
     "options": [
