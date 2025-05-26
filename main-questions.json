@@ -3,7 +3,396 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
-  
+  {
+    "id": 341,
+    "question": "A fruit develops from a single flower, but its edible portion is primarily derived from the swollen receptacle, with the actual fruitlets appearing as small, seed-like structures on its surface. This fruit is best classified as a/an:",
+    "options": [
+      {"text": "Multiple fruit"},
+      {"text": "True fruit"},
+      {"text": "Aggregate fruit"},
+      {"text": "Parthenocarpic fruit"}
+    ],
+    "answer": "Aggregate fruit",
+    "explanation": "Aggregate fruits, like the strawberry, develop from multiple separate ovaries within a single flower, with the receptacle often becoming fleshy and edible. The individual 'seed-like' structures are the true fruitlets (achenes).",
+    "questionImage": ""
+  },
+  {
+    "id": 342,
+    "question": "Which of the following fruit types is characterized by a pericarp that remains intact upon ripening, releasing seeds only through decay or external forces?",
+    "options": [
+      {"text": "Follicle"},
+      {"text": "Capsule"},
+      {"text": "Legume"},
+      {"text": "Caryopsis"}
+    ],
+    "answer": "Caryopsis",
+    "explanation": "Caryopsis is an indehiscent dry fruit where the pericarp is fused with the seed coat. Follicle, Capsule, and Legume are all dehiscent fruits that split open to release seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 343,
+    "question": "A fruit is observed to have a hard, woody, or leathery pericarp that is difficult to break, yet it encloses a soft, pulpy interior containing seeds. This description precisely matches a/an:",
+    "options": [
+      {"text": "Pepo"},
+      {"text": "Hesperidium"},
+      {"text": "Amphisarca"},
+      {"text": "Balausta"}
+    ],
+    "answer": "Amphisarca",
+    "explanation": "Amphisarca is a fleshy fruit type defined by its hard, woody, or leathery pericarp that is not easily broken, enclosing a soft, pulpy interior with seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 344,
+    "question": "The primary distinction between a true berry (e.g., grape) and a false berry (e.g., banana) lies in the origin of their ovaries. A true berry develops from a superior ovary, while a false berry originates from a/an:",
+    "options": [
+      {"text": "Polycarpellary ovary"},
+      {"text": "Monocarpellary ovary"},
+      {"text": "Inferior ovary"},
+      {"text": "Accessory ovary"}
+    ],
+    "answer": "Inferior ovary",
+    "explanation": "True berries originate from a superior ovary, whereas false berries (like banana) originate from an inferior ovary, with the thalamus and pericarp often merged.",
+    "questionImage": ""
+  },
+  {
+    "id": 345,
+    "question": "In a Pome, such as an apple, the true fruit (pericarp) is inconspicuous and embedded within the fleshy edible portion. This edible part is primarily derived from the:",
+    "options": [
+      {"text": "Ovary wall"},
+      {"text": "Stony endocarp"},
+      {"text": "Fleshy thalamus"},
+      {"text": "Receptacle"}
+    ],
+    "answer": "Fleshy thalamus",
+    "explanation": "Pomes are simple, fleshy false fruits where the edible portion is the fleshy thalamus, which surrounds the true fruit (pericarp) containing the seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 346,
+    "question": "A fruit that forms from a monocarpellary pistil and dehisces along only one suture is botanically termed a:",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Follicle",
+    "explanation": "A Follicle is a dehiscent fruit formed from a monocarpellary pistil that opens along a single suture. A Legume opens along two sutures.",
+    "questionImage": ""
+  },
+  {
+    "id": 347,
+    "question": "Which of the following dry, indehiscent fruits is characterized by a pericarp that is completely fused with the seed coat?",
+    "options": [
+      {"text": "Achene"},
+      {"text": "Cypsela"},
+      {"text": "Caryopsis"},
+      {"text": "Nut"}
+    ],
+    "answer": "Caryopsis",
+    "explanation": "In a Caryopsis (e.g., maize, wheat), the pericarp is fused with the seed coat. In an Achene, the pericarp is free from the seed coat.",
+    "questionImage": ""
+  },
+  {
+    "id": 348,
+    "question": "A fruit develops from a polycarpellary, syncarpous pistil and is known to sometimes originate from an inferior ovary. This dehiscent fruit type is a:",
+    "options": [
+      {"text": "Legume"},
+      {"text": "Follicle"},
+      {"text": "Siliqua"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Capsule",
+    "explanation": "A Capsule is a dehiscent fruit originating from a polycarpellary, syncarpous pistil, and it is unique among these types for sometimes forming from an inferior ovary.",
+    "questionImage": ""
+  },
+  {
+    "id": 349,
+    "question": "The Pomegranate is a distinctive fleshy fruit known for its hard, leathery rind and numerous seeds embedded in juicy pulp. This specific fruit type is classified as a/an:",
+    "options": [
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Amphisarca"},
+      {"text": "Balausta"}
+    ],
+    "answer": "Balausta",
+    "explanation": "A Balausta is a specific type of fleshy fruit, exemplified by the pomegranate, characterized by its hard, leathery rind and numerous seeds embedded in juicy pulp.",
+    "questionImage": ""
+  },
+  {
+    "id": 350,
+    "question": "In a schizocarpic fruit, the one-seeded parts that result from splitting are termed 'cocci' if they are dehiscent. What are these individual units called if they remain indehiscent?",
+    "options": [
+      {"text": "Samaras"},
+      {"text": "Achenes"},
+      {"text": "Mericarps"},
+      {"text": "Nutlets"}
+    ],
+    "answer": "Mericarps",
+    "explanation": "Schizocarpic fruits split into one-seeded parts. If these parts are indehiscent, they are called mericarps. If they are dehiscent, they are called cocci.",
+    "questionImage": ""
+  },
+  {
+    "id": 351,
+    "question": "A fruit develops from the entire inflorescence, where all the flowers combine to form a single, large, composite fruit. Which of the following is a classic example of this fruit type?",
+    "options": [
+      {"text": "Strawberry"},
+      {"text": "Blackberry"},
+      {"text": "Pineapple"},
+      {"text": "Raspberry"}
+    ],
+    "answer": "Pineapple",
+    "explanation": "Pineapple is a multiple fruit, formed from the entire inflorescence. Strawberry, Blackberry, and Raspberry are aggregate fruits, formed from multiple ovaries of a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 352,
+    "question": "The pericarp of a fruit is botanically defined as the fruit wall, which is derived directly from the:",
+    "options": [
+      {"text": "Receptacle"},
+      {"text": "Ovule"},
+      {"text": "Ovary wall"},
+      {"text": "Thalamus"}
+    ],
+    "answer": "Ovary wall",
+    "explanation": "The pericarp, or fruit wall, develops from the mature ovary wall after fertilization.",
+    "questionImage": ""
+  },
+  {
+    "id": 353,
+    "question": "A fruit is characterized by a succulent mesocarp and a hard, stony endocarp that encloses the seed. This description is characteristic of a:",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Pome"},
+      {"text": "Drupe"},
+      {"text": "Pepo"}
+    ],
+    "answer": "Drupe",
+    "explanation": "Drupes are succulent fruits with a fleshy mesocarp and a hard, stony endocarp (the 'stone' or 'pit') that surrounds the seed.",
+    "questionImage": ""
+  },
+  {
+    "id": 354,
+    "question": "Which of the following fruit types is typically seedless and develops without the process of fertilization?",
+    "options": [
+      {"text": "True fruit"},
+      {"text": "False fruit"},
+      {"text": "Parthenocarpic fruit"},
+      {"text": "Aggregate fruit"}
+    ],
+    "answer": "Parthenocarpic fruit",
+    "explanation": "Parthenocarpic fruits are formed without fertilization and are consequently seedless.",
+    "questionImage": ""
+  },
+  {
+    "id": 355,
+    "question": "Both Siliqua and Silicula originate from a bicarpellary, syncarpous pistil with two parietal placentas. However, a Silicula is specifically distinguished by its morphology as being:",
+    "options": [
+      {"text": "Long and round with many seeds"},
+      {"text": "Short and broad with fewer seeds"},
+      {"text": "Fleshy and indehiscent"},
+      {"text": "Dehiscent along a single suture"}
+    ],
+    "answer": "Short and broad with fewer seeds",
+    "explanation": "A Silicula is similar to a Siliqua in origin but is characterized by being short and broad and containing fewer seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 356,
+    "question": "A fruit with a leathery rind containing oil glands and a segmented, juicy pulp, originating from a superior ovary, is specifically known as a:",
+    "options": [
+      {"text": "Pepo"},
+      {"text": "Hesperidium"},
+      {"text": "Berry"},
+      {"text": "Balausta"}
+    ],
+    "answer": "Hesperidium",
+    "explanation": "Hesperidium (e.g., orange, lemon) is a fleshy fruit from a superior ovary, characterized by a leathery rind with oil glands and segmented pulp.",
+    "questionImage": ""
+  },
+  {
+    "id": 357,
+    "question": "The primary biological advantage of a dehiscent fruit over an indehiscent fruit lies in its mechanism for:",
+    "options": [
+      {"text": "Enhanced nutrient storage for the embryo."},
+      {"text": "Superior protection of the seeds from predators."},
+      {"text": "Active and efficient seed dispersal."},
+      {"text": "Attracting a wider range of pollinators."}
+    ],
+    "answer": "Active and efficient seed dispersal.",
+    "explanation": "Dehiscent fruits are characterized by their pericarp rupturing after ripening, which is a mechanism for active and efficient dispersal of the seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 358,
+    "question": "Which of the following fruits is a dry, indehiscent type where the pericarp is free from the seed coat, and it typically contains only one seed?",
+    "options": [
+      {"text": "Caryopsis"},
+      {"text": "Nut"},
+      {"text": "Achene"},
+      {"text": "Samara"}
+    ],
+    "answer": "Achene",
+    "explanation": "An Achene is a small, one-seeded, dry, indehiscent fruit where the pericarp is free from the seed coat. A Caryopsis has a fused pericarp, a Nut has a hard woody pericarp, and a Samara is winged.",
+    "questionImage": ""
+  },
+  {
+    "id": 359,
+    "question": "A fruit develops from an inferior ovary and has a hard rind, with a fleshy interior. This description is characteristic of a:",
+    "options": [
+      {"text": "Drupe"},
+      {"text": "Pome"},
+      {"text": "Pepo"},
+      {"text": "Berry"}
+    ],
+    "answer": "Pepo",
+    "explanation": "Pepo (e.g., cucumber, gourd, watermelon) is a fleshy fruit that develops from an inferior ovary and has a hard rind.",
+    "questionImage": ""
+  },
+  {
+    "id": 360,
+    "question": "The fruit of a pea plant is a classic example of a Legume. This implies it is formed from a monocarpellary pistil and dehisces along:",
+    "options": [
+      {"text": "A single dorsal suture"},
+      {"text": "A single ventral suture"},
+      {"text": "Both dorsal and ventral sutures"},
+      {"text": "Irregularly along multiple sutures"}
+    ],
+    "answer": "Both dorsal and ventral sutures",
+    "explanation": "A Legume is a fruit formed from a monocarpellary pistil and dehisces along both dorsal and ventral sutures.",
+    "questionImage": ""
+  },
+  {
+    "id": 361,
+    "question": "An aggregate fruit, such as a blackberry, is composed of numerous small, individual fruits called fruitlets. These fruitlets develop from:",
+    "options": [
+      {"text": "Multiple flowers in an inflorescence"},
+      {"text": "A single ovary of a single flower"},
+      {"text": "Several ovaries within a single flower"},
+      {"text": "A flower without fertilization"}
+    ],
+    "answer": "Several ovaries within a single flower",
+    "explanation": "Aggregate fruits develop from several separate ovaries within a single flower, with each ovary forming a small fruitlet.",
+    "questionImage": ""
+  },
+  {
+    "id": 362,
+    "question": "Which of the following fruit types is characterized by a winged pericarp, specifically adapted for wind dispersal?",
+    "options": [
+      {"text": "Achene"},
+      {"text": "Caryopsis"},
+      {"text": "Nut"},
+      {"text": "Samara"}
+    ],
+    "answer": "Samara",
+    "explanation": "A Samara is a dry, indehiscent fruit with a winged pericarp, facilitating wind dispersal.",
+    "questionImage": ""
+  },
+  {
+    "id": 363,
+    "question": "A botanist examines a fruit where the pericarp is clearly differentiated into three distinct layers: an outer epicarp, a middle mesocarp, and an inner endocarp. This differentiation is characteristic of a:",
+    "options": [
+      {"text": "Pome"},
+      {"text": "Berry"},
+      {"text": "Achene"},
+      {"text": "Capsule"}
+    ],
+    "answer": "Berry",
+    "explanation": "In a Berry, the pericarp is typically distinguished into epicarp, mesocarp, and endocarp. While other fruits have pericarps, this clear three-layer distinction is a defining feature of berries.",
+    "questionImage": ""
+  },
+  {
+    "id": 364,
+    "question": "The term 'false fruit' implies that the edible portion of the fruit is derived from floral parts other than the ovary. Which of the following is a classic example of a false fruit where the thalamus contributes significantly to the edible part?",
+    "options": [
+      {"text": "Mango"},
+      {"text": "Grape"},
+      {"text": "Apple"},
+      {"text": "Tomato"}
+    ],
+    "answer": "Apple",
+    "explanation": "Apple is a Pome, which is a false fruit where the fleshy edible part is derived from the thalamus, enclosing the true fruit (pericarp) within.",
+    "questionImage": ""
+  },
+  {
+    "id": 365,
+    "question": "A fruit is described as a dry, one-seeded fruit with a hard, woody pericarp. This description best fits a:",
+    "options": [
+      {"text": "Achene"},
+      {"text": "Caryopsis"},
+      {"text": "Nut"},
+      {"text": "Cypsela"}
+    ],
+    "answer": "Nut",
+    "explanation": "A Nut is a large, one-seeded, dry, indehiscent fruit characterized by a hard, woody pericarp.",
+    "questionImage": ""
+  },
+  {
+    "id": 366,
+    "question": "Which of the following fruit types is formed from a bicarpellary, syncarpous pistil with two parietal placentas, and is typically long and round with many seeds?",
+    "options": [
+      {"text": "Follicle"},
+      {"text": "Legume"},
+      {"text": "Siliqua"},
+      {"text": "Silicula"}
+    ],
+    "answer": "Siliqua",
+    "explanation": "A Siliqua is a dehiscent fruit originating from a bicarpellary, syncarpous pistil with two parietal placentas, and is typically long and round with many seeds. A Silicula is similar but short and broad.",
+    "questionImage": ""
+  },
+  {
+    "id": 367,
+    "question": "A fruit is observed to be seedless, and its development is attributed to the absence of fertilization. This phenomenon is known as:",
+    "options": [
+      {"text": "Apomixis"},
+      {"text": "Polyembryony"},
+      {"text": "Parthenocarpy"},
+      {"text": "Vivipary"}
+    ],
+    "answer": "Parthenocarpy",
+    "explanation": "Parthenocarpy is the natural or artificially induced production of fruit without fertilization of ovules, resulting in seedless fruits.",
+    "questionImage": ""
+  },
+  {
+    "id": 368,
+    "question": "The fruit of a sunflower is a Cypsela. This implies it is a dry, indehiscent fruit that resembles an Achene but specifically originates from a/an:",
+    "options": [
+      {"text": "Superior ovary"},
+      {"text": "Inferior ovary"},
+      {"text": "Monocarpellary pistil"},
+      {"text": "Polycarpellary pistil"}
+    ],
+    "answer": "Inferior ovary",
+    "explanation": "A Cypsela is a dry, indehiscent fruit similar to an Achene but specifically develops from an inferior ovary, often with a persistent pappus.",
+    "questionImage": ""
+  },
+  {
+    "id": 369,
+    "question": "A fruit is formed from a single flower with a single ovary. This broad classification describes a:",
+    "options": [
+      {"text": "Multiple fruit"},
+      {"text": "Aggregate fruit"},
+      {"text": "Simple fruit"},
+      {"text": "Composite fruit"}
+    ],
+    "answer": "Simple fruit",
+    "explanation": "Simple fruits develop from a single ovary of a single flower. Multiple fruits develop from an entire inflorescence, and aggregate fruits from multiple ovaries of a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 370,
+    "question": "In the context of fruit development, what is the botanical term for the mature ovule after fertilization?",
+    "options": [
+      {"text": "Pericarp"},
+      {"text": "Fruitlet"},
+      {"text": "Seed"},
+      {"text": "Embryo"}
+    ],
+    "answer": "Seed",
+    "explanation": "After fertilization, the ovule matures and develops into the seed.",
+    "questionImage": ""
+  },
   {
     "id": 311,
     "question": "Which characteristic is the primary distinguishing feature of a dry fruit compared to a fleshy fruit?",
