@@ -2,17 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CBT Test</title>
-  
+
   <!-- MathJax and KaTeX for math rendering -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <!-- Marked.js for Markdown (if needed) -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- Chart.js and html2pdf (if needed elsewhere) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <!-- MathJax Setup -->
@@ -234,7 +232,7 @@
       }
     }
 
-    @media(max-width: 800px) {
+    @media(max-width: 600px) {
       .container {
         max-width: 96vw;
         padding: 5vw 2vw;
@@ -276,7 +274,7 @@
     <div class="header-inner">
       <div class="header-left">
         <span class="exam-title" id="examTitle">Loading Exam...</span>
-        <span class="candidate-name" id="candidateName">CANDIDATE:  </span>
+        <span class="candidate-name" id="candidateName">CANDIDATE:  .</span>
       </div>
       <div class="header-center">
         <img src="logo.png" alt="School Logo" class="school-logo" />
@@ -308,12 +306,16 @@
       window.location.href = "mock.html";
     }
 
+    // Constants for session
+    const MAX_SESSION_QUESTIONS = 60;
+    const SESSION_TIME_LIMIT = 40 * 60; // 40 minutes in seconds
+
     // Questions logic
     let allQuestionSets = [];
     let questions = [];
     let currentQuestionIndex = 0;
     let userAnswers = {};
-    let timeLimit = 180; // seconds
+    let timeLimit = SESSION_TIME_LIMIT;
     let timeRemaining = timeLimit;
     let timerInterval;
 
@@ -334,13 +336,40 @@
           return;
         }
         document.getElementById('examTitle').textContent = activeSet.title || "CBT Test";
-        questions = shuffle(activeSet.questions.map(q => ({
-          ...q,
-          options: shuffle([...q.options])
-        })));
+
+        // Get or reset answered question IDs for this user and set
+        const currentSetKey = 'set_' + (activeSet.title || '').replace(/\s/g, '_');
+        const userKey = `answered_${currentSetKey}_${currentUser}`;
+        let answered = [];
+        try {
+          answered = JSON.parse(localStorage.getItem(userKey) || '[]');
+        } catch (e) {
+          answered = [];
+        }
+
+        let unseenQuestions = activeSet.questions.filter(q => !answered.includes(q.id));
+        // If all have been answered, reset and start fresh
+        if (unseenQuestions.length === 0) {
+          answered = [];
+          unseenQuestions = activeSet.questions.slice();
+        }
+
+        // Prepare questions for this session, capped at 60
+        questions = shuffle(unseenQuestions).slice(0, MAX_SESSION_QUESTIONS);
+
+        // Save key data for use in submission
+        window._cbtSessionData = {
+          userKey,
+          answered
+        };
+
         document.getElementById('noActiveSet').style.display = "none";
         document.getElementById('navButtons').style.display = "";
         renderQuestion();
+        timeLimit = SESSION_TIME_LIMIT;
+        timeRemaining = timeLimit;
+        updateTimerDisplay();
+        if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(updateTimer, 1000);
       } catch (err) {
         document.getElementById("questionBox").innerHTML =
@@ -406,22 +435,36 @@
       }
     }
 
+    function updateTimerDisplay() {
+      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
+      const secs = String(timeRemaining % 60).padStart(2, '0');
+      document.getElementById("timer").innerText = `Time Remaining: ${mins}:${secs}`;
+    }
+
     function updateTimer() {
       if (timeRemaining <= 0) {
         submitTest();
         return;
       }
-      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
-      const secs = String(timeRemaining % 60).padStart(2, '0');
-      document.getElementById("timer").innerText = `Time Remaining: ${mins}:${secs}`;
       timeRemaining--;
+      updateTimerDisplay();
     }
 
     function submitTest() {
       clearInterval(timerInterval);
+      // Save answers and questions for summary
       localStorage.setItem(`answers_${currentUser}`, JSON.stringify(userAnswers));
       localStorage.setItem(`questions_${currentUser}`, JSON.stringify(questions));
       localStorage.setItem(`timeTaken_${currentUser}`, timeLimit - timeRemaining);
+
+      // Update the answered question IDs for this user and set
+      const { userKey, answered } = window._cbtSessionData || {};
+      if (userKey) {
+        const newAnswered = questions.map(q => q.id);
+        const updatedAnswered = Array.from(new Set([...(answered||[]), ...newAnswered]));
+        localStorage.setItem(userKey, JSON.stringify(updatedAnswered));
+      }
+
       window.location.href = 'summary.html';
     }
 
