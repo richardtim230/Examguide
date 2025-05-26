@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 371,
+    "question": "A defining characteristic that distinguishes bryophytes from most algae, despite both being green plants, is the presence of:",
+    "options": [
+      {"text": "Chlorophyll for photosynthesis."},
+      {"text": "Multicellular reproductive organs."},
+      {"text": "Specialized structures for absorbing water from soil."},
+      {"text": "A dominant diploid sporophyte generation."}
+    ],
+    "answer": "Specialized structures for absorbing water from soil.",
+    "explanation": "Bryophytes show a major adaptation to land habitat by having definite structures (rhizoids) for absorbing water and nutrients from the soil, unlike most algae which absorb through their entire body surface immersed in water.",
+    "questionImage": ""
+  },
+  {
+    "id": 372,
+    "question": "In the life cycle of bryophytes, the sporophytic phase exhibits a unique physiological relationship with the gametophytic phase, characterized by:",
+    "options": [
+      {"text": "Mutualistic symbiosis for nutrient exchange."},
+      {"text": "Complete independence and self-sufficiency."},
+      {"text": "Physiological dependence on the gametophyte."},
+      {"text": "Dominance over the gametophyte in all aspects."}
+    ],
+    "answer": "Physiological dependence on the gametophyte.",
+    "explanation": "The sporophyte phase in bryophytes is physiologically dependent on the gametophytic phase, which remains the dominant generation.",
+    "questionImage": ""
+  },
+  {
+    "id": 373,
+    "question": "Marchantia polymorpha, a thalloid liverwort, primarily achieves vegetative reproduction through the production of:",
+    "options": [
+      {"text": "Spores released from capsules."},
+      {"text": "Flagellated antherozoids."},
+      {"text": "Multicellular gemmae within specialized cups."},
+      {"text": "Fragmentation of its rhizoids."}
+    ],
+    "answer": "Multicellular gemmae within specialized cups.",
+    "explanation": "Vegetative reproduction in Marchantia polymorpha is significantly achieved by gemmae, which are tiny multicellular lens-shaped bodies produced in gemma cups on the surface of the thallus.",
+    "questionImage": ""
+  },
+  {
+    "id": 374,
+    "question": "The male sex cells (antherozoids) in Marchantia are produced in structures located on a modified part of the gametophyte. This modified structure is specifically known as the:",
+    "options": [
+      {"text": "Archegoniophore"},
+      {"text": "Gemma cup"},
+      {"text": "Antheridial disk"},
+      {"text": "Antheridiophore"}
+    ],
+    "answer": "Antheridiophore",
+    "explanation": "Male gametes (antherozoids) are produced in antheridia, which are located on a modified part of the gametophyte called the antheridiophore, produced on the dorsal surface of the male thallus.",
+    "questionImage": ""
+  },
+  {
+    "id": 375,
+    "question": "In the sporophyte of Marchantia, the structures sensitive to atmospheric humidity that aid in the dehiscence of the capsule and release of spores are called:",
+    "options": [
+      {"text": "Setae"},
+      {"text": "Amphithecia"},
+      {"text": "Elaters"},
+      {"text": "Endothecia"}
+    ],
+    "answer": "Elaters",
+    "explanation": "The elaters, a spiral internal thickening, being sensitive to atmospheric humidity, aid dehiscence of the capsule at maturity thus releasing the numerous spores from the capsule.",
+    "questionImage": ""
+  },
+  {
+    "id": 376,
+    "question": "A key morphological difference between the sporophyte of Marchantia and that of Porella is that the sporophyte of Porella is:",
+    "options": [
+      {"text": "Entirely parasitic on the gametophyte."},
+      {"text": "More inconspicuous with a shorter seta."},
+      {"text": "More prominent with a bigger capsule and longer seta."},
+      {"text": "Capable of independent photosynthesis."}
+    ],
+    "answer": "More prominent with a bigger capsule and longer seta.",
+    "explanation": "Unlike Marchantia, the sporophyte is more prominent in Porella with a bigger capsule and longer seta.",
+    "questionImage": ""
+  },
+  {
+    "id": 377,
+    "question": "While bryophytes generally absorb water through rhizoids, leafy liverworts like Porella exhibit an additional primary mechanism for water and nutrient absorption, which is through the:",
+    "options": [
+      {"text": "Internal vascular tissues."},
+      {"text": "Surfaces of their leaf-like structures."},
+      {"text": "Specialized root hairs."},
+      {"text": "Direct immersion of the entire plant body."}
+    ],
+    "answer": "Surfaces of their leaf-like structures.",
+    "explanation": "In Porella, water and nutrients are absorbed into the plant through the surfaces of the leaves, in addition to rhizoids functioning largely in anchorage.",
+    "questionImage": ""
+  },
+  {
+    "id": 378,
+    "question": "Despite being land plants, bryophytes are decidedly restricted to moist habitats primarily because they require water for:",
+    "options": [
+      {"text": "Photosynthesis and nutrient uptake."},
+      {"text": "Structural support and turgidity."},
+      {"text": "Transporting male gametes to female gametes."},
+      {"text": "Preventing excessive desiccation of their aerial parts."}
+    ],
+    "answer": "Transporting male gametes to female gametes.",
+    "explanation": "Bryophytes need water for transporting their male gametes to the female gametes; they are thus plants of decidedly moist habitats.",
+    "questionImage": ""
+  },
+  {
+    "id": 379,
+    "question": "Which of the following plant body forms is NOT typically encountered in bryophytes?",
+    "options": [
+      {"text": "Flattened and dichotomously branched thallus."},
+      {"text": "Prostrate leafy axes (stems)."},
+      {"text": "Erect leafy axes (stem)."},
+      {"text": "True stems and leaves with vascular tissue."}
+    ],
+    "answer": "True stems and leaves with vascular tissue.",
+    "explanation": "In the bryophytes, three main forms of plant body are often encountered: flattened and dichotomously branched thallus, prostrate leafy axes, and erect leafy axes. True stems and leaves are absent.",
+    "questionImage": ""
+  },
+  {
+    "id": 380,
+    "question": "The term 'archegoniate' is applied to all plant groups in which which of the following structures is found?",
+    "options": [
+      {"text": "Antheridia"},
+      {"text": "Gemmae"},
+      {"text": "Archegonia"},
+      {"text": "Sporophytes"}
+    ],
+    "answer": "Archegonia",
+    "explanation": "All the plant groups in which archegonia are found are said to be archegoniate.",
+    "questionImage": ""
+  },
+  {
+    "id": 381,
+    "question": "Upon fertilization in Marchantia, the union of sperm and egg results in a diploid zygote. This zygote then develops into the:",
+    "options": [
+      {"text": "Haploid gametophyte."},
+      {"text": "Photosynthetic thallus."},
+      {"text": "Inconspicuous sporophyte."},
+      {"text": "Motile antherozoid."}
+    ],
+    "answer": "Inconspicuous sporophyte.",
+    "explanation": "A diploid zygote is formed. It is this zygote which develops into the sporophyte – a diploid generation. The sporophyte is rather inconspicuous and it develops entirely parasitically on the gametophyte.",
+    "questionImage": ""
+  },
+  {
+    "id": 382,
+    "question": "A fundamental aspect of the bryophyte life cycle, distinguishing it from most algae and fungi, is that the dominant generation is the:",
+    "options": [
+      {"text": "Diploid sporophyte phase."},
+      {"text": "Multicellular diploid phase."},
+      {"text": "Haploid gametophyte phase."},
+      {"text": "Unicellular zygote phase."}
+    ],
+    "answer": "Haploid gametophyte phase.",
+    "explanation": "The haploid phase, however, remains the dominant generation in bryophytes, contrary to what is observed in almost all algae and fungi.",
+    "questionImage": ""
+  },
+  {
+    "id": 383,
+    "question": "Marchantia polymorpha is noted for its role as a pioneer species, specifically thriving in which type of environment after a disturbance?",
+    "options": [
+      {"text": "Deep aquatic habitats."},
+      {"text": "Arid desert regions."},
+      {"text": "Burnt forest soil after fire."},
+      {"text": "Highly saline coastal areas."}
+    ],
+    "answer": "Burnt forest soil after fire.",
+    "explanation": "Marchantia polymorpha grows as a pioneer in the burnt forest soil after fire.",
+    "questionImage": ""
+  },
+  {
+    "id": 384,
+    "question": "The gemmae of Marchantia are described as tiny, multicellular, lens-shaped bodies. Their dispersal is primarily facilitated by:",
+    "options": [
+      {"text": "Wind currents."},
+      {"text": "Animal consumption."},
+      {"text": "Rainwater or surrounding water."},
+      {"text": "Active propulsion from the gemma cup."}
+    ],
+    "answer": "Rainwater or surrounding water.",
+    "explanation": "Gemmae are easily dislodged at maturity when the cups are flooded by rainwater or water from the surrounding.",
+    "questionImage": ""
+  },
+  {
+    "id": 385,
+    "question": "The male gametes (sperm) of Marchantia are characterized by their motility, which enables them to:",
+    "options": [
+      {"text": "Disperse widely through the air."},
+      {"text": "Penetrate the thallus for internal fertilization."},
+      {"text": "Swim out through openings on the antheridial disk."},
+      {"text": "Anchor new thalli in favorable locations."}
+    ],
+    "answer": "Swim out through openings on the antheridial disk.",
+    "explanation": "At maturity, the cells of the antheridia are transformed into motile sex cells (sperm) which swim out through the openings on the antheridial disk.",
+    "questionImage": ""
+  },
+  {
+    "id": 386,
+    "question": "The female sex cell (egg) in Marchantia is contained within a flask-shaped, multicellular structure. This structure is located on the underside of an umbrella-shaped archegoniophore and is called the:",
+    "options": [
+      {"text": "Antheridium"},
+      {"text": "Gemma cup"},
+      {"text": "Archegonium"},
+      {"text": "Sporangium"}
+    ],
+    "answer": "Archegonium",
+    "explanation": "The female sex cell (egg) is produced in flask-shaped multicellular structures (archegonia) located on the modified portion of the gametophyte (the archegoniophore). The archegonia are found on what appears to be the underside of the umbrella of the umbrella-like structure.",
+    "questionImage": ""
+  },
+  {
+    "id": 387,
+    "question": "The sporophyte of Marchantia, which develops parasitically on the gametophyte, is differentiated into three distinct parts. These parts are the:",
+    "options": [
+      {"text": "Rhizoid, stem, and leaf."},
+      {"text": "Foot, seta, and capsule."},
+      {"text": "Antheridiophore, archegoniophore, and gemma cup."},
+      {"text": "Amphithecium, endothecium, and elater."}
+    ],
+    "answer": "Foot, seta, and capsule.",
+    "explanation": "The sporophyte is differentiated into three distinct parts- foot, seta and capsule.",
+    "questionImage": ""
+  },
+  {
+    "id": 388,
+    "question": "Upon release from the capsule, the numerous spores of Marchantia germinate directly into:",
+    "options": [
+      {"text": "Diploid sporophytes."},
+      {"text": "Thread-like protonemata."},
+      {"text": "New thalloid gametophytes."},
+      {"text": "Motile antherozoids."}
+    ],
+    "answer": "New thalloid gametophytes.",
+    "explanation": "The spores germinate into thalloid gametophytes.",
+    "questionImage": ""
+  },
+  {
+    "id": 389,
+    "question": "Leafy liverworts are characterized by definite prostrate axes on which leaf-like structures are arranged. These leaf-like structures are distinct from true leaves because they lack:",
+    "options": [
+      {"text": "Chlorophyll for photosynthesis."},
+      {"text": "A mid-rib for support."},
+      {"text": "Internal complexity of the Marchantia thallus."},
+      {"text": "The ability to absorb water."}
+    ],
+    "answer": "Internal complexity of the Marchantia thallus.",
+    "explanation": "The leaves (of leafy liverworts) do not have the internal complexity of the thallus of Marchantia.",
+    "questionImage": ""
+  },
+  {
+    "id": 390,
+    "question": "Porella, a leafy liverwort, exhibits a dorsiventral arrangement of its leaf-like structures, specifically featuring:",
+    "options": [
+      {"text": "One row of leaves on the dorsal side and two on the ventral."},
+      {"text": "Two rows of bilobed overlapping leaves dorsally and one row ventrally."},
+      {"text": "Leaves arranged in three ranks along an erect stem."},
+      {"text": "Leaves spirally arranged around a central axis."}
+    ],
+    "answer": "Two rows of bilobed overlapping leaves dorsally and one row ventrally.",
+    "explanation": "The plant (Porella) is dorsiventral with two rows of bilobed over-lapping leaves on the dorsal side of the stem and one row of leaves on the ventral side.",
+    "questionImage": ""
+  },
+  {
+    "id": 391,
+    "question": "In Porella, the rhizoids are primarily dispersed along the ventral surfaces of the axes and function largely in:",
+    "options": [
+      {"text": "Water and nutrient absorption."},
+      {"text": "Photosynthesis."},
+      {"text": "Anchorage."},
+      {"text": "Sexual reproduction."}
+    ],
+    "answer": "Anchorage.",
+    "explanation": "Rhizoids which are delivered to function largely in anchorage are dispersed along the ventral surfaces of the axes.",
+    "questionImage": ""
+  },
+  {
+    "id": 392,
+    "question": "During sexual reproduction in Porella, although many eggs on an archegonia-bearing branch may be fertilized, how many typically develop into a sporophyte?",
+    "options": [
+      {"text": "All fertilized eggs develop into sporophytes."},
+      {"text": "Only one develops into a sporophyte."},
+      {"text": "None, as sporophytes are formed asexually."},
+      {"text": "A variable number, depending on environmental conditions."}
+    ],
+    "answer": "Only one develops into a sporophyte.",
+    "explanation": "Although many eggs may be fertilized on an archegonia-bearing branch, only one develops into a sporophyte.",
+    "questionImage": ""
+  },
+  {
+    "id": 393,
+    "question": "Unlike Marchantia, the spores of Porella germinate into which specific structures before developing into leafy axes?",
+    "options": [
+      {"text": "Thalloid gametophytes."},
+      {"text": "Diploid zygotes."},
+      {"text": "Multicellular gemmae."},
+      {"text": "Thread-like filaments (protonemata)."}
+    ],
+    "answer": "Thread-like filaments (protonemata).",
+    "explanation": "The spores then germinate into thread-like filaments (protonemata) from which the leafy axes develop.",
+    "questionImage": ""
+  },
+  {
+    "id": 394,
+    "question": "The gametophyte of mosses, like that of liverworts, is characterized as a:",
+    "options": [
+      {"text": "Physiologically dependent generation."},
+      {"text": "Non-photosynthetic, subterranean structure."},
+      {"text": "Photosynthetic, free-living generation."},
+      {"text": "Dominant diploid phase."}
+    ],
+    "answer": "Photosynthetic, free-living generation.",
+    "explanation": "Like the liverworts, the gametophyte of the mosses is a photosynthetic free-living generation.",
+    "questionImage": ""
+  },
+  {
+    "id": 395,
+    "question": "Compared to the sporophytes of liverworts, the sporophytes of mosses are generally described as:",
+    "options": [
+      {"text": "Less conspicuous with shorter setae."},
+      {"text": "More conspicuous with longer setae and specialized dispersal mechanisms."},
+      {"text": "Physiologically independent of the gametophyte."},
+      {"text": "Lacking a capsule for spore production."}
+    ],
+    "answer": "More conspicuous with longer setae and specialized dispersal mechanisms.",
+    "explanation": "The sporophytes of mosses, compared with those of liverworts, are not only more conspicuous but they have longer seta and more highly specialized dispersal mechanisms.",
+    "questionImage": ""
+  },
+  {
+    "id": 396,
+    "question": "Vegetative reproduction in mosses, while also employing gemmae, differs from Marchantia in that it is not restricted to:",
+    "options": [
+      {"text": "Moist habitats."},
+      {"text": "Sexual reproduction."},
+      {"text": "Specialized gemma cups."},
+      {"text": "The gametophyte generation."}
+    ],
+    "answer": "Specialized gemma cups.",
+    "explanation": "Vegetative reproduction in mosses also occurs employing gemmae but is not restricted to cups as in Marchantia.",
+    "questionImage": ""
+  },
+  {
+    "id": 397,
+    "question": "The chlorophyllous leaves of Bryum coronatum, a Nigerian moss species, are characterized by being:",
+    "options": [
+      {"text": "Multilayered for increased photosynthetic efficiency."},
+      {"text": "One cell layer in thickness except at the mid-rib."},
+      {"text": "Completely lacking a mid-rib."},
+      {"text": "Non-photosynthetic and primarily for support."}
+    ],
+    "answer": "One cell layer in thickness except at the mid-rib.",
+    "explanation": "The gametophyte (of Bryum coronatum) is photosynthetic with chlorophyllous leaves which are one cell layer in thickness except at the mid-rib.",
+    "questionImage": ""
+  },
+  {
+    "id": 398,
+    "question": "In a cross-section of the stem of Bryum coronatum, the inner part primarily consists of parenchymatous cells, some of which provide:",
+    "options": [
+      {"text": "Photosynthetic capabilities."},
+      {"text": "Water and nutrient transport."},
+      {"text": "Reproductive functions."},
+      {"text": "Some structural support."}
+    ],
+    "answer": "Some structural support.",
+    "explanation": "In cross-section, the stem has a chlorophyllous epidermal layer and an inner part with largely parenchymatous cells some of which may provide some support.",
+    "questionImage": ""
+  },
+  {
+    "id": 399,
+    "question": "Bryophytes are considered the simplest and most primitive green land plants. However, they are distinct from advanced land plants due to the absence of:",
+    "options": [
+      {"text": "Chlorophyll and photosynthetic ability."},
+      {"text": "A multicellular diploid generation."},
+      {"text": "True roots, stems, and leaves."},
+      {"text": "Sexual reproduction involving gametes."}
+    ],
+    "answer": "True roots, stems, and leaves.",
+    "explanation": "The liverworts and the mosses are the simplest and the most primitive green land plants. True stems and leaves are absent. The subterranean portion is the rhizoid- it is not a true root as found in advanced land plants.",
+    "questionImage": ""
+  },
+  {
+    "id": 400,
+    "question": "Liverworts and mosses are known to characterize early stages of ecological succession, particularly on surfaces such as:",
+    "options": [
+      {"text": "Deep ocean floors and volcanic vents."},
+      {"text": "Arable farmlands and cultivated fields."},
+      {"text": "Bare rock surfaces and tree trunks."},
+      {"text": "Mature forest canopies and dense grasslands."}
+    ],
+    "answer": "Bare rock surfaces and tree trunks.",
+    "explanation": "The liverworts and mosses characterize early stages of ecological succession such as bare rock surfaces and tree trunks.",
+    "questionImage": ""
+  },  
+  {
     "id": 341,
     "question": "A fruit develops from a single flower, but its edible portion is primarily derived from the swollen receptacle, with the actual fruitlets appearing as small, seed-like structures on its surface. This fruit is best classified as a/an:",
     "options": [
