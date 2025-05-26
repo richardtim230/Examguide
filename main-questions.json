@@ -3,6 +3,787 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
+  
+  {
+    "id": 251,
+    "question": "Which fundamental characteristic distinguishes a Racemose inflorescence from a Cymose inflorescence regarding the growth of the main axis?",
+    "options": [
+      {"text": "The main axis in Racemose always ends in a flower, while in Cymose it does not."},
+      {"text": "The main axis in Racemose continues to grow indefinitely, while in Cymose it terminates in a flower."},
+      {"text": "Racemose inflorescences exhibit basipetal succession, whereas Cymose inflorescences show acropetal succession."},
+      {"text": "Flowers in Racemose are always sessile, while in Cymose they are always pedicellate."}
+    ],
+    "answer": "The main axis in Racemose continues to grow indefinitely, while in Cymose it terminates in a flower.",
+    "explanation": "In a Racemose inflorescence, the growth of the main axis is not ceased by the development of the terminal flower, allowing it to continue growing. Conversely, in a Cymose inflorescence, the main axis culminates in a flower and its growth ceases.",
+    "questionImage": ""
+  },
+  {
+    "id": 252,
+    "question": "In a typical Racemose inflorescence with an elongated axis, what is the precise arrangement of flowers based on their age?",
+    "options": [
+      {"text": "Older flowers are at the apex, and younger flowers are at the base."},
+      {"text": "Flowers mature simultaneously along the entire axis."},
+      {"text": "Younger flowers are at the apex, and older flowers are at the base."},
+      {"text": "Flowers are randomly distributed without a specific age pattern."}
+    ],
+    "answer": "Younger flowers are at the apex, and older flowers are at the base.",
+    "explanation": "In a Racemose inflorescence, flowers develop in 'acropetal succession', meaning the younger flowers are at the top (apex) and the older flowers are at the base.",
+    "questionImage": ""
+  },
+  {
+    "id": 253,
+    "question": "A 'panicle' is specifically described as which type of Racemose inflorescence?",
+    "options": [
+      {"text": "A simple raceme with sessile flowers."},
+      {"text": "A branched raceme."},
+      {"text": "A raceme with a flattened receptacle."},
+      {"text": "A raceme where pedicels originate from a single point."}
+    ],
+    "answer": "A branched raceme.",
+    "explanation": "A 'panicle' is characterized as a branched structure, which is a key characteristic distinguishing it from a simple raceme.",
+    "questionImage": ""
+  },
+  {
+    "id": 254,
+    "question": "Which of the following Racemose inflorescence types is characterized by having all its flowers sessile on an unbranched, elongated axis?",
+    "options": [
+      {"text": "Raceme"},
+      {"text": "Corymb"},
+      {"text": "Spike"},
+      {"text": "Umbel"}
+    ],
+    "answer": "Spike",
+    "explanation": "A 'spike' is a type of inflorescence where flowers are directly attached to the main axis without individual stalks (pedicels), making them sessile.",
+    "questionImage": ""
+  },
+  {
+    "id": 255,
+    "question": "In a 'corymb' inflorescence, what specific arrangement of pedicels leads to its characteristic flat-topped appearance?",
+    "options": [
+      {"text": "All pedicels are of equal length."},
+      {"text": "Pedicels of upper flowers are longer than those of lower flowers."},
+      {"text": "Pedicels of lower flowers are longer than those of upper flowers."},
+      {"text": "Flowers are sessile, so no pedicels are present."}
+    ],
+    "answer": "Pedicels of lower flowers are longer than those of upper flowers.",
+    "explanation": "In a 'corymb', the pedicels of the lower flowers are elongated to bring them to the same level as the upper flowers, creating a flat-topped look.",
+    "questionImage": ""
+  },
+  {
+    "id": 256,
+    "question": "Which Racemose inflorescence type features flowers whose pedicels all arise from a single point at the apex of the peduncle, resembling an umbrella?",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Capitulum"},
+      {"text": "Umbel"},
+      {"text": "Panicle"}
+    ],
+    "answer": "Umbel",
+    "explanation": "An 'umbel' features all flower stalks (pedicels) originating from a common point, giving it an umbrella-like shape.",
+    "questionImage": ""
+  },
+  {
+    "id": 257,
+    "question": "A 'capitulum' (or head) is a dense inflorescence where flowers are sessile and borne on a flattened, broad receptacle. Which of the following is a key visual characteristic of this type?",
+    "options": [
+      {"text": "It has a highly branched main axis."},
+      {"text": "It appears as a single, large flower."},
+      {"text": "It features pendulous, unisexual flowers."},
+      {"text": "Its flowers are arranged in a helix."}
+    ],
+    "answer": "It appears as a single, large flower.",
+    "explanation": "A 'capitulum' shows a dense cluster of small flowers on a flat base, which often gives the entire inflorescence the appearance of a single, composite flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 258,
+    "question": "If a Racemose inflorescence has a main axis that is unbranched and bears individual flowers on short stalks, it is classified as a:",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Raceme"},
+      {"text": "Panicle"},
+      {"text": "Corymb"}
+    ],
+    "answer": "Raceme",
+    "explanation": "A 'raceme' has an unbranched main axis with flowers attached via short stalks (pedicels).",
+    "questionImage": ""
+  },
+  {
+    "id": 259,
+    "question": "Which of the following inflorescence types, though often visually grouped with Racemose examples, is fundamentally a type of determinate inflorescence?",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Raceme"},
+      {"text": "Cyme"},
+      {"text": "Panicle"}
+    ],
+    "answer": "Cyme",
+    "explanation": "A 'cyme' is fundamentally a determinate inflorescence type where the main axis culminates in a flower, ceasing its growth, which is characteristic of Cymose inflorescences, not Racemose.",
+    "questionImage": ""
+  },
+  {
+    "id": 260,
+    "question": "Consider a Racemose inflorescence where the main axis is unbranched, and flowers are sessile. If this axis is fleshy, what specific term is used for this structure?",
+    "options": [
+      {"text": "Capitulum"},
+      {"text": "Spadix"},
+      {"text": "Catkin"},
+      {"text": "Umbel"}
+    ],
+    "answer": "Spadix",
+    "explanation": "A 'spadix' is a type of spike (sessile flowers on an unbranched axis) characterized by a fleshy axis, often found in plants like Araceae.",
+    "questionImage": ""
+  },
+  {
+    "id": 261,
+    "question": "Which Racemose inflorescence type is typically pendulous, bears unisexual flowers, and often has a reduced or absent perianth?",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Corymb"},
+      {"text": "Catkin"},
+      {"text": "Umbel"}
+    ],
+    "answer": "Catkin",
+    "explanation": "A 'catkin' is a specialized type of spike or raceme known for its pendulous, often unisexual flowers with reduced floral parts.",
+    "questionImage": ""
+  },
+  {
+    "id": 262,
+    "question": "If a plant exhibits a single flower at the very tip of its main stem, without any other flowers forming a cluster, this is best described as a:",
+    "options": [
+      {"text": "Raceme"},
+      {"text": "Solitary inflorescence"},
+      {"text": "Spike"},
+      {"text": "Cyme"}
+    ],
+    "answer": "Solitary inflorescence",
+    "explanation": "A solitary inflorescence indicates a single flower rather than a cluster.",
+    "questionImage": ""
+  },
+  {
+    "id": 263,
+    "question": "Which of the following Racemose inflorescences is essentially a compound version of a simple raceme?",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Corymb"},
+      {"text": "Panicle"},
+      {"text": "Capitulum"}
+    ],
+    "answer": "Panicle",
+    "explanation": "A 'panicle' is defined as a branched raceme, making it a compound form of the simple raceme.",
+    "questionImage": ""
+  },
+  {
+    "id": 264,
+    "question": "The primary distinction between a 'raceme' and a 'spike' lies in the presence or absence of which floral structure?",
+    "options": [
+      {"text": "Bracts"},
+      {"text": "Pedicels"},
+      {"text": "Receptacle"},
+      {"text": "Perianth"}
+    ],
+    "answer": "Pedicels",
+    "explanation": "A 'raceme' has flowers on pedicels (stalks), while a 'spike' has sessile flowers (without pedicels) directly on the main axis. This is the defining difference.",
+    "questionImage": ""
+  },
+  {
+    "id": 265,
+    "question": "Which Racemose inflorescence type is characterized by a dense cluster of sessile flowers on a flattened receptacle, often surrounded by an involucre of bracts?",
+    "options": [
+      {"text": "Umbel"},
+      {"text": "Spadix"},
+      {"text": "Capitulum"},
+      {"text": "Corymb"}
+    ],
+    "answer": "Capitulum",
+    "explanation": "A 'capitulum' (or head) is a dense cluster of sessile flowers on a flattened receptacle, which is a defining characteristic.",
+    "questionImage": ""
+  },
+  {
+    "id": 266,
+    "question": "What is the defining characteristic of a Cymose inflorescence regarding the termination of its main axis?",
+    "options": [
+      {"text": "The main axis continues to grow indefinitely."},
+      {"text": "The main axis ends in a flower, ceasing its growth."},
+      {"text": "The main axis branches repeatedly in a racemose manner."},
+      {"text": "The main axis is always fleshy and unbranched."}
+    ],
+    "answer": "The main axis ends in a flower, ceasing its growth.",
+    "explanation": "In a Cymose inflorescence, the growth of the main axis is ceased by the development of the flower at its apex, and the lateral axis which develops the terminal flower also culminates in a flower and its growth also ceases.",
+    "questionImage": ""
+  },
+  {
+    "id": 267,
+    "question": "How do the flowers develop in a Cymose inflorescence in terms of their age and position?",
+    "options": [
+      {"text": "In acropetal succession, with younger flowers at the base."},
+      {"text": "Simultaneously, with all flowers maturing at once."},
+      {"text": "In basipetal succession, with the terminal flower being the oldest."},
+      {"text": "Randomly, with no discernible pattern."}
+    ],
+    "answer": "In basipetal succession, with the terminal flower being the oldest.",
+    "explanation": "In a Cymose inflorescence, the flowers develop in basipetal succession, meaning the terminal flower is the oldest and the lateral ones are younger.",
+    "questionImage": ""
+  },
+  {
+    "id": 268,
+    "question": "Which type of Cymose inflorescence produces only one lateral branch at a time from the main axis, which itself ends in a flower?",
+    "options": [
+      {"text": "Biparous cyme"},
+      {"text": "Multiparous cyme"},
+      {"text": "Uniparous or Monochasial cyme"},
+      {"text": "Compound dichasium"}
+    ],
+    "answer": "Uniparous or Monochasial cyme",
+    "explanation": "A 'Uniparous or Monochasial cyme' is characterized by the main axis ending in a flower and producing only one lateral branch at a time, which also ends in a flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 269,
+    "question": "A Monochasial cyme where the lateral branches develop alternately on opposite sides, forming a zigzag pattern, is specifically known as a:",
+    "options": [
+      {"text": "Helicoid cyme"},
+      {"text": "Dichasial cyme"},
+      {"text": "Scorpioid cyme"},
+      {"text": "Polychasial cyme"}
+    ],
+    "answer": "Scorpioid cyme",
+    "explanation": "A 'Scorpioid cyme' has lateral branches developing alternately on opposite sides, forming a zigzag pattern.",
+    "questionImage": ""
+  },
+  {
+    "id": 270,
+    "question": "Which of the following plants is given as an example of a Monochasial Helicoid cyme?",
+    "options": [
+      {"text": "<i>Gossypium</i>"},
+      {"text": "<i>Solanum</i>"},
+      {"text": "<i>Heliotropium</i>"},
+      {"text": "<i>Ixora</i>"}
+    ],
+    "answer": "<i>Heliotropium</i>",
+    "explanation": "<i>Heliotropium</i> is an example of a Monochasial Helicoid cyme.",
+    "questionImage": ""
+  },
+  {
+    "id": 271,
+    "question": "In a Biparous or Dichasial cyme, how many lateral younger flowers or branches are typically produced from the main axis after its terminal flower develops?",
+    "options": [
+      {"text": "One"},
+      {"text": "Two"},
+      {"text": "More than two"},
+      {"text": "None, as it's unbranched"}
+    ],
+    "answer": "Two",
+    "explanation": "In a Biparous or Dichasial cyme, the peduncle typically produces two lateral younger flowers or two lateral branches after its terminal flower develops.",
+    "questionImage": ""
+  },
+  {
+    "id": 272,
+    "question": "Which of these plants is cited as an example of a True Cyme or Compound Dichasium?",
+    "options": [
+      {"text": "<i>Calotropis</i>"},
+      {"text": "<i>Mimosa</i>"},
+      {"text": "<i>Ixora</i>"},
+      {"text": "<i>Hamelia</i>"}
+    ],
+    "answer": "<i>Ixora</i>",
+    "explanation": "<i>Ixora</i> is an example of a True Cyme or Compound Dichasium.",
+    "questionImage": ""
+  },
+  {
+    "id": 273,
+    "question": "What defines a Multiparous or Polychasial cyme in terms of its branching pattern?",
+    "options": [
+      {"text": "It produces only one lateral branch at a time."},
+      {"text": "It produces two lateral branches simultaneously."},
+      {"text": "It produces more than two lateral flowers or branches."},
+      {"text": "Its main axis continues to grow indefinitely."}
+    ],
+    "answer": "It produces more than two lateral flowers or branches.",
+    "explanation": "A 'Multiparous or Polychasial cyme' is defined by its main axis culminating in a flower, and simultaneously producing more than two lateral flowers or branches.",
+    "questionImage": ""
+  },
+  {
+    "id": 274,
+    "question": "In a Cymose capitulum, where are the oldest flowers typically located?",
+    "options": [
+      {"text": "At the periphery of the disc."},
+      {"text": "Randomly distributed across the disc."},
+      {"text": "In the center of the disc."},
+      {"text": "At the base of the peduncle."}
+    ],
+    "answer": "In the center of the disc.",
+    "explanation": "In a Cymose capitulum, the oldest flowers typically develop in the center of the disc, with the youngest towards the periphery.",
+    "questionImage": ""
+  },
+  {
+    "id": 275,
+    "question": "Which of the following plants is an example of a Cymose capitulum?",
+    "options": [
+      {"text": "<i>Calotropis</i>"},
+      {"text": "<i>Mimosa</i>"},
+      {"text": "<i>Teak</i>"},
+      {"text": "<i>Heliotropium</i>"}
+    ],
+    "answer": "<i>Mimosa</i>",
+    "explanation": "<i>Mimosa</i> is an example of a Cymose capitulum.",
+    "questionImage": ""
+  },
+  {
+    "id": 276,
+    "question": "What is the primary characteristic of a 'Compound Inflorescence'?",
+    "options": [
+      {"text": "It always has a solitary flower."},
+      {"text": "Its main axis branches repeatedly, either in a racemose or cymose manner."},
+      {"text": "Its flowers are always sessile and arranged in a head."},
+      {"text": "It only produces one lateral branch at a time."}
+    ],
+    "answer": "Its main axis branches repeatedly, either in a racemose or cymose manner.",
+    "explanation": "A 'Compound Inflorescence' is characterized by its main axis (peduncle) branching repeatedly, either in a racemose or cymose manner, leading to compound racemose or compound cymose forms.",
+    "questionImage": ""
+  },
+  {
+    "id": 277,
+    "question": "If a compound inflorescence is formed by the repeated branching of a raceme, it is specifically called a:",
+    "options": [
+      {"text": "Compound Cyme"},
+      {"text": "Panicle"},
+      {"text": "Compound Raceme"},
+      {"text": "Dichasium"}
+    ],
+    "answer": "Compound Raceme",
+    "explanation": "A 'Compound Raceme' is a type of compound inflorescence formed when the main axis branches in a racemose manner.",
+    "questionImage": ""
+  },
+  {
+    "id": 278,
+    "question": "Which of the following describes a 'True Cyme'?",
+    "options": [
+      {"text": "A monochasial cyme with a zigzag axis."},
+      {"text": "A cymose inflorescence where the peduncle produces two lateral younger flowers."},
+      {"text": "A polychasial cyme with more than two lateral branches."},
+      {"text": "A racemose inflorescence with a flat top."}
+    ],
+    "answer": "A cymose inflorescence where the peduncle produces two lateral younger flowers.",
+    "explanation": "A 'True Cyme' is a cymose inflorescence where the peduncle produces two lateral younger flowers or two lateral branches.",
+    "questionImage": ""
+  },
+  {
+    "id": 279,
+    "question": "A Monochasial cyme where the lateral branches develop on one side only, forming a coiled or helical structure, is known as a:",
+    "options": [
+      {"text": "Scorpioid cyme"},
+      {"text": "Dichasial cyme"},
+      {"text": "Helicoid cyme"},
+      {"text": "Polychasial cyme"}
+    ],
+    "answer": "Helicoid cyme",
+    "explanation": "A 'Helicoid cyme' is a Monochasial cyme where the lateral branches develop on one side only, forming a coiled or helical structure.",
+    "questionImage": ""
+  },
+  {
+    "id": 280,
+    "question": "What is the primary difference in the arrangement of flowers between a Monochasial Helicoid cyme and a Monochasial Scorpioid cyme?",
+    "options": [
+      {"text": "Helicoid has sessile flowers, Scorpioid has pedicellate flowers."},
+      {"text": "Helicoid branches on one side, Scorpioid branches on alternate sides."},
+      {"text": "Helicoid has two lateral branches, Scorpioid has one."},
+      {"text": "Helicoid has older flowers at the center, Scorpioid has younger flowers at the center."}
+    ],
+    "answer": "Helicoid branches on one side, Scorpioid branches on alternate sides.",
+    "explanation": "In a Monochasial Helicoid cyme, lateral branches develop on one side, while in a Monochasial Scorpioid cyme, they develop on alternate sides.",
+    "questionImage": ""
+  },
+  {
+    "id": 281,
+    "question": "A fruit is botanically defined as a mature, ripened structure. What specific plant part does it primarily originate from?",
+    "options": [
+      {"text": "The ovule"},
+      {"text": "The stamen"},
+      {"text": "The ovary"},
+      {"text": "The petal"}
+    ],
+    "answer": "The ovary",
+    "explanation": "A fruit is a mature, ripened ovary, along with the contents of the ovary. It is the ovule-bearing reproductive structure in the plant flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 282,
+    "question": "Which statement accurately describes the relationship between a fruit and a seed?",
+    "options": [
+      {"text": "A fruit develops from an ovule, and a seed develops from an ovary."},
+      {"text": "A fruit is the seed-bearing structure, and a seed develops from an ovule."},
+      {"text": "A fruit is always fleshy, while a seed is always dry."},
+      {"text": "A fruit is part of the stamen, and a seed is part of the pistil."}
+    ],
+    "answer": "A fruit is the seed-bearing structure, and a seed develops from an ovule.",
+    "explanation": "A fruit is the seed-bearing structure in flowering plants that is formed from the ovary after flowering. The seed develops within the ovary, which is part of the pistil, from the ovule.",
+    "questionImage": ""
+  },
+  {
+    "id": 283,
+    "question": "The pericarp, or fruit wall, is a crucial component of a fruit. From which part of the flower does the pericarp develop?",
+    "options": [
+      {"text": "The ovule"},
+      {"text": "The stigma"},
+      {"text": "The ovary wall"},
+      {"text": "The filament"}
+    ],
+    "answer": "The ovary wall",
+    "explanation": "The pericarp is actually the ovarian wall or the ovary from which the fruit developed.",
+    "questionImage": ""
+  },
+  {
+    "id": 284,
+    "question": "A fruit's pericarp is typically divided into three distinct layers. Which of these layers is responsible for forming the skin of the fruit?",
+    "options": [
+      {"text": "Mesocarp"},
+      {"text": "Endocarp"},
+      {"text": "Exocarp"},
+      {"text": "Carpel"}
+    ],
+    "answer": "Exocarp",
+    "explanation": "The Exocarp or Epicarp is the outer layer of the pericarp that forms the skin.",
+    "questionImage": ""
+  },
+  {
+    "id": 285,
+    "question": "In a fruit with a well-differentiated pericarp, which layer is characterized as being thick, fleshy, and juicy?",
+    "options": [
+      {"text": "Exocarp"},
+      {"text": "Endocarp"},
+      {"text": "Mesocarp"},
+      {"text": "Seed coat"}
+    ],
+    "answer": "Mesocarp",
+    "explanation": "The Mesocarp is the thick, fleshy, and juicy middle layer of the pericarp.",
+    "questionImage": ""
+  },
+  {
+    "id": 286,
+    "question": "The innermost layer of the pericarp, which often forms a hard, protective 'stone' around the seed, is known as the:",
+    "options": [
+      {"text": "Exocarp"},
+      {"text": "Mesocarp"},
+      {"text": "Endocarp"},
+      {"text": "Testa"}
+    ],
+    "answer": "Endocarp",
+    "explanation": "The Endocarp is the inner layer of the fruit that typically forms the stone.",
+    "questionImage": ""
+  },
+  {
+    "id": 287,
+    "question": "Fruits are classified based on the number of ovaries and flowers involved in their development. Which category describes a fruit that develops from a single ovary of a single flower?",
+    "options": [
+      {"text": "Aggregate fruit"},
+      {"text": "Multiple fruit"},
+      {"text": "Simple fruit"},
+      {"text": "Accessory fruit"}
+    ],
+    "answer": "Simple fruit",
+    "explanation": "Simple Fruits develop from a single ovary of several carpels, originating from a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 288,
+    "question": "A fruit formed from multiple separate carpels of a single flower is categorized as a/an:",
+    "options": [
+      {"text": "Simple fruit"},
+      {"text": "Multiple fruit"},
+      {"text": "Aggregate fruit"},
+      {"text": "Compound fruit"}
+    ],
+    "answer": "Aggregate fruit",
+    "explanation": "Aggregate Fruits develop from multiple separate carpels of a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 289,
+    "question": "When a fruit develops from the ovaries of multiple flowers within an entire inflorescence, it is classified as a/an:",
+    "options": [
+      {"text": "Simple fruit"},
+      {"text": "Aggregate fruit"},
+      {"text": "Multiple fruit"},
+      {"text": "Composite fruit"}
+    ],
+    "answer": "Multiple fruit",
+    "explanation": "Multiple Fruits develop from the ovaries of multiple flowers in an inflorescence.",
+    "questionImage": ""
+  },
+  {
+    "id": 290,
+    "question": "An apple is botanically considered an accessory fruit. What distinguishes an accessory fruit from other fruit types?",
+    "options": [
+      {"text": "It develops from multiple separate carpels."},
+      {"text": "It develops from multiple flowers in an inflorescence."},
+      {"text": "It incorporates other floral parts, such as the fleshy receptacle, into the fruit structure."},
+      {"text": "Its pericarp is not differentiated into distinct layers."}
+    ],
+    "answer": "It incorporates other floral parts, such as the fleshy receptacle, into the fruit structure.",
+    "explanation": "Accessory Fruits incorporate remains of floral parts, such as the fleshy receptacle, into the fruit structure.",
+    "questionImage": ""
+  },
+  {
+    "id": 291,
+    "question": "A raspberry develops from a single flower with multiple separate carpels. Based on this developmental origin, how is a raspberry classified?",
+    "options": [
+      {"text": "Simple fruit"},
+      {"text": "Multiple fruit"},
+      {"text": "Aggregate fruit"},
+      {"text": "Accessory fruit"}
+    ],
+    "answer": "Aggregate fruit",
+    "explanation": "A raspberry is an example of an Aggregate fruit, developing from multiple separate carpels of a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 292,
+    "question": "A pineapple develops from an entire inflorescence, where the ovaries of multiple flowers fuse together. This developmental pattern places the pineapple in which fruit category?",
+    "options": [
+      {"text": "Simple fruit"},
+      {"text": "Aggregate fruit"},
+      {"text": "Multiple fruit"},
+      {"text": "Compound fruit"}
+    ],
+    "answer": "Multiple fruit",
+    "explanation": "A pineapple is an example of a Multiple fruit, developing from multiple flowers in an inflorescence.",
+    "questionImage": ""
+  },
+  {
+    "id": 293,
+    "question": "Which of the following is NOT a primary classification category for fruits based on the number of ovaries and flowers involved in their development?",
+    "options": [
+      {"text": "Simple Fruits"},
+      {"text": "Aggregate Fruits"},
+      {"text": "Compound Fruits"},
+      {"text": "Multiple Fruits"}
+    ],
+    "answer": "Compound Fruits",
+    "explanation": "The primary categories for fruit classification based on the number of ovaries and flowers involved are Simple, Aggregate, and Multiple Fruits.",
+    "questionImage": ""
+  },
+  {
+    "id": 294,
+    "question": "A pea pod, which develops from a single carpel of a single flower, is a classic example of which fruit type?",
+    "options": [
+      {"text": "Aggregate fruit"},
+      {"text": "Multiple fruit"},
+      {"text": "Simple fruit"},
+      {"text": "Accessory fruit"}
+    ],
+    "answer": "Simple fruit",
+    "explanation": "A pea fruit is an example of a Simple fruit, developing from a single carpel of a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 295,
+    "question": "The broadened and ripened ovary, which typically forms the enlarged portion of the fruit, is botanically referred to as the:",
+    "options": [
+      {"text": "Ovule"},
+      {"text": "Pistil"},
+      {"text": "Fruit"},
+      {"text": "Stigma"}
+    ],
+    "answer": "Fruit",
+    "explanation": "The broadened and ripened ovary is referred to as the fruit, which typically forms the enlarged portion.",
+    "questionImage": ""
+  },
+  {
+    "id": 296,
+    "question": "Simple fruits are broadly divided into two main types based on the nature of their pericarp. What are these two types?",
+    "options": [
+      {"text": "Dry and Fleshy"},
+      {"text": "Aggregate and Multiple"},
+      {"text": "Dehiscent and Indehiscent"},
+      {"text": "Superior and Inferior"}
+    ],
+    "answer": "Dry and Fleshy",
+    "explanation": "Simple fruits are further divided into Dry fruits and Fleshy fruits depending upon the pericarp.",
+    "questionImage": ""
+  },
+  {
+    "id": 297,
+    "question": "Which characteristic primarily distinguishes a dry fruit from a fleshy fruit?",
+    "options": [
+      {"text": "Dry fruits always contain a single seed, while fleshy fruits contain multiple seeds."},
+      {"text": "Dry fruits have a pericarp that is not distinguished into distinct layers, unlike fleshy fruits."},
+      {"text": "Dry fruits develop from multiple carpels, while fleshy fruits develop from a single carpel."},
+      {"text": "Dry fruits are always dehiscent, while fleshy fruits are always indehiscent."}
+    ],
+    "answer": "Dry fruits have a pericarp that is not distinguished into distinct layers, unlike fleshy fruits.",
+    "explanation": "Dry Fruits are not fleshy, and their pericarp (fruit wall) is not distinguished into distinct layers, whereas fleshy fruits have a pericarp differentiated into exocarp, mesocarp, and endocarp.",
+    "questionImage": ""
+  },
+  {
+    "id": 298,
+    "question": "A fruit characterized by having an entire pericarp that is fleshy and juicy, with seeds embedded within the fleshy pulp, is known as a:",
+    "options": [
+      {"text": "Drupe"},
+      {"text": "Pome"},
+      {"text": "Berry"},
+      {"text": "Pepo"}
+    ],
+    "answer": "Berry",
+    "explanation": "A Berry has an entire pericarp that is fleshy and juicy, with seeds embedded within the fleshy pulp.",
+    "questionImage": ""
+  },
+  {
+    "id": 299,
+    "question": "Which of the following fruits is classified as a Berry?",
+    "options": [
+      {"text": "Peach"},
+      {"text": "Apple"},
+      {"text": "Watermelon"},
+      {"text": "Banana"}
+    ],
+    "answer": "Banana",
+    "explanation": "Banana is an example of a Berry, alongside tomato and grape.",
+    "questionImage": ""
+  },
+  {
+    "id": 300,
+    "question": "A 'stone fruit' is a common term for a fruit type where the endocarp is hard and stony, enclosing a single seed. This botanical fruit type is called a:",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Pome"},
+      {"text": "Drupe"},
+      {"text": "Hesperidium"}
+    ],
+    "answer": "Drupe",
+    "explanation": "A Drupe is characterized as a 'stone fruit' where the endocarp is hard and stony, enclosing a single seed.",
+    "questionImage": ""
+  },
+  {
+    "id": 301,
+    "question": "Which fruit is an example of a Drupe?",
+    "options": [
+      {"text": "Grape"},
+      {"text": "Orange"},
+      {"text": "Cherry"},
+      {"text": "Squash"}
+    ],
+    "answer": "Cherry",
+    "explanation": "Cherry is an example of a Drupe, along with peach, coconut, and olive.",
+    "questionImage": ""
+  },
+  {
+    "id": 302,
+    "question": "A large, fleshy fruit with a hard, leathery rind (exocarp) and a fleshy mesocarp, typically containing many seeds, is characteristic of a:",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Pome"}
+    ],
+    "answer": "Pepo",
+    "explanation": "A Pepo is a large, fleshy fruit with a hard, leathery rind (exocarp) and a fleshy mesocarp, typically containing many seeds.",
+    "questionImage": ""
+  },
+  {
+    "id": 303,
+    "question": "Watermelon, pumpkin, and squash are all examples of which specific type of fleshy fruit?",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Hesperidium"}
+    ],
+    "answer": "Pepo",
+    "explanation": "Watermelon, pumpkin, and squash are all examples of a Pepo.",
+    "questionImage": ""
+  },
+  {
+    "id": 304,
+    "question": "A fleshy fruit with a leathery rind containing oil glands and juicy pulp divided into segments by membranous partitions is known as a:",
+    "options": [
+      {"text": "Pepo"},
+      {"text": "Berry"},
+      {"text": "Hesperidium"},
+      {"text": "Pome"}
+    ],
+    "answer": "Hesperidium",
+    "explanation": "A Hesperidium is a fleshy fruit with a leathery rind containing oil glands and juicy pulp divided into segments by membranous partitions.",
+    "questionImage": ""
+  },
+  {
+    "id": 305,
+    "question": "Which of the following fruits is classified as a Hesperidium?",
+    "options": [
+      {"text": "Tomato"},
+      {"text": "Pear"},
+      {"text": "Lemon"},
+      {"text": "Coconut"}
+    ],
+    "answer": "Lemon",
+    "explanation": "Lemon is an example of a Hesperidium, along with orange and grapefruit.",
+    "questionImage": ""
+  },
+  {
+    "id": 306,
+    "question": "A fruit where the fleshy part is primarily derived from the receptacle, which encloses the true fruit (achenes or carpels) within a core, is a:",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Pome"}
+    ],
+    "answer": "Pome",
+    "explanation": "A Pome is a fruit where the fleshy part is primarily derived from the receptacle, which encloses the true fruit within a core.",
+    "questionImage": ""
+  },
+  {
+    "id": 307,
+    "question": "An apple is botanically classified as which type of fleshy fruit?",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Pome"}
+    ],
+    "answer": "Pome",
+    "explanation": "Apple is an example of a Pome, along with pear and quince.",
+    "questionImage": ""
+  },
+  {
+    "id": 308,
+    "question": "All of the following are examples of fleshy fruits EXCEPT a:",
+    "options": [
+      {"text": "Grape"},
+      {"text": "Peach"},
+      {"text": "Squash"},
+      {"text": "Pea pod"}
+    ],
+    "answer": "Pea pod",
+    "explanation": "Grape (Berry), Peach (Drupe), and Squash (Pepo) are all fleshy fruits. A pea pod is a dry fruit, as its pericarp is not fleshy and not distinguished into layers.",
+    "questionImage": ""
+  },
+  {
+    "id": 309,
+    "question": "A fruit with a thin, papery exocarp, a thick, juicy mesocarp, and a hard, stony endocarp enclosing a single seed is most accurately described as a:",
+    "options": [
+      {"text": "Berry"},
+      {"text": "Drupe"},
+      {"text": "Pepo"},
+      {"text": "Pome"}
+    ],
+    "answer": "Drupe",
+    "explanation": "This description perfectly matches a Drupe, commonly known as a 'stone fruit', which has a thin skin (exocarp), fleshy middle (mesocarp), and a hard, stony inner layer (endocarp) enclosing the seed.",
+    "questionImage": ""
+  },
+  {
+    "id": 310,
+    "question": "If a fruit's entire pericarp is fleshy, and it contains multiple seeds, but lacks a hard rind or stony endocarp, it is most likely a:",
+    "options": [
+      {"text": "Drupe"},
+      {"text": "Pome"},
+      {"text": "Berry"},
+      {"text": "Hesperidium"}
+    ],
+    "answer": "Berry",
+    "explanation": "This description fits a Berry, which has an entirely fleshy pericarp and typically multiple seeds, without the specialized rind of a Pepo or Hesperidium, or the stony endocarp of a Drupe.",
+    "questionImage": ""
+  },
   {
     "id": 221,
     "question": "What is the primary characteristic of a Racemose inflorescence regarding its main axis?",
