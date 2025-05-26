@@ -9,8 +9,11 @@
     { "source": "/cbt-examoau", "destination": "/tp.html" },
     { "source": "/general-articles", "destination": "/blog.html" },
     { "source": "/login", "destination": "/login.html" },
-    { "source": "/profile-menu", "destination": "/profile-menu.html" },
-    { "source": "/mock-icthallb", "destination": "/mock.html" }
+    { "source": "/result-summary", "destination": "/summary.html" },
+    { "source": "/mock-icthallb", "destination": "/mock.html" },
+    { "source": "/testsession", "destination": "/test.html" },
+    { "source": "/mok-icthallb", "destination": "/mck.html" }
+    
     
   ],
   "redirects": [
@@ -21,7 +24,9 @@
     { "source": "/old-cbt-examoau", "destination": "/cbt-examoau", "permanent": true },
     { "source": "/old-general-articles", "destination": "/general-articles", "permanent": true },
     { "source": "/old-profile-menu", "destination": "/profile-menu", "permanent": true },
-    { "source": "/old-mock-icthallb", "destination": "/ict-hallb", "permanent": true }
+    { "source": "/old-mock-icthallb", "destination": "/ict-hallb", "permanent": true },
+    { "source": "/old-result-summary", "destination": "/result-summary", "permanent": true },
+    { "source": "/old-testsession", "destination": "/testsession", "permanent": true }
       
   ]
 }
