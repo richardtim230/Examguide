@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 221,
+    "question": "What is the primary characteristic of a Racemose inflorescence regarding its main axis?",
+    "options": [
+      {"text": "It terminates in a flower."},
+      {"text": "It continues to grow indefinitely."},
+      {"text": "It is always unbranched."},
+      {"text": "It produces flowers in a definite pattern."}
+    ],
+    "answer": "It continues to grow indefinitely.",
+    "explanation": "A <strong>Racemose inflorescence</strong> is characterized by an <strong>indefinite</strong> growth pattern, meaning its main axis does not terminate in a flower and continues to grow, producing new flowers laterally.",
+    "questionImage": ""
+  },
+  {
+    "id": 222,
+    "question": "In a Racemose inflorescence, how are the flowers typically arranged in terms of age along the main axis?",
+    "options": [
+      {"text": "Older flowers are at the top, younger at the base."},
+      {"text": "Younger flowers are at the top, older at the base."},
+      {"text": "All flowers mature simultaneously."},
+      {"text": "Flowers develop randomly along the axis."}
+    ],
+    "answer": "Younger flowers are at the top, older at the base.",
+    "explanation": "Flowers in a Racemose inflorescence develop in <strong>acropetal succession</strong>, meaning the <strong>older flowers are lower on the axis, while the younger flowers are at the top</strong> or center of a truncated axis.",
+    "questionImage": ""
+  },
+  {
+    "id": 223,
+    "question": "Which type of inflorescence is generally considered 'definite' in its growth pattern?",
+    "options": [
+      {"text": "Racemose"},
+      {"text": "Cymose"},
+      {"text": "Spadix"},
+      {"text": "Capitulum"}
+    ],
+    "answer": "Cymose",
+    "explanation": "Inflorescences are classified into two distinct groups based on their branching pattern: <strong>Racemose (indefinite)</strong> and <strong>Cymose (definite)</strong>. A definite pattern means the main axis terminates in a flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 224,
+    "question": "A Raceme is a type of inflorescence where individual flowers are borne on:",
+    "options": [
+      {"text": "A fleshy stem."},
+      {"text": "A broad, flat peduncle."},
+      {"text": "Short stalks called pedicels."},
+      {"text": "Directly on the main stem."}
+    ],
+    "answer": "Short stalks called pedicels.",
+    "explanation": "In a <strong>Raceme</strong>, each flower is borne on a <strong>short stalk called a pedicel</strong>, distinguishing it from types where flowers are sessile.",
+    "questionImage": ""
+  },
+  {
+    "id": 225,
+    "question": "Which plant is given as an example of a Raceme inflorescence?",
+    "options": [
+      {"text": "Astilbe"},
+      {"text": "Amaranthus"},
+      {"text": "Snapdragon"},
+      {"text": "Hawthorn"}
+    ],
+    "answer": "Snapdragon",
+    "explanation": "An example of a <strong>Raceme</strong> is the <strong>Snapdragon</strong> (<i>Antirrhinum majus</i>), where flowers are arranged on pedicels along an elongated axis.",
+    "questionImage": ""
+  },
+  {
+    "id": 226,
+    "question": "What is a Panicle defined as?",
+    "options": [
+      {"text": "A simple raceme."},
+      {"text": "A branched raceme."},
+      {"text": "A spike on a fleshy stem."},
+      {"text": "A flat-topped cluster."}
+    ],
+    "answer": "A branched raceme.",
+    "explanation": "A <strong>Panicle</strong> is a <strong>branched raceme</strong>, where each branch itself bears more than one flower, often in the axil of a bract.",
+    "questionImage": ""
+  },
+  {
+    "id": 227,
+    "question": "In a Spike inflorescence, how are the flowers attached to the stem?",
+    "options": [
+      {"text": "On long pedicels."},
+      {"text": "Directly, without pedicels."},
+      {"text": "In umbrella-like clusters."},
+      {"text": "On a fleshy peduncle."}
+    ],
+    "answer": "Directly, without pedicels.",
+    "explanation": "A <strong>Spike</strong> is a raceme where the flowers develop <strong>directly from the stem and are not borne on pedicels</strong>, making them sessile.",
+    "questionImage": ""
+  },
+  {
+    "id": 228,
+    "question": "Which type of inflorescence is characterized by flowers that are either male (staminate) or female (carpellate), usually pendulous, with a reduced or absent perianth?",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Catkin"},
+      {"text": "Corymb"},
+      {"text": "Umbel"}
+    ],
+    "answer": "Catkin",
+    "explanation": "A <strong>Catkin</strong> is a raceme in which the flowers are either <strong>male (staminate) or female (carpellate)</strong>, it is usually pendulous, and the perianth may be reduced or absent.",
+    "questionImage": ""
+  },
+  {
+    "id": 229,
+    "question": "What distinguishes a Corymb inflorescence?",
+    "options": [
+      {"text": "Flowers on a fleshy stem."},
+      {"text": "Pedicels of lower flowers are longer than upper ones."},
+      {"text": "All pedicels originate from the same point."},
+      {"text": "Flowers are sessile on a broad peduncle."}
+    ],
+    "answer": "Pedicels of lower flowers are longer than upper ones.",
+    "explanation": "A <strong>Corymb</strong> is a raceme where the <strong>pedicels of the lower flowers are longer than those of the upper flowers</strong>, resulting in a flat-topped cluster of flowers.",
+    "questionImage": ""
+  },
+  {
+    "id": 230,
+    "question": "Which inflorescence type has pedicels that initiate from about the same point at the tip of the peduncle, forming an umbrella-like shape?",
+    "options": [
+      {"text": "Corymb"},
+      {"text": "Spadix"},
+      {"text": "Umbel"},
+      {"text": "Head"}
+    ],
+    "answer": "Umbel",
+    "explanation": "An <strong>Umbel</strong> is a raceme where the <strong>pedicels initiate from about the same point</strong> at the tip of the peduncle, giving the appearance of an <strong>umbrella-like shape</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 231,
+    "question": "A Spadix is a spike borne on what type of stem?",
+    "options": [
+      {"text": "A woody stem"},
+      {"text": "A herbaceous stem"},
+      {"text": "A fleshy stem"},
+      {"text": "A hollow stem"}
+    ],
+    "answer": "A fleshy stem",
+    "explanation": "A <strong>Spadix</strong> is a spike borne on a <strong>fleshy stem</strong>, and it is common in the family Araceae.",
+    "questionImage": ""
+  },
+  {
+    "id": 232,
+    "question": "What is the characteristic appearance of a Head (Capitulum) inflorescence?",
+    "options": [
+      {"text": "A branched cluster of flowers."},
+      {"text": "A single flower appearance."},
+      {"text": "A pendulous cluster."},
+      {"text": "An umbrella-like cluster."}
+    ],
+    "answer": "A single flower appearance.",
+    "explanation": "A <strong>Head (Capitulum)</strong> is a short, dense spike where the flowers are borne directly on a broad, flat peduncle, giving the inflorescence the appearance of a <strong>single flower</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 233,
+    "question": "Morphologically, an inflorescence is considered a modified part of which plant structure?",
+    "options": [
+      {"text": "The root system"},
+      {"text": "The leaf blade"},
+      {"text": "The shoot of seed plants"},
+      {"text": "The floral receptacle"}
+    ],
+    "answer": "The shoot of seed plants",
+    "explanation": "Morphologically, an inflorescence is the <strong>modified part of the shoot of seed plants</strong> where flowers are formed, representing a specialized reproductive branch.",
+    "questionImage": ""
+  },
+  {
+    "id": 234,
+    "question": "Which term refers to the stem holding the whole inflorescence?",
+    "options": [
+      {"text": "Rachis"},
+      {"text": "Pedicel"},
+      {"text": "Peduncle"},
+      {"text": "Stalk"}
+    ],
+    "answer": "Peduncle",
+    "explanation": "The stem holding the whole inflorescence is called a <strong>peduncle</strong>, serving as the main supporting stalk for the entire flower cluster.",
+    "questionImage": ""
+  },
+  {
+    "id": 235,
+    "question": "What is the term for the main stem within an inflorescence that holds the flowers or more branches?",
+    "options": [
+      {"text": "Peduncle"},
+      {"text": "Pedicel"},
+      {"text": "Rachis"},
+      {"text": "Axis"}
+    ],
+    "answer": "Rachis",
+    "explanation": "The main axis holding the flowers or more branches within the inflorescence is called the <strong>rachis</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 236,
+    "question": "What is the stalk of a single flower within an inflorescence called?",
+    "options": [
+      {"text": "Peduncle"},
+      {"text": "Rachis"},
+      {"text": "Pedicel"},
+      {"text": "Stalk"}
+    ],
+    "answer": "Pedicel",
+    "explanation": "The stalk of each single flower is called a <strong>pedicel</strong>, connecting the individual flower to the main axis or branch of the inflorescence.",
+    "questionImage": ""
+  },
+  {
+    "id": 237,
+    "question": "A flower that is not part of an inflorescence is referred to as a:",
+    "options": [
+      {"text": "Compound flower"},
+      {"text": "Solitary flower"},
+      {"text": "Terminal flower"},
+      {"text": "Axillary flower"}
+    ],
+    "answer": "Solitary flower",
+    "explanation": "A flower that is not part of an inflorescence is called a <strong>solitary flower</strong>, and its stalk is also referred to as a peduncle.",
+    "questionImage": ""
+  },
+  {
+    "id": 238,
+    "question": "When an inflorescence is referred to as a 'pseudanthium', what does it typically imply about the individual flowers?",
+    "options": [
+      {"text": "They are large and showy."},
+      {"text": "They are small and borne in a tight cluster."},
+      {"text": "They are solitary and terminal."},
+      {"text": "They are highly differentiated."}
+    ],
+    "answer": "They are small and borne in a tight cluster.",
+    "explanation": "An inflorescence may be referred to as a flower (a <strong>pseudanthium</strong>), especially when the individual flowers are particularly <strong>small and borne in a tight cluster</strong>, giving the appearance of a single flower.",
+    "questionImage": ""
+  },
+  {
+    "id": 239,
+    "question": "What is the fruiting stage of an inflorescence known as?",
+    "options": [
+      {"text": "Fructification"},
+      {"text": "Infructescence"},
+      {"text": "Fruiting body"},
+      {"text": "Carpel"}
+    ],
+    "answer": "Infructescence",
+    "explanation": "The fruiting stage of an inflorescence, after fertilization and fruit development, is known as an <strong>infructescence</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 240,
+    "question": "Which of the following is a modification that can occur in an inflorescence?",
+    "options": [
+      {"text": "Increase in internode length only."},
+      {"text": "Reduction of main axes only."},
+      {"text": "Variations in proportions and compression of axes."},
+      {"text": "Loss of all floral parts."}
+    ],
+    "answer": "Variations in proportions and compression of axes.",
+    "explanation": "The modifications involved in inflorescence formation include changes in the length and nature of the internodes and the phyllaxis, as well as <strong>variations in the proportions, compressions, and reduction of main and secondary axes</strong>.",
+    "questionImage": ""
+  },
+  {
+    "id": 241,
+    "question": "What is the primary function of an inflorescence?",
+    "options": [
+      {"text": "To store food reserves."},
+      {"text": "To absorb sunlight for photosynthesis."},
+      {"text": "To bear a cluster of flowers in a specific pattern."},
+      {"text": "To provide structural support to the plant."}
+    ],
+    "answer": "To bear a cluster of flowers in a specific pattern.",
+    "explanation": "An inflorescence can be defined as the <strong>reproductive portion of a plant that bears a cluster of flowers in a specific pattern</strong>, optimizing pollination and seed dispersal.",
+    "questionImage": ""
+  },
+  {
+    "id": 242,
+    "question": "Which type of inflorescence has its youngest flowers at the top of an elongated axis?",
+    "options": [
+      {"text": "Cymose"},
+      {"text": "Racemose"},
+      {"text": "Solitary"},
+      {"text": "Compound"}
+    ],
+    "answer": "Racemose",
+    "explanation": "In a <strong>Racemose inflorescence</strong>, the youngest flowers are typically found at the <strong>top of an elongated axis</strong> or at the center of a truncated axis, due to acropetal succession.",
+    "questionImage": ""
+  },
+  {
+    "id": 243,
+    "question": "What is the term for the small leaf-like structures often found at the base of a flower or inflorescence branch?",
+    "options": [
+      {"text": "Pedicel"},
+      {"text": "Peduncle"},
+      {"text": "Phyllary"},
+      {"text": "Rachis"}
+    ],
+    "answer": "Phyllary",
+    "explanation": "The diagram of a general inflorescence structure labels a small leaf-like structure associated with the flowers as a <strong>phyllary</strong>, which are often bracts.",
+    "questionImage": ""
+  },
+  {
+    "id": 244,
+    "question": "Which of the following is an example of a plant with a Catkin inflorescence?",
+    "options": [
+      {"text": "Snapdragon"},
+      {"text": "Hawthorn"},
+      {"text": "Hoya"},
+      {"text": "Oak"}
+    ],
+    "answer": "Oak",
+    "explanation": "<strong>Oaks</strong> (<i>Quercus</i> sp.) are given as an example of plants that produce <strong>Catkin</strong> inflorescences, characterized by pendulous, unisexual flowers with reduced perianths.",
+    "questionImage": ""
+  },
+  {
+    "id": 245,
+    "question": "In a Corymb, how do the pedicels of the lower flowers compare to those of the upper flowers?",
+    "options": [
+      {"text": "They are shorter."},
+      {"text": "They are equal in length."},
+      {"text": "They are longer."},
+      {"text": "They are absent."}
+    ],
+    "answer": "They are longer.",
+    "explanation": "In a <strong>Corymb</strong>, the <strong>pedicels of the lower flowers are longer than those of the upper flowers</strong>, causing all flowers to reach approximately the same level and form a flat-topped cluster.",
+    "questionImage": ""
+  },
+  {
+    "id": 246,
+    "question": "Which inflorescence type is characterized by a fleshy stem and is common in the Araceae family?",
+    "options": [
+      {"text": "Spike"},
+      {"text": "Umbel"},
+      {"text": "Spadix"},
+      {"text": "Head"}
+    ],
+    "answer": "Spadix",
+    "explanation": "A <strong>Spadix</strong> is a spike borne on a <strong>fleshy stem</strong>, and it is a common inflorescence type in the family Araceae, which includes plants like garden egg and banana.",
+    "questionImage": ""
+  },
+  {
+    "id": 247,
+    "question": "What is the appearance of a Head (Capitulum) inflorescence due to its short, dense spike and broad, flat peduncle?",
+    "options": [
+      {"text": "A branched cluster"},
+      {"text": "A single flower"},
+      {"text": "A pendulous cluster"},
+      {"text": "An umbrella-like cluster"}
+    ],
+    "answer": "A single flower",
+    "explanation": "A <strong>Head (Capitulum)</strong> is a short, dense spike where the flowers are borne directly on a broad, flat peduncle, giving the entire inflorescence the appearance of a <strong>single flower</strong>, as seen in dandelions.",
+    "questionImage": ""
+  },
+  {
+    "id": 248,
+    "question": "What is the term for the main supporting stalk of an entire inflorescence?",
+    "options": [
+      {"text": "Rachis"},
+      {"text": "Pedicel"},
+      {"text": "Peduncle"},
+      {"text": "Stalk"}
+    ],
+    "answer": "Peduncle",
+    "explanation": "The stem holding the whole inflorescence is called a <strong>peduncle</strong>, serving as the main supporting stalk for the entire flower cluster.",
+    "questionImage": ""
+  },
+  {
+    "id": 249,
+    "question": "Which term describes an inflorescence that appears as a single flower, especially when its individual flowers are small and tightly clustered?",
+    "options": [
+      {"text": "Solitary flower"},
+      {"text": "Compound flower"},
+      {"text": "Pseudanthium"},
+      {"text": "Capitulum"}
+    ],
+    "answer": "Pseudanthium",
+    "explanation": "An inflorescence may be referred to as a flower, specifically when the individual flowers are particularly small and borne in a tight cluster, forming a <strong>pseudanthium</strong> (false flower).",
+    "questionImage": ""
+  },
+  {
+    "id": 250,
+    "question": "What is the botanical term for the fruiting stage of an inflorescence?",
+    "options": [
+      {"text": "Fructification"},
+      {"text": "Infructescence"},
+      {"text": "Fruiting body"},
+      {"text": "Carpel"}
+    ],
+    "answer": "Infructescence",
+    "explanation": "The fruiting stage of an inflorescence, after fertilization and fruit development, is known as an <strong>infructescence</strong>.",
+    "questionImage": ""
+  },
+  {
     "id": 201,
     "question": "What is a key evolutionary trend in vascular plants regarding the sporophyte generation?",
     "options": [
