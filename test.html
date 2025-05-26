@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CBT Test</title>
 
   <!-- MathJax and KaTeX for math rendering -->
@@ -267,6 +267,82 @@
       font-size: 1.2rem;
       margin-top: 40px;
     }
+
+    /* Instruction Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      z-index: 100;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(12, 23, 48, 0.73);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      background: #fff;
+      color: #102654;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px 0 #001c3c66;
+      max-width: 430px;
+      width: 92vw;
+      padding: 34px 28px 22px 28px;
+      text-align: left;
+      position: relative;
+      animation: popin 0.3s;
+    }
+    @keyframes popin {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-box h2 {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #0072ff;
+      margin-bottom: 10px;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+    }
+    .modal-box .school-modal {
+      text-align: center;
+      margin-bottom: 6px;
+      color: #2d6a99;
+      font-weight: bold;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .modal-box .subtitle-modal {
+      text-align: center;
+      color: #00c6ff;
+      font-weight: 500;
+      font-size: 1.01rem;
+      margin-bottom: 13px;
+    }
+    .modal-box ul {
+      margin: 16px 0 0 0;
+      padding-left: 19px;
+      font-size: 1rem;
+    }
+    .modal-box ul li {
+      margin-bottom: 9px;
+      line-height: 1.5;
+    }
+    .modal-box .modal-btn {
+      margin: 24px auto 0 auto;
+      display: block;
+      background: linear-gradient(90deg,#00c6ff 0%, #0072ff 100%);
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      font-size: 1.08rem;
+      border-radius: 7px;
+      padding: 12px 38px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #00c6ff39;
+      transition: background 0.2s;
+    }
+    .modal-box .modal-btn:hover {
+      background: linear-gradient(90deg,#0072ff 0%, #00c6ff 100%);
+    }
   </style>
 </head>
 <body>
@@ -274,7 +350,7 @@
     <div class="header-inner">
       <div class="header-left">
         <span class="exam-title" id="examTitle">Loading Exam...</span>
-        <span class="candidate-name" id="candidateName">CANDIDATE:  .</span>
+        <span class="candidate-name" id="candidateName">CANDIDATE: |</span>
       </div>
       <div class="header-center">
         <img src="logo.png" alt="School Logo" class="school-logo" />
@@ -284,6 +360,30 @@
       <div id="timer">Loading...</div>
     </div>
   </header>
+
+  <!-- Instruction Modal -->
+  <div class="modal-overlay" id="instructionModal">
+    <div class="modal-box">
+      <div class="school-modal">Obafemi Awolowo University</div>
+      <div class="subtitle-modal">Central Mock Test</div>
+      <h2>Welcome to the CBT Test Portal</h2>
+      <div>
+        <strong>Please read the following instructions carefully before you begin:</strong>
+        <ul>
+          <li>This is a Computer-Based Test (CBT) comprising randomly selected questions from your subject area.</li>
+          <li>You will be presented with a maximum of <strong>60 questions</strong> per session, to be completed within <strong>40 minutes</strong>.</li>
+          <li>Select the most appropriate answer for each question. Only one option is correct per question.</li>
+          <li>Use the <b>Next</b> and <b>Previous</b> buttons to navigate between questions. You may review and change your answers before submission.</li>
+          <li>Each session will serve you new questions you have not attempted before. Once all questions have been attempted, the cycle will restart.</li>
+          <li>The timer at the top right corner shows your remaining time. The test will be submitted automatically when time runs out.</li>
+          <li>Do not refresh or close your browser during the test, as this may result in loss of progress.</li>
+          <li>Once you click <b>Submit</b> on the last question or your time elapses, your answers will be recorded and cannot be changed.</li>
+          <li>Click <b>“Start Test”</b> below to begin. Best of luck!</li>
+        </ul>
+      </div>
+      <button class="modal-btn" onclick="closeInstructionModal()">Start Test</button>
+    </div>
+  </div>
 
   <div class="container">
     <div id="noActiveSet" style="display:none;">
@@ -299,6 +399,17 @@
   </div>
 
   <script>
+    // Instruction Modal Logic
+    function closeInstructionModal() {
+      document.getElementById('instructionModal').style.display = 'none';
+      // Now allow test to load
+      window._cbtReadyToStart = true;
+      if (typeof window._cbtLoadQuestions === 'function') window._cbtLoadQuestions();
+    }
+    window.onload = function() {
+      document.getElementById('instructionModal').style.display = 'flex';
+    };
+
     // User & Access
     const currentUser = localStorage.getItem('current_user') || 'Guest';
     document.getElementById('candidateName').innerText += currentUser;
@@ -319,7 +430,9 @@
     let timeRemaining = timeLimit;
     let timerInterval;
 
-    async function loadQuestions() {
+    // Defer loading of questions until instruction modal is closed
+    window._cbtLoadQuestions = async function loadQuestions() {
+      if (!window._cbtReadyToStart) return;
       try {
         const res = await fetch('main-questions.json');
         if (!res.ok) throw new Error("Could not load questions");
@@ -378,7 +491,7 @@
         document.getElementById('navButtons').style.display = "none";
         console.error(err);
       }
-    }
+    };
 
     function renderQuestion() {
       const q = questions[currentQuestionIndex];
@@ -465,7 +578,7 @@
         localStorage.setItem(userKey, JSON.stringify(updatedAnswered));
       }
 
-      window.location.href = 'result-summary';
+      window.location.href = 'test-summary';
     }
 
     function shuffle(arr) {
@@ -475,8 +588,6 @@
       }
       return arr;
     }
-
-    window.onload = loadQuestions;
   </script>
 </body>
 </html>
