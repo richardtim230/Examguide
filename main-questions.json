@@ -3,6 +3,787 @@
     "title": "INTRODUCTORY BOTANY II",
     "status": "ACTIVE",
     "questions": [
+  
+  {
+    "id": 446,
+    "question": "A lichen species is observed to grow as a <b>crust-like, powdery layer</b> tightly adhered to the substrate, making it difficult to remove without damaging the surface. This growth form is characteristic of a:",
+    "options": [
+      {"text": "Foliose lichen"},
+      {"text": "Fruticose lichen"},
+      {"text": "Crustose lichen"},
+      {"text": "Squamulose lichen"}
+    ],
+    "answer": "Crustose lichen",
+    "explanation": "<b>Crustose lichens</b> are characterized by their <b>crust-like or powdery appearance</b>, forming a thin layer that is intimately attached to the substrate and cannot be easily separated.",
+    "questionImage": ""
+  },
+  {
+    "id": 447,
+    "question": "The symbiotic relationship within a lichen is primarily characterized by the fungus providing <b>physical protection and attachment</b>, while the algal component contributes:",
+    "options": [
+      {"text": "Mineral absorption"},
+      {"text": "Nitrogen fixation"},
+      {"text": "Photosynthetic products"},
+      {"text": "Reproductive spores"}
+    ],
+    "answer": "Photosynthetic products",
+    "explanation": "In the lichen symbiosis, the <b>algal (phycobiont)</b> component is <b>photosynthetic</b>, meaning it produces organic food (carbohydrates) for both partners.",
+    "questionImage": ""
+  },
+  {
+    "id": 448,
+    "question": "Which of the following intracellular products found in lichens is responsible for their <b>antibiotic properties</b>, inhibiting the growth of certain bacteria?",
+    "options": [
+      {"text": "Carotenoids"},
+      {"text": "Polysaccharides"},
+      {"text": "Lichen acids"},
+      {"text": "Free amino acids"}
+    ],
+    "answer": "Lichen acids",
+    "explanation": "Many <b>lichen acids</b> (e.g., usnic acid, fumarprotocetraric acid) are known to possess <b>antibiotic properties</b>, which help protect the lichen from microbial attack.",
+    "questionImage": ""
+  },
+  {
+    "id": 449,
+    "question": "A lichen with a <b>hair-like or shrubby appearance</b>, often branching and growing erect or pendulous from its attachment point, is classified as:",
+    "options": [
+      {"text": "Foliose"},
+      {"text": "Crustose"},
+      {"text": "Fruticose"},
+      {"text": "Dimorphic"}
+    ],
+    "answer": "Fruticose",
+    "explanation": "<b>Fruticose lichens</b> are characterized by their <b>shrub-like or hair-like morphology</b>, often growing in three-dimensional, branched structures.",
+    "questionImage": ""
+  },
+  {
+    "id": 450,
+    "question": "The primary reason why lichens are considered <b>pioneering organisms</b> in ecological succession is their ability to:",
+    "options": [
+      {"text": "Rapidly colonize bare rock surfaces"},
+      {"text": "Fix atmospheric nitrogen efficiently"},
+      {"text": "Decompose organic matter quickly"},
+      {"text": "Form complex food webs"}
+    ],
+    "answer": "Rapidly colonize bare rock surfaces",
+    "explanation": "Lichens are often the first organisms to colonize harsh, barren environments like <b>bare rock</b>, initiating the process of ecological succession by contributing to soil formation.",
+    "questionImage": ""
+  },
+  {
+    "id": 451,
+    "question": "Pteridophytes are characterized by a dominant sporophyte generation and the presence of <b>true roots, stems, and leaves</b>. However, unlike seed plants, their reproduction is dependent on:",
+    "options": [
+      {"text": "Wind for pollination"},
+      {"text": "Insects for fertilization"},
+      {"text": "Water for sperm transfer"},
+      {"text": "Animal dispersal of seeds"}
+    ],
+    "answer": "Water for sperm transfer",
+    "explanation": "Despite having vascular tissue, <b>Pteridophytes</b> (ferns and their allies) are still dependent on a film of <b>water</b> for the motile sperm to swim to the egg during fertilization, a key ancestral trait.",
+    "questionImage": ""
+  },
+  {
+    "id": 452,
+    "question": "Which of the following terms accurately describes the spore production in the majority of Pteridophytes, where only one type of spore is produced?",
+    "options": [
+      {"text": "Heterosporous"},
+      {"text": "Isosporous"},
+      {"text": "Homosporous"},
+      {"text": "Anisosporous"}
+    ],
+    "answer": "Homosporous",
+    "explanation": "Most <b>Pteridophytes</b> are <b>homosporous</b>, meaning they produce only <b>one type of spore</b>, which develops into a bisexual gametophyte.",
+    "questionImage": ""
+  },
+  {
+    "id": 453,
+    "question": "The underground stem structure characteristic of many ferns, from which roots and fronds arise, is known as a:",
+    "options": [
+      {"text": "Stolon"},
+      {"text": "Tuber"},
+      {"text": "Bulb"},
+      {"text": "Rhizome"}
+    ],
+    "answer": "Rhizome",
+    "explanation": "A <b>rhizome</b> is a horizontal, underground stem found in many ferns and other plants, from which new shoots and roots can grow.",
+    "questionImage": ""
+  },
+  {
+    "id": 454,
+    "question": "The specialized structures on the underside of fern fronds that contain sporangia are called:",
+    "options": [
+      {"text": "Sori"},
+      {"text": "Indusia"},
+      {"text": "Sporophylls"},
+      {"text": "Prothalli"}
+    ],
+    "answer": "Sori",
+    "explanation": "<b>Sori</b> (singular: sorus) are clusters of <b>sporangia</b>, typically found on the underside of fern fronds, where spores are produced.",
+    "questionImage": ""
+  },
+  {
+    "id": 455,
+    "question": "The heart-shaped, photosynthetic gametophyte of a fern, which produces both antheridia and archegonia, is known as the:",
+    "options": [
+      {"text": "Sporophyte"},
+      {"text": "Prothallus"},
+      {"text": "Rhizoid"},
+      {"text": "Frond"}
+    ],
+    "answer": "Prothallus",
+    "explanation": "The <b>prothallus</b> is the small, typically heart-shaped, free-living <b>gametophyte</b> of a fern, responsible for producing gametes.",
+    "questionImage": ""
+  },
+  {
+    "id": 456,
+    "question": "Which of the following Pteridophyte groups is characterized by having <b>microphylls</b> (small, single-veined leaves) and often forms cone-like strobili?",
+    "options": [
+      {"text": "Ferns (Filicopsida)"},
+      {"text": "Horsetails (Sphenopsida)"},
+      {"text": "Clubmosses (Lycopsida)"},
+      {"text": "Whisk ferns (Psilopsida)"}
+    ],
+    "answer": "Clubmosses (Lycopsida)",
+    "explanation": "<b>Clubmosses (Lycopsida)</b> are distinguished by their <b>microphylls</b> and often bear sporangia in compact, cone-like structures called <b>strobili</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 457,
+    "question": "The vascular tissue in Pteridophytes, while present, is considered less developed than in seed plants. Which of the following is a key difference?",
+    "options": [
+      {"text": "Absence of xylem"},
+      {"text": "Lack of true phloem"},
+      {"text": "Absence of vessel elements in xylem"},
+      {"text": "Presence of sieve tubes only"}
+    ],
+    "answer": "Absence of vessel elements in xylem",
+    "explanation": "The <b>xylem of Pteridophytes</b> typically consists only of <b>tracheids</b>, lacking the more efficient <b>vessel elements</b> found in most angiosperms.",
+    "questionImage": ""
+  },
+  {
+    "id": 458,
+    "question": "In the life cycle of a homosporous Pteridophyte, the spores germinate to produce a gametophyte that is typically:",
+    "options": [
+      {"text": "Dioecious (separate male and female)"},
+      {"text": "Monoecious (producing both male and female gametes)"},
+      {"text": "Parasitic on the sporophyte"},
+      {"text": "Long-lived and dominant"}
+    ],
+    "answer": "Monoecious (producing both male and female gametes)",
+    "explanation": "In <b>homosporous Pteridophytes</b>, the single type of spore develops into a <b>monoecious gametophyte</b> (prothallus), meaning it produces both male (antheridia) and female (archegonia) reproductive organs.",
+    "questionImage": ""
+  },
+  {
+    "id": 459,
+    "question": "Which Pteridophyte group is characterized by jointed stems, whorls of small leaves, and often contains silica in its cell walls, giving it an abrasive texture?",
+    "options": [
+      {"text": "Ferns"},
+      {"text": "Clubmosses"},
+      {"text": "Horsetails"},
+      {"text": "Whisk ferns"}
+    ],
+    "answer": "Horsetails",
+    "explanation": "<b>Horsetails (Sphenopsida)</b> are distinctive for their <b>jointed stems</b>, whorled leaves, and the presence of <b>silica</b> in their epidermal cells, making them rough to the touch.",
+    "questionImage": ""
+  },
+  {
+    "id": 460,
+    "question": "The term 'frond' in Pteridophytes specifically refers to the:",
+    "options": [
+      {"text": "Underground stem"},
+      {"text": "Reproductive cone"},
+      {"text": "Leaf of a fern"},
+      {"text": "Root-like structure"}
+    ],
+    "answer": "Leaf of a fern",
+    "explanation": "A <b>frond</b> is the botanical term for the <b>leaf of a fern</b>, which typically includes both the blade and the stalk (stipe).",
+    "questionImage": ""
+  },
+  {
+    "id": 431,
+    "question": "In a symbiotic association, a <b>non-photosynthetic</b> organism provides shelter and attachment, while its <b>photosynthetic</b> partner produces food. This describes the relationship within a:",
+    "options": [
+      {"text": "Mycorrhiza"},
+      {"text": "Lichen"},
+      {"text": "Cyanobacterium colony"},
+      {"text": "Parasitic fungus"}
+    ],
+    "answer": "Lichen",
+    "explanation": "A <b>lichen</b> is a composite organism where a <b>non-photosynthetic fungus</b> (mycobiont) provides shelter and attachment, and a <b>photosynthetic alga</b> (phycobiont) produces food.",
+    "questionImage": ""
+  },
+  {
+    "id": 432,
+    "question": "A lichen characterized by a <b>flat structure</b> with <b>leafy, dorsiventral bodies</b> is botanically classified as:",
+    "options": [
+      {"text": "Crustose"},
+      {"text": "Fruticose"},
+      {"text": "Foliose"},
+      {"text": "Squamulose"}
+    ],
+    "answer": "Foliose",
+    "explanation": "<b>Foliose</b> lichens are distinguished by their <b>flat, leaf-like thalli</b> that are often lobed and attached to the substrate at multiple points.",
+    "questionImage": ""
+  },
+  {
+    "id": 433,
+    "question": "The presence of a specific acid in lichens renders them <b>unpalatable to most animals</b>, serving as a chemical defense mechanism. This acid is:",
+    "options": [
+      {"text": "Usnic acid"},
+      {"text": "Lichenic acid"},
+      {"text": "Fumarprotocetraric acid"},
+      {"text": "Oxalic acid"}
+    ],
+    "answer": "Fumarprotocetraric acid",
+    "explanation": "<b>Fumarprotocetraric acid</b> is a secondary metabolite found in some lichens that makes them <b>unpalatable</b>, deterring herbivory.",
+    "questionImage": ""
+  },
+  {
+    "id": 434,
+    "question": "The sensitivity of lichens to certain atmospheric components makes them widely recognized as excellent <b>bioindicators</b> for:",
+    "options": [
+      {"text": "Water quality"},
+      {"text": "Soil nutrient levels"},
+      {"text": "Atmospheric pollution"},
+      {"text": "Climate change"}
+    ],
+    "answer": "Atmospheric pollution",
+    "explanation": "Lichens absorb substances directly from the atmosphere, and their sensitivity to pollutants like sulfur dioxide makes them valuable indicators of <b>air quality</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 435,
+    "question": "Which of the following combinations of features is characteristic of all Bryophytes, distinguishing them from higher plants?",
+    "options": [
+      {"text": "Presence of true roots, stems, and leaves"},
+      {"text": "Possession of a cuticle, but lacking vascular tissue"},
+      {"text": "Absence of cuticle, true roots, and vascular systems"},
+      {"text": "Dominant sporophyte generation"}
+    ],
+    "answer": "Absence of cuticle, true roots, and vascular systems",
+    "explanation": "<b>Bryophytes</b> are non-vascular plants that lack a true <b>cuticle</b>, true <b>roots</b> (possessing rhizoids instead), and a developed <b>vascular system</b> for water and nutrient transport.",
+    "questionImage": ""
+  },
+  {
+    "id": 436,
+    "question": "The three primary classes into which Bryophytes are traditionally divided are:",
+    "options": [
+      {"text": "Algae, Fungi, and Lichens"},
+      {"text": "Mosses, Ferns, and Liverworts"},
+      {"text": "Liverworts, Hornworts, and Mosses"},
+      {"text": "Clubmosses, Horsetails, and Whisk ferns"}
+    ],
+    "answer": "Liverworts, Hornworts, and Mosses",
+    "explanation": "<b>Bryophytes</b> are classified into three main groups: Musci (<b>Mosses</b>), Hepaticae (<b>Liverworts</b>), and Anthocerotae (<b>Hornworts</b>).",
+    "questionImage": ""
+  },
+  {
+    "id": 437,
+    "question": "A Bryophyte found growing on the <b>bark of a tree</b> would be described using which specific ecological term?",
+    "options": [
+      {"text": "Terricolous"},
+      {"text": "Saxicolous"},
+      {"text": "Epixylic"},
+      {"text": "Corticolous"}
+    ],
+    "answer": "Corticolous",
+    "explanation": "<b>'Corticolous'</b> refers to organisms that grow on <b>tree bark</b>. 'Terricolous' means growing on soil, 'saxicolous' on rocks, and 'epixylic' on decaying wood.",
+    "questionImage": ""
+  },
+  {
+    "id": 438,
+    "question": "Due to the <b>absence of a cuticle</b>, Bryophytes are obligate in absorbing water primarily through their:",
+    "options": [
+      {"text": "Rhizoids"},
+      {"text": "Stomata"},
+      {"text": "Entire surface, especially leaves"},
+      {"text": "Specialized vascular tissues"}
+    ],
+    "answer": "Entire surface, especially leaves",
+    "explanation": "Lacking a protective <b>cuticle</b>, Bryophytes absorb water directly across their <b>general body surface</b>, particularly through their leaf-like structures, making them highly dependent on environmental moisture.",
+    "questionImage": ""
+  },
+  {
+    "id": 439,
+    "question": "The physiological characteristic of Bryophytes that allows them to tolerate periods of desiccation and rehydrate when water becomes available is known as:",
+    "options": [
+      {"text": "Hydrophily"},
+      {"text": "Xerophytism"},
+      {"text": "Poikilohydry"},
+      {"text": "Homeostasis"}
+    ],
+    "answer": "Poikilohydry",
+    "explanation": "<b>Poikilohydry</b> describes organisms whose water content fluctuates with the external environment, allowing them to survive periods of water scarcity by drying out and then rehydrating.",
+    "questionImage": ""
+  },
+  {
+    "id": 440,
+    "question": "Which of the following is a recognized practical application of Bryophytes, particularly <i>Sphagnum</i> moss?",
+    "options": [
+      {"text": "Source of timber"},
+      {"text": "Pollution monitoring and erosion control"},
+      {"text": "Production of biofuels"},
+      {"text": "Primary food source for large herbivores"}
+    ],
+    "answer": "Pollution monitoring and erosion control",
+    "explanation": "<b>Bryophytes</b>, especially <i>Sphagnum</i>, are used as <b>bioindicators for pollution</b> and play a significant role in preventing <b>soil erosion</b> due to their dense growth and water-holding capacity.",
+    "questionImage": ""
+  },
+  {
+    "id": 441,
+    "question": "Mosses that exhibit an <b>erect growth habit</b>, with their sporophytes typically terminal on the main stem, are classified as:",
+    "options": [
+      {"text": "Pleurocarpous"},
+      {"text": "Thalloid"},
+      {"text": "Acrocarpous"},
+      {"text": "Dorsiventral"}
+    ],
+    "answer": "Acrocarpous",
+    "explanation": "<b>Acrocarpous</b> mosses are characterized by an <b>upright growth form</b>, with the sporophyte developing at the apex of the main stem. Pleurocarpous mosses are creeping with sporophytes on lateral branches.",
+    "questionImage": ""
+  },
+  {
+    "id": 442,
+    "question": "Unlike all mosses which are leafy, Liverworts can exhibit which of the following morphological forms?",
+    "options": [
+      {"text": "Only leafy forms"},
+      {"text": "Only thalloid forms"},
+      {"text": "Both leafy and thalloid forms"},
+      {"text": "Only filamentous forms"}
+    ],
+    "answer": "Both leafy and thalloid forms",
+    "explanation": "<b>Liverworts</b> (Hepaticae) display a diversity of forms, including both <b>leafy</b> species with distinct leaf-like structures and <b>thalloid</b> species with flattened, undifferentiated bodies.",
+    "questionImage": ""
+  },
+  {
+    "id": 443,
+    "question": "Bryophytes are characterized by producing spores that are <b>uniform in both size and shape</b>. This condition is known as:",
+    "options": [
+      {"text": "Heterospory"},
+      {"text": "Homospory"},
+      {"text": "Isospory"},
+      {"text": "Anisospory"}
+    ],
+    "answer": "Homospory",
+    "explanation": "<b>Homospory</b> refers to the production of only one type of spore, which develops into a bisexual gametophyte. This is a characteristic feature of Bryophytes.",
+    "questionImage": ""
+  },
+  {
+    "id": 444,
+    "question": "The structures responsible for the <b>attachment of lichens</b> to their substratum are called:",
+    "options": [
+      {"text": "True roots"},
+      {"text": "Haustoria"},
+      {"text": "Rhizoids"},
+      {"text": "Rhizines"}
+    ],
+    "answer": "Rhizines",
+    "explanation": "Lichens attach to their substrate via specialized <b>root-like structures called rhizines</b>, which are distinct from true roots found in higher plants.",
+    "questionImage": ""
+  },
+  {
+    "id": 445,
+    "question": "Beyond their role as pollution indicators, lichens are known to contain various intracellular products. Which of the following is <i>not</i> typically found as a major intracellular product in lichens?",
+    "options": [
+      {"text": "Carotenoids"},
+      {"text": "Lignin"},
+      {"text": "Vitamins"},
+      {"text": "Free amino acids"}
+    ],
+    "answer": "Lignin",
+    "explanation": "Lichens contain carotenoids, carbohydrates, free amino acids, and vitamins. <b>Lignin</b> is a complex polymer found in the cell walls of vascular plants, providing structural support, and is <b>not a typical intracellular product of lichens</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 401,
+    "question": "A newly discovered algal species is found to possess <b>chlorophyll <i>a</i> and <i>d</i></b>, and its reproductive cycle involves <b>non-motile male gametes</b>. This alga most likely belongs to which division?",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Phaeophyta"},
+      {"text": "Rhodophyta"},
+      {"text": "Euglenophyta"}
+    ],
+    "answer": "Rhodophyta",
+    "explanation": "Rhodophyta (Red Algae) are characterized by <b>chlorophyll <i>a</i> and <i>d</i></b>, and their complex reproduction includes <b>non-motile male gametes (spermatia)</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 402,
+    "question": "Which of the following algal divisions is uniquely distinguished by its <b>prokaryotic cellular organization</b>?",
+    "options": [
+      {"text": "Bacillariophyta"},
+      {"text": "Cyanophyta"},
+      {"text": "Chlorophyta"},
+      {"text": "Euglenophyta"}
+    ],
+    "answer": "Cyanophyta",
+    "explanation": "Cyanophyta, also known as Blue-Green Algae, are the only <b>prokaryotic</b> algal division among those listed, lacking a membrane-bound nucleus and organelles.",
+    "questionImage": ""
+  },
+  {
+    "id": 403,
+    "question": "An alga is observed to have a <b>flexible cell membrane</b> and an '<b>eye spot</b>', allowing it to switch between <b>autotrophic and saprophytic</b> modes of nutrition. This organism is most likely a member of:",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Phaeophyta"},
+      {"text": "Euglenophyta"},
+      {"text": "Rhodophyta"}
+    ],
+    "answer": "Euglenophyta",
+    "explanation": "Euglenophyta are known for their <b>flexible cells</b> (due to the absence of a rigid cell wall), an '<b>eye spot</b>' for light detection, and their <b>mixotrophic</b> nature, allowing them to photosynthesize or absorb nutrients.",
+    "questionImage": ""
+  },
+  {
+    "id": 404,
+    "question": "The primary food reserve in an algal group that is <b>macroscopic, brown in color</b>, and possesses a <b>holdfast</b> structure is:",
+    "options": [
+      {"text": "Starch plus oils"},
+      {"text": "Floridean starch plus oils"},
+      {"text": "Chrysolaminarin plus oils"},
+      {"text": "Laminarin plus oil"}
+    ],
+    "answer": "Laminarin plus oil",
+    "explanation": "Phaeophyta (Brown Algae) are typically <b>macroscopic, brown</b> due to fucoxanthin, and have specialized structures like <b>holdfasts</b>. Their characteristic food reserve is <b>Laminarin plus oil</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 405,
+    "question": "Which of the following algal groups contributes significantly to the formation of <b>crude oil deposits</b> over geological time?",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Cyanophyta"},
+      {"text": "Bacillariophyta"},
+      {"text": "Rhodophyta"}
+    ],
+    "answer": "Bacillariophyta",
+    "explanation": "Bacillariophyta (Diatoms) have <b>silica cell walls</b> that, upon accumulation and geological processes involving heat and pressure, form diatomites, which can then contribute to <b>crude oil formation</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 406,
+    "question": "A filamentous alga undergoes sexual reproduction where the fusing gametes are <b>identical in shape but differ in size</b>. This specific type of sexual reproduction is termed:",
+    "options": [
+      {"text": "Isogamy"},
+      {"text": "Oogamy"},
+      {"text": "Anisogamy"},
+      {"text": "Conjugation"}
+    ],
+    "answer": "Anisogamy",
+    "explanation": "<b>Anisogamy</b> is a form of sexual reproduction involving the fusion of two gametes that are <b>similar in morphology (shape) but differ in size</b>. Isogamy involves identical gametes, and oogamy involves gametes that differ significantly in both size and motility.",
+    "questionImage": ""
+  },
+  {
+    "id": 407,
+    "question": "The presence of <b>Heterocysts</b> in an algal filament is a strong indicator of its ability to perform:",
+    "options": [
+      {"text": "Oxygenic photosynthesis"},
+      {"text": "Nitrogen fixation"},
+      {"text": "Asexual spore formation"},
+      {"text": "Sexual reproduction"}
+    ],
+    "answer": "Nitrogen fixation",
+    "explanation": "<b>Heterocysts</b> are specialized cells found in some filamentous Cyanophyta (Blue-Green Algae) that provide an anaerobic environment necessary for <b>nitrogen fixation</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 408,
+    "question": "Which pair of chlorophylls is characteristic of the algal division that includes <i>Volvox</i> and <i>Spirogyra</i>?",
+    "options": [
+      {"text": "Chlorophyll <i>a</i> and <i>c</i>"},
+      {"text": "Chlorophyll <i>a</i> and <i>d</i>"},
+      {"text": "Chlorophyll <i>a</i> and <i>b</i>"},
+      {"text": "Chlorophyll <i>b</i> and <i>c</i>"}
+    ],
+    "answer": "Chlorophyll <i>a</i> and <i>b</i>",
+    "explanation": "<i>Volvox</i> and <i>Spirogyra</i> are examples of Chlorophyta (Green Algae), which are characterized by the presence of <b>chlorophyll <i>a</i> and <i>b</i></b>, similar to higher plants.",
+    "questionImage": ""
+  },
+  {
+    "id": 409,
+    "question": "The rigid and highly resistant cell walls of Diatoms are primarily composed of:",
+    "options": [
+      {"text": "Cellulose and lignin"},
+      {"text": "Chitin and protein"},
+      {"text": "Silica and pectin"},
+      {"text": "Peptidoglycan and cellulose"}
+    ],
+    "answer": "Silica and pectin",
+    "explanation": "Diatoms (Bacillariophyta) possess unique cell walls made of hydrated <b>silica</b> (glass-like material) embedded in an organic matrix, often described as <b>silica and pectin</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 410,
+    "question": "An algal group is known for its ability to produce <b>vitamins and antibiotics</b>. This group's primary food reserve is <b>starch plus oils</b>. Which division is being described?",
+    "options": [
+      {"text": "Rhodophyta"},
+      {"text": "Phaeophyta"},
+      {"text": "Chlorophyta"},
+      {"text": "Bacillariophyta"}
+    ],
+    "answer": "Chlorophyta",
+    "explanation": "<b>Chlorophyta</b> (Green Algae) are known for producing <b>vitamins and antibiotics</b>, and their food reserve is typically <b>starch plus oils</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 411,
+    "question": "Which of the following algal divisions is commonly used in the synthesis of <b>agar</b>, a substance vital in microbiology and food industries?",
+    "options": [
+      {"text": "Cyanophyta"},
+      {"text": "Chlorophyta"},
+      {"text": "Rhodophyta"},
+      {"text": "Euglenophyta"}
+    ],
+    "answer": "Rhodophyta",
+    "explanation": "<b>Rhodophyta</b> (Red Algae), specifically genera like <i>Gelidium</i> and <i>Gracilaria</i>, are the primary source for the production of <b>agar</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 412,
+    "question": "The <b>brown coloration</b> observed in Phaeophyta is primarily due to the presence of a dominant accessory pigment called:",
+    "options": [
+      {"text": "Phycoerythrin"},
+      {"text": "Phycocyanin"},
+      {"text": "Fucoxanthin"},
+      {"text": "Carotenoids"}
+    ],
+    "answer": "Fucoxanthin",
+    "explanation": "<b>Fucoxanthin</b> is the characteristic <b>brown pigment</b> found in Phaeophyta (Brown Algae), masking the green color of chlorophylls.",
+    "questionImage": ""
+  },
+  {
+    "id": 413,
+    "question": "Which of the following characteristics is <i>not</i> universally true for all algal divisions?",
+    "options": [
+      {"text": "Possession of chlorophyll <i>a</i>"},
+      {"text": "Aquatic habitat"},
+      {"text": "Eukaryotic cell structure"},
+      {"text": "Lack of true roots, stems, and leaves"}
+    ],
+    "answer": "Eukaryotic cell structure",
+    "explanation": "While most algae are eukaryotic, <b>Cyanophyta</b> (Blue-Green Algae) are <b>prokaryotic</b>, making 'eukaryotic cell structure' not universally true for all algal divisions.",
+    "questionImage": ""
+  },
+  {
+    "id": 414,
+    "question": "A researcher identifies an alga that forms large, <b>macroscopic thalli</b> with differentiated structures resembling <b>blades, stipes, and holdfasts</b>. This alga most likely belongs to:",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Rhodophyta"},
+      {"text": "Phaeophyta"},
+      {"text": "Bacillariophyta"}
+    ],
+    "answer": "Phaeophyta",
+    "explanation": "<b>Phaeophyta</b> (Brown Algae) are known for their advanced organization, often forming large, complex thalli with structures analogous to leaves (<b>blades</b>), stems (<b>stipes</b>), and roots (<b>holdfasts</b>).",
+    "questionImage": ""
+  },
+  {
+    "id": 415,
+    "question": "The food reserve in an algal group that is often used as a <b>monitor of water pollution</b> is:",
+    "options": [
+      {"text": "Cyanophycean starch plus oil"},
+      {"text": "Floridean starch plus oils"},
+      {"text": "Starch plus oil"},
+      {"text": "Chrysolaminarin plus oils"}
+    ],
+    "answer": "Starch plus oil",
+    "explanation": "<b>Euglenophyta</b> are known to be indicators of <b>water pollution</b>, and their primary food reserve is <b>starch plus oil</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 416,
+    "question": "Which of the following algal groups is characterized by a food reserve of <b>Chrysolaminarin plus oils</b> and serves as a significant <b>food source for aquatic organisms</b>?",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Euglenophyta"},
+      {"text": "Bacillariophyta"},
+      {"text": "Rhodophyta"}
+    ],
+    "answer": "Bacillariophyta",
+    "explanation": "<b>Bacillariophyta</b> (Diatoms) store food as <b>Chrysolaminarin plus oils</b> and are a crucial component of aquatic food webs, serving as <b>food for fishes</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 417,
+    "question": "The term '<b>cryptogamic</b>' when applied to algae primarily refers to their mode of:",
+    "options": [
+      {"text": "Nutrition"},
+      {"text": "Habitat"},
+      {"text": "Reproduction"},
+      {"text": "Cellular organization"}
+    ],
+    "answer": "Reproduction",
+    "explanation": "<b>Cryptogamic</b> organisms, including algae, reproduce by <b>spores</b> and do not produce seeds or flowers, meaning their reproductive structures are 'hidden' or less conspicuous compared to flowering plants.",
+    "questionImage": ""
+  },
+  {
+    "id": 418,
+    "question": "Which type of sexual reproduction in Chlorophyta involves the fusion of two gametes that are <b>significantly different in both size and motility</b>, typically a large non-motile egg and a small motile sperm?",
+    "options": [
+      {"text": "Isogamy"},
+      {"text": "Anisogamy"},
+      {"text": "Oogamy"},
+      {"text": "Conjugation"}
+    ],
+    "answer": "Oogamy",
+    "explanation": "<b>Oogamy</b> is a form of sexual reproduction where there is a distinct difference between the male and female gametes, with the female gamete being <b>larger and non-motile</b>, and the male gamete being <b>smaller and motile</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 419,
+    "question": "A key ecological role of certain filamentous Cyanophyta, particularly <i>Anabaena</i>, is their contribution to:",
+    "options": [
+      {"text": "Water purification"},
+      {"text": "Soil fertility"},
+      {"text": "Atmospheric oxygen depletion"},
+      {"text": "Decomposition of organic matter"}
+    ],
+    "answer": "Soil fertility",
+    "explanation": "Filamentous Cyanophyta like <i>Anabaena</i> possess <b>heterocysts</b>, enabling them to fix atmospheric nitrogen, which directly enhances <b>soil fertility</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 420,
+    "question": "Which of the following algal divisions is known to thrive in <b>high-temperature environments</b>, such as hot springs?",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Rhodophyta"},
+      {"text": "Cyanophyta"},
+      {"text": "Phaeophyta"}
+    ],
+    "answer": "Cyanophyta",
+    "explanation": "<b>Cyanophyta</b> (Blue-Green Algae) are well-known for their ability to survive and flourish in extreme conditions, including <b>high-temperature environments</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 421,
+    "question": "The primary method of asexual reproduction in Chlorophyta, as exemplified by the breaking apart of an algal body, is:",
+    "options": [
+      {"text": "Spore formation"},
+      {"text": "Budding"},
+      {"text": "Fragmentation"},
+      {"text": "Binary fission"}
+    ],
+    "answer": "Fragmentation",
+    "explanation": "<b>Fragmentation</b>, the breaking of the algal body into smaller pieces that develop into new individuals, is a common asexual reproductive strategy in Chlorophyta.",
+    "questionImage": ""
+  },
+  {
+    "id": 422,
+    "question": "Which of the following is a <b>colonial, non-flagellated</b> form of Chlorophyta?",
+    "options": [
+      {"text": "Volvox"},
+      {"text": "Chlamydomonas"},
+      {"text": "Scenedesmus"},
+      {"text": "Spirogyra"}
+    ],
+    "answer": "Scenedesmus",
+    "explanation": "<i>Scenedesmus</i> is a well-known example of a <b>colonial green alga that lacks flagella</b>. <i>Volvox</i> is colonial and flagellated, <i>Chlamydomonas</i> is unicellular and flagellated, and <i>Spirogyra</i> is filamentous.",
+    "questionImage": ""
+  },
+  {
+    "id": 423,
+    "question": "The unique resistance of Diatom cell walls to degradation by <b>acids</b> makes them valuable in which of the following applications?",
+    "options": [
+      {"text": "As a source of antibiotics"},
+      {"text": "For water purification filters"},
+      {"text": "In abrasive materials like toothpastes"},
+      {"text": "As a biofuel source"}
+    ],
+    "answer": "In abrasive materials like toothpastes",
+    "explanation": "The <b>acid-resistant</b> and hard nature of diatom cell walls (silica) makes diatomites suitable for use as mild <b>abrasives</b>, such as in toothpastes and polishing agents.",
+    "questionImage": ""
+  },
+  {
+    "id": 424,
+    "question": "Which algal division is characterized by having <b>chlorophyll <i>a</i> and <i>c</i></b>, and includes <b>large, complex forms</b> often found in marine environments?",
+    "options": [
+      {"text": "Chlorophyta"},
+      {"text": "Rhodophyta"},
+      {"text": "Phaeophyta"},
+      {"text": "Euglenophyta"}
+    ],
+    "answer": "Phaeophyta",
+    "explanation": "<b>Phaeophyta</b> (Brown Algae) are known for containing <b>chlorophyll <i>a</i> and <i>c</i></b>, their typically <b>large and complex thalli</b>, and their prevalence in marine habitats.",
+    "questionImage": ""
+  },
+  {
+    "id": 425,
+    "question": "The food reserve of an alga that is primarily found in fresh and marine waters and can be used as a <b>monitor of pollution</b> is:",
+    "options": [
+      {"text": "Cyanophycean starch"},
+      {"text": "Floridean starch"},
+      {"text": "Starch"},
+      {"text": "Laminarin"}
+    ],
+    "answer": "Starch",
+    "explanation": "<b>Euglenophyta</b> are found in fresh and marine waters, act as <b>pollution monitors</b>, and store their food as <b>starch</b> (specifically, paramylon, a type of starch). The options are simplified to 'starch'.",
+    "questionImage": ""
+  },
+  {
+    "id": 426,
+    "question": "Which of the following is a <b>unicellular, non-colonial</b> form of Chlorophyta?",
+    "options": [
+      {"text": "Gonium"},
+      {"text": "Pandorina"},
+      {"text": "Chlorella"},
+      {"text": "Cladophora"}
+    ],
+    "answer": "Chlorella",
+    "explanation": "<i>Chlorella</i> is a well-known example of a <b>unicellular, non-colonial green alga</b>. <i>Gonium</i> and <i>Pandorina</i> are colonial, and <i>Cladophora</i> is filamentous.",
+    "questionImage": ""
+  },
+  {
+    "id": 427,
+    "question": "The <b>most complex form of sexual reproduction</b> among the algal divisions discussed is found in the group characterized by <b>chlorophyll <i>a</i> and <i>d</i></b>. This complexity involves specialized male and female gametes known as:",
+    "options": [
+      {"text": "Zoospores and Aplanospores"},
+      {"text": "Isogametes and Anisogametes"},
+      {"text": "Spermatia and Carpogonium"},
+      {"text": "Conjugation tubes and Zygospores"}
+    ],
+    "answer": "Spermatia and Carpogonium",
+    "explanation": "<b>Rhodophyta</b> (Red Algae), with <b>chlorophyll <i>a</i> and <i>d</i></b>, exhibit the <b>most complex reproduction</b>, featuring non-motile male gametes called <b>spermatia</b> and specialized female gametes called <b>carpogonium</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 428,
+    "question": "The food reserve of an algal group that is typically found in <b>diverse aquatic habitats</b> and has cell walls made of <b>silica and pectin</b> is:",
+    "options": [
+      {"text": "Starch plus oil"},
+      {"text": "Floridean starch plus oils"},
+      {"text": "Chrysolaminarin plus oils"},
+      {"text": "Laminarin plus oil"}
+    ],
+    "answer": "Chrysolaminarin plus oils",
+    "explanation": "<b>Bacillariophyta</b> (Diatoms) are found in <b>diverse aquatic habitats</b>, have <b>silica and pectin cell walls</b>, and store food as <b>Chrysolaminarin plus oils</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 429,
+    "question": "Which of the following is a <b>filamentous, unbranched</b> Chlorophyta that undergoes sexual reproduction by <b>conjugation</b>?",
+    "options": [
+      {"text": "Cladophora"},
+      {"text": "Chlamydomonas"},
+      {"text": "Spirogyra"},
+      {"text": "Oscillatoria"}
+    ],
+    "answer": "Spirogyra",
+    "explanation": "<i>Spirogyra</i> is a classic example of a <b>filamentous, unbranched green alga</b> that reproduces sexually through a process called <b>conjugation</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 430,
+    "question": "The primary photosynthetic pigment found in <i>all</i> known algal divisions is:",
+    "options": [
+      {"text": "Chlorophyll <i>b</i>"},
+      {"text": "Chlorophyll <i>c</i>"},
+      {"text": "Chlorophyll <i>a</i>"},
+      {"text": "Fucoxanthin"}
+    ],
+    "answer": "Chlorophyll <i>a</i>",
+    "explanation": "<b>Chlorophyll <i>a</i></b> is the <b>universal photosynthetic pigment</b> found in all oxygenic photosynthetic organisms, including all algal divisions.",
+    "questionImage": ""
+  },
   {
     "id": 371,
     "question": "A defining characteristic that distinguishes bryophytes from most algae, despite both being green plants, is the presence of:",
