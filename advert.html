@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Premium Offer - OAU CBT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #0B0B45 0%, #00c6ff 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ad-container {
+      background: rgba(255,255,255,0.11);
+      border-radius: 24px;
+      box-shadow: 0 12px 40px 0 #00224473;
+      max-width: 430px;
+      width: 95vw;
+      padding: 40px 28px 30px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn .9s cubic-bezier(.41,.46,.37,.97);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(.97);}
+      to   { opacity: 1; transform: scale(1);}
+    }
+    .ad-premium-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #ffd700 0%, #ff9900 100%);
+      color: #0B0B45;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 7px 22px;
+      letter-spacing: 1.2px;
+      font-size: 1.03rem;
+      box-shadow: 0 2px 12px #ffd70055;
+      margin-bottom: 18px;
+      margin-top: 5px;
+      text-shadow: 0 2px 8px #fff7;
+    }
+    .photo-placeholder {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #cbcbcb 30%, #e7e7e7 100%);
+      border: 3px solid #00c6ff;
+      box-shadow: 0 4px 22px #00c6ff45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 17px auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-placeholder .icon {
+      color: #2d6a99;
+      font-size: 2.7rem;
+      opacity: 0.55;
+    }
+    .photo-placeholder .initials {
+      font-size: 1.55rem;
+      font-weight: bold;
+      color: #0072ff;
+      letter-spacing: 1px;
+      opacity: 0.7;
+    }
+    .ad-image-holder {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #cbcbcb 30%, #e7e7e7 100%);
+      border: 3px solid #00c6ff;
+      box-shadow: 0 4px 22px #00c6ff45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .ad-image-holder .icon {
+      color: #2d6a99;
+      font-size: 3.1rem;
+      opacity: 0.52;
+    }
+    .ad-image-holder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+    .ad-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
+      box-shadow: 0 4px 24px #ffd70060;
+      border: 3px solid #ffd700cc;
+      margin-bottom: 13px;
+    }
+    .ad-title {
+      font-size: 1.48rem;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #fff;
+      text-shadow: 0 2px 16px #001c3c55;
+      letter-spacing: 1px;
+    }
+    .ad-desc {
+      color: #e6e9f2;
+      font-size: 1.08rem;
+      margin-bottom: 22px;
+      margin-top: 8px;
+      line-height: 1.7;
+    }
+    .features-list {
+      text-align: left;
+      max-width: 340px;
+      margin: 15px auto 22px auto;
+      color: #ffd700;
+      font-size: 1.01rem;
+      padding-left: 0;
+    }
+    .features-list li {
+      margin-bottom: 9px;
+      list-style: none;
+      position: relative;
+      padding-left: 26px;
+    }
+    .features-list li:before {
+      content: "★";
+      position: absolute;
+      left: 0;
+      color: #ffd700;
+      font-size: 1.13em;
+      top: 0;
+    }
+    .continue-btn {
+      background: linear-gradient(90deg, #ffd700 0%, #ff9900 100%);
+      color: #1a2e56;
+      font-weight: bold;
+      font-size: 1.15rem;
+      border: none;
+      border-radius: 8px;
+      padding: 15px 0;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 16px;
+      margin-bottom: 7px;
+      box-shadow: 0 2px 16px #ffd70044;
+      transition: background 0.19s;
+      letter-spacing: 0.7px;
+    }
+    .continue-btn:hover {
+      background: linear-gradient(90deg, #ff9900 0%, #ffd700 100%);
+      color: #0B0B45;
+    }
+    .powered {
+      margin-top: 26px;
+      color: #bdeaff;
+      font-size: 0.95rem;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+    @media (max-width: 600px) {
+      .ad-container {
+        padding: 25px 7vw 18px 7vw;
+      }
+      .ad-title { font-size: 1.06rem; }
+      .ad-premium-badge { font-size: 0.95rem; }
+      .ad-logo { width: 58px; height: 58px; }
+      .photo-placeholder { width: 62px; height: 62px; }
+      .ad-image-holder { width: 74px; height: 74px; }
+      .ad-desc { font-size: 0.95rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="ad-container">
+    <div class="ad-premium-badge">PREMIUM OFFER</div>
+
+    <!-- User Photo Placeholder -->
+    <div class="photo-placeholder" title="User Photo">
+      <!-- User initials or a user icon (SVG) -->
+      <!-- <span class="initials">RT</span> --><!-- Or show initials if you want -->
+      <span class="icon">
+        <!-- SVG user icon -->
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="22" fill="#cce6ff"/>
+          <ellipse cx="22" cy="17.5" rx="7" ry="7" fill="#0072ff"/>
+          <ellipse cx="22" cy="33" rx="13" ry="7" fill="#0072ff" fill-opacity="0.18"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- Advertisement Image Placeholder (shows SVG if no real ad image is set) -->
+    <div class="ad-image-holder" id="advertImageHolder">
+      <!-- 
+        To display an ad image, insert an <img> here:
+        <img src="your-ad-image.jpg" alt="Advertisement">
+        If no image, show a symbolic illustration:
+      -->
+      <span class="icon">
+        <!-- SVG ad image icon -->
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <rect x="5" y="14" width="50" height="36" rx="7" fill="#bdeaff"/>
+          <rect x="5" y="14" width="50" height="36" rx="7" stroke="#00c6ff" stroke-width="2"/>
+          <ellipse cx="19" cy="28" rx="5" ry="5" fill="#00c6ff" fill-opacity="0.34"/>
+          <path d="M10 45l11-13.5c1-1.2 2.9-1.2 3.9 0l7.2 8.4c0.9 1.1 2.7 1.1 3.6 0l7.3-8.6c1-1.2 2.9-1.2 3.9 0L50 42" stroke="#00c6ff" stroke-width="2" fill="none"/>
+        </svg>
+      </span>
+    </div>
+
+    <img src="logo.png" alt="Premium" class="ad-logo">
+
+    <div class="ad-title">Upgrade Your Learning Experience!</div>
+    <div class="ad-desc">
+      Take your academic journey to the next level with our <b>premium CBT portal</b> features, designed exclusively for Obafemi Awolowo University students!
+    </div>
+    <ul class="features-list">
+      <li>Access detailed analytics and personalized performance reports</li>
+      <li>Unlock unlimited practice sessions with full question banks</li>
+      <li>Review in-depth solutions and expert explanations</li>
+      <li>Get priority support and early access to new features</li>
+    </ul>
+    <button class="continue-btn" onclick="window.location.href='summary.html'">
+      Continue to Check Result
+    </button>
+    <div class="powered">Powered by OAU ICT &mdash; Excellence in Innovation</div>
+  </div>
+  <script>
+    // Example: Dynamically replace the ad image placeholder with a real image if available
+    // let adImageUrl = "ad-image.jpg"; // Set this dynamically if you have an ad image
+    // if(adImageUrl) {
+    //   document.getElementById('advertImageHolder').innerHTML = '<img src="' + adImageUrl + '" alt="Advertisement">';
+    // }
+  </script>
+</body>
+</html>
