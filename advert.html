@@ -171,6 +171,40 @@
       font-size: 1.15em;
       top: 0;
     }
+    /* Middle advert image styling */
+    .middle-advert-img {
+      width: 100%;
+      max-width: 320px;
+      margin: 20px 0 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      min-height: 100px;
+      background: linear-gradient(90deg, #e7f7ff 70%, #cde7ff 100%);
+      box-shadow: 0 2px 12px #bdeaff21;
+      overflow: hidden;
+      position: relative;
+    }
+    .middle-advert-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      border-radius: 14px;
+      max-height: 170px;
+      background: #fff;
+    }
+    .middle-advert-img .ad-img-placeholder {
+      width: 100%;
+      text-align: center;
+      color: #00c6ff;
+      font-size: 2.1rem;
+      opacity: 0.13;
+      padding: 22px 0;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
     .continue-btn {
       background: linear-gradient(90deg,#0072ff 0%, #00c6ff 100%);
       color: #fff;
@@ -208,6 +242,7 @@
       .ad-image-holder { width: 66px; height: 66px; }
       .photo-placeholder { width: 35px; height: 35px; font-size: 1.11rem;}
       .ad-desc { font-size: 0.99rem;}
+      .middle-advert-img { max-width: 98vw; }
     }
   </style>
 </head>
@@ -244,6 +279,12 @@
       <div class="ad-desc">
         Unlock your full potential with <b>exclusive CBT portal features</b> designed for ambitious OAU students!
       </div>
+      
+      <!-- MIDDLE ADVERT IMAGE: replace the placeholder with your advert image if available -->
+      <div class="middle-advert-img" id="middleAdvertImg">
+        <span class="ad-img-placeholder">[ Advertisement ]</span>
+      </div>
+      
       <ul class="features-list">
         <li>Detailed analytics & personalized performance reports</li>
         <li>Unlimited access to all practice questions</li>
@@ -257,10 +298,14 @@
     </div>
   </div>
   <script>
-    // To dynamically add an ad image, use:
+    // To dynamically add an ad image to either section, use:
     // let adImageUrl = "your-ad-image.jpg";
     // if(adImageUrl) {
     //   document.getElementById('advertImageHolder').innerHTML = '<img src="' + adImageUrl + '" alt="Advertisement">';
+    // }
+    // let middleAdImageUrl = "your-middle-ad-image.jpg";
+    // if(middleAdImageUrl) {
+    //   document.getElementById('middleAdvertImg').innerHTML = '<img src="' + middleAdImageUrl + '" alt="Advertisement">';
     // }
   </script>
 </body>
