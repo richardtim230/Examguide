@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Your Next Big Advantage - OAU CBT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9">
   <style>
     body {
       min-height: 100vh;
@@ -35,14 +35,14 @@
     .advert-banner {
       position: relative;
       width: 100%;
-      height: 230px;
+      height: 200px;
       min-height: 140px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #e6f8ff; /* fallback color */
-      border-radius: 0 0 0 0;
+      border-radius: 0 1 0 1;
     }
     .banner-bg-img {
       position: absolute;
@@ -195,19 +195,43 @@
       background: linear-gradient(90deg, #ffb700 0%, #ffe066 100%);
       color: #0072ff;
     }
-    .powered {
-      margin-top: 18px;
-      color: #6ec2ff;
-      font-size: 0.98rem;
-      text-align: center;
-      letter-spacing: 0.3px;
+    .footer-verified {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      border-radius: 0 0 32px 32px;
+      background: linear-gradient(90deg,#00c6ff 0%, #0072ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.02rem;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      box-shadow: 0 -2px 12px #bdeaff23;
+      padding-top: 18px;
+      padding-bottom: 18px;
+      position: relative;
+    }
+    .footer-verified .verified-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      margin-top: -2px;
+      font-size: 1.25em;
+    }
+    .footer-verified .verified-text {
+      display: inline-block;
+      vertical-align: middle;
+      text-shadow: 0 2px 10px #00588840;
     }
     @media (max-width: 900px) {
       .advert-main { max-width: 99vw;}
       .advert-content { padding: 40px 5vw 18px 5vw; }
       .middle-advert-img { max-width: 95vw; }
+      .footer-verified { border-radius: 0 0 20px 20px;}
     }
-    @media (max-width: 600px) {
+    @media (max-width: 800px) {
       .advert-main { border-radius: 0 0 20px 20px; }
       .advert-content { padding: 32px 2vw 16px 2vw; border-radius: 0 0 20px 20px;}
       .ad-title { font-size: 1.14rem; }
@@ -215,6 +239,7 @@
       .ad-desc { font-size: 1.01rem;}
       .middle-advert-img { max-width: 99vw; min-height: 120px; }
       .features-list { font-size: 1rem;}
+      .footer-verified { border-radius: 0 0 12px 12px;}
     }
   </style>
 </head>
@@ -239,7 +264,16 @@
           Contact Advertiser
         </a>
       </div>
-      <div class="powered">Powered by OAU ICT &mdash; Excellence in Innovation</div>
+    </div>
+    <div class="footer-verified">
+      <span class="verified-icon">
+        <!-- Verified Shield SVG Icon -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M11 2.5L18.5 5.5V11C18.5 15.62 14.49 18.39 11.86 19.74C11.32 20.03 10.68 20.03 10.14 19.74C7.51 18.39 3.5 15.62 3.5 11V5.5L11 2.5Z" fill="#fff" stroke="#ffe066" stroke-width="1.2"/>
+          <path d="M8.5 11.25L10.25 13L13.5 9.75" stroke="#13e46b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="verified-text">All Advertisers are verified</span>
     </div>
   </div>
   <script>
@@ -297,7 +331,7 @@
         document.getElementById('advertMain').style.display = "";
       })
       .catch(err => {
-        document.body.innerHTML = 
+        document.body.innerHTML =
           "<div style='color:#0072ff;text-align:center;padding:60px 12px;font-size:1.2rem;'>Unable to load advertisement.<br>"+escapeHTML(err.message)+"</div>";
       });
   </script>
