@@ -19,8 +19,8 @@
       background: #fff;
       border-radius: 32px;
       box-shadow: 0 10px 48px 0 #268fff28, 0 2px 12px #0072ff18;
-      max-width: 480px;
-      width: 96vw;
+      max-width: 600px;
+      width: 97vw;
       padding: 0;
       overflow: hidden;
       display: flex;
@@ -35,38 +35,27 @@
     .advert-banner {
       position: relative;
       width: 100%;
-      height: 170px;
-      min-height: 110px;
+      height: 230px;
+      min-height: 140px;
       overflow: hidden;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
       background: #e6f8ff; /* fallback color */
+      border-radius: 0 0 0 0;
     }
     .banner-bg-img {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover;
+      object-position: center;
       z-index: 0;
       background: #e6f8ff;
       transition: opacity 0.4s;
-    }
-    .advert-banner .logo {
-      position: relative;
-      z-index: 2;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 3px 13px #00c6ff18;
-      border: 2px solid #bdeaff;
-      margin-bottom: -27px;
-      margin-top: 0;
-      left: 0;
-      transform: none;
+      border-radius: 0 0 0 0;
     }
     .advert-content {
-      padding: 54px 30px 28px 30px;
+      padding: 40px 38px 28px 38px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -82,51 +71,53 @@
       font-weight: bold;
       border-radius: 9px;
       padding: 4px 16px;
-      font-size: 0.93rem;
-      margin-bottom: 9px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
       letter-spacing: 1px;
       box-shadow: 0 1px 5px #ffe06633;
-      margin-top: 0;
     }
     .ad-title {
-      font-size: 1.45rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: #0a223a;
       letter-spacing: .5px;
       text-align: center;
-      margin-bottom: 7px;
-      margin-top: 5px;
+      margin-bottom: 9px;
+      margin-top: 6px;
     }
     .ad-desc {
       color: #375375;
-      font-size: 1.01rem;
-      margin-bottom: 18px;
-      margin-top: 8px;
+      font-size: 1.13rem;
+      margin-bottom: 22px;
+      margin-top: 10px;
       line-height: 1.7;
       text-align: center;
     }
     .middle-advert-img {
       width: 100%;
-      max-width: 320px;
-      margin: 20px 0 18px 0;
+      max-width: 430px;
+      min-width: 220px;
+      margin: 28px 0 25px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
-      min-height: 100px;
+      border-radius: 18px;
+      min-height: 200px;
+      max-height: 310px;
       background: linear-gradient(90deg, #e7f7ff 70%, #cde7ff 100%);
-      box-shadow: 0 2px 12px #bdeaff21;
+      box-shadow: 0 2px 18px #bdeaff21;
       overflow: hidden;
       position: relative;
     }
     .middle-advert-img img {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      max-height: 310px;
       object-fit: cover;
-      border-radius: 14px;
-      max-height: 170px;
+      border-radius: 18px;
+      display: block;
       background: #fff;
+      transition: filter 0.2s;
     }
     .middle-advert-img .ad-img-placeholder {
       width: 100%;
@@ -134,52 +125,53 @@
       color: #00c6ff;
       font-size: 2.1rem;
       opacity: 0.13;
-      padding: 22px 0;
+      padding: 40px 0;
       font-weight: bold;
       letter-spacing: 2px;
     }
     .features-list {
       width: 100%;
-      margin: 14px 0 21px 0;
+      margin: 18px 0 26px 0;
       color: #0072ff;
-      font-size: 1.01rem;
+      font-size: 1.13rem;
       padding-left: 0;
       text-align: left;
+      max-width: 400px;
     }
     .features-list li {
-      margin-bottom: 9px;
+      margin-bottom: 11px;
       list-style: none;
       position: relative;
-      padding-left: 26px;
+      padding-left: 32px;
     }
     .features-list li:before {
       content: "✓";
       position: absolute;
       left: 0;
       color: #00c6ff;
-      font-size: 1.15em;
+      font-size: 1.18em;
       top: 0;
     }
     .action-btns {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       width: 100%;
-      margin-top: 10px;
-      margin-bottom: 5px;
+      margin-top: 12px;
+      margin-bottom: 8px;
       flex-wrap: wrap;
       justify-content: center;
     }
     .continue-btn, .contact-btn {
-      flex: 1 1 170px;
-      min-width: 140px;
-      max-width: 250px;
+      flex: 1 1 200px;
+      min-width: 160px;
+      max-width: 270px;
       background: linear-gradient(90deg,#0072ff 0%, #00c6ff 100%);
       color: #fff;
       font-weight: bold;
-      font-size: 1.09rem;
+      font-size: 1.14rem;
       border: none;
       border-radius: 8px;
-      padding: 12px 0;
+      padding: 14px 0;
       cursor: pointer;
       box-shadow: 0 2px 16px #00c6ff33;
       transition: background 0.17s;
@@ -206,19 +198,23 @@
     .powered {
       margin-top: 18px;
       color: #6ec2ff;
-      font-size: 0.96rem;
+      font-size: 0.98rem;
       text-align: center;
       letter-spacing: 0.3px;
     }
+    @media (max-width: 900px) {
+      .advert-main { max-width: 99vw;}
+      .advert-content { padding: 40px 5vw 18px 5vw; }
+      .middle-advert-img { max-width: 95vw; }
+    }
     @media (max-width: 600px) {
-      .advert-main { max-width: 99vw; border-radius: 0 0 24px 24px; }
-      .advert-content { padding: 54px 7vw 18px 7vw; border-radius: 0 0 24px 24px;}
-      .ad-title { font-size: 1.09rem; }
-      .ad-premium-badge { font-size: 0.88rem; }
-      .ad-logo { width: 44px; height: 44px; }
-      .banner-bg-img { height: 110px; }
-      .ad-desc { font-size: 0.99rem;}
-      .middle-advert-img { max-width: 98vw; }
+      .advert-main { border-radius: 0 0 20px 20px; }
+      .advert-content { padding: 32px 2vw 16px 2vw; border-radius: 0 0 20px 20px;}
+      .ad-title { font-size: 1.14rem; }
+      .ad-premium-badge { font-size: 0.89rem; }
+      .ad-desc { font-size: 1.01rem;}
+      .middle-advert-img { max-width: 99vw; min-height: 120px; }
+      .features-list { font-size: 1rem;}
     }
   </style>
 </head>
@@ -226,7 +222,6 @@
   <div class="advert-main" id="advertMain" style="display:none;">
     <div class="advert-banner">
       <img id="bannerImg" src="" alt="Advertiser Banner" class="banner-bg-img" style="opacity:0;">
-      <img src="logo.png" alt="OAU Logo" class="logo">
     </div>
     <div class="advert-content">
       <span class="ad-premium-badge" id="adPremiumBadge">PREMIUM ACCESS</span>
@@ -269,6 +264,7 @@
         if(advertiser.topImage) {
           bannerImg.src = advertiser.topImage;
           bannerImg.style.opacity = "1";
+          bannerImg.style.background = "#e6f8ff";
         } else {
           bannerImg.style.opacity = "0";
         }
