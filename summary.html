@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.80"/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.95"/>
   <title>Exam Summary</title>
   
   <style>
@@ -190,23 +190,87 @@
       border-radius: 6px;
       font-size: 15px;
     }
+    /* --- New Footer Styles --- */
     footer {
-      background: linear-gradient(-45deg, #0072ff, #00c6ff, #5e60ce, #f72585);
+      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 40%, #5e60ce 80%, #f72585 100%);
       background-size: 400% 400%;
       animation: gradientBG 12s ease infinite;
       color: #fff;
       text-align: center;
-      padding: 30px 0 36px 0;
-      font-size: 1.13rem;
+      padding: 38px 0 38px 0;
+      font-size: 1.15rem;
       font-weight: 500;
       letter-spacing: 1px;
-      box-shadow: 0 -2px 18px rgba(0,0,0,0.10);
-      margin-top: 32px;
+      box-shadow: 0 -2px 22px 0px #00c6ff55, 0 -2px 18px rgba(0,0,0,0.12);
+      margin-top: 40px;
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      overflow: hidden;
+    }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+    .footer-powered {
+      font-size: 1.13rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      background: rgba(0, 198, 255, 0.08);
+      padding: 8px 20px;
+      border-radius: 9px;
+      margin: 0 auto;
+      box-shadow: 0 1.5px 6px rgba(0,198,255,0.10);
+    }
+    .footer-powered strong {
+      color: #00ffae;
+      font-size: 1.16rem;
+    }
+    .footer-divider {
+      width: 55%;
+      height: 2.5px;
+      background: linear-gradient(90deg, #00c6ff 0%, #f72585 100%);
+      border: none;
+      border-radius: 2px;
+      margin: 13px 0 8px 0;
+      opacity: 0.7;
+      box-shadow: 0 0 8px 0 #00c6ff44;
+      transition: width 0.3s;
+    }
+    .footer-honour {
+      margin-top: 10px;
+      font-family: 'Dancing Script', cursive, 'Segoe UI', sans-serif;
+      font-size: 1.28rem;
+      font-weight: bold;
+      color: #fffbe7;
+      text-shadow: 0 1px 12px #00c6ff77, 1px 1px 0 #f7258577;
+      background: linear-gradient(90deg, #00c6ff 0%, #f72585 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: brightness(1.2);
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+      display: inline-block;
+      padding: 2px 7px;
+    }
+    .footer-honour::before, .footer-honour::after {
+      content: "★";
+      color: #ffd700;
+      margin: 0 7px;
+      font-size: 1.13em;
+      filter: drop-shadow(0 0 4px #f7258555);
+      vertical-align: middle;
+      opacity: 0.85;
     }
     #printBtn {
       background: #fff;
@@ -237,6 +301,7 @@
         background-position: 0% 50%;
       }
     }
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
     @media (max-width: 800px) {
       .summary-container {
         padding: 12px 5px;
@@ -256,6 +321,28 @@
       }
       .pie-chart-section {
         padding: 12px 0;
+      }
+      footer {
+        font-size: 1.00rem;
+        padding: 28px 0 29px 0;
+        border-top-left-radius: 22px;
+        border-top-right-radius: 22px;
+      }
+      .footer-content {
+        gap: 10px;
+      }
+      .footer-powered {
+        font-size: 1.01rem;
+        padding: 5px 10px;
+      }
+      .footer-divider {
+        width: 80%;
+        height: 2px;
+        margin: 10px 0 4px 0;
+      }
+      .footer-honour {
+        font-size: 1.07rem;
+        padding: 2px 3px;
       }
     }
     @media print {
@@ -291,6 +378,8 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Dancing Script Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -317,8 +406,16 @@
     <div id="reviewSection"></div>
   </div>
   <footer>
-    <button id="printBtn">Print / Save as PDF</button>
-    &copy; <span id="year"></span> CBT Platform &mdash; Powered by ExamGuide
+    <div class="footer-content">
+      <button id="printBtn">Print / Save as PDF</button>
+      <div class="footer-powered">
+        &copy; <span id="year"></span> <strong>CBT Platform</strong> &mdash; Powered by ExamGuide
+      </div>
+      <hr class="footer-divider"/>
+      <div class="footer-honour">
+        This solutions were provided and reviewed by Hon. Richard D'prof
+      </div>
+    </div>
   </footer>
   <script>
     // Data and calculations
