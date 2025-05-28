@@ -12,7 +12,7 @@
     { "source": "/result-summary", "destination": "/summary.html" },
     { "source": "/mock-icthallb", "destination": "/mock.html" },
     { "source": "/testsession", "destination": "/test.html" },
-    { "source": "/mok-icthallb", "destination": "/mck.html" }
+    { "source": "/advertisement", "destination": "/advert.html" }
     
     
   ],
@@ -26,6 +26,7 @@
     { "source": "/old-profile-menu", "destination": "/profile-menu", "permanent": true },
     { "source": "/old-mock-icthallb", "destination": "/ict-hallb", "permanent": true },
     { "source": "/old-result-summary", "destination": "/result-summary", "permanent": true },
+    { "source": "/old-advertisement", "destination": "/advertisement", "permanent": true },
     { "source": "/old-testsession", "destination": "/testsession", "permanent": true }
       
   ]
