@@ -15,7 +15,6 @@
       align-items: center;
       justify-content: center;
     }
-    
     .advert-main {
       background: #fff;
       border-radius: 32px;
@@ -34,84 +33,38 @@
       100% { transform: translateY(0) scale(1); opacity: 1;}
     }
     .advert-banner {
-      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-      padding: 40px 0 0 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       position: relative;
-    }
-    .advert-banner .ad-image-holder {
-      width: 110px;
-      height: 110px;
-      border-radius: 16px;
-      background: #fff;
-      box-shadow: 0 6px 32px #00c6ff21;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 100%;
+      height: 170px;
+      min-height: 110px;
       overflow: hidden;
-      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      background: #e6f8ff; /* fallback color */
     }
-        .advert-banner .logo {
+    .banner-bg-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      background: #e6f8ff;
+      transition: opacity 0.4s;
+    }
+    .advert-banner .logo {
+      position: relative;
+      z-index: 2;
       width: 54px;
       height: 54px;
-      object-fit: contain;
       border-radius: 50%;
-      box-shadow: 0 3px 13px #00c6ff18;
-      position: absolute;
-      bottom: -27px;
-      left: 50%;
-      transform: translateX(-50%);
       background: #fff;
+      box-shadow: 0 3px 13px #00c6ff18;
       border: 2px solid #bdeaff;
-      z-index: 2;
-                                  }
-    .advert-banner .ad-image-holder img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 16px;
-      display: block;
+      margin-bottom: -27px;
+      margin-top: 0;
+      left: 0;
+      transform: none;
     }
-    .advert-banner .ad-image-holder .placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%; height: 100%;
-      color: #bdeaff;
-      font-size: 2.6rem;
-    }
-
-    .advert-banner {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  background: #e6f8ff; /* fallback color */
-}
-.banner-bg-img {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-.logo {
-  position: relative;
-  z-index: 2;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 3px 13px #00c6ff18;
-  border: 2px solid #bdeaff;
-  margin-bottom: -27px;
-}
-    
-
     .advert-content {
       padding: 54px 30px 28px 30px;
       display: flex;
@@ -121,15 +74,6 @@
       border-radius: 0 0 32px 32px;
       box-shadow: 0 2px 16px #bdeaff09 inset;
       position: relative;
-    }
-    .ad-title {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: #0a223a;
-      letter-spacing: .5px;
-      text-align: center;
-      margin-bottom: 7px;
-      margin-top: 5px;
     }
     .ad-premium-badge {
       display: inline-block;
@@ -142,6 +86,16 @@
       margin-bottom: 9px;
       letter-spacing: 1px;
       box-shadow: 0 1px 5px #ffe06633;
+      margin-top: 0;
+    }
+    .ad-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #0a223a;
+      letter-spacing: .5px;
+      text-align: center;
+      margin-bottom: 7px;
+      margin-top: 5px;
     }
     .ad-desc {
       color: #375375;
@@ -150,28 +104,6 @@
       margin-top: 8px;
       line-height: 1.7;
       text-align: center;
-    }
-    .features-list {
-      width: 100%;
-      margin: 14px 0 21px 0;
-      color: #0072ff;
-      font-size: 1.01rem;
-      padding-left: 0;
-      text-align: left;
-    }
-    .features-list li {
-      margin-bottom: 9px;
-      list-style: none;
-      position: relative;
-      padding-left: 26px;
-    }
-    .features-list li:before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: #00c6ff;
-      font-size: 1.15em;
-      top: 0;
     }
     .middle-advert-img {
       width: 100%;
@@ -205,6 +137,28 @@
       padding: 22px 0;
       font-weight: bold;
       letter-spacing: 2px;
+    }
+    .features-list {
+      width: 100%;
+      margin: 14px 0 21px 0;
+      color: #0072ff;
+      font-size: 1.01rem;
+      padding-left: 0;
+      text-align: left;
+    }
+    .features-list li {
+      margin-bottom: 9px;
+      list-style: none;
+      position: relative;
+      padding-left: 26px;
+    }
+    .features-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #00c6ff;
+      font-size: 1.15em;
+      top: 0;
     }
     .action-btns {
       display: flex;
@@ -262,7 +216,7 @@
       .ad-title { font-size: 1.09rem; }
       .ad-premium-badge { font-size: 0.88rem; }
       .ad-logo { width: 44px; height: 44px; }
-      .ad-image-holder { width: 66px; height: 66px; }
+      .banner-bg-img { height: 110px; }
       .ad-desc { font-size: 0.99rem;}
       .middle-advert-img { max-width: 98vw; }
     }
@@ -270,10 +224,9 @@
 </head>
 <body>
   <div class="advert-main" id="advertMain" style="display:none;">
-    
     <div class="advert-banner">
-  <img id="bannerImg" src="" alt="Advertiser Banner" class="banner-bg-img">
-  <img src="logo.png" alt="OAU Logo" class="logo">
+      <img id="bannerImg" src="" alt="Advertiser Banner" class="banner-bg-img" style="opacity:0;">
+      <img src="logo.png" alt="OAU Logo" class="logo">
     </div>
     <div class="advert-content">
       <span class="ad-premium-badge" id="adPremiumBadge">PREMIUM ACCESS</span>
@@ -312,11 +265,12 @@
         // Random selection
         var advertiser = advertisers[Math.floor(Math.random() * advertisers.length)];
         // Banner image
-        var advertImageHolder = document.getElementById('advertImageHolder');
+        var bannerImg = document.getElementById('bannerImg');
         if(advertiser.topImage) {
-          advertImageHolder.innerHTML = '<img src="' + escapeHTML(advertiser.topImage) + '" alt="Advertiser Banner">';
+          bannerImg.src = advertiser.topImage;
+          bannerImg.style.opacity = "1";
         } else {
-          advertImageHolder.innerHTML = '<span class="placeholder">[ No Image ]</span>';
+          bannerImg.style.opacity = "0";
         }
         // Title, description
         document.getElementById('adTitle').textContent = advertiser.headline || advertiser.name || 'Special Offer';
@@ -324,7 +278,7 @@
         // Middle image
         var middleAdvertImg = document.getElementById('middleAdvertImg');
         if(advertiser.midImage) {
-          middleAdvertImg.innerHTML = '<img src="' + escapeHTML(advertiser.midImage) + '" alt="Advertiser">';
+          middleAdvertImg.innerHTML = '<img src="' + escapeHTML(advertiser.midImage) + '" alt="Advertisement">';
         } else {
           middleAdvertImg.innerHTML = '<span class="ad-img-placeholder">[ Advertisement ]</span>';
         }
