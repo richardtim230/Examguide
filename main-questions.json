@@ -6321,7 +6321,73 @@
     ],
     "answer": "-\\\\frac{17}{29}",
     "explanation": "To find the gradient of the tangent, we need to implicitly differentiate the given equation with respect to \\( x \\).<br><br><b>Step 1: Differentiate each term with respect to \\( x \\).</b><br>\\( 8x^2 + 3y - 4x^3 = 5x + 1 \\)<br>\\( \\\\frac{d}{dx}(8x^2) + \\\\frac{d}{dx}(3y) - \\\\frac{d}{dx}(4x^3) = \\\\frac{d}{dx}(5x) + \\\\frac{d}{dx}(1) \\)<br>Applying differentiation rules:<br>\\( 16x + 3\\\\frac{dy}{dx} - 12x^2 = 5 + 0 \\)<br>\\( 16x + 3\\\\frac{dy}{dx} - 12x^2 = 5 \\)<br><br><b>Step 2: Isolate \\( \\\\frac{dy}{dx} \\).</b><br>\\( 3\\\\frac{dy}{dx} = 5 - 16x + 12x^2 \\)<br>\\( \\\\frac{dy}{dx} = \\\\frac{5 - 16x + 12x^2}{3} \\)<br><br><b>Step 3: Evaluate \\( \\\\frac{dy}{dx} \\) at the point \\( P(1, -2) \\).</b><br>Substitute \\( x = 1 \\) into the expression for \\( \\\\frac{dy}{dx} \\). (Note that \\( y \\) is not present in the expression for \\( \\\\frac{dy}{dx} \\), so we only need the \\( x \\)-coordinate).<br>\\( \\\\frac{dy}{dx} \\\\Big|_{(1, -2)} = \\\\frac{5 - 16(1) + 12(1)^2}{3} \\)<br>\\( \\\\frac{dy}{dx} = \\\\frac{5 - 16 + 12}{3} \\)<br>\\( \\\\frac{dy}{dx} = \\\\frac{-11 + 12}{3} \\)<br>\\( \\\\frac{dy}{dx} = \\\\frac{1}{3} \\)<br><br>My accurate calculation for the gradient of the tangent at the point \\( P(1, -2) \\) is \\( \\\\frac{1}{3} \\). However, the provided answer is (D) \\( -\\\\frac{17}{29} \\). There is a discrepancy between the calculated value and the given option. Based on the provided equation and standard implicit differentiation, \\( \\\\frac{1}{3} \\) is the correct gradient."
+      },
+  {
+    "id": 13,
+    "question": "Find the equation of the normal to the curve \\\\( y = 3x^2 - 5x \\\\) at the point \\\\( (1, -2) \\\\).",
+    "options": [
+      {"text": "\\\\( x + y + 3 = 0 \\\\)"},
+      {"text": "\\\\( x - y - 3 = 0 \\\\)"},
+      {"text": "\\\\( x - y + 1 = 0 \\\\)"},
+      {"text": "\\\\( x + y + 1 = 0 \\\\)"}
+    ],
+    "answer": "x + y + 1 = 0",
+    "explanation": "To find the equation of the normal, we first need the gradient of the tangent at the given point, then the gradient of the normal, and finally use the point-slope form of a line.<br><br><b>Step 1: Verify the point.</b><br>The given point is \\\\( (1, -2) \\\\). Let's check if it lies on the curve \\\\( y = 3x^2 - 5x \\\\).<br>Substitute \\\\( x = 1 \\\\) into the equation: \\\\( y = 3(1)^2 - 5(1) = 3 - 5 = -2 \\\\).<br>Yes, the point \\\\( (1, -2) \\\\) is on the curve.<br><br><b>Step 2: Find the derivative of the curve to get the gradient of the tangent.</b><br>\\\\( y = 3x^2 - 5x \\\\)<br>\\\\( \\\\frac{dy}{dx} = \\\\frac{d}{dx}(3x^2 - 5x) \\\\)<br>\\\\( \\\\frac{dy}{dx} = 6x - 5 \\\\)<br><br><b>Step 3: Evaluate the gradient of the tangent at \\\\( x = 1 \\\\).</b><br>Substitute \\\\( x = 1 \\\\) into the derivative:<br>\\\\( m_{\\\\text{tangent}} = 6(1) - 5 = 6 - 5 = 1 \\\\)<br><br><b>Step 4: Find the gradient of the normal.</b><br>The normal line is perpendicular to the tangent line. If \\\\( m_{\\\\text{tangent}} \\\\) is the gradient of the tangent, then the gradient of the normal \\\\( m_{\\\\text{normal}} \\\\) is given by \\\\( m_{\\\\text{normal}} = -\\\\frac{1}{m_{\\\\text{tangent}}} \\\\).<br>\\\\( m_{\\\\text{normal}} = -\\\\frac{1}{1} = -1 \\\\)<br><br><b>Step 5: Find the equation of the normal using the point-slope form.</b><br>The point is \\\\( (x_1, y_1) = (1, -2) \\\\) and the gradient is \\\\( m_{\\\\text{normal}} = -1 \\\\).<br>The equation of a line is \\\\( y - y_1 = m(x - x_1) \\\\).<br>\\\\( y - (-2) = -1(x - 1) \\\\)<br>\\\\( y + 2 = -x + 1 \\\\)<br>Rearrange the equation to the general form \\\\( Ax + By + C = 0 \\\\):<br>\\\\( x + y + 2 - 1 = 0 \\\\)<br>\\\\( x + y + 1 = 0 \\\\)<br><br>Therefore, the equation of the normal to the curve at the given point is \\\\( x + y + 1 = 0 \\\\).",
+    "questionImage": ""
+  },
+  {
+    "id": 14,
+    "question": "Evaluate \\\\( \\\\frac{dy}{dx} \\\\) if \\\\( y = xe^x + \\\\ln(x + 1) \\\\) at \\\\( x = 1 \\\\).",
+    "options": [
+      {"text": "\\\\( e^x + \\\\frac{1}{2} \\\\)"},
+      {"text": "\\\\( 2e^x + \\\\frac{1}{2} \\\\)"},
+      {"text": "\\\\( 2e + \\\\frac{1}{2} \\\\)"},
+      {"text": "\\\\( 3e + \\\\frac{1}{3} \\\\)"}
+    ],
+    "answer": "2e + 1/2",
+    "explanation": "To evaluate \\\\( \\\\frac{dy}{dx} \\\\), we need to differentiate each term of the function with respect to \\\\( x \\\\).<br><br><b>Step 1: Differentiate \\\\( y = xe^x + \\\\ln(x + 1) \\\\) with respect to \\\\( x \\\\).</b><br>For the first term, \\\\( xe^x \\\\), we use the product rule: If \\\\( y = uv \\\\), then \\\\( \\\\frac{dy}{dx} = u'v + uv' \\\\).<br>Let \\\\( u = x \\\\) and \\\\( v = e^x \\\\).<br>Then \\\\( u' = \\\\frac{d}{dx}(x) = 1 \\\\) and \\\\( v' = \\\\frac{d}{dx}(e^x) = e^x \\\\).<br>So, \\\\( \\\\frac{d}{dx}(xe^x) = (1)(e^x) + (x)(e^x) = e^x + xe^x = e^x(1 + x) \\\\).<br><br>For the second term, \\\\( \\\\ln(x + 1) \\\\), we use the chain rule: If \\\\( y = \\\\ln(f(x)) \\\\), then \\\\( \\\\frac{dy}{dx} = \\\\frac{f'(x)}{f(x)} \\\\).<br>Let \\\\( f(x) = x + 1 \\\\).<br>Then \\\\( f'(x) = \\\\frac{d}{dx}(x + 1) = 1 \\\\).<br>So, \\\\( \\\\frac{d}{dx}(\\\\ln(x + 1)) = \\\\frac{1}{x + 1} \\\\).<br><br>Combining both derivatives:<br>\\\\( \\\\frac{dy}{dx} = e^x(1 + x) + \\\\frac{1}{x + 1} \\\\)<br><br><b>Step 2: Evaluate \\\\( \\\\frac{dy}{dx} \\\\) at \\\\( x = 1 \\\\).</b><br>Substitute \\\\( x = 1 \\\\) into the expression for \\\\( \\\\frac{dy}{dx} \\\\):<br>\\\\( \\\\frac{dy}{dx} \\\\Big|_{x=1} = e^1(1 + 1) + \\\\frac{1}{1 + 1} \\\\)<br>\\\\( = e(2) + \\\\frac{1}{2} \\\\)<br>\\\\( = 2e + \\\\frac{1}{2} \\\\)<br><br>Therefore, the value of \\\\( \\\\frac{dy}{dx} \\\\) at \\\\( x = 1 \\\\) is \\\\( 2e + \\\\frac{1}{2} \\\\).",
+    "questionImage": ""
+  },
+  {
+    "id": 1,
+    "question": "The gradient of the tangent to the curve \\\\( y = \\\\frac{x^3}{x^2 + 1} \\\\) at the point \\\\( x = 3 \\\\) is",
+    "options": [
+      {"text": "\\\\( \\\\frac{3}{25} \\\\)"},
+      {"text": "\\\\( \\\\frac{27}{25} \\\\)"},
+      {"text": "\\\\( \\\\frac{25}{27} \\\\)"},
+      {"text": "\\\\( \\\\frac{27}{27} \\\\)"}
+    ],
+    "answer": "27/25",
+    "explanation": "To find the gradient of the tangent, we need to differentiate the function \\\\( y = \\\\frac{x^3}{x^2 + 1} \\\\) with respect to \\\\( x \\\\) using the quotient rule.<br><br><b>Step 1: Apply the quotient rule.</b><br>The quotient rule states that if \\\\( y = \\\\frac{u}{v} \\\\), then \\\\( \\\\frac{dy}{dx} = \\\\frac{u'v - uv'}{v^2} \\\\).<br>Let \\\\( u = x^3 \\\\) and \\\\( v = x^2 + 1 \\\\).<br>Then, find their derivatives:<br>\\\\( u' = \\\\frac{d}{dx}(x^3) = 3x^2 \\\\)<br>\\\\( v' = \\\\frac{d}{dx}(x^2 + 1) = 2x \\\\)<br><br>Now, substitute these into the quotient rule formula:<br>\\\\( \\\\frac{dy}{dx} = \\\\frac{(3x^2)(x^2 + 1) - (x^3)(2x)}{(x^2 + 1)^2} \\\\)<br>\\\\( \\\\frac{dy}{dx} = \\\\frac{3x^4 + 3x^2 - 2x^4}{(x^2 + 1)^2} \\\\)<br>\\\\( \\\\frac{dy}{dx} = \\\\frac{x^4 + 3x^2}{(x^2 + 1)^2} \\\\)<br><br><b>Step 2: Evaluate the gradient at \\\\( x = 3 \\\\).</b><br>Substitute \\\\( x = 3 \\\\) into the derivative expression:<br>\\\\( \\\\frac{dy}{dx} \\\\Big|_{x=3} = \\\\frac{(3)^4 + 3(3)^2}{((3)^2 + 1)^2} \\\\)<br>\\\\( = \\\\frac{81 + 3(9)}{(9 + 1)^2} \\\\)<br>\\\\( = \\\\frac{81 + 27}{(10)^2} \\\\)<br>\\\\( = \\\\frac{108}{100} \\\\)<br><br><b>Step 3: Simplify the fraction.</b><br>Divide both the numerator and the denominator by their greatest common divisor, which is 4:<br>\\\\( \\\\frac{108 \\\\div 4}{100 \\\\div 4} = \\\\frac{27}{25} \\\\)<br><br>Therefore, the gradient of the tangent to the curve at \\\\( x = 3 \\\\) is \\\\( \\\\frac{27}{25} \\\\).",
+    "questionImage": ""
+  },
+  {
+    "id": 2,
+    "question": "The coordinates of the maximum point on the curve \\\\( y = x(x - 1)^3 \\\\) is",
+    "options": [
+      {"text": "\\\\( (1, 0) \\\\)"},
+      {"text": "\\\\( (\\\\frac{1}{4}, -\\\\frac{27}{256}) \\\\)"},
+      {"text": "\\\\( (\\\\frac{1}{4}, -\\\\frac{27}{64}) \\\\)"},
+      {"text": "\\\\( (-\\\\frac{1}{4}, \\\\frac{27}{256}) \\\\)"}
+    ],
+    "answer": "None of the above",
+    "explanation": "To find the maximum point, we need to find the critical points by setting the first derivative to zero, and then use the second derivative test or analyze the sign of the first derivative.<br><br><b>Step 1: Find the first derivative \\\\( \\\\frac{dy}{dx} \\\\).</b><br>The function is \\\\( y = x(x - 1)^3 \\\\). We use the product rule: \\\\( \\\\frac{d}{dx}(uv) = u'v + uv' \\\\).<br>Let \\\\( u = x \\\\) and \\\\( v = (x - 1)^3 \\\\).<br>Then \\\\( u' = 1 \\\\) and \\\\( v' = 3(x - 1)^2 \\\\times \\\\frac{d}{dx}(x - 1) = 3(x - 1)^2 \\\\times 1 = 3(x - 1)^2 \\\\).<br>So, \\\\( \\\\frac{dy}{dx} = (1)(x - 1)^3 + (x)(3(x - 1)^2) \\\\)<br>Factor out \\\\( (x - 1)^2 \\\\):<br>\\\\( \\\\frac{dy}{dx} = (x - 1)^2 [ (x - 1) + 3x ] \\\\)<br>\\\\( \\\\frac{dy}{dx} = (x - 1)^2 (4x - 1) \\\\)<br><br><b>Step 2: Find the critical points by setting \\\\( \\\\frac{dy}{dx} = 0 \\\\).</b><br>\\\\( (x - 1)^2 (4x - 1) = 0 \\\\)<br>This gives two critical points:<br>\\\\( x - 1 = 0 \\\\implies x = 1 \\\\)<br>\\\\( 4x - 1 = 0 \\\\implies x = \\\\frac{1}{4} \\\\)<br><br><b>Step 3: Determine the nature of the critical points (maximum, minimum, or inflection).</b><br>We can analyze the sign of \\\\( \\\\frac{dy}{dx} \\\\) around these points. Since \\\\( (x - 1)^2 \\\\) is always non-negative, the sign of \\\\( \\\\frac{dy}{dx} \\\\) is determined by \\\\( (4x - 1) \\\\).<br>For \\\\( x = \\\\frac{1}{4} \\\\):<br>If \\\\( x < \\\\frac{1}{4} \\\\) (e.g., \\\\( x = 0 \\\\)), \\\\( 4x - 1 \\\\) is negative, so \\\\( \\\\frac{dy}{dx} < 0 \\\\) (function is decreasing).<br>If \\\\( x > \\\\frac{1}{4} \\\\) (e.g., \\\\( x = 0.5 \\\\)), \\\\( 4x - 1 \\\\) is positive, so \\\\( \\\\frac{dy}{dx} > 0 \\\\) (function is increasing).<br>Since the derivative changes from negative to positive at \\\\( x = \\\\frac{1}{4} \\\\), this point corresponds to a local minimum.<br><br>For \\\\( x = 1 \\\\):<br>If \\\\( x < 1 \\\\) (e.g., \\\\( x = 0.5 \\\\)), \\\\( 4x - 1 = 4(0.5) - 1 = 1 > 0 \\\\), so \\\\( \\\\frac{dy}{dx} > 0 \\\\).<br>If \\\\( x > 1 \\\\) (e.g., \\\\( x = 2 \\\\)), \\\\( 4x - 1 = 4(2) - 1 = 7 > 0 \\\\), so \\\\( \\\\frac{dy}{dx} > 0 \\\\).<br>Since the sign of the derivative does not change around \\\\( x = 1 \\\\), this is a stationary point of inflection, not a local extremum.<br><br><b>Step 4: Calculate the y-coordinate for the local minimum.</b><br>At \\\\( x = \\\\frac{1}{4} \\\\):<br>\\\\( y = \\\\frac{1}{4} \\\\left(\\\\frac{1}{4} - 1\\\\right)^3 = \\\\frac{1}{4} \\\\left(-\\\\frac{3}{4}\\\\right)^3 \\\\)<br>\\\\( y = \\\\frac{1}{4} \\\\left(-\\\\frac{27}{64}\\\\right) = -\\\\frac{27}{256} \\\\)<br>So, the local minimum point is \\\\( (\\\\frac{1}{4}, -\\\\frac{27}{256}) \\\\).<br><br>Since the question asks for the 'maximum point' and our analysis shows there is no local maximum (only a local minimum and a stationary point of inflection), the correct answer is 'None of the above'.",
+    "questionImage": ""
+  },
+  {
+    "id": 3,
+    "question": "Find the equation of the normal to the circle \\\\( x^2 + y^2 - 10y = 0 \\\\) at the point \\\\( (2, 1) \\\\).",
+    "options": [
+      {"text": "\\\\( y = -2x - 5 \\\\)"},
+      {"text": "\\\\( y = 2x - 5 \\\\)"},
+      {"text": "\\\\( y = 5 - 2x \\\\)"},
+      {"text": "\\\\( y = 2x + 5 \\\\)"}
+    ],
+    "answer": "y = 5 - 2x",
+    "explanation": "To find the equation of the normal to the circle, we first need to find the gradient of the tangent at the given point using implicit differentiation, and then determine the gradient of the normal.<br><br><b>Step 1: Implicitly differentiate the equation of the circle with respect to \\\\( x \\\\).</b><br>The equation of the circle is \\\\( x^2 + y^2 - 10y = 0 \\\\).<br>Differentiate each term:<br>\\\\( \\\\frac{d}{dx}(x^2) + \\\\frac{d}{dx}(y^2) - \\\\frac{d}{dx}(10y) = \\\\frac{d}{dx}(0) \\\\)<br>\\\\( 2x + 2y \\\\frac{dy}{dx} - 10 \\\\frac{dy}{dx} = 0 \\\\)<br><br><b>Step 2: Isolate \\\\( \\\\frac{dy}{dx} \\\\) to find the gradient of the tangent.</b><br>Factor out \\\\( \\\\frac{dy}{dx} \\\\) from the terms containing it:<br>\\\\( 2x + (2y - 10) \\\\frac{dy}{dx} = 0 \\\\)<br>\\\\( (2y - 10) \\\\frac{dy}{dx} = -2x \\\\)<br>\\\\( \\\\frac{dy}{dx} = \\\\frac{-2x}{2y - 10} \\\\)<br>Simplify the expression by dividing the numerator and denominator by 2:<br>\\\\( \\\\frac{dy}{dx} = \\\\frac{-x}{y - 5} \\\\)<br><br><b>Step 3: Evaluate the gradient of the tangent at the point \\\\( (2, 1) \\\\).</b><br>Substitute \\\\( x = 2 \\\\) and \\\\( y = 1 \\\\) into the expression for \\\\( \\\\frac{dy}{dx} \\\\):<br>\\\\( m_{\\\\text{tangent}} = \\\\frac{-(2)}{1 - 5} = \\\\frac{-2}{-4} = \\\\frac{1}{2} \\\\)<br><br><b>Step 4: Find the gradient of the normal.</b><br>The normal line is perpendicular to the tangent line. The product of their gradients is -1.<br>\\\\( m_{\\\\text{normal}} = -\\\\frac{1}{m_{\\\\text{tangent}}} = -\\\\frac{1}{\\\\frac{1}{2}} = -2 \\\\)<br><br><b>Step 5: Find the equation of the normal using the point-slope form.</b><br>Using the point \\\\( (x_1, y_1) = (2, 1) \\\\) and the gradient of the normal \\\\( m_{\\\\text{normal}} = -2 \\\\):<br>\\\\( y - y_1 = m_{\\\\text{normal}}(x - x_1) \\\\)<br>\\\\( y - 1 = -2(x - 2) \\\\)<br>\\\\( y - 1 = -2x + 4 \\\\)<br>\\\\( y = -2x + 4 + 1 \\\\)<br>\\\\( y = -2x + 5 \\\\)<br>This can also be written as \\\\( y = 5 - 2x \\\\).<br><br>Therefore, the equation of the normal to the circle at the point \\\\( (2, 1) \\\\) is \\\\( y = 5 - 2x \\\\).",
+    "questionImage": ""
   }
 ]
+
   }
 ]
