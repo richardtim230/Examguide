@@ -5,259 +5,301 @@
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8">
   <style>
-    html, body {
-      height: 100%;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    /* Notification Pop-up Styles */
+    #notificationPopup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.92);
+        padding: 20px;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    #notificationPopup.active {
+        display: block !important;
+        opacity: 1;
+    }
+    #notificationPopup .popup-content {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    #notificationPopup h2 {
+        font-size: 15px;
+        color: #0a35c9;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+    #notificationPopup ul {
+        list-style: inside disc;
+        margin-bottom: 20px;
+        text-align: left;
+        font-size: 13px;
+        color: #1a1a1a;
+    }
+    #notificationPopup button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+    }
+    #whatsappBtn {
+        background: #25D366;
+        color: white;
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background 0.2s, transform 0.2s;
+    }
+    #whatsappBtn:hover {
+        background: #20b058;
     }
     body {
-      min-height: 100vh;
+      height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
       overflow: hidden;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      position: relative;
     }
-
     .stars {
       position: absolute;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background: transparent;
       overflow: hidden;
       z-index: 0;
     }
-
     .stars div {
       position: absolute;
       background: white;
       border-radius: 50%;
       animation: twinkle 4s infinite ease-in-out;
     }
-
     @keyframes twinkle {
       0%, 100% { opacity: 0.2; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.4); }
     }
-
-    .center-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 100vh;
+    .login-container {
       position: relative;
-      z-index: 2;
-    }
-
-    .modern-login-box {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 2px 24px rgba(31,38,135,0.13);
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       width: 100%;
-      max-width: 410px;
-      padding: 0 0 32px 0;
-      margin: 32px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
+      max-width: 400px;
+      padding: 38px 24px 30px 24px;
+      text-align: center;
+      color: white;
+      margin-top: 10px;
     }
-
-    .login-image {
-      width: 100%;
-      background: #f7f7f7;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      min-height: 200px;
-      border-bottom: 1px solid #eee;
-    }
-    .login-image img {
-      width: 90%;
-      max-width: 300px;
-      margin-top: 20px;
+    .logo {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
       margin-bottom: 10px;
+      background: #fff;
+      box-shadow: 0 6px 24px #00c6ff33;
       object-fit: contain;
-      border-radius: 10px;
-    }
-
-    .login-header {
-      padding: 22px 30px 0 30px;
-      width: 100%;
-      box-sizing: border-box;
-      text-align: left;
-    }
-    .login-header .logo-row {
-      display: flex;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .login-header .identico-text {
-      font-size: 1.6rem;
-      color: #1b2735;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      margin-right: 14px;
-    }
-    .login-header .identico-badge {
-      height: 30px;
-      margin-left: 4px;
-      margin-bottom: -5px;
-    }
-    .login-header h2 {
-      font-size: 1.14rem;
-      font-weight: 600;
-      color: #222;
-      margin-bottom: 5px;
-      margin-top: 0;
-    }
-    .login-header p {
-      font-size: 0.96rem;
-      color: #5a5a5a;
-      margin: 0 0 12px 0;
-      letter-spacing: 0.1px;
-    }
-
-    .login-form {
-      width: 100%;
-      padding: 0 30px;
-      box-sizing: border-box;
-      margin-top: 6px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-      width: 100%;
-    }
-    .form-label {
-      font-size: 0.96rem;
-      font-weight: 600;
-      color: #716e6e;
-      margin-bottom: 4px;
+      border: 3px solid #0072ff44;
       display: block;
-      letter-spacing: 0.1px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .form-input {
+    .school-name {
+      font-size: 1.22rem;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      letter-spacing: 1.1px;
+      margin-bottom: 3px;
+      margin-top: 2px;
+      text-shadow: 0 2px 8px #001c3c44;
+    }
+    .subtitle {
+      color: #bdeaff;
+      font-size: 1.01rem;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      text-shadow: 0 1px 4px #001c3c44;
+    }
+    .login-container h2 {
+      font-size: 25px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #00c6ff;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+    input {
       width: 100%;
       padding: 12px;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      font-size: 1rem;
-      background: #fafbfc;
-      transition: border .2s;
-      color: #23272d;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+      font-size: 16px;
       outline: none;
     }
-    .form-input:focus {
-      border: 1.5px solid #0072ff;
-      background: #fff;
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
     }
-
-    .form-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.97rem;
-      margin-bottom: 14px;
+    input:focus {
+      background: rgba(255,255,255,0.32);
     }
-    .form-check {
-      display: flex;
-      align-items: center;
-    }
-    .form-check input[type="checkbox"] {
-      margin-right: 5px;
-      accent-color: #ff914d;
-    }
-    .form-link {
-      color: #0072ff;
-      cursor: pointer;
-      text-decoration: underline;
-      background: none;
-      border: none;
-      font: inherit;
-      padding: 0;
-    }
-    .form-link:hover {
-      color: #ff914d;
-    }
-
-    .sign-in-btn {
+    button {
       width: 100%;
-      padding: 13px 0;
-      background: #ff914d;
-      color: #fff;
+      padding: 12px;
+      margin-top: 15px;
       border: none;
-      border-radius: 6px;
-      font-size: 1.07rem;
-      font-weight: 600;
-      margin-top: 5px;
+      border-radius: 8px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.18s;
+      transition: background 0.3s ease;
     }
-    .sign-in-btn:hover {
-      background: #f97c1b;
+    button:hover {
+      background: linear-gradient(to right, #0072ff, #00c6ff);
     }
-
+    .login-footer {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 0.98rem;
+      color: #bdeaff;
+      letter-spacing: 0.4px;
+    }
+    .reset-link {
+      color: #ffe966;
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.99rem;
+    }
+    .reset-link:hover {
+      color: #fff;
+    }
+    .security-warning {
+      background: #fff3c4;
+      color: #a65c00;
+      border-radius: 6px;
+      padding: 11px;
+      margin: 0 0 13px 0;
+      font-size: 0.97rem;
+      text-align: center;
+      box-shadow: 0 2px 8px #00000022;
+    }
+    /* Custom notification bar */
+    #customNotification {
+      display: none;
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #003366ee;
+      color: #fff;
+      padding: 16px 36px 16px 22px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px #00000055;
+      z-index: 1100;
+      font-size: 1rem;
+      min-width: 200px;
+      max-width: 90vw;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.4s, top 0.4s;
+      pointer-events: none;
+    }
+    #customNotification.show {
+      display: block;
+      opacity: 1;
+      top: 50px;
+      pointer-events: auto;
+    }
+    #customNotification.success {
+      background: #25d366ee;
+      color: #1b2e11;
+    }
+    #customNotification.error {
+      background: #ff4136ee;
+      color: #fff;
+    }
+    #customNotification .close-noti {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    #customNotification .close-noti:hover {
+      opacity: 1;
+    }
     @media (max-width: 500px) {
-      .modern-login-box {
-        max-width: 98vw;
-        margin: 0;
-        border-radius: 0;
-        box-shadow: none;
+      .login-container {
+        padding: 25px 7vw 18px 7vw;
       }
-      .login-header, .login-form {
-        padding-left: 5vw;
-        padding-right: 5vw;
+      input, button {
+        font-size: 14px;
       }
-      .login-image img {
+      .login-container h2 {
+        font-size: 21px;
+      }
+      .logo {
+        width: 54px;
+        height: 54px;
+      }
+      .school-name { font-size: 1.07rem; }
+      .subtitle { font-size: 0.93rem; }
+      #customNotification {
         max-width: 98vw;
+        padding: 13px 22px 13px 16px;
+        font-size: 0.93rem;
       }
     }
   </style>
+  <!-- SHA-256 hashing library (for demo security) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-  <div class="stars"></div>
-  <div class="center-container">
-    <div class="modern-login-box">
-      <div class="login-image">
-        <!-- Reference: ![image1](image1) -->
-        <img src="image1" alt="Login Visual" />
-      </div>
-      <div class="login-header">
-        <div class="logo-row">
-          <span class="identico-text">identico</span>
-          <img class="identico-badge" src="logo.png" alt="Platform Badge" style="height:30px;">
-        </div>
-        <h2>Sign in your account</h2>
-        <p>Welcome back! Login with your data that you entered during registration</p>
-      </div>
-      <form class="login-form" id="authForm" autocomplete="off">
-        <div class="form-group">
-          <label class="form-label" for="username">E-Mail</label>
-          <input class="form-input" type="text" id="username" placeholder="Enter your email" required autocomplete="off" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="password">Password</label>
-          <input class="form-input" type="password" id="password" placeholder="Enter your password" required autocomplete="off" />
-        </div>
-        <div class="form-row">
-          <span class="form-check">
-            <input type="checkbox" id="rememberMe">
-            <label for="rememberMe" style="font-weight:400; cursor:pointer;">Remember My Preference</label>
-          </span>
-          <button type="button" class="form-link" id="forgotPassword">Forgot Password?</button>
-        </div>
-        <button type="submit" class="sign-in-btn">Sign In</button>
-      </form>
-    </div>
+  <!-- Custom notification UI -->
+  <div id="customNotification">
+    <button class="close-noti" onclick="hideNotification()" aria-label="Close notification">&times;</button>
+    <span id="customNotificationMsg"></span>
   </div>
+  <div class="stars"></div>
   <script>
-    // Star background effect
+    // Add stars to the background
     document.addEventListener('DOMContentLoaded', function() {
       const starsContainer = document.querySelector('.stars');
       for(let i=0; i<50; i++) {
@@ -270,44 +312,119 @@
         starsContainer.appendChild(star);
       }
     });
-
-    // Username (E-Mail) validation
-    function validateUsername(username) {
-      // Allow emails only for demo
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
+  </script>
+  <!-- Notification Pop-up -->
+  <div id="notificationPopup" class="popup" aria-modal="true" role="dialog">
+      <div class="popup-content">
+        <img src="logo.png" alt="De-Brainstormers Logo" class="logo">
+          <h2>Welcome to the Mock Exam Platform</h2>
+          <ul>
+              <li>Ensure you have a stable internet connection.</li>
+              <li>Read all instructions carefully before starting the exam.</li>
+              <li>Contact the Admin desk if you encounter any issues.</li>
+              <li>Are you a tutorial coordinator or team leader who would love to use our online ICT? Click on the button below.</li>
+              <li>Our online ICT has multiple Exam Rooms so different examination sessions could take place at the same time without errors.</li>
+              <li>Cheapest and super Personified experience!</li>
+          </ul>
+          <button id="whatsappBtn" class="styled-btn" aria-label="Contact Admin on WhatsApp">Contact Admin on WhatsApp</button>
+          <button id="closeNotification" class="close-btn" aria-label="Close Notification">Close</button>
+      </div>
+  </div>
+  <div class="login-container">
+    <img src="logo.png" alt="CBT Logo" class="logo">
+    <div class="security-warning">
+      <strong>Security Notice:</strong> For demonstration only.<br>
+      Your password is not sent to a server. Don’t reuse your real password.
+    </div>
+    <div class="school-name">Obafemi Awolowo University</div>
+    <div class="subtitle">Central Mock Test</div>
+    <h2>LOG IN OR REGISTER</h2>
+    <form id="authForm" autocomplete="off">
+      <input type="text" id="username" placeholder="Username" required autocomplete="off" aria-label="Username">
+      <input type="password" id="password" placeholder="Password" required autocomplete="off" aria-label="Password">
+      <button type="submit" id="loginBtn">Login / Register</button>
+      <div>
+        <span class="reset-link" id="forgotPassword" tabindex="0">Forgot password?</span>
+      </div>
+    </form>
+    <div class="login-footer">Powered by De-Brainstormers Team</div>
+  </div>
+  <script>
+    // Custom notification logic
+    function showNotification(message, type = "") {
+      const noti = document.getElementById('customNotification');
+      const msgBox = document.getElementById('customNotificationMsg');
+      msgBox.textContent = message;
+      noti.className = type ? `show ${type}` : 'show';
+      noti.style.display = 'block';
+      setTimeout(() => {
+        if (noti.classList.contains('show')) {
+          hideNotification();
+        }
+      }, 3500);
+    }
+    function hideNotification() {
+      const noti = document.getElementById('customNotification');
+      noti.className = '';
+      setTimeout(() => { noti.style.display = 'none'; }, 400);
     }
 
-    // Password hashing for demo (SHA-256)
+    // Show the notification pop-up
+    document.getElementById('notificationPopup').classList.add('active');
+
+    // Close the notification pop-up
+    document.getElementById('closeNotification').addEventListener('click', function() {
+        document.getElementById('notificationPopup').classList.remove('active');
+    });
+
+    // WhatsApp button functionality
+    document.getElementById('whatsappBtn').addEventListener('click', function() {
+        window.open('https://wa.me/+2349155127634', '_blank');
+    });
+
+    // Helper: Username validation (allow spaces, forbid only empty username after trimming)
+    function validateUsername(username) {
+      // Username can be anything except all spaces or empty string after trimming
+      return username.length > 0;
+    }
+
+    // Password hashing for demo security
     function hashPassword(password) {
       return CryptoJS.SHA256(password).toString();
     }
 
-    // Password reset demo
+    // Password reset (for demo: reset password by username)
     document.getElementById('forgotPassword').addEventListener('click', function() {
-      const username = prompt("Enter your email to reset password:");
-      if (!username) return;
-      let users = JSON.parse(localStorage.getItem('cbt_users')) || {};
-      if (!users[username]) {
-        alert("E-Mail not found.");
+      let username = prompt("Enter your username for password reset:");
+      if (username === null) return;
+      username = username.trimEnd();
+      if (!validateUsername(username)) {
+        showNotification("Username cannot be empty.", "error");
         return;
       }
+      let users = JSON.parse(localStorage.getItem('cbt_users')) || {};
+      if (!users[username]) {
+        showNotification("Username not found.", "error");
+        return;
+      }
+      // For demo, just allow user to set a new password
       const newPass = prompt("Enter your new password:");
-      if (!newPass) return alert("Password cannot be empty.");
+      if (!newPass) return showNotification("Password cannot be empty.", "error");
       users[username].password = hashPassword(newPass);
       localStorage.setItem('cbt_users', JSON.stringify(users));
-      alert("Password reset successful!");
+      showNotification("Password reset successful!", "success");
     });
 
     document.getElementById('authForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const username = document.getElementById('username').value.trim();
+      let username = document.getElementById('username').value;
+      username = username.trimEnd();
       const password = document.getElementById('password').value;
-      const rememberMe = document.getElementById('rememberMe').checked;
 
-      if (!username || !password) return alert("Both fields are required!");
+      if (!username || !password) return showNotification("Both fields are required!", "error");
 
       if (!validateUsername(username)) {
-        return alert("Please enter a valid email address!");
+        return showNotification("Username cannot be empty or only spaces!", "error");
       }
 
       let users = JSON.parse(localStorage.getItem('cbt_users')) || {};
@@ -317,23 +434,15 @@
         users[username] = { password: hashedPassword };
         localStorage.setItem('cbt_users', JSON.stringify(users));
         localStorage.setItem('current_user', username);
-        if (rememberMe) localStorage.setItem('cbt_remember_me', username);
-        alert("Registered successfully!");
-        window.location.href = 'testsession';
+        showNotification("Registered successfully!", "success");
+        setTimeout(() => { window.location.href = 'testsession'; }, 1200);
       } else if (users[username].password !== hashedPassword) {
-        return alert("Incorrect password!");
+        return showNotification("Incorrect password!", "error");
       } else {
         localStorage.setItem('current_user', username);
-        if (rememberMe) localStorage.setItem('cbt_remember_me', username);
-        alert("Welcome back!");
-        window.location.href = 'testsession';
+        showNotification("Welcome back!", "success");
+        setTimeout(() => { window.location.href = 'testsession'; }, 900);
       }
-    });
-
-    // Optional: Pre-fill email if "remember me"
-    document.addEventListener('DOMContentLoaded', function() {
-      const remembered = localStorage.getItem('cbt_remember_me');
-      if (remembered) document.getElementById('username').value = remembered;
     });
 
     // Optional: Warn users if not using HTTPS
