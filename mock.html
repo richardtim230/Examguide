@@ -5,11 +5,86 @@
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8" />
   <style>
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+#notificationPopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 20px;
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#notificationPopup.active {
+  display: block !important;
+  opacity: 1;
+}
+
+#notificationPopup .popup-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: 5% auto;
+  text-align: center;
+}
+
+#notificationPopup h2 {
+  font-size: 15px;
+  color: #0a35c9;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#notificationPopup ul {
+  list-style: inside disc;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 13px;
+  color: #1a1a1a;
+}
+
+#notificationPopup button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+#whatsappBtn {
+  background: #25D366;
+  color: white;
+}
+
+#whatsappBtn:hover {
+  background: #20b058;
+}
+
+#closeNotification {
+  background: #ddd;
+  color: #333;
+}
+
+#closeNotification:hover {
+  background: #bbb;
+}
 
     body {
       height: 100vh;
@@ -241,7 +316,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-
+<!-- Notification Pop-up -->
+<div id="notificationPopup" class="popup" aria-modal="true" role="dialog">
+  <div class="popup-content">
+    <img src="logo.png" alt="De-Brainstormers Logo" class="logo">
+    <h2>Welcome to the Mock Exam Platform</h2>
+    <ul>
+      <li>Ensure you have a stable internet connection.</li>
+      <li>Read all instructions carefully before starting the exam.</li>
+      <li>Contact the Admin desk if you encounter any issues.</li>
+      <li>Are you a tutorial coordinator or team leader who would love to use our online ICT? Click on the button below.</li>
+      <li>Our online ICT has multiple Exam Rooms so different examination sessions could take place at the same time without errors.</li>
+      <li>Cheapest and super Personified experience!</li>
+    </ul>
+    <button id="whatsappBtn" aria-label="Contact Admin on WhatsApp">Contact Admin on WhatsApp</button>
+    <button id="closeNotification" aria-label="Close Notification">Close</button>
+  </div>
+  </div>
+      
   <!-- Star background -->
   <div class="stars"></div>
 
@@ -254,7 +346,7 @@
   <!-- Login Card -->
   <div class="login-wrapper">
     <div class="login-card">
-      <img src="your-illustration.png" alt="Login illustration" class="login-img" />
+      <img src="csc1.webp" alt="Login illustration" class="login-img" />
       <div class="login-content">
         <h2>Sign in your account</h2>
         <p class="subtext">Welcome back! Login with your data that you entered during registration</p>
@@ -297,7 +389,19 @@
         starsContainer.appendChild(star);
       }
     });
+// Show notification popup on page load
+document.getElementById('notificationPopup').classList.add('active');
 
+// Close button
+document.getElementById('closeNotification').addEventListener('click', function () {
+  document.getElementById('notificationPopup').classList.remove('active');
+});
+
+// WhatsApp button
+document.getElementById('whatsappBtn').addEventListener('click', function () {
+  window.open('https://wa.me/+2349155127634', '_blank');
+});
+    
     // Notifications
     function showNotification(message, type = "") {
       const noti = document.getElementById('customNotification');
