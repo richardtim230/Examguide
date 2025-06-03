@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 21,
+    "question": "The science of genetics, despite its modern origins, traces its conceptual roots back to which ancient practice?",
+    "options": [
+      {"text": "Philosophical debates on human nature."},
+      {"text": "Early medical treatments for inherited diseases."},
+      {"text": "Primitive agricultural domestication of plants and animals."},
+      {"text": "Astronomical observations of celestial patterns."}
+    ],
+    "answer": "Primitive agricultural domestication of plants and animals.",
+    "explanation": "The text states that the science of genetics dates back to primitive agriculturists who domesticated plants and animals thousands of years ago.",
+    "questionImage": ""
+  },
+  {
+    "id": 22,
+    "question": "Pythagoras's 'moist vapour' theory of heredity posited that the male transmitted all characters of the embryo, with this vapour originating from:",
+    "options": [
+      {"text": "The heart and vital organs."},
+      {"text": "The brain nerves and other body organs."},
+      {"text": "Semen produced by the testes."},
+      {"text": "Blood circulating throughout the body."}
+    ],
+    "answer": "The brain nerves and other body organs.",
+    "explanation": "Pythagoras speculated that a moist 'vapour' descended from the brain nerves and other body organs of the male.",
+    "questionImage": ""
+  },
+  {
+    "id": 23,
+    "question": "Aristotle's theory of heredity differed from Hippocrates' by suggesting that male semen was formed from:",
+    "options": [
+      {"text": "Reproductive material from all body parts."},
+      {"text": "A 'vital heat' contained within blood."},
+      {"text": "Direct secretions from each organ."},
+      {"text": "Preformed miniature parts of the offspring."}
+    ],
+    "answer": "A 'vital heat' contained within blood.",
+    "explanation": "Aristotle believed that the semen of men is formed from blood rather than from each organ, and its generative power resides in a 'vital heat'.",
+    "questionImage": ""
+  },
+  {
+    "id": 24,
+    "question": "Which preformationist concluded that the development of any organism consisted simply of the growth of preformed parts?",
+    "options": [
+      {"text": "Leonardo da Vinci."},
+      {"text": "William Harvey."},
+      {"text": "R. de Graaf."},
+      {"text": "Malpighi."}
+    ],
+    "answer": "Malpighi.",
+    "explanation": "Malpighi was a pioneer of the preformationist school who concluded that development was simply the growth of preformed parts.",
+    "questionImage": ""
+  },
+  {
+    "id": 25,
+    "question": "The concept of a 'homunculus' or 'manikin' (a miniature man) being present in the sperm head was published by:",
+    "options": [
+      {"text": "A. V. Leeuwenhoek."},
+      {"text": "J. Swammerdam."},
+      {"text": "Hartsoeker."},
+      {"text": "N. Grew."}
+    ],
+    "answer": "Hartsoeker.",
+    "explanation": "Hartsoeker published the figure of a homunculus or manikin (a miniature man) in the sperm head.",
+    "questionImage": ""
+  },
+  {
+    "id": 26,
+    "question": "The preformationist school that attached more importance to the ovum, believing the 'homunculus' was present there, was known as:",
+    "options": [
+      {"text": "Animalculists."},
+      {"text": "Spermatists."},
+      {"text": "Ovists."},
+      {"text": "Epigeneticists."}
+    ],
+    "answer": "Ovists.",
+    "explanation": "Ovists were the preformationists who believed the 'homunculus' was present in the ovum.",
+    "questionImage": ""
+  },
+  {
+    "id": 27,
+    "question": "K.F. Wolff's theory of epigenesis fundamentally refuted preformation by proposing that gametes contained:",
+    "options": [
+      {"text": "Preformed miniature organisms."},
+      {"text": "Undifferentiated living substance capable of forming organized bodies."},
+      {"text": "Specific vapours or fluids from parental organs."},
+      {"text": "A 'vital heat' that shaped menstrual blood."}
+    ],
+    "answer": "Undifferentiated living substance capable of forming organized bodies.",
+    "explanation": "K.F. Wolff refuted preformation by proposing that gametes contained undifferentiated living substance capable of forming the organized body after fertilization.",
+    "questionImage": ""
+  },
+  {
+    "id": 28,
+    "question": "Maupertuis's particulate theory of inheritance suggested that a new individual is formed by the union of:",
+    "options": [
+      {"text": "Preformed miniature organisms from one parent."},
+      {"text": "Vapours from the brain nerves of the male."},
+      {"text": "Minute particles contributed by each parent."},
+      {"text": "A 'vital heat' from the male semen."}
+    ],
+    "answer": "Minute particles contributed by each parent.",
+    "explanation": "Maupertuis proposed that the body of each parent gives rise to minute particles, which unite to form a new individual in sexual reproduction.",
+    "questionImage": ""
+  },
+  {
+    "id": 29,
+    "question": "The theory of 'inheritance of acquired characteristics' was proposed by:",
+    "options": [
+      {"text": "Charles Darwin."},
+      {"text": "Gregor Mendel."},
+      {"text": "Jean Baptiste Lamarck."},
+      {"text": "Augustinian Monk."}
+    ],
+    "answer": "Jean Baptiste Lamarck.",
+    "explanation": "Jean Baptiste Lamarck proposed the phenomenon of 'inheritance of acquired characteristics'.",
+    "questionImage": ""
+  },
+  {
+    "id": 30,
+    "question": "Weismann's germplasm theory fundamentally disproved the inheritance of acquired characteristics by distinguishing between:",
+    "options": [
+      {"text": "Male and female gametes."},
+      {"text": "Dominant and recessive traits."},
+      {"text": "Somatic cells and reproductive cells."},
+      {"text": "Pure lines and hybrids."}
+    ],
+    "answer": "Somatic cells and reproductive cells.",
+    "explanation": "Weismann postulated the theory of germplasm, distinguishing between somatic cells (body) and reproductive cells (germplasm), arguing that changes to somatic cells are not inherited.",
+    "questionImage": ""
+  },
+  {
+    "id": 31,
+    "question": "The year 1903 is considered the birth year of cytogenetics, primarily due to the proposal of the chromosome theory of heredity by:",
+    "options": [
+      {"text": "Bateson."},
+      {"text": "Archibald E. Garrod."},
+      {"text": "Walter S. Sutton."},
+      {"text": "Johannsen."}
+    ],
+    "answer": "Walter S. Sutton.",
+    "explanation": "Walter S. Sutton proposed the chromosome theory of heredity in 1902, leading to 1903 being considered the birth year of cytogenetics.",
+    "questionImage": ""
+  },
+  {
+    "id": 32,
+    "question": "The human disease alkaptonuria, characterized by urine turning dark upon exposure to air, had its inheritance pattern deciphered by:",
+    "options": [
+      {"text": "Thomas H. Morgan."},
+      {"text": "Archibald E. Garrod."},
+      {"text": "Walter S. Sutton."},
+      {"text": "Johannsen."}
+    ],
+    "answer": "Archibald E. Garrod.",
+    "explanation": "Archibald E. Garrod deciphered the inheritance pattern and metabolic nature of the human disease alkaptonuria.",
+    "questionImage": ""
+  },
+  {
+    "id": 33,
+    "question": "The term 'gene' was coined in 1877 by the investigator who formulated the genotype-phenotype concept. This individual was:",
+    "options": [
+      {"text": "Gregor Mendel."},
+      {"text": "Thomas H. Morgan."},
+      {"text": "Johannsen."},
+      {"text": "Walter S. Sutton."}
+    ],
+    "answer": "Johannsen.",
+    "explanation": "Johannsen formulated the genotype-phenotype concept and coined the term 'gene' in 1877.",
+    "questionImage": ""
+  },
+  {
+    "id": 34,
+    "question": "The fruit fly, *Drosophila Melanogaster*, became a significant model organism in genetics research due to the work of:",
+    "options": [
+      {"text": "Gregor Mendel."},
+      {"text": "Archibald E. Garrod."},
+      {"text": "Walter S. Sutton."},
+      {"text": "Thomas H. Morgan."}
+    ],
+    "answer": "Thomas H. Morgan.",
+    "explanation": "Thomas H. Morgan and his collaborators worked on the fruit fly, *Drosophila Melanogaster*, making it a key model organism.",
+    "questionImage": ""
+  },
+  {
+    "id": 35,
+    "question": "Which application of genetics involves the use of bioengineering to directly alter the genetic material of an organism?",
+    "options": [
+      {"text": "Agriculture for crop improvement."},
+      {"text": "Diagnosis of hereditary diseases."},
+      {"text": "Biotechnology for acquiring new traits."},
+      {"text": "Production of drugs like insulin."}
+    ],
+    "answer": "Biotechnology for acquiring new traits.",
+    "explanation": "Biotechnology involves the use of bioengineering to alter the genetic material of an organism directly, allowing for new genes and traits.",
+    "questionImage": ""
+  },
+  {
+    "id": 36,
+    "question": "An allele is defined as one of two or more forms that can exist at a single gene locus, distinguished by their differing effects on the:",
+    "options": [
+      {"text": "Genotype."},
+      {"text": "Chromosome number."},
+      {"text": "Phenotype."},
+      {"text": "Gamete formation."}
+    ],
+    "answer": "Phenotype.",
+    "explanation": "An allele is defined by its differing effects on the <b>phenotype</b>, which are the observable characteristics.",
+    "questionImage": ""
+  },
+  {
+    "id": 37,
+    "question": "Chromosomes other than sex chromosomes are specifically termed:",
+    "options": [
+      {"text": "Allosomes."},
+      {"text": "Homologues."},
+      {"text": "Autosomes."},
+      {"text": "Heterozygotes."}
+    ],
+    "answer": "Autosomes.",
+    "explanation": "<b>Autosomes</b> are chromosomes other than sex chromosomes.",
+    "questionImage": ""
+  },
+  {
+    "id": 38,
+    "question": "The cross of a progeny individual with its parents is known as a:",
+    "options": [
+      {"text": "Monohybrid cross."},
+      {"text": "Testcross."},
+      {"text": "Backcross."},
+      {"text": "Dihybrid cross."}
+    ],
+    "answer": "Backcross.",
+    "explanation": "A <b>backcross</b> is defined as the cross of a progeny individual with its parents.",
+    "questionImage": ""
+  },
+  {
+    "id": 39,
+    "question": "The phenomenon where one allele expresses its phenotypic effects even when heterozygous with a recessive allele is termed:",
+    "options": [
+      {"text": "Co-dominance."},
+      {"text": "Incomplete dominance."},
+      {"text": "Segregation."},
+      {"text": "Dominance."}
+    ],
+    "answer": "Dominance.",
+    "explanation": "<b>Dominance</b> is the phenomenon in which one member of a pair of allelic genes expresses itself as a whole or in part.",
+    "questionImage": ""
+  },
+  {
+    "id": 40,
+    "question": "A sex cell or germ cell possessing a haploid set of chromosomes is called a:",
+    "options": [
+      {"text": "Zygote."},
+      {"text": "Somatic cell."},
+      {"text": "Gamete."},
+      {"text": "Genome."}
+    ],
+    "answer": "Gamete.",
+    "explanation": "A <b>gamete</b> is defined as a sex cell or germ cell having a haploid set of chromosomes.",
+    "questionImage": ""
+  },
+  {
+    "id": 41,
+    "question": "The fundamental physical and functional unit of heredity, a segment of DNA that carries information from one generation to the next, is a:",
+    "options": [
+      {"text": "Chromosome."},
+      {"text": "Genome."},
+      {"text": "Gene."},
+      {"text": "Nucleotide."}
+    ],
+    "answer": "Gene.",
+    "explanation": "A <b>gene</b> is defined as the fundamental physical and functional unit of heredity, a segment of DNA.",
+    "questionImage": ""
+  },
+  {
+    "id": 42,
+    "question": "The progressive sequence of changes an organism undergoes from fertilization to death, including reproduction, mitosis, and meiosis, constitutes its:",
+    "options": [
+      {"text": "Developmental stage."},
+      {"text": "Evolutionary pathway."},
+      {"text": "Life cycle."},
+      {"text": "Genetic lineage."}
+    ],
+    "answer": "Life cycle.",
+    "explanation": "The progressive sequence of changes an organism goes through from fertilization to death, including reproduction, mitosis, and meiosis, constitutes its <b>life cycle</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 43,
+    "question": "In the diploid-dominant life cycle, characteristic of most animals, the only haploid cells produced by the organism are the:",
+    "options": [
+      {"text": "Somatic cells."},
+      {"text": "Germ cells."},
+      {"text": "Zygotes."},
+      {"text": "Gametes."}
+    ],
+    "answer": "Gametes.",
+    "explanation": "In the diploid-dominant life cycle, the multicellular diploid stage is most obvious, and the only haploid cells produced are the <b>gametes</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 44,
+    "question": "Most fungi and algae employ a life cycle type where the multicellular haploid stage is the most obvious. This is known as the:",
+    "options": [
+      {"text": "Diploid-dominant life cycle."},
+      {"text": "Alternation of generations."},
+      {"text": "Haploid-dominant life cycle."},
+      {"text": "Asexual reproduction cycle."}
+    ],
+    "answer": "Haploid-dominant life cycle.",
+    "explanation": "Most fungi and algae employ a <b>haploid-dominant life cycle</b> type, where the multicellular haploid stage is the most obvious life stage.",
+    "questionImage": ""
+  },
+  {
+    "id": 45,
+    "question": "Plants exhibit a life cycle that blends haploid-dominant and diploid-dominant extremes, involving both multicellular haploid and diploid organisms. This is termed:",
+    "options": [
+      {"text": "Sporophyte dominance."},
+      {"text": "Gametophyte dominance."},
+      {"text": "Alternation of generations."},
+      {"text": "Sexual dimorphism."}
+    ],
+    "answer": "Alternation of generations.",
+    "explanation": "The third life-cycle type, employed by some algae and all plants, is a blend of the haploid-dominant and diploid-dominant extremes, known as <b>alternation of generations</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 46,
+    "question": "Mendel's First Law of Genetics, the Law of Segregation, states that during gamete formation, the two alleles of a gene:",
+    "options": [
+      {"text": "Always remain linked together."},
+      {"text": "Segregate independently of other gene pairs."},
+      {"text": "Separate from each other to form the genetic constitution of the gamete."},
+      {"text": "Blend to form an intermediate phenotype."}
+    ],
+    "answer": "Separate from each other to form the genetic constitution of the gamete.",
+    "explanation": "Mendel's First Law, the Law of Segregation, states that during gamete formation, each member of the allelic pair separates from the other member to form the genetic constitution of the gamete.",
+    "questionImage": ""
+  },
+  {
+    "id": 47,
+    "question": "In a monohybrid cross involving complete dominance, the F₂ generation typically exhibits a phenotypic ratio of:",
+    "options": [
+      {"text": "1:2:1."},
+      {"text": "9:3:3:1."},
+      {"text": "3:1."},
+      {"text": "1:1."}
+    ],
+    "answer": "3:1.",
+    "explanation": "The F₂ generation in a monohybrid cross with complete dominance always produces a <b>3:1 phenotypic ratio</b> (dominant to recessive).",
+    "questionImage": ""
+  },
+  {
+    "id": 48,
+    "question": "The backbone of the DNA double helix is composed of alternating units of:",
+    "options": [
+      {"text": "Nitrogenous bases and sugars."},
+      {"text": "Phosphate groups and nitrogenous bases."},
+      {"text": "Sugars and phosphate groups."},
+      {"text": "Amino acids and fatty acids."}
+    ],
+    "answer": "Sugars and phosphate groups.",
+    "explanation": "The backbone of the DNA helix is composed of two chains with alternating sugar (deoxyribose) and phosphate units.",
+    "questionImage": ""
+  },
+  {
+    "id": 49,
+    "question": "Which of the following is a key difference between RNA and DNA?",
+    "options": [
+      {"text": "RNA is double-stranded, while DNA is single-stranded."},
+      {"text": "RNA contains deoxyribose sugar, while DNA contains ribose sugar."},
+      {"text": "RNA contains thymine, while DNA contains uracil."},
+      {"text": "RNA contains uracil, while DNA contains thymine."}
+    ],
+    "answer": "RNA contains uracil, while DNA contains thymine.",
+    "explanation": "RNA contains the pyrimidine base <b>uracil (U)</b> instead of thymine (T), which is found in DNA.",
+    "questionImage": ""
+  },
+  {
+    "id": 50,
+    "question": "A base-sugar complex is termed a ________, while adding a phosphate to this complex forms a ________.",
+    "options": [
+      {"text": "Nucleotide, nucleoside."},
+      {"text": "Gene, chromosome."},
+      {"text": "Nucleoside, nucleotide."},
+      {"text": "Codon, anticodon."}
+    ],
+    "answer": "Nucleoside, nucleotide.",
+    "explanation": "A base-sugar complex is called a <b>nucleoside</b>; a nucleoside plus a phosphate is called a <b>nucleotide</b>.",
+    "questionImage": ""
+  },
+  {
     "id": 1,
     "question": "The fundamental characteristic defining a substance as a 'pollutant' is its capacity to instigate:",
     "options": [
@@ -31,7 +421,7 @@
   },
   {
     "id": 3,
-    "question": "Which of the following chemical compounds is specifically mentioned as a pollutant, often associated with its use in cleaning agents?",
+    "question": "Which of the following chemical compounds is a pollutant, often associated with its use in cleaning agents?",
     "options": [
       {"text": "Arsine."},
       {"text": "Phosgene."},
@@ -70,7 +460,7 @@
   },
   {
     "id": 6,
-    "question": "Which of these is *not* explicitly listed as a distinct category of environmental pollution?",
+    "question": "Which of these is NOT a distinct category of environmental pollution?",
     "options": [
       {"text": "Land pollution."},
       {"text": "Thermal pollution."},
@@ -122,7 +512,7 @@
   },
   {
     "id": 10,
-    "question": "The adverse effects of pollutants are stated to impact all the following *except*:",
+    "question": "The adverse effects of pollutants are stated to impact all the following EXCEPT:",
     "options": [
       {"text": "Human life."},
       {"text": "Animal species."},
@@ -187,7 +577,7 @@
   },
   {
     "id": 15,
-    "question": "Which gas is *not* explicitly identified as a primary trapping pollutant contributing to the greenhouse effect?",
+    "question": "Which gas is NOT a primary trapping pollutant contributing to the greenhouse effect?",
     "options": [
       {"text": "Methane."},
       {"text": "Nitrous oxide."},
@@ -226,7 +616,7 @@
   },
   {
     "id": 18,
-    "question": "A direct consequence of rising global temperatures, as mentioned, is the disruption of the:",
+    "question": "A direct consequence of rising global temperatures is the disruption of the:",
     "options": [
       {"text": "Ocean currents."},
       {"text": "Balance of nature."},
