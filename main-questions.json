@@ -5,7 +5,7 @@
     "questions": [
   {
     "id": 81,
-    "question": "The term <b>ecology<b> is derived from the Greek words <b>Oikos<b> and <b>Logy.<b> Which of the following accurately represents the combined meaning of these roots as they relate to the scientific study of ecology?",
+    "question": "The term <b>ecology</b> is derived from the Greek words <b>Oikos</b> and <b>Logy.</b> Which of the following accurately represents the combined meaning of these roots as they relate to the scientific study of ecology?",
     "options": [
       {"text": "The study of natural habitats."},
       {"text": "The scientific investigation of environmental systems."},
@@ -18,7 +18,7 @@
   },
   {
     "id": 82,
-    "question": "According to the provided definition, ecology is the scientific study of the inter-relationship between living organisms and their environment. Which of the following pairs correctly identifies the two fundamental components of this environment?",
+    "question": "Ecology is the scientific study of the inter-relationship between living organisms and their environment. Which of the following pairs correctly identifies the two fundamental components of this environment?",
     "options": [
       {"text": "Physical and Chemical"},
       {"text": "Terrestrial and Aquatic"},
@@ -135,7 +135,7 @@
   },
   {
     "id": 91,
-    "question": "The area near the Earth's surface is divided into four interconnected geo-spheres that make up the carbon cycle. Which of these geo-spheres is <i>not</i> explicitly listed as one of the four?",
+    "question": "The area near the Earth's surface is divided into four interconnected geo-spheres that make up the carbon cycle. Which of these geo-spheres is <i>not</i> one of the four?",
     "options": [
       {"text": "Atmosphere."},
       {"text": "Biosphere."},
@@ -161,7 +161,7 @@
   },
   {
     "id": 93,
-    "question": "Which layer of the atmosphere is described as the warmest layer closest to the Earth's surface?",
+    "question": "Which layer of the atmosphere is known as the warmest layer closest to the Earth's surface?",
     "options": [
       {"text": "Stratosphere."},
       {"text": "Mesosphere."},
@@ -213,7 +213,7 @@
   },
   {
     "id": 97,
-    "question": "The hydrosphere encompasses various water bodies. Which of the following is <i>not</i> explicitly listed as a component of the hydrosphere in the provided text?",
+    "question": "The hydrosphere encompasses various water bodies. Which of the following is <i>not</i> a component of the hydrosphere in the provided text?",
     "options": [
       {"text": "Glaciers."},
       {"text": "Geysers."},
