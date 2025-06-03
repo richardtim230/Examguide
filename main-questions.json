@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 131,
+    "question": "Mammals are vertebrates distinguished by an advanced structural complexity and specialization across nearly all body systems. This advancement is most notably evident in their superior development of which two systems?",
+    "options": [
+      {"text": "Skeletal and Muscular systems."},
+      {"text": "Digestive and Circulatory systems."},
+      {"text": "Brain and Nervous systems."},
+      {"text": "Respiratory and Excretory systems."}
+    ],
+    "answer": "Brain and Nervous systems.",
+    "explanation": "Mammals are characterized by their <b>superior brain and nervous system</b>, which makes them more intelligent than other animals.",
+    "questionImage": ""
+  },
+  {
+    "id": 132,
+    "question": "A defining characteristic of Class Mammalia is the presence of specialized glands for feeding their young. What are these glands called?",
+    "options": [
+      {"text": "Sebaceous glands."},
+      {"text": "Sweat glands."},
+      {"text": "Mammary glands."},
+      {"text": "Scent glands."}
+    ],
+    "answer": "Mammary glands.",
+    "explanation": "Mammals are characterized by the presence of <b>mammary glands</b> through which they feed their young ones.",
+    "questionImage": ""
+  },
+  {
+    "id": 133,
+    "question": "Which of the following is a distinguishing characteristic of mammals related to their body temperature regulation?",
+    "options": [
+      {"text": "Poikilothermic."},
+      {"text": "Ectothermic."},
+      {"text": "Cold-blooded."},
+      {"text": "Warm-blooded."}
+    ],
+    "answer": "Warm-blooded.",
+    "explanation": "A distinguishing characteristic of mammals is being <b>warm-blooded</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 134,
+    "question": "Mammals possess different types of teeth, a condition known as:",
+    "options": [
+      {"text": "Homodont."},
+      {"text": "Polyphyodont."},
+      {"text": "Heterodont."},
+      {"text": "Thecodont."}
+    ],
+    "answer": "Heterodont.",
+    "explanation": "Mammals are characterized by being <b>heterodont</b>, meaning they possess different types of teeth.",
+    "questionImage": ""
+  },
+  {
+    "id": 135,
+    "question": "The trunk of a mammal's body is divided into two main sections. What are these sections?",
+    "options": [
+      {"text": "Head and Neck."},
+      {"text": "Thorax and Abdomen."},
+      {"text": "Pelvis and Thorax."},
+      {"text": "Cranium and Vertebrae."}
+    ],
+    "answer": "Thorax and Abdomen.",
+    "explanation": "The trunk of a mammal is divided into the <b>thorax and abdomen</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 136,
+    "question": "Mammals primarily respire through which organs?",
+    "options": [
+      {"text": "Gills."},
+      {"text": "Skin."},
+      {"text": "Trachea."},
+      {"text": "Lungs."}
+    ],
+    "answer": "Lungs.",
+    "explanation": "Mammals <b>respire through lungs</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 137,
+    "question": "The classification of Class Mammalia into three subclasses is primarily based on their method of:",
+    "options": [
+      {"text": "Locomotion."},
+      {"text": "Feeding."},
+      {"text": "Reproduction."},
+      {"text": "Habitat."}
+    ],
+    "answer": "Reproduction.",
+    "explanation": "The class Mammalia is classified into 3 subclasses based on their <b>reproduction method</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 138,
+    "question": "Which of the following is *not* a criterion used for further classifying mammalian subclasses into orders?",
+    "options": [
+      {"text": "Character of teeth."},
+      {"text": "Modifications of limbs or digits."},
+      {"text": "Presence or absence of claws or hoofs."},
+      {"text": "Type of diet."}
+    ],
+    "answer": "Type of diet.",
+    "explanation": "Orders are classified based on the character of teeth, modifications of the limbs or digit, presence or absence of claws or hoofs, and the complexity of the nervous system. Type of diet is not listed as a primary classification criterion for orders.",
+    "questionImage": ""
+  },
+  {
+    "id": 139,
+    "question": "Which subclass of mammals is characterized by being egg-laying?",
+    "options": [
+      {"text": "Metatheria."},
+      {"text": "Eutheria."},
+      {"text": "Prototheria."},
+      {"text": "Theria."}
+    ],
+    "answer": "Prototheria.",
+    "explanation": "<b>Prototheria</b> are the egg-laying mammals, also known as monotremes.",
+    "questionImage": ""
+  },
+  {
+    "id": 140,
+    "question": "The subclass Prototheria consists of only one order. What is this order, characterized by the presence of a single ventral orifice for discharge of faeces, excretory, and genital products?",
+    "options": [
+      {"text": "Marsupialia."},
+      {"text": "Monotremata."},
+      {"text": "Placentalia."},
+      {"text": "Insectivora."}
+    ],
+    "answer": "Monotremata.",
+    "explanation": "Subclass Prototheria consists of only order <b>Monotremata</b>, which refers to the presence of a single ventral orifice.",
+    "questionImage": ""
+  },
+  {
+    "id": 141,
+    "question": "Which of the following animals is an example of a Prototherian mammal?",
+    "options": [
+      {"text": "Kangaroo."},
+      {"text": "Duck-billed platypus."},
+      {"text": "Tasmanian wolf."},
+      {"text": "Bat."}
+    ],
+    "answer": "Duck-billed platypus.",
+    "explanation": "The <b>Duck-billed platypus</b> (Ornithorhynchus) is an example of a Prototherian mammal.",
+    "questionImage": ""
+  },
+  {
+    "id": 142,
+    "question": "Subclass Metatheria is characterized by an abdominal pouch where premature young continue their development. What is this pouch called?",
+    "options": [
+      {"text": "Placenta."},
+      {"text": "Amnion."},
+      {"text": "Uterus."},
+      {"text": "Marsupium."}
+    ],
+    "answer": "Marsupium.",
+    "explanation": "Metatheria are characterized by an abdominal pouch known as <b>marsupium</b>, which is a sort of external uterus.",
+    "questionImage": ""
+  },
+  {
+    "id": 143,
+    "question": "Metatherian mammals give birth at a premature stage. Where does the development of the young continue after birth?",
+    "options": [
+      {"text": "In the uterus."},
+      {"text": "Attached to the nipples within the marsupium."},
+      {"text": "In a nest outside the mother's body."},
+      {"text": "Through external incubation."}
+    ],
+    "answer": "Attached to the nipples within the marsupium.",
+    "explanation": "Metatherians give birth at a premature stage, and development continues in the <b>marsupium attached to the nipples</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 144,
+    "question": "Which of the following is an example of a carnivorous marsupial?",
+    "options": [
+      {"text": "Koala."},
+      {"text": "Numbat."},
+      {"text": "Tasmanian wolf."},
+      {"text": "Kangaroo."}
+    ],
+    "answer": "Tasmanian wolf.",
+    "explanation": "The <b>Tasmanian wolf</b> is listed as an example of a carnivorous marsupial.",
+    "questionImage": ""
+  },
+  {
+    "id": 145,
+    "question": "The two distinct geographical groups of marsupials found today are in Australia and which other continent?",
+    "options": [
+      {"text": "Africa."},
+      {"text": "Asia."},
+      {"text": "South America."},
+      {"text": "Europe."}
+    ],
+    "answer": "South America.",
+    "explanation": "There are two distinct groups of marsupials, one in Australia and the other in <b>South America</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 146,
+    "question": "Subclass Eutheria is characterized by giving birth to well-developed young directly. What specialized structure links the embryo to the maternal blood system for nutrient and oxygen exchange?",
+    "options": [
+      {"text": "Marsupium."},
+      {"text": "Amnion."},
+      {"text": "Yolk sac."},
+      {"text": "Placenta."}
+    ],
+    "answer": "Placenta.",
+    "explanation": "The embryo of Eutherian mammals is linked to the maternal blood system by the <b>placenta</b> for nutrient and oxygen transfer.",
+    "questionImage": ""
+  },
+  {
+    "id": 147,
+    "question": "Eutherian mammals are the most numerous subclass. How many orders do they consist of in total?",
+    "options": [
+      {"text": "7."},
+      {"text": "8."},
+      {"text": "19."},
+      {"text": "250."}
+    ],
+    "answer": "19.",
+    "explanation": "Eutherian mammals are the most numerous, consisting of <b>19 orders</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 148,
+    "question": "Deer, Sheep, Antelope, and Cows are examples of even-toed ruminant ungulates belonging to which mammalian order?",
+    "options": [
+      {"text": "Perissodactyla."},
+      {"text": "Carnivora."},
+      {"text": "Artiodactyla."},
+      {"text": "Lagomorpha."}
+    ],
+    "answer": "Artiodactyla.",
+    "explanation": "Deer, Sheep, Antelope, and Cows belong to Order <b>Artiodactyla</b>, which are even-toed ruminant ungulates.",
+    "questionImage": ""
+  },
+  {
+    "id": 149,
+    "question": "Horses and Zebras are examples of odd-toed ungulates. To which mammalian order do they belong?",
+    "options": [
+      {"text": "Artiodactyla."},
+      {"text": "Perissodactyla."},
+      {"text": "Rodentia."},
+      {"text": "Primates."}
+    ],
+    "answer": "Perissodactyla.",
+    "explanation": "Horses and Zebras belong to Order <b>Perissodactyla</b>, which are odd-toed ungulates.",
+    "questionImage": ""
+  },
+  {
+    "id": 150,
+    "question": "Dogs, Cats, Bear, and Lions are examples of flesh-eating land mammals. They are classified under which order?",
+    "options": [
+      {"text": "Insectivora."},
+      {"text": "Chiroptera."},
+      {"text": "Carnivora."},
+      {"text": "Lagomorpha."}
+    ],
+    "answer": "Carnivora.",
+    "explanation": "Dogs, Cats, Bear, and Lions are examples of flesh-eating land mammals belonging to Order <b>Carnivora</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 151,
+    "question": "Rabbits and Hares, characterized as large rodents with short tails, belong to which mammalian order?",
+    "options": [
+      {"text": "Rodentia."},
+      {"text": "Lagomorpha."},
+      {"text": "Artiodactyla."},
+      {"text": "Insectivora."}
+    ],
+    "answer": "Lagomorpha.",
+    "explanation": "Rabbits and Hares belong to Order <b>Lagomorpha</b>, described as large rodents with short tails.",
+    "questionImage": ""
+  },
+  {
+    "id": 152,
+    "question": "Squirrels, Rats, Mice, and Porcupines are examples of gnawing mammals with sharp front teeth. They are members of which order?",
+    "options": [
+      {"text": "Lagomorpha."},
+      {"text": "Insectivora."},
+      {"text": "Rodentia."},
+      {"text": "Primates."}
+    ],
+    "answer": "Rodentia.",
+    "explanation": "Squirrels, Rats, Mice, Porcupines, and Beavers belong to Order <b>Rodentia</b>, which are gnawing mammals with sharp front teeth.",
+    "questionImage": ""
+  },
+  {
+    "id": 153,
+    "question": "Bats are the sole examples of flying mammals listed. To which order do they belong?",
+    "options": [
+      {"text": "Primates."},
+      {"text": "Chiroptera."},
+      {"text": "Insectivora."},
+      {"text": "Carnivora."}
+    ],
+    "answer": "Chiroptera.",
+    "explanation": "Bats are flying mammals belonging to Order <b>Chiroptera</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 154,
+    "question": "Lemurs, Monkeys, Apes, and Man are examples of arboreal or tree-living mammals, some with terrestrial forms, and all possessing well-developed brains. They are classified under which order?",
+    "options": [
+      {"text": "Rodentia."},
+      {"text": "Carnivora."},
+      {"text": "Primates."},
+      {"text": "Insectivora."}
+    ],
+    "answer": "Primates.",
+    "explanation": "Lemurs, Monkeys, Apes, and Man belong to Order <b>Primates</b>, characterized as arboreal/tree-living mammals with well-developed brains.",
+    "questionImage": ""
+  },
+  {
+    "id": 155,
+    "question": "Moles and Shrews are considered the most primitive insect-eating mammals. They belong to which order?",
+    "options": [
+      {"text": "Rodentia."},
+      {"text": "Lagomorpha."},
+      {"text": "Insectivora."},
+      {"text": "Chiroptera."}
+    ],
+    "answer": "Insectivora.",
+    "explanation": "Moles and Shrews are the most primitive insect-eating mammals, belonging to Order <b>Insectivora</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 156,
+    "question": "Which of the following characteristics is unique to mammals compared to other vertebrates, as highlighted in the provided information?",
+    "options": [
+      {"text": "Possession of a four-chambered heart."},
+      {"text": "Respiration through lungs."},
+      {"text": "Giving birth to live young."},
+      {"text": "Presence of mammary glands."}
+    ],
+    "answer": "Presence of mammary glands.",
+    "explanation": "While other vertebrates may share some characteristics, the <b>presence of mammary glands</b> for feeding young is a defining and unique characteristic of mammals.",
+    "questionImage": ""
+  },
+  {
+    "id": 157,
+    "question": "The subclass Prototheria is described as descendants of reptiles. This lineage is reflected in which of their reproductive characteristics?",
+    "options": [
+      {"text": "Viviparous (live birth)."},
+      {"text": "Oviparous (egg-laying)."},
+      {"text": "Development in a pouch."},
+      {"text": "Placental development."}
+    ],
+    "answer": "Oviparous (egg-laying).",
+    "explanation": "Prototheria are descendants of reptiles and are hence <b>oviparous</b>, meaning they lay eggs.",
+    "questionImage": ""
+  },
+  {
+    "id": 158,
+    "question": "Which of the following marsupials is specifically identified as a tree-dwelling species?",
+    "options": [
+      {"text": "Tasmanian wolf."},
+      {"text": "Numbat."},
+      {"text": "Bandicoot."},
+      {"text": "Koala."}
+    ],
+    "answer": "Koala.",
+    "explanation": "Opposums and <b>koalas</b> are listed as tree-dwelling marsupials.",
+    "questionImage": ""
+  },
+  {
+    "id": 159,
+    "question": "The placenta in Eutherian mammals facilitates the transfer of nutrients and oxygen from the mother to the embryo. What waste product is transferred from the embryo back to the mother via the placenta?",
+    "options": [
+      {"text": "Uric acid."},
+      {"text": "Ammonia."},
+      {"text": "Nitrogenous waste and CO₂."},
+      {"text": "Excess water."}
+    ],
+    "answer": "Nitrogenous waste and CO₂.",
+    "explanation": "The placenta allows for the transfer of nutrients and oxygen from mother to embryo, as well as <b>nitrogenous waste and CO₂</b> from embryo to mother.",
+    "questionImage": ""
+  },
+  {
+    "id": 160,
+    "question": "Which of the following orders of Eutherian mammals is characterized by having a well-developed brain?",
+    "options": [
+      {"text": "Lagomorpha."},
+      {"text": "Rodentia."},
+      {"text": "Chiroptera."},
+      {"text": "Primates."}
+    ],
+    "answer": "Primates.",
+    "explanation": "Order <b>Primates</b> are described as having well-developed brains.",
+    "questionImage": ""
+  },
+  {
     "id": 191,
     "question": "Which branch of ecology focuses on the interactions of a single species or an individual organism with its living and non-living environmental factors, influencing its survival and reproduction?",
     "options": [
