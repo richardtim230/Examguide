@@ -1,9 +1,9 @@
 [
   {
     "id": "premiumstudy",
-    "name": "Premium Study Tools",
-    "headline": "Boost Your Grades with Premium Study Tools!",
-    "description": "Get access to powerful resources, analytics, and expert support tailored for OAU students.",
+    "name": "Premium Study Tips",
+    "headline": "MESSAGE FROM PROF RICHARD!",
+    "description": "Before you proceed with checking your performance report and corrections, I just want to remind you that you've got all it takes to be who you are, don't let anything limit you! <br>Send a message via the button below if you got an issue to talk about, I'm here for you dear</br>",
     "features": [
       "Unlimited CBT practice sessions",
       "Instant feedback and solutions",
@@ -11,9 +11,9 @@
       "24/7 expert support"
     ],
     "topImage": "portable-megaphone-3d-icon_439185-12216.jpg",
-    "midImage": "close-up-stack-books_1098-1352.jpg",
-    "contactLabel": "Contact Premium Study",
-    "contactLink": "mailto:info@premiumstudy.com"
+    "midImage": "tourists-go-up-hill-sunrise_1150-19692.webp",
+    "contactLabel": "Contact Prof Richard",
+    "contactLink": "https://wa.me/2349155127634"
   },
   {
     "id": "fastprint",
@@ -27,7 +27,7 @@
       "Student discounts available"
     ],
     "topImage": "portable-megaphone-3d-icon_439185-12216.jpg",
-    "midImage": "close-up-stack-books_1098-1352.jpg",
+    "midImage": "red-dart-arrow-hitting-target-center-dartboard_91128-1576.webp",
     "contactLabel": "WhatsApp FastPrint",
     "contactLink": "https://wa.me/2348000000000"
   },
@@ -45,6 +45,6 @@
     "topImage": "important-announcement-megaphone-announces-news-vector-illustration_3482-13249.jpg",
     "midImage": "close-up-stack-books_1098-1352.jpg",
     "contactLabel": "Call EasyHostel",
-    "contactLink": "tel:+2348123456789"
+    "contactLink": "tel:+23412333333"
   }
 ]
