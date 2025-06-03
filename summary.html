@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+no<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -191,143 +191,91 @@
       border-radius: 6px;
       font-size: 15px;
     }
-    
-    .footer-glass {
-      background: rgba(22,34,65,0.82);
-      box-shadow: 0 -8px 42px 0 #00c6ff66, 0 -1.5px 0 #fff2;
-      backdrop-filter: blur(9px);
-      border-top-left-radius: 36px;
-      border-top-right-radius: 36px;
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-      padding: 44px 0 48px 0;
-      margin-top: 38px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-family: 'Segoe UI', 'Tahoma', Geneva, Verdana, sans-serif;
-    }
-    .footer-content-cool {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      width: 100%;
-      position: relative;
-      z-index: 2;
-    }
-    .footer-powered-cool {
-      font-size: 1.13rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-      background: rgba(0, 198, 255, 0.10);
-      padding: 8px 24px;
-      border-radius: 9px;
-      margin: 0 auto;
-      box-shadow: 0 1.5px 6px rgba(0,198,255,0.10);
-    }
-    .footer-divider-cool {
-      width: 60%;
-      height: 2.5px;
-      background: linear-gradient(90deg, #00c6ff 0%, #f72585 100%);
-      border: none;
-      border-radius: 2px;
-      margin: 12px 0 8px 0;
-      opacity: 0.7;
-      box-shadow: 0 0 8px 0 #00c6ff44;
-    }
-    .footer-honour-cool {
-      margin-top: 10px;
-      font-family: 'Dancing Script', cursive, 'Segoe UI', sans-serif;
-      font-size: 1.38rem;
-      font-weight: bold;
-      letter-spacing: 0.7px;
-      background: linear-gradient(90deg, #00c6ff 0%, #f72585 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: brightness(1.25);
-      text-shadow: 0 2px 18px #00c6ff99, 1px 1px 0 #f7258577;
-      padding: 6px 20px;
-      border-radius: 24px;
-      border: 2.5px solid #00c6ff66;
-      box-shadow: 0 2px 18px #00c6ff33;
-      position: relative;
-      display: inline-block;
-      animation: fadeInHonour 1.8s ease;
-    }
-    @keyframes fadeInHonour {
-      from { opacity: 0; transform: translateY(20px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .footer-badge {
-      position: absolute;
-      top: -22px;
-      right: 12px;
-      background: #f72585;
-      color: #fff;
-      font-size: 1.05em;
-      padding: 3px 15px 3px 12px;
-      border-radius: 18px;
-      font-family: 'Segoe UI', sans-serif;
-      font-weight: 600;
-      box-shadow: 0 2px 10px #f7258544;
-      transform: rotate(8deg);
-      letter-spacing: 0.5px;
-      border: 1.5px solid #fff;
-      z-index: 10;
-      animation: fadeInBadge 2.4s 0.4s backwards;
-    }
-    @keyframes fadeInBadge {
-      from {opacity: 0; transform: scale(0.8);}
-      to {opacity: 1; transform: scale(1);}
-    }
-    .footer-socials {
-      display: flex;
-      gap: 15px;
-      margin-top: 12px;
-    }
-    .footer-socials a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(0,198,255,0.13);
-      color: #fff;
-      font-size: 1.45em;
-      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-      box-shadow: 0 2px 6px rgba(0,198,255,0.07);
-      text-decoration: none;
-    }
-    .footer-socials a:hover {
-      background: linear-gradient(90deg, #00c6ff 0%, #f72585 100%);
-      color: #fffbe7;
-      box-shadow: 0 2px 12px #00c6ff33;
-    }
-    /* Sparkle animation */
-    .sparkle {
-      position: absolute;
-      pointer-events: none;
-      opacity: 0.7;
-      animation: sparkle-anim 4s linear infinite;
-    }
-    .sparkle.s1 { top: 10%; left: 11%; font-size: 1em; animation-delay: 0s;}
-    .sparkle.s2 { top: 18%; right: 17%; font-size: 1.5em; animation-delay: 1.2s;}
-    .sparkle.s3 { bottom: 14%; left: 18%; font-size: 1.2em; animation-delay: 2.1s;}
-    .sparkle.s4 { bottom: 20%; right: 13%; font-size: 1.7em; animation-delay: 0.7s;}
-    @keyframes sparkle-anim {
-      0% { opacity: 0.7; transform: scale(1);}
-      50% { opacity: 1; transform: scale(1.3) rotate(18deg);}
-      100% { opacity: 0.7; transform: scale(1);}
-    }
-  
+    .app-footer {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  color: #eee;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+}
 
-  
+.footer-glass {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sparkles {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 5px;
+  opacity: 0.6;
+}
+
+.footer-content {
+  padding-top: 30px;
+}
+
+.footer-btn {
+  background: #0d6efd;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-btn:hover {
+  background: #0b5ed7;
+}
+
+.footer-powered {
+  margin: 15px 0 5px;
+}
+
+.powered-by {
+  font-weight: bold;
+  color: #00ffea;
+}
+
+.footer-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 10px auto;
+  width: 60%;
+}
+
+.footer-credits {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.footer-badge {
+  display: inline-block;
+  background: #292929;
+  color: #f0f0f0;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-left: 5px;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icon {
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+      
     #printBtn {
       background: #fff;
       color: #0072ff;
@@ -461,30 +409,43 @@
     <div class="section-title">Attempt Review</div>
     <div id="reviewSection"></div>
   </div>
-  <footer>
-    <div class="footer-glass">
-    <span class="sparkle s1">✨</span>
-    <span class="sparkle s2">🌟</span>
-    <span class="sparkle s3">💫</span>
-    <span class="sparkle s4">⭐</span>
-    <div class="footer-content-cool">
-      <button id="printBtn">Print / Save as PDF</button>
-      <div class="footer-powered-cool">
-        &copy; <span id="year"></span> <strong>CBT Platform</strong> &mdash; Powered by ExamGuide
+  <footer class="app-footer">
+  <div class="footer-glass">
+    
+    <!-- Decorative Sparkles -->
+    <div class="sparkles">
+      <span class="sparkle s1" aria-hidden="true">✨</span>
+      <span class="sparkle s2" aria-hidden="true">🌟</span>
+      <span class="sparkle s3" aria-hidden="true">💫</span>
+      <span class="sparkle s4" aria-hidden="true">⭐</span>
+    </div>
+
+    <!-- Main Footer Content -->
+    <div class="footer-content">
+      <button id="printBtn" class="footer-btn">🖨️ Print / Save as PDF</button>
+
+      <div class="footer-powered">
+        &copy; <span id="year"></span> <strong>CBT Platform</strong> — Powered by <span class="powered-by">ExamGuide</span>
       </div>
-      <hr class="footer-divider-cool"/>
-      <div class="footer-honour-cool" style="position:relative;">
-        This solutions were provided and reviewed by
+
+      <hr class="footer-divider" />
+
+      <div class="footer-credits">
+        Solutions provided and reviewed by
         <span class="footer-badge">Hon. Richard D'prof</span>
       </div>
+
       <div class="footer-socials">
-        <a href="#" aria-label="WhatsApp"><span>🟢</span></a>
-        <a href="#" aria-label="LinkedIn"><span>🔗</span></a>
-        <a href="#" aria-label="Email"><span>✉️</span></a>
+        <a href="#" aria-label="WhatsApp" class="social-icon">🟢</a>
+        <a href="#" aria-label="LinkedIn" class="social-icon">🔗</a>
+        <a href="#" aria-label="Email" class="social-icon">✉️</a>
       </div>
     </div>
   </div>
   </footer>
+  
+  
+  
   <script>
     // Data and calculations
     const currentUser = localStorage.getItem('current_user') || 'Guest';
