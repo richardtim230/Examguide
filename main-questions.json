@@ -96,7 +96,7 @@
   },
   {
     "id": 138,
-    "question": "Which of the following is *not* a criterion used for further classifying mammalian subclasses into orders?",
+    "question": "Which of the following is NOT a criterion used for further classifying mammalian subclasses into orders?",
     "options": [
       {"text": "Character of teeth."},
       {"text": "Modifications of limbs or digits."},
@@ -330,7 +330,7 @@
   },
   {
     "id": 156,
-    "question": "Which of the following characteristics is unique to mammals compared to other vertebrates, as highlighted in the provided information?",
+    "question": "Which of the following characteristics is unique to mammals compared to other vertebrates?",
     "options": [
       {"text": "Possession of a four-chambered heart."},
       {"text": "Respiration through lungs."},
