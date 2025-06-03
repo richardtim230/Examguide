@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 81,
+    "question": "The term <b>ecology<b> is derived from the Greek words <b>Oikos<b> and <b>Logy.<b> Which of the following accurately represents the combined meaning of these roots as they relate to the scientific study of ecology?",
+    "options": [
+      {"text": "The study of natural habitats."},
+      {"text": "The scientific investigation of environmental systems."},
+      {"text": "The study of organisms in their dwelling."},
+      {"text": "The scientific analysis of life forms."}
+    ],
+    "answer": "The study of organisms in their dwelling.",
+    "explanation": "The word 'ecology' is derived from 'Oikos' meaning 'house' or 'at home' and 'Logy' meaning 'study'. Therefore, it fundamentally means the study of organisms in their 'house' or 'home', which refers to their environment.",
+    "questionImage": ""
+  },
+  {
+    "id": 82,
+    "question": "According to the provided definition, ecology is the scientific study of the inter-relationship between living organisms and their environment. Which of the following pairs correctly identifies the two fundamental components of this environment?",
+    "options": [
+      {"text": "Physical and Chemical"},
+      {"text": "Terrestrial and Aquatic"},
+      {"text": "Biotic and Abiotic"},
+      {"text": "Natural and Anthropogenic"}
+    ],
+    "answer": "Biotic and Abiotic",
+    "explanation": "Ecology is defined as the scientific study of the inter-relationship between living organisms and their <b>abiotic and biotic environment</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 83,
+    "question": "A specific aspect of ecology focuses on applying ecological principles to ensure the continuation of life on Earth by maintaining necessary conditions. This field is precisely known as:",
+    "options": [
+      {"text": "Conservation Biology."},
+      {"text": "Restoration Ecology."},
+      {"text": "Applied Ecology."},
+      {"text": "Environmental Science."}
+    ],
+    "answer": "Applied Ecology.",
+    "explanation": "<b>Applied Ecology</b> is defined as 'Using ecological principles to maintain conditions necessary for the continuation of present day life on earth'.",
+    "questionImage": ""
+  },
+  {
+    "id": 84,
+    "question": "The application of ecological principles specifically for bringing deteriorated ecosystems back to their original state, as exemplified by the restoration of Ogoniland in the Niger Delta, falls under which ecological discipline?",
+    "options": [
+      {"text": "Conservation Biology/Ecology."},
+      {"text": "Applied Ecology."},
+      {"text": "Landscape Ecology."},
+      {"text": "Restoration Biology/Ecology."}
+    ],
+    "answer": "Restoration Biology/Ecology.",
+    "explanation": "<b>Restoration Biology/Ecology</b> is the 'Application of ecological principles for the restoration of deteriorated ecosystems in an attempt to bring it back to its original state as much as possible. Example restoration of ogoniland in the Niger Delta region of Nigeria'.",
+    "questionImage": ""
+  },
+  {
+    "id": 85,
+    "question": "Which branch of ecology is primarily concerned with the spatial patterns within a landscape, their development, and the influence of disturbances, including human-induced impacts?",
+    "options": [
+      {"text": "Urban Ecology."},
+      {"text": "Applied Ecology."},
+      {"text": "Conservation Ecology."},
+      {"text": "Landscape Ecology."}
+    ],
+    "answer": "Landscape Ecology.",
+    "explanation": "<b>Landscape Ecology</b> is 'concerned with spatial patterns in the landscape and how they develop, with an emphasis on the role of disturbance, including anthropogenic impacts (Smith and Smith 2005)'.",
+    "questionImage": ""
+  },
+  {
+    "id": 86,
+    "question": "The study of ecological relationships, interactions, and the types and numbers of species specifically found within urban habitats is the focus of:",
+    "options": [
+      {"text": "Human Ecology."},
+      {"text": "Urban Ecology."},
+      {"text": "Environmental Sociology."},
+      {"text": "Applied Conservation."}
+    ],
+    "answer": "Urban Ecology.",
+    "explanation": "<b>Urban Ecology</b> is 'the study of ecology in urban areas, specifically the relationships, interactions, types and numbers of species found in urban habitats'.",
+    "questionImage": ""
+  },
+  {
+    "id": 87,
+    "question": "The environment is defined as the sum total of living and non-living components surrounding an organism. Which of the following is <i>not</i> explicitly listed as a requirement for survival that an organism depends on from its environment?",
+    "options": [
+      {"text": "Shelter."},
+      {"text": "Reproduction."},
+      {"text": "Defense mechanisms."},
+      {"text": "Food."}
+    ],
+    "answer": "Defense mechanisms.",
+    "explanation": "The slide lists 'food, energy, water, oxygen, shelter, reproduction and other requirements important for its survival'. Defense mechanisms are not explicitly listed.",
+    "questionImage": ""
+  },
+  {
+    "id": 88,
+    "question": "Abiotic components of the environment are non-living physical and chemical elements. From which three primary geo-spheres are abiotic resources typically obtained?",
+    "options": [
+      {"text": "Biosphere, Lithosphere, Cryosphere."},
+      {"text": "Atmosphere, Hydrosphere, Lithosphere."},
+      {"text": "Stratosphere, Troposphere, Mesosphere."},
+      {"text": "Pedosphere, Atmosphere, Hydrosphere."}
+    ],
+    "answer": "Atmosphere, Hydrosphere, Lithosphere.",
+    "explanation": "Abiotic resources are usually obtained from the <b>atmosphere, hydrosphere and lithosphere</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 89,
+    "question": "Abiotic components are categorized into physical conditions and chemical factors. Which of the following is an example of a <i>chemical factor</i> as described in the notes?",
+    "options": [
+      {"text": "Temperature."},
+      {"text": "Humidity."},
+      {"text": "Salinity."},
+      {"text": "Mineral nutrients."}
+    ],
+    "answer": "Mineral nutrients.",
+    "explanation": "Physical conditions include 'temperature, pH, humidity, salinity, sunlight, etc.' while chemical factors include 'different gases and <b>mineral nutrients</b> present in the air, water, soil, etc.'.",
+    "questionImage": ""
+  },
+  {
+    "id": 90,
+    "question": "Biotic components are living or once-living organisms. These components are obtained from the biosphere and can have direct or indirect effects on organisms. Which of the following is an example of an <i>interaction</i> between living organisms that constitutes a biotic component?",
+    "options": [
+      {"text": "Sunlight availability."},
+      {"text": "Soil pH."},
+      {"text": "Predation."},
+      {"text": "Water temperature."}
+    ],
+    "answer": "Predation.",
+    "explanation": "Biotic components include 'the organisms themselves, other organisms, interactions between living organisms that result in parasitism, disease, and <b>predation</b>'.",
+    "questionImage": ""
+  },
+  {
+    "id": 91,
+    "question": "The area near the Earth's surface is divided into four interconnected geo-spheres that make up the carbon cycle. Which of these geo-spheres is <i>not</i> explicitly listed as one of the four?",
+    "options": [
+      {"text": "Atmosphere."},
+      {"text": "Biosphere."},
+      {"text": "Cryosphere."},
+      {"text": "Hydrosphere."}
+    ],
+    "answer": "Cryosphere.",
+    "explanation": "The four interconnected geo-spheres listed are 'the atmosphere, biosphere, hydrosphere and lithosphere'. Cryosphere is not mentioned.",
+    "questionImage": ""
+  },
+  {
+    "id": 92,
+    "question": "The atmosphere is composed of approximately how many gases that are in constant motion and change?",
+    "options": [
+      {"text": "7."},
+      {"text": "10."},
+      {"text": "14."},
+      {"text": "20."}
+    ],
+    "answer": "14.",
+    "explanation": "The atmosphere is made up of about <b>14 gases</b> that are in motion and constantly changing.",
+    "questionImage": ""
+  },
+  {
+    "id": 93,
+    "question": "Which layer of the atmosphere is described as the warmest layer closest to the Earth's surface?",
+    "options": [
+      {"text": "Stratosphere."},
+      {"text": "Mesosphere."},
+      {"text": "Troposphere."},
+      {"text": "Tropopause."}
+    ],
+    "answer": "Troposphere.",
+    "explanation": "The 'warmest layer closest to the earth surface known as <b>troposphere</b>'.",
+    "questionImage": ""
+  },
+  {
+    "id": 94,
+    "question": "The tropopause serves a specific function within the atmospheric layers. What does the tropopause separate?",
+    "options": [
+      {"text": "The stratosphere from the mesosphere."},
+      {"text": "The troposphere from the stratosphere."},
+      {"text": "The mesosphere from the exosphere."},
+      {"text": "The Earth's surface from the atmosphere."}
+    ],
+    "answer": "The troposphere from the stratosphere.",
+    "explanation": "...the <b>tropopause</b> which separates the troposphere from the next layer known as the stratosphere.",
+    "questionImage": ""
+  },
+  {
+    "id": 95,
+    "question": "Which atmospheric layer is characterized by a high concentration of ozone gas, crucial for protecting the Earth from ultraviolet rays?",
+    "options": [
+      {"text": "Troposphere."},
+      {"text": "Mesosphere."},
+      {"text": "Stratosphere."},
+      {"text": "Thermosphere."}
+    ],
+    "answer": "Stratosphere.",
+    "explanation": "The <b>stratosphere</b> is the layer with high concentration of ozone gas which is crucial in protecting the earth from ultra violet rays.",
+    "questionImage": ""
+  },
+  {
+    "id": 96,
+    "question": "Among the atmospheric layers mentioned, which one is identified as the coldest part of the atmosphere?",
+    "options": [
+      {"text": "Stratosphere."},
+      {"text": "Troposphere."},
+      {"text": "Mesosphere."},
+      {"text": "Tropopause."}
+    ],
+    "answer": "Mesosphere.",
+    "explanation": "This is followed by the <b>mesosphere</b> which is the coldest part of the atmosphere.",
+    "questionImage": ""
+  },
+  {
+    "id": 97,
+    "question": "The hydrosphere encompasses various water bodies. Which of the following is <i>not</i> explicitly listed as a component of the hydrosphere in the provided text?",
+    "options": [
+      {"text": "Glaciers."},
+      {"text": "Geysers."},
+      {"text": "Snow."},
+      {"text": "Water vapour."}
+    ],
+    "answer": "Geysers.",
+    "explanation": "The hydrosphere includes 'the ocean, lakes, rivers, snow, frost, hail, glaciers, water underneath the earth's surface and water vapour'. Geysers are not mentioned.",
+    "questionImage": ""
+  },
+  {
+    "id": 98,
+    "question": "Approximately what percentage of the Earth's surface is covered by the hydrosphere?",
+    "options": [
+      {"text": "50%."},
+      {"text": "60%."},
+      {"text": "70%."},
+      {"text": "80%."}
+    ],
+    "answer": "70%.",
+    "explanation": "The hydrosphere covers approximately <b>70%</b> of the earth's surface.",
+    "questionImage": ""
+  },
+  {
+    "id": 99,
+    "question": "The lithosphere is made up of mountains, valleys, and rocks. What natural process do these rocks undergo to form minerals and soil?",
+    "options": [
+      {"text": "Erosion."},
+      {"text": "Deposition."},
+      {"text": "Weathering."},
+      {"text": "Subduction."}
+    ],
+    "answer": "Weathering.",
+    "explanation": "...rocks, which undergo the process of <b>weathering</b> to form minerals and soil.",
+    "questionImage": ""
+  },
+  {
+    "id": 100,
+    "question": "Which type of rock is formed specifically by the cooling and hardening of hot molten magma?",
+    "options": [
+      {"text": "Metamorphic rocks."},
+      {"text": "Sedimentary rocks."},
+      {"text": "Igneous rocks."},
+      {"text": "Extrusive rocks."}
+    ],
+    "answer": "Igneous rocks.",
+    "explanation": "<b>Igneous rocks</b> are formed by the cooling of hot molten magma which is hardened.",
+    "questionImage": ""
+  },
+  {
+    "id": 101,
+    "question": "Rocks formed from pre-existing rocks that have undergone heat and/or pressure are classified as:",
+    "options": [
+      {"text": "Igneous rocks."},
+      {"text": "Sedimentary rocks."},
+      {"text": "Metamorphic rocks."},
+      {"text": "Volcanic rocks."}
+    ],
+    "answer": "Metamorphic rocks.",
+    "explanation": "<b>Metamorphic rocks</b> which are formed by heat and / or pressure from pre-existing rocks.",
+    "questionImage": ""
+  },
+  {
+    "id": 102,
+    "question": "The biosphere is composed of all living organisms. It is believed that all life exists within this geo-sphere. What is the approximate maximum depth below ground where populations of living organisms are mostly found?",
+    "options": [
+      {"text": "About 1 meter."},
+      {"text": "About 3 meters."},
+      {"text": "About 10 meters."},
+      {"text": "About 30 meters."}
+    ],
+    "answer": "About 3 meters.",
+    "explanation": "They are mostly found from about <b>three meters below ground</b> to about 30 meters above it...",
+    "questionImage": ""
+  },
+  {
+    "id": 103,
+    "question": "What is the approximate maximum depth within the ocean and seas where populations of living organisms are mostly found?",
+    "options": [
+      {"text": "About 50 meters."},
+      {"text": "About 100 meters."},
+      {"text": "About 200 meters."},
+      {"text": "About 500 meters."}
+    ],
+    "answer": "About 200 meters.",
+    "explanation": "...as well as within about <b>200 meters of the ocean and seas</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 104,
+    "question": "Organisms that use photosynthesis to capture solar energy and produce their own food, such as green plants, are also known by what term?",
+    "options": [
+      {"text": "Heterotrophs."},
+      {"text": "Consumers."},
+      {"text": "Autotrophs."},
+      {"text": "Decomposers."}
+    ],
+    "answer": "Autotrophs.",
+    "explanation": "Producers, mostly green plants which use photosynthesis to capture energy... are also called <b>autotrophs</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 105,
+    "question": "Consumers are categorized based on their feeding habits. Which of the following is <i>not</i> listed as a category of consumers?",
+    "options": [
+      {"text": "Herbivores."},
+      {"text": "Carnivores."},
+      {"text": "Saprophytes."},
+      {"text": "Detritivores."}
+    ],
+    "answer": "Saprophytes.",
+    "explanation": "Consumers are categorized as 'herbivores, carnivores, omnivores or detritivores'. Saprophytes are not listed.",
+    "questionImage": ""
+  },
+  {
+    "id": 106,
+    "question": "What is the primary role of decomposers in an ecosystem, according to the provided text?",
+    "options": [
+      {"text": "To produce energy through photosynthesis."},
+      {"text": "To feed on producers for energy."},
+      {"text": "To break down dead materials and provide nutrients."},
+      {"text": "To regulate population sizes."}
+    ],
+    "answer": "To break down dead materials and provide nutrients.",
+    "explanation": "<b>Decomposers</b> are organisms which obtain energy from breaking down dead materials. They also provide nutrients that other organisms need to survive.",
+    "questionImage": ""
+  },
+  {
+    "id": 107,
+    "question": "Environmental degradation is defined as the deterioration of the environment through various anthropogenic disturbances. Which of the following is <i>not</i> explicitly listed as a common result of such degradation?",
+    "options": [
+      {"text": "Pollution of air, water, and soil."},
+      {"text": "Habitat destruction."},
+      {"text": "Increased biodiversity."},
+      {"text": "Loss of associated ecosystem services."}
+    ],
+    "answer": "Increased biodiversity.",
+    "explanation": "Environmental degradation 'often results in pollution of air, water and soil; habitat destruction; and <b>loss of biodiversity</b> and associated ecosystem services'. Increased biodiversity is the opposite.",
+    "questionImage": ""
+  },
+  {
+    "id": 108,
+    "question": "Intensive agricultural practices, deforestation, and leakage from landfills are primary causes of which specific type of environmental degradation?",
+    "options": [
+      {"text": "Water degradation."},
+      {"text": "Atmospheric degradation."},
+      {"text": "Land and soil degradation."},
+      {"text": "Biodiversity loss."}
+    ],
+    "answer": "Land and soil degradation.",
+    "explanation": "<b>Land and soil degradation</b>: Degradation of soil quality often resulting from intensive agricultural practices (such as excessive use of fertilizers and pesticides), deforestation, leakage from landfills etc.",
+    "questionImage": ""
+  },
+  {
+    "id": 109,
+    "question": "The pollution of water bodies by plastics and other non-biodegradable wastes, along with oil spillage, are examples of which type of environmental degradation?",
+    "options": [
+      {"text": "Land degradation."},
+      {"text": "Water degradation."},
+      {"text": "Atmospheric degradation."},
+      {"text": "Habitat destruction."}
+    ],
+    "answer": "Water degradation.",
+    "explanation": "<b>Water degradation</b>: Pollution of water from trash dumped in oceans... pollution of water bodies from plastics and other non-biodegradable wastes, oil spillage etc.",
+    "questionImage": ""
+  },
+  {
+    "id": 110,
+    "question": "Industrial pollutants, the effects of greenhouse gases, and the consequent depletion of the ozone layer are all factors contributing to which type of environmental degradation?",
+    "options": [
+      {"text": "Land and soil degradation."},
+      {"text": "Water degradation."},
+      {"text": "Atmospheric degradation."},
+      {"text": "Ecosystem service loss."}
+    ],
+    "answer": "Atmospheric degradation.",
+    "explanation": "<b>Atmospheric degradation</b>: This is air degradation and pollution as a result of industrial pollutants, effects of green house gases and the consequent depletion of the ozone layer and other associated effects.",
+    "questionImage": ""
+  },
+  {
     "id": 51,
     "question": "Within a community, groups of species that perform similar ecological roles or utilize identical resources are collectively known as:",
     "options": [
