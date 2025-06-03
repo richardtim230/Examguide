@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 51,
+    "question": "Within a community, groups of species that perform similar ecological roles or utilize identical resources are collectively known as:",
+    "options": [
+      {"text": "Populations."},
+      {"text": "Biomes."},
+      {"text": "Guilds."},
+      {"text": "Ecosystems."}
+    ],
+    "answer": "Guilds.",
+    "explanation": "A <b>guild</b> refers to a group of species within a community that carry out similar functions or exploit the same resource.",
+    "questionImage": ""
+  },
+  {
+    "id": 52,
+    "question": "Forests and grasslands are examples of communities that derive their energy directly from the sun through photosynthesis. These are classified as:",
+    "options": [
+      {"text": "Heterotrophic communities."},
+      {"text": "Dominant communities."},
+      {"text": "Autotrophic communities."},
+      {"text": "Closed communities."}
+    ],
+    "answer": "Autotrophic communities.",
+    "explanation": "<b>Autotrophic communities</b>, such as forests and grasslands, require only the energy of the sun to drive photosynthesis and produce their own food.",
+    "questionImage": ""
+  },
+  {
+    "id": 53,
+    "question": "When a community's biological structure is characterized by a single or a few species being overwhelmingly abundant, these species are considered:",
+    "options": [
+      {"text": "Heterotrophs."},
+      {"text": "Guilds."},
+      {"text": "Dominant."},
+      {"text": "Autotrophs."}
+    ],
+    "answer": "Dominant.",
+    "explanation": "When a single or few species predominate within a community, those organisms are considered <b>dominant</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 54,
+    "question": "A physical, self-supporting unit comprising interacting organisms and their surrounding environment, focusing on energy and matter exchange, is termed a(n):",
+    "options": [
+      {"text": "Community."},
+      {"text": "Habitat."},
+      {"text": "Ecosystem."},
+      {"text": "Biome."}
+    ],
+    "answer": "Ecosystem.",
+    "explanation": "An <b>ecosystem</b> is defined as a physical, distinct, self-supporting unit of interacting organisms and their surrounding environment, with a primary focus on energy and matter exchange.",
+    "questionImage": ""
+  },
+  {
+    "id": 55,
+    "question": "The exchange of energy and matter from inside an ecosystem into the surrounding environment is categorized as a(n):",
+    "options": [
+      {"text": "Input."},
+      {"text": "Output."},
+      {"text": "Conversion."},
+      {"text": "Absorption."}
+    ],
+    "answer": "Output.",
+    "explanation": "Exchanges from inside the ecosystem into the surrounding environment are considered <b>outputs</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 56,
+    "question": "Rivers, streams, and springs are examples of which specific type of aquatic ecosystem?",
+    "options": [
+      {"text": "Lentic ecosystem."},
+      {"text": "Marine ecosystem."},
+      {"text": "Estuarine ecosystem."},
+      {"text": "Lotic ecosystem."}
+    ],
+    "answer": "Lotic ecosystem.",
+    "explanation": "<b>Lotic ecosystems</b> are characterized as running water bodies that flow continuously, such as rivers, streams, and springs.",
+    "questionImage": ""
+  },
+  {
+    "id": 57,
+    "question": "The three basic components found in all ecosystems are autotrophs, consumers, and:",
+    "options": [
+      {"text": "Decomposers."},
+      {"text": "Biotic community."},
+      {"text": "Abiotic matter."},
+      {"text": "Energy inputs."}
+    ],
+    "answer": "Abiotic matter.",
+    "explanation": "All ecosystems universally have three basic components: autotrophs, consumers, and <b>abiotic matter</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 58,
+    "question": "The organic compounds used by consumers (heterotrophs) as a food source are primarily produced by:",
+    "options": [
+      {"text": "Decomposers."},
+      {"text": "Abiotic matter."},
+      {"text": "Autotrophs."},
+      {"text": "Other consumers."}
+    ],
+    "answer": "Autotrophs.",
+    "explanation": "Consumers or heterotrophs use the organic compounds produced by the <b>autotrophs</b> as a source of food.",
+    "questionImage": ""
+  },
+  {
+    "id": 59,
+    "question": "A large geographical area with a somewhat uniform climate, where the length of seasons and days are similar across its parts, is termed a:",
+    "options": [
+      {"text": "Habitat."},
+      {"text": "Ecosystem."},
+      {"text": "Biome."},
+      {"text": "Community."}
+    ],
+    "answer": "Biome.",
+    "explanation": "A <b>biome</b> is defined as a large geographical area with a somewhat uniform climate and similar lengths of seasons and days.",
+    "questionImage": ""
+  },
+  {
+    "id": 60,
+    "question": "The geographic location where plants and animals live, characterized by specific biotic and abiotic conditions, is known as a(n):",
+    "options": [
+      {"text": "Ecosystem."},
+      {"text": "Niche."},
+      {"text": "Habitat."},
+      {"text": "Biome."}
+    ],
+    "answer": "Habitat.",
+    "explanation": "A <b>habitat</b> is the geographic location where plants and animals live, defined by its biotic and abiotic conditions.",
+    "questionImage": ""
+  },
+  {
+    "id": 61,
+    "question": "A combination of several similar or different habitats collectively forms a(n):",
+    "options": [
+      {"text": "Community."},
+      {"text": "Ecosystem."},
+      {"text": "Biome."},
+      {"text": "Niche."}
+    ],
+    "answer": "Ecosystem.",
+    "explanation": "A combination of several similar or different habitats makes up an <b>ecosystem</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 62,
+    "question": "Which of the following is *not* listed as one of the four major types of forests?",
+    "options": [
+      {"text": "Tropical."},
+      {"text": "Temperate."},
+      {"text": "Boreal."},
+      {"text": "Deciduous."}
+    ],
+    "answer": "Deciduous.",
+    "explanation": "The four major types of forests are tropical, temperate, boreal, and plantation forests. <b>Deciduous</b> is a characteristic, not a major type in this classification.",
+    "questionImage": ""
+  },
+  {
+    "id": 63,
+    "question": "Grasslands, dominated by grass cover, account for what percentage of the Earth's terrestrial surface?",
+    "options": [
+      {"text": "25%."},
+      {"text": "33%."},
+      {"text": "46%."},
+      {"text": "60%."}
+    ],
+    "answer": "46%.",
+    "explanation": "Grasslands are one of the major vegetation types in the world, accounting for <b>46%</b> of the terrestrial surface.",
+    "questionImage": ""
+  },
+  {
+    "id": 64,
+    "question": "Deserts are characterized as moisture deficit areas that cover more than what fraction of the Earth's land area?",
+    "options": [
+      {"text": "One-tenth."},
+      {"text": "One-fifth."},
+      {"text": "One-quarter."},
+      {"text": "One-half."}
+    ],
+    "answer": "One-fifth.",
+    "explanation": "Deserts cover more than <b>one-fifth</b> of the Earth's land area.",
+    "questionImage": ""
+  },
+  {
+    "id": 65,
+    "question": "The Gobi desert in China is cited as an example of a desert characterized by:",
+    "options": [
+      {"text": "High annual rainfall."},
+      {"text": "Extremely hot temperatures."},
+      {"text": "Very cold temperatures."},
+      {"text": "Coastal proximity."}
+    ],
+    "answer": "Very cold temperatures.",
+    "explanation": "Though deserts are mostly considered hot, some are very cold, with the Gobi desert in China given as an example of a <b>cold desert</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 66,
+    "question": "Freshwater ecosystems, despite supporting over 100,000 species, constitute approximately what percentage of the water on the planet?",
+    "options": [
+      {"text": "0.01%."},
+      {"text": "1%."},
+      {"text": "3%."},
+      {"text": "70%."}
+    ],
+    "answer": "3%.",
+    "explanation": "Freshwater ecosystems account for about <b>3%</b> of the water on the planet.",
+    "questionImage": ""
+  },
+  {
+    "id": 67,
+    "question": "Standing or stagnant water bodies that do not flow or move, such as lakes, ponds, swamps, and dams, are examples of:",
+    "options": [
+      {"text": "Lotic waters."},
+      {"text": "Marine waters."},
+      {"text": "Lentic waters."},
+      {"text": "Estuarine waters."}
+    ],
+    "answer": "Lentic waters.",
+    "explanation": "<b>Lentic waters</b> are standing or stagnant water bodies that do not flow or move.",
+    "questionImage": ""
+  },
+  {
+    "id": 68,
+    "question": "The largest habitat on the planet, supporting a vast variety of animals from tiny plankton to the blue whale, is the:",
+    "options": [
+      {"text": "Freshwater habitat."},
+      {"text": "Terrestrial habitat."},
+      {"text": "Marine habitat."},
+      {"text": "Estuarine habitat."}
+    ],
+    "answer": "Marine habitat.",
+    "explanation": "The <b>marine habitat</b> is the largest habitat on the planet, making up the majority of the water.",
+    "questionImage": ""
+  },
+  {
+    "id": 69,
+    "question": "Estuaries are unique habitats characterized by their role as places of transition from land to sea, where freshwater mixes with:",
+    "options": [
+      {"text": "Underground aquifers."},
+      {"text": "Glacial meltwater."},
+      {"text": "Saline ocean water."},
+      {"text": "Polluted industrial discharge."}
+    ],
+    "answer": "Saline ocean water.",
+    "explanation": "Estuaries are partially enclosed, coastal water bodies where freshwater from rivers and streams mixes with <b>saline water from the ocean</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 70,
+    "question": "Which of the following animals is commonly found in estuaries?",
+    "options": [
+      {"text": "Polar bear."},
+      {"text": "Camel."},
+      {"text": "Oyster."},
+      {"text": "Blue whale."}
+    ],
+    "answer": "Oyster.",
+    "explanation": "Animals found in estuaries include crab, <b>oyster</b>, waterfowl, and worm.",
+    "questionImage": ""
+  },
+  {
+    "id": 71,
+    "question": "The ecological niche of a species describes its ecological role and the range of conditions necessary for its:",
+    "options": [
+      {"text": "Evolutionary divergence."},
+      {"text": "Population density."},
+      {"text": "Persistence."},
+      {"text": "Biomass accumulation."}
+    ],
+    "answer": "Persistence.",
+    "explanation": "The ecological niche describes both the range of conditions necessary for a species' <b>persistence</b> and its ecological role in the ecosystem.",
+    "questionImage": ""
+  },
+  {
+    "id": 72,
+    "question": "The concept of the ecological niche, initially introduced as the habitat requirements for a species' survival and reproduction, was proposed by:",
+    "options": [
+      {"text": "Charles Sutherland Elton."},
+      {"text": "George Evelyn Hutchinson."},
+      {"text": "Grinnell."},
+      {"text": "Hutchinson."}
+    ],
+    "answer": "Grinnell.",
+    "explanation": "<b>Grinnell (1917)</b> first introduced the concept of the ecological niche as the habitat requirements of a species for it to survive and reproduce.",
+    "questionImage": ""
+  },
+  {
+    "id": 73,
+    "question": "In 1927, the ecological niche was considered equivalent to the position of a species within a trophic web by:",
+    "options": [
+      {"text": "Grinnell."},
+      {"text": "George Evelyn Hutchinson."},
+      {"text": "Charles Sutherland Elton."},
+      {"text": "Hutchinson."}
+    ],
+    "answer": "Charles Sutherland Elton.",
+    "explanation": "In 1927, <b>Charles Sutherland Elton</b> regarded the niche to be equivalent to the position of a species in a trophic web.",
+    "questionImage": ""
+  },
+  {
+    "id": 74,
+    "question": "The multi-dimensional space of resources available to and used by a species was described using the term 'niche' by:",
+    "options": [
+      {"text": "Grinnell."},
+      {"text": "Charles Sutherland Elton."},
+      {"text": "George Evelyn Hutchinson."},
+      {"text": "Hutchinson."}
+    ],
+    "answer": "George Evelyn Hutchinson.",
+    "explanation": "In 1958, <b>George Evelyn Hutchinson</b> used the term niche to describe the multi-dimensional space of resources available to and used by a species.",
+    "questionImage": ""
+  },
+  {
+    "id": 75,
+    "question": "The conditions under which a species could exist in the complete absence of ecological interactions define its:",
+    "options": [
+      {"text": "Realized niche."},
+      {"text": "Competitive niche."},
+      {"text": "Fundamental niche."},
+      {"text": "Optimal niche."}
+    ],
+    "answer": "Fundamental niche.",
+    "explanation": "The <b>fundamental niche</b> is defined as the conditions in which a species could exist with no ecological interactions.",
+    "questionImage": ""
+  },
+  {
+    "id": 76,
+    "question": "A population's actual existence, considering the presence of interactions and competition, defines its:",
+    "options": [
+      {"text": "Fundamental niche."},
+      {"text": "Optimal niche."},
+      {"text": "Realized niche."},
+      {"text": "Competitive niche."}
+    ],
+    "answer": "Realized niche.",
+    "explanation": "The <b>realized niche</b> is defined as the population's existence in the presence of interactions or competition.",
+    "questionImage": ""
+  },
+  {
+    "id": 77,
+    "question": "The principle asserting that two species cannot indefinitely occupy the exact same ecological niche due to competition for resources is the:",
+    "options": [
+      {"text": "Principle of limiting factors."},
+      {"text": "Competitive Exclusion Principle."},
+      {"text": "Principle of resource allocation."},
+      {"text": "Principle of natural selection."}
+    ],
+    "answer": "Competitive Exclusion Principle.",
+    "explanation": "The <b>Competitive Exclusion Principle</b> states that two species cannot exist in the same ecological niche due to competition for resources in a habitat.",
+    "questionImage": ""
+  },
+  {
+    "id": 78,
+    "question": "The process where natural selection leads competing species to utilize different aspects of a habitat, thus occupying distinct niches, is termed:",
+    "options": [
+      {"text": "Resource competition."},
+      {"text": "Niche partitioning."},
+      {"text": "Ecological succession."},
+      {"text": "Competitive exclusion."}
+    ],
+    "answer": "Niche partitioning.",
+    "explanation": "<b>Niche partitioning</b> is the process through which natural selection drives competing species into separate niches, as niche is species-specific.",
+    "questionImage": ""
+  },
+  {
+    "id": 79,
+    "question": "When species coexist, they often adapt by resource differentiation to mitigate competition for:",
+    "options": [
+      {"text": "Dominance."},
+      {"text": "Predators."},
+      {"text": "Limited resources."},
+      {"text": "New habitats."}
+    ],
+    "answer": "Limited resources.",
+    "explanation": "Coexisting species must find ways to adapt, such as through resource differentiation (niche partitioning), to avoid competition for <b>limited resources</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 80,
+    "question": "In a scenario of interspecies competition, if one species gains a significant advantage through natural selection, the other species will ultimately face:",
+    "options": [
+      {"text": "Migration to a new habitat."},
+      {"text": "Development of new adaptations."},
+      {"text": "Extinction."},
+      {"text": "Formation of a symbiotic relationship."}
+    ],
+    "answer": "Extinction.",
+    "explanation": "If one of two competing species is favored by natural selection, the other will eventually <b>become extinct</b>.",
+    "questionImage": ""
+  },
+  {
     "id": 21,
     "question": "The science of genetics, despite its modern origins, traces its conceptual roots back to which ancient practice?",
     "options": [
