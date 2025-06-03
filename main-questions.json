@@ -1,7 +1,273 @@
 [
   {
-    "title": "INTRODUCTORY BOTANY II",
+    "title": "INTRODUCTORY ZOOLOGY II",
     "status": "ACTIVE",
+    "questions": [
+  {
+    "id": 1,
+    "question": "The fundamental characteristic defining a substance as a 'pollutant' is its capacity to instigate:",
+    "options": [
+      {"text": "Beneficial alterations in environmental characteristics."},
+      {"text": "Neutral modifications to ecological balance."},
+      {"text": "Undesirable shifts in environmental attributes."},
+      {"text": "Temporary disruptions in natural cycles."}
+    ],
+    "answer": "Undesirable shifts in environmental attributes.",
+    "explanation": "Pollution is an <b>undesirable change</b> in the physical, chemical, or biological characteristics of air, land, and water.",
+    "questionImage": ""
+  },
+  {
+    "id": 2,
+    "question": "A particulate substance, often a product of combustion or erosion, explicitly categorized as 'deposited matter' in the context of pollutants, is:",
+    "options": [
+      {"text": "Hydrogen sulfide."},
+      {"text": "Soot."},
+      {"text": "Lead."},
+      {"text": "Detergent."}
+    ],
+    "answer": "Soot.",
+    "explanation": "<b>Soot</b> is a form of deposited matter, which includes substances like smoke, tar, dust, and grit, all categorized as pollutants.",
+    "questionImage": ""
+  },
+  {
+    "id": 3,
+    "question": "Which of the following chemical compounds is specifically mentioned as a pollutant, often associated with its use in cleaning agents?",
+    "options": [
+      {"text": "Arsine."},
+      {"text": "Phosgene."},
+      {"text": "Hydrogen fluorides."},
+      {"text": "Detergents."}
+    ],
+    "answer": "Detergents.",
+    "explanation": "<b>Detergents</b> are classified as chemical compound pollutants, alongside substances like Arsines and Phosgenes.",
+    "questionImage": ""
+  },
+  {
+    "id": 4,
+    "question": "Pollutants that are characterized by their resistance to natural decomposition processes within the environment are termed:",
+    "options": [
+      {"text": "Persistent organic pollutants."},
+      {"text": "Biodegradable pollutants."},
+      {"text": "Non-degradable pollutants."},
+      {"text": "Inorganic compounds."}
+    ],
+    "answer": "Non-degradable pollutants.",
+    "explanation": "<b>Non-degradable pollutants</b> are those that resist natural breakdown processes in the environment, unlike biodegradable pollutants which can decompose.",
+    "questionImage": ""
+  },
+  {
+    "id": 5,
+    "question": "Sewage is presented as an example of a pollutant, primarily due to its classification as a:",
+    "options": [
+      {"text": "Non-degradable substance."},
+      {"text": "Radioactive material."},
+      {"text": "Biodegradable pollutant."},
+      {"text": "Heavy metal."}
+    ],
+    "answer": "Biodegradable pollutant.",
+    "explanation": "Sewage is a form of organic waste that can be broken down by natural processes, thus classifying it as a <b>biodegradable pollutant</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 6,
+    "question": "Which of these is *not* explicitly listed as a distinct category of environmental pollution?",
+    "options": [
+      {"text": "Land pollution."},
+      {"text": "Thermal pollution."},
+      {"text": "Noise pollution."},
+      {"text": "Radioactive pollution."}
+    ],
+    "answer": "Thermal pollution.",
+    "explanation": "The distinct types of pollution include Air, Water, Land, Radioactive, and Noise pollution. While heat is a pollutant, <b>thermal pollution</b> is not listed as a separate category.",
+    "questionImage": ""
+  },
+  {
+    "id": 7,
+    "question": "Herbicides, Fungicides, and Biocides are collectively categorized under which specific class of pollutants?",
+    "options": [
+      {"text": "Chemical compounds."},
+      {"text": "Economic poisons."},
+      {"text": "Deposited matter."},
+      {"text": "Gaseous pollutants."}
+    ],
+    "answer": "Economic poisons.",
+    "explanation": "Herbicides, Fungicides, Pesticides, Nematicides, Insecticides, Rodenticides, and Biocides are all categorized as '<b>Economic poisons</b>'.",
+    "questionImage": ""
+  },
+  {
+    "id": 8,
+    "question": "Among the following, which metallic element is specifically identified as a pollutant?",
+    "options": [
+      {"text": "Aluminum."},
+      {"text": "Calcium."},
+      {"text": "Mercury."},
+      {"text": "Sodium."}
+    ],
+    "answer": "Mercury.",
+    "explanation": "Among the listed metallic pollutants are Lead, Iron, Zinc, and <b>Mercury</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 9,
+    "question": "An environmental alteration that qualifies as a pollutant, despite lacking a tangible chemical composition, is:",
+    "options": [
+      {"text": "Humidity."},
+      {"text": "Pressure."},
+      {"text": "Noise."},
+      {"text": "Cloudiness."}
+    ],
+    "answer": "Noise.",
+    "explanation": "<b>Noise</b>, along with heat, is identified as a pollutant, representing an environmental alteration that does not have a chemical composition.",
+    "questionImage": ""
+  },
+  {
+    "id": 10,
+    "question": "The adverse effects of pollutants are stated to impact all the following *except*:",
+    "options": [
+      {"text": "Human life."},
+      {"text": "Animal species."},
+      {"text": "Geological formations."},
+      {"text": "Industrial processes."}
+    ],
+    "answer": "Geological formations.",
+    "explanation": "Pollutants are stated to adversely affect human life, animal species, industrial processes, and living conditions. <b>Geological formations</b> are not among the listed impacts.",
+    "questionImage": ""
+  },
+  {
+    "id": 11,
+    "question": "The long-term average of atmospheric conditions, encompassing rainfall and temperature across various seasons, precisely defines:",
+    "options": [
+      {"text": "Weather."},
+      {"text": "Climate."},
+      {"text": "Atmospheric pressure."},
+      {"text": "Seasonal variation."}
+    ],
+    "answer": "Climate.",
+    "explanation": "<b>Climate</b> is defined as the long-term average of atmospheric conditions, including rainfall and temperature, over a given area and period.",
+    "questionImage": ""
+  },
+  {
+    "id": 12,
+    "question": "Long-duration alterations in temperature and atmospheric patterns are collectively referred to as:",
+    "options": [
+      {"text": "Global warming."},
+      {"text": "Climatic shifts."},
+      {"text": "Climate change."},
+      {"text": "Meteorological phenomena."}
+    ],
+    "answer": "Climate change.",
+    "explanation": "<b>Climate change</b> refers to the long-term shifts in temperature and atmospheric patterns.",
+    "questionImage": ""
+  },
+  {
+    "id": 13,
+    "question": "A predominant human activity responsible for over 75% of global greenhouse emissions is the utilization of:",
+    "options": [
+      {"text": "Nuclear energy."},
+      {"text": "Renewable resources."},
+      {"text": "Fossil fuels."},
+      {"text": "Hydroelectric power."}
+    ],
+    "answer": "Fossil fuels.",
+    "explanation": "The utilization of <b>fossil fuels</b> is identified as a predominant human activity, contributing to over 75% of global greenhouse emissions.",
+    "questionImage": ""
+  },
+  {
+    "id": 14,
+    "question": "The atmospheric phenomenon where specific pollutants absorb sunlight and solar radiation, leading to an increase in the planet's overall temperature, is known as:",
+    "options": [
+      {"text": "Ozone depletion."},
+      {"text": "Acid rain."},
+      {"text": "Global warming."},
+      {"text": "Thermal inversion."}
+    ],
+    "answer": "Global warming.",
+    "explanation": "<b>Global warming</b> is the long-term increase in the planet's overall temperature, occurring when specific pollutants in the atmosphere absorb sunlight and solar radiation.",
+    "questionImage": ""
+  },
+  {
+    "id": 15,
+    "question": "Which gas is *not* explicitly identified as a primary trapping pollutant contributing to the greenhouse effect?",
+    "options": [
+      {"text": "Methane."},
+      {"text": "Nitrous oxide."},
+      {"text": "Sulfur dioxide."},
+      {"text": "Water vapour."}
+    ],
+    "answer": "Sulfur dioxide.",
+    "explanation": "Primary trapping pollutants contributing to the greenhouse effect include CO₂, methane, nitrous oxide, water vapour, and synthetic fluorinated gases. <b>Sulfur dioxide</b> is not listed among these specific greenhouse gases.",
+    "questionImage": ""
+  },
+  {
+    "id": 16,
+    "question": "The collective impact resulting from the accumulation of trapping pollutants in the atmosphere, leading to planetary warming, is termed the:",
+    "options": [
+      {"text": "Atmospheric inversion."},
+      {"text": "Greenhouse effect."},
+      {"text": "Carbon cycle."},
+      {"text": "Solar radiation effect."}
+    ],
+    "answer": "Greenhouse effect.",
+    "explanation": "The accumulation of trapping pollutants in the atmosphere, leading to planetary warming, results in the phenomenon known as the <b>greenhouse effect</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 17,
+    "question": "The current rate of global warming is described as unprecedented when compared to:",
+    "options": [
+      {"text": "The last decade."},
+      {"text": "Any other time."},
+      {"text": "Pre-industrial levels."},
+      {"text": "The last century."}
+    ],
+    "answer": "Any other time.",
+    "explanation": "The current rate of global warming is described as unprecedented, warming <b>faster than any other time</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 18,
+    "question": "A direct consequence of rising global temperatures, as mentioned, is the disruption of the:",
+    "options": [
+      {"text": "Ocean currents."},
+      {"text": "Balance of nature."},
+      {"text": "Earth's magnetic field."},
+      {"text": "Stratospheric ozone layer."}
+    ],
+    "answer": "Balance of nature.",
+    "explanation": "A direct consequence of rising global temperatures is the disruption of the <b>balance of nature</b>, alongside changes in weather patterns.",
+    "questionImage": ""
+  },
+  {
+    "id": 19,
+    "question": "Cloudiness, moisture, and wind are fundamental components used to describe the state of the:",
+    "options": [
+      {"text": "Hydrosphere."},
+      {"text": "Lithosphere."},
+      {"text": "Atmosphere."},
+      {"text": "Biosphere."}
+    ],
+    "answer": "Atmosphere.",
+    "explanation": "Cloudiness, moisture, and wind are fundamental components used to describe the state of the <b>atmosphere</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 20,
+    "question": "Coal, oil, and gas are specific examples of energy sources primarily categorized as:",
+    "options": [
+      {"text": "Biofuels."},
+      {"text": "Renewable energy."},
+      {"text": "Nuclear fuels."},
+      {"text": "Fossil fuels."}
+    ],
+    "answer": "Fossil fuels.",
+    "explanation": "Coal, oil, and gas are specific examples of energy sources categorized as <b>fossil fuels</b>, which are major contributors to greenhouse emissions.",
+    "questionImage": ""
+  }
+]
+      },
+  {
+    "title": "INTRODUCTORY BOTANY II",
+    "status": "INACTIVE",
     "questions": [
   
   {
