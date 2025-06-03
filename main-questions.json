@@ -4,6 +4,396 @@
     "status": "ACTIVE",
     "questions": [
   {
+    "id": 191,
+    "question": "Which branch of ecology focuses on the interactions of a single species or an individual organism with its living and non-living environmental factors, influencing its survival and reproduction?",
+    "options": [
+      {"text": "Synecology."},
+      {"text": "Community Ecology."},
+      {"text": "Autecology."},
+      {"text": "Ecosystem Ecology."}
+    ],
+    "answer": "Autecology.",
+    "explanation": "<b>Autecology</b>, also known as Species Ecology, is the study of interactions of an individual organism or a single species with the biotic and abiotic factors that affect its survival and reproduction in the environment.",
+    "questionImage": ""
+  },
+  {
+    "id": 192,
+    "question": "A key characteristic of autecology is its experimental nature, often dealing with easily quantifiable variables. Which of the following is an example of such a variable studied in autecology?",
+    "options": [
+      {"text": "Interspecific competition outcomes."},
+      {"text": "Population growth rates."},
+      {"text": "Community diversity indices."},
+      {"text": "Available nutrients."}
+    ],
+    "answer": "Available nutrients.",
+    "explanation": "Autecology is primarily experimental and deals with easily measured variables such as light, humidity, and <b>available nutrients</b> that promote understanding of the needs, life history, and behavior of the studied organisms or species.",
+    "questionImage": ""
+  },
+  {
+    "id": 193,
+    "question": "Autecology involves a detailed study of various aspects of individual species. Which of the following is a core area of study within autecology?",
+    "options": [
+      {"text": "The overall structure of a biome."},
+      {"text": "The geographical distribution of a species."},
+      {"text": "The energy flow within an entire ecosystem."},
+      {"text": "The collective evolution of multiple populations."}
+    ],
+    "answer": "The geographical distribution of a species.",
+    "explanation": "Autecology involves detailed study of the <b>geographical distribution</b>, morphology, taxonomic position, life cycle, and the various ecological factors that might influence different stages of the life cycle of individual species.",
+    "questionImage": ""
+  },
+  {
+    "id": 194,
+    "question": "One reason autecology is considered important is that ecological mechanisms and life processes are often unique to a particular species. This highlights the concept of:",
+    "options": [
+      {"text": "Ecosystem stability."},
+      {"text": "Species specificity."},
+      {"text": "Community resilience."},
+      {"text": "Population dynamics."}
+    ],
+    "answer": "Species specificity.",
+    "explanation": "Autecology is important because ecological mechanisms and life processes are often <b>species-specific</b>, meaning they are unique to the individuals that make up each species.",
+    "questionImage": ""
+  },
+  {
+    "id": 195,
+    "question": "Despite shared evolutionary histories, individual species often exhibit distinct preferences and spatial arrangements within their environment. This variation is described as differences in:",
+    "options": [
+      {"text": "Physiological status and age."},
+      {"text": "Resource acquisition strategies."},
+      {"text": "Habitat preference and distribution."},
+      {"text": "Inter-specific interactions."}
+    ],
+    "answer": "Habitat preference and distribution.",
+    "explanation": "Despite similarities in their shared evolutionary past, species often differ in <b>habitat preference and distribution</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 196,
+    "question": "Autecology examines how individual species respond to human-induced environmental changes. Which of the following is an example of an anthropogenic disturbance studied in this context?",
+    "options": [
+      {"text": "Volcanic eruptions."},
+      {"text": "Tectonic plate movements."},
+      {"text": "Pollution."},
+      {"text": "Natural climate cycles."}
+    ],
+    "answer": "Pollution.",
+    "explanation": "Individual species often differ in their response to <b>anthropogenic disturbances</b> such as pollution, habitat loss, and climate change.",
+    "questionImage": ""
+  },
+  {
+    "id": 197,
+    "question": "Beyond variations between different species, individual organisms within the *same* species can also differ. These intraspecific differences include variations in:",
+    "options": [
+      {"text": "Taxonomic position and life cycle."},
+      {"text": "Geographical distribution and habitat."},
+      {"text": "Physiological status, morphology, size, and age."},
+      {"text": "Biotic and abiotic factor interactions."}
+    ],
+    "answer": "Physiological status, morphology, size, and age.",
+    "explanation": "Beyond differences across species, individual organisms also vary in terms of their <b>physiological status, morphology, size, and age</b> within the same species.",
+    "questionImage": ""
+  },
+  {
+    "id": 198,
+    "question": "Which ecological mechanism, involving activities like foraging for food, is a key area of study within autecology?",
+    "options": [
+      {"text": "Community succession."},
+      {"text": "Resource acquisition."},
+      {"text": "Ecosystem productivity."},
+      {"text": "Population regulation."}
+    ],
+    "answer": "Resource acquisition.",
+    "explanation": "Autecology usually involves the study of ecological mechanisms such as <b>resource acquisition</b> (e.g., foraging for food).",
+    "questionImage": ""
+  },
+  {
+    "id": 199,
+    "question": "Autecology investigates how individual species adapt to non-living environmental conditions. This area of study is known as:",
+    "options": [
+      {"text": "Behavioral ecology."},
+      {"text": "Eco-physiological adaptations."},
+      {"text": "Evolutionary ecology."},
+      {"text": "Population genetics."}
+    ],
+    "answer": "Eco-physiological adaptations.",
+    "explanation": "Autecology studies <b>eco-physiological adaptations</b>, such as a species' response to abiotic conditions like temperature and other climatic factors.",
+    "questionImage": ""
+  },
+  {
+    "id": 200,
+    "question": "The study of a group of organism populations in the same area and their various interactions with the environment is known as:",
+    "options": [
+      {"text": "Autecology."},
+      {"text": "Species Ecology."},
+      {"text": "Synecology."},
+      {"text": "Individual Ecology."}
+    ],
+    "answer": "Synecology.",
+    "explanation": "<b>Synecology</b> is the study of a group of organism populations in the same area and their various interactions with the environment.",
+    "questionImage": ""
+  },
+  {
+    "id": 201,
+    "question": "Which of the following is a branch of ecology that falls under the broader umbrella of synecology?",
+    "options": [
+      {"text": "Physiological ecology."},
+      {"text": "Behavioral ecology."},
+      {"text": "Community ecology."},
+      {"text": "Evolutionary ecology."}
+    ],
+    "answer": "Community ecology.",
+    "explanation": "Synecology is made up of several branches of ecology, including <b>Community ecology</b>, Biome ecology, and Ecosystem ecology.",
+    "questionImage": ""
+  },
+  {
+    "id": 202,
+    "question": "A group of individuals of the same species living in the same area, potentially interacting, or all individuals of a given species in a specific area at a certain time, defines a:",
+    "options": [
+      {"text": "Community."},
+      {"text": "Ecosystem."},
+      {"text": "Population."},
+      {"text": "Biome."}
+    ],
+    "answer": "Population.",
+    "explanation": "A <b>population</b> is defined as a group of individuals of the same species living in the same area, potentially interacting, or all individuals of a given species in a specific area or region at a certain time.",
+    "questionImage": ""
+  },
+  {
+    "id": 203,
+    "question": "What term describes a group of populations of different species living in the same area, potentially interacting?",
+    "options": [
+      {"text": "Ecosystem."},
+      {"text": "Biome."},
+      {"text": "Habitat."},
+      {"text": "Community."}
+    ],
+    "answer": "Community.",
+    "explanation": "A <b>community</b> is defined as a group of populations of different species living in the same area, potentially interacting, or all the populations in a specific area or region at a certain time.",
+    "questionImage": ""
+  },
+  {
+    "id": 204,
+    "question": "Which of the following is a characteristic used to describe animal and plant populations?",
+    "options": [
+      {"text": "Species diversity."},
+      {"text": "Biomass."},
+      {"text": "Geographic Distribution."},
+      {"text": "Trophic level."}
+    ],
+    "answer": "Geographic Distribution.",
+    "explanation": "Animal and plant populations are described based on characteristics such as <b>Geographic Distribution</b> (Spatial and Temporal), Size (Number, Density), and Growth rate.",
+    "questionImage": ""
+  },
+  {
+    "id": 205,
+    "question": "Population growth rate is a critical index for animal populations. Which of the following factors directly affects this growth rate?",
+    "options": [
+      {"text": "Community structure."},
+      {"text": "Ecosystem stability."},
+      {"text": "Predation and diseases."},
+      {"text": "Biotic potential."}
+    ],
+    "answer": "Predation and diseases.",
+    "explanation": "Population growth rate is affected by important factors like resources (food, water, mates, shelter), <b>predation and diseases</b>, and human influence and other ecological disturbances.",
+    "questionImage": ""
+  },
+  {
+    "id": 206,
+    "question": "Interactions between different species of organisms in an ecosystem can have various effects. Which of the following is a direct consequence of these population interactions?",
+    "options": [
+      {"text": "Changes in abiotic conditions."},
+      {"text": "Influences on evolution."},
+      {"text": "Formation of new biomes."},
+      {"text": "Alterations in geological processes."}
+    ],
+    "answer": "Influences on evolution.",
+    "explanation": "Population interactions affect distribution and abundance, and they also <b>influence evolution</b>, mortality, and natality, consequently impacting population growth and size.",
+    "questionImage": ""
+  },
+  {
+    "id": 207,
+    "question": "In a type of population interaction, both or all species involved derive mutual benefits. What is this interaction called?",
+    "options": [
+      {"text": "Commensalism."},
+      {"text": "Amensalism."},
+      {"text": "Mutualism."},
+      {"text": "Competition."}
+    ],
+    "answer": "Mutualism.",
+    "explanation": "<b>Mutualism</b> is the type of interaction where both or all the species derive mutual benefits.",
+    "questionImage": ""
+  },
+  {
+    "id": 208,
+    "question": "Which interaction describes a scenario where one species benefits by living on another species, but the host species is unaffected?",
+    "options": [
+      {"text": "Parasitism."},
+      {"text": "Predation."},
+      {"text": "Commensalism."},
+      {"text": "Mutualism."}
+    ],
+    "answer": "Commensalism.",
+    "explanation": "<b>Commensalism</b> is an interaction in which a species benefits by living on other species without effect on the host.",
+    "questionImage": ""
+  },
+  {
+    "id": 209,
+    "question": "An interaction where one species is detrimentally affected, while the species it interacts with is not affected at all, is known as:",
+    "options": [
+      {"text": "Competition."},
+      {"text": "Amensalism."},
+      {"text": "Predation."},
+      {"text": "Parasitism."}
+    ],
+    "answer": "Amensalism.",
+    "explanation": "<b>Amensalism</b> is an interaction in which one species is detrimentally affected, while the species it interacts with is not affected at all.",
+    "questionImage": ""
+  },
+  {
+    "id": 210,
+    "question": "What type of interaction occurs when one species consumes another species?",
+    "options": [
+      {"text": "Parasitism."},
+      {"text": "Competition."},
+      {"text": "Predation."},
+      {"text": "Commensalism."}
+    ],
+    "answer": "Predation.",
+    "explanation": "<b>Predation</b> is an interaction where one species eats up another.",
+    "questionImage": ""
+  },
+  {
+    "id": 211,
+    "question": "An interaction in which one species (the parasite) lives and feeds on another species (the host) is defined as:",
+    "options": [
+      {"text": "Predation."},
+      {"text": "Mutualism."},
+      {"text": "Competition."},
+      {"text": "Parasitism."}
+    ],
+    "answer": "Parasitism.",
+    "explanation": "<b>Parasitism</b> is an interaction in which one species (parasite) lives and feeds on another species (host).",
+    "questionImage": ""
+  },
+  {
+    "id": 212,
+    "question": "Pollination, the relationship between fungi species and plant roots, and the interaction between ants and honey dew producing insects are all examples of which type of ecological interaction?",
+    "options": [
+      {"text": "Commensalism."},
+      {"text": "Competition."},
+      {"text": "Mutualism."},
+      {"text": "Parasitism."}
+    ],
+    "answer": "Mutualism.",
+    "explanation": "These are all examples of <b>mutualism</b>, where two species provide resources or services to each other, enhancing the fitness of both.",
+    "questionImage": ""
+  },
+  {
+    "id": 213,
+    "question": "Which category of mutualism describes a relationship that is beneficial but not absolutely necessary for the survival and reproduction of either participating party?",
+    "options": [
+      {"text": "Obligate mutualism."},
+      {"text": "Symbiotic mutualism."},
+      {"text": "Facultative mutualism."},
+      {"text": "Commensal mutualism."}
+    ],
+    "answer": "Facultative mutualism.",
+    "explanation": "<b>Facultative mutualisms</b> are beneficial but not essential to survival and reproduction of either party.",
+    "questionImage": ""
+  },
+  {
+    "id": 214,
+    "question": "The relationship between the ant (Pseudomyrmex) and the acacia tree, where the interaction is essential for the life of one or both associates, is an example of:",
+    "options": [
+      {"text": "Facultative mutualism."},
+      {"text": "Commensalism."},
+      {"text": "Obligate mutualism."},
+      {"text": "Parasitism."}
+    ],
+    "answer": "Obligate mutualism.",
+    "explanation": "<b>Obligate mutualisms</b> are those that are essential to the life of one or both associates, as exemplified by the ant (Pseudomyrmex) and acacia tree.",
+    "questionImage": ""
+  },
+  {
+    "id": 215,
+    "question": "In the context of competition, what is a primary resource that plants typically compete for?",
+    "options": [
+      {"text": "Nesting sites."},
+      {"text": "Mates."},
+      {"text": "Light."},
+      {"text": "Safe sites from predators."}
+    ],
+    "answer": "Light.",
+    "explanation": "In plants, resources competed for range from <b>light</b>, nutrients, and water.",
+    "questionImage": ""
+  },
+  {
+    "id": 216,
+    "question": "Increasing competition within a population can lead to several negative outcomes. Which of the following is a direct result of increased competition?",
+    "options": [
+      {"text": "Higher growth rates."},
+      {"text": "Increased survivorship."},
+      {"text": "Lower reproduction."},
+      {"text": "Enhanced carrying capacity."}
+    ],
+    "answer": "Lower reproduction.",
+    "explanation": "Increasing competition may result in lower survivorship, growth, and <b>reproduction</b>.",
+    "questionImage": ""
+  },
+  {
+    "id": 217,
+    "question": "When organisms seeking a resource directly harm or become aggressive towards one another in the process, even if the resource is not in short supply, this is known as:",
+    "options": [
+      {"text": "Exploitation competition."},
+      {"text": "Resource use competition."},
+      {"text": "Interference competition."},
+      {"text": "Intraspecific competition."}
+    ],
+    "answer": "Interference competition.",
+    "explanation": "<b>Interference (Direct) competition</b> occurs when organisms seeking a resource harm (become aggressive) one another in the process, even when the resource is not in short supply.",
+    "questionImage": ""
+  },
+  {
+    "id": 218,
+    "question": "Competition that arises as a result of the consumption and depletion of shared resources is classified as:",
+    "options": [
+      {"text": "Interference competition."},
+      {"text": "Direct competition."},
+      {"text": "Exploitation competition."},
+      {"text": "Intraspecific competition."}
+    ],
+    "answer": "Exploitation competition.",
+    "explanation": "<b>Exploitation (Indirect) competition</b> occurs as a result of consumption and depletion of resources.",
+    "questionImage": ""
+  },
+  {
+    "id": 219,
+    "question": "Competition occurring between members of the same population is specifically termed:",
+    "options": [
+      {"text": "Interspecific competition."},
+      {"text": "Heterospecific competition."},
+      {"text": "Intraspecific competition."},
+      {"text": "Resource competition."}
+    ],
+    "answer": "Intraspecific competition.",
+    "explanation": "<b>Intraspecific competition</b> occurs between members of the same population (conspecifics).",
+    "questionImage": ""
+  },
+  {
+    "id": 220,
+    "question": "The Competitive Exclusion Principle, proposed by Gause, states that for two competing species to coexist in a stable environment, they must differ in their respective:",
+    "options": [
+      {"text": "Reproductive rates."},
+      {"text": "Population densities."},
+      {"text": "Ecological niche."},
+      {"text": "Predator avoidance strategies."}
+    ],
+    "answer": "Ecological niche.",
+    "explanation": "The Competitive Exclusion Principle states that to coexist in a stable environment, two competing species must differ in their respective <b>ecological niche</b>.",
+    "questionImage": ""
+  },
+  {
     "id": 81,
     "question": "The term <b>ecology</b> is derived from the Greek words <b>Oikos</b> and <b>Logy.</b> Which of the following accurately represents the combined meaning of these roots as they relate to the scientific study of ecology?",
     "options": [
