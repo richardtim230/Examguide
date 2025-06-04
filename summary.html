@@ -17,55 +17,74 @@
       flex-direction: column;
     }
     
-.sticky-header {
+.refined-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  background: #ffffffd9; /* Light glass-like feel */
   backdrop-filter: blur(8px);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  padding: 20px 30px;
-  transition: all 0.3s ease;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-.sticky-header.scrolled {
-  background: rgba(15, 32, 39, 0.95);
-  box-shadow: 0 2px 8px rgba(0, 255, 204, 0.2);
-}
-
-.logo-row {
+.header-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  max-width: 1000px;
-  margin: 0 auto;
+  justify-content: flex-start;
   gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.logo-img {
-  height: 60px;
-  width: 60px;
-  border-radius: 10px;
+.header-logo {
+  height: 56px;
+  width: 56px;
   object-fit: contain;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px #ccc;
+  background-color: #f8f9fa;
 }
 
-.header-texts {
-  flex-grow: 1;
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.main-title {
+.header-title {
+  font-size: 1.6rem;
+  color: #1a202c;
   margin: 0;
-  font-size: 1.8rem;
-  color: white;
-  font-weight: bold;
+  font-weight: 600;
 }
 
-.subtitle {
-  margin: 4px 0 0;
-  font-size: 1rem;
-  color: #ccf3ff;
+.header-subtitle {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  color: #4a5568;
 }
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-logo {
+    height: 50px;
+    width: 50px;
+  }
+
+  .header-title {
+    font-size: 1.4rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.9rem;
+  }
+    }
+    
 
 @media (max-width: 600px) {
   .logo-row {
@@ -421,16 +440,17 @@
 </head>
 <body>
   
-  <header class="app-header sticky-header">
-  <div class="logo-row">
-    <img src="logo.png" alt="Platform Logo" class="logo-img" />
-    <div class="header-texts">
-      <h1 class="main-title">Test Summary Report</h1>
-      <p class="subtitle">Review your performance and answers below</p>
+  
+  <header class="refined-header">
+  <div class="header-container">
+    <img src="logo.png" alt="CBT Platform Logo" class="header-logo" />
+    <div class="header-text">
+      <h1 class="header-title">Test Summary Report</h1>
+      <p class="header-subtitle">Review your performance and answers below</p>
     </div>
   </div>
   </header>
-  
+        
   
   <div class="summary-container">
     <div class="section-title">Details</div>
