@@ -17,43 +17,70 @@
       flex-direction: column;
     }
     header {
-      background: linear-gradient(-45deg, #0072ff, #00c6ff, #5e60ce, #f72585);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-      color: #fff;
-      box-shadow: 0 4px 32px 0 #00c6ff44, 0 1.5px 0 #fff2;
-      position: relative;
-      padding: 36px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+    .app-header {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 3px solid #00ffcc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.logo-img {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+
+.header-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  color: #ffffff;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #ccf3ff;
+  margin: 4px 0 0;
+}
+@media (max-width: 600px) {
+  .logo-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo-img {
+    height: 50px;
+    width: 50px;
+  }
+
+  .main-title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
     }
-    header .logo-row {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      justify-content: center;
-    }
-    header img {
-      height: 62px;
-      border-radius: 12px;
-      background: #fff;
-      padding: 6px;
-      box-shadow: 0 2px 8px rgba(0,198,255,0.20);
-    }
-    header .main-title {
-      font-size: 2.0rem;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-    }
-    header .subtitle {
-      font-size: 1.1rem;
-      opacity: 0.92;
-      margin-top: 5px;
-      font-weight: 400;
-    }
+    
     .summary-container {
       max-width: 950px;
       margin: 32px auto 32px auto;
@@ -386,15 +413,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <div class="logo-row">
-      <img src="logo.png" alt="Logo">
-      <div>
-        <div class="main-title">Test Summary Report</div>
-        <div class="subtitle">Review your performance and answers below</div>
-      </div>
+  <header class="app-header">
+  <div class="logo-row">
+    <img src="logo.png" alt="Platform Logo" class="logo-img" />
+    <div class="header-texts">
+      <h1 class="main-title">Test Summary Report</h1>
+      <p class="subtitle">Review your performance and answers below</p>
     </div>
+  </div>
   </header>
+  
+  
   <div class="summary-container">
     <div class="section-title">Details</div>
     <div class="details-table-container">
