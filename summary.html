@@ -17,49 +17,56 @@
       flex-direction: column;
     }
     
-    .app-header {
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: white;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   padding: 20px 30px;
-  display: flex;
-  justify-content: center;
-  border-bottom: 3px solid #00ffcc;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.sticky-header.scrolled {
+  background: rgba(15, 32, 39, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 255, 204, 0.2);
 }
 
 .logo-row {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
   max-width: 1000px;
-  width: 100%;
+  margin: 0 auto;
+  gap: 20px;
 }
 
 .logo-img {
   height: 60px;
   width: 60px;
+  border-radius: 10px;
   object-fit: contain;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
 .header-texts {
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
 }
 
 .main-title {
-  font-size: 1.8rem;
-  font-weight: bold;
   margin: 0;
-  color: #ffffff;
+  font-size: 1.8rem;
+  color: white;
+  font-weight: bold;
 }
 
 .subtitle {
+  margin: 4px 0 0;
   font-size: 1rem;
   color: #ccf3ff;
-  margin: 4px 0 0;
 }
+
 @media (max-width: 600px) {
   .logo-row {
     flex-direction: column;
@@ -413,7 +420,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="app-header">
+  
+  <header class="app-header sticky-header">
   <div class="logo-row">
     <img src="logo.png" alt="Platform Logo" class="logo-img" />
     <div class="header-texts">
@@ -627,7 +635,11 @@ if (!currentUser || currentUser === "Guest") {
     document.getElementById('printBtn').onclick = function() {
       window.print();
     };
-  
+  window.addEventListener('scroll', () => {
+  const header = document.querySelector('.sticky-header');
+  header.classList.toggle('scrolled', window.scrollY > 20);
+});
+    
   </script>
 </body>
 </html>
