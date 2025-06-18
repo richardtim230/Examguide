@@ -788,8 +788,7 @@ body {
         </div>`;
       }
       if (type === "addScheduleModal") {
-        html = `
-        
+  html = `
 <div class="modal-backdrop" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="close-modal" onclick="closeModal(event)">&times;</button>
@@ -797,7 +796,7 @@ body {
     <label>Exam Set</label>
     <select id="scheduleSet"></select>
     <label>Faculty</label>
-    <select id="scheduleFaculty" onchange="populateScheduleDepartments()"></select>
+    <select id="scheduleFaculty"></select>
     <label>Department</label>
     <select id="scheduleDepartment"></select>
     <label>Start Date & Time</label>
@@ -809,7 +808,46 @@ body {
     <button class="btn" onclick="submitAddSchedule()">Schedule</button>
   </div>
 </div>`;
-      }
+  document.getElementById("modalRoot").innerHTML = html;
+
+  // Populate sets, faculties, departments for the modal
+  populateScheduleModalFields();
+}
+
+// Populate all dropdowns for the schedule modal
+async function populateScheduleModalFields() {
+  const [sets, faculties, departments] = await Promise.all([
+    fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
+    fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
+    fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } }).then(r => r.json())
+  ]);
+
+  // Exam set
+  const setSelect = document.getElementById("scheduleSet");
+  setSelect.innerHTML = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join('');
+
+  // Faculty
+  const facultySelect = document.getElementById("scheduleFaculty");
+  facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
+
+  // Store departments for filtering
+  window.scheduleDepartments = departments;
+  
+  // Populate departments for first faculty
+  populateScheduleDepartments();
+
+  // On faculty change, update departments list
+  facultySelect.onchange = populateScheduleDepartments;
+}
+
+function populateScheduleDepartments() {
+  const facultyId = document.getElementById("scheduleFaculty").value;
+  const depts = window.scheduleDepartments.filter(d => d.faculty === facultyId);
+  document.getElementById("scheduleDepartment").innerHTML =
+    depts.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
+}
+
+
       if (type === "sendNotifModal") {
         html = `
         <div class="modal-backdrop" onclick="closeModal(event)">
