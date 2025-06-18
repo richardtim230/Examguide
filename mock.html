@@ -72,6 +72,60 @@
     #whatsappBtn:hover {
         background: #20b058;
     }
+    @media (min-width: 800px) {
+  body {
+    overflow: auto;
+    min-height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 60px;
+  }
+  .login-container {
+    max-width: 440px;
+    min-width: 340px;
+    padding: 54px 36px 40px 36px;
+    margin-top: 40px;
+    box-shadow: 0 12px 48px rgba(31, 38, 135, 0.25);
+    background: rgba(255, 255, 255, 0.17);
+    color: #fff;
+  }
+  .login-container h2 {
+    font-size: 29px;
+    margin-bottom: 28px;
+  }
+  .logo {
+    width: 86px;
+    height: 86px;
+    margin-bottom: 16px;
+  }
+  .school-name {
+    font-size: 1.33rem;
+    margin-bottom: 7px;
+  }
+  .subtitle {
+    font-size: 1.14rem;
+    margin-bottom: 18px;
+  }
+  input, button {
+    font-size: 17px;
+    min-height: 48px;
+  }
+  #customNotification {
+    font-size: 1.08rem;
+    max-width: 420px;
+  }
+  #notificationPopup .popup-content {
+    max-width: 600px;
+    font-size: 1.07rem;
+  }
+  .stars {
+    /* More stars for desktop */
+    z-index: 0;
+  }
+}
+    .login-container h2 {
+  font-size: clamp(22px, 2vw, 30px);
+    }
     body {
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
