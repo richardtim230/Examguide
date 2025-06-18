@@ -329,6 +329,24 @@
       color: var(--danger);
       opacity: 1;
     }
+    /* Spinner and message styles */
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #00c6ff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .success-msg { color: var(--success); margin-left: 8px; font-size: 1.07em; display: inline-block; vertical-align: middle;}
+    .error-msg { color: var(--danger); margin-left: 8px; font-size: 1.07em; display: inline-block; vertical-align: middle;}
     @media (max-width: 950px) {
       .dashboard-cards, .section { padding: 0 6vw 0 6vw;}
       .main-content { margin-left: 0; width: 100vw;}
@@ -552,6 +570,7 @@
     let questionsGlobal = [];
     async function fetchQuestions() {
       const setId = document.getElementById("qSetSelect").value;
+      if (!setId) { document.querySelector("#questionsTable tbody").innerHTML = ""; return; }
       const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
       const set = await resp.json();
       questionsGlobal = set.questions || [];
@@ -640,6 +659,8 @@
             <input id="setTitle" type="text" maxlength="48">
             <label>Status</label>
             <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+            <span id="addSetMsg"></span>
+            <span class="spinner" id="addSetSpinner" style="display:none"></span>
             <button class="btn" onclick="submitAddSet()">Create</button>
           </div>
         </div>`;
@@ -661,6 +682,8 @@
             <label>Answer</label>
             <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
             <label>Explanation</label><textarea id="explanation"></textarea>
+            <span id="addQMsg"></span>
+            <span class="spinner" id="addQSpinner" style="display:none"></span>
             <button class="btn" onclick="submitAddQuestion()">Add</button>
           </div>
         </div>`;
@@ -675,6 +698,8 @@
             <select id="modalSetSelect"></select>
             <label>Paste JSON Array of Questions</label>
             <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
+            <span id="bulkUploadMsg"></span>
+            <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
             <button class="btn" onclick="submitBulkUpload()">Upload</button>
           </div>
         </div>`;
@@ -691,6 +716,8 @@
             <input id="scheduleStart" type="datetime-local">
             <label>End Date & Time</label>
             <input id="scheduleEnd" type="datetime-local">
+            <span id="addScheduleMsg"></span>
+            <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
             <button class="btn" onclick="submitAddSchedule()">Schedule</button>
           </div>
         </div>`;
@@ -705,6 +732,8 @@
             <input id="notifTitle" type="text" maxlength="40">
             <label>Message</label>
             <textarea id="notifMsg" maxlength="300"></textarea>
+            <span id="sendNotifMsg"></span>
+            <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
             <button class="btn" onclick="submitSendNotif()">Send</button>
           </div>
         </div>`;
@@ -729,15 +758,31 @@
     async function submitAddSet() {
       const title = document.getElementById("setTitle").value.trim();
       const status = document.getElementById("setStatus").value;
-      if (!title) return alert("Title required!");
-      await fetch(API_URL + "questionsets", {
+      const msg = document.getElementById("addSetMsg");
+      const spinner = document.getElementById("addSetSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!title) { msg.innerText = "Title required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "questionsets", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ title, status, questions: [] })
       });
-      fetchSets();
-      fetchDashboardCounts();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to add set.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchSets();
+        fetchDashboardCounts();
+        closeModal();
+      }, 900);
     }
     async function submitAddQuestion() {
       const setId = document.getElementById("modalSetSelect").value;
@@ -751,58 +796,121 @@
       const answerIndex = "ABCD".indexOf(document.getElementById("answer").value);
       const answer = options[answerIndex].text;
       const explanation = document.getElementById("explanation").value.trim();
-      if (!question || options.some(o=>!o.text) || !answer) return alert("All fields required!");
-      // Get id for the new question
+      const msg = document.getElementById("addQMsg");
+      const spinner = document.getElementById("addQSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!question || options.some(o=>!o.text) || !answer) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
       const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
       const set = await resp.json();
       const newId = (set.questions && set.questions.length > 0) ? Math.max(...set.questions.map(q=>q.id)) + 1 : 1;
-      await fetch(API_URL + `questionsets/${setId}/questions`, {
+      const postResp = await fetch(API_URL + `questionsets/${setId}/questions`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ questions: [{ id: newId, question, options, answer, explanation }] })
       });
-      fetchQuestions();
-      fetchDashboardCounts();
-      closeModal();
+      spinner.style.display = "none";
+      if (!postResp.ok) {
+        const data = await postResp.json();
+        msg.innerText = data.message || "Failed to add question.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchQuestions();
+        fetchDashboardCounts();
+        closeModal();
+      }, 900);
     }
     async function submitBulkUpload() {
       const setId = document.getElementById("modalSetSelect").value;
       let questions;
+      const msg = document.getElementById("bulkUploadMsg");
+      const spinner = document.getElementById("bulkUploadSpinner");
+      msg.innerText = "";
+      msg.className = "";
       try { questions = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
-      catch { return alert("Invalid JSON format."); }
-      await fetch(API_URL + `questionsets/${setId}/questions`, {
+      catch { msg.innerText = "Invalid JSON format."; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + `questionsets/${setId}/questions`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ questions })
       });
-      fetchQuestions();
-      fetchDashboardCounts();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to upload.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchQuestions();
+        fetchDashboardCounts();
+        closeModal();
+      }, 900);
     }
     async function submitAddSchedule() {
       const examSet = document.getElementById("scheduleSet").value.trim();
       const start = document.getElementById("scheduleStart").value;
       const end = document.getElementById("scheduleEnd").value;
-      if (!examSet || !start || !end) return alert("All fields required!");
-      await fetch(API_URL + "schedules", {
+      const msg = document.getElementById("addScheduleMsg");
+      const spinner = document.getElementById("addScheduleSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!examSet || !start || !end) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "schedules", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ examSet, start, end })
       });
-      fetchSchedules();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to schedule.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchSchedules();
+        closeModal();
+      }, 900);
     }
     async function submitSendNotif() {
       const title = document.getElementById("notifTitle").value.trim();
       const message = document.getElementById("notifMsg").value.trim();
-      if (!title || !message) return alert("All fields required!");
-      await fetch(API_URL + "notifications", {
+      const msg = document.getElementById("sendNotifMsg");
+      const spinner = document.getElementById("sendNotifSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "notifications", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ title, message })
       });
-      fetchNotifications();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to send.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchNotifications();
+        closeModal();
+      }, 900);
     }
 
     // ========== AUTH & LOGOUT ==========
