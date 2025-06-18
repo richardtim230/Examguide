@@ -1011,34 +1011,41 @@ body {
       }, 900);
     }
     async function submitAddSchedule() {
-      const examSet = document.getElementById("scheduleSet").value.trim();
-      const start = document.getElementById("scheduleStart").value;
-      const end = document.getElementById("scheduleEnd").value;
-      const msg = document.getElementById("addScheduleMsg");
-      const spinner = document.getElementById("addScheduleSpinner");
-      msg.innerText = "";
-      msg.className = "";
-      if (!examSet || !start || !end) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
-      spinner.style.display = "inline-block";
-      const resp = await fetch(API_URL + "schedules", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-        body: JSON.stringify({ examSet, start, end })
-      });
-      spinner.style.display = "none";
-      if (!resp.ok) {
-        const data = await resp.json();
-        msg.innerText = data.message || "Failed to schedule.";
-        msg.className = "error-msg";
-        return;
-      }
-      msg.innerText = "Successfully loaded!";
-      msg.className = "success-msg";
-      setTimeout(() => {
-        fetchSchedules();
-        closeModal();
-      }, 900);
-    }
+  const examSet = document.getElementById("scheduleSet").value;
+  const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
+  const department = document.getElementById("scheduleDepartment") ? document.getElementById("scheduleDepartment").value : "";
+  const start = document.getElementById("scheduleStart").value;
+  const end = document.getElementById("scheduleEnd").value;
+  const msg = document.getElementById("addScheduleMsg");
+  const spinner = document.getElementById("addScheduleSpinner");
+  msg.innerText = "";
+  msg.className = "";
+
+  if (!examSet || !faculty || !department || !start || !end) {
+    msg.innerText = "All fields required!";
+    msg.className = "error-msg";
+    return;
+  }
+  spinner.style.display = "inline-block";
+  const resp = await fetch(API_URL + "schedules", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify({ examSet, faculty, department, start, end })
+  });
+  spinner.style.display = "none";
+  if (!resp.ok) {
+    const data = await resp.json();
+    msg.innerText = data.message || data.error || "Failed to schedule.";
+    msg.className = "error-msg";
+    return;
+  }
+  msg.innerText = "Successfully loaded!";
+  msg.className = "success-msg";
+  setTimeout(() => {
+    fetchSchedules();
+    closeModal();
+  }, 900);
+}
     async function submitSendNotif() {
       const title = document.getElementById("notifTitle").value.trim();
       const message = document.getElementById("notifMsg").value.trim();
