@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>CBT Test</title>
-
-  <!-- MathJax and KaTeX for math rendering -->
+  <!-- Math and chart libs -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
@@ -13,7 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- MathJax Setup -->
   <script>
     window.MathJax = {
       tex: {
@@ -23,9 +21,6 @@
       svg: { fontCache: 'global' }
     };
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -447,7 +442,6 @@
       <div id="timer">Loading...</div>
     </div>
   </header>
-
   <!-- Instruction Modal -->
   <div class="modal-overlay" id="instructionModal">
     <div class="modal-box">
@@ -471,7 +465,6 @@
       <button class="modal-btn" onclick="closeInstructionModal()">Start Test</button>
     </div>
   </div>
-
   <!-- Exam Selection Modal -->
   <div class="exam-selection-modal" id="examSelectionModal" style="display:none;">
     <div class="exam-selection-content">
@@ -479,45 +472,31 @@
       <div class="exam-buttons" id="examButtons"></div>
     </div>
   </div>
-
   <div class="container">
     <div id="noActiveSet" style="display:none;">
       No active question set is available. Please contact your instructor.
     </div>
-    <div class="question-box" id="questionBox">
-      <!-- Content loads here -->
-    </div>
+    <div class="question-box" id="questionBox"></div>
     <div class="nav-buttons" id="navButtons" style="display:none;">
       <button onclick="prevQuestion()" id="prevBtn">Previous</button>
       <button onclick="nextQuestion()" id="nextBtn">Next</button>
     </div>
   </div>
-
   <script>
-    // Instruction Modal Logic
-    function closeInstructionModal() {
-      document.getElementById('instructionModal').style.display = 'none';
-      // Now allow test to load
-      window._cbtReadyToStart = true;
-      if (typeof window._cbtLoadQuestions === 'function') window._cbtLoadQuestions();
-    }
-    window.onload = function() {
-      document.getElementById('instructionModal').style.display = 'flex';
-    };
-
-    // User & Access
-    const token = localStorage.getItem('token');
+    // === CONFIG ===
+    const API_URL = "https://your-backend-service.onrender.com/api/";
+    const token = localStorage.getItem("token");
     let currentUser = "Guest";
+    let examSet = "";
 
-    // Get logged-in user via backend for protection
+    // On load: authenticate user
     async function fetchCurrentUser() {
       if (!token) {
         window.location.href = "index.html";
         return;
       }
       try {
-        // Replace with your backend Render URL:
-        const resp = await fetch("https://your-backend-service.onrender.com/api/auth/me", {
+        const resp = await fetch(API_URL + "auth/me", {
           headers: { Authorization: "Bearer " + token }
         });
         const data = await resp.json();
@@ -535,18 +514,29 @@
     }
     fetchCurrentUser();
 
-    // Constants for session
-    const MAX_SESSION_QUESTIONS = 60;
-    const SESSION_TIME_LIMIT = 40 * 60; // 40 minutes in seconds
+    // Modal logic
+    function closeInstructionModal() {
+      document.getElementById('instructionModal').style.display = 'none';
+      window._cbtReadyToStart = true;
+      if (typeof window._cbtLoadQuestions === 'function') window._cbtLoadQuestions();
+    }
+    window.onload = function() {
+      document.getElementById('instructionModal').style.display = 'flex';
+    };
 
-    // Questions logic
-    let allQuestionSets = [];
+    // Session constants
+    const MAX_SESSION_QUESTIONS = 60;
+    const SESSION_TIME_LIMIT = 40 * 60;
+
+    // State
     let questions = [];
     let currentQuestionIndex = 0;
     let userAnswers = {};
     let timeLimit = SESSION_TIME_LIMIT;
     let timeRemaining = timeLimit;
     let timerInterval;
+    let answeredIds = [];
+    let completed = false;
 
     // Exam selection modal logic
     function showExamSelectionModal(activeSets, proceedCallback) {
@@ -566,23 +556,50 @@
       modal.style.display = "flex";
     }
 
-    // Defer loading of questions until instruction modal is closed
+    // --- Backend Progress Sync ---
+    async function saveProgress() {
+      if (!examSet || !token) return;
+      await fetch(API_URL + "progress/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({
+          examSet,
+          answers: userAnswers,
+          answeredIds,
+          currentQuestionIndex,
+          timeRemaining,
+          completed
+        }),
+      });
+    }
+    async function loadProgress(examSetTitle) {
+      if (!token) return null;
+      const res = await fetch(`${API_URL}progress?examSet=${encodeURIComponent(examSetTitle)}`, {
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!res.ok) return null;
+      const { progress } = await res.json();
+      return progress;
+    }
+
+    // Defer loading until instructions closed
     window._cbtLoadQuestions = async function loadQuestions(selectedExamSet = null) {
       if (!window._cbtReadyToStart) return;
       try {
+        // --- In production, fetch questions from your API ---
         const res = await fetch('main-questions.json');
         if (!res.ok) throw new Error("Could not load questions");
         const sets = await res.json();
         let activeSets = sets.filter(set => set.status === "ACTIVE");
-        // If more than one active, show modal selection
         if (!selectedExamSet && activeSets.length > 1) {
           showExamSelectionModal(activeSets, (chosenSet) => {
             window._cbtLoadQuestions(chosenSet);
           });
-          // Don't continue loading yet
           return;
         }
-        // Use selected set (or the only one)
         const activeSet = selectedExamSet || activeSets[0];
         if (!activeSet || !activeSet.questions || activeSet.questions.length === 0) {
           document.getElementById("examTitle").textContent = "No Active Exam";
@@ -593,41 +610,41 @@
           return;
         }
         document.getElementById('examTitle').textContent = activeSet.title || "CBT Test";
+        examSet = activeSet.title || "CBT Test";
 
-        // Get or reset answered question IDs for this user and set
-        const currentSetKey = 'set_' + (activeSet.title || '').replace(/\s/g, '_');
-        const userKey = `answered_${currentSetKey}_${currentUser}`;
-        let answered = [];
-        try {
-          answered = JSON.parse(localStorage.getItem(userKey) || '[]');
-        } catch (e) {
-          answered = [];
+        // --- Load progress from backend if exists ---
+        const progress = await loadProgress(examSet);
+
+        // Filter unseen questions if any, or reset if all are done.
+        let allQ = activeSet.questions.slice();
+        if (progress && progress.answeredIds && progress.answeredIds.length === allQ.length) {
+          // All attempted before; restart
+          answeredIds = [];
+        } else {
+          answeredIds = (progress && progress.answeredIds) ? progress.answeredIds : [];
         }
+        let unseenQuestions = allQ.filter(q => !answeredIds.includes(q.id));
+        if (unseenQuestions.length === 0) unseenQuestions = allQ.slice();
 
-        let unseenQuestions = activeSet.questions.filter(q => !answered.includes(q.id));
-        // If all have been answered, reset and start fresh
-        if (unseenQuestions.length === 0) {
-          answered = [];
-          unseenQuestions = activeSet.questions.slice();
-        }
-
-        // Prepare questions for this session, capped at 60
+        // Session questions
         questions = shuffle(unseenQuestions).slice(0, MAX_SESSION_QUESTIONS);
 
-        // Save key data for use in submission
-        window._cbtSessionData = {
-          userKey,
-          answered
-        };
+        // Restore progress
+        userAnswers = (progress && progress.answers) ? Object.fromEntries(Object.entries(progress.answers)) : {};
+        currentQuestionIndex = (progress && typeof progress.currentQuestionIndex === 'number') ? progress.currentQuestionIndex : 0;
+        timeLimit = SESSION_TIME_LIMIT;
+        timeRemaining = (progress && typeof progress.timeRemaining === 'number') ? progress.timeRemaining : timeLimit;
+        completed = (progress && progress.completed) ? true : false;
 
         document.getElementById('noActiveSet').style.display = "none";
         document.getElementById('navButtons').style.display = "";
         renderQuestion();
-        timeLimit = SESSION_TIME_LIMIT;
-        timeRemaining = timeLimit;
         updateTimerDisplay();
         if (timerInterval) clearInterval(timerInterval);
-        timerInterval = setInterval(updateTimer, 1000);
+        timerInterval = setInterval(() => {
+          updateTimer();
+          saveProgress();
+        }, 1000);
       } catch (err) {
         document.getElementById("questionBox").innerHTML =
           `<p style="color:red;">Failed to load questions. Please refresh or try again later.</p>`;
@@ -640,11 +657,13 @@
     function renderQuestion() {
       const q = questions[currentQuestionIndex];
       const container = document.getElementById("questionBox");
-
+      if (!q) {
+        container.innerHTML = `<div style="color:red;">No question available.</div>`;
+        return;
+      }
       const questionImageHTML = q.questionImage
         ? `<div style="margin: 10px 0;"><img src="${q.questionImage}" style="max-width:100%; border-radius:8px;"></div>`
         : "";
-
       const optionsHTML = q.options.map(opt => {
         const isSelected = userAnswers[q.id] === opt.text;
         const hasImage = opt.image ? `<img src="${opt.image}" style="max-height:80px; margin-left:10px;">` : "";
@@ -653,33 +672,31 @@
             ${opt.text}${hasImage}
           </button>`;
       }).join('');
-
       container.innerHTML = `
         <div class="question">${currentQuestionIndex + 1}. ${q.question}</div>
         ${questionImageHTML}
         <div class="options">${optionsHTML}</div>
       `;
-
       document.getElementById("prevBtn").disabled = currentQuestionIndex === 0;
       document.getElementById("nextBtn").innerText =
         currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
-
-      // Trigger MathJax typesetting
-      if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise();
-      }
+      if (window.MathJax && window.MathJax.typesetPromise) MathJax.typesetPromise();
     }
 
     function selectAnswer(qid, answer, btn) {
       userAnswers[qid] = answer;
+      // Update answeredIds array if not present
+      if (!answeredIds.includes(qid)) answeredIds.push(qid);
       document.querySelectorAll(".options button").forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+      saveProgress();
     }
 
     function nextQuestion() {
       if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
         renderQuestion();
+        saveProgress();
       } else {
         submitTest();
       }
@@ -689,6 +706,7 @@
       if (currentQuestionIndex > 0) {
         currentQuestionIndex--;
         renderQuestion();
+        saveProgress();
       }
     }
 
@@ -707,21 +725,10 @@
       updateTimerDisplay();
     }
 
-    function submitTest() {
+    async function submitTest() {
       clearInterval(timerInterval);
-      // Save answers and questions for summary
-      localStorage.setItem(`answers_${currentUser}`, JSON.stringify(userAnswers));
-      localStorage.setItem(`questions_${currentUser}`, JSON.stringify(questions));
-      localStorage.setItem(`timeTaken_${currentUser}`, timeLimit - timeRemaining);
-
-      // Update the answered question IDs for this user and set
-      const { userKey, answered } = window._cbtSessionData || {};
-      if (userKey) {
-        const newAnswered = questions.map(q => q.id);
-        const updatedAnswered = Array.from(new Set([...(answered||[]), ...newAnswered]));
-        localStorage.setItem(userKey, JSON.stringify(updatedAnswered));
-      }
-
+      completed = true;
+      await saveProgress();
       window.location.href = 'advertisement';
     }
 
