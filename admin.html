@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard | CBT Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
+  <link rel="icon" href="logo.png">
+  <style>
+    :root {
+      --primary: #0055b7;
+      --accent: #00c6ff;
+      --accent2: #0072ff;
+      --danger: #ff3b47;
+      --success: #25d366;
+      --bg: #f5f8fa;
+      --card-bg: #fff;
+      --text: #222;
+      --muted: #667;
+      --border: #e3e8ee;
+      --shadow: 0 4px 16px #00336614;
+      --radius: 15px;
+      --nav-width: 220px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+    }
+    body {
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: var(--nav-width);
+      background: linear-gradient(135deg, var(--primary) 80%, var(--accent2) 100%);
+      color: #fff;
+      min-height: 100vh;
+      box-shadow: 2px 0 18px #00336612;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      transition: width 0.2s;
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 32px 16px 18px 22px;
+    }
+    .sidebar-header img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #bdeaff88;
+    }
+    .sidebar-header .brand {
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 0 2px 10px #001c3c33;
+    }
+    .sidebar-nav {
+      flex: 1;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 0 13px 24px;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.02rem;
+      text-decoration: none;
+      border-left: 4px solid transparent;
+      transition: background 0.19s, border 0.19s;
+      cursor: pointer;
+    }
+    .sidebar-nav a.active,
+    .sidebar-nav a:hover {
+      background: rgba(255,255,255,0.08);
+      border-left: 4px solid var(--accent);
+      color: var(--accent);
+    }
+    .sidebar-footer {
+      padding: 18px 22px 22px 22px;
+      border-top: 1px solid #ffffff12;
+      font-size: 0.94rem;
+      color: #bbdefb;
+      opacity: 0.92;
+    }
+    .main-content {
+      margin-left: var(--nav-width);
+      width: calc(100vw - var(--nav-width));
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.2s;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      padding: 20px 38px;
+      box-shadow: 0 2px 10px #00336609;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .topbar .page-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+    .topbar .admin-avatar {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+    }
+    .topbar .admin-avatar img {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      border: 2px solid var(--accent2);
+      object-fit: cover;
+    }
+    .topbar .admin-avatar span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      opacity: 0.89;
+    }
+    .dashboard-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin: 30px 0 0 0;
+      padding: 0 36px;
+    }
+    .dashboard-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex: 1 1 230px;
+      min-width: 210px;
+      max-width: 265px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 11px;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: box-shadow 0.18s;
+    }
+    .dashboard-card:hover {
+      box-shadow: 0 6px 32px #00336622;
+      border-color: var(--accent2);
+    }
+    .dashboard-card .card-label {
+      font-size: 1.05rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .dashboard-card .card-value {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .dashboard-card .card-icon {
+      position: absolute;
+      top: 23px;
+      right: 23px;
+      font-size: 2.2rem;
+      opacity: 0.13;
+      pointer-events: none;
+    }
+    .section {
+      margin: 32px 36px 0 36px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 26px;
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .section-title {
+      font-size: 1.23rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 21px;
+      letter-spacing: 0.5px;
+    }
+    .section .actions {
+      margin-bottom: 14px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: linear-gradient(90deg, var(--accent) 35%, var(--accent2) 100%);
+      color: #fff;
+      padding: 9px 18px;
+      font-size: 1.02rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #00c6ff19;
+      transition: background 0.18s;
+    }
+    .btn:hover, .btn:focus {
+      background: linear-gradient(90deg, var(--accent2) 35%, var(--accent) 100%);
+    }
+    .btn-danger { background: var(--danger);}
+    .btn-success { background: var(--success); color: #1a2c10;}
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 14px;
+    }
+    .data-table th, .data-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 1.01rem;
+    }
+    .data-table thead {
+      background: #f8fdff;
+    }
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--accent2);
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+      margin-right: 7px;
+      transition: color 0.18s;
+    }
+    .action-btn:hover {
+      color: var(--danger);
+      text-decoration: underline;
+    }
+    .modal-backdrop {
+      position: fixed; z-index: 1001; left:0; top:0; width:100vw; height:100vh;
+      background: rgba(18,28,68,0.46); display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 32px #00336622;
+      max-width: 425px;
+      width: 92vw;
+      padding: 32px 28px;
+      position: relative;
+      animation: popin 0.25s;
+    }
+    .modal h2 {
+      color: var(--primary);
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    .modal label {
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin: 14px 0 5px 0;
+      display: block;
+    }
+    .modal input, .modal select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border-radius: 7px;
+      border: 1.2px solid var(--border);
+      background: #f9fcfe;
+      font-size: 1.04rem;
+    }
+    .modal textarea {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 7px;
+      border: 1.2px solid var(--border);
+      background: #f9fcfe;
+      font-size: 1.04rem;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      resize: vertical;
+    }
+    .modal .close-modal {
+      position: absolute;
+      top: 13px;
+      right: 16px;
+      font-size: 1.7rem;
+      color: #bbb;
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: 0.79;
+    }
+    .modal .close-modal:hover {
+      color: var(--danger);
+      opacity: 1;
+    }
+    @media (max-width: 950px) {
+      .dashboard-cards, .section { padding: 0 6vw 0 6vw;}
+      .main-content { margin-left: 0; width: 100vw;}
+      .sidebar { position: fixed; left: -220px; width: 220px; transition: left 0.18s;}
+      .sidebar.open { left: 0;}
+      .main-content.shifted { margin-left: var(--nav-width);}
+      .topbar { padding: 20px 16px;}
+      .section { margin-left: 8px; margin-right: 8px;}
+    }
+    @media (max-width: 600px) {
+      .dashboard-cards, .section { padding: 0 2vw 0 2vw;}
+      .dashboard-card { min-width: 130px; padding: 17px 8px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="logo.png" alt="CBT Logo">
+      <span class="brand">CBT Admin</span>
+    </div>
+    <div class="sidebar-nav">
+      <a href="#dashboard" class="active" onclick="showSection('dashboard', this)"><span>🏠</span> Dashboard</a>
+      <a href="#sets" onclick="showSection('sets', this)"><span>📚</span> Question Sets</a>
+      <a href="#questions" onclick="showSection('questions', this)"><span>✏️</span> Questions</a>
+      <a href="#results" onclick="showSection('results', this)"><span>📊</span> Results</a>
+      <a href="#schedules" onclick="showSection('schedules', this)"><span>⏰</span> Schedules</a>
+      <a href="#notifications" onclick="showSection('notifications', this)"><span>✉️</span> Messaging</a>
+    </div>
+    <div class="sidebar-footer">
+      <span style="font-size:1.05em;">Admin</span><br>
+      <a href="#" onclick="logout()" style="color:#ffe066; text-decoration:underline;font-size:0.97em;">Logout</a>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <!-- Topbar -->
+    <div class="topbar">
+      <span class="page-title" id="pageTitle">Dashboard</span>
+      <div class="admin-avatar">
+        <img src="admin.png" alt="Admin">
+        <span id="adminName">Admin</span>
+      </div>
+    </div>
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards" id="dashboardCards">
+      <div class="dashboard-card">
+        <div class="card-label">Question Sets</div>
+        <div class="card-value" id="qSetCount">0</div>
+        <div class="card-icon">📚</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Questions</div>
+        <div class="card-value" id="questionCount">0</div>
+        <div class="card-icon">✏️</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Total Results</div>
+        <div class="card-value" id="resultCount">0</div>
+        <div class="card-icon">📊</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Scheduled Tests</div>
+        <div class="card-value" id="scheduleCount">0</div>
+        <div class="card-icon">⏰</div>
+      </div>
+    </div>
+    <!-- SECTIONS -->
+    <div class="section" id="dashboardSection">
+      <div class="section-title">Welcome, Admin!</div>
+      <p>Use the navigation to manage question sets, upload and edit questions, view results, schedule tests, and communicate with students.</p>
+    </div>
+    <!-- Question Sets -->
+    <div class="section" id="setsSection" style="display:none;">
+      <div class="section-title">Question Sets</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addSetModal')">+ New Set</button>
+      </div>
+      <table class="data-table" id="setsTable">
+        <thead>
+          <tr>
+            <th>Title</th><th>Status</th><th>Questions</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Questions -->
+    <div class="section" id="questionsSection" style="display:none;">
+      <div class="section-title">Manage Questions</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addQuestionModal')">+ Add Question</button>
+        <button class="btn" onclick="openModal('bulkUploadModal')">Bulk Upload</button>
+      </div>
+      <div>
+        <label for="qSetSelect">Question Set:</label>
+        <select id="qSetSelect" onchange="fetchQuestions()"></select>
+      </div>
+      <table class="data-table" id="questionsTable">
+        <thead>
+          <tr>
+            <th>Question</th><th>Options</th><th>Answer</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Results -->
+    <div class="section" id="resultsSection" style="display:none;">
+      <div class="section-title">Results</div>
+      <table class="data-table" id="resultsTable">
+        <thead>
+          <tr>
+            <th>Student</th><th>Set</th><th>Score</th><th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Schedules -->
+    <div class="section" id="schedulesSection" style="display:none;">
+      <div class="section-title">Test Schedules</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
+      </div>
+      <table class="data-table" id="schedulesTable">
+        <thead>
+          <tr>
+            <th>Set</th><th>Start</th><th>End</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Notifications -->
+    <div class="section" id="notificationsSection" style="display:none;">
+      <div class="section-title">Send Announcement</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
+      </div>
+      <table class="data-table" id="notificationsTable">
+        <thead>
+          <tr>
+            <th>Title</th><th>Message</th><th>Sent</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="modalRoot"></div>
+  <script>
+    // ========== CONFIG ==========
+    const API_URL = "https://your-backend-service.onrender.com/api/";
+    const token = localStorage.getItem("token");
+
+    // ========== UX NAVIGATION ==========
+    function showSection(id, el) {
+      document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+      if (el) el.classList.add('active');
+      document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
+      ['dashboard','sets','questions','results','schedules','notifications'].forEach(sec => {
+        document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
+      });
+      if (window.innerWidth <= 950) closeSidebar();
+    }
+    function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
+
+    // ========== DASHBOARD DATA ==========
+    async function fetchDashboardCounts() {
+      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+      const sets = await resp.json();
+      document.getElementById("qSetCount").innerText = sets.length;
+      let qCount = 0;
+      sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
+      document.getElementById("questionCount").innerText = qCount;
+      // Results
+      const resp2 = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+      const results = await resp2.json();
+      document.getElementById("resultCount").innerText = results.length;
+      // Schedules
+      const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+      const schedules = await resp3.json();
+      document.getElementById("scheduleCount").innerText = schedules.length;
+    }
+
+    // ========== QUESTION SETS ==========
+    async function fetchSets() {
+      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+      const sets = await resp.json();
+      let html = "";
+      sets.forEach(set => {
+        html += `<tr>
+          <td>${set.title}</td>
+          <td>${set.status}</td>
+          <td>${set.questions.length}</td>
+          <td>
+            <button class="action-btn" onclick="editSet('${set._id}')">Edit</button>
+            <button class="action-btn" onclick="deleteSet('${set._id}')">Delete</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#setsTable tbody").innerHTML = html;
+      // For question select
+      let setOpts = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+      document.getElementById("qSetSelect").innerHTML = setOpts;
+    }
+    async function deleteSet(id) {
+      if (!confirm("Delete this set?")) return;
+      await fetch(API_URL + "questionsets/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
+      fetchSets();
+      fetchDashboardCounts();
+    }
+    function editSet(id) {
+      alert("Editing question set not implemented in this mockup.");
+    }
+
+    // ========== QUESTIONS ==========
+    let questionsGlobal = [];
+    async function fetchQuestions() {
+      const setId = document.getElementById("qSetSelect").value;
+      const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
+      const set = await resp.json();
+      questionsGlobal = set.questions || [];
+      let html = "";
+      set.questions.forEach(q => {
+        html += `<tr>
+          <td>${q.question}</td>
+          <td>${q.options.map(o=>o.text).join(", ")}</td>
+          <td>${q.answer}</td>
+          <td>
+            <button class="action-btn" onclick="editQuestion('${setId}',${q.id})">Edit</button>
+            <button class="action-btn" onclick="deleteQuestion('${setId}',${q.id})">Delete</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#questionsTable tbody").innerHTML = html;
+    }
+    async function deleteQuestion(setId, qid) {
+      if (!confirm("Delete this question?")) return;
+      await fetch(API_URL + `questionsets/${setId}/questions/${qid}`, {
+        method: "DELETE", headers: { Authorization: "Bearer " + token }
+      });
+      fetchQuestions();
+      fetchDashboardCounts();
+    }
+    function editQuestion(setId, qid) {
+      alert("Question editing not implemented in this mockup.");
+    }
+
+    // ========== RESULTS ==========
+    async function fetchResults() {
+      const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+      const results = await resp.json();
+      let html = "";
+      results.forEach(r => {
+        html += `<tr>
+          <td>${r.user.username}</td>
+          <td>${r.examSet}</td>
+          <td>${r.score ?? '-'}</td>
+          <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#resultsTable tbody").innerHTML = html;
+    }
+
+    // ========== SCHEDULES ==========
+    async function fetchSchedules() {
+      const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+      const schedules = await resp.json();
+      let html = "";
+      schedules.forEach(s => {
+        html += `<tr>
+          <td>${s.examSet}</td>
+          <td>${(new Date(s.start)).toLocaleString()}</td>
+          <td>${(new Date(s.end)).toLocaleString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#schedulesTable tbody").innerHTML = html;
+    }
+
+    // ========== NOTIFICATIONS ==========
+    async function fetchNotifications() {
+      const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
+      const notifs = await resp.json();
+      let html = "";
+      notifs.forEach(n => {
+        html += `<tr>
+          <td>${n.title}</td>
+          <td>${n.message}</td>
+          <td>${(new Date(n.createdAt)).toLocaleString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#notificationsTable tbody").innerHTML = html;
+    }
+
+    // ========== MODALS ==========
+    function openModal(type) {
+      let html = "";
+      if (type === "addSetModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>New Question Set</h2>
+            <label>Title</label>
+            <input id="setTitle" type="text" maxlength="48">
+            <label>Status</label>
+            <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+            <button class="btn" onclick="submitAddSet()">Create</button>
+          </div>
+        </div>`;
+      }
+      if (type === "addQuestionModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Add Question</h2>
+            <label>Set</label>
+            <select id="modalSetSelect"></select>
+            <label>Question</label>
+            <textarea id="questionText"></textarea>
+            <label>Option A</label><input id="optionA" type="text">
+            <label>Option B</label><input id="optionB" type="text">
+            <label>Option C</label><input id="optionC" type="text">
+            <label>Option D</label><input id="optionD" type="text">
+            <label>Answer</label>
+            <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+            <label>Explanation</label><textarea id="explanation"></textarea>
+            <button class="btn" onclick="submitAddQuestion()">Add</button>
+          </div>
+        </div>`;
+      }
+      if (type === "bulkUploadModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Bulk Upload Questions</h2>
+            <label>Set</label>
+            <select id="modalSetSelect"></select>
+            <label>Paste JSON Array of Questions</label>
+            <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
+            <button class="btn" onclick="submitBulkUpload()">Upload</button>
+          </div>
+        </div>`;
+      }
+      if (type === "addScheduleModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Schedule Test</h2>
+            <label for="scheduleSet">Exam Set</label>
+            <input id="scheduleSet" type="text">
+            <label>Start Date & Time</label>
+            <input id="scheduleStart" type="datetime-local">
+            <label>End Date & Time</label>
+            <input id="scheduleEnd" type="datetime-local">
+            <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+          </div>
+        </div>`;
+      }
+      if (type === "sendNotifModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Send Announcement</h2>
+            <label>Title</label>
+            <input id="notifTitle" type="text" maxlength="40">
+            <label>Message</label>
+            <textarea id="notifMsg" maxlength="300"></textarea>
+            <button class="btn" onclick="submitSendNotif()">Send</button>
+          </div>
+        </div>`;
+      }
+      document.getElementById("modalRoot").innerHTML = html;
+
+      // Populate set dropdowns in modals
+      if (type === "addQuestionModal" || type === "bulkUploadModal") {
+        fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
+          .then(r=>r.json())
+          .then(sets=>{
+            document.getElementById("modalSetSelect").innerHTML =
+              sets.map(s=>`<option value="${s._id}">${s.title}</option>`).join("");
+          });
+      }
+    }
+    function closeModal(e) {
+      if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+        document.getElementById("modalRoot").innerHTML = "";
+      }
+    }
+    async function submitAddSet() {
+      const title = document.getElementById("setTitle").value.trim();
+      const status = document.getElementById("setStatus").value;
+      if (!title) return alert("Title required!");
+      await fetch(API_URL + "questionsets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ title, status, questions: [] })
+      });
+      fetchSets();
+      fetchDashboardCounts();
+      closeModal();
+    }
+    async function submitAddQuestion() {
+      const setId = document.getElementById("modalSetSelect").value;
+      const question = document.getElementById("questionText").value.trim();
+      const options = [
+        { text: document.getElementById("optionA").value.trim() },
+        { text: document.getElementById("optionB").value.trim() },
+        { text: document.getElementById("optionC").value.trim() },
+        { text: document.getElementById("optionD").value.trim() }
+      ];
+      const answerIndex = "ABCD".indexOf(document.getElementById("answer").value);
+      const answer = options[answerIndex].text;
+      const explanation = document.getElementById("explanation").value.trim();
+      if (!question || options.some(o=>!o.text) || !answer) return alert("All fields required!");
+      // Get id for the new question
+      const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
+      const set = await resp.json();
+      const newId = (set.questions && set.questions.length > 0) ? Math.max(...set.questions.map(q=>q.id)) + 1 : 1;
+      await fetch(API_URL + `questionsets/${setId}/questions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ questions: [{ id: newId, question, options, answer, explanation }] })
+      });
+      fetchQuestions();
+      fetchDashboardCounts();
+      closeModal();
+    }
+    async function submitBulkUpload() {
+      const setId = document.getElementById("modalSetSelect").value;
+      let questions;
+      try { questions = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
+      catch { return alert("Invalid JSON format."); }
+      await fetch(API_URL + `questionsets/${setId}/questions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ questions })
+      });
+      fetchQuestions();
+      fetchDashboardCounts();
+      closeModal();
+    }
+    async function submitAddSchedule() {
+      const examSet = document.getElementById("scheduleSet").value.trim();
+      const start = document.getElementById("scheduleStart").value;
+      const end = document.getElementById("scheduleEnd").value;
+      if (!examSet || !start || !end) return alert("All fields required!");
+      await fetch(API_URL + "schedules", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ examSet, start, end })
+      });
+      fetchSchedules();
+      closeModal();
+    }
+    async function submitSendNotif() {
+      const title = document.getElementById("notifTitle").value.trim();
+      const message = document.getElementById("notifMsg").value.trim();
+      if (!title || !message) return alert("All fields required!");
+      await fetch(API_URL + "notifications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ title, message })
+      });
+      fetchNotifications();
+      closeModal();
+    }
+
+    // ========== AUTH & LOGOUT ==========
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "index.html";
+    }
+
+    // ========== INIT ==========
+    async function init() {
+      if (!token) return window.location.href = "index.html";
+      document.getElementById("adminName").innerText = "Admin";
+      await fetchDashboardCounts();
+      await fetchSets();
+      await fetchQuestions();
+      await fetchResults();
+      await fetchSchedules();
+      await fetchNotifications();
+    }
+    window.onload = init;
+  </script>
+</body>
+</html>
