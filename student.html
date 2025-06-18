@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Dashboard | CBT Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
+  <style>
+    body { font-family: 'Inter', Arial, sans-serif; background: #f5f8fa; margin: 0; min-height: 100vh; }
+    .header { background: #003366; color: #fff; padding: 25px 18px; }
+    .main { max-width: 900px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 4px 32px #00336611; padding: 36px 26px; }
+    .profile { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; }
+    .profile-img { width: 70px; height: 70px; border-radius: 50%; background: #eee; }
+    .profile-info { flex: 1; }
+    .profile-info h2 { margin: 0 0 4px 0; font-size: 1.6rem; }
+    .profile-info .meta { color: #0072ff; font-size: 1rem; }
+    .section-title { font-size: 1.1rem; font-weight: bold; margin: 22px 0 10px 0; color: #003366; }
+    .dashboard-cards { display: flex; gap: 18px; margin: 18px 0; flex-wrap: wrap; }
+    .dashboard-card { flex: 1 1 180px; background: #f8fdff; border-radius: 10px; padding: 18px; min-width: 120px; color: #003366; font-weight: 600; box-shadow: 0 1px 8px #00c6ff22;}
+    .test-table, .result-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .test-table th, .test-table td, .result-table th, .result-table td { padding: 10px 7px; border-bottom: 1px solid #e3e8ee; }
+    .test-table th, .result-table th { background: #f8fdff; color: #003366; }
+    .btn { background: #00c6ff; color: #fff; border: none; border-radius: 7px; padding: 8px 20px; margin: 2px 0; font-size: 1rem; cursor: pointer; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    .announcement { background: #f1f8ff; border-left: 4px solid #00c6ff; margin: 14px 0; padding: 12px 18px; border-radius: 7px; }
+    .support-link { color: #0072ff; text-decoration: underline; cursor: pointer; }
+    @media (max-width: 600px) { .main { padding: 12px 2vw; } .dashboard-cards { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Welcome, <span id="studentName">Student</span>!</h1>
+    <div><small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small></div>
+  </div>
+  <div class="main">
+    <!-- Profile section -->
+    <div class="profile">
+      <div class="profile-img"><img src="student.png" alt="Profile" width="70" height="70"></div>
+      <div class="profile-info">
+        <h2 id="profileName">Student Name</h2>
+        <div class="meta">Username: <span id="profileUser"></span></div>
+        <div class="meta">Faculty: <span id="profileFaculty"></span> | Department: <span id="profileDept"></span></div>
+        <div class="meta"><a class="support-link" href="#" onclick="openSupport()">Need Help?</a></div>
+      </div>
+    </div>
+    <!-- Announcements -->
+    <div class="announcement" id="announcementsPanel"></div>
+    <!-- Dashboard cards -->
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <div>Upcoming Test</div>
+        <div id="upcomingTest">None</div>
+      </div>
+      <div class="dashboard-card">
+        <div>Last Score</div>
+        <div id="lastScore">-</div>
+      </div>
+      <div class="dashboard-card">
+        <div>Tests Taken</div>
+        <div id="testsTaken">0</div>
+      </div>
+    </div>
+    <!-- Test history -->
+    <div class="section-title">Test History</div>
+    <table class="result-table" id="historyTable">
+      <thead>
+        <tr><th>Test</th><th>Date</th><th>Score</th><th>Action</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <!-- Upcoming/scheduled tests -->
+    <div class="section-title">Available Tests</div>
+    <table class="test-table" id="availableTable">
+      <thead><tr><th>Test</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script>
+    // CONFIG
+    const API_URL = "https://your-backend-service.onrender.com/api/";
+    const token = localStorage.getItem("token");
+    let student = {};
+
+    async function fetchProfile() {
+      const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
+      const data = await resp.json();
+      student = data.user;
+      document.getElementById("studentName").innerText = student.username;
+      document.getElementById("profileName").innerText = student.username;
+      document.getElementById("studentFaculty").innerText = student.faculty;
+      document.getElementById("studentDept").innerText = student.department;
+      document.getElementById("profileUser").innerText = student.username;
+      document.getElementById("profileFaculty").innerText = student.faculty;
+      document.getElementById("profileDept").innerText = student.department;
+    }
+
+    async function fetchAnnouncements() {
+      const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
+      const notifs = await resp.json();
+      let html = "";
+      notifs.forEach(n => {
+        html += `<div><strong>${n.title}:</strong> ${n.message} <small style="color:#888;">(${(new Date(n.createdAt)).toLocaleString()})</small></div>`;
+      });
+      document.getElementById("announcementsPanel").innerHTML = html || "No new announcements.";
+    }
+
+    async function fetchHistory() {
+      const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
+      const results = await resp.json();
+      let html = "";
+      let lastScore = "-";
+      if(results.length > 0) {
+        lastScore = results[0].score ?? "-";
+      }
+      document.getElementById("lastScore").innerText = lastScore;
+      document.getElementById("testsTaken").innerText = results.length;
+      results.forEach(r => {
+        html += `<tr>
+          <td>${r.examSet}</td>
+          <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+          <td>${r.score ?? "-"}</td>
+          <td><button class="btn" onclick="viewResult('${r._id}')">View</button></td>
+        </tr>`;
+      });
+      document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
+    }
+
+    async function fetchAvailableTests() {
+      const resp = await fetch(API_URL + `questionsets?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
+        { headers: { Authorization: "Bearer " + token } });
+      const sets = await resp.json();
+      let html = "";
+      sets.forEach(set => {
+        if(set.status !== "ACTIVE") return;
+        html += `<tr>
+          <td>${set.title}</td>
+          <td>${set.status}</td>
+          <td><button class="btn" onclick="startTest('${set._id}')">Start</button></td>
+        </tr>`;
+      });
+      document.querySelector("#availableTable tbody").innerHTML = html || "<tr><td colspan=3>No available tests</td></tr>";
+      document.getElementById("upcomingTest").innerText = sets.length > 0 ? sets[0].title : "None";
+    }
+
+    function viewResult(id) {
+      alert("Result detail view coming soon!"); // Can be implemented: fetch result, show breakdown
+    }
+    function startTest(setId) {
+      window.location.href = `testsession.html?set=${setId}`;
+    }
+    function openSupport() {
+      window.open("mailto:support@yourcbtplattform.com", "_blank");
+    }
+    async function init() {
+      if (!token) return window.location.href = "index.html";
+      await fetchProfile();
+      await fetchAnnouncements();
+      await fetchHistory();
+      await fetchAvailableTests();
+    }
+    window.onload = init;
+  </script>
+</body>
+</html>
