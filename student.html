@@ -5,25 +5,47 @@
   <title>Student Dashboard | CBT Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
+  <link rel="icon" href="student.png">
   <style>
     body { font-family: 'Inter', Arial, sans-serif; background: #f5f8fa; margin: 0; min-height: 100vh; }
-    .header { background: #003366; color: #fff; padding: 25px 18px; }
-    .main { max-width: 900px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 4px 32px #00336611; padding: 36px 26px; }
+    .header { background: #003366; color: #fff; padding: 26px 16px 20px 16px; }
+    .main { max-width: 980px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 4px 32px #00336611; padding: 36px 26px 40px 26px; }
     .profile { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; }
-    .profile-img { width: 70px; height: 70px; border-radius: 50%; background: #eee; }
+    .profile-img img { width: 74px; height: 74px; border-radius: 50%; background: #eee; border: 2.5px solid #00c6ff55; object-fit: cover;}
     .profile-info { flex: 1; }
-    .profile-info h2 { margin: 0 0 4px 0; font-size: 1.6rem; }
-    .profile-info .meta { color: #0072ff; font-size: 1rem; }
-    .section-title { font-size: 1.1rem; font-weight: bold; margin: 22px 0 10px 0; color: #003366; }
-    .dashboard-cards { display: flex; gap: 18px; margin: 18px 0; flex-wrap: wrap; }
-    .dashboard-card { flex: 1 1 180px; background: #f8fdff; border-radius: 10px; padding: 18px; min-width: 120px; color: #003366; font-weight: 600; box-shadow: 0 1px 8px #00c6ff22;}
-    .test-table, .result-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .profile-info h2 { margin: 0 0 4px 0; font-size: 1.65rem; }
+    .profile-info .meta { color: #0072ff; font-size: 1.06rem; }
+    .profile-actions { margin-top: 3px; }
+    .profile-actions .btn-profile { background: #00c6ff; color: #fff; border: none; border-radius: 7px; padding: 6px 18px; font-size: 1rem; margin-right: 6px; cursor: pointer;}
+    .section-title { font-size: 1.14rem; font-weight: bold; margin: 22px 0 10px 0; color: #003366; }
+    .dashboard-cards { display: flex; gap: 22px; margin: 18px 0 8px 0; flex-wrap: wrap; }
+    .dashboard-card { flex: 1 1 190px; background: #f8fdff; border-radius: 10px; padding: 18px 15px 15px 15px; min-width: 145px; color: #003366; font-weight: 600; box-shadow: 0 1px 10px #00c6ff22; display: flex; flex-direction: column; align-items: flex-start; }
+    .dashboard-card .card-title { font-size: 1.05rem; color: #0055b7; margin-bottom: 6px; }
+    .dashboard-card .card-value { font-size: 1.75rem; font-weight: bold; }
+    .dashboard-card canvas { margin-top: 8px;}
+    .dashboard-card .cert-link { font-size: 0.99rem; color: #0072ff; text-decoration: underline; cursor: pointer; }
+    .progress-bar-bg { height: 14px; width: 100%; background: #e2f4fc; border-radius: 6px; margin: 7px 0 0 0; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #00c6ff 30%, #0072ff 100%); border-radius: 6px; transition: width 0.4s;}
+    .recommend-box { background: #e5f6ff; border-left: 5px solid #00c6ff; border-radius: 9px; padding: 13px 18px; margin-bottom: 13px; }
+    .recommend-title { font-weight: 600; color: #0072ff; margin-bottom: 6px;}
+    .test-table, .result-table { width: 100%; border-collapse: collapse; margin-top: 12px;}
     .test-table th, .test-table td, .result-table th, .result-table td { padding: 10px 7px; border-bottom: 1px solid #e3e8ee; }
-    .test-table th, .result-table th { background: #f8fdff; color: #003366; }
+    .test-table th, .result-table th { background: #f8fdff; color: #003366; font-size:1.03rem;}
     .btn { background: #00c6ff; color: #fff; border: none; border-radius: 7px; padding: 8px 20px; margin: 2px 0; font-size: 1rem; cursor: pointer; }
     .btn:disabled { background: #ccc; cursor: not-allowed; }
     .announcement { background: #f1f8ff; border-left: 4px solid #00c6ff; margin: 14px 0; padding: 12px 18px; border-radius: 7px; }
     .support-link { color: #0072ff; text-decoration: underline; cursor: pointer; }
+    .badge { display: inline-block; background: #43aa8b; color: #fff; font-size: 0.93rem; border-radius: 6px; padding: 2.5px 8px; margin-right: 6px; }
+    .review-modal { background: #fff; border-radius: 13px; box-shadow: 0 8px 42px #00336633; max-width: 540px; width: 95vw; padding: 32px 28px; position: relative;}
+    .review-modal h3 { margin-top: 0; }
+    .review-question { margin-top: 11px; margin-bottom: 6px; }
+    .review-opts { margin-left: 12px; }
+    .review-correct { color: #25d366; font-weight: 600;}
+    .review-wrong { color: #f25f5c; font-weight: 600;}
+    .review-expl { font-size: 0.97rem; color: #0072ff; background: #f8fdff; border-radius: 7px; padding: 6px 8px; margin: 6px 0;}
+    .modal-backdrop { position: fixed; z-index: 1001; left:0; top:0; width:100vw; height:100vh; background: rgba(18,28,68,0.37); display: flex; align-items: center; justify-content: center;}
+    .close-modal { position: absolute; top: 11px; right: 14px; font-size: 1.8rem; color: #bbb; background: none; border: none; cursor: pointer; }
+    .close-modal:hover { color: #ff3b47;}
     @media (max-width: 600px) { .main { padding: 12px 2vw; } .dashboard-cards { flex-direction: column; } }
   </style>
 </head>
@@ -35,37 +57,46 @@
   <div class="main">
     <!-- Profile section -->
     <div class="profile">
-      <div class="profile-img"><img src="student.png" alt="Profile" width="70" height="70"></div>
+      <div class="profile-img"><img src="student.png" alt="Profile" id="profilePic"></div>
       <div class="profile-info">
         <h2 id="profileName">Student Name</h2>
         <div class="meta">Username: <span id="profileUser"></span></div>
         <div class="meta">Faculty: <span id="profileFaculty"></span> | Department: <span id="profileDept"></span></div>
+        <div class="profile-actions">
+          <button class="btn-profile" onclick="openProfileEdit()">Edit Profile</button>
+          <button class="btn-profile" onclick="logout()">Logout</button>
+        </div>
         <div class="meta"><a class="support-link" href="#" onclick="openSupport()">Need Help?</a></div>
       </div>
     </div>
-    <!-- Announcements -->
-    <div class="announcement" id="announcementsPanel"></div>
     <!-- Dashboard cards -->
     <div class="dashboard-cards">
       <div class="dashboard-card">
-        <div>Upcoming Test</div>
-        <div id="upcomingTest">None</div>
+        <div class="card-title">Progress</div>
+        <canvas id="progressChart" width="120" height="90"></canvas>
       </div>
       <div class="dashboard-card">
-        <div>Last Score</div>
-        <div id="lastScore">-</div>
+        <div class="card-title">Upcoming Test</div>
+        <div class="card-value" id="upcomingTest">None</div>
+        <div id="testCountdown" style="font-size:0.97rem; color:#0072ff;"></div>
       </div>
       <div class="dashboard-card">
-        <div>Tests Taken</div>
-        <div id="testsTaken">0</div>
+        <div class="card-title">Certificates</div>
+        <div><span class="cert-link" onclick="downloadCertificate()">Download</span></div>
+        <div id="badgePanel"></div>
       </div>
     </div>
-    <!-- Test history -->
+    <!-- Recommendations -->
+    <div class="recommend-box">
+      <div class="recommend-title">Recommended for You</div>
+      <ul style="margin:0 0 0 12px;" id="recommendations"></ul>
+    </div>
+    <!-- Announcements & Messaging -->
+    <div class="announcement" id="announcementsPanel"></div>
+    <!-- Test History with Review -->
     <div class="section-title">Test History</div>
     <table class="result-table" id="historyTable">
-      <thead>
-        <tr><th>Test</th><th>Date</th><th>Score</th><th>Action</th></tr>
-      </thead>
+      <thead><tr><th>Test</th><th>Date</th><th>Score</th><th>Review</th></tr></thead>
       <tbody></tbody>
     </table>
     <!-- Upcoming/scheduled tests -->
@@ -74,91 +105,279 @@
       <thead><tr><th>Test</th><th>Status</th><th>Action</th></tr></thead>
       <tbody></tbody>
     </table>
+    <!-- Discussion/Help -->
+    <div class="section-title">Need Academic Help?</div>
+    <button class="btn" onclick="openDiscussion()">Go to Discussion Board</button>
   </div>
+  <div id="modalRoot"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     // CONFIG
     const API_URL = "https://your-backend-service.onrender.com/api/";
     const token = localStorage.getItem("token");
     let student = {};
+    let progressData = { labels: [], values: [] };
+    let resultsCache = [];
+    let setsCache = [];
+    let nextTest = null;
+    let nextTestStart = null;
 
+    // Fetch and display student profile
     async function fetchProfile() {
       const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
       const data = await resp.json();
       student = data.user;
       document.getElementById("studentName").innerText = student.username;
       document.getElementById("profileName").innerText = student.username;
+      document.getElementById("profileUser").innerText = student.username;
       document.getElementById("studentFaculty").innerText = student.faculty;
       document.getElementById("studentDept").innerText = student.department;
-      document.getElementById("profileUser").innerText = student.username;
       document.getElementById("profileFaculty").innerText = student.faculty;
       document.getElementById("profileDept").innerText = student.department;
+      // If profile picture
+      if (student.profilePic) document.getElementById("profilePic").src = student.profilePic;
     }
 
+    // Editable Profile Modal
+    function openProfileEdit() {
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="review-modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h3>Edit Profile</h3>
+            <label>Change Username</label>
+            <input id="editUsername" value="${student.username}" maxlength="32">
+            <label>Change Password</label>
+            <input id="editPassword" type="password" placeholder="Leave blank to keep current">
+            <label>Profile Picture (URL)</label>
+            <input id="editProfilePic" value="${student.profilePic||''}">
+            <button class="btn" onclick="submitProfileEdit()">Save</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitProfileEdit() {
+      const username = document.getElementById("editUsername").value.trim();
+      const password = document.getElementById("editPassword").value;
+      const profilePic = document.getElementById("editProfilePic").value.trim();
+      if (!username) return alert("Username required");
+      await fetch(API_URL + "superadmin/me", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ username, password, profilePic })
+      });
+      alert("Profile updated. Please log out and log in again if you changed username/password.");
+      closeModal();
+      fetchProfile();
+    }
+
+    // Announcements
     async function fetchAnnouncements() {
       const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
       const notifs = await resp.json();
       let html = "";
-      notifs.forEach(n => {
+      notifs.slice(0,2).forEach(n => {
         html += `<div><strong>${n.title}:</strong> ${n.message} <small style="color:#888;">(${(new Date(n.createdAt)).toLocaleString()})</small></div>`;
       });
       document.getElementById("announcementsPanel").innerHTML = html || "No new announcements.";
     }
 
+    // Recommendation engine (very basic: lowest scores)
+    function recommendTopics() {
+      if (!resultsCache.length || !setsCache.length) return;
+      let lowest = resultsCache.reduce((acc, cur) => {
+        if (cur.score !== undefined && cur.score !== null) {
+          if (!acc[cur.examSet]) acc[cur.examSet] = [];
+          acc[cur.examSet].push(cur.score);
+        }
+        return acc;
+      }, {});
+      let avgScores = Object.entries(lowest).map(([set, scores]) => ({
+        set, avg: scores.reduce((a,b)=>a+b,0)/scores.length
+      })).sort((a,b)=>a.avg-b.avg);
+      let html = "";
+      avgScores.slice(0,2).forEach(s => {
+        html += `<li>Revise <b>${s.set}</b> (avg: ${Math.round(s.avg)}%) <span class="badge">Practice</span></li>`;
+      });
+      if (!html) html = "<li>No recommendations. Great job!</li>";
+      document.getElementById("recommendations").innerHTML = html;
+    }
+
+    // Test History and Progress
     async function fetchHistory() {
       const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
       const results = await resp.json();
+      resultsCache = results;
       let html = "";
-      let lastScore = "-";
-      if(results.length > 0) {
-        lastScore = results[0].score ?? "-";
+      let setStats = {};
+      let badgeHtml = "";
+      if (results.length > 0) {
+        results.forEach(r => {
+          if (!setStats[r.examSet]) setStats[r.examSet] = [];
+          setStats[r.examSet].push(r.score ?? 0);
+        });
+        // Badges (for 80%+ or >5 tests)
+        if (results.length >= 5) badgeHtml += `<span class="badge">5+ Tests</span>`;
+        if (results.some(r=>r.score>=80)) badgeHtml += `<span class="badge">High Score</span>`;
       }
-      document.getElementById("lastScore").innerText = lastScore;
-      document.getElementById("testsTaken").innerText = results.length;
-      results.forEach(r => {
+      document.getElementById("badgePanel").innerHTML = badgeHtml;
+      // Fill progress data for chart
+      progressData.labels = Object.keys(setStats);
+      progressData.values = progressData.labels.map(lbl => {
+        let arr = setStats[lbl] || [];
+        return arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : 0;
+      });
+      renderProgressChart(progressData);
+      // Fill history table
+      results.slice(0,10).forEach(r => {
         html += `<tr>
           <td>${r.examSet}</td>
           <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
           <td>${r.score ?? "-"}</td>
-          <td><button class="btn" onclick="viewResult('${r._id}')">View</button></td>
+          <td><button class="btn" onclick="reviewResult('${r._id}')">Review</button></td>
         </tr>`;
       });
       document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
+      recommendTopics();
     }
 
+    // Progress chart with Chart.js
+    function renderProgressChart(data) {
+      const ctx = document.getElementById('progressChart').getContext('2d');
+      if (window._progressChart) window._progressChart.destroy();
+      window._progressChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            data: data.values,
+            backgroundColor: ['#00c6ff', '#0072ff', '#f25f5c', '#43aa8b', '#ffe066', '#6639ba']
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          cutout: "70%",
+          responsive: false,
+          maintainAspectRatio: false
+        }
+      });
+    }
+
+    // Available tests (only for their faculty/department, ACTIVE, and not attempted or scheduled)
     async function fetchAvailableTests() {
       const resp = await fetch(API_URL + `questionsets?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
         { headers: { Authorization: "Bearer " + token } });
       const sets = await resp.json();
+      setsCache = sets;
       let html = "";
+      let soonest = null;
       sets.forEach(set => {
-        if(set.status !== "ACTIVE") return;
+        if (set.status !== "ACTIVE") return;
+        // Restrict if already taken recently?
+        let taken = resultsCache.some(r=>r.examSet===set.title);
+        let sched = set.schedule || {};
+        let now = Date.now();
+        let canTake = !taken && (!sched.start || now >= new Date(sched.start).getTime());
+        let btn = `<button class="btn" onclick="startTest('${set._id}')"
+          ${canTake ? "" : "disabled"}>${taken ? "Completed" : "Start"}</button>`;
         html += `<tr>
           <td>${set.title}</td>
-          <td>${set.status}</td>
-          <td><button class="btn" onclick="startTest('${set._id}')">Start</button></td>
+          <td>${taken ? "Completed" : (canTake ? "Available" : "Scheduled")}</td>
+          <td>${btn}</td>
         </tr>`;
+        // Find soonest upcoming
+        if (!soonest || (sched.start && new Date(sched.start).getTime() < new Date(soonest.start).getTime())) soonest = set;
       });
       document.querySelector("#availableTable tbody").innerHTML = html || "<tr><td colspan=3>No available tests</td></tr>";
-      document.getElementById("upcomingTest").innerText = sets.length > 0 ? sets[0].title : "None";
+      // Upcoming test
+      if (soonest && soonest.schedule && soonest.schedule.start && new Date(soonest.schedule.start).getTime() > Date.now()) {
+        nextTest = soonest;
+        nextTestStart = new Date(soonest.schedule.start).getTime();
+        document.getElementById("upcomingTest").innerText = soonest.title;
+        startCountdown();
+      } else if (sets.length > 0) {
+        document.getElementById("upcomingTest").innerText = sets[0].title;
+        document.getElementById("testCountdown").innerText = "";
+      } else {
+        document.getElementById("upcomingTest").innerText = "None";
+        document.getElementById("testCountdown").innerText = "";
+      }
+    }
+    // Countdown for next test
+    function startCountdown() {
+      if (!nextTestStart) return;
+      function updateCountdown() {
+        let now = Date.now();
+        let diff = Math.max(0, Math.floor((nextTestStart - now)/1000));
+        let h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = diff%60;
+        document.getElementById("testCountdown").innerText =
+          diff > 0 ? `Starts in ${h}h ${m}m ${s}s` : "Available now!";
+        if (diff > 0) setTimeout(updateCountdown, 1000);
+      }
+      updateCountdown();
     }
 
-    function viewResult(id) {
-      alert("Result detail view coming soon!"); // Can be implemented: fetch result, show breakdown
+    // Review modal for result
+    async function reviewResult(id) {
+      const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+      const results = await resp.json();
+      const result = results.find(r => r._id === id);
+      if (!result) return alert("Result not found.");
+      // Fetch set for questions
+      const setResp = await fetch(API_URL + "questionsets?title=" + encodeURIComponent(result.examSet), { headers: { Authorization: "Bearer " + token } });
+      const sets = await setResp.json();
+      const set = Array.isArray(sets) ? sets[0] : sets;
+      if (!set) return alert("Question set not found.");
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="review-modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h3>Review: ${set.title} (${result.score}%)</h3>
+            <div style="max-height:380px; overflow-y: auto;">`;
+      set.questions.forEach((q, idx) => {
+        let stuAns = result.answers && result.answers[q.id];
+        let correct = q.answer;
+        html += `<div class="review-question">${idx+1}. ${q.question}</div>
+          <div class="review-opts">Your Answer: <span class="${stuAns===correct?'review-correct':'review-wrong'}">${stuAns||'-'}</span>,
+            Correct: <span class="review-correct">${correct}</span></div>
+          <div class="review-expl">${q.explanation||''}</div><hr>`;
+      });
+      html += `</div></div></div>`;
+      document.getElementById("modalRoot").innerHTML = html;
     }
+    function closeModal(e) {
+      if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+        document.getElementById("modalRoot").innerHTML = "";
+      }
+    }
+
     function startTest(setId) {
-      window.location.href = `testsession.html?set=${setId}`;
+      window.location.href = `mock.html?set=${setId}`;
     }
     function openSupport() {
       window.open("mailto:support@yourcbtplattform.com", "_blank");
     }
+    function openDiscussion() {
+      window.open("discussion.html", "_blank");
+    }
+    function downloadCertificate() {
+      alert("Certificate download coming soon! (Generate PDF for passed exams)");
+    }
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "mock-icthallb";
+    }
+
+    // INIT
     async function init() {
       if (!token) return window.location.href = "index.html";
       await fetchProfile();
-      await fetchAnnouncements();
       await fetchHistory();
+      await fetchAnnouncements();
       await fetchAvailableTests();
     }
     window.onload = init;
+
   </script>
 </body>
 </html>
