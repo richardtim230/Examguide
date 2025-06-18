@@ -27,19 +27,47 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
   throw new Error("Missing required environment variables. Check MONGODB_URI, JWT_SECRET, FRONTEND_ORIGIN.");
 }
 
+// CORS: explicitly allow your Vercel frontend URL and subpath
+const allowedOrigins = [
+  "https://examguide.vercel.app",
+  "https://examguide.vercel.app/mock-icthallb"
+];
+const app = express();
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("CORS not allowed from this origin: " + origin), false);
+  },
+  credentials: true,
+}));
+app.use(express.json());
+
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
-const app = express();
-app.use(express.json());
-app.use(cors({
-  origin: [
-    "https://examguide.vercel.app",
-    "https://examguide.vercel.app/mock-icthallb"
-  ],
-  credentials: true
-}));
+// --- Superadmin bootstrapping (Option 3) ---
+// This block creates a superadmin user if none exists, with a sample password.
+// REMOVE or comment out this block after first use for security!
+(async () => {
+  try {
+    const exists = await User.findOne({ role: "superadmin" });
+    if (!exists) {
+      const hashed = await bcrypt.hash("SuperSecret123!", 12); // Sample password
+      await User.create({
+        username: "superadmin",
+        password: hashed,
+        role: "superadmin",
+      });
+      console.log("Superadmin created: username=superadmin, password=SuperSecret123!");
+    }
+  } catch (e) {
+    console.error("Error during superadmin bootstrapping:", e);
+  }
+})();
+
 // --- Auth Endpoints ---
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
@@ -107,7 +135,7 @@ app.get("/api/auth/me", authenticate, (req, res) => {
   res.json({user: req.user});
 });
 
-// Add a health check endpoint for /api/auth GET (OPTIONAL, for browser test)
+// Health check endpoint for /api/auth (for browser test)
 app.get("/api/auth", (req, res) => {
   res.json({ status: "auth API live" });
 });
