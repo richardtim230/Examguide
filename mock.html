@@ -423,19 +423,16 @@
 
     // Show the notification pop-up
     document.getElementById('notificationPopup').classList.add('active');
-
-    // Close the notification pop-up
     document.getElementById('closeNotification').addEventListener('click', function() {
         document.getElementById('notificationPopup').classList.remove('active');
     });
-
-    // WhatsApp button functionality
     document.getElementById('whatsappBtn').addEventListener('click', function() {
         window.open('https://wa.me/+2349155127634', '_blank');
     });
 
     // --- BACKEND LOGIC INTEGRATION ---
-    // Use your Render backend URL:
+
+    // SET THIS TO YOUR RENDER BACKEND URL:
     const API_URL = "https://examguide.onrender.com/api/auth/";
 
     function validateUsername(username) {
@@ -459,20 +456,35 @@
       });
       let loginData = await loginResponse.json();
 
-      if (loginResponse.ok && loginData.token) {
+      if (loginResponse.ok) {
         localStorage.setItem('token', loginData.token);
-        // Get user info to determine role
-        let meResponse = await fetch("https://examguide.onrender.com/api/auth/me", {
-          headers: { 'Authorization': 'Bearer ' + loginData.token }
-        });
-        let meData = await meResponse.json();
-        if (meResponse.ok && meData.user) {
-          let role = meData.user.role;
-          if (role === "superadmin") window.location.href = "superadmin.html";
-          else if (role === "admin") window.location.href = "admin.html";
-          else window.location.href = "student.html";
-        } else {
-          showNotification("Could not determine user role", "error");
+        // Get user role and redirect accordingly
+        try {
+          let profileResp = await fetch(API_URL.replace(/auth\/$/, '') + "auth/me", {
+            headers: { 'Authorization': 'Bearer ' + loginData.token }
+          });
+          let profileData = await profileResp.json();
+          if (profileResp.ok && profileData.user) {
+            const role = profileData.user.role;
+            if (role === 'superadmin') {
+              showNotification("Welcome, Superadmin!", "success");
+              setTimeout(() => { window.location.href = "supaadmin.html"; }, 1000);
+              return;
+            }
+            if (role === 'admin') {
+              showNotification("Welcome, Admin!", "success");
+              setTimeout(() => { window.location.href = "admin.html"; }, 1000);
+              return;
+            }
+            // Default: student
+            showNotification("Welcome, Student!", "success");
+            setTimeout(() => { window.location.href = "student.html"; }, 1000);
+            return;
+          }
+        } catch {
+          // fallback
+          showNotification("Login successful!", "success");
+          setTimeout(() => { window.location.href = "student.html"; }, 1000);
         }
         return;
       }
@@ -485,10 +497,10 @@
           body: JSON.stringify({username, password})
         });
         let registerData = await registerResponse.json();
-        if (registerResponse.ok && registerData.token) {
+        if (registerResponse.ok) {
           localStorage.setItem('token', registerData.token);
-          // Default role after registration is "student"
-          window.location.href = "student.html";
+          showNotification("Registered successfully!", "success");
+          setTimeout(() => { window.location.href = 'student.html'; }, 1200);
         } else {
           showNotification(registerData.message || "Registration failed", "error");
         }
