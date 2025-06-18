@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Superadmin Dashboard | CBT Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
+  <link rel="icon" href="logo.png">
+  <style>
+    :root {
+      --primary: #003366;
+      --accent: #00c6ff;
+      --accent2: #0072ff;
+      --danger: #ff3b47;
+      --success: #25d366;
+      --bg: #f5f8fa;
+      --card-bg: #fff;
+      --text: #222;
+      --muted: #667;
+      --border: #e3e8ee;
+      --shadow: 0 4px 16px #00336614;
+      --radius: 15px;
+      --nav-width: 230px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+    }
+    body {
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: var(--nav-width);
+      background: linear-gradient(135deg, var(--primary) 80%, var(--accent2) 100%);
+      color: #fff;
+      min-height: 100vh;
+      box-shadow: 2px 0 18px #00336612;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      transition: width 0.2s;
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 32px 16px 18px 22px;
+    }
+    .sidebar-header img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #bdeaff88;
+    }
+    .sidebar-header .brand {
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 0 2px 10px #001c3c33;
+    }
+    .sidebar-nav {
+      flex: 1;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 0 13px 24px;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      border-left: 4px solid transparent;
+      transition: background 0.19s, border 0.19s;
+      cursor: pointer;
+    }
+    .sidebar-nav a.active,
+    .sidebar-nav a:hover {
+      background: rgba(255,255,255,0.08);
+      border-left: 4px solid var(--accent);
+      color: var(--accent);
+    }
+    .sidebar-footer {
+      padding: 18px 24px 22px 24px;
+      border-top: 1px solid #ffffff12;
+      font-size: 0.94rem;
+      color: #bbdefb;
+      opacity: 0.92;
+    }
+    /* Main content */
+    .main-content {
+      margin-left: var(--nav-width);
+      width: calc(100vw - var(--nav-width));
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.2s;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      padding: 20px 38px;
+      box-shadow: 0 2px 10px #00336609;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .topbar .page-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+    .topbar .superadmin-avatar {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+    }
+    .topbar .superadmin-avatar img {
+      width: 37px;
+      height: 37px;
+      border-radius: 50%;
+      border: 2px solid var(--accent2);
+      object-fit: cover;
+    }
+    .topbar .superadmin-avatar span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      opacity: 0.89;
+    }
+    /* Dashboard cards */
+    .dashboard-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin: 30px 0 0 0;
+      padding: 0 36px;
+    }
+    .dashboard-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex: 1 1 230px;
+      min-width: 210px;
+      max-width: 265px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 11px;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: box-shadow 0.18s;
+    }
+    .dashboard-card:hover {
+      box-shadow: 0 6px 32px #00336622;
+      border-color: var(--accent2);
+    }
+    .dashboard-card .card-label {
+      font-size: 1.05rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .dashboard-card .card-value {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .dashboard-card .card-icon {
+      position: absolute;
+      top: 23px;
+      right: 23px;
+      font-size: 2.2rem;
+      opacity: 0.16;
+      pointer-events: none;
+    }
+    /* Section layout */
+    .section {
+      margin: 32px 36px 0 36px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 26px;
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 21px;
+      letter-spacing: 0.5px;
+    }
+    .section .actions {
+      margin-bottom: 14px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: linear-gradient(90deg, var(--accent) 35%, var(--accent2) 100%);
+      color: #fff;
+      padding: 10px 22px;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #00c6ff19;
+      transition: background 0.18s;
+    }
+    .btn:hover, .btn:focus {
+      background: linear-gradient(90deg, var(--accent2) 35%, var(--accent) 100%);
+    }
+    .btn-danger {
+      background: var(--danger);
+    }
+    .btn-success {
+      background: var(--success);
+      color: #1a2c10;
+    }
+    /* Table styling */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 14px;
+    }
+    .data-table th, .data-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 1.04rem;
+    }
+    .data-table thead {
+      background: #f8fdff;
+    }
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--accent2);
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+      margin-right: 7px;
+      transition: color 0.18s;
+    }
+    .action-btn:hover {
+      color: var(--danger);
+      text-decoration: underline;
+    }
+    /* Modal */
+    .modal-backdrop {
+      position: fixed; z-index: 1001; left:0; top:0; width:100vw; height:100vh;
+      background: rgba(18,28,68,0.46); display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 32px #00336622;
+      max-width: 425px;
+      width: 92vw;
+      padding: 32px 28px;
+      position: relative;
+      animation: popin 0.25s;
+    }
+    .modal h2 {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    .modal label {
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin: 14px 0 5px 0;
+      display: block;
+    }
+    .modal input, .modal select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border-radius: 7px;
+      border: 1.2px solid var(--border);
+      background: #f9fcfe;
+      font-size: 1.04rem;
+    }
+    .modal textarea {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 7px;
+      border: 1.2px solid var(--border);
+      background: #f9fcfe;
+      font-size: 1.04rem;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      resize: vertical;
+    }
+    .modal .close-modal {
+      position: absolute;
+      top: 13px;
+      right: 16px;
+      font-size: 1.7rem;
+      color: #bbb;
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: 0.79;
+    }
+    .modal .close-modal:hover {
+      color: var(--danger);
+      opacity: 1;
+    }
+    /* Responsive */
+    @media (max-width: 950px) {
+      .dashboard-cards, .section {
+        padding: 0 6vw 0 6vw;
+      }
+      .main-content {
+        margin-left: 0;
+        width: 100vw;
+      }
+      .sidebar {
+        position: fixed; left: -230px; width: 230px; transition: left 0.18s;
+      }
+      .sidebar.open { left: 0; }
+      .main-content.shifted { margin-left: var(--nav-width); }
+      .topbar { padding: 20px 18px; }
+      .section { margin-left: 18px; margin-right: 18px; }
+    }
+    @media (max-width: 600px) {
+      .dashboard-cards, .section { padding: 0 2vw 0 2vw; }
+      .dashboard-card { min-width: 130px; padding: 20px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="logo.png" alt="CBT Logo">
+      <span class="brand">CBT Superadmin</span>
+    </div>
+    <div class="sidebar-nav">
+      <a href="#dashboard" class="active" onclick="showSection('dashboard', this)"><span>🏠</span> Dashboard</a>
+      <a href="#admins" onclick="showSection('admins', this)"><span>👤</span> Admins</a>
+      <a href="#students" onclick="showSection('students', this)"><span>🎓</span> Students</a>
+      <a href="#sets" onclick="showSection('sets', this)"><span>📚</span> Question Sets</a>
+      <a href="#results" onclick="showSection('results', this)"><span>📊</span> Results</a>
+      <a href="#schedules" onclick="showSection('schedules', this)"><span>⏰</span> Schedules</a>
+      <a href="#notifications" onclick="showSection('notifications', this)"><span>✉️</span> Messaging</a>
+    </div>
+    <div class="sidebar-footer">
+      <span style="font-size:1.1em;">Superadmin</span><br>
+      <a href="#" onclick="logout()" style="color:#ffe066; text-decoration:underline;font-size:0.95em;">Logout</a>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <!-- Topbar -->
+    <div class="topbar">
+      <span class="page-title" id="pageTitle">Dashboard</span>
+      <div class="superadmin-avatar">
+        <img src="superadmin.png" alt="Superadmin">
+        <span id="superadminName">Superadmin</span>
+      </div>
+    </div>
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards" id="dashboardCards">
+      <div class="dashboard-card">
+        <div class="card-label">Total Students</div>
+        <div class="card-value" id="totalStudents">0</div>
+        <div class="card-icon">🎓</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Admins</div>
+        <div class="card-value" id="totalAdmins">0</div>
+        <div class="card-icon">👤</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Active Test Takers</div>
+        <div class="card-value" id="activeTestTakers">0</div>
+        <div class="card-icon">🟢</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Total Test Attempts</div>
+        <div class="card-value" id="totalAttempts">0</div>
+        <div class="card-icon">📊</div>
+      </div>
+    </div>
+    <!-- SECTIONS -->
+    <div class="section" id="dashboardSection">
+      <div class="section-title">Platform Overview</div>
+      <div style="min-height:70px;">
+        <canvas id="overviewChart" height="60"></canvas>
+      </div>
+    </div>
+
+    <!-- Admins Management -->
+    <div class="section" id="adminsSection" style="display:none;">
+      <div class="section-title">Admins Management</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addAdminModal')">+ Add Admin</button>
+      </div>
+      <table class="data-table" id="adminsTable">
+        <thead>
+          <tr>
+            <th>Username</th><th>Created</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Students Management -->
+    <div class="section" id="studentsSection" style="display:none;">
+      <div class="section-title">Students</div>
+      <table class="data-table" id="studentsTable">
+        <thead>
+          <tr>
+            <th>Username</th><th>Registered</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Question Sets -->
+    <div class="section" id="setsSection" style="display:none;">
+      <div class="section-title">Question Sets</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addSetModal')">+ New Set</button>
+      </div>
+      <table class="data-table" id="setsTable">
+        <thead>
+          <tr>
+            <th>Title</th><th>Status</th><th>Questions</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Results -->
+    <div class="section" id="resultsSection" style="display:none;">
+      <div class="section-title">Student Results</div>
+      <table class="data-table" id="resultsTable">
+        <thead>
+          <tr>
+            <th>Student</th><th>Set</th><th>Score</th><th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Schedules -->
+    <div class="section" id="schedulesSection" style="display:none;">
+      <div class="section-title">Test Schedules</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
+      </div>
+      <table class="data-table" id="schedulesTable">
+        <thead>
+          <tr>
+            <th>Set</th><th>Start</th><th>End</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Notifications -->
+    <div class="section" id="notificationsSection" style="display:none;">
+      <div class="section-title">Send Announcement</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
+      </div>
+      <table class="data-table" id="notificationsTable">
+        <thead>
+          <tr>
+            <th>Title</th><th>Message</th><th>Sent</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modals (Add Admin, Add Set, Add Schedule, Send Notif) -->
+  <div id="modalRoot"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // ========== CONFIG ==========
+    const API_URL = "https://your-backend-service.onrender.com/api/";
+    const token = localStorage.getItem("token");
+
+    /* ========== UX NAVIGATION ========== */
+    function showSection(id, el) {
+      document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+      if (el) el.classList.add('active');
+      document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
+      ['dashboard','admins','students','sets','results','schedules','notifications'].forEach(sec => {
+        document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
+      });
+      if (window.innerWidth <= 950) closeSidebar();
+    }
+    function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
+
+    // ========== DASHBOARD DATA ==========
+
+    async function fetchStats() {
+      const resp = await fetch(API_URL + "adminstats", { headers: { Authorization: "Bearer " + token } });
+      if (!resp.ok) return;
+      const data = await resp.json();
+      document.getElementById("totalStudents").innerText = data.totalStudents ?? 0;
+      document.getElementById("totalAdmins").innerText = data.totalAdmins ?? 0;
+      document.getElementById("activeTestTakers").innerText = data.totalAttempts ?? 0; // Or get from backend
+      document.getElementById("totalAttempts").innerText = data.totalAttempts ?? 0;
+      // Draw chart
+      drawOverviewChart(data);
+    }
+
+    function drawOverviewChart(data) {
+      const ctx = document.getElementById('overviewChart').getContext('2d');
+      if (window._overviewChart) window._overviewChart.destroy();
+      window._overviewChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Students', 'Admins', 'Test Attempts'],
+          datasets: [{
+            data: [data.totalStudents, data.totalAdmins, data.totalAttempts],
+            backgroundColor: ['#00c6ff','#0072ff','#25d366'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          plugins: { legend: { position: "bottom" } },
+          cutout: "70%",
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+
+    // ========== ADMIN MANAGEMENT ==========
+
+    async function fetchAdmins() {
+      const resp = await fetch(API_URL + "users?role=admin", { headers: { Authorization: "Bearer " + token } });
+      const admins = await resp.json();
+      let html = "";
+      admins.forEach(a => {
+        html += `<tr>
+          <td>${a.username}</td>
+          <td>${(new Date(a.createdAt)).toLocaleDateString()}</td>
+          <td>
+            <button class="action-btn" onclick="removeAdmin('${a._id}')">Remove</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#adminsTable tbody").innerHTML = html;
+    }
+    async function removeAdmin(id) {
+      if (!confirm("Remove this admin?")) return;
+      await fetch(API_URL + "users/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
+      fetchAdmins();
+    }
+
+    // ========== STUDENTS MANAGEMENT ==========
+
+    async function fetchStudents() {
+      const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+      const students = await resp.json();
+      let html = "";
+      students.forEach(s => {
+        html += `<tr>
+          <td>${s.username}</td>
+          <td>${(new Date(s.createdAt)).toLocaleDateString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#studentsTable tbody").innerHTML = html;
+    }
+
+    // ========== QUESTION SETS ==========
+
+    async function fetchSets() {
+      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+      const sets = await resp.json();
+      let html = "";
+      sets.forEach(set => {
+        html += `<tr>
+          <td>${set.title}</td>
+          <td>${set.status}</td>
+          <td>${set.questions.length}</td>
+          <td>
+            <button class="action-btn" onclick="editSet('${set._id}')">Edit</button>
+            <button class="action-btn" onclick="deleteSet('${set._id}')">Delete</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#setsTable tbody").innerHTML = html;
+    }
+    async function deleteSet(id) {
+      if (!confirm("Delete this set?")) return;
+      await fetch(API_URL + "questionsets/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
+      fetchSets();
+    }
+    function editSet(id) {
+      alert("Editing of set is not yet implemented in this mockup.");
+    }
+
+    // ========== RESULTS ==========
+
+    async function fetchResults() {
+      const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+      const results = await resp.json();
+      let html = "";
+      results.forEach(r => {
+        html += `<tr>
+          <td>${r.user.username}</td>
+          <td>${r.examSet}</td>
+          <td>${r.score ?? '-'}</td>
+          <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#resultsTable tbody").innerHTML = html;
+    }
+
+    // ========== SCHEDULES ==========
+
+    async function fetchSchedules() {
+      const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+      const schedules = await resp.json();
+      let html = "";
+      schedules.forEach(s => {
+        html += `<tr>
+          <td>${s.examSet}</td>
+          <td>${(new Date(s.start)).toLocaleString()}</td>
+          <td>${(new Date(s.end)).toLocaleString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#schedulesTable tbody").innerHTML = html;
+    }
+
+    // ========== NOTIFICATIONS ==========
+
+    async function fetchNotifications() {
+      const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
+      const notifs = await resp.json();
+      let html = "";
+      notifs.forEach(n => {
+        html += `<tr>
+          <td>${n.title}</td>
+          <td>${n.message}</td>
+          <td>${(new Date(n.createdAt)).toLocaleString()}</td>
+        </tr>`;
+      });
+      document.querySelector("#notificationsTable tbody").innerHTML = html;
+    }
+
+    // ========== MODALS ==========
+    function openModal(type) {
+      let html = "";
+      if (type === "addAdminModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Add New Admin</h2>
+            <label>Username</label>
+            <input id="adminUsername" type="text" maxlength="32">
+            <label>Password</label>
+            <input id="adminPassword" type="password" maxlength="32">
+            <button class="btn" onclick="submitAddAdmin()">Create</button>
+          </div>
+        </div>`;
+      }
+      if (type === "addSetModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>New Question Set</h2>
+            <label>Title</label>
+            <input id="setTitle" type="text" maxlength="48">
+            <label>Status</label>
+            <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+            <button class="btn" onclick="submitAddSet()">Create</button>
+          </div>
+        </div>`;
+      }
+      if (type === "addScheduleModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Schedule Test</h2>
+            <label for="scheduleSet">Exam Set</label>
+            <input id="scheduleSet" type="text">
+            <label>Start Date & Time</label>
+            <input id="scheduleStart" type="datetime-local">
+            <label>End Date & Time</label>
+            <input id="scheduleEnd" type="datetime-local">
+            <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+          </div>
+        </div>`;
+      }
+      if (type === "sendNotifModal") {
+        html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Send Announcement</h2>
+            <label>Title</label>
+            <input id="notifTitle" type="text" maxlength="40">
+            <label>Message</label>
+            <textarea id="notifMsg" maxlength="300"></textarea>
+            <button class="btn" onclick="submitSendNotif()">Send</button>
+          </div>
+        </div>`;
+      }
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    function closeModal(e) {
+      if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+        document.getElementById("modalRoot").innerHTML = "";
+      }
+    }
+    async function submitAddAdmin() {
+      const username = document.getElementById("adminUsername").value.trim();
+      const password = document.getElementById("adminPassword").value;
+      if (!username || !password) return alert("All fields required!");
+      await fetch(API_URL + "auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ username, password, role: "admin" })
+      });
+      fetchAdmins();
+      closeModal();
+    }
+    async function submitAddSet() {
+      const title = document.getElementById("setTitle").value.trim();
+      const status = document.getElementById("setStatus").value;
+      if (!title) return alert("Title required!");
+      await fetch(API_URL + "questionsets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ title, status, questions: [] })
+      });
+      fetchSets();
+      closeModal();
+    }
+    async function submitAddSchedule() {
+      const examSet = document.getElementById("scheduleSet").value.trim();
+      const start = document.getElementById("scheduleStart").value;
+      const end = document.getElementById("scheduleEnd").value;
+      if (!examSet || !start || !end) return alert("All fields required!");
+      await fetch(API_URL + "schedules", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ examSet, start, end })
+      });
+      fetchSchedules();
+      closeModal();
+    }
+    async function submitSendNotif() {
+      const title = document.getElementById("notifTitle").value.trim();
+      const message = document.getElementById("notifMsg").value.trim();
+      if (!title || !message) return alert("All fields required!");
+      await fetch(API_URL + "notifications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ title, message })
+      });
+      fetchNotifications();
+      closeModal();
+    }
+
+    // ========== AUTH & LOGOUT ==========
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "index.html";
+    }
+
+    // ========== INIT ==========
+    async function init() {
+      // Security
+      if (!token) return window.location.href = "index.html";
+      // Superadmin name (you may want to get from backend)
+      document.getElementById("superadminName").innerText = "Superadmin";
+      // Dashboard cards
+      await fetchStats();
+      await fetchAdmins();
+      await fetchStudents();
+      await fetchSets();
+      await fetchResults();
+      await fetchSchedules();
+      await fetchNotifications();
+    }
+    window.onload = init;
+  </script>
+</body>
+</html>
