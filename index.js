@@ -14,6 +14,19 @@ import notificationsRoutes from "./routes/notifications.js";
 import adminStatsRoutes from "./routes/adminStats.js";
 import superadminRoutes from "./routes/superadmin.js";
 
+// ===== ADD FACULTY & DEPARTMENT MODELS =====
+const FacultySchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true }
+});
+const Faculty = mongoose.model("Faculty", FacultySchema);
+
+const DepartmentSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  faculty: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: true }
+});
+const Department = mongoose.model("Department", DepartmentSchema);
+// ===========================================
+
 dotenv.config();
 
 const {
@@ -67,6 +80,34 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
     console.error("Error during superadmin bootstrapping:", e);
   }
 })();
+
+// ===== FACULTY ROUTES =====
+app.get("/api/faculties", authenticate, async (req, res) => {
+  const list = await Faculty.find().sort({ name: 1 });
+  res.json(list);
+});
+app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const faculty = await Faculty.create({ name: req.body.name });
+    res.status(201).json(faculty);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// ===== DEPARTMENT ROUTES =====
+app.get("/api/departments", authenticate, async (req, res) => {
+  const list = await Department.find().sort({ name: 1 });
+  res.json(list);
+});
+app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dept = await Department.create({ name: req.body.name, faculty: req.body.faculty });
+    res.status(201).json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
 
 // --- Auth Endpoints ---
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
