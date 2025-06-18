@@ -3,14 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    * {
+    html, body {
+      height: 100%;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
-    /* Notification Pop-up Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .stars {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .stars div {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 4s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
     #notificationPopup {
         display: none;
         position: fixed;
@@ -33,12 +64,13 @@
         padding: 25px;
         border-radius: 12px;
         box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-        max-width: 500px;
+        max-width: 600px;
         margin: 0 auto;
         text-align: center;
+        font-size: 1.07rem;
     }
     #notificationPopup h2 {
-        font-size: 15px;
+        font-size: 18px;
         color: #0a35c9;
         margin-top: 15px;
         margin-bottom: 20px;
@@ -50,7 +82,7 @@
         list-style: inside disc;
         margin-bottom: 20px;
         text-align: left;
-        font-size: 13px;
+        font-size: 15px;
         color: #1a1a1a;
     }
     #notificationPopup button {
@@ -72,220 +104,22 @@
     #whatsappBtn:hover {
         background: #20b058;
     }
-    @media (min-width: 800px) {
-  body {
-    overflow: auto;
-    min-height: 100vh;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 60px;
-  }
-  .login-container {
-    max-width: 440px;
-    min-width: 340px;
-    padding: 54px 36px 40px 36px;
-    margin-top: 40px;
-    box-shadow: 0 12px 48px rgba(31, 38, 135, 0.25);
-    background: rgba(255, 255, 255, 0.17);
-    color: #fff;
-  }
-  .login-container h2 {
-    font-size: 29px;
-    margin-bottom: 28px;
-  }
-  .logo {
-    width: 86px;
-    height: 86px;
-    margin-bottom: 16px;
-  }
-  .school-name {
-    font-size: 1.33rem;
-    margin-bottom: 7px;
-  }
-  .subtitle {
-    font-size: 1.14rem;
-    margin-bottom: 18px;
-  }
-  input, button {
-    font-size: 17px;
-    min-height: 48px;
-  }
-  #customNotification {
-    font-size: 1.08rem;
-    max-width: 420px;
-  }
-  #notificationPopup .popup-content {
-    max-width: 600px;
-    font-size: 1.07rem;
-  }
-  .stars {
-    /* More stars for desktop */
-    z-index: 0;
-  }
-}
-    .login-container h2 {
-  font-size: clamp(22px, 2vw, 30px);
-    }
-    body {
-      height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      position: relative;
-    }
-    .stars {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .stars div {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 4s infinite ease-in-out;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
-    }
-    .login-container {
-      position: relative;
-      z-index: 1;
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      width: 100%;
-      max-width: 400px;
-      padding: 38px 24px 30px 24px;
-      text-align: center;
-      color: white;
-      margin-top: 10px;
-    }
-    .logo {
-      width: 76px;
-      height: 76px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      background: #fff;
-      box-shadow: 0 6px 24px #00c6ff33;
-      object-fit: contain;
-      border: 3px solid #0072ff44;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .school-name {
-      font-size: 1.22rem;
-      font-weight: bold;
-      color: #fff;
-      text-align: center;
-      letter-spacing: 1.1px;
-      margin-bottom: 3px;
-      margin-top: 2px;
-      text-shadow: 0 2px 8px #001c3c44;
-    }
-    .subtitle {
-      color: #bdeaff;
-      font-size: 1.01rem;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: 500;
-      letter-spacing: 0.6px;
-      text-shadow: 0 1px 4px #001c3c44;
-    }
-    .login-container h2 {
-      font-size: 25px;
-      margin-bottom: 20px;
-      font-weight: bold;
-      color: #00c6ff;
-      letter-spacing: 1px;
-      margin-top: 10px;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.22);
-      color: #fff;
-      font-size: 16px;
-      outline: none;
-    }
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-    input:focus {
-      background: rgba(255,255,255,0.32);
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: linear-gradient(to right, #0072ff, #00c6ff);
-    }
-    .login-footer {
-      margin-top: 22px;
-      text-align: center;
-      font-size: 0.98rem;
-      color: #bdeaff;
-      letter-spacing: 0.4px;
-    }
-    .reset-link {
-      color: #ffe966;
-      display: inline-block;
-      margin-top: 10px;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 0.99rem;
-    }
-    .reset-link:hover {
-      color: #fff;
-    }
-    .security-warning {
-      background: #fff3c4;
-      color: #a65c00;
-      border-radius: 6px;
-      padding: 11px;
-      margin: 0 0 13px 0;
-      font-size: 0.97rem;
-      text-align: center;
-      box-shadow: 0 2px 8px #00000022;
-    }
-    /* Custom notification bar */
+
     #customNotification {
       display: none;
       position: fixed;
-      top: 30px;
+      top: 40px;
       left: 50%;
       transform: translateX(-50%);
       background: #003366ee;
       color: #fff;
-      padding: 16px 36px 16px 22px;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px #00000055;
+      padding: 15px 38px 15px 22px;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px #00000033;
       z-index: 1100;
-      font-size: 1rem;
-      min-width: 200px;
-      max-width: 90vw;
+      font-size: 1.05rem;
+      min-width: 280px;
+      max-width: 410px;
       text-align: center;
       opacity: 0;
       transition: opacity 0.4s, top 0.4s;
@@ -294,7 +128,7 @@
     #customNotification.show {
       display: block;
       opacity: 1;
-      top: 50px;
+      top: 60px;
       pointer-events: auto;
     }
     #customNotification.success {
@@ -319,31 +153,185 @@
     #customNotification .close-noti:hover {
       opacity: 1;
     }
-    @media (max-width: 500px) {
-      .login-container {
-        padding: 25px 7vw 18px 7vw;
+
+    .auth-main-wrapper {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 0;
+      z-index: 1;
+    }
+    .login-card {
+      display: flex;
+      flex-direction: row;
+      background: rgba(255,255,255,0.14);
+      box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.22), 0 1.5px 6px #0060e011;
+      border-radius: 18px;
+      overflow: hidden;
+      max-width: 810px;
+      width: 100%;
+      min-height: 480px;
+      position: relative;
+      animation: fadein 0.7s;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: scale(0.98);}
+      to   { opacity: 1; transform: scale(1);}
+    }
+    .login-info {
+      background: linear-gradient(115deg,#003366 70%,#0055b7 100%);
+      color: #fff;
+      flex: 1.2;
+      padding: 48px 38px 38px 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 260px;
+    }
+    .login-info .logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 32px #001c3c25;
+      margin-bottom: 20px;
+      object-fit: contain;
+      border: 3px solid #bdeaff77;
+    }
+    .login-info .school-name {
+      font-size: 1.55rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 8px #001c3c33;
+    }
+    .login-info .subtitle {
+      font-size: 1.13rem;
+      margin-bottom: 24px;
+      color: #bdeaff;
+      font-weight: 500;
+      text-shadow: 0 1px 4px #001c3c33;
+    }
+    .login-info .desc {
+      font-size: 1rem;
+      opacity: 0.93;
+      margin-bottom: 0;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .login-form {
+      flex: 1.5;
+      padding: 54px 40px 42px 40px;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 300px;
+    }
+    .login-form h2 {
+      color: #00c6ff;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 22px;
+      letter-spacing: 0.7px;
+      text-align: left;
+      text-shadow: 0 2px 8px #001c3c33;
+    }
+    .login-form form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .login-form input {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #dde2ee;
+      font-size: 1rem;
+      color: #003366;
+      background: #f7faff;
+      transition: border 0.2s;
+      outline: none;
+    }
+    .login-form input:focus {
+      border: 1.5px solid #0072ff;
+      background: #fff;
+    }
+    .login-form button {
+      padding: 14px 0;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #0072ff33;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .login-form button:hover {
+      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+      box-shadow: 0 4px 16px #00336633;
+    }
+    .login-footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #bdeaff;
+      letter-spacing: 0.2px;
+      opacity: 0.98;
+    }
+    .reset-link {
+      color: #ffe966;
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.99rem;
+      transition: color 0.2s;
+    }
+    .reset-link:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .login-card {
+        flex-direction: column;
+        min-height: auto;
+        max-width: 98vw;
+        margin: 0 2vw;
       }
-      input, button {
-        font-size: 14px;
+      .login-info, .login-form {
+        padding: 34px 7vw 24px 7vw;
       }
-      .login-container h2 {
-        font-size: 21px;
+    }
+    @media (max-width: 600px) {
+      .login-info {
+        padding: 28px 4vw 18px 4vw;
       }
-      .logo {
-        width: 54px;
-        height: 54px;
+      .login-form {
+        padding: 32px 4vw 20px 4vw;
       }
-      .school-name { font-size: 1.07rem; }
-      .subtitle { font-size: 0.93rem; }
+      .login-form h2 {
+        font-size: 1.32rem;
+      }
       #customNotification {
         max-width: 98vw;
-        padding: 13px 22px 13px 16px;
         font-size: 0.93rem;
+        padding: 13px 22px 13px 16px;
+      }
+      #notificationPopup .popup-content {
+        max-width: 98vw;
+        font-size: 1rem;
       }
     }
   </style>
-  <!-- SHA-256 hashing library (for demo security) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
   <!-- Custom notification UI -->
@@ -356,9 +344,9 @@
     // Add stars to the background
     document.addEventListener('DOMContentLoaded', function() {
       const starsContainer = document.querySelector('.stars');
-      for(let i=0; i<50; i++) {
+      for(let i=0; i<70; i++) {
         let star = document.createElement('div');
-        let size = Math.random() * 4 + 1;
+        let size = Math.random() * 4 + 1.5;
         star.style.width = star.style.height = `${size}px`;
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
@@ -384,24 +372,37 @@
           <button id="closeNotification" class="close-btn" aria-label="Close Notification">Close</button>
       </div>
   </div>
-  <div class="login-container">
-    <img src="logo.png" alt="CBT Logo" class="logo">
-    
-    <div class="school-name">Obafemi Awolowo University</div>
-    <div class="subtitle">Central Mock Test</div>
-    <h2>LOG IN OR REGISTER</h2>
-    <form id="authForm" autocomplete="off">
-      <input type="text" id="username" placeholder="Username" required autocomplete="off" aria-label="Username">
-      <input type="password" id="password" placeholder="Password" required autocomplete="off" aria-label="Password">
-      <button type="submit" id="loginBtn">Login / Register</button>
-      <div>
-        <span class="reset-link" id="forgotPassword" tabindex="0">Forgot password?</span>
+  <div class="auth-main-wrapper">
+    <div class="login-card">
+      <!-- Left: Info/brand -->
+      <div class="login-info">
+        <img src="logo.png" alt="CBT Logo" class="logo">
+        <div class="school-name">Obafemi Awolowo University</div>
+        <div class="subtitle">Central Mock Test</div>
+        <div class="desc">
+          <p>Welcome to the official mock test portal.<br>
+          Please log in or register to begin.<br>
+          <span style="opacity:0.8;font-size:0.97em;">Powered by De-Brainstormers Team</span>
+          </p>
+        </div>
       </div>
-    </form>
-    <div class="login-footer">Powered by De-Brainstormers Team</div>
+      <!-- Right: Form -->
+      <div class="login-form">
+        <h2>Log In or Register</h2>
+        <form id="authForm" autocomplete="off">
+          <input type="text" id="username" placeholder="Username" required autocomplete="off" aria-label="Username">
+          <input type="password" id="password" placeholder="Password" required autocomplete="off" aria-label="Password">
+          <button type="submit" id="loginBtn">Login / Register</button>
+          <div>
+            <span class="reset-link" id="forgotPassword" tabindex="0">Forgot password?</span>
+          </div>
+        </form>
+        <div class="login-footer">By logging in, you agree to the ICT policy.</div>
+      </div>
+    </div>
   </div>
   <script>
-    // Custom notification logic
+    // --- Notification logic ---
     function showNotification(message, type = "") {
       const noti = document.getElementById('customNotification');
       const msgBox = document.getElementById('customNotificationMsg');
@@ -433,70 +434,86 @@
         window.open('https://wa.me/+2349155127634', '_blank');
     });
 
-    // Helper: Username validation (allow spaces, forbid only empty username after trimming)
+    // --- BACKEND LOGIC INTEGRATION ---
+
+    // SET THIS TO YOUR RENDER BACKEND URL:
+    const API_URL = "https://your-backend-service.onrender.com/api/auth/";
+
     function validateUsername(username) {
-      // Username can be anything except all spaces or empty string after trimming
-      return username.length > 0;
+      return username.trim().length > 0;
     }
 
-    // Password hashing for demo security
-    function hashPassword(password) {
-      return CryptoJS.SHA256(password).toString();
-    }
+    document.getElementById('authForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      let username = document.getElementById('username').value.trim();
+      let password = document.getElementById('password').value;
+      if (!validateUsername(username) || !password) {
+        showNotification("Both fields are required!", "error");
+        return;
+      }
 
-    // Password reset (for demo: reset password by username)
-    document.getElementById('forgotPassword').addEventListener('click', function() {
+      // Try login first
+      let loginResponse = await fetch(API_URL + "login", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password})
+      });
+      let loginData = await loginResponse.json();
+
+      if (loginResponse.ok) {
+        localStorage.setItem('token', loginData.token);
+        showNotification("Welcome back!", "success");
+        setTimeout(() => { window.location.href = 'testsession'; }, 900);
+        return;
+      }
+
+      // If login fails (user not found), try register
+      if (loginData.message && loginData.message.toLowerCase().includes("invalid")) {
+        let registerResponse = await fetch(API_URL + "register", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({username, password})
+        });
+        let registerData = await registerResponse.json();
+        if (registerResponse.ok) {
+          localStorage.setItem('token', registerData.token);
+          showNotification("Registered successfully!", "success");
+          setTimeout(() => { window.location.href = 'testsession'; }, 1200);
+        } else {
+          showNotification(registerData.message || "Registration failed", "error");
+        }
+      } else {
+        showNotification(loginData.message || "Login failed", "error");
+      }
+    });
+
+    document.getElementById('forgotPassword').addEventListener('click', async function() {
       let username = prompt("Enter your username for password reset:");
       if (username === null) return;
-      username = username.trimEnd();
+      username = username.trim();
       if (!validateUsername(username)) {
         showNotification("Username cannot be empty.", "error");
         return;
       }
-      let users = JSON.parse(localStorage.getItem('cbt_users')) || {};
-      if (!users[username]) {
-        showNotification("Username not found.", "error");
+      let newPass = prompt("Enter your new password:");
+      if (!newPass) {
+        showNotification("Password cannot be empty.", "error");
         return;
       }
-      // For demo, just allow user to set a new password
-      const newPass = prompt("Enter your new password:");
-      if (!newPass) return showNotification("Password cannot be empty.", "error");
-      users[username].password = hashPassword(newPass);
-      localStorage.setItem('cbt_users', JSON.stringify(users));
-      showNotification("Password reset successful!", "success");
-    });
-
-    document.getElementById('authForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      let username = document.getElementById('username').value;
-      username = username.trimEnd();
-      const password = document.getElementById('password').value;
-
-      if (!username || !password) return showNotification("Both fields are required!", "error");
-
-      if (!validateUsername(username)) {
-        return showNotification("Username cannot be empty or only spaces!", "error");
-      }
-
-      let users = JSON.parse(localStorage.getItem('cbt_users')) || {};
-      const hashedPassword = hashPassword(password);
-
-      if (!users[username]) {
-        users[username] = { password: hashedPassword };
-        localStorage.setItem('cbt_users', JSON.stringify(users));
-        localStorage.setItem('current_user', username);
-        showNotification("Registered successfully!", "success");
-        setTimeout(() => { window.location.href = 'testsession'; }, 1200);
-      } else if (users[username].password !== hashedPassword) {
-        return showNotification("Incorrect password!", "error");
+      let resp = await fetch(API_URL + "reset", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password: newPass})
+      });
+      let data = await resp.json();
+      if (resp.ok) {
+        showNotification("Password reset successful!", "success");
       } else {
-        localStorage.setItem('current_user', username);
-        showNotification("Welcome back!", "success");
-        setTimeout(() => { window.location.href = 'testsession'; }, 900);
+        showNotification(data.message || "Reset failed", "error");
       }
     });
 
-    // Optional: Warn users if not using HTTPS
+    // HTTPS warning (for demo)
     if (window.location.protocol !== "https:") {
       console.warn("You are not on a secure connection (HTTPS). Never enter real passwords here.");
     }
