@@ -789,21 +789,26 @@ body {
       }
       if (type === "addScheduleModal") {
         html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Schedule Test</h2>
-            <label for="scheduleSet">Exam Set</label>
-            <input id="scheduleSet" type="text">
-            <label>Start Date & Time</label>
-            <input id="scheduleStart" type="datetime-local">
-            <label>End Date & Time</label>
-            <input id="scheduleEnd" type="datetime-local">
-            <span id="addScheduleMsg"></span>
-            <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-          </div>
-        </div>`;
+        
+<div class="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="close-modal" onclick="closeModal(event)">&times;</button>
+    <h2>Schedule Test</h2>
+    <label>Exam Set</label>
+    <select id="scheduleSet"></select>
+    <label>Faculty</label>
+    <select id="scheduleFaculty" onchange="populateScheduleDepartments()"></select>
+    <label>Department</label>
+    <select id="scheduleDepartment"></select>
+    <label>Start Date & Time</label>
+    <input id="scheduleStart" type="datetime-local">
+    <label>End Date & Time</label>
+    <input id="scheduleEnd" type="datetime-local">
+    <span id="addScheduleMsg"></span>
+    <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
+    <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+  </div>
+</div>`;
       }
       if (type === "sendNotifModal") {
         html = `
