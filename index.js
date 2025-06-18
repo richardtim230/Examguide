@@ -33,8 +33,13 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: FRONTEND_ORIGIN.split(','), credentials: true }));
-
+app.use(cors({
+  origin: [
+    "https://examguide.vercel.app",
+    "https://examguide.vercel.app/mock-icthallb"
+  ],
+  credentials: true
+}));
 // --- Auth Endpoints ---
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
