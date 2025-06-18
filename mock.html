@@ -435,9 +435,8 @@
     });
 
     // --- BACKEND LOGIC INTEGRATION ---
-
-    // SET THIS TO YOUR RENDER BACKEND URL:
-    const API_URL = "https://your-backend-service.onrender.com/api/auth/";
+    // Use your Render backend URL:
+    const API_URL = "https://examguide.onrender.com/api/auth/";
 
     function validateUsername(username) {
       return username.trim().length > 0;
@@ -460,10 +459,21 @@
       });
       let loginData = await loginResponse.json();
 
-      if (loginResponse.ok) {
+      if (loginResponse.ok && loginData.token) {
         localStorage.setItem('token', loginData.token);
-        showNotification("Welcome back!", "success");
-        setTimeout(() => { window.location.href = 'testsession'; }, 900);
+        // Get user info to determine role
+        let meResponse = await fetch("https://examguide.onrender.com/api/auth/me", {
+          headers: { 'Authorization': 'Bearer ' + loginData.token }
+        });
+        let meData = await meResponse.json();
+        if (meResponse.ok && meData.user) {
+          let role = meData.user.role;
+          if (role === "superadmin") window.location.href = "superadmin.html";
+          else if (role === "admin") window.location.href = "admin.html";
+          else window.location.href = "student.html";
+        } else {
+          showNotification("Could not determine user role", "error");
+        }
         return;
       }
 
@@ -475,10 +485,10 @@
           body: JSON.stringify({username, password})
         });
         let registerData = await registerResponse.json();
-        if (registerResponse.ok) {
+        if (registerResponse.ok && registerData.token) {
           localStorage.setItem('token', registerData.token);
-          showNotification("Registered successfully!", "success");
-          setTimeout(() => { window.location.href = 'testsession'; }, 1200);
+          // Default role after registration is "student"
+          window.location.href = "student.html";
         } else {
           showNotification(registerData.message || "Registration failed", "error");
         }
@@ -513,7 +523,6 @@
       }
     });
 
-    // HTTPS warning (for demo)
     if (window.location.protocol !== "https:") {
       console.warn("You are not on a secure connection (HTTPS). Never enter real passwords here.");
     }
