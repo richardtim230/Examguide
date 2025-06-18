@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.95"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>CBT Test</title>
 
   <!-- MathJax and KaTeX for math rendering -->
@@ -26,14 +26,6 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script type='text/javascript'>
-  window.smartlook||(function(d) {
-    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-    c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
-    })(document);
-    smartlook('init', '424bfe466de56c64d867be2f4112259c1c07021b', { region: 'eu' });
-  </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -514,11 +506,34 @@
     };
 
     // User & Access
-    const currentUser = localStorage.getItem('current_user') || 'Guest';
-    document.getElementById('candidateName').innerText += currentUser;
-    if (!currentUser || currentUser === "Guest") {
-      window.location.href = "mock.html";
+    const token = localStorage.getItem('token');
+    let currentUser = "Guest";
+
+    // Get logged-in user via backend for protection
+    async function fetchCurrentUser() {
+      if (!token) {
+        window.location.href = "index.html";
+        return;
+      }
+      try {
+        // Replace with your backend Render URL:
+        const resp = await fetch("https://your-backend-service.onrender.com/api/auth/me", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        const data = await resp.json();
+        if (resp.ok && data.user && data.user.username) {
+          currentUser = data.user.username;
+          document.getElementById('candidateName').innerText = "CANDIDATE: " + currentUser;
+        } else {
+          localStorage.removeItem('token');
+          window.location.href = "index.html";
+        }
+      } catch (e) {
+        localStorage.removeItem('token');
+        window.location.href = "index.html";
+      }
     }
+    fetchCurrentUser();
 
     // Constants for session
     const MAX_SESSION_QUESTIONS = 60;
