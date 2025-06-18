@@ -102,6 +102,11 @@ app.get("/api/auth/me", authenticate, (req, res) => {
   res.json({user: req.user});
 });
 
+// Add a health check endpoint for /api/auth GET (OPTIONAL, for browser test)
+app.get("/api/auth", (req, res) => {
+  res.json({ status: "auth API live" });
+});
+
 // List users by role/faculty/department (for superadmin)
 app.get("/api/users", authenticate, authorizeRole("superadmin"), async (req, res) => {
   const filter = {};
