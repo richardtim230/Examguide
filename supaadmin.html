@@ -340,6 +340,36 @@
       color: var(--danger);
       opacity: 1;
     }
+    /* Spinner styles */
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #00c6ff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .success-msg {
+      color: var(--success);
+      margin-left: 8px;
+      font-size: 1.07em;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .error-msg {
+      color: var(--danger);
+      margin-left: 8px;
+      font-size: 1.07em;
+      display: inline-block;
+      vertical-align: middle;
+    }
     /* Responsive */
     @media (max-width: 950px) {
       .dashboard-cards, .section {
@@ -702,6 +732,8 @@
             <input id="adminUsername" type="text" maxlength="32">
             <label>Password</label>
             <input id="adminPassword" type="password" maxlength="32">
+            <span id="addAdminMsg"></span>
+            <span class="spinner" id="addAdminSpinner" style="display:none"></span>
             <button class="btn" onclick="submitAddAdmin()">Create</button>
           </div>
         </div>`;
@@ -716,6 +748,8 @@
             <input id="setTitle" type="text" maxlength="48">
             <label>Status</label>
             <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+            <span id="addSetMsg"></span>
+            <span class="spinner" id="addSetSpinner" style="display:none"></span>
             <button class="btn" onclick="submitAddSet()">Create</button>
           </div>
         </div>`;
@@ -732,6 +766,8 @@
             <input id="scheduleStart" type="datetime-local">
             <label>End Date & Time</label>
             <input id="scheduleEnd" type="datetime-local">
+            <span id="addScheduleMsg"></span>
+            <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
             <button class="btn" onclick="submitAddSchedule()">Schedule</button>
           </div>
         </div>`;
@@ -746,6 +782,8 @@
             <input id="notifTitle" type="text" maxlength="40">
             <label>Message</label>
             <textarea id="notifMsg" maxlength="300"></textarea>
+            <span id="sendNotifMsg"></span>
+            <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
             <button class="btn" onclick="submitSendNotif()">Send</button>
           </div>
         </div>`;
@@ -760,51 +798,112 @@
     async function submitAddAdmin() {
       const username = document.getElementById("adminUsername").value.trim();
       const password = document.getElementById("adminPassword").value;
-      if (!username || !password) return alert("All fields required!");
-      await fetch(API_URL + "auth/register", {
+      const spinner = document.getElementById("addAdminSpinner");
+      const msg = document.getElementById("addAdminMsg");
+      msg.innerText = "";
+      msg.className = "";
+      if (!username || !password) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ username, password, role: "admin" })
       });
-      fetchAdmins();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to add admin.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchAdmins();
+        closeModal();
+      }, 900);
     }
     async function submitAddSet() {
       const title = document.getElementById("setTitle").value.trim();
       const status = document.getElementById("setStatus").value;
-      if (!title) return alert("Title required!");
-      await fetch(API_URL + "questionsets", {
+      const spinner = document.getElementById("addSetSpinner");
+      const msg = document.getElementById("addSetMsg");
+      msg.innerText = ""; msg.className = "";
+      if (!title) { msg.innerText = "Title required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "questionsets", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ title, status, questions: [] })
       });
-      fetchSets();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to add set.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchSets();
+        closeModal();
+      }, 900);
     }
     async function submitAddSchedule() {
       const examSet = document.getElementById("scheduleSet").value.trim();
       const start = document.getElementById("scheduleStart").value;
       const end = document.getElementById("scheduleEnd").value;
-      if (!examSet || !start || !end) return alert("All fields required!");
-      await fetch(API_URL + "schedules", {
+      const spinner = document.getElementById("addScheduleSpinner");
+      const msg = document.getElementById("addScheduleMsg");
+      msg.innerText = ""; msg.className = "";
+      if (!examSet || !start || !end) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "schedules", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ examSet, start, end })
       });
-      fetchSchedules();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to schedule.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchSchedules();
+        closeModal();
+      }, 900);
     }
     async function submitSendNotif() {
       const title = document.getElementById("notifTitle").value.trim();
       const message = document.getElementById("notifMsg").value.trim();
-      if (!title || !message) return alert("All fields required!");
-      await fetch(API_URL + "notifications", {
+      const spinner = document.getElementById("sendNotifSpinner");
+      const msg = document.getElementById("sendNotifMsg");
+      msg.innerText = ""; msg.className = "";
+      if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "notifications", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
         body: JSON.stringify({ title, message })
       });
-      fetchNotifications();
-      closeModal();
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to send.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchNotifications();
+        closeModal();
+      }, 900);
     }
 
     // ========== AUTH & LOGOUT ==========
@@ -815,11 +914,8 @@
 
     // ========== INIT ==========
     async function init() {
-      // Security
       if (!token) return window.location.href = "index.html";
-      // Superadmin name (you may want to get from backend)
       document.getElementById("superadminName").innerText = "Superadmin";
-      // Dashboard cards
       await fetchStats();
       await fetchAdmins();
       await fetchStudents();
