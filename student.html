@@ -4,43 +4,47 @@
   <meta charset="UTF-8" />
   <title>Lumina Scholar Portal | LuminaExam Suite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600,800&display=swap">
   <link rel="icon" href="lumina-logo.png">
   <style>
     :root {
-      --lumina-primary: #3a86ff;
-      --lumina-accent: #8338ec;
-      --lumina-green: #43aa8b;
-      --lumina-yellow: #ffbe0b;
-      --lumina-bg: #f8faff;
-      --lumina-bg-card: #f4f8fe;
-      --lumina-border: #e2eafc;
-      --lumina-shadow: 0 4px 24px #3a86ff15;
-      --lumina-radius: 18px;
-      --lumina-radius-s: 12px;
-      --lumina-radius-xs: 8px;
-      --lumina-dark: #264653;
-      --lumina-light: #fff;
-      --lumina-muted: #adb5bd;
-      --lumina-gradient: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
-      --lumina-gradient-secondary: linear-gradient(90deg, #43aa8b 0%, #ffbe0b 100%);
+      --primary: #3a86ff;
+      --primary-dark: #26549b;
+      --accent: #8338ec;
+      --success: #43aa8b;
+      --warning: #ffbe0b;
+      --danger: #ff3b47;
+      --muted: #adb5bd;
+      --bg: #f8faff;
+      --bg-card: #f4f8fe;
+      --white: #fff;
+      --border: #e2eafc;
+      --shadow: 0 4px 18px #3a86ff13;
+      --radius: 18px;
+      --radius-s: 12px;
+      --radius-xs: 8px;
+      --gradient: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
+      --gradient-accent: linear-gradient(90deg, #43aa8b 0%, #ffbe0b 100%);
+      --table-head: #f4f8fe;
     }
     html, body {
-      background: var(--lumina-bg);
+      background: var(--bg);
       font-family: 'Inter', Arial, sans-serif;
       margin: 0;
       min-height: 100vh;
-      color: var(--lumina-dark);
+      color: #23366e;
       letter-spacing: 0.01em;
     }
+
+    /* Header */
     .header {
-      background: var(--lumina-gradient);
-      color: var(--lumina-light);
-      padding: 42px 0 30px 0;
+      background: var(--gradient);
+      color: var(--white);
+      padding: 44px 0 34px 0;
       position: relative;
       box-shadow: 0 2px 18px #3a86ff22;
-      border-bottom-left-radius: var(--lumina-radius);
-      border-bottom-right-radius: var(--lumina-radius);
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
       text-align: center;
     }
     .header .brand {
@@ -48,44 +52,43 @@
       align-items: center;
       gap: 14px;
       justify-content: center;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .header .brand img {
-      height: 46px;
-      width: 46px;
-      border-radius: var(--lumina-radius-xs);
+      height: 42px;
+      width: 42px;
+      border-radius: var(--radius-xs);
       background: #fff;
-      border: 2.5px solid var(--lumina-light);
+      border: 2.5px solid var(--white);
       object-fit: contain;
       box-shadow: 0 1px 10px #3a86ff19;
     }
     .header h1 {
-      margin: 0 0 7px 0;
-      font-size: 2.35rem;
+      margin: 0 0 8px 0;
+      font-size: 2.1rem;
       letter-spacing: 0.04em;
       font-weight: 800;
     }
     .header small {
-      opacity: 0.94;
-      font-size: 1.06em;
+      opacity: 0.95;
+      font-size: 1.03em;
     }
-    /* Notification */
     .notif-bell {
       position: absolute;
-      top: 24px; right: 37px;
+      top: 24px; right: 25px;
       font-size: 2.1rem;
-      color: var(--lumina-yellow);
+      color: var(--warning);
       cursor: pointer;
       z-index: 30;
       filter: drop-shadow(0 2px 2px #3a86ff22);
-      transition: color 0.19s;
+      transition: color 0.18s;
     }
     .notif-bell:hover { color: #fff6b7; }
     .notif-bell .notif-dot {
       position: absolute;
-      top: 5px; right: 7px;
+      top: 5px; right: 8px;
       width: 13px; height: 13px;
-      background: #ff3b47;
+      background: var(--danger);
       border-radius: 50%;
       border: 2px solid #fff;
       box-shadow: 0 0 5px #ff3b4733;
@@ -93,15 +96,15 @@
     .notif-dropdown {
       position: absolute;
       top: 60px;
-      right: 32px;
+      right: 22px;
       background: #fff;
-      border-radius: var(--lumina-radius-xs);
-      box-shadow: var(--lumina-shadow);
-      width: 340px;
+      border-radius: var(--radius-xs);
+      box-shadow: var(--shadow);
+      width: 330px;
       padding: 10px 0;
       z-index: 50;
       display: none;
-      border: 1.6px solid var(--lumina-border);
+      border: 1.3px solid var(--border);
     }
     .notif-dropdown.active { display: block; }
     .notif-dropdown .notif-item {
@@ -112,28 +115,30 @@
       transition: background 0.11s;
     }
     .notif-dropdown .notif-item:hover {
-      background: var(--lumina-bg-card);
+      background: var(--bg-card);
     }
-    .notif-dropdown .notif-title { font-weight: 700; color: var(--lumina-primary);}
+    .notif-dropdown .notif-title { font-weight: 700; color: var(--primary);}
     .notif-dropdown .notif-time { color: #888; font-size: 0.95em;}
+
     /* Main */
     .main {
-      max-width: 1200px;
-      margin: 42px auto 0 auto;
-      background: var(--lumina-light);
-      border-radius: var(--lumina-radius);
-      box-shadow: var(--lumina-shadow);
-      padding: 52px 46px 55px 46px;
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 38px 32px 44px 32px;
       position: relative;
     }
-    /* Profile */
+
+    /* Profile section */
     .profile {
       display: flex;
       align-items: flex-start;
-      gap: 44px;
-      margin-bottom: 44px;
-      border-bottom: 1.5px solid var(--lumina-border);
-      padding-bottom: 24px;
+      gap: 28px;
+      margin-bottom: 32px;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 20px;
       flex-wrap: wrap;
     }
     .profile-img {
@@ -141,145 +146,150 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100px;
-      width: 100px;
-      background: var(--lumina-bg-card);
+      height: 80px;
+      width: 80px;
+      background: var(--bg-card);
       border-radius: 50%;
       box-shadow: 0 1px 8px #3a86ff18;
       margin-top: 6px;
     }
     .profile-img img {
-      width: 84px;
-      height: 84px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: #eaf1fb;
-      border: 3px solid var(--lumina-primary);
+      border: 2px solid var(--primary);
       object-fit: cover;
-      box-shadow: 0 2px 10px #3a86ff11;
+      box-shadow: 0 1px 8px #3a86ff11;
     }
     .profile-info {
       flex: 1;
-      min-width: 210px;
+      min-width: 170px;
     }
     .profile-info h2 {
-      margin: 0 0 7px 0;
-      font-size: 2rem;
+      margin: 0 0 6px 0;
+      font-size: 1.42rem;
       font-weight: 800;
-      color: var(--lumina-primary);
+      color: var(--primary);
       letter-spacing: 0.01em;
     }
     .profile-info .meta {
-      color: var(--lumina-accent);
-      font-size: 1.11rem;
-      margin: 4.5px 0;
+      color: var(--accent);
+      font-size: 1.05rem;
+      margin: 4px 0;
       font-weight: 500;
     }
     .profile-actions {
-      margin-top: 14px;
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .profile-actions .btn-profile {
-      background: var(--lumina-gradient);
+      background: var(--gradient);
       color: #fff;
       border: none;
-      border-radius: var(--lumina-radius-xs);
-      padding: 9px 26px;
-      font-size: 1.11rem;
-      margin-right: 13px;
+      border-radius: var(--radius-xs);
+      padding: 8px 18px;
+      font-size: 1.02rem;
       font-weight: 600;
       box-shadow: 0 1px 7px #3a86ff14;
       cursor: pointer;
       transition: background 0.18s, box-shadow 0.2s;
     }
     .profile-actions .btn-profile:hover {
-      background: var(--lumina-gradient-secondary);
+      background: var(--gradient-accent);
       color: #222;
       box-shadow: 0 2px 9px #43aa8b44;
     }
     .profile-info .support-link {
-      color: var(--lumina-primary);
+      color: var(--primary);
       text-decoration: underline;
       cursor: pointer;
-      font-size: 1.08em;
-      margin-top: 14px;
+      font-size: 1.01em;
+      margin-top: 13px;
       display: inline-block;
       font-weight: 500;
     }
-    /* Dashboard */
+
+    /* Dashboard cards */
     .dashboard-cards {
       display: flex;
-      gap: 32px;
-      margin: 26px 0 18px 0;
+      gap: 20px;
+      margin: 23px 0 12px 0;
       flex-wrap: wrap;
     }
     .dashboard-card {
-      flex: 1 1 240px;
-      background: var(--lumina-bg-card);
-      border-radius: var(--lumina-radius-s);
-      padding: 30px 20px 23px 20px;
-      min-width: 190px;
-      color: var(--lumina-dark);
+      flex: 1 1 185px;
+      background: var(--bg-card);
+      border-radius: var(--radius-s);
+      padding: 22px 15px 19px 15px;
+      min-width: 145px;
+      color: var(--primary-dark);
       font-weight: 600;
-      box-shadow: 0 2px 18px #3a86ff0a;
+      box-shadow: 0 2px 14px #3a86ff0a;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      border: 1.5px solid var(--lumina-border);
+      border: 1.5px solid var(--border);
       position: relative;
       overflow: hidden;
     }
     .dashboard-card .card-title {
-      font-size: 1.19rem;
-      color: var(--lumina-accent);
-      margin-bottom: 7px;
+      font-size: 1.09rem;
+      color: var(--accent);
+      margin-bottom: 6px;
       font-weight: 700;
       letter-spacing: 0.01em;
     }
     .dashboard-card .card-value {
-      font-size: 2.05rem;
+      font-size: 1.5rem;
       font-weight: 800;
-      color: var(--lumina-primary);
+      color: var(--primary);
     }
     .dashboard-card .cert-link {
-      font-size: 1.13rem;
-      color: var(--lumina-primary);
+      font-size: 1.03rem;
+      color: var(--primary);
       text-decoration: underline;
       cursor: pointer;
       margin-bottom: 4px;
       font-weight: 600;
     }
     .dashboard-card .cert-link:hover {
-      color: var(--lumina-accent);
+      color: var(--accent);
     }
-    /* Recommendations (Restyled) */
+    .dashboard-card #badgePanel {
+      margin-top: 5px;
+    }
+
+    /* Recommendations */
     .recommend-box {
-      background: var(--lumina-gradient-secondary);
-      border-radius: var(--lumina-radius-s);
-      padding: 0;
-      margin-bottom: 30px;
-      margin-top: 2px;
-      box-shadow: 0 2px 16px #ffbe0b13;
+      background: var(--gradient-accent);
+      border-radius: var(--radius-s);
+      margin-bottom: 22px;
+      margin-top: 7px;
+      box-shadow: 0 2px 10px #ffbe0b13;
       display: flex;
       align-items: stretch;
-      min-height: 120px;
+      min-height: 84px;
       overflow: hidden;
       position: relative;
     }
     .recommend-icon-area {
-      background: var(--lumina-gradient);
-      min-width: 120px;
+      background: var(--gradient);
+      width: 84px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 3.5rem;
+      font-size: 2.3rem;
       font-weight: bold;
-      border-radius: var(--lumina-radius-s) 0 0 var(--lumina-radius-s);
-      box-shadow: 0 2px 14px #3a86ff18;
-      margin-right: 0;
+      border-radius: var(--radius-s) 0 0 var(--radius-s);
+      box-shadow: 0 2px 8px #3a86ff18;
       flex-shrink: 0;
     }
     .recommend-content {
-      padding: 26px 34px 26px 24px;
+      padding: 15px 23px 15px 19px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -287,9 +297,8 @@
     }
     .recommend-title {
       font-weight: 800;
-      color: var(--lumina-primary);
-      font-size: 1.24em;
-      letter-spacing: 0.01em;
+      color: var(--primary);
+      font-size: 1.11em;
       margin: 0 0 6px 0;
     }
     .recommend-list {
@@ -298,86 +307,105 @@
       list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 22px 45px;
+      gap: 10px 18px;
     }
     .recommend-list li {
       background: #fff;
-      border-radius: var(--lumina-radius-xs);
-      color: var(--lumina-dark);
-      font-size: 1.07em;
+      border-radius: var(--radius-xs);
+      color: var(--primary-dark);
+      font-size: 1em;
       font-weight: 500;
-      box-shadow: 0 1px 8px #3a86ff14;
-      padding: 12px 20px 12px 16px;
+      box-shadow: 0 1px 7px #3a86ff10;
+      padding: 7px 14px 7px 12px;
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 120px;
-      margin-top: 7px;
-      border-left: 5px solid var(--lumina-primary);
+      gap: 10px;
+      min-width: 98px;
+      margin-top: 2px;
+      border-left: 4px solid var(--primary);
       animation: fadeInUp 0.6s cubic-bezier(.23,1.01,.42,.98);
     }
     .recommend-list li .badge {
-      background: var(--lumina-primary);
+      background: var(--accent);
       color: #fff;
-      font-size: 0.96em;
+      font-size: 0.94em;
       border-radius: 7px;
-      margin-left: 10px;
-      padding: 3px 12px;
+      margin-left: 8px;
+      padding: 2.5px 10px;
       font-weight: 600;
-      box-shadow: 0 1px 5px #3a86ff19;
-    }
-    .recommend-list li .badge-practice {
-      background: var(--lumina-accent);
-      color: #fff;
+      box-shadow: 0 1px 3px #8338ec13;
     }
     .recommend-list li .badge-excellent {
-      background: var(--lumina-green);
+      background: var(--success);
       color: #fff;
     }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(25px);}
       to { opacity: 1; transform: translateY(0);}
     }
+
     /* Tables */
     .test-table, .result-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 16px;
-      background: var(--lumina-bg-card);
-      border-radius: var(--lumina-radius-xs);
+      margin-top: 13px;
+      background: var(--bg-card);
+      border-radius: var(--radius-xs);
       overflow: hidden;
       box-shadow: 0 2px 9px #3a86ff0d;
     }
     .test-table th, .test-table td, .result-table th, .result-table td {
-      padding: 14px 10px;
+      padding: 11px 8px;
       border-bottom: 1px solid #e3e8ee;
-      font-size: 1.05em;
+      font-size: 1em;
       text-align: left;
-      background: transparent;
     }
     .test-table th, .result-table th {
-      background: var(--lumina-bg-card);
-      color: var(--lumina-primary);
+      background: var(--table-head);
+      color: var(--primary);
+      font-size: 1.01rem;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* Section titles */
+    .section-title {
       font-size: 1.13rem;
       font-weight: 700;
-      border-bottom: 2.5px solid var(--lumina-border);
+      margin: 34px 0 10px 0;
+      color: var(--primary-dark);
+      letter-spacing: 0.01em;
     }
+
+    /* Announcement */
+    .announcement {
+      background: #fffbe6;
+      border-left: 5px solid var(--warning);
+      margin: 14px 0 0 0;
+      padding: 13px 18px;
+      border-radius: var(--radius-xs);
+      font-size: 1.04em;
+      color: #b08900;
+      font-weight: 600;
+      box-shadow: 0 1px 8px #ffbe0b22;
+    }
+
+    /* Buttons */
     .btn {
-      background: var(--lumina-gradient);
+      background: var(--gradient);
       color: #fff;
       border: none;
-      border-radius: var(--lumina-radius-xs);
-      padding: 11px 27px;
-      margin: 2px 0;
-      font-size: 1.11rem;
+      border-radius: var(--radius-xs);
+      padding: 10px 19px;
+      font-size: 1.02rem;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 1px 6px #3a86ff15;
-      transition: background 0.18s;
+      transition: background 0.17s;
     }
     .btn:hover {
-      background: var(--lumina-gradient-secondary);
+      background: var(--gradient-accent);
       color: #222;
       box-shadow: 0 1px 10px #ffbe0b22;
     }
@@ -386,29 +414,20 @@
       cursor: not-allowed;
       color: #fff;
     }
-    .announcement {
-      background: #fffbec;
-      border-left: 6px solid var(--lumina-yellow);
-      margin: 18px 0;
-      padding: 17px 30px;
-      border-radius: var(--lumina-radius-xs);
-      font-size: 1.14em;
-      color: #b08900;
-      font-weight: 600;
-      box-shadow: 0 1px 9px #ffbe0b22;
-    }
+    /* Badges */
     .badge {
       display: inline-block;
-      background: var(--lumina-green);
+      background: var(--success);
       color: #fff;
-      font-size: 1.04rem;
+      font-size: 1em;
       border-radius: 8px;
-      padding: 3px 13px;
-      margin-right: 9px;
-      margin-top: 5px;
+      padding: 2.5px 10px;
+      margin-right: 7px;
+      margin-top: 3px;
       font-weight: 700;
-      box-shadow: 0 1px 8px #43aa8b22;
+      box-shadow: 0 1px 7px #43aa8b22;
     }
+
     /* Modal */
     .modern-modal-backdrop, .modal-backdrop {
       position: fixed; top:0; left:0; width:100vw; height:100vh;
@@ -417,124 +436,124 @@
     }
     .modern-modal, .review-modal {
       background: #fff;
-      border-radius: var(--lumina-radius);
+      border-radius: var(--radius);
       box-shadow: 0 8px 36px #3a86ff30;
-      padding: 38px 34px 29px 34px;
-      max-width: 570px;
+      padding: 36px 30px 24px 30px;
+      max-width: 420px;
       width: 97vw;
       display: flex; flex-direction: column; align-items: flex-start;
       position: relative;
     }
     .modern-modal h3, .review-modal h3, .modern-modal h2 {
-      margin: 0 0 20px 0;
-      font-size: 1.48rem;
-      color: var(--lumina-primary);
+      margin: 0 0 17px 0;
+      font-size: 1.22rem;
+      color: var(--primary);
       font-weight: 700;
     }
     .modal-close, .close-modal {
-      position: absolute; right: 19px; top: 17px;
+      position: absolute; right: 15px; top: 13px;
       background: none; border: none; font-size: 2.1rem; color: #bbb; cursor: pointer;
       transition: color 0.17s;
     }
     .modal-close:hover, .close-modal:hover {
-      color: #ff3b47;
+      color: var(--danger);
     }
-    .profile-img-preview { width: 74px; height: 74px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;}
+    .profile-img-preview { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;}
     .modern-input {
-      width: 100%; font-size: 1.11em; margin-bottom: 16px; padding: 12px 15px;
-      border: 1.7px solid #d1e4f7; border-radius: 9px; background: #f8fdff;
+      width: 100%; font-size: 1.02em; margin-bottom: 13px; padding: 10px 12px;
+      border: 1.3px solid #d1e4f7; border-radius: 8px; background: #f8fdff;
       outline: none; transition: border 0.2s;
     }
-    .modern-input:focus { border-color: var(--lumina-primary);}
+    .modern-input:focus { border-color: var(--primary);}
     .modern-btn {
-      width: 100%; padding: 12px 0; border: none;
-      background: var(--lumina-gradient);
-      color: #fff; font-size: 1.13em; border-radius: 9px;
-      font-weight: 700; margin-top: 8px; cursor: pointer; transition: background 0.2s;
+      width: 100%; padding: 11px 0; border: none;
+      background: var(--gradient);
+      color: #fff; font-size: 1.09em; border-radius: 8px;
+      font-weight: 700; margin-top: 7px; cursor: pointer; transition: background 0.2s;
     }
-    .modern-btn:hover { background: var(--lumina-gradient-secondary); color: #222;}
-    /* Review modal details */
+    .modern-btn:hover { background: var(--gradient-accent); color: #222;}
     .review-question {
-      margin-top: 13px;
+      margin-top: 11px;
       margin-bottom: 7px;
       font-weight: 600;
       letter-spacing: 0.01em;
-      color: var(--lumina-dark);
+      color: #2d5da8;
     }
     .review-opts {
-      margin-left: 16px;
+      margin-left: 13px;
       font-size: 1em;
       margin-bottom: 5px;
     }
     .review-correct {
-      color: var(--lumina-green);
+      color: var(--success);
       font-weight: 700;
     }
     .review-wrong {
-      color: #ff3b47;
+      color: var(--danger);
       font-weight: 700;
     }
     .review-expl {
-      font-size: 1.03rem;
-      color: var(--lumina-primary);
-      background: var(--lumina-bg-card);
+      font-size: 1.01rem;
+      color: var(--primary);
+      background: var(--bg-card);
       border-radius: 8px;
-      padding: 8px 12px;
-      margin: 7px 0 10px 0;
+      padding: 7px 12px;
+      margin: 6px 0 10px 0;
     }
     hr {
       border: none;
-      border-top: 1.2px solid var(--lumina-border);
+      border-top: 1.2px solid var(--border);
       margin: 10px 0 8px 0;
     }
+
     /* Chat modal */
     .chat-modal {
-      background: #fff; border-radius: var(--lumina-radius); box-shadow: 0 8px 42px #3a86ff33;
-      max-width: 440px; width: 96vw; padding: 0; position: relative; display: flex; flex-direction: column; height: 90vh; max-height: 560px;
-      border: 1.7px solid var(--lumina-border);
+      background: #fff; border-radius: var(--radius); box-shadow: 0 8px 42px #3a86ff33;
+      max-width: 380px; width: 94vw; padding: 0; position: relative; display: flex; flex-direction: column; height: 90vh; max-height: 500px;
+      border: 1.7px solid var(--border);
     }
     .chat-modal-header {
-      background: var(--lumina-bg-card); border-bottom: 1.7px solid #e3e8ee; border-radius: var(--lumina-radius) var(--lumina-radius) 0 0;
-      padding: 19px 23px; font-weight: bold; font-size: 1.19rem; color: var(--lumina-primary); display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg-card); border-bottom: 1.7px solid #e3e8ee; border-radius: var(--radius) var(--radius) 0 0;
+      padding: 17px 18px; font-weight: bold; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; justify-content: space-between;
     }
     .chat-list {
-      max-height: 160px; overflow-y: auto; padding: 0 20px 10px 20px; border-bottom: 1px solid #e3e8ee;
+      max-height: 140px; overflow-y: auto; padding: 0 16px 8px 16px; border-bottom: 1px solid #e3e8ee;
     }
-    .chat-list .chat-user { padding: 9px 0; cursor:pointer; color: var(--lumina-primary);}
-    .chat-list .chat-user.active { color: var(--lumina-accent); font-weight: 700; }
-    .chat-modal-body { flex: 1; overflow-y: auto; padding: 18px 18px 2px 18px; background: #f7fbfd;}
-    .chat-message { margin-bottom: 15px; display: flex; flex-direction: column; }
+    .chat-list .chat-user { padding: 7px 0; cursor:pointer; color: var(--primary);}
+    .chat-list .chat-user.active { color: var(--accent); font-weight: 700; }
+    .chat-modal-body { flex: 1; overflow-y: auto; padding: 12px 12px 2px 12px; background: #f7fbfd;}
+    .chat-message { margin-bottom: 12px; display: flex; flex-direction: column; }
     .chat-message.self { align-items: flex-end; }
     .chat-message .chat-bubble {
-      max-width: 80%; padding: 12px 18px; border-radius: 14px;
-      background: #e9f3ff; color: var(--lumina-dark); margin-bottom: 2px; display: inline-block;
-      font-size: 1.02em;
+      max-width: 80%; padding: 10px 13px; border-radius: 13px;
+      background: #e9f3ff; color: #23366e; margin-bottom: 2px; display: inline-block;
+      font-size: 1em;
       box-shadow: 0 1px 7px #3a86ff0a;
     }
-    .chat-message.self .chat-bubble { background: var(--lumina-primary); color: #fff; }
-    .chat-message .chat-meta { font-size: 0.92em; color: #888;}
+    .chat-message.self .chat-bubble { background: var(--primary); color: #fff; }
+    .chat-message .chat-meta { font-size: 0.91em; color: #888;}
     .chat-modal-footer {
-      padding: 13px 18px 17px 18px; background: #fff;
-      display: flex; gap: 10px; border-radius: 0 0 var(--lumina-radius) var(--lumina-radius); border-top: 1.5px solid #e3e8ee;
+      padding: 9px 13px 13px 13px; background: #fff;
+      display: flex; gap: 8px; border-radius: 0 0 var(--radius) var(--radius); border-top: 1.2px solid #e3e8ee;
     }
-    .chat-input { flex: 1; border-radius: 8px; border: 1.6px solid var(--lumina-border); padding: 9px 12px; font-size: 1.07em;}
-    .chat-send-btn { background: var(--lumina-primary); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 1.07em; cursor: pointer;}
+    .chat-input { flex: 1; border-radius: 8px; border: 1.2px solid var(--border); padding: 8px 10px; font-size: 1em;}
+    .chat-send-btn { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 7px 14px; font-size: 1em; cursor: pointer;}
     .chat-send-btn:disabled { background: #ccc; }
     /* Responsive */
-    @media (max-width: 900px) {
-      .main { padding: 17px 2vw; }
-      .dashboard-cards { flex-direction: column; gap: 25px;}
-      .profile { flex-direction: column; gap: 18px; }
-      .recommend-box { flex-direction: column;}
-      .recommend-icon-area { border-radius: var(--lumina-radius-s) var(--lumina-radius-s) 0 0; min-width: 100%; justify-content: flex-start; padding-left: 10vw;}
-      .recommend-content { padding: 16px 10vw 20px 10vw;}
+    @media (max-width: 650px) {
+      .main { padding: 7px 2vw; }
+      .dashboard-cards { flex-direction: column; gap: 13px;}
+      .profile { flex-direction: column; gap: 13px; }
     }
-    @media (max-width: 520px) {
-      .header { padding: 23px 1vw 13px 1vw; }
+    @media (max-width: 500px) {
+      .header { padding: 13px 1vw 9px 1vw; }
       .main { padding: 2vw; }
-      .dashboard-card { min-width: 110px; }
-      .recommend-content { padding: 13px 2vw 16px 2vw;}
-      .recommend-icon-area { padding-left: 0;}
+      .dashboard-card { min-width: 88px; }
+      .recommend-content { padding: 7px 2vw 8px 2vw;}
+      .recommend-icon-area { min-width: 52px; font-size: 1.5rem;}
+      .result-table th, .result-table td, .test-table th, .test-table td { font-size: 0.95em; }
+      .section-title { font-size: 1.04rem; }
+      .profile-info h2 { font-size: 1.15rem;}
     }
   </style>
 </head>
@@ -546,8 +565,8 @@
     </span>
     <div class="notif-dropdown" id="notifDropdown"></div>
     <div class="brand">
-      <img src="lumina-logo.png" alt="Lumina Logo" />
-      <span style="font-size:1.32em;font-weight:800;letter-spacing:0.04em;">Lumina Scholar Portal</span>
+      <img src="logo.png" alt="OAU Logo" onerror="this.style.display='none'"/>
+      <span style="font-size:1.12em;font-weight:800;letter-spacing:0.04em;">Lumina Scholar Portal</span>
     </div>
     <h1>Welcome, <span id="studentName">Scholar</span>!</h1>
     <div><small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small></div>
@@ -555,7 +574,9 @@
   <div class="main">
     <!-- Profile section -->
     <div class="profile">
-      <div class="profile-img"><img src="lumina-avatar.png" alt="Profile" id="profilePic"></div>
+      <div class="profile-img">
+        <img src="lumina-avatar.png" alt="Profile" id="profilePic" onerror="this.src='https://ui-avatars.com/api/?name=Scholar&background=3a86ff&color=fff&rounded=true';"/>
+      </div>
       <div class="profile-info">
         <h2 id="profileName">Your Name</h2>
         <div class="meta">Username: <span id="profileUser"></span></div>
@@ -577,7 +598,7 @@
       <div class="dashboard-card">
         <div class="card-title">Upcoming Test</div>
         <div class="card-value" id="upcomingTest">None</div>
-        <div id="testCountdown" style="font-size:1.05rem; color:var(--lumina-primary);font-weight:600;"></div>
+        <div id="testCountdown" style="font-size:1.01rem; color:var(--primary);font-weight:600;"></div>
       </div>
       <div class="dashboard-card">
         <div class="card-title">Certificates</div>
@@ -655,6 +676,7 @@
       document.getElementById("profileFaculty").innerText = student.faculty || "-";
       document.getElementById("profileDept").innerText = student.department || "-";
       if (student.profilePic) document.getElementById("profilePic").src = student.profilePic;
+      else document.getElementById("profilePic").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.username || 'Scholar')}&background=3a86ff&color=fff&rounded=true`;
       if (
         showProfileModalOnEmpty &&
         (
@@ -767,7 +789,7 @@
       const notifs = await resp.json();
       let html = "";
       notifs.forEach(n => {
-        html += `<div class="message-link" style="cursor:pointer;color:var(--lumina-primary);" onclick="openMessageModal('${n.title.replace(/'/g, "\\'")}', '${n.message.replace(/'/g, "\\'")}', '${n.createdAt}')"><strong>${n.title}:</strong> ${n.message.length>60?n.message.substring(0,57)+'...':n.message} <small style="color:#888;">(${(new Date(n.createdAt)).toLocaleString()})</small></div>`;
+        html += `<div class="message-link" style="cursor:pointer;color:var(--primary);" onclick="openMessageModal('${n.title.replace(/'/g, "\\'")}', '${n.message.replace(/'/g, "\\'")}', '${n.createdAt}')"><strong>${n.title}:</strong> ${n.message.length>60?n.message.substring(0,57)+'...':n.message} <small style="color:#888;">(${(new Date(n.createdAt)).toLocaleString()})</small></div>`;
       });
       document.getElementById("announcementsPanel").innerHTML = html || "No new announcements.";
     }
@@ -777,7 +799,7 @@
           <div class="review-modal" onclick="event.stopPropagation()">
             <button class="close-modal" onclick="closeModal(event)">&times;</button>
             <h3>${title}</h3>
-            <div><small style="color:var(--lumina-primary)">${(new Date(date)).toLocaleString()}</small></div>
+            <div><small style="color:var(--primary)">${(new Date(date)).toLocaleString()}</small></div>
             <div style="margin-top:12px;">${msg}</div>
           </div>
         </div>`;
@@ -879,11 +901,11 @@
       }
     }
     function showNewMessagePopup(chat) {
-      let html = `<div id="newMsgPopup" style="position:fixed;bottom:32px;right:34px;z-index:9999;background:#fff;padding:22px 40px;border-radius:20px;box-shadow:0 4px 22px #3a86ff44;">
+      let html = `<div id="newMsgPopup" style="position:fixed;bottom:32px;right:16px;z-index:9999;background:#fff;padding:18px 26px;border-radius:18px;box-shadow:0 4px 22px #3a86ff44;">
         <b>New message from ${chat.otherUserName}</b>
-        <div style="margin:11px 0 0 0;">${chat.lastMsgText?chat.lastMsgText.substring(0,90):""}</div>
+        <div style="margin:8px 0 0 0;">${chat.lastMsgText?chat.lastMsgText.substring(0,90):""}</div>
         <button class="btn" onclick="openChatModal('${chat.otherUserId}');document.getElementById('newMsgPopup').remove();">View</button>
-        <button class="btn" onclick="document.getElementById('newMsgPopup').remove();" style="background:#f4f8fe;color:var(--lumina-primary);">Dismiss</button>
+        <button class="btn" onclick="document.getElementById('newMsgPopup').remove();" style="background:#f4f8fe;color:var(--primary);">Dismiss</button>
       </div>`;
       document.body.insertAdjacentHTML("beforeend", html);
       setTimeout(() => { if (document.getElementById("newMsgPopup")) document.getElementById("newMsgPopup").remove(); }, 16000);
@@ -892,7 +914,7 @@
     function recommendTopics() {
       const list = document.getElementById("recommendations");
       if (!resultsCache.length || !setsCache.length) {
-        list.innerHTML = `<li><span style="color:var(--lumina-muted);font-style:italic;">Take more assessments to receive tailored recommendations!</span></li>`;
+        list.innerHTML = `<li><span style="color:var(--muted);font-style:italic;">Take more assessments to receive tailored recommendations!</span></li>`;
         return;
       }
       let lowest = resultsCache.reduce((acc, cur) => {
@@ -910,7 +932,7 @@
         avgScores.slice(0,2).forEach(s => {
           html += `<li>
             <span>Focus on <b>${s.set}</b> (avg: ${Math.round(s.avg)}%)</span>
-            <span class="badge badge-practice">Practice</span>
+            <span class="badge">Practice</span>
           </li>`;
         });
         avgScores.filter(s => s.avg >= 80).slice(0,1).forEach(s => {
@@ -920,7 +942,7 @@
           </li>`;
         });
       }
-      if (!html) html = `<li><span style="color:var(--lumina-muted);font-style:italic;">No recommendations. Stellar performance!</span></li>`;
+      if (!html) html = `<li><span style="color:var(--muted);font-style:italic;">No recommendations. Stellar performance!</span></li>`;
       list.innerHTML = html;
     }
     async function fetchHistory() {
@@ -1046,7 +1068,7 @@
           <div class="review-modal" onclick="event.stopPropagation()">
             <button class="close-modal" onclick="closeModal(event)">&times;</button>
             <h3>Review: ${set.title} (${result.score}%)</h3>
-            <div style="max-height:380px; overflow-y: auto;">`;
+            <div style="max-height:280px; overflow-y: auto;">`;
       set.questions.forEach((q, idx) => {
         let stuAns = result.answers && result.answers[q.id];
         let correct = q.answer;
