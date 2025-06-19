@@ -153,9 +153,16 @@ app.post("/api/auth/reset", async (req, res) => {
   }
 });
 
-// Get user info (protected)
-app.get("/api/auth/me", authenticate, (req, res) => {
-  res.json({user: req.user});
+// Get user info (protected) -- now returns full user document, not just JWT claims!
+app.get("/api/auth/me", authenticate, async (req, res) => {
+  try {
+    // Fetch full user info by ID
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ user });
+  } catch (e) {
+    res.status(500).json({ message: "Could not fetch user info" });
+  }
 });
 
 // Health check endpoint for /api/auth (for browser test)
