@@ -16,6 +16,10 @@ import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 
+// ===== ADD FACULTY & DEPARTMENT MODELS =====
+const FacultySchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true }
+});
 const Faculty = mongoose.model("Faculty", FacultySchema);
 
 const DepartmentSchema = new mongoose.Schema({
@@ -23,7 +27,6 @@ const DepartmentSchema = new mongoose.Schema({
   faculty: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: true }
 });
 const Department = mongoose.model("Department", DepartmentSchema);
-// ===========================================
 
 dotenv.config();
 
@@ -59,7 +62,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
-
 app.use("/api/users", usersRoutes);
 // ===== FACULTY ROUTES =====
 app.get("/api/faculties", authenticate, async (req, res) => {
@@ -75,10 +77,6 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
   }
 });
 app.use("/api/messages", messagesRoutes);
-// ===== ADD FACULTY & DEPARTMENT MODELS =====
-const FacultySchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true }
-});
 // ===== DEPARTMENT ROUTES =====
 app.get("/api/departments", authenticate, async (req, res) => {
   const list = await Department.find().sort({ name: 1 });
@@ -165,7 +163,7 @@ app.get("/api/auth", (req, res) => {
   res.json({ status: "auth API live" });
 });
 
-// List users by role/faculty/department (for superadmin)
+// List users by role/faculty/department (for admin/superadmin)
 app.get("/api/users", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
@@ -173,6 +171,26 @@ app.get("/api/users", authenticate, authorizeRole("superadmin", "admin"), async 
   if (req.query.department) filter.department = req.query.department;
   const users = await User.find(filter).sort({ createdAt: -1 });
   res.json(users);
+});
+
+// Get single user (admin/superadmin)
+app.get("/api/users/:id", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).json({ message: "User not found" });
+  res.json(user);
+});
+
+// Update user (edit/activate/deactivate, admin/superadmin)
+app.put("/api/users/:id", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).json({ message: "User not found" });
+  // Only allow updating allowed fields
+  if (req.body.username !== undefined) user.username = req.body.username;
+  if (req.body.faculty !== undefined) user.faculty = req.body.faculty;
+  if (req.body.department !== undefined) user.department = req.body.department;
+  if (req.body.active !== undefined) user.active = req.body.active;
+  await user.save();
+  res.json({ message: "User updated" });
 });
 
 // Remove admin (for superadmin)
