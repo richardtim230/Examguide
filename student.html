@@ -2,372 +2,459 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Student Portal | SmartExam Platform</title>
+  <title>Lumina Scholar Portal | LuminaExam Suite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
-  <link rel="icon" href="student.png">
+  <link rel="icon" href="lumina-logo.png">
   <style>
     body {
-  font-family: 'Inter', Arial, sans-serif;
-  background: #f5f8fa;
-  margin: 0;
-  min-height: 100vh;
-}
-.header {
-  background: #003366;
-  color: #fff;
-  padding: 26px 16px 20px 16px;
-  position: relative;
-}
-.main {
-  max-width: 980px;
-  margin: 30px auto;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 4px 32px #00336611;
-  padding: 36px 26px 40px 26px;
-}
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 20px;
-}
-.profile-img img {
-  width: 74px;
-  height: 74px;
-  border-radius: 50%;
-  background: #eee;
-  border: 2.5px solid #00c6ff55;
-  object-fit: cover;
-}
-.profile-info {
-  flex: 1;
-}
-.profile-info h2 {
-  margin: 0 0 4px 0;
-  font-size: 1.65rem;
-}
-.profile-info .meta {
-  color: #0072ff;
-  font-size: 1.06rem;
-}
-.profile-actions {
-  margin-top: 3px;
-}
-.profile-actions .btn-profile {
-  background: #00c6ff;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 6px 18px;
-  font-size: 1rem;
-  margin-right: 6px;
-  cursor: pointer;
-}
-.section-title {
-  font-size: 1.14rem;
-  font-weight: bold;
-  margin: 22px 0 10px 0;
-  color: #003366;
-}
-.dashboard-cards {
-  display: flex;
-  gap: 22px;
-  margin: 18px 0 8px 0;
-  flex-wrap: wrap;
-}
-.dashboard-card {
-  flex: 1 1 190px;
-  background: #f8fdff;
-  border-radius: 10px;
-  padding: 18px 15px 15px 15px;
-  min-width: 145px;
-  color: #003366;
-  font-weight: 600;
-  box-shadow: 0 1px 10px #00c6ff22;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.dashboard-card .card-title {
-  font-size: 1.05rem;
-  color: #0055b7;
-  margin-bottom: 6px;
-}
-.dashboard-card .card-value {
-  font-size: 1.75rem;
-  font-weight: bold;
-}
-.dashboard-card canvas {
-  margin-top: 8px;
-}
-.dashboard-card .cert-link {
-  font-size: 0.99rem;
-  color: #0072ff;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.progress-bar-bg {
-  height: 14px;
-  width: 100%;
-  background: #e2f4fc;
-  border-radius: 6px;
-  margin: 7px 0 0 0;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #00c6ff 30%, #0072ff 100%);
-  border-radius: 6px;
-  transition: width 0.4s;
-}
-.recommend-box {
-  background: #e5f6ff;
-  border-left: 5px solid #00c6ff;
-  border-radius: 9px;
-  padding: 13px 18px;
-  margin-bottom: 13px;
-}
-.recommend-title {
-  font-weight: 600;
-  color: #0072ff;
-  margin-bottom: 6px;
-}
-.test-table, .result-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-}
-.test-table th, .test-table td, .result-table th, .result-table td {
-  padding: 10px 7px;
-  border-bottom: 1px solid #e3e8ee;
-}
-.test-table th, .result-table th {
-  background: #f8fdff;
-  color: #003366;
-  font-size: 1.03rem;
-}
-.btn {
-  background: #00c6ff;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 8px 20px;
-  margin: 2px 0;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-.announcement {
-  background: #f1f8ff;
-  border-left: 4px solid #00c6ff;
-  margin: 14px 0;
-  padding: 12px 18px;
-  border-radius: 7px;
-}
-.support-link {
-  color: #0072ff;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.badge {
-  display: inline-block;
-  background: #43aa8b;
-  color: #fff;
-  font-size: 0.93rem;
-  border-radius: 6px;
-  padding: 2.5px 8px;
-  margin-right: 6px;
-}
-.review-modal {
-  background: #fff;
-  border-radius: 13px;
-  box-shadow: 0 8px 42px #00336633;
-  max-width: 540px;
-  width: 95vw;
-  padding: 32px 28px;
-  position: relative;
-}
-.review-modal h3 {
-  margin-top: 0;
-}
-.review-question {
-  margin-top: 11px;
-  margin-bottom: 6px;
-}
-.review-opts {
-  margin-left: 12px;
-}
-.review-correct {
-  color: #25d366;
-  font-weight: 600;
-}
-.review-wrong {
-  color: #f25f5c;
-  font-weight: 600;
-}
-.review-expl {
-  font-size: 0.97rem;
-  color: #0072ff;
-  background: #f8fdff;
-  border-radius: 7px;
-  padding: 6px 8px;
-  margin: 6px 0;
-}
-.modal-backdrop {
-  position: fixed; z-index: 1001; left:0; top:0; width:100vw; height:100vh;
-  background: rgba(18,28,68,0.37); display: flex; align-items: center; justify-content: center;
-}
-.close-modal {
-  position: absolute;
-  top: 11px;
-  right: 14px;
-  font-size: 1.8rem;
-  color: #bbb;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.close-modal:hover {
-  color: #ff3b47;
-}
-@media (max-width: 600px) {
-  .main { padding: 12px 2vw; }
-  .dashboard-cards { flex-direction: column; }
-  }
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(120deg, #e9f3ff 0%, #f5f7fa 100%);
+      margin: 0;
+      min-height: 100vh;
+      color: #1b263b;
+    }
+    .header {
+      background: linear-gradient(90deg, #364fc7 0%, #4895ef 100%);
+      color: #fff;
+      padding: 32px 20px 24px 20px;
+      position: relative;
+      box-shadow: 0 2px 12px #23366e22;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+    }
+    .header .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 3px;
+    }
+    .header .brand img {
+      height: 40px;
+      width: 40px;
+      border-radius: 13px;
+      background: #fff;
+      border: 2px solid #fff;
+      object-fit: contain;
+      box-shadow: 0 1px 8px #00285536;
+    }
+    .header h1 {
+      margin: 0 0 5px 0;
+      font-size: 2.1rem;
+      letter-spacing: 0.02em;
+    }
+    .header small {
+      opacity: 0.93;
+    }
+    .main {
+      max-width: 1100px;
+      margin: 36px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #2d5da811;
+      padding: 44px 38px 46px 38px;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+      margin-bottom: 34px;
+      border-bottom: 1.5px solid #e7eefc;
+      padding-bottom: 16px;
+    }
+    .profile-img img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: #eaf1fb;
+      border: 3px solid #4895ef66;
+      object-fit: cover;
+      box-shadow: 0 2px 10px #4895ef11;
+    }
+    .profile-info {
+      flex: 1;
+    }
+    .profile-info h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #364fc7;
+      letter-spacing: 0.01em;
+    }
+    .profile-info .meta {
+      color: #4895ef;
+      font-size: 1.11rem;
+      margin: 2.5px 0;
+    }
+    .profile-actions {
+      margin-top: 8px;
+    }
+    .profile-actions .btn-profile {
+      background: linear-gradient(90deg, #364fc7 60%, #4895ef 100%);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 8px 21px;
+      font-size: 1.07rem;
+      margin-right: 7px;
+      font-weight: 500;
+      box-shadow: 0 1px 7px #4895ef11;
+      cursor: pointer;
+      transition: background 0.18s, box-shadow 0.2s;
+    }
+    .profile-actions .btn-profile:hover {
+      background: linear-gradient(90deg, #4895ef 40%, #364fc7 100%);
+      box-shadow: 0 2px 9px #2d5da844;
+    }
+    .profile-info .support-link {
+      color: #364fc7;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 1.04em;
+      margin-top: 8px;
+      display: inline-block;
+    }
+    .section-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin: 36px 0 13px 0;
+      color: #364fc7;
+      letter-spacing: 0.01em;
+    }
+    .dashboard-cards {
+      display: flex;
+      gap: 28px;
+      margin: 22px 0 10px 0;
+      flex-wrap: wrap;
+    }
+    .dashboard-card {
+      flex: 1 1 210px;
+      background: linear-gradient(120deg, #f4fafe 80%, #eaf1fb 100%);
+      border-radius: 13px;
+      padding: 20px 17px 18px 17px;
+      min-width: 175px;
+      color: #364fc7;
+      font-weight: 600;
+      box-shadow: 0 2px 16px #4895ef10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1.5px solid #e3e7f7;
+      position: relative;
+    }
+    .dashboard-card .card-title {
+      font-size: 1.14rem;
+      color: #4895ef;
+      margin-bottom: 6px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .dashboard-card .card-value {
+      font-size: 1.95rem;
+      font-weight: 700;
+      color: #23366e;
+    }
+    .dashboard-card .cert-link {
+      font-size: 1.03rem;
+      color: #364fc7;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 3px;
+    }
+    .progress-bar-bg {
+      height: 18px;
+      width: 100%;
+      background: #e7eefc;
+      border-radius: 8px;
+      margin: 11px 0 0 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4895ef 30%, #364fc7 100%);
+      border-radius: 8px;
+      transition: width 0.4s;
+    }
+    .recommend-box {
+      background: linear-gradient(90deg, #e9f3ff 80%, #f5f7fa 100%);
+      border-left: 6px solid #4895ef;
+      border-radius: 10px;
+      padding: 16px 22px;
+      margin-bottom: 17px;
+      box-shadow: 0 1px 8px #4895ef0d;
+    }
+    .recommend-title {
+      font-weight: 700;
+      color: #364fc7;
+      margin-bottom: 7px;
+      font-size: 1.09em;
+    }
+    .test-table, .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      background: #f8fafe;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 9px #eaf1fb55;
+    }
+    .test-table th, .test-table td, .result-table th, .result-table td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #e3e8ee;
+      font-size: 1.01em;
+      text-align: left;
+    }
+    .test-table th, .result-table th {
+      background: #eaf1fb;
+      color: #364fc7;
+      font-size: 1.09rem;
+      font-weight: 700;
+    }
+    .btn {
+      background: linear-gradient(90deg, #4895ef 60%, #364fc7 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      margin: 2px 0;
+      font-size: 1.07rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 5px #4895ef11;
+      transition: background 0.19s;
+    }
+    .btn:hover {
+      background: linear-gradient(90deg, #364fc7 60%, #4895ef 100%);
+      box-shadow: 0 1px 9px #364fc733;
+    }
+    .btn:disabled {
+      background: #b1c7ee;
+      cursor: not-allowed;
+      color: #fff;
+    }
+    .announcement {
+      background: #f5f7fa;
+      border-left: 5px solid #4895ef;
+      margin: 18px 0;
+      padding: 15px 22px;
+      border-radius: 9px;
+      font-size: 1.08em;
+      color: #23366e;
+    }
+    .support-link {
+      color: #4895ef;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .badge {
+      display: inline-block;
+      background: #48b16f;
+      color: #fff;
+      font-size: 1.04rem;
+      border-radius: 8px;
+      padding: 3px 12px;
+      margin-right: 7px;
+      margin-top: 5px;
+      font-weight: 600;
+      box-shadow: 0 1px 8px #48b16f22, 0 1px 2px #fff9;
+    }
+    /* Notification Bell */
     .notif-bell {
       position: absolute;
-      top: 22px; right: 28px;
-      font-size: 2rem;
-      color: #00c6ff;
+      top: 25px; right: 34px;
+      font-size: 2.2rem;
+      color: #ffe066;
       cursor: pointer;
       z-index: 30;
+      filter: drop-shadow(0 2px 2px #00285522);
+      transition: color 0.19s;
     }
+    .notif-bell:hover { color: #fff9b2; }
     .notif-bell .notif-dot {
       position: absolute;
-      top: 2px; right: 3px;
-      width: 12px; height: 12px;
+      top: 4px; right: 3px;
+      width: 13px; height: 13px;
       background: #ff3b47;
       border-radius: 50%;
       border: 2px solid #fff;
+      box-shadow: 0 0 5px #ff3b4733;
     }
     .notif-dropdown {
       position: absolute;
-      top: 56px;
-      right: 28px;
+      top: 58px;
+      right: 32px;
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 24px #00336622;
-      width: 320px;
+      border-radius: 11px;
+      box-shadow: 0 4px 24px #364fc722;
+      width: 340px;
       padding: 10px 0;
       z-index: 50;
       display: none;
+      border: 1.6px solid #eaf1fb;
     }
     .notif-dropdown.active { display: block; }
     .notif-dropdown .notif-item {
-      padding: 10px 18px;
+      padding: 12px 22px;
       border-bottom: 1px solid #e3e8ee;
       cursor: pointer;
+      background: #fff;
+      transition: background 0.11s;
     }
-    .notif-dropdown .notif-item:last-child { border-bottom: none; }
-    .notif-dropdown .notif-title { font-weight: 600; color: #003366; }
-    .notif-dropdown .notif-time { color: #888; font-size: 0.94em;}
+    .notif-dropdown .notif-item:hover {
+      background: #eaf1fb;
+    }
+    .notif-dropdown .notif-title { font-weight: 700; color: #364fc7; }
+    .notif-dropdown .notif-time { color: #888; font-size: 0.95em;}
+    /* Chat modal */
     .chat-modal {
-      background: #fff; border-radius: 13px; box-shadow: 0 8px 42px #00336633;
-      max-width: 410px; width: 95vw; padding: 0; position: relative; display: flex; flex-direction: column; height: 87vh; max-height: 540px;
+      background: #fff; border-radius: 15px; box-shadow: 0 8px 42px #364fc733;
+      max-width: 420px; width: 95vw; padding: 0; position: relative; display: flex; flex-direction: column; height: 88vh; max-height: 550px;
+      border: 1.7px solid #eaf1fb;
     }
     .chat-modal-header {
-      background: #f8fdff; border-bottom: 1px solid #e3e8ee; border-radius: 13px 13px 0 0;
-      padding: 16px 20px; font-weight: bold; font-size: 1.1rem; color: #0072ff; display: flex; align-items: center; justify-content: space-between;
+      background: #eaf1fb; border-bottom: 1.7px solid #e3e8ee; border-radius: 15px 15px 0 0;
+      padding: 18px 22px; font-weight: bold; font-size: 1.19rem; color: #4895ef; display: flex; align-items: center; justify-content: space-between;
     }
     .chat-list {
-      max-height: 160px; overflow-y: auto; padding: 0 16px 8px 16px; border-bottom: 1px solid #e3e8ee;
+      max-height: 160px; overflow-y: auto; padding: 0 20px 10px 20px; border-bottom: 1px solid #e3e8ee;
     }
-    .chat-list .chat-user { padding: 7px 0; cursor:pointer; color: #003366;}
-    .chat-list .chat-user.active { color: #00c6ff; font-weight: 600; }
+    .chat-list .chat-user { padding: 9px 0; cursor:pointer; color: #364fc7;}
+    .chat-list .chat-user.active { color: #4895ef; font-weight: 700; }
     .chat-modal-body { flex: 1; overflow-y: auto; padding: 18px 18px 2px 18px; background: #f7fbfd;}
-    .chat-message { margin-bottom: 14px; display: flex; flex-direction: column; }
+    .chat-message { margin-bottom: 15px; display: flex; flex-direction: column; }
     .chat-message.self { align-items: flex-end; }
     .chat-message .chat-bubble {
-      max-width: 80%; padding: 10px 15px; border-radius: 14px;
-      background: #e5f6ff; color: #003366; margin-bottom: 2px; display: inline-block;
+      max-width: 80%; padding: 12px 18px; border-radius: 14px;
+      background: #e9f3ff; color: #23366e; margin-bottom: 2px; display: inline-block;
+      font-size: 1.01em;
+      box-shadow: 0 1px 7px #4895ef0a;
     }
-    .chat-message.self .chat-bubble { background: #00c6ff; color: #fff; }
-    .chat-message .chat-meta { font-size: 0.88em; color: #888;}
+    .chat-message.self .chat-bubble { background: #4895ef; color: #fff; }
+    .chat-message .chat-meta { font-size: 0.92em; color: #888;}
     .chat-modal-footer {
-      padding: 9px 14px 13px 14px; background: #fff;
-      display: flex; gap: 9px; border-radius: 0 0 13px 13px; border-top: 1px solid #e3e8ee;
+      padding: 13px 18px 17px 18px; background: #fff;
+      display: flex; gap: 10px; border-radius: 0 0 15px 15px; border-top: 1.5px solid #e3e8ee;
     }
-    .chat-input { flex: 1; border-radius: 7px; border: 1.2px solid #e3e8ee; padding: 8px 10px; font-size: 1.01em;}
-    .chat-send-btn { background: #00c6ff; color: #fff; border: none; border-radius: 7px; padding: 8px 16px; font-size: 1em; cursor: pointer;}
+    .chat-input { flex: 1; border-radius: 8px; border: 1.6px solid #eaf1fb; padding: 9px 12px; font-size: 1.07em;}
+    .chat-send-btn { background: #4895ef; color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 1.07em; cursor: pointer;}
     .chat-send-btn:disabled { background: #ccc; }
-    .profile-img-upload { margin-top: 7px; }
-    .profile-img-preview { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 7px;}
-    .modern-modal-backdrop {
-  position: fixed; top:0; left:0; width:100vw; height:100vh; 
-  background: rgba(20,40,72,0.22); z-index:1000; display: flex; align-items: center; justify-content: center;
-}
-.modern-modal {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px #00336630;
-  padding: 32px 28px 24px 28px;
-  width: 95vw; max-width: 350px;
-  display: flex; flex-direction: column; align-items: center;
-  position: relative;
-}
-.modal-close {
-  position: absolute; right: 18px; top: 16px; 
-  background: none; border: none; font-size: 2rem; color: #bbb; cursor: pointer;
-}
-.modern-modal h2 {
-  margin: 0 0 18px 0;
-  font-size: 1.4rem;
-  color: #003366;
-}
-.profile-pic-upload {
-  display: flex; flex-direction: column; align-items: center; margin-bottom: 16px;
-}
-.profile-pic-upload img {
-  width: 68px; height: 68px; border-radius: 50%; margin-bottom: 8px; object-fit: cover; border: 2px solid #00c6ff;
-}
-.profile-pic-upload input[type="file"] {
-  display: block; font-size: 1em;
-}
-.modern-input {
-  width: 100%; font-size: 1.08em; margin-bottom: 15px; padding: 10px 14px;
-  border: 1.4px solid #d1e4f7; border-radius: 8px; background: #f8fdff;
-  outline: none; transition: border 0.2s;
-}
-.modern-input:focus { border-color: #00c6ff; }
-.modern-btn {
-  width: 100%; padding: 11px 0; border: none;
-  background: linear-gradient(90deg, #00c6ff 50%, #0072ff 100%);
-  color: #fff; font-size: 1.09em; border-radius: 8px;
-  font-weight: 600; margin-top: 7px; cursor: pointer; transition: background 0.2s;
-}
-.modern-btn:hover { background: linear-gradient(90deg, #0072ff 60%, #00c6ff 100%); }
+    .profile-img-upload { margin-top: 8px; }
+    .profile-img-preview { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; margin-bottom: 8px;}
+    /* Modal styles */
+    .modern-modal-backdrop, .modal-backdrop {
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: rgba(54,79,199,0.16);
+      z-index:1001; display: flex; align-items: center; justify-content: center;
+    }
+    .review-modal, .modern-modal {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 36px #364fc730;
+      padding: 34px 28px 26px 28px;
+      max-width: 550px;
+      width: 95vw;
+      display: flex; flex-direction: column; align-items: flex-start;
+      position: relative;
+    }
+    .review-modal h3, .modern-modal h3, .modern-modal h2 {
+      margin: 0 0 19px 0;
+      font-size: 1.38rem;
+      color: #364fc7;
+    }
+    .modal-close, .close-modal {
+      position: absolute; right: 18px; top: 16px;
+      background: none; border: none; font-size: 2rem; color: #bbb; cursor: pointer;
+      transition: color 0.17s;
+    }
+    .modal-close:hover, .close-modal:hover {
+      color: #ff3b47;
+    }
+    .profile-pic-upload {
+      display: flex; flex-direction: column; align-items: center; margin-bottom: 18px;
+    }
+    .profile-pic-upload img {
+      width: 74px; height: 74px; border-radius: 50%; margin-bottom: 8px; object-fit: cover; border: 2px solid #4895ef;
+    }
+    .modern-input {
+      width: 100%; font-size: 1.09em; margin-bottom: 16px; padding: 11px 15px;
+      border: 1.7px solid #d1e4f7; border-radius: 9px; background: #f8fdff;
+      outline: none; transition: border 0.2s;
+    }
+    .modern-input:focus { border-color: #4895ef; }
+    .modern-btn {
+      width: 100%; padding: 12px 0; border: none;
+      background: linear-gradient(90deg, #4895ef 50%, #364fc7 100%);
+      color: #fff; font-size: 1.13em; border-radius: 9px;
+      font-weight: 700; margin-top: 8px; cursor: pointer; transition: background 0.2s;
+    }
+    .modern-btn:hover { background: linear-gradient(90deg, #364fc7 60%, #4895ef 100%); }
+    /* Review modal details */
+    .review-question {
+      margin-top: 13px;
+      margin-bottom: 7px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #23366e;
+    }
+    .review-opts {
+      margin-left: 16px;
+      font-size: 1em;
+      margin-bottom: 5px;
+    }
+    .review-correct {
+      color: #48b16f;
+      font-weight: 700;
+    }
+    .review-wrong {
+      color: #ff3b47;
+      font-weight: 700;
+    }
+    .review-expl {
+      font-size: 1.01rem;
+      color: #4895ef;
+      background: #eaf1fb;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 7px 0 10px 0;
+    }
+    hr {
+      border: none;
+      border-top: 1.2px solid #e7eefc;
+      margin: 10px 0 8px 0;
+    }
+    /* Responsive */
+    @media (max-width: 750px) {
+      .main { padding: 13px 2vw; }
+      .dashboard-cards { flex-direction: column; }
+      .profile { flex-direction: column; gap: 18px; }
+    }
+    @media (max-width: 430px) {
+      .header { padding: 22px 7px 13px 7px; }
+      .main { padding: 2vw; }
+      .dashboard-card { min-width: 120px; }
+    }
   </style>
 </head>
 <body>
   <div class="header" style="position:relative;">
-    <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()">
+    <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()" title="Notifications">
       &#128276;
       <span id="notifDot" class="notif-dot" style="display:none"></span>
     </span>
     <div class="notif-dropdown" id="notifDropdown"></div>
-    <h1>Welcome, <span id="studentName">Student</span>!</h1>
+    <div class="brand">
+      <img src="lumina-logo.png" alt="Lumina Logo" />
+      <span style="font-size:1.25em;font-weight:700;letter-spacing:0.04em;">Lumina Scholar Portal</span>
+    </div>
+    <h1>Hello, <span id="studentName">Scholar</span>!</h1>
     <div><small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small></div>
   </div>
   <div class="main">
     <!-- Profile section -->
     <div class="profile">
-      <div class="profile-img"><img src="student.png" alt="Profile" id="profilePic"></div>
+      <div class="profile-img"><img src="lumina-avatar.png" alt="Profile" id="profilePic"></div>
       <div class="profile-info">
-        <h2 id="profileName">Student Name</h2>
+        <h2 id="profileName">Your Name</h2>
         <div class="meta">Username: <span id="profileUser"></span></div>
         <div class="meta">Faculty: <span id="profileFaculty"></span> | Department: <span id="profileDept"></span></div>
         <div class="profile-actions">
@@ -375,19 +462,19 @@
           <button class="btn-profile" onclick="openChatModal()">Messages</button>
           <button class="btn-profile" onclick="logout()">Logout</button>
         </div>
-        <div class="meta"><a class="support-link" href="#" onclick="openSupport()">Need Help?</a></div>
+        <a class="support-link" href="#" onclick="openSupport()">Need Help? Contact Support</a>
       </div>
     </div>
     <!-- Dashboard cards -->
     <div class="dashboard-cards">
       <div class="dashboard-card">
-        <div class="card-title">Progress</div>
+        <div class="card-title">Your Progress</div>
         <canvas id="progressChart" width="120" height="90"></canvas>
       </div>
       <div class="dashboard-card">
         <div class="card-title">Upcoming Test</div>
         <div class="card-value" id="upcomingTest">None</div>
-        <div id="testCountdown" style="font-size:0.97rem; color:#0072ff;"></div>
+        <div id="testCountdown" style="font-size:1.01rem; color:#4895ef;"></div>
       </div>
       <div class="dashboard-card">
         <div class="card-title">Certificates</div>
@@ -397,26 +484,26 @@
     </div>
     <!-- Recommendations -->
     <div class="recommend-box">
-      <div class="recommend-title">Recommended for You</div>
-      <ul style="margin:0 0 0 12px;" id="recommendations"></ul>
+      <div class="recommend-title">Personalized Recommendations</div>
+      <ul style="margin:0 0 0 14px;" id="recommendations"></ul>
     </div>
     <!-- Announcements & Messaging -->
     <div class="announcement" id="announcementsPanel"></div>
     <!-- Test History with Review -->
-    <div class="section-title">Test History</div>
+    <div class="section-title">Test Performance & Reviews</div>
     <table class="result-table" id="historyTable">
       <thead><tr><th>Test</th><th>Date</th><th>Score</th><th>Review</th></tr></thead>
       <tbody></tbody>
     </table>
     <!-- Upcoming/scheduled tests -->
-    <div class="section-title">Available Tests</div>
+    <div class="section-title">Available Assessments</div>
     <table class="test-table" id="availableTable">
       <thead><tr><th>Test</th><th>Status</th><th>Action</th></tr></thead>
       <tbody></tbody>
     </table>
     <!-- Discussion/Help -->
     <div class="section-title">Need Academic Help?</div>
-    <button class="btn" onclick="openDiscussion()">Go to Discussion Board</button>
+    <button class="btn" onclick="openDiscussion()">Go to Community Board</button>
   </div>
   <div id="modalRoot"></div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -489,24 +576,24 @@
             <button class="close-modal" onclick="closeModal(event)">&times;</button>
             <h3>${isInitial ? "Complete Your Profile" : "Edit Profile"}</h3>
             <label>Username</label>
-            <input id="editUsername" value="${student.username || ''}" maxlength="32">
+            <input id="editUsername" class="modern-input" value="${student.username || ''}" maxlength="32">
             <label>Password</label>
-            <input id="editPassword" type="password" placeholder="Leave blank to keep current">
+            <input id="editPassword" class="modern-input" type="password" placeholder="Leave blank to keep current">
             <label>Profile Picture</label>
             <input type="file" id="editProfilePicFile" accept="image/*" class="profile-img-upload" onchange="handleProfilePicUpload(event)">
             <img id="profileImgPreview" class="profile-img-preview" style="display:none">
             <input id="editProfilePic" value="${student.profilePic||''}" style="display:none;">
             <label>Faculty</label>
-            <select id="editFaculty" onchange="updateDeptOptions()">
+            <select id="editFaculty" class="modern-input" onchange="updateDeptOptions()">
               <option value="">Select Faculty</option>
               ${facultyOptions}
             </select>
             <label>Department</label>
-            <select id="editDepartment">
+            <select id="editDepartment" class="modern-input">
               <option value="">Select Department</option>
               ${deptOptions}
             </select>
-            <button class="btn" onclick="submitProfileEdit(${!!isInitial})">${isInitial ? "Save & Continue" : "Save"}</button>
+            <button class="modern-btn" onclick="submitProfileEdit(${!!isInitial})">${isInitial ? "Save & Continue" : "Save"}</button>
           </div>
         </div>`;
       document.getElementById("modalRoot").innerHTML = html;
@@ -572,14 +659,13 @@
         await fetchAvailableTests();
       }
     }
-
     // ========== ANNOUNCEMENTS/NOTIFICATIONS ==========
     async function fetchAnnouncements() {
       const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
       const notifs = await resp.json();
       let html = "";
       notifs.forEach(n => {
-        html += `<div class="message-link" style="cursor:pointer;color:#0072ff;" onclick="openMessageModal('${n.title.replace(/'/g, "\\'")}', '${n.message.replace(/'/g, "\\'")}', '${n.createdAt}')"><strong>${n.title}:</strong> ${n.message.length>60?n.message.substring(0,57)+'...':n.message} <small style="color:#888;">(${(new Date(n.createdAt)).toLocaleString()})</small></div>`;
+        html += `<div class="message-link" style="cursor:pointer;color:#4895ef;" onclick="openMessageModal('${n.title.replace(/'/g, "\\'")}', '${n.message.replace(/'/g, "\\'")}', '${n.createdAt}')"><strong>${n.title}:</strong> ${n.message.length>60?n.message.substring(0,57)+'...':n.message} <small style="color:#888;">(${(new Date(n.createdAt)).toLocaleString()})</small></div>`;
       });
       document.getElementById("announcementsPanel").innerHTML = html || "No new announcements.";
     }
@@ -589,13 +675,12 @@
           <div class="review-modal" onclick="event.stopPropagation()">
             <button class="close-modal" onclick="closeModal(event)">&times;</button>
             <h3>${title}</h3>
-            <div><small style="color:#0072ff">${(new Date(date)).toLocaleString()}</small></div>
-            <div style="margin-top:10px;">${msg}</div>
+            <div><small style="color:#4895ef">${(new Date(date)).toLocaleString()}</small></div>
+            <div style="margin-top:12px;">${msg}</div>
           </div>
         </div>`;
       document.getElementById("modalRoot").innerHTML = html;
     }
-
     // ========== NOTIFICATION BELL ==========
     function toggleNotifDropdown() {
       const dd = document.getElementById("notifDropdown");
@@ -608,7 +693,7 @@
     }
     function renderNotifDropdown() {
       let html = "";
-      if (!chatListCache.length) html = "<div style='padding:14px;text-align:center'>No new messages.</div>";
+      if (!chatListCache.length) html = "<div style='padding:18px;text-align:center;color:#aaa;'>No new messages.</div>";
       else chatListCache.slice(0, 8).forEach(chat => {
         html += `<div class="notif-item" onclick="openChatModal('${chat.otherUserId}')">
           <div class="notif-title">${chat.otherUserName}</div>
@@ -648,7 +733,7 @@
         document.getElementById("chatSendBtn").disabled = !this.value.trim();
       });
       if (otherUserId) fetchChatMessages(otherUserId);
-      else document.getElementById("chatBody").innerHTML = '<div style="padding:25px 0;text-align:center;color:#aaa;">Select a user to chat with.</div>';
+      else document.getElementById("chatBody").innerHTML = '<div style="padding:30px 0;text-align:center;color:#aaa;">Select a user to chat with.</div>';
       // Poll for new messages in this chat
       if (chatPollingInterval) clearInterval(chatPollingInterval);
       if (otherUserId) {
@@ -657,7 +742,6 @@
     }
     async function fetchChatMessages(otherUserId, silent=false) {
       if (!otherUserId) return;
-      // Assume endpoint: /api/messages/:otherUserId
       const resp = await fetch(`${API_URL}messages/${otherUserId}`, { headers: { Authorization: "Bearer " + token } });
       const data = await resp.json();
       let html = "";
@@ -686,32 +770,28 @@
     }
     // ========== MESSAGE POLLING FOR NOTIFICATIONS ==========
     async function pollChatsForNotifications() {
-      // Assume endpoint: /api/messages/chats
       const resp = await fetch(`${API_URL}messages/chats`, { headers: { Authorization: "Bearer " + token } });
       chatListCache = await resp.json();
-      // Check for unread
       unreadMessages = chatListCache.filter(c => c.unreadCount > 0);
       document.getElementById("notifDot").style.display = unreadMessages.length ? "block" : "none";
-      // Optionally: show popup alert for new message
       if (unreadMessages.length && !document.getElementById("newMsgPopup")) {
         showNewMessagePopup(unreadMessages[0]);
       }
     }
     function showNewMessagePopup(chat) {
-      let html = `<div id="newMsgPopup" style="position:fixed;bottom:26px;right:30px;z-index:9999;background:#fff;padding:18px 30px;border-radius:18px;box-shadow:0 4px 22px #00336644;">
+      let html = `<div id="newMsgPopup" style="position:fixed;bottom:32px;right:34px;z-index:9999;background:#fff;padding:20px 36px;border-radius:20px;box-shadow:0 4px 22px #364fc744;">
         <b>New message from ${chat.otherUserName}</b>
-        <div style="margin:7px 0 0 0;">${chat.lastMsgText?chat.lastMsgText.substring(0,90):""}</div>
+        <div style="margin:9px 0 0 0;">${chat.lastMsgText?chat.lastMsgText.substring(0,90):""}</div>
         <button class="btn" onclick="openChatModal('${chat.otherUserId}');document.getElementById('newMsgPopup').remove();">View</button>
-        <button class="btn" onclick="document.getElementById('newMsgPopup').remove();" style="background:#eee;color:#003366;">Dismiss</button>
+        <button class="btn" onclick="document.getElementById('newMsgPopup').remove();" style="background:#eaf1fb;color:#364fc7;">Dismiss</button>
       </div>`;
       document.body.insertAdjacentHTML("beforeend", html);
       setTimeout(() => { if (document.getElementById("newMsgPopup")) document.getElementById("newMsgPopup").remove(); }, 16000);
     }
-
     // ========== RECOMMENDATIONS, HISTORY, TESTS, ETC. ==========
     function recommendTopics() {
       if (!resultsCache.length || !setsCache.length) {
-        document.getElementById("recommendations").innerHTML = "<li>Take more tests to see recommendations!</li>";
+        document.getElementById("recommendations").innerHTML = "<li>Take more tests to receive personalized recommendations!</li>";
         return;
       }
       let lowest = resultsCache.reduce((acc, cur) => {
@@ -726,9 +806,9 @@
       })).sort((a,b)=>a.avg-b.avg);
       let html = "";
       avgScores.slice(0,2).forEach(s => {
-        html += `<li>Revise <b>${s.set}</b> (avg: ${Math.round(s.avg)}%) <span class="badge">Practice</span></li>`;
+        html += `<li>Boost your grasp on <b>${s.set}</b> (avg: ${Math.round(s.avg)}%) <span class="badge">Practice</span></li>`;
       });
-      if (!html) html = "<li>No recommendations. Great job!</li>";
+      if (!html) html = "<li>No recommendations. Stellar performance!</li>";
       document.getElementById("recommendations").innerHTML = html;
     }
     async function fetchHistory() {
@@ -744,19 +824,16 @@
           if (!setStats[r.examSet]) setStats[r.examSet] = [];
           setStats[r.examSet].push(r.score ?? 0);
         });
-        // Badges (for 80%+ or >5 tests)
-        if (results.length >= 5) badgeHtml += `<span class="badge">5+ Tests</span>`;
-        if (results.some(r=>r.score>=80)) badgeHtml += `<span class="badge">High Score</span>`;
+        if (results.length >= 5) badgeHtml += `<span class="badge">5+ Assessments</span>`;
+        if (results.some(r=>r.score>=80)) badgeHtml += `<span class="badge">High Performer</span>`;
       }
       document.getElementById("badgePanel").innerHTML = badgeHtml;
-      // Fill progress data for chart
       progressData.labels = Object.keys(setStats);
       progressData.values = progressData.labels.map(lbl => {
         let arr = setStats[lbl] || [];
         return arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : 0;
       });
       renderProgressChart(progressData);
-      // Fill history table
       results.slice(0,10).forEach(r => {
         html += `<tr>
           <td>${r.examSet}</td>
@@ -777,7 +854,7 @@
           labels: data.labels,
           datasets: [{
             data: data.values,
-            backgroundColor: ['#00c6ff', '#0072ff', '#f25f5c', '#43aa8b', '#ffe066', '#6639ba']
+            backgroundColor: ['#4895ef', '#364fc7', '#ffe066', '#48b16f', '#f25f5c', '#6639ba']
           }]
         },
         options: {
@@ -790,7 +867,7 @@
     }
     async function fetchAvailableTests() {
       if (!student.faculty || !student.department) {
-        document.querySelector("#availableTable tbody").innerHTML = "<tr><td colspan=3>Please complete your profile to see available tests.</td></tr>";
+        document.querySelector("#availableTable tbody").innerHTML = "<tr><td colspan=3>Please complete your profile to see available assessments.</td></tr>";
         document.getElementById("upcomingTest").innerText = "None";
         document.getElementById("testCountdown").innerText = "";
         return;
@@ -816,7 +893,7 @@
         </tr>`;
         if (!soonest || (sched.start && new Date(sched.start).getTime() < new Date(soonest.start).getTime())) soonest = set;
       });
-      document.querySelector("#availableTable tbody").innerHTML = html || "<tr><td colspan=3>No available tests</td></tr>";
+      document.querySelector("#availableTable tbody").innerHTML = html || "<tr><td colspan=3>No available assessments</td></tr>";
       if (soonest && soonest.schedule && soonest.schedule.start && new Date(soonest.schedule.start).getTime() > Date.now()) {
         nextTest = soonest;
         nextTestStart = new Date(soonest.schedule.start).getTime();
@@ -879,7 +956,7 @@
       window.location.href = `mock.html?set=${setId}`;
     }
     function openSupport() {
-      window.open("mailto:support@yourcbtplattform.com", "_blank");
+      window.open("mailto:support@luminaexam.com", "_blank");
     }
     function openDiscussion() {
       window.open("discussion.html", "_blank");
