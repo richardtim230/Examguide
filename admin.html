@@ -377,6 +377,7 @@ body {
       <a href="#results" onclick="showSection('results', this)"><span>📊</span> Results</a>
       <a href="#schedules" onclick="showSection('schedules', this)"><span>⏰</span> Schedules</a>
       <a href="#notifications" onclick="showSection('notifications', this)"><span>✉️</span> Messaging</a>
+      <a href="#students" onclick="showSection('students', this)"><span>👥</span> Students</a>
     </div>
     <div class="sidebar-footer">
       <span style="font-size:1.05em;">Admin</span><br>
@@ -516,6 +517,18 @@ body {
     </div>
   </div>
   <div id="modalRoot"></div>
+  <!-- Students Management Section -->
+<div class="section" id="studentsSection" style="display:none;">
+  <div class="section-title">Manage Students</div>
+  <table class="data-table" id="studentsTable">
+    <thead>
+      <tr>
+        <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
   <script>
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
@@ -538,7 +551,32 @@ body {
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
-
+async function fetchStudents() {
+  const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  const users = await resp.json();
+  let html = "";
+  users.forEach(u => {
+    html += `<tr>
+      <td>${u.username}</td>
+      <td>${u.username}</td>
+      <td>${u.faculty || '-'}</td>
+      <td>${u.department || '-'}</td>
+      <td>
+        <span style="color:${u.active === false ? '#ff3b47':'#25d366'};font-weight:700;">
+          ${u.active === false ? 'Inactive':'Active'}
+        </span>
+      </td>
+      <td>
+        <button class="action-btn" onclick="viewStudent('${u._id}')">View</button>
+        <button class="action-btn" onclick="editStudent('${u._id}')">Edit</button>
+        <button class="action-btn" onclick="toggleStudentStatus('${u._id}', ${u.active !== false})">
+          ${u.active === false ? 'Activate':'Deactivate'}
+        </button>
+      </td>
+    </tr>`;
+  });
+  document.querySelector("#studentsTable tbody").innerHTML = html;
+    }
     // ========== UX NAVIGATION ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
@@ -548,6 +586,7 @@ body {
         document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
       });
       if (id === "faculty") { fetchFaculties(); fetchDepartments(); }
+      if (id === "students") { fetchStudents(); }
       if (window.innerWidth <= 950) closeSidebar();
     }
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
