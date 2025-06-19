@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
   <link rel="icon" href="student.png">
   <style>
-    /* [PASTE YOUR CSS FROM EARLIER HERE OR IN A LINKED FILE] */
     body {
   font-family: 'Inter', Arial, sans-serif;
   background: #f5f8fa;
@@ -307,6 +306,50 @@
     .chat-send-btn:disabled { background: #ccc; }
     .profile-img-upload { margin-top: 7px; }
     .profile-img-preview { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 7px;}
+    .modern-modal-backdrop {
+  position: fixed; top:0; left:0; width:100vw; height:100vh; 
+  background: rgba(20,40,72,0.22); z-index:1000; display: flex; align-items: center; justify-content: center;
+}
+.modern-modal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #00336630;
+  padding: 32px 28px 24px 28px;
+  width: 95vw; max-width: 350px;
+  display: flex; flex-direction: column; align-items: center;
+  position: relative;
+}
+.modal-close {
+  position: absolute; right: 18px; top: 16px; 
+  background: none; border: none; font-size: 2rem; color: #bbb; cursor: pointer;
+}
+.modern-modal h2 {
+  margin: 0 0 18px 0;
+  font-size: 1.4rem;
+  color: #003366;
+}
+.profile-pic-upload {
+  display: flex; flex-direction: column; align-items: center; margin-bottom: 16px;
+}
+.profile-pic-upload img {
+  width: 68px; height: 68px; border-radius: 50%; margin-bottom: 8px; object-fit: cover; border: 2px solid #00c6ff;
+}
+.profile-pic-upload input[type="file"] {
+  display: block; font-size: 1em;
+}
+.modern-input {
+  width: 100%; font-size: 1.08em; margin-bottom: 15px; padding: 10px 14px;
+  border: 1.4px solid #d1e4f7; border-radius: 8px; background: #f8fdff;
+  outline: none; transition: border 0.2s;
+}
+.modern-input:focus { border-color: #00c6ff; }
+.modern-btn {
+  width: 100%; padding: 11px 0; border: none;
+  background: linear-gradient(90deg, #00c6ff 50%, #0072ff 100%);
+  color: #fff; font-size: 1.09em; border-radius: 8px;
+  font-weight: 600; margin-top: 7px; cursor: pointer; transition: background 0.2s;
+}
+.modern-btn:hover { background: linear-gradient(90deg, #0072ff 60%, #00c6ff 100%); }
   </style>
 </head>
 <body>
@@ -441,8 +484,8 @@
         .filter(d => !currentFacultyId || d.faculty === currentFacultyId)
         .map(d => `<option value="${d._id}" ${student.department === d.name ? "selected" : ""}>${d.name}</option>`).join('');
       let html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="review-modal" onclick="event.stopPropagation()">
+        <div class="modern-modal-backdrop" onclick="closeModal(event)">
+          <div class="modern-modal" onclick="event.stopPropagation()">
             <button class="close-modal" onclick="closeModal(event)">&times;</button>
             <h3>${isInitial ? "Complete Your Profile" : "Edit Profile"}</h3>
             <label>Username</label>
