@@ -90,7 +90,27 @@ app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"),
     res.status(400).json({ message: e.message });
   }
 });
+// DEBUG: List schedules for the logged-in user's faculty/department
+app.get("/api/debug/schedules", authenticate, async (req, res) => {
+  try {
+    // Get the logged-in user's faculty and department
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
 
+    // Find schedules for that faculty/department and populate examSet
+    const schedules = await mongoose.model("Schedule").find({
+      faculty: user.faculty,
+      department: user.department
+    }).populate({
+      path: "examSet",
+      select: "title status questions faculty department"
+    });
+
+    res.json({ faculty: user.faculty, department: user.department, schedules });
+  } catch (e) {
+    res.status(500).json({ message: "Debug schedules error", error: e.message });
+  }
+});
 // --- Auth Endpoints ---
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
