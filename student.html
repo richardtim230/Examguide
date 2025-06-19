@@ -1013,91 +1013,62 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
           responsive: false,
           maintainAspectRatio: false
         }
+      });
+    }
     async function fetchAvailableTests() {
-  if (!student.faculty || !student.department) {
-    document.querySelector("#availableTable tbody").innerHTML = "<tr><td colspan=3>Please complete your profile to see available assessments.</td></tr>";
-    document.getElementById("upcomingTest").innerText = "None";
-    document.getElementById("testCountdown").innerText = "";
-    return;
-  }
-
-  // Fetch all question sets for this faculty & department
-  const resp = await fetch(API_URL + `questionsets?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
-    { headers: { Authorization: "Bearer " + token } });
-  const sets = await resp.json();
-  setsCache = sets;
-
-  let html = "";
-  let soonest = null;
-  let now = Date.now();
-
-  sets.forEach(set => {
-    // Defensive: default schedule
-    let sched = set.schedule || {};
-    let startTime = sched.start ? new Date(sched.start).getTime() : null;
-    let taken = resultsCache.some(r => r.examSet === set.title);
-    let isActive = set.status === "ACTIVE";
-    let canTake = isActive && !taken && (!startTime || now >= startTime);
-    let isScheduled = isActive && !taken && startTime && now < startTime;
-    let statusLabel = taken
-      ? "Completed"
-      : (!isActive
-          ? (isScheduled ? "Scheduled" : "Inactive")
-          : (isScheduled
-              ? "Scheduled"
-              : "Available"));
-
-    let btn = `<button class="btn" onclick="startTest('${set._id}')" ${canTake ? "" : "disabled"}>${taken ? "Completed" : (isScheduled ? "Not Yet Open" : "Start")}</button>`;
-
-    html += `<tr>
-      <td>${set.title}</td>
-      <td>${statusLabel}</td>
-      <td>${btn}</td>
-    </tr>`;
-
-    // Track the soonest upcoming test (after now)
-    if (
-      isActive &&
-      !taken &&
-      startTime &&
-      now < startTime &&
-      (!soonest || startTime < new Date(soonest.schedule.start).getTime())
-    ) soonest = set;
-  });
-
-  document.querySelector("#availableTable tbody").innerHTML = html || "<tr><td colspan=3>No available assessments</td></tr>";
-
-  // Handle upcoming test display & countdown
-  if (soonest && soonest.schedule && soonest.schedule.start && new Date(soonest.schedule.start).getTime() > now) {
-    nextTest = soonest;
-    nextTestStart = new Date(soonest.schedule.start).getTime();
-    document.getElementById("upcomingTest").innerText = soonest.title;
-    startCountdown();
-  } else if (sets.length > 0) {
-    // Show first test as current if no upcoming scheduled
-    let firstAvailable = sets.find(set => set.status === "ACTIVE");
-    document.getElementById("upcomingTest").innerText = firstAvailable ? firstAvailable.title : sets[0].title;
-    document.getElementById("testCountdown").innerText = "";
-  } else {
-    document.getElementById("upcomingTest").innerText = "None";
-    document.getElementById("testCountdown").innerText = "";
-  }
-}
-
-function startCountdown() {
-  if (!nextTestStart) return;
-  function updateCountdown() {
-    let now = Date.now();
-    let diff = Math.max(0, Math.floor((nextTestStart - now) / 1000));
-    let h = Math.floor(diff / 3600),
-      m = Math.floor((diff % 3600) / 60),
-      s = diff % 60;
-    document.getElementById("testCountdown").innerText =
-      diff > 0 ? `Starts in ${h}h ${m}m ${s}s` : "Available now!";
-    if (diff > 0) setTimeout(updateCountdown, 1000);
-  }
-  updateCountdown();
-}
+      if (!student.faculty || !student.department) {
+        document.querySelector("#availableTable tbody").innerHTML = "<tr><td colspan=3>Please complete your profile to see available assessments.</td></tr>";
+        document.getElementById("upcomingTest").innerText = "None";
+        document.getElementById("testCountdown").innerText = "";
+        return;
+      }
+      const resp = await fetch(API_URL + `questionsets?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
+        { headers: { Authorization: "Bearer " + token } });
+      const sets = await resp.json();
+      setsCache = sets;
+      let html = "";
+      let soonest = null;
+      sets.forEach(set => {
+        if (set.status !== "ACTIVE") return;
+        let taken = resultsCache.some(r=>r.examSet===set.title);
+        let sched = set.schedule || {};
+        let now = Date.now();
+        let canTake = !taken && (!sched.start || now >= new Date(sched.start).getTime());
+        let btn = `<button class="btn" onclick="startTest('${set._id}')"
+          ${canTake ? "" : "disabled"}>${taken ? "Completed" : "Start"}</button>`;
+        html += `<tr>
+          <td>${set.title}</td>
+          <td>${taken ? "Completed" : (canTake ? "Available" : "Scheduled")}</td>
+          <td>${btn}</td>
+        </tr>`;
+        if (!soonest || (sched.start && new Date(sched.start).getTime() < new Date(soonest.start).getTime())) soonest = set;
+      });
+      document.querySelector("#availableTable tbody").innerHTML = html || "<tr><td colspan=3>No available assessments</td></tr>";
+      if (soonest && soonest.schedule && soonest.schedule.start && new Date(soonest.schedule.start).getTime() > Date.now()) {
+        nextTest = soonest;
+        nextTestStart = new Date(soonest.schedule.start).getTime();
+        document.getElementById("upcomingTest").innerText = soonest.title;
+        startCountdown();
+      } else if (sets.length > 0) {
+        document.getElementById("upcomingTest").innerText = sets[0].title;
+        document.getElementById("testCountdown").innerText = "";
+      } else {
+        document.getElementById("upcomingTest").innerText = "None";
+        document.getElementById("testCountdown").innerText = "";
+      }
+    }
+    function startCountdown() {
+      if (!nextTestStart) return;
+      function updateCountdown() {
+        let now = Date.now();
+        let diff = Math.max(0, Math.floor((nextTestStart - now)/1000));
+        let h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = diff%60;
+        document.getElementById("testCountdown").innerText =
+          diff > 0 ? `Starts in ${h}h ${m}m ${s}s` : "Available now!";
+        if (diff > 0) setTimeout(updateCountdown, 1000);
+      }
+      updateCountdown();
+    }
     // ========== REVIEW ========== 
     async function reviewResult(id) {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
