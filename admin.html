@@ -660,49 +660,93 @@ async function viewStudent(id) {
 }
 
 async function editStudent(id) {
-  const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
-  const u = await resp.json();
-  let html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Edit Profile</h2>
-        <label>Username</label>
-        <input id="editStudentUsername" value="${u.username}">
-        <label>Faculty</label>
-        <input id="editStudentFaculty" value="${u.faculty || ''}">
-        <label>Department</label>
-        <input id="editStudentDepartment" value="${u.department || ''}">
-        <label>Status</label>
-        <select id="editStudentStatus"><option value="active"${u.active !== false ? ' selected':''}>Active</option><option value="inactive"${u.active === false ? ' selected':''}>Inactive</option></select>
-        <button class="btn" onclick="submitEditStudent('${u._id}')">Save</button>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
+  try {
+    const resp = await fetch(API_URL + "users/" + id, {
+      headers: { Authorization: "Bearer " + token }
+    });
+    if (!resp.ok) {
+      alert("Could not load student: " + resp.statusText);
+      return;
+    }
+    const u = await resp.json();
+    let html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Edit Profile</h2>
+          <label>Username</label>
+          <input id="editStudentUsername" value="${u.username || ''}">
+          <label>Faculty</label>
+          <input id="editStudentFaculty" value="${u.faculty || ''}">
+          <label>Department</label>
+          <input id="editStudentDepartment" value="${u.department || ''}">
+          <label>Status</label>
+          <select id="editStudentStatus">
+            <option value="active"${u.active !== false ? ' selected' : ''}>Active</option>
+            <option value="inactive"${u.active === false ? ' selected' : ''}>Inactive</option>
+          </select>
+          <div id="editStudentMsg" style="color:#b22;margin-top:7px;"></div>
+          <button class="btn" id="saveStudentBtn">Save</button>
+        </div>
+      </div>`;
+    document.getElementById("modalRoot").innerHTML = html;
+    // Bind save button after modal is loaded
+    document.getElementById("saveStudentBtn").onclick = () => submitEditStudent(id);
+  } catch (e) {
+    alert("Could not load student profile.");
+  }
 }
 
 async function submitEditStudent(id) {
+  const msg = document.getElementById("editStudentMsg");
   const username = document.getElementById("editStudentUsername").value.trim();
   const faculty = document.getElementById("editStudentFaculty").value.trim();
   const department = document.getElementById("editStudentDepartment").value.trim();
   const status = document.getElementById("editStudentStatus").value === "active";
-  await fetch(API_URL + "users/" + id, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ username, faculty, department, active: status })
-  });
-  closeModal();
-  fetchStudents();
+  msg.textContent = "";
+  try {
+    const resp = await fetch(API_URL + "users/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({ username, faculty, department, active: status })
+    });
+    const resJson = await resp.json();
+    if (!resp.ok) {
+      msg.textContent = resJson.message || "Update failed.";
+      return;
+    }
+    closeModal();
+    fetchStudents();
+  } catch (e) {
+    msg.textContent = "Network error.";
+  }
 }
 
 async function toggleStudentStatus(id, currentlyActive) {
-  await fetch(API_URL + "users/" + id, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ active: !currentlyActive })
-  });
-  fetchStudents();
+  try {
+    const resp = await fetch(API_URL + "users/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({ active: !currentlyActive })
+    });
+    if (!resp.ok) {
+      const resJson = await resp.json();
+      alert(resJson.message || "Failed to update status.");
+    }
+    fetchStudents();
+  } catch (e) {
+    alert("Network error.");
+  }
 }
+
+// Modal close helper
+function closeModal(e) {
+  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+    document.getElementById("modalRoot").innerHTML = "";
+  }
+}
+
+
     // ========== QUESTION SETS ==========
     async function fetchSets() {
       const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
