@@ -59,25 +59,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
-// --- Superadmin bootstrapping (Option 3) ---
-// This block creates a superadmin user if none exists, with a sample password.
-// REMOVE or comment out this block after first use for security!
-(async () => {
-  try {
-    const exists = await User.findOne({ role: "superadmin" });
-    if (!exists) {
-      const hashed = await bcrypt.hash("SuperSecret123!", 12); // Sample password
-      await User.create({
-        username: "superadmin",
-        password: hashed,
-        role: "superadmin",
-      });
-      console.log("Superadmin created: username=superadmin, password=SuperSecret123!");
-    }
-  } catch (e) {
-    console.error("Error during superadmin bootstrapping:", e);
-  }
-})();
+
 app.use("/api/users", usersRoutes);
 // ===== FACULTY ROUTES =====
 app.get("/api/faculties", authenticate, async (req, res) => {
@@ -184,7 +166,7 @@ app.get("/api/auth", (req, res) => {
 });
 
 // List users by role/faculty/department (for superadmin)
-app.get("/api/users", authenticate, authorizeRole("superadmin"), async (req, res) => {
+app.get("/api/users", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
   if (req.query.faculty) filter.faculty = req.query.faculty;
