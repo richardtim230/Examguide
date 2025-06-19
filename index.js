@@ -13,11 +13,8 @@ import scheduleRoutes from "./routes/schedule.js";
 import notificationsRoutes from "./routes/notifications.js";
 import adminStatsRoutes from "./routes/adminStats.js";
 import superadminRoutes from "./routes/superadmin.js";
+import messagesRoutes from "./routes/messages.js";
 
-// ===== ADD FACULTY & DEPARTMENT MODELS =====
-const FacultySchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true }
-});
 const Faculty = mongoose.model("Faculty", FacultySchema);
 
 const DepartmentSchema = new mongoose.Schema({
@@ -94,7 +91,11 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
     res.status(400).json({ message: e.message });
   }
 });
-
+app.use("/api/messages", messagesRoutes);
+// ===== ADD FACULTY & DEPARTMENT MODELS =====
+const FacultySchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true }
+});
 // ===== DEPARTMENT ROUTES =====
 app.get("/api/departments", authenticate, async (req, res) => {
   const list = await Department.find().sort({ name: 1 });
