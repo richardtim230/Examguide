@@ -15,8 +15,14 @@ export function authenticate(req, res, next) {
 
 export function authorizeRole(...roles) {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role))
+    // Defensive: check req.user exists
+    if (!req.user || !req.user.role) {
       return res.status(403).json({ message: "Forbidden" });
+    }
+    // Case-insensitive role comparison for robustness
+    if (!roles.map(r => r.toLowerCase()).includes(req.user.role.toLowerCase())) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
     next();
-  }
+  };
 }
