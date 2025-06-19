@@ -559,13 +559,30 @@ body {
       return f ? f.name : "";
     }
 async function fetchStudents() {
+  
+  // Students
+  const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  let students = [];
+  try {
+    // Our API returns an array!
+    students = await resp4.json();
+  } catch { students = []; }
+  document.getElementById("studentCount").innerText = students.length;
+}
+
+// Students table
+async function fetchStudents() {
   const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-  const users = await resp.json();
+  let users = [];
+  try {
+    // Our API returns an array!
+    users = await resp.json();
+  } catch { users = []; }
   let html = "";
   users.forEach(u => {
     html += `<tr>
-      <td>${u.username}</td>
-      <td>${u.username}</td>
+      <td>${u.fullname || u.username || '-'}</td>
+      <td>${u.username || '-'}</td>
       <td>${u.faculty || '-'}</td>
       <td>${u.department || '-'}</td>
       <td>
@@ -583,7 +600,7 @@ async function fetchStudents() {
     </tr>`;
   });
   document.querySelector("#studentsTable tbody").innerHTML = html;
-    }
+}
     // ========== UX NAVIGATION ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
@@ -598,9 +615,9 @@ async function fetchStudents() {
     }
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
-
-    // ========== DASHBOARD DATA ==========
-    async function fetchDashboardCounts() {
+// Dashboard card student count
+async function fetchDashboardCounts() {
+  
       const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
       const sets = await resp.json();
       document.getElementById("qSetCount").innerText = sets.length;
