@@ -3,405 +3,455 @@
 <head>
   <meta charset="UTF-8">
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.75">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
   <style>
     html, body {
-      height: 100%;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-    .stars {
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      background: transparent;
-      overflow: hidden;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .stars div {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 4s infinite ease-in-out;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
-    }
-
-    #notificationPopup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(8, 24, 57, 0.85);
-        padding: 0;
-        z-index: 1000;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-        align-items: center;
-        justify-content: center;
-        animation: popupFadeIn 0.3s;
-    }
-    #notificationPopup.active {
-        display: flex !important;
-        opacity: 1;
-    }
-    @keyframes popupFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    #notificationPopup .popup-content {
-        background: #f9fbfd;
-        padding: 34px 26px 30px 26px;
-        border-radius: 18px;
-        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
-        max-width: 600px;
-        width: 94vw;
-        margin: 0 auto;
-        text-align: center;
-        font-size: 1.09rem;
-        position: relative;
-        border: 2px solid #0055b7;
-        animation: popupContentFadeIn 0.5s;
-    }
-    @keyframes popupContentFadeIn {
-      from { opacity: 0; transform: translateY(-32px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    #notificationPopup h2 {
-        font-size: 20px;
-        color: #003366;
-        margin-top: 15px;
-        margin-bottom: 18px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        text-align: center;
-        font-weight: bold;
-    }
-    #notificationPopup ul {
-        list-style: inside disc;
-        margin-bottom: 22px;
-        text-align: left;
-        font-size: 15px;
-        color: #1a1a1a;
-        padding-left: 0;
-    }
-    #notificationPopup button.styled-btn,
-    #notificationPopup button.close-btn {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        font-family: inherit;
-    }
-    #whatsappBtn.styled-btn {
-        background: #25D366;
-        color: white;
-        padding: 12px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        margin: 10px 0 2px 0;
-        transition: background 0.2s, transform 0.2s;
-        font-weight: 500;
-        box-shadow: 0 2px 7px #25d36633;
-    }
-    #whatsappBtn.styled-btn:hover {
-        background: #20b058;
-    }
-    #closeNotification.close-btn {
-        background: #003366;
-        color: #fff;
-        padding: 10px 0;
-        font-size: 15px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-top: 4px;
-        transition: background 0.2s, color 0.2s;
-        font-weight: 500;
-        box-shadow: 0 1px 5px #00336633;
-    }
-    #closeNotification.close-btn:hover {
-        background: #0055b7;
-        color: #ffe966;
-    }
-
-    #customNotification {
-      display: none;
-      position: fixed;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #003366ee;
-      color: #fff;
-      padding: 16px 44px 16px 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 18px #00000033;
-      z-index: 1100;
-      font-size: 1.09rem;
-      min-width: 280px;
-      max-width: 410px;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.4s, top 0.4s;
-      pointer-events: none;
-      border: 1.5px solid #00c6ff;
-      font-family: inherit;
-      position: fixed;
-    }
-    #customNotification.show {
-      display: block;
-      opacity: 1;
-      top: 60px;
-      pointer-events: auto;
-      animation: notiPopFadeIn 0.5s;
-    }
-    @keyframes notiPopFadeIn {
-      from { opacity: 0; top: 40px; }
-      to { opacity: 1; top: 60px; }
-    }
-    #customNotification.success {
-      background: #25d366ee;
-      color: #1b2e11;
-      border: 1.5px solid #17a84b;
-    }
-    #customNotification.error {
-      background: #ff4136ee;
-      color: #fff;
-      border: 1.5px solid #c9251b;
-    }
-    #customNotification .close-noti {
-      position: absolute;
-      right: 12px;
-      top: 10px;
-      background: transparent;
-      border: none;
-      color: inherit;
-      font-size: 20px;
-      cursor: pointer;
-      opacity: 0.7;
-      padding: 0;
-    }
-    #customNotification .close-noti:hover {
-      opacity: 1;
-    }
-
-    .auth-main-wrapper {
-      width: 100vw;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 0;
-      z-index: 1;
-    }
-    .login-card {
-      display: flex;
-      flex-direction: row;
-      background: rgba(255,255,255,0.14);
-      box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.22), 0 1.5px 6px #0060e011;
-      border-radius: 18px;
-      overflow: hidden;
-      max-width: 810px;
-      width: 100%;
-      min-height: 480px;
-      position: relative;
-      animation: fadein 0.7s;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-    @keyframes fadein {
-      from { opacity: 0; transform: scale(0.98);}
-      to   { opacity: 1; transform: scale(1);}
-    }
-    .login-info {
-      background: linear-gradient(115deg,#003366 70%,#0055b7 100%);
-      color: #fff;
-      flex: 1.2;
-      padding: 48px 38px 38px 38px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-width: 260px;
-    }
-    .login-info .logo {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 8px 32px #001c3c25;
-      margin-bottom: 20px;
-      object-fit: contain;
-      border: 3px solid #bdeaff77;
-    }
-    .login-info .school-name {
-      font-size: 1.55rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 8px #001c3c33;
-    }
-    .login-info .subtitle {
-      font-size: 1.13rem;
-      margin-bottom: 24px;
-      color: #bdeaff;
-      font-weight: 500;
-      text-shadow: 0 1px 4px #001c3c33;
-    }
-    .login-info .desc {
-      font-size: 1rem;
-      opacity: 0.93;
-      margin-bottom: 0;
-      line-height: 1.6;
-      text-align: center;
-    }
-    .login-form {
-      flex: 1.5;
-      padding: 54px 40px 42px 40px;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 300px;
-    }
-    .login-form h2 {
-      color: #00c6ff;
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 22px;
-      letter-spacing: 0.7px;
-      text-align: center;
-      text-shadow: 0 2px 8px #001c3c33;
-    }
-    .login-form form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .login-form input {
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1.5px solid #dde2ee;
-      font-size: 1rem;
-      color: #003366;
-      background: #f7faff;
-      transition: border 0.2s;
-      outline: none;
-    }
-    .login-form input:focus {
-      border: 1.5px solid #0072ff;
-      background: #fff;
-    }
-    .login-form button {
-      padding: 14px 0;
-      border-radius: 8px;
-      border: none;
-      background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      box-shadow: 0 2px 8px #0072ff33;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .login-form button:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-    .login-form button:hover:not(:disabled) {
-      background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-      box-shadow: 0 4px 16px #00336633;
-    }
-    .spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid #fff;
-      border-top: 3px solid #00c6ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-right: 10px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
-    }
-    .login-footer {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 0.95rem;
-      color: #bdeaff;
-      letter-spacing: 0.2px;
-      opacity: 0.98;
-    }
-    .reset-link {
-      color: #ffe966;
-      display: inline-block;
-      margin-top: 10px;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 0.99rem;
-      transition: color 0.2s;
-    }
-    .reset-link:hover {
-      color: #fff;
-    }
-
-    @media (max-width: 900px) {
-      .login-card {
-        flex-direction: column;
-        min-height: auto;
-        max-width: 98vw;
-        margin: 0 2vw;
-      }
-      .login-info, .login-form {
-        padding: 34px 7vw 24px 7vw;
-      }
-    }
-    @media (max-width: 600px) {
-      .login-info {
-        padding: 28px 4vw 18px 4vw;
-      }
-      .login-form {
-        padding: 32px 4vw 20px 4vw;
-      }
-      .login-form h2 {
-        font-size: 1.32rem;
-      }
-      #customNotification {
-        max-width: 98vw;
-        font-size: 0.93rem;
-        padding: 13px 22px 13px 16px;
-      }
-      #notificationPopup .popup-content {
-        max-width: 98vw;
-        font-size: 1rem;
-      }
-    }
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+.stars {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.stars div {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 4s infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+#notificationPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(8, 24, 57, 0.85);
+    padding: 0;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    animation: popupFadeIn 0.3s;
+}
+#notificationPopup.active {
+    display: flex !important;
+    opacity: 1;
+}
+@keyframes popupFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+#notificationPopup .popup-content {
+    background: #f9fbfd;
+    padding: 34px 26px 30px 26px;
+    border-radius: 18px;
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
+    max-width: 600px;
+    width: 94vw;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.09rem;
+    position: relative;
+    border: 2px solid #0055b7;
+    animation: popupContentFadeIn 0.5s;
+}
+@keyframes popupContentFadeIn {
+  from { opacity: 0; transform: translateY(-32px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+#notificationPopup h2 {
+    font-size: 20px;
+    color: #003366;
+    margin-top: 15px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: bold;
+}
+#notificationPopup ul {
+    list-style: inside disc;
+    margin-bottom: 22px;
+    text-align: left;
+    font-size: 15px;
+    color: #1a1a1a;
+    padding-left: 0;
+}
+#notificationPopup button.styled-btn,
+#notificationPopup button.close-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    font-family: inherit;
+}
+#whatsappBtn.styled-btn {
+    background: #25D366;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0 2px 0;
+    transition: background 0.2s, transform 0.2s;
+    font-weight: 500;
+    box-shadow: 0 2px 7px #25d36633;
+}
+#whatsappBtn.styled-btn:hover {
+    background: #20b058;
+}
+#closeNotification.close-btn {
+    background: #003366;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 500;
+    box-shadow: 0 1px 5px #00336633;
+}
+#closeNotification.close-btn:hover {
+    background: #0055b7;
+    color: #ffe966;
+}
+#customNotification {
+  display: none;
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #003366ee;
+  color: #fff;
+  padding: 16px 44px 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px #00000033;
+  z-index: 1100;
+  font-size: 1.09rem;
+  min-width: 280px;
+  max-width: 410px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.4s, top 0.4s;
+  pointer-events: none;
+  border: 1.5px solid #00c6ff;
+  font-family: inherit;
+  position: fixed;
+}
+#customNotification.show {
+  display: block;
+  opacity: 1;
+  top: 60px;
+  pointer-events: auto;
+  animation: notiPopFadeIn 0.5s;
+}
+@keyframes notiPopFadeIn {
+  from { opacity: 0; top: 40px; }
+  to { opacity: 1; top: 60px; }
+}
+#customNotification.success {
+  background: #25d366ee;
+  color: #1b2e11;
+  border: 1.5px solid #17a84b;
+}
+#customNotification.error {
+  background: #ff4136ee;
+  color: #fff;
+  border: 1.5px solid #c9251b;
+}
+#customNotification .close-noti {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+}
+#customNotification .close-noti:hover {
+  opacity: 1;
+}
+.auth-main-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0;
+  z-index: 1;
+}
+.login-card {
+  display: flex;
+  flex-direction: row;
+  background: rgba(255,255,255,0.14);
+  box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.22), 0 1.5px 6px #0060e011;
+  border-radius: 18px;
+  overflow: hidden;
+  max-width: 810px;
+  width: 100%;
+  min-height: 480px;
+  position: relative;
+  animation: fadein 0.7s;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+@keyframes fadein {
+  from { opacity: 0; transform: scale(0.98);}
+  to   { opacity: 1; transform: scale(1);}
+}
+.login-info {
+  background: linear-gradient(115deg,#003366 70%,#0055b7 100%);
+  color: #fff;
+  flex: 1.2;
+  padding: 48px 38px 38px 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 260px;
+}
+.login-info .logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 8px 32px #001c3c25;
+  margin-bottom: 20px;
+  object-fit: contain;
+  border: 3px solid #bdeaff77;
+}
+.login-info .school-name {
+  font-size: 1.55rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px #001c3c33;
+}
+.login-info .subtitle {
+  font-size: 1.13rem;
+  margin-bottom: 24px;
+  color: #bdeaff;
+  font-weight: 500;
+  text-shadow: 0 1px 4px #001c3c33;
+}
+.login-info .desc {
+  font-size: 1rem;
+  opacity: 0.93;
+  margin-bottom: 0;
+  line-height: 1.6;
+  text-align: center;
+}
+.login-form {
+  flex: 1.5;
+  padding: 54px 40px 42px 40px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 300px;
+}
+.login-form h2 {
+  color: #00c6ff;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 22px;
+  letter-spacing: 0.7px;
+  text-align: left;
+  text-shadow: 0 2px 8px #001c3c33;
+}
+.login-form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login-form input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #dde2ee;
+  font-size: 1rem;
+  color: #003366;
+  background: #f7faff;
+  transition: border 0.2s;
+  outline: none;
+}
+.login-form input:focus {
+  border: 1.5px solid #0072ff;
+  background: #fff;
+}
+.login-form button {
+  padding: 14px 0;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #0072ff33;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-form button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+.login-form button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+  box-shadow: 0 4px 16px #00336633;
+}
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid #00c6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+.login-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #bdeaff;
+  letter-spacing: 0.2px;
+  opacity: 0.98;
+}
+.reset-link {
+  color: #ffe966;
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.99rem;
+  transition: color 0.2s;
+}
+.reset-link:hover {
+  color: #fff;
+}
+.nav-tabs {
+  display: flex;
+  margin-bottom: 26px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px #001c3c13;
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nav-tab-btn {
+  flex: 1;
+  padding: 13px 0;
+  background: #eaf6ff;
+  border: none;
+  color: #003366;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+}
+.nav-tab-btn.active {
+  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #0072ff33;
+}
+.tab-section {
+  display: none;
+  animation: fadein 0.5s;
+}
+.tab-section.active {
+  display: block;
+}
+.register-form input, .register-form select {
+  margin-bottom: 13px;
+}
+.register-form select {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #dde2ee;
+  font-size: 1rem;
+  color: #003366;
+  background: #f7faff;
+  transition: border 0.2s;
+  outline: none;
+}
+.register-form select:focus {
+  border: 1.5px solid #0072ff;
+  background: #fff;
+}
+@media (max-width: 900px) {
+  .login-card {
+    flex-direction: column;
+    min-height: auto;
+    max-width: 98vw;
+    margin: 0 2vw;
+  }
+  .login-info, .login-form {
+    padding: 34px 7vw 24px 7vw;
+  }
+}
+@media (max-width: 600px) {
+  .login-info {
+    padding: 28px 4vw 18px 4vw;
+  }
+  .login-form {
+    padding: 32px 4vw 20px 4vw;
+  }
+  .login-form h2 {
+    font-size: 1.32rem;
+  }
+  #customNotification {
+    max-width: 98vw;
+    font-size: 0.93rem;
+    padding: 13px 22px 13px 16px;
+  }
+  #notificationPopup .popup-content {
+    max-width: 98vw;
+    font-size: 1rem;
+  }
+}
+    /* [CSS remains unchanged. Place original CSS here.] */
   </style>
 </head>
 <body>
@@ -457,21 +507,55 @@
           </p>
         </div>
       </div>
-      <!-- Right: Form -->
+      <!-- Right: Form with Navigation -->
       <div class="login-form">
-        <h2>Log In or Register</h2>
-        <form id="authForm" autocomplete="off">
-          <input type="text" id="username" placeholder="Username" required autocomplete="username" aria-label="Username">
-          <input type="password" id="password" placeholder="Password" required autocomplete="current-password" aria-label="Password">
-          <button type="submit" id="loginBtn">
-            <span id="loginBtnText">Login / Register</span>
-            <span class="spinner" id="loginSpinner" style="display:none;"></span>
-          </button>
-          <div>
-            <span class="reset-link" id="forgotPassword" tabindex="0">Forgot password?</span>
-          </div>
-        </form>
-        <div class="login-footer">By logging in, you agree to the ICT policy.</div>
+        <div class="nav-tabs">
+          <button class="nav-tab-btn active" id="loginTabBtn" type="button">Login</button>
+          <button class="nav-tab-btn" id="registerTabBtn" type="button">Register</button>
+        </div>
+        <!-- Login Section -->
+        <div class="tab-section active" id="loginSection">
+          <h2>Log In</h2>
+          <form id="authForm" autocomplete="off">
+            <input type="text" id="username" placeholder="Username" required autocomplete="username" aria-label="Username">
+            <input type="password" id="password" placeholder="Password" required autocomplete="current-password" aria-label="Password">
+            <button type="submit" id="loginBtn">
+              <span id="loginBtnText">Login</span>
+              <span class="spinner" id="loginSpinner" style="display:none;"></span>
+            </button>
+            <div>
+              <span class="reset-link" id="forgotPassword" tabindex="0">Forgot password?</span>
+            </div>
+          </form>
+          <div class="login-footer">By logging in, you agree to the ICT policy.</div>
+        </div>
+        <!-- Registration Section -->
+        <div class="tab-section" id="registerSection">
+          <h2>Register</h2>
+          <form id="registerForm" class="register-form" autocomplete="off">
+            <input type="text" id="reg_fullname" placeholder="Full Name" required aria-label="Full Name">
+            <input type="text" id="reg_username" placeholder="Username" required autocomplete="username" aria-label="Username">
+            <input type="password" id="reg_password" placeholder="Password" required autocomplete="new-password" aria-label="Password">
+            <input type="email" id="reg_email" placeholder="Email" required aria-label="Email">
+            <!-- Changed from Matric Number to Faculty -->
+            <input type="text" id="reg_faculty" placeholder="Faculty" required aria-label="Faculty">
+            <input type="text" id="reg_department" placeholder="Department" required aria-label="Department">
+            <select id="reg_level" required aria-label="Level">
+              <option value="">Select Level</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value="400">400</option>
+              <option value="500">500</option>
+              <option value="600">600</option>
+            </select>
+            <input type="tel" id="reg_phone" placeholder="Phone Number" required pattern="[0-9]{11,14}" aria-label="Phone Number">
+            <button type="submit" id="registerBtn">
+              <span id="registerBtnText">Register</span>
+              <span class="spinner" id="registerSpinner" style="display:none;"></span>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -504,6 +588,26 @@
         window.open('https://wa.me/+2349155127634', '_blank');
     });
 
+    // --- NAVIGATION LOGIC ---
+    const loginTabBtn = document.getElementById('loginTabBtn');
+    const registerTabBtn = document.getElementById('registerTabBtn');
+    const loginSection = document.getElementById('loginSection');
+    const registerSection = document.getElementById('registerSection');
+
+    loginTabBtn.addEventListener('click', function() {
+      loginTabBtn.classList.add('active');
+      registerTabBtn.classList.remove('active');
+      loginSection.classList.add('active');
+      registerSection.classList.remove('active');
+    });
+
+    registerTabBtn.addEventListener('click', function() {
+      registerTabBtn.classList.add('active');
+      loginTabBtn.classList.remove('active');
+      registerSection.classList.add('active');
+      loginSection.classList.remove('active');
+    });
+
     // --- BACKEND LOGIC INTEGRATION ---
 
     // SET THIS TO YOUR RENDER BACKEND URL:
@@ -513,6 +617,7 @@
       return username.trim().length > 0;
     }
 
+    // LOGIN HANDLING
     const authForm = document.getElementById('authForm');
     const loginBtn = document.getElementById('loginBtn');
     const loginBtnText = document.getElementById('loginBtnText');
@@ -588,30 +693,85 @@
           return;
         }
 
-        // If login fails (user not found), try register
-        if (loginData.message && loginData.message.toLowerCase().includes("invalid")) {
-          let registerResponse = await fetch(API_URL + "register", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
-          });
-          let registerData = await registerResponse.json();
-          if (registerResponse.ok) {
-            localStorage.setItem('token', registerData.token);
-            showNotification("Registered successfully!", "success");
-            setTimeout(() => { window.location.href = 'student.html'; }, 1200);
-          } else {
-            showNotification(registerData.message || "Registration failed", "error");
-          }
-        } else {
-          showNotification(loginData.message || "Login failed", "error");
-        }
+        // Login failed (user not found)
+        showNotification(loginData.message || "Login failed", "error");
       } catch (err) {
         showNotification("Network or server error. Please try again.", "error");
       }
       await setLoading(false);
     });
 
+    // REGISTRATION HANDLING
+    const registerForm = document.getElementById('registerForm');
+    const registerBtn = document.getElementById('registerBtn');
+    const registerBtnText = document.getElementById('registerBtnText');
+    const registerSpinner = document.getElementById('registerSpinner');
+
+    async function setRegLoading(isLoading) {
+      if (isLoading) {
+        registerBtn.setAttribute("disabled", "disabled");
+        registerBtn.style.opacity = "0.7";
+        registerSpinner.style.display = "inline-block";
+        registerBtnText.style.display = "none";
+      } else {
+        registerBtn.removeAttribute("disabled");
+        registerBtn.style.opacity = "1";
+        registerSpinner.style.display = "none";
+        registerBtnText.style.display = "inline";
+      }
+    }
+
+    registerForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      // Collect all registration details
+      let fullName = document.getElementById('reg_fullname').value.trim();
+      let username = document.getElementById('reg_username').value.trim();
+      let password = document.getElementById('reg_password').value;
+      let email = document.getElementById('reg_email').value.trim();
+      let faculty = document.getElementById('reg_faculty').value.trim();
+      let department = document.getElementById('reg_department').value.trim();
+      let level = document.getElementById('reg_level').value;
+      let phone = document.getElementById('reg_phone').value.trim();
+
+      // Basic validation
+      if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
+        showNotification("All fields are required!", "error");
+        return;
+      }
+
+      await setRegLoading(true);
+
+      try {
+        let registerResponse = await fetch(API_URL + "register", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            username,
+            password,
+            email,
+            fullname: fullName,
+            faculty,
+            department,
+            level,
+            phone
+          })
+        });
+        let registerData = await registerResponse.json();
+        if (registerResponse.ok) {
+          localStorage.setItem('token', registerData.token);
+          showNotification("Registered successfully!", "success");
+          setTimeout(() => { window.location.href = 'student.html'; }, 1200);
+        } else {
+          showNotification(registerData.message || "Registration failed", "error");
+        }
+      } catch (err) {
+        showNotification("Network or server error. Please try again.", "error");
+      }
+
+      await setRegLoading(false);
+    });
+
+    // Password reset (unchanged)
     document.getElementById('forgotPassword').addEventListener('click', async function() {
       let username = prompt("Enter your username for password reset:");
       if (username === null) return;
