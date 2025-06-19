@@ -14,6 +14,7 @@ import notificationsRoutes from "./routes/notifications.js";
 import adminStatsRoutes from "./routes/adminStats.js";
 import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
+import usersRoutes from "./routes/users.js";
 
 const Faculty = mongoose.model("Faculty", FacultySchema);
 
@@ -77,7 +78,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
     console.error("Error during superadmin bootstrapping:", e);
   }
 })();
-
+app.use("/api/users", usersRoutes);
 // ===== FACULTY ROUTES =====
 app.get("/api/faculties", authenticate, async (req, res) => {
   const list = await Faculty.find().sort({ name: 1 });
