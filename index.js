@@ -242,7 +242,7 @@ app.use("/api/superadmin", superadminRoutes);
 // --- Main Features ---
 app.use("/api/questionsets", questionSetRoutes);
 app.use("/api/results", resultsRoutes);
-app.use("/api/schedules", scheduleRoutes);
+app.use("/api/schedules", scheduleRoutes); // <-- ensure this is used!
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/adminstats", adminStatsRoutes);
 
