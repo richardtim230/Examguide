@@ -416,6 +416,11 @@ body {
         <div class="card-value" id="scheduleCount">0</div>
         <div class="card-icon">⏰</div>
       </div>
+      <div class="dashboard-card">
+  <div class="card-label">Students</div>
+  <div class="card-value" id="studentCount">0</div>
+  <div class="card-icon">👥</div>
+  </div>
     </div>
     <!-- SECTIONS -->
     <div class="section" id="dashboardSection">
@@ -516,7 +521,6 @@ body {
       </table>
     </div>
   </div>
-  <div id="modalRoot"></div>
   <!-- Students Management Section -->
 <div class="section" id="studentsSection" style="display:none;">
   <div class="section-title">Manage Students</div>
@@ -529,6 +533,8 @@ body {
     <tbody></tbody>
   </table>
 </div>
+  <div id="modalRoot"></div>
+  
   <script>
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
@@ -608,6 +614,10 @@ async function fetchStudents() {
       const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
       const schedules = await resp3.json();
       document.getElementById("scheduleCount").innerText = schedules.length;
+        // Students
+  const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  const students = await resp4.json();
+  document.getElementById("studentCount").innerText = students.length;
     }
 async function viewStudent(id) {
   const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
