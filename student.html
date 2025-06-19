@@ -1118,20 +1118,47 @@ async function fetchAvailableTests() {
     document.getElementById("testCountdown").innerText = "";
   }
 }
+/**
+ * Starts and updates a countdown timer until the next test's start time.
+ * Expects the following globals to be set:
+ *   - nextTestStart: timestamp (ms) of the upcoming test
+ *   - nextTest: object with at least a 'title' property
+ * Also expects these elements in the DOM:
+ *   - element with id="upcomingTest"
+ *   - element with id="testCountdown"
+ */
+function startCountdown() {
+  const countdownEl = document.getElementById("testCountdown");
+  const testTitleEl = document.getElementById("upcomingTest");
+  if (!nextTestStart || !countdownEl || !testTitleEl) return;
 
-
-    function startCountdown() {
-      if (!nextTestStart) return;
-      function updateCountdown() {
-        let now = Date.now();
-        let diff = Math.max(0, Math.floor((nextTestStart - now)/1000));
-        let h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = diff%60;
-        document.getElementById("testCountdown").innerText =
-          diff > 0 ? `Starts in ${h}h ${m}m ${s}s` : "Available now!";
-        if (diff > 0) setTimeout(updateCountdown, 1000);
-      }
-      updateCountdown();
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = nextTestStart - now;
+    if (diff <= 0) {
+      countdownEl.innerText = "Test is now available!";
+      // Optionally update testTitleEl to indicate "Now Available"
+      testTitleEl.innerText = nextTest.title + " (Now Available)";
+      clearInterval(timer);
+      return;
     }
+    // Calculate time parts
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    let text = "";
+    if (hours > 0) text += hours + "h ";
+    if (hours > 0 || minutes > 0) text += minutes + "m ";
+    text += seconds + "s";
+    countdownEl.innerText = "Starts in " + text;
+  }
+
+  // Initial call and set interval
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+}
+
+    
     // ========== REVIEW ========== 
     async function reviewResult(id) {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
