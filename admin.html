@@ -558,17 +558,7 @@ body {
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
-async function fetchStudents() {
-  
-  // Students
-  const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-  let students = [];
-  try {
-    // Our API returns an array!
-    students = await resp4.json();
-  } catch { students = []; }
-  document.getElementById("studentCount").innerText = students.length;
-}
+
 
 // Students table
 async function fetchStudents() {
@@ -617,36 +607,51 @@ async function fetchStudents() {
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 // Dashboard card student count
 async function fetchDashboardCounts() {
-  
-      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
-      const sets = await resp.json();
-      document.getElementById("qSetCount").innerText = sets.length;
-      let qCount = 0;
-      sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
-      document.getElementById("questionCount").innerText = qCount;
-      // Results
-      const resp2 = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
-      const results = await resp2.json();
-      document.getElementById("resultCount").innerText = results.length;
-      // Schedules
-      const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
-      const schedules = await resp3.json();
-      document.getElementById("scheduleCount").innerText = schedules.length;
-        // Students
+  // Fetch question sets
+  const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+  const sets = await resp.json();
+  document.getElementById("qSetCount").innerText = sets.length;
+  let qCount = 0;
+  sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
+  document.getElementById("questionCount").innerText = qCount;
+
+  // Fetch results
+  const resp2 = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+  const results = await resp2.json();
+  document.getElementById("resultCount").innerText = results.length;
+
+  // Fetch schedules
+  const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+  const schedules = await resp3.json();
+  document.getElementById("scheduleCount").innerText = schedules.length;
+
+  // Fetch students (API returns array!)
   const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-  const students = await resp4.json();
+  let students = [];
+  try {
+    students = await resp4.json();
+  } catch {
+    students = [];
+  }
   document.getElementById("studentCount").innerText = students.length;
-    }
+}
+
 async function viewStudent(id) {
   const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
+  if (!resp.ok) {
+    alert("Could not load student: " + resp.statusText);
+    return;
+  }
   const u = await resp.json();
   let html = `
     <div class="modal-backdrop" onclick="closeModal(event)">
       <div class="modal" onclick="event.stopPropagation()">
         <button class="close-modal" onclick="closeModal(event)">&times;</button>
         <h2>Student Profile</h2>
+        <label>Full Name</label>
+        <input value="${u.fullname || ''}" disabled>
         <label>Username</label>
-        <input value="${u.username}" disabled>
+        <input value="${u.username || ''}" disabled>
         <label>Faculty</label>
         <input value="${u.faculty || ''}" disabled>
         <label>Department</label>
