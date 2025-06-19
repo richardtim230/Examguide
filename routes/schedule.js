@@ -9,7 +9,9 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   const { examSet, faculty, department, start, end } = req.body;
   try {
     const sched = await Schedule.create({
-      examSet, faculty, department,
+      examSet, // should be ObjectId of QuestionSet
+      faculty,
+      department,
       start: new Date(start),
       end: new Date(end),
       createdBy: req.user.id
@@ -20,7 +22,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   }
 });
 
-// List all schedules (optionally filter by faculty/department), populated with question set info
+// List all schedules (optionally filter by faculty/department), populated with examSet (QuestionSet) info
 router.get("/", authenticate, async (req, res) => {
   const filter = {};
   if (req.query.faculty) filter.faculty = req.query.faculty;
@@ -30,7 +32,7 @@ router.get("/", authenticate, async (req, res) => {
       .sort({ start: -1 })
       .populate({
         path: "examSet",
-        select: "title status questions faculty department schedule" // select only what you need
+        select: "title status questions faculty department schedule"
       });
     res.json(schedules);
   } catch (e) {
