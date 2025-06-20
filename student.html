@@ -1288,9 +1288,10 @@ async function fetchAvailableTests() {
         if (chatPollingInterval) clearInterval(chatPollingInterval);
       }
     }
-    function startTest(setId) {
-      window.location.href = `mock.html?set=${setId}`;
-    }
+    function startTest(examSetId) {
+  window.location.href = `cbt.html?examSet=${encodeURIComponent(examSetId)}`;
+}
+    
     function openSupport() {
       window.open("mailto:support@luminaexam.com", "_blank");
     }
