@@ -1109,7 +1109,7 @@ async function fetchAvailableTests() {
 
     const resp = await fetch(
       API_URL +
-        `schedules?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
+        `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
       { headers: { Authorization: "Bearer " + token } }
     );
     const schedules = await resp.json();
