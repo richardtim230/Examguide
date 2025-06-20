@@ -17,9 +17,7 @@
       font-family: 'Inter', Arial, sans-serif;
       color: #23366e;
     }
-    *, *:before, *:after {
-      box-sizing: inherit;
-    }
+    *, *:before, *:after { box-sizing: inherit; }
     body {
       min-height: 100vh;
       display: flex;
@@ -101,27 +99,30 @@
       min-height: 0;
       overflow-y: auto;
       overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      background: #f4f8fe;
     }
-    .chat-conversation-card {
+    .chat-conversation-item {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 13px;
       padding: 13px 18px;
       border-bottom: 1px solid #e3e8ee;
       cursor: pointer;
-      transition: background 0.12s;
       background: #f4f8fe;
-      position: relative;
+      transition: background 0.13s;
       min-width: 0;
       touch-action: manipulation;
     }
-    .chat-conversation-card.active,
-    .chat-conversation-card:hover {
+    .chat-conversation-item.active,
+    .chat-conversation-item:hover {
       background: #e6eeff;
     }
     .chat-conv-avatar {
-      width: 46px;
-      height: 46px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       object-fit: cover;
       background: #eaf1fb;
@@ -135,12 +136,13 @@
       overflow: hidden;
     }
     .chat-conv-name {
-      font-weight: 700;
+      font-weight: 600;
       font-size: 1.07em;
       color: #23366e;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      margin-bottom: 2px;
     }
     .chat-conv-lastmsg {
       font-size: 0.97em;
@@ -151,11 +153,11 @@
       max-width: 170px;
     }
     .chat-conv-unread-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       background: #3a86ff;
       border-radius: 50%;
-      margin-left: 8px;
+      margin-left: 7px;
       box-shadow: 0 0 8px #3a86ff55;
     }
     /* Main Chat Area */
@@ -286,16 +288,16 @@
     }
     .chat-message-row.self .chat-message-meta { text-align: right; }
     .chat-message-row:not(.self) .chat-message-meta { text-align: left; }
-    /* Input */
+    /* Sticky Input at Bottom */
     .chat-input-area {
       display: flex;
       gap: 10px;
-      padding: 18px 30px 18px 30px;
+      padding: 14px 22px 14px 22px;
       border-top: 1.5px solid #e2eafc;
       background: #fff;
       position: sticky;
       bottom: 0;
-      z-index: 1;
+      z-index: 2;
       min-width: 0;
       width: 100%;
     }
@@ -355,7 +357,7 @@
         overflow-x: auto;
         min-width: 0;
       }
-      .chat-conversation-card {
+      .chat-conversation-item {
         min-width: 180px;
         flex-direction: column;
         align-items: flex-start;
@@ -440,7 +442,7 @@
         max-width: 90vw;
       }
       .chat-input-area {
-        padding: 9px 3vw 10px 3vw;
+        padding: 9px 2vw 10px 2vw;
       }
       .back-btn {
         display: inline-block;
@@ -459,7 +461,7 @@
     <!-- Sidebar: Conversations -->
     <aside class="chat-sidebar" id="chatSidebar">
       <div class="chat-sidebar-header">Chats</div>
-      <div class="chat-conversations-list" id="chatConversations"></div>
+      <ul class="chat-conversations-list" id="chatConversations"></ul>
     </aside>
     <!-- Main Chat Content Area -->
     <main class="chat-content-area" id="mainChatArea">
@@ -560,19 +562,19 @@
       const list = document.getElementById("chatConversations");
       list.innerHTML = "";
       if (!conversations.length) {
-        list.innerHTML = `<div style="padding:38px 0 0 0; color:#adb5bd; text-align:center;">No conversations yet.<br>Start a chat from your dashboard.</div>`;
+        list.innerHTML = `<li style="padding:38px 0 0 0; color:#adb5bd; text-align:center;">No conversations yet.<br>Start a chat from your dashboard.</li>`;
         return;
       }
       conversations.forEach(chat => {
         const user = usersCache[chat.otherUserId] || { username: chat.otherUserName || "Unknown" };
         const lastMsg = chat.lastMsgText ? escapeHtml(chat.lastMsgText) : "(No messages yet)";
-        const card = document.createElement("div");
-        card.className = "chat-conversation-card" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
-        card.onclick = () => {
+        const li = document.createElement("li");
+        li.className = "chat-conversation-item" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
+        li.onclick = () => {
           closeSidebar();
           openConversation(chat.otherUserId);
         };
-        card.innerHTML = `
+        li.innerHTML = `
           <img class="chat-conv-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
           <div class="chat-conv-info">
             <div class="chat-conv-name">${escapeHtml(user.username)}</div>
@@ -580,7 +582,7 @@
           </div>
           ${chat.unreadCount > 0 ? '<span class="chat-conv-unread-dot"></span>' : ''}
         `;
-        list.appendChild(card);
+        list.appendChild(li);
       });
     }
     // === RENDER ACTIVE CONVERSATION HEADER ===
@@ -592,7 +594,6 @@
         <img class="chat-content-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
         <span class="chat-content-username">${escapeHtml(user.username)}</span>
       `;
-      // Show/hide back button on mobile only
       document.getElementById("backToChatsBtn").onclick = function() {
         openSidebar();
       };
