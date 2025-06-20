@@ -735,8 +735,9 @@
         <div class="meta">Faculty: <span id="profileFaculty"></span> | Department: <span id="profileDept"></span></div>
         <div class="profile-actions">
           <button class="btn-profile" onclick="openProfileEdit()">Edit Profile</button>
-          <button class="btn-profile" href="chat.html" target="_blank" rel="noopener">Messages</button>
-          
+          <button class="btn-profile" onclick="window.open('chat.html', '_blank', 'noopener'); return false;">
+  Messages
+</button>
           <button class="btn-profile" onclick="logout()">Logout</button>
         </div>
         <a class="support-link" href="#" onclick="openSupport()">Need Help? Contact Support</a>
