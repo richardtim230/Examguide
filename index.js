@@ -64,6 +64,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
   .catch(err=>console.error("MongoDB error", err));
 
 app.use("/api/users", usersRoutes);
+
 // ===== FACULTY ROUTES =====
 app.get("/api/faculties", authenticate, async (req, res) => {
   const list = await Faculty.find().sort({ name: 1 });
@@ -77,7 +78,9 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
     res.status(400).json({ message: e.message });
   }
 });
+
 app.use("/api/messages", messagesRoutes);
+
 // ===== DEPARTMENT ROUTES =====
 app.get("/api/departments", authenticate, async (req, res) => {
   const list = await Department.find().sort({ name: 1 });
@@ -91,6 +94,7 @@ app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"),
     res.status(400).json({ message: e.message });
   }
 });
+
 // DEBUG: List schedules for the logged-in user's faculty/department
 app.get("/api/debug/schedules", authenticate, async (req, res) => {
   try {
@@ -112,6 +116,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
     res.status(500).json({ message: "Debug schedules error", error: e.message });
   }
 });
+
 // --- Auth Endpoints ---
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
@@ -191,13 +196,17 @@ app.get("/api/auth", (req, res) => {
   res.json({ status: "auth API live" });
 });
 
-// List users by role/faculty/department (for admin/superadmin)
-app.get("/api/users", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
+// ==== UPDATED: USERS ENDPOINT (open to all authenticated users for chat) ====
+// Only restrict POST, PUT, DELETE to admin/superadmin, but GET is open to any logged-in user
+app.get("/api/users", authenticate, async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
   if (req.query.faculty) filter.faculty = req.query.faculty;
   if (req.query.department) filter.department = req.query.department;
-  const users = await User.find(filter).sort({ createdAt: -1 });
+  // Only return fields needed for chat
+  const users = await User.find(filter)
+    .select("username role faculty department _id profilePic active")
+    .sort({ createdAt: -1 });
   res.json(users);
 });
 
