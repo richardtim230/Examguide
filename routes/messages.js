@@ -1,16 +1,27 @@
 import express from "express";
 import mongoose from "mongoose";
+import multer from "multer";
+import path from "path";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
+// --- Multer config for file uploads ---
+const upload = multer({
+  dest: "uploads/",
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
+  fileFilter: (req, file, cb) => {
+    // Optionally restrict mime types
+    cb(null, true);
+  }
+});
+
 // --- 1. List all chats for notification (MUST come BEFORE '/:otherUserId') ---
 router.get("/chats", authenticate, async (req, res) => {
   const userId = req.user.id;
   const userObjectId = new mongoose.Types.ObjectId(userId);
-  // Find distinct users this user has chatted with
   const chats = await Message.aggregate([
     { $match: { $or: [{ from: userObjectId }, { to: userObjectId }] }},
     { $sort: { createdAt: -1 } },
@@ -28,7 +39,6 @@ router.get("/chats", authenticate, async (req, res) => {
     }},
     { $sort: { lastMsgAt: -1 } }
   ]);
-  // Attach usernames
   for (let chat of chats) {
     if (mongoose.Types.ObjectId.isValid(chat._id)) {
       const user = await User.findById(chat._id);
@@ -49,7 +59,6 @@ router.get("/:otherUserId", authenticate, async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
-  // Mark all messages from otherUserId to current user as read
   await Message.updateMany(
     { from: otherUserId, to: userId, read: false },
     { $set: { read: true } }
@@ -63,12 +72,12 @@ router.get("/:otherUserId", authenticate, async (req, res) => {
   res.json(messages);
 });
 
-// --- 3. Send a message to another user ---
+// --- 3. Send a text message to another user ---
 router.post("/:otherUserId", authenticate, async (req, res) => {
   const userId = req.user.id;
   const otherUserId = req.params.otherUserId;
   const { text } = req.body;
-  if (!text || !text.trim()) return res.status(400).json({ message: "Text required" });
+  if (!text && !req.file) return res.status(400).json({ message: "Text required" });
   if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
@@ -80,5 +89,36 @@ router.post("/:otherUserId", authenticate, async (req, res) => {
   });
   res.status(201).json(msg);
 });
+
+// --- 4. Send a file (optionally with text) ---
+router.post("/:otherUserId/file", authenticate, upload.single("file"), async (req, res) => {
+  const userId = req.user.id;
+  const otherUserId = req.params.otherUserId;
+  const { text } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+  if (!req.file) return res.status(400).json({ message: "File required" });
+
+  // Save file message
+  const fileObj = {
+    originalname: req.file.originalname,
+    mimetype: req.file.mimetype,
+    filename: req.file.filename,
+    size: req.file.size,
+    url: `/uploads/${req.file.filename}`
+  };
+  const msg = await Message.create({
+    from: userId,
+    to: otherUserId,
+    text: text || "",
+    file: fileObj,
+    read: false
+  });
+  res.status(201).json(msg);
+});
+
+// --- Serve uploads statically (should be in main app.js/server.js) ---
+// app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 export default router;
