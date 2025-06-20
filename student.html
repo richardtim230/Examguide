@@ -35,7 +35,30 @@
       color: #23366e;
       letter-spacing: 0.01em;
     }
-
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+.test-table {
+  min-width: 700px;
+}
+.test-table td, .test-table th {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 170px;
+}
+@media (max-width: 650px) {
+  .test-table th:nth-child(2),
+  .test-table td:nth-child(2),
+  .test-table th:nth-child(3),
+  .test-table td:nth-child(3) {
+    display: none;
+  }
+  .test-table {
+    min-width: 400px;
+  }
+  }
     /* Header */
     .header {
       background: var(--gradient);
@@ -627,19 +650,21 @@
 <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
   <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
 </div>
-<table class="test-table" id="availableTable">
-  <thead>
-    <tr>
-      <th>Test</th>
-      <th>Description</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
+<div class="table-responsive">
+  <table class="test-table" id="availableTable">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Description</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
   </table>
+</div>
     <!-- Discussion/Help -->
     <div class="section-title">Need Academic Help?</div>
     <button class="btn" onclick="openDiscussion()">Go to Community Board</button>
