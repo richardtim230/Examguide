@@ -710,31 +710,38 @@
       const resp = await fetch(API_URL + "users", { headers: { Authorization: "Bearer " + token } });
       usersCache = await resp.json();
     }
-    async function fetchProfile(showProfileModalOnEmpty = true) {
-      const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
-      const data = await resp.json();
-      student = data.user;
-      document.getElementById("studentName").innerText = student.username;
-      document.getElementById("profileName").innerText = student.username;
-      document.getElementById("profileUser").innerText = student.username;
-      document.getElementById("studentFaculty").innerText = student.faculty || "-";
-      document.getElementById("studentDept").innerText = student.department || "-";
-      document.getElementById("profileFaculty").innerText = student.faculty || "-";
-      document.getElementById("profileDept").innerText = student.department || "-";
-      if (student.profilePic) document.getElementById("profilePic").src = student.profilePic;
-      else document.getElementById("profilePic").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.username || 'Scholar')}&background=3a86ff&color=fff&rounded=true`;
-      if (
-        showProfileModalOnEmpty &&
-        (
-          !student.faculty ||
-          !student.department ||
-          !student.username ||
-          student.username === "student"
-        )
-      ) {
-        openProfileEdit(true);
-      }
-    }
+  async function fetchProfile(showProfileModalOnEmpty = true) {
+  const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
+  const data = await resp.json();
+  student = data.user;
+
+  // Match by name to get the ObjectId (for faculty and department)
+  const facultyObj = facultiesCache.find(f => f.name === student.faculty);
+  const departmentObj = departmentsCache.find(d => d.name === student.department);
+  student.facultyId = facultyObj ? facultyObj._id : "";
+  student.departmentId = departmentObj ? departmentObj._id : "";
+
+  document.getElementById("studentName").innerText = student.username;
+  document.getElementById("profileName").innerText = student.username;
+  document.getElementById("profileUser").innerText = student.username;
+  document.getElementById("studentFaculty").innerText = student.faculty || "-";
+  document.getElementById("studentDept").innerText = student.department || "-";
+  document.getElementById("profileFaculty").innerText = student.faculty || "-";
+  document.getElementById("profileDept").innerText = student.department || "-";
+  if (student.profilePic) document.getElementById("profilePic").src = student.profilePic;
+  else document.getElementById("profilePic").src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.username || 'Scholar')}&background=3a86ff&color=fff&rounded=true`;
+  if (
+    showProfileModalOnEmpty &&
+    (
+      !student.faculty ||
+      !student.department ||
+      !student.username ||
+      student.username === "student"
+    )
+  ) {
+    openProfileEdit(true);
+  }
+}
     function autoRefreshWithSpinner(timeoutMs=1200) {
   const spinner = document.getElementById("refreshSpinner");
   if (spinner) {
