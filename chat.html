@@ -7,6 +7,27 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600,800&display=swap">
   <link rel="icon" href="logo.png">
   <style>
+    html, body {
+      background: #f8faff;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100vw;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
+      overflow-x: hidden;
+      width: 125vw; /* To accommodate scale(0.8) */
+      transform: scale(0.8);
+      transform-origin: top left;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
     :root {
       --primary: #3a86ff;
       --primary-dark: #26549b;
@@ -22,20 +43,6 @@
       --received: #f1f0f0;
       --sidebar-width: 320px;
     }
-
-    html, body {
-      background: var(--bg);
-      font-family: 'Inter', Arial, sans-serif;
-      height: 100%;
-      margin: 0;
-      color: #23366e;
-    }
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
     .chat-app-header {
       background: var(--primary);
       color: #fff;
@@ -48,6 +55,8 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      width: 100vw;
+      overflow-x: hidden;
     }
     .chat-app-header img {
       height: 38px;
@@ -56,24 +65,27 @@
       border-radius: 8px;
       background: #fff;
     }
-
     .chat-main-container {
       flex: 1;
       display: flex;
-      min-height: 0;  /* for proper flexbox scroll */
+      min-height: 0;
       height: 92vh;
       background: var(--bg);
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: hidden;
     }
-
     /* Sidebar */
     .chat-sidebar {
       width: var(--sidebar-width);
+      max-width: var(--sidebar-width);
       background: var(--bg-chat);
       border-right: 1.5px solid var(--border);
       display: flex;
       flex-direction: column;
       min-width: 0;
       overflow: hidden;
+      height: 100%;
     }
     .chat-sidebar-header {
       font-size: 1.1em;
@@ -85,6 +97,8 @@
     .chat-conversations-list {
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden;
+      width: 100%;
     }
     .chat-conversation-card {
       display: flex;
@@ -96,6 +110,10 @@
       transition: background 0.12s;
       background: var(--bg-chat);
       position: relative;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
     }
     .chat-conversation-card.active,
     .chat-conversation-card:hover {
@@ -114,6 +132,7 @@
     .chat-conv-info {
       flex: 1;
       min-width: 0;
+      overflow-x: hidden;
     }
     .chat-conv-name {
       font-weight: 700;
@@ -139,7 +158,6 @@
       margin-left: 8px;
       box-shadow: 0 0 8px #3a86ff55;
     }
-
     /* Main Chat Area */
     .chat-content-area {
       flex: 1;
@@ -148,6 +166,8 @@
       background: var(--white);
       min-width: 0;
       position: relative;
+      width: 100%;
+      overflow-x: hidden;
     }
     .chat-content-header {
       display: flex;
@@ -159,6 +179,8 @@
       position: sticky;
       top: 0;
       z-index: 2;
+      width: 100%;
+      overflow-x: hidden;
     }
     .chat-content-avatar {
       width: 46px;
@@ -174,22 +196,25 @@
       font-size: 1.15em;
       color: #23366e;
     }
-
     .chat-messages-area {
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden;
       background: var(--bg-chat);
       padding: 30px 30px 20px 30px;
       display: flex;
       flex-direction: column;
       gap: 0;
       min-height: 0;
+      width: 100%;
+      max-width: 100%;
     }
     .chat-message-row {
       display: flex;
       align-items: flex-end;
       margin-bottom: 14px;
       max-width: 92%;
+      overflow-x: hidden;
     }
     .chat-message-row.self {
       flex-direction: row-reverse;
@@ -218,6 +243,7 @@
       word-break: break-word;
       min-width: 32px;
       max-width: 360px;
+      overflow-x: auto;
     }
     .chat-message-row.self .chat-message-bubble {
       background: var(--sent);
@@ -240,7 +266,6 @@
     }
     .chat-message-row.self .chat-message-meta { text-align: right; }
     .chat-message-row:not(.self) .chat-message-meta { text-align: left; }
-
     /* Input */
     .chat-input-area {
       display: flex;
@@ -251,6 +276,8 @@
       position: sticky;
       bottom: 0;
       z-index: 1;
+      width: 100%;
+      overflow-x: hidden;
     }
     .chat-input {
       flex: 1;
@@ -281,7 +308,6 @@
       cursor: not-allowed;
       color: #fff;
     }
-
     /* Responsive */
     @media (max-width: 900px) {
       .chat-main-container {
@@ -370,6 +396,7 @@
     let usersCache = {};
     let activeOtherUserId = null;
     let pollingInterval = null;
+    let lastMessageIds = {};
 
     // === HELPERS ===
     function avatarUrl(user) {
@@ -397,10 +424,8 @@
 
     // === LOAD USERS CACHE (for avatars, names) ===
     async function fetchUsersCache(usersToEnsure=[]) {
-      // Avoid reloading all users, only fetch missing ones.
       let missing = usersToEnsure.filter(id => !usersCache[id]);
       if (missing.length === 0) return;
-      // Your API: GET /users returns array of all users
       const resp = await fetch(API_URL + "users", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) return;
       const arr = await resp.json();
@@ -409,7 +434,6 @@
 
     // === LOAD CONVERSATIONS ===
     async function fetchConversations() {
-      // API: GET /messages/chats
       const resp = await fetch(API_URL + "messages/chats", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) return [];
       return await resp.json();
@@ -417,7 +441,6 @@
 
     // === LOAD MESSAGES FOR ACTIVE CONVERSATION ===
     async function fetchMessages(otherUserId) {
-      // API: GET /messages/:otherUserId
       const resp = await fetch(API_URL + "messages/" + otherUserId, { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) return [];
       return await resp.json();
@@ -425,7 +448,6 @@
 
     // === SEND MESSAGE ===
     async function sendMessage(otherUserId, text) {
-      // API: POST /messages/:otherUserId
       const resp = await fetch(API_URL + "messages/" + otherUserId, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
@@ -437,7 +459,6 @@
     // === RENDER CONVERSATIONS LIST ===
     async function renderConversations() {
       conversations = await fetchConversations();
-      // Fetch missing users
       const userIds = conversations.map(chat => String(chat.otherUserId));
       await fetchUsersCache(userIds);
       const list = document.getElementById("chatConversations");
@@ -474,11 +495,14 @@
       `;
     }
 
-    // === RENDER MESSAGES ===
-    async function renderMessages(otherUserId) {
+    // === RENDER MESSAGES (SILENT, NO PHYSICAL REFRESH, SMART UPDATE) ===
+    async function renderMessages(otherUserId, silent = false) {
       const messagesArea = document.getElementById("chatMessages");
-      messagesArea.innerHTML = `<div style="padding:40px;color:#adb5bd;text-align:center;">Loading...</div>`;
       const msgs = await fetchMessages(otherUserId);
+      // Only update if there's a change (last message id/length)
+      if (silent && lastMessageIds[otherUserId] && msgs.length && lastMessageIds[otherUserId] === msgs[msgs.length - 1]._id) {
+        return; // No new messages
+      }
       // Fetch sender users if needed
       const msgUserIds = [...new Set(msgs.map(msg => msg.from))];
       await fetchUsersCache(msgUserIds);
@@ -502,16 +526,18 @@
         `;
         messagesArea.appendChild(row);
       });
-      // Scroll to bottom
-      messagesArea.scrollTop = messagesArea.scrollHeight;
+      // Scroll to bottom only if not silent (user is typing, don't jump)
+      if (!silent) {
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+      }
+      // Remember last message id for silent polling
+      lastMessageIds[otherUserId] = msgs.length ? msgs[msgs.length - 1]._id : null;
     }
 
     // === OPEN CONVERSATION ===
     async function openConversation(otherUserId) {
       activeOtherUserId = otherUserId;
-      // Update sidebar highlight
       renderConversations();
-      // Get user object for header
       const user = usersCache[otherUserId] || { username: "Unknown" };
       renderConversationHeader(user);
       document.getElementById("chatInputForm").style.display = "";
@@ -540,14 +566,12 @@
     async function initChat() {
       await fetchProfile();
       await renderConversations();
-      // Auto-select first conversation if any
       if (conversations.length > 0) {
         openConversation(conversations[0].otherUserId);
       }
-      // Poll for new messages every 5s
       pollingInterval = setInterval(async () => {
         await renderConversations();
-        if (activeOtherUserId) await renderMessages(activeOtherUserId);
+        if (activeOtherUserId) await renderMessages(activeOtherUserId, true); // silent update
       }, 5000);
     }
     window.addEventListener("DOMContentLoaded", initChat);
