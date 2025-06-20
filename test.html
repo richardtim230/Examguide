@@ -735,21 +735,19 @@
       updateTimerDisplay();
     }
 
-    async function submitTest() {
+async function submitTest() {
   clearInterval(timerInterval);
   completed = true;
 
-  // Calculate score
+  // Calculate score and time
   let score = 0;
   for (const q of questions) {
     const userAns = userAnswers[q.id];
     if (typeof userAns !== "undefined" && userAns === q.answer) score++;
   }
-
-  // Calculate time taken
   const timeTaken = SESSION_TIME_LIMIT - timeRemaining;
 
-  // Prepare result payload
+  // Build payload
   const payload = {
     examSet: examSetId,
     answers: userAnswers,
@@ -780,8 +778,7 @@
       return;
     }
 
-    // Successfully saved, redirect to report page
-    window.location.href = `summary.html?examSet=${encodeURIComponent(examSetId)}`;
+    window.location.href = `result-summary?examSet=${encodeURIComponent(examSetId)}`;
   } catch (err) {
     alert("Network error. Please try again.");
   }
