@@ -368,13 +368,13 @@
     let currentUser = {};
     let conversations = [];
     let usersCache = {};
-    let activeConvId = null;
+    let activeOtherUserId = null;
     let pollingInterval = null;
 
     // === HELPERS ===
     function avatarUrl(user) {
-      if (user.profilePic) return user.profilePic;
-      return `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=3a86ff&color=fff&rounded=true`;
+      if (user && user.profilePic) return user.profilePic;
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(user && user.username ? user.username : 'User')}&background=3a86ff&color=fff&rounded=true`;
     }
     function escapeHtml(str) {
       return (str || '').replace(/[&<>"']/g, function(m) {
@@ -396,7 +396,11 @@
     }
 
     // === LOAD USERS CACHE (for avatars, names) ===
-    async function fetchUsersCache() {
+    async function fetchUsersCache(usersToEnsure=[]) {
+      // Avoid reloading all users, only fetch missing ones.
+      let missing = usersToEnsure.filter(id => !usersCache[id]);
+      if (missing.length === 0) return;
+      // Your API: GET /users returns array of all users
       const resp = await fetch(API_URL + "users", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) return;
       const arr = await resp.json();
@@ -405,27 +409,27 @@
 
     // === LOAD CONVERSATIONS ===
     async function fetchConversations() {
-      // API: GET /messages/conversations, returns list [{_id, users: [userId1, userId2], lastMessage, unreadCount, ...}]
-      const resp = await fetch(API_URL + "messages/conversations", { headers: { Authorization: "Bearer " + token } });
+      // API: GET /messages/chats
+      const resp = await fetch(API_URL + "messages/chats", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) return [];
       return await resp.json();
     }
 
     // === LOAD MESSAGES FOR ACTIVE CONVERSATION ===
-    async function fetchMessages(convId) {
-      // API: GET /messages/{convId}
-      const resp = await fetch(API_URL + "messages/" + convId, { headers: { Authorization: "Bearer " + token } });
+    async function fetchMessages(otherUserId) {
+      // API: GET /messages/:otherUserId
+      const resp = await fetch(API_URL + "messages/" + otherUserId, { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) return [];
       return await resp.json();
     }
 
     // === SEND MESSAGE ===
-    async function sendMessage(convId, text) {
-      // API: POST /messages/{convId}
-      const resp = await fetch(API_URL + "messages/" + convId, {
+    async function sendMessage(otherUserId, text) {
+      // API: POST /messages/:otherUserId
+      const resp = await fetch(API_URL + "messages/" + otherUserId, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ text: text })
       });
       return resp.ok;
     }
@@ -433,36 +437,35 @@
     // === RENDER CONVERSATIONS LIST ===
     async function renderConversations() {
       conversations = await fetchConversations();
+      // Fetch missing users
+      const userIds = conversations.map(chat => String(chat.otherUserId));
+      await fetchUsersCache(userIds);
       const list = document.getElementById("chatConversations");
       list.innerHTML = "";
       if (!conversations.length) {
         list.innerHTML = `<div style="padding:38px 0 0 0; color:#adb5bd; text-align:center;">No conversations yet.<br>Start a chat from your dashboard.</div>`;
         return;
       }
-      conversations.forEach(conv => {
-        // Find the other participant
-        const otherId = conv.users.find(id => id !== currentUser._id);
-        const user = usersCache[otherId] || { username: "Unknown" };
-        const lastMsg = conv.lastMessage ? escapeHtml(conv.lastMessage.message) : "(No messages yet)";
+      conversations.forEach(chat => {
+        const user = usersCache[chat.otherUserId] || { username: chat.otherUserName || "Unknown" };
+        const lastMsg = chat.lastMsgText ? escapeHtml(chat.lastMsgText) : "(No messages yet)";
         const card = document.createElement("div");
-        card.className = "chat-conversation-card" + (conv._id === activeConvId ? " active" : "");
-        card.onclick = () => openConversation(conv._id);
+        card.className = "chat-conversation-card" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
+        card.onclick = () => openConversation(chat.otherUserId);
         card.innerHTML = `
           <img class="chat-conv-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
           <div class="chat-conv-info">
             <div class="chat-conv-name">${escapeHtml(user.username)}</div>
             <div class="chat-conv-lastmsg">${lastMsg}</div>
           </div>
-          ${conv.unreadCount > 0 ? '<span class="chat-conv-unread-dot"></span>' : ''}
+          ${chat.unreadCount > 0 ? '<span class="chat-conv-unread-dot"></span>' : ''}
         `;
         list.appendChild(card);
       });
     }
 
     // === RENDER ACTIVE CONVERSATION HEADER ===
-    function renderConversationHeader(conv) {
-      const otherId = conv.users.find(id => id !== currentUser._id);
-      const user = usersCache[otherId] || { username: "Unknown" };
+    function renderConversationHeader(user) {
       const header = document.getElementById("chatContentHeader");
       header.style.display = "";
       header.innerHTML = `
@@ -472,23 +475,26 @@
     }
 
     // === RENDER MESSAGES ===
-    async function renderMessages(convId) {
+    async function renderMessages(otherUserId) {
       const messagesArea = document.getElementById("chatMessages");
       messagesArea.innerHTML = `<div style="padding:40px;color:#adb5bd;text-align:center;">Loading...</div>`;
-      const msgs = await fetchMessages(convId);
+      const msgs = await fetchMessages(otherUserId);
+      // Fetch sender users if needed
+      const msgUserIds = [...new Set(msgs.map(msg => msg.from))];
+      await fetchUsersCache(msgUserIds);
       messagesArea.innerHTML = "";
       if (!msgs.length) {
         messagesArea.innerHTML = `<div style="padding:40px;color:#adb5bd;text-align:center;">No messages yet. Say hello!</div>`;
       }
       msgs.forEach(msg => {
-        const isSelf = msg.sender === currentUser._id;
-        const user = usersCache[msg.sender] || { username: "Unknown" };
+        const isSelf = String(msg.from) === String(currentUser._id);
+        const user = usersCache[msg.from] || { username: "Unknown" };
         const row = document.createElement("div");
         row.className = "chat-message-row" + (isSelf ? " self" : "");
         row.innerHTML = `
           <img class="chat-message-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
           <div>
-            <div class="chat-message-bubble">${escapeHtml(msg.message)}</div>
+            <div class="chat-message-bubble">${escapeHtml(msg.text)}</div>
             <div class="chat-message-meta">
               ${isSelf ? "You" : escapeHtml(user.username)}, ${new Date(msg.createdAt).toLocaleString()}
             </div>
@@ -501,15 +507,15 @@
     }
 
     // === OPEN CONVERSATION ===
-    async function openConversation(convId) {
-      activeConvId = convId;
+    async function openConversation(otherUserId) {
+      activeOtherUserId = otherUserId;
       // Update sidebar highlight
       renderConversations();
-      // Get conversation object
-      const conv = conversations.find(c => c._id === convId);
-      renderConversationHeader(conv);
+      // Get user object for header
+      const user = usersCache[otherUserId] || { username: "Unknown" };
+      renderConversationHeader(user);
       document.getElementById("chatInputForm").style.display = "";
-      await renderMessages(convId);
+      await renderMessages(otherUserId);
       document.getElementById("chatInput").focus();
     }
 
@@ -520,30 +526,28 @@
     document.getElementById("chatInputForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const text = document.getElementById("chatInput").value.trim();
-      if (!text || !activeConvId) return;
+      if (!text || !activeOtherUserId) return;
       document.getElementById("sendBtn").disabled = true;
-      await sendMessage(activeConvId, text);
+      await sendMessage(activeOtherUserId, text);
       document.getElementById("chatInput").value = "";
-      await renderMessages(activeConvId);
+      await renderMessages(activeOtherUserId);
       document.getElementById("sendBtn").disabled = false;
       document.getElementById("chatInput").focus();
-      // Optionally: re-poll conversations for unread updates
       renderConversations();
     });
 
     // === INITIALIZATION ===
     async function initChat() {
       await fetchProfile();
-      await fetchUsersCache();
       await renderConversations();
       // Auto-select first conversation if any
       if (conversations.length > 0) {
-        openConversation(conversations[0]._id);
+        openConversation(conversations[0].otherUserId);
       }
       // Poll for new messages every 5s
       pollingInterval = setInterval(async () => {
         await renderConversations();
-        if (activeConvId) await renderMessages(activeConvId);
+        if (activeOtherUserId) await renderMessages(activeOtherUserId);
       }, 5000);
     }
     window.addEventListener("DOMContentLoaded", initChat);
