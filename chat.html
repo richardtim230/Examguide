@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,67 +96,75 @@
       letter-spacing: 0.02em;
       flex-shrink: 0;
     }
-    .contact-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .chat-conversations-list {
+      flex: 1 1 auto;
+      min-height: 0;
       overflow-y: auto;
-      max-height: 100%;
+      overflow-x: hidden;
+      padding: 0;
+      margin: 0;
+      list-style: none;
     }
-    .contact-list-item {
+    .chat-conversation-listitem {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 16px;
-      cursor: pointer;
-      transition: background 0.14s;
-      border-radius: 0;
+      padding: 13px 18px;
       border-bottom: 1px solid #e3e8ee;
+      cursor: pointer;
+      transition: background 0.12s;
       background: #f4f8fe;
+      position: relative;
       min-width: 0;
       touch-action: manipulation;
     }
-    .contact-list-item.active,
-    .contact-list-item:hover {
+    .chat-conversation-listitem.active,
+    .chat-conversation-listitem:hover {
       background: #e6eeff;
     }
-    .contact-avatar {
-      width: 41px;
-      height: 41px;
+    .chat-conv-avatar {
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       object-fit: cover;
       background: #eaf1fb;
       border: 2px solid #3a86ff;
+      box-shadow: 0 1px 5px #3a86ff11;
       flex-shrink: 0;
     }
-    .contact-info {
+    .chat-conv-info {
       flex: 1;
       min-width: 0;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .contact-name {
+    .chat-conv-name {
       font-weight: 700;
-      font-size: 1.08em;
+      font-size: 1.07em;
       color: #23366e;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 2px;
     }
-    .contact-lastmsg {
-      font-size: .97em;
+    .chat-conv-lastmsg {
+      font-size: 0.97em;
       color: #5a6b8c;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 170px;
+      margin-bottom: 0;
     }
-    .contact-unread-dot {
+    .chat-conv-unread-dot {
       width: 12px;
       height: 12px;
       background: #3a86ff;
       border-radius: 50%;
       margin-left: 8px;
       box-shadow: 0 0 8px #3a86ff55;
-      flex-shrink: 0;
     }
     /* Main Chat Area */
     .chat-content-area {
@@ -172,7 +179,6 @@
       max-width: 100vw;
       overflow: hidden;
       transition: margin-left .3s cubic-bezier(.4,0,.2,1);
-      height: 100vh;
     }
     .chat-content-header {
       display: flex;
@@ -225,14 +231,13 @@
       overflow-y: auto;
       overflow-x: hidden;
       background: #f4f8fe;
-      padding: 30px 30px 80px 30px; /* space for sticky input */
+      padding: 30px 30px 20px 30px;
       display: flex;
       flex-direction: column;
       gap: 0;
       min-height: 0;
       max-width: 100vw;
       min-width: 0;
-      height: 1px;
     }
     .chat-message-row {
       display: flex;
@@ -291,17 +296,18 @@
     .chat-message-row:not(.self) .chat-message-meta { text-align: left; }
     /* Input */
     .chat-input-area {
+      display: flex;
+      gap: 10px;
+      padding: 18px 30px 18px 30px;
+      border-top: 1.5px solid #e2eafc;
+      background: #fff;
       position: sticky;
       bottom: 0;
       left: 0;
+      right: 0;
+      z-index: 3;
+      min-width: 0;
       width: 100%;
-      background: #fff;
-      padding: 18px 30px;
-      border-top: 1.5px solid #e2eafc;
-      z-index: 20;
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
     }
     .chat-input {
       flex: 1;
@@ -329,7 +335,6 @@
       transition: background 0.17s;
       box-shadow: 0 1px 6px #3a86ff15;
       min-width: 80px;
-      height: 44px;
     }
     .chat-send-btn:disabled {
       background: #b1c7ee;
@@ -354,19 +359,11 @@
         overflow-x: auto;
         overflow-y: hidden;
       }
-      .contact-list {
+      .chat-conversations-list {
         display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        min-width: 0;
-      }
-      .contact-list-item {
-        min-width: 180px;
         flex-direction: column;
-        align-items: flex-start;
-        border-bottom: none;
-        border-right: 1px solid #e3e8ee;
-        padding: 13px 12px;
+        overflow-x: hidden;
+        min-width: 0;
       }
     }
     @media (max-width: 650px) {
@@ -432,7 +429,7 @@
         font-size: 1.01em;
       }
       .chat-messages-area {
-        padding: 11px 3vw 70px 3vw;
+        padding: 11px 3vw 10px 3vw;
       }
       .chat-message-avatar {
         width: 27px;
@@ -446,11 +443,18 @@
       }
       .chat-input-area {
         padding: 9px 3vw 10px 3vw;
-        bottom: env(safe-area-inset-bottom, 0);
-        height: 60px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 10;
       }
       .back-btn {
         display: inline-block;
+      }
+      .chat-messages-area {
+        margin-bottom: 70px; /* ensure messages not hidden behind fixed input */
       }
     }
   </style>
@@ -466,7 +470,7 @@
     <!-- Sidebar: Conversations -->
     <aside class="chat-sidebar" id="chatSidebar">
       <div class="chat-sidebar-header">Chats</div>
-      <ul class="contact-list" id="chatConversations"></ul>
+      <ul class="chat-conversations-list" id="chatConversations"></ul>
     </aside>
     <!-- Main Chat Content Area -->
     <main class="chat-content-area" id="mainChatArea">
@@ -574,18 +578,18 @@
         const user = usersCache[chat.otherUserId] || { username: chat.otherUserName || "Unknown" };
         const lastMsg = chat.lastMsgText ? escapeHtml(chat.lastMsgText) : "(No messages yet)";
         const li = document.createElement("li");
-        li.className = "contact-list-item" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
+        li.className = "chat-conversation-listitem" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
         li.onclick = () => {
           closeSidebar();
           openConversation(chat.otherUserId);
         };
         li.innerHTML = `
-          <img class="contact-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
-          <div class="contact-info">
-            <div class="contact-name">${escapeHtml(user.username)}</div>
-            <div class="contact-lastmsg">${lastMsg}</div>
+          <img class="chat-conv-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
+          <div class="chat-conv-info">
+            <span class="chat-conv-name">${escapeHtml(user.username)}</span>
+            <span class="chat-conv-lastmsg">${lastMsg}</span>
           </div>
-          ${chat.unreadCount > 0 ? '<span class="contact-unread-dot"></span>' : ''}
+          ${chat.unreadCount > 0 ? '<span class="chat-conv-unread-dot"></span>' : ''}
         `;
         list.appendChild(li);
       });
