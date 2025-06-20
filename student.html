@@ -845,39 +845,76 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     }
     // ========== MESSAGING ==========
     async function openChatModal(otherUserId = "") {
-      if (!usersCache.length) await fetchAllUsers();
-      const adminUsers = usersCache.filter(u => u.role === "admin" || u.role === "superadmin");
-      const deptUsers = usersCache.filter(u => u.department === student.department && u.role === "student" && u._id !== student.id);
-      const chatUsers = [...adminUsers, ...deptUsers];
-      let listHtml = chatUsers.map(u =>
-        `<div class="chat-user${otherUserId === u._id ? " active" : ""}" onclick="openChatModal('${u._id}')">${u.username} ${u.role === "admin" || u.role === "superadmin" ? "(Admin)" : ""}</div>`
-      ).join('');
-      let html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="chat-modal" onclick="event.stopPropagation()">
-            <div class="chat-modal-header">
-              <span>Direct Messages</span>
-              <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            </div>
-            <div class="chat-list">${listHtml}</div>
-            <div class="chat-modal-body" id="chatBody"></div>
-            <form class="chat-modal-footer" onsubmit="event.preventDefault(); sendChatMessage('${otherUserId}');">
-              <input class="chat-input" id="chatInput" autocomplete="off" placeholder="Type a message..." />
-              <button type="submit" class="chat-send-btn" id="chatSendBtn" disabled>Send</button>
-            </form>
-          </div>
-        </div>`;
-      document.getElementById("modalRoot").innerHTML = html;
-      document.getElementById("chatInput").addEventListener("input", function() {
-        document.getElementById("chatSendBtn").disabled = !this.value.trim();
-      });
-      if (otherUserId) fetchChatMessages(otherUserId);
-      else document.getElementById("chatBody").innerHTML = '<div style="padding:30px 0;text-align:center;color:#aaa;">Select a user to chat with.</div>';
-      if (chatPollingInterval) clearInterval(chatPollingInterval);
-      if (otherUserId) {
-        chatPollingInterval = setInterval(() => fetchChatMessages(otherUserId, true), 3000);
-      }
-    }
+  // Ensure user data is loaded
+  if (!student.id) await fetchProfile(false);
+  if (!usersCache.length) await fetchAllUsers();
+
+  // Find students in same department, excluding current user
+  const deptStudents = usersCache.filter(
+    u => u.role === "student" && u.department === student.department && u._id !== student.id
+  );
+
+  // Optionally show admins
+  const adminUsers = usersCache.filter(u => u.role === "admin" || u.role === "superadmin");
+
+  // Build student list
+  let studentListHtml = deptStudents.length
+    ? deptStudents.map(u => `
+        <div class="chat-user${otherUserId === u._id ? " active" : ""}" 
+             onclick="openChatModal('${u._id}')">
+          <span>${u.username}</span>
+        </div>
+      `).join('')
+    : `<div style="padding:10px;color:#aaa;">No other students in your department.</div>`;
+
+  let adminListHtml = adminUsers.length
+    ? `<div style="margin-top:12px;font-weight:700;color:var(--accent);">Admins</div>` +
+      adminUsers.map(u => `
+        <div class="chat-user${otherUserId === u._id ? " active" : ""}" 
+             onclick="openChatModal('${u._id}')">
+          <span>${u.username}</span> <span style="font-size:0.93em;color:var(--accent);">(Admin)</span>
+        </div>
+      `).join('')
+    : "";
+
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="chat-modal" onclick="event.stopPropagation()">
+        <div class="chat-modal-header">
+          <span>Direct Messages</span>
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-weight:700;color:var(--primary-dark);margin-bottom:4px;">Students in your Department</div>
+          <div class="chat-list">${studentListHtml}</div>
+          ${adminListHtml ? `<div class="chat-list">${adminListHtml}</div>` : ""}
+        </div>
+        <div class="chat-modal-body" id="chatBody"></div>
+        <form class="chat-modal-footer" onsubmit="event.preventDefault(); sendChatMessage('${otherUserId}');">
+          <input class="chat-input" id="chatInput" autocomplete="off" placeholder="Type a message..." />
+          <button type="submit" class="chat-send-btn" id="chatSendBtn" disabled>Send</button>
+        </form>
+      </div>
+    </div>
+  `;
+  document.getElementById("modalRoot").innerHTML = html;
+
+  // Enable send button only if input is not empty
+  document.getElementById("chatInput").addEventListener("input", function() {
+    document.getElementById("chatSendBtn").disabled = !this.value.trim();
+  });
+
+  // Load chat if a user is selected, else show instructions
+  if (otherUserId) fetchChatMessages(otherUserId);
+  else document.getElementById("chatBody").innerHTML =
+    '<div style="padding:40px;text-align:center;color:#aaa;">Select a student to start chatting.</div>';
+
+  // Poll for messages if user is selected
+  if (chatPollingInterval) clearInterval(chatPollingInterval);
+  if (otherUserId) {
+    chatPollingInterval = setInterval(() => fetchChatMessages(otherUserId, true), 3000);
+  }
+}
     async function fetchChatMessages(otherUserId, silent=false) {
       if (!otherUserId) return;
       const resp = await fetch(`${API_URL}messages/${otherUserId}`, { headers: { Authorization: "Bearer " + token } });
