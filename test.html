@@ -736,11 +736,12 @@
     }
 
     async function submitTest() {
-      clearInterval(timerInterval);
-      completed = true;
-      await saveProgress();
-      window.location.href = 'advertisement';
-    }
+  clearInterval(timerInterval);
+  completed = true;
+  await saveProgress();
+  // Redirect to report page with examSetId as a query param
+  window.location.href = `result-summary?examSet=${encodeURIComponent(examSetId)}`;
+}
 
     function shuffle(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
