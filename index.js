@@ -16,13 +16,7 @@ import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import path from "path";
-// Serve static frontend assets
-app.use(express.static(path.join(process.cwd(), "build"))); // or "dist"
 
-// Fallback: serve index.html for any unmatched route
-app.get("*", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "build", "mock.html"));
-});
 // ===== ADD FACULTY & DEPARTMENT MODELS =====
 const FacultySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true }
