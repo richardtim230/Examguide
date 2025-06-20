@@ -30,10 +30,27 @@ router.get("/user/:userId", authenticate, async (req, res) => {
   const results = await Result.find({ user: req.params.userId }).populate("user", "username");
   res.json(results);
 });
-// POST /api/results
+
+
+// Save a result for the logged-in user
 router.post("/", authenticate, async (req, res) => {
   const { examSet, answers, score, timeTaken, questions } = req.body;
-  const result = new Result({
+
+  // Prevent duplicate results for same user/examSet
+  let result = await Result.findOne({ user: req.user.id, examSet });
+  if (result) {
+    // Optionally update it instead of failing
+    result.answers = answers;
+    result.score = score;
+    result.timeTaken = timeTaken;
+    result.questions = questions;
+    result.submittedAt = new Date();
+    await result.save();
+    return res.json({ message: "Result updated", result });
+  }
+
+  // Create new result
+  result = new Result({
     user: req.user.id,
     examSet,
     answers,
@@ -42,9 +59,12 @@ router.post("/", authenticate, async (req, res) => {
     questions,
     submittedAt: new Date()
   });
+
   await result.save();
   res.status(201).json({ message: "Result saved", result });
 });
+
+
 // === ADD THIS ROUTE: Get the result for the logged-in user for a given examSet ===
 router.get("/", authenticate, async (req, res) => {
   // /api/results?examSet=xxxx
