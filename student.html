@@ -662,20 +662,18 @@ body, .header, .brand-title { font-family: 'Inter', 'Segoe UI', Arial, sans-seri
 </head>
 <body>
   <div class="header">
-  <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()" title="Notifications">
-    &#128276;
-    <span id="notifDot" class="notif-dot"></span>
-  </span>
-  <div class="notif-dropdown" id="notifDropdown"></div>
-  <div class="brand">
-    <img src="logo.png" alt="OAU Logo" onerror="this.style.display='none'"/>
-    <span class="brand-title">CENTRAL MOCK PLATFORM</span>
+    <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()" title="Notifications">
+      &#128276;
+      <span id="notifDot" class="notif-dot" style="display:none"></span>
+    </span>
+    <div class="notif-dropdown" id="notifDropdown"></div>
+    <div class="brand">
+      <img src="logo.png" alt="OAU Logo" onerror="this.style.display='none'"/>
+      <span style="font-size:0.8em;font-weight:500;letter-spacing:0.04em;">CENTRAL MOCK PLATFORM</span>
+    </div>
+    <h1>Welcome, <span id="studentName">Scholar</span>!</h1>
+    <div><small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small></div>
   </div>
-  <h1>Welcome, <span id="studentName">Scholar</span>!</h1>
-  <div class="student-info">
-    <small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small>
-  </div>
-                 </div>
   
   <div class="main">
     <!-- Profile section -->
