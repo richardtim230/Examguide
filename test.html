@@ -738,9 +738,53 @@
     async function submitTest() {
   clearInterval(timerInterval);
   completed = true;
-  await saveProgress();
-  // Redirect to report page with examSetId as a query param
-  window.location.href = `result-summary?examSet=${encodeURIComponent(examSetId)}`;
+
+  // Calculate score
+  let score = 0;
+  for (const q of questions) {
+    const userAns = userAnswers[q.id];
+    if (typeof userAns !== "undefined" && userAns === q.answer) score++;
+  }
+
+  // Calculate time taken
+  const timeTaken = SESSION_TIME_LIMIT - timeRemaining;
+
+  // Prepare result payload
+  const payload = {
+    examSet: examSetId,
+    answers: userAnswers,
+    score,
+    timeTaken,
+    questions: questions.map(q => ({
+      id: q.id,
+      question: q.question,
+      answer: q.answer,
+      options: q.options,
+      explanation: q.explanation,
+      questionImage: q.questionImage || null
+    }))
+  };
+
+  try {
+    const response = await fetch(API_URL + "results", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      alert("Failed to save result. Please try again.");
+      return;
+    }
+
+    // Successfully saved, redirect to report page
+    window.location.href = `summary.html?examSet=${encodeURIComponent(examSetId)}`;
+  } catch (err) {
+    alert("Network error. Please try again.");
+  }
 }
 
     function shuffle(arr) {
