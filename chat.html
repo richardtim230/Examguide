@@ -17,7 +17,9 @@
       font-family: 'Inter', Arial, sans-serif;
       color: #23366e;
     }
-    *, *:before, *:after { box-sizing: inherit; }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
     body {
       min-height: 100vh;
       display: flex;
@@ -94,71 +96,67 @@
       letter-spacing: 0.02em;
       flex-shrink: 0;
     }
-    .chat-conversations-list {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow-y: auto;
-      overflow-x: hidden;
+    .contact-list {
+      list-style: none;
       margin: 0;
       padding: 0;
-      list-style: none;
-      background: #f4f8fe;
+      overflow-y: auto;
+      max-height: 100%;
     }
-    .chat-conversation-item {
+    .contact-list-item {
       display: flex;
       align-items: center;
-      gap: 13px;
-      padding: 13px 18px;
-      border-bottom: 1px solid #e3e8ee;
+      gap: 12px;
+      padding: 10px 16px;
       cursor: pointer;
+      transition: background 0.14s;
+      border-radius: 0;
+      border-bottom: 1px solid #e3e8ee;
       background: #f4f8fe;
-      transition: background 0.13s;
       min-width: 0;
       touch-action: manipulation;
     }
-    .chat-conversation-item.active,
-    .chat-conversation-item:hover {
+    .contact-list-item.active,
+    .contact-list-item:hover {
       background: #e6eeff;
     }
-    .chat-conv-avatar {
-      width: 42px;
-      height: 42px;
+    .contact-avatar {
+      width: 41px;
+      height: 41px;
       border-radius: 50%;
       object-fit: cover;
       background: #eaf1fb;
       border: 2px solid #3a86ff;
-      box-shadow: 0 1px 5px #3a86ff11;
       flex-shrink: 0;
     }
-    .chat-conv-info {
+    .contact-info {
       flex: 1;
       min-width: 0;
       overflow: hidden;
     }
-    .chat-conv-name {
-      font-weight: 600;
-      font-size: 1.07em;
+    .contact-name {
+      font-weight: 700;
+      font-size: 1.08em;
       color: #23366e;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
-      margin-bottom: 2px;
     }
-    .chat-conv-lastmsg {
-      font-size: 0.97em;
+    .contact-lastmsg {
+      font-size: .97em;
       color: #5a6b8c;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 170px;
     }
-    .chat-conv-unread-dot {
-      width: 10px;
-      height: 10px;
+    .contact-unread-dot {
+      width: 12px;
+      height: 12px;
       background: #3a86ff;
       border-radius: 50%;
-      margin-left: 7px;
+      margin-left: 8px;
       box-shadow: 0 0 8px #3a86ff55;
+      flex-shrink: 0;
     }
     /* Main Chat Area */
     .chat-content-area {
@@ -173,6 +171,7 @@
       max-width: 100vw;
       overflow: hidden;
       transition: margin-left .3s cubic-bezier(.4,0,.2,1);
+      height: 100vh;
     }
     .chat-content-header {
       display: flex;
@@ -225,13 +224,14 @@
       overflow-y: auto;
       overflow-x: hidden;
       background: #f4f8fe;
-      padding: 30px 30px 20px 30px;
+      padding: 30px 30px 80px 30px; /* space for sticky input */
       display: flex;
       flex-direction: column;
       gap: 0;
       min-height: 0;
       max-width: 100vw;
       min-width: 0;
+      height: 1px;
     }
     .chat-message-row {
       display: flex;
@@ -288,18 +288,19 @@
     }
     .chat-message-row.self .chat-message-meta { text-align: right; }
     .chat-message-row:not(.self) .chat-message-meta { text-align: left; }
-    /* Sticky Input at Bottom */
+    /* Input */
     .chat-input-area {
-      display: flex;
-      gap: 10px;
-      padding: 14px 22px 14px 22px;
-      border-top: 1.5px solid #e2eafc;
-      background: #fff;
       position: sticky;
       bottom: 0;
-      z-index: 2;
-      min-width: 0;
+      left: 0;
       width: 100%;
+      background: #fff;
+      padding: 18px 30px;
+      border-top: 1.5px solid #e2eafc;
+      z-index: 20;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
     }
     .chat-input {
       flex: 1;
@@ -327,6 +328,7 @@
       transition: background 0.17s;
       box-shadow: 0 1px 6px #3a86ff15;
       min-width: 80px;
+      height: 44px;
     }
     .chat-send-btn:disabled {
       background: #b1c7ee;
@@ -351,13 +353,13 @@
         overflow-x: auto;
         overflow-y: hidden;
       }
-      .chat-conversations-list {
+      .contact-list {
         display: flex;
         flex-direction: row;
         overflow-x: auto;
         min-width: 0;
       }
-      .chat-conversation-item {
+      .contact-list-item {
         min-width: 180px;
         flex-direction: column;
         align-items: flex-start;
@@ -429,7 +431,7 @@
         font-size: 1.01em;
       }
       .chat-messages-area {
-        padding: 11px 3vw 10px 3vw;
+        padding: 11px 3vw 70px 3vw;
       }
       .chat-message-avatar {
         width: 27px;
@@ -442,7 +444,9 @@
         max-width: 90vw;
       }
       .chat-input-area {
-        padding: 9px 2vw 10px 2vw;
+        padding: 9px 3vw 10px 3vw;
+        bottom: env(safe-area-inset-bottom, 0);
+        height: 60px;
       }
       .back-btn {
         display: inline-block;
@@ -461,7 +465,7 @@
     <!-- Sidebar: Conversations -->
     <aside class="chat-sidebar" id="chatSidebar">
       <div class="chat-sidebar-header">Chats</div>
-      <ul class="chat-conversations-list" id="chatConversations"></ul>
+      <ul class="contact-list" id="chatConversations"></ul>
     </aside>
     <!-- Main Chat Content Area -->
     <main class="chat-content-area" id="mainChatArea">
@@ -569,18 +573,18 @@
         const user = usersCache[chat.otherUserId] || { username: chat.otherUserName || "Unknown" };
         const lastMsg = chat.lastMsgText ? escapeHtml(chat.lastMsgText) : "(No messages yet)";
         const li = document.createElement("li");
-        li.className = "chat-conversation-item" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
+        li.className = "contact-list-item" + (String(chat.otherUserId) === String(activeOtherUserId) ? " active" : "");
         li.onclick = () => {
           closeSidebar();
           openConversation(chat.otherUserId);
         };
         li.innerHTML = `
-          <img class="chat-conv-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
-          <div class="chat-conv-info">
-            <div class="chat-conv-name">${escapeHtml(user.username)}</div>
-            <div class="chat-conv-lastmsg">${lastMsg}</div>
+          <img class="contact-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
+          <div class="contact-info">
+            <div class="contact-name">${escapeHtml(user.username)}</div>
+            <div class="contact-lastmsg">${lastMsg}</div>
           </div>
-          ${chat.unreadCount > 0 ? '<span class="chat-conv-unread-dot"></span>' : ''}
+          ${chat.unreadCount > 0 ? '<span class="contact-unread-dot"></span>' : ''}
         `;
         list.appendChild(li);
       });
@@ -594,6 +598,7 @@
         <img class="chat-content-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
         <span class="chat-content-username">${escapeHtml(user.username)}</span>
       `;
+      // Show/hide back button on mobile only
       document.getElementById("backToChatsBtn").onclick = function() {
         openSidebar();
       };
