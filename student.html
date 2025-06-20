@@ -1054,6 +1054,7 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     }
     // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
 async function fetchAvailableTests() {
+  // Assume `student` object is loaded with .faculty and .department fields
   if (!student.faculty || !student.department) {
     document.querySelector("#availableTable tbody").innerHTML =
       "<tr><td colspan=3>Please complete your profile to see available assessments.</td></tr>";
@@ -1062,7 +1063,6 @@ async function fetchAvailableTests() {
     return;
   }
 
-  // Fetch scheduled tests for this faculty & department
   const resp = await fetch(
     API_URL +
       `schedules?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
@@ -1073,17 +1073,7 @@ async function fetchAvailableTests() {
   let soonest = null;
   let now = Date.now();
 
-  // Defensive: if schedules is not an array, fallback
-  if (!Array.isArray(schedules)) {
-    document.querySelector("#availableTable tbody").innerHTML =
-      "<tr><td colspan=3>Error loading available assessments</td></tr>";
-    document.getElementById("upcomingTest").innerText = "None";
-    document.getElementById("testCountdown").innerText = "";
-    return;
-  }
-
   schedules.forEach((sched) => {
-    // Defensive: examSet should be populated
     const set = sched.examSet;
     if (!set || set.status !== "ACTIVE") return;
 
@@ -1154,7 +1144,7 @@ async function fetchAvailableTests() {
     document.getElementById("upcomingTest").innerText = "None";
     document.getElementById("testCountdown").innerText = "";
   }
-}
+}  
 /**
  * Starts and updates a countdown timer until the next test's start time.
  * Expects the following globals to be set:
