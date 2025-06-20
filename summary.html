@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=0.95"/>
   <title>Exam Summary</title>
-    <!-- Google Fonts for Dancing Script -->
+  <!-- Google Fonts for Dancing Script -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -16,97 +16,65 @@
       display: flex;
       flex-direction: column;
     }
-    
-.refined-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #ffffffd9; /* Light glass-like feel */
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.header-logo {
-  height: 56px;
-  width: 56px;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 0 0 1px #ccc;
-  background-color: #f8f9fa;
-}
-
-.header-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.header-title {
-  font-size: 1.6rem;
-  color: #0B0B45;
-  margin: 0;
-  font-weight: 600;
-}
-
-.header-subtitle {
-  margin: 2px 0 0;
-  font-size: 0.95rem;
-  color: #0B0B45;
-}
-@media (max-width: 600px) {
-  .header-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .header-logo {
-    height: 50px;
-    width: 50px;
-  }
-
-  .header-title {
-    font-size: 1.4rem;
-  }
-
-  .header-subtitle {
-    font-size: 0.9rem;
-  }
+    .refined-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffffd9;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     }
-    
-
-@media (max-width: 600px) {
-  .logo-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .logo-img {
-    height: 50px;
-    width: 50px;
-  }
-
-  .main-title {
-    font-size: 1.5rem;
-  }
-
-  .subtitle {
-    font-size: 0.95rem;
-  }
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
     }
-    
+    .header-logo {
+      height: 56px;
+      width: 56px;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 0 0 1px #ccc;
+      background-color: #f8f9fa;
+    }
+    .header-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .header-title {
+      font-size: 1.6rem;
+      color: #0B0B45;
+      margin: 0;
+      font-weight: 600;
+    }
+    .header-subtitle {
+      margin: 2px 0 0;
+      font-size: 0.95rem;
+      color: #0B0B45;
+    }
+    @media (max-width: 600px) {
+      .header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .header-logo {
+        height: 50px;
+        width: 50px;
+      }
+      .header-title {
+        font-size: 1.4rem;
+      }
+      .header-subtitle {
+        font-size: 0.9rem;
+      }
+    }
     .summary-container {
       max-width: 950px;
       margin: 32px auto 32px auto;
@@ -245,90 +213,76 @@
       font-size: 15px;
     }
     .app-footer {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  padding: 20px;
-  color: #eee;
-  text-align: center;
-  font-family: 'Segoe UI', sans-serif;
-  position: relative;
-}
-
-.footer-glass {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.sparkles {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  gap: 5px;
-  opacity: 0.6;
-}
-
-.footer-content {
-  padding-top: 30px;
-}
-
-.footer-btn {
-  background: #0d6efd;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.footer-btn:hover {
-  background: #0b5ed7;
-}
-
-.footer-powered {
-  margin: 15px 0 5px;
-}
-
-.powered-by {
-  font-weight: bold;
-  color: #00ffea;
-}
-
-.footer-divider {
-  border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 10px auto;
-  width: 60%;
-}
-
-.footer-credits {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-}
-
-.footer-badge {
-  display: inline-block;
-  background: #292929;
-  color: #f0f0f0;
-  border-radius: 4px;
-  padding: 2px 6px;
-  margin-left: 5px;
-}
-
-.footer-socials {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.social-icon {
-  font-size: 1.4rem;
-  text-decoration: none;
-}
-
-      
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      color: #eee;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+    }
+    .footer-glass {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .sparkles {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      gap: 5px;
+      opacity: 0.6;
+    }
+    .footer-content {
+      padding-top: 30px;
+    }
+    .footer-btn {
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .footer-btn:hover {
+      background: #0b5ed7;
+    }
+    .footer-powered {
+      margin: 15px 0 5px;
+    }
+    .powered-by {
+      font-weight: bold;
+      color: #00ffea;
+    }
+    .footer-divider {
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin: 10px auto;
+      width: 60%;
+    }
+    .footer-credits {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    .footer-badge {
+      display: inline-block;
+      background: #292929;
+      color: #f0f0f0;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-left: 5px;
+    }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .social-icon {
+      font-size: 1.4rem;
+      text-decoration: none;
+    }
     #printBtn {
       background: #fff;
       color: #0072ff;
@@ -347,18 +301,6 @@
       background: #00c6ff;
       color: #fff;
     }
-    @keyframes gradientBG {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
     @media (max-width: 800px) {
       .summary-container {
         padding: 12px 5px;
@@ -435,23 +377,17 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Dancing Script Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  
-  
   <header class="refined-header">
-  <div class="header-container">
-    <img src="logo.png" alt="CBT Platform Logo" class="header-logo" />
-    <div class="header-text">
-      <h1 class="header-title">Test Summary Report</h1>
-      <p class="header-subtitle">Review your performance and answers below</p>
+    <div class="header-container">
+      <img src="logo.png" alt="CBT Platform Logo" class="header-logo" />
+      <div class="header-text">
+        <h1 class="header-title">Test Summary Report</h1>
+        <p class="header-subtitle">Review your performance and answers below</p>
+      </div>
     </div>
-  </div>
   </header>
-        
-  
   <div class="summary-container">
     <div class="section-title">Details</div>
     <div class="details-table-container">
@@ -467,155 +403,184 @@
     <div id="reviewSection"></div>
   </div>
   <footer class="app-footer">
-  <div class="footer-glass">
-    
-    <!-- Decorative Sparkles -->
-    <div class="sparkles">
-      <span class="sparkle s1" aria-hidden="true">✨</span>
-      <span class="sparkle s2" aria-hidden="true">🌟</span>
-      <span class="sparkle s3" aria-hidden="true">💫</span>
-      <span class="sparkle s4" aria-hidden="true">⭐</span>
-    </div>
-
-    <!-- Main Footer Content -->
-    <div class="footer-content">
-      <button id="printBtn" class="footer-btn">🖨️ Print / Save as PDF</button>
-
-      <div class="footer-powered">
-        &copy; <span id="year"></span> <strong>CBT Platform</strong> — Powered by <span class="powered-by">ExamGuide</span>
+    <div class="footer-glass">
+      <div class="sparkles">
+        <span class="sparkle s1" aria-hidden="true">✨</span>
+        <span class="sparkle s2" aria-hidden="true">🌟</span>
+        <span class="sparkle s3" aria-hidden="true">💫</span>
+        <span class="sparkle s4" aria-hidden="true">⭐</span>
       </div>
-
-      <hr class="footer-divider" />
-
-      <div class="footer-credits">
-        Solutions provided and reviewed by
-        <span class="footer-badge">Hon. Richard D'prof</span>
-      </div>
-
-      <div class="footer-socials">
-        <a href="#" aria-label="WhatsApp" class="social-icon">🟢</a>
-        <a href="#" aria-label="LinkedIn" class="social-icon">🔗</a>
-        <a href="#" aria-label="Email" class="social-icon">✉️</a>
+      <div class="footer-content">
+        <button id="printBtn" class="footer-btn">🖨️ Print / Save as PDF</button>
+        <div class="footer-powered">
+          &copy; <span id="year"></span> <strong>CBT Platform</strong> — Powered by <span class="powered-by">ExamGuide</span>
+        </div>
+        <hr class="footer-divider" />
+        <div class="footer-credits">
+          Solutions provided and reviewed by
+          <span class="footer-badge">Hon. Richard D'prof</span>
+        </div>
+        <div class="footer-socials">
+          <a href="#" aria-label="WhatsApp" class="social-icon">🟢</a>
+          <a href="#" aria-label="LinkedIn" class="social-icon">🔗</a>
+          <a href="#" aria-label="Email" class="social-icon">✉️</a>
+        </div>
       </div>
     </div>
-  </div>
   </footer>
-  
-  
-  
   <script>
-    // Data and calculations
-    const currentUser = localStorage.getItem('current_user') || 'Guest';
-    const answers = JSON.parse(localStorage.getItem(`answers_${currentUser}`) || '{}');
-    const questions = JSON.parse(localStorage.getItem(`questions_${currentUser}`) || '[]');
-    const timeTaken = Number(localStorage.getItem(`timeTaken_${currentUser}`) || "0");
-
-    const totalQuestions = questions.length;
-    const attemptedQuestions = Object.keys(answers).length;
-    let score = 0;
-// Prevent unauthorized access
-if (!currentUser || currentUser === "Guest") {
-  // Redirect to login page (adjust the path as needed)
-  window.location.href = "mock.html";
-}
-    questions.forEach(q => {
-      if (answers[q.id] !== undefined && typeof answers[q.id] !== 'undefined' && answers[q.id] === q.answer) score++;
-    });
-
-    const incorrect = attemptedQuestions - score;
-    const notAttempted = totalQuestions - attemptedQuestions;
-    const percentage = totalQuestions ? (score / totalQuestions * 100).toFixed(2) : 0;
-    const avgSpeed = totalQuestions ? (timeTaken / totalQuestions).toFixed(2) : 0;
-    const mins = Math.floor(timeTaken / 60);
-    const secs = timeTaken % 60;
-
-    // Fill Table
-    document.getElementById('detailsTable').innerHTML = `
-      <tr>
-        <th>Username</th>
-        <td>${currentUser}</td>
-      </tr>
-      <tr>
-        <th>Total Questions</th>
-        <td>${totalQuestions}</td>
-      </tr>
-      <tr>
-        <th>Attempted</th>
-        <td class="attempted">${attemptedQuestions}</td>
-      </tr>
-      <tr>
-        <th>Correct Answers</th>
-        <td class="score">${score}</td>
-      </tr>
-      <tr>
-        <th>Incorrect Answers</th>
-        <td style="color:#ff4e55; font-weight:bold;">${incorrect}</td>
-      </tr>
-      <tr>
-        <th>Not Attempted</th>
-        <td style="color:#bdeaff; font-weight:bold;">${notAttempted}</td>
-      </tr>
-      <tr>
-        <th>Percentage</th>
-        <td class="percentage">${percentage}%</td>
-      </tr>
-      <tr>
-        <th>Avg Speed</th>
-        <td>${avgSpeed} sec/question</td>
-      </tr>
-      <tr>
-        <th>Time Taken</th>
-        <td>${mins}m ${secs < 10 ? '0' : ''}${secs}s</td>
-      </tr>
-    `;
-
-    // Pie Chart
-    window.addEventListener('DOMContentLoaded', function() {
-      const ctx = document.getElementById('resultPieChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: ['Correct', 'Incorrect', 'Not Attempted'],
-          datasets: [{
-            data: [score, incorrect, notAttempted],
-            backgroundColor: [
-              '#00ffae', // Correct
-              '#ff4e55', // Incorrect
-              '#bdeaff'  // Not Attempted
-            ],
-            borderWidth: 2,
-            borderColor: '#232526'
-          }]
-        },
-        options: {
-          responsive: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: '#fff',
-                font: {size: 15}
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.label || '';
-                  if (label) {
-                    label += ': ';
+    // === CONFIG ===
+    const API_URL = "https://examguide.onrender.com/api/";
+    const token = localStorage.getItem("token");
+    // Expect examSetId to be passed as query param, e.g. report.html?examSet=xxxx
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    const examSetId = getQueryParam('examSet');
+    // Prevent unauthorized access
+    if (!token || !examSetId) {
+      window.location.href = "mock.html";
+    }
+    let currentUser = "Guest";
+    // Get user info
+    async function fetchCurrentUser() {
+      if (!token) return;
+      try {
+        const resp = await fetch(API_URL + "auth/me", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        const data = await resp.json();
+        if (resp.ok && data.user && data.user.username) {
+          currentUser = data.user.username;
+        } else {
+          localStorage.removeItem('token');
+          window.location.href = "mock.html";
+        }
+      } catch (e) {
+        localStorage.removeItem('token');
+        window.location.href = "mock.html";
+      }
+    }
+    // Fetch result from backend
+    async function fetchTestReport() {
+      // Replace with your backend endpoint for results
+      // e.g. GET /api/results?examSet=examSetId
+      const res = await fetch(`${API_URL}results?examSet=${encodeURIComponent(examSetId)}`, {
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!res.ok) throw new Error("Could not load report");
+      const data = await res.json();
+      // data.result should have: { questions: [], answers: {}, score, timeTaken, ... }
+      return data.result;
+    }
+    // Render report
+    async function renderReport() {
+      await fetchCurrentUser();
+      let result;
+      try {
+        result = await fetchTestReport();
+      } catch (err) {
+        document.querySelector('.summary-container').innerHTML = `<div style="color:red;text-align:center;padding:30px;">Failed to load your report. Please try again later.</div>`;
+        return;
+      }
+      if (!result) {
+        document.querySelector('.summary-container').innerHTML = `<div style="color:red;text-align:center;padding:30px;">No report found.</div>`;
+        return;
+      }
+      const { questions = [], answers = {}, score = 0, timeTaken = 0 } = result;
+      const totalQuestions = questions.length;
+      const attemptedQuestions = Object.keys(answers).length;
+      const incorrect = attemptedQuestions - score;
+      const notAttempted = totalQuestions - attemptedQuestions;
+      const percentage = totalQuestions ? (score / totalQuestions * 100).toFixed(2) : 0;
+      const avgSpeed = totalQuestions ? (timeTaken / totalQuestions).toFixed(2) : 0;
+      const mins = Math.floor(timeTaken / 60);
+      const secs = timeTaken % 60;
+      // Fill Table
+      document.getElementById('detailsTable').innerHTML = `
+        <tr>
+          <th>Username</th>
+          <td>${currentUser}</td>
+        </tr>
+        <tr>
+          <th>Total Questions</th>
+          <td>${totalQuestions}</td>
+        </tr>
+        <tr>
+          <th>Attempted</th>
+          <td class="attempted">${attemptedQuestions}</td>
+        </tr>
+        <tr>
+          <th>Correct Answers</th>
+          <td class="score">${score}</td>
+        </tr>
+        <tr>
+          <th>Incorrect Answers</th>
+          <td style="color:#ff4e55; font-weight:bold;">${incorrect}</td>
+        </tr>
+        <tr>
+          <th>Not Attempted</th>
+          <td style="color:#bdeaff; font-weight:bold;">${notAttempted}</td>
+        </tr>
+        <tr>
+          <th>Percentage</th>
+          <td class="percentage">${percentage}%</td>
+        </tr>
+        <tr>
+          <th>Avg Speed</th>
+          <td>${avgSpeed} sec/question</td>
+        </tr>
+        <tr>
+          <th>Time Taken</th>
+          <td>${mins}m ${secs < 10 ? '0' : ''}${secs}s</td>
+        </tr>
+      `;
+      // Pie Chart
+      setTimeout(() => {
+        const ctx = document.getElementById('resultPieChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Correct', 'Incorrect', 'Not Attempted'],
+            datasets: [{
+              data: [score, incorrect, notAttempted],
+              backgroundColor: [
+                '#00ffae', // Correct
+                '#ff4e55', // Incorrect
+                '#bdeaff'  // Not Attempted
+              ],
+              borderWidth: 2,
+              borderColor: '#232526'
+            }]
+          },
+          options: {
+            responsive: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: '#fff',
+                  font: {size: 15}
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    let label = context.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    label += context.parsed;
+                    return label;
                   }
-                  label += context.parsed;
-                  return label;
                 }
               }
             }
           }
-        }
-      });
-    });
-
-    // Attempt Review
-    function renderReview() {
+        });
+      }, 100);
+      // Attempt Review
       let html = '';
       questions.forEach((q, idx) => {
         const userAns = answers[q.id];
@@ -637,7 +602,7 @@ if (!currentUser || currentUser === "Guest") {
             </div>
             <div class="explanation">
               <strong>Explanation:</strong> <br/>
-              ${q.explanation}
+              ${q.explanation || ""}
             </div>
           </div>
         `;
@@ -647,19 +612,13 @@ if (!currentUser || currentUser === "Guest") {
         MathJax.typesetPromise();
       }
     }
-    renderReview();
-
     // Footer year
-  
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('printBtn').onclick = function() {
       window.print();
     };
-  window.addEventListener('scroll', () => {
-  const header = document.querySelector('.sticky-header');
-  header.classList.toggle('scrolled', window.scrollY > 20);
-});
-    
+    // On load
+    renderReport();
   </script>
 </body>
 </html>
