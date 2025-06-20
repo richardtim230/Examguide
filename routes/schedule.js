@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import Schedule from "../models/Schedule.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
@@ -23,32 +22,18 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   }
 });
 
-// List all schedules for the authenticated user's faculty and department
-// Only return schedules for future or current tests, and only if examSet is ACTIVE
+// List all schedules (optionally filter by faculty/department), populated with examSet (QuestionSet) info
 router.get("/", authenticate, async (req, res) => {
+  const filter = {};
+  if (req.query.faculty) filter.faculty = req.query.faculty;
+  if (req.query.department) filter.department = req.query.department;
   try {
-    // User's faculty and department may be string or ObjectId, normalize to ObjectId
-    let { faculty, department } = req.user;
-    if (typeof faculty === "string") faculty = mongoose.Types.ObjectId(faculty);
-    if (typeof department === "string") department = mongoose.Types.ObjectId(department);
-
-    // Find schedules for this faculty/department, starting now or later
-    let schedules = await Schedule.find({
-      faculty,
-      department,
-      start: { $gte: new Date() }
-    })
-      .sort({ start: 1 })
+    const schedules = await Schedule.find(filter)
+      .sort({ start: -1 })
       .populate({
         path: "examSet",
-        select: "title status questions faculty department"
+        select: "title status questions faculty department schedule"
       });
-
-    // Filter out schedules whose examSet is missing or not ACTIVE
-    schedules = schedules.filter(
-      sch => sch.examSet && sch.examSet.status === "ACTIVE"
-    );
-
     res.json(schedules);
   } catch (e) {
     res.status(500).json({ error: e.message });
