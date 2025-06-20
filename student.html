@@ -59,6 +59,132 @@
     min-width: 400px;
   }
   }
+.header {
+  background: var(--gradient);
+  color: var(--white);
+  padding: 44px 0 34px 0;
+  position: relative;
+  box-shadow: 0 2px 18px #3a86ff22;
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.header .brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.header .brand img {
+  height: 42px;
+  width: 42px;
+  border-radius: var(--radius-xs);
+  background: #fff;
+  border: 2.5px solid var(--white);
+  object-fit: contain;
+  box-shadow: 0 1px 10px #3a86ff19;
+}
+.brand-title {
+  font-size: 0.98em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2.1rem;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+}
+.header h1 span {
+  color: #fff6b7;
+  font-weight: 800;
+}
+.student-info {
+  font-size: 1.03em;
+  color: #fff;
+  opacity: 0.92;
+}
+.student-info small span {
+  color: #fff;
+  font-weight: 600;
+}
+
+.notif-bell {
+  position: absolute;
+  top: 24px; right: 25px;
+  font-size: 2.1rem;
+  color: var(--warning);
+  cursor: pointer;
+  z-index: 30;
+  filter: drop-shadow(0 2px 2px #3a86ff22);
+  transition: color 0.18s;
+}
+.notif-bell:hover { color: #fff6b7; }
+.notif-bell .notif-dot {
+  display: none;
+  position: absolute;
+  top: 5px; right: 8px;
+  width: 13px; height: 13px;
+  background: var(--danger);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 5px #ff3b4733;
+}
+.notif-bell.has-notif .notif-dot {
+  display: block;
+}
+.notif-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 22px;
+  background: #fff;
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow);
+  width: 330px;
+  padding: 10px 0;
+  z-index: 50;
+  display: none;
+  border: 1.3px solid var(--border);
+}
+.notif-dropdown.active { display: block; }
+
+@media (max-width: 650px) {
+  .header {
+    padding: 22px 0 17px 0;
+    gap: 0.2em;
+  }
+  .header .brand img {
+    height: 32px;
+    width: 32px;
+  }
+  .brand-title {
+    font-size: 0.77em;
+  }
+  .header h1 {
+    font-size: 1.13rem;
+  }
+  .notif-bell {
+    top: 11px; right: 9px;
+    font-size: 1.5rem;
+  }
+  .notif-dropdown {
+    width: 96vw;
+    min-width: 180px;
+    right: 2vw;
+    padding: 7px 0;
+  }
+}
+    
     /* Header */
     .header {
       background: var(--gradient);
@@ -582,18 +708,21 @@
 </head>
 <body>
   <div class="header">
-    <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()" title="Notifications">
-      &#128276;
-      <span id="notifDot" class="notif-dot" style="display:none"></span>
-    </span>
-    <div class="notif-dropdown" id="notifDropdown"></div>
-    <div class="brand">
-      <img src="logo.png" alt="OAU Logo" onerror="this.style.display='none'"/>
-      <span style="font-size:0.8em;font-weight:500;letter-spacing:0.04em;">CENTRAL MOCK PLATFORM</span>
-    </div>
-    <h1>Welcome, <span id="studentName">Scholar</span>!</h1>
-    <div><small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small></div>
+  <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()" title="Notifications">
+    &#128276;
+    <span id="notifDot" class="notif-dot"></span>
+  </span>
+  <div class="notif-dropdown" id="notifDropdown"></div>
+  <div class="brand">
+    <img src="logo.png" alt="OAU Logo" onerror="this.style.display='none'"/>
+    <span class="brand-title">CENTRAL MOCK PLATFORM</span>
   </div>
+  <h1>Welcome, <span id="studentName">Scholar</span>!</h1>
+  <div class="student-info">
+    <small>Faculty: <span id="studentFaculty"></span> | Department: <span id="studentDept"></span></small>
+  </div>
+      </div>
+  
   <div class="main">
     <!-- Profile section -->
     <div class="profile">
