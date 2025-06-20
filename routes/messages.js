@@ -9,21 +9,22 @@ const router = express.Router();
 // --- 1. List all chats for notification (MUST come BEFORE '/:otherUserId') ---
 router.get("/chats", authenticate, async (req, res) => {
   const userId = req.user.id;
+  const userObjectId = new mongoose.Types.ObjectId(userId);
   // Find distinct users this user has chatted with
   const chats = await Message.aggregate([
-    { $match: { $or: [{ from: mongoose.Types.ObjectId(userId) }, { to: mongoose.Types.ObjectId(userId) }] }},
+    { $match: { $or: [{ from: userObjectId }, { to: userObjectId }] }},
     { $sort: { createdAt: -1 } },
     { $group: {
       _id: {
         $cond: [
-          { $eq: ["$from", mongoose.Types.ObjectId(userId)] },
+          { $eq: ["$from", userObjectId] },
           "$to",
           "$from"
         ]
       },
       lastMsgText: { $first: "$text" },
       lastMsgAt: { $first: "$createdAt" },
-      unreadCount: { $sum: { $cond: [ { $and: [ { $eq: ["$to", mongoose.Types.ObjectId(userId)] }, { $eq: ["$read", false] } ] }, 1, 0 ] } }
+      unreadCount: { $sum: { $cond: [ { $and: [ { $eq: ["$to", userObjectId] }, { $eq: ["$read", false] } ] }, 1, 0 ] } }
     }},
     { $sort: { lastMsgAt: -1 } }
   ]);
@@ -45,10 +46,14 @@ router.get("/chats", authenticate, async (req, res) => {
 router.get("/:otherUserId", authenticate, async (req, res) => {
   const userId = req.user.id;
   const otherUserId = req.params.otherUserId;
-  // Validate ObjectId
   if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
+  // Mark all messages from otherUserId to current user as read
+  await Message.updateMany(
+    { from: otherUserId, to: userId, read: false },
+    { $set: { read: true } }
+  );
   const messages = await Message.find({
     $or: [
       { from: userId, to: otherUserId },
@@ -64,14 +69,14 @@ router.post("/:otherUserId", authenticate, async (req, res) => {
   const otherUserId = req.params.otherUserId;
   const { text } = req.body;
   if (!text || !text.trim()) return res.status(400).json({ message: "Text required" });
-  // Validate ObjectId
   if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
   const msg = await Message.create({
     from: userId,
     to: otherUserId,
-    text
+    text,
+    read: false
   });
   res.status(201).json(msg);
 });
