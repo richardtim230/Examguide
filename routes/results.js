@@ -30,7 +30,21 @@ router.get("/user/:userId", authenticate, async (req, res) => {
   const results = await Result.find({ user: req.params.userId }).populate("user", "username");
   res.json(results);
 });
-
+// POST /api/results
+router.post("/", authenticate, async (req, res) => {
+  const { examSet, answers, score, timeTaken, questions } = req.body;
+  const result = new Result({
+    user: req.user.id,
+    examSet,
+    answers,
+    score,
+    timeTaken,
+    questions,
+    submittedAt: new Date()
+  });
+  await result.save();
+  res.status(201).json({ message: "Result saved", result });
+});
 // === ADD THIS ROUTE: Get the result for the logged-in user for a given examSet ===
 router.get("/", authenticate, async (req, res) => {
   // /api/results?examSet=xxxx
