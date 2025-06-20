@@ -744,11 +744,10 @@
       </div>
     </div>
     <!-- Dashboard cards -->
-    <div class="dashboard-cards">
-      <div class="dashboard-card">
-        <div class="card-title">Your Progress</div>
-        <canvas id="progressChart" width="120" height="90"></canvas>
-      </div>
+    <div class="dashboard-card">
+  <div class="card-title">Your Progress</div>
+  <div id="progressList" style="max-height:110px;overflow-y:auto;"></div>
+</div>
       <div class="dashboard-card">
         <div class="card-title">Upcoming Test</div>
         <div class="card-value" id="upcomingTest">None</div>
@@ -772,10 +771,19 @@
     <div class="announcement" id="announcementsPanel"></div>
     <!-- Test History with Review -->
     <div class="section-title">Assessment Performance & Reviews</div>
-    <table class="result-table" id="historyTable">
-      <thead><tr><th>Test</th><th>Date</th><th>Score</th><th>Review</th></tr></thead>
-      <tbody></tbody>
-    </table>
+<table class="result-table" id="historyTable">
+  <thead>
+    <tr>
+      <th>Test</th>
+      <th>Date</th>
+      <th>Score</th>
+      <th>Review</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Populated by JS -->
+  </tbody>
+      </table>
     <!-- Upcoming/scheduled tests -->
     <div class="section-title">Available Assessments</div>
 <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
@@ -1207,26 +1215,49 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
       document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
       recommendTopics();
     }
-    function renderProgressChart(data) {
-      const ctx = document.getElementById('progressChart').getContext('2d');
-      if (window._progressChart) window._progressChart.destroy();
-      window._progressChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: data.labels,
-          datasets: [{
-            data: data.values,
-            backgroundColor: ['#3a86ff', '#8338ec', '#ffbe0b', '#43aa8b', '#f25f5c', '#6639ba']
-          }]
-        },
-        options: {
-          plugins: { legend: { display: false } },
-          cutout: "70%",
-          responsive: false,
-          maintainAspectRatio: false
-        }
-      });
-    }
+    function renderProgressList() {
+  const list = document.getElementById("progressList");
+  if (!resultsCache.length) {
+    list.innerHTML = `<div style="color:var(--muted);font-style:italic;">No exams taken yet.</div>`;
+    return;
+  }
+  // Most recent first, limit to latest 7
+  const items = resultsCache
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
+    .slice(0, 7)
+    .map(r => 
+      `<div style="padding:6px 0;border-bottom:1px solid #e3e8ee;">
+        <b>${r.examSet}</b> — 
+        <span style="color:var(--primary);font-weight:700;">${r.score ?? '-'}</span>%
+        <span style="color:#888;font-size:0.95em;float:right;">${(new Date(r.submittedAt)).toLocaleDateString()}</span>
+      </div>`
+    ).join('');
+  list.innerHTML = items;
+}
+
+async function fetchHistory() {
+  if (!student.id) return;
+  const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
+  const results = await resp.json();
+  resultsCache = results;
+
+  // Update Progress Card
+  renderProgressList();
+
+  // Update Assessment Performance Table
+  let html = "";
+  results.slice(0, 10).forEach(r => {
+    html += `<tr>
+      <td>${r.examSet}</td>
+      <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+      <td>${r.score ?? "-"}</td>
+      <td><button class="btn" onclick="reviewResult('${r._id}')">Review</button></td>
+    </tr>`;
+  });
+  document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
+
+  recommendTopics();
+}
     // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
 async function fetchAvailableTests() {
   const spinner = document.getElementById("testSpinner");
