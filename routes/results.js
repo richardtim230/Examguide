@@ -31,7 +31,6 @@ router.get("/user/:userId", authenticate, async (req, res) => {
   res.json(results);
 });
 
-
 // Save a result for the logged-in user
 router.post("/", authenticate, async (req, res) => {
   const { examSet, answers, score, timeTaken, questions } = req.body;
@@ -64,10 +63,9 @@ router.post("/", authenticate, async (req, res) => {
   res.status(201).json({ message: "Result saved", result });
 });
 
-
-// === ADD THIS ROUTE: Get the result for the logged-in user for a given examSet ===
-router.get("/", authenticate, async (req, res) => {
-  // /api/results?examSet=xxxx
+// Get the result for the logged-in user for a given examSet
+router.get("/me", authenticate, async (req, res) => {
+  // /api/results/me?examSet=xxxx
   const { examSet } = req.query;
   if (!examSet) return res.status(400).json({ error: "Missing examSet" });
   const result = await Result.findOne({ user: req.user.id, examSet }).populate("user", "username");
