@@ -17,6 +17,8 @@ import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import path from "path";
 
+dotenv.config();
+
 // ===== ADD FACULTY & DEPARTMENT MODELS =====
 const FacultySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true }
@@ -28,8 +30,6 @@ const DepartmentSchema = new mongoose.Schema({
   faculty: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: true }
 });
 const Department = mongoose.model("Department", DepartmentSchema);
-
-dotenv.config();
 
 const {
   MONGODB_URI,
@@ -63,6 +63,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
+// Main user routes (GET all users for chat must be open to all authenticated users)
 app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
@@ -79,8 +80,6 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
   }
 });
 
-app.use("/api/messages", messagesRoutes);
-
 // ===== DEPARTMENT ROUTES =====
 app.get("/api/departments", authenticate, async (req, res) => {
   const list = await Department.find().sort({ name: 1 });
@@ -94,6 +93,8 @@ app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"),
     res.status(400).json({ message: e.message });
   }
 });
+
+app.use("/api/messages", messagesRoutes);
 
 // DEBUG: List schedules for the logged-in user's faculty/department
 app.get("/api/debug/schedules", authenticate, async (req, res) => {
@@ -196,49 +197,6 @@ app.get("/api/auth", (req, res) => {
   res.json({ status: "auth API live" });
 });
 
-// ==== UPDATED: USERS ENDPOINT (open to all authenticated users for chat) ====
-// Only restrict POST, PUT, DELETE to admin/superadmin, but GET is open to any logged-in user
-app.get("/api/users", authenticate, async (req, res) => {
-  const filter = {};
-  if (req.query.role) filter.role = req.query.role;
-  if (req.query.faculty) filter.faculty = req.query.faculty;
-  if (req.query.department) filter.department = req.query.department;
-  // Only return fields needed for chat
-  const users = await User.find(filter)
-    .select("username role faculty department _id profilePic active")
-    .sort({ createdAt: -1 });
-  res.json(users);
-});
-
-// Get single user (admin/superadmin)
-app.get("/api/users/:id", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) return res.status(404).json({ message: "User not found" });
-  res.json(user);
-});
-
-// Update user (edit/activate/deactivate, admin/superadmin)
-app.put("/api/users/:id", authenticate, authorizeRole("superadmin", "admin"), async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) return res.status(404).json({ message: "User not found" });
-  // Only allow updating allowed fields
-  if (req.body.username !== undefined) user.username = req.body.username;
-  if (req.body.faculty !== undefined) user.faculty = req.body.faculty;
-  if (req.body.department !== undefined) user.department = req.body.department;
-  if (req.body.active !== undefined) user.active = req.body.active;
-  await user.save();
-  res.json({ message: "User updated" });
-});
-
-// Remove admin (for superadmin)
-app.delete("/api/users/:id", authenticate, authorizeRole("superadmin"), async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user) return res.status(404).json({ message: "User not found" });
-  if (user.role !== "admin") return res.status(400).json({ message: "Only admins can be removed here" });
-  await User.findByIdAndDelete(req.params.id);
-  res.json({ message: "Admin removed" });
-});
-
 // --- Progress Endpoints (for students) ---
 app.post("/api/progress/save", authenticate, async (req, res) => {
   const { examSet, answers, answeredIds, currentQuestionIndex, timeRemaining, completed } = req.body;
@@ -272,7 +230,7 @@ app.use("/api/superadmin", superadminRoutes);
 // --- Main Features ---
 app.use("/api/questionsets", questionSetRoutes);
 app.use("/api/results", resultsRoutes);
-app.use("/api/schedules", scheduleRoutes); // <-- ensure this is used!
+app.use("/api/schedules", scheduleRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/adminstats", adminStatsRoutes);
 
