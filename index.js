@@ -16,7 +16,7 @@ import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import path from "path";
-
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 dotenv.config();
 
 // ===== ADD FACULTY & DEPARTMENT MODELS =====
