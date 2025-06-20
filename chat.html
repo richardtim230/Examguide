@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Messages | OAUExam Suite</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, viewport-fit=cover" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600,800&display=swap">
   <link rel="icon" href="logo.png">
   <style>
@@ -272,6 +272,7 @@
       word-break: break-word;
       min-width: 32px;
       max-width: 360px;
+      display: inline-block;
     }
     .chat-message-row.self .chat-message-bubble {
       background: #3a86ff;
@@ -308,7 +309,20 @@
       z-index: 3;
       min-width: 0;
       width: 100%;
+      align-items: center;
     }
+    .chat-attach-btn {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: #3a86ff;
+      margin-right: 6px;
+      cursor: pointer;
+      transition: color 0.15s;
+      padding: 4px 4px 4px 0;
+      outline: none;
+    }
+    .chat-attach-btn:active, .chat-attach-btn:focus { color: #8338ec; }
     .chat-input {
       flex: 1;
       border-radius: 8px;
@@ -340,6 +354,33 @@
       background: #b1c7ee;
       cursor: not-allowed;
       color: #fff;
+    }
+    .file-preview {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-left: 8px;
+      font-size: 0.97em;
+      color: #3a86ff;
+      max-width: 170px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-preview img {
+      max-height: 32px;
+      max-width: 32px;
+      border-radius: 4px;
+      vertical-align: middle;
+    }
+    .file-remove-btn {
+      background: none;
+      border: none;
+      color: #ff0033;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin-left: 4px;
+      padding: 0 4px;
     }
     /* Responsive */
     @media (max-width: 900px) {
@@ -476,9 +517,14 @@
     <main class="chat-content-area" id="mainChatArea">
       <div class="chat-content-header" id="chatContentHeader" style="display:none;"></div>
       <div class="chat-messages-area" id="chatMessages"></div>
-      <form class="chat-input-area" id="chatInputForm" style="display:none;">
+      <form class="chat-input-area" id="chatInputForm" style="display:none;" enctype="multipart/form-data">
+        <label for="chatFileInput" class="chat-attach-btn" title="Attach file">
+          <span>&#128206;</span>
+          <input type="file" id="chatFileInput" style="display:none;">
+        </label>
         <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="1000" autocomplete="off" />
         <button type="submit" class="chat-send-btn" id="sendBtn" disabled>Send</button>
+        <span class="file-preview" id="filePreview" style="display:none;"></span>
       </form>
     </main>
   </div>
@@ -492,6 +538,7 @@
     let activeOtherUserId = null;
     let pollingInterval = null;
     let lastMessageId = null;
+    let selectedFile = null;
 
     // Mobile sidebar controls
     const sidebar = document.getElementById("chatSidebar");
@@ -521,6 +568,20 @@
         return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]);
       });
     }
+    function humanFileSize(bytes) {
+      const thresh = 1024;
+      if (Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+      }
+      const units = ['KB','MB','GB','TB','PB','EB','ZB','YB'];
+      let u = -1;
+      do {
+        bytes /= thresh;
+        ++u;
+      } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+      return bytes.toFixed(1)+' '+units[u];
+    }
+
     // === LOAD CURRENT USER ===
     async function fetchProfile() {
       const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
@@ -554,14 +615,26 @@
       if (!resp.ok) return [];
       return await resp.json();
     }
-    // === SEND MESSAGE ===
-    async function sendMessage(otherUserId, text) {
-      const resp = await fetch(API_URL + "messages/" + otherUserId, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-        body: JSON.stringify({ text: text })
-      });
-      return resp.ok;
+    // === SEND MESSAGE (supports file) ===
+    async function sendMessage(otherUserId, text, file) {
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('text', text || "");
+        const resp = await fetch(API_URL + "messages/" + otherUserId + "/file", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + token },
+          body: formData
+        });
+        return resp.ok;
+      } else {
+        const resp = await fetch(API_URL + "messages/" + otherUserId, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+          body: JSON.stringify({ text: text })
+        });
+        return resp.ok;
+      }
     }
     // === RENDER CONVERSATIONS LIST ===
     async function renderConversations() {
@@ -603,12 +676,11 @@
         <img class="chat-content-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
         <span class="chat-content-username">${escapeHtml(user.username)}</span>
       `;
-      // Show/hide back button on mobile only
       document.getElementById("backToChatsBtn").onclick = function() {
         openSidebar();
       };
     }
-    // === RENDER MESSAGES ===
+    // === RENDER MESSAGES (supports file) ===
     async function renderMessages(otherUserId, scrollToBottom=true) {
       const messagesArea = document.getElementById("chatMessages");
       messagesArea.innerHTML = `<div style="padding:40px;color:#adb5bd;text-align:center;">Loading...</div>`;
@@ -626,10 +698,19 @@
         const user = usersCache[msg.from] || { username: "Unknown" };
         const row = document.createElement("div");
         row.className = "chat-message-row" + (isSelf ? " self" : "");
+        let bubbleContent = escapeHtml(msg.text);
+        // Display file if present
+        if (msg.file && msg.file.url) {
+          if (msg.file.mimetype && msg.file.mimetype.startsWith("image/")) {
+            bubbleContent += `<br><a href="${msg.file.url}" target="_blank"><img src="${msg.file.url}" alt="${escapeHtml(msg.file.originalname)}" style="max-width:120px;max-height:120px;border-radius:8px;box-shadow:0 1px 5px #3a86ff28"></a>`;
+          } else {
+            bubbleContent += `<br><a href="${msg.file.url}" target="_blank" style="color:#3a86ff;font-weight:600;text-decoration:underline;">${escapeHtml(msg.file.originalname)} (${humanFileSize(msg.file.size || 0)})</a>`;
+          }
+        }
         row.innerHTML = `
           <img class="chat-message-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
           <div>
-            <div class="chat-message-bubble">${escapeHtml(msg.text)}</div>
+            <div class="chat-message-bubble">${bubbleContent}</div>
             <div class="chat-message-meta">
               ${isSelf ? "You" : escapeHtml(user.username)}, ${new Date(msg.createdAt).toLocaleString()}
             </div>
@@ -651,17 +732,50 @@
       await renderMessages(otherUserId, true);
       document.getElementById("chatInput").focus();
     }
-    // === HANDLE SEND ===
-    document.getElementById("chatInput").addEventListener("input", function() {
-      document.getElementById("sendBtn").disabled = !this.value.trim();
+    // === FILE PREVIEW HANDLING ===
+    document.getElementById("chatFileInput").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      selectedFile = file;
+      const preview = document.getElementById("filePreview");
+      if (file) {
+        let html = "";
+        if (file.type.startsWith("image/")) {
+          const url = URL.createObjectURL(file);
+          html += `<img src="${url}" alt="Preview" onload="URL.revokeObjectURL('${url}')" />`;
+        } else {
+          html += "&#128206;";
+        }
+        html += ` <span>${escapeHtml(file.name)}</span> <span style="font-size:0.89em;color:#888;">(${humanFileSize(file.size)})</span>`;
+        html += ` <button class="file-remove-btn" type="button" title="Remove file" onclick="removeSelectedFile()">&#10005;</button>`;
+        preview.style.display = "";
+        preview.innerHTML = html;
+      } else {
+        preview.style.display = "none";
+        preview.innerHTML = "";
+      }
+      updateSendBtnState();
     });
+    window.removeSelectedFile = function () {
+      document.getElementById("chatFileInput").value = "";
+      selectedFile = null;
+      const preview = document.getElementById("filePreview");
+      preview.style.display = "none";
+      preview.innerHTML = "";
+      updateSendBtnState();
+    }
+    // === HANDLE SEND ===
+    function updateSendBtnState() {
+      document.getElementById("sendBtn").disabled = !(document.getElementById("chatInput").value.trim() || selectedFile);
+    }
+    document.getElementById("chatInput").addEventListener("input", updateSendBtnState);
     document.getElementById("chatInputForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const text = document.getElementById("chatInput").value.trim();
-      if (!text || !activeOtherUserId) return;
+      if (!(text || selectedFile) || !activeOtherUserId) return;
       document.getElementById("sendBtn").disabled = true;
-      await sendMessage(activeOtherUserId, text);
+      await sendMessage(activeOtherUserId, text, selectedFile);
       document.getElementById("chatInput").value = "";
+      removeSelectedFile();
       await renderMessages(activeOtherUserId, true);
       document.getElementById("sendBtn").disabled = false;
       document.getElementById("chatInput").focus();
@@ -691,12 +805,20 @@
             msgs.forEach(msg => {
               const isSelf = String(msg.from) === String(currentUser._id);
               const user = usersCache[msg.from] || { username: "Unknown" };
+              let bubbleContent = escapeHtml(msg.text);
+              if (msg.file && msg.file.url) {
+                if (msg.file.mimetype && msg.file.mimetype.startsWith("image/")) {
+                  bubbleContent += `<br><a href="${msg.file.url}" target="_blank"><img src="${msg.file.url}" alt="${escapeHtml(msg.file.originalname)}" style="max-width:120px;max-height:120px;border-radius:8px;box-shadow:0 1px 5px #3a86ff28"></a>`;
+                } else {
+                  bubbleContent += `<br><a href="${msg.file.url}" target="_blank" style="color:#3a86ff;font-weight:600;text-decoration:underline;">${escapeHtml(msg.file.originalname)} (${humanFileSize(msg.file.size || 0)})</a>`;
+                }
+              }
               const row = document.createElement("div");
               row.className = "chat-message-row" + (isSelf ? " self" : "");
               row.innerHTML = `
                 <img class="chat-message-avatar" src="${avatarUrl(user)}" alt="${escapeHtml(user.username)}" />
                 <div>
-                  <div class="chat-message-bubble">${escapeHtml(msg.text)}</div>
+                  <div class="chat-message-bubble">${bubbleContent}</div>
                   <div class="chat-message-meta">
                     ${isSelf ? "You" : escapeHtml(user.username)}, ${new Date(msg.createdAt).toLocaleString()}
                   </div>
