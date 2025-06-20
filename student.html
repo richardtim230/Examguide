@@ -624,10 +624,22 @@
     </table>
     <!-- Upcoming/scheduled tests -->
     <div class="section-title">Available Assessments</div>
-    <table class="test-table" id="availableTable">
-      <thead><tr><th>Test</th><th>Status</th><th>Action</th></tr></thead>
-      <tbody></tbody>
-    </table>
+<div id="testSpinner" style="display:none;text-align:center;padding:20px;">
+  <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
+</div>
+<table class="test-table" id="availableTable">
+  <thead>
+    <tr>
+      <th>Test</th>
+      <th>Description</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+  </table>
     <!-- Discussion/Help -->
     <div class="section-title">Need Academic Help?</div>
     <button class="btn" onclick="openDiscussion()">Go to Community Board</button>
@@ -1054,107 +1066,133 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     }
     // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
 async function fetchAvailableTests() {
-  // Assume `student` object is loaded with .faculty and .department fields
-  if (!student.faculty || !student.department) {
-    document.querySelector("#availableTable tbody").innerHTML =
-      "<tr><td colspan=3>Please complete your profile to see available assessments.</td></tr>";
-    document.getElementById("upcomingTest").innerText = "None";
-    document.getElementById("testCountdown").innerText = "";
-    return;
-  }
+  const spinner = document.getElementById("testSpinner");
+  const tbody = document.querySelector("#availableTable tbody");
+  spinner.style.display = "block";
+  tbody.innerHTML = ""; // Clear previous table content
 
-  const resp = await fetch(
-    API_URL +
-      `schedules?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
-    { headers: { Authorization: "Bearer " + token } }
-  );
-  const schedules = await resp.json();
-  let html = "";
-  let soonest = null;
-  let now = Date.now();
+  try {
+    // Defensive: ensure student object is loaded
+    if (!student.faculty || !student.department) {
+      spinner.style.display = "none";
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
+        Please complete your profile to see available assessments.</td></tr>`;
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+      return;
+    }
 
-  schedules.forEach((sched) => {
-    const set = sched.examSet;
-    if (!set || set.status !== "ACTIVE") return;
-
-    const taken = resultsCache.some((r) => r.examSet === set.title);
-    const start = sched.start ? new Date(sched.start).getTime() : null;
-    const end = sched.end ? new Date(sched.end).getTime() : null;
-    const canTake =
-      !taken &&
-      set.status === "ACTIVE" &&
-      start &&
-      now >= start &&
-      (!end || now <= end);
-
-    const isScheduled = start && now < start;
-    const statusLabel = taken
-      ? "Completed"
-      : canTake
-      ? "Available"
-      : isScheduled
-      ? "Scheduled"
-      : "Closed";
-
-    let btn = `<button class="btn" onclick="startTest('${set._id}')"
-      ${canTake ? "" : "disabled"}>${taken ? "Completed" : isScheduled ? "Not Yet Open" : "Start"}</button>`;
-
-    html += `<tr>
-      <td>${set.title}</td>
-      <td>${statusLabel}</td>
-      <td>${btn}</td>
-    </tr>`;
-
-    // Track soonest upcoming test (after now)
-    if (
-      set.status === "ACTIVE" &&
-      !taken &&
-      start &&
-      now < start &&
-      (!soonest || start < new Date(soonest.start).getTime())
-    )
-      soonest = { ...sched, examSet: set };
-  });
-
-  document.querySelector("#availableTable tbody").innerHTML =
-    html || "<tr><td colspan=3>No available assessments</td></tr>";
-
-  // Handle upcoming test display & countdown
-  if (
-    soonest &&
-    soonest.start &&
-    new Date(soonest.start).getTime() > now &&
-    soonest.examSet
-  ) {
-    nextTest = soonest.examSet;
-    nextTestStart = new Date(soonest.start).getTime();
-    document.getElementById("upcomingTest").innerText = soonest.examSet.title;
-    startCountdown();
-  } else if (schedules.length > 0) {
-    // Show first ACTIVE test as current if no upcoming scheduled
-    const firstAvailable = schedules.find(
-      (sched) => sched.examSet && sched.examSet.status === "ACTIVE"
+    const resp = await fetch(
+      API_URL +
+        `schedules?faculty=${encodeURIComponent(student.faculty)}&department=${encodeURIComponent(student.department)}`,
+      { headers: { Authorization: "Bearer " + token } }
     );
-    if (firstAvailable && firstAvailable.examSet)
-      document.getElementById("upcomingTest").innerText =
-        firstAvailable.examSet.title;
-    else document.getElementById("upcomingTest").innerText = "None";
-    document.getElementById("testCountdown").innerText = "";
-  } else {
+    const schedules = await resp.json();
+    spinner.style.display = "none";
+
+    if (!Array.isArray(schedules) || schedules.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
+        No available assessments at this time.</td></tr>`;
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+      return;
+    }
+
+    let html = "";
+    let soonest = null;
+    const now = Date.now();
+
+    schedules.forEach((sched) => {
+      const set = sched.examSet;
+      if (!set || set.status !== "ACTIVE") return;
+
+      const taken = resultsCache.some((r) => r.examSet === set.title);
+      const start = sched.start ? new Date(sched.start) : null;
+      const end = sched.end ? new Date(sched.end) : null;
+      const canTake =
+        !taken &&
+        set.status === "ACTIVE" &&
+        start &&
+        now >= start.getTime() &&
+        (!end || now <= end.getTime());
+
+      const isScheduled = start && now < start.getTime();
+
+      let statusLabel = taken
+        ? "Completed"
+        : canTake
+        ? "Available"
+        : isScheduled
+        ? "Scheduled"
+        : "Closed";
+
+      let btnHtml = canTake
+        ? `<button class="btn" onclick="startTest('${set._id}')">Start</button>`
+        : taken
+        ? `<span style="color:var(--muted);">Completed</span>`
+        : isScheduled
+        ? `<span style="color:var(--muted);">Not Yet Open</span>`
+        : `<span style="color:var(--muted);">Closed</span>`;
+
+      html += `<tr>
+        <td>${set.title}</td>
+        <td>${set.description ? set.description : "-"}</td>
+        <td>${start ? start.toLocaleString() : "-"}</td>
+        <td>${end ? end.toLocaleString() : "-"}</td>
+        <td>${statusLabel}</td>
+        <td>${btnHtml}</td>
+      </tr>`;
+
+      // Track soonest upcoming test (after now)
+      if (
+        set.status === "ACTIVE" &&
+        !taken &&
+        start &&
+        now < start.getTime() &&
+        (!soonest || start.getTime() < new Date(soonest.start).getTime())
+      ) {
+        soonest = { ...sched, examSet: set };
+      }
+    });
+
+    tbody.innerHTML =
+      html ||
+      `<tr><td colspan="6" style="text-align:center;color:#999;">
+        No available assessments at this time.</td></tr>`;
+
+    // Handle upcoming test display & countdown
+    if (
+      soonest &&
+      soonest.start &&
+      new Date(soonest.start).getTime() > now &&
+      soonest.examSet
+    ) {
+      nextTest = soonest.examSet;
+      nextTestStart = new Date(soonest.start).getTime();
+      document.getElementById("upcomingTest").innerText = soonest.examSet.title;
+      startCountdown();
+    } else if (schedules.length > 0) {
+      // Show first ACTIVE test as current if no upcoming scheduled
+      const firstAvailable = schedules.find(
+        (sched) => sched.examSet && sched.examSet.status === "ACTIVE"
+      );
+      if (firstAvailable && firstAvailable.examSet)
+        document.getElementById("upcomingTest").innerText =
+          firstAvailable.examSet.title;
+      else document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    } else {
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    }
+  } catch (err) {
+    spinner.style.display = "none";
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#f25f5c;">
+      Failed to load assessments.</td></tr>`;
     document.getElementById("upcomingTest").innerText = "None";
     document.getElementById("testCountdown").innerText = "";
   }
-}  
-/**
- * Starts and updates a countdown timer until the next test's start time.
- * Expects the following globals to be set:
- *   - nextTestStart: timestamp (ms) of the upcoming test
- *   - nextTest: object with at least a 'title' property
- * Also expects these elements in the DOM:
- *   - element with id="upcomingTest"
- *   - element with id="testCountdown"
- */
-function startCountdown() {
+}function startCountdown() {
   const countdownEl = document.getElementById("testCountdown");
   const testTitleEl = document.getElementById("upcomingTest");
   if (!nextTestStart || !countdownEl || !testTitleEl) return;
@@ -1164,7 +1202,6 @@ function startCountdown() {
     const diff = nextTestStart - now;
     if (diff <= 0) {
       countdownEl.innerText = "Test is now available!";
-      // Optionally update testTitleEl to indicate "Now Available"
       testTitleEl.innerText = nextTest.title + " (Now Available)";
       clearInterval(timer);
       return;
@@ -1185,7 +1222,7 @@ function startCountdown() {
   const timer = setInterval(updateCountdown, 1000);
 }
 
-    
+  
     // ========== REVIEW ========== 
     async function reviewResult(id) {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
