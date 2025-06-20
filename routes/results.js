@@ -5,22 +5,40 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-// Get all student results
+// Get all student results (admin only)
 router.get("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const results = await Result.find().populate("user", "username faculty department").sort({ submittedAt: -1 });
   res.json(results);
 });
 
-// Get results for a specific examSet
+// Get results for a specific examSet (admin only)
 router.get("/exam/:examSet", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const results = await Result.find({ examSet: req.params.examSet }).populate("user", "username");
   res.json(results);
 });
 
-// Get results for a specific student
+// Get all results for a specific student (that student)
 router.get("/user/:userId", authenticate, async (req, res) => {
+  // Only the user themselves or admin/superadmin can access
+  if (
+    req.user.role !== "admin" &&
+    req.user.role !== "superadmin" &&
+    req.user.id !== req.params.userId
+  ) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
   const results = await Result.find({ user: req.params.userId }).populate("user", "username");
   res.json(results);
+});
+
+// === ADD THIS ROUTE: Get the result for the logged-in user for a given examSet ===
+router.get("/", authenticate, async (req, res) => {
+  // /api/results?examSet=xxxx
+  const { examSet } = req.query;
+  if (!examSet) return res.status(400).json({ error: "Missing examSet" });
+  const result = await Result.findOne({ user: req.user.id, examSet }).populate("user", "username");
+  if (!result) return res.status(404).json({ error: "No result found" });
+  res.json({ result });
 });
 
 export default router;
