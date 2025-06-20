@@ -484,15 +484,22 @@
   </div>
   <script>
     // === CONFIG ===
-    const API_URL = "https://your-backend-service.onrender.com/api/";
+    const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
     let currentUser = "Guest";
     let examSet = "";
 
+    // --- Parse examSetId from URL ---
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    const examSetId = getQueryParam('examSet');
+
     // On load: authenticate user
     async function fetchCurrentUser() {
       if (!token) {
-        window.location.href = "index.html";
+        window.location.href = "mock.html";
         return;
       }
       try {
@@ -505,11 +512,11 @@
           document.getElementById('candidateName').innerText = "CANDIDATE: " + currentUser;
         } else {
           localStorage.removeItem('token');
-          window.location.href = "index.html";
+          window.location.href = "mock.html";
         }
       } catch (e) {
         localStorage.removeItem('token');
-        window.location.href = "index.html";
+        window.location.href = "mock.html";
       }
     }
     fetchCurrentUser();
@@ -538,7 +545,7 @@
     let answeredIds = [];
     let completed = false;
 
-    // Exam selection modal logic
+    // Exam selection modal logic (not used here, but kept for single page multi-exam use)
     function showExamSelectionModal(activeSets, proceedCallback) {
       const modal = document.getElementById('examSelectionModal');
       const btnsDiv = document.getElementById('examButtons');
@@ -588,21 +595,24 @@
     // Defer loading until instructions closed
     window._cbtLoadQuestions = async function loadQuestions(selectedExamSet = null) {
       if (!window._cbtReadyToStart) return;
+      if (!examSetId) {
+        document.getElementById("examTitle").textContent = "No Exam Selected";
+        document.getElementById("questionBox").innerHTML = "";
+        document.getElementById('navButtons').style.display = "none";
+        document.getElementById('noActiveSet').style.display = "";
+        document.getElementById("timer").innerText = "Error!";
+        return;
+      }
       try {
-        // --- In production, fetch questions from your API ---
-        const res = await fetch('main-questions.json');
-        if (!res.ok) throw new Error("Could not load questions");
-        const sets = await res.json();
-        let activeSets = sets.filter(set => set.status === "ACTIVE");
-        if (!selectedExamSet && activeSets.length > 1) {
-          showExamSelectionModal(activeSets, (chosenSet) => {
-            window._cbtLoadQuestions(chosenSet);
-          });
-          return;
-        }
-        const activeSet = selectedExamSet || activeSets[0];
+        // Fetch the exam set and its questions from your API
+        const res = await fetch(`${API_URL}questionsets/${examSetId}`, {
+          headers: { Authorization: "Bearer " + token }
+        });
+        if (!res.ok) throw new Error("Could not load exam set");
+        const activeSet = await res.json();
+
         if (!activeSet || !activeSet.questions || activeSet.questions.length === 0) {
-          document.getElementById("examTitle").textContent = "No Active Exam";
+          document.getElementById("examTitle").textContent = "No Questions Found";
           document.getElementById("questionBox").innerHTML = "";
           document.getElementById('navButtons').style.display = "none";
           document.getElementById('noActiveSet').style.display = "";
