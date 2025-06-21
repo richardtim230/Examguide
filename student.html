@@ -1075,10 +1075,12 @@
   <table class="result-table" id="historyTable">
     <thead>
       <tr>
-        <th>Test</th>
-        <th>Date</th>
-        <th>Score</th>
-        <th>Review</th>
+        <td>Test</td>
+        <td>Date</td>
+        <td>Score</td>
+        <td>
+    <button onclick="openReviewTab('${result._id}')">Review</button>
+  </td>
       </tr>
     </thead>
     <tbody>
@@ -1562,6 +1564,9 @@ async function fetchHistory() {
 
   recommendTopics();
 }
+    function openReviewTab(sessionId) {
+  window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
+    }
     // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
 async function fetchAvailableTests() {
   const spinner = document.getElementById("testSpinner");
