@@ -8,7 +8,7 @@ import fs from "fs";
 
 const router = express.Router();
 
-// Set up multer for image uploads (store in /uploads/notifications/)
+// Multer setup with 5MB limit for images
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadPath = path.join("uploads", "notifications");
@@ -16,11 +16,13 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
-    // Unique name: timestamp + original name
     cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "_"));
   }
 });
-const upload = multer({ storage });
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
 
 // CREATE notification (support image)
 router.post(
@@ -30,7 +32,11 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
+      // Parse fields (FormData or JSON)
       const { title, message, sentTo } = req.body;
+      if (!title || !message) {
+        return res.status(400).json({ message: "Title and message are required." });
+      }
       let recipients = [];
       if (sentTo && sentTo.length > 0) {
         recipients = Array.isArray(sentTo) ? sentTo : [sentTo];
@@ -73,7 +79,7 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 
-// EDIT notification (support image)
+// EDIT notification (support image or just text)
 router.put(
   "/:id",
   authenticate,
@@ -96,7 +102,7 @@ router.put(
       notif.message = req.body.message ?? notif.message;
 
       if (req.file) {
-        // Optionally delete old file here if you want
+        // Delete old image if exists
         if (notif.imageUrl) {
           const oldPath = path.join(process.cwd(), notif.imageUrl);
           if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
@@ -130,7 +136,7 @@ router.delete(
         return res.status(403).json({ message: "Forbidden" });
       }
 
-      // Optionally delete image file from disk
+      // Delete image file if exists
       if (notif.imageUrl) {
         const filePath = path.join(process.cwd(), notif.imageUrl);
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
