@@ -962,68 +962,8 @@ async function submitEditNotif(id) {
   }, 900);
 }
 
-// ========== MODALS ==========
-// add support for image upload in new message
-if (type === "sendNotifModal") {
-  html = `
-  <div class="modal-backdrop" onclick="closeModal(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-      <button class="close-modal" onclick="closeModal(event)">&times;</button>
-      <h2>Send Announcement</h2>
-      <label>Title</label>
-      <input id="notifTitle" type="text" maxlength="40">
-      <label>Message</label>
-      <textarea id="notifMsg" maxlength="300"></textarea>
-      <label>Attach Image (optional)</label>
-      <input id="notifImg" type="file" accept="image/*">
-      <span id="sendNotifMsg"></span>
-      <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
-      <button class="btn" onclick="submitSendNotif()">Send</button>
-    </div>
-  </div>`;
-}
 
-async function submitSendNotif() {
-  const title = document.getElementById("notifTitle").value.trim();
-  const message = document.getElementById("notifMsg").value.trim();
-  const imageFile = document.getElementById("notifImg").files[0];
-  const spinner = document.getElementById("sendNotifSpinner");
-  const msg = document.getElementById("sendNotifMsg");
-  msg.innerText = ""; msg.className = "";
-  if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
-  spinner.style.display = "inline-block";
 
-  let body, headers;
-  if (imageFile) {
-    body = new FormData();
-    body.append("title", title);
-    body.append("message", message);
-    body.append("image", imageFile);
-    headers = { Authorization: "Bearer " + token };
-  } else {
-    body = JSON.stringify({ title, message });
-    headers = { "Content-Type": "application/json", Authorization: "Bearer " + token };
-  }
-
-  const resp = await fetch(API_URL + "notifications", {
-    method: "POST",
-    headers,
-    body
-  });
-  spinner.style.display = "none";
-  if (!resp.ok) {
-    const data = await resp.json();
-    msg.innerText = data.message || "Failed to send.";
-    msg.className = "error-msg";
-    return;
-  }
-  msg.innerText = "Sent!";
-  msg.className = "success-msg";
-  setTimeout(() => {
-    fetchNotifications();
-    closeModal();
-  }, 900);
-}
 
 
     // ========== MODALS ==========
@@ -1109,6 +1049,25 @@ async function submitSendNotif() {
           </div>
         </div>`;
       }
+      // add support for image upload in new message
+if (type === "sendNotifModal") {
+  html = `
+  <div class="modal-backdrop" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="close-modal" onclick="closeModal(event)">&times;</button>
+      <h2>Send Announcement</h2>
+      <label>Title</label>
+      <input id="notifTitle" type="text" maxlength="40">
+      <label>Message</label>
+      <textarea id="notifMsg" maxlength="300"></textarea>
+      <label>Attach Image (optional)</label>
+      <input id="notifImg" type="file" accept="image/*">
+      <span id="sendNotifMsg"></span>
+      <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
+      <button class="btn" onclick="submitSendNotif()">Send</button>
+    </div>
+  </div>`;
+}
       if (type === "bulkUploadModal") {
         html = `
         <div class="modal-backdrop" onclick="closeModal(event)">
@@ -1186,23 +1145,6 @@ function populateScheduleDepartments() {
 }
 
 
-      if (type === "sendNotifModal") {
-        html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Send Announcement</h2>
-            <label>Title</label>
-            <input id="notifTitle" type="text" maxlength="40">
-            <label>Message</label>
-            <textarea id="notifMsg" maxlength="300"></textarea>
-            <span id="sendNotifMsg"></span>
-            <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitSendNotif()">Send</button>
-          </div>
-        </div>`;
-      }
-      document.getElementById("modalRoot").innerHTML = html;
 
       // Populate set dropdowns in modals
       if (type === "addQuestionModal" || type === "bulkUploadModal") {
@@ -1423,38 +1365,51 @@ function populateScheduleDepartments() {
   }, 900);
 }
     async function submitSendNotif() {
-      const title = document.getElementById("notifTitle").value.trim();
-      const message = document.getElementById("notifMsg").value.trim();
-      const msg = document.getElementById("sendNotifMsg");
-      const spinner = document.getElementById("sendNotifSpinner");
-      msg.innerText = "";
-      msg.className = "";
-      if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
-      spinner.style.display = "inline-block";
-      const resp = await fetch(API_URL + "notifications", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-        body: JSON.stringify({ title, message })
-      });
-      spinner.style.display = "none";
-      if (!resp.ok) {
-        const data = await resp.json();
-        msg.innerText = data.message || "Failed to send.";
-        msg.className = "error-msg";
-        return;
-      }
-      msg.innerText = "Successfully loaded!";
-      msg.className = "success-msg";
-      setTimeout(() => {
-        fetchNotifications();
-        closeModal();
-      }, 900);
-    }
+  const title = document.getElementById("notifTitle").value.trim();
+  const message = document.getElementById("notifMsg").value.trim();
+  const imageFile = document.getElementById("notifImg").files[0];
+  const spinner = document.getElementById("sendNotifSpinner");
+  const msg = document.getElementById("sendNotifMsg");
+  msg.innerText = ""; msg.className = "";
+  if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+  spinner.style.display = "inline-block";
+
+  let body, headers;
+  if (imageFile) {
+    body = new FormData();
+    body.append("title", title);
+    body.append("message", message);
+    body.append("image", imageFile);
+    headers = { Authorization: "Bearer " + token };
+  } else {
+    body = JSON.stringify({ title, message });
+    headers = { "Content-Type": "application/json", Authorization: "Bearer " + token };
+  }
+
+  const resp = await fetch(API_URL + "notifications", {
+    method: "POST",
+    headers,
+    body
+  });
+  spinner.style.display = "none";
+  if (!resp.ok) {
+    const data = await resp.json();
+    msg.innerText = data.message || "Failed to send.";
+    msg.className = "error-msg";
+    return;
+  }
+  msg.innerText = "Sent!";
+  msg.className = "success-msg";
+  setTimeout(() => {
+    fetchNotifications();
+    closeModal();
+  }, 900);
+}
 
     // ========== AUTH & LOGOUT ==========
     function logout() {
       localStorage.removeItem("token");
-      window.location.href = "index.html";
+      window.location.href = "mock.html";
     }
 
     // ========== INIT ==========
