@@ -962,26 +962,7 @@ async function submitEditNotif(id) {
   }, 900);
 }
 // ========== MODALS ==========
-// add support for image upload in new message
-if (type === "sendNotifModal") {
-  html = `
-  <div class="modal-backdrop" onclick="closeModal(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-      <button class="close-modal" onclick="closeModal(event)">&times;</button>
-      <h2>Send Announcement</h2>
-      <label>Title</label>
-      <input id="notifTitle" type="text" maxlength="40">
-      <label>Message</label>
-      <textarea id="notifMsg" maxlength="300"></textarea>
-      <label>Attach Image (optional)</label>
-      <input id="notifImg" type="file" accept="image/*">
-      <span id="sendNotifMsg"></span>
-      <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
-      <button class="btn" onclick="submitSendNotif()">Send</button>
-    </div>
-  </div>`;
-}
-    
+
     // ========== MODALS ==========
     function openModal(type) {
       let html = "";
@@ -1065,7 +1046,26 @@ if (type === "sendNotifModal") {
           </div>
         </div>`;
       }
-
+// add support for image upload in new message
+if (type === "sendNotifModal") {
+  html = `
+  <div class="modal-backdrop" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="close-modal" onclick="closeModal(event)">&times;</button>
+      <h2>Send Announcement</h2>
+      <label>Title</label>
+      <input id="notifTitle" type="text" maxlength="40">
+      <label>Message</label>
+      <textarea id="notifMsg" maxlength="300"></textarea>
+      <label>Attach Image (optional)</label>
+      <input id="notifImg" type="file" accept="image/*">
+      <span id="sendNotifMsg"></span>
+      <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
+      <button class="btn" onclick="submitSendNotif()">Send</button>
+    </div>
+  </div>`;
+}
+    
       if (type === "bulkUploadModal") {
         html = `
         <div class="modal-backdrop" onclick="closeModal(event)">
