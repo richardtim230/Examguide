@@ -778,6 +778,188 @@
         <ul class="recommend-list" id="recommendations"></ul>
       </div>
     </div>
+  <!-- Add this HTML snippet to your modal root, or inject via JS to show the schedule modal -->
+<div class="schedule-modal-backdrop" onclick="closeModal(event)">
+  <div class="schedule-modal" onclick="event.stopPropagation()">
+    <button class="schedule-modal-close" onclick="closeModal(event)" title="Close">&times;</button>
+    <div class="schedule-cover">
+      <img src="schedule-cover.jpg" alt="Schedule Cover" class="schedule-cover-img" />
+      <div class="schedule-cover-overlay">
+        <div class="schedule-main-title">Current Scheduled Assessment</div>
+      </div>
+    </div>
+    <div class="schedule-content">
+      <div class="schedule-info">
+        <div class="schedule-title" id="schedTitle">Test Title Here</div>
+        <div class="schedule-desc" id="schedDesc">Short description about the test or any important info for the candidate goes here.</div>
+        <div class="schedule-detail-grid">
+          <div>
+            <span class="sched-label">Start:</span>
+            <span id="schedStart">-</span>
+          </div>
+          <div>
+            <span class="sched-label">End:</span>
+            <span id="schedEnd">-</span>
+          </div>
+          <div>
+            <span class="sched-label">Status:</span>
+            <span id="schedStatus">-</span>
+          </div>
+        </div>
+      </div>
+      <div id="schedStartBtnWrap" style="text-align:center;margin-top:2em;">
+        <!-- Conditionally render button below -->
+        <button class="schedule-start-btn" id="schedStartBtn" style="display:none;" onclick="startTest(currentSchedId);">Start Assessment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.schedule-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(58,134,255,0.21);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.schedule-modal {
+  width: 80vw;
+  max-width: 700px;
+  min-width: 320px;
+  max-height: 85vh;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 10px 45px #3a86ff33;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: popIn 0.22s;
+}
+@keyframes popIn {
+  from { transform: scale(0.92) translateY(30px); opacity: 0.3;}
+  to { transform: scale(1) translateY(0); opacity: 1;}
+}
+.schedule-modal-close {
+  position: absolute;
+  top: 13px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  color: #fff;
+  z-index: 11;
+  cursor: pointer;
+  opacity: 0.93;
+  transition: color 0.17s;
+}
+.schedule-modal-close:hover { color: var(--danger);}
+.schedule-cover {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #e7f0fa;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+.schedule-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.92) blur(0.5px);
+  pointer-events: none;
+  user-select: none;
+}
+.schedule-cover-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 0 22px 0;
+  background: linear-gradient(0deg, #3a86ffbb 60%, #3a86ff11 95%);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+}
+.schedule-main-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 15px #3a86ff66;
+}
+.schedule-content {
+  padding: 30px 6vw 34px 6vw;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+}
+.schedule-info {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+.schedule-title {
+  font-size: 1.17rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.schedule-desc {
+  color: #455c8a;
+  font-size: 1.02em;
+  margin-bottom: 16px;
+}
+.schedule-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  background: #f8faff;
+  border-radius: 12px;
+  padding: 16px 10px;
+  margin-bottom: 9px;
+  font-size: 1.03em;
+  color: #354a6c;
+  font-weight: 600;
+}
+.sched-label {
+  color: var(--accent);
+  font-weight: 700;
+  margin-right: 5px;
+}
+.schedule-start-btn {
+  margin: 0 auto;
+  display: inline-block;
+  padding: 13px 44px;
+  font-size: 1.13rem;
+  font-weight: 700;
+  border-radius: 12px;
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 15px #3a86ff15;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.schedule-start-btn:hover {
+  background: var(--gradient-accent);
+  color: #23366e;
+}
+@media (max-width: 900px) {
+  .schedule-modal { width: 95vw; }
+}
+@media (max-width: 650px) {
+  .schedule-modal { width: 98vw; min-width: 0; }
+  .schedule-content { padding: 18px 2vw 16px 2vw;}
+  .schedule-cover { height: 120px; }
+  .schedule-main-title { font-size: 1.02rem;}
+  .schedule-modal-close { font-size: 2rem; right: 13px; }
+}
+</style>
     <!-- Announcements & Messaging -->
     <div class="announcement" id="announcementsPanel"></div>
     <!-- Test History with Review -->
@@ -1427,7 +1609,47 @@ async function fetchAvailableTests() {
   const timer = setInterval(updateCountdown, 1000);
 }
 
-  
+  // Example function to show the modal with schedule info
+// Call showScheduleModal(scheduleObj) where scheduleObj is the current schedule object
+
+let currentSchedId = null;
+
+function showScheduleModal(schedule) {
+  currentSchedId = schedule.examSet._id; // Used for Start button
+  // Fill modal info
+  document.getElementById("schedTitle").innerText = schedule.examSet.title || "-";
+  document.getElementById("schedDesc").innerText = schedule.examSet.description || "No description provided.";
+  document.getElementById("schedStart").innerText = schedule.start ? new Date(schedule.start).toLocaleString() : "-";
+  document.getElementById("schedEnd").innerText = schedule.end ? new Date(schedule.end).toLocaleString() : "-";
+  // Status logic
+  const now = Date.now();
+  let status = "Closed";
+  if (schedule.examSet.status === "ACTIVE") {
+    if (schedule.start && now < new Date(schedule.start).getTime()) status = "Scheduled";
+    else if (
+      schedule.start &&
+      schedule.end &&
+      now >= new Date(schedule.start).getTime() &&
+      now <= new Date(schedule.end).getTime()
+    ) status = "Available";
+    else if (schedule.end && now > new Date(schedule.end).getTime()) status = "Closed";
+  }
+  document.getElementById("schedStatus").innerText = status;
+
+  // Show/hide start button
+  const taken = window.resultsCache?.some(r => r.examSet === schedule.examSet.title); // Used in your app
+  if (
+    status === "Available" &&
+    !taken
+  ) {
+    document.getElementById("schedStartBtn").style.display = "inline-block";
+  } else {
+    document.getElementById("schedStartBtn").style.display = "none";
+  }
+
+  // Insert modal into DOM (if not already)
+  document.getElementById("modalRoot").innerHTML = document.querySelector('.schedule-modal-backdrop').outerHTML;
+}
     // ========== REVIEW ========== 
     async function reviewResult(id) {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
