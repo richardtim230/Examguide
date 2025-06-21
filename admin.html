@@ -6,9 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
   <link rel="icon" href="logo.png">
-  <!-- PLACEHOLDER FOR YOUR CSS STYLESHEET -->
-  <style> 
-  :root {
+  <style>
+    :root {
   --primary: #0055b7;
   --accent: #00c6ff;
   --accent2: #0072ff;
@@ -359,8 +358,9 @@ body {
 @media (max-width: 600px) {
   .dashboard-cards, .section { padding: 0 2vw 0 2vw;}
   .dashboard-card { min-width: 130px; padding: 17px 8px;}
-  }
+}
   </style>
+  <!-- CSS is excluded as per request -->
 </head>
 <body>
   <!-- Sidebar -->
@@ -417,10 +417,10 @@ body {
         <div class="card-icon">⏰</div>
       </div>
       <div class="dashboard-card">
-  <div class="card-label">Students</div>
-  <div class="card-value" id="studentCount">0</div>
-  <div class="card-icon">👥</div>
-  </div>
+        <div class="card-label">Students</div>
+        <div class="card-value" id="studentCount">0</div>
+        <div class="card-icon">👥</div>
+      </div>
     </div>
     <!-- SECTIONS -->
     <div class="section" id="dashboardSection">
@@ -505,41 +505,39 @@ body {
         <tbody></tbody>
       </table>
     </div>
-    <!-- Notifications -->
-    <!-- Notifications Section (replace the old notifications table in admin.html) -->
-<div class="section" id="notificationsSection" style="display:none;">
-  <div class="section-title">Send Announcement</div>
-  <div class="actions">
-    <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
-  </div>
-  <table class="data-table" id="notificationsTable">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Message</th>
-        <th>Image</th>
-        <th>Sent</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-  <!-- Students Management Section -->
-<div class="section" id="studentsSection" style="display:none;">
-  <div class="section-title">Manage Students</div>
-  <table class="data-table" id="studentsTable">
-    <thead>
-      <tr>
-        <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+    <!-- Notifications Section -->
+    <div class="section" id="notificationsSection" style="display:none;">
+      <div class="section-title">Send Announcement</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
+      </div>
+      <table class="data-table" id="notificationsTable">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Image</th>
+            <th>Sent</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Students Management Section -->
+    <div class="section" id="studentsSection" style="display:none;">
+      <div class="section-title">Manage Students</div>
+      <table class="data-table" id="studentsTable">
+        <thead>
+          <tr>
+            <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
   <div id="modalRoot"></div>
-  
   <script>
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
@@ -562,39 +560,42 @@ body {
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
+    function getDepartmentName(deptId) {
+      const d = departments.find(d => d._id === deptId);
+      return d ? d.name : "";
+    }
 
+    // ========== Students ==========
+    async function fetchStudents() {
+      const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+      let users = [];
+      try {
+        users = await resp.json();
+      } catch { users = []; }
+      let html = "";
+      users.forEach(u => {
+        html += `<tr>
+          <td>${u.fullname || u.username || '-'}</td>
+          <td>${u.username || '-'}</td>
+          <td>${u.faculty || '-'}</td>
+          <td>${u.department || '-'}</td>
+          <td>
+            <span style="color:${u.active === false ? '#ff3b47':'#25d366'};font-weight:700;">
+              ${u.active === false ? 'Inactive':'Active'}
+            </span>
+          </td>
+          <td>
+            <button class="action-btn" onclick="viewStudent('${u._id}')">View</button>
+            <button class="action-btn" onclick="editStudent('${u._id}')">Edit</button>
+            <button class="action-btn" onclick="toggleStudentStatus('${u._id}', ${u.active !== false})">
+              ${u.active === false ? 'Activate':'Deactivate'}
+            </button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#studentsTable tbody").innerHTML = html;
+    }
 
-// Students table
-async function fetchStudents() {
-  const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-  let users = [];
-  try {
-    // Our API returns an array!
-    users = await resp.json();
-  } catch { users = []; }
-  let html = "";
-  users.forEach(u => {
-    html += `<tr>
-      <td>${u.fullname || u.username || '-'}</td>
-      <td>${u.username || '-'}</td>
-      <td>${u.faculty || '-'}</td>
-      <td>${u.department || '-'}</td>
-      <td>
-        <span style="color:${u.active === false ? '#ff3b47':'#25d366'};font-weight:700;">
-          ${u.active === false ? 'Inactive':'Active'}
-        </span>
-      </td>
-      <td>
-        <button class="action-btn" onclick="viewStudent('${u._id}')">View</button>
-        <button class="action-btn" onclick="editStudent('${u._id}')">Edit</button>
-        <button class="action-btn" onclick="toggleStudentStatus('${u._id}', ${u.active !== false})">
-          ${u.active === false ? 'Activate':'Deactivate'}
-        </button>
-      </td>
-    </tr>`;
-  });
-  document.querySelector("#studentsTable tbody").innerHTML = html;
-}
     // ========== UX NAVIGATION ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
@@ -609,154 +610,31 @@ async function fetchStudents() {
     }
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
-// Dashboard card student count
-async function fetchDashboardCounts() {
-  // Fetch question sets
-  const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
-  const sets = await resp.json();
-  document.getElementById("qSetCount").innerText = sets.length;
-  let qCount = 0;
-  sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
-  document.getElementById("questionCount").innerText = qCount;
 
-  // Fetch results
-  const resp2 = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
-  const results = await resp2.json();
-  document.getElementById("resultCount").innerText = results.length;
+    // ========== Dashboard Counts ==========
+    async function fetchDashboardCounts() {
+      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+      const sets = await resp.json();
+      document.getElementById("qSetCount").innerText = sets.length;
+      let qCount = 0;
+      sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
+      document.getElementById("questionCount").innerText = qCount;
 
-  // Fetch schedules
-  const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
-  const schedules = await resp3.json();
-  document.getElementById("scheduleCount").innerText = schedules.length;
+      const resp2 = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+      const results = await resp2.json();
+      document.getElementById("resultCount").innerText = results.length;
 
-  // Fetch students (API returns array!)
-  const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-  let students = [];
-  try {
-    students = await resp4.json();
-  } catch {
-    students = [];
-  }
-  document.getElementById("studentCount").innerText = students.length;
-}
+      const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+      const schedules = await resp3.json();
+      document.getElementById("scheduleCount").innerText = schedules.length;
 
-async function viewStudent(id) {
-  const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
-  if (!resp.ok) {
-    alert("Could not load student: " + resp.statusText);
-    return;
-  }
-  const u = await resp.json();
-  let html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Student Profile</h2>
-        <label>Full Name</label>
-        <input value="${u.fullname || ''}" disabled>
-        <label>Username</label>
-        <input value="${u.username || ''}" disabled>
-        <label>Faculty</label>
-        <input value="${u.faculty || ''}" disabled>
-        <label>Department</label>
-        <input value="${u.department || ''}" disabled>
-        <label>Status</label>
-        <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
-        <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-}
-
-async function editStudent(id) {
-  try {
-    const resp = await fetch(API_URL + "users/" + id, {
-      headers: { Authorization: "Bearer " + token }
-    });
-    if (!resp.ok) {
-      alert("Could not load student: " + resp.statusText);
-      return;
+      const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+      let students = [];
+      try { students = await resp4.json(); } catch { students = []; }
+      document.getElementById("studentCount").innerText = students.length;
     }
-    const u = await resp.json();
-    let html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Edit Profile</h2>
-          <label>Username</label>
-          <input id="editStudentUsername" value="${u.username || ''}">
-          <label>Faculty</label>
-          <input id="editStudentFaculty" value="${u.faculty || ''}">
-          <label>Department</label>
-          <input id="editStudentDepartment" value="${u.department || ''}">
-          <label>Status</label>
-          <select id="editStudentStatus">
-            <option value="active"${u.active !== false ? ' selected' : ''}>Active</option>
-            <option value="inactive"${u.active === false ? ' selected' : ''}>Inactive</option>
-          </select>
-          <div id="editStudentMsg" style="color:#b22;margin-top:7px;"></div>
-          <button class="btn" id="saveStudentBtn">Save</button>
-        </div>
-      </div>`;
-    document.getElementById("modalRoot").innerHTML = html;
-    // Bind save button after modal is loaded
-    document.getElementById("saveStudentBtn").onclick = () => submitEditStudent(id);
-  } catch (e) {
-    alert("Could not load student profile.");
-  }
-}
 
-async function submitEditStudent(id) {
-  const msg = document.getElementById("editStudentMsg");
-  const username = document.getElementById("editStudentUsername").value.trim();
-  const faculty = document.getElementById("editStudentFaculty").value.trim();
-  const department = document.getElementById("editStudentDepartment").value.trim();
-  const status = document.getElementById("editStudentStatus").value === "active";
-  msg.textContent = "";
-  try {
-    const resp = await fetch(API_URL + "users/" + id, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-      body: JSON.stringify({ username, faculty, department, active: status })
-    });
-    const resJson = await resp.json();
-    if (!resp.ok) {
-      msg.textContent = resJson.message || "Update failed.";
-      return;
-    }
-    closeModal();
-    fetchStudents();
-  } catch (e) {
-    msg.textContent = "Network error.";
-  }
-}
-
-async function toggleStudentStatus(id, currentlyActive) {
-  try {
-    const resp = await fetch(API_URL + "users/" + id, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-      body: JSON.stringify({ active: !currentlyActive })
-    });
-    if (!resp.ok) {
-      const resJson = await resp.json();
-      alert(resJson.message || "Failed to update status.");
-    }
-    fetchStudents();
-  } catch (e) {
-    alert("Network error.");
-  }
-}
-
-// Modal close helper
-function closeModal(e) {
-  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
-    document.getElementById("modalRoot").innerHTML = "";
-  }
-}
-
-
-    // ========== QUESTION SETS ==========
+    // ========== Question Sets ==========
     async function fetchSets() {
       const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
       const sets = await resp.json();
@@ -775,13 +653,8 @@ function closeModal(e) {
         </tr>`;
       });
       document.querySelector("#setsTable tbody").innerHTML = html;
-      // For question select
       let setOpts = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
       document.getElementById("qSetSelect").innerHTML = setOpts;
-    }
-    function getDepartmentName(deptId) {
-      const d = departments.find(d => d._id === deptId);
-      return d ? d.name : "";
     }
     async function deleteSet(id) {
       if (!confirm("Delete this set?")) return;
@@ -793,7 +666,7 @@ function closeModal(e) {
       alert("Editing question set not implemented in this mockup.");
     }
 
-    // ========== QUESTIONS ==========
+    // ========== Questions ==========
     let questionsGlobal = [];
     async function fetchQuestions() {
       const setId = document.getElementById("qSetSelect").value;
@@ -827,7 +700,7 @@ function closeModal(e) {
       alert("Question editing not implemented in this mockup.");
     }
 
-    // ========== RESULTS ==========
+    // ========== Results ==========
     async function fetchResults() {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
       const results = await resp.json();
@@ -843,7 +716,7 @@ function closeModal(e) {
       document.querySelector("#resultsTable tbody").innerHTML = html;
     }
 
-    // ========== SCHEDULES ==========
+    // ========== Schedules ==========
     async function fetchSchedules() {
       const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
       const schedules = await resp.json();
@@ -858,319 +731,251 @@ function closeModal(e) {
       document.querySelector("#schedulesTable tbody").innerHTML = html;
     }
 
-
-
-// ========== NOTIFICATIONS ==========
-// Modified to include image and actions
-async function fetchNotifications() {
-  const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
-  const notifs = await resp.json();
-  let html = "";
-  notifs.forEach(n => {
-    html += `<tr>
-      <td>${n.title}</td>
-      <td>${n.message}</td>
-      <td>${n.imageUrl ? `<img src="${n.imageUrl}" alt="img" style="max-width:60px;max-height:60px;border-radius:4px;">` : ""}</td>
-      <td>${(new Date(n.createdAt)).toLocaleString()}</td>
-      <td>
-        <button class="action-btn" onclick="editNotif('${n._id}')">Edit</button>
-        <button class="action-btn" onclick="deleteNotif('${n._id}')">Delete</button>
-      </td>
-    </tr>`;
-  });
-  document.querySelector("#notificationsTable tbody").innerHTML = html;
-}
-
-// Handle deleting a notification
-async function deleteNotif(id) {
-  if (!confirm("Delete this message?")) return;
-  await fetch(API_URL + "notifications/" + id, {
-    method: "DELETE",
-    headers: { Authorization: "Bearer " + token }
-  });
-  fetchNotifications();
-}
-
-// Handle editing a notification
-async function editNotif(id) {
-  // Fetch notification details
-  const resp = await fetch(API_URL + "notifications/" + id, { headers: { Authorization: "Bearer " + token } });
-  if (!resp.ok) { alert("Could not load message."); return; }
-  const n = await resp.json();
-
-  // Show edit modal
-  let html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Edit Announcement</h2>
-        <label>Title</label>
-        <input id="editNotifTitle" type="text" maxlength="40" value="${n.title}">
-        <label>Message</label>
-        <textarea id="editNotifMsg" maxlength="300">${n.message}</textarea>
-        <label>Image (Leave blank to keep current)</label>
-        <input id="editNotifImg" type="file" accept="image/*">
-        ${n.imageUrl ? `<img src="${n.imageUrl}" style="max-width:80px;display:block;margin:5px 0">` : ""}
-        <span id="editNotifMsgEl"></span>
-        <span class="spinner" id="editNotifSpinner" style="display:none"></span>
-        <button class="btn" onclick="submitEditNotif('${n._id}')">Save</button>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-}
-
-async function submitEditNotif(id) {
-  const title = document.getElementById("editNotifTitle").value.trim();
-  const message = document.getElementById("editNotifMsg").value.trim();
-  const imageFile = document.getElementById("editNotifImg").files[0];
-  const spinner = document.getElementById("editNotifSpinner");
-  const msg = document.getElementById("editNotifMsgEl");
-  msg.innerText = ""; msg.className = "";
-  if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
-  spinner.style.display = "inline-block";
-
-  let body, headers;
-
-  if (imageFile) {
-    body = new FormData();
-    body.append("title", title);
-    body.append("message", message);
-    body.append("image", imageFile);
-    headers = { Authorization: "Bearer " + token };
-  } else {
-    body = JSON.stringify({ title, message });
-    headers = { "Content-Type": "application/json", Authorization: "Bearer " + token };
-  }
-
-  const resp = await fetch(API_URL + "notifications/" + id, {
-    method: "PUT",
-    headers,
-    body
-  });
-  spinner.style.display = "none";
-  if (!resp.ok) {
-    const data = await resp.json();
-    msg.innerText = data.message || "Failed to edit message.";
-    msg.className = "error-msg";
-    return;
-  }
-  msg.innerText = "Edited!";
-  msg.className = "success-msg";
-  setTimeout(() => {
-    fetchNotifications();
-    closeModal();
-  }, 900);
-}
-// ========== MODALS ==========
-
-function openModal(type) {
-  let html = "";
-
-  if (type === "addFacultyModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Add Faculty</h2>
-          <label>Faculty Name</label>
-          <input id="facultyName" type="text" maxlength="64">
-          <span id="addFacultyMsg"></span>
-          <span class="spinner" id="addFacultySpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddFaculty()">Create</button>
-        </div>
-      </div>`;
-  }
-
-  if (type === "addDepartmentModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Add Department</h2>
-          <label>Department Name</label>
-          <input id="departmentName" type="text" maxlength="64">
-          <label>Faculty</label>
-          <select id="departmentFaculty">
-            ${faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('')}
-          </select>
-          <span id="addDeptMsg"></span>
-          <span class="spinner" id="addDeptSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddDepartment()">Create</button>
-        </div>
-      </div>`;
-  }
-
-  if (type === "addSetModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>New Question Set</h2>
-          <label>Title</label>
-          <input id="setTitle" type="text" maxlength="48">
-          <label>Faculty</label>
-          <select id="setFaculty" onchange="populateDepartmentsDropdown()">
-            <option value="">Select faculty</option>
-            ${faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('')}
-          </select>
-          <label>Department</label>
-          <select id="setDepartment">
-            <option value="">Select department</option>
-          </select>
-          <label>Status</label>
-          <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
-          <span id="addSetMsg"></span>
-          <span class="spinner" id="addSetSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddSet()">Create</button>
-        </div>
-      </div>`;
-  }
-
-  if (type === "addQuestionModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Add Question</h2>
-          <label>Set</label>
-          <select id="modalSetSelect"></select>
-          <label>Question</label>
-          <textarea id="questionText"></textarea>
-          <label>Option A</label><input id="optionA" type="text">
-          <label>Option B</label><input id="optionB" type="text">
-          <label>Option C</label><input id="optionC" type="text">
-          <label>Option D</label><input id="optionD" type="text">
-          <label>Answer</label>
-          <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
-          <label>Explanation</label><textarea id="explanation"></textarea>
-          <span id="addQMsg"></span>
-          <span class="spinner" id="addQSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddQuestion()">Add</button>
-        </div>
-      </div>`;
-  }
-
-  if (type === "bulkUploadModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Bulk Upload Questions</h2>
-          <label>Set</label>
-          <select id="modalSetSelect"></select>
-          <label>Paste JSON Array of Questions</label>
-          <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
-          <span id="bulkUploadMsg"></span>
-          <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitBulkUpload()">Upload</button>
-        </div>
-      </div>`;
-  }
-
-  if (type === "sendNotifModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Send Announcement</h2>
-          <label>Title</label>
-          <input id="notifTitle" type="text" maxlength="40">
-          <label>Message</label>
-          <textarea id="notifMsg" maxlength="300"></textarea>
-          <label>Attach Image (optional)</label>
-          <input id="notifImg" type="file" accept="image/*">
-          <span id="sendNotifMsg"></span>
-          <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitSendNotif()">Send</button>
-        </div>
-      </div>`;
-  }
-
-  // Special case: addScheduleModal needs immediate DOM insert and population
-  if (type === "addScheduleModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Schedule Test</h2>
-          <label>Exam Set</label>
-          <select id="scheduleSet"></select>
-          <label>Faculty</label>
-          <select id="scheduleFaculty"></select>
-          <label>Department</label>
-          <select id="scheduleDepartment"></select>
-          <label>Start Date & Time</label>
-          <input id="scheduleStart" type="datetime-local">
-          <label>End Date & Time</label>
-          <input id="scheduleEnd" type="datetime-local">
-          <span id="addScheduleMsg"></span>
-          <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-        </div>
-      </div>`;
-    document.getElementById("modalRoot").innerHTML = html;
-    populateScheduleModalFields();
-    return; // Prevent further rendering for this modal
-  }
-
-  // Render the modal if html is set
-  if (html) {
-    document.getElementById("modalRoot").innerHTML = html;
-  }
-
-  // Populate set dropdowns in question and bulk upload modals
-  if (type === "addQuestionModal" || type === "bulkUploadModal") {
-    fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
-      .then(r => r.json())
-      .then(sets => {
-        document.getElementById("modalSetSelect").innerHTML =
-          sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+    // ========== NOTIFICATIONS ==========
+    async function fetchNotifications() {
+      const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
+      const notifs = await resp.json();
+      let html = "";
+      notifs.forEach(n => {
+        html += `<tr>
+          <td>${n.title}</td>
+          <td>${n.message}</td>
+          <td>${n.imageUrl ? `<img src="${n.imageUrl}" alt="img" style="max-width:60px;max-height:60px;border-radius:4px;">` : ""}</td>
+          <td>${(new Date(n.createdAt)).toLocaleString()}</td>
+          <td>
+            <button class="action-btn" onclick="editNotif('${n._id}')">Edit</button>
+            <button class="action-btn" onclick="deleteNotif('${n._id}')">Delete</button>
+          </td>
+        </tr>`;
       });
-  }
-}
-                  
-// Populate all dropdowns for the schedule modal
-async function populateScheduleModalFields() {
-  const [sets, faculties, departments] = await Promise.all([
-    fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
-    fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
-    fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } }).then(r => r.json())
-  ]);
+      document.querySelector("#notificationsTable tbody").innerHTML = html;
+    }
+    async function deleteNotif(id) {
+      if (!confirm("Delete this message?")) return;
+      const resp = await fetch(API_URL + "notifications/" + id, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        alert(data.message || "Failed to delete.");
+      }
+      fetchNotifications();
+    }
+    async function editNotif(id) {
+      const resp = await fetch(API_URL + "notifications/" + id, { headers: { Authorization: "Bearer " + token } });
+      if (!resp.ok) { alert("Could not load message."); return; }
+      const n = await resp.json();
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Edit Announcement</h2>
+            <label>Title</label>
+            <input id="editNotifTitle" type="text" maxlength="40" value="${n.title}">
+            <label>Message</label>
+            <textarea id="editNotifMsg" maxlength="300">${n.message}</textarea>
+            <label>Image (Leave blank to keep current)</label>
+            <input id="editNotifImg" type="file" accept="image/*">
+            ${n.imageUrl ? `<img src="${n.imageUrl}" style="max-width:80px;display:block;margin:5px 0">` : ""}
+            <span id="editNotifMsgEl"></span>
+            <span class="spinner" id="editNotifSpinner" style="display:none"></span>
+            <button class="btn" onclick="submitEditNotif('${n._id}')">Save</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitEditNotif(id) {
+      const title = document.getElementById("editNotifTitle").value.trim();
+      const message = document.getElementById("editNotifMsg").value.trim();
+      const imageFile = document.getElementById("editNotifImg").files[0];
+      const spinner = document.getElementById("editNotifSpinner");
+      const msg = document.getElementById("editNotifMsgEl");
+      msg.innerText = ""; msg.className = "";
+      if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      let body, headers;
+      if (imageFile) {
+        body = new FormData();
+        body.append("title", title);
+        body.append("message", message);
+        body.append("image", imageFile);
+        headers = { Authorization: "Bearer " + token };
+      } else {
+        body = JSON.stringify({ title, message });
+        headers = { "Content-Type": "application/json", Authorization: "Bearer " + token };
+      }
+      const resp = await fetch(API_URL + "notifications/" + id, {
+        method: "PUT",
+        headers,
+        body
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to edit message.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Edited!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchNotifications();
+        closeModal();
+      }, 900);
+    }
 
-  // Exam set
-  const setSelect = document.getElementById("scheduleSet");
-  setSelect.innerHTML = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join('');
-
-  // Faculty
-  const facultySelect = document.getElementById("scheduleFaculty");
-  facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
-
-  // Store departments for filtering
-  window.scheduleDepartments = departments;
-  
-  // Populate departments for first faculty
-  populateScheduleDepartments();
-
-  // On faculty change, update departments list
-  facultySelect.onchange = populateScheduleDepartments;
-}
-
-function populateScheduleDepartments() {
-  const facultyId = document.getElementById("scheduleFaculty").value;
-  const depts = window.scheduleDepartments.filter(d => d.faculty === facultyId);
-  document.getElementById("scheduleDepartment").innerHTML =
-    depts.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
-}
-
-
-
-      // Populate set dropdowns in modals
+    // ========== MODALS ==========
+    function openModal(type) {
+      let html = "";
+      if (type === "addFacultyModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Add Faculty</h2>
+              <label>Faculty Name</label>
+              <input id="facultyName" type="text" maxlength="64">
+              <span id="addFacultyMsg"></span>
+              <span class="spinner" id="addFacultySpinner" style="display:none"></span>
+              <button class="btn" onclick="submitAddFaculty()">Create</button>
+            </div>
+          </div>`;
+      }
+      if (type === "addDepartmentModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Add Department</h2>
+              <label>Department Name</label>
+              <input id="departmentName" type="text" maxlength="64">
+              <label>Faculty</label>
+              <select id="departmentFaculty">
+                ${faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('')}
+              </select>
+              <span id="addDeptMsg"></span>
+              <span class="spinner" id="addDeptSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitAddDepartment()">Create</button>
+            </div>
+          </div>`;
+      }
+      if (type === "addSetModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>New Question Set</h2>
+              <label>Title</label>
+              <input id="setTitle" type="text" maxlength="48">
+              <label>Faculty</label>
+              <select id="setFaculty" onchange="populateDepartmentsDropdown()">
+                <option value="">Select faculty</option>
+                ${faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('')}
+              </select>
+              <label>Department</label>
+              <select id="setDepartment">
+                <option value="">Select department</option>
+              </select>
+              <label>Status</label>
+              <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+              <span id="addSetMsg"></span>
+              <span class="spinner" id="addSetSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitAddSet()">Create</button>
+            </div>
+          </div>`;
+      }
+      if (type === "addQuestionModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Add Question</h2>
+              <label>Set</label>
+              <select id="modalSetSelect"></select>
+              <label>Question</label>
+              <textarea id="questionText"></textarea>
+              <label>Option A</label><input id="optionA" type="text">
+              <label>Option B</label><input id="optionB" type="text">
+              <label>Option C</label><input id="optionC" type="text">
+              <label>Option D</label><input id="optionD" type="text">
+              <label>Answer</label>
+              <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+              <label>Explanation</label><textarea id="explanation"></textarea>
+              <span id="addQMsg"></span>
+              <span class="spinner" id="addQSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitAddQuestion()">Add</button>
+            </div>
+          </div>`;
+      }
+      if (type === "bulkUploadModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Bulk Upload Questions</h2>
+              <label>Set</label>
+              <select id="modalSetSelect"></select>
+              <label>Paste JSON Array of Questions</label>
+              <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
+              <span id="bulkUploadMsg"></span>
+              <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitBulkUpload()">Upload</button>
+            </div>
+          </div>`;
+      }
+      if (type === "sendNotifModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Send Announcement</h2>
+              <label>Title</label>
+              <input id="notifTitle" type="text" maxlength="40">
+              <label>Message</label>
+              <textarea id="notifMsg" maxlength="300"></textarea>
+              <label>Attach Image (optional)</label>
+              <input id="notifImg" type="file" accept="image/*">
+              <span id="sendNotifMsg"></span>
+              <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitSendNotif()">Send</button>
+            </div>
+          </div>`;
+      }
+      if (type === "addScheduleModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Schedule Test</h2>
+              <label>Exam Set</label>
+              <select id="scheduleSet"></select>
+              <label>Faculty</label>
+              <select id="scheduleFaculty"></select>
+              <label>Department</label>
+              <select id="scheduleDepartment"></select>
+              <label>Start Date & Time</label>
+              <input id="scheduleStart" type="datetime-local">
+              <label>End Date & Time</label>
+              <input id="scheduleEnd" type="datetime-local">
+              <span id="addScheduleMsg"></span>
+              <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+            </div>
+          </div>`;
+        document.getElementById("modalRoot").innerHTML = html;
+        populateScheduleModalFields();
+        return;
+      }
+      if (html) {
+        document.getElementById("modalRoot").innerHTML = html;
+      }
       if (type === "addQuestionModal" || type === "bulkUploadModal") {
         fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
-          .then(r=>r.json())
-          .then(sets=>{
+          .then(r => r.json())
+          .then(sets => {
             document.getElementById("modalSetSelect").innerHTML =
-              sets.map(s=>`<option value="${s._id}">${s.title}</option>`).join("");
+              sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
           });
       }
     }
@@ -1179,7 +984,6 @@ function populateScheduleDepartments() {
         document.getElementById("modalRoot").innerHTML = "";
       }
     }
-    // Populate departments dropdown in addSetModal according to selected faculty
     function populateDepartmentsDropdown() {
       const select = document.getElementById("setDepartment");
       const facultyId = document.getElementById("setFaculty").value;
@@ -1187,8 +991,27 @@ function populateScheduleDepartments() {
       select.innerHTML = `<option value="">Select department</option>` +
         deptList.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
     }
+    async function populateScheduleModalFields() {
+      const [sets, faculties, departments] = await Promise.all([
+        fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
+        fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
+        fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } }).then(r => r.json())
+      ]);
+      const setSelect = document.getElementById("scheduleSet");
+      setSelect.innerHTML = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join('');
+      const facultySelect = document.getElementById("scheduleFaculty");
+      facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
+      window.scheduleDepartments = departments;
+      populateScheduleDepartments();
+      facultySelect.onchange = populateScheduleDepartments;
+    }
+    function populateScheduleDepartments() {
+      const facultyId = document.getElementById("scheduleFaculty").value;
+      const depts = window.scheduleDepartments.filter(d => d.faculty === facultyId);
+      document.getElementById("scheduleDepartment").innerHTML =
+        depts.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
+    }
 
-                
     // ========== MODAL SUBMIT HANDLERS ==========
     async function submitAddFaculty() {
       const name = document.getElementById("facultyName").value.trim();
@@ -1348,82 +1171,79 @@ function populateScheduleDepartments() {
       }, 900);
     }
     async function submitAddSchedule() {
-  const examSet = document.getElementById("scheduleSet").value;
-  const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
-  const department = document.getElementById("scheduleDepartment") ? document.getElementById("scheduleDepartment").value : "";
-  const start = document.getElementById("scheduleStart").value;
-  const end = document.getElementById("scheduleEnd").value;
-  const msg = document.getElementById("addScheduleMsg");
-  const spinner = document.getElementById("addScheduleSpinner");
-  msg.innerText = "";
-  msg.className = "";
-
-  if (!examSet || !faculty || !department || !start || !end) {
-    msg.innerText = "All fields required!";
-    msg.className = "error-msg";
-    return;
-  }
-  spinner.style.display = "inline-block";
-  const resp = await fetch(API_URL + "schedules", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ examSet, faculty, department, start, end })
-  });
-  spinner.style.display = "none";
-  if (!resp.ok) {
-    const data = await resp.json();
-    msg.innerText = data.message || data.error || "Failed to schedule.";
-    msg.className = "error-msg";
-    return;
-  }
-  msg.innerText = "Successfully loaded!";
-  msg.className = "success-msg";
-  setTimeout(() => {
-    fetchSchedules();
-    closeModal();
-  }, 900);
-}
-async function submitSendNotif() {
-  const title = document.getElementById("notifTitle").value.trim();
-  const message = document.getElementById("notifMsg").value.trim();
-  const imageFile = document.getElementById("notifImg").files[0];
-  const spinner = document.getElementById("sendNotifSpinner");
-  const msg = document.getElementById("sendNotifMsg");
-  msg.innerText = ""; msg.className = "";
-  if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
-  spinner.style.display = "inline-block";
-
-  let body, headers;
-  if (imageFile) {
-    body = new FormData();
-    body.append("title", title);
-    body.append("message", message);
-    body.append("image", imageFile);
-    headers = { Authorization: "Bearer " + token };
-  } else {
-    body = JSON.stringify({ title, message });
-    headers = { "Content-Type": "application/json", Authorization: "Bearer " + token };
-  }
-
-  const resp = await fetch(API_URL + "notifications", {
-    method: "POST",
-    headers,
-    body
-  });
-  spinner.style.display = "none";
-  if (!resp.ok) {
-    const data = await resp.json();
-    msg.innerText = data.message || "Failed to send.";
-    msg.className = "error-msg";
-    return;
-  }
-  msg.innerText = "Sent!";
-  msg.className = "success-msg";
-  setTimeout(() => {
-    fetchNotifications();
-    closeModal();
-  }, 900);
-}
+      const examSet = document.getElementById("scheduleSet").value;
+      const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
+      const department = document.getElementById("scheduleDepartment") ? document.getElementById("scheduleDepartment").value : "";
+      const start = document.getElementById("scheduleStart").value;
+      const end = document.getElementById("scheduleEnd").value;
+      const msg = document.getElementById("addScheduleMsg");
+      const spinner = document.getElementById("addScheduleSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!examSet || !faculty || !department || !start || !end) {
+        msg.innerText = "All fields required!";
+        msg.className = "error-msg";
+        return;
+      }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "schedules", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ examSet, faculty, department, start, end })
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || data.error || "Failed to schedule.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchSchedules();
+        closeModal();
+      }, 900);
+    }
+    async function submitSendNotif() {
+      const title = document.getElementById("notifTitle").value.trim();
+      const message = document.getElementById("notifMsg").value.trim();
+      const imageFile = document.getElementById("notifImg").files[0];
+      const spinner = document.getElementById("sendNotifSpinner");
+      const msg = document.getElementById("sendNotifMsg");
+      msg.innerText = ""; msg.className = "";
+      if (!title || !message) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      let body, headers;
+      if (imageFile) {
+        body = new FormData();
+        body.append("title", title);
+        body.append("message", message);
+        body.append("image", imageFile);
+        headers = { Authorization: "Bearer " + token };
+      } else {
+        body = JSON.stringify({ title, message });
+        headers = { "Content-Type": "application/json", Authorization: "Bearer " + token };
+      }
+      const resp = await fetch(API_URL + "notifications", {
+        method: "POST",
+        headers,
+        body
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to send.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Sent!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchNotifications();
+        closeModal();
+      }, 900);
+    }
 
     // ========== AUTH & LOGOUT ==========
     function logout() {
