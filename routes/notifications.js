@@ -6,21 +6,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-
-
-
-    // Optionally delete image file from disk
-    if (notif.imageUrl) {
-      const filePath = path.join(process.cwd(), notif.imageUrl);
-      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-    }
-
-    await notif.deleteOne();
-    res.json({ message: "Deleted" });
-  } catch (e) {
-    res.status(500).json({ message: "Could not delete notification" });
-  }
-});
+const router = express.Router();
 
 // Set up multer for image uploads (store in /uploads/notifications/)
 const storage = multer.diskStorage({
@@ -76,6 +62,17 @@ router.get("/", authenticate, async (req, res) => {
   res.json(notif);
 });
 
+// READ one notification by ID
+router.get("/:id", authenticate, async (req, res) => {
+  try {
+    const notif = await Notification.findById(req.params.id);
+    if (!notif) return res.status(404).json({ message: "Notification not found" });
+    res.json(notif);
+  } catch (e) {
+    res.status(500).json({ message: "Could not fetch notification" });
+  }
+});
+
 // EDIT notification (support image)
 router.put(
   "/:id",
@@ -100,6 +97,10 @@ router.put(
 
       if (req.file) {
         // Optionally delete old file here if you want
+        if (notif.imageUrl) {
+          const oldPath = path.join(process.cwd(), notif.imageUrl);
+          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        }
         notif.imageUrl = "/" + req.file.path.replace(/\\/g, "/");
       }
 
@@ -119,7 +120,7 @@ router.delete(
   async (req, res) => {
     try {
       const notif = await Notification.findById(req.params.id);
-      if (!notif) return res.status(404).json({ message: "Not found" });
+      if (!notif) return res.status(404).json({ message: "Notification not found" });
 
       // Only allow sender or superadmin to delete
       if (
@@ -128,16 +129,7 @@ router.delete(
       ) {
         return res.status(403).json({ message: "Forbidden" });
       }
-// In routes/notifications.js
-router.get("/:id", authenticate, async (req, res) => {
-  try {
-    const notif = await Notification.findById(req.params.id);
-    if (!notif) return res.status(404).json({ message: "Notification not found" });
-    res.json(notif);
-  } catch (e) {
-    res.status(500).json({ message: "Could not fetch notification" });
-  }
-});
+
       // Optionally delete image file from disk
       if (notif.imageUrl) {
         const filePath = path.join(process.cwd(), notif.imageUrl);
@@ -147,22 +139,9 @@ router.get("/:id", authenticate, async (req, res) => {
       await notif.deleteOne();
       res.json({ message: "Deleted" });
     } catch (err) {
-      res.status(400).json({ message: err.message });
+      res.status(500).json({ message: "Could not delete notification" });
     }
   }
 );
-router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const notif = await Notification.findById(req.params.id);
-    if (!notif) return res.status(404).json({ message: "Notification not found" });
 
-    // Optionally restrict to sender/superadmin (already in previous samples)
-    if (
-      String(notif.sentBy) !== String(req.user.id) &&
-      req.user.role !== "superadmin"
-    ) {
-      return res.status(403).json({ message: "Forbidden" });
-    }
-const router = express.Router();
-      
 export default router;
