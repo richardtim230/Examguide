@@ -234,7 +234,17 @@ app.get("/api/progress", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not get progress" });
   }
 });
-
+// Delete progress for a user and examSet
+app.delete("/api/progress", authenticate, async (req, res) => {
+  const examSet = req.query.examSet;
+  if (!examSet) return res.status(400).json({ message: "examSet query param required" });
+  try {
+    await Progress.deleteOne({ user: req.user.id, examSet });
+    res.json({ message: "Progress deleted" });
+  } catch (e) {
+    res.status(500).json({ message: "Could not delete progress" });
+  }
+});
 // --- Superadmin & Student Profile Updates ---
 app.use("/api/superadmin", superadminRoutes);
 
