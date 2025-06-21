@@ -32,14 +32,46 @@ router.get("/:id", authenticate, async (req, res) => {
   res.json(set);
 });
 
-// Add questions in bulk to an existing set
+// Bulk upload: Add questions to set with given title (merges questions, does not create duplicates or replace)
+router.post("/bulk", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const { title, status, faculty, department, questions } = req.body;
+  if (!title || !questions) {
+    return res.status(400).json({ error: "title and questions are required" });
+  }
+  try {
+    // Find set by title
+    let set = await QuestionSet.findOne({ title });
+    if (!set) {
+      // Create if not exists
+      set = await QuestionSet.create({ title, status, faculty, department, questions, createdBy: req.user.id });
+      return res.status(201).json({ message: "Created new set", set });
+    }
+    // Merge: Only add questions that don't have duplicate ids
+    const existingIds = new Set(set.questions.map(q => q.id));
+    const newQuestions = questions.filter(q => !existingIds.has(q.id));
+    set.questions.push(...newQuestions);
+    // Optionally update status/faculty/department if provided
+    if (status) set.status = status;
+    if (faculty) set.faculty = faculty;
+    if (department) set.department = department;
+    await set.save();
+    res.json({ message: `Added ${newQuestions.length} new questions to existing set`, set });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+// Add questions in bulk to an existing set by id
 router.post("/:id/questions", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const { id } = req.params;
   const questions = req.body.questions;
   try {
     const set = await QuestionSet.findById(id);
     if (!set) return res.status(404).json({ error: "Set not found" });
-    set.questions.push(...questions);
+    // Only add questions that don't have duplicate ids
+    const existingIds = new Set(set.questions.map(q => q.id));
+    const newQuestions = questions.filter(q => !existingIds.has(q.id));
+    set.questions.push(...newQuestions);
     await set.save();
     res.json(set);
   } catch (e) {
