@@ -4,9 +4,16 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+import multer from "multer";
+
+// ===== Models and Middleware =====
 import User from "./models/User.js";
 import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
+
+// ===== Routes =====
 import questionSetRoutes from "./routes/questionsets.js";
 import resultsRoutes from "./routes/results.js";
 import scheduleRoutes from "./routes/schedule.js";
@@ -15,8 +22,7 @@ import adminStatsRoutes from "./routes/adminStats.js";
 import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
-import path from "path";
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 dotenv.config();
 
 // ===== ADD FACULTY & DEPARTMENT MODELS =====
@@ -42,7 +48,7 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
   throw new Error("Missing required environment variables. Check MONGODB_URI, JWT_SECRET, FRONTEND_ORIGIN.");
 }
 
-// CORS: explicitly allow your Vercel frontend URL and subpath
+// ===== CORS Config =====
 const allowedOrigins = [
   "https://examguide.vercel.app",
   "https://examguide.vercel.app/mock-icthallb"
@@ -58,12 +64,17 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
+// ===== Multer Setup for Notifications (used in notificationsRoutes) =====
+// (If your notificationsRoutes uses its own multer, this is just for fallback or extra uses.)
+
+// ===== MongoDB Connect =====
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
-// Main user routes (GET all users for chat must be open to all authenticated users)
+// ===== Main User Routes =====
 app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
