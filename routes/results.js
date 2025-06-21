@@ -7,13 +7,18 @@ const router = express.Router();
 
 // Get all student results (admin only)
 router.get("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const results = await Result.find().populate("user", "username faculty department").sort({ submittedAt: -1 });
+  const results = await Result.find()
+    .populate("user", "username faculty department")
+    .populate("examSet", "title")
+    .sort({ submittedAt: -1 });
   res.json(results);
 });
 
 // Get results for a specific examSet (admin only)
 router.get("/exam/:examSet", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const results = await Result.find({ examSet: req.params.examSet }).populate("user", "username");
+  const results = await Result.find({ examSet: req.params.examSet })
+    .populate("user", "username")
+    .populate("examSet", "title");
   res.json(results);
 });
 
@@ -27,7 +32,9 @@ router.get("/user/:userId", authenticate, async (req, res) => {
   ) {
     return res.status(403).json({ error: "Forbidden" });
   }
-  const results = await Result.find({ user: req.params.userId }).populate("user", "username");
+  const results = await Result.find({ user: req.params.userId })
+    .populate("user", "username")
+    .populate("examSet", "title");
   res.json(results);
 });
 
@@ -68,7 +75,9 @@ router.get("/me", authenticate, async (req, res) => {
   // /api/results/me?examSet=xxxx
   const { examSet } = req.query;
   if (!examSet) return res.status(400).json({ error: "Missing examSet" });
-  const result = await Result.findOne({ user: req.user.id, examSet }).populate("user", "username");
+  const result = await Result.findOne({ user: req.user.id, examSet })
+    .populate("user", "username")
+    .populate("examSet", "title");
   if (!result) return res.status(404).json({ error: "No result found" });
   res.json({ result });
 });
