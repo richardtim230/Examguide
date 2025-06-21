@@ -1552,21 +1552,17 @@ async function fetchHistory() {
 
   // Update Assessment Performance Table
   let html = "";
-  results.slice(0, 10).forEach(r => {
-    html += `<tr>
-      <td>${r.examSet}</td>
-      <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
-      <td>${r.score ?? "-"}</td>
-      <td><button class="btn" onclick="reviewResult('${r._id}')">Review</button></td>
-    </tr>`;
-  });
-  document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
+results.slice(0, 10).forEach(r => {
+  html += `<tr>
+    <td>${r.examSet}</td>
+    <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+    <td>${r.score ?? "-"}</td>
+    <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
+  </tr>`;
+});
+document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
 
-  recommendTopics();
-}
-    function openReviewTab(sessionId) {
-  window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
-    }
+recommendTopics();
     // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
 async function fetchAvailableTests() {
   const spinner = document.getElementById("testSpinner");
