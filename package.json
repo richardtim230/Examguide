@@ -2,11 +2,11 @@
   "name": "cbt-platform-backend",
   "version": "1.0.0",
   "description": "Backend for ExamGuide CBT Platform (faculty/department organized, superadmin/admin/student roles)",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -14,7 +14,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.5"
+    "mongoose": "^8.3.5",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
@@ -34,4 +35,4 @@
   ],
   "author": "ExamGuide Team",
   "license": "MIT"
-    }
+}
