@@ -1,6 +1,7 @@
 import express from "express";
 import Result from "../models/Result.js";
 import User from "../models/User.js";
+import QuestionSet from "../models/QuestionSet.js"; // Added for review endpoint
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
@@ -22,7 +23,7 @@ router.get("/exam/:examSet", authenticate, authorizeRole("admin", "superadmin"),
   res.json(results);
 });
 
-// Get all results for a specific student (that student)
+// Get all results for a specific student (that student, admin, or superadmin)
 router.get("/user/:userId", authenticate, async (req, res) => {
   // Only the user themselves or admin/superadmin can access
   if (
@@ -80,6 +81,49 @@ router.get("/me", authenticate, async (req, res) => {
     .populate("examSet", "title");
   if (!result) return res.status(404).json({ error: "No result found" });
   res.json({ result });
+});
+
+/**
+ * REVIEW ENDPOINT for session/exam correction review.
+ * GET /api/results/:sessionId/review
+ * Returns: { sessionId, examTitle, questions: [ { question, options, correct, selected, explanation } ] }
+ */
+router.get("/:sessionId/review", authenticate, async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const result = await Result.findById(sessionId);
+
+    if (!result) return res.status(404).json({ message: "Result not found" });
+
+    // Only allow the owner or admin/superadmin
+    if (
+      req.user.role !== "admin" &&
+      req.user.role !== "superadmin" &&
+      req.user.id !== result.user.toString()
+    ) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    const questionSet = await QuestionSet.findById(result.examSet);
+    if (!questionSet) return res.status(404).json({ message: "Question set not found" });
+
+    // Compose question review info for each question
+    const questions = questionSet.questions.map((q, idx) => ({
+      question: q.question,
+      options: q.options,
+      correct: q.answer,
+      selected: result.answers && result.answers[idx],
+      explanation: q.explanation || ""
+    }));
+
+    res.json({
+      sessionId: result._id,
+      examTitle: questionSet.title,
+      questions
+    });
+  } catch (e) {
+    res.status(500).json({ message: "Could not load review", error: e.message });
+  }
 });
 
 export default router;
