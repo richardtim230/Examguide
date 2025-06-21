@@ -778,42 +778,43 @@
         <ul class="recommend-list" id="recommendations"></ul>
       </div>
     </div>
-  <!-- Add this HTML snippet to your modal root, or inject via JS to show the schedule modal -->
-<div class="schedule-modal-backdrop" onclick="closeModal(event)">
-  <div class="schedule-modal" onclick="event.stopPropagation()">
-    <button class="schedule-modal-close" onclick="closeModal(event)" title="Close">&times;</button>
-    <div class="schedule-cover">
-      <img src="schedule-cover.jpg" alt="Schedule Cover" class="schedule-cover-img" />
-      <div class="schedule-cover-overlay">
-        <div class="schedule-main-title">Current Scheduled Assessment</div>
-      </div>
-    </div>
-    <div class="schedule-content">
-      <div class="schedule-info">
-        <div class="schedule-title" id="schedTitle">Test Title Here</div>
-        <div class="schedule-desc" id="schedDesc">Short description about the test or any important info for the candidate goes here.</div>
-        <div class="schedule-detail-grid">
-          <div>
-            <span class="sched-label">Start:</span>
-            <span id="schedStart">-</span>
-          </div>
-          <div>
-            <span class="sched-label">End:</span>
-            <span id="schedEnd">-</span>
-          </div>
-          <div>
-            <span class="sched-label">Status:</span>
-            <span id="schedStatus">-</span>
-          </div>
+  <!-- Place this in your HTML, ideally inside <body> or as the last child, or just copy the style to your main style -->
+<template id="scheduleModalTemplate">
+  <div class="schedule-modal-backdrop" onclick="closeModal(event)">
+    <div class="schedule-modal" onclick="event.stopPropagation()">
+      <button class="schedule-modal-close" onclick="closeModal(event)" title="Close">&times;</button>
+      <div class="schedule-cover">
+        <img src="schedule-cover.jpg" alt="Schedule Cover" class="schedule-cover-img" />
+        <div class="schedule-cover-overlay">
+          <div class="schedule-main-title">Current Scheduled Assessment</div>
         </div>
       </div>
-      <div id="schedStartBtnWrap" style="text-align:center;margin-top:2em;">
-        <!-- Conditionally render button below -->
-        <button class="schedule-start-btn" id="schedStartBtn" style="display:none;" onclick="startTest(currentSchedId);">Start Assessment</button>
+      <div class="schedule-content">
+        <div class="schedule-info">
+          <div class="schedule-title" id="schedTitle">Test Title Here</div>
+          <div class="schedule-desc" id="schedDesc">Short description about the test or any important info for the candidate goes here.</div>
+          <div class="schedule-detail-grid">
+            <div>
+              <span class="sched-label">Start:</span>
+              <span id="schedStart">-</span>
+            </div>
+            <div>
+              <span class="sched-label">End:</span>
+              <span id="schedEnd">-</span>
+            </div>
+            <div>
+              <span class="sched-label">Status:</span>
+              <span id="schedStatus">-</span>
+            </div>
+          </div>
+        </div>
+        <div id="schedStartBtnWrap" style="text-align:center;margin-top:2em;">
+          <button class="schedule-start-btn" id="schedStartBtn" style="display:none;" onclick="startTest(currentSchedId);">Start Assessment</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</template>
 
 <style>
 .schedule-modal-backdrop {
@@ -960,6 +961,7 @@
   .schedule-modal-close { font-size: 2rem; right: 13px; }
 }
 </style>
+
     <!-- Announcements & Messaging -->
     <div class="announcement" id="announcementsPanel"></div>
     <!-- Test History with Review -->
@@ -1609,13 +1611,19 @@ async function fetchAvailableTests() {
   const timer = setInterval(updateCountdown, 1000);
 }
 
-  // Example function to show the modal with schedule info
-// Call showScheduleModal(scheduleObj) where scheduleObj is the current schedule object
+  // Place this after your other <script> code, or at the end of your page
+// This requires your schedules and resultsCache to be loaded before calling
 
 let currentSchedId = null;
 
 function showScheduleModal(schedule) {
-  currentSchedId = schedule.examSet._id; // Used for Start button
+  currentSchedId = schedule.examSet._id;
+  // Clone template
+  const template = document.getElementById("scheduleModalTemplate");
+  if (!template) return;
+  document.getElementById("modalRoot").innerHTML = "";
+  document.getElementById("modalRoot").appendChild(template.content.cloneNode(true));
+
   // Fill modal info
   document.getElementById("schedTitle").innerText = schedule.examSet.title || "-";
   document.getElementById("schedDesc").innerText = schedule.examSet.description || "No description provided.";
@@ -1637,7 +1645,7 @@ function showScheduleModal(schedule) {
   document.getElementById("schedStatus").innerText = status;
 
   // Show/hide start button
-  const taken = window.resultsCache?.some(r => r.examSet === schedule.examSet.title); // Used in your app
+  const taken = window.resultsCache?.some(r => r.examSet === schedule.examSet.title);
   if (
     status === "Available" &&
     !taken
@@ -1646,10 +1654,53 @@ function showScheduleModal(schedule) {
   } else {
     document.getElementById("schedStartBtn").style.display = "none";
   }
-
-  // Insert modal into DOM (if not already)
-  document.getElementById("modalRoot").innerHTML = document.querySelector('.schedule-modal-backdrop').outerHTML;
 }
+
+// Run this after schedules/resultsCache are loaded
+async function showScheduleOnLoad() {
+  // You can call fetchAvailableTests or your own method to get schedules
+  // For this example, we'll mimic how your fetchAvailableTests works
+
+  // Defensive: ensure student, schedules, and resultsCache are loaded
+  // We'll fetch schedules for their faculty/department
+  if (!student.facultyId || !student.departmentId) return;
+  try {
+    const resp = await fetch(
+      API_URL +
+        `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
+      { headers: { Authorization: "Bearer " + token } }
+    );
+    const schedules = await resp.json();
+    if (!Array.isArray(schedules) || schedules.length === 0) return;
+
+    // Find current/next available or scheduled test (pick first ACTIVE)
+    const now = Date.now();
+    let activeSched = schedules.find(sched =>
+      sched.examSet &&
+      sched.examSet.status === "ACTIVE" &&
+      sched.start &&
+      now <= new Date(sched.end).getTime()
+    );
+    if (!activeSched) {
+      // Fallback: show first scheduled in future
+      activeSched = schedules.find(sched =>
+        sched.examSet &&
+        sched.examSet.status === "ACTIVE" &&
+        sched.start &&
+        now < new Date(sched.start).getTime()
+      );
+    }
+    if (activeSched) showScheduleModal(activeSched);
+  } catch (e) {
+    // Fail silently or log error
+  }
+}
+
+// Add to your init or window.onload after resultsCache & student loaded
+window.addEventListener("load", function() {
+  // Wait 600ms for user/profile/results to load, then show modal if available
+  setTimeout(showScheduleOnLoad, 600);
+});
     // ========== REVIEW ========== 
     async function reviewResult(id) {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
