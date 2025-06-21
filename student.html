@@ -1234,13 +1234,6 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     list.innerHTML = `<div style="color:var(--muted);font-style:italic;">No exams taken yet.</div>`;
     return;
   }
-  // Most recent first, limit to latest 7
-  function renderProgressList() {
-  const list = document.getElementById("progressList");
-  if (!resultsCache.length) {
-    list.innerHTML = `<div style="color:var(--muted);font-style:italic;">No exams taken yet.</div>`;
-    return;
-  }
   const items = resultsCache
     .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
     .slice(0, 7)
@@ -1253,7 +1246,6 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     ).join('');
   list.innerHTML = items;
 }
-    }
 async function fetchHistory() {
   if (!student.id) return;
   const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
