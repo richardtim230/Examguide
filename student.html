@@ -1771,6 +1771,13 @@ async function fetchAvailableTests() {
       localStorage.removeItem("token");
       window.location.href = "index.html";
     }
+
+  function closeModal(e) {
+  // Closes when clicking backdrop, close button, or if called directly
+  if (!e || e.target.classList.contains('schedule-modal-backdrop') || e.target.classList.contains('schedule-modal-close')) {
+    document.getElementById("modalRoot").innerHTML = "";
+  }
+}
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "mock-icthallb";
