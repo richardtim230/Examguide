@@ -27,15 +27,6 @@
       --gradient-accent: linear-gradient(90deg, #43aa8b 0%, #ffbe0b 100%);
       --table-head: #f4f8fe;
     }
-    #progressList {
-  display: block !important;
-  background: #fff !important;
-  color: #222 !important;
-  max-height: 200px !important;
-  min-height: 40px !important;
-  padding: 12px !important;
-  border: 1px solid #ddd !important;
-}
     html, body {
       background: var(--bg);
       font-family: 'Inter', Arial, sans-serif;
@@ -829,12 +820,6 @@
 </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-
-    window.onload = async function() {
-  // This is just to simulate your fetch - replace accordingly
-  resultsCache = [{ examSet: "Math 2025", score: 84, submittedAt: new Date() }];
-  renderProgressList();
-};
     // CONFIG
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
@@ -1232,19 +1217,11 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     }
     function renderProgressList() {
   const list = document.getElementById("progressList");
-  if (!list) {
-    console.error("progressList element not found!");
-    return;
-  }
-  if (!resultsCache || !Array.isArray(resultsCache)) {
-    console.error("resultsCache is not an array", resultsCache);
-    list.innerHTML = `<div style="color:var(--danger);">Error loading progress.</div>`;
-    return;
-  }
   if (!resultsCache.length) {
     list.innerHTML = `<div style="color:var(--muted);font-style:italic;">No exams taken yet.</div>`;
     return;
   }
+  // Most recent first, limit to latest 7
   const items = resultsCache
     .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
     .slice(0, 7)
