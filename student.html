@@ -1235,19 +1235,25 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     return;
   }
   // Most recent first, limit to latest 7
+  function renderProgressList() {
+  const list = document.getElementById("progressList");
+  if (!resultsCache.length) {
+    list.innerHTML = `<div style="color:var(--muted);font-style:italic;">No exams taken yet.</div>`;
+    return;
+  }
   const items = resultsCache
-  .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
-  .slice(0, 7)
-  .map(r => 
-    `<div style="padding:6px 0;border-bottom:1px solid #e3e8ee;">
-      <b>${r.examSet && r.examSet.title ? r.examSet.title : r.examSet}</b> — 
-      <span style="color:var(--primary);font-weight:700;">${r.score ?? '-'}</span>%
-      <span style="color:#888;font-size:0.95em;float:right;">${(new Date(r.submittedAt)).toLocaleDateString()}</span>
-    </div>`
-  ).join('');
-list.innerHTML = items; 
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
+    .slice(0, 7)
+    .map(r =>
+      `<div style="padding:6px 0;border-bottom:1px solid #e3e8ee;">
+        <b>${r.examSet && r.examSet.title ? r.examSet.title : r.examSet}</b> —
+        <span style="color:var(--primary);font-weight:700;">${r.score ?? '-'}</span>%
+        <span style="color:#888;font-size:0.95em;float:right;">${(new Date(r.submittedAt)).toLocaleDateString()}</span>
+      </div>`
+    ).join('');
+  list.innerHTML = items;
 }
-
+    }
 async function fetchHistory() {
   if (!student.id) return;
   const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
