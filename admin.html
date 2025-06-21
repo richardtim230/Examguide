@@ -359,6 +359,154 @@ body {
   .dashboard-cards, .section { padding: 0 2vw 0 2vw;}
   .dashboard-card { min-width: 130px; padding: 17px 8px;}
 }
+/* ====== MOBILE IMPROVEMENTS ====== */
+@media (max-width: 950px) {
+  .dashboard-cards, .section {
+    padding: 0 2vw;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100vw;
+  }
+  .sidebar {
+    position: fixed;
+    left: -220px;
+    width: 220px;
+    transition: left 0.18s;
+    z-index: 100;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .main-content.shifted {
+    margin-left: var(--nav-width);
+  }
+  .topbar {
+    padding: 16px 8px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .section {
+    margin-left: 4px;
+    margin-right: 4px;
+    padding: 22px 8px;
+  }
+  .dashboard-cards {
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 6vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-cards, .section {
+    padding: 0 2vw;
+  }
+  .dashboard-card {
+    min-width: 120px;
+    max-width: 100%;
+    padding: 12px 6px;
+    font-size: 0.97em;
+  }
+  .section {
+    padding: 12px 2vw;
+    margin-bottom: 16px;
+  }
+  .sidebar {
+    width: 170px;
+    left: -170px;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .sidebar-header {
+    padding: 16px 8px 12px 10px;
+  }
+  .sidebar-header img {
+    width: 32px;
+    height: 32px;
+  }
+  .sidebar-header .brand {
+    font-size: 0.94rem;
+  }
+  .sidebar-nav a {
+    font-size: 0.92rem;
+    padding: 9px 0 9px 14px;
+    gap: 8px;
+  }
+  .sidebar-footer {
+    padding: 10px 8px 12px 8px;
+    font-size: 0.89rem;
+  }
+  .topbar {
+    padding: 10px 4px;
+    font-size: 0.99em;
+  }
+  .topbar .admin-avatar img {
+    width: 26px;
+    height: 26px;
+  }
+  .modal {
+    max-width: 99vw;
+    padding: 14px 6px;
+  }
+  .modal h2 { font-size: 1.07em;}
+  .modal label,
+  .modal input,
+  .modal select,
+  .modal textarea {
+    font-size: 0.98em;
+  }
+  .data-table th, .data-table td {
+    padding: 6px 4px;
+    font-size: 0.98em;
+    word-break: break-word;
+  }
+  .data-table {
+    font-size: 0.97em;
+    overflow-x: auto;
+    display: block;
+  }
+}
+
+/* Make tables horizontally scrollable and prevent overflow on small screens */
+@media (max-width: 480px) {
+  .data-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-spacing: 0;
+  }
+  .data-table thead, .data-table tbody, .data-table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .data-table th, .data-table td {
+    font-size: 0.93em;
+    padding: 5px 2px;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+  .dashboard-card {
+    min-width: 90px;
+    padding: 8px 3px;
+    font-size: 0.93em;
+  }
+  .modal {
+    padding: 8px 2px;
+  }
+}
+
+/* Optional: Hide less important columns on very small screens */
+@media (max-width: 400px) {
+  .data-table th:nth-child(3), .data-table td:nth-child(3),
+  .data-table th:nth-child(4), .data-table td:nth-child(4),
+  .data-table th:nth-child(5), .data-table td:nth-child(5) {
+    display: none;
+  }
+}
+    
   </style>
   <!-- CSS is excluded as per request -->
 </head>
