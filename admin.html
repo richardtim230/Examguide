@@ -1001,17 +1001,21 @@ function closeModal(e) {
       const notifs = await resp.json();
       let html = "";
       notifs.forEach(n => {
-        html += `<tr>
-          <td>${n.title}</td>
-          <td>${n.message}</td>
-          <td>${n.imageUrl ? `<img src="${n.imageUrl}" alt="img" style="max-width:60px;max-height:60px;border-radius:4px;">` : ""}</td>
-          <td>${(new Date(n.createdAt)).toLocaleString()}</td>
-          <td>
-            <button class="action-btn" onclick="editNotif('${n._id}')">Edit</button>
-            <button class="action-btn" onclick="deleteNotif('${n._id}')">Delete</button>
-          </td>
-        </tr>`;
-      });
+  html += `<tr>
+    <td>${n.title}</td>
+    <td>${n.message}</td>
+    <td>${
+      n.imageUrl
+        ? `<img src="${API_URL}${n.imageUrl}" alt="img" style="max-width:60px;max-height:60px;border-radius:4px;">`
+        : ""
+    }</td>
+    <td>${(new Date(n.createdAt)).toLocaleString()}</td>
+    <td>
+      <button class="action-btn" onclick="editNotif('${n._id}')">Edit</button>
+      <button class="action-btn" onclick="deleteNotif('${n._id}')">Delete</button>
+    </td>
+  </tr>`;
+});
       document.querySelector("#notificationsTable tbody").innerHTML = html;
     }
     async function deleteNotif(id) {
