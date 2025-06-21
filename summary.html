@@ -412,6 +412,9 @@
       </div>
       <div class="footer-content">
         <button id="printBtn" class="footer-btn">🖨️ Print / Save as PDF</button>
+        <button id="backToDashboardBtn" class="footer-btn" style="margin-top:14px;background:#00c6ff;color:#fff;">
+      ← Back to Dashboard
+    </button>
         <div class="footer-powered">
           &copy; <span id="year"></span> <strong>CBT Platform</strong> — Powered by <span class="powered-by">ExamGuide</span>
         </div>
@@ -489,9 +492,9 @@
       }
       const { questions = [], answers = {}, score = 0, timeTaken = 0 } = result;
       const totalQuestions = questions.length;
-      const attemptedQuestions = Object.keys(answers).length;
-      const incorrect = attemptedQuestions - score;
-      const notAttempted = totalQuestions - attemptedQuestions;
+const attemptedQuestions = questions.filter(q => answers.hasOwnProperty(q.id)).length;
+const incorrect = questions.filter(q => answers[q.id] && answers[q.id] !== q.answer).length;
+const notAttempted = totalQuestions - attemptedQuestions;
       const percentage = totalQuestions ? (score / totalQuestions * 100).toFixed(2) : 0;
       const avgSpeed = totalQuestions ? (timeTaken / totalQuestions).toFixed(2) : 0;
       const mins = Math.floor(timeTaken / 60);
@@ -616,6 +619,21 @@
     document.getElementById('printBtn').onclick = function() {
       window.print();
     };
+      // --- Back to Dashboard logic ---
+  document.getElementById('backToDashboardBtn').onclick = async function() {
+    const examSetId = new URLSearchParams(window.location.search).get("examSet");
+    if (examSetId && token) {
+      try {
+        await fetch(API_URL + "progress?examSet=" + encodeURIComponent(examSetId), {
+          method: "DELETE",
+          headers: { Authorization: "Bearer " + token }
+        });
+      } catch (e) {
+        // Ignore errors, just proceed
+      }
+    }
+    window.location.href = "student.html";
+  };
     // On load
     renderReport();
   </script>
