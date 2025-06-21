@@ -513,6 +513,7 @@
       background: var(--bg-card);
       border-radius: var(--radius-xs);
       overflow: hidden;
+      overflow-x: auto;
       box-shadow: 0 2px 9px #3a86ff0d;
     }
     .test-table th, .test-table td, .result-table th, .result-table td {
@@ -1611,96 +1612,7 @@ async function fetchAvailableTests() {
   const timer = setInterval(updateCountdown, 1000);
 }
 
-  // Place this after your other <script> code, or at the end of your page
-// This requires your schedules and resultsCache to be loaded before calling
-
-let currentSchedId = null;
-
-function showScheduleModal(schedule) {
-  currentSchedId = schedule.examSet._id;
-  // Clone template
-  const template = document.getElementById("scheduleModalTemplate");
-  if (!template) return;
-  document.getElementById("modalRoot").innerHTML = "";
-  document.getElementById("modalRoot").appendChild(template.content.cloneNode(true));
-
-  // Fill modal info
-  document.getElementById("schedTitle").innerText = schedule.examSet.title || "-";
-  document.getElementById("schedDesc").innerText = schedule.examSet.description || "No description provided.";
-  document.getElementById("schedStart").innerText = schedule.start ? new Date(schedule.start).toLocaleString() : "-";
-  document.getElementById("schedEnd").innerText = schedule.end ? new Date(schedule.end).toLocaleString() : "-";
-  // Status logic
-  const now = Date.now();
-  let status = "Closed";
-  if (schedule.examSet.status === "ACTIVE") {
-    if (schedule.start && now < new Date(schedule.start).getTime()) status = "Scheduled";
-    else if (
-      schedule.start &&
-      schedule.end &&
-      now >= new Date(schedule.start).getTime() &&
-      now <= new Date(schedule.end).getTime()
-    ) status = "Available";
-    else if (schedule.end && now > new Date(schedule.end).getTime()) status = "Closed";
-  }
-  document.getElementById("schedStatus").innerText = status;
-
-  // Show/hide start button
-  const taken = window.resultsCache?.some(r => r.examSet === schedule.examSet.title);
-  if (
-    status === "Available" &&
-    !taken
-  ) {
-    document.getElementById("schedStartBtn").style.display = "inline-block";
-  } else {
-    document.getElementById("schedStartBtn").style.display = "none";
-  }
-}
-
-// Run this after schedules/resultsCache are loaded
-async function showScheduleOnLoad() {
-  // You can call fetchAvailableTests or your own method to get schedules
-  // For this example, we'll mimic how your fetchAvailableTests works
-
-  // Defensive: ensure student, schedules, and resultsCache are loaded
-  // We'll fetch schedules for their faculty/department
-  if (!student.facultyId || !student.departmentId) return;
-  try {
-    const resp = await fetch(
-      API_URL +
-        `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
-      { headers: { Authorization: "Bearer " + token } }
-    );
-    const schedules = await resp.json();
-    if (!Array.isArray(schedules) || schedules.length === 0) return;
-
-    // Find current/next available or scheduled test (pick first ACTIVE)
-    const now = Date.now();
-    let activeSched = schedules.find(sched =>
-      sched.examSet &&
-      sched.examSet.status === "ACTIVE" &&
-      sched.start &&
-      now <= new Date(sched.end).getTime()
-    );
-    if (!activeSched) {
-      // Fallback: show first scheduled in future
-      activeSched = schedules.find(sched =>
-        sched.examSet &&
-        sched.examSet.status === "ACTIVE" &&
-        sched.start &&
-        now < new Date(sched.start).getTime()
-      );
-    }
-    if (activeSched) showScheduleModal(activeSched);
-  } catch (e) {
-    // Fail silently or log error
-  }
-}
-
-// Add to your init or window.onload after resultsCache & student loaded
-window.addEventListener("load", function() {
-  // Wait 600ms for user/profile/results to load, then show modal if available
-  setTimeout(showScheduleOnLoad, 600);
-});
+  
     // ========== REVIEW ========== 
     async function reviewResult(id) {
       const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
@@ -1768,6 +1680,97 @@ window.addEventListener("load", function() {
         }
       });
     }
+    // Place this at the end of your main <script> block, after all data-loading functions
+let currentSchedId = null;
+
+// Utility to show modal and fill info
+function showScheduleModal(schedule) {
+  currentSchedId = schedule.examSet._id;
+  const template = document.getElementById("scheduleModalTemplate");
+  if (!template) return;
+  document.getElementById("modalRoot").innerHTML = "";
+  document.getElementById("modalRoot").appendChild(template.content.cloneNode(true));
+
+  // Fill modal info
+  document.getElementById("schedTitle").innerText = schedule.examSet.title || "-";
+  document.getElementById("schedDesc").innerText = schedule.examSet.description || "No description provided.";
+  document.getElementById("schedStart").innerText = schedule.start ? new Date(schedule.start).toLocaleString() : "-";
+  document.getElementById("schedEnd").innerText = schedule.end ? new Date(schedule.end).toLocaleString() : "-";
+  // Status logic
+  const now = Date.now();
+  let status = "Closed";
+  if (schedule.examSet.status === "ACTIVE") {
+    if (schedule.start && now < new Date(schedule.start).getTime()) status = "Scheduled";
+    else if (
+      schedule.start &&
+      schedule.end &&
+      now >= new Date(schedule.start).getTime() &&
+      now <= new Date(schedule.end).getTime()
+    ) status = "Available";
+    else if (schedule.end && now > new Date(schedule.end).getTime()) status = "Closed";
+  }
+  document.getElementById("schedStatus").innerText = status;
+
+  // Show/hide start button
+  const taken = window.resultsCache?.some(r => (r.examSet === (schedule.examSet.title || schedule.examSet._id)));
+  if (
+    status === "Available" &&
+    !taken
+  ) {
+    document.getElementById("schedStartBtn").style.display = "inline-block";
+  } else {
+    document.getElementById("schedStartBtn").style.display = "none";
+  }
+}
+
+// Waits until student/resultsCache/schedule data are loaded, then pops up modal
+async function showScheduleOnLoad() {
+  // Wait for profile/resultsCache/student to be ready
+  let tries = 0;
+  function ready() {
+    // Modify these conditions if your variables have different names
+    return student && student.facultyId && student.departmentId && Array.isArray(resultsCache);
+  }
+  while (!ready() && tries < 15) {
+    await new Promise(r => setTimeout(r, 250));
+    tries++;
+  }
+  if (!ready()) return;
+
+  try {
+    const resp = await fetch(
+      API_URL +
+        `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
+      { headers: { Authorization: "Bearer " + token } }
+    );
+    const schedules = await resp.json();
+    if (!Array.isArray(schedules) || schedules.length === 0) return;
+
+    // Find current or next available test
+    const now = Date.now();
+    let activeSched = schedules.find(sched =>
+      sched.examSet &&
+      sched.examSet.status === "ACTIVE" &&
+      sched.start &&
+      now <= new Date(sched.end).getTime()
+    );
+    if (!activeSched) {
+      // Fallback: show first scheduled in future
+      activeSched = schedules.find(sched =>
+        sched.examSet &&
+        sched.examSet.status === "ACTIVE" &&
+        sched.start &&
+        now < new Date(sched.start).getTime()
+      );
+    }
+    if (activeSched) showScheduleModal(activeSched);
+  } catch (e) { /* fail silently */ }
+}
+
+// Auto-run after page load
+window.addEventListener("load", function() {
+  setTimeout(showScheduleOnLoad, 700);
+});
     window.onload = init;
   </script>
 </body>
