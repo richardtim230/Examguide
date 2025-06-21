@@ -462,19 +462,17 @@
         window.location.href = "mock.html";
       }
     }
-    // Fetch result from backend
+
     async function fetchTestReport() {
-      // Replace with your backend endpoint for results
-      // e.g. GET /api/results?examSet=examSetId
-      const examSetId = new URLSearchParams(window.location.search).get("examSet");
-const resp = await fetch(API_URL + "results/me?examSet=" + encodeURIComponent(examSetId), {
-  headers: { Authorization: "Bearer " + token }
-});
-      if (!res.ok) throw new Error("Could not load report");
-      const data = await res.json();
-      // data.result should have: { questions: [], answers: {}, score, timeTaken, ... }
-      return data.result;
-    }
+  const examSetId = new URLSearchParams(window.location.search).get("examSet");
+  const resp = await fetch(API_URL + "results/me?examSet=" + encodeURIComponent(examSetId), {
+    headers: { Authorization: "Bearer " + token }
+  });
+  if (!resp.ok) throw new Error("Could not load report");
+  const data = await resp.json();
+  return data.result;
+}
+    
     // Render report
     async function renderReport() {
       await fetchCurrentUser();
