@@ -963,152 +963,172 @@ async function submitEditNotif(id) {
 }
 // ========== MODALS ==========
 
-    // ========== MODALS ==========
-    function openModal(type) {
-      let html = "";
-      if(type === "addFacultyModal") {
-        html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Add Faculty</h2>
-            <label>Faculty Name</label>
-            <input id="facultyName" type="text" maxlength="64">
-            <span id="addFacultyMsg"></span>
-            <span class="spinner" id="addFacultySpinner" style="display:none"></span>
-            <button class="btn" onclick="submitAddFaculty()">Create</button>
-          </div>
-        </div>`;
-      }
-      if(type === "addDepartmentModal") {
-        html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Add Department</h2>
-            <label>Department Name</label>
-            <input id="departmentName" type="text" maxlength="64">
-            <label>Faculty</label>
-            <select id="departmentFaculty">
-              ${faculties.map(f=>`<option value="${f._id}">${f.name}</option>`).join('')}
-            </select>
-            <span id="addDeptMsg"></span>
-            <span class="spinner" id="addDeptSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitAddDepartment()">Create</button>
-          </div>
-        </div>`;
-      }
-      if (type === "addSetModal") {
-        html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>New Question Set</h2>
-            <label>Title</label>
-            <input id="setTitle" type="text" maxlength="48">
-            <label>Faculty</label>
-            <select id="setFaculty" onchange="populateDepartmentsDropdown()">
-              <option value="">Select faculty</option>
-              ${faculties.map(f=>`<option value="${f._id}">${f.name}</option>`).join('')}
-            </select>
-            <label>Department</label>
-            <select id="setDepartment">
-              <option value="">Select department</option>
-            </select>
-            <label>Status</label>
-            <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
-            <span id="addSetMsg"></span>
-            <span class="spinner" id="addSetSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitAddSet()">Create</button>
-          </div>
-        </div>`;
-      }
-      if (type === "addQuestionModal") {
-        html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Add Question</h2>
-            <label>Set</label>
-            <select id="modalSetSelect"></select>
-            <label>Question</label>
-            <textarea id="questionText"></textarea>
-            <label>Option A</label><input id="optionA" type="text">
-            <label>Option B</label><input id="optionB" type="text">
-            <label>Option C</label><input id="optionC" type="text">
-            <label>Option D</label><input id="optionD" type="text">
-            <label>Answer</label>
-            <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
-            <label>Explanation</label><textarea id="explanation"></textarea>
-            <span id="addQMsg"></span>
-            <span class="spinner" id="addQSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitAddQuestion()">Add</button>
-          </div>
-        </div>`;
-      }
-// add support for image upload in new message
-if (type === "sendNotifModal") {
-  html = `
-  <div class="modal-backdrop" onclick="closeModal(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-      <button class="close-modal" onclick="closeModal(event)">&times;</button>
-      <h2>Send Announcement</h2>
-      <label>Title</label>
-      <input id="notifTitle" type="text" maxlength="40">
-      <label>Message</label>
-      <textarea id="notifMsg" maxlength="300"></textarea>
-      <label>Attach Image (optional)</label>
-      <input id="notifImg" type="file" accept="image/*">
-      <span id="sendNotifMsg"></span>
-      <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
-      <button class="btn" onclick="submitSendNotif()">Send</button>
-    </div>
-  </div>`;
-}
-    
-      if (type === "bulkUploadModal") {
-        html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Bulk Upload Questions</h2>
-            <label>Set</label>
-            <select id="modalSetSelect"></select>
-            <label>Paste JSON Array of Questions</label>
-            <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
-            <span id="bulkUploadMsg"></span>
-            <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitBulkUpload()">Upload</button>
-          </div>
-        </div>`;
-      }
-      if (type === "addScheduleModal") {
-  html = `
-<div class="modal-backdrop" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="close-modal" onclick="closeModal(event)">&times;</button>
-    <h2>Schedule Test</h2>
-    <label>Exam Set</label>
-    <select id="scheduleSet"></select>
-    <label>Faculty</label>
-    <select id="scheduleFaculty"></select>
-    <label>Department</label>
-    <select id="scheduleDepartment"></select>
-    <label>Start Date & Time</label>
-    <input id="scheduleStart" type="datetime-local">
-    <label>End Date & Time</label>
-    <input id="scheduleEnd" type="datetime-local">
-    <span id="addScheduleMsg"></span>
-    <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-    <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-  </div>
-</div>`;
-  document.getElementById("modalRoot").innerHTML = html;
+function openModal(type) {
+  let html = "";
 
-  // Populate sets, faculties, departments for the modal
-  populateScheduleModalFields();
-}
+  if (type === "addFacultyModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Add Faculty</h2>
+          <label>Faculty Name</label>
+          <input id="facultyName" type="text" maxlength="64">
+          <span id="addFacultyMsg"></span>
+          <span class="spinner" id="addFacultySpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddFaculty()">Create</button>
+        </div>
+      </div>`;
+  }
 
+  if (type === "addDepartmentModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Add Department</h2>
+          <label>Department Name</label>
+          <input id="departmentName" type="text" maxlength="64">
+          <label>Faculty</label>
+          <select id="departmentFaculty">
+            ${faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('')}
+          </select>
+          <span id="addDeptMsg"></span>
+          <span class="spinner" id="addDeptSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddDepartment()">Create</button>
+        </div>
+      </div>`;
+  }
+
+  if (type === "addSetModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>New Question Set</h2>
+          <label>Title</label>
+          <input id="setTitle" type="text" maxlength="48">
+          <label>Faculty</label>
+          <select id="setFaculty" onchange="populateDepartmentsDropdown()">
+            <option value="">Select faculty</option>
+            ${faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('')}
+          </select>
+          <label>Department</label>
+          <select id="setDepartment">
+            <option value="">Select department</option>
+          </select>
+          <label>Status</label>
+          <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+          <span id="addSetMsg"></span>
+          <span class="spinner" id="addSetSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddSet()">Create</button>
+        </div>
+      </div>`;
+  }
+
+  if (type === "addQuestionModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Add Question</h2>
+          <label>Set</label>
+          <select id="modalSetSelect"></select>
+          <label>Question</label>
+          <textarea id="questionText"></textarea>
+          <label>Option A</label><input id="optionA" type="text">
+          <label>Option B</label><input id="optionB" type="text">
+          <label>Option C</label><input id="optionC" type="text">
+          <label>Option D</label><input id="optionD" type="text">
+          <label>Answer</label>
+          <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          <label>Explanation</label><textarea id="explanation"></textarea>
+          <span id="addQMsg"></span>
+          <span class="spinner" id="addQSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddQuestion()">Add</button>
+        </div>
+      </div>`;
+  }
+
+  if (type === "bulkUploadModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Bulk Upload Questions</h2>
+          <label>Set</label>
+          <select id="modalSetSelect"></select>
+          <label>Paste JSON Array of Questions</label>
+          <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
+          <span id="bulkUploadMsg"></span>
+          <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitBulkUpload()">Upload</button>
+        </div>
+      </div>`;
+  }
+
+  if (type === "sendNotifModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Send Announcement</h2>
+          <label>Title</label>
+          <input id="notifTitle" type="text" maxlength="40">
+          <label>Message</label>
+          <textarea id="notifMsg" maxlength="300"></textarea>
+          <label>Attach Image (optional)</label>
+          <input id="notifImg" type="file" accept="image/*">
+          <span id="sendNotifMsg"></span>
+          <span class="spinner" id="sendNotifSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitSendNotif()">Send</button>
+        </div>
+      </div>`;
+  }
+
+  // Special case: addScheduleModal needs immediate DOM insert and population
+  if (type === "addScheduleModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Schedule Test</h2>
+          <label>Exam Set</label>
+          <select id="scheduleSet"></select>
+          <label>Faculty</label>
+          <select id="scheduleFaculty"></select>
+          <label>Department</label>
+          <select id="scheduleDepartment"></select>
+          <label>Start Date & Time</label>
+          <input id="scheduleStart" type="datetime-local">
+          <label>End Date & Time</label>
+          <input id="scheduleEnd" type="datetime-local">
+          <span id="addScheduleMsg"></span>
+          <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+        </div>
+      </div>`;
+    document.getElementById("modalRoot").innerHTML = html;
+    populateScheduleModalFields();
+    return; // Prevent further rendering for this modal
+  }
+
+  // Render the modal if html is set
+  if (html) {
+    document.getElementById("modalRoot").innerHTML = html;
+  }
+
+  // Populate set dropdowns in question and bulk upload modals
+  if (type === "addQuestionModal" || type === "bulkUploadModal") {
+    fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
+      .then(r => r.json())
+      .then(sets => {
+        document.getElementById("modalSetSelect").innerHTML =
+          sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+      });
+  }
+}
+                  
 // Populate all dropdowns for the schedule modal
 async function populateScheduleModalFields() {
   const [sets, faculties, departments] = await Promise.all([
