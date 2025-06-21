@@ -34,14 +34,15 @@
       min-height: 100vh;
       color: #23366e;
       letter-spacing: 0.01em;
-    }.result-table-container {
-  max-height: 340px;
+    }
+/* Container for the table to enable scrolling */
+.result-table-container {
+  max-height: 320px;
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 6px 24px rgba(80, 80, 150, 0.10);
   background: #fff;
   margin-bottom: 2rem;
-  padding: 0.5rem 0;
 }
 
 /* Section Title */
@@ -60,42 +61,40 @@
   border-collapse: separate;
   border-spacing: 0;
   background: #f9fafc;
-  min-width: 650px;
+  min-width: 450px;
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-  table-layout: fixed;
+}
+
+.result-table thead tr {
+  background: linear-gradient(90deg, #95b9e0 0%, #f3f9ff 100%);
 }
 
 .result-table th, .result-table td {
-  padding: 0.9em 1em 0.7em 1em;
+  padding: 0.85em 1em;
   text-align: left;
   border-bottom: 1px solid #e0e6ed;
   font-size: 1rem;
-  vertical-align: top;
 }
 
 .result-table th {
   position: sticky;
   top: 0;
   background: linear-gradient(90deg, #b8d3fa 0%, #e3f2fd 100%);
+  z-index: 2;
   color: #3d5a80;
   font-weight: 600;
   letter-spacing: 0.5px;
-  z-index: 2;
   box-shadow: 0 2px 4px rgba(90, 140, 180, 0.04);
 }
 
-.col-desc {
-  font-size: 0.93em;
-  color: #6a7a90;
-  font-weight: 400;
-  margin-top: 4px;
-  line-height: 1.2;
-  letter-spacing: 0.2px;
+.result-table tbody tr {
+  transition: background 0.2s;
 }
 
 .result-table tbody tr:nth-child(odd) {
   background: #f6faff;
 }
+
 .result-table tbody tr:hover {
   background: #e3f2fd;
 }
@@ -103,9 +102,9 @@
 .result-table td {
   color: #556;
   vertical-align: middle;
-  overflow-wrap: break-word;
 }
 
+/* Review Link/Button Styling */
 .result-table td:last-child a,
 .result-table td:last-child button {
   background: #3d5a80;
@@ -126,7 +125,7 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 700px) {
+@media (max-width: 660px) {
   .result-table,
   .result-table thead,
   .result-table tbody,
@@ -161,7 +160,7 @@
   }
 }
 
-/* Stylish Scrollbar */
+/* Hide scrollbar but allow scroll with mouse/touch */
 .result-table-container {
   scrollbar-width: thin;
   scrollbar-color: #b8d3fa #f9fafc;
@@ -1070,37 +1069,23 @@
     <!-- Announcements & Messaging -->
     <div class="announcement" id="announcementsPanel"></div>
     <!-- Test History with Review -->
-
-    <!-- Assessment Performance & Reviews -->
+  <!-- Test History with Review -->
 <div class="section-title">Assessment Performance & Reviews</div>
 <div class="result-table-container">
   <table class="result-table" id="historyTable">
     <thead>
       <tr>
-        <th>
-          Test
-          <div class="col-desc">Test title or subject</div>
-        </th>
-        <th>
-          Date
-          <div class="col-desc">Date taken</div>
-        </th>
-        <th>
-          Score
-          <div class="col-desc">Percent or mark</div>
-        </th>
-        <th>
-          Review
-          <div class="col-desc">View or retake</div>
-        </th>
+        <th>Test</th>
+        <th>Date</th>
+        <th>Score</th>
+        <th>Review</th>
       </tr>
     </thead>
     <tbody>
-      
       <!-- Populated by JS -->
     </tbody>
   </table>
-                                                             </div>
+    
     
     <!-- Upcoming/scheduled tests -->
     <div class="section-title">Available Assessments</div>
@@ -1122,7 +1107,7 @@
     <tbody></tbody>
   </table>
 </div>
-  
+  </div>
     <!-- Discussion/Help -->
     <div class="section-title">Need Academic Help?</div>
     <button class="btn" onclick="openDiscussion()">Go to Community Board</button>
