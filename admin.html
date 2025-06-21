@@ -1178,21 +1178,25 @@ async function fetchNotifications() {
           </div>`;
       }
       if (type === "bulkUploadModal") {
-        html = `
-          <div class="modal-backdrop" onclick="closeModal(event)">
-            <div class="modal" onclick="event.stopPropagation()">
-              <button class="close-modal" onclick="closeModal(event)">&times;</button>
-              <h2>Bulk Upload Questions</h2>
-              <label>Set</label>
-              <select id="modalSetSelect"></select>
-              <label>Paste JSON Array of Questions</label>
-              <textarea id="bulkQuestions" placeholder='[{"id":1,"question":"...","options":[...],"answer":"...","explanation":"..."}, ...]'></textarea>
-              <span id="bulkUploadMsg"></span>
-              <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
-              <button class="btn" onclick="submitBulkUpload()">Upload</button>
-            </div>
-          </div>`;
-      }
+  html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Bulk Upload Questions</h2>
+        <label>Paste Complete JSON Object (title, status, questions[])</label>
+        <textarea id="bulkQuestions" rows="12" placeholder='{
+  "title": "INTRODUCTORY ZOOLOGY II",
+  "status": "ACTIVE",
+  "questions": [
+    { "id": 131, "question": "...", "options": [...], "answer": "...", "explanation": "", "questionImage": "" }
+  ]
+}'></textarea>
+        <span id="bulkUploadMsg"></span>
+        <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
+        <button class="btn" onclick="submitBulkUpload()">Upload</button>
+      </div>
+    </div>`;
+}
       if (type === "sendNotifModal") {
         html = `
           <div class="modal-backdrop" onclick="closeModal(event)">
@@ -1409,36 +1413,45 @@ async function fetchNotifications() {
         closeModal();
       }, 900);
     }
+
     async function submitBulkUpload() {
-      const setId = document.getElementById("modalSetSelect").value;
-      let questions;
-      const msg = document.getElementById("bulkUploadMsg");
-      const spinner = document.getElementById("bulkUploadSpinner");
-      msg.innerText = "";
-      msg.className = "";
-      try { questions = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
-      catch { msg.innerText = "Invalid JSON format."; msg.className = "error-msg"; return; }
-      spinner.style.display = "inline-block";
-      const resp = await fetch(API_URL + `questionsets/${setId}/questions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-        body: JSON.stringify({ questions })
-      });
-      spinner.style.display = "none";
-      if (!resp.ok) {
-        const data = await resp.json();
-        msg.innerText = data.message || "Failed to upload.";
-        msg.className = "error-msg";
-        return;
-      }
-      msg.innerText = "Successfully loaded!";
-      msg.className = "success-msg";
-      setTimeout(() => {
-        fetchQuestions();
-        fetchDashboardCounts();
-        closeModal();
-      }, 900);
+  let data;
+  const msg = document.getElementById("bulkUploadMsg");
+  const spinner = document.getElementById("bulkUploadSpinner");
+  msg.innerText = "";
+  msg.className = "";
+  try { data = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
+  catch { msg.innerText = "Invalid JSON format."; msg.className = "error-msg"; return; }
+
+  // Optional: basic structure validation
+  if (!data.title || !data.status || !Array.isArray(data.questions)) {
+    msg.innerText = "JSON must include title, status, and questions[]";
+    msg.className = "error-msg";
+    return;
+  }
+
+  spinner.style.display = "inline-block";
+  const resp = await fetch(API_URL + "questionsets/bulk", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify(data)
+  });
+  spinner.style.display = "none";
+  if (!resp.ok) {
+    const out = await resp.json();
+    msg.innerText = out.error || out.message || "Failed to upload.";
+    msg.className = "error-msg";
+    return;
+  }
+  msg.innerText = "Bulk upload successful!";
+  msg.className = "success-msg";
+  setTimeout(() => {
+    fetchSets();
+    fetchDashboardCounts();
+    closeModal();
+  }, 900);
     }
+    
     async function submitAddSchedule() {
       const examSet = document.getElementById("scheduleSet").value;
       const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
