@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exam History | Review</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px #3a86ff19;
+      padding: 28px 10px 28px 10px;
+    }
+    h2 {
+      margin-top: 0;
+      padding-left: 12px;
+      font-size: 2rem;
+      color: #222;
+      font-weight: 800;
+    }
+    .q-card {
+      border-left: 4px solid #2563eb;
+      border-radius: 14px;
+      background: #fcfcff;
+      margin-bottom: 23px;
+      padding: 16px 17px 13px 17px;
+      box-shadow: 0 1px 6px #3a86ff0b;
+    }
+    .q-title {
+      font-weight: bold;
+      font-size: 1.08em;
+      margin-bottom: 10px;
+    }
+    .options {
+      margin: 0 0 10px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .options li {
+      background: #f2f5f8;
+      border-radius: 7px;
+      margin-bottom: 7px;
+      padding: 8px 12px;
+      font-size: 1.05em;
+      color: #222;
+      border: 1.5px solid transparent;
+    }
+    .options .correct {
+      color: #198754;
+      font-weight: bold;
+      border-color: #198754;
+      background: #eafaf1;
+    }
+    .options .wrong {
+      color: #d90429;
+      font-weight: bold;
+      border-color: #d90429;
+      background: #ffe6e9;
+    }
+    .explanation {
+      font-size: 1em;
+      background: #f7fafd;
+      border-radius: 7px;
+      padding: 10px 12px;
+      margin-top: 7px;
+      border-left: 4px solid #8338ec;
+    }
+    .explanation strong {
+      color: #2d5da8;
+    }
+    .error-msg {
+      color: #c00;
+      text-align: center;
+      margin-top: 2em;
+      font-weight: bold;
+    }
+    .loading {
+      text-align: center;
+      color: #2563eb;
+      margin: 2em 0;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="examTitle">Exam History</h2>
+    <div id="reviewContent"></div>
+  </div>
+  <script>
+    async function loadReview() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('session');
+      const container = document.getElementById('reviewContent');
+      const title = document.getElementById('examTitle');
+      if (!sessionId) {
+        container.innerHTML = '<div class="error-msg">No session ID provided.</div>';
+        return;
+      }
+
+      container.innerHTML = '<div class="loading">Loading review...</div>';
+
+      try {
+        // fetch() will send cookies for authentication if user is logged in
+        const response = await fetch(`/api/results/${encodeURIComponent(sessionId)}/review`, {
+          credentials: "include"
+        });
+        if (!response.ok) throw new Error('Session not found');
+        const data = await response.json();
+
+        if (data.examTitle) title.textContent = data.examTitle + " - Exam History";
+
+        container.innerHTML = '';
+
+        if (!data.questions || !data.questions.length) {
+          container.innerHTML = '<div class="error-msg">No questions found for this session.</div>';
+          return;
+        }
+
+        data.questions.forEach((q, idx) => {
+          const optionsHtml = q.options.map(opt => {
+            let cls = '';
+            // Show as green if correct, red if selected and wrong
+            if (opt === q.correct) cls = 'correct';
+            else if (opt === q.selected && q.selected !== q.correct) cls = 'wrong';
+            return `<li class="${cls}">${opt}</li>`;
+          }).join('');
+          container.innerHTML += `
+            <div class="q-card">
+              <div class="q-title">Q${idx+1}: ${q.question}</div>
+              <ul class="options">${optionsHtml}</ul>
+              <div class="explanation"><strong>Explanation:</strong> ${q.explanation || ''}</div>
+            </div>
+          `;
+        });
+      } catch (err) {
+        container.innerHTML = `<div class="error-msg">${err.message || "Failed to load review."}</div>`;
+      }
+    }
+    loadReview();
+  </script>
+</body>
+</html>
