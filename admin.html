@@ -743,7 +743,71 @@ body {
       });
       document.querySelector("#studentsTable tbody").innerHTML = html;
     }
+async function viewStudent(id) {
+  const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
+  if (!resp.ok) {
+    alert("Could not load student: " + resp.statusText);
+    return;
+  }
+  const u = await resp.json();
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Student Profile</h2>
+        <label>Full Name</label>
+        <input value="${u.fullname || ''}" disabled>
+        <label>Username</label>
+        <input value="${u.username || ''}" disabled>
+        <label>Faculty</label>
+        <input value="${u.faculty || ''}" disabled>
+        <label>Department</label>
+        <input value="${u.department || ''}" disabled>
+        <label>Status</label>
+        <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
+        <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
+      </div>
+    </div>`;
+  document.getElementById("modalRoot").innerHTML = html;
+}
 
+async function editStudent(id) {
+  try {
+    const resp = await fetch(API_URL + "users/" + id, {
+      headers: { Authorization: "Bearer " + token }
+    });
+    if (!resp.ok) {
+      alert("Could not load student: " + resp.statusText);
+      return;
+    }
+    const u = await resp.json();
+    let html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Edit Profile</h2>
+          <label>Username</label>
+          <input id="editStudentUsername" value="${u.username || ''}">
+          <label>Faculty</label>
+          <input id="editStudentFaculty" value="${u.faculty || ''}">
+          <label>Department</label>
+          <input id="editStudentDepartment" value="${u.department || ''}">
+          <label>Status</label>
+          <select id="editStudentStatus">
+            <option value="active"${u.active !== false ? ' selected' : ''}>Active</option>
+            <option value="inactive"${u.active === false ? ' selected' : ''}>Inactive</option>
+          </select>
+          <div id="editStudentMsg" style="color:#b22;margin-top:7px;"></div>
+          <button class="btn" id="saveStudentBtn">Save</button>
+        </div>
+      </div>`;
+    document.getElementById("modalRoot").innerHTML = html;
+    // Bind save button after modal is loaded
+    document.getElementById("saveStudentBtn").onclick = () => submitEditStudent(id);
+  } catch (e) {
+    alert("Could not load student profile.");
+  }
+}
     // ========== UX NAVIGATION ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
