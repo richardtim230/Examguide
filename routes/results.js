@@ -86,28 +86,37 @@ router.get("/me", authenticate, async (req, res) => {
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
-    const result = await Result.findById(sessionId);
-    if (!result) return res.status(404).json({ message: "Result not found" });
+    console.log("Session review request:", sessionId, "by user:", req.user.id);
 
-    // Compare user IDs as strings
+    const result = await Result.findById(sessionId);
+    if (!result) {
+      console.log("No result found for sessionId", sessionId);
+      return res.status(404).json({ message: "Result not found" });
+    }
+
+    // Compare user ID as string (ObjectId to string)
     if (
       req.user.role !== "admin" &&
       req.user.role !== "superadmin" &&
       req.user.id !== String(result.user)
     ) {
+      console.log("Forbidden: user mismatch. req.user.id:", req.user.id, "result.user:", result.user);
       return res.status(403).json({ message: "Forbidden" });
     }
 
     const questionSet = await QuestionSet.findById(result.examSet);
-    if (!questionSet) return res.status(404).json({ message: "Question set not found" });
+    if (!questionSet) {
+      console.log("Question set not found for examSet", result.examSet);
+      return res.status(404).json({ message: "Question set not found" });
+    }
 
-    // answers may be an object: { "0": "answer1", "1": "answer2" }
+    // answers as object, not array
     const answers = result.answers || {};
     const questions = questionSet.questions.map((q, idx) => ({
       question: q.question,
       options: q.options,
       correct: q.answer,
-      selected: answers[idx] ?? "",
+      selected: answers[idx] ?? "", // If answers is object: { "0": "A", "1": "B" }
       explanation: q.explanation || ""
     }));
 
@@ -117,6 +126,7 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
       questions
     });
   } catch (e) {
+    console.log("Error in review endpoint:", e);
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
