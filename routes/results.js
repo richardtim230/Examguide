@@ -83,23 +83,17 @@ router.get("/me", authenticate, async (req, res) => {
   res.json({ result });
 });
 
-/**
- * REVIEW ENDPOINT for session/exam correction review.
- * GET /api/results/:sessionId/review
- * Returns: { sessionId, examTitle, questions: [ { question, options, correct, selected, explanation } ] }
- */
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
     const result = await Result.findById(sessionId);
-
     if (!result) return res.status(404).json({ message: "Result not found" });
 
-    // Only allow the owner or admin/superadmin
+    // Compare user IDs as strings
     if (
       req.user.role !== "admin" &&
       req.user.role !== "superadmin" &&
-      req.user.id !== result.user.toString()
+      req.user.id !== String(result.user)
     ) {
       return res.status(403).json({ message: "Forbidden" });
     }
@@ -107,12 +101,13 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     const questionSet = await QuestionSet.findById(result.examSet);
     if (!questionSet) return res.status(404).json({ message: "Question set not found" });
 
-    // Compose question review info for each question
+    // answers may be an object: { "0": "answer1", "1": "answer2" }
+    const answers = result.answers || {};
     const questions = questionSet.questions.map((q, idx) => ({
       question: q.question,
       options: q.options,
       correct: q.answer,
-      selected: result.answers && result.answers[idx],
+      selected: answers[idx] ?? "",
       explanation: q.explanation || ""
     }));
 
@@ -125,5 +120,4 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
-
 export default router;
