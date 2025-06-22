@@ -70,7 +70,7 @@
 
 .header h1 {
   margin: 0 0 8px 0;
-  font-size: 2.1rem;
+  font-size: 1.5rem;
   letter-spacing: 0.04em;
   font-weight: 800;
 }
@@ -79,7 +79,7 @@
   font-weight: 800;
 }
 .student-info {
-  font-size: 1.03em;
+  font-size: 1.0em;
   color: #fff;
   opacity: 0.92;
 }
@@ -90,7 +90,7 @@
 
 .notif-bell {
   position: absolute;
-  top: 24px; right: 25px;
+  top: 20px; right: 10px;
   font-size: 2.1rem;
   color: var(--warning);
   cursor: pointer;
