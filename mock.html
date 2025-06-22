@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8">
-  <link rel="stylesheet" href="register.css">
-  <style> 
+  <style>
     html, body {
   height: 100%;
   min-height: 100vh;
@@ -42,133 +41,105 @@ body {
   0%, 100% { opacity: 0.2; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.4); }
 }
-
-/* Faculty Loader Spinner */
-#facultyLoader {
-  position: fixed;
-  z-index: 1200;
-  left: 0; top: 0; width: 100vw; height: 100vh;
-  background: rgba(22,34,55,0.98);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  transition: opacity 0.5s;
-}
-#facultyLoader .spinner {
-  width: 60px; height: 60px; border: 6px solid #eee; border-top: 6px solid #0072ff;
-  border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 18px;
-}
-#facultyLoader span {
-  font-size: 1.2rem;
-  color: #fff;
-  letter-spacing: 1px;
-  text-shadow: 0 1px 8px #00336666;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
-}
-
 #notificationPopup {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(8, 24, 57, 0.85);
-  padding: 0;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  align-items: center;
-  justify-content: center;
-  animation: popupFadeIn 0.3s;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(8, 24, 57, 0.85);
+    padding: 0;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    animation: popupFadeIn 0.3s;
 }
 #notificationPopup.active {
-  display: flex !important;
-  opacity: 1;
+    display: flex !important;
+    opacity: 1;
 }
 @keyframes popupFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 #notificationPopup .popup-content {
-  background: #f9fbfd;
-  padding: 34px 26px 30px 26px;
-  border-radius: 18px;
-  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
-  max-width: 600px;
-  width: 94vw;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 1.09rem;
-  position: relative;
-  border: 2px solid #0055b7;
-  animation: popupContentFadeIn 0.5s;
+    background: #f9fbfd;
+    padding: 34px 26px 30px 26px;
+    border-radius: 18px;
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
+    max-width: 600px;
+    width: 94vw;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.09rem;
+    position: relative;
+    border: 2px solid #0055b7;
+    animation: popupContentFadeIn 0.5s;
 }
 @keyframes popupContentFadeIn {
   from { opacity: 0; transform: translateY(-32px);}
   to { opacity: 1; transform: translateY(0);}
 }
 #notificationPopup h2 {
-  font-size: 20px;
-  color: #003366;
-  margin-top: 15px;
-  margin-bottom: 18px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-  font-weight: bold;
+    font-size: 20px;
+    color: #003366;
+    margin-top: 15px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: bold;
 }
 #notificationPopup ul {
-  list-style: inside disc;
-  margin-bottom: 22px;
-  text-align: left;
-  font-size: 15px;
-  color: #1a1a1a;
-  padding-left: 0;
+    list-style: inside disc;
+    margin-bottom: 22px;
+    text-align: left;
+    font-size: 15px;
+    color: #1a1a1a;
+    padding-left: 0;
 }
 #notificationPopup button.styled-btn,
 #notificationPopup button.close-btn {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  font-family: inherit;
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    font-family: inherit;
 }
 #whatsappBtn.styled-btn {
-  background: #25D366;
-  color: white;
-  padding: 12px 25px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 10px 0 2px 0;
-  transition: background 0.2s, transform 0.2s;
-  font-weight: 500;
-  box-shadow: 0 2px 7px #25d36633;
+    background: #25D366;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0 2px 0;
+    transition: background 0.2s, transform 0.2s;
+    font-weight: 500;
+    box-shadow: 0 2px 7px #25d36633;
 }
 #whatsappBtn.styled-btn:hover {
-  background: #20b058;
+    background: #20b058;
 }
 #closeNotification.close-btn {
-  background: #003366;
-  color: #fff;
-  padding: 10px 0;
-  font-size: 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 4px;
-  transition: background 0.2s, color 0.2s;
-  font-weight: 500;
-  box-shadow: 0 1.5px 6px #00336633;
+    background: #003366;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 500;
+    box-shadow: 0 1px 5px #00336633;
 }
 #closeNotification.close-btn:hover {
-  background: #0055b7;
-  color: #ffe966;
+    background: #0055b7;
+    color: #ffe966;
 }
 #customNotification {
   display: none;
@@ -497,14 +468,10 @@ body {
     max-width: 99vw;
   }
 }
-    </style>
+    /* [CSS goes here, to be provided separately] */
+  </style>
 </head>
 <body>
-  <!-- Loader that covers the page until faculties are loaded -->
-  <div id="facultyLoader">
-    <div class="spinner"></div>
-    <span>Loading faculties, please wait...</span>
-  </div>
   <!-- Custom notification UI -->
   <div id="customNotification">
     <button class="close-noti" onclick="hideNotification()" aria-label="Close notification">&times;</button>
@@ -580,44 +547,39 @@ body {
           <div class="login-footer">By logging in, you agree to the ICT policy.</div>
         </div>
         <!-- Registration Section -->
-        <div class="tab-section" id="registerSection" style="display:none;">
-          <h2 class="tab-header">Register</h2>
-          <form id="registerForm" class="register-form" autocomplete="off">
-            <input type="text" id="reg_fullname" placeholder="Full Name" required aria-label="Full Name">
-            <input type="text" id="reg_username" placeholder="Username" required autocomplete="username" aria-label="Username">
-            <input type="password" id="reg_password" placeholder="Password" required autocomplete="new-password" aria-label="Password">
-            <input type="email" id="reg_email" placeholder="Email" required aria-label="Email">
-
-            <!-- Dynamic Faculty/Department -->
-            <select id="reg_faculty" required aria-label="Faculty">
-              <option value="">Select Faculty</option>
-              <!-- Populated dynamically -->
-            </select>
-            <select id="reg_department" required aria-label="Department" disabled>
-              <option value="">Select Department</option>
-              <!-- Populated dynamically -->
-            </select>
-
-            <select id="reg_level" required aria-label="Level">
-              <option value="">Select Level</option>
-              <option value="100">100</option>
-              <option value="200">200</option>
-              <option value="300">300</option>
-              <option value="400">400</option>
-              <option value="500">500</option>
-              <option value="600">600</option>
-            </select>
-            <input type="tel" id="reg_phone" placeholder="Phone Number" required pattern="[0-9]{11,14}" aria-label="Phone Number">
-            <button type="submit" id="registerBtn">
-              <span id="registerBtnText">Register</span>
-              <span class="spinner" id="registerSpinner" style="display:none;"></span>
-            </button>
-          </form>
-          <div class="alternate-link">
-            Already have an account?
-            <a href="#" id="showLoginSection">Click here to Login</a>
-          </div>
-        </div>
+<div class="tab-section" id="registerSection" style="display:none;">
+  <h2 class="tab-header">Register</h2>
+  <form id="registerForm" class="register-form" autocomplete="off">
+    <input type="text" id="reg_fullname" placeholder="Full Name" required aria-label="Full Name">
+    <input type="text" id="reg_username" placeholder="Username" required autocomplete="username" aria-label="Username">
+    <input type="password" id="reg_password" placeholder="Password" required autocomplete="new-password" aria-label="Password">
+    <input type="email" id="reg_email" placeholder="Email" required aria-label="Email">
+    <select id="reg_faculty" required aria-label="Faculty">
+      <option value="">Select Faculty</option>
+      <!-- JS populates faculty options here -->
+    </select>
+    <select id="reg_department" required aria-label="Department" disabled>
+      <option value="">Select Department</option>
+      <!-- JS populates department options here -->
+    </select>
+    <select id="reg_level" required aria-label="Level">
+      <option value="">Select Level</option>
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <option value="400">400</option>
+    </select>
+    <input type="tel" id="reg_phone" placeholder="Phone Number" required pattern="[0-9]{11,14}" aria-label="Phone Number">
+    <button type="submit" id="registerBtn">
+      <span id="registerBtnText">Register</span>
+      <span class="spinner" id="registerSpinner" style="display:none;"></span>
+    </button>
+  </form>
+  <div class="alternate-link">
+    Already have an account?
+    <a href="#" id="showLoginSection">Click here to Login</a>
+  </div>
+</div>
       </div>
     </div>
   </div>
@@ -675,63 +637,9 @@ body {
       showLogin();
     });
 
-    // --- FACULTY & DEPARTMENT DYNAMIC POPULATION ---
-    const FACULTY_API = "https://examguide.onrender.com/api/faculties";
-    const DEPARTMENT_API = "https://examguide.onrender.com/api/departments?faculty=";
-
-    async function populateFaculties() {
-      const facultySelect = document.getElementById('reg_faculty');
-      facultySelect.innerHTML = '<option value="">Select Faculty</option>';
-      try {
-        const res = await fetch(FACULTY_API);
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          data.forEach(fac => {
-            const opt = document.createElement('option');
-            opt.value = fac.name || fac;
-            opt.textContent = fac.name || fac;
-            facultySelect.appendChild(opt);
-          });
-        }
-      } catch (e) {
-        showNotification("Failed to load faculties. Please refresh.", "error");
-      }
-    }
-
-    document.getElementById('reg_faculty').addEventListener('change', async function() {
-      const faculty = this.value;
-      const deptSelect = document.getElementById('reg_department');
-      deptSelect.innerHTML = '<option value="">Select Department</option>';
-      deptSelect.disabled = true;
-      if (!faculty) return;
-      try {
-        const res = await fetch(DEPARTMENT_API + encodeURIComponent(faculty));
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          data.forEach(dept => {
-            const opt = document.createElement('option');
-            opt.value = dept.name || dept;
-            opt.textContent = dept.name || dept;
-            deptSelect.appendChild(opt);
-          });
-          deptSelect.disabled = false;
-        }
-      } catch {}
-    });
-
-    // Show the faculty loader until faculties are loaded
-    document.addEventListener('DOMContentLoaded', async () => {
-      const loader = document.getElementById('facultyLoader');
-      loader.style.display = 'flex';
-      // Hide registration section until loaded
-      document.querySelector('.auth-main-wrapper').style.visibility = "hidden";
-      await populateFaculties();
-      loader.style.opacity = "0";
-      setTimeout(() => loader.style.display = "none", 500);
-      document.querySelector('.auth-main-wrapper').style.visibility = "";
-    });
-
     // --- BACKEND LOGIC INTEGRATION ---
+
+    // SET THIS TO YOUR RENDER BACKEND URL:
     const API_URL = "https://examguide.onrender.com/api/auth/";
 
     function validateUsername(username) {
@@ -849,11 +757,171 @@ body {
       let username = document.getElementById('reg_username').value.trim();
       let password = document.getElementById('reg_password').value;
       let email = document.getElementById('reg_email').value.trim();
-      let faculty = document.getElementById('reg_faculty').value;
-      let department = document.getElementById('reg_department').value;
+      let faculty = document.getElementById('reg_faculty').value.trim();
+      let department = document.getElementById('reg_department').value.trim();
       let level = document.getElementById('reg_level').value;
       let phone = document.getElementById('reg_phone').value.trim();
+// OAU Faculties and Departments
+const facultyDepartments = {
+  "Administration": [
+    "Management and Accounting",
+    "Public Administration",
+    "Local Government and Development Studies",
+    "International Relations"
+  ],
+  "Agriculture": [
+    "Agricultural Economics",
+    "Animal Science",
+    "Crop Production and Protection",
+    "Family, Nutrition and Consumer Sciences",
+    "Soil Science",
+    "Agricultural Extension and Rural Development"
+  ],
+  "Arts": [
+    "African Languages and Literatures",
+    "Dramatic Arts",
+    "English Language",
+    "Foreign Languages",
+    "History",
+    "Linguistics and African Languages",
+    "Music",
+    "Philosophy",
+    "Religious Studies"
+  ],
+  "Basic Medical Sciences": [
+    "Anatomy and Cell Biology",
+    "Biochemistry",
+    "Medical Microbiology and Parasitology",
+    "Chemical Pathology",
+    "Haematology and Immunology",
+    "Morbid Anatomy and Forensic Medicine",
+    "Physiology"
+  ],
+  "Clinical Sciences": [
+    "Community Health",
+    "Medicine",
+    "Nursing Science",
+    "Obstetrics, Gynaecology and Perinatology",
+    "Paediatrics and Child Health",
+    "Psychiatry",
+    "Radiology",
+    "Surgery"
+  ],
+  "Dentistry": [
+    "Child Dental Health",
+    "Oral and Maxillofacial Surgery and Oral Pathology",
+    "Preventive and Community Dentistry",
+    "Restorative Dentistry"
+  ],
+  "Education": [
+    "Adult Education and Lifelong Learning",
+    "Educational Foundations and Counselling",
+    "Educational Management",
+    "Educational Technology",
+    "Fine and Applied Arts Education",
+    "Institute of Education",
+    "Physical and Health Education",
+    "Science and Technology Education",
+    "Social Sciences Education"
+  ],
+  "Environmental Design and Management": [
+    "Architecture",
+    "Building",
+    "Estate Management",
+    "Fine and Applied Arts",
+    "Quantity Surveying",
+    "Urban and Regional Planning"
+  ],
+  "Law": [
+    "Business Law",
+    "International Law",
+    "Jurisprudence and Private Law",
+    "Public Law"
+  ],
+  "Pharmacy": [
+    "Clinical Pharmacy and Pharmacy Administration",
+    "Pharmaceutical Chemistry",
+    "Pharmaceutical Microbiology",
+    "Pharmaceutics",
+    "Pharmacognosy",
+    "Pharmacology"
+  ],
+  "Science": [
+    "Biochemistry and Molecular Biology",
+    "Botany",
+    "Chemistry",
+    "Computer Science and Engineering",
+    "Geology",
+    "Mathematics",
+    "Microbiology",
+    "Physics",
+    "Statistics",
+    "Zoology"
+  ],
+  "Social Sciences": [
+    "Demography and Social Statistics",
+    "Economics",
+    "Geography",
+    "Political Science",
+    "Psychology",
+    "Sociology and Anthropology"
+  ],
+  "Technology": [
+    "Agricultural and Environmental Engineering",
+    "Chemical Engineering",
+    "Civil Engineering",
+    "Computer Science and Engineering",
+    "Electronic and Electrical Engineering",
+    "Food Science and Technology",
+    "Materials Science and Engineering",
+    "Mechanical Engineering"
+  ],
+  "Health Sciences": [
+    "Medical Rehabilitation",
+    "Nursing Science"
+  ]
+};
 
+const facultySelect = document.getElementById('reg_faculty');
+const deptSelect = document.getElementById('reg_department');
+
+// Populate faculty select
+function populateFaculties() {
+  facultySelect.innerHTML = `<option value="">Select Faculty</option>`;
+  Object.keys(facultyDepartments).forEach(faculty => {
+    const opt = document.createElement("option");
+    opt.value = faculty;
+    opt.textContent = faculty;
+    facultySelect.appendChild(opt);
+  });
+}
+
+// Populate department select based on faculty
+function populateDepartments(faculty) {
+  deptSelect.innerHTML = `<option value="">Select Department</option>`;
+  if (facultyDepartments[faculty]) {
+    facultyDepartments[faculty].forEach(dept => {
+      const opt = document.createElement("option");
+      opt.value = dept;
+      opt.textContent = dept;
+      deptSelect.appendChild(opt);
+    });
+    deptSelect.disabled = false;
+  } else {
+    deptSelect.disabled = true;
+  }
+}
+
+// On faculty change, update departments
+facultySelect.addEventListener('change', function() {
+  populateDepartments(this.value);
+});
+
+// Initialize on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  populateFaculties();
+  deptSelect.disabled = true;
+});
       // Basic validation
       if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
         showNotification("All fields are required!", "error");
