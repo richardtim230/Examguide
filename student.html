@@ -1067,34 +1067,83 @@
 </style>
 <!-- Place in <body> after existing content (preferably near the bottom or before closing </body>) -->
 
+<!-- Place this at the end of <body> in student.html, before </body> -->
+<!-- You may need to adjust image URLs or inline SVG for your icons and ribbon -->
+
+<!-- Google Fonts for certificate (add in <head>) -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+
 <!-- Hidden Certificate Template -->
-<div id="certificateTemplate" style="display:none;position:fixed;top:-9999px;left:-9999px;width:600px;height:400px;padding:0;">
-  <div style="width:600px;height:400px;background:#f7fafc;border:5px solid #3a86ff;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;font-family:'Segoe UI',Arial,sans-serif;">
-    <img src="logo.png" style="width:60px;position:absolute;top:30px;left:30px;" onerror="this.style.display='none';"/>
-    <div style="font-size:2rem;font-weight:800;color:#3a86ff;margin-top:38px;">Certificate of Participation</div>
-    <div style="margin-top:15px;font-size:1.15rem;color:#444;text-align:center;">
-      This is to certify that
-    </div>
-    <div id="certStudentName" style="margin-top:8px;font-size:1.4rem;font-weight:700;color:#2e3a5a;"></div>
-    <div style="margin-top:10px;font-size:1.13rem;color:#333;text-align:center;">
-      participated in the assessment<br/>
-      <span id="certTestTitle" style="font-weight:700;color:#3a86ff"></span>
-    </div>
-    <div style="margin-top:13px;font-size:1.04rem;color:#333;text-align:center;">
-      and scored <span id="certScore" style="font-weight:700;color:#43aa8b;"></span>
-    </div>
-    <div style="margin-top:18px;font-size:1em;color:#555;">
-      <span id="certFaculty"></span> | <span id="certDept"></span>
-    </div>
-    <div style="position:absolute;bottom:32px;right:32px;font-size:0.97rem;color:#888;text-align:right;">
-      <span id="certDate"></span>
-    </div>
-    <div style="position:absolute;bottom:32px;left:32px;font-size:0.97rem;color:#3a86ff;font-weight:700;">
-      OAUExam Suite
+<div id="certificateTemplate" style="display:none;position:fixed;top:-9999px;left:-9999px;width:1200px;height:850px;">
+  <div id="certificateContent"
+       style="width:1200px;height:850px;position:relative;
+              background:#fff;border-radius:18px;box-shadow:0 8px 48px #3a86ff22;overflow:hidden;">
+    <!-- Decorative SVG border (top left / bottom right) -->
+    <svg width="1200" height="850" viewBox="0 0 1200 850" style="position:absolute;z-index:1;top:0;left:0;">
+      <defs>
+        <linearGradient id="bluegold1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#23366e"/>
+          <stop offset="70%" stop-color="#3a86ff"/>
+          <stop offset="100%" stop-color="#ffe082"/>
+        </linearGradient>
+        <linearGradient id="bluegold2" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffe082"/>
+          <stop offset="30%" stop-color="#3a86ff"/>
+          <stop offset="100%" stop-color="#23366e"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,0 Q350,60 600,0 Q900,-40 1200,0 L1200,60 Q950,40 800,60 Q300,120 0,60 Z"
+            fill="url(#bluegold1)" opacity="0.85"/>
+      <path d="M0,850 Q350,790 600,850 Q900,890 1200,850 L1200,790 Q950,810 800,790 Q300,730 0,790 Z"
+            fill="url(#bluegold2)" opacity="0.85"/>
+      <!-- Thin gold frame -->
+      <rect x="23" y="23" width="1153" height="804" fill="none" stroke="#ffe082" stroke-width="5"/>
+    </svg>
+    <!-- Gold Ribbon/Badge (top right) -->
+    <svg width="120" height="120" viewBox="0 0 120 120" style="position:absolute;top:70px;right:80px;z-index:5;">
+      <defs>
+        <radialGradient id="ribbonGold" cx="60" cy="60" r="60" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#fffde4"/>
+          <stop offset="50%" stop-color="#ffe082"/>
+          <stop offset="100%" stop-color="#bfa043"/>
+        </radialGradient>
+      </defs>
+      <circle cx="60" cy="60" r="48" fill="url(#ribbonGold)" stroke="#bfa043" stroke-width="7"/>
+      <polygon points="60,15 70,65 115,60 75,75 90,110 60,85 30,110 45,75 5,60 50,65"
+               fill="#ffe082" stroke="#bfa043" stroke-width="3" opacity="0.75"/>
+    </svg>
+    <!-- Main certificate content -->
+    <div style="position:relative;z-index:10;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;">
+      <div style="margin-top:120px;font-size:3.2rem;font-weight:900;letter-spacing:2px;color:#23366e;">CERTIFICATE</div>
+      <div style="margin-top:10px;font-size:1.7rem;font-weight:700;background:#23366e;color:#fff;border-radius:42px;padding:8px 44px;letter-spacing:3px;">
+        OF PARTICIPATION
+      </div>
+      <div style="margin-top:44px;font-size:1.15rem;color:#23366e;opacity:0.82;">This participation certificate is given to</div>
+      <div id="certStudentName" style="font-family:'Great Vibes',cursive;font-size:3rem;font-weight:400;color:#23366e;margin:18px 0 7px 0;line-height:1.1;text-align:center;max-width:900px;"></div>
+      <div id="certAwardText" style="font-size:1.25rem;color:#23366e;text-align:center;max-width:800px;">
+        Who has participated in <span id="certEvent"></span>
+        <br/>hosted by <span id="certHost"></span> on <span id="certDate"></span>
+      </div>
+      <div id="certScoreSection" style="font-size:1.18rem;color:#1e6a4e;margin:20px 0 0 0;font-weight:700;"></div>
+      <div style="width:70%;margin:60px auto 0 auto;display:flex;justify-content:space-between;align-items:flex-end;">
+        <div style="text-align:center;">
+          <div style="height:60px;">
+            <img id="certChairSign" src="https://i.ibb.co/1rFWF7T/signature1.png" alt="Chairman Sign" style="height:48px;max-width:130px;object-fit:contain;"/>
+          </div>
+          <div style="font-size:1.05rem;font-weight:700;color:#23366e;margin-top:2px;">Chairman</div>
+          <div id="certChairName" style="font-size:1.07rem;font-weight:900;color:#23366e;">Cla Rodriguez</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="height:60px;">
+            <img id="certRepSign" src="https://i.ibb.co/vw9w4b6/signature2.png" alt="Rep Sign" style="height:48px;max-width:130px;object-fit:contain;"/>
+          </div>
+          <div style="font-size:1.05rem;font-weight:700;color:#23366e;margin-top:2px;">Representative</div>
+          <div id="certRepName" style="font-size:1.07rem;font-weight:900;color:#23366e;">Chad Gibbons</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
 <!-- Add html2canvas from CDN before closing </body> -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
@@ -1929,42 +1978,55 @@ window.addEventListener("load", function() {
 });
     window.onload = init;
 
-    // Example: fillCertInfo({name, testTitle, score, faculty, dept, date})
-function fillCertInfo(data) {
-  document.getElementById('certStudentName').innerText = data.name || '';
-  document.getElementById('certTestTitle').innerText = data.testTitle || '';
-  document.getElementById('certScore').innerText = data.score || '';
-  document.getElementById('certFaculty').innerText = data.faculty || '';
-  document.getElementById('certDept').innerText = data.dept || '';
-  document.getElementById('certDate').innerText = data.date || '';
+// Add this script to your student.html, after html2canvas import
+
+// Utility to fill in certificate info from your app
+function fillCertInfo({
+  name,
+  event = "a scheduled assessment",
+  host = "OAUExam Suite",
+  date,
+  score,
+  chair = "RICHARD D'PROF",
+  rep = "OKWONG BLESSING",
+  chairSignUrl = "https://i.ibb.co/1rFWF7T/signature1.png",
+  repSignUrl = "https://i.ibb.co/vw9w4b6/signature2.png"
+}) {
+  document.getElementById('certStudentName').innerText = name || '';
+  document.getElementById('certEvent').innerText = event;
+  document.getElementById('certHost').innerText = host;
+  document.getElementById('certDate').innerText = date || '';
+  document.getElementById('certScoreSection').innerHTML = score ? `Score: <span style="color:#43aa8b;">${score}</span>` : '';
+  document.getElementById('certChairName').innerText = chair;
+  document.getElementById('certRepName').innerText = rep;
+  document.getElementById('certChairSign').src = chairSignUrl;
+  document.getElementById('certRepSign').src = repSignUrl;
 }
 
-// Attach to downloadCertificate()
+// Download certificate as image
 async function downloadCertificate() {
-  // Get the latest test and user info -- adapt these to your app's data structure
+  // Replace with your logic to fetch user/test info
   const name = document.getElementById('profileName').innerText || 'Scholar';
-  const faculty = document.getElementById('profileFaculty').innerText;
-  const dept = document.getElementById('profileDept').innerText;
-  // Replace with the actual completed test info
-  const testTitle = window.lastCompletedTestTitle || 'Assessment';
-  const score = window.lastCompletedTestScore || '--';
-  const date = new Date().toLocaleDateString();
+  const event = window.lastCompletedTestTitle || 'Central Mock Assessment';
+  const host = 'OAUExam Suite';
+  const score = window.lastCompletedTestScore || '';
+  const date = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
 
-  fillCertInfo({ name, testTitle, score, faculty, dept, date });
+  fillCertInfo({ name, event, host, date, score });
 
   const certDiv = document.getElementById('certificateTemplate');
-  certDiv.style.display = 'block'; // ensure visible for canvas
+  certDiv.style.display = 'block';
 
-  // Wait a tick in case fonts/images load
+  // Wait for fonts/images
   setTimeout(() => {
     html2canvas(certDiv, {backgroundColor: null, useCORS: true, scale:2}).then(canvas => {
       certDiv.style.display = 'none';
       const link = document.createElement('a');
-      link.download = `Certificate_${testTitle.replace(/\s+/g,'_')}.png`;
+      link.download = `Certificate_${event.replace(/[^\w]/g,'_')}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     });
-  }, 150);
+  }, 180);
 }
   </script>
 </body>
