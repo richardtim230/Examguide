@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 const ResultSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  examSet: { type: String, required: true }, // use String or mongoose.Schema.Types.ObjectId, depending on your examSet data type
+  examSet: { type: mongoose.Schema.Types.ObjectId, ref: "QuestionSet", required: true },
   answers: { type: Map, of: String, default: {} },
   score: { type: Number, required: true },
-  timeTaken: { type: Number, required: true }, // Add this line if you want to store time taken (in seconds)
-  questions: { type: Array, default: [] }, // Stores questions for review if needed
+  timeTaken: { type: Number, required: true },
+  questions: { type: Array, default: [] },
   submittedAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
