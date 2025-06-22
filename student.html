@@ -7,7 +7,120 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600,800&display=swap">
   <link rel="icon" href="logo.png">
 <link rel="stylesheet" href="./dashboard.css">
-  
+  <style>
+    /* Assessment Performance & Reviews Table */
+.result-table, .test-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px #3a86ff18;
+  margin: 14px 0 22px 0;
+  font-size: 1.06rem;
+  min-width: 340px;
+}
+
+.result-table thead tr, .test-table thead tr {
+  background: linear-gradient(90deg, #3a86ff 60%, #4cc9f0 100%);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.result-table th, .result-table td,
+.test-table th, .test-table td {
+  padding: 11px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e3e8ee;
+}
+
+.result-table th:last-child, .result-table td:last-child,
+.test-table th:last-child, .test-table td:last-child {
+  text-align: center;
+}
+
+.result-table tbody tr, .test-table tbody tr {
+  transition: background 0.18s;
+}
+
+.result-table tbody tr:nth-child(even),
+.test-table tbody tr:nth-child(even) {
+  background: #f7faff;
+}
+
+.result-table tbody tr:hover,
+.test-table tbody tr:hover {
+  background: #e3f0ff;
+}
+
+.result-table td, .test-table td {
+  color: #23366e;
+}
+
+.result-table td button,
+.test-table td button,
+.test-table td .btn {
+  background: linear-gradient(90deg, #3a86ff 60%, #4cc9f0 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.18s;
+  font-weight: 600;
+  box-shadow: 0 2px 7px #3a86ff22;
+}
+.result-table td button:hover,
+.test-table td button:hover,
+.test-table td .btn:hover {
+  background: linear-gradient(90deg, #4cc9f0 0%, #3a86ff 100%);
+  color: #fff;
+}
+
+/* Responsive: horizontal scroll on small screens */
+@media (max-width: 800px) {
+  .result-table, .test-table {
+    font-size: 0.99rem;
+    min-width: 390px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+  .result-table thead, .test-table thead {
+    display: table-header-group;
+  }
+}
+
+/* Optional: Add a subtle border radius to the first/last cell */
+.result-table th:first-child, .result-table td:first-child,
+.test-table th:first-child, .test-table td:first-child {
+  border-top-left-radius: 12px;
+}
+.result-table th:last-child, .result-table td:last-child,
+.test-table th:last-child, .test-table td:last-child {
+  border-top-right-radius: 12px;
+}
+
+/* Optional: Style empty table rows (no data) */
+.result-table tbody tr:only-child td,
+.test-table tbody tr:only-child td {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  background: #f8faff;
+}
+
+/* Utility: .table-responsive wrapper for scrollable tables */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin: 0;
+  border-radius: 14px;
+}
+  </style>
 </head>
 <body>
   <div class="header">
