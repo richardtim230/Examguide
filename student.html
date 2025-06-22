@@ -941,17 +941,17 @@ async function fetchHistory() {
   // Update Assessment Performance Table
   let html = "";
   results.slice(0, 10).forEach(r => {
-    html += `<tr>
-      <td>${
-  r.examSet && typeof r.examSet === "object"
-    ? (r.examSet.title || r.examSet._id || "")
-    : (r.examSet || "")
-}</td>
-      <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
-      <td>${r.score ?? "-"}</td>
-      <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
-    </tr>`;
-  });
+  const examTitle =
+    r.examSet && typeof r.examSet === "object"
+      ? (r.examSet.title || r.examSet._id || "")
+      : (r.examSet || "");
+  html += `<tr>
+    <td>${examTitle}</td>
+    <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+    <td>${r.score ?? "-"}</td>
+    <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
+  </tr>`;
+});
   document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
 
   recommendTopics();
