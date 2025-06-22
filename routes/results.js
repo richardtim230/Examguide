@@ -83,10 +83,19 @@ router.get("/me", authenticate, async (req, res) => {
   res.json({ result });
 });
 
+
+
+// Review endpoint (robust version)
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
     console.log("Session review request:", sessionId, "by user:", req.user.id);
+
+    // Defensive: check for valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+      console.log("Invalid sessionId format", sessionId);
+      return res.status(400).json({ message: "Invalid session id" });
+    }
 
     const result = await Result.findById(sessionId);
     if (!result) {
@@ -130,4 +139,5 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
+
 export default router;
