@@ -106,72 +106,67 @@
     <h2 id="examTitle">Exam History</h2>
     <div id="reviewContent"></div>
   </div>
-  <script>
-    async function loadReview() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get('session');
-      const container = document.getElementById('reviewContent');
-      const title = document.getElementById('examTitle');
-      if (!sessionId) {
-        container.innerHTML = '<div class="error-msg">No session ID provided.</div>';
-        return;
-      }
+<script>
+async function loadReview() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get('session');
+  const container = document.getElementById('reviewContent');
+  const title = document.getElementById('examTitle');
+  if (!sessionId) {
+    container.innerHTML = '<div class="error-msg">No session ID provided.</div>';
+    return;
+  }
 
-      container.innerHTML = '<div class="loading">Loading review...</div>';
+  container.innerHTML = '<div class="loading">Loading review...</div>';
 
-      try {
-        // fetch() will send cookies for authentication if user is logged in
-        const response = await fetch(`/api/results/${encodeURIComponent(sessionId)}/review`, {
-          credentials: "include"
-        });
-        if (!response.ok) {
-          // Show backend error message if available
-          let err = { message: 'Session not found' };
-          try { err = await response.json(); } catch {}
-          throw new Error(err.message || 'Session not found');
-        }
-        const data = await response.json();
-
-        if (data.examTitle) title.textContent = data.examTitle + " - Exam History";
-
-        container.innerHTML = '';
-
-        if (!data.questions || !data.questions.length) {
-          container.innerHTML = '<div class="error-msg">No questions found for this session.</div>';
-          return;
-        }
-
-        data.questions.forEach((q, idx) => {
-          const optionsHtml = q.options.map(opt => {
-            let cls = '';
-            let extra = '';
-            // Correct answer is always green
-            if (opt === q.correct) cls = 'correct';
-            // If user selected this and it's wrong
-            if (opt === q.selected && q.selected !== q.correct) cls = 'wrong';
-            // Mark user's selected answer
-            if (opt === q.selected) extra = ' <span style="color:#8338ec;font-weight:bold;">(Your Answer)</span>';
-            if (opt === q.correct && opt === q.selected) extra = ' <span style="color:#198754;font-weight:bold;">(Your Answer ✓)</span>';
-            return `<li class="${cls}">${opt}${extra}</li>`;
-          }).join('');
-          let notAnswered = '';
-          if (!q.selected && q.selected !== 0) {
-            notAnswered = `<div class="not-answered">You did not answer this question.</div>`;
-          }
-          container.innerHTML += `
-            <div class="q-card">
-              <div class="q-title">Q${idx+1}: ${q.question}</div>
-              <ul class="options">${optionsHtml}</ul>
-              ${notAnswered}
-              <div class="explanation"><strong>Explanation:</strong> ${q.explanation || ''}</div>
-            </div>
-          `;
-        });
-      } catch (err) {
-        container.innerHTML = `<div class="error-msg">${err.message || "Failed to load review."}</div>`;
-      }
+  try {
+    const response = await fetch(`/api/results/${encodeURIComponent(sessionId)}/review`, {
+      credentials: "include"
+    });
+    if (!response.ok) {
+      let err = { message: 'Session not found' };
+      try { err = await response.json(); } catch {}
+      throw new Error(err.message || 'Session not found');
     }
-    loadReview();
-  </script>
+    const data = await response.json();
+
+    if (data.examTitle) title.textContent = data.examTitle + " - Exam History";
+
+    container.innerHTML = '';
+
+    if (!data.questions || !data.questions.length) {
+      container.innerHTML = '<div class="error-msg">No questions found for this session.</div>';
+      return;
+    }
+
+    data.questions.forEach((q, idx) => {
+      const optionsHtml = q.options.map(opt => {
+        let cls = '';
+        let extra = '';
+        if (opt === q.correct) cls = 'correct';
+        if (opt === q.selected && q.selected !== q.correct) cls = 'wrong';
+        if (opt === q.selected) extra = ' <span style="color:#8338ec;font-weight:bold;">(Your Answer)</span>';
+        if (opt === q.correct && opt === q.selected) extra = ' <span style="color:#198754;font-weight:bold;">(Your Answer ✓)</span>';
+        return `<li class="${cls}">${opt}${extra}</li>`;
+      }).join('');
+      let notAnswered = '';
+      if (!q.selected && q.selected !== 0) {
+        notAnswered = `<div class="not-answered">You did not answer this question.</div>`;
+      }
+      container.innerHTML += `
+        <div class="q-card">
+          <div class="q-title">Q${idx+1}: ${q.question}</div>
+          <ul class="options">${optionsHtml}</ul>
+          ${notAnswered}
+          <div class="explanation"><strong>Explanation:</strong> ${q.explanation || ''}</div>
+        </div>
+      `;
+    });
+  } catch (err) {
+    container.innerHTML = `<div class="error-msg">${err.message || "Failed to load review."}</div>`;
+  }
+}
+loadReview();
+</script>
 </body>
 </html>
