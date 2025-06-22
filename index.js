@@ -65,9 +65,6 @@ app.use(cors({
 app.use(express.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-// ===== Multer Setup for Notifications (used in notificationsRoutes) =====
-// (If your notificationsRoutes uses its own multer, this is just for fallback or extra uses.)
-
 // ===== MongoDB Connect =====
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=>console.log("MongoDB connected"))
@@ -77,15 +74,16 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
+// GET: public, returns array of faculty names
 app.get("/api/faculties", async (req, res) => {
   try {
     const list = await Faculty.find().sort({ name: 1 });
-    // Return as array of names for frontend simplicity
     res.json(list.map(f => f.name));
   } catch (e) {
     res.status(500).json({ message: "Server error" });
   }
 });
+// POST: protected, for admin/superadmin only
 app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const faculty = await Faculty.create({ name: req.body.name });
@@ -96,7 +94,7 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
 });
 
 // ===== DEPARTMENT ROUTES =====
-// GET /api/departments?faculty=FacultyName
+// GET: public, supports ?faculty=Faculty Name, returns array of department names
 app.get("/api/departments", async (req, res) => {
   try {
     let filter = {};
@@ -106,12 +104,12 @@ app.get("/api/departments", async (req, res) => {
       filter.faculty = fac._id;
     }
     const list = await Department.find(filter).sort({ name: 1 });
-    // Return as array of names for frontend simplicity
     res.json(list.map(d => d.name));
   } catch (e) {
     res.status(500).json({ message: "Server error" });
   }
 });
+// POST: protected, for admin/superadmin only
 app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const fac = await Faculty.findOne({ name: req.body.faculty });
