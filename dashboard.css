@@ -140,7 +140,7 @@
     font-size: 0.77em;
   }
   .header h1 {
-    font-size: 1.13rem;
+    font-size: 1.0rem;
   }
   .notif-bell {
     top: 11px; right: 9px;
@@ -183,17 +183,17 @@
     }
     .header h1 {
       margin: 0 0 8px 0;
-      font-size: 2.1rem;
+      font-size: 1.5rem;
       letter-spacing: 0.04em;
       font-weight: 800;
     }
     .header small {
       opacity: 0.95;
-      font-size: 1.03em;
+      font-size: 1.0em;
     }
     .notif-bell {
       position: absolute;
-      top: 24px; right: 25px;
+      top: 20px; right: 15px;
       font-size: 2.1rem;
       color: var(--warning);
       cursor: pointer;
