@@ -1051,9 +1051,20 @@ async function fetchAvailableTests() {
     }
 
   function closeModal(e) {
-  // Closes when clicking backdrop, close button, or if called directly
-  if (!e || e.target.classList.contains('schedule-modal-backdrop') || e.target.classList.contains('schedule-modal-close')) {
+  // If called programmatically or from a close button/backdrop, close modalRoot
+  if (
+    !e ||
+    (e.target &&
+      (
+        e.target.classList.contains('modal-backdrop') ||
+        e.target.classList.contains('close-modal') ||
+        e.target.classList.contains('schedule-modal-backdrop') ||
+        e.target.classList.contains('schedule-modal-close')
+      )
+    )
+  ) {
     document.getElementById("modalRoot").innerHTML = "";
+    if (typeof chatPollingInterval !== "undefined" && chatPollingInterval) clearInterval(chatPollingInterval);
   }
 }
     // ========== INIT ==========
