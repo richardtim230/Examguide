@@ -65,6 +65,11 @@
       border-color: #d90429;
       background: #ffe6e9;
     }
+    .options .selected {
+      font-weight: bold;
+      border: 2px dashed #8338ec;
+      background: #f8f3ff;
+    }
     .explanation {
       font-size: 1em;
       background: #f7fafd;
@@ -87,6 +92,12 @@
       color: #2563eb;
       margin: 2em 0;
       font-size: 1.2em;
+    }
+    .not-answered {
+      color: #d90429;
+      font-size: 0.98em;
+      margin-top: 5px;
+      font-style: italic;
     }
   </style>
 </head>
@@ -113,7 +124,12 @@
         const response = await fetch(`/api/results/${encodeURIComponent(sessionId)}/review`, {
           credentials: "include"
         });
-        if (!response.ok) throw new Error('Session not found');
+        if (!response.ok) {
+          // Show backend error message if available
+          let err = { message: 'Session not found' };
+          try { err = await response.json(); } catch {}
+          throw new Error(err.message || 'Session not found');
+        }
         const data = await response.json();
 
         if (data.examTitle) title.textContent = data.examTitle + " - Exam History";
@@ -128,15 +144,25 @@
         data.questions.forEach((q, idx) => {
           const optionsHtml = q.options.map(opt => {
             let cls = '';
-            // Show as green if correct, red if selected and wrong
+            let extra = '';
+            // Correct answer is always green
             if (opt === q.correct) cls = 'correct';
-            else if (opt === q.selected && q.selected !== q.correct) cls = 'wrong';
-            return `<li class="${cls}">${opt}</li>`;
+            // If user selected this and it's wrong
+            if (opt === q.selected && q.selected !== q.correct) cls = 'wrong';
+            // Mark user's selected answer
+            if (opt === q.selected) extra = ' <span style="color:#8338ec;font-weight:bold;">(Your Answer)</span>';
+            if (opt === q.correct && opt === q.selected) extra = ' <span style="color:#198754;font-weight:bold;">(Your Answer ✓)</span>';
+            return `<li class="${cls}">${opt}${extra}</li>`;
           }).join('');
+          let notAnswered = '';
+          if (!q.selected && q.selected !== 0) {
+            notAnswered = `<div class="not-answered">You did not answer this question.</div>`;
+          }
           container.innerHTML += `
             <div class="q-card">
               <div class="q-title">Q${idx+1}: ${q.question}</div>
               <ul class="options">${optionsHtml}</ul>
+              ${notAnswered}
               <div class="explanation"><strong>Explanation:</strong> ${q.explanation || ''}</div>
             </div>
           `;
