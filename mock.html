@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <!-- [Your existing CSS remains unchanged, omitted here for brevity] -->
   <style>
     html, body {
   height: 100%;
@@ -42,104 +43,104 @@ body {
   50% { opacity: 1; transform: scale(1.4); }
 }
 #notificationPopup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(8, 24, 57, 0.85);
-    padding: 0;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    align-items: center;
-    justify-content: center;
-    animation: popupFadeIn 0.3s;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(8, 24, 57, 0.85);
+  padding: 0;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  align-items: center;
+  justify-content: center;
+  animation: popupFadeIn 0.3s;
 }
 #notificationPopup.active {
-    display: flex !important;
-    opacity: 1;
+  display: flex !important;
+  opacity: 1;
 }
 @keyframes popupFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 #notificationPopup .popup-content {
-    background: #f9fbfd;
-    padding: 34px 26px 30px 26px;
-    border-radius: 18px;
-    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
-    max-width: 600px;
-    width: 94vw;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 1.09rem;
-    position: relative;
-    border: 2px solid #0055b7;
-    animation: popupContentFadeIn 0.5s;
+  background: #f9fbfd;
+  padding: 34px 26px 30px 26px;
+  border-radius: 18px;
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24);
+  max-width: 600px;
+  width: 94vw;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.09rem;
+  position: relative;
+  border: 2px solid #0055b7;
+  animation: popupContentFadeIn 0.5s;
 }
 @keyframes popupContentFadeIn {
   from { opacity: 0; transform: translateY(-32px);}
   to { opacity: 1; transform: translateY(0);}
 }
 #notificationPopup h2 {
-    font-size: 20px;
-    color: #003366;
-    margin-top: 15px;
-    margin-bottom: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-    font-weight: bold;
+  font-size: 20px;
+  color: #003366;
+  margin-top: 15px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  font-weight: bold;
 }
 #notificationPopup ul {
-    list-style: inside disc;
-    margin-bottom: 22px;
-    text-align: left;
-    font-size: 15px;
-    color: #1a1a1a;
-    padding-left: 0;
+  list-style: inside disc;
+  margin-bottom: 22px;
+  text-align: left;
+  font-size: 15px;
+  color: #1a1a1a;
+  padding-left: 0;
 }
 #notificationPopup button.styled-btn,
 #notificationPopup button.close-btn {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    font-family: inherit;
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  font-family: inherit;
 }
 #whatsappBtn.styled-btn {
-    background: #25D366;
-    color: white;
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin: 10px 0 2px 0;
-    transition: background 0.2s, transform 0.2s;
-    font-weight: 500;
-    box-shadow: 0 2px 7px #25d36633;
+  background: #25D366;
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px 0 2px 0;
+  transition: background 0.2s, transform 0.2s;
+  font-weight: 500;
+  box-shadow: 0 2px 7px #25d36633;
 }
 #whatsappBtn.styled-btn:hover {
-    background: #20b058;
+  background: #20b058;
 }
 #closeNotification.close-btn {
-    background: #003366;
-    color: #fff;
-    padding: 10px 0;
-    font-size: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 4px;
-    transition: background 0.2s, color 0.2s;
-    font-weight: 500;
-    box-shadow: 0 1px 5px #00336633;
+  background: #003366;
+  color: #fff;
+  padding: 10px 0;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+  box-shadow: 0 1.5px 6px #00336633;
 }
 #closeNotification.close-btn:hover {
-    background: #0055b7;
-    color: #ffe966;
+  background: #0055b7;
+  color: #ffe966;
 }
 #customNotification {
   display: none;
@@ -468,7 +469,7 @@ body {
     max-width: 99vw;
   }
 }
-    /* [CSS goes here, to be provided separately] */
+    /* ... [all your CSS here unchanged] ... */
   </style>
 </head>
 <body>
@@ -554,8 +555,17 @@ body {
             <input type="text" id="reg_username" placeholder="Username" required autocomplete="username" aria-label="Username">
             <input type="password" id="reg_password" placeholder="Password" required autocomplete="new-password" aria-label="Password">
             <input type="email" id="reg_email" placeholder="Email" required aria-label="Email">
-            <input type="text" id="reg_faculty" placeholder="Faculty" required aria-label="Faculty">
-            <input type="text" id="reg_department" placeholder="Department" required aria-label="Department">
+
+            <!-- Dynamic Faculty/Department -->
+            <select id="reg_faculty" required aria-label="Faculty">
+              <option value="">Select Faculty</option>
+              <!-- Populated dynamically -->
+            </select>
+            <select id="reg_department" required aria-label="Department" disabled>
+              <option value="">Select Department</option>
+              <!-- Populated dynamically -->
+            </select>
+
             <select id="reg_level" required aria-label="Level">
               <option value="">Select Level</option>
               <option value="100">100</option>
@@ -633,8 +643,58 @@ body {
       showLogin();
     });
 
-    // --- BACKEND LOGIC INTEGRATION ---
+    // --- FACULTY & DEPARTMENT DYNAMIC POPULATION ---
+    // Backend endpoints must return arrays: faculties [{name:...}], departments [{name:...}]
+    const FACULTY_API = "https://examguide.onrender.com/api/faculties";
+    const DEPARTMENT_API = "https://examguide.onrender.com/api/departments?faculty=";
 
+    async function populateFaculties() {
+      const facultySelect = document.getElementById('reg_faculty');
+      facultySelect.innerHTML = '<option value="">Select Faculty</option>';
+      try {
+        const res = await fetch(FACULTY_API);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          data.forEach(fac => {
+            const opt = document.createElement('option');
+            opt.value = fac.name || fac;
+            opt.textContent = fac.name || fac;
+            facultySelect.appendChild(opt);
+          });
+        }
+      } catch (e) {
+        // fallback: do nothing
+      }
+    }
+
+    document.getElementById('reg_faculty').addEventListener('change', async function() {
+      const faculty = this.value;
+      const deptSelect = document.getElementById('reg_department');
+      deptSelect.innerHTML = '<option value="">Select Department</option>';
+      deptSelect.disabled = true;
+      if (!faculty) return;
+      try {
+        const res = await fetch(DEPARTMENT_API + encodeURIComponent(faculty));
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          data.forEach(dept => {
+            const opt = document.createElement('option');
+            opt.value = dept.name || dept;
+            opt.textContent = dept.name || dept;
+            deptSelect.appendChild(opt);
+          });
+          deptSelect.disabled = false;
+        }
+      } catch (e) {
+        // fallback: do nothing
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateFaculties();
+    });
+
+    // --- BACKEND LOGIC INTEGRATION ---
     // SET THIS TO YOUR RENDER BACKEND URL:
     const API_URL = "https://examguide.onrender.com/api/auth/";
 
@@ -753,8 +813,8 @@ body {
       let username = document.getElementById('reg_username').value.trim();
       let password = document.getElementById('reg_password').value;
       let email = document.getElementById('reg_email').value.trim();
-      let faculty = document.getElementById('reg_faculty').value.trim();
-      let department = document.getElementById('reg_department').value.trim();
+      let faculty = document.getElementById('reg_faculty').value;
+      let department = document.getElementById('reg_department').value;
       let level = document.getElementById('reg_level').value;
       let phone = document.getElementById('reg_phone').value.trim();
 
