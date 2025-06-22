@@ -55,6 +55,7 @@
   width: 42px;
   border-radius: var(--radius-xs);
   background: #fff;
+ top: 5px; left: 8px;
   border: 2.5px solid var(--white);
   object-fit: contain;
   box-shadow: 0 1px 10px #3a86ff19;
@@ -79,7 +80,7 @@
   font-weight: 800;
 }
 .student-info {
-  font-size: 1.0em;
+  font-size: 0.80em;
   color: #fff;
   opacity: 0.92;
 }
