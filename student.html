@@ -899,6 +899,7 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
       });
       renderProgressChart(progressData);
       results.slice(0, 10).forEach(r => {
+        
   const examTitle =
     r.examSet && typeof r.examSet === "object"
       ? (r.examSet.title || r.examSet._id || "")
@@ -946,10 +947,10 @@ async function fetchHistory() {
   // Update Assessment Performance Table
   let html = "";
   results.slice(0, 10).forEach(r => {
-  const examTitle =
-    r.examSet && typeof r.examSet === "object"
-      ? (r.examSet.title || r.examSet._id || "")
-      : (r.examSet || "");
+    const examTitle =
+  r.examSet && typeof r.examSet === "object"
+    ? (r.examSet.title || "")
+    : ""; // fallback to empty string, never show ID
   html += `<tr>
     <td>${examTitle}</td>
     <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
