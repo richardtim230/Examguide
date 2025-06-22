@@ -25,7 +25,7 @@ import usersRoutes from "./routes/users.js";
 
 dotenv.config();
 
-// ===== ADD FACULTY & DEPARTMENT MODELS =====
+// ===== FACULTY & DEPARTMENT MODELS =====
 const FacultySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true }
 });
@@ -56,7 +56,6 @@ const allowedOrigins = [
 const app = express();
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error("CORS not allowed from this origin: " + origin), false);
@@ -78,9 +77,14 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
-app.get("/api/faculties", authenticate, async (req, res) => {
-  const list = await Faculty.find().sort({ name: 1 });
-  res.json(list);
+app.get("/api/faculties", async (req, res) => {
+  try {
+    const list = await Faculty.find().sort({ name: 1 });
+    // Return as array of names for frontend simplicity
+    res.json(list.map(f => f.name));
+  } catch (e) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
@@ -92,13 +96,27 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
 });
 
 // ===== DEPARTMENT ROUTES =====
-app.get("/api/departments", authenticate, async (req, res) => {
-  const list = await Department.find().sort({ name: 1 });
-  res.json(list);
+// GET /api/departments?faculty=FacultyName
+app.get("/api/departments", async (req, res) => {
+  try {
+    let filter = {};
+    if (req.query.faculty) {
+      const fac = await Faculty.findOne({ name: req.query.faculty });
+      if (!fac) return res.json([]);
+      filter.faculty = fac._id;
+    }
+    const list = await Department.find(filter).sort({ name: 1 });
+    // Return as array of names for frontend simplicity
+    res.json(list.map(d => d.name));
+  } catch (e) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const dept = await Department.create({ name: req.body.name, faculty: req.body.faculty });
+    const fac = await Faculty.findOne({ name: req.body.faculty });
+    if (!fac) return res.status(400).json({ message: "Faculty not found" });
+    const dept = await Department.create({ name: req.body.name, faculty: fac._id });
     res.status(201).json(dept);
   } catch (e) {
     res.status(400).json({ message: e.message });
@@ -134,7 +152,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
 app.post("/api/auth/register", async (req, res) => {
   try {
     const {username, password, role, faculty, department} = req.body;
-    if (!username || !password)
+    if (!username || !password || !faculty || !department)
       return res.status(400).json({message: "All fields required"});
     if (username.length < 3)
       return res.status(400).json({message: "Username must be at least 3 characters"});
@@ -191,10 +209,9 @@ app.post("/api/auth/reset", async (req, res) => {
   }
 });
 
-// Get user info (protected) -- now returns full user document, not just JWT claims!
+// Get user info (protected)
 app.get("/api/auth/me", authenticate, async (req, res) => {
   try {
-    // Fetch full user info by ID
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ user });
