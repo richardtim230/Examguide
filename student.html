@@ -898,14 +898,18 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
         return arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : 0;
       });
       renderProgressChart(progressData);
-      results.slice(0,10).forEach(r => {
-        html += `<tr>
-          <td>${r.examSet}</td>
-          <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
-          <td>${r.score ?? "-"}</td>
-          <td><button class="btn" onclick="reviewResult('${r._id}')">Review</button></td>
-        </tr>`;
-      });
+      results.slice(0, 10).forEach(r => {
+  const examTitle =
+    r.examSet && typeof r.examSet === "object"
+      ? (r.examSet.title || r.examSet._id || "")
+      : (r.examSet || "");
+  html += `<tr>
+    <td>${examTitle}</td>
+    <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+    <td>${r.score ?? "-"}</td>
+    <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
+  </tr>`;
+});
       document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
       recommendTopics();
     }
@@ -927,6 +931,7 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     ).join('');
   list.innerHTML = items;
 }
+    
 async function fetchHistory() {
   if (!student.id) return;
   const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
