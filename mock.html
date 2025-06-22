@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>Obafemi Awolowo University | Central Mock Test Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8">
-  <!-- [Your existing CSS remains unchanged, omitted here for brevity] -->
-  <style>
+  <link rel="stylesheet" href="register.css">
+  <style> 
     html, body {
   height: 100%;
   min-height: 100vh;
@@ -42,6 +42,34 @@ body {
   0%, 100% { opacity: 0.2; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.4); }
 }
+
+/* Faculty Loader Spinner */
+#facultyLoader {
+  position: fixed;
+  z-index: 1200;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(22,34,55,0.98);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.5s;
+}
+#facultyLoader .spinner {
+  width: 60px; height: 60px; border: 6px solid #eee; border-top: 6px solid #0072ff;
+  border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 18px;
+}
+#facultyLoader span {
+  font-size: 1.2rem;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 8px #00336666;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
 #notificationPopup {
   display: none;
   position: fixed;
@@ -469,10 +497,14 @@ body {
     max-width: 99vw;
   }
 }
-    /* ... [all your CSS here unchanged] ... */
-  </style>
+    </style>
 </head>
 <body>
+  <!-- Loader that covers the page until faculties are loaded -->
+  <div id="facultyLoader">
+    <div class="spinner"></div>
+    <span>Loading faculties, please wait...</span>
+  </div>
   <!-- Custom notification UI -->
   <div id="customNotification">
     <button class="close-noti" onclick="hideNotification()" aria-label="Close notification">&times;</button>
@@ -644,7 +676,6 @@ body {
     });
 
     // --- FACULTY & DEPARTMENT DYNAMIC POPULATION ---
-    // Backend endpoints must return arrays: faculties [{name:...}], departments [{name:...}]
     const FACULTY_API = "https://examguide.onrender.com/api/faculties";
     const DEPARTMENT_API = "https://examguide.onrender.com/api/departments?faculty=";
 
@@ -663,7 +694,7 @@ body {
           });
         }
       } catch (e) {
-        // fallback: do nothing
+        showNotification("Failed to load faculties. Please refresh.", "error");
       }
     }
 
@@ -685,17 +716,22 @@ body {
           });
           deptSelect.disabled = false;
         }
-      } catch (e) {
-        // fallback: do nothing
-      }
+      } catch {}
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      populateFaculties();
+    // Show the faculty loader until faculties are loaded
+    document.addEventListener('DOMContentLoaded', async () => {
+      const loader = document.getElementById('facultyLoader');
+      loader.style.display = 'flex';
+      // Hide registration section until loaded
+      document.querySelector('.auth-main-wrapper').style.visibility = "hidden";
+      await populateFaculties();
+      loader.style.opacity = "0";
+      setTimeout(() => loader.style.display = "none", 500);
+      document.querySelector('.auth-main-wrapper').style.visibility = "";
     });
 
     // --- BACKEND LOGIC INTEGRATION ---
-    // SET THIS TO YOUR RENDER BACKEND URL:
     const API_URL = "https://examguide.onrender.com/api/auth/";
 
     function validateUsername(username) {
