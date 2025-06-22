@@ -1065,6 +1065,42 @@
   .schedule-modal-close { font-size: 2rem; right: 13px; }
 }
 </style>
+<!-- Place in <body> after existing content (preferably near the bottom or before closing </body>) -->
+
+<!-- Hidden Certificate Template -->
+<div id="certificateTemplate" style="display:none;position:fixed;top:-9999px;left:-9999px;width:600px;height:400px;padding:0;">
+  <div style="width:600px;height:400px;background:#f7fafc;border:5px solid #3a86ff;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;font-family:'Segoe UI',Arial,sans-serif;">
+    <img src="logo.png" style="width:60px;position:absolute;top:30px;left:30px;" onerror="this.style.display='none';"/>
+    <div style="font-size:2rem;font-weight:800;color:#3a86ff;margin-top:38px;">Certificate of Participation</div>
+    <div style="margin-top:15px;font-size:1.15rem;color:#444;text-align:center;">
+      This is to certify that
+    </div>
+    <div id="certStudentName" style="margin-top:8px;font-size:1.4rem;font-weight:700;color:#2e3a5a;"></div>
+    <div style="margin-top:10px;font-size:1.13rem;color:#333;text-align:center;">
+      participated in the assessment<br/>
+      <span id="certTestTitle" style="font-weight:700;color:#3a86ff"></span>
+    </div>
+    <div style="margin-top:13px;font-size:1.04rem;color:#333;text-align:center;">
+      and scored <span id="certScore" style="font-weight:700;color:#43aa8b;"></span>
+    </div>
+    <div style="margin-top:18px;font-size:1em;color:#555;">
+      <span id="certFaculty"></span> | <span id="certDept"></span>
+    </div>
+    <div style="position:absolute;bottom:32px;right:32px;font-size:0.97rem;color:#888;text-align:right;">
+      <span id="certDate"></span>
+    </div>
+    <div style="position:absolute;bottom:32px;left:32px;font-size:0.97rem;color:#3a86ff;font-weight:700;">
+      OAUExam Suite
+    </div>
+  </div>
+</div>
+
+<!-- Add html2canvas from CDN before closing </body> -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+
+
+
 
     <!-- Announcements & Messaging -->
     <div class="announcement" id="announcementsPanel"></div>
@@ -1771,12 +1807,10 @@ async function fetchAvailableTests() {
     function openDiscussion() {
       window.open("discussion.html", "_blank");
     }
-    function downloadCertificate() {
-      alert("Certificate download coming soon! (Generate PDF for passed exams)");
-    }
+    
     function logout() {
       localStorage.removeItem("token");
-      window.location.href = "index.html";
+      window.location.href = "mock-icthallb";
     }
 
   function closeModal(e) {
@@ -1894,6 +1928,44 @@ window.addEventListener("load", function() {
   setTimeout(showScheduleOnLoad, 700);
 });
     window.onload = init;
+
+    // Example: fillCertInfo({name, testTitle, score, faculty, dept, date})
+function fillCertInfo(data) {
+  document.getElementById('certStudentName').innerText = data.name || '';
+  document.getElementById('certTestTitle').innerText = data.testTitle || '';
+  document.getElementById('certScore').innerText = data.score || '';
+  document.getElementById('certFaculty').innerText = data.faculty || '';
+  document.getElementById('certDept').innerText = data.dept || '';
+  document.getElementById('certDate').innerText = data.date || '';
+}
+
+// Attach to downloadCertificate()
+async function downloadCertificate() {
+  // Get the latest test and user info -- adapt these to your app's data structure
+  const name = document.getElementById('profileName').innerText || 'Scholar';
+  const faculty = document.getElementById('profileFaculty').innerText;
+  const dept = document.getElementById('profileDept').innerText;
+  // Replace with the actual completed test info
+  const testTitle = window.lastCompletedTestTitle || 'Assessment';
+  const score = window.lastCompletedTestScore || '--';
+  const date = new Date().toLocaleDateString();
+
+  fillCertInfo({ name, testTitle, score, faculty, dept, date });
+
+  const certDiv = document.getElementById('certificateTemplate');
+  certDiv.style.display = 'block'; // ensure visible for canvas
+
+  // Wait a tick in case fonts/images load
+  setTimeout(() => {
+    html2canvas(certDiv, {backgroundColor: null, useCORS: true, scale:2}).then(canvas => {
+      certDiv.style.display = 'none';
+      const link = document.createElement('a');
+      link.download = `Certificate_${testTitle.replace(/\s+/g,'_')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  }, 150);
+}
   </script>
 </body>
 </html>
