@@ -228,64 +228,126 @@ body {
   position: fixed; z-index: 1001; left:0; top:0; width:100vw; height:100vh;
   background: rgba(18,28,68,0.46); display: flex; align-items: center; justify-content: center;
 }
+
+/* Modal overlay and container */
+.modal-backdrop {
+  position: fixed; z-index: 1001; left:0; top:0; width:100vw; height:100vh;
+  background: rgba(18,28,68,0.46);
+  display: flex; align-items: center; justify-content: center;
+  overflow-y: auto;
+}
 .modal {
   background: #fff;
-  border-radius: 14px;
+  border-radius: 19px 19px 16px 16px;
   box-shadow: 0 6px 32px #00336622;
-  max-width: 425px;
-  width: 92vw;
-  padding: 32px 28px;
+  max-width: 450px;
+  width: 97vw;
+  padding: 22px 6vw 18px 6vw;
+  margin: 13vw 0;
   position: relative;
-  animation: popin 0.25s;
+  animation: popin 0.22s;
+  overflow-y: auto;
+  max-height: 95vh;
 }
-.modal h2 {
-  color: var(--primary);
-  font-size: 1.15rem;
-  margin-bottom: 18px;
-  font-weight: 700;
+@media (max-width: 600px) {
+  .modal {
+    max-width: 98vw;
+    padding: 18px 2vw 14px 2vw;
+    margin: 8vw 0;
+  }
 }
-.modal label {
-  font-size: 1.02rem;
-  font-weight: 500;
-  color: var(--muted);
-  margin: 14px 0 5px 0;
-  display: block;
-}
-.modal input, .modal select {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-  border-radius: 7px;
-  border: 1.2px solid var(--border);
-  background: #f9fcfe;
-  font-size: 1.04rem;
-}
-.modal textarea {
-  width: 100%;
-  min-height: 54px;
-  border-radius: 7px;
-  border: 1.2px solid var(--border);
-  background: #f9fcfe;
-  font-size: 1.04rem;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  resize: vertical;
-}
-.modal .close-modal {
+.close-modal {
   position: absolute;
   top: 13px;
   right: 16px;
-  font-size: 1.7rem;
+  font-size: 2.1rem;
   color: #bbb;
   background: none;
   border: none;
   cursor: pointer;
   opacity: 0.79;
+  z-index: 2;
 }
-.modal .close-modal:hover {
-  color: var(--danger);
+.close-modal:hover {
+  color: #ff3b47;
   opacity: 1;
 }
+
+/* Modal profile header */
+.modal-profile-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.modal-profile-header img {
+  width: 80px; height: 80px; border-radius: 50%; border: 2.5px solid #e3e8ee;
+  margin-bottom: 7px; object-fit: cover; background: #f6f8fa;
+}
+.modal-profile-header .fullname {
+  font-weight: 700; font-size: 1.15em; color: #0055b7; margin-bottom: 4px;
+}
+.modal-profile-header .username {
+  color: #1767cf;
+  font-size: 1em;
+  font-weight: 500;
+  text-decoration: underline;
+  display: block;
+  margin-bottom: 7px;
+  word-break: break-all;
+}
+.modal-profile-header .faculty, .modal-profile-header .department {
+  font-size: 1em;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+.modal-profile-header .faculty {
+  margin-top: 2px;
+}
+
+/* Modal labels and fields */
+.modal label {
+  font-size: 1.05em;
+  color: #75718d;
+  font-weight: 600;
+  margin-top: 13px;
+  margin-bottom: 2px;
+  display: block;
+  text-align: left;
+  letter-spacing: 0.01em;
+}
+.modal input, .modal textarea, .modal select {
+  width: 100%;
+  background: #f7fafd;
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+  padding: 11px 9px;
+  font-size: 1.05em;
+  margin-bottom: 5px;
+  color: #222;
+  box-sizing: border-box;
+  resize: none;
+}
+.modal textarea {
+  min-height: 52px;
+  max-height: 200px;
+}
+@media (max-width: 400px) {
+  .modal label, .modal input, .modal textarea, .modal select {
+    font-size: 1em;
+    padding: 8px 5px;
+  }
+  .modal-profile-header img { width: 54px; height: 54px; }
+}
+
+/* Make modal scrollable if content is taller than viewport */
+@media (max-width: 700px) {
+  .modal {
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+}
+    
+
 .spinner {
   border: 3px solid #f3f3f3;
   border-top: 3px solid #00c6ff;
@@ -524,9 +586,9 @@ body {
     </table>
   </div>
   <div id="modalRoot"></div>
-    <-- Place this button just inside your or inside .topbar, before .sidebar in your HTML -->
+    <!-- Place this button just inside your or inside .topbar, before .sidebar in your HTML -->
 <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
-  &#9776;
+  &black;
 </button>
   <script>
     // ========== CONFIG ==========
