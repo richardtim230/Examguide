@@ -214,7 +214,6 @@
     });
     function selectAttachment(type) {
       closeAttachmentModal();
-      // You can expand this logic for real uploads, etc.
       alert("Selected: " + type);
     }
 
@@ -271,7 +270,7 @@
       const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) {
         alert("Session expired. Please log in again.");
-        window.close();
+        window.location.href = "/login";
         return;
       }
       const data = await resp.json();
@@ -295,15 +294,16 @@
     }
     // === LOAD DEPARTMENT CONTACTS ===
     async function fetchDepartmentContacts() {
+      if (!currentUser || !currentUser.department) return;
       const resp = await fetch(API_URL + "users", { headers: { Authorization: "Bearer " + token } });
-      if (!resp.ok) return [];
+      if (!resp.ok) return;
       const users = await resp.json();
-      // Filter: same department, student role, not self
       departmentContacts = users.filter(
         u => u.department === currentUser.department && u.role === "student" && u._id !== currentUser._id
       );
-      // Add to cache for avatar and details
       departmentContacts.forEach(u => usersCache[u._id] = u);
+      // DEBUG: log contacts for troubleshooting
+      // console.log("Dept contacts:", departmentContacts);
     }
     // === LOAD MESSAGES FOR ACTIVE CONVERSATION ===
     async function fetchMessages(otherUserId) {
