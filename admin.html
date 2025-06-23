@@ -6,8 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
   <link rel="icon" href="logo.png">
- <link rel="stylesheet" href="./admin.css">
-  <!-- CSS is excluded as per request -->
+  <link rel="stylesheet" href="./admin.css">
 </head>
 <body>
   <!-- Sidebar -->
@@ -68,7 +67,7 @@
         <div class="card-value" id="studentCount">0</div>
         <div class="card-icon">👥</div>
       </div>
-          </div>
+    </div>
     <!-- SECTIONS -->
     <div class="section" id="dashboardSection">
       <div class="section-title">Welcome, Admin!</div>
@@ -171,26 +170,26 @@
         <tbody></tbody>
       </table>
     </div>
-  <!-- Sidebar and main content are unchanged, except the students table: -->
-  <div class="section" id="studentsSection" style="display:block;">
-    <div class="section-title">Manage Students</div>
-    <table class="data-table" id="studentsTable">
-      <thead>
-        <tr>
-          <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+    <!-- Manage Students Section -->
+    <div class="section" id="studentsSection" style="display:none;">
+      <div class="section-title">Manage Students</div>
+      <table class="data-table" id="studentsTable">
+        <thead>
+          <tr>
+            <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   <div id="modalRoot"></div>
     <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <rect y="6" width="32" height="3.5" rx="1.7" fill="#111"/>
-    <rect y="14" width="32" height="3.5" rx="1.7" fill="#111"/>
-    <rect y="22" width="32" height="3.5" rx="1.7" fill="#111"/>
-  </svg>
-</button>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect y="6" width="32" height="3.5" rx="1.7" fill="#111"/>
+        <rect y="14" width="32" height="3.5" rx="1.7" fill="#111"/>
+        <rect y="22" width="32" height="3.5" rx="1.7" fill="#111"/>
+      </svg>
+    </button>
   <script>
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
@@ -217,7 +216,6 @@
       const d = departments.find(d => d._id === deptId);
       return d ? d.name : "";
     }
-
 
     // ========== Students ==========
     async function fetchStudents() {
@@ -298,7 +296,7 @@
       }
     }
 
-        // ========== UX NAVIGATION ==========
+    // ========== UX NAVIGATION ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
       if (el) el.classList.add('active');
@@ -336,95 +334,6 @@
       document.getElementById("studentCount").innerText = students.length;
     }
 
-async function editStudent(id) {
-  try {
-    const resp = await fetch(API_URL + "users/" + id, {
-      headers: { Authorization: "Bearer " + token }
-    });
-    if (!resp.ok) {
-      alert("Could not load student: " + resp.statusText);
-      return;
-    }
-    const u = await resp.json();
-    let html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Edit Profile</h2>
-          <label>Username</label>
-          <input id="editStudentUsername" value="${u.username || ''}">
-          <label>Faculty</label>
-          <input id="editStudentFaculty" value="${u.faculty || ''}">
-          <label>Department</label>
-          <input id="editStudentDepartment" value="${u.department || ''}">
-          <label>Status</label>
-          <select id="editStudentStatus">
-            <option value="active"${u.active !== false ? ' selected' : ''}>Active</option>
-            <option value="inactive"${u.active === false ? ' selected' : ''}>Inactive</option>
-          </select>
-          <div id="editStudentMsg" style="color:#b22;margin-top:7px;"></div>
-          <button class="btn" id="saveStudentBtn">Save</button>
-        </div>
-      </div>`;
-    document.getElementById("modalRoot").innerHTML = html;
-    // Bind save button after modal is loaded
-    document.getElementById("saveStudentBtn").onclick = () => submitEditStudent(id);
-  } catch (e) {
-    alert("Could not load student profile.");
-  }
-}
-
-  async function submitEditStudent(id) {
-  const msg = document.getElementById("editStudentMsg");
-  const username = document.getElementById("editStudentUsername").value.trim();
-  const faculty = document.getElementById("editStudentFaculty").value.trim();
-  const department = document.getElementById("editStudentDepartment").value.trim();
-  const status = document.getElementById("editStudentStatus").value === "active";
-  msg.textContent = "";
-  try {
-    const resp = await fetch(API_URL + "users/" + id, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-      body: JSON.stringify({ username, faculty, department, active: status })
-    });
-    const resJson = await resp.json();
-    if (!resp.ok) {
-      msg.textContent = resJson.message || "Update failed.";
-      return;
-    }
-    closeModal();
-    fetchStudents();
-  } catch (e) {
-    msg.textContent = "Network error.";
-  }
-}
-
-async function toggleStudentStatus(id, currentlyActive) {
-  try {
-    const resp = await fetch(API_URL + "users/" + id, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-      body: JSON.stringify({ active: !currentlyActive })
-    });
-    if (!resp.ok) {
-      const resJson = await resp.json();
-      alert(resJson.message || "Failed to update status.");
-    }
-    fetchStudents();
-  } catch (e) {
-    alert("Network error.");
-  }
-}
-
-// Modal close helper
-function closeModal(e) {
-  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
-    document.getElementById("modalRoot").innerHTML = "";
-  }
-}
-
-
-
     // ========== Question Sets ==========
     async function fetchSets() {
       const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
@@ -447,14 +356,88 @@ function closeModal(e) {
       let setOpts = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
       document.getElementById("qSetSelect").innerHTML = setOpts;
     }
+
+    function editSet(id) {
+      fetch(`${API_URL}questionsets/${id}`, {
+        headers: { Authorization: "Bearer " + token }
+      })
+      .then(response => response.json())
+      .then(set => {
+        let html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Edit Question Set</h2>
+              <label>Title</label>
+              <input id="editSetTitle" value="${set.title}" required>
+              <label>Faculty</label>
+              <select id="editSetFaculty">
+                ${faculties.map(f => `<option value="${f._id}" ${f._id === set.faculty ? 'selected' : ''}>${f.name}</option>`).join('')}
+              </select>
+              <label>Department</label>
+              <select id="editSetDepartment">
+                ${departments.map(d => `<option value="${d._id}" ${d._id === set.department ? 'selected' : ''}>${d.name}</option>`).join('')}
+              </select>
+              <label>Status</label>
+              <select id="editSetStatus">
+                <option value="ACTIVE" ${set.status === "ACTIVE" ? 'selected' : ''}>ACTIVE</option>
+                <option value="INACTIVE" ${set.status === "INACTIVE" ? 'selected' : ''}>INACTIVE</option>
+              </select>
+              <button class="btn" onclick="submitEditSet('${id}')">Save Changes</button>
+              <div id="editSetMsg"></div>
+            </div>
+          </div>`;
+        document.getElementById("modalRoot").innerHTML = html;
+      })
+      .catch(error => {
+        console.error('Error fetching question set:', error);
+      });
+    }
+
+    async function submitEditSet(id) {
+      const title = document.getElementById("editSetTitle").value.trim();
+      const faculty = document.getElementById("editSetFaculty").value;
+      const department = document.getElementById("editSetDepartment").value;
+      const status = document.getElementById("editSetStatus").value;
+      
+      const msg = document.getElementById("editSetMsg");
+      msg.innerText = "";
+      
+      if (!title || !faculty || !department) {
+        msg.innerText = "All fields are required!";
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}questionsets/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          },
+          body: JSON.stringify({ title, faculty, department, status })
+        });
+
+        if (!response.ok) {
+          const resJson = await response.json();
+          msg.innerText = resJson.message || "Update failed.";
+          return;
+        }
+
+        msg.innerText = "Question set updated successfully!";
+        closeModal();
+        fetchSets(); // Refresh the question sets list
+      } catch (error) {
+        msg.innerText = "Network error.";
+        console.error('Error updating question set:', error);
+      }
+    }
+
     async function deleteSet(id) {
       if (!confirm("Delete this set?")) return;
       await fetch(API_URL + "questionsets/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
       fetchSets();
       fetchDashboardCounts();
-    }
-    function editSet(id) {
-      alert("Editing question set not implemented in this mockup.");
     }
 
     // ========== Questions ==========
@@ -521,31 +504,32 @@ function closeModal(e) {
       });
       document.querySelector("#schedulesTable tbody").innerHTML = html;
     }
-const BACKEND_URL = "https://examguide.onrender.com";
 
-async function fetchNotifications() {
-  const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
-  const notifs = await resp.json();
-  let html = "";
-  notifs.forEach(n => {
-    html += `<tr>
-      <td>${n.title}</td>
-      <td>${n.message}</td>
-      <td>${
-        n.imageUrl
-          ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : BACKEND_URL + n.imageUrl}" alt="img" style="max-width:60px;max-height:60px;border-radius:4px;">`
-          : ""
-      }</td>
-      <td>${(new Date(n.createdAt)).toLocaleString()}</td>
-      <td>
-        <button class="action-btn" onclick="editNotif('${n._id}')">Edit</button>
-        <button class="action-btn" onclick="deleteNotif('${n._id}')">Delete</button>
-      </td>
-    </tr>`;
-  });
-  document.querySelector("#notificationsTable tbody").innerHTML = html;
-}
-    
+    const BACKEND_URL = "https://examguide.onrender.com";
+
+    async function fetchNotifications() {
+      const resp = await fetch(API_URL + "notifications", { headers: { Authorization: "Bearer " + token } });
+      const notifs = await resp.json();
+      let html = "";
+      notifs.forEach(n => {
+        html += `<tr>
+          <td>${n.title}</td>
+          <td>${n.message}</td>
+          <td>${
+            n.imageUrl
+              ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : BACKEND_URL + n.imageUrl}" alt="img" style="max-width:60px;max-height:60px;border-radius:4px;">`
+              : ""
+          }</td>
+          <td>${(new Date(n.createdAt)).toLocaleString()}</td>
+          <td>
+            <button class="action-btn" onclick="editNotif('${n._id}')">Edit</button>
+            <button class="action-btn" onclick="deleteNotif('${n._id}')">Delete</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#notificationsTable tbody").innerHTML = html;
+    }
+
     async function deleteNotif(id) {
       if (!confirm("Delete this message?")) return;
       const resp = await fetch(API_URL + "notifications/" + id, {
@@ -581,6 +565,7 @@ async function fetchNotifications() {
         </div>`;
       document.getElementById("modalRoot").innerHTML = html;
     }
+    
     async function submitEditNotif(id) {
       const title = document.getElementById("editNotifTitle").value.trim();
       const message = document.getElementById("editNotifMsg").value.trim();
@@ -705,25 +690,25 @@ async function fetchNotifications() {
           </div>`;
       }
       if (type === "bulkUploadModal") {
-  html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Bulk Upload Questions</h2>
-        <label>Paste Complete JSON Object (title, status, questions[])</label>
-        <textarea id="bulkQuestions" rows="12" placeholder='{
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Bulk Upload Questions</h2>
+              <label>Paste Complete JSON Object (title, status, questions[])</label>
+              <textarea id="bulkQuestions" rows="12" placeholder='{
   "title": "INTRODUCTORY ZOOLOGY II",
   "status": "ACTIVE",
   "questions": [
     { "id": 131, "question": "...", "options": [...], "answer": "...", "explanation": "", "questionImage": "" }
   ]
 }'></textarea>
-        <span id="bulkUploadMsg"></span>
-        <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
-        <button class="btn" onclick="submitBulkUpload()">Upload</button>
-      </div>
-    </div>`;
-}
+              <span id="bulkUploadMsg"></span>
+              <span class="spinner" id="bulkUploadSpinner" style="display:none"></span>
+              <button class="btn" onclick="submitBulkUpload()">Upload</button>
+            </div>
+          </div>`;
+      }
       if (type === "sendNotifModal") {
         html = `
           <div class="modal-backdrop" onclick="closeModal(event)">
@@ -747,7 +732,7 @@ async function fetchNotifications() {
           <div class="modal-backdrop" onclick="closeModal(event)">
             <div class="modal" onclick="event.stopPropagation()">
               <button class="close-modal" onclick="closeModal(event)">&times;</button>
-              <h2>Schedule Test</h2>
+                          <h2>Schedule Test</h2>
               <label>Exam Set</label>
               <select id="scheduleSet"></select>
               <label>Faculty</label>
@@ -779,38 +764,6 @@ async function fetchNotifications() {
           });
       }
     }
-    function closeModal(e) {
-      if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
-        document.getElementById("modalRoot").innerHTML = "";
-      }
-    }
-    function populateDepartmentsDropdown() {
-      const select = document.getElementById("setDepartment");
-      const facultyId = document.getElementById("setFaculty").value;
-      const deptList = departments.filter(d => d.faculty === facultyId);
-      select.innerHTML = `<option value="">Select department</option>` +
-        deptList.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
-    }
-    async function populateScheduleModalFields() {
-      const [sets, faculties, departments] = await Promise.all([
-        fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
-        fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } }).then(r => r.json()),
-        fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } }).then(r => r.json())
-      ]);
-      const setSelect = document.getElementById("scheduleSet");
-      setSelect.innerHTML = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join('');
-      const facultySelect = document.getElementById("scheduleFaculty");
-      facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
-      window.scheduleDepartments = departments;
-      populateScheduleDepartments();
-      facultySelect.onchange = populateScheduleDepartments;
-    }
-    function populateScheduleDepartments() {
-      const facultyId = document.getElementById("scheduleFaculty").value;
-      const depts = window.scheduleDepartments.filter(d => d.faculty === facultyId);
-      document.getElementById("scheduleDepartment").innerHTML =
-        depts.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
-    }
 
     // ========== MODAL SUBMIT HANDLERS ==========
     async function submitAddFaculty() {
@@ -840,6 +793,7 @@ async function fetchNotifications() {
         closeModal();
       }, 900);
     }
+
     async function submitAddDepartment() {
       const name = document.getElementById("departmentName").value.trim();
       const faculty = document.getElementById("departmentFaculty").value;
@@ -868,6 +822,7 @@ async function fetchNotifications() {
         closeModal();
       }, 900);
     }
+
     async function submitAddSet() {
       const title = document.getElementById("setTitle").value.trim();
       const status = document.getElementById("setStatus").value;
@@ -899,6 +854,7 @@ async function fetchNotifications() {
         closeModal();
       }, 900);
     }
+
     async function submitAddQuestion() {
       const setId = document.getElementById("modalSetSelect").value;
       const question = document.getElementById("questionText").value.trim();
@@ -942,43 +898,42 @@ async function fetchNotifications() {
     }
 
     async function submitBulkUpload() {
-  let data;
-  const msg = document.getElementById("bulkUploadMsg");
-  const spinner = document.getElementById("bulkUploadSpinner");
-  msg.innerText = "";
-  msg.className = "";
-  try { data = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
-  catch { msg.innerText = "Invalid JSON format."; msg.className = "error-msg"; return; }
+      let data;
+      const msg = document.getElementById("bulkUploadMsg");
+      const spinner = document.getElementById("bulkUploadSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      try { data = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
+      catch { msg.innerText = "Invalid JSON format."; msg.className = "error-msg"; return; }
 
-  // Optional: basic structure validation
-  if (!data.title || !data.status || !Array.isArray(data.questions)) {
-    msg.innerText = "JSON must include title, status, and questions[]";
-    msg.className = "error-msg";
-    return;
-  }
+      if (!data.title || !data.status || !Array.isArray(data.questions)) {
+        msg.innerText = "JSON must include title, status, and questions[]";
+        msg.className = "error-msg";
+        return;
+      }
 
-  spinner.style.display = "inline-block";
-  const resp = await fetch(API_URL + "questionsets/bulk", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify(data)
-  });
-  spinner.style.display = "none";
-  if (!resp.ok) {
-    const out = await resp.json();
-    msg.innerText = out.error || out.message || "Failed to upload.";
-    msg.className = "error-msg";
-    return;
-  }
-  msg.innerText = "Bulk upload successful!";
-  msg.className = "success-msg";
-  setTimeout(() => {
-    fetchSets();
-    fetchDashboardCounts();
-    closeModal();
-  }, 900);
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "questionsets/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify(data)
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const out = await resp.json();
+        msg.innerText = out.error || out.message || "Failed to upload.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Bulk upload successful!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchSets();
+        fetchDashboardCounts();
+        closeModal();
+      }, 900);
     }
-    
+
     async function submitAddSchedule() {
       const examSet = document.getElementById("scheduleSet").value;
       const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
@@ -1014,6 +969,7 @@ async function fetchNotifications() {
         closeModal();
       }, 900);
     }
+
     async function submitSendNotif() {
       const title = document.getElementById("notifTitle").value.trim();
       const message = document.getElementById("notifMsg").value.trim();
@@ -1059,25 +1015,28 @@ async function fetchNotifications() {
       localStorage.removeItem("token");
       window.location.href = "mock.html";
     }
-function toggleSidebar() {
-  var sidebar = document.querySelector('.sidebar');
-  if (sidebar.classList.contains('open')) {
-    sidebar.classList.remove('open');
-    document.querySelector('.main-content').classList.remove('shifted');
-  } else {
-    sidebar.classList.add('open');
-    document.querySelector('.main-content').classList.add('shifted');
-  }
-}
-// Optional: close sidebar when clicking outside on mobile
-window.addEventListener('click', function(e) {
-  var sidebar = document.querySelector('.sidebar');
-  var navToggle = document.getElementById('navToggle');
-  if (!sidebar.contains(e.target) && !navToggle.contains(e.target) && sidebar.classList.contains('open') && window.innerWidth < 950) {
-    sidebar.classList.remove('open'); 
-    document.querySelector('.main-content').classList.remove('shifted');
-  }
-});
+
+    function toggleSidebar() {
+      var sidebar = document.querySelector('.sidebar');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        document.querySelector('.main-content').classList.remove('shifted');
+      } else {
+        sidebar.classList.add('open');
+        document.querySelector('.main-content').classList.add('shifted');
+      }
+    }
+
+    // Optional: close sidebar when clicking outside on mobile
+    window.addEventListener('click', function(e) {
+      var sidebar = document.querySelector('.sidebar');
+      var navToggle = document.getElementById('navToggle');
+      if (!sidebar.contains(e.target) && !navToggle.contains(e.target) && sidebar.classList.contains('open') && window.innerWidth < 950) {
+        sidebar.classList.remove('open'); 
+        document.querySelector('.main-content').classList.remove('shifted');
+      }
+    });
+
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "index.html";
@@ -1095,3 +1054,4 @@ window.addEventListener('click', function(e) {
   </script>
 </body>
 </html>
+
