@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OAUExam Suite | Community Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600,800&display=swap">
+  <style>
+    body {
+      margin: 0;
+      background: #e9f3ff;
+      font-family: 'Inter', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
+      color: #fff;
+      padding: 18px 0 12px 0;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 18px #3a86ff22;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      z-index: 100;
+    }
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 500px;
+      margin: 74px auto 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px #3a86ff22;
+      overflow: hidden;
+      min-height: 500px;
+      position: relative;
+      height: calc(100vh - 74px - 74px);
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 22px 14px 22px 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      background: #f8faff;
+      min-height: 0;
+      height: 100%;
+    }
+    .message-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .message-row.self {
+      flex-direction: row-reverse;
+    }
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #d1e4f7;
+      border: 2px solid #3a86ff33;
+    }
+    .chat-bubble {
+      max-width: 73vw;
+      min-width: 54px;
+      padding: 10px 16px;
+      border-radius: 18px;
+      background: #e7f0fa;
+      color: #23366e;
+      font-size: 1.01em;
+      position: relative;
+      word-break: break-word;
+      box-shadow: 0 2px 8px #3a86ff13;
+      white-space: pre-line;
+    }
+    .message-row.self .chat-bubble {
+      background: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
+      color: #fff;
+      border-bottom-right-radius: 7px;
+      border-bottom-left-radius: 18px;
+      align-self: flex-end;
+    }
+    .message-row:not(.self) .chat-bubble {
+      border-bottom-left-radius: 7px;
+      border-bottom-right-radius: 18px;
+    }
+    .meta {
+      font-size: 0.85em;
+      color: #888;
+      margin: 2px 0 0 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .meta .name {
+      font-weight: 700;
+      color: #3a86ff;
+    }
+    .meta .time {
+      color: #aaa;
+      font-size: 0.88em;
+    }
+    .chat-footer {
+      display: flex;
+      gap: 9px;
+      background: #f4f8fe;
+      padding: 14px;
+      border-top: 1.5px solid #e2eafc;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      z-index: 99;
+      max-width: 100vw;
+      box-sizing: border-box;
+      align-items: center;
+    }
+    .attach-btn {
+      background: none;
+      border: none;
+      font-size: 1.8em;
+      color: #3a86ff;
+      cursor: pointer;
+      margin-right: 6px;
+      margin-left: 2px;
+      position: relative;
+      z-index: 150;
+    }
+    .chat-input {
+      flex: 1;
+      border-radius: 10px;
+      border: 1.3px solid #b8d3fa;
+      padding: 9px 13px;
+      font-size: 1em;
+      outline: none;
+      background: #fff;
+      transition: border 0.18s;
+    }
+    .chat-input:focus {
+      border-color: #3a86ff;
+    }
+    .send-btn {
+      background: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0 22px;
+      font-size: 1.06em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #3a86ff11;
+      transition: background 0.14s;
+    }
+    .send-btn:disabled {
+      background: #b1c7ee;
+      cursor: not-allowed;
+    }
+    .attach-menu {
+      position: fixed;
+      bottom: 70px;
+      left: 30px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px #3a86ff30;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 22px;
+      padding: 20px 20px 14px 20px;
+      z-index: 120;
+      min-width: 290px;
+      max-width: 98vw;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .attach-menu.active {
+      opacity: 1;
+      pointer-events: auto;
+      animation: popIn .16s;
+    }
+    .attach-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      width: 65px;
+      padding: 6px 2px;
+      border-radius: 12px;
+      transition: background 0.13s;
+      user-select: none;
+    }
+    .attach-item:hover {
+      background: #f5f8ff;
+    }
+    .attach-icon {
+      font-size: 2.1em;
+      margin-bottom: 4px;
+    }
+    .attach-label {
+      font-size: 0.98em;
+      color: #3a86ff;
+      font-weight: 600;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.93) translateY(25px); opacity: 0.3;}
+      to { transform: scale(1) translateY(0); opacity: 1;}
+    }
+    .chat-bubble table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .chat-bubble th, .chat-bubble td {
+      border: 1px solid #b8d3fa;
+      padding: 4px 8px;
+      font-size: 0.97em;
+      text-align: left;
+    }
+    .chat-bubble th {
+      background: #eaf4ff;
+      font-weight: bold;
+      color: #3a86ff;
+    }
+    .modal-backdrop {
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: rgba(58,134,255,0.13);
+      z-index: 2001; display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 36px #3a86ff30;
+      padding: 32px 24px 22px 24px;
+      max-width: 340px;
+      width: 96vw;
+      display: flex; flex-direction: column; align-items: flex-start;
+      position: relative;
+      animation: popIn 0.21s;
+    }
+    .modal h3 {
+      margin: 0 0 17px 0;
+      font-size: 1.16rem;
+      color: #3a86ff;
+      font-weight: 700;
+    }
+    .modal-close {
+      position: absolute; right: 15px; top: 13px;
+      background: none; border: none; font-size: 2.1rem; color: #bbb; cursor: pointer;
+      transition: color 0.17s;
+    }
+    .modal-close:hover {
+      color: #ff3b47;
+    }
+    .modal label {
+      font-size: 1em;
+      margin-bottom: 7px;
+      color: #2e3a5a;
+      font-weight: 500;
+      display: block;
+    }
+    .modal input[type="number"] {
+      width: 80px;
+      padding: 5px 7px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1.2px solid #b8d3fa;
+      margin-right: 13px;
+      margin-bottom: 11px;
+      outline: none;
+    }
+    .modal input[type="number"]:focus {
+      border-color: #3a86ff;
+    }
+    .modal .modal-btn {
+      background: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
+      color: #fff; font-size: 1.03em; border-radius: 8px;
+      font-weight: 700; margin-top: 7px; cursor: pointer; border:none; padding: 10px 22px;
+      transition: background 0.18s;
+      align-self: flex-end;
+    }
+    .modal .modal-btn:disabled {
+      background: #b1c7ee;
+      cursor: not-allowed;
+    }
+    .table-populate-modal .modal {
+      max-width: 98vw;
+      width: 98vw;
+      padding: 40px 8vw 30px 8vw;
+      min-width: 300px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .table-populate-form table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .table-populate-form th, .table-populate-form td {
+      border: 1px solid #b8d3fa;
+      padding: 4px;
+      text-align: left;
+      font-size: 1em;
+    }
+    .table-populate-form input {
+      width: 98%;
+      border: 1px solid #e2eafc;
+      border-radius: 6px;
+      padding: 2px 5px;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+    .table-populate-form th input {
+      background: #eaf4ff;
+      font-weight: bold;
+      color: #3a86ff;
+    }
+    .table-populate-modal .modal-btn {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    /* VoiceNote (audio) UI */
+    .attach-item.audio-recording {
+      background: #eaf4ff;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .chat-bubble .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0;
+    }
+    .audio-play-btn {
+      background: #3a86ff;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.16s;
+    }
+    .audio-play-btn.paused {
+      background: #43aa8b;
+    }
+    .audio-duration {
+      color: #3a86ff;
+      font-size: 0.99em;
+      font-family: monospace;
+      min-width: 42px;
+    }
+    .audio-visualizer {
+      width: 60px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    .modal.record-modal {
+      max-width: 370px;
+      width: 97vw;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 38px;
+      padding-bottom: 38px;
+    }
+    .record-btn {
+      background: linear-gradient(90deg, #3a86ff 0%, #8338ec 100%);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      font-size: 2.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 0 auto 10px auto;
+      box-shadow: 0 2px 12px #3a86ff33;
+      transition: background 0.15s;
+    }
+    .record-btn.recording {
+      background: #ff3b47;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 #ff3b4730;}
+      70% { box-shadow: 0 0 0 12px #ff3b4710;}
+      100% { box-shadow: 0 0 0 0 #ff3b4700;}
+    }
+    .record-timer {
+      font-size: 1.2em;
+      color: #3a86ff;
+      font-family: monospace;
+      margin-bottom: 18px;
+    }
+    .record-hint {
+      color: #888;
+      margin-bottom: 10px;
+      font-size: 0.99em;
+    }
+    .record-modal .modal-btn {
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) {
+      .chat-container {
+        max-width: 100vw;
+        min-height: 85vh;
+        border-radius: 0;
+        margin: 74px 0 0 0;
+      }
+      .chat-messages {
+        padding: 13px 3vw 13px 3vw;
+      }
+      .attach-menu {
+        left: 3vw;
+        min-width: unset;
+        max-width: 95vw;
+        padding: 15px 6vw 10px 6vw;
+      }
+      .table-populate-modal .modal {
+        padding: 20px 2vw 18px 2vw;
+      }
+    }
+    html, body {
+      height: 100%;
+      min-height: 100vh;
+    }
+    body {
+      box-sizing: border-box;
+    }
+    .chat-container {
+      box-sizing: border-box;
+      height: calc(100vh - 74px - 74px);
+    }
+    .chat-messages {
+      height: 100%;
+      max-height: calc(100vh - 74px - 74px);
+    }
+    @media (max-width: 600px) {
+      .chat-container {
+        height: calc(100vh - 74px - 74px);
+      }
+      .chat-messages {
+        max-height: calc(100vh - 74px - 74px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-header">
+    <span style="font-size:1.1em">💬</span> Community Board (General Chat)
+  </div>
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages"></div>
+  </div>
+  <form class="chat-footer" id="chatForm" autocomplete="off">
+    <button class="attach-btn" type="button" id="attachBtn" tabindex="-1" title="Attach">&#128206;</button>
+    <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." maxlength="400" required />
+    <button class="send-btn" type="submit">Send</button>
+    <div class="attach-menu" id="attachMenu">
+      <div class="attach-item" onclick="openFilePicker('image/*')">
+        <span class="attach-icon">&#128247;</span>
+        <span class="attach-label">Gallery</span>
+      </div>
+      <div class="attach-item" onclick="openFilePicker('image/*', true)">
+        <span class="attach-icon">&#128247;</span>
+        <span class="attach-label">Camera</span>
+      </div>
+      <div class="attach-item" onclick="alert('Location sharing coming soon!')">
+        <span class="attach-icon">&#128205;</span>
+        <span class="attach-label">Location</span>
+      </div>
+      <div class="attach-item" onclick="alert('Contact sharing coming soon!')">
+        <span class="attach-icon">&#128100;</span>
+        <span class="attach-label">Contact</span>
+      </div>
+      <div class="attach-item" onclick="openFilePicker('.pdf,.doc,.docx,.txt')">
+        <span class="attach-icon">&#128196;</span>
+        <span class="attach-label">Document</span>
+      </div>
+      <div class="attach-item" onclick="openAudioRecordModal()" id="audioAttachBtn">
+        <span class="attach-icon">&#127911;</span>
+        <span class="attach-label">Audio</span>
+      </div>
+      <div class="attach-item" onclick="alert('Poll feature coming soon!')">
+        <span class="attach-icon">&#128200;</span>
+        <span class="attach-label">Poll</span>
+      </div>
+      <div class="attach-item" onclick="alert('Event feature coming soon!')">
+        <span class="attach-icon">&#128197;</span>
+        <span class="attach-label">Event</span>
+      </div>
+      <div class="attach-item" onclick="openTableModal()">
+        <span class="attach-icon">&#8863;</span>
+        <span class="attach-label">Table</span>
+      </div>
+    </div>
+    <input type="file" id="fileInput" style="display:none" />
+  </form>
+  <!-- Table size Modal -->
+  <div class="modal-backdrop" id="tableModalBackdrop" style="display:none" onclick="closeTableModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeTableModal(event)" title="Close">&times;</button>
+      <h3>Insert Table</h3>
+      <label>Rows: <input type="number" id="tableRows" min="1" max="15" value="2" /></label>
+      <label>Columns: <input type="number" id="tableCols" min="1" max="10" value="2" /></label>
+      <button class="modal-btn" onclick="showTablePopulateModal()" id="insertTableBtn">Next</button>
+    </div>
+  </div>
+  <!-- Table populate Modal -->
+  <div class="modal-backdrop table-populate-modal" id="tablePopulateModalBackdrop" style="display:none" onclick="closeTablePopulateModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeTablePopulateModal(event)" title="Close">&times;</button>
+      <h3>Populate Table</h3>
+      <form class="table-populate-form" id="tablePopulateForm"></form>
+      <button class="modal-btn" onclick="submitPopulatedTable()" id="submitTableBtn" type="button">Send Table</button>
+    </div>
+  </div>
+  <!-- VoiceNote (Audio Recording) Modal -->
+  <div class="modal-backdrop" id="audioRecordModalBackdrop" style="display:none">
+    <div class="modal record-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeAudioRecordModal()" title="Close">&times;</button>
+      <div id="audioRecordStatus" class="record-hint">Click the mic to start recording</div>
+      <div class="record-timer" id="audioRecordTimer">00:00</div>
+      <button class="record-btn" id="recordBtn" onclick="toggleRecording(event)">
+        <span id="recordBtnIcon">&#127908;</span>
+      </button>
+      <div id="audioRecordPlayback" style="margin-top:18px;"></div>
+      <button class="modal-btn" id="sendAudioBtn" style="display:none;margin-top:16px;" onclick="sendRecordedAudio(event)">Send Audio</button>
+    </div>
+  </div>
+  <script>
+    // ========== BACKEND INTEGRATION VARIABLES ==========
+    // Set these for authentication/token as your backend requires
+    const API_BASE = "/api/community"; // Change if your endpoint differs
+    // Fetch user data from your auth/session (not localStorage in production)
+    const user = {
+      id: localStorage.getItem('userId') || 'me',
+      name: localStorage.getItem('studentName') || 'You',
+      avatar: localStorage.getItem('studentAvatar') || 'https://ui-avatars.com/api/?name=You&background=3a86ff&color=fff&rounded=true'
+    };
+
+    // ========== REAL-TIME (WebSocket) ==========
+    // Example with Socket.IO. Adjust as your backend requires.
+    let socket;
+    if (window.io) {
+      socket = io(); // Connects to same host by default
+      socket.on("community-message", (msg) => {
+        window.messages.push(msg);
+        renderMessages();
+      });
+    }
+
+    // ========== FETCH MESSAGES ==========
+    window.messages = [];
+    async function fetchMessages() {
+      try {
+        const res = await fetch(API_BASE + "?limit=50");
+        if (!res.ok) throw new Error("Failed to fetch messages");
+        window.messages = await res.json();
+        renderMessages();
+      } catch (err) { }
+    }
+
+    function formatTime(date) {
+      date = typeof date === "string" ? new Date(date) : date;
+      return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+    function renderMessages() {
+      const chatMessages = document.getElementById('chatMessages');
+      chatMessages.innerHTML = '';
+      window.messages.forEach(msg => {
+        const isSelf = msg.from && (msg.from._id === user.id || msg.from === user.id);
+        const displayUser = msg.from && (typeof msg.from === "object" ? msg.from : user);
+        const row = document.createElement('div');
+        row.className = 'message-row' + (isSelf ? ' self' : '');
+        // Audio voicenote message
+        if ((msg.type === "audio" || msg.audio) && msg.audio && msg.audio.url) {
+          row.innerHTML = `
+            <img class="avatar" src="${displayUser.avatar || user.avatar}" alt="${displayUser.username || user.name}" onerror="this.style.display='none'">
+            <div>
+              <div class="chat-bubble">
+                <div class="audio-controls">
+                  <button class="audio-play-btn" onclick="playAudioMsg(this, '${msg.audio.url}')">&#9654;</button>
+                  <span class="audio-duration">${msg.audio.duration || '00:00'}</span>
+                </div>
+              </div>
+              <div class="meta">
+                <span class="name">${displayUser.username || displayUser.name}</span>
+                <span class="time">${formatTime(msg.createdAt)}</span>
+              </div>
+            </div>
+          `;
+        } else if (msg.type === "file" && msg.file && msg.file.url) {
+          let fileType = (msg.file.mimetype || "").split("/")[0];
+          let fileHtml = "";
+          if (fileType === "image") {
+            fileHtml = `<img src="${msg.file.url}" style="max-width:180px;max-height:120px;border-radius:10px;box-shadow:0 1px 8px #3a86ff22;">`;
+          } else {
+            fileHtml = `<a href="${msg.file.url}" target="_blank" style="color:#3a86ff;text-decoration:underline;">📄 ${msg.file.originalname || "file"}</a>`;
+          }
+          row.innerHTML = `
+            <img class="avatar" src="${displayUser.avatar || user.avatar}" alt="${displayUser.username || user.name}" onerror="this.style.display='none'">
+            <div>
+              <div class="chat-bubble">${fileHtml}${msg.text ? "<br>"+escapeHtml(msg.text) : ""}</div>
+              <div class="meta">
+                <span class="name">${displayUser.username || displayUser.name}</span>
+                <span class="time">${formatTime(msg.createdAt)}</span>
+              </div>
+            </div>
+          `;
+        } else if (msg.type === "table" && msg.text) {
+          row.innerHTML = `
+            <img class="avatar" src="${displayUser.avatar || user.avatar}" alt="${displayUser.username || user.name}" onerror="this.style.display='none'">
+            <div>
+              <div class="chat-bubble">${msg.text}</div>
+              <div class="meta">
+                <span class="name">${displayUser.username || displayUser.name}</span>
+                <span class="time">${formatTime(msg.createdAt)}</span>
+              </div>
+            </div>
+          `;
+        } else {
+          row.innerHTML = `
+            <img class="avatar" src="${displayUser.avatar || user.avatar}" alt="${displayUser.username || user.name}" onerror="this.style.display='none'">
+            <div>
+              <div class="chat-bubble">${escapeHtml(msg.text)}</div>
+              <div class="meta">
+                <span class="name">${displayUser.username || displayUser.name}</span>
+                <span class="time">${formatTime(msg.createdAt)}</span>
+              </div>
+            </div>
+          `;
+        }
+        chatMessages.appendChild(row);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // ========== SEND MESSAGE ==========
+    document.getElementById('chatForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      await sendMessage({ text, type: "text" });
+      input.value = '';
+    };
+
+    async function sendMessage({ text, type="text", tableHtml }) {
+      const payload = { text, type };
+      if (type === "table" && tableHtml) payload.text = tableHtml;
+      const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, // Add Authorization if needed
+        body: JSON.stringify(payload)
+      });
+      const msg = await res.json();
+      window.messages.push(msg);
+      renderMessages();
+      // Emit via socket if available
+      if (socket) socket.emit("community-message", msg);
+    }
+
+    // ========== FILE/IMAGE/AUDIO UPLOAD ==========
+    function openFilePicker(accept, useCamera) {
+      const fileInput = document.getElementById('fileInput');
+      fileInput.accept = accept;
+      fileInput.capture = useCamera ? "environment" : undefined;
+      fileInput.value = '';
+      fileInput.onchange = async function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        await uploadAndSendFile(file);
+      };
+      fileInput.click();
+      attachMenu.classList.remove('active');
+    }
+
+    async function uploadAndSendFile(file, typeOverride) {
+      const formData = new FormData();
+      formData.append("file", file);
+      if (typeOverride) formData.append("type", typeOverride);
+      const res = await fetch(API_BASE + "/file", { method: "POST", body: formData });
+      const msg = await res.json();
+      window.messages.push(msg);
+      renderMessages();
+      if (socket) socket.emit("community-message", msg);
+    }
+
+    // ========== TABLE INSERTION ==========
+    function openTableModal() {
+      document.getElementById('tableModalBackdrop').style.display = 'flex';
+      document.getElementById('tableRows').focus();
+      attachMenu.classList.remove('active');
+    }
+    function closeTableModal(e) {
+      if (e && e.stopPropagation) e.stopPropagation();
+      document.getElementById('tableModalBackdrop').style.display = 'none';
+    }
+    function showTablePopulateModal() {
+      const rows = Math.max(1, Math.min(15, parseInt(document.getElementById('tableRows').value)));
+      const cols = Math.max(1, Math.min(10, parseInt(document.getElementById('tableCols').value)));
+      const form = document.getElementById('tablePopulateForm');
+      let html = '<table><thead><tr>';
+      for(let c=0; c<cols; ++c) {
+        html += `<th><input type="text" name="head${c}" placeholder="Header ${c+1}" required></th>`;
+      }
+      html += '</tr></thead><tbody>';
+      for(let r=0; r<rows; ++r) {
+        html += "<tr>";
+        for(let c=0; c<cols; ++c) {
+          html += `<td><input type="text" name="cell${r}_${c}" placeholder="" ></td>`;
+        }
+        html += "</tr>";
+      }
+      html += '</tbody></table>';
+      form.innerHTML = html;
+      document.getElementById('tableModalBackdrop').style.display = 'none';
+      document.getElementById('tablePopulateModalBackdrop').style.display = 'flex';
+    }
+    function closeTablePopulateModal(e) {
+      if (e && e.stopPropagation) e.stopPropagation();
+      document.getElementById('tablePopulateModalBackdrop').style.display = 'none';
+    }
+    async function submitPopulatedTable() {
+      const form = document.getElementById('tablePopulateForm');
+      const ths = form.querySelectorAll('thead input');
+      const headers = Array.from(ths).map(input => input.value.trim() || " ");
+      const trs = form.querySelectorAll('tbody tr');
+      let table = '<table><thead><tr>';
+      for(let h of headers) table += `<th>${escapeHtml(h)}</th>`;
+      table += '</tr></thead><tbody>';
+      trs.forEach(tr => {
+        table += "<tr>";
+        const tds = tr.querySelectorAll('td input');
+        tds.forEach(td => {
+          table += `<td>${escapeHtml(td.value)}</td>`;
+        });
+        table += "</tr>";
+      });
+      table += "</tbody></table>";
+      await sendMessage({ type: "table", tableHtml: table });
+      closeTablePopulateModal();
+    }
+    // ========== Audio Voicenote ==========
+    let mediaRecorder, audioChunks, audioBlob, audioUrl, recordStartTime=0, recordInterval;
+    function openAudioRecordModal() {
+      document.getElementById('audioRecordModalBackdrop').style.display = 'flex';
+      document.getElementById('audioRecordStatus').innerText = "Click the mic to start recording";
+      document.getElementById('audioRecordTimer').innerText = "00:00";
+      document.getElementById('audioRecordPlayback').innerHTML = "";
+      document.getElementById('sendAudioBtn').style.display = "none";
+      document.getElementById('recordBtnIcon').innerHTML = "&#127908;";
+      document.getElementById('recordBtn').classList.remove('recording');
+      audioBlob = null; audioUrl = null;
+      attachMenu.classList.remove('active');
+    }
+    function closeAudioRecordModal() {
+      stopRecording(true);
+      document.getElementById('audioRecordModalBackdrop').style.display = 'none';
+    }
+    function toggleRecording(e) {
+      e.preventDefault();
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    }
+    function startRecording() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        document.getElementById('audioRecordStatus').innerText = "Audio recording not supported.";
+        return;
+      }
+      navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        mediaRecorder.onstop = () => {
+          audioBlob = new Blob(audioChunks, {type: 'audio/webm'});
+          audioUrl = URL.createObjectURL(audioBlob);
+          showAudioPlayback();
+          stream.getTracks().forEach(track => track.stop());
+        };
+        mediaRecorder.start();
+        document.getElementById('audioRecordStatus').innerText = "Recording... Click mic to stop";
+        document.getElementById('recordBtn').classList.add('recording');
+        document.getElementById('recordBtnIcon').innerHTML = "&#9209;";
+        recordStartTime = Date.now();
+        recordInterval = setInterval(updateRecordTimer, 200);
+        updateRecordTimer();
+      }).catch(err => {
+        document.getElementById('audioRecordStatus').innerText = "Permission denied or not available.";
+      });
+    }
+    function stopRecording(cancelOnly) {
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        clearInterval(recordInterval);
+        document.getElementById('recordBtn').classList.remove('recording');
+        document.getElementById('recordBtnIcon').innerHTML = "&#127908;";
+        if (cancelOnly) {
+          audioBlob = null; audioUrl = null;
+          document.getElementById('audioRecordPlayback').innerHTML = "";
+          document.getElementById('sendAudioBtn').style.display = "none";
+        }
+      }
+    }
+    function updateRecordTimer() {
+      let sec = Math.floor((Date.now() - recordStartTime)/1000);
+      let min = Math.floor(sec/60);
+      sec = sec%60;
+      document.getElementById('audioRecordTimer').innerText =
+        (min<10?'0':'')+min+":"+(sec<10?'0':'')+sec;
+    }
+    function showAudioPlayback() {
+      document.getElementById('audioRecordStatus').innerText = "Preview your recording:";
+      document.getElementById('sendAudioBtn').style.display = "inline-block";
+      let audio = document.createElement('audio');
+      audio.controls = true;
+      audio.src = audioUrl;
+      document.getElementById('audioRecordPlayback').innerHTML = "";
+      document.getElementById('audioRecordPlayback').appendChild(audio);
+    }
+    async function sendRecordedAudio(e) {
+      if (!audioBlob || !audioUrl) return;
+      let duration = document.getElementById('audioRecordTimer').innerText;
+      // Upload to /file endpoint as audio
+      const file = new File([audioBlob], "voicenote.webm", {type:"audio/webm"});
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("type", "audio");
+      formData.append("duration", duration);
+      const res = await fetch(API_BASE + "/file", { method: "POST", body: formData });
+      const msg = await res.json();
+      window.messages.push(msg);
+      renderMessages();
+      if (socket) socket.emit("community-message", msg);
+      closeAudioRecordModal();
+    }
+
+    // ========== Audio Playback in Chat ==========
+    window.activeAudio = null;
+    function playAudioMsg(btn, url) {
+      if (window.activeAudio && window.activeAudio.audio) {
+        window.activeAudio.audio.pause();
+        if (window.activeAudio.btn) {
+          window.activeAudio.btn.innerHTML = "&#9654;";
+          window.activeAudio.btn.classList.remove("paused");
+        }
+        window.activeAudio = null;
+      }
+      const audio = new Audio(url);
+      btn.innerHTML = "&#10073;&#10073;"; // pause icon
+      btn.classList.add("paused");
+      window.activeAudio = {audio, btn};
+      audio.play();
+      audio.onended = function() {
+        btn.innerHTML = "&#9654;";
+        btn.classList.remove("paused");
+        window.activeAudio = null;
+      };
+      audio.onpause = function() {
+        btn.innerHTML = "&#9654;";
+        btn.classList.remove("paused");
+        window.activeAudio = null;
+      };
+    }
+
+    // ========== ATTACHMENT MENU LOGIC ==========
+    const attachBtn = document.getElementById('attachBtn');
+    const attachMenu = document.getElementById('attachMenu');
+    document.addEventListener('click', function(e) {
+      if (attachMenu.classList.contains('active')
+          && !attachMenu.contains(e.target)
+          && e.target !== attachBtn) {
+        attachMenu.classList.remove('active');
+      }
+    });
+    attachBtn.onclick = function(e) {
+      e.stopPropagation();
+      attachMenu.classList.toggle('active');
+    };
+    // Keyboard shortcut for attachment: Ctrl+/
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+        attachMenu.classList.toggle('active');
+      }
+    });
+
+    function escapeHtml(text) {
+      return (text || "").replace(/[&<>"']/g, function(m) {
+        return ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[m];
+      });
+    }
+
+    // ========== INITIALIZE ==========
+    fetchMessages();
+  </script>
+</body>
+</html>
