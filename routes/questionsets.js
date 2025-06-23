@@ -118,6 +118,23 @@ router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), 
   res.json(set);
 });
 
+// General update for set (PUT or PATCH /:id)
+router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const { title, faculty, department, status } = req.body;
+  try {
+    const set = await QuestionSet.findById(req.params.id);
+    if (!set) return res.status(404).json({ error: "Set not found" });
+    if (title !== undefined) set.title = title;
+    if (faculty !== undefined) set.faculty = faculty;
+    if (department !== undefined) set.department = department;
+    if (status !== undefined) set.status = status;
+    await set.save();
+    res.json(set);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
 // Delete a whole question set
 router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   await QuestionSet.findByIdAndDelete(req.params.id);
