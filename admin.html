@@ -34,164 +34,6 @@ body {
   margin: 0;
   padding: 0;
 }
-:root {
-  --primary: #0055b7;
-  --blue: #1767cf;
-  --accent: #1a73e8;
-  --danger: #ff3b47;
-  --success: #25d366;
-  --bg: #f5f8fa;
-  --card-bg: #fff;
-  --text: #111;
-  --muted: #667;
-  --border: #e3e8ee;
-  --shadow: 0 4px 16px #00336614;
-  --radius: 16px;
-}
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-.topbar {
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 11px 12px 11px 10px;
-  box-shadow: 0 1px 8px #00336615;
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 10;
-}
-.topbar .logo {
-  font-size: 1.45rem;
-  color: var(--primary);
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.topbar .logo img {
-  height: 29px; width: 29px; border-radius: 7px; background: #fff;
-}
-.topbar .admin-avatar {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 0.97em;
-  color: var(--blue);
-  font-weight: 500;
-}
-.topbar .admin-avatar img {
-  width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #e3e8ee;
-}
-@media (max-width: 700px) {
-  .topbar .logo span { display: none; }
-}
-.dashboard-section {
-  padding: 14px 6px 8px 6px;
-}
-.dashboard-heading {
-  font-size: 1.08em;
-  font-weight: 700;
-  color: var(--blue);
-  margin: 2px 0 6px 1px;
-  letter-spacing: 0.03em;
-  display: flex; align-items: center; gap: 6px;
-}
-.dashboard-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px 11px;
-  margin-bottom: 10px;
-}
-.dashboard-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 12px #00336609;
-  border: 1px solid var(--border);
-  padding: 17px 11px 14px 13px;
-  display: flex;
-  align-items: flex-start;
-  min-width: 0;
-  min-height: 66px;
-  gap: 10px;
-  position: relative;
-}
-.dashboard-card .numbers {
-  display: flex; flex-direction: column; align-items: flex-start; flex: 1;
-}
-.dashboard-card .label {
-  color: var(--muted);
-  font-size: 0.97em;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-.dashboard-card .value {
-  color: var(--blue);
-  font-size: 1.45em;
-  font-weight: 700;
-  margin-bottom: 1px;
-}
-.dashboard-card .card-icon {
-  font-size: 2.1em;
-  opacity: 0.19;
-  position: absolute;
-  right: 11px;
-  top: 13px;
-  pointer-events: none;
-}
-.section-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 12px #00336609;
-  border: 1px solid var(--border);
-  padding: 17px 11px 18px 13px;
-  margin-bottom: 11px;
-}
-.section-card .section-title {
-  font-size: 1.03em;
-  color: var(--blue);
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-.simple-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 7px;
-  font-size: 0.97em;
-}
-.simple-table thead th {
-  text-align: left;
-  font-weight: 600;
-  color: #222;
-  font-size: 1em;
-  background: none;
-  padding: 4px 5px 4px 0;
-}
-.simple-table td {
-  padding: 3px 5px 3px 0;
-  border: none;
-  color: #333;
-}
-@media (max-width: 700px) {
-  .dashboard-section {
-    padding: 7px 1vw 5vw 1vw;
-  }
-  .dashboard-cards {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 5px;
-  }
-  .dashboard-card, .section-card {
-    padding: 12px 4px 12px 7px;
-    min-height: 50px;
-    font-size: 0.98em;
-  }
-  .section-card {
-    margin-bottom: 7px;
-  }
-}
-    
 .sidebar {
   width: var(--nav-width);
   background: linear-gradient(135deg, var(--primary) 80%, var(--accent2) 100%);
@@ -539,47 +381,34 @@ body {
         <span id="adminName">Admin</span>
       </div>
     </div>
-    
-<div class="dashboard-section">
-  <div class="dashboard-cards">
-    <div class="dashboard-card">
-      <div class="numbers">
-        <span class="label">Question Sets</span>
-        <span class="value">3</span>
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards" id="dashboardCards">
+      <div class="dashboard-card">
+        <div class="card-label">Question Sets</div>
+        <div class="card-value" id="qSetCount">0</div>
+        <div class="card-icon">📚</div>
       </div>
-      <span class="card-icon">📚</span>
-    </div>
-    <div class="dashboard-card">
-      <div class="numbers">
-        <span class="label">Questions</span>
-        <span class="value">780</span>
+      <div class="dashboard-card">
+        <div class="card-label">Questions</div>
+        <div class="card-value" id="questionCount">0</div>
+        <div class="card-icon">✏️</div>
       </div>
-      <span class="card-icon">✏️</span>
-    </div>
-    <div class="dashboard-card">
-      <div class="numbers">
-        <span class="label">Total Results</span>
-        <span class="value">11</span>
+      <div class="dashboard-card">
+        <div class="card-label">Total Results</div>
+        <div class="card-value" id="resultCount">0</div>
+        <div class="card-icon">📊</div>
       </div>
-      <span class="card-icon">📊</span>
-    </div>
-    <div class="dashboard-card">
-      <div class="numbers">
-        <span class="label">Scheduled Tests</span>
-        <span class="value">21</span>
+      <div class="dashboard-card">
+        <div class="card-label">Scheduled Tests</div>
+        <div class="card-value" id="scheduleCount">0</div>
+        <div class="card-icon">⏰</div>
       </div>
-      <span class="card-icon">⏰</span>
-    </div>
-    <div class="dashboard-card">
-      <div class="numbers">
-        <span class="label">Students</span>
-        <span class="value">32</span>
+      <div class="dashboard-card">
+        <div class="card-label">Students</div>
+        <div class="card-value" id="studentCount">0</div>
+        <div class="card-icon">👥</div>
       </div>
-      <span class="card-icon">👥</span>
-    </div>
-  </div>
-
-
+          </div>
     <!-- SECTIONS -->
     <div class="section" id="dashboardSection">
       <div class="section-title">Welcome, Admin!</div>
@@ -695,6 +524,10 @@ body {
     </table>
   </div>
   <div id="modalRoot"></div>
+    <-- Place this button just inside your or inside .topbar, before .sidebar in your HTML -->
+<button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
+  &#9776;
+</button>
   <script>
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
@@ -1563,7 +1396,25 @@ async function fetchNotifications() {
       localStorage.removeItem("token");
       window.location.href = "mock.html";
     }
-
+function toggleSidebar() {
+  var sidebar = document.querySelector('.sidebar');
+  if (sidebar.classList.contains('open')) {
+    sidebar.classList.remove('open');
+    document.querySelector('.main-content').classList.remove('shifted');
+  } else {
+    sidebar.classList.add('open');
+    document.querySelector('.main-content').classList.add('shifted');
+  }
+}
+// Optional: close sidebar when clicking outside on mobile
+window.addEventListener('click', function(e) {
+  var sidebar = document.querySelector('.sidebar');
+  var navToggle = document.getElementById('navToggle');
+  if (!sidebar.contains(e.target) && !navToggle.contains(e.target) && sidebar.classList.contains('open') && window.innerWidth < 950) {
+    sidebar.classList.remove('open'); 
+    document.querySelector('.main-content').classList.remove('shifted');
+  }
+});
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "index.html";
