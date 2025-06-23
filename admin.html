@@ -569,7 +569,7 @@ body {
         <div class="card-value" id="studentCount">0</div>
         <div class="card-icon">👥</div>
       </div>
-    </div>
+          </div>
     <!-- SECTIONS -->
     <div class="section" id="dashboardSection">
       <div class="section-title">Welcome, Admin!</div>
@@ -672,18 +672,17 @@ body {
         <tbody></tbody>
       </table>
     </div>
-    <!-- Students Management Section -->
-    <div class="section" id="studentsSection" style="display:none;">
-      <div class="section-title">Manage Students</div>
-      <table class="data-table" id="studentsTable">
-        <thead>
-          <tr>
-            <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  <!-- Sidebar and main content are unchanged, except the students table: -->
+  <div class="section" id="studentsSection" style="display:block;">
+    <div class="section-title">Manage Students</div>
+    <table class="data-table" id="studentsTable">
+      <thead>
+        <tr>
+          <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
   <div id="modalRoot"></div>
   <script>
@@ -713,6 +712,7 @@ body {
       return d ? d.name : "";
     }
 
+
     // ========== Students ==========
     async function fetchStudents() {
       const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
@@ -723,7 +723,11 @@ body {
       let html = "";
       users.forEach(u => {
         html += `<tr>
-          <td>${u.fullname || u.username || '-'}</td>
+          <td>
+            <a href="#" onclick="viewStudent('${u._id}');return false;" style="color:#3a86ff;font-weight:600;cursor:pointer;text-decoration:underline;">
+              ${u.fullname || u.username || '-'}
+            </a>
+          </td>
           <td>${u.username || '-'}</td>
           <td>${u.faculty || '-'}</td>
           <td>${u.department || '-'}</td>
@@ -742,6 +746,50 @@ body {
         </tr>`;
       });
       document.querySelector("#studentsTable tbody").innerHTML = html;
+    }
+
+    async function viewStudent(id) {
+      const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
+      if (!resp.ok) {
+        alert("Could not load student: " + resp.statusText);
+        return;
+      }
+      const u = await resp.json();
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <div style="text-align:center">
+              <img src="${u.profilePic ? u.profilePic : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.fullname || u.username || 'Student') + '&background=3a86ff&color=fff&rounded=true'}" alt="Profile" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 16px auto;border:3px solid #3a86ff;">
+              <h2 style="margin-bottom:2px;">${u.fullname || '-'}</h2>
+              <div style="font-size:1em;color:#3a86ff;">@${u.username || '-'}</div>
+              <div style="margin:8px 0 18px 0;">
+                <span style="font-size:0.97em;color:#444;">Faculty: <b>${u.faculty || '-'}</b></span><br>
+                <span style="font-size:0.97em;color:#444;">Department: <b>${u.department || '-'}</b></span>
+              </div>
+            </div>
+            <div>
+              <label>Email</label>
+              <input value="${u.email || ''}" disabled>
+              <label>Status</label>
+              <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
+              <label>Bio</label>
+              <textarea disabled style="min-height:50px">${u.bio || ''}</textarea>
+              <label>Phone</label>
+              <input value="${u.phone || ''}" disabled>
+              <label>Joined</label>
+              <input value="${u.createdAt ? (new Date(u.createdAt)).toLocaleString() : ''}" disabled>
+            </div>
+            <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+
+    function closeModal(e) {
+      if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+        document.getElementById("modalRoot").innerHTML = "";
+      }
     }
 
         // ========== UX NAVIGATION ==========
@@ -781,33 +829,6 @@ body {
       try { students = await resp4.json(); } catch { students = []; }
       document.getElementById("studentCount").innerText = students.length;
     }
-async function viewStudent(id) {
-  const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
-  if (!resp.ok) {
-    alert("Could not load student: " + resp.statusText);
-    return;
-  }
-  const u = await resp.json();
-  let html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Student Profile</h2>
-        <label>Full Name</label>
-        <input value="${u.fullname || ''}" disabled>
-        <label>Username</label>
-        <input value="${u.username || ''}" disabled>
-        <label>Faculty</label>
-        <input value="${u.faculty || ''}" disabled>
-        <label>Department</label>
-        <input value="${u.department || ''}" disabled>
-        <label>Status</label>
-        <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
-        <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-}
 
 async function editStudent(id) {
   try {
