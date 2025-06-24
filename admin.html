@@ -187,14 +187,7 @@
       </table>
     </div>
   <div id="modalRoot"></div>
-    <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <rect y="6" width="32" height="3.5" rx="1.7" fill="#111"/>
-        <rect y="14" width="32" height="3.5" rx="1.7" fill="#111"/>
-        <rect y="22" width="32" height="3.5" rx="1.7" fill="#111"/>
-      </svg>
-    </button>
-    <div id="pageLoader" style="
+       <div id="pageLoader" style="
   position:fixed; top:0; left:0; width:100vw; height:100vh; 
   background:rgba(255,255,255,0.9); z-index:9999; display:flex; 
   align-items:center; justify-content:center; flex-direction:column;">
@@ -204,6 +197,14 @@
 <style>
 @keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
+    <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect y="6" width="32" height="3.5" rx="1.7" fill="#111"/>
+        <rect y="14" width="32" height="3.5" rx="1.7" fill="#111"/>
+        <rect y="22" width="32" height="3.5" rx="1.7" fill="#111"/>
+      </svg>
+    </button>
+ 
   <script>
 
     // Example: Wait for these to finish before showing main content
