@@ -714,13 +714,13 @@ function showSection(id, el) {
       const results = await resp.json();
       let html = "";
       results.forEach(r => {
-        html += `<tr>
-          <td>${r.user.username}</td>
-          <td>${r.examSet}</td>
-          <td>${r.score ?? '-'}</td>
-          <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
-        </tr>`;
-      });
+  html += `<tr>
+    <td>${r.user.username}</td>
+    <td>${r.examSet && r.examSet.title ? r.examSet.title : '-'}</td>
+    <td>${r.score ?? '-'}</td>
+    <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+  </tr>`;
+});
       document.querySelector("#resultsTable tbody").innerHTML = html;
     }
 
