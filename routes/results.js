@@ -84,53 +84,43 @@ router.get("/me", authenticate, async (req, res) => {
   res.json({ result });
 });
 
-// Review endpoint (robust version) - updated to support answers keyed by question id (string)
-// Also includes logging for debugging and better error messages
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
-    console.log("Session review request:", sessionId, "by user:", req.user.id);
-
-    // Defensive: check for valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(sessionId)) {
-      console.log("Invalid sessionId format", sessionId);
       return res.status(400).json({ message: "Invalid session id" });
     }
-
     const result = await Result.findById(sessionId);
-    if (!result) {
-      console.log("No result found for sessionId", sessionId);
-      return res.status(404).json({ message: "Result not found" });
-    }
-
-    // Compare user ID as string (ObjectId to string)
+    if (!result) return res.status(404).json({ message: "Result not found" });
     if (
       req.user.role !== "admin" &&
       req.user.role !== "superadmin" &&
       req.user.id !== String(result.user)
     ) {
-      console.log("Forbidden: user mismatch. req.user.id:", req.user.id, "result.user:", result.user);
       return res.status(403).json({ message: "Forbidden" });
     }
-
     const questionSet = await QuestionSet.findById(result.examSet);
-    if (!questionSet) {
-      console.log("Question set not found for examSet", result.examSet);
-      return res.status(404).json({ message: "Question set not found" });
-    }
+    if (!questionSet) return res.status(404).json({ message: "Question set not found" });
 
-    // answers as object, keyed by question id (string)
-    const answers = result.answers || {};
-    console.log("Answers keys:", Object.keys(answers));
-    if (questionSet.questions && questionSet.questions.length > 0) {
-      console.log("First question id in QuestionSet:", questionSet.questions[0].id);
+    // Defensive: Convert Map to object if needed
+    let answers = result.answers;
+    if (answers instanceof Map) {
+      answers = Object.fromEntries(answers);
     }
+    answers = answers || {};
+    console.log("answers keys:", Object.keys(answers));
+    if (questionSet.questions.length > 0) {
+      console.log("first question id:", questionSet.questions[0].id);
+    }
+    questionSet.questions.forEach(q => {
+      console.log("question id:", q.id, "selected:", answers[String(q.id)]);
+    });
 
     const questions = questionSet.questions.map((q) => ({
       question: q.question,
       options: q.options,
       correct: q.answer,
-      selected: answers[String(q.id)] ?? "", // match by question id (string)
+      selected: answers[String(q.id)] ?? "",
       explanation: q.explanation || ""
     }));
 
@@ -144,5 +134,4 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
-
 export default router;
