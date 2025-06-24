@@ -255,7 +255,10 @@
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
-
+function getDepartmentName(departmentId) {
+  const d = departments.find(dep => dep._id === departmentId);
+  return d ? d.name : "";
+}
     // EDIT FACULTY
     function editFaculty(id) {
       const faculty = faculties.find(f => f._id === id);
