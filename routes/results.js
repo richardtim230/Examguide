@@ -121,13 +121,13 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
 
     // answers as object, not array
     const answers = result.answers || {};
-    const questions = questionSet.questions.map((q, idx) => ({
-      question: q.question,
-      options: q.options,
-      correct: q.answer,
-      selected: answers[idx] ?? "", // If answers is object: { "0": "A", "1": "B" }
-      explanation: q.explanation || ""
-    }));
+const questions = questionSet.questions.map((q) => ({
+  question: q.question,
+  options: q.options,
+  correct: q.answer,
+  selected: answers[q.id] ?? "", // match by question id
+  explanation: q.explanation || ""
+}));
 
     res.json({
       sessionId: result._id,
