@@ -517,7 +517,7 @@ function showSection(id, el) {
   if (id === "schedules") fetchSchedules();
   if (id === "notifications") fetchNotifications();
   if (id === "students") fetchStudents();
-  if (window.innerWidth <= 850) closeSidebar();
+  if (window.innerWidth <= 950) closeSidebar();
 }
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
