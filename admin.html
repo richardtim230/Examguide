@@ -73,8 +73,7 @@
       <div class="section-title">Welcome, Admin!</div>
       <p>Use the navigation to manage question sets, upload and edit questions, view results, schedule tests, and communicate with students.</p>
     </div>
-    <!-- Faculties & Departments Section -->
-    <div class="section" id="facultySection" style="display:none;">
+   <div class="section" id="facultySection" style="display:none;">
       <div class="section-title">Faculties & Departments</div>
       <div class="actions">
         <button class="btn" onclick="openModal('addFacultyModal')">+ Add Faculty</button>
@@ -195,26 +194,155 @@
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
 
-    // ========== Faculties & Departments ==========
+      // ========== Faculties & Departments ==========
     let faculties = [];
     let departments = [];
     async function fetchFaculties() {
       const resp = await fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } });
       faculties = await resp.json();
-      document.getElementById("facultyList").innerHTML = faculties.map(f => `<li>${f.name}</li>`).join('');
+      document.getElementById("facultyList").innerHTML = faculties.map(f => 
+        `<li>
+          ${f.name} 
+          <button class="action-btn" onclick="editFaculty('${f._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteFaculty('${f._id}')">Delete</button>
+        </li>`).join('');
     }
     async function fetchDepartments() {
       const resp = await fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } });
       departments = await resp.json();
-      document.getElementById("departmentList").innerHTML = departments.map(d => `<li>${d.name} <span style="color:#888">(Faculty: ${getFacultyName(d.faculty)})</span></li>`).join('');
+      document.getElementById("departmentList").innerHTML = departments.map(d => 
+        `<li>
+          ${d.name} <span style="color:#888">(Faculty: ${getFacultyName(d.faculty)})</span>
+          <button class="action-btn" onclick="editDepartment('${d._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteDepartment('${d._id}')">Delete</button>
+        </li>`).join('');
     }
     function getFacultyName(facultyId) {
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
-    function getDepartmentName(deptId) {
-      const d = departments.find(d => d._id === deptId);
-      return d ? d.name : "";
+
+    // EDIT FACULTY
+    function editFaculty(id) {
+      const faculty = faculties.find(f => f._id === id);
+      if (!faculty) return;
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:400px;">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Edit Faculty</h2>
+            <label>Faculty Name</label>
+            <input id="editFacultyName" type="text" maxlength="64" value="${faculty.name}">
+            <span id="editFacultyMsg"></span>
+            <span class="spinner" id="editFacultySpinner" style="display:none"></span>
+            <button class="btn" onclick="submitEditFaculty('${faculty._id}')">Save</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitEditFaculty(id) {
+      const name = document.getElementById("editFacultyName").value.trim();
+      const msg = document.getElementById("editFacultyMsg");
+      const spinner = document.getElementById("editFacultySpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!name) { msg.innerText = "Faculty name required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "faculties/" + id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ name })
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to edit faculty.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Faculty updated!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchFaculties();
+        closeModal();
+      }, 900);
+    }
+    // DELETE FACULTY
+    async function deleteFaculty(id) {
+      if (!confirm("Delete this faculty?")) return;
+      const resp = await fetch(API_URL + "faculties/" + id, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        alert(data.message || "Failed to delete faculty.");
+      }
+      fetchFaculties();
+    }
+
+    // EDIT DEPARTMENT
+    function editDepartment(id) {
+      const department = departments.find(d => d._id === id);
+      if (!department) return;
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:400px;">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Edit Department</h2>
+            <label>Department Name</label>
+            <input id="editDepartmentName" type="text" maxlength="64" value="${department.name}">
+            <label>Faculty</label>
+            <select id="editDepartmentFaculty">
+              ${faculties.map(f => `<option value="${f._id}" ${f._id === department.faculty ? 'selected' : ''}>${f.name}</option>`).join('')}
+            </select>
+            <span id="editDepartmentMsg"></span>
+            <span class="spinner" id="editDepartmentSpinner" style="display:none"></span>
+            <button class="btn" onclick="submitEditDepartment('${department._id}')">Save</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitEditDepartment(id) {
+      const name = document.getElementById("editDepartmentName").value.trim();
+      const faculty = document.getElementById("editDepartmentFaculty").value;
+      const msg = document.getElementById("editDepartmentMsg");
+      const spinner = document.getElementById("editDepartmentSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!name || !faculty) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "departments/" + id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ name, faculty })
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to edit department.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Department updated!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchDepartments();
+        closeModal();
+      }, 900);
+    }
+    // DELETE DEPARTMENT
+    async function deleteDepartment(id) {
+      if (!confirm("Delete this department?")) return;
+      const resp = await fetch(API_URL + "departments/" + id, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        alert(data.message || "Failed to delete department.");
+      }
+      fetchDepartments();
     }
 
     // ========== Students ==========
