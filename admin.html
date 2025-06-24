@@ -187,16 +187,17 @@
       </table>
     </div>
   <div id="modalRoot"></div>
-       <div id="pageLoader" style="
-  position:fixed; top:0; left:0; width:100vw; height:100vh; 
-  background:rgba(255,255,255,0.9); z-index:9999; display:flex; 
-  align-items:center; justify-content:center; flex-direction:column;">
-  <div class="spinner" style="width:50px; height:50px; border:6px solid #eee; border-top:6px solid #3a86ff; border-radius:50%; animation:spin 1s linear infinite;"></div>
-  <div style="margin-top:16px; font-size:1.2em; color:#3a86ff;">Loading data...</div>
-</div>
-<style>
-@keyframes spin { 100% { transform: rotate(360deg); } }
-</style>
+      <div id="pageLoader" style="
+    position:fixed; top:0; left:0; width:100vw; height:100vh; 
+    background:rgba(255,255,255,0.9); z-index:9999; display:flex; 
+    align-items:center; justify-content:center; flex-direction:column;">
+    <div class="spinner" style="width:50px; height:50px; border:6px solid #eee; border-top:6px solid #3a86ff; border-radius:50%; animation:spin 1s linear infinite;"></div>
+    <div style="margin-top:16px; font-size:1.2em; color:#3a86ff;">Loading data...</div>
+  </div>
+  <style>
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+
     <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect y="6" width="32" height="3.5" rx="1.7" fill="#111"/>
@@ -1326,41 +1327,28 @@ async function deleteSchedule(id) {
       }
     });
 
-    // Example: Wait for these to finish before showing main content
-async function initDashboard() {
-  document.getElementById("pageLoader").style.display = "flex"; // Show loader
+ async function initDashboard() {
+      document.getElementById("pageLoader").style.display = "flex"; // Show loader
+      document.getElementById("mainContent").style.visibility = "hidden"; // Hide main
 
-  // Await all required fetches
-  await Promise.all([
-    fetchFaculties(),
-    fetchDepartments(),
-    fetchSchedules(),      // or any other initial data
-    fetchStudentsList(),   // etc.
-  ]);
+      // Await all required fetches
+      await Promise.all([
+        fetchFaculties(),
+        fetchDepartments(),
+        fetchSchedules(),
+        fetchStudentsList(),
+        fetchSets(),
+        fetchResults(),
+        fetchDashboardCounts(),
+        fetchNotifications(),
+      ]);
 
-  document.getElementById("pageLoader").style.display = "none"; // Hide loader
-  document.getElementById("mainContent").style.visibility = "visible"; // Show content
-}
-
-// Optionally, hide everything at first (in CSS or JS)
-document.getElementById("mainContent").style.visibility = "hidden";
-
-// Start loading when DOM is ready
-window.addEventListener('DOMContentLoaded', initDashboard);
-    // ========== INIT ==========
-    async function init() {
-      if (!token) return window.location.href = "index.html";
-      document.getElementById("adminName").innerText = "Admin";
-      await fetchFaculties();
-      await fetchDepartments();
-      await fetchDashboardCounts();
-      await fetchSets();
-      await fetchQuestions();
-      await fetchResults();
-      await fetchSchedules();
-      await fetchNotifications();
+      document.getElementById("pageLoader").style.display = "none"; // Hide loader
+      document.getElementById("mainContent").style.visibility = "visible"; // Show content
     }
-    window.onload = init;
+
+    window.addEventListener('DOMContentLoaded', initDashboard);
+
   </script>
 </body>
 </html>
