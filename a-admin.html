@@ -388,83 +388,36 @@
       }
       const u = await resp.json();
       let html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
-    <button class="close-modal" onclick="closeModal(event)">&times;</button>
-    <div style="text-align:center">
-      <img src="${u.profilePic ? u.profilePic : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.fullname || u.username || 'Student') + '&background=3a86ff&color=fff&rounded=true'}" alt="Profile" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 16px auto;border:3px solid #3a86ff;">
-      <h2 style="margin-bottom:2px;">${u.fullname || '-'}</h2>
-      <div style="font-size:1em;color:#3a86ff;">@${u.username || '-'}</div>
-      <div style="margin:8px 0 18px 0;">
-        <span style="font-size:0.97em;color:#444;">Faculty: <b>${u.faculty || '-'}</b></span><br>
-        <span style="font-size:0.97em;color:#444;">Department: <b>${u.department || '-'}</b></span>
-      </div>
-    </div>
-    <div>
-      <label>Email</label>
-      <input value="${u.email || ''}" disabled>
-      <label>Status</label>
-      <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
-      <label>Bio</label>
-      <textarea disabled style="min-height:50px">${u.bio || ''}</textarea>
-      <label>Phone</label>
-      <input value="${u.phone || ''}" disabled>
-      <label>Joined</label>
-      <input value="${u.createdAt ? (new Date(u.createdAt)).toLocaleString() : ''}" disabled>
-    </div>
-    <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
-    <button class="btn" onclick="openSendMessageModal('${u._id}','${u.fullname || u.username || '-'}')">Send Message</button>
-  </div>
-</div>`;
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <div style="text-align:center">
+              <img src="${u.profilePic ? u.profilePic : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.fullname || u.username || 'Student') + '&background=3a86ff&color=fff&rounded=true'}" alt="Profile" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 16px auto;border:3px solid #3a86ff;">
+              <h2 style="margin-bottom:2px;">${u.fullname || '-'}</h2>
+              <div style="font-size:1em;color:#3a86ff;">@${u.username || '-'}</div>
+              <div style="margin:8px 0 18px 0;">
+                <span style="font-size:0.97em;color:#444;">Faculty: <b>${u.faculty || '-'}</b></span><br>
+                <span style="font-size:0.97em;color:#444;">Department: <b>${u.department || '-'}</b></span>
+              </div>
+            </div>
+            <div>
+              <label>Email</label>
+              <input value="${u.email || ''}" disabled>
+              <label>Status</label>
+              <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
+              <label>Bio</label>
+              <textarea disabled style="min-height:50px">${u.bio || ''}</textarea>
+              <label>Phone</label>
+              <input value="${u.phone || ''}" disabled>
+              <label>Joined</label>
+              <input value="${u.createdAt ? (new Date(u.createdAt)).toLocaleString() : ''}" disabled>
+            </div>
+            <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
+          </div>
+        </div>`;
       document.getElementById("modalRoot").innerHTML = html;
     }
-// Opens the Send Message modal for a given user
-function openSendMessageModal(userId, userName) {
-  let html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Send Message to ${userName}</h2>
-        <textarea id="sendMsgText" rows="4" placeholder="Type your message..."></textarea>
-        <span id="sendMsgStatus"></span>
-        <span class="spinner" id="sendMsgSpinner" style="display:none"></span>
-        <button class="btn" onclick="submitSendMessage('${userId}')">Send</button>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-}
 
-// Handles message send
-async function submitSendMessage(userId) {
-  const text = document.getElementById("sendMsgText").value.trim();
-  const msg = document.getElementById("sendMsgStatus");
-  const spinner = document.getElementById("sendMsgSpinner");
-  msg.innerText = "";
-  msg.className = "";
-  if (!text) { msg.innerText = "Message cannot be empty!"; msg.className = "error-msg"; return; }
-  spinner.style.display = "inline-block";
-  try {
-    const resp = await fetch(API_URL + "messages/" + userId, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-      body: JSON.stringify({ text })
-    });
-    spinner.style.display = "none";
-    if (!resp.ok) {
-      const data = await resp.json();
-      msg.innerText = data.message || "Failed to send message.";
-      msg.className = "error-msg";
-      return;
-    }
-    msg.innerText = "Message sent!";
-    msg.className = "success-msg";
-    setTimeout(() => closeModal(), 900);
-  } catch (e) {
-    spinner.style.display = "none";
-    msg.innerText = "Network error.";
-    msg.className = "error-msg";
-  }
-}
     function closeModal(e) {
       if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
         document.getElementById("modalRoot").innerHTML = "";
