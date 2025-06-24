@@ -73,8 +73,7 @@
       <div class="section-title">Welcome, Admin!</div>
       <p>Use the navigation to manage question sets, upload and edit questions, view results, schedule tests, and communicate with students.</p>
     </div>
-    <!-- Faculties & Departments Section -->
-    <div class="section" id="facultySection" style="display:none;">
+   <div class="section" id="facultySection" style="display:none;">
       <div class="section-title">Faculties & Departments</div>
       <div class="actions">
         <button class="btn" onclick="openModal('addFacultyModal')">+ Add Faculty</button>
@@ -137,20 +136,25 @@
       </table>
     </div>
     <!-- Schedules -->
-    <div class="section" id="schedulesSection" style="display:none;">
-      <div class="section-title">Test Schedules</div>
-      <div class="actions">
-        <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
-      </div>
-      <table class="data-table" id="schedulesTable">
-        <thead>
-          <tr>
-            <th>Set</th><th>Start</th><th>End</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+   <div class="section" id="schedulesSection" style="display:none;">
+  <div class="section-title">Test Schedules</div>
+  <div class="actions">
+    <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
+  </div>
+  <table class="data-table" id="schedulesTable">
+    <thead>
+      <tr>
+        <th>Set</th>
+        <th>Faculty</th>
+        <th>Department</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
     <!-- Notifications Section -->
     <div class="section" id="notificationsSection" style="display:none;">
       <div class="section-title">Send Announcement</div>
@@ -183,6 +187,16 @@
       </table>
     </div>
   <div id="modalRoot"></div>
+       <div id="pageLoader" style="
+  position:fixed; top:0; left:0; width:100vw; height:100vh; 
+  background:rgba(255,255,255,0.9); z-index:9999; display:flex; 
+  align-items:center; justify-content:center; flex-direction:column;">
+  <div class="spinner" style="width:50px; height:50px; border:6px solid #eee; border-top:6px solid #3a86ff; border-radius:50%; animation:spin 1s linear infinite;"></div>
+  <div style="margin-top:16px; font-size:1.2em; color:#3a86ff;">Loading data...</div>
+</div>
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
     <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect y="6" width="32" height="3.5" rx="1.7" fill="#111"/>
@@ -190,31 +204,162 @@
         <rect y="22" width="32" height="3.5" rx="1.7" fill="#111"/>
       </svg>
     </button>
+ 
   <script>
+
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
 
-    // ========== Faculties & Departments ==========
+      // ========== Faculties & Departments ==========
     let faculties = [];
     let departments = [];
     async function fetchFaculties() {
       const resp = await fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } });
       faculties = await resp.json();
-      document.getElementById("facultyList").innerHTML = faculties.map(f => `<li>${f.name}</li>`).join('');
+      document.getElementById("facultyList").innerHTML = faculties.map(f => 
+        `<li>
+          ${f.name} 
+          <button class="action-btn" onclick="editFaculty('${f._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteFaculty('${f._id}')">Delete</button>
+        </li>`).join('');
     }
     async function fetchDepartments() {
       const resp = await fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } });
       departments = await resp.json();
-      document.getElementById("departmentList").innerHTML = departments.map(d => `<li>${d.name} <span style="color:#888">(Faculty: ${getFacultyName(d.faculty)})</span></li>`).join('');
+      document.getElementById("departmentList").innerHTML = departments.map(d => 
+        `<li>
+          ${d.name} <span style="color:#888">(Faculty: ${getFacultyName(d.faculty)})</span>
+          <button class="action-btn" onclick="editDepartment('${d._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteDepartment('${d._id}')">Delete</button>
+        </li>`).join('');
     }
     function getFacultyName(facultyId) {
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
-    function getDepartmentName(deptId) {
-      const d = departments.find(d => d._id === deptId);
-      return d ? d.name : "";
+
+    // EDIT FACULTY
+    function editFaculty(id) {
+      const faculty = faculties.find(f => f._id === id);
+      if (!faculty) return;
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:400px;">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Edit Faculty</h2>
+            <label>Faculty Name</label>
+            <input id="editFacultyName" type="text" maxlength="64" value="${faculty.name}">
+            <span id="editFacultyMsg"></span>
+            <span class="spinner" id="editFacultySpinner" style="display:none"></span>
+            <button class="btn" onclick="submitEditFaculty('${faculty._id}')">Save</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitEditFaculty(id) {
+      const name = document.getElementById("editFacultyName").value.trim();
+      const msg = document.getElementById("editFacultyMsg");
+      const spinner = document.getElementById("editFacultySpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!name) { msg.innerText = "Faculty name required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "faculties/" + id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ name })
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to edit faculty.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Faculty updated!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchFaculties();
+        closeModal();
+      }, 900);
+    }
+    // DELETE FACULTY
+    async function deleteFaculty(id) {
+      if (!confirm("Delete this faculty?")) return;
+      const resp = await fetch(API_URL + "faculties/" + id, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        alert(data.message || "Failed to delete faculty.");
+      }
+      fetchFaculties();
+    }
+
+    // EDIT DEPARTMENT
+    function editDepartment(id) {
+      const department = departments.find(d => d._id === id);
+      if (!department) return;
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:400px;">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Edit Department</h2>
+            <label>Department Name</label>
+            <input id="editDepartmentName" type="text" maxlength="64" value="${department.name}">
+            <label>Faculty</label>
+            <select id="editDepartmentFaculty">
+              ${faculties.map(f => `<option value="${f._id}" ${f._id === department.faculty ? 'selected' : ''}>${f.name}</option>`).join('')}
+            </select>
+            <span id="editDepartmentMsg"></span>
+            <span class="spinner" id="editDepartmentSpinner" style="display:none"></span>
+            <button class="btn" onclick="submitEditDepartment('${department._id}')">Save</button>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitEditDepartment(id) {
+      const name = document.getElementById("editDepartmentName").value.trim();
+      const faculty = document.getElementById("editDepartmentFaculty").value;
+      const msg = document.getElementById("editDepartmentMsg");
+      const spinner = document.getElementById("editDepartmentSpinner");
+      msg.innerText = "";
+      msg.className = "";
+      if (!name || !faculty) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
+      spinner.style.display = "inline-block";
+      const resp = await fetch(API_URL + "departments/" + id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ name, faculty })
+      });
+      spinner.style.display = "none";
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to edit department.";
+        msg.className = "error-msg";
+        return;
+      }
+      msg.innerText = "Department updated!";
+      msg.className = "success-msg";
+      setTimeout(() => {
+        fetchDepartments();
+        closeModal();
+      }, 900);
+    }
+    // DELETE DEPARTMENT
+    async function deleteDepartment(id) {
+      if (!confirm("Delete this department?")) return;
+      const resp = await fetch(API_URL + "departments/" + id, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        alert(data.message || "Failed to delete department.");
+      }
+      fetchDepartments();
     }
 
     // ========== Students ==========
@@ -260,36 +405,83 @@
       }
       const u = await resp.json();
       let html = `
-        <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <div style="text-align:center">
-              <img src="${u.profilePic ? u.profilePic : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.fullname || u.username || 'Student') + '&background=3a86ff&color=fff&rounded=true'}" alt="Profile" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 16px auto;border:3px solid #3a86ff;">
-              <h2 style="margin-bottom:2px;">${u.fullname || '-'}</h2>
-              <div style="font-size:1em;color:#3a86ff;">@${u.username || '-'}</div>
-              <div style="margin:8px 0 18px 0;">
-                <span style="font-size:0.97em;color:#444;">Faculty: <b>${u.faculty || '-'}</b></span><br>
-                <span style="font-size:0.97em;color:#444;">Department: <b>${u.department || '-'}</b></span>
-              </div>
-            </div>
-            <div>
-              <label>Email</label>
-              <input value="${u.email || ''}" disabled>
-              <label>Status</label>
-              <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
-              <label>Bio</label>
-              <textarea disabled style="min-height:50px">${u.bio || ''}</textarea>
-              <label>Phone</label>
-              <input value="${u.phone || ''}" disabled>
-              <label>Joined</label>
-              <input value="${u.createdAt ? (new Date(u.createdAt)).toLocaleString() : ''}" disabled>
-            </div>
-            <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
-          </div>
-        </div>`;
+      <div class="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
+    <button class="close-modal" onclick="closeModal(event)">&times;</button>
+    <div style="text-align:center">
+      <img src="${u.profilePic ? u.profilePic : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.fullname || u.username || 'Student') + '&background=3a86ff&color=fff&rounded=true'}" alt="Profile" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 16px auto;border:3px solid #3a86ff;">
+      <h2 style="margin-bottom:2px;">${u.fullname || '-'}</h2>
+      <div style="font-size:1em;color:#3a86ff;">@${u.username || '-'}</div>
+      <div style="margin:8px 0 18px 0;">
+        <span style="font-size:0.97em;color:#444;">Faculty: <b>${u.faculty || '-'}</b></span><br>
+        <span style="font-size:0.97em;color:#444;">Department: <b>${u.department || '-'}</b></span>
+      </div>
+    </div>
+    <div>
+      <label>Email</label>
+      <input value="${u.email || ''}" disabled>
+      <label>Status</label>
+      <input value="${u.active === false ? 'Inactive':'Active'}" disabled>
+      <label>Bio</label>
+      <textarea disabled style="min-height:50px">${u.bio || ''}</textarea>
+      <label>Phone</label>
+      <input value="${u.phone || ''}" disabled>
+      <label>Joined</label>
+      <input value="${u.createdAt ? (new Date(u.createdAt)).toLocaleString() : ''}" disabled>
+    </div>
+    <button class="btn" onclick="editStudent('${u._id}')">Edit</button>
+    <button class="btn" onclick="openSendMessageModal('${u._id}','${u.fullname || u.username || '-'}')">Send Message</button>
+  </div>
+</div>`;
       document.getElementById("modalRoot").innerHTML = html;
     }
+// Opens the Send Message modal for a given user
+function openSendMessageModal(userId, userName) {
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:450px;">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Send Message to ${userName}</h2>
+        <textarea id="sendMsgText" rows="4" placeholder="Type your message..."></textarea>
+        <span id="sendMsgStatus"></span>
+        <span class="spinner" id="sendMsgSpinner" style="display:none"></span>
+        <button class="btn" onclick="submitSendMessage('${userId}')">Send</button>
+      </div>
+    </div>`;
+  document.getElementById("modalRoot").innerHTML = html;
+}
 
+// Handles message send
+async function submitSendMessage(userId) {
+  const text = document.getElementById("sendMsgText").value.trim();
+  const msg = document.getElementById("sendMsgStatus");
+  const spinner = document.getElementById("sendMsgSpinner");
+  msg.innerText = "";
+  msg.className = "";
+  if (!text) { msg.innerText = "Message cannot be empty!"; msg.className = "error-msg"; return; }
+  spinner.style.display = "inline-block";
+  try {
+    const resp = await fetch(API_URL + "messages/" + userId, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({ text })
+    });
+    spinner.style.display = "none";
+    if (!resp.ok) {
+      const data = await resp.json();
+      msg.innerText = data.message || "Failed to send message.";
+      msg.className = "error-msg";
+      return;
+    }
+    msg.innerText = "Message sent!";
+    msg.className = "success-msg";
+    setTimeout(() => closeModal(), 900);
+  } catch (e) {
+    spinner.style.display = "none";
+    msg.innerText = "Network error.";
+    msg.className = "error-msg";
+  }
+}
     function closeModal(e) {
       if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
         document.getElementById("modalRoot").innerHTML = "";
@@ -490,20 +682,117 @@
       document.querySelector("#resultsTable tbody").innerHTML = html;
     }
 
-    // ========== Schedules ==========
-    async function fetchSchedules() {
-      const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
-      const schedules = await resp.json();
-      let html = "";
-      schedules.forEach(s => {
-        html += `<tr>
-          <td>${s.examSet}</td>
-          <td>${(new Date(s.start)).toLocaleString()}</td>
-          <td>${(new Date(s.end)).toLocaleString()}</td>
-        </tr>`;
-      });
-      document.querySelector("#schedulesTable tbody").innerHTML = html;
-    }
+// ========== Schedules ==========
+async function fetchSchedules() {
+  const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+  const schedules = await resp.json();
+  let html = "";
+  schedules.forEach(s => {
+    html += `<tr>
+      <td>${s.examSet?.title || '-'}</td>
+      <td>${getFacultyName(s.faculty)}</td>
+      <td>${getDepartmentName(s.department)}</td>
+      <td>${(new Date(s.start)).toLocaleString()}</td>
+      <td>${(new Date(s.end)).toLocaleString()}</td>
+      <td>
+        <button class="action-btn" onclick="editSchedule('${s._id}')">Edit</button>
+        <button class="action-btn" onclick="deleteSchedule('${s._id}')">Delete</button>
+      </td>
+    </tr>`;
+  });
+  document.querySelector("#schedulesTable tbody").innerHTML = html;
+}
+
+// Edit Schedule Modal
+async function editSchedule(id) {
+  const resp = await fetch(API_URL + "schedules/" + id, { headers: { Authorization: "Bearer " + token } });
+  if (!resp.ok) { alert("Could not load schedule."); return; }
+  const s = await resp.json();
+  // Ensure faculties, departments, and question sets are loaded
+  if (!faculties.length) await fetchFaculties();
+  if (!departments.length) await fetchDepartments();
+  const setsResp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+  const sets = await setsResp.json();
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:420px;">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Edit Schedule</h2>
+        <label>Exam Set</label>
+        <select id="editScheduleSet">
+          ${sets.map(set => 
+            `<option value="${set._id}" ${set._id === (s.examSet?._id || s.examSet) ? 'selected' : ''}>${set.title}</option>`
+          ).join('')}
+        </select>
+        <label>Faculty</label>
+        <select id="editScheduleFaculty">
+          ${faculties.map(f => `<option value="${f._id}" ${f._id === s.faculty ? 'selected' : ''}>${f.name}</option>`).join('')}
+        </select>
+        <label>Department</label>
+        <select id="editScheduleDepartment">
+          ${departments.map(d => `<option value="${d._id}" ${d._id === s.department ? 'selected' : ''}>${d.name}</option>`).join('')}
+        </select>
+        <label>Start Date & Time</label>
+        <input id="editScheduleStart" type="datetime-local" value="${(new Date(s.start)).toISOString().slice(0,16)}">
+        <label>End Date & Time</label>
+        <input id="editScheduleEnd" type="datetime-local" value="${(new Date(s.end)).toISOString().slice(0,16)}">
+        <span id="editScheduleMsg"></span>
+        <span class="spinner" id="editScheduleSpinner" style="display:none"></span>
+        <button class="btn" onclick="submitEditSchedule('${s._id}')">Save Changes</button>
+      </div>
+    </div>`;
+  document.getElementById("modalRoot").innerHTML = html;
+}
+
+async function submitEditSchedule(id) {
+  const examSet = document.getElementById("editScheduleSet").value;
+  const faculty = document.getElementById("editScheduleFaculty").value;
+  const department = document.getElementById("editScheduleDepartment").value;
+  const start = document.getElementById("editScheduleStart").value;
+  const end = document.getElementById("editScheduleEnd").value;
+  const msg = document.getElementById("editScheduleMsg");
+  const spinner = document.getElementById("editScheduleSpinner");
+  msg.innerText = "";
+  msg.className = "";
+  if (!examSet || !faculty || !department || !start || !end) {
+    msg.innerText = "All fields required!";
+    msg.className = "error-msg";
+    return;
+  }
+  spinner.style.display = "inline-block";
+  const resp = await fetch(API_URL + "schedules/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify({ examSet, faculty, department, start, end })
+  });
+  spinner.style.display = "none";
+  if (!resp.ok) {
+    const data = await resp.json();
+    msg.innerText = data.error || data.message || "Failed to update schedule.";
+    msg.className = "error-msg";
+    return;
+  }
+  msg.innerText = "Schedule updated!";
+  msg.className = "success-msg";
+  setTimeout(() => {
+    fetchSchedules();
+    closeModal();
+  }, 900);
+}
+
+// Delete Schedule
+async function deleteSchedule(id) {
+  if (!confirm("Delete this schedule?")) return;
+  const resp = await fetch(API_URL + "schedules/" + id, {
+    method: "DELETE",
+    headers: { Authorization: "Bearer " + token }
+  });
+  if (!resp.ok) {
+    const data = await resp.json();
+    alert(data.error || data.message || "Failed to delete schedule.");
+  }
+  fetchSchedules();
+}
 
     const BACKEND_URL = "https://examguide.onrender.com";
 
@@ -1037,6 +1326,27 @@
       }
     });
 
+    // Example: Wait for these to finish before showing main content
+async function initDashboard() {
+  document.getElementById("pageLoader").style.display = "flex"; // Show loader
+
+  // Await all required fetches
+  await Promise.all([
+    fetchFaculties(),
+    fetchDepartments(),
+    fetchSchedules(),      // or any other initial data
+    fetchStudentsList(),   // etc.
+  ]);
+
+  document.getElementById("pageLoader").style.display = "none"; // Hide loader
+  document.getElementById("mainContent").style.visibility = "visible"; // Show content
+}
+
+// Optionally, hide everything at first (in CSS or JS)
+document.getElementById("mainContent").style.visibility = "hidden";
+
+// Start loading when DOM is ready
+window.addEventListener('DOMContentLoaded', initDashboard);
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "index.html";
