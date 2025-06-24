@@ -715,7 +715,11 @@ function showSection(id, el) {
       let html = "";
       results.forEach(r => {
   html += `<tr>
-    <td>${r.user.username}</td>
+    <td>
+  <a href="#" onclick="viewStudentSession('${r._id}');return false;" style="color:#3a86ff;font-weight:600;cursor:pointer;text-decoration:underline;">
+    ${r.user.username}
+  </a>
+</td>
     <td>${r.examSet && r.examSet.title ? r.examSet.title : '-'}</td>
     <td>${r.score ?? '-'}</td>
     <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
@@ -723,7 +727,52 @@ function showSection(id, el) {
 });
       document.querySelector("#resultsTable tbody").innerHTML = html;
     }
+async function viewStudentSession(resultId) {
+  // Show loader or modal
+  const resp = await fetch(API_URL + "results/" + resultId, { headers: { Authorization: "Bearer " + token } });
+  if (!resp.ok) {
+    alert("Could not load session: " + resp.statusText);
+    return;
+  }
+  const result = await resp.json();
 
+  // Assuming result.questionsAnswered is an array of: { questionText, studentAnswer, correctAnswer, isCorrect }
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:600px;">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Session for ${result.user?.fullname || result.user?.username || ''}</h2>
+        <div><b>Set:</b> ${result.examSet?.title || '-'}</div>
+        <div><b>Score:</b> ${result.score ?? '-'}</div>
+        <table class="data-table" style="margin-top:20px;">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Your Answer</th>
+              <th>Correct Answer</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+  `;
+  (result.questionsAnswered || []).forEach(q => {
+    html += `<tr>
+      <td>${q.questionText}</td>
+      <td>${q.studentAnswer}</td>
+      <td>${q.correctAnswer}</td>
+      <td style="color:${q.isCorrect ? 'green' : 'red'};font-weight:700;">
+        ${q.isCorrect ? 'Correct' : 'Wrong'}
+      </td>
+    </tr>`;
+  });
+  html += `
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  document.getElementById("modalRoot").innerHTML = html;
+}
 // =========================
 // Reusable Section Loader
 // =========================
