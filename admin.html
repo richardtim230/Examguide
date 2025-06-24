@@ -501,18 +501,24 @@ async function submitSendMessage(userId) {
       }
     }
 
-    // ========== UX NAVIGATION ==========
-    function showSection(id, el) {
-      document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-      if (el) el.classList.add('active');
-      document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
-      ['dashboard','faculty','sets','questions','results','schedules','notifications', 'students'].forEach(sec => {
-        document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
-      });
-      if (id === "faculty") { fetchFaculties(); fetchDepartments(); }
-      if (id === "students") { fetchStudents(); }
-      if (window.innerWidth <= 950) closeSidebar();
-    }
+    // ========== Show Section & Load Data ==========
+function showSection(id, el) {
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
+  ['dashboard','faculty','sets','questions','results','schedules','notifications', 'students'].forEach(sec => {
+    document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
+  });
+  if (id === "dashboard") fetchDashboardCounts();
+  if (id === "faculty") { fetchFaculties(); fetchDepartments(); }
+  if (id === "sets") fetchSets();
+  if (id === "questions") fetchQuestions();
+  if (id === "results") fetchResults();
+  if (id === "schedules") fetchSchedules();
+  if (id === "notifications") fetchNotifications();
+  if (id === "students") fetchStudents();
+  if (window.innerWidth <= 850) closeSidebar();
+}
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 
