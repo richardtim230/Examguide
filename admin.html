@@ -87,81 +87,83 @@
         <div class="card-value" id="studentCount">0</div>
         <div class="card-icon">👥</div>
       </div>
-    </div>
-    <!-- SECTIONS -->
-    <div class="section" id="dashboardSection">
-      <div class="section-title">Welcome, Admin!</div>
-      <p>Use the navigation to manage question sets, upload and edit questions, view results, schedule tests, and communicate with students.</p>
-    </div>
-   <div class="section" id="facultySection" style="display:none;">
-      <div class="section-title">Faculties & Departments</div>
-      <div class="actions">
-        <button class="btn" onclick="openModal('addFacultyModal')">+ Add Faculty</button>
-        <button class="btn" onclick="openModal('addDepartmentModal')">+ Add Department</button>
-      </div>
-      <div style="margin-bottom:24px;">
-        <b>Faculties:</b>
-        <ul id="facultyList"></ul>
-      </div>
-      <div>
-        <b>Departments:</b>
-        <ul id="departmentList"></ul>
-      </div>
-    </div>
-    <!-- Question Sets -->
-    <div class="section" id="setsSection" style="display:none;">
-      <div class="section-title">Question Sets</div>
-      <div class="actions">
-        <button class="btn" onclick="openModal('addSetModal')">+ New Set</button>
-      </div>
-      <table class="data-table" id="setsTable">
-        <thead>
-          <tr>
-            <th>Title</th><th>Faculty</th><th>Department</th><th>Status</th><th>Questions</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <!-- Questions -->
-    <div class="section" id="questionsSection" style="display:none;">
-      <div class="section-title">Manage Questions</div>
-      <div class="actions">
-        <button class="btn" onclick="openModal('addQuestionModal')">+ Add Question</button>
-        <button class="btn" onclick="openModal('bulkUploadModal')">Bulk Upload</button>
-      </div>
-      <div>
-        <label for="qSetSelect">Question Set:</label>
-        <select id="qSetSelect" onchange="fetchQuestions()"></select>
-      </div>
-      <table class="data-table" id="questionsTable">
-        <thead>
-          <tr>
-            <th>Question</th><th>Options</th><th>Answer</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <!-- Results -->
-    <div class="section" id="resultsSection" style="display:none;">
-      <div class="section-title">Results</div>
-      <table class="data-table" id="resultsTable">
-        <thead>
-          <tr>
-            <th>Student</th><th>Set</th><th>Score</th><th>Submitted</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    
+    </div><!-- ...rest of your HTML above... -->
+
+<div class="section" id="dashboardSection" style="position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Welcome, Admin!</div>
+  <p>Use the navigation to manage question sets, upload and edit questions, view results, schedule tests, and communicate with students.</p>
+</div>
+
+<div class="section" id="facultySection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Faculties & Departments</div>
+  <div class="actions">
+    <button class="btn" onclick="openModal('addFacultyModal')">+ Add Faculty</button>
+    <button class="btn" onclick="openModal('addDepartmentModal')">+ Add Department</button>
+  </div>
+  <div style="margin-bottom:24px;">
+    <b>Faculties:</b>
+    <ul id="facultyList"></ul>
+  </div>
+  <div>
+    <b>Departments:</b>
+    <ul id="departmentList"></ul>
+  </div>
+</div>
+
+<div class="section" id="setsSection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Question Sets</div>
+  <div class="actions">
+    <button class="btn" onclick="openModal('addSetModal')">+ New Set</button>
+  </div>
+  <table class="data-table" id="setsTable">
+    <thead>
+      <tr>
+        <th>Title</th><th>Faculty</th><th>Department</th><th>Status</th><th>Questions</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="section" id="questionsSection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Manage Questions</div>
+  <div class="actions">
+    <button class="btn" onclick="openModal('addQuestionModal')">+ Add Question</button>
+    <button class="btn" onclick="openModal('bulkUploadModal')">Bulk Upload</button>
+  </div>
+  <div>
+    <label for="qSetSelect">Question Set:</label>
+    <select id="qSetSelect" onchange="fetchQuestions()"></select>
+  </div>
+  <table class="data-table" id="questionsTable">
+    <thead>
+      <tr>
+        <th>Question</th><th>Options</th><th>Answer</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="section" id="resultsSection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Results</div>
+  <table class="data-table" id="resultsTable">
+    <thead>
+      <tr>
+        <th>Student</th><th>Set</th><th>Score</th><th>Submitted</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <div class="section" id="schedulesSection" style="display:none; position: relative;">
-  <!-- Loader for schedules (generic, reusable) -->
-  <div class="section-loader" style="display:none;">
-    <div class="spinner"></div>
-  </div>
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Test Schedules</div>
   <div class="actions">
     <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
@@ -180,37 +182,39 @@
     <tbody></tbody>
   </table>
 </div>
-    <!-- Notifications Section -->
-    <div class="section" id="notificationsSection" style="display:none;">
-      <div class="section-title">Send Announcement</div>
-      <div class="actions">
-        <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
-      </div>
-      <table class="data-table" id="notificationsTable">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Message</th>
-            <th>Image</th>
-            <th>Sent</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <!-- Manage Students Section -->
-    <div class="section" id="studentsSection" style="display:none;">
-      <div class="section-title">Manage Students</div>
-      <table class="data-table" id="studentsTable">
-        <thead>
-          <tr>
-            <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+
+<div class="section" id="notificationsSection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Send Announcement</div>
+  <div class="actions">
+    <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
+  </div>
+  <table class="data-table" id="notificationsTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Message</th>
+        <th>Image</th>
+        <th>Sent</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="section" id="studentsSection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Manage Students</div>
+  <table class="data-table" id="studentsTable">
+    <thead>
+      <tr>
+        <th>Name</th><th>Username</th><th>Faculty</th><th>Department</th><th>Status</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
   <div id="modalRoot"></div>
     <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -547,26 +551,37 @@ function showSection(id, el) {
 
     // ========== Question Sets ==========
     async function fetchSets() {
-      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
-      const sets = await resp.json();
-      let html = "";
-      sets.forEach(set => {
-        html += `<tr>
-          <td>${set.title}</td>
-          <td>${getFacultyName(set.faculty)}</td>
-          <td>${getDepartmentName(set.department)}</td>
-          <td>${set.status}</td>
-          <td>${set.questions.length}</td>
-          <td>
-            <button class="action-btn" onclick="editSet('${set._id}')">Edit</button>
-            <button class="action-btn" onclick="deleteSet('${set._id}')">Delete</button>
-          </td>
-        </tr>`;
-      });
-      document.querySelector("#setsTable tbody").innerHTML = html;
-      let setOpts = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
-      document.getElementById("qSetSelect").innerHTML = setOpts;
+  setSectionLoader("setsSection", true);
+  try {
+    const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+    const sets = await resp.json();
+    let html = "";
+    sets.forEach(set => {
+      html += `<tr>
+        <td>${set.title}</td>
+        <td>${getFacultyName(set.faculty)}</td>
+        <td>${getDepartmentName(set.department)}</td>
+        <td>${set.status}</td>
+        <td>${set.questions.length}</td>
+        <td>
+          <button class="action-btn" onclick="editSet('${set._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteSet('${set._id}')">Delete</button>
+        </td>
+      </tr>`;
+    });
+    document.querySelector("#setsTable tbody").innerHTML = html;
+    let setOpts = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+    document.getElementById("qSetSelect").innerHTML = setOpts;
+
+    // Auto-select first set and fetch questions for it
+    if (sets.length > 0) {
+      document.getElementById("qSetSelect").value = sets[0]._id;
+      fetchQuestions();
     }
+  } finally {
+    setSectionLoader("setsSection", false);
+  }
+  }
 
     function editSet(id) {
       fetch(`${API_URL}questionsets/${id}`, {
@@ -654,25 +669,30 @@ function showSection(id, el) {
     // ========== Questions ==========
     let questionsGlobal = [];
     async function fetchQuestions() {
-      const setId = document.getElementById("qSetSelect").value;
-      if (!setId) { document.querySelector("#questionsTable tbody").innerHTML = ""; return; }
-      const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
-      const set = await resp.json();
-      questionsGlobal = set.questions || [];
-      let html = "";
-      set.questions.forEach(q => {
-        html += `<tr>
-          <td>${q.question}</td>
-          <td>${q.options.map(o=>o.text).join(", ")}</td>
-          <td>${q.answer}</td>
-          <td>
-            <button class="action-btn" onclick="editQuestion('${setId}',${q.id})">Edit</button>
-            <button class="action-btn" onclick="deleteQuestion('${setId}',${q.id})">Delete</button>
-          </td>
-        </tr>`;
-      });
-      document.querySelector("#questionsTable tbody").innerHTML = html;
-    }
+  setSectionLoader("questionsSection", true);
+  try {
+    const setId = document.getElementById("qSetSelect").value;
+    if (!setId) { document.querySelector("#questionsTable tbody").innerHTML = ""; return; }
+    const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
+    const set = await resp.json();
+    let html = "";
+    (set.questions || []).forEach(q => {
+      html += `<tr>
+        <td>${q.question}</td>
+        <td>${q.options.map(o=>o.text).join(", ")}</td>
+        <td>${q.answer}</td>
+        <td>
+          <button class="action-btn" onclick="editQuestion('${setId}',${q.id})">Edit</button>
+          <button class="action-btn" onclick="deleteQuestion('${setId}',${q.id})">Delete</button>
+        </td>
+      </tr>`;
+    });
+    document.querySelector("#questionsTable tbody").innerHTML = html;
+  } finally {
+    setSectionLoader("questionsSection", false);
+  }
+}
+      
     async function deleteQuestion(setId, qid) {
       if (!confirm("Delete this question?")) return;
       await fetch(API_URL + `questionsets/${setId}/questions/${qid}`, {
