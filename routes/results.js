@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import Result from "../models/Result.js";
 import User from "../models/User.js";
 import QuestionSet from "../models/QuestionSet.js"; // Added for review endpoint
@@ -83,9 +84,7 @@ router.get("/me", authenticate, async (req, res) => {
   res.json({ result });
 });
 
-
-
-// Review endpoint (robust version)
+// Review endpoint (robust version) - updated to support answers keyed by question id (string)
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -119,15 +118,15 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
       return res.status(404).json({ message: "Question set not found" });
     }
 
-    // answers as object, not array
+    // answers as object, keyed by question id (string)
     const answers = result.answers || {};
-const questions = questionSet.questions.map((q) => ({
-  question: q.question,
-  options: q.options,
-  correct: q.answer,
-  selected: answers[q.id] ?? "", // match by question id
-  explanation: q.explanation || ""
-}));
+    const questions = questionSet.questions.map((q) => ({
+      question: q.question,
+      options: q.options,
+      correct: q.answer,
+      selected: answers[String(q.id)] ?? "", // match by question id (string)
+      explanation: q.explanation || ""
+    }));
 
     res.json({
       sessionId: result._id,
