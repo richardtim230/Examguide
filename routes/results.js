@@ -85,6 +85,7 @@ router.get("/me", authenticate, async (req, res) => {
 });
 
 // Review endpoint (robust version) - updated to support answers keyed by question id (string)
+// Also includes logging for debugging and better error messages
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -120,6 +121,11 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
 
     // answers as object, keyed by question id (string)
     const answers = result.answers || {};
+    console.log("Answers keys:", Object.keys(answers));
+    if (questionSet.questions && questionSet.questions.length > 0) {
+      console.log("First question id in QuestionSet:", questionSet.questions[0].id);
+    }
+
     const questions = questionSet.questions.map((q) => ({
       question: q.question,
       options: q.options,
