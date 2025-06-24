@@ -207,27 +207,6 @@
  
   <script>
 
-    // Example: Wait for these to finish before showing main content
-async function initDashboard() {
-  document.getElementById("pageLoader").style.display = "flex"; // Show loader
-
-  // Await all required fetches
-  await Promise.all([
-    fetchFaculties(),
-    fetchDepartments(),
-    fetchSchedules(),      // or any other initial data
-    fetchStudentsList(),   // etc.
-  ]);
-
-  document.getElementById("pageLoader").style.display = "none"; // Hide loader
-  document.getElementById("mainContent").style.visibility = "visible"; // Show content
-}
-
-// Optionally, hide everything at first (in CSS or JS)
-document.getElementById("mainContent").style.visibility = "hidden";
-
-// Start loading when DOM is ready
-window.addEventListener('DOMContentLoaded', initDashboard);
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
@@ -1347,6 +1326,27 @@ async function deleteSchedule(id) {
       }
     });
 
+    // Example: Wait for these to finish before showing main content
+async function initDashboard() {
+  document.getElementById("pageLoader").style.display = "flex"; // Show loader
+
+  // Await all required fetches
+  await Promise.all([
+    fetchFaculties(),
+    fetchDepartments(),
+    fetchSchedules(),      // or any other initial data
+    fetchStudentsList(),   // etc.
+  ]);
+
+  document.getElementById("pageLoader").style.display = "none"; // Hide loader
+  document.getElementById("mainContent").style.visibility = "visible"; // Show content
+}
+
+// Optionally, hide everything at first (in CSS or JS)
+document.getElementById("mainContent").style.visibility = "hidden";
+
+// Start loading when DOM is ready
+window.addEventListener('DOMContentLoaded', initDashboard);
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "index.html";
