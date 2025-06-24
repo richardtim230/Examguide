@@ -25,7 +25,7 @@ import usersRoutes from "./routes/users.js";
 
 dotenv.config();
 
-// ===== ADD FACULTY & DEPARTMENT MODELS =====
+// ===== FACULTY & DEPARTMENT MODELS =====
 const FacultySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true }
 });
@@ -78,10 +78,12 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
+// Get all faculties
 app.get("/api/faculties", authenticate, async (req, res) => {
   const list = await Faculty.find().sort({ name: 1 });
   res.json(list);
 });
+// Create faculty
 app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const faculty = await Faculty.create({ name: req.body.name });
@@ -90,16 +92,43 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
     res.status(400).json({ message: e.message });
   }
 });
+// Edit faculty
+app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const faculty = await Faculty.findById(req.params.id);
+    if (!faculty) return res.status(404).json({ message: "Faculty not found" });
+    if (req.body.name !== undefined) faculty.name = req.body.name;
+    await faculty.save();
+    res.json(faculty);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
 
 // ===== DEPARTMENT ROUTES =====
+// Get all departments
 app.get("/api/departments", authenticate, async (req, res) => {
   const list = await Department.find().sort({ name: 1 });
   res.json(list);
 });
+// Create department
 app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const dept = await Department.create({ name: req.body.name, faculty: req.body.faculty });
     res.status(201).json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+// Edit department
+app.put("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
+    if (req.body.name !== undefined) dept.name = req.body.name;
+    if (req.body.faculty !== undefined) dept.faculty = req.body.faculty;
+    await dept.save();
+    res.json(dept);
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
