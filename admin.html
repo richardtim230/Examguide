@@ -44,6 +44,7 @@
       <a href="#schedules" onclick="showSection('schedules', this)"><span>⏰</span> Schedules</a>
       <a href="#notifications" onclick="showSection('notifications', this)"><span>✉️</span> Messaging</a>
       <a href="#students" onclick="showSection('students', this)"><span>👥</span> Students</a>
+      <a href="#uploaders" onclick="showSection('uploaders', this)"><span>👥</span> Uploaders</a>
     </div>
     <div class="sidebar-footer">
       <span style="font-size:1.05em;">Admin</span><br>
@@ -82,11 +83,20 @@
         <div class="card-value" id="scheduleCount">0</div>
         <div class="card-icon">⏰</div>
       </div>
+    
       <div class="dashboard-card">
         <div class="card-label">Students</div>
         <div class="card-value" id="studentCount">0</div>
         <div class="card-icon">👥</div>
       </div>
+      <!-- Add the following in your dashboard card section: -->
+<div class="dashboard-card">
+  <div class="card-label">Question Uploaders</div>
+  <div class="card-value" id="uploadersCount">0</div>
+  <div class="card-icon">📤</div>
+</div>
+
+<!-- ...existing HTML... -->
     </div><!-- ...rest of your HTML above... -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -150,6 +160,29 @@
   </table>
 </div>
 
+<!-- Add the following section for managing uploaders (add after other admin sections): -->
+<div class="section" id="uploadersSection" style="display:none;">
+  <div class="section-title">Manage Question Uploaders</div>
+  <div class="actions">
+    <button class="btn" onclick="openUploaderModal()">+ Add Uploader</button>
+  </div>
+  <table class="data-table" id="uploadersTable">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Faculty</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<div id="uploaderModalRoot"></div>
+<!-- ...existing HTML... -->
 <div class="section" id="questionsSection" style="display:none; position: relative;">
   <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Manage Questions</div>
@@ -1606,6 +1639,133 @@ async function fetchAndRenderDashboardAnalytics() {
 // On DOM ready, render analytics
 window.addEventListener("DOMContentLoaded", fetchAndRenderDashboardAnalytics);
 
+
+<script>
+/* ---- Count of Uploaders Card ---- */
+async function fetchUploadersCount() {
+  const resp = await fetch(API_URL + "users?role=uploader", { headers: { Authorization: "Bearer " + token } });
+  const uploaders = await resp.json();
+  document.getElementById("uploadersCount").innerText = uploaders.length;
+}
+
+/* ---- Fetch and List Uploaders ---- */
+async function fetchUploaders() {
+  const resp = await fetch(API_URL + "users?role=uploader", { headers: { Authorization: "Bearer " + token } });
+  const uploaders = await resp.json();
+  let html = "";
+  for (const u of uploaders) {
+    html += `<tr>
+      <td>${u.fullname || "-"}</td>
+      <td>${u.username}</td>
+      <td>${u.email}</td>
+      <td>${u.facultyName || "-"}</td>
+      <td>${u.departmentName || "-"}</td>
+      <td>${u.active ? "Active" : "Inactive"}</td>
+      <td>
+        <button class="action-btn" onclick="editUploader('${u._id}')">Edit</button>
+        <button class="action-btn" onclick="deleteUploader('${u._id}')">Delete</button>
+      </td>
+    </tr>`;
+  }
+  document.querySelector("#uploadersTable tbody").innerHTML = html;
+}
+
+/* ---- Add Uploader Modal ---- */
+function openUploaderModal() {
+  // Assume faculties and departments are already fetched into window.faculties and window.departments
+  let facultyOpts = (window.faculties||[]).map(f=>`<option value="${f._id}">${f.name}</option>`).join("");
+  let deptOpts = (window.departments||[]).map(d=>`<option value="${d._id}">${d.name}</option>`).join("");
+  let html = `
+    <div class="modal-backdrop" onclick="closeUploaderModal(event)">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="close-modal" onclick="closeUploaderModal(event)">&times;</button>
+        <h2>Add Question Uploader</h2>
+        <label>Full Name</label>
+        <input id="uploaderFullName" type="text" required>
+        <label>Username</label>
+        <input id="uploaderUsername" type="text" required>
+        <label>Email</label>
+        <input id="uploaderEmail" type="email" required>
+        <label>Password</label>
+        <input id="uploaderPassword" type="password" required>
+        <label>Faculty</label>
+        <select id="uploaderFaculty">${facultyOpts}</select>
+        <label>Department</label>
+        <select id="uploaderDepartment">${deptOpts}</select>
+        <span id="uploaderMsg"></span>
+        <button class="btn" onclick="submitAddUploader()">Create</button>
+      </div>
+    </div>`;
+  document.getElementById("uploaderModalRoot").innerHTML = html;
+}
+function closeUploaderModal(e) {
+  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+    document.getElementById("uploaderModalRoot").innerHTML = "";
+  }
+}
+
+/* ---- Submit Add Uploader ---- */
+async function submitAddUploader() {
+  const fullname = document.getElementById("uploaderFullName").value.trim();
+  const username = document.getElementById("uploaderUsername").value.trim();
+  const email = document.getElementById("uploaderEmail").value.trim();
+  const password = document.getElementById("uploaderPassword").value.trim();
+  const faculty = document.getElementById("uploaderFaculty").value;
+  const department = document.getElementById("uploaderDepartment").value;
+  const msg = document.getElementById("uploaderMsg");
+  msg.innerText = "";
+  if (!fullname || !username || !email || !password || !faculty || !department) {
+    msg.innerText = "All fields are required!";
+    return;
+  }
+  try {
+    const resp = await fetch(API_URL + "users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({
+        fullname,
+        username,
+        email,
+        password,
+        role: "uploader",
+        faculty,
+        department
+      })
+    });
+    if (!resp.ok) {
+      const err = await resp.json();
+      msg.innerText = err.message || "Failed to add uploader.";
+      return;
+    }
+    msg.innerText = "Uploader added!";
+    fetchUploaders();
+    fetchUploadersCount();
+    setTimeout(() => { closeUploaderModal(); }, 900);
+  } catch (err) {
+    msg.innerText = "Network error.";
+  }
+}
+
+/* ---- Optionally, add edit/delete logic for uploaders here ---- */
+
+// ---- Show section function update ----
+function showSection(id, el) {
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
+  ['dashboard','sets','questions','profile','uploaders'].forEach(sec => {
+    const secDiv = document.getElementById(sec+'Section');
+    if (secDiv) secDiv.style.display = (sec===id) ? "" : "none";
+  });
+  if (id === "dashboard") {
+    fetchDashboardCounts();
+    fetchUploadersCount();
+  }
+  if (id === "uploaders") fetchUploaders();
+  // ...other logic...
+}
+
+
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "index.html";
@@ -1618,6 +1778,7 @@ window.addEventListener("DOMContentLoaded", fetchAndRenderDashboardAnalytics);
       await fetchResults();
       await fetchSchedules();
       await fetchNotifications();
+    await fetchUploadersCount();
     }
     window.onload = init;
   </script>
