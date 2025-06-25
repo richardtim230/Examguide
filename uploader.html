@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Question Uploader Dashboard | CBT Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap">
+  <link rel="icon" href="logo.png">
+  <style>
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #0B0B45;
+      color: #fff;
+      margin: 0; min-height: 100vh;
+    }
+    .sidebar {
+      background: #111f4e;
+      width: 230px;
+      height: 100vh;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      display: flex; flex-direction: column;
+      z-index: 10;
+      box-shadow: 2px 0 12px #0002;
+    }
+    .sidebar-header {
+      display: flex; align-items: center;
+      padding: 30px 20px 20px 20px;
+      border-bottom: 1px solid #172559;
+    }
+    .sidebar-header img {
+      width: 48px; height: 48px; border-radius: 10px; margin-right: 10px;
+    }
+    .sidebar-header .brand {
+      font-weight: bold; font-size: 1.19em; color: #ffe066;
+    }
+    .sidebar-nav {
+      flex: 1 1 auto;
+      display: flex; flex-direction: column;
+      padding: 18px 0;
+    }
+    .sidebar-nav a {
+      color: #bdeaff;
+      text-decoration: none;
+      padding: 13px 26px;
+      font-size: 1em;
+      border-left: 4px solid transparent;
+      transition: background 0.18s, color 0.18s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-nav a.active, .sidebar-nav a:hover {
+      background: #172559;
+      color: #ffe066;
+      border-left: 4px solid #ffe066;
+      font-weight: bold;
+    }
+    .sidebar-footer {
+      padding: 18px 20px;
+      border-top: 1px solid #172559;
+      text-align: left;
+      font-size: 1em;
+      color: #ffe066;
+    }
+    .main-content {
+      margin-left: 230px;
+      min-height: 100vh;
+      background: #0B0B45;
+      transition: margin-left 0.2s;
+    }
+    .topbar {
+      background: linear-gradient(90deg,#111f4e 0%,#2a7bc0 100%);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 30px 16px 30px;
+      box-shadow: 0 2px 18px #0002;
+      position: sticky; top: 0; z-index: 5;
+    }
+    .page-title {
+      font-size: 1.3em; font-weight: bold;
+      color: #ffe066;
+      letter-spacing: 0.04em;
+    }
+    .uploader-avatar {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .uploader-avatar img {
+      width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ffe066;
+    }
+    .dashboard-cards {
+      display: flex; flex-wrap: wrap; gap: 30px;
+      margin: 34px 0 26px 0; justify-content: flex-start;
+    }
+    .dashboard-card {
+      background: #172559;
+      color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0002;
+      padding: 27px 40px 25px 32px;
+      min-width: 210px;
+      flex: 1 1 210px;
+      display: flex; flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+    .dashboard-card .card-label { font-size: 1.07em; margin-bottom: 12px; color: #bdeaff; }
+    .dashboard-card .card-value { font-size: 2.1em; font-weight: bold; color: #ffe066; }
+    .dashboard-card .card-icon { position: absolute; right: 16px; top: 15px; font-size: 2.1em; opacity: 0.19; }
+    .section {
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0002;
+      padding: 34px 32px 38px 32px;
+      margin-bottom: 30px;
+      margin-right: 40px;
+      margin-left: 10px;
+      position: relative;
+    }
+    .section-title {
+      font-size: 1.18em;
+      font-weight: 600;
+      color: #ffe066;
+      margin-bottom: 20px;
+    }
+    .actions { margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 18px; background: #0072ff;
+      color: #fff; border: none; border-radius: 7px;
+      font-size: 1em; cursor: pointer; font-weight: 500;
+      box-shadow: 0 2px 8px #0072ff33;
+      transition: background 0.18s;
+    }
+    .btn:hover { background: #ffe066; color: #0B0B45; }
+    .data-table {
+      width: 100%; border-collapse: collapse; margin-top: 12px;
+      font-size: 1em; background: #172559;
+      border-radius: 7px; overflow: hidden;
+    }
+    .data-table th, .data-table td {
+      padding: 12px 8px; text-align: left; border-bottom: 1px solid #23316a;
+    }
+    .data-table th { background: #23316a; color: #ffe066; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .action-btn {
+      background: #00c6ff; color: #111f4e; border: none; border-radius: 5px;
+      padding: 6px 13px; cursor: pointer; font-size: 1em; margin-right: 7px; margin-bottom: 2px;
+      font-weight: 500;
+      transition: background 0.16s;
+    }
+    .action-btn:hover { background: #ffe066; color: #0B0B45; }
+    .success-msg { color: #25d366; font-weight: 600; }
+    .error-msg { color: #ff4e55; font-weight: 600; }
+    .modal-backdrop {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(12,23,48,0.73); z-index: 5000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      background: #fff; color: #0B0B45; border-radius: 14px;
+      box-shadow: 0 8px 40px 0 #001c3c66;
+      max-width: 430px; width: 90vw; padding: 28px 28px 18px 28px;
+      text-align: left; position: relative; animation: popin 0.3s;
+    }
+    .close-modal {
+      position: absolute; top: 13px; right: 17px; border: none;
+      background: none; color: #0B0B45; font-size: 1.9em; cursor: pointer; font-weight: bold;
+    }
+    .spinner {
+      width: 26px; height: 26px; border: 4px solid #ffe066; border-top: 4px solid #3a86ff;
+      border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block;
+      vertical-align: middle; margin-left: 8px;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @media (max-width: 900px) {
+      .sidebar { width: 65vw; min-width: 180px; }
+      .main-content { margin-left: 0; }
+      .sidebar.open { left: 0; }
+      .main-content.shifted { margin-left: 65vw; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 12px 5vw 20px 5vw; margin-right: 0; }
+      .dashboard-card { min-width: 145px; padding: 16px 13px 15px 13px; }
+      .data-table th, .data-table td { padding: 7px 4px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="logo.png" alt="CBT Logo">
+      <span class="brand">CBT Uploader</span>
+    </div>
+    <div class="sidebar-nav">
+      <a href="#dashboard" class="active" onclick="showSection('dashboard', this)"><span>🏠</span> Dashboard</a>
+      <a href="#sets" onclick="showSection('sets', this)"><span>📚</span> Question Sets</a>
+      <a href="#questions" onclick="showSection('questions', this)"><span>✏️</span> Questions</a>
+      <a href="#profile" onclick="showSection('profile', this)"><span>👤</span> Profile</a>
+    </div>
+    <div class="sidebar-footer">
+      <span style="font-size:1.08em;" id="uploaderRole"></span><br>
+      <a href="#" onclick="logout()" style="color:#ffe066; text-decoration:underline;font-size:0.97em;">Logout</a>
+    </div>
+  </nav>
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Topbar -->
+    <div class="topbar">
+      <span class="page-title" id="pageTitle">Dashboard</span>
+      <div class="uploader-avatar">
+        <img src="uploader.png" alt="Uploader" id="uploaderAvatar">
+        <span id="uploaderName">Uploader</span>
+      </div>
+    </div>
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards" id="dashboardCards">
+      <div class="dashboard-card">
+        <div class="card-label">Assigned Faculty</div>
+        <div class="card-value" id="facultyName">-</div>
+        <div class="card-icon">🏢</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Assigned Department</div>
+        <div class="card-value" id="departmentName">-</div>
+        <div class="card-icon">🏫</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Question Sets Uploaded</div>
+        <div class="card-value" id="setsUploaded">0</div>
+        <div class="card-icon">📚</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-label">Questions Uploaded</div>
+        <div class="card-value" id="questionsUploaded">0</div>
+        <div class="card-icon">✏️</div>
+      </div>
+    </div>
+    <!-- Dashboard Welcome -->
+    <div class="section" id="dashboardSection">
+      <div class="section-title">Welcome, <span id="welcomeName">Uploader</span>!</div>
+      <p>
+        You are assigned to <b id="dashFaculty">-</b> / <b id="dashDept">-</b>.<br>
+        Your primary duty is to upload and manage question sets and questions for your assigned department.<br>
+        <ul>
+          <li>You can add, edit, and delete question sets/questions for your department only.</li>
+          <li>You can view your upload history and statistics.</li>
+          <li>Contact the admin for any faculty/department changes.</li>
+        </ul>
+      </p>
+    </div>
+    <!-- Question Sets Section -->
+    <div class="section" id="setsSection" style="display:none;">
+      <div class="section-title">Question Sets</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addSetModal')">+ New Set</button>
+      </div>
+      <table class="data-table" id="setsTable">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Questions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Questions Section -->
+    <div class="section" id="questionsSection" style="display:none;">
+      <div class="section-title">Manage Questions</div>
+      <div class="actions">
+        <button class="btn" onclick="openModal('addQuestionModal')">+ Add Question</button>
+        <button class="btn" onclick="openModal('bulkUploadModal')">Bulk Upload</button>
+      </div>
+      <div>
+        <label for="qSetSelect">Question Set:</label>
+        <select id="qSetSelect" onchange="fetchQuestions()"></select>
+      </div>
+      <table class="data-table" id="questionsTable">
+        <thead>
+          <tr>
+            <th>Question</th><th>Options</th><th>Answer</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Profile Section -->
+    <div class="section" id="profileSection" style="display:none;">
+      <div class="section-title">Your Profile</div>
+      <div style="display:flex;align-items:center;gap:28px;">
+        <img src="uploader.png" id="profileAvatar" style="width:74px;height:74px;border-radius:50%;object-fit:cover;border:3px solid #ffe066;">
+        <div>
+          <div style="font-size:1.09em;font-weight:600;" id="profileName"></div>
+          <div style="color:#bdeaff;margin-top:6px;margin-bottom:7px;">
+            <span id="profileFaculty"></span> / <span id="profileDept"></span>
+          </div>
+          <div style="margin-bottom:7px;">Role: <b id="profileRole">Uploader</b></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <label>Email</label>
+        <input value="" id="profileEmail" disabled style="width:97%;padding:11px 8px;font-size:1.03em;border-radius:7px;border:none;margin-bottom:10px;">
+        <label>Username</label>
+        <input value="" id="profileUsername" disabled style="width:97%;padding:11px 8px;font-size:1.03em;border-radius:7px;border:none;margin-bottom:10px;">
+      </div>
+    </div>
+    <div id="modalRoot"></div>
+  </div>
+  <script>
+    // ========== CONFIG ==========
+    const API_URL = "https://examguide.onrender.com/api/";
+    const token = localStorage.getItem("token");
+    let uploader = {}; // user object
+    let faculty = {};
+    let department = {};
+    let sets = [];
+    let questions = [];
+
+    // ========== AUTH & PROFILE ==========
+    async function fetchUploaderProfile() {
+      if (!token) return window.location.href = "index.html";
+      const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
+      if (!resp.ok) { localStorage.removeItem("token"); window.location.href = "index.html"; return; }
+      uploader = await resp.json();
+      if (!uploader || !uploader.user || uploader.user.role !== "uploader") {
+        alert("Unauthorized.");
+        window.location.href = "mock.html";
+        return;
+      }
+      uploader = uploader.user;
+      document.getElementById("uploaderName").innerText = uploader.fullname || uploader.username || "-";
+      document.getElementById("welcomeName").innerText = uploader.fullname || uploader.username || "-";
+      document.getElementById("profileName").innerText = uploader.fullname || uploader.username || "-";
+      document.getElementById("profileUsername").value = uploader.username || "";
+      document.getElementById("profileEmail").value = uploader.email || "";
+      document.getElementById("uploaderAvatar").src = uploader.profilePic || "uploader.png";
+      document.getElementById("profileAvatar").src = uploader.profilePic || "uploader.png";
+      document.getElementById("profileRole").innerText = "Uploader";
+      document.getElementById("uploaderRole").innerText = "Uploader";
+      // Assigned faculty/department
+      if (uploader.faculty) await fetchFaculty(uploader.faculty);
+      if (uploader.department) await fetchDepartment(uploader.department);
+      document.getElementById("facultyName").innerText = faculty.name || "-";
+      document.getElementById("departmentName").innerText = department.name || "-";
+      document.getElementById("dashFaculty").innerText = faculty.name || "-";
+      document.getElementById("dashDept").innerText = department.name || "-";
+      document.getElementById("profileFaculty").innerText = faculty.name || "-";
+      document.getElementById("profileDept").innerText = department.name || "-";
+    }
+    async function fetchFaculty(fid) {
+      const resp = await fetch(API_URL + "faculties/" + fid, { headers: { Authorization: "Bearer " + token } });
+      if (resp.ok) faculty = await resp.json(); else faculty = {};
+    }
+    async function fetchDepartment(did) {
+      const resp = await fetch(API_URL + "departments/" + did, { headers: { Authorization: "Bearer " + token } });
+      if (resp.ok) department = await resp.json(); else department = {};
+    }
+
+    // ========== DASHBOARD COUNTS ==========
+    async function fetchDashboardCounts() {
+      const resp = await fetch(API_URL + "questionsets?faculty=" + uploader.faculty + "&department=" + uploader.department, { headers: { Authorization: "Bearer " + token } });
+      sets = await resp.json();
+      document.getElementById("setsUploaded").innerText = sets.length;
+      let qCount = 0;
+      sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
+      document.getElementById("questionsUploaded").innerText = qCount;
+    }
+
+    // ========== QUESTION SETS ==========
+    async function fetchSets() {
+      const resp = await fetch(API_URL + "questionsets?faculty=" + uploader.faculty + "&department=" + uploader.department, { headers: { Authorization: "Bearer " + token } });
+      sets = await resp.json();
+      let html = "";
+      sets.forEach(set => {
+        html += `<tr>
+          <td>${set.title}</td>
+          <td>${set.status}</td>
+          <td>${(set.questions && set.questions.length) || 0}</td>
+          <td>
+            <button class="action-btn" onclick="editSet('${set._id}')">Edit</button>
+            <button class="action-btn" onclick="deleteSet('${set._id}')">Delete</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#setsTable tbody").innerHTML = html;
+      let setOpts = sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+      document.getElementById("qSetSelect").innerHTML = setOpts;
+      if (sets.length > 0) {
+        document.getElementById("qSetSelect").value = sets[0]._id;
+        fetchQuestions();
+      }
+    }
+    function editSet(id) {
+      const set = sets.find(s => s._id === id);
+      if (!set) return;
+      let html = `
+        <div class="modal-backdrop" onclick="closeModal(event)">
+          <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h2>Edit Set</h2>
+            <label>Title</label>
+            <input id="editSetTitle" value="${set.title}" required>
+            <label>Status</label>
+            <select id="editSetStatus">
+              <option value="ACTIVE" ${set.status === "ACTIVE" ? 'selected' : ''}>ACTIVE</option>
+              <option value="INACTIVE" ${set.status === "INACTIVE" ? 'selected' : ''}>INACTIVE</option>
+            </select>
+            <button class="btn" onclick="submitEditSet('${id}')">Save</button>
+            <div id="editSetMsg"></div>
+          </div>
+        </div>`;
+      document.getElementById("modalRoot").innerHTML = html;
+    }
+    async function submitEditSet(id) {
+      const title = document.getElementById("editSetTitle").value.trim();
+      const status = document.getElementById("editSetStatus").value;
+      const msg = document.getElementById("editSetMsg");
+      msg.innerText = "";
+      if (!title) { msg.innerText = "Title required!"; return; }
+      try {
+        const response = await fetch(`${API_URL}questionsets/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+          body: JSON.stringify({ title, faculty: uploader.faculty, department: uploader.department, status })
+        });
+        if (!response.ok) {
+          const resJson = await response.json();
+          msg.innerText = resJson.message || "Update failed.";
+          return;
+        }
+        msg.innerText = "Updated!";
+        closeModal();
+        fetchSets();
+        fetchDashboardCounts();
+      } catch (error) {
+        msg.innerText = "Network error.";
+      }
+    }
+    async function deleteSet(id) {
+      if (!confirm("Delete this set?")) return;
+      await fetch(API_URL + "questionsets/" + id, { method: "DELETE", headers: { Authorization: "Bearer " + token } });
+      fetchSets();
+      fetchDashboardCounts();
+    }
+
+    // ========== QUESTIONS ==========
+    async function fetchQuestions() {
+      const setId = document.getElementById("qSetSelect").value;
+      if (!setId) { document.querySelector("#questionsTable tbody").innerHTML = ""; return; }
+      const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
+      const set = await resp.json();
+      let html = "";
+      (set.questions || []).forEach(q => {
+        html += `<tr>
+          <td>${q.question}</td>
+          <td>${q.options.map(o=>o.text).join(", ")}</td>
+          <td>${q.answer}</td>
+          <td>
+            <button class="action-btn" onclick="editQuestion('${setId}',${q.id})">Edit</button>
+            <button class="action-btn" onclick="deleteQuestion('${setId}',${q.id})">Delete</button>
+          </td>
+        </tr>`;
+      });
+      document.querySelector("#questionsTable tbody").innerHTML = html;
+    }
+    async function deleteQuestion(setId, qid) {
+      if (!confirm("Delete this question?")) return;
+      await fetch(API_URL + `questionsets/${setId}/questions/${qid}`, {
+        method: "DELETE", headers: { Authorization: "Bearer " + token }
+      });
+      fetchQuestions();
+      fetchDashboardCounts();
+    }
+    function editQuestion(setId, qid) {
+      alert("Question editing not implemented in this mockup.");
+    }
+
+    // ========== MODALS ==========
+    function openModal(type) {
+      let html = "";
+      if (type === "addSetModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>New Question Set</h2>
+              <label>Title</label>
+              <input id="setTitle" type="text" maxlength="48">
+              <label>Status</label>
+              <select id="setStatus"><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select>
+              <span id="addSetMsg"></span>
+              <button class="btn" onclick="submitAddSet()">Create</button>
+            </div>
+          </div>`;
+      }
+      if (type === "addQuestionModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Add Question</h2>
+              <label>Set</label>
+              <select id="modalSetSelect"></select>
+              <label>Question</label>
+              <textarea id="questionText"></textarea>
+              <label>Option A</label><input id="optionA" type="text">
+              <label>Option B</label><input id="optionB" type="text">
+              <label>Option C</label><input id="optionC" type="text">
+              <label>Option D</label><input id="optionD" type="text">
+              <label>Answer</label>
+              <select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+              <label>Explanation</label><textarea id="explanation"></textarea>
+              <span id="addQMsg"></span>
+              <button class="btn" onclick="submitAddQuestion()">Add</button>
+            </div>
+          </div>`;
+      }
+      if (type === "bulkUploadModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Bulk Upload Questions</h2>
+              <label>Paste Complete JSON Object (title, status, questions[])</label>
+              <textarea id="bulkQuestions" rows="12" placeholder='{
+  "title": "Zoology II",
+  "status": "ACTIVE",
+  "questions": [
+    { "id": 131, "question": "...", "options": [...], "answer": "...", "explanation": "", "questionImage": "" }
+  ]
+}'></textarea>
+              <span id="bulkUploadMsg"></span>
+              <button class="btn" onclick="submitBulkUpload()">Upload</button>
+            </div>
+          </div>`;
+      }
+      if (html) {
+        document.getElementById("modalRoot").innerHTML = html;
+      }
+      if (type === "addQuestionModal") {
+        document.getElementById("modalSetSelect").innerHTML =
+          sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+      }
+    }
+    function closeModal(e) {
+      if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+        document.getElementById("modalRoot").innerHTML = "";
+      }
+    }
+
+    // ========== MODAL SUBMIT HANDLERS ==========
+    async function submitAddSet() {
+      const title = document.getElementById("setTitle").value.trim();
+      const status = document.getElementById("setStatus").value;
+      const msg = document.getElementById("addSetMsg");
+      msg.innerText = "";
+      if (!title) { msg.innerText = "Title required!"; return; }
+      const resp = await fetch(API_URL + "questionsets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ title, status, faculty: uploader.faculty, department: uploader.department, questions: [] })
+      });
+      if (!resp.ok) {
+        const data = await resp.json();
+        msg.innerText = data.message || "Failed to add set.";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      fetchSets();
+      fetchDashboardCounts();
+      setTimeout(() => { closeModal(); }, 900);
+    }
+    async function submitAddQuestion() {
+      const setId = document.getElementById("modalSetSelect").value;
+      const question = document.getElementById("questionText").value.trim();
+      const options = [
+        { text: document.getElementById("optionA").value.trim() },
+        { text: document.getElementById("optionB").value.trim() },
+        { text: document.getElementById("optionC").value.trim() },
+        { text: document.getElementById("optionD").value.trim() }
+      ];
+      const answerIndex = "ABCD".indexOf(document.getElementById("answer").value);
+      const answer = options[answerIndex].text;
+      const explanation = document.getElementById("explanation").value.trim();
+      const msg = document.getElementById("addQMsg");
+      msg.innerText = "";
+      if (!question || options.some(o=>!o.text) || !answer) { msg.innerText = "All fields required!"; return; }
+      const resp = await fetch(API_URL + "questionsets/" + setId, { headers: { Authorization: "Bearer " + token } });
+      const set = await resp.json();
+      const newId = (set.questions && set.questions.length > 0) ? Math.max(...set.questions.map(q=>q.id)) + 1 : 1;
+      const postResp = await fetch(API_URL + `questionsets/${setId}/questions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ questions: [{ id: newId, question, options, answer, explanation }] })
+      });
+      if (!postResp.ok) {
+        const data = await postResp.json();
+        msg.innerText = data.message || "Failed to add question.";
+        return;
+      }
+      msg.innerText = "Successfully loaded!";
+      fetchQuestions();
+      fetchDashboardCounts();
+      setTimeout(() => { closeModal(); }, 900);
+    }
+    async function submitBulkUpload() {
+      let data;
+      const msg = document.getElementById("bulkUploadMsg");
+      msg.innerText = "";
+      try { data = JSON.parse(document.getElementById("bulkQuestions").value.trim()); }
+      catch { msg.innerText = "Invalid JSON format."; return; }
+      if (!data.title || !data.status || !Array.isArray(data.questions)) {
+        msg.innerText = "JSON must include title, status, and questions[]";
+        return;
+      }
+      const resp = await fetch(API_URL + "questionsets/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ ...data, faculty: uploader.faculty, department: uploader.department })
+      });
+      if (!resp.ok) {
+        const out = await resp.json();
+        msg.innerText = out.error || out.message || "Failed to upload.";
+        return;
+      }
+      msg.innerText = "Bulk upload successful!";
+      fetchSets();
+      fetchDashboardCounts();
+      setTimeout(() => { closeModal(); }, 900);
+    }
+
+    // ========== NAV ==========
+    function showSection(id, el) {
+      document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+      if (el) el.classList.add('active');
+      document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
+      ['dashboard','sets','questions','profile'].forEach(sec => {
+        document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
+      });
+      if (id === "dashboard") fetchDashboardCounts();
+      if (id === "sets") fetchSets();
+      if (id === "questions") fetchSets();
+    }
+    // ========== LOGOUT ==========
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "mock.html";
+    }
+    // ========== INIT ==========
+    async function init() {
+      await fetchUploaderProfile();
+      await fetchDashboardCounts();
+      showSection('dashboard', document.querySelector('.sidebar-nav a.active'));
+    }
+    window.onload = init;
+  </script>
+</body>
+</html>
