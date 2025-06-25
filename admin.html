@@ -795,7 +795,7 @@ async function fetchSchedules() {
       html += `<tr>
         <td>${s.examSet?.title || '-'}</td>
         <td>${getFacultyName(s.faculty)}</td>
-        <td>${getDepartmentName(s.department)}</td>
+        <td>${getDepartmentsNames(s.departments || s.department)}</td>
         <td>${(new Date(s.start)).toLocaleString()}</td>
         <td>${(new Date(s.end)).toLocaleString()}</td>
         <td>
@@ -809,6 +809,7 @@ async function fetchSchedules() {
     setSectionLoader("schedulesSection", false);
   }
 }
+
 
 // Edit Schedule Modal
 async function editSchedule(id) {
@@ -854,14 +855,15 @@ async function editSchedule(id) {
 async function submitEditSchedule(id) {
   const examSet = document.getElementById("editScheduleSet").value;
   const faculty = document.getElementById("editScheduleFaculty").value;
-  const department = document.getElementById("editScheduleDepartment").value;
+  const departmentsSelect = document.getElementById("editScheduleDepartments");
+  const departments = Array.from(departmentsSelect.selectedOptions).map(opt => opt.value);
   const start = document.getElementById("editScheduleStart").value;
   const end = document.getElementById("editScheduleEnd").value;
   const msg = document.getElementById("editScheduleMsg");
   const spinner = document.getElementById("editScheduleSpinner");
   msg.innerText = "";
   msg.className = "";
-  if (!examSet || !faculty || !department || !start || !end) {
+  if (!examSet || !faculty || !departments.length || !start || !end) {
     msg.innerText = "All fields required!";
     msg.className = "error-msg";
     return;
@@ -870,7 +872,7 @@ async function submitEditSchedule(id) {
   const resp = await fetch(API_URL + "schedules/" + id, {
     method: "PUT",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ examSet, faculty, department, start, end })
+    body: JSON.stringify({ examSet, faculty, departments, start, end })
   });
   spinner.style.display = "none";
   if (!resp.ok) {
@@ -886,7 +888,6 @@ async function submitEditSchedule(id) {
     closeModal();
   }, 900);
 }
-
 // Delete Schedule
 async function deleteSchedule(id) {
   if (!confirm("Delete this schedule?")) return;
@@ -1001,6 +1002,7 @@ async function deleteSchedule(id) {
         closeModal();
       }, 900);
     }
+    
 
     // ========== MODALS ==========
     function openModal(type) {
@@ -1123,31 +1125,32 @@ async function deleteSchedule(id) {
             </div>
           </div>`;
       }
-      if (type === "addScheduleModal") {
-        html = `
-          <div class="modal-backdrop" onclick="closeModal(event)">
-            <div class="modal" onclick="event.stopPropagation()">
-              <button class="close-modal" onclick="closeModal(event)">&times;</button>
-                          <h2>Schedule Test</h2>
-              <label>Exam Set</label>
-              <select id="scheduleSet"></select>
-              <label>Faculty</label>
-              <select id="scheduleFaculty"></select>
-              <label>Department</label>
-              <select id="scheduleDepartment"></select>
-              <label>Start Date & Time</label>
-              <input id="scheduleStart" type="datetime-local">
-              <label>End Date & Time</label>
-              <input id="scheduleEnd" type="datetime-local">
-              <span id="addScheduleMsg"></span>
-              <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-              <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-            </div>
-          </div>`;
-        document.getElementById("modalRoot").innerHTML = html;
-        populateScheduleModalFields();
-        return;
-      }
+        // ... other modals ...
+  if (type === "addScheduleModal") {
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Schedule Test</h2>
+          <label>Exam Set</label>
+          <select id="scheduleSet"></select>
+          <label>Faculty</label>
+          <select id="scheduleFaculty" onchange="populateDepartmentsDropdownForSchedule()"></select>
+          <label>Departments <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
+          <select id="scheduleDepartments" multiple size="6" style="height:auto;"></select>
+          <label>Start Date & Time</label>
+          <input id="scheduleStart" type="datetime-local">
+          <label>End Date & Time</label>
+          <input id="scheduleEnd" type="datetime-local">
+          <span id="addScheduleMsg"></span>
+          <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+        </div>
+      </div>`;
+    document.getElementById("modalRoot").innerHTML = html;
+    populateScheduleModalFields();
+    return;
+  }
       if (html) {
         document.getElementById("modalRoot").innerHTML = html;
       }
