@@ -89,6 +89,28 @@
       </div>
     </div><!-- ...rest of your HTML above... -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="dashboard-analytics" style="margin: 40px 0;">
+  <div style="display:flex; gap:40px; flex-wrap:wrap;">
+    <!-- Results Analytics -->
+    <div style="flex:1; min-width:300px; background:#fff; border-radius:12px; box-shadow:0 2px 10px #0001; padding:24px;">
+      <h3 style="margin-bottom:16px;">Results Analytics</h3>
+      <canvas id="resultsChart" height="120"></canvas>
+    </div>
+    <!-- Performance Analytics -->
+    <div style="flex:1; min-width:300px; background:#fff; border-radius:12px; box-shadow:0 2px 10px #0001; padding:24px;">
+      <h3 style="margin-bottom:16px;">Performance Analytics</h3>
+      <canvas id="performanceChart" height="120"></canvas>
+    </div>
+    <!-- Registration Analytics -->
+    <div style="flex:1; min-width:300px; background:#fff; border-radius:12px; box-shadow:0 2px 10px #0001; padding:24px;">
+      <h3 style="margin-bottom:16px;">Registration Analytics</h3>
+      <canvas id="registrationChart" height="120"></canvas>
+    </div>
+  </div>
+</div>
+
 <div class="section" id="dashboardSection" style="position: relative;">
   <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Welcome, Admin!</div>
@@ -1480,6 +1502,109 @@ function populateScheduleModalFields() {
         document.querySelector('.main-content').classList.remove('shifted');
       }
     });
+
+
+function renderBarChart(ctxId, labels, data, label, color) {
+  const ctx = document.getElementById(ctxId);
+  if (ctx.chartInstance) {
+    ctx.chartInstance.destroy();
+  }
+  ctx.chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: label,
+        data: data,
+        backgroundColor: color,
+        borderRadius: 6,
+        maxBarThickness: 34
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: { beginAtZero:true, ticks: { stepSize: 10 } }
+      }
+    }
+  });
+}
+
+// Fetch and render analytics charts
+async function fetchAndRenderDashboardAnalytics() {
+  // 1. Results Analytics: average score per question set
+  let resultsLabels = [], resultsData = [];
+  try {
+    const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+    const results = await resp.json();
+    // Group by set title, compute average score
+    const setScores = {};
+    results.forEach(r => {
+      if (!r.examSet?.title) return;
+      if (!setScores[r.examSet.title]) setScores[r.examSet.title] = [];
+      setScores[r.examSet.title].push(Number(r.score || 0));
+    });
+    resultsLabels = Object.keys(setScores);
+    resultsData = resultsLabels.map(title => {
+      const scores = setScores[title];
+      return scores.length ? (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1) : 0;
+    });
+  } catch (e) {
+    // fallback
+    resultsLabels = ["No Data"];
+    resultsData = [0];
+  }
+  renderBarChart("resultsChart", resultsLabels, resultsData, "Avg Score", "#3a86ff");
+
+  // 2. Performance Analytics: number of students in each performance band
+  // Example bands: >=80, 70-79, 60-69, 50-59, <50
+  let perfLabels = ["80+", "70-79", "60-69", "50-59", "<50"], perfData = [0,0,0,0,0];
+  try {
+    const resp = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
+    const results = await resp.json();
+    results.forEach(r => {
+      const s = Number(r.score || 0);
+      if (s >= 80) perfData[0]++;
+      else if (s >= 70) perfData[1]++;
+      else if (s >= 60) perfData[2]++;
+      else if (s >= 50) perfData[3]++;
+      else perfData[4]++;
+    });
+  } catch (e) {}
+  renderBarChart("performanceChart", perfLabels, perfData, "Students", "#25d366");
+
+  // 3. Registration Analytics: registration count per month (last 6 months)
+  let regLabels = [], regData = [];
+  try {
+    const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+    const users = await resp.json();
+    // Group by month
+    const months = {};
+    users.forEach(u => {
+      if (!u.createdAt) return;
+      const date = new Date(u.createdAt);
+      const key = `${date.getFullYear()}-${("0"+(date.getMonth()+1)).slice(-2)}`; // e.g. 2025-06
+      months[key] = (months[key]||0)+1;
+    });
+    // Sort keys, take last 6
+    const keys = Object.keys(months).sort().slice(-6);
+    regLabels = keys.map(k => {
+      const [y,m] = k.split("-");
+      return new Date(y, m-1).toLocaleString('default', { month:'short', year:'2-digit' });
+    });
+    regData = keys.map(k => months[k]);
+  } catch (e) {
+    regLabels = ["No Data"];
+    regData = [0];
+  }
+  renderBarChart("registrationChart", regLabels, regData, "Registrations", "#ffe066");
+}
+
+// On DOM ready, render analytics
+window.addEventListener("DOMContentLoaded", fetchAndRenderDashboardAnalytics);
 
     // ========== INIT ==========
     async function init() {
