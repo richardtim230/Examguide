@@ -1679,6 +1679,8 @@ async function fetchUploaders() {
   }
   document.querySelector("#uploadersTable tbody").innerHTML = html;
 }
+
+    
 async function showUploaderModalWithData() {
   // Fetch faculties and departments if not already loaded or cache is empty
   if (!window.faculties || !window.faculties.length) {
@@ -1691,11 +1693,13 @@ async function showUploaderModalWithData() {
   }
   openUploaderModal();
 }
-/* ---- Add Uploader Modal ---- */
+
 function openUploaderModal() {
-  // Assume faculties and departments are already fetched into window.faculties and window.departments
-  let facultyOpts = (window.faculties||[]).map(f=>`<option value="${f._id}">${f.name}</option>`).join("");
-  let deptOpts = (window.departments||[]).map(d=>`<option value="${d._id}">${d.name}</option>`).join("");
+  // Faculties and departments are arrays of {_id, name}
+  let facultyOpts = (window.faculties||[]).map(f=>
+    `<option value="${f._id}">${f.name}</option>`).join("");
+  let deptOpts = (window.departments||[]).map(d=>
+    `<option value="${d._id}">${d.name}</option>`).join("");
   let html = `
     <div class="modal-backdrop" onclick="closeUploaderModal(event)">
       <div class="modal" onclick="event.stopPropagation()">
@@ -1710,21 +1714,38 @@ function openUploaderModal() {
         <label>Password</label>
         <input id="uploaderPassword" type="password" required>
         <label>Faculty</label>
-        <select id="uploaderFaculty">${facultyOpts}</select>
+        <select id="uploaderFaculty" onchange="filterDepartmentsByFaculty()">
+          <option value="">-- Select Faculty --</option>
+          ${facultyOpts}
+        </select>
         <label>Department</label>
-        <select id="uploaderDepartment">${deptOpts}</select>
+        <select id="uploaderDepartment">
+          <option value="">-- Select Department --</option>
+          ${deptOpts}
+        </select>
         <span id="uploaderMsg"></span>
         <button class="btn" onclick="submitAddUploader()">Create</button>
       </div>
     </div>`;
   document.getElementById("uploaderModalRoot").innerHTML = html;
 }
+
 function closeUploaderModal(e) {
   if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
     document.getElementById("uploaderModalRoot").innerHTML = "";
   }
 }
-/* ---- Submit Add Uploader ---- */
+
+// Filter departments based on selected faculty
+function filterDepartmentsByFaculty() {
+  const facultyId = document.getElementById('uploaderFaculty').value;
+  const deptSelect = document.getElementById('uploaderDepartment');
+  const deptOpts = (window.departments||[])
+    .filter(d => d.faculty === facultyId)
+    .map(d => `<option value="${d._id}">${d.name}</option>`).join('');
+  deptSelect.innerHTML = `<option value="">-- Select Department --</option>` + deptOpts;
+}
+
 async function submitAddUploader() {
   const fullname = document.getElementById("uploaderFullName").value.trim();
   const username = document.getElementById("uploaderUsername").value.trim();
@@ -1748,25 +1769,28 @@ async function submitAddUploader() {
         email,
         password,
         role: "uploader",
-        faculty,
-        department
+        faculty,      // this is the ObjectId as string
+        department    // this is the ObjectId as string
       })
     });
     if (!resp.ok) {
-      const err = await resp.json();
-      msg.innerText = err.message || "Failed to add uploader.";
+      let errMsg = "Failed to add uploader.";
+      try {
+        const err = await resp.json();
+        errMsg = err.message || errMsg;
+      } catch { /* ignore */ }
+      msg.innerText = errMsg;
       return;
     }
     msg.innerText = "Uploader added!";
-    fetchUploaders();
+    fetchUploaders(); // Refresh list
     fetchUploadersCount();
     setTimeout(() => { closeUploaderModal(); }, 900);
   } catch (err) {
     msg.innerText = "Network error.";
+    console.error(err);
   }
 }
-
-
 
     // ========== INIT ==========
     async function init() {
