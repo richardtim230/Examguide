@@ -580,7 +580,12 @@ function showSection(id, el) {
   ['dashboard', 'uploaders','faculty','sets','questions','results','schedules','notifications', 'students'].forEach(sec => {
     document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
   });
-  if (id === "dashboard") fetchDashboardCounts();
+
+  
+  if (id === "dashboard") {
+    fetchDashboardCounts();
+    fetchUploadersCount();
+  }
   if (id === "faculty") { fetchFaculties(); fetchDepartments(); }
   if (id === "sets") fetchSets();
   if (id === "questions") fetchQuestions();
