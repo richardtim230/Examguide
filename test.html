@@ -227,7 +227,7 @@
       }
     }
 
-    @media(max-width: 600px) {
+    @media(max-width: 850px) {
       .container {
         max-width: 96vw;
         padding: 5vw 2vw;
@@ -425,6 +425,84 @@
         min-width: 150px;
       }
     }
+    /* Progress Bar */
+    .progress-bar-bg {
+      width: 100%;
+      background: #19296b;
+      height: 14px;
+      border-radius: 10px;
+      margin: 20px 0 18px 0;
+      overflow: hidden;
+      box-shadow: 0 2px 8px #00c6ff33;
+    }
+    .progress-bar-fg {
+      background: linear-gradient(90deg,#00c6ff 0%, #0072ff 100%);
+      height: 100%;
+      transition: width 0.4s cubic-bezier(.6,.2,.5,1);
+    }
+    .question-counter {
+      text-align:right;
+      font-size: 1.05rem;
+      color: #bdeaff;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    .confirm-modal-overlay {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(12,23,48,0.79);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20000;
+    }
+    .confirm-modal-box {
+      background: #fff;
+      color: #102654;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px 0 #001c3c66;
+      max-width: 430px;
+      width: 90vw;
+      padding: 32px 28px 24px 28px;
+      text-align: center;
+      position: relative;
+      animation: popin 0.28s;
+    }
+    .confirm-modal-box .score-main {
+      font-size: 2.4rem;
+      color: #00c6ff;
+      margin-bottom: 8px;
+      font-weight: bold;
+      letter-spacing: 1.2px;
+    }
+    .confirm-modal-box .score-label {
+      color: #0072ff;
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .confirm-modal-box .summary-row {
+      display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1rem;
+    }
+    .confirm-modal-box button {
+      margin: 18px auto 0 auto;
+      display: block;
+      background: linear-gradient(90deg,#00c6ff 0%, #0072ff 100%);
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      font-size: 1.1rem;
+      border-radius: 7px;
+      padding: 11px 38px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #00c6ff39;
+      transition: background 0.2s;
+    }
+    .confirm-modal-box button:hover {
+      background: linear-gradient(90deg,#0072ff 0%, #00c6ff 100%);
+    }
   </style>
 </head>
 <body>
@@ -473,6 +551,10 @@
     </div>
   </div>
   <div class="container">
+    <div class="question-counter" id="questionCounter"></div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fg" id="progressBarFG" style="width:0%"></div>
+    </div>
     <div id="noActiveSet" style="display:none;">
       No active question set is available. Please contact your instructor.
     </div>
@@ -482,6 +564,8 @@
       <button onclick="nextQuestion()" id="nextBtn">Next</button>
     </div>
   </div>
+  <!-- Confirmation Modal (hidden by default) -->
+  <div id="confirmModal" style="display:none;"></div>
   <script>
     // === CONFIG ===
     const API_URL = "https://examguide.onrender.com/api/";
@@ -542,8 +626,6 @@
     let timeLimit = SESSION_TIME_LIMIT;
     let timeRemaining = timeLimit;
     let timerInterval;
-    let answeredIds = [];
-    let completed = false;
 
     // Exam selection modal logic (not used here, but kept for single page multi-exam use)
     function showExamSelectionModal(activeSets, proceedCallback) {
@@ -563,35 +645,6 @@
       modal.style.display = "flex";
     }
 
-    // --- Backend Progress Sync ---
-    async function saveProgress() {
-      if (!examSet || !token) return;
-      await fetch(API_URL + "progress/save", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        },
-        body: JSON.stringify({
-          examSet,
-          answers: userAnswers,
-          answeredIds,
-          currentQuestionIndex,
-          timeRemaining,
-          completed
-        }),
-      });
-    }
-    async function loadProgress(examSetTitle) {
-      if (!token) return null;
-      const res = await fetch(`${API_URL}progress?examSet=${encodeURIComponent(examSetTitle)}`, {
-        headers: { Authorization: "Bearer " + token }
-      });
-      if (!res.ok) return null;
-      const { progress } = await res.json();
-      return progress;
-    }
-
     // Defer loading until instructions closed
     window._cbtLoadQuestions = async function loadQuestions(selectedExamSet = null) {
       if (!window._cbtReadyToStart) return;
@@ -604,13 +657,12 @@
         return;
       }
       try {
-        // Fetch the exam set and its questions from your API
+        // 1. Get all questions for the set
         const res = await fetch(`${API_URL}questionsets/${examSetId}`, {
           headers: { Authorization: "Bearer " + token }
         });
         if (!res.ok) throw new Error("Could not load exam set");
         const activeSet = await res.json();
-
         if (!activeSet || !activeSet.questions || activeSet.questions.length === 0) {
           document.getElementById("examTitle").textContent = "No Questions Found";
           document.getElementById("questionBox").innerHTML = "";
@@ -621,30 +673,34 @@
         }
         document.getElementById('examTitle').textContent = activeSet.title || "CBT Test";
         examSet = activeSet.title || "CBT Test";
+        const allQuestions = activeSet.questions.slice();
 
-        // --- Load progress from backend if exists ---
-        const progress = await loadProgress(examSet);
-
-        // Filter unseen questions if any, or reset if all are done.
-        let allQ = activeSet.questions.slice();
-        if (progress && progress.answeredIds && progress.answeredIds.length === allQ.length) {
-          // All attempted before; restart
-          answeredIds = [];
-        } else {
-          answeredIds = (progress && progress.answeredIds) ? progress.answeredIds : [];
+        // 2. Fetch user's previously attempted question IDs for this exam set
+        let answeredIds = [];
+        try {
+          const progressRes = await fetch(`${API_URL}progress?examSet=${encodeURIComponent(examSet)}`, {
+            headers: { Authorization: "Bearer " + token }
+          });
+          if (progressRes.ok) {
+            const { progress } = await progressRes.json();
+            if (progress && Array.isArray(progress.answeredIds)) {
+              answeredIds = progress.answeredIds;
+            }
+          }
+        } catch (e) {
+          // Ignore progress errors, treat as no history
         }
-        let unseenQuestions = allQ.filter(q => !answeredIds.includes(q.id));
-        if (unseenQuestions.length === 0) unseenQuestions = allQ.slice();
 
-        // Session questions
+        // 3. Filter for unseen questions, if any
+        let unseenQuestions = allQuestions.filter(q => !answeredIds.includes(q.id));
+        if (unseenQuestions.length === 0) unseenQuestions = allQuestions.slice();
+
+        // 4. Start a fresh session (no resume of answers/timer)
         questions = shuffle(unseenQuestions).slice(0, MAX_SESSION_QUESTIONS);
-
-        // Restore progress
-        userAnswers = (progress && progress.answers) ? Object.fromEntries(Object.entries(progress.answers)) : {};
-        currentQuestionIndex = (progress && typeof progress.currentQuestionIndex === 'number') ? progress.currentQuestionIndex : 0;
+        userAnswers = {};
+        currentQuestionIndex = 0;
         timeLimit = SESSION_TIME_LIMIT;
-        timeRemaining = (progress && typeof progress.timeRemaining === 'number') ? progress.timeRemaining : timeLimit;
-        completed = (progress && progress.completed) ? true : false;
+        timeRemaining = timeLimit;
 
         document.getElementById('noActiveSet').style.display = "none";
         document.getElementById('navButtons').style.display = "";
@@ -653,7 +709,6 @@
         if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(() => {
           updateTimer();
-          saveProgress();
         }, 1000);
       } catch (err) {
         document.getElementById("questionBox").innerHTML =
@@ -663,6 +718,14 @@
         console.error(err);
       }
     };
+
+    function updateProgressUI() {
+      const total = questions.length;
+      const curr = currentQuestionIndex + 1;
+      document.getElementById("questionCounter").innerText = `Question ${curr} of ${total}`;
+      const percent = total ? (curr/total)*100 : 0;
+      document.getElementById("progressBarFG").style.width = percent + "%";
+    }
 
     function renderQuestion() {
       const q = questions[currentQuestionIndex];
@@ -691,22 +754,19 @@
       document.getElementById("nextBtn").innerText =
         currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
       if (window.MathJax && window.MathJax.typesetPromise) MathJax.typesetPromise();
+      updateProgressUI();
     }
 
     function selectAnswer(qid, answer, btn) {
       userAnswers[qid] = answer;
-      // Update answeredIds array if not present
-      if (!answeredIds.includes(qid)) answeredIds.push(qid);
       document.querySelectorAll(".options button").forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      saveProgress();
     }
 
     function nextQuestion() {
       if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
         renderQuestion();
-        saveProgress();
       } else {
         submitTest();
       }
@@ -716,7 +776,6 @@
       if (currentQuestionIndex > 0) {
         currentQuestionIndex--;
         renderQuestion();
-        saveProgress();
       }
     }
 
@@ -735,54 +794,75 @@
       updateTimerDisplay();
     }
 
-async function submitTest() {
-  clearInterval(timerInterval);
-  completed = true;
+    async function submitTest() {
+      clearInterval(timerInterval);
+      let score = 0;
+      for (const q of questions) {
+        const userAns = userAnswers[q.id];
+        if (typeof userAns !== "undefined" && userAns === q.answer) score++;
+      }
+      const timeTaken = SESSION_TIME_LIMIT - timeRemaining;
 
-  // Calculate score and time
-  let score = 0;
-  for (const q of questions) {
-    const userAns = userAnswers[q.id];
-    if (typeof userAns !== "undefined" && userAns === q.answer) score++;
-  }
-  const timeTaken = SESSION_TIME_LIMIT - timeRemaining;
-
-  // Build payload
-  const payload = {
-    examSet: examSetId,
-    answers: userAnswers,
-    score,
-    timeTaken,
-    questions: questions.map(q => ({
-      id: q.id,
-      question: q.question,
-      answer: q.answer,
-      options: q.options,
-      explanation: q.explanation,
-      questionImage: q.questionImage || null
-    }))
-  };
-
-  try {
-    const response = await fetch(API_URL + "results", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      alert("Failed to save result. Please try again.");
-      return;
+      // Show confirmation modal
+      showConfirmModal(score, questions.length, timeTaken, async function onConfirm() {
+        // Actually submit to backend
+        const payload = {
+          examSet: examSetId,
+          answers: userAnswers,
+          score,
+          timeTaken,
+          questions: questions.map(q => ({
+            id: q.id,
+            question: q.question,
+            answer: q.answer,
+            options: q.options,
+            explanation: q.explanation,
+            questionImage: q.questionImage || null
+          }))
+        };
+        try {
+          const response = await fetch(API_URL + "results", {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) {
+            alert("Failed to save result. Please try again.");
+            return;
+          }
+          window.location.href = `result-summary?examSet=${encodeURIComponent(examSetId)}`;
+        } catch (err) {
+          alert("Network error. Please try again.");
+        }
+      });
     }
 
-    window.location.href = `result-summary?examSet=${encodeURIComponent(examSetId)}`;
-  } catch (err) {
-    alert("Network error. Please try again.");
-  }
-}
+    function showConfirmModal(score, total, timeTaken, onConfirm) {
+      const mins = Math.floor(timeTaken / 60);
+      const secs = timeTaken % 60;
+      document.getElementById("confirmModal").innerHTML = `
+        <div class="confirm-modal-overlay">
+          <div class="confirm-modal-box">
+            <div class="score-main">${score} / ${total}</div>
+            <div class="score-label">Your Score</div>
+            <div class="summary-row"><span>Total Questions:</span><span>${total}</span></div>
+            <div class="summary-row"><span>Answered:</span><span>${Object.keys(userAnswers).length}</span></div>
+            <div class="summary-row"><span>Time Taken:</span><span>${mins}m ${secs}s</span></div>
+            <div style="margin-top:18px; font-size:0.96em; color:#444;">Are you sure you want to submit?<br/>You can't change your answers afterward.</div>
+            <button onclick="closeConfirmModal(true)">Yes, Submit</button>
+            <button style="margin-top:8px; background:#ff5050;" onclick="closeConfirmModal(false)">Cancel</button>
+          </div>
+        </div>
+      `;
+      document.getElementById("confirmModal").style.display = "";
+      window.closeConfirmModal = function(confirm) {
+        document.getElementById("confirmModal").style.display = "none";
+        if (confirm && typeof onConfirm === "function") onConfirm();
+      }
+    }
 
     function shuffle(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
