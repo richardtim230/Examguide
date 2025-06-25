@@ -4,14 +4,14 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-// Create a new test schedule
+// Create a new test schedule (support many departments)
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const { examSet, faculty, department, start, end } = req.body;
+  const { examSet, faculty, departments, start, end } = req.body;
   try {
     const sched = await Schedule.create({
       examSet, // should be ObjectId of QuestionSet
       faculty,
-      department,
+      departments, // now expects an array of department IDs
       start: new Date(start),
       end: new Date(end),
       createdBy: req.user.id
@@ -22,11 +22,11 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   }
 });
 
-// List all schedules (optionally filter by faculty/department), populated with examSet (QuestionSet) info
+// List all schedules (optionally filter by faculty/department), populated with examSet info
 router.get("/", authenticate, async (req, res) => {
   const filter = {};
   if (req.query.faculty) filter.faculty = req.query.faculty;
-  if (req.query.department) filter.department = req.query.department;
+  if (req.query.department) filter.departments = req.query.department; // department is now inside departments array
   try {
     const schedules = await Schedule.find(filter)
       .sort({ start: -1 })
@@ -55,15 +55,15 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 
-// Update a schedule by id
+// Update a schedule by id (support many departments)
 router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const { examSet, faculty, department, start, end } = req.body;
+  const { examSet, faculty, departments, start, end } = req.body;
   try {
     const sched = await Schedule.findById(req.params.id);
     if (!sched) return res.status(404).json({ error: "Schedule not found" });
     if (examSet !== undefined) sched.examSet = examSet;
     if (faculty !== undefined) sched.faculty = faculty;
-    if (department !== undefined) sched.department = department;
+    if (departments !== undefined) sched.departments = departments; // expects array
     if (start !== undefined) sched.start = new Date(start);
     if (end !== undefined) sched.end = new Date(end);
     await sched.save();
