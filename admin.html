@@ -255,10 +255,13 @@
       const f = faculties.find(f => f._id === facultyId);
       return f ? f.name : "";
     }
-function getDepartmentName(departmentId) {
-  const d = departments.find(dep => dep._id === departmentId);
-  return d ? d.name : "";
-}
+
+/* --- Utility to get department names for array --- */
+function getDepartmentsNames(deptIds) {
+  if (!Array.isArray(deptIds)) deptIds = deptIds ? [deptIds] : [];
+  return deptIds.map(getDepartmentName).join(", ");
+    }
+    
     // EDIT FACULTY
     function editFaculty(id) {
       const faculty = faculties.find(f => f._id === id);
@@ -1162,6 +1165,35 @@ async function deleteSchedule(id) {
     populateScheduleModalFields();
     return;
   }
+
+    
+
+/* --- Updated: populate departments dropdown in schedule modal for selected faculty --- */
+function populateDepartmentsDropdownForSchedule() {
+  const facultyId = document.getElementById('scheduleFaculty').value;
+  const deptSelect = document.getElementById('scheduleDepartments');
+  if (!deptSelect) return;
+  deptSelect.innerHTML = departments
+    .filter(d => d.faculty === facultyId)
+    .map(d => `<option value="${d._id}">${d.name}</option>`).join('');
+}
+
+/* --- Updated: Populate schedule modal fields & set up dependent dropdown --- */
+function populateScheduleModalFields() {
+  // Sets
+  fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
+    .then(r => r.json())
+    .then(sets => {
+      document.getElementById("scheduleSet").innerHTML =
+        sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+    });
+  // Faculties
+  document.getElementById("scheduleFaculty").innerHTML =
+    faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join("");
+  // Departments (filtered by selected faculty)
+  populateDepartmentsDropdownForSchedule();
+}
+          
       if (html) {
         document.getElementById("modalRoot").innerHTML = html;
       }
