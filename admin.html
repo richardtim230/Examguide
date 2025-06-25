@@ -164,7 +164,7 @@
 <div class="section" id="uploadersSection" style="display:none;">
   <div class="section-title">Manage Question Uploaders</div>
   <div class="actions">
-    <button class="btn" onclick="openUploaderModal()">+ Add Uploader</button>
+    <button class="btn" onclick="showUploaderModalWithData()">+ Add Uploader</button>
   </div>
   <table class="data-table" id="uploadersTable">
     <thead>
@@ -1679,7 +1679,18 @@ async function fetchUploaders() {
   }
   document.querySelector("#uploadersTable tbody").innerHTML = html;
 }
-
+async function showUploaderModalWithData() {
+  // Fetch faculties and departments if not already loaded or cache is empty
+  if (!window.faculties || !window.faculties.length) {
+    const facResp = await fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } });
+    window.faculties = await facResp.json();
+  }
+  if (!window.departments || !window.departments.length) {
+    const deptResp = await fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } });
+    window.departments = await deptResp.json();
+  }
+  openUploaderModal();
+}
 /* ---- Add Uploader Modal ---- */
 function openUploaderModal() {
   // Assume faculties and departments are already fetched into window.faculties and window.departments
@@ -1713,7 +1724,6 @@ function closeUploaderModal(e) {
     document.getElementById("uploaderModalRoot").innerHTML = "";
   }
 }
-
 /* ---- Submit Add Uploader ---- */
 async function submitAddUploader() {
   const fullname = document.getElementById("uploaderFullName").value.trim();
