@@ -577,7 +577,7 @@ function showSection(id, el) {
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
   document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
-  ['dashboard','faculty','sets','questions','results','schedules','notifications', 'students'].forEach(sec => {
+  ['dashboard', 'uploaders','faculty','sets','questions','results','schedules','notifications', 'students'].forEach(sec => {
     document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
   });
   if (id === "dashboard") fetchDashboardCounts();
@@ -589,7 +589,14 @@ function showSection(id, el) {
   if (id === "notifications") fetchNotifications();
   if (id === "students") fetchStudents();
   if (window.innerWidth <= 950) closeSidebar();
+    if (id === "dashboard") {
+    fetchDashboardCounts();
+    fetchUploadersCount();
+  }
+  
+  if (id === "uploaders") fetchUploaders();
 }
+    
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 
@@ -1639,8 +1646,6 @@ async function fetchAndRenderDashboardAnalytics() {
 // On DOM ready, render analytics
 window.addEventListener("DOMContentLoaded", fetchAndRenderDashboardAnalytics);
 
-
-<script>
 /* ---- Count of Uploaders Card ---- */
 async function fetchUploadersCount() {
   const resp = await fetch(API_URL + "users?role=uploader", { headers: { Authorization: "Bearer " + token } });
@@ -1746,24 +1751,6 @@ async function submitAddUploader() {
   }
 }
 
-/* ---- Optionally, add edit/delete logic for uploaders here ---- */
-
-// ---- Show section function update ----
-function showSection(id, el) {
-  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-  if (el) el.classList.add('active');
-  document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
-  ['dashboard','sets','questions','profile','uploaders'].forEach(sec => {
-    const secDiv = document.getElementById(sec+'Section');
-    if (secDiv) secDiv.style.display = (sec===id) ? "" : "none";
-  });
-  if (id === "dashboard") {
-    fetchDashboardCounts();
-    fetchUploadersCount();
-  }
-  if (id === "uploaders") fetchUploaders();
-  // ...other logic...
-}
 
 
     // ========== INIT ==========
