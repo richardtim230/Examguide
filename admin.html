@@ -1169,9 +1169,20 @@ async function deleteSchedule(id) {
     return;
   }
 
-    
+      if (html) {
+        document.getElementById("modalRoot").innerHTML = html;
+      }
+      if (type === "addQuestionModal" || type === "bulkUploadModal") {
+        fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
+          .then(r => r.json())
+          .then(sets => {
+            document.getElementById("modalSetSelect").innerHTML =
+              sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
+          });
+      }
+    }
 
-/* --- Updated: populate departments dropdown in schedule modal for selected faculty --- */
+// ========== Modal: Populate Add Schedule Dropdowns ==========
 function populateDepartmentsDropdownForSchedule() {
   const facultyId = document.getElementById('scheduleFaculty').value;
   const deptSelect = document.getElementById('scheduleDepartments');
@@ -1180,8 +1191,6 @@ function populateDepartmentsDropdownForSchedule() {
     .filter(d => d.faculty === facultyId)
     .map(d => `<option value="${d._id}">${d.name}</option>`).join('');
 }
-
-/* --- Updated: Populate schedule modal fields & set up dependent dropdown --- */
 function populateScheduleModalFields() {
   // Sets
   fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
@@ -1196,20 +1205,6 @@ function populateScheduleModalFields() {
   // Departments (filtered by selected faculty)
   populateDepartmentsDropdownForSchedule();
 }
-          
-      if (html) {
-        document.getElementById("modalRoot").innerHTML = html;
-      }
-      if (type === "addQuestionModal" || type === "bulkUploadModal") {
-        fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } })
-          .then(r => r.json())
-          .then(sets => {
-            document.getElementById("modalSetSelect").innerHTML =
-              sets.map(s => `<option value="${s._id}">${s.title}</option>`).join("");
-          });
-      }
-    }
-
     // ========== MODAL SUBMIT HANDLERS ==========
     async function submitAddFaculty() {
       const name = document.getElementById("facultyName").value.trim();
