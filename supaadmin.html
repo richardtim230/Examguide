@@ -725,19 +725,26 @@
       if (type === "addAdminModal") {
         html = `
         <div class="modal-backdrop" onclick="closeModal(event)">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeModal(event)">&times;</button>
-            <h2>Add New Admin</h2>
-            <label>Username</label>
-            <input id="adminUsername" type="text" maxlength="32">
-            <label>Password</label>
-            <input id="adminPassword" type="password" maxlength="32">
-            <span id="addAdminMsg"></span>
-            <span class="spinner" id="addAdminSpinner" style="display:none"></span>
-            <button class="btn" onclick="submitAddAdmin()">Create</button>
-          </div>
-        </div>`;
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="close-modal" onclick="closeModal(event)">&times;</button>
+    <h2>Add New Admin or Uploader</h2>
+    <label>Username</label>
+    <input id="adminUsername" type="text" maxlength="32">
+    <label>Password</label>
+    <input id="adminPassword" type="password" maxlength="32">
+    <label>Role</label>
+    <select id="adminRole">
+      <option value="admin">Admin</option>
+      <option value="uploader">Uploader</option>
+    </select>
+    <span id="addAdminMsg"></span>
+    <span class="spinner" id="addAdminSpinner" style="display:none"></span>
+    <button class="btn" onclick="submitAddAdmin()">Create</button>
+  </div>
+</div>`;
       }
+      
+
       if (type === "addSetModal") {
         html = `
         <div class="modal-backdrop" onclick="closeModal(event)">
@@ -796,33 +803,38 @@
       }
     }
     async function submitAddAdmin() {
-      const username = document.getElementById("adminUsername").value.trim();
-      const password = document.getElementById("adminPassword").value;
-      const spinner = document.getElementById("addAdminSpinner");
-      const msg = document.getElementById("addAdminMsg");
-      msg.innerText = "";
-      msg.className = "";
-      if (!username || !password) { msg.innerText = "All fields required!"; msg.className = "error-msg"; return; }
-      spinner.style.display = "inline-block";
-      const resp = await fetch(API_URL + "auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-        body: JSON.stringify({ username, password, role: "admin" })
-      });
-      spinner.style.display = "none";
-      if (!resp.ok) {
-        const data = await resp.json();
-        msg.innerText = data.message || "Failed to add admin.";
-        msg.className = "error-msg";
-        return;
-      }
-      msg.innerText = "Successfully loaded!";
-      msg.className = "success-msg";
-      setTimeout(() => {
-        fetchAdmins();
-        closeModal();
-      }, 900);
-    }
+  const username = document.getElementById("adminUsername").value.trim();
+  const password = document.getElementById("adminPassword").value;
+  const role = document.getElementById("adminRole").value; // NEW
+  const spinner = document.getElementById("addAdminSpinner");
+  const msg = document.getElementById("addAdminMsg");
+  msg.innerText = "";
+  msg.className = "";
+  if (!username || !password || !role) {
+    msg.innerText = "All fields required!";
+    msg.className = "error-msg";
+    return;
+  }
+  spinner.style.display = "inline-block";
+  const resp = await fetch(API_URL + "auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify({ username, password, role }) // include role
+  });
+  spinner.style.display = "none";
+  if (!resp.ok) {
+    const data = await resp.json();
+    msg.innerText = data.message || "Failed to add user.";
+    msg.className = "error-msg";
+    return;
+  }
+  msg.innerText = "Successfully loaded!";
+  msg.className = "success-msg";
+  setTimeout(() => {
+    fetchAdmins();
+    closeModal();
+  }, 900);
+}
     async function submitAddSet() {
       const title = document.getElementById("setTitle").value.trim();
       const status = document.getElementById("setStatus").value;
