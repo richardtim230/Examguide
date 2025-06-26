@@ -551,9 +551,50 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
+
+
+let facultiesList = [];
+let departmentsList = [];
+
+async function loadFacultiesAndDepartments() {
+  // Fetch faculties
+  let resp = await fetch(API_URL + "faculties", { headers: { Authorization: "Bearer " + token } });
+  facultiesList = await resp.json();
+  let facultyOpts = facultiesList.map(f => `<option value="${f._id}">${f.name}</option>`).join("");
+  document.getElementById("adminFaculty").innerHTML = `<option value="">Select Faculty</option>` + facultyOpts;
+
+  // Fetch departments
+  resp = await fetch(API_URL + "departments", { headers: { Authorization: "Bearer " + token } });
+  departmentsList = await resp.json();
+  updateDepartmentsDropdown();
+  // Update departments when faculty changes
+  document.getElementById("adminFaculty").onchange = updateDepartmentsDropdown;
+}
+function updateDepartmentsDropdown() {
+  const facultyId = document.getElementById("adminFaculty").value;
+  const depts = departmentsList.filter(d => d.faculty === facultyId);
+  let deptOpts = depts.map(d => `<option value="${d._id}">${d.name}</option>`).join("");
+  document.getElementById("adminDepartment").innerHTML = `<option value="">Select Department</option>` + deptOpts;
+}
+
+function toggleFacultyDeptFields() {
+  var role = document.getElementById("adminRole").value;
+  var fDiv = document.getElementById("facultyDeptFields");
+  if (role === "uploader") {
+    fDiv.style.display = "";
+    loadFacultiesAndDepartments();
+  } else {
+    fDiv.style.display = "none";
+  }
+}
+
+// Call this after rendering the modal, e.g., in openModal('addAdminModal')
+toggleFacultyDeptFields();
+
 
     /* ========== UX NAVIGATION ========== */
     function showSection(id, el) {
@@ -733,10 +774,16 @@
     <label>Password</label>
     <input id="adminPassword" type="password" maxlength="32">
     <label>Role</label>
-    <select id="adminRole">
+    <select id="adminRole" onchange="toggleFacultyDeptFields()">
       <option value="admin">Admin</option>
-      <option value="upler">Uploader</option>
+      <option value="uploader">Uploader</option>
     </select>
+    <div id="facultyDeptFields" style="display:none;">
+      <label>Faculty</label>
+      <select id="adminFaculty"></select>
+      <label>Department</label>
+      <select id="adminDepartment"></select>
+    </div>
     <span id="addAdminMsg"></span>
     <span class="spinner" id="addAdminSpinner" style="display:none"></span>
     <button class="btn" onclick="submitAddAdmin()">Create</button>
@@ -802,10 +849,13 @@
         document.getElementById("modalRoot").innerHTML = "";
       }
     }
-    async function submitAddAdmin() {
+
+async function submitAddAdmin() {
   const username = document.getElementById("adminUsername").value.trim();
   const password = document.getElementById("adminPassword").value;
-  const role = document.getElementById("adminRole").value; // NEW
+  const role = document.getElementById("adminRole").value;
+  const faculty = document.getElementById("adminFaculty")?.value;
+  const department = document.getElementById("adminDepartment")?.value;
   const spinner = document.getElementById("addAdminSpinner");
   const msg = document.getElementById("addAdminMsg");
   msg.innerText = "";
@@ -815,11 +865,21 @@
     msg.className = "error-msg";
     return;
   }
+  if (role === "uploader" && (!faculty || !department)) {
+    msg.innerText = "Faculty and department required for uploaders!";
+    msg.className = "error-msg";
+    return;
+  }
   spinner.style.display = "inline-block";
+  const payload = { username, password, role };
+  if (role === "uploader") {
+    payload.faculty = faculty;
+    payload.department = department;
+  }
   const resp = await fetch(API_URL + "auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ username, password, role }) // include role
+    body: JSON.stringify(payload)
   });
   spinner.style.display = "none";
   if (!resp.ok) {
