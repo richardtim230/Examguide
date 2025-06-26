@@ -1,8 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
-import Faculty from "../models/Faculty.js";
-import Department from "../models/Department.js";
+
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
