@@ -74,7 +74,7 @@ a { color: inherit; text-decoration: none; }
 .sidebar {
   background: #111f4e;
   width: 230px;
-  height: 96vh;
+  height: 98vh;
   position: fixed;
   left: 0; top: 0; bottom: 0;
   display: flex; flex-direction: column;
@@ -155,7 +155,7 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px 32px 16px 32px;
   box-shadow: 0 2px 18px #0002;
-  width: 100vw;
+  width: 96vw;
   position: sticky; top: 0; z-index: 5;
   min-height: 70px;
 }
@@ -281,6 +281,7 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: center;
   transition: background 0.2s;
   padding: 2vw;
+  overflow-y: auto;
 }
 .modal {
   background: #fff; color: #0B0B45; border-radius: 16px;
@@ -288,8 +289,10 @@ a { color: inherit; text-decoration: none; }
   max-width: 440px; width: 96vw; padding: 33px 28px 18px 28px;
   text-align: left; position: relative; animation: modalPopin 0.32s;
   border: 2.5px solid #00c6ff33;
+  max-height: 95vh;
   display: flex; flex-direction: column;
   gap: 13px;
+  overflow-y: auto;
 }
 @keyframes modalPopin {
   0% { opacity: 0; transform: translateY(24px) scale(0.96);}
