@@ -47,10 +47,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     const allowedRoles = ["student", "admin", "superadmin", "uploader"];
     if (!allowedRoles.includes(role)) return res.status(400).json({ message: "Invalid role." });
 
-    if (role === "uploader" && (!faculty || !department)) {
-      return res.status(400).json({ message: "Uploader must have faculty and department." });
-    }
-
+    // Faculty and department are now optional for all roles, including uploader.
     // Validate existence of faculty and department if provided
     if (faculty) {
       if (!faculty.match(/^[0-9a-fA-F]{24}$/)) {
