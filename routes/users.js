@@ -98,7 +98,7 @@ router.get("/:id", authenticate, authorizeRole("admin", "superadmin"), async (re
 });
 
 // UPDATE user profile (admin or superadmin)
-router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.put("/:id", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
