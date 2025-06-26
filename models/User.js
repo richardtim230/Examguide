@@ -10,6 +10,8 @@ const UserSchema = new mongoose.Schema({
   department: { type: mongoose.Schema.Types.ObjectId, ref: "Department", required: function() { return this.role === "uploader"; } },
   role:       { type: String, enum: ["student", "admin", "superadmin", "uploader"], default: "student" },
   active:     { type: Boolean, default: true },
+  level:      { type: String, trim: true }, // Added, e.g., "100", "200", etc.
+  phone:      { type: String, trim: true }, // Added
   createdAt:  { type: Date, default: Date.now }
 });
 
