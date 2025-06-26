@@ -729,9 +729,14 @@
       if (type === "addAdminModal") {
         html = `
         <div class="modal-backdrop" onclick="closeModal(event)">
+  <div c<div class="modal-backdrop" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="close-modal" onclick="closeModal(event)">&times;</button>
     <h2>Add New Admin or Uploader</h2>
+    <label>Fullname</label>
+    <input id="adminFullname" type="text" maxlength="64">
+    <label>Email</label>
+    <input id="adminEmail" type="email" maxlength="64">
     <label>Username</label>
     <input id="adminUsername" type="text" maxlength="32">
     <label>Password</label>
@@ -806,8 +811,9 @@
         document.getElementById("modalRoot").innerHTML = "";
       }
     }
-
 async function submitAddAdmin() {
+  const fullname = document.getElementById("adminFullname").value.trim();
+  const email = document.getElementById("adminEmail").value.trim();
   const username = document.getElementById("adminUsername").value.trim();
   const password = document.getElementById("adminPassword").value;
   const role = document.getElementById("adminRole").value;
@@ -815,14 +821,13 @@ async function submitAddAdmin() {
   const msg = document.getElementById("addAdminMsg");
   msg.innerText = "";
   msg.className = "";
-  if (!username || !password || !role) {
-    msg.innerText = "All fields required!";
+  if (!fullname || !email || !username || !password || !role) {
+    msg.innerText = "fullname, username, email, and password are required.";
     msg.className = "error-msg";
     return;
   }
-
   spinner.style.display = "inline-block";
-  const payload = { username, password, role };
+  const payload = { fullname, email, username, password, role };
   const resp = await fetch(API_URL + "auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
@@ -841,7 +846,8 @@ async function submitAddAdmin() {
     fetchAdmins();
     closeModal();
   }, 900);
-}
+    }
+
     async function submitAddSet() {
       const title = document.getElementById("setTitle").value.trim();
       const status = document.getElementById("setStatus").value;
