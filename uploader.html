@@ -322,7 +322,7 @@
       const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) { localStorage.removeItem("token"); window.location.href = "index.html"; return; }
       uploader = await resp.json();
-      if (!uploader || !uploader.user || uploader.user.role !== "uploader") {
+      if (!uploader || !uploader.user || uploader.user.role !== "admin") {
         alert("Unauthorized.");
         window.location.href = "mock.html";
         return;
