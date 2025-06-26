@@ -162,17 +162,44 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
   try {
-    const {username, password, role, faculty, department} = req.body;
-    if (!username || !password)
-      return res.status(400).json({message: "All fields required"});
+    const {
+      username,
+      password,
+      fullname,
+      email,
+      faculty,
+      department,
+      level,
+      phone,
+      role // optional, default to student
+    } = req.body;
+
+    // Validation
+    if (!username || !password || !fullname || !email)
+      return res.status(400).json({message: "fullname, username, email, and password are required."});
     if (username.length < 3)
       return res.status(400).json({message: "Username must be at least 3 characters"});
-    const exists = await User.findOne({username});
+    const exists = await User.findOne({ $or: [{ username }, { email }] });
     if (exists)
-      return res.status(409).json({message: "Username already exists"});
+      return res.status(409).json({message: "Username or email already exists"});
+
     const hashed = await bcrypt.hash(password, 12);
-    const user = new User({username, password: hashed, role: role || "student", faculty, department});
+
+    // Save all fields
+    const user = new User({
+      username,
+      password: hashed,
+      fullname,
+      email,
+      faculty,
+      department,
+      level,
+      phone,
+      role: role || "student"
+    });
+
     await user.save();
+
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "2h"});
     res.status(201).json({token, message: "Registration successful"});
   } catch (e) {
