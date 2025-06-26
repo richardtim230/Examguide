@@ -6,8 +6,8 @@ const UserSchema = new mongoose.Schema({
   fullname:   { type: String, required: true, trim: true },
   email:      { type: String, required: true, unique: true, trim: true },
   profilePic: { type: String, default: "" },
-  faculty:    { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: function() { return this.role === "uploader"; } },
-  department: { type: mongoose.Schema.Types.ObjectId, ref: "Department", required: function() { return this.role === "uploader"; } },
+  faculty:    { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: function() { return this.role === "uploady"; } },
+  department: { type: mongoose.Schema.Types.ObjectId, ref: "Department", required: function() { return this.role === "uploady"; } },
   role:       { type: String, enum: ["student", "admin", "superadmin", "uploader"], default: "student" },
   active:     { type: Boolean, default: true },
   level:      { type: String, trim: true }, // Added, e.g., "100", "200", etc.
