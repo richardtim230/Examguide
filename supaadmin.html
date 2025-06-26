@@ -865,11 +865,7 @@ async function submitAddAdmin() {
     msg.className = "error-msg";
     return;
   }
-  if (role === "uploader" && (!faculty || !department)) {
-    msg.innerText = "Faculty and department required for uploaders!";
-    msg.className = "error-msg";
-    return;
-  }
+  
   spinner.style.display = "inline-block";
   const payload = { username, password, role };
   if (role === "uploader") {
