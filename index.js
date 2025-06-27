@@ -11,8 +11,6 @@ import multer from "multer";
 // ===== Models and Middleware =====
 import User from "./models/User.js";
 import Progress from "./models/Progress.js";
-import Faculty from "./models/Faculty.js";
-import Department from "./models/Department.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 
 // ===== Routes =====
@@ -26,6 +24,18 @@ import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 
 dotenv.config();
+
+// ===== FACULTY & DEPARTMENT MODELS =====
+const FacultySchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true }
+});
+const Faculty = mongoose.model("Faculty", FacultySchema);
+
+const DepartmentSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  faculty: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: true }
+});
+const Department = mongoose.model("Department", DepartmentSchema);
 
 const {
   MONGODB_URI,
@@ -147,6 +157,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
     res.status(500).json({ message: "Debug schedules error", error: e.message });
   }
 });
+
 // --- Auth Endpoints ---
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
@@ -169,7 +180,6 @@ app.post("/api/auth/register", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
-
 
 // Login
 app.post("/api/auth/login", async (req, res) => {
