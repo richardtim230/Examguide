@@ -870,6 +870,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 await setLoading(false);
                 return;
               }
+              if (role === 'uploader') {
+                showNotification("Welcome, Uploader!", "success");
+                setTimeout(() => { window.location.href = "uploader.html"; }, 1000);
+                await setLoading(false);
+                return;
+              }
               // Default: student
               showNotification("Welcome, Student!", "success");
               setTimeout(() => { window.location.href = "student.html"; }, 1000);
