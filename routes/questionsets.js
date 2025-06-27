@@ -5,7 +5,7 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
 // Create new set
-router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.post("/", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { title, status, faculty, department, questions } = req.body;
   try {
     const qset = await QuestionSet.create({ title, status, faculty, department, questions, createdBy: req.user.id });
@@ -33,7 +33,7 @@ router.get("/:id", authenticate, async (req, res) => {
 });
 
 // Bulk upload: Add questions to set with given title (merges questions, does not create duplicates or replace)
-router.post("/bulk", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.post("/bulk", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { title, status, faculty, department, questions } = req.body;
   if (!title || !questions) {
     return res.status(400).json({ error: "title and questions are required" });
@@ -62,7 +62,7 @@ router.post("/bulk", authenticate, authorizeRole("admin", "superadmin"), async (
 });
 
 // Add questions in bulk to an existing set by id
-router.post("/:id/questions", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.post("/:id/questions", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { id } = req.params;
   const questions = req.body.questions;
   try {
@@ -80,7 +80,7 @@ router.post("/:id/questions", authenticate, authorizeRole("admin", "superadmin")
 });
 
 // Update a single question in a set
-router.put("/:id/questions/:qid", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.put("/:id/questions/:qid", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { id, qid } = req.params;
   try {
     const set = await QuestionSet.findById(id);
@@ -119,7 +119,7 @@ router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), 
 });
 
 // General update for set (PUT or PATCH /:id)
-router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.put("/:id", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { title, faculty, department, status } = req.body;
   try {
     const set = await QuestionSet.findById(req.params.id);
