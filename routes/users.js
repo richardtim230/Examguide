@@ -47,7 +47,10 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     const allowedRoles = ["student", "admin", "superadmin", "uploader"];
     if (!allowedRoles.includes(role)) return res.status(400).json({ message: "Invalid role." });
 
-    // Faculty and department are now optional for all roles, including uploader.
+    if (role === "uploader" && (!faculty || !department)) {
+      return res.status(400).json({ message: "Uploader must have faculty and department." });
+    }
+
     // Validate existence of faculty and department if provided
     if (faculty) {
       if (!faculty.match(/^[0-9a-fA-F]{24}$/)) {
@@ -99,7 +102,7 @@ router.get("/:id", authenticate, authorizeRole("admin", "superadmin"), async (re
 });
 
 // UPDATE user profile (admin or superadmin)
-router.put("/:id", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
+router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
