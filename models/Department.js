@@ -10,9 +10,8 @@ const DepartmentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Faculty",
     required: true
-  },
-  // You can add other fields if needed, e.g., code, description, etc.
+  }
 }, { timestamps: true });
 
-const Department = mongoose.model("Department", DepartmentSchema);
-export default Department;
+// Prevent OverwriteModelError in dev/hot-reload/multiple imports
+export default mongoose.models.Department || mongoose.model("Department", DepartmentSchema);
