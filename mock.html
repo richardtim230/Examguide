@@ -913,54 +913,54 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     registerForm.addEventListener('submit', async function(e) {
-  e.preventDefault();
-  // Collect all registration details
-  let fullName = document.getElementById('reg_fullname').value.trim();
-  let username = document.getElementById('reg_username').value.trim();
-  let password = document.getElementById('reg_password').value;
-  let email = document.getElementById('reg_email').value.trim();
-  let faculty = document.getElementById('reg_faculty').value.trim();
-  let department = document.getElementById('reg_department').value.trim();
-  let level = document.getElementById('reg_level').value;
-  let phone = document.getElementById('reg_phone').value.trim();
+      e.preventDefault();
+      // Collect all registration details
+      let fullName = document.getElementById('reg_fullname').value.trim();
+      let username = document.getElementById('reg_username').value.trim();
+      let password = document.getElementById('reg_password').value;
+      let email = document.getElementById('reg_email').value.trim();
+      let faculty = document.getElementById('reg_faculty').value.trim();
+      let department = document.getElementById('reg_department').value.trim();
+      let level = document.getElementById('reg_level').value;
+      let phone = document.getElementById('reg_phone').value.trim();
 
-  // Basic validation
-  if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
-    showNotification("All fields are required!", "error");
-    return;
-  }
+      // Basic validation
+      if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
+        showNotification("All fields are required!", "error");
+        return;
+      }
 
-  await setRegLoading(true);
+      await setRegLoading(true);
 
-  try {
-    let registerResponse = await fetch(API_URL + "register", {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        username,
-        password,
-        email,
-        fullname: fullName, // <-- key must be 'fullname' to match Mongoose schema!
-        faculty,
-        department,
-        level,
-        phone
-      })
+      try {
+        let registerResponse = await fetch(API_URL + "register", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            username,
+            password,
+            email,
+            fullname: fullName,
+            faculty,
+            department,
+            level,
+            phone
+          })
+        });
+        let registerData = await registerResponse.json();
+        if (registerResponse.ok) {
+          localStorage.setItem('token', registerData.token);
+          showNotification("Registered successfully!", "success");
+          setTimeout(() => { window.location.href = 'student.html'; }, 1200);
+        } else {
+          showNotification(registerData.message || "Registration failed", "error");
+        }
+      } catch (err) {
+        showNotification("Network or server error. Please try again.", "error");
+      }
+
+      await setRegLoading(false);
     });
-    let registerData = await registerResponse.json();
-    if (registerResponse.ok) {
-      localStorage.setItem('token', registerData.token);
-      showNotification("Registered successfully!", "success");
-      setTimeout(() => { window.location.href = 'student.html'; }, 1200);
-    } else {
-      showNotification(registerData.message || "Registration failed", "error");
-    }
-  } catch (err) {
-    showNotification("Network or server error. Please try again.", "error");
-  }
-
-  await setRegLoading(false);
-});
 
     // Password reset (unchanged)
     document.getElementById('forgotPassword').addEventListener('click', async function() {
