@@ -1754,36 +1754,12 @@ async function submitAddUploader() {
   const faculty = document.getElementById("uploaderFaculty").value;
   const department = document.getElementById("uploaderDepartment").value;
   const msg = document.getElementById("uploaderMsg");
-
-  // Clear previous messages
   msg.innerText = "";
-  msg.className = "";
-
-  // Disable the button to prevent duplicate submissions
-  const btn = msg.parentElement.querySelector("button.btn");
-  if (btn) btn.disabled = true;
-
-  // Quick client-side validation
   if (!fullname || !username || !email || !password || !faculty || !department) {
     msg.innerText = "All fields are required!";
-    msg.className = "error-msg";
-    if (btn) btn.disabled = false;
     return;
   }
-  // Check that faculty/department look like Mongo ObjectIds
-  const objectIdRegex = /^[a-f\d]{24}$/i;
-  if (!objectIdRegex.test(faculty) || !objectIdRegex.test(department)) {
-    msg.innerText = "Please select valid faculty and department.";
-    msg.className = "error-msg";
-    if (btn) btn.disabled = false;
-    return;
-  }
-
   try {
-    // Show loading spinner/message
-    msg.innerHTML = "Adding uploader... <span class='spinner' style='width:18px;height:18px;vertical-align:middle;'></span>";
-    msg.className = "";
-
     const resp = await fetch(API_URL + "users", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
@@ -1793,38 +1769,26 @@ async function submitAddUploader() {
         email,
         password,
         role: "uploader",
-        faculty,
-        department
+        faculty,      // this is the ObjectId as string
+        department    // this is the ObjectId as string
       })
     });
-
-    // Handle errors
     if (!resp.ok) {
       let errMsg = "Failed to add uploader.";
       try {
         const err = await resp.json();
-        // Show specific backend error if available
         errMsg = err.message || errMsg;
       } catch { /* ignore */ }
       msg.innerText = errMsg;
-      msg.className = "error-msg";
-      if (btn) btn.disabled = false;
       return;
     }
-
-    // Success!
     msg.innerText = "Uploader added!";
-    msg.className = "success-msg";
     fetchUploaders(); // Refresh list
     fetchUploadersCount();
     setTimeout(() => { closeUploaderModal(); }, 900);
-
   } catch (err) {
-    msg.innerText = "Network or server error. Please try again.";
-    msg.className = "error-msg";
+    msg.innerText = "Network error.";
     console.error(err);
-  } finally {
-    if (btn) btn.disabled = false;
   }
 }
 
