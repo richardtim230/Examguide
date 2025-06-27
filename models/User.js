@@ -1,16 +1,14 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-  username:   { type: String, required: true, unique: true, trim: true },
-  password:   { type: String, required: true },
-  fullname:   { type: String, required: true, trim: true },
-  email:      { type: String, required: true, unique: true, trim: true },
+  username: { type: String, required: true, unique: true, trim: true },
+  password: { type: String, required: true },
   profilePic: { type: String, default: "" },
-  faculty:    { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: function() { return this.role === "uploader"; } },
-  department: { type: mongoose.Schema.Types.ObjectId, ref: "Department", required: function() { return this.role === "uploader"; } },
-  role:       { type: String, enum: ["student", "admin", "superadmin", "uploader"], default: "student" },
-  active:     { type: Boolean, default: true },
-  createdAt:  { type: Date, default: Date.now }
+  faculty: { type: String, default: "" },
+  department: { type: String, default: "" },
+  role: { type: String, enum: ["student", "admin", "superadmin"], default: "student" },
+  active: { type: Boolean, default: true }, // for activate/deactivate
+  createdAt: { type: Date, default: Date.now }
 });
 
 export default mongoose.model("User", UserSchema);
