@@ -6,12 +6,10 @@ const UserSchema = new mongoose.Schema({
   fullname:   { type: String, required: true, trim: true },
   email:      { type: String, required: true, unique: true, trim: true },
   profilePic: { type: String, default: "" },
-  faculty:    { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: false},
-  department: { type: mongoose.Schema.Types.ObjectId, ref: "Department", required: false},
+  faculty:    { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: function() { return this.role === "uploader"; } },
+  department: { type: mongoose.Schema.Types.ObjectId, ref: "Department", required: function() { return this.role === "uploader"; } },
   role:       { type: String, enum: ["student", "admin", "superadmin", "uploader"], default: "student" },
   active:     { type: Boolean, default: true },
-  level:      { type: String, trim: true }, // Added, e.g., "100", "200", etc.
-  phone:      { type: String, trim: true }, // Added
   createdAt:  { type: Date, default: Date.now }
 });
 
