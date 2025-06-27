@@ -9,3 +9,5 @@ const FacultySchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+// Prevent OverwriteModelError in dev/hot-reload/multiple imports
+export default mongoose.models.Faculty || mongoose.model("Faculty", FacultySchema);
