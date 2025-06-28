@@ -173,7 +173,7 @@ app.post("/api/auth/register", async (req, res) => {
     const hashed = await bcrypt.hash(password, 12);
     const user = new User({username, password: hashed, role: role || "student", faculty, department});
     await user.save();
-    const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "2h"});
+    const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({token, message: "Registration successful"});
   } catch (e) {
     console.error("Register error:", e);
