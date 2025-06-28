@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   profilePic: { type: String, default: "" },
   faculty: { type: String, default: "" },
   department: { type: String, default: "" },
-  role: { type: String, enum: ["student", "admin", "superadmin"], default: "student" },
+  role: { type: String, enum: ["student", "uploader", "admin", "superadmin"], default: "student" },
   active: { type: Boolean, default: true }, // for activate/deactivate
   createdAt: { type: Date, default: Date.now }
 });
