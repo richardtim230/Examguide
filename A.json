@@ -1,0 +1,789 @@
+
+{
+  "title": "LIBRARY ORGANIZATION & CLASSIFICATION",
+  "status": "ACTIVE",
+  "faculty": "Science",
+  "department": "Zoology",
+  "questions": [
+    {
+      "id": 41,
+      "question": "What is the primary function of classification in a library?",
+      "options": [
+        {"text": "To digitize all physical resources for online access."},
+        {"text": "To arrange information items into a system for easy identification and retrieval."},
+        {"text": "To categorize library users based on their research interests."},
+        {"text": "To manage the daily operational schedules of library staff."}
+      ],
+      "answer": "To arrange information items into a system for easy identification and retrieval.",
+      "explanation": "Information organization, primarily through classification, aims to arrange library items into a systematic order, making them easily identifiable and retrievable for users.",
+      "questionImage": ""
+    },
+    {
+      "id": 42,
+      "question": "Which specific classification scheme is utilized at the Hezekiah Oluwasanmi Library?",
+      "options": [
+        {"text": "Dewey Decimal Classification Scheme (DDC)."},
+        {"text": "Universal Decimal Classification Scheme (UDC)."},
+        {"text": "Library of Congress Classification Scheme (LCC)."},
+        {"text": "Colon Classification Scheme (CC)."}
+      ],
+      "answer": "Library of Congress Classification Scheme (LCC).",
+      "explanation": "The Library of Congress Classification (LCC) Scheme is explicitly stated as the subject classification scheme in use at the Hezekiah Oluwasanmi Library.",
+      "questionImage": ""
+    },
+    {
+      "id": 43,
+      "question": "The 'Classification Number' or 'Call Mark' assigned to a library item primarily serves to denote its:",
+      "options": [
+        {"text": "Acquisition date and cost."},
+        {"text": "Author's unique identification code."},
+        {"text": "Physical location on the shelf and subject content."},
+        {"text": "Circulation history and user popularity."}
+      ],
+      "answer": "Physical location on the shelf and subject content.",
+      "explanation": "The Classification Number or Call Mark is a code that denotes the subject content of a book or item, and it is used to arrange items numerically on the shelves for retrieval.",
+      "questionImage": ""
+    },
+    {
+      "id": 44,
+      "question": "Books on 'Political Science' are assigned which main class letter in the Library of Congress Classification?",
+      "options": [
+        {"text": "G"},
+        {"text": "H"},
+        {"text": "J"},
+        {"text": "K"}
+      ],
+      "answer": "H",
+      "explanation": "In the LCC scheme, 'H' represents 'Social Sciences', which includes Political Science.",
+      "questionImage": ""
+    },
+    {
+      "id": 45,
+      "question": "The Hezekiah Oluwasanmi Library's collection includes over 750,000 volumes of what specific type of resource?",
+      "options": [
+        {"text": "Rare manuscripts."},
+        {"text": "Academic journals."},
+        {"text": "Textbooks."},
+        {"text": "Government documents."}
+      ],
+      "answer": "Textbooks.",
+      "explanation": "The library is stated to hold 'over 750,000 volumes of text books'.",
+      "questionImage": ""
+    },
+    {
+      "id": 46,
+      "question": "What are the two broad categories of resources that constitute the Hezekiah Oluwasanmi Library's general collections?",
+      "options": [
+        {"text": "Digital and Analog resources."},
+        {"text": "Primary and Secondary resources."},
+        {"text": "Print and Non-print resources."},
+        {"text": "Local and International resources."}
+      ],
+      "answer": "Print and Non-print resources.",
+      "explanation": "The library's collections are broadly categorized into 'Print resources' and 'Non-print resources'.",
+      "questionImage": ""
+    },
+    {
+      "id": 47,
+      "question": "The 'Africana Special Collection' is characterized by its focus on materials of primary interest to which specific field of study?",
+      "options": [
+        {"text": "General African History."},
+        {"text": "African Linguistics."},
+        {"text": "African Studies."},
+        {"text": "African Diaspora Research."}
+      ],
+      "answer": "African Studies.",
+      "explanation": "The Africana Special Collection is described as being of primary interest to people whose fields of interest are in 'African Studies'.",
+      "questionImage": ""
+    },
+    {
+      "id": 48,
+      "question": "What kind of publications are specifically housed under 'OAU Publications' within the library's print resources?",
+      "options": [
+        {"text": "Publications from other Nigerian universities."},
+        {"text": "Staff publications and theses submitted for higher degrees."},
+        {"text": "General academic textbooks for OAU courses."},
+        {"text": "International research papers by OAU affiliates."}
+      ],
+      "answer": "Staff publications and theses submitted for higher degrees.",
+      "explanation": "'OAU Publications' specifically includes 'Staff publications and theses submitted for higher degrees of the university as well as of other universities'.",
+      "questionImage": ""
+    },
+    {
+      "id": 49,
+      "question": "In the Library of Congress Classification, what does the letter 'Q' represent as a main subject area?",
+      "options": [
+        {"text": "Medicine."},
+        {"text": "Science."},
+        {"text": "Technology."},
+        {"text": "Agriculture."}
+      ],
+      "answer": "Science.",
+      "explanation": "LCC class 'Q' is designated for 'Science'. R is Medicine, S is Agriculture, and T is Technology.",
+      "questionImage": ""
+    },
+    {
+      "id": 50,
+      "question": "Which LCC main class covers 'Auxiliary Sciences of History'?",
+      "options": [
+        {"text": "A"},
+        {"text": "B"},
+        {"text": "C"},
+        {"text": "D"}
+      ],
+      "answer": "C",
+      "explanation": "LCC class 'C' is designated for 'Auxiliary Sciences of History'.",
+      "questionImage": ""
+    },
+    {
+      "id": 51,
+      "question": "What is the purpose of dividing main subject areas into sub-classes within the Library of Congress Classification Scheme?",
+      "options": [
+        {"text": "To limit the total number of books in a class."},
+        {"text": "To allow for more detailed and specific classification of materials."},
+        {"text": "To simplify the classification process for new librarians."},
+        {"text": "To ensure all books are of a uniform size on the shelves."}
+      ],
+      "answer": "To allow for more detailed and specific classification of materials.",
+      "explanation": "The LCC scheme allows for main subject areas to be 'divided or sub divided so that allowances is made for as such details as possible'.",
+      "questionImage": ""
+    },
+    {
+      "id": 52,
+      "question": "Books classified under LCC Classes A-J are housed in which specific wing of the Hezekiah Oluwasanmi Library?",
+      "options": [
+        {"text": "The North wing."},
+        {"text": "The South wing."},
+        {"text": "The East wing."},
+        {"text": "The West wing."}
+      ],
+      "answer": "The South wing.",
+      "explanation": "The South wing houses books in Class A-J.",
+      "questionImage": ""
+    },
+    {
+      "id": 53,
+      "question": "Books classified under LCC Classes K-Z are housed in which specific wing of the Hezekiah Oluwasanmi Library?",
+      "options": [
+        {"text": "The South wing."},
+        {"text": "The North wing."},
+        {"text": "The Central wing."},
+        {"text": "The Special Collections wing."}
+      ],
+      "answer": "The North wing.",
+      "explanation": "The North wing houses books in Classes K-Z.",
+      "questionImage": ""
+    },
+    {
+      "id": 54,
+      "question": "What is the primary role of the 'Acquisitions' function within a library's organizational structure?",
+      "options": [
+        {"text": "Managing user accounts and loans."},
+        {"text": "Obtaining new materials for the library's collection."},
+        {"text": "Repairing damaged books."},
+        {"text": "Providing reference assistance to users."}
+      ],
+      "answer": "Obtaining new materials for the library's collection.",
+      "explanation": "Acquisitions is a sub-unit under 'Collection Services', implying its role in obtaining new materials.",
+      "questionImage": ""
+    },
+    {
+      "id": 55,
+      "question": "What is the primary role of the 'Cataloging' function within a library's organizational structure?",
+      "options": [
+        {"text": "Creating digital copies of physical books."},
+        {"text": "Organizing and describing library materials for easy retrieval."},
+        {"text": "Handling inter-library loan requests."},
+        {"text": "Developing new library programs for the community."}
+      ],
+      "answer": "Organizing and describing library materials for easy retrieval.",
+      "explanation": "Cataloguing is a sub-unit under 'Technical Services', which is responsible for arranging information items into a system for easy identification and retrieval.",
+      "questionImage": ""
+    },
+    {
+      "id": 56,
+      "question": "Classification, in a library context, is defined as the orderly arrangement of items according to their:",
+      "options": [
+        {"text": "Publication date."},
+        {"text": "Physical size."},
+        {"text": "Common characteristics."},
+        {"text": "Author's last name."}
+      ],
+      "answer": "Common characteristics.",
+      "explanation": "Classification is defined as 'the orderly arrangement of things/ items in classes according to common characteristics'.",
+      "questionImage": ""
+    },
+    {
+      "id": 57,
+      "question": "Which classification scheme is commonly known by the acronym 'UDC'?",
+      "options": [
+        {"text": "Universal Digital Catalog."},
+        {"text": "Unified Document Code."},
+        {"text": "Universal Decimal Classification Scheme."},
+        {"text": "Undergraduate Degree Classification."}
+      ],
+      "answer": "Universal Decimal Classification Scheme.",
+      "explanation": "UDC stands for 'Universal Decimal Classification Scheme'.",
+      "questionImage": ""
+    },
+    {
+      "id": 58,
+      "question": "A key feature of the Library of Congress Classification (LCC) Scheme is that its symbols are made up of a combination of:",
+      "options": [
+        {"text": "Roman numerals and Greek letters."},
+        {"text": "Letters and numbers."},
+        {"text": "Colors and geometric shapes."},
+        {"text": "Alphabets and special characters."}
+      ],
+      "answer": "Letters and numbers.",
+      "explanation": "The LCC Scheme 'is made up of a combination of letters and numbers'.",
+      "questionImage": ""
+    },
+    {
+      "id": 59,
+      "question": "What is the primary method by which information sources are arranged in the Hezekiah Oluwasanmi Library to facilitate identification and retrieval?",
+      "options": [
+        {"text": "Alphabetical ordering by title."},
+        {"text": "Numerical sequencing by accession number."},
+        {"text": "Classification by subject."},
+        {"text": "Chronological arrangement by publication year."}
+      ],
+      "answer": "Classification by subject.",
+      "explanation": "The material states that 'The most common way of arranging information items or sources in the library is by classification', and the HOL uses the LCC Scheme for subject classification.",
+      "questionImage": ""
+    },
+    {
+      "id": 60,
+      "question": "What LCC main class is assigned to 'Law'?",
+      "options": [
+        {"text": "I"},
+        {"text": "J"},
+        {"text": "K"},
+        {"text": "L"}
+      ],
+      "answer": "K",
+      "explanation": "LCC class 'K' is designated for 'Law'.",
+      "questionImage": ""
+    },
+    {
+      "id": 61,
+      "question": "What is the primary purpose of displaying 'Recent Accessions' in the library?",
+      "options": [
+        {"text": "To allow immediate borrowing by all users."},
+        {"text": "To showcase newly acquired books before integration into the main collection."},
+        {"text": "To facilitate quick cataloguing by library staff."},
+        {"text": "To serve as a permanent exhibition of rare books."}
+      ],
+      "answer": "To showcase newly acquired books before integration into the main collection.",
+      "explanation": "Recent Accessions are displayed for several days before being put in the main collection, allowing users to see new additions.",
+      "questionImage": ""
+    },
+    {
+      "id": 62,
+      "question": "Can books displayed as 'Recent Accessions' be borrowed directly from the display?",
+      "options": [
+        {"text": "Yes, immediately."},
+        {"text": "Only by senior staff."},
+        {"text": "No, but they can be reserved at the Loans desk."},
+        {"text": "Only after a week of display."}
+      ],
+      "answer": "No, but they can be reserved at the Loans desk.",
+      "explanation": "Books on display as Recent Accessions cannot be borrowed directly but can be reserved at the Loans desk.",
+      "questionImage": ""
+    },
+    {
+      "id": 63,
+      "question": "The Conservation Room Collection serves as a depository for which types of materials?",
+      "options": [
+        {"text": "Current textbooks and journals."},
+        {"text": "Newspapers, magazines, and some rare books."},
+        {"text": "Digital archives and e-books."},
+        {"text": "Government documents and OAU publications."}
+      ],
+      "answer": "Newspapers, magazines, and some rare books.",
+      "explanation": "The Conservation Room serves as a depository for newspapers, magazines, and some rare books.",
+      "questionImage": ""
+    },
+    {
+      "id": 64,
+      "question": "Newspapers and magazines in the Conservation Room Collection date back to which period?",
+      "options": [
+        {"text": "Early 2000s."},
+        {"text": "Late 1980s."},
+        {"text": "Early 1960s."},
+        {"text": "Mid-1970s."}
+      ],
+      "answer": "Early 1960s.",
+      "explanation": "Newspapers and magazines in this collection date back to the early 1960s.",
+      "questionImage": ""
+    },
+    {
+      "id": 65,
+      "question": "The library subscribes to online databases that provide access to which broad categories of information?",
+      "options": [
+        {"text": "Social media and entertainment content."},
+        {"text": "Books, journal articles, newspapers, scientific and business information."},
+        {"text": "Personal blogs and forums."},
+        {"text": "Government classified documents."}
+      ],
+      "answer": "Books, journal articles, newspapers, scientific and business information.",
+      "explanation": "Online Databases provide access to books, journal articles, newspapers, scientific and business information.",
+      "questionImage": ""
+    },
+    {
+      "id": 66,
+      "question": "Which of the following is an example of an accessible electronic resource provided by the library?",
+      "options": [
+        {"text": "Physical textbooks."},
+        {"text": "Printed journals."},
+        {"text": "E-books."},
+        {"text": "Microfilm archives."}
+      ],
+      "answer": "E-books.",
+      "explanation": "Accessible electronic resources include E-books and E-journals.",
+      "questionImage": ""
+    },
+    {
+      "id": 67,
+      "question": "Which online database subscribed to by the library covers 'All disciplines'?",
+      "options": [
+        {"text": "The New England Journal of Medicine."},
+        {"text": "Royal Society Journal Online."},
+        {"text": "Ebscohost."},
+        {"text": "Marketline."}
+      ],
+      "answer": "Ebscohost.",
+      "explanation": "Ebscohost covers 'All disciplines'.",
+      "questionImage": ""
+    },
+    {
+      "id": 68,
+      "question": "For information related to 'Business information', which specific online database is available?",
+      "options": [
+        {"text": "Legalpedia."},
+        {"text": "HeinOnline."},
+        {"text": "Marketline."},
+        {"text": "Springer Nature."}
+      ],
+      "answer": "Marketline.",
+      "explanation": "Marketline provides information for 'Business information'.",
+      "questionImage": ""
+    },
+    {
+      "id": 69,
+      "question": "Which online resource provides access to 'e-journals in French Language'?",
+      "options": [
+        {"text": "ALPS Learned journals collection."},
+        {"text": "EIFL.Net e-journals in French Language."},
+        {"text": "DATAD."},
+        {"text": "Research4Life."}
+      ],
+      "answer": "EIFL.Net e-journals in French Language.",
+      "explanation": "EIFL.Net e-journals provide access to resources in 'French Language'.",
+      "questionImage": ""
+    },
+    {
+      "id": 70,
+      "question": "The 'Document Collection' includes official publications from which Nigerian governmental bodies?",
+      "options": [
+        {"text": "State Houses of Assembly and Local Government Councils."},
+        {"text": "Federal Government of Nigeria, Old Regional Governments, and the Federal Capital Territory."},
+        {"text": "Nigerian National Assembly and Judiciary."},
+        {"text": "State Governors' Offices and Traditional Rulers' Councils."}
+      ],
+      "answer": "Federal Government of Nigeria, Old Regional Governments, and the Federal Capital Territory.",
+      "explanation": "The Document Collection includes official publications of the Federal Government of Nigeria, the Old Regional Governments, the present State Governments and the Federal Capital Territory.",
+      "questionImage": ""
+    },
+    {
+      "id": 71,
+      "question": "Besides Nigerian government publications, the 'Document Collection' also includes publications from which international organizations?",
+      "options": [
+        {"text": "NATO and European Union."},
+        {"text": "United Nations Organisation (UNO) and World Bank."},
+        {"text": "African Development Bank and ECOWAS."},
+        {"text": "International Monetary Fund (IMF) and World Trade Organization (WTO)."}
+      ],
+      "answer": "United Nations Organisation (UNO) and World Bank.",
+      "explanation": "The Document Collection includes publications from United Nations Organisation (UNO) and the World Bank, among others.",
+      "questionImage": ""
+    },
+    {
+      "id": 72,
+      "question": "The 'Reference Collection' primarily consists of which types of resources?",
+      "options": [
+        {"text": "Fiction novels and poetry books."},
+        {"text": "Dictionaries, encyclopedias, handbooks, and atlases."},
+        {"text": "Current newspapers and magazines."},
+        {"text": "Theses and dissertations."}
+      ],
+      "answer": "Dictionaries, encyclopedias, handbooks, and atlases.",
+      "explanation": "The Reference Collection includes dictionaries, encyclopaedia, handbooks, directories, atlases, and university calendars.",
+      "questionImage": ""
+    },
+    {
+      "id": 73,
+      "question": "Where are newspaper clippings (post-October, 1980) and vertical file pamphlet type material kept?",
+      "options": [
+        {"text": "Main reading rooms."},
+        {"text": "Serials Room."},
+        {"text": "Reference Room."},
+        {"text": "Conservation Room."}
+      ],
+      "answer": "Reference Room.",
+      "explanation": "Newspaper clippings and pamphlet type material are kept in the Reference Room.",
+      "questionImage": ""
+    },
+    {
+      "id": 74,
+      "question": "What additional resource is provided in the Reference Room for periodical articles on Nigerian and African Literature?",
+      "options": [
+        {"text": "Full-text digital copies."},
+        {"text": "Indexes."},
+        {"text": "Microfilm copies."},
+        {"text": "Audio recordings."}
+      ],
+      "answer": "Indexes.",
+      "explanation": "Indexes are provided for periodical articles on Nigerian and African Literature.",
+      "questionImage": ""
+    },
+    {
+      "id": 75,
+      "question": "The 'Serials Collection' consists of which two main categories of journals?",
+      "options": [
+        {"text": "Local and International journals."},
+        {"text": "Print and Electronic journals."},
+        {"text": "Current and back files of journals."},
+        {"text": "Open access and Subscription journals."}
+      ],
+      "answer": "Current and back files of journals.",
+      "explanation": "The Serials collection consists of both current and back files of journals.",
+      "questionImage": ""
+    },
+    {
+      "id": 76,
+      "question": "Where are the 'current journals' from the Serials Collection displayed?",
+      "options": [
+        {"text": "In the main reading rooms."},
+        {"text": "In the display section of the Serial Room."},
+        {"text": "In the Reference Room."},
+        {"text": "In the Conservation Room."}
+      ],
+      "answer": "In the display section of the Serial Room.",
+      "explanation": "The current journals are shelved in the display section of the Serial Room.",
+      "questionImage": ""
+    },
+    {
+      "id": 77,
+      "question": "Access to 'Recent back files' (latest 10 years) of journals in the Serials Collection is open to which specific user categories?",
+      "options": [
+        {"text": "All registered students and staff."},
+        {"text": "Undergraduate students only."},
+        {"text": "Registered Senior Staff and Postgraduate students."},
+        {"text": "External researchers with special permission."}
+      ],
+      "answer": "Registered Senior Staff and Postgraduate students.",
+      "explanation": "Recent back files are on open access to registered Senior Staff and Postgraduate students who must present the university identity and library cards and sign the register.",
+      "questionImage": ""
+    },
+    {
+      "id": 78,
+      "question": "To access 'Older back files' (journals older than ten years) in the Serials Collection, what is required from readers?",
+      "options": [
+        {"text": "Direct access from the shelves."},
+        {"text": "Online request only."},
+        {"text": "Obtain and complete a request form at the Serials Section."},
+        {"text": "Special permission from the University Librarian."}
+      ],
+      "answer": "Obtain and complete a request form at the Serials Section.",
+      "explanation": "For Older back files, readers must obtain and complete a request form at the Serials Section.",
+      "questionImage": ""
+    },
+    {
+      "id": 79,
+      "question": "Which online database is specifically designed for 'Databases of African Theses and Dissertations'?",
+      "options": [
+        {"text": "Research4Life."},
+        {"text": "The Federalist."},
+        {"text": "DATAD."},
+        {"text": "Afrilka."}
+      ],
+      "answer": "DATAD.",
+      "explanation": "DATAD is designed for 'Databases of African Theses and Dissertations'.",
+      "questionImage": ""
+    },
+    {
+      "id": 80,
+      "question": "The collections in the Conservation Room, excluding rare books, are generally of what nature?",
+      "options": [
+        {"text": "Ephemeral."},
+        {"text": "Discontinuous."},
+        {"text": "Continuous."},
+        {"text": "Digital."}
+      ],
+      "answer": "Continuous.",
+      "explanation": "The collections in the Conservation Room, excluding rare books, are of a continuous nature.",
+      "questionImage": ""
+    },
+    {
+      "id": 1,
+      "question": "According to the ALA (2010) definition, a library is primarily a collection of resources organized by information professionals to provide convenient access and to achieve which ultimate goal?",
+      "options": [
+        {"text": "Preserving historical documents for future generations."},
+        {"text": "Educating and entertaining a variety of audiences."},
+        {"text": "Stimulating individual learning and advancing as a whole."},
+        {"text": "Facilitating the dissemination of research findings globally."}
+      ],
+      "answer": "Stimulating individual learning and advancing as a whole.",
+      "explanation": "The ALA (2010) definition explicitly states the goal as 'stimulating individual learning and advancing as a whole'. While other options are related library functions, this is the specific ultimate goal mentioned in the definition.",
+      "questionImage": ""
+    },
+    {
+      "id": 2,
+      "question": "Which of the following is a core objective of a university library, as stated in the provided material?",
+      "options": [
+        {"text": "Generating revenue through resource sales."},
+        {"text": "Promoting social gatherings and events."},
+        {"text": "Extending the bounds of knowledge through research."},
+        {"text": "Providing vocational training for non-students."}
+      ],
+      "answer": "Extending the bounds of knowledge through research.",
+      "explanation": "One of the key objectives listed is 'Extenuation of the bounds of knowledge through research by lecturers and other researchers'. The other options are not stated objectives.",
+      "questionImage": ""
+    },
+    {
+      "id": 3,
+      "question": "The Hezekiah Oluwasanmi Library's 'Collection Development' department includes which of these units?",
+      "options": [
+        {"text": "Circulation and Reference."},
+        {"text": "Cataloguing and Bindery."},
+        {"text": "Serials and Orders."},
+text": "Repository and Multimedia."}
+      ],
+      "answer": "Serials and Orders.",
+      "explanation": "Under 'Collection Development', the listed units are 'Serials' and 'Orders'. The other options belong to different departments.",
+      "questionImage": ""
+    },
+    {
+      "id": 4,
+      "question": "Which type of library is specifically designed to serve the information needs of a particular organization, industry, or specialized field?",
+      "options": [
+        {"text": "Public Libraries."},
+        {"text": "School Libraries."},
+        {"text": "Academic Libraries."},
+        {"text": "Special/Research Libraries."}
+      ],
+      "answer": "Special/Research Libraries.",
+      "explanation": "The 'Types of Libraries' section lists 'Special/Research Libraries' as those serving specific, specialized needs, distinct from general public, school, or academic institutions.",
+      "questionImage": ""
+    },
+    {
+      "id": 5,
+      "question": "A student seeking assistance with finding relevant scholarly articles for their thesis would most likely utilize which service provided by the University Library?",
+      "options": [
+        {"text": "Document Delivery Services."},
+        {"text": "Inter-library Loan Services."},
+        {"text": "Literature Search Service."},
+        {"text": "Translation Services."}
+      ],
+      "answer": "Literature Search Service.",
+      "explanation": "The 'Research Services' section lists 'Literature search service' as directly assisting users in finding relevant scholarly articles for their research. Other options are for obtaining specific documents or language conversion.",
+      "questionImage": ""
+    },
+    {
+      "id": 6,
+      "question": "The 'Technical Services' department of the Hezekiah Oluwasanmi Library is responsible for:",
+      "options": [
+        {"text": "Lending and returning books."},
+        {"text": "Digitizing old manuscripts."},
+        {"text": "Cataloguing and binding materials."},
+        {"text": "Providing access to e-resources."}
+      ],
+      "answer": "Cataloguing and binding materials.",
+      "explanation": "Under 'Technical Services', the listed responsibilities are 'Cataloguing', 'Reprography', and 'Bindery'. Lending books is 'Circulation', digitizing is likely 'ICT E-Resources' or 'Research Development', and e-resources access is 'ICT E-Resources'.",
+      "questionImage": ""
+    },
+    {
+      "id": 7,
+      "question": "Beyond providing physical books, a key importance of the library in a university setting is offering access to:",
+      "options": [
+        {"text": "Social media platforms."},
+        {"text": "Online gaming portals."},
+        {"text": "Various electronic and ICT resources."},
+        {"text": "Personal financial advisory services."}
+      ],
+      "answer": "Various electronic and ICT resources.",
+      "explanation": "The 'Importance of the Library' section highlights 'access to various electronic and ICT resources' as a key benefit, enabling modern research and study.",
+      "questionImage": ""
+    },
+    {
+      "id": 8,
+      "question": "Which of the following is NOT explicitly listed as a unit under 'Research Development' in the Hezekiah Oluwasanmi Library's organization?",
+      "options": [
+        {"text": "Africana."},
+        {"text": "Government Document."},
+        {"text": "OAU Publications."},
+        {"text": "Serials."}
+      ],
+      "answer": "Serials.",
+      "explanation": "'Serials' is listed under 'Collection Development', not 'Research Development'. The other options are all explicitly listed under 'Research Development'.",
+      "questionImage": ""
+    },
+    {
+      "id": 9,
+      "question": "The service known as 'SDI' in university libraries stands for:",
+      "options": [
+        {"text": "Systematic Document Indexing."},
+        {"text": "Selective Dissemination of Information."},
+        {"text": "Standard Digital Integration."},
+        {"text": "Student Development Initiatives."}
+      ],
+      "answer": "Selective Dissemination of Information.",
+      "explanation": "SDI is an acronym for 'Selective Dissemination of Information', a service that provides tailored updates to users based on their specific interests.",
+      "questionImage": ""
+    },
+    {
+      "id": 10,
+      "question": "Who is the highest administrative head of the Hezekiah Oluwasanmi Library, according      to its organizational structure?",
+      "options": [
+        {"text": "Department Head."},
+        {"text": "Sectional Head."},
+        {"text": "University Librarian."},
+        {"text": "Chief Administrative Officer."}
+      ],
+      "answer": "University Librarian.",
+      "explanation": "The 'Organisation of the Hezekiah Oluwasanmi Library' section lists the 'University Librarian' as the top administrative position.",
+      "questionImage": ""
+    },
+    {
+      "id": 11,
+      "question": "Which section within the Hezekiah Oluwasanmi Library is primarily responsible for the direct lending and return of library materials?",
+      "options": [
+        {"text": "Reference."},
+        {"text": "Circulation."},
+        {"text": "Faculty Libraries."},
+        {"text": "Serials."}
+      ],
+      "answer": "Circulation.",
+      "explanation": "Circulation is the unit specifically mentioned under 'Readers Services' for lending and returning materials.",
+      "questionImage": ""
+    },
+    {
+      "id": 12,
+      "question": "The process of acquiring new books and journals for the library's collection falls under which main department?",
+      "options": [
+        {"text": "Readers Services."},
+        {"text": "Technical Services."},
+        {"text": "Collection Development."},
+        {"text": "Research Development."}
+      ],
+      "answer": "Collection Development.",
+      "explanation": "'Collection Development' is responsible for 'Serials' and 'Orders', which relate to acquiring materials.",
+      "questionImage": ""
+    },
+    {
+      "id": 13,
+      "question": "If a student needs to access digital academic papers and multimedia files provided by the library, they would typically find these under which department?",
+      "options": [
+        {"text": "Technical Services."},
+        {"text": "Readers Services."},
+        {"text": "ICT E-Resources."},
+        {"text": "Research Development."}
+      ],
+      "answer": "ICT E-Resources.",
+      "explanation": "'ICT E-Resources (Repository)' explicitly lists 'Repository', 'Software/E-Resources', 'Hardware', and 'Multimedia' as its units.",
+      "questionImage": ""
+    },
+    {
+      "id": 14,
+      "question": "The physical preparation of library materials, such as binding and cataloguing, is handled by which department?",
+      "options": [
+        {"text": "ICT E-Resources."},
+        {"text": "Technical Services."},
+        {"text": "Collection Development."},
+        {"text": "Readers Services."}
+      ],
+      "answer": "Technical Services.",
+      "explanation": "'Technical Services' includes 'Cataloguing', 'Reprography', and 'Bindery', all related to physical preparation.",
+      "questionImage": ""
+    },
+    {
+      "id": 15,
+      "question": "Which unit within the Hezekiah Oluwasanmi Library focuses on collecting and preserving historical documents related to the university itself?",
+      "options": [
+        {"text": "Africana."},
+        {"text": "Government Document."},
+        {"text": "University Archives."},
+        {"text": "Research Commons."}
+      ],
+      "answer": "University Archives.",
+      "explanation": "'University Archives' is specifically listed under 'Research Development' for preserving university-related historical documents.",
+      "questionImage": ""
+    },
+    {
+      "id": 16,
+      "question": "A library, as defined by George Eberhart, is characterized by its collection of resources being organized by whom?",
+      "options": [
+        {"text": "General public volunteers."},
+        {"text": "Experienced educators."},
+        {"text": "Information professionals or other experts."},
+        {"text": "University administrators."}
+      ],
+      "answer": "Information professionals or other experts.",
+      "explanation": "The definition explicitly states 'organized by information professionals or other experts'.",
+      "questionImage": ""
+    },
+    {
+      "id": 17,
+      "question": "One of the objectives of the university library is to ensure that faculty and students achieve high academic honour and a good reading habit by:",
+      "options": [
+        {"text": "Providing entertainment resources."},
+        {"text": "Enabling access to necessary resources."},
+        {"text": "Organizing social events."},
+        {"text": "Offering financial aid."}
+      ],
+      "answer": "Enabling access to necessary resources.",
+      "explanation": "The objective states 'Enabling the faculty and students to achieve highest academic honour and lifetime good reading'. This implies providing the resources to do so, further supported by 'Acquiring process of resources and make them available to the readers/users'.",
+      "questionImage": ""
+    },
+    {
+      "id": 18,
+      "question": "If a researcher needs to obtain a document that is not available in the Hezekiah Oluwasanmi Library's collection, which service would they most likely use?",
+      "options": [
+        {"text": "Bibliographic services."},
+        {"text": "Current Awareness Service."},
+        {"text": "Inter-library loan services."},
+        {"text": "Translation services."}
+      ],
+      "answer": "Inter-library loan services.",
+      "explanation": "'Inter-library loan services' are specifically for obtaining materials from other libraries.",
+      "questionImage": ""
+    },
+    {
+      "id": 19,
+      "question": "Which type of library primarily serves the general public with a wide range of materials and services for all ages?",
+      "options": [
+        {"text": "Academic Libraries."},
+        {"text": "School Libraries."},
+        {"text": "Public Libraries."},
+        {"text": "Special Libraries."}
+      ],
+      "answer": "Public Libraries.",
+      "explanation": "Public libraries are designed to serve the general public, as implied by their name and common understanding.",
+      "questionImage": ""
+    },
+    {
+      "id": 20,
+      "question": "Besides providing resources, a university library is important because it offers students and lecturers a quiet place to:",
+      "options": [
+        {"text": "Socialize and network."},
+        {"text": "Conduct experiments."},
+        {"text": "Study and utilize ICT resources."},
+        {"text": "Engage in recreational activities."}
+      ],
+      "answer": "Study and utilize ICT resources.",
+      "explanation": "The 'Importance of the Library' section states 'it offers a quiet places to study as well as access to various electronic and ICT resources'.",
+      "questionImage": ""
+    }
+  ]
+}
