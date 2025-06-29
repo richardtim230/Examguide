@@ -7,6 +7,9 @@ import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import multer from "multer";
+// ...existing imports...
+import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
+import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API route
 
 // ===== Models and Middleware =====
 import User from "./models/User.js";
@@ -66,8 +69,12 @@ app.use(cors({
 app.use(express.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-// ===== Multer Setup for Notifications (used in notificationsRoutes) =====
-// (If your notificationsRoutes uses its own multer, this is just for fallback or extra uses.)
+
+// ===== Add after notifications/multer setup =====
+app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts"))); // NEW: serve broadcast images
+
+// ===== Register broadcasts API route =====
+app.use("/api/broadcasts", broadcastsRoutes); // NEW: broadcasts API
 
 // ===== MongoDB Connect =====
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
