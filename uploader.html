@@ -511,7 +511,7 @@ a { color: inherit; text-decoration: none; }
   </div>
   <script>
     // ========== CONFIG ==========
-    const API_URL = "https://examguide-wmyk.onrender.com/api/";
+    const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
     let uploader = {}; // user object
     let faculty = {};
@@ -527,7 +527,7 @@ a { color: inherit; text-decoration: none; }
       uploader = await resp.json();
       if (!uploader || !uploader.user || uploader.user.role !== "uploader") {
         alert("Unauthorized.");
-        window.location.href = "mock.html";
+        window.location.href = "mock-icthallb";
         return;
       }
       uploader = uploader.user;
