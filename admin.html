@@ -253,7 +253,7 @@
   <div class="actions">
     <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
     <!-- Button to open the Broadcast Modal -->
-<button class="btn" onclick="openBroadcastModal()">+ Broadcast Message</button>
+
 
   </div>
   <table class="data-table" id="notificationsTable">
@@ -620,6 +620,7 @@ function showSection(id, el) {
   if (id === "schedules") fetchSchedules();
   if (id === "notifications") fetchNotifications();
   if (id === "students") fetchStudents();
+  if (id === "broadcasts") fetchBroadcasts();
   if (window.innerWidth <= 950) closeSidebar();
     if (id === "dashboard") {
     fetchDashboardCounts();
