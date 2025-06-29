@@ -618,9 +618,8 @@ function showSection(id, el) {
   if (id === "questions") fetchQuestions();
   if (id === "results") fetchResults();
   if (id === "schedules") fetchSchedules();
-  if (id === "notifications") fetchNotifications();
+  if (id === "notifications") { fetchNotifications(); fetchBroadcasts(); }
   if (id === "students") fetchStudents();
-  if (id === "broadcasts") fetchBroadcasts();
   if (window.innerWidth <= 950) closeSidebar();
     if (id === "dashboard") {
     fetchDashboardCounts();
