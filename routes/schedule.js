@@ -22,22 +22,11 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   }
 });
 
-
-
-// List all schedules (students: only for their department)
+// List all schedules (optionally filter by faculty/department), populated with examSet info
 router.get("/", authenticate, async (req, res) => {
   const filter = {};
-
-  // For admins, allow filtering by faculty/department via query
-  if (req.user.role === "admin" || req.user.role === "superadmin") {
-    if (req.query.faculty) filter.faculty = req.query.faculty;
-    if (req.query.department) filter.departments = req.query.department;
-  }
-  // For students, filter by their department (always)
-  if (req.user.role === "student" && req.user.department) {
-    filter.departments = req.user.department; // schedules where student's dept is in departments array
-  }
-
+  if (req.query.faculty) filter.faculty = req.query.faculty;
+  if (req.query.department) filter.departments = req.query.department; // department is now inside departments array
   try {
     const schedules = await Schedule.find(filter)
       .sort({ start: -1 })
