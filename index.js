@@ -5,7 +5,12 @@ import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+
 import fs from "fs";
+const uploadDir = "./uploads/broadcasts";
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 import multer from "multer";
 // ...existing imports...
 import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
