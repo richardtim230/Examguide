@@ -84,6 +84,43 @@ router.get("/me", authenticate, async (req, res) => {
   res.json({ result });
 });
 
+// Leaderboard endpoint: Returns top students by total cumulative score.
+router.get("/leaderboard/top", authenticate, async (req, res) => {
+  try {
+    // Aggregate results: sum total score for each user
+    const aggregation = await Result.aggregate([
+      { $group: {
+          _id: "$user",
+          totalScore: { $sum: "$score" }
+        }
+      },
+      { $sort: { totalScore: -1 } },
+      { $limit: 10 }
+    ]);
+    // Populate user info
+    const userIds = aggregation.map(e => e._id);
+    const users = await User.find({ _id: { $in: userIds } })
+      .select("username fullname profilePic faculty department");
+    // Merge users and scores
+    const leaderboard = aggregation.map(entry => {
+      const user = users.find(u => u._id.toString() === entry._id.toString()) || {};
+      return {
+        userId: user._id,
+        username: user.username,
+        fullname: user.fullname,
+        profilePic: user.profilePic,
+        faculty: user.faculty,
+        department: user.department,
+        totalScore: entry.totalScore
+      };
+    });
+    res.json(leaderboard);
+  } catch (e) {
+    console.error("Leaderboard error:", e);
+    res.status(500).json({ message: "Could not fetch leaderboard", error: e.message });
+  }
+});
+
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -108,12 +145,13 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
       answers = Object.fromEntries(answers);
     }
     answers = answers || {};
-    console.log("answers keys:", Object.keys(answers));
+    // Debug logs (optional, can be removed in production)
+     console.log("answers keys:", Object.keys(answers));
     if (questionSet.questions.length > 0) {
-      console.log("first question id:", questionSet.questions[0].id);
+    console.log("first question id:", questionSet.questions[0].id);
     }
     questionSet.questions.forEach(q => {
-      console.log("question id:", q.id, "selected:", answers[String(q.id)]);
+     console.log("question id:", q.id, "selected:", answers[String(q.id)]);
     });
 
     const questions = questionSet.questions.map((q) => ({
@@ -134,4 +172,5 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
+
 export default router;
