@@ -925,13 +925,13 @@ document.addEventListener('DOMContentLoaded', function() {
       let username = document.getElementById('reg_username').value.trim();
       let password = document.getElementById('reg_password').value;
       let email = document.getElementById('reg_email').value.trim();
-      let Faculty = document.getElementById('reg_faculty').value.trim();
+      let faculty = document.getElementById('reg_faculty').value.trim();
       let department = document.getElementById('reg_department').value.trim();
       let level = document.getElementById('reg_level').value;
       let phone = document.getElementById('reg_phone').value.trim();
 
       // Basic validation
-      if (!fullName || !username || !password || !email || !Faculty || !department || !level || !phone) {
+      if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
         showNotification("All fields are required!", "error");
         return;
       }
@@ -947,7 +947,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password,
             email,
             fullname: fullName,
-            Faculty :faculty,
+            faculty,
             department,
             level,
             phone
