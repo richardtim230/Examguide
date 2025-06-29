@@ -28,6 +28,22 @@
       display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-bottom: 1px solid #e3e8ee; cursor: pointer; transition: background 0.12s;
       background: #f4f8fe; position: relative; min-width: 0; touch-action: manipulation;
     }
+    @media (max-width: 900px) {
+  .chat-sidebar { flex-direction: column !important; }
+  .chat-conversations-list { flex-direction: column !important; }
+}
+@media (max-width: 650px) {
+  .chat-sidebar {
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  .chat-conversations-list {
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+      }
     .chat-conversation-listitem.active, .chat-conversation-listitem:hover { background: #e6eeff; }
     .chat-conv-avatar { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; background: #eaf1fb; border: 2px solid #3a86ff; box-shadow: 0 1px 5px #3a86ff11; flex-shrink: 0; }
     .chat-conv-info { flex: 1; min-width: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
@@ -85,7 +101,37 @@
       .back-btn { display: inline-block;}
       .chat-messages-area { margin-bottom: 70px; }
     }
+@media (max-width: 650px) {
+  .chat-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    min-height: 0;
+    max-height: 100vh;
+    z-index: 201;
+    width: 86vw;
+    max-width: 340px;
+    background: #f4f8fe;
+    box-shadow: 2px 0 16px #3a86ff22;
+    transform: translateX(-100%);
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+    flex-direction: column; /* <--- this is key */
+    overflow-y: auto; /* <--- allow vertical scroll */
+    overflow-x: hidden;
+  }
+  .chat-conversations-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
 
+    
     /* WhatsApp-style attachment modal */
     .attachment-modal-backdrop {
       position: fixed; inset: 0; background: rgba(58,134,255,0.13); z-index: 3000;
