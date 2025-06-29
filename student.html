@@ -1513,7 +1513,6 @@ async function downloadCertificate() {
 
 // Fetch and display leaderboard from API, with daily popup for the top scorer
 
-
 let leaderboardCache = [];
 
 // Fetch leaderboard directly from the backend API endpoint
@@ -1529,23 +1528,20 @@ async function fetchLeaderboard() {
   }
 }
 
+// Render the top 3 scholars in the leaderboard container
 function renderLeaderboard() {
   const lb = leaderboardCache.slice(0, 3);
   let html = `<div class="scoreboard-title">🏆 Top Scholars</div>
     <div class="scoreboard-list">
-      ${
-        lb.length > 0
-        ? lb.map((stu, idx) => `
-          <div class="scoreboard-item rank-${idx+1}">
-            <div class="scoreboard-rank">#${idx+1}</div>
-            <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="Profile">
-            <div class="scoreboard-name">${stu.fullname || stu.username}</div>
-            <div class="scoreboard-score">${stu.totalScore} pts</div>
-            <span class="scoreboard-badge badge-rank-${idx+1}">${['🥇','🥈','🥉'][idx]}</span>
-          </div>
-        `).join('')
-        : `<div style="width:100%;text-align:center;color:#888;font-size:1.05em;padding:12px 0;">No leaderboard data yet.</div>`
-      }
+      ${lb.map((stu, idx) => `
+        <div class="scoreboard-item rank-${idx+1}">
+          <div class="scoreboard-rank">#${idx+1}</div>
+          <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="Profile">
+          <div class="scoreboard-name">${stu.fullname || stu.username}</div>
+          <div class="scoreboard-score">${stu.totalScore} pts</div>
+          <span class="scoreboard-badge badge-rank-${idx+1}">${['🥇','🥈','🥉'][idx]}</span>
+        </div>
+      `).join('')}
     </div>`;
   document.getElementById("leaderboardContainer").innerHTML = html;
 }
@@ -1585,21 +1581,6 @@ function checkAndShowWinnerPopup() {
   }
 }
 
-// Close modal utility
-function closeModal(e) {
-  if (
-    !e ||
-    (e.target &&
-      (
-        e.target.classList.contains('modal-backdrop') ||
-        e.target.classList.contains('close-modal')
-      )
-    )
-  ) {
-    document.getElementById("modalRoot").innerHTML = "";
-  }
-}
-
 // Call this after the DOM is ready to setup the leaderboard
 async function setupLeaderboard() {
   await fetchLeaderboard();
@@ -1608,7 +1589,7 @@ async function setupLeaderboard() {
 }
 
 // Call setupLeaderboard() after login or main dashboard page load
-window.addEventListener("DOMContentLoaded", setupLeaderboard);
+setupLeaderboard();
 
   </script>
 </body>
