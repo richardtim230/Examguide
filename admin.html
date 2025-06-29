@@ -246,6 +246,9 @@
   <div class="section-title">Send Announcement</div>
   <div class="actions">
     <button class="btn" onclick="openModal('sendNotifModal')">+ New Message</button>
+    <!-- Button to open the Broadcast Modal -->
+<button class="btn" onclick="openBroadcastModal()">+ Broadcast Message</button>
+
   </div>
   <table class="data-table" id="notificationsTable">
     <thead>
@@ -1520,6 +1523,74 @@ function populateScheduleModalFields() {
         closeModal();
       }, 900);
     }
+
+
+function openBroadcastModal() {
+  document.getElementById("modalRoot").innerHTML = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" style="max-width:420px;" onclick="event.stopPropagation()">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Send Broadcast Message</h2>
+        <label>Title</label>
+        <input id="broadcastTitle" type="text" maxlength="120">
+        <label>Message</label>
+        <textarea id="broadcastMsg" maxlength="2000" rows="5"></textarea>
+        <label>Type</label>
+        <select id="broadcastType">
+          <option value="info">Info</option>
+          <option value="success">Success</option>
+          <option value="warning">Warning</option>
+          <option value="danger">Danger</option>
+        </select>
+        <label>Expiry (optional)</label>
+        <input id="broadcastExpiry" type="datetime-local">
+        <label>Link (optional)</label>
+        <input id="broadcastLink" type="url" maxlength="600">
+        <label>Image (optional)</label>
+        <input id="broadcastImg" type="file" accept="image/*">
+        <span id="broadcastMsgStatus"></span>
+        <button class="btn" onclick="submitBroadcast()">Send</button>
+      </div>
+    </div>`;
+}
+
+async function submitBroadcast() {
+  const title = document.getElementById("broadcastTitle").value.trim();
+  const message = document.getElementById("broadcastMsg").value.trim();
+  const type = document.getElementById("broadcastType").value;
+  const link = document.getElementById("broadcastLink").value.trim();
+  const expiresAt = document.getElementById("broadcastExpiry").value;
+  const imageFile = document.getElementById("broadcastImg").files[0];
+  const status = document.getElementById("broadcastMsgStatus");
+  status.innerText = "";
+
+  if (!title || !message) { status.innerText = "Title and message are required!"; return; }
+
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('message', message);
+  formData.append('type', type);
+  if (link) formData.append('link', link);
+  if (expiresAt) formData.append('expiresAt', expiresAt);
+  if (imageFile) formData.append('image', imageFile);
+
+  try {
+    const resp = await fetch(API_URL + "broadcasts", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+      body: formData
+    });
+    if (!resp.ok) {
+      const err = await resp.json();
+      status.innerText = err.message || "Failed to send broadcast.";
+      return;
+    }
+    status.innerText = "Broadcast sent!";
+    setTimeout(closeModal, 1200);
+  } catch (e) {
+    status.innerText = "Network error.";
+  }
+}
 
     // ========== AUTH & LOGOUT ==========
     function logout() {
