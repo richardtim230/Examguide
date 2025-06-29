@@ -580,6 +580,54 @@
     location.reload();
   }
     }
+
+    async function checkForBroadcast() {
+  try {
+    const resp = await fetch(API_URL + "broadcasts/latest", {
+      headers: { Authorization: "Bearer " + token }
+    });
+    const b = await resp.json();
+    if (!b || b.seenBy?.includes(student.id)) return; // Already seen
+    showBroadcastPopup(b);
+  } catch {}
+}
+
+function showBroadcastPopup(broadcast) {
+  // Modal style similar to provided image
+  let color = {
+    info: "#3a86ff", 
+    success: "#43aa8b", 
+    warning: "#ffb300", 
+    danger: "#ff3b47"
+  }[broadcast.type || "info"];
+  
+  document.getElementById("modalRoot").innerHTML = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:380px;border-radius:18px;box-shadow:0 6px 32px #0003;padding:0;">
+        <div style="background:${color};padding:14px 24px;border-top-left-radius:18px;border-top-right-radius:18px;color:#fff;font-weight:700;font-size:1.18em;">
+          ${broadcast.title}
+          <button class="close-modal" onclick="closeModal(event)" style="float:right;background:none;border:none;font-size:1.7em;color:#fff;opacity:0.83;">&times;</button>
+        </div>
+        <div style="padding:22px 18px;">
+          ${broadcast.imageUrl ? `<img src="${broadcast.imageUrl}" alt="info" style="max-width:100%;border-radius:8px;margin-bottom:14px;">` : ""}
+          <div style="font-size:1.07em;margin-bottom:12px;white-space:pre-wrap;">${broadcast.message}</div>
+          ${broadcast.link ? `<a href="${broadcast.link}" target="_blank" style="color:${color};text-decoration:underline;font-size:1.05em;">Read more</a><br>` : ""}
+          <button class="btn" style="width:100%;margin-top:18px;background:${color};" onclick="ackBroadcast('${broadcast._id}')">OK, Got it</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function ackBroadcast(id) {
+  await fetch(API_URL + "broadcasts/ack/" + id, {
+    method: "POST",
+    headers: { Authorization: "Bearer " + token }
+  });
+  closeModal();
+}
+
+// Call this on dashboard page load
+window.addEventListener("load", checkForBroadcast);
     // ========== PROFILE MODAL ==========
     function openProfileEdit(isInitial = false) {
       let facultyOptions = facultiesCache.map(f => `<option value="${f._id}" ${student.faculty === f.name ? "selected" : ""}>${f.name}</option>`).join('');
