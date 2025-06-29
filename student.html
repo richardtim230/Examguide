@@ -8,7 +8,66 @@
   <link rel="icon" href="logo.png">
 <link rel="stylesheet" href="./dashboard.css">
   <style>
-
+/* Add this to your dashboard.css or in a <style> tag */
+.scoreboard-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 18px #3a86ff18;
+  padding: 24px 0 18px 0;
+  margin: 28px auto 18px auto;
+  max-width: 440px;
+}
+.scoreboard-title {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #23366e;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.scoreboard-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 16px;
+}
+.scoreboard-item {
+  background: #f7faff;
+  border-radius: 14px;
+  padding: 10px 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px #3a86ff11;
+  min-width: 90px;
+  position: relative;
+}
+.scoreboard-item .scoreboard-rank {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #3a86ff;
+  margin-bottom: 4px;
+}
+.scoreboard-avatar {
+  width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin-bottom: 4px;
+  border: 2px solid #3a86ff33;
+}
+.scoreboard-name {
+  font-size: 1.07em;
+  font-weight: 600;
+  color: #23366e;
+}
+.scoreboard-score {
+  font-size: 1.01em;
+  color: #455c8a;
+  margin-top: 3px;
+}
+.scoreboard-badge {
+  display: inline-block;
+  font-size: 1.36em;
+  margin-top: 6px;
+}
+.badge-rank-1 { color: #f7b500; }
+.badge-rank-2 { color: #a8b0b8; }
+.badge-rank-3 { color: #c47c39; }
   .modal-backdrop {
   position: fixed; inset: 0; z-index: 2000;
   background: rgba(58,134,255,0.13);
