@@ -8,6 +8,12 @@
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="./admin.css">
   <style>
+
+  .data-table img {
+  max-width: 60px;
+  max-height: 60px;
+  border-radius: 4px;
+}
     .section-loader {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -262,6 +268,24 @@
     </thead>
     <tbody></tbody>
   </table>
+  <div class="section-title">Broadcasts History</div>
+<div class="actions">
+  <button class="btn" onclick="openBroadcastModal()">+ Broadcast Message</button>
+</div>
+<table class="data-table" id="broadcastsTable">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Message</th>
+      <th>Image</th>
+      <th>Link</th>
+      <th>Sent</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+          </table>
 </div>
 
 <div class="section" id="studentsSection" style="display:none; position: relative;">
@@ -1591,7 +1615,41 @@ async function submitBroadcast() {
     status.innerText = "Network error.";
   }
 }
+async function fetchBroadcasts() {
+  const resp = await fetch(API_URL + "broadcasts", { headers: { Authorization: "Bearer " + token } });
+  const broadcasts = await resp.json();
+  let html = "";
+  broadcasts.forEach(b => {
+    html += `<tr>
+      <td>${b.title}</td>
+      <td>${b.type}</td>
+      <td>${b.message}</td>
+      <td>${b.imageUrl ? `<img src="${b.imageUrl}" style="max-width:60px;max-height:60px;border-radius:4px;">` : ""}</td>
+      <td>${b.link ? `<a href="${b.link}" target="_blank">Link</a>` : ""}</td>
+      <td>${(new Date(b.createdAt)).toLocaleString()}</td>
+      <td>
+        <button class="action-btn" onclick="editBroadcast('${b._id}')">Edit</button>
+        <button class="action-btn" onclick="deleteBroadcast('${b._id}')">Delete</button>
+      </td>
+    </tr>`;
+  });
+  document.querySelector("#broadcastsTable tbody").innerHTML = html;
+}
 
+async function deleteBroadcast(id) {
+  if (!confirm("Delete this broadcast message?")) return;
+  const resp = await fetch(API_URL + "broadcasts/" + id, {
+    method: "DELETE",
+    headers: { Authorization: "Bearer " + token }
+  });
+  if (!resp.ok) {
+    const data = await resp.json();
+    alert(data.message || "Failed to delete.");
+  }
+  fetchBroadcasts();
+}
+
+// Call fetchBroadcasts() when the admin enters the broadcasts section
     // ========== AUTH & LOGOUT ==========
     function logout() {
       localStorage.removeItem("token");
