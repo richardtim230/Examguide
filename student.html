@@ -1044,6 +1044,8 @@ async function fetchHistory() {
   window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
     }
     // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
+// ...inside fetchAvailableTests()
+
 async function fetchAvailableTests() {
   const spinner = document.getElementById("testSpinner");
   const tbody = document.querySelector("#availableTable tbody");
@@ -1069,7 +1071,21 @@ async function fetchAvailableTests() {
     const schedules = await resp.json();
     spinner.style.display = "none";
 
-    if (!Array.isArray(schedules) || schedules.length === 0) {
+    // ======== PATCH: Remove Duplicate Schedules ========
+    // We'll use examSet._id as the uniqueness key. If missing, fallback to title.
+    const uniqueSchedules = [];
+    const seenExamSetIds = new Set();
+    for (const sched of schedules) {
+      const set = sched.examSet;
+      if (!set) continue;
+      const key = set._id || set.title;
+      if (!key || seenExamSetIds.has(key)) continue;
+      seenExamSetIds.add(key);
+      uniqueSchedules.push(sched);
+    }
+    // ======== END PATCH ========
+
+    if (!Array.isArray(uniqueSchedules) || uniqueSchedules.length === 0) {
       tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
         No available assessments at this time.</td></tr>`;
       document.getElementById("upcomingTest").innerText = "None";
@@ -1081,7 +1097,7 @@ async function fetchAvailableTests() {
     let soonest = null;
     const now = Date.now();
 
-    schedules.forEach((sched) => {
+    uniqueSchedules.forEach((sched) => {
       const set = sched.examSet;
       if (!set || set.status !== "ACTIVE") return;
 
@@ -1150,9 +1166,9 @@ async function fetchAvailableTests() {
       nextTestStart = new Date(soonest.start).getTime();
       document.getElementById("upcomingTest").innerText = soonest.examSet.title;
       startCountdown();
-    } else if (schedules.length > 0) {
+    } else if (uniqueSchedules.length > 0) {
       // Show first ACTIVE test as current if no upcoming scheduled
-      const firstAvailable = schedules.find(
+      const firstAvailable = uniqueSchedules.find(
         (sched) => sched.examSet && sched.examSet.status === "ACTIVE"
       );
       if (firstAvailable && firstAvailable.examSet)
@@ -1171,7 +1187,10 @@ async function fetchAvailableTests() {
     document.getElementById("upcomingTest").innerText = "None";
     document.getElementById("testCountdown").innerText = "";
   }
-}function startCountdown() {
+}
+  
+    
+  function startCountdown() {
   const countdownEl = document.getElementById("testCountdown");
   const testTitleEl = document.getElementById("upcomingTest");
   if (!nextTestStart || !countdownEl || !testTitleEl) return;
