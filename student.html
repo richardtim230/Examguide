@@ -1507,6 +1507,90 @@ async function downloadCertificate() {
     });
   }, 180);
 }
+// ==============================
+// Leadership Scoreboard Feature
+// ==============================
+
+// Fetch and display leaderboard from API, with daily popup for the top scorer
+
+let leaderboardCache = [];
+
+// Fetch leaderboard directly from the backend API endpoint
+async function fetchLeaderboard() {
+  try {
+    const resp = await fetch("/api/results/leaderboard/top", {
+      headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+    });
+    if (!resp.ok) throw new Error("Failed to fetch leaderboard");
+    leaderboardCache = await resp.json();
+  } catch (e) {
+    leaderboardCache = [];
+  }
+}
+
+// Render the top 3 scholars in the leaderboard container
+function renderLeaderboard() {
+  const lb = leaderboardCache.slice(0, 3);
+  let html = `<div class="scoreboard-title">🏆 Top Scholars</div>
+    <div class="scoreboard-list">
+      ${lb.map((stu, idx) => `
+        <div class="scoreboard-item rank-${idx+1}">
+          <div class="scoreboard-rank">#${idx+1}</div>
+          <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="Profile">
+          <div class="scoreboard-name">${stu.fullname || stu.username}</div>
+          <div class="scoreboard-score">${stu.totalScore} pts</div>
+          <span class="scoreboard-badge badge-rank-${idx+1}">${['🥇','🥈','🥉'][idx]}</span>
+        </div>
+      `).join('')}
+    </div>`;
+  document.getElementById("leaderboardContainer").innerHTML = html;
+}
+
+// Show the daily winner popup at 8AM and 9PM
+function showWinnerPopup() {
+  if (!leaderboardCache.length) return;
+  const winner = leaderboardCache[0];
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:370px; box-shadow:0 6px 32px #0003; border-radius:18px;">
+        <div style="background:#3a86ff; color:#fff; border-top-left-radius:18px; border-top-right-radius:18px; padding:18px 0; text-align:center;">
+          <div style="font-size:2.4em;">🥇</div>
+          <div style="font-size:1.4em;font-weight:bold;">Daily Champion</div>
+        </div>
+        <div style="padding:32px 20px 20px 20px; text-align:center;">
+          <img src="${winner.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(winner.fullname||winner.username)}&background=3a86ff&color=fff&rounded=true`}" style="width:88px;height:88px;border-radius:50%;border:3px solid #3a86ff;margin-bottom:16px;">
+          <div style="font-size:1.23em; font-weight:700; color:#23366e; margin-bottom:8px;">${winner.fullname || winner.username}</div>
+          <div style="color:#3a86ff; font-size:1.02em;">Congratulations! You are the top scorer with <b>${winner.totalScore}</b> points!</div>
+          <div style="margin-top:15px;"><span class="scoreboard-badge badge-rank-1">🥇</span> <span style="color:#f7b500;font-weight:700;">Gold Badge</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById("modalRoot").innerHTML = html;
+}
+
+// Check and show winner popup at 8:00AM and 9:00PM (once per hour per day)
+function checkAndShowWinnerPopup() {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const key = `leaderboardPopupShown_${now.getFullYear()}_${now.getMonth()}_${now.getDate()}_${hour}`;
+  if (((hour === 8 && minute === 0) || (hour === 21 && minute === 0)) && !localStorage.getItem(key)) {
+    showWinnerPopup();
+    localStorage.setItem(key, "true");
+  }
+}
+
+// Call this after the DOM is ready to setup the leaderboard
+async function setupLeaderboard() {
+  await fetchLeaderboard();
+  renderLeaderboard();
+  setInterval(checkAndShowWinnerPopup, 60 * 1000);
+}
+
+// Call setupLeaderboard() after login or main dashboard page load
+setupLeaderboard();
+
   </script>
 </body>
 </html>
