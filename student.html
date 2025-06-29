@@ -8,7 +8,42 @@
   <link rel="icon" href="logo.png">
 <link rel="stylesheet" href="./dashboard.css">
   <style>
-    /* Assessment Performance & Reviews Table */
+
+    ".modal-backdrop {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(58,134,255,0.13);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 36px #0002;
+  animation: popIn 0.22s;
+}
+@keyframes popIn {
+  from { transform: scale(0.92) translateY(30px); opacity: 0.3;}
+  to { transform: scale(1) translateY(0); opacity: 1;}
+}
+.btn {
+  background: #3a86ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.07em;
+  font-weight: 700;
+  padding: 12px 0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn:hover { filter: brightness(1.08); }
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: #888;
+  cursor: pointer;
+}"
+ 
 .result-table, .test-table {
   width: 95%;
   border-collapse: separate;
