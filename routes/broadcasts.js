@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Broadcast = require("../models/broadcast");
+const Broadcast = require("../models/Broadcast");
 const requireAdmin = require("../middleware/requireAdmin");
 const requireAuth = require("../middleware/requireAuth");
 const multer = require("multer");
