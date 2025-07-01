@@ -197,7 +197,7 @@
       }
       // Backend registration request
       try {
-        const res = await fetch('https://examguide-wmyk.onrender.com/api/admin/register', {
+        const res = await fetch('https://examguide.onrender.com/api/admin/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -209,7 +209,7 @@
           successMsg.textContent = "Registration successful! Redirecting to dashboard...";
           successMsg.style.display = 'block';
           setTimeout(() => {
-            window.location.href = "admin.html";
+            window.location.href = "admin-panel.html";
           }, 1800);
         } else {
           errorMsg.textContent = data.message || "Unable to register. Please try again.";
