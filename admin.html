@@ -51,6 +51,7 @@
       <a href="#notifications" onclick="showSection('notifications', this)"><span>✉️</span> Messaging</a>
       <a href="#students" onclick="showSection('students', this)"><span>👥</span> Students</a>
       <a href="#uploaders" onclick="showSection('uploaders', this)"><span>👥</span> Uploaders</a>
+      <a href="#forms" onclick="showSection('forms', this)"><span>📝</span> Forms</a>
     </div>
     <div class="sidebar-footer">
       <span style="font-size:1.05em;">Admin</span><br>
@@ -222,7 +223,24 @@
     <tbody></tbody>
   </table>
 </div>
-
+<div class="section" id="formsSection" style="display:none; position: relative;">
+  <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
+  <div class="section-title">Manage Custom Forms</div>
+  <div class="actions">
+    <button class="btn" onclick="openFormBuilder()">+ Create Form</button>
+  </div>
+  <table class="data-table" id="formsTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<div id="formModalRoot"></div>
 
 <!-- Schedules Table: change column header and row rendering -->
 <div class="section" id="schedulesSection" style="display:none; position: relative;">
@@ -604,9 +622,9 @@ function showSection(id, el) {
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
   document.getElementById('pageTitle').innerText = el ? el.textContent.trim() : id.charAt(0).toUpperCase() + id.slice(1);
-  ['dashboard', 'uploaders','faculty','sets','questions','results','schedules','notifications', 'students'].forEach(sec => {
-    document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
-  });
+ ['dashboard', 'uploaders', 'faculty', 'sets', 'questions', 'results', 'schedules', 'notifications', 'students', 'forms'].forEach(sec => {
+  document.getElementById(sec+'Section').style.display = (sec===id) ? "" : "none";
+});
 
   
   if (id === "dashboard") {
@@ -618,6 +636,7 @@ function showSection(id, el) {
   if (id === "questions") fetchQuestions();
   if (id === "results") fetchResults();
   if (id === "schedules") fetchSchedules();
+  if (id === "forms") fetchForms();
   if (id === "notifications") { fetchNotifications(); fetchBroadcasts(); }
   if (id === "students") fetchStudents();
   if (window.innerWidth <= 950) closeSidebar();
@@ -1922,7 +1941,183 @@ async function submitAddUploader() {
     console.error(err);
   }
 }
+const FORMS_API = API_URL + "forms";
 
+// Fetch and display forms in the table
+async function fetchForms() {
+  setSectionLoader("formsSection", true);
+  try {
+    const resp = await fetch(FORMS_API, { headers: { Authorization: "Bearer " + token } });
+    const forms = await resp.json();
+    let html = "";
+    forms.forEach(form => {
+      html += `<tr>
+        <td>${form.title}</td>
+        <td>${new Date(form.createdAt).toLocaleString()}</td>
+        <td>
+          <button class="action-btn" onclick="openFormBuilder('${form._id}')">Edit</button>
+          <button class="action-btn" onclick="viewFormResponses('${form._id}')">Responses</button>
+        </td>
+      </tr>`;
+    });
+    document.querySelector("#formsTable tbody").innerHTML = html;
+  } finally {
+    setSectionLoader("formsSection", false);
+  }
+}
+
+// Open Form Builder Modal (for create or edit)
+async function openFormBuilder(formId) {
+  let form = { title: "", description: "", fields: [] };
+  if (formId) {
+    const resp = await fetch(FORMS_API + "/" + formId, { headers: { Authorization: "Bearer " + token } });
+    form = await resp.json();
+  }
+  // Render the builder modal (simplified version)
+  let html = `
+    <div class="modal-backdrop" onclick="closeFormModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:680px;">
+        <button class="close-modal" onclick="closeFormModal(event)">&times;</button>
+        <h2>${formId ? "Edit Form" : "Create Form"}</h2>
+        <label>Title</label>
+        <input id="formTitle" value="${form.title || ''}">
+        <label>Description</label>
+        <input id="formDesc" value="${form.description || ''}">
+        <div id="formFields">
+          <!-- Fields rendered here -->
+        </div>
+        <button class="btn" onclick="addFormField()">+ Add Field</button>
+        <span id="formMsg"></span>
+        <button class="btn" onclick="submitFormBuilder('${formId||''}')">${formId ? "Save Changes" : "Create Form"}</button>
+      </div>
+    </div>
+  `;
+  document.getElementById("formModalRoot").innerHTML = html;
+  window.formFields = (form.fields || []).map(f => ({ ...f })); // state
+  renderFormFields();
+}
+
+// Render fields UI inside builder
+function renderFormFields() {
+  let html = "";
+  (window.formFields || []).forEach((f, idx) => {
+    html += `
+      <div style="border:1px solid #ccc;padding:6px;margin:6px 0;">
+        <input value="${f.label || ''}" placeholder="Label" style="width:40%;" onchange="updateFormField(${idx}, 'label', this.value)">
+        <select onchange="updateFormField(${idx}, 'type', this.value)">
+          <option value="text" ${f.type==='text'?'selected':''}>Short Text</option>
+          <option value="textarea" ${f.type==='textarea'?'selected':''}>Paragraph</option>
+          <option value="select" ${f.type==='select'?'selected':''}>Dropdown</option>
+          <option value="radio" ${f.type==='radio'?'selected':''}>Multiple Choice</option>
+          <option value="checkbox" ${f.type==='checkbox'?'selected':''}>Checkboxes</option>
+          <option value="date" ${f.type==='date'?'selected':''}>Date</option>
+        </select>
+        <label><input type="checkbox" ${f.required?'checked':''} onchange="updateFormField(${idx}, 'required', this.checked)"> Required</label>
+        <button onclick="removeFormField(${idx})">Delete</button>
+        ${(f.type === "select" || f.type === "radio" || f.type === "checkbox") ? `
+          <div>
+            ${(f.options||[]).map((o,i) => `<input value="${o}" onchange="updateFormOption(${idx},${i},this.value)" style="width:70px;">
+              <button onclick="removeFormOption(${idx},${i})">x</button>`).join("")}
+            <button onclick="addFormOption(${idx})">Add Option</button>
+          </div>
+        ` : ""}
+      </div>
+    `;
+  });
+  document.getElementById("formFields").innerHTML = html;
+}
+function addFormField() {
+  window.formFields = window.formFields || [];
+  window.formFields.push({ label: "", type: "text", required: false, options: [] });
+  renderFormFields();
+}
+function removeFormField(idx) {
+  window.formFields.splice(idx, 1);
+  renderFormFields();
+}
+function updateFormField(idx, key, value) {
+  window.formFields[idx][key] = value;
+  if (key === 'type' && ['select','radio','checkbox'].includes(value) && !window.formFields[idx].options) window.formFields[idx].options = [];
+  renderFormFields();
+}
+function addFormOption(idx) {
+  window.formFields[idx].options = window.formFields[idx].options || [];
+  window.formFields[idx].options.push("");
+  renderFormFields();
+}
+function removeFormOption(idx, oidx) {
+  window.formFields[idx].options.splice(oidx,1);
+  renderFormFields();
+}
+function updateFormOption(idx, oidx, value) {
+  window.formFields[idx].options[oidx] = value;
+  renderFormFields();
+}
+async function submitFormBuilder(formId) {
+  const title = document.getElementById("formTitle").value.trim();
+  const description = document.getElementById("formDesc").value.trim();
+  const fields = window.formFields || [];
+  const msg = document.getElementById("formMsg");
+  msg.innerText = "";
+  if (!title) { msg.innerText = "Title required!"; return; }
+  const payload = { title, description, fields };
+  let ok = false;
+  if (formId) {
+    const resp = await fetch(FORMS_API + "/" + formId, { method:"PUT", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }, body: JSON.stringify(payload) });
+    ok = resp.ok;
+  } else {
+    const resp = await fetch(FORMS_API, { method:"POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }, body: JSON.stringify(payload) });
+    ok = resp.ok;
+  }
+  if (ok) {
+    msg.innerText = "Saved!";
+    fetchForms();
+    setTimeout(closeFormModal, 700);
+  } else {
+    msg.innerText = "Save failed!";
+  }
+}
+function closeFormModal(e) {
+  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
+    document.getElementById("formModalRoot").innerHTML = "";
+  }
+}
+
+// View form responses
+async function viewFormResponses(formId) {
+  const respForm = await fetch(FORMS_API + "/" + formId, { headers: { Authorization: "Bearer " + token } });
+  const form = await respForm.json();
+  const respRes = await fetch(FORMS_API + "/" + formId + "/responses", { headers: { Authorization: "Bearer " + token } });
+  const responses = await respRes.json();
+  let html = `
+    <div class="modal-backdrop" onclick="closeFormModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:900px;">
+        <button class="close-modal" onclick="closeFormModal(event)">&times;</button>
+        <h2>Responses for: ${form.title}</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              ${(form.fields||[]).map(f=>`<th>${f.label}</th>`).join("")}
+              <th>Submitted by</th>
+              <th>At</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${responses.map(resp => `<tr>
+              ${(form.fields||[]).map((f,idx) => {
+                const ansObj = (resp.answers||[]).find(a => String(a.fieldId) === String(f._id) || a.fieldId == idx);
+                return `<td>${Array.isArray(ansObj?.value) ? ansObj.value.join(", ") : (ansObj?.value||"")}</td>`;
+              }).join("")}
+              <td>${resp.submittedBy?.username || "Anonymous"}</td>
+              <td>${new Date(resp.createdAt).toLocaleString()}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  document.getElementById("formModalRoot").innerHTML = html;
+}
     // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "index.html";
