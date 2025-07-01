@@ -859,8 +859,9 @@ async function viewStudentSession(resultId) {
 </thead>
           <tbody>
   `;
-  (result.questionsAnswered || []).forEach(q => {
+ (result.questionsAnswered || []).forEach((q, idx) => {
   html += `<tr>
+    <td>${idx + 1}</td>
     <td>${q.questionText}</td>
     <td>${q.studentAnswer}</td>
     <td>${q.correctAnswer}</td>
