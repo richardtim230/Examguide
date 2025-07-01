@@ -120,7 +120,27 @@ router.get("/leaderboard/top", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not fetch leaderboard", error: e.message });
   }
 });
+// Get a specific result by ID (admin, superadmin, or result owner)
+router.get("/:resultId", authenticate, async (req, res) => {
+  const { resultId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(resultId)) {
+    return res.status(400).json({ message: "Invalid result id" });
+  }
+  const result = await Result.findById(resultId)
+    .populate("user", "username fullname faculty department")
+    .populate("examSet", "title");
+  if (!result) return res.status(404).json({ message: "Result not found" });
 
+  if (
+    req.user.role !== "admin" &&
+    req.user.role !== "superadmin" &&
+    req.user.id !== String(result.user._id)
+  ) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  res.json(result);
+});
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
