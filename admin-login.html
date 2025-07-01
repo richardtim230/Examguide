@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Login - Form Platform</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     body {
@@ -191,7 +191,7 @@
           // Optionally: store token in localStorage/cookies
           // localStorage.setItem('adminToken', data.token);
           setTimeout(() => {
-            window.location.href = "admin.html";
+            window.location.href = "admin-panel.html";
           }, 1300);
         } else {
           errorMsg.textContent = data.message || "Invalid credentials. Please try again.";
