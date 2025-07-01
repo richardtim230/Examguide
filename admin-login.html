@@ -149,59 +149,59 @@
       <div id="errorMsg" class="error-message"></div>
     </form>
     <a href="admin-register.html" class="register-link">Don't have an admin account? Register</a>
-  </div>
-  <script>
-    // Autofill email if passed from previous page
-    window.onload = function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const email = urlParams.get('email');
-      if (email) {
-        const emailInput = document.getElementById('email');
-        if (emailInput) emailInput.value = email;
-      }
-    };
+  </div><script>
+  // Autofill email if passed from previous page
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+    if (email) {
+      const emailInput = document.getElementById('email');
+      if (emailInput) emailInput.value = email;
+    }
+  };
 
-    document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const successMsg = document.getElementById('successMsg');
-      const errorMsg = document.getElementById('errorMsg');
-      successMsg.style.display = 'none';
-      errorMsg.style.display = 'none';
+  document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const successMsg = document.getElementById('successMsg');
+    const errorMsg = document.getElementById('errorMsg');
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
 
-      if (!email || !password) {
-        errorMsg.textContent = "Please fill in both fields.";
-        errorMsg.style.display = 'block';
-        return;
-      }
+    if (!email || !password) {
+      errorMsg.textContent = "Please fill in both fields.";
+      errorMsg.style.display = 'block';
+      return;
+    }
 
-      try {
-        // Replace with your backend endpoint!
-        const res = await fetch('https://examguide.onrender.com/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
+    try {
+      // Make sure you use the correct backend URL!
+      const res = await fetch('https://examguide.onrender.com/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
 
-        if (res.ok && data.success) {
-          successMsg.textContent = "Login successful! Redirecting to dashboard...";
-          successMsg.style.display = 'block';
-          // Optionally: store token in localStorage/cookies
-          // localStorage.setItem('adminToken', data.token);
-          setTimeout(() => {
-            window.location.href = "admin-panel.html";
-          }, 1300);
-        } else {
-          errorMsg.textContent = data.message || "Invalid credentials. Please try again.";
-          errorMsg.style.display = 'block';
-        }
-      } catch (err) {
-        errorMsg.textContent = "Unable to login. Please try again.";
+      if (res.ok && data.success && data.token) {
+        // Store token in localStorage for subsequent authenticated requests
+        localStorage.setItem('adminToken', data.token);
+
+        successMsg.textContent = "Login successful! Redirecting to dashboard...";
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = "admin-panel.html";
+        }, 1300);
+      } else {
+        errorMsg.textContent = data.message || "Invalid credentials. Please try again.";
         errorMsg.style.display = 'block';
       }
-    });
-  </script>
+    } catch (err) {
+      errorMsg.textContent = "Unable to login. Please try again.";
+      errorMsg.style.display = 'block';
+    }
+  });
+</script>
 </body>
 </html>
