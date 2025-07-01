@@ -120,15 +120,20 @@ router.get("/leaderboard/top", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not fetch leaderboard", error: e.message });
   }
 });
-// Get a specific result by ID (admin, superadmin, or result owner)
 router.get("/:resultId", authenticate, async (req, res) => {
   const { resultId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(resultId)) {
     return res.status(400).json({ message: "Invalid result id" });
   }
+
+  // Populate examSet's questions for reconstruction
   const result = await Result.findById(resultId)
     .populate("user", "username fullname faculty department")
-    .populate("examSet", "title");
+    .populate({
+      path: "examSet",
+      select: "title questions"
+    });
+
   if (!result) return res.status(404).json({ message: "Result not found" });
 
   if (
@@ -139,7 +144,25 @@ router.get("/:resultId", authenticate, async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
-  res.json(result);
+  // Reconstruct questionsAnswered array
+  let questionsAnswered = [];
+  if (result.examSet && Array.isArray(result.examSet.questions)) {
+    // answers can be a Map, convert to plain object for safety
+    let answers = result.answers;
+    if (answers instanceof Map) answers = Object.fromEntries(answers);
+    answers = answers || {};
+    questionsAnswered = result.examSet.questions.map(q => ({
+      questionText: q.question,
+      studentAnswer: answers[String(q.id)] ?? "",
+      correctAnswer: q.answer,
+      isCorrect: answers[String(q.id)] === q.answer
+    }));
+  }
+
+  res.json({
+    ...result.toObject(),
+    questionsAnswered
+  });
 });
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
