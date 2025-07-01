@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Builder Platform - Admin Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', system-ui, Arial, sans-serif;
+      background: linear-gradient(180deg, #0d084d 0%, #2d236d 60%, #6a55e9 100%);
+      color: #fff;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 24px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 48px;
+    }
+    .logo {
+      width: 36px;
+      height: 36px;
+    }
+    .sign-in {
+      background: none;
+      border: 1.5px solid #fff;
+      color: #fff;
+      border-radius: 8px;
+      padding: 7px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .sign-in:hover {
+      background: #fff;
+      color: #0d084d;
+    }
+    .already-code-link {
+      display: block;
+      margin: 25px auto 0 auto;
+      color: #93f7b0;
+      text-align: center;
+      font-size: 1rem;
+      text-decoration: underline;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .already-code-link:hover {
+      color: #45d693;
+    }
+    main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 0 0 16px 0;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: #e2e4f0;
+      font-weight: 400;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .cta-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .cta-form input[type="email"] {
+      padding: 14px 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: linear-gradient(90deg, #e6e9f0 0%, #cfd9df 100%);
+      color: #23263b;
+      margin-bottom: 6px;
+    }
+    .signup {
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 13px 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .signup:hover {
+      background: #1a6f28;
+    }
+    .try-copilot {
+      width: 100%;
+      padding: 13px 0;
+      margin-top: 8px;
+      background: none;
+      color: #fff;
+      border: 2px solid #23263b;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .try-copilot:hover {
+      background: #23263b;
+      color: #fff;
+    }
+    .scroll-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #23263b;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.8;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .scroll-top:hover {
+      background: #238636;
+    }
+    .error-message, .info-message {
+      background: #c03221;
+      color: #fff;
+      padding: 11px;
+      border-radius: 8px;
+      margin: 12px 0 0 0;
+      font-size: 1rem;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+    .info-message {
+      background: #238636;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="logo" alt="Logo">
+      <button class="sign-in" onclick="window.location.href='admin-login.html'">Sign in</button>
+    </header>
+    <main>
+      <h1>Build and ship forms on a single,<br>collaborative platform</h1>
+      <p class="subtitle">
+        Admins: Sign up to manage and monitor your forms.
+      </p>
+      <form class="cta-form" id="adminEmailForm" autocomplete="off">
+        <input type="email" id="adminEmail" placeholder="Enter your admin email" required>
+        <button type="submit" class="signup">Continue</button>
+      </form>
+      <div id="errorMsg" class="error-message"></div>
+      <div id="infoMsg" class="info-message"></div>
+      <button class="try-copilot" onclick="alert('Demo coming soon!')">Try Form Builder Now</button>
+      <a class="already-code-link" href="index.html">Already have a code? Fill a form here</a>
+    </main>
+  </div>
+  <button class="scroll-top">&#8679;</button>
+  <script>
+    // Scroll to top functionality
+    document.querySelector('.scroll-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Sign-up logic
+    document.getElementById('adminEmailForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+      const infoMsg = document.getElementById('infoMsg');
+      errorMsg.style.display = 'none';
+      infoMsg.style.display = 'none';
+
+      if (!email) {
+        errorMsg.textContent = "Please enter a valid email address.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      // Show loading info
+      infoMsg.textContent = "Checking admin email...";
+      infoMsg.style.display = 'block';
+
+      try {
+        // Backend check (adjust endpoint as needed)
+        const url = `https://examguide-wmyk.onrender.com/api/admin/check-email?email=${encodeURIComponent(email)}`;
+        const res = await fetch(url, { method: 'GET' });
+        const data = await res.json();
+
+        infoMsg.style.display = 'none';
+
+        // Assume backend returns { exists: true/false }
+        if (data.exists) {
+          // Redirect to login with email prefilled
+          window.location.href = `admin-login.html?email=${encodeURIComponent(email)}`;
+        } else {
+          // Redirect to registration with email prefilled
+          window.location.href = `admin-register.html?email=${encodeURIComponent(email)}`;
+        }
+      } catch (err) {
+        infoMsg.style.display = 'none';
+        errorMsg.textContent = "Unable to check email. Please try again.";
+        errorMsg.style.display = 'block';
+      }
+    });
+
+    // Autofill email from query param (for login/register pages)
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('email');
+      if (email) {
+        const emailInput = document.getElementById('adminEmail');
+        if(emailInput) emailInput.value = email;
+      }
+    };
+  </script>
+</body>
+</html>
