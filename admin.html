@@ -318,6 +318,35 @@
     <tbody></tbody>
   </table>
 </div>
+    <!-- Include this modal div near your root (e.g. at the end of <body>) -->
+<div id="formBuilderModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeFormBuilderModal()">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:820px;">
+    <button class="close-modal" onclick="closeFormBuilderModal()">&times;</button>
+    <div style="margin-bottom:16px;">
+      <input id="fbFormTitle" placeholder="Untitled form" style="font-size:2em;font-weight:600;width:99%;border:none;background:transparent;">
+      <input id="fbFormDesc" placeholder="Form description" style="font-size:1em;width:99%;border:none;background:transparent;">
+    </div>
+    <div id="fbQuestions"></div>
+    <button class="btn" onclick="addFBQuestion()" style="margin:10px 0;">+ Add Question</button>
+    <div style="margin-top:20px;">
+      <button class="btn" onclick="saveFBForm()">Save Form</button>
+      <span id="fbFormMsg" style="margin-left:12px;font-weight:bold;"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Minimal style to match your admin dashboard */
+#fbQuestions .fb-q-card { background:#fcfcff; border:2px solid #c3c6ff; border-radius:8px; margin:18px 0; padding:20px 16px 8px 16px; box-shadow:0 1px 3px #0002; position:relative;}
+#fbQuestions .fb-q-toolbar { position:absolute; right:16px; top:14px; }
+#fbQuestions input.fb-q-label { font-size:1.15em; font-weight:500; width:60%; border:none; background:transparent;}
+#fbQuestions select.fb-q-type { font-size:1em; margin-left:14px;}
+#fbQuestions .fb-q-options input { margin:2px 6px 2px 0; }
+#fbQuestions .fb-q-options .fb-q-opt-row { display:flex; align-items:center; margin:2px 0;}
+#fbQuestions .fb-q-options .fb-q-opt-row input { width:70%; }
+#fbQuestions .fb-q-options button { margin-left:6px;}
+#fbQuestions .fb-q-required { margin-left:18px;}
+</style>
   <div id="modalRoot"></div>
     <button class="nav-toggle" id="navToggle" aria-label="Open navigation" onclick="toggleSidebar()">
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -1299,7 +1328,118 @@ async function deleteSchedule(id) {
           });
       }
     }
+// Add this to your admin JS bundle (after your section logic)
+let fbQuestions = [];
+let fbFormId = null;
+const FORMS_API = API_URL + "forms";
 
+function openFormBuilderModal(editForm) {
+  fbFormId = editForm?._id || null;
+  fbQuestions = (editForm?.fields || []).map(f => ({...f}));
+  document.getElementById("fbFormTitle").value = editForm?.title || "";
+  document.getElementById("fbFormDesc").value = editForm?.description || "";
+  renderFBQuestions();
+  document.getElementById("formBuilderModal").style.display = "block";
+}
+function closeFormBuilderModal() {
+  document.getElementById("formBuilderModal").style.display = "none";
+  document.getElementById("fbFormMsg").innerText = "";
+}
+function renderFBQuestions() {
+  const container = document.getElementById("fbQuestions");
+  if (!container) return;
+  container.innerHTML = fbQuestions.map((q, i) => `
+    <div class="fb-q-card">
+      <div>
+        <input class="fb-q-label" value="${q.label || ''}" placeholder="Untitled Question" 
+          onchange="fbUpdateQ(${i}, 'label', this.value)">
+        <select class="fb-q-type" onchange="fbUpdateQ(${i},'type',this.value)">
+          <option value="text" ${q.type==="text"?"selected":""}>Short answer</option>
+          <option value="textarea" ${q.type==="textarea"?"selected":""}>Paragraph</option>
+          <option value="radio" ${q.type==="radio"?"selected":""}>Multiple choice</option>
+          <option value="checkbox" ${q.type==="checkbox"?"selected":""}>Checkboxes</option>
+          <option value="select" ${q.type==="select"?"selected":""}>Dropdown</option>
+          <option value="date" ${q.type==="date"?"selected":""}>Date</option>
+          <option value="file" ${q.type==="file"?"selected":""}>File upload</option>
+        </select>
+        <label class="fb-q-required">
+          <input type="checkbox" ${q.required?"checked":""} 
+            onchange="fbUpdateQ(${i},'required',this.checked)"> Required
+        </label>
+        <span class="fb-q-toolbar">
+          <button onclick="fbDuplicateQ(${i})" title="Duplicate">&#128209;</button>
+          <button onclick="fbDeleteQ(${i})" title="Delete">&#128465;</button>
+          ${i>0?`<button onclick="fbMoveQ(${i},-1)" title="Move up">&#8593;</button>`:""}
+          ${i<fbQuestions.length-1?`<button onclick="fbMoveQ(${i},1)" title="Move down">&#8595;</button>`:""}
+        </span>
+      </div>
+      <div class="fb-q-options">
+        ${(["radio","checkbox","select"].includes(q.type)) ? 
+          (q.options||[]).map((opt,oi)=>`
+            <div class="fb-q-opt-row">
+              <input value="${opt||''}" placeholder="Option" 
+                onchange="fbUpdateQOpt(${i},${oi},this.value)">
+              <button onclick="fbDeleteQOpt(${i},${oi})" title="Remove">x</button>
+            </div>`).join("") +
+            `<button onclick="fbAddQOpt(${i})">Add option</button>`
+          : ""}
+      </div>
+    </div>
+  `).join("");
+}
+function addFBQuestion() {
+  fbQuestions.push({ label:"", type:"text", required:false, options:[] });
+  renderFBQuestions();
+}
+function fbUpdateQ(idx, key, val) {
+  fbQuestions[idx][key] = val;
+  if (["radio","checkbox","select"].includes(fbQuestions[idx].type) && !fbQuestions[idx].options)
+    fbQuestions[idx].options = [""];
+  renderFBQuestions();
+}
+function fbAddQOpt(qidx) {
+  fbQuestions[qidx].options = fbQuestions[qidx].options || [];
+  fbQuestions[qidx].options.push("");
+  renderFBQuestions();
+}
+function fbDeleteQOpt(qidx, oidx) {
+  fbQuestions[qidx].options.splice(oidx,1);
+  renderFBQuestions();
+}
+function fbUpdateQOpt(qidx, oidx, val) {
+  fbQuestions[qidx].options[oidx] = val;
+}
+function fbDeleteQ(idx) { fbQuestions.splice(idx,1); renderFBQuestions(); }
+function fbDuplicateQ(idx) { fbQuestions.splice(idx+1,0,{...fbQuestions[idx], options:[...(fbQuestions[idx].options||[])]}); renderFBQuestions(); }
+function fbMoveQ(idx, dir) { 
+  const q = fbQuestions.splice(idx,1)[0]; 
+  fbQuestions.splice(idx+dir,0,q); 
+  renderFBQuestions();
+}
+async function saveFBForm() {
+  const title = document.getElementById("fbFormTitle").value.trim();
+  const description = document.getElementById("fbFormDesc").value.trim();
+  const fields = fbQuestions.map(q => ({...q}));
+  const msg = document.getElementById("fbFormMsg");
+  msg.innerText = "";
+  if (!title) { msg.innerText = "Title required!"; return; }
+  let ok = false;
+  const payload = { title, description, fields };
+  if (fbFormId) {
+    const resp = await fetch(FORMS_API + "/" + fbFormId, { method:"PUT", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }, body: JSON.stringify(payload) });
+    ok = resp.ok;
+  } else {
+    const resp = await fetch(FORMS_API, { method:"POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }, body: JSON.stringify(payload) });
+    ok = resp.ok;
+  }
+  if (ok) {
+    msg.innerText = "Saved!";
+    fetchForms && fetchForms();
+    setTimeout(closeFormBuilderModal, 1000);
+  } else {
+    msg.innerText = "Save failed!";
+  }
+}
 // ========== Modal: Populate Add Schedule Dropdowns ==========
 function populateDepartmentsDropdownForSchedule() {
   const facultyId = document.getElementById('scheduleFaculty').value;
@@ -1950,15 +2090,16 @@ async function fetchForms() {
     const resp = await fetch(FORMS_API, { headers: { Authorization: "Bearer " + token } });
     const forms = await resp.json();
     let html = "";
-    forms.forEach(form => {
-      html += `<tr>
-        <td>${form.title}</td>
-        <td>${new Date(form.createdAt).toLocaleString()}</td>
-        <td>
-          <button class="action-btn" onclick="openFormBuilder('${form._id}')">Edit</button>
-          <button class="action-btn" onclick="viewFormResponses('${form._id}')">Responses</button>
-        </td>
-      </tr>`;
+    // Store forms globally for access by index
+window.formsCache = forms;
+html += `<tr>
+  <td>${form.title}</td>
+  <td>${new Date(form.createdAt).toLocaleString()}</td>
+  <td>
+    <button class="action-btn" onclick="openFormBuilderModal(window.formsCache[${i}])">Edit</button>
+    <button class="action-btn" onclick="viewFormResponses('${form._id}')">Responses</button>
+  </td>
+</tr>`;
     });
     document.querySelector("#formsTable tbody").innerHTML = html;
   } finally {
