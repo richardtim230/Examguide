@@ -16,7 +16,6 @@ import multer from "multer";
 import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
 import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API route
 import adminRoutes from "./routes/admin.js";
-import formsRoutes from "./routes/forms.js";
 import responsesRoutes from "./routes/responses.js";
 import settingsRoutes from "./routes/settings.js";
   
@@ -300,7 +299,7 @@ app.use("/api/schedules", scheduleRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/adminstats", adminStatsRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/forms", formsRoutes);
+
 app.use("/api/responses", responsesRoutes);
 app.use("/api/settings", settingsRoutes);
 
