@@ -2084,143 +2084,29 @@ async function submitAddUploader() {
 const FORMS_API = API_URL + "forms";
 
 // Fetch and display forms
+
 async function fetchForms() {
   setSectionLoader("formsSection", true);
   try {
     const resp = await fetch(FORMS_API, { headers: { Authorization: "Bearer " + token } });
     const forms = await resp.json();
+    window.formsCache = forms; // Store forms globally for Edit access
     let html = "";
-    // Store forms globally for access by index
-window.formsCache = forms;
-html += `<tr>
-  <td>${form.title}</td>
-  <td>${new Date(form.createdAt).toLocaleString()}</td>
-  <td>
-    <button class="action-btn" onclick="openFormBuilderModal(window.formsCache[${i}])">Edit</button>
-    <button class="action-btn" onclick="viewFormResponses('${form._id}')">Responses</button>
-  </td>
-</tr>`;
+    forms.forEach((form, i) => {
+      html += `<tr>
+        <td>${form.title}</td>
+        <td>${new Date(form.createdAt).toLocaleString()}</td>
+        <td>
+          <button class="action-btn" onclick="openFormBuilderModal(window.formsCache[${i}])">Edit</button>
+          <button class="action-btn" onclick="viewFormResponses('${form._id}')">Responses</button>
+        </td>
+      </tr>`;
     });
     document.querySelector("#formsTable tbody").innerHTML = html;
   } finally {
     setSectionLoader("formsSection", false);
   }
 }
-
-// Open Form Builder Modal (for create or edit)
-async function openFormBuilder(formId) {
-  let form = { title: "", description: "", fields: [] };
-  if (formId) {
-    const resp = await fetch(FORMS_API + "/" + formId, { headers: { Authorization: "Bearer " + token } });
-    form = await resp.json();
-  }
-  let html = `
-    <div class="modal-backdrop" onclick="closeFormModal(event)">
-      <div class="modal" onclick="event.stopPropagation()" style="max-width:700px;">
-        <button class="close-modal" onclick="closeFormModal(event)">&times;</button>
-        <h2>${formId ? "Edit Form" : "Create Form"}</h2>
-        <label>Title</label>
-        <input id="formTitle" value="${form.title || ''}">
-        <label>Description</label>
-        <input id="formDesc" value="${form.description || ''}">
-        <div id="formFields"></div>
-        <button class="btn" type="button" onclick="addFormField()">+ Add Field</button>
-        <span id="formMsg"></span>
-        <button class="btn" onclick="submitFormBuilder('${formId||''}')">${formId ? "Save Changes" : "Create Form"}</button>
-      </div>
-    </div>
-  `;
-  document.getElementById("formModalRoot").innerHTML = html;
-  window.formFields = (form.fields || []).map(f => ({ ...f })); // state
-  renderFormFields();
-}
-
-function renderFormFields() {
-  let html = "";
-  (window.formFields || []).forEach((f, idx) => {
-    html += `
-      <div style="border:1px solid #ccc;padding:8px;margin:6px 0;">
-        <input value="${f.label || ''}" placeholder="Label" style="width:40%;" onchange="updateFormField(${idx}, 'label', this.value)">
-        <select onchange="updateFormField(${idx}, 'type', this.value)">
-          <option value="text" ${f.type==='text'?'selected':''}>Short Text</option>
-          <option value="textarea" ${f.type==='textarea'?'selected':''}>Paragraph</option>
-          <option value="select" ${f.type==='select'?'selected':''}>Dropdown</option>
-          <option value="radio" ${f.type==='radio'?'selected':''}>Multiple Choice</option>
-          <option value="checkbox" ${f.type==='checkbox'?'selected':''}>Checkboxes</option>
-          <option value="date" ${f.type==='date'?'selected':''}>Date</option>
-        </select>
-        <label><input type="checkbox" ${f.required?'checked':''} onchange="updateFormField(${idx}, 'required', this.checked)"> Required</label>
-        <button type="button" onclick="removeFormField(${idx})">Delete</button>
-        ${(f.type === "select" || f.type === "radio" || f.type === "checkbox") ? `
-          <div>
-            ${(f.options||[]).map((o,i) => `<input value="${o}" onchange="updateFormOption(${idx},${i},this.value)" style="width:70px;">
-              <button type="button" onclick="removeFormOption(${idx},${i})">x</button>`).join("")}
-            <button type="button" onclick="addFormOption(${idx})">Add Option</button>
-          </div>
-        ` : ""}
-      </div>
-    `;
-  });
-  document.getElementById("formFields").innerHTML = html;
-}
-function addFormField() {
-  window.formFields = window.formFields || [];
-  window.formFields.push({ label: "", type: "text", required: false, options: [] });
-  renderFormFields();
-}
-function removeFormField(idx) {
-  window.formFields.splice(idx, 1);
-  renderFormFields();
-}
-function updateFormField(idx, key, value) {
-  window.formFields[idx][key] = value;
-  if (key === 'type' && ['select','radio','checkbox'].includes(value) && !window.formFields[idx].options)
-    window.formFields[idx].options = [];
-  renderFormFields();
-}
-function addFormOption(idx) {
-  window.formFields[idx].options = window.formFields[idx].options || [];
-  window.formFields[idx].options.push("");
-  renderFormFields();
-}
-function removeFormOption(idx, oidx) {
-  window.formFields[idx].options.splice(oidx,1);
-  renderFormFields();
-}
-function updateFormOption(idx, oidx, value) {
-  window.formFields[idx].options[oidx] = value;
-  renderFormFields();
-}
-async function submitFormBuilder(formId) {
-  const title = document.getElementById("formTitle").value.trim();
-  const description = document.getElementById("formDesc").value.trim();
-  const fields = window.formFields || [];
-  const msg = document.getElementById("formMsg");
-  msg.innerText = "";
-  if (!title) { msg.innerText = "Title required!"; return; }
-  const payload = { title, description, fields };
-  let ok = false;
-  if (formId) {
-    const resp = await fetch(FORMS_API + "/" + formId, { method:"PUT", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }, body: JSON.stringify(payload) });
-    ok = resp.ok;
-  } else {
-    const resp = await fetch(FORMS_API, { method:"POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token }, body: JSON.stringify(payload) });
-    ok = resp.ok;
-  }
-  if (ok) {
-    msg.innerText = "Saved!";
-    fetchForms();
-    setTimeout(closeFormModal, 800);
-  } else {
-    msg.innerText = "Save failed!";
-  }
-}
-function closeFormModal(e) {
-  if (!e || e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')) {
-    document.getElementById("formModalRoot").innerHTML = "";
-  }
-}
-
 // View form responses
 async function viewFormResponses(formId) {
   const respForm = await fetch(FORMS_API + "/" + formId, { headers: { Authorization: "Bearer " + token } });
