@@ -1943,7 +1943,7 @@ async function submitAddUploader() {
 }
 const FORMS_API = API_URL + "forms";
 
-// Fetch and display forms in the table
+// Fetch and display forms
 async function fetchForms() {
   setSectionLoader("formsSection", true);
   try {
@@ -1973,20 +1973,17 @@ async function openFormBuilder(formId) {
     const resp = await fetch(FORMS_API + "/" + formId, { headers: { Authorization: "Bearer " + token } });
     form = await resp.json();
   }
-  // Render the builder modal (simplified version)
   let html = `
     <div class="modal-backdrop" onclick="closeFormModal(event)">
-      <div class="modal" onclick="event.stopPropagation()" style="max-width:680px;">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:700px;">
         <button class="close-modal" onclick="closeFormModal(event)">&times;</button>
         <h2>${formId ? "Edit Form" : "Create Form"}</h2>
         <label>Title</label>
         <input id="formTitle" value="${form.title || ''}">
         <label>Description</label>
         <input id="formDesc" value="${form.description || ''}">
-        <div id="formFields">
-          <!-- Fields rendered here -->
-        </div>
-        <button class="btn" onclick="addFormField()">+ Add Field</button>
+        <div id="formFields"></div>
+        <button class="btn" type="button" onclick="addFormField()">+ Add Field</button>
         <span id="formMsg"></span>
         <button class="btn" onclick="submitFormBuilder('${formId||''}')">${formId ? "Save Changes" : "Create Form"}</button>
       </div>
@@ -1997,12 +1994,11 @@ async function openFormBuilder(formId) {
   renderFormFields();
 }
 
-// Render fields UI inside builder
 function renderFormFields() {
   let html = "";
   (window.formFields || []).forEach((f, idx) => {
     html += `
-      <div style="border:1px solid #ccc;padding:6px;margin:6px 0;">
+      <div style="border:1px solid #ccc;padding:8px;margin:6px 0;">
         <input value="${f.label || ''}" placeholder="Label" style="width:40%;" onchange="updateFormField(${idx}, 'label', this.value)">
         <select onchange="updateFormField(${idx}, 'type', this.value)">
           <option value="text" ${f.type==='text'?'selected':''}>Short Text</option>
@@ -2013,12 +2009,12 @@ function renderFormFields() {
           <option value="date" ${f.type==='date'?'selected':''}>Date</option>
         </select>
         <label><input type="checkbox" ${f.required?'checked':''} onchange="updateFormField(${idx}, 'required', this.checked)"> Required</label>
-        <button onclick="removeFormField(${idx})">Delete</button>
+        <button type="button" onclick="removeFormField(${idx})">Delete</button>
         ${(f.type === "select" || f.type === "radio" || f.type === "checkbox") ? `
           <div>
             ${(f.options||[]).map((o,i) => `<input value="${o}" onchange="updateFormOption(${idx},${i},this.value)" style="width:70px;">
-              <button onclick="removeFormOption(${idx},${i})">x</button>`).join("")}
-            <button onclick="addFormOption(${idx})">Add Option</button>
+              <button type="button" onclick="removeFormOption(${idx},${i})">x</button>`).join("")}
+            <button type="button" onclick="addFormOption(${idx})">Add Option</button>
           </div>
         ` : ""}
       </div>
@@ -2037,7 +2033,8 @@ function removeFormField(idx) {
 }
 function updateFormField(idx, key, value) {
   window.formFields[idx][key] = value;
-  if (key === 'type' && ['select','radio','checkbox'].includes(value) && !window.formFields[idx].options) window.formFields[idx].options = [];
+  if (key === 'type' && ['select','radio','checkbox'].includes(value) && !window.formFields[idx].options)
+    window.formFields[idx].options = [];
   renderFormFields();
 }
 function addFormOption(idx) {
@@ -2072,7 +2069,7 @@ async function submitFormBuilder(formId) {
   if (ok) {
     msg.innerText = "Saved!";
     fetchForms();
-    setTimeout(closeFormModal, 700);
+    setTimeout(closeFormModal, 800);
   } else {
     msg.innerText = "Save failed!";
   }
