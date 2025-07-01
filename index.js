@@ -30,7 +30,7 @@ import adminStatsRoutes from "./routes/adminStats.js";
 import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
-
+import formsRoutes from "./routes/forms.js"; // <-- add this line
 dotenv.config();
 
 // ===== FACULTY & DEPARTMENT MODELS =====
@@ -73,7 +73,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
-
+app.use("/api/forms", formsRoutes); 
 
 // ===== Add after notifications/multer setup =====
 app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts"))); // NEW: serve broadcast images
