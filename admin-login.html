@@ -1,70 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        .styled-btn {
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            color: white;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 10px 0;
-            transition: transform 0.2s ease-in-out;
-        }
-        .styled-btn:hover {
-            transform: scale(1.05);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Admin Login - Form Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', system-ui, Arial, sans-serif;
+      background: linear-gradient(180deg, #0d084d 0%, #2d236d 60%, #6a55e9 100%);
+      color: #fff;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 32px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      width: 38px;
+      height: 38px;
+      margin-right: 10px;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #e2e4f0;
+      font-weight: 400;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+    form {
+      background: rgba(255,255,255,0.11);
+      border-radius: 14px;
+      padding: 26px 14px 18px 14px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 4px 20px 0 rgba(0,0,0,0.09);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+      color: #e2e4f0;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      margin-top: 3px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #e6e9f0 0%, #cfd9df 100%);
+      color: #23263b;
+      box-sizing: border-box;
+    }
+    .submit-btn {
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 13px 0;
+      width: 100%;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .submit-btn:hover {
+      background: #1a6f28;
+    }
+    .success-message, .error-message {
+      padding: 13px;
+      border-radius: 10px;
+      margin-top: 14px;
+      text-align: center;
+      font-weight: 600;
+      animation: fadeIn 0.7s;
+      display: none;
+    }
+    .success-message {
+      background: #238636;
+      color: #fff;
+    }
+    .error-message {
+      background: #c03221;
+      color: #fff;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .register-link {
+      color: #93f7b0;
+      font-size: 1rem;
+      text-align: center;
+      margin-top: 13px;
+      display: block;
+      text-decoration: underline;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Admin Login</h2>
-        <input type="text" id="adminUsername" class="input-field" placeholder="Username">
-        <input type="password" id="adminPassword" class="input-field" placeholder="Password">
-        <button class="styled-btn" onclick="adminLogin()">Login</button>
-    </div>
-    <script>
-        function adminLogin() {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            if (username === 'admin' && password === 'password') {
-                alert('Login successful!');
-                window.location.href = 'admin-dashboard.html';
-            } else {
-                alert('Invalid credentials. Please try again.');
-            }
+  <div class="container">
+    <header>
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="logo" alt="Logo">
+      <span style="font-size:1.3rem;font-weight:700;">Admin Login</span>
+    </header>
+    <h2>Admin Login</h2>
+    <p class="subtitle">Login to access your admin dashboard.</p>
+    <form id="adminLoginForm" autocomplete="off">
+      <div>
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" placeholder="Your admin email" required>
+      </div>
+      <div>
+        <label for="password">Password *</label>
+        <input type="password" id="password" name="password" placeholder="Your password" required>
+      </div>
+      <button type="submit" class="submit-btn">Login</button>
+      <div id="successMsg" class="success-message"></div>
+      <div id="errorMsg" class="error-message"></div>
+    </form>
+    <a href="admin-register.html" class="register-link">Don't have an admin account? Register</a>
+  </div>
+  <script>
+    // Autofill email if passed from previous page
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('email');
+      if (email) {
+        const emailInput = document.getElementById('email');
+        if (emailInput) emailInput.value = email;
+      }
+    };
+
+    document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const successMsg = document.getElementById('successMsg');
+      const errorMsg = document.getElementById('errorMsg');
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      if (!email || !password) {
+        errorMsg.textContent = "Please fill in both fields.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      try {
+        // Replace with your backend endpoint!
+        const res = await fetch('https://examguide-wmyk.onrender.com/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          successMsg.textContent = "Login successful! Redirecting to dashboard...";
+          successMsg.style.display = 'block';
+          // Optionally: store token in localStorage/cookies
+          // localStorage.setItem('adminToken', data.token);
+          setTimeout(() => {
+            window.location.href = "admin.html";
+          }, 1300);
+        } else {
+          errorMsg.textContent = data.message || "Invalid credentials. Please try again.";
+          errorMsg.style.display = 'block';
         }
-    </script>
+      } catch (err) {
+        errorMsg.textContent = "Unable to login. Please try again.";
+        errorMsg.style.display = 'block';
+      }
+    });
+  </script>
 </body>
 </html>
