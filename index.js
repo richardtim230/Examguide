@@ -15,7 +15,11 @@ import multer from "multer";
 // ...existing imports...
 import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
 import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API route
-
+import adminRoutes from "./routes/admin.js";
+import formsRoutes from "./routes/forms.js";
+import responsesRoutes from "./routes/responses.js";
+import settingsRoutes from "./routes/settings.js";
+  
 // ===== Models and Middleware =====
 import User from "./models/User.js";
 import Progress from "./models/Progress.js";
@@ -295,6 +299,12 @@ app.use("/api/results", resultsRoutes);
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/adminstats", adminStatsRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/forms", formsRoutes);
+app.use("/api/responses", responsesRoutes);
+app.use("/api/settings", settingsRoutes);
+
+app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 
 app.get("/", (req, res) => res.json({status: "ok"}));
 
