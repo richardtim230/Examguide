@@ -14,4 +14,4 @@ export async function authAdmin(req, res, next) {
   } catch {
     res.status(401).json({ message: "Unauthorized" });
   }
-}
+      }
