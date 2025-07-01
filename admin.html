@@ -849,25 +849,26 @@ async function viewStudentSession(resultId) {
         <div><b>Score:</b> ${result.score ?? '-'}</div>
         <table class="data-table" style="margin-top:20px;">
           <thead>
-            <tr>
-              <th>Question</th>
-              <th>Your Answer</th>
-              <th>Correct Answer</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+  <tr>
+    <th>#</th>
+    <th>Question</th>
+    <th>Your Answer</th>
+    <th>Correct Answer</th>
+    <th>Status</th>
+  </tr>
+</thead>
           <tbody>
   `;
   (result.questionsAnswered || []).forEach(q => {
-    html += `<tr>
-      <td>${q.questionText}</td>
-      <td>${q.studentAnswer}</td>
-      <td>${q.correctAnswer}</td>
-      <td style="color:${q.isCorrect ? 'green' : 'red'};font-weight:700;">
-        ${q.isCorrect ? 'Correct' : 'Wrong'}
-      </td>
-    </tr>`;
-  });
+  html += `<tr>
+    <td>${q.questionText}</td>
+    <td>${q.studentAnswer}</td>
+    <td>${q.correctAnswer}</td>
+    <td style="color:${q.isCorrect ? 'green' : 'red'};font-weight:700;">
+      ${q.isCorrect ? 'Correct' : 'Wrong'}
+    </td>
+  </tr>`;
+});
   html += `
           </tbody>
         </table>
