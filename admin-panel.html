@@ -16,13 +16,15 @@
     .container {
       max-width: 980px;
       margin: 0 auto;
-      padding: 32px 18px;
+      padding: 32px 8px;
     }
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 34px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .logo {
       width: 38px;
@@ -55,6 +57,7 @@
       margin-bottom: 30px;
       display: flex;
       gap: 12px;
+      flex-wrap: wrap;
     }
     .tab-btn {
       background: #4538b2;
@@ -68,6 +71,7 @@
       transition: background 0.18s;
       outline: none;
       box-shadow: 0 2px 6px 0 rgba(0,0,0,0.08);
+      flex-shrink: 0;
     }
     .tab-btn.active {
       background: #fff;
@@ -76,12 +80,13 @@
     .tab-content {
       background: rgba(255,255,255,0.11);
       border-radius: 0 14px 14px 14px;
-      padding: 28px 22px;
+      padding: 28px 12px;
       box-shadow: 0 4px 20px 0 rgba(0,0,0,0.10);
       margin-bottom: 24px;
       min-height: 230px;
       animation: fadeIn .4s;
       display: none;
+      overflow-x: auto;
     }
     .tab-content.active {
       display: block;
@@ -131,13 +136,19 @@
     .admin-btn:hover {
       background: #1a6f28;
     }
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
     .form-list, .response-list {
       width: 100%;
+      min-width: 700px;
       border-collapse: collapse;
       background: rgba(255,255,255,0.08);
       margin-top: 12px;
       border-radius: 8px;
       overflow-x: auto;
+      table-layout: auto;
     }
     .form-list th, .form-list td,
     .response-list th, .response-list td {
@@ -145,6 +156,7 @@
       text-align: left;
       border-bottom: 1px solid #6a55e9;
       font-size: 1rem;
+      word-break: break-word;
     }
     .form-list th, .response-list th {
       background: #4538b2;
@@ -154,6 +166,15 @@
     .form-list td, .response-list td {
       color: #fff;
       background: none;
+      vertical-align: top;
+    }
+    .form-link {
+      color: #93f7b0;
+      text-decoration: underline;
+      word-break: break-all;
+      font-size: 0.97rem;
+      display: inline-block;
+      max-width: 140px;
     }
     .action-btn {
       background: #4538b2;
@@ -207,10 +228,24 @@
       background: #4538b2;
       border-radius: 5px;
     }
-    @media (max-width: 700px) {
-      .container { max-width: 99vw; padding: 8px 2vw; }
-      .tab-content { padding: 15px 2vw; }
+    @media (max-width: 1200px) {
+      .container { max-width: 100vw; }
+      .form-list, .response-list { min-width: 500px; }
+    }
+    @media (max-width: 800px) {
+      .container { padding: 12px 2vw; }
+      .tab-content { padding: 12px 2vw; }
       nav { flex-direction: column; gap: 5px; }
+      .form-list, .response-list { min-width: 400px; }
+    }
+    @media (max-width: 550px) {
+      .admin-title { font-size: 1.3rem; }
+      .container { padding: 8px 0.5vw; }
+      .tab-content { padding: 8px 1vw; min-height: 120px; }
+      .form-list, .response-list { font-size: 0.92rem; min-width: 310px; }
+      th, td { font-size: 0.92rem; }
+      .tab-btn { padding: 7px 7vw; font-size: 0.97rem; }
+      .admin-btn { font-size: 1rem; padding: 9px 12vw; }
     }
   </style>
 </head>
@@ -234,7 +269,7 @@
     <div class="tab-content active" id="forms">
       <h2>Manage Forms</h2>
       <div class="small-note">Create, delete, and manage forms.</div>
-      <form id="createFormForm">
+      <form id="createFormForm" autocomplete="off">
         <div class="form-row">
           <label for="formName">Form Name *</label>
           <input type="text" id="formName" required>
@@ -260,20 +295,23 @@
         <div class="success-message" id="formCreateMsg"></div>
         <div class="error-message" id="formCreateErr"></div>
       </form>
-      <table class="form-list" id="formsTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Code</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- JS fills forms here -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="form-list" id="formsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Form Link</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS fills forms here -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Responses Management -->
@@ -283,44 +321,49 @@
       <select id="responseFormSelect">
         <option value="">Select Form</option>
       </select>
-      <table class="response-list" id="responsesTable" style="display:none;">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Submission</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- JS fills responses here -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="response-list" id="responsesTable" style="display:none;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Submission</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS fills responses here -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Codes Management -->
     <div class="tab-content" id="codes">
       <h2>Manage Form Codes</h2>
       <div class="small-note">Edit or delete codes. Codes route users to forms.</div>
-      <table class="form-list" id="codesTable">
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Form Name</th>
-            <th>Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- JS fills codes here -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="form-list" id="codesTable">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Form Name</th>
+              <th>Type</th>
+              <th>Form Link</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS fills codes here -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Settings -->
     <div class="tab-content" id="settings">
       <h2>Settings</h2>
       <div class="small-note">Basic settings for your form platform.</div>
-      <form id="settingsForm">
+      <form id="settingsForm" autocomplete="off">
         <div class="form-row">
           <label for="platformName">Platform Name</label>
           <input type="text" id="platformName" placeholder="Form Builder Platform">
@@ -336,7 +379,10 @@
     </div>
   </div>
   <script>
+    // CHANGE THIS TO YOUR ACTUAL DEPLOYED DOMAIN
+    const PLATFORM_URL = "https://examguide.vercel.app";
     const API_BASE = "https://examguide.onrender.com/api";
+    const token = localStorage.getItem('adminToken');
 
     // --- Tab Navigation ---
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -347,7 +393,6 @@
         tabContents.forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById(btn.dataset.tab).classList.add('active');
-        // Refresh forms/responses if needed
         if (btn.dataset.tab === 'forms' || btn.dataset.tab === 'codes') fetchForms();
         if (btn.dataset.tab === 'responses') fetchForms(true);
       });
@@ -363,20 +408,20 @@
           renderCodes(data.forms);
           if (refreshResponseSelect) renderFormSelect(data.forms);
         }
-      } catch (err) {
-        // Optionally: Show error UI
-      }
+      } catch (err) {}
     }
     function renderForms(forms) {
       const tbody = document.querySelector('#formsTable tbody');
       tbody.innerHTML = '';
       forms.forEach(f => {
+        const link = `${PLATFORM_URL}/form.html?code=${encodeURIComponent(f.code)}`;
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${f.name}</td>
           <td>${f.type || ''}</td>
           <td>${f.code}</td>
           <td>${f.desc || ''}</td>
+          <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
           <td>
             <button class="action-btn delete-btn" onclick="deleteForm('${f._id}')">Delete</button>
           </td>
@@ -388,11 +433,13 @@
       const tbody = document.querySelector('#codesTable tbody');
       tbody.innerHTML = '';
       forms.forEach(f => {
+        const link = `${PLATFORM_URL}/form.html?code=${encodeURIComponent(f.code)}`;
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${f.code}</td>
           <td>${f.name}</td>
           <td>${f.type || ''}</td>
+          <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
           <td>
             <button class="action-btn delete-btn" onclick="deleteForm('${f._id}')">Delete</button>
           </td>
@@ -426,7 +473,10 @@
       try {
         const res = await fetch(`${API_BASE}/forms`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": "Bearer " + token })
+          },
           body: JSON.stringify({ name, type, code, desc })
         });
         const data = await res.json();
@@ -448,10 +498,15 @@
     async function deleteForm(formId) {
       if(!confirm('Are you sure you want to delete this form?')) return;
       try {
-        const res = await fetch(`${API_BASE}/forms/${formId}`, { method: "DELETE" });
+        const res = await fetch(`${API_BASE}/forms/${formId}`, {
+          method: "DELETE",
+          headers: {
+            ...(token && { "Authorization": "Bearer " + token })
+          }
+        });
         const data = await res.json();
         if (res.ok && data.success) fetchForms();
-        // Optionally: Show feedback message
+        // Optionally: show success/error message to user here
       } catch (err) {}
     }
     window.deleteForm = deleteForm;
@@ -468,8 +523,9 @@
         const data = await res.json();
         if (Array.isArray(data.responses) && data.responses.length) {
           data.responses.forEach((r, i) => {
+            const dateStr = r.date ? new Date(r.date).toLocaleString() : (r.createdAt ? new Date(r.createdAt).toLocaleString() : "");
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${i+1}</td><td>${JSON.stringify(r.data)}</td><td>${r.date || r.createdAt || ""}</td>`;
+            tr.innerHTML = `<td>${i+1}</td><td style="max-width:180px;word-break:break-all;">${JSON.stringify(r.data)}</td><td>${dateStr}</td>`;
             tbody.appendChild(tr);
           });
           table.style.display = '';
@@ -492,11 +548,13 @@
       const err = document.getElementById('settingsErr');
       msg.style.display = err.style.display = 'none';
 
-      // Optional: If your backend supports settings update
       try {
         const res = await fetch(`${API_BASE}/settings`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": "Bearer " + token })
+          },
           body: JSON.stringify({ platformName, adminEmail })
         });
         const data = await res.json();
@@ -514,10 +572,8 @@
       }
     });
 
-    // --- LOGOUT ---
     document.getElementById('logoutBtn').onclick = function() {
-      // Example: Remove token from localStorage if used
-      // localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminToken');
       window.location.href = 'index.html';
     };
 
