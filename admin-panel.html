@@ -626,7 +626,8 @@ document.getElementById('responseFormSelect').addEventListener('change', async f
                 <strong>Email:</strong> ${reg.email}<br>
                 <strong>Phone:</strong> ${reg.phone}<br>
                 <strong>Gender:</strong> ${reg.gender}<br>
-                <strong>Passport:</strong> <a href="${API_BASE.replace('/api','')}/uploads/registrations/${reg.passport}" target="_blank">View</a><br>
+                <strong>Passport:</strong><br>
+<img src="https://examguide.onrender.com/uploads/registrations/${reg.passport}" alt="Passport" style="max-width:90px;max-height:90px;border-radius:7px;border:1.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.13);" /><br>
                 <strong>Receipt:</strong> <a href="${API_BASE.replace('/api','')}/uploads/registrations/${reg.receipt}" target="_blank">View</a>
               </td>
               <td>${dateStr}</td>
