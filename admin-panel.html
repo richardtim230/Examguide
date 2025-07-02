@@ -401,187 +401,186 @@
     </div>
   </div>
   <script>
-    // CHANGE THIS TO YOUR ACTUAL DEPLOYED DOMAIN
-    const PLATFORM_URL = "https://examguide.vercel.app";
-    const API_BASE = "https://examguide.onrender.com/api";
-    const token = localStorage.getItem('adminToken');
+ // CHANGE THIS TO YOUR ACTUAL DEPLOYED DOMAIN
+const PLATFORM_URL = "https://examguide.vercel.app";
+const API_BASE = "https://examguide.onrender.com/api";
+const token = localStorage.getItem('adminToken');
 
-    function getFormLink(form) {
-      if (form.type === "Registration") {
-        return `${PLATFORM_URL}/registration.html?code=${encodeURIComponent(form.code)}`;
-      } else if (form.type === "Application") {
-        return `${PLATFORM_URL}/application.html?code=${encodeURIComponent(form.code)}`;
-      } else {
-        return `${PLATFORM_URL}/form.html?code=${encodeURIComponent(form.code)}`;
+function getFormLink(form) {
+  if (form.type === "Registration") {
+    return `${PLATFORM_URL}/registration.html?code=${encodeURIComponent(form.code)}`;
+  } else if (form.type === "Application") {
+    return `${PLATFORM_URL}/application.html?code=${encodeURIComponent(form.code)}`;
+  } else {
+    return `${PLATFORM_URL}/form.html?code=${encodeURIComponent(form.code)}`;
+  }
+}
+
+// --- Tab Navigation ---
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'forms' || btn.dataset.tab === 'codes') fetchForms();
+    if (btn.dataset.tab === 'responses') fetchForms(true);
+  });
+});
+
+// --- FORMS: CREATE, FETCH, DELETE ---
+async function fetchForms(refreshResponseSelect) {
+  try {
+    const res = await fetch(`${API_BASE}/forms`, {
+      headers: {
+        ...(token && { "Authorization": "Bearer " + token })
       }
-    }
-
-    // --- Tab Navigation ---
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabBtns.forEach(b => b.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
-        if (btn.dataset.tab === 'forms' || btn.dataset.tab === 'codes') fetchForms();
-        if (btn.dataset.tab === 'responses') fetchForms(true);
-      });
     });
-
-    // --- FORMS: CREATE, FETCH, DELETE ---
-    async function fetchForms(refreshResponseSelect) {
-      try {
-        const res = await fetch(`${API_BASE}/forms`, {
-          headers: {
-            ...(token && { "Authorization": "Bearer " + token })
-          }
-        });
-        const data = await res.json();
-        if (Array.isArray(data.forms)) {
-          renderForms(data.forms);
-          renderCodes(data.forms);
-          if (refreshResponseSelect) renderFormSelect(data.forms);
-        }
-      } catch (err) {}
+    const data = await res.json();
+    if (Array.isArray(data.forms)) {
+      renderForms(data.forms);
+      renderCodes(data.forms);
+      if (refreshResponseSelect) renderFormSelect(data.forms);
     }
-    function renderForms(forms) {
-      const tbody = document.querySelector('#formsTable tbody');
-      tbody.innerHTML = '';
-      forms.forEach(f => {
-        const link = getFormLink(f);
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${f.name}</td>
-          <td>${f.type || ''}</td>
-          <td>${f.code}</td>
-          <td>${f.desc || ''}</td>
-          <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
-          <td>
-            <button class="action-btn delete-btn" data-id="${f._id}">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-      // Attach event listeners for delete (with loader)
-      tbody.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.onclick = async function() {
-          if(!confirm('Are you sure you want to delete this form?')) return;
-          const origText = btn.textContent;
-          btn.innerHTML = `<span class="btn-spinner"></span>`;
-          btn.disabled = true;
-          await deleteForm(btn.getAttribute('data-id'));
-          btn.disabled = false;
-          btn.textContent = origText;
-        }
-      });
-    }
-    function renderCodes(forms) {
-      const tbody = document.querySelector('#codesTable tbody');
-      tbody.innerHTML = '';
-      forms.forEach(f => {
-        const link = getFormLink(f);
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${f.code}</td>
-          <td>${f.name}</td>
-          <td>${f.type || ''}</td>
-          <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
-          <td>
-            <button class="action-btn delete-btn" data-id="${f._id}">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-      // Attach event listeners for delete (with loader)
-      tbody.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.onclick = async function() {
-          if(!confirm('Are you sure you want to delete this form?')) return;
-          const origText = btn.textContent;
-          btn.innerHTML = `<span class="btn-spinner"></span>`;
-          btn.disabled = true;
-          await deleteForm(btn.getAttribute('data-id'));
-          btn.disabled = false;
-          btn.textContent = origText;
-        }
-      });
-    }
-    function renderFormSelect(forms) {
-      const select = document.getElementById('responseFormSelect');
-      select.innerHTML = '<option value="">Select Form</option>';
-      forms.forEach(f => {
-        select.innerHTML += `<option value="${f._id}">${f.name} (${f.code})</option>`;
-      });
-    }
-
-    document.getElementById('createFormForm').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const btn = document.getElementById('createFormBtn');
+  } catch (err) {}
+}
+function renderForms(forms) {
+  const tbody = document.querySelector('#formsTable tbody');
+  tbody.innerHTML = '';
+  forms.forEach(f => {
+    const link = getFormLink(f);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${f.name}</td>
+      <td>${f.type || ''}</td>
+      <td>${f.code}</td>
+      <td>${f.desc || ''}</td>
+      <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
+      <td>
+        <button class="action-btn delete-btn" data-id="${f._id}">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // Attach event listeners for delete (with loader)
+  tbody.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.onclick = async function() {
+      if(!confirm('Are you sure you want to delete this form?')) return;
       const origText = btn.textContent;
-      btn.innerHTML = `<span class="btn-spinner"></span> Creating...`;
+      btn.innerHTML = `<span class="btn-spinner"></span>`;
       btn.disabled = true;
-
-      const name = document.getElementById('formName').value.trim();
-      const type = document.getElementById('formType').value.trim();
-      const code = document.getElementById('formCode').value.trim().toUpperCase();
-      const desc = document.getElementById('formDesc').value.trim();
-      const msg = document.getElementById('formCreateMsg');
-      const err = document.getElementById('formCreateErr');
-      msg.style.display = err.style.display = 'none';
-
-      if(!name || !type || !code) {
-        err.textContent = "Please fill all required fields.";
-        err.style.display = 'block';
-        btn.innerHTML = origText;
-        btn.disabled = false;
-        return;
-      }
-      try {
-        const res = await fetch(`${API_BASE}/forms`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token && { "Authorization": "Bearer " + token })
-          },
-          body: JSON.stringify({ name, type, code, desc })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          msg.textContent = "Form created successfully!";
-          msg.style.display = 'block';
-          this.reset();
-          fetchForms();
-        } else {
-          err.textContent = data.message || "Failed to create form.";
-          err.style.display = 'block';
-        }
-      } catch (error) {
-        err.textContent = "Unable to connect to server.";
-        err.style.display = 'block';
-      }
-      btn.innerHTML = origText;
+      await deleteForm(btn.getAttribute('data-id'));
       btn.disabled = false;
-    });
-
-    async function deleteForm(formId) {
-      try {
-        const res = await fetch(`${API_BASE}/forms/${formId}`, {
-          method: "DELETE",
-          headers: {
-            ...(token && { "Authorization": "Bearer " + token })
-          }
-        });
-        const data = await res.json();
-        if (res.ok && data.success) fetchForms();
-        // Optionally: show success/error message to user here
-      } catch (err) {}
+      btn.textContent = origText;
     }
-    window.deleteForm = deleteForm;
+  });
+}
+function renderCodes(forms) {
+  const tbody = document.querySelector('#codesTable tbody');
+  tbody.innerHTML = '';
+  forms.forEach(f => {
+    const link = getFormLink(f);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${f.code}</td>
+      <td>${f.name}</td>
+      <td>${f.type || ''}</td>
+      <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
+      <td>
+        <button class="action-btn delete-btn" data-id="${f._id}">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // Attach event listeners for delete (with loader)
+  tbody.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.onclick = async function() {
+      if(!confirm('Are you sure you want to delete this form?')) return;
+      const origText = btn.textContent;
+      btn.innerHTML = `<span class="btn-spinner"></span>`;
+      btn.disabled = true;
+      await deleteForm(btn.getAttribute('data-id'));
+      btn.disabled = false;
+      btn.textContent = origText;
+    }
+  });
+}
+function renderFormSelect(forms) {
+  const select = document.getElementById('responseFormSelect');
+  select.innerHTML = '<option value="">Select Form</option>';
+  forms.forEach(f => {
+    select.innerHTML += `<option value="${f._id}">${f.name} (${f.code})</option>`;
+  });
+}
 
-    // --- RESPONSES: FETCH FOR FORM ---
-    document.getElementById('responseFormSelect').addEventListener('change', async function(){
-    document.getElementById('responseFormSelect').addEventListener('change', async function(){
+document.getElementById('createFormForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('createFormBtn');
+  const origText = btn.textContent;
+  btn.innerHTML = `<span class="btn-spinner"></span> Creating...`;
+  btn.disabled = true;
+
+  const name = document.getElementById('formName').value.trim();
+  const type = document.getElementById('formType').value.trim();
+  const code = document.getElementById('formCode').value.trim().toUpperCase();
+  const desc = document.getElementById('formDesc').value.trim();
+  const msg = document.getElementById('formCreateMsg');
+  const err = document.getElementById('formCreateErr');
+  msg.style.display = err.style.display = 'none';
+
+  if(!name || !type || !code) {
+    err.textContent = "Please fill all required fields.";
+    err.style.display = 'block';
+    btn.innerHTML = origText;
+    btn.disabled = false;
+    return;
+  }
+  try {
+    const res = await fetch(`${API_BASE}/forms`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { "Authorization": "Bearer " + token })
+      },
+      body: JSON.stringify({ name, type, code, desc })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      msg.textContent = "Form created successfully!";
+      msg.style.display = 'block';
+      this.reset();
+      fetchForms();
+    } else {
+      err.textContent = data.message || "Failed to create form.";
+      err.style.display = 'block';
+    }
+  } catch (error) {
+    err.textContent = "Unable to connect to server.";
+    err.style.display = 'block';
+  }
+  btn.innerHTML = origText;
+  btn.disabled = false;
+});
+
+async function deleteForm(formId) {
+  try {
+    const res = await fetch(`${API_BASE}/forms/${formId}`, {
+      method: "DELETE",
+      headers: {
+        ...(token && { "Authorization": "Bearer " + token })
+      }
+    });
+    const data = await res.json();
+    if (res.ok && data.success) fetchForms();
+    // Optionally: show success/error message to user here
+  } catch (err) {}
+}
+window.deleteForm = deleteForm;
+
+// --- RESPONSES: FETCH FOR FORM ---
+document.getElementById('responseFormSelect').addEventListener('change', async function(){
   const formId = this.value;
   const table = document.getElementById('responsesTable');
   const tbody = table.querySelector('tbody');
@@ -615,53 +614,53 @@
   }
 });
 
-    // --- SETTINGS: PATCH/UPDATE SETTINGS (OPTIONAL) ---
-    document.getElementById('settingsForm').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const btn = document.getElementById('settingsBtn');
-      const origText = btn.textContent;
-      btn.innerHTML = `<span class="btn-spinner"></span> Saving...`;
-      btn.disabled = true;
+// --- SETTINGS: PATCH/UPDATE SETTINGS (OPTIONAL) ---
+document.getElementById('settingsForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('settingsBtn');
+  const origText = btn.textContent;
+  btn.innerHTML = `<span class="btn-spinner"></span> Saving...`;
+  btn.disabled = true;
 
-      const platformName = document.getElementById('platformName').value.trim();
-      const adminEmail = document.getElementById('adminEmail').value.trim();
-      const msg = document.getElementById('settingsMsg');
-      const err = document.getElementById('settingsErr');
-      msg.style.display = err.style.display = 'none';
+  const platformName = document.getElementById('platformName').value.trim();
+  const adminEmail = document.getElementById('adminEmail').value.trim();
+  const msg = document.getElementById('settingsMsg');
+  const err = document.getElementById('settingsErr');
+  msg.style.display = err.style.display = 'none';
 
-      try {
-        const res = await fetch(`${API_BASE}/settings`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token && { "Authorization": "Bearer " + token })
-          },
-          body: JSON.stringify({ platformName, adminEmail })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          msg.textContent = "Settings saved!";
-          msg.style.display = 'block';
-          this.reset();
-        } else {
-          err.textContent = data.message || "Failed to save settings.";
-          err.style.display = 'block';
-        }
-      } catch (error) {
-        err.textContent = "Unable to connect to server.";
-        err.style.display = 'block';
-      }
-      btn.innerHTML = origText;
-      btn.disabled = false;
+  try {
+    const res = await fetch(`${API_BASE}/settings`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { "Authorization": "Bearer " + token })
+      },
+      body: JSON.stringify({ platformName, adminEmail })
     });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      msg.textContent = "Settings saved!";
+      msg.style.display = 'block';
+      this.reset();
+    } else {
+      err.textContent = data.message || "Failed to save settings.";
+      err.style.display = 'block';
+    }
+  } catch (error) {
+    err.textContent = "Unable to connect to server.";
+    err.style.display = 'block';
+  }
+  btn.innerHTML = origText;
+  btn.disabled = false;
+});
 
-    document.getElementById('logoutBtn').onclick = function() {
-      localStorage.removeItem('adminToken');
-      window.location.href = 'formpage.html';
-    };
+document.getElementById('logoutBtn').onclick = function() {
+  localStorage.removeItem('adminToken');
+  window.location.href = 'formpage.html';
+};
 
-    // Initial fetch on load
-    fetchForms(true);
+// Initial fetch on load
+fetchForms(true);
   </script>
 </body>
 </html>
