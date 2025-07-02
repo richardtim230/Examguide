@@ -1,9 +1,10 @@
 import express from "express";
 import Response from "../models/Response.js";
 import Form from "../models/Form.js";
+import { authAdmin } from "../middleware/authAdmin.js";
 const router = express.Router();
 
-// Submit a response
+// Submit a response (public)
 router.post("/", async (req, res) => {
   const { formId, data } = req.body;
   if (!formId || !data) return res.status(400).json({ message: "Missing formId or data." });
@@ -17,11 +18,15 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get all responses for a form
-router.get("/", async (req, res) => {
+// Get all responses for a form (admin only, must own form)
+router.get("/", authAdmin, async (req, res) => {
   const { formId } = req.query;
   if (!formId) return res.status(400).json({ message: "formId required." });
-  const responses = await Response.find({ formId }).sort({ date: -1 });
+  const form = await Form.findById(formId);
+  if (!form) return res.status(404).json({ message: "Form not found." });
+  if (form.admin.toString() !== req.admin._id.toString())
+    return res.status(403).json({ message: "Forbidden. Not your form." });
+  const responses = await Response.find({ formId }).sort({ createdAt: -1 });
   res.json({ responses });
 });
 
