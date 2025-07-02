@@ -35,8 +35,6 @@ import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
-
-app.use("/api/registrations", registrationsRoutes);
 dotenv.config();
 
 // ===== FACULTY & DEPARTMENT MODELS =====
@@ -302,7 +300,7 @@ app.use("/api/schedules", scheduleRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/adminstats", adminStatsRoutes);
 app.use("/api/admin", adminRoutes);
-
+app.use("/api/registrations", registrationsRoutes);
 app.use("/api/responses", responsesRoutes);
 app.use("/api/settings", settingsRoutes);
 
