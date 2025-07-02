@@ -1,5 +1,5 @@
 import express from "express";
-import Form from "../models/Form.js";
+import Form from "../models/Response.js";
 import { authAdmin } from "../middleware/authAdmin.js";
 
 const router = express.Router();
