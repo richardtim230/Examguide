@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
-const RegistrationSchema = new mongoose.Schema({
+
+const registrationSchema = new mongoose.Schema({
   fullname: { type: String, required: true },
-  email: { type: String, required: true, lowercase: true },
+  email: { type: String, required: true },
   phone: { type: String, required: true },
   gender: { type: String, required: true },
   passport: { type: String, required: true },
   receipt: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
-export default mongoose.model("Registration", RegistrationSchema);
+  // Optional: link to Form and Admin if needed
+  formId: { type: mongoose.Schema.Types.ObjectId, ref: "Form" },
+  admin: { type: mongoose.Schema.Types.ObjectId, ref: "Admin" }
+}, { timestamps: true });
+
+export default mongoose.model("Registration", registrationSchema);
