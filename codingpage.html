@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>NextGen Web Dev Class: HTML, CSS & JavaScript</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.80">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Icons (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <style>
     :root {
-      --primary: #012b5d;
+      --primary: #0e1e3a;
       --accent: #21d4fd;
       --accent2: #b721ff;
-      --bg: #f5f8fb;
-      --hero-gradient: linear-gradient(120deg, #21d4fd 0%, #b721ff 100%);
-      --button-gradient: linear-gradient(90deg, #012b5d 0%, #21d4fd 100%);
+      --accent3: #009ffd;
+      --bg: #f6f8fc;
+      --hero-gradient: linear-gradient(112deg, #21d4fd 0%, #b721ff 100%);
+      --button-gradient: linear-gradient(90deg, #0e1e3a 0%, #21d4fd 100%);
       --section-bg: #fff;
       --section-border: #e4e9f2;
+      --shadow: 0 6px 32px #b721ff15, 0 2px 8px #0e1e3a09;
     }
     * { box-sizing: border-box; }
+    html, body {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
       font-family: 'Inter', Arial, sans-serif;
@@ -25,254 +32,392 @@
       color: var(--primary);
       min-height: 100vh;
       line-height: 1.6;
+      letter-spacing: 0.01em;
+      font-size: 1.04rem;
     }
     header {
       background: var(--hero-gradient);
       color: #fff;
-      padding: 44px 8vw 36px 8vw;
-      border-bottom-left-radius: 52px;
-      border-bottom-right-radius: 52px;
-      box-shadow: 0 6px 24px #21d4fd33;
+      padding: 36px 7vw 32px 7vw;
+      border-bottom-left-radius: 56px 38px;
+      border-bottom-right-radius: 56px 38px;
+      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at 80% 30%, #b721ff33 0%, transparent 80%);
+      z-index: 0;
     }
     .logo-title {
       display: flex;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
     .logo {
-      width: 56px;
-      height: 56px;
-      margin-right: 14px;
-      border-radius: 12px;
+      width: 58px;
+      height: 58px;
+      margin-right: 16px;
+      border-radius: 15px;
       background: #fff;
       object-fit: cover;
-      box-shadow: 0 2px 12px #b721ff33;
+      box-shadow: 0 2px 14px #b721ff44;
+      border: 3px solid #fff;
+      transition: transform .2s;
     }
+    .logo:hover { transform: scale(1.07) rotate(-4deg); }
     .site-title {
-      font-size: 2rem;
+      font-size: 2.15rem;
       font-weight: 900;
-      letter-spacing: -1px;
+      letter-spacing: -1.2px;
       font-family: 'Fira Code', monospace;
+      text-shadow: 0 2px 8px #21d4fd22;
     }
     nav {
       margin-top: 0;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 1;
     }
     nav a {
       color: #fff;
       font-weight: 700;
       text-decoration: none;
-      margin-left: 28px;
-      font-size: 1.06rem;
-      letter-spacing: 0.3px;
+      margin-left: 34px;
+      font-size: 1.13rem;
       border-bottom: 2px solid transparent;
       transition: border 0.2s, color 0.2s;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 0%;
+      background: var(--accent2);
+      border-radius: 2px;
+      transition: width 0.18s;
+      margin-top: 4px;
     }
     nav a:hover {
       color: var(--accent2);
-      border-bottom: 2px solid var(--accent2);
     }
+    nav a:hover::after {
+      width: 70%;
+    }
+    .cta-btn {
+      background: var(--button-gradient);
+      color: #fff!important;
+      font-size: 1.18rem;
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 700;
+      padding: 13px 38px;
+      border: none;
+      border-radius: 13px;
+      box-shadow: 0 2px 16px 0 #21d4fd44, 0 2px 8px #b721ff22;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.18s, color 0.18s;
+      text-decoration: none;
+      letter-spacing: 0.9px;
+      display: inline-block;
+      margin-left: 44px;
+      position: relative;
+    }
+    .cta-btn:hover, .cta-btn:focus {
+      background: linear-gradient(90deg, #21d4fd 0%, #0e1e3a 100%);
+      color: var(--accent2)!important;
+      transform: scale(1.045) translateY(-2px);
+      box-shadow: 0 8px 28px 0 #b721ff38;
+      outline: none;
+    }
+    /* HERO */
     .hero-section {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 64px 8vw 38px 8vw;
+      padding: 70px 7vw 44px 7vw;
       flex-wrap: wrap;
-      background: #fff;
-      border-radius: 40px;
-      box-shadow: 0 8px 38px #012b5d14;
-      margin: -48px auto 0 auto;
-      max-width: 1100px;
+      background: var(--section-bg);
+      border-radius: 44px;
+      box-shadow: var(--shadow);
+      margin: -52px auto 0 auto;
+      max-width: 1200px;
+      position: relative;
+      z-index: 3;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      left: -60px;
+      bottom: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 25% 85%, #21d4fd22 0%, transparent 90%);
+      z-index: 0;
+    }
+    .hero-left {
+      max-width: 540px;
       position: relative;
       z-index: 1;
     }
-    .hero-left {
-      max-width: 510px;
-    }
     .hero-title {
-      font-size: 2.06rem;
+      font-size: 2.7rem;
       font-weight: 900;
       color: var(--primary);
-      margin-bottom: 10px;
-      letter-spacing: -0.5px;
-      line-height: 1.13;
+      margin-bottom: 12px;
+      letter-spacing: -0.7px;
+      line-height: 1.10;
+      text-shadow: 0 3px 10px #21d4fd14;
     }
     .hero-title .highlight {
       color: var(--accent2);
-      background: #f5f8fb;
-      padding: 0 7px;
-      border-radius: 7px;
+      background: #f6f8fc;
+      padding: 0 10px;
+      border-radius: 10px;
       font-weight: 900;
-      letter-spacing: 1px;
-      font-size: 1.08em;
+      letter-spacing: 1.4px;
+      font-size: 1.13em;
+      box-shadow: 0 2px 8px #b721ff22;
     }
     .hero-desc {
-      font-size: 1.18rem;
+      font-size: 1.22rem;
       font-weight: 500;
-      color: #1a233a;
-      margin-bottom: 26px;
-      line-height: 1.6;
+      color: #27314e;
+      margin-bottom: 28px;
+      line-height: 1.7;
+      text-shadow: 0 1px 7px #21d4fd0c;
     }
-    .cta-btn {
-      background: var(--button-gradient);
-      color: #fff;
-      font-size: 1.18rem;
-      font-family: 'Inter', Arial, sans-serif;
-      font-weight: 700;
-      padding: 16px 44px;
-      border: none;
-      border-radius: 11px;
-      box-shadow: 0 2px 16px 0 #21d4fd44;
-      cursor: pointer;
-      transition: background 0.18s, transform 0.18s;
-      text-decoration: none;
-      letter-spacing: 0.8px;
+    .hero-badges {
+      margin-bottom: 28px;
+    }
+    .badge {
       display: inline-block;
+      background: linear-gradient(90deg,#21d4fd 0%,#b721ff 100%);
+      color: #fff;
+      font-size: 0.98em;
+      font-weight: 800;
+      border-radius: 7px;
+      padding: 6px 16px;
+      margin-right: 12px;
+      margin-bottom: 7px;
+      box-shadow: 0 1px 6px #b721ff25;
+      letter-spacing: 0.8px;
+      text-shadow: 0 1px 3px #0e1e3a22;
     }
-    .cta-btn:hover {
-      background: linear-gradient(90deg, #21d4fd 0%, #012b5d 100%);
-      color: var(--accent2);
-      transform: scale(1.04) translateY(-2px);
-      box-shadow: 0 8px 24px 0 #b721ff32;
+    .cta-btn.hero {
+      margin-left: 0;
+      margin-top: 10px;
+      font-size: 1.21rem;
+      padding: 16px 54px;
+      border-radius: 17px;
+      letter-spacing: 1px;
     }
     .hero-right {
-      max-width: 420px;
-      width: 44vw;
-      min-width: 230px;
-      margin-left: 32px;
+      max-width: 430px;
+      width: 45vw;
+      min-width: 260px;
+      margin-left: 34px;
       background: var(--hero-gradient);
-      border-radius: 22px;
-      box-shadow: 0 2px 24px #b721ff22;
+      border-radius: 28px;
+      box-shadow: 0 2px 32px #b721ff30;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       aspect-ratio: 1.2/1;
+      position: relative;
+      z-index: 1;
+      /* Animation */
+      animation: floatY 3.8s ease-in-out infinite;
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(-18px);}
     }
     .hero-right img {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 22px;
-    }
-    .features-section {
-      margin: 75px auto 0 auto;
-      padding: 44px 4vw 30px 4vw;
-      background: var(--section-bg);
       border-radius: 28px;
-      max-width: 1100px;
+      box-shadow: 0 8px 34px #21d4fd18;
+      border: 4px solid #fff;
+      filter: saturate(1.07) contrast(1.03);
+      transition: filter .2s;
+    }
+    .hero-right img:hover {
+      filter: saturate(1.14) contrast(1.07) brightness(1.03);
+    }
+    /* FEATURES */
+    .features-section {
+      margin: 82px auto 0 auto;
+      padding: 60px 5vw 38px 5vw;
+      background: var(--section-bg);
+      border-radius: 32px;
+      max-width: 1200px;
       border: 1.5px solid var(--section-border);
-      box-shadow: 0 6px 16px #21d4fd12;
+      box-shadow: var(--shadow);
     }
     .features-title {
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: 900;
       color: var(--primary);
-      margin-bottom: 24px;
+      margin-bottom: 34px;
       text-align: center;
+      letter-spacing: -1.5px;
+      text-shadow: 0 2px 8px #21d4fd11;
     }
     .features-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 34px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
     .feature-card {
-      background: linear-gradient(120deg, #fff 60%, #f3f6fb 100%);
-      border-radius: 16px;
-      box-shadow: 0 4px 16px #21d4fd22;
-      padding: 28px 20px 18px 20px;
+      background: linear-gradient(120deg, #fff 62%, #f3f6fb 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 18px #21d4fd19;
+      padding: 34px 22px 18px 22px;
       text-align: center;
-      min-height: 180px;
+      min-height: 193px;
       border: 1.5px solid #eaeaf7;
-      transition: box-shadow 0.18s, transform 0.18s;
+      transition: box-shadow 0.22s, transform 0.15s;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover {
+      box-shadow: 0 10px 30px #b721ff28, 0 2px 8px #21d4fd16;
+      transform: translateY(-7px) scale(1.025);
     }
     .feature-icon {
-      font-size: 2.1rem;
-      margin-bottom: 13px;
+      font-size: 2.15rem;
+      margin-bottom: 15px;
+      color: var(--accent2);
+      background: linear-gradient(90deg,#21d4fd 0%,#b721ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
     }
     .feature-title {
-      font-size: 1.08rem;
+      font-size: 1.23rem;
       font-weight: 700;
-      margin-bottom: 7px;
-      color: var(--accent2);
+      margin-bottom: 8px;
+      color: var(--primary);
+      letter-spacing: 0.2px;
     }
     .feature-desc {
-      font-size: 0.97rem;
+      font-size: 1.04rem;
       color: #2a395c;
       font-weight: 500;
       line-height: 1.5;
+      margin-top: 2px;
     }
+    /* HOW */
     .how-section {
-      margin: 72px auto 0 auto;
-      padding: 38px 4vw 30px 4vw;
+      margin: 88px auto 0 auto;
+      padding: 50px 5vw 34px 5vw;
       background: var(--section-bg);
-      border-radius: 28px;
+      border-radius: 32px;
       max-width: 1000px;
       border: 1.5px solid var(--section-border);
-      box-shadow: 0 6px 12px #21d4fd11;
+      box-shadow: var(--shadow);
     }
     .how-title {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       text-align: center;
+      letter-spacing: -0.4px;
+      text-shadow: 0 2px 8px #21d4fd0d;
     }
     .how-steps {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 32px;
+      gap: 35px 28px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
     .how-step {
-      flex: 1 1 210px;
-      min-width: 170px;
+      flex: 1 1 220px;
+      min-width: 180px;
       max-width: 260px;
       background: #f5f8fb;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px #21d4fd13;
-      padding: 24px 12px 14px 12px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #21d4fd13;
+      padding: 29px 14px 17px 14px;
       text-align: center;
-      font-size: 1.04rem;
+      font-size: 1.09rem;
       font-weight: 600;
-      color: #012b5d;
+      color: #0e1e3a;
       border: 1px solid #e7ebf7;
+      transition: box-shadow .18s, transform .16s;
+      position: relative;
+      z-index: 1;
+    }
+    .how-step:hover {
+      box-shadow: 0 8px 22px #21d4fd24;
+      transform: translateY(-6px) scale(1.022);
     }
     .how-step-number {
       display: inline-block;
-      font-size: 1.5em;
+      font-size: 1.45em;
       font-family: 'Fira Code', monospace;
       background: var(--accent2);
       color: #fff;
       border-radius: 50%;
-      width: 38px;
-      height: 38px;
-      line-height: 38px;
-      margin-bottom: 12px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      margin-bottom: 13px;
       font-weight: 900;
-      box-shadow: 0 2px 8px #b721ff22;
+      box-shadow: 0 2px 10px #b721ff22;
+      border: 2.5px solid #fff;
     }
+    /* Footer */
     footer {
       text-align: center;
-      color: #888;
-      padding: 36px 0 25px 0;
-      font-size: 1.08rem;
+      color: #8891a1;
+      padding: 46px 0 28px 0;
+      font-size: 1.11rem;
       font-family: 'Inter', Arial, sans-serif;
-      margin-top: 52px;
+      margin-top: 60px;
       background: none;
+      border-top: 1.5px solid #eaeaf7;
+      letter-spacing: 0.1px;
+      box-shadow: 0 -2px 18px #b721ff11;
     }
-    @media (max-width: 1000px) {
+    footer a {
+      color: var(--accent3);
+      text-decoration: underline;
+      transition: color .18s;
+    }
+    footer a:hover {
+      color: var(--accent2);
+    }
+    /* Responsive */
+    @media (max-width: 1050px) {
       .hero-section, .features-section, .how-section {
         padding-left: 2vw;
         padding-right: 2vw;
@@ -282,32 +427,39 @@
         text-align: center;
       }
       .hero-right {
-        margin: 34px 0 0 0;
-        width: 96vw;
-        max-width: 340px;
+        margin: 38px auto 0 auto;
+        width: 92vw;
+        max-width: 350px;
       }
       .hero-left {
         max-width: 99vw;
         margin: 0 auto;
       }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       header {
         flex-direction: column;
         align-items: flex-start;
-        padding: 24px 4vw 16px 4vw;
+        padding: 26px 4vw 15px 4vw;
       }
       .logo-title { margin-bottom: 8px; }
-      .site-title { font-size: 1.3rem; }
+      .site-title { font-size: 1.5rem; }
       nav { margin-top: 0; }
-      nav a { margin-left: 14px; font-size: 0.98rem; }
-      .hero-title { font-size: 1.25rem; }
+      nav a { margin-left: 13px; font-size: 1.03rem; }
+      .cta-btn { margin-left: 18px; font-size: 1.06rem; padding: 10px 16px; }
+      .hero-title { font-size: 1.38rem; }
       .features-section, .how-section {
         padding: 18px 2vw 10px 2vw;
-        border-radius: 11px;
+        border-radius: 12px;
       }
-      .features-title, .how-title { font-size: 1.08rem; }
-      .features-list, .how-steps { gap: 14px; }
+      .features-title, .how-title { font-size: 1.18rem; }
+      .features-list, .how-steps { gap: 15px; }
+    }
+    @media (max-width: 450px) {
+      .hero-title { font-size: 1rem; }
+      .site-title { font-size: 1.1rem; }
+      .hero-right { max-width: 200px; }
+      .badge { font-size: 0.9em; }
     }
   </style>
 </head>
@@ -320,22 +472,27 @@
     <nav>
       <a href="#features">Why Join?</a>
       <a href="#how">How it Works</a>
-      <a href="#register" class="cta-btn" style="margin-left:32px;font-size:1.06rem;padding:8px 20px;">Register</a>
+      <a href="#register" class="cta-btn">Register</a>
     </nav>
   </header>
   <section class="hero-section">
     <div class="hero-left">
       <h1 class="hero-title">
-        <span class="highlight">Master</span> HTML,<br>
-        CSS & JavaScript<br>
-        <span style="font-size:1.02em;font-weight:700;color:#21d4fd;">— Online, Interactive, and Modern</span>
+        <span class="highlight">Master</span> HTML,
+        <br>CSS &amp; JavaScript<br>
+        <span style="font-size:1.09em;font-weight:700;color:#21d4fd;">— Online, Interactive, and Modern</span>
       </h1>
+      <div class="hero-badges">
+        <span class="badge"><i class="fa-solid fa-certificate"></i> Get Certified</span>
+        <span class="badge"><i class="fa-solid fa-laptop-code"></i> Real Projects</span>
+        <span class="badge"><i class="fa-solid fa-users"></i> Global Community</span>
+      </div>
       <p class="hero-desc">
         <b>Unlock your coding career</b> with our expert-led, result-driven class.<br>
         Learn everything from fundamentals to advanced tricks for building stunning, responsive websites & apps — <b>on your mobile or desktop</b>.<br>
-        <span style="color:#012b5d;font-weight:600;">Project-focused. Community-powered. Certificate awarded.</span>
+        <span style="color:#0e1e3a;font-weight:600;">Project-focused. Community-powered. Certificate awarded.</span>
       </p>
-      <a href="registration.html?code=BELLI" class="cta-btn" id="register" style="margin-top:14px;">Register Now</a>
+      <a href="registration.html?code=BELLI" class="cta-btn hero" id="register">Register Now</a>
     </div>
     <div class="hero-right">
       <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
@@ -346,33 +503,33 @@
     <div class="features-title">Why Choose This Web Dev Class?</div>
     <ul class="features-list">
       <li class="feature-card">
-        <div class="feature-icon">🌍</div>
+        <div class="feature-icon"><i class="fa-solid fa-globe"></i></div>
         <div class="feature-title">Universal Access</div>
         <div class="feature-desc">Join seamlessly from mobile or desktop. Practice and build from anywhere—no special equipment needed.</div>
       </li>
       <li class="feature-card">
-        <div class="feature-icon">🧑‍💻</div>
+        <div class="feature-icon"><i class="fa-solid fa-code"></i></div>
         <div class="feature-title">Hands-on Projects</div>
         <div class="feature-desc">Apply what you learn in live projects. Build real websites & UI components as you go.</div>
       </li>
       <li class="feature-card">
-        <div class="feature-icon">🚀</div>
+        <div class="feature-icon"><i class="fa-solid fa-rocket"></i></div>
         <div class="feature-title">Career-Ready Curriculum</div>
         <div class="feature-desc">From basics to advanced concepts—get ready for freelance gigs or your first tech job.</div>
       </li>
       <li class="feature-card">
-        <div class="feature-icon">📞</div>
+        <div class="feature-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
         <div class="feature-title">Live Q&A + Mentorship</div>
         <div class="feature-desc">Get your questions answered by real developers. 1-on-1 feedback and peer review sessions included.</div>
       </li>
       <li class="feature-card">
-        <div class="feature-icon">🎓</div>
-        <div class="feature-title">Certificate & Portfolio</div>
+        <div class="feature-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="feature-title">Certificate &amp; Portfolio</div>
         <div class="feature-desc">Graduate with a verifiable certificate and a beautiful portfolio to show off your new skills.</div>
       </li>
       <li class="feature-card">
-        <div class="feature-icon">💼</div>
-        <div class="feature-title">Community & Networking</div>
+        <div class="feature-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+        <div class="feature-title">Community &amp; Networking</div>
         <div class="feature-desc">Connect with aspiring and professional developers. Collaborate, share, and grow together.</div>
       </li>
     </ul>
@@ -404,7 +561,7 @@
   </section>
   <footer>
     &copy; 2025 NextGen Web Dev Class &mdash; Unlock Your Future in Tech.<br>
-    <span style="font-size:0.98em;">Questions? <a href="mailto: richardoco12@gmail.com" style="color:#21d4fd;text-decoration:underline">Contact us</a></span>
+    <span style="font-size:0.98em;">Questions? <a href="mailto: richardoco12@gmail.com">Contact us</a></span>
   </footer>
   <script>
     // Replace registration URL everywhere
