@@ -429,24 +429,20 @@
         tbody.appendChild(tr);
       });
     }
-    function renderCodes(forms) {
-      const tbody = document.querySelector('#codesTable tbody');
-      tbody.innerHTML = '';
-      forms.forEach(f => {
-        const link = `${PLATFORM_URL}/form.html?code=${encodeURIComponent(f.code)}`;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${f.code}</td>
-          <td>${f.name}</td>
-          <td>${f.type || ''}</td>
-          <td><a href="${link}" target="_blank" class="form-link">Form Link</a></td>
-          <td>
-            <button class="action-btn delete-btn" onclick="deleteForm('${f._id}')">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+function getFormLink(form) {
+  if (form.type === "Registration") {
+    return `${PLATFORM_URL}/registration.html?code=${encodeURIComponent(form.code)}`;
+  } else if (form.type === "Application") {
+    return `${PLATFORM_URL}/application.html?code=${encodeURIComponent(form.code)}`;
+  } else {
+    return `${PLATFORM_URL}/form.html?code=${encodeURIComponent(form.code)}`;
+  }
+}
+
+// Then in your render functions
+const link = getFormLink(f);
+    
+    
     function renderFormSelect(forms) {
       const select = document.getElementById('responseFormSelect');
       select.innerHTML = '<option value="">Select Form</option>';
