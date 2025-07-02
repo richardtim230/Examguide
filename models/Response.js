@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-const Response = mongoose.models.Response || mongoose.model("Response", ResponseSchema);
+
 const responseSchema = new mongoose.Schema({
   formId: { type: mongoose.Schema.Types.ObjectId, ref: "Form", required: true },
   data: { type: Object, required: true },
   date: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-export default mongoose.models.Response || mongoose.model("Response", ResponseSchema);
+export default mongoose.model("Response", responseSchema);
