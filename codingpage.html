@@ -3,28 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>NextGen Web Dev Class: HTML, CSS & JavaScript</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.80">
+  <meta name="viewport" content="width=device-width, initial-scale=0.750">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
+  <!-- Icons (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <style>
     :root {
-      --primary: #fff;
-      --bg1: #090e24;
-      --bg2: #2c1b84;
-      --bg3: #43108b;
-      --accent: #1dbf73;
+      --primary: #0e1e3a;
+      --accent: #21d4fd;
       --accent2: #b721ff;
-      --accent3: #21d4fd;
-      --cta: #1dbf73;
-      --cta-hover: #159f5c;
-      --card-bg: #181d3a;
-      --input-bg: #231e4f;
-      --input-border: #6c63ff44;
-      --shadow: 0 6px 32px #00000014, 0 2px 8px #1dbf7311;
-      --gradient-bg: linear-gradient(180deg, #090e24 0%, #2c1b84 80%);
-      --button-gradient: linear-gradient(90deg, #1dbf73 0%, #21d4fd 100%);
+      --accent3: #009ffd;
+      --bg: #f6f8fc;
+      --hero-gradient: linear-gradient(112deg, #21d4fd 0%, #b721ff 100%);
+      --button-gradient: linear-gradient(90deg, #0e1e3a 0%, #21d4fd 100%);
+      --section-bg: #fff;
+      --section-border: #e4e9f2;
+      --shadow: 0 6px 32px #b721ff15, 0 2px 8px #0e1e3a09;
     }
     * { box-sizing: border-box; }
     html, body {
@@ -33,23 +28,37 @@
     body {
       margin: 0;
       font-family: 'Inter', Arial, sans-serif;
-      background: var(--gradient-bg);
+      background: var(--bg);
       color: var(--primary);
       min-height: 100vh;
-      line-height: 1.5;
-      font-size: 1.09rem;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+      font-size: 1.04rem;
     }
     header {
-      background: transparent;
+      background: var(--hero-gradient);
       color: #fff;
-      padding: 32px 6vw 10px 6vw;
+      padding: 36px 7vw 32px 7vw;
+      border-bottom-left-radius: 56px 38px;
+      border-bottom-right-radius: 56px 38px;
+      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       position: relative;
       z-index: 10;
-      font-family: 'Inter', Arial, sans-serif;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at 80% 30%, #b721ff33 0%, transparent 80%);
+      z-index: 0;
     }
     .logo-title {
       display: flex;
@@ -58,24 +67,26 @@
       z-index: 1;
     }
     .logo {
-      width: 50px;
-      height: 50px;
-      margin-right: 15px;
-      border-radius: 12px;
+      width: 58px;
+      height: 58px;
+      margin-right: 16px;
+      border-radius: 15px;
       background: #fff;
       object-fit: cover;
       box-shadow: 0 2px 14px #b721ff44;
       border: 3px solid #fff;
       transition: transform .2s;
     }
+    .logo:hover { transform: scale(1.07) rotate(-4deg); }
     .site-title {
-      font-size: 1.7rem;
+      font-size: 2.15rem;
       font-weight: 900;
       letter-spacing: -1.2px;
       font-family: 'Fira Code', monospace;
       text-shadow: 0 2px 8px #21d4fd22;
     }
     nav {
+      margin-top: 0;
       display: flex;
       align-items: center;
       position: relative;
@@ -85,196 +96,153 @@
       color: #fff;
       font-weight: 700;
       text-decoration: none;
-      margin-left: 26px;
-      font-size: 1.09rem;
+      margin-left: 34px;
+      font-size: 1.13rem;
       border-bottom: 2px solid transparent;
       transition: border 0.2s, color 0.2s;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       position: relative;
     }
+    nav a::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 0%;
+      background: var(--accent2);
+      border-radius: 2px;
+      transition: width 0.18s;
+      margin-top: 4px;
+    }
     nav a:hover {
-      color: var(--cta);
-      border-bottom: 2px solid var(--cta);
+      color: var(--accent2);
+    }
+    nav a:hover::after {
+      width: 70%;
     }
     .cta-btn {
       background: var(--button-gradient);
-      color: #fff !important;
-      font-size: 1.13rem;
+      color: #fff!important;
+      font-size: 1.18rem;
       font-family: 'Inter', Arial, sans-serif;
-      font-weight: 800;
-      padding: 13px 34px;
+      font-weight: 700;
+      padding: 13px 38px;
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 2px 13px 0 #21d4fd33, 0 2px 8px #b721ff22;
+      border-radius: 13px;
+      box-shadow: 0 2px 16px 0 #21d4fd44, 0 2px 8px #b721ff22;
       cursor: pointer;
       transition: background 0.18s, transform 0.18s, color 0.18s;
       text-decoration: none;
-      letter-spacing: 1px;
+      letter-spacing: 0.9px;
       display: inline-block;
-      margin-left: 28px;
+      margin-left: 44px;
       position: relative;
     }
     .cta-btn:hover, .cta-btn:focus {
-      background: linear-gradient(90deg, #21d4fd 0%, #1dbf73 100%);
+      background: linear-gradient(90deg, #21d4fd 0%, #0e1e3a 100%);
       color: var(--accent2)!important;
       transform: scale(1.045) translateY(-2px);
-      box-shadow: 0 8px 22px 0 #b721ff38;
+      box-shadow: 0 8px 28px 0 #b721ff38;
       outline: none;
     }
     /* HERO */
     .hero-section {
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 38px 4vw 38px 4vw;
-      background: none;
-      margin: 0 auto 0 auto;
-      max-width: 1100px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 70px 7vw 44px 7vw;
+      flex-wrap: wrap;
+      background: var(--section-bg);
+      border-radius: 44px;
+      box-shadow: var(--shadow);
+      margin: -52px auto 0 auto;
+      max-width: 1200px;
       position: relative;
       z-index: 3;
-      min-height: 80vh;
-      gap: 42px;
-      flex-wrap: wrap;
-    }
-    .hero-left {
-      max-width: 480px;
-      min-width: 320px;
-      flex: 1 1 340px;
-      text-align: left;
-    }
-    .hero-title {
-      font-size: 2.1rem;
-      font-weight: 900;
-      font-family: 'Inter', Arial, sans-serif;
-      margin-bottom: 20px;
-      letter-spacing: -0.7px;
-      line-height: 1.1;
-      text-shadow: 0 4px 18px #1dbf7311;
-    }
-    .hero-title .highlight {
-      color: var(--cta);
-      background: #fff1;
-      padding: 0 9px;
-      border-radius: 10px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      font-size: 1.16em;
-      box-shadow: 0 2px 8px #1dbf7319;
-      font-family: 'Fira Code', monospace;
-    }
-    .hero-desc {
-      font-size: 1.13rem;
-      font-weight: 500;
-      color: #e8e7f7;
-      margin-bottom: 26px;
-      line-height: 1.6;
-      text-shadow: 0 1px 8px #1dbf731c;
-    }
-    .discount-banner {
-      background: linear-gradient(90deg,#1dbf73 10%, #21d4fd 90%);
-      color: #fff;
-      font-weight: 800;
-      font-size: 1.1rem;
-      border-radius: 14px;
-      padding: 13px 18px;
-      margin-bottom: 26px;
-      box-shadow: 0 4px 28px #1dbf732a;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 15px;
-      position: relative;
       overflow: hidden;
     }
-    .discount-banner i {
-      font-size: 1.45em;
-      margin-right: 7px;
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      left: -60px;
+      bottom: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 25% 85%, #21d4fd22 0%, transparent 90%);
+      z-index: 0;
     }
-    .countdown {
-      background: #fff3;
+    .hero-left {
+      max-width: 540px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-title {
+      font-size: 2.7rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.7px;
+      line-height: 1.10;
+      text-shadow: 0 3px 10px #21d4fd14;
+    }
+    .hero-title .highlight {
+      color: var(--accent2);
+      background: #f6f8fc;
+      padding: 0 10px;
+      border-radius: 10px;
+      font-weight: 900;
+      letter-spacing: 1.4px;
+      font-size: 1.13em;
+      box-shadow: 0 2px 8px #b721ff22;
+    }
+    .hero-desc {
+      font-size: 1.22rem;
+      font-weight: 500;
+      color: #27314e;
+      margin-bottom: 28px;
+      line-height: 1.7;
+      text-shadow: 0 1px 7px #21d4fd0c;
+    }
+    .hero-badges {
+      margin-bottom: 28px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg,#21d4fd 0%,#b721ff 100%);
       color: #fff;
-      font-family: 'Fira Code', monospace;
-      font-weight: 900;
-      font-size: 1.03em;
-      border-radius: 8px;
-      padding: 3px 11px;
-      margin-left: 9px;
-      letter-spacing: 0.5px;
-      min-width: 100px;
-      display: inline-block;
-    }
-    .price {
-      font-size: 1.25rem;
-      color: var(--cta);
-      font-weight: 900;
-      margin: 12px 0 0 0;
-      letter-spacing: 1.2px;
-      font-family: 'Fira Code', monospace;
-      display: inline-block;
-    }
-    .old-price {
-      color: #e74c3c;
-      opacity: 0.7;
-      text-decoration: line-through;
-      font-size: 1.1rem;
+      font-size: 0.98em;
+      font-weight: 800;
+      border-radius: 7px;
+      padding: 6px 16px;
       margin-right: 12px;
-      font-weight: 700;
+      margin-bottom: 7px;
+      box-shadow: 0 1px 6px #b721ff25;
+      letter-spacing: 0.8px;
+      text-shadow: 0 1px 3px #0e1e3a22;
     }
-    .cta-buttons {
-      margin: 24px 0 0 0;
-      display: flex;
-      flex-direction: row;
-      gap: 18px;
-      align-items: center;
-    }
-    .cta-btn.whatsapp {
-      background: linear-gradient(90deg, #25d366 0%, #128c7e 100%);
-      color: #fff !important;
-      font-weight: 800;
-      font-size: 1.13rem;
-      letter-spacing: 1.2px;
-      border-radius: 13px;
+    .cta-btn.hero {
       margin-left: 0;
-      box-shadow: 0 2px 12px #128c7e33;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 13px 34px;
-    }
-    .cta-btn.whatsapp:hover {
-      background: linear-gradient(90deg, #128c7e 0%, #25d366 100%);
-    }
-    .cta-btn.pay {
-      background: var(--button-gradient);
-      color: #fff !important;
-      font-size: 1.13rem;
-      letter-spacing: 1.1px;
-      border-radius: 13px;
-      margin-left: 0;
-      box-shadow: 0 2px 9px #1dbf7333;
-      font-weight: 800;
-      padding: 13px 34px;
-    }
-    .cta-btn.pay:hover {
-      background: linear-gradient(90deg, #21d4fd 0%, #1dbf73 100%);
+      margin-top: 10px;
+      font-size: 1.21rem;
+      padding: 16px 54px;
+      border-radius: 17px;
+      letter-spacing: 1px;
     }
     .hero-right {
-      flex: 1 1 340px;
-      min-width: 280px;
-      max-width: 410px;
-      margin: 0 auto;
+      max-width: 430px;
+      width: 45vw;
+      min-width: 260px;
+      margin-left: 34px;
+      background: var(--hero-gradient);
+      border-radius: 28px;
+      box-shadow: 0 2px 32px #b721ff30;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(120deg, #1dbf731d 70%, #21d4fd18 100%);
-      border-radius: 32px;
-      box-shadow: 0 2px 24px #21d4fd22;
       overflow: hidden;
       aspect-ratio: 1.2/1;
       position: relative;
       z-index: 1;
+      /* Animation */
       animation: floatY 3.8s ease-in-out infinite;
     }
     @keyframes floatY {
@@ -285,7 +253,7 @@
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 32px;
+      border-radius: 28px;
       box-shadow: 0 8px 34px #21d4fd18;
       border: 4px solid #fff;
       filter: saturate(1.07) contrast(1.03);
@@ -296,51 +264,53 @@
     }
     /* FEATURES */
     .features-section {
-      margin: 64px auto 0 auto;
-      padding: 48px 4vw 28px 4vw;
-      background: var(--card-bg);
-      border-radius: 28px;
-      max-width: 1100px;
-      border: 1.5px solid #282a4f;
+      margin: 82px auto 0 auto;
+      padding: 60px 5vw 38px 5vw;
+      background: var(--section-bg);
+      border-radius: 32px;
+      max-width: 1200px;
+      border: 1.5px solid var(--section-border);
       box-shadow: var(--shadow);
     }
     .features-title {
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: 900;
-      color: #fff;
-      margin-bottom: 24px;
+      color: var(--primary);
+      margin-bottom: 34px;
       text-align: center;
       letter-spacing: -1.5px;
       text-shadow: 0 2px 8px #21d4fd11;
     }
     .features-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 34px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
     .feature-card {
-      background: linear-gradient(120deg, #181d3a 60%, #2c1b84 100%);
-      border-radius: 16px;
-      box-shadow: 0 4px 16px #21d4fd22;
-      padding: 28px 20px 18px 20px;
+      background: linear-gradient(120deg, #fff 62%, #f3f6fb 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 18px #21d4fd19;
+      padding: 34px 22px 18px 22px;
       text-align: center;
-      min-height: 180px;
-      border: 1.5px solid #241a3f;
-      transition: box-shadow 0.18s, transform 0.18s;
+      min-height: 193px;
+      border: 1.5px solid #eaeaf7;
+      transition: box-shadow 0.22s, transform 0.15s;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      overflow: hidden;
     }
     .feature-card:hover {
       box-shadow: 0 10px 30px #b721ff28, 0 2px 8px #21d4fd16;
       transform: translateY(-7px) scale(1.025);
     }
     .feature-icon {
-      font-size: 2.1rem;
-      margin-bottom: 13px;
+      font-size: 2.15rem;
+      margin-bottom: 15px;
       color: var(--accent2);
       background: linear-gradient(90deg,#21d4fd 0%,#b721ff 100%);
       -webkit-background-clip: text;
@@ -348,32 +318,34 @@
       display: inline-block;
     }
     .feature-title {
-      font-size: 1.08rem;
+      font-size: 1.23rem;
       font-weight: 700;
-      margin-bottom: 7px;
-      color: var(--accent3);
+      margin-bottom: 8px;
+      color: var(--primary);
+      letter-spacing: 0.2px;
     }
     .feature-desc {
-      font-size: 0.97rem;
-      color: #c6d0f0;
+      font-size: 1.04rem;
+      color: #2a395c;
       font-weight: 500;
       line-height: 1.5;
+      margin-top: 2px;
     }
     /* HOW */
     .how-section {
-      margin: 62px auto 0 auto;
-      padding: 38px 4vw 30px 4vw;
-      background: var(--card-bg);
-      border-radius: 28px;
+      margin: 88px auto 0 auto;
+      padding: 50px 5vw 34px 5vw;
+      background: var(--section-bg);
+      border-radius: 32px;
       max-width: 1000px;
-      border: 1.5px solid #282a4f;
+      border: 1.5px solid var(--section-border);
       box-shadow: var(--shadow);
     }
     .how-title {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      color: #fff;
-      margin-bottom: 24px;
+      color: var(--primary);
+      margin-bottom: 28px;
       text-align: center;
       letter-spacing: -0.4px;
       text-shadow: 0 2px 8px #21d4fd0d;
@@ -382,49 +354,57 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 32px;
+      gap: 35px 28px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
     .how-step {
-      flex: 1 1 210px;
-      min-width: 170px;
+      flex: 1 1 220px;
+      min-width: 180px;
       max-width: 260px;
-      background: #090e2430;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px #21d4fd13;
-      padding: 24px 12px 14px 12px;
+      background: #f5f8fb;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #21d4fd13;
+      padding: 29px 14px 17px 14px;
       text-align: center;
-      font-size: 1.04rem;
+      font-size: 1.09rem;
       font-weight: 600;
-      color: #fff;
-      border: 1px solid #2c1b84;
+      color: #0e1e3a;
+      border: 1px solid #e7ebf7;
+      transition: box-shadow .18s, transform .16s;
+      position: relative;
+      z-index: 1;
+    }
+    .how-step:hover {
+      box-shadow: 0 8px 22px #21d4fd24;
+      transform: translateY(-6px) scale(1.022);
     }
     .how-step-number {
       display: inline-block;
-      font-size: 1.5em;
+      font-size: 1.45em;
       font-family: 'Fira Code', monospace;
       background: var(--accent2);
       color: #fff;
       border-radius: 50%;
-      width: 38px;
-      height: 38px;
-      line-height: 38px;
-      margin-bottom: 12px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      margin-bottom: 13px;
       font-weight: 900;
-      box-shadow: 0 2px 8px #b721ff22;
+      box-shadow: 0 2px 10px #b721ff22;
+      border: 2.5px solid #fff;
     }
     /* Footer */
     footer {
       text-align: center;
-      color: #bbb;
-      padding: 40px 0 22px 0;
+      color: #8891a1;
+      padding: 46px 0 28px 0;
       font-size: 1.11rem;
       font-family: 'Inter', Arial, sans-serif;
-      margin-top: 40px;
+      margin-top: 60px;
       background: none;
-      border-top: 1.5px solid #2c1b84;
+      border-top: 1.5px solid #eaeaf7;
       letter-spacing: 0.1px;
       box-shadow: 0 -2px 18px #b721ff11;
     }
@@ -434,39 +414,52 @@
       transition: color .18s;
     }
     footer a:hover {
-      color: var(--cta);
+      color: var(--accent2);
     }
     /* Responsive */
-    @media (max-width: 1000px) {
+    @media (max-width: 1050px) {
       .hero-section, .features-section, .how-section {
-        flex-direction: column;
         padding-left: 2vw;
         padding-right: 2vw;
-        max-width: 99vw;
       }
-      .hero-section { gap: 38px; flex-wrap: wrap; }
-      .hero-left, .hero-right { margin: 0 auto; max-width: 99vw; }
-      .cta-buttons { flex-direction: column; gap: 16px; }
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-right {
+        margin: 38px auto 0 auto;
+        width: 92vw;
+        max-width: 350px;
+      }
+      .hero-left {
+        max-width: 99vw;
+        margin: 0 auto;
+      }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       header {
         flex-direction: column;
         align-items: flex-start;
-        padding: 22px 4vw 10px 4vw;
+        padding: 26px 4vw 15px 4vw;
       }
       .logo-title { margin-bottom: 8px; }
-      .site-title { font-size: 1.16rem; }
+      .site-title { font-size: 1.5rem; }
       nav { margin-top: 0; }
-      nav a { margin-left: 13px; font-size: 0.98rem; }
-      .hero-section { padding: 30px 1vw 15px 1vw; min-height: unset; }
-      .hero-title { font-size: 1.15rem; }
-      .discount-banner { font-size: 1em; padding: 10px 9px; }
-      .cta-btn, .cta-btn.whatsapp, .cta-btn.pay { width: 100%; font-size: 1em; padding: 10px 0; }
-      .features-title, .how-title { font-size: 1.08rem; }
+      nav a { margin-left: 13px; font-size: 1.03rem; }
+      .cta-btn { margin-left: 18px; font-size: 1.06rem; padding: 10px 16px; }
+      .hero-title { font-size: 1.38rem; }
       .features-section, .how-section {
-        padding: 16px 2vw 8px 2vw;
-        border-radius: 11px;
+        padding: 18px 2vw 10px 2vw;
+        border-radius: 12px;
       }
+      .features-title, .how-title { font-size: 1.18rem; }
+      .features-list, .how-steps { gap: 15px; }
+    }
+    @media (max-width: 450px) {
+      .hero-title { font-size: 1rem; }
+      .site-title { font-size: 1.1rem; }
+      .hero-right { max-width: 200px; }
+      .badge { font-size: 0.9em; }
     }
   </style>
 </head>
@@ -482,138 +475,98 @@
       <a href="#register" class="cta-btn">Register</a>
     </nav>
   </header>
-  <main>
-    <section class="hero-section">
-      <div class="hero-left">
-        <div class="discount-banner">
-          <i class="fa-solid fa-bolt"></i>
-          <span>
-            <span style="color:#fff">🔥 30% Discount! <span class="old-price">N7000</span> <span class="price">Now N5000</span></span>
-            &nbsp;|&nbsp; <span>Ends in <span class="countdown" id="countdown"></span></span>
-          </span>
-        </div>
-        <h1 class="hero-title">
-          <span class="highlight">Master</span> HTML, CSS &amp; JavaScript
-          <br>
-          <span style="font-size:1.09em;font-weight:700;color:#1dbf73;">— Online, Interactive, and Modern</span>
-        </h1>
-        <p class="hero-desc">
-          <b>Unlock your coding career</b> with our expert-led, result-driven class.<br>
-          Learn everything from fundamentals to advanced tricks for building stunning, responsive websites & apps — <b>on your mobile or desktop</b>.<br>
-          <span style="color:#1dbf73;font-weight:600;">Project-focused. Community-powered. Certificate awarded.</span>
-        </p>
-        <div class="cta-buttons">
-          <a href="registration.html?code=BELLI" class="cta-btn pay" id="register">Register Now</a>
-          <a 
-            href="https://wa.me/2349155127634?text=I'm%20here%20to%20register%20for%20the%20class%20and%20make%20the%20payment%20of%20N5000"
-            class="cta-btn whatsapp"
-            target="_blank"
-            rel="noopener"
-          ><i class="fab fa-whatsapp"></i> WhatsApp Admin to Pay</a>
-        </div>
+  <section class="hero-section">
+    <div class="hero-left">
+      <h1 class="hero-title">
+        <span class="highlight">Master</span> HTML,
+        <br>CSS &amp; JavaScript<br>
+        <span style="font-size:1.09em;font-weight:700;color:#21d4fd;">— Online, Interactive, and Modern</span>
+      </h1>
+      <div class="hero-badges">
+        <span class="badge"><i class="fa-solid fa-certificate"></i> Get Certified</span>
+        <span class="badge"><i class="fa-solid fa-laptop-code"></i> Real Projects</span>
+        <span class="badge"><i class="fa-solid fa-users"></i> Global Community</span>
       </div>
-      <div class="hero-right">
-        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
-             alt="Web design and code illustration" />
-      </div>
-    </section>
-    <section class="features-section" id="features">
-      <div class="features-title">Why Choose This Web Dev Class?</div>
-      <ul class="features-list">
-        <li class="feature-card">
-          <div class="feature-icon"><i class="fa-solid fa-globe"></i></div>
-          <div class="feature-title">Universal Access</div>
-          <div class="feature-desc">Join seamlessly from mobile or desktop. Practice and build from anywhere—no special equipment needed.</div>
-        </li>
-        <li class="feature-card">
-          <div class="feature-icon"><i class="fa-solid fa-code"></i></div>
-          <div class="feature-title">Hands-on Projects</div>
-          <div class="feature-desc">Apply what you learn in live projects. Build real websites & UI components as you go.</div>
-        </li>
-        <li class="feature-card">
-          <div class="feature-icon"><i class="fa-solid fa-rocket"></i></div>
-          <div class="feature-title">Career-Ready Curriculum</div>
-          <div class="feature-desc">From basics to advanced concepts—get ready for freelance gigs or your first tech job.</div>
-        </li>
-        <li class="feature-card">
-          <div class="feature-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
-          <div class="feature-title">Live Q&amp;A + Mentorship</div>
-          <div class="feature-desc">Get your questions answered by real developers. 1-on-1 feedback and peer review sessions included.</div>
-        </li>
-        <li class="feature-card">
-          <div class="feature-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-          <div class="feature-title">Certificate &amp; Portfolio</div>
-          <div class="feature-desc">Graduate with a verifiable certificate and a beautiful portfolio to show off your new skills.</div>
-        </li>
-        <li class="feature-card">
-          <div class="feature-icon"><i class="fa-solid fa-handshake-angle"></i></div>
-          <div class="feature-title">Community &amp; Networking</div>
-          <div class="feature-desc">Connect with aspiring and professional developers. Collaborate, share, and grow together.</div>
-        </li>
-      </ul>
-    </section>
-    <section class="how-section" id="how">
-      <div class="how-title">How It Works</div>
-      <ul class="how-steps">
-        <li class="how-step">
-          <span class="how-step-number">1</span><br>
-          Register using the button below.<br>
-          <span style="font-size:0.98em;font-weight:400;">It takes less than 2 minutes.</span>
-        </li>
-        <li class="how-step">
-          <span class="how-step-number">2</span><br>
-          Receive your class link & onboarding kit via email/WhatsApp.
-        </li>
-        <li class="how-step">
-          <span class="how-step-number">3</span><br>
-          Attend live lessons & join the interactive code labs (on mobile or desktop).
-        </li>
-        <li class="how-step">
-          <span class="how-step-number">4</span><br>
-          Get feedback, complete real projects, earn your certificate!
-        </li>
-      </ul>
-      <div style="text-align:center;margin-top:30px;">
-        <a href="registration.html?code=BELLI" class="cta-btn pay" style="font-size:1.15em;">Register for the Class</a>
-        <a 
-          href="https://wa.me/2349155127634?text=I'm%20here%20to%20register%20for%20the%20class%20and%20make%20the%20payment%20of%20N5000"
-          class="cta-btn whatsapp"
-          target="_blank"
-          rel="noopener"
-          style="font-size:1.12em;"
-        ><i class="fab fa-whatsapp"></i> WhatsApp Admin to Pay</a>
-      </div>
-    </section>
-  </main>
+      <p class="hero-desc">
+        <b>Unlock your coding career</b> with our expert-led, result-driven class.<br>
+        Learn everything from fundamentals to advanced tricks for building stunning, responsive websites & apps — <b>on your mobile or desktop</b>.<br>
+        <span style="color:#0e1e3a;font-weight:600;">Project-focused. Community-powered. Certificate awarded.</span>
+      </p>
+      <a href="registration.html?code=BELLI" class="cta-btn hero" id="register">Register Now</a>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
+           alt="Web design and code illustration" />
+    </div>
+  </section>
+  <section class="features-section" id="features">
+    <div class="features-title">Why Choose This Web Dev Class?</div>
+    <ul class="features-list">
+      <li class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-globe"></i></div>
+        <div class="feature-title">Universal Access</div>
+        <div class="feature-desc">Join seamlessly from mobile or desktop. Practice and build from anywhere—no special equipment needed.</div>
+      </li>
+      <li class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-code"></i></div>
+        <div class="feature-title">Hands-on Projects</div>
+        <div class="feature-desc">Apply what you learn in live projects. Build real websites & UI components as you go.</div>
+      </li>
+      <li class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="feature-title">Career-Ready Curriculum</div>
+        <div class="feature-desc">From basics to advanced concepts—get ready for freelance gigs or your first tech job.</div>
+      </li>
+      <li class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+        <div class="feature-title">Live Q&A + Mentorship</div>
+        <div class="feature-desc">Get your questions answered by real developers. 1-on-1 feedback and peer review sessions included.</div>
+      </li>
+      <li class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="feature-title">Certificate &amp; Portfolio</div>
+        <div class="feature-desc">Graduate with a verifiable certificate and a beautiful portfolio to show off your new skills.</div>
+      </li>
+      <li class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+        <div class="feature-title">Community &amp; Networking</div>
+        <div class="feature-desc">Connect with aspiring and professional developers. Collaborate, share, and grow together.</div>
+      </li>
+    </ul>
+  </section>
+  <section class="how-section" id="how">
+    <div class="how-title">How It Works</div>
+    <ul class="how-steps">
+      <li class="how-step">
+        <span class="how-step-number">1</span><br>
+        Register using the button below.<br>
+        <span style="font-size:0.98em;font-weight:400;">It takes less than 2 minutes.</span>
+      </li>
+      <li class="how-step">
+        <span class="how-step-number">2</span><br>
+        Receive your class link & onboarding kit via email/WhatsApp.
+      </li>
+      <li class="how-step">
+        <span class="how-step-number">3</span><br>
+        Attend live lessons & join the interactive code labs (on mobile or desktop).
+      </li>
+      <li class="how-step">
+        <span class="how-step-number">4</span><br>
+        Get feedback, complete real projects, earn your certificate!
+      </li>
+    </ul>
+    <div style="text-align:center;margin-top:30px;">
+      <a href="registration.html?code=BELLI" class="cta-btn" style="font-size:1.15em;">Register for the Class</a>
+    </div>
+  </section>
   <footer>
     &copy; 2025 NextGen Web Dev Class &mdash; Unlock Your Future in Tech.<br>
     <span style="font-size:0.98em;">Questions? <a href="mailto: richardoco12@gmail.com">Contact us</a></span>
   </footer>
   <script>
-    // Countdown logic to discount end (7 days from now)
-    function startCountdown(endDateStr, elId) {
-      const endDate = new Date(endDateStr).getTime();
-      const el = document.getElementById(elId);
-      function update() {
-        const now = new Date().getTime();
-        let diff = endDate - now;
-        if (diff < 0) diff = 0;
-        const days = Math.floor(diff / (1000*60*60*24));
-        const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-        const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
-        const secs = Math.floor((diff % (1000*60)) / 1000);
-        el.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
-        if (diff > 0) setTimeout(update, 1000);
-        else el.textContent = "EXPIRED";
-      }
-      update();
-    }
-    // Set countdown to 7 days from now (using 2025-07-02 as base)
-    const discountEndDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    startCountdown(discountEndDate, 'countdown');
-    // Registration button logic
-    const registrationUrl = "registration.html?code=BELLI";
-    document.querySelectorAll('a.cta-btn.pay').forEach(btn => btn.href = registrationUrl);
+    // Replace registration URL everywhere
+    const registrationUrl = "registration.html?code=BELLI"; // CHANGE TO YOUR ACTUAL URL
+    document.querySelectorAll('a.cta-btn').forEach(btn => btn.href = registrationUrl);
     document.querySelectorAll('nav a').forEach(link => {
       if(link.textContent.trim().toLowerCase().includes('register')) link.href = registrationUrl;
     });
