@@ -4,14 +4,17 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function authAdmin(req, res, next) {
   const auth = req.headers.authorization;
-  if (!auth || !auth.startsWith("Bearer ")) return res.status(401).json({ message: "Unauthorized" });
+  if (!auth || !auth.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   try {
-    const payload = jwt.verify(auth.slice(7), JWT_SECRET);
+    const token = auth.slice(7);
+    const payload = jwt.verify(token, JWT_SECRET);
     const admin = await Admin.findById(payload.id);
     if (!admin) return res.status(401).json({ message: "Unauthorized" });
     req.admin = admin;
     next();
-  } catch {
+  } catch (err) {
     res.status(401).json({ message: "Unauthorized" });
   }
-      }
+}
