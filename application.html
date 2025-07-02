@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expanded Application Form Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', system-ui, Arial, sans-serif;
+      background: linear-gradient(180deg, #0d084d 0%, #2d236d 60%, #6a55e9 100%);
+      color: #fff;
+    }
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      width: 36px;
+      height: 36px;
+      margin-right: 8px;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      color: #e2e4f0;
+      font-weight: 400;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+    form {
+      background: rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 24px 18px 18px 18px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 4px 20px 0 rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="file"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      margin-top: 3px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #e6e9f0 0%, #cfd9df 100%);
+      color: #23263b;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    .form-section {
+      display: flex;
+      flex-direction: column;
+    }
+    .checkbox-group, .skills-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 18px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+    }
+    .checkbox-group label,
+    .skills-group label {
+      font-weight: 400;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    .submit-btn {
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.12rem;
+      font-weight: 700;
+      padding: 13px 0;
+      width: 100%;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .submit-btn:hover {
+      background: #1a6f28;
+    }
+    .success-message, .error-message {
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 22px;
+      text-align: center;
+      font-weight: 600;
+      animation: fadeIn 0.7s;
+      display: none;
+    }
+    .success-message {
+      background: #238636;
+      color: #fff;
+    }
+    .error-message {
+      background: #c03221;
+      color: #fff;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .terms {
+      font-size: 0.98rem;
+      font-weight: 400;
+      margin-left: 5px;
+      color: #e2e4f0;
+    }
+    @media (max-width: 700px) {
+      .container { max-width: 99vw; padding: 8px 2vw; }
+      form { padding: 12px 5vw 10px 5vw; }
+      h2 { font-size: 1.25rem; }
+    }
+    @media (max-width: 420px) {
+      .container { padding: 4px 1vw; }
+      form { padding: 6px 2vw 6px 2vw; }
+      h2 { font-size: 1.08rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="logo" alt="Logo">
+      <span style="font-size:1.3rem;font-weight:700;">Application Form</span>
+    </header>
+    <h2 id="formTitle">Apply Now</h2>
+    <p class="subtitle" id="formSubtitle">Fill out this form to submit your application.</p>
+    <form id="applicationForm" autocomplete="off" enctype="multipart/form-data" style="display:none;">
+      <div class="form-section">
+        <label for="fullname">Full Name *</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Your full name" required>
+      </div>
+      <div class="form-section">
+        <label for="dob">Date of Birth *</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+      <div class="form-section">
+        <label>Gender *</label>
+        <div class="checkbox-group">
+          <label><input type="radio" name="gender" value="Male" required> Male</label>
+          <label><input type="radio" name="gender" value="Female" required> Female</label>
+          <label><input type="radio" name="gender" value="Other" required> Other</label>
+        </div>
+      </div>
+      <div class="form-section">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" placeholder="Your email address" required>
+      </div>
+      <div class="form-section">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="Your phone number">
+      </div>
+      <div class="form-section">
+        <label for="address">Address *</label>
+        <input type="text" id="address" name="address" placeholder="Street, City, State, Country" required>
+      </div>
+      <div class="form-section">
+        <label for="education">Highest Education Level *</label>
+        <select id="education" name="education" required>
+          <option value="">Select education level</option>
+          <option>High School</option>
+          <option>Associate Degree</option>
+          <option>Bachelor's Degree</option>
+          <option>Master's Degree</option>
+          <option>Doctorate</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label for="resume">Resume/CV (PDF, DOC, DOCX) *</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+      </div>
+      <div class="form-section">
+        <label for="linkedin">LinkedIn Profile</label>
+        <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+      </div>
+      <div class="form-section">
+        <label for="github">GitHub Profile</label>
+        <input type="url" id="github" name="github" placeholder="https://github.com/yourprofile">
+      </div>
+      <div class="form-section">
+        <label for="position">Position Applying For *</label>
+        <select id="position" name="position" required>
+          <option value="">Select position</option>
+          <option>Frontend Developer</option>
+          <option>Backend Developer</option>
+          <option>UI/UX Designer</option>
+          <option>Product Manager</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label>Skills (select all that apply) *</label>
+        <div class="skills-group">
+          <label><input type="checkbox" name="skills" value="HTML/CSS" required> HTML/CSS</label>
+          <label><input type="checkbox" name="skills" value="JavaScript"> JavaScript</label>
+          <label><input type="checkbox" name="skills" value="Python"> Python</label>
+          <label><input type="checkbox" name="skills" value="Java"> Java</label>
+          <label><input type="checkbox" name="skills" value="UI/UX Design"> UI/UX Design</label>
+          <label><input type="checkbox" name="skills" value="Project Management"> Project Management</label>
+        </div>
+      </div>
+      <div class="form-section">
+        <label for="startdate">Preferred Start Date</label>
+        <input type="date" id="startdate" name="startdate">
+      </div>
+      <div class="form-section">
+        <label for="referral">How did you hear about us?</label>
+        <select id="referral" name="referral">
+          <option value="">Choose option</option>
+          <option>LinkedIn</option>
+          <option>Company Website</option>
+          <option>Friend/Employee</option>
+          <option>Social Media</option>
+          <option>Job Board</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label for="cover">Cover Letter / Short Bio *</label>
+        <textarea id="cover" name="cover" placeholder="Tell us about yourself..." required></textarea>
+      </div>
+      <div class="form-section" style="flex-direction: row; align-items: center;">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms" class="terms">I agree that the information provided is true and correct.</label>
+      </div>
+      <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+    <div id="successMsg" class="success-message">
+      🎉 Thank you for your application!<br>We have received your details.
+    </div>
+    <div id="errorMsg" class="error-message"></div>
+  </div>
+  <script>
+    const API_BASE = "https://examguide-wmyk.onrender.com/api";
+    let formCode = null;
+    let formName = "";
+    let formDesc = "";
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Initial UI state
+    document.getElementById('applicationForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'none';
+    document.getElementById('errorMsg').style.display = 'none';
+
+    // On load, get form code from URL and validate
+    window.addEventListener('DOMContentLoaded', async () => {
+      formCode = getQueryParam('code');
+      if (!formCode) {
+        showError("No application code provided in the URL.");
+        return;
+      }
+      try {
+        const res = await fetch(`${API_BASE}/forms/code/${encodeURIComponent(formCode)}`);
+        const data = await res.json();
+        if (res.ok && data.form) {
+          formName = data.form.name || "";
+          formDesc = data.form.desc || "";
+          document.getElementById('formTitle').textContent = formName ? `Apply for: ${formName}` : "Application Form";
+          document.getElementById('formSubtitle').textContent = formDesc ? formDesc : "Fill out this form to submit your application.";
+          document.getElementById('applicationForm').style.display = 'flex';
+          document.getElementById('successMsg').style.display = 'none';
+          document.getElementById('errorMsg').style.display = 'none';
+        } else {
+          showError(data.message || "Invalid application code. Please check your link.");
+        }
+      } catch (err) {
+        showError("Could not connect to the server. Please try again later.");
+      }
+    });
+
+    function showError(msg) {
+      document.getElementById('applicationForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'none';
+      const errDiv = document.getElementById('errorMsg');
+      errDiv.textContent = msg;
+      errDiv.style.display = 'block';
+    }
+
+    function showSuccess() {
+      document.getElementById('applicationForm').reset();
+      document.getElementById('applicationForm').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      setTimeout(() => {
+        document.getElementById('successMsg').style.display = 'none';
+        document.getElementById('applicationForm').style.display = 'flex';
+      }, 7000);
+    }
+
+    document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      document.getElementById('successMsg').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+
+      if (!formCode) {
+        showError("No valid code. Please refresh the page or use a correct link.");
+        return;
+      }
+
+      // Validate at least one skill is checked
+      const skillsChecked = Array.from(this.querySelectorAll('input[name="skills"]:checked'));
+      if (skillsChecked.length === 0) {
+        showError("Please select at least one skill.");
+        return;
+      }
+
+      const formData = new FormData(this);
+      formData.append('formCode', formCode);
+
+      try {
+        const res = await fetch(`${API_BASE}/responses`, {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showSuccess();
+        } else {
+          showError(data.message || "Failed to submit application. Please try again.");
+        }
+      } catch (err) {
+        showError("Could not connect to the server. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
