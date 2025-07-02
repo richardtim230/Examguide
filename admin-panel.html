@@ -433,7 +433,11 @@
     // --- FORMS: CREATE, FETCH, DELETE ---
     async function fetchForms(refreshResponseSelect) {
       try {
-        const res = await fetch(`${API_BASE}/forms`);
+        const res = await fetch(`${API_BASE}/forms`, {
+          headers: {
+            ...(token && { "Authorization": "Bearer " + token })
+          }
+        });
         const data = await res.json();
         if (Array.isArray(data.forms)) {
           renderForms(data.forms);
@@ -586,7 +590,11 @@
         // Add spinner (inline)
         tbody.innerHTML = `<tr><td colspan="3" style="text-align:center"><span class="inline-spinner"></span> Loading...</td></tr>`;
         table.style.display = '';
-        const res = await fetch(`${API_BASE}/responses?formId=${encodeURIComponent(formId)}`);
+        const res = await fetch(`${API_BASE}/responses?formId=${encodeURIComponent(formId)}`, {
+          headers: {
+            ...(token && { "Authorization": "Bearer " + token })
+          }
+        });
         const data = await res.json();
         if (Array.isArray(data.responses) && data.responses.length) {
           tbody.innerHTML = '';
