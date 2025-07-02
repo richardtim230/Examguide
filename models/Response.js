@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+const Response = mongoose.models.Response || mongoose.model("Response", ResponseSchema);
 const responseSchema = new mongoose.Schema({
   formId: { type: mongoose.Schema.Types.ObjectId, ref: "Form", required: true },
   data: { type: Object, required: true },
