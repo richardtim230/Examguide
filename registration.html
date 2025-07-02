@@ -102,9 +102,26 @@
       margin-top: 10px;
       cursor: pointer;
       transition: background 0.18s;
+      position: relative;
     }
-    .submit-btn:hover {
-      background: #1a6f28;
+    .submit-btn[disabled] {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .btn-spinner {
+      display: inline-block;
+      width: 17px;
+      height: 17px;
+      border: 2.5px solid #fff;
+      border-top: 2.5px solid #4538b2;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 7px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
     }
     .success-message, .error-message {
       padding: 15px;
@@ -188,7 +205,7 @@
         </span>
         <input type="file" id="receipt" name="receipt" accept=".pdf,.jpg,.jpeg,.png" required>
       </div>
-      <button type="submit" class="submit-btn">Submit Registration</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Registration</button>
     </form>
     <div id="successMsg" class="success-message">
       🎉 Registration submitted!<br>Thank you for registering.
@@ -196,7 +213,7 @@
     <div id="errorMsg" class="error-message"></div>
   </div>
   <script>
-    const API_BASE = "https://examguide.onrender.com/api";
+    const API_BASE = "https://examguide.onrender.com/";
     // Passport image preview
     const passportInput = document.getElementById('passport');
     const passportPreview = document.getElementById('passportPreview');
@@ -223,11 +240,21 @@
       }
     });
 
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       document.getElementById('successMsg').style.display = 'none';
       document.getElementById('errorMsg').style.display = 'none';
+
+      const submitBtn = document.getElementById('submitBtn');
+      const origText = submitBtn.textContent;
+      submitBtn.innerHTML = '<span class="btn-spinner"></span> Submitting...';
+      submitBtn.disabled = true;
 
       // Optionally validate receipt file
       const receiptInput = document.getElementById('receipt');
@@ -237,12 +264,20 @@
         if (!allowed.includes(file.type) || file.size > 5*1024*1024) {
           document.getElementById('errorMsg').textContent = 'Invalid receipt file. Please select a PDF or image under 5MB.';
           document.getElementById('errorMsg').style.display = 'block';
+          submitBtn.innerHTML = origText;
+          submitBtn.disabled = false;
           return;
         }
       }
 
       // Prepare form data for backend
       const formData = new FormData(this);
+
+      // Attach formCode from URL if present
+      const formCode = getQueryParam('code');
+      if (formCode) {
+        formData.append('formCode', formCode);
+      }
 
       try {
         const res = await fetch(`${API_BASE}/registrations`, {
@@ -268,6 +303,8 @@
         document.getElementById('errorMsg').textContent = "Could not connect to server. Please try again.";
         document.getElementById('errorMsg').style.display = 'block';
       }
+      submitBtn.innerHTML = origText;
+      submitBtn.disabled = false;
     });
   </script>
 </body>
