@@ -35,6 +35,8 @@ import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
+import applicationsRoutes from "./routes/applications.js";
+
 dotenv.config();
 
 // ===== FACULTY & DEPARTMENT MODELS =====
@@ -303,7 +305,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/registrations", registrationsRoutes);
 app.use("/api/responses", responsesRoutes);
 app.use("/api/settings", settingsRoutes);
-
+app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 
 app.get("/", (req, res) => res.json({status: "ok"}));
