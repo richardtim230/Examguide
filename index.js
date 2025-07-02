@@ -35,7 +35,7 @@ import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
-...
+
 app.use("/api/registrations", registrationsRoutes);
 dotenv.config();
 
