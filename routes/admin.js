@@ -16,10 +16,7 @@ router.post("/register", async (req, res) => {
     if (password.length < 6)
       return res.status(400).json({ success: false, message: "Password must be at least 6 characters." });
 
-    // Lowercase email for uniqueness
     const lcEmail = email.toLowerCase();
-
-    // Atomic unique check
     const exists = await Admin.findOne({ $or: [{ email: lcEmail }, { username }] });
     if (exists)
       return res.status(409).json({ success: false, message: "Email or username already registered." });
@@ -30,7 +27,7 @@ router.post("/register", async (req, res) => {
     try {
       admin = await Admin.create({ fullname, email: lcEmail, username, password: hash });
     } catch (err) {
-      if (err.code === 11000) { // Mongo duplicate key error
+      if (err.code === 11000) {
         return res.status(409).json({ success: false, message: "Email or username already registered." });
       }
       throw err;
