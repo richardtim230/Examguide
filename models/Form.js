@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 
-const formSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  type: { type: String, required: true },
-  code: { type: String, required: true, unique: true },
-  desc: String,
-  admin: { type: mongoose.Schema.Types.ObjectId, ref: "Admin", required: true }
-}, { timestamps: true });
+const ResponseSchema = new mongoose.Schema({
+  form: { type: mongoose.Schema.Types.ObjectId, ref: "Form", required: true },
+  data: { type: Object, required: true }, // Submitted fields and answers
+  date: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now }
+});
 
-export default mongoose.model("Form", formSchema);
+export default mongoose.model("Response", ResponseSchema);
