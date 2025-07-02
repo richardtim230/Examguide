@@ -580,40 +580,90 @@ async function deleteForm(formId) {
 window.deleteForm = deleteForm;
 
 // --- RESPONSES: FETCH FOR FORM ---
+
+
 document.getElementById('responseFormSelect').addEventListener('change', async function(){
   const formId = this.value;
   const table = document.getElementById('responsesTable');
   const tbody = table.querySelector('tbody');
   tbody.innerHTML = '';
   if (!formId) { table.style.display = 'none'; return; }
+
+  // Fetch forms from cache or from API
+  let forms = [];
+  try {
+    forms = JSON.parse(localStorage.getItem('adminFormsCache') || '[]');
+    if (!forms.length) {
+      const res = await fetch(`${API_BASE}/forms`, {
+        headers: { ...(token && { "Authorization": "Bearer " + token }) }
+      });
+      const data = await res.json();
+      forms = data.forms || [];
+      localStorage.setItem('adminFormsCache', JSON.stringify(forms));
+    }
+  } catch (e) {}
+
+  const selectedForm = forms.find(f => f._id === formId);
+
   try {
     tbody.innerHTML = `<tr><td colspan="3" style="text-align:center"><span class="inline-spinner"></span> Loading...</td></tr>`;
     table.style.display = '';
-    const res = await fetch(`${API_BASE}/responses?formId=${encodeURIComponent(formId)}`, {
-      headers: {
-        ...(token && { "Authorization": "Bearer " + token })
-      }
-    });
-    const data = await res.json();
-    if (Array.isArray(data.responses) && data.responses.length) {
-      tbody.innerHTML = '';
-      data.responses.forEach((r, i) => {
-        const dateStr = r.date ? new Date(r.date).toLocaleString() : (r.createdAt ? new Date(r.createdAt).toLocaleString() : "");
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${i+1}</td><td style="max-width:180px;word-break:break-all;">${JSON.stringify(r.data)}</td><td>${dateStr}</td>`;
-        tbody.appendChild(tr);
+    if (selectedForm && selectedForm.type === "Registration") {
+      // Fetch registrations
+      const res = await fetch(`${API_BASE}/registrations?formId=${encodeURIComponent(formId)}`, {
+        headers: { ...(token && { "Authorization": "Bearer " + token }) }
       });
-      table.style.display = '';
+      const data = await res.json();
+      if (Array.isArray(data.registrations) && data.registrations.length) {
+        tbody.innerHTML = '';
+        data.registrations.forEach((reg, i) => {
+          const dateStr = reg.createdAt ? new Date(reg.createdAt).toLocaleString() : "";
+          tbody.innerHTML += `
+            <tr>
+              <td>${i + 1}</td>
+              <td>
+                <strong>Name:</strong> ${reg.fullname}<br>
+                <strong>Email:</strong> ${reg.email}<br>
+                <strong>Phone:</strong> ${reg.phone}<br>
+                <strong>Gender:</strong> ${reg.gender}<br>
+                <strong>Passport:</strong> <a href="${API_BASE.replace('/api','')}/uploads/registrations/${reg.passport}" target="_blank">View</a><br>
+                <strong>Receipt:</strong> <a href="${API_BASE.replace('/api','')}/uploads/registrations/${reg.receipt}" target="_blank">View</a>
+              </td>
+              <td>${dateStr}</td>
+            </tr>
+          `;
+        });
+        table.style.display = '';
+      } else {
+        tbody.innerHTML = `<tr><td colspan="3" style="color:#bfc7e4;">No registrations yet.</td></tr>`;
+        table.style.display = '';
+      }
     } else {
-      tbody.innerHTML = `<tr><td colspan="3" style="color:#bfc7e4;">No responses yet.</td></tr>`;
-      table.style.display = '';
+      // Existing code for generic responses
+      const res = await fetch(`${API_BASE}/responses?formId=${encodeURIComponent(formId)}`, {
+        headers: { ...(token && { "Authorization": "Bearer " + token }) }
+      });
+      const data = await res.json();
+      if (Array.isArray(data.responses) && data.responses.length) {
+        tbody.innerHTML = '';
+        data.responses.forEach((r, i) => {
+          const dateStr = r.date ? new Date(r.date).toLocaleString() : (r.createdAt ? new Date(r.createdAt).toLocaleString() : "");
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${i+1}</td><td style="max-width:180px;word-break:break-all;">${JSON.stringify(r.data)}</td><td>${dateStr}</td>`;
+          tbody.appendChild(tr);
+        });
+        table.style.display = '';
+      } else {
+        tbody.innerHTML = `<tr><td colspan="3" style="color:#bfc7e4;">No responses yet.</td></tr>`;
+        table.style.display = '';
+      }
     }
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="3" style="color:#c03221;">Error fetching responses.</td></tr>`;
     table.style.display = '';
   }
 });
-
+  
 // --- SETTINGS: PATCH/UPDATE SETTINGS (OPTIONAL) ---
 document.getElementById('settingsForm').addEventListener('submit', async function(e){
   e.preventDefault();
