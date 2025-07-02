@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', system-ui, Arial, sans-serif;
+      background: linear-gradient(180deg, #0d084d 0%, #2d236d 60%, #6a55e9 100%);
+      color: #fff;
+    }
+    .container {
+      max-width: 450px;
+      margin: 0 auto;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      width: 36px;
+      height: 36px;
+      margin-right: 8px;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #e2e4f0;
+      font-weight: 400;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+    form {
+      background: rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 24px 18px 18px 18px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 4px 20px 0 rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="file"],
+    select {
+      width: 100%;
+      padding: 11px 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      margin-top: 3px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #e6e9f0 0%, #cfd9df 100%);
+      color: #23263b;
+      box-sizing: border-box;
+    }
+    .file-note {
+      font-size: 0.97rem;
+      color: #bfc7e4;
+      margin-bottom: 5px;
+      margin-left: 2px;
+    }
+    .form-section {
+      display: flex;
+      flex-direction: column;
+    }
+    .submit-btn {
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.12rem;
+      font-weight: 700;
+      padding: 13px 0;
+      width: 100%;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .submit-btn:hover {
+      background: #1a6f28;
+    }
+    .success-message, .error-message {
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 22px;
+      text-align: center;
+      font-weight: 600;
+      animation: fadeIn 0.7s;
+      display: none;
+    }
+    .success-message {
+      background: #238636;
+      color: #fff;
+    }
+    .error-message {
+      background: #c03221;
+      color: #fff;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .passport-preview {
+      margin-top: 3px;
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 12px;
+      display: none;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    }
+    .receipt-link {
+      color: #93f7b0;
+      font-size: 0.97rem;
+      text-decoration: underline dotted;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="logo" alt="Logo">
+      <span style="font-size:1.3rem;font-weight:700;">Registration Form</span>
+    </header>
+    <h2>Register Now</h2>
+    <p class="subtitle">Please fill in your details and upload your passport photo and payment receipt.</p>
+    <form id="registrationForm" autocomplete="off" enctype="multipart/form-data">
+      <div class="form-section">
+        <label for="fullname">Full Name *</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Your full name" required>
+      </div>
+      <div class="form-section">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" placeholder="Your email address" required>
+      </div>
+      <div class="form-section">
+        <label for="phone">Phone *</label>
+        <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+      </div>
+      <div class="form-section">
+        <label for="gender">Gender *</label>
+        <select id="gender" name="gender" required>
+          <option value="">Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label for="passport">Passport Photograph *</label>
+        <span class="file-note">Accepted: JPG, PNG, JPEG. Max 2MB.</span>
+        <input type="file" id="passport" name="passport" accept=".jpg,.jpeg,.png" required>
+        <img id="passportPreview" class="passport-preview" alt="Passport Preview">
+      </div>
+      <div class="form-section">
+        <label for="receipt">Receipt of Payment *</label>
+        <span class="file-note">
+          Accepted: PDF, JPG, PNG, JPEG. Max 5MB.
+          <a class="receipt-link" href="#" onclick="alert('Sample: Bank or online transfer receipt of your registration payment.');return false;">See sample</a>
+        </span>
+        <input type="file" id="receipt" name="receipt" accept=".pdf,.jpg,.jpeg,.png" required>
+      </div>
+      <button type="submit" class="submit-btn">Submit Registration</button>
+    </form>
+    <div id="successMsg" class="success-message">
+      🎉 Registration submitted!<br>Thank you for registering.
+    </div>
+    <div id="errorMsg" class="error-message"></div>
+  </div>
+  <script>
+    const API_BASE = "https://examguide-wmyk.onrender.com/api";
+    // Passport image preview
+    const passportInput = document.getElementById('passport');
+    const passportPreview = document.getElementById('passportPreview');
+    passportInput.addEventListener('change', function(){
+      if (passportInput.files && passportInput.files[0]) {
+        const file = passportInput.files[0];
+        const allowed = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!allowed.includes(file.type) || file.size > 2*1024*1024) {
+          alert('Invalid file. Please select a JPG or PNG image under 2MB.');
+          passportInput.value = '';
+          passportPreview.style.display = 'none';
+          passportPreview.src = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          passportPreview.src = e.target.result;
+          passportPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        passportPreview.style.display = 'none';
+        passportPreview.src = '';
+      }
+    });
+
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      document.getElementById('successMsg').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+
+      // Optionally validate receipt file
+      const receiptInput = document.getElementById('receipt');
+      if (receiptInput.files && receiptInput.files[0]) {
+        const file = receiptInput.files[0];
+        const allowed = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+        if (!allowed.includes(file.type) || file.size > 5*1024*1024) {
+          document.getElementById('errorMsg').textContent = 'Invalid receipt file. Please select a PDF or image under 5MB.';
+          document.getElementById('errorMsg').style.display = 'block';
+          return;
+        }
+      }
+
+      // Prepare form data for backend
+      const formData = new FormData(this);
+
+      try {
+        const res = await fetch(`${API_BASE}/registrations`, {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          this.reset();
+          passportPreview.style.display = 'none';
+          passportPreview.src = '';
+          document.getElementById('successMsg').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('successMsg').style.display = 'none';
+          }, 7000);
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        } else {
+          document.getElementById('errorMsg').textContent = data.message || "Failed to submit registration. Please try again.";
+          document.getElementById('errorMsg').style.display = 'block';
+        }
+      } catch (err) {
+        document.getElementById('errorMsg').textContent = "Could not connect to server. Please try again.";
+        document.getElementById('errorMsg').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
