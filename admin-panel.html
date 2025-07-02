@@ -581,39 +581,39 @@
 
     // --- RESPONSES: FETCH FOR FORM ---
     document.getElementById('responseFormSelect').addEventListener('change', async function(){
-      const formId = this.value;
-      const table = document.getElementById('responsesTable');
-      const tbody = table.querySelector('tbody');
-      tbody.innerHTML = '';
-      if (!formId) { table.style.display = 'none'; return; }
-      try {
-        // Add spinner (inline)
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center"><span class="inline-spinner"></span> Loading...</td></tr>`;
-        table.style.display = '';
-        const res = await fetch(`${API_BASE}/responses?formId=${encodeURIComponent(formId)}`, {
-          headers: {
-            ...(token && { "Authorization": "Bearer " + token })
-          }
-        });
-        const data = await res.json();
-        if (Array.isArray(data.responses) && data.responses.length) {
-          tbody.innerHTML = '';
-          data.responses.forEach((r, i) => {
-            const dateStr = r.date ? new Date(r.date).toLocaleString() : (r.createdAt ? new Date(r.createdAt).toLocaleString() : "");
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${i+1}</td><td style="max-width:180px;word-break:break-all;">${JSON.stringify(r.data)}</td><td>${dateStr}</td>`;
-            tbody.appendChild(tr);
-          });
-          table.style.display = '';
-        } else {
-          tbody.innerHTML = `<tr><td colspan="3" style="color:#bfc7e4;">No responses yet.</td></tr>`;
-          table.style.display = '';
-        }
-      } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="3" style="color:#c03221;">Error fetching responses.</td></tr>`;
-        table.style.display = '';
+    document.getElementById('responseFormSelect').addEventListener('change', async function(){
+  const formId = this.value;
+  const table = document.getElementById('responsesTable');
+  const tbody = table.querySelector('tbody');
+  tbody.innerHTML = '';
+  if (!formId) { table.style.display = 'none'; return; }
+  try {
+    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center"><span class="inline-spinner"></span> Loading...</td></tr>`;
+    table.style.display = '';
+    const res = await fetch(`${API_BASE}/responses?formId=${encodeURIComponent(formId)}`, {
+      headers: {
+        ...(token && { "Authorization": "Bearer " + token })
       }
     });
+    const data = await res.json();
+    if (Array.isArray(data.responses) && data.responses.length) {
+      tbody.innerHTML = '';
+      data.responses.forEach((r, i) => {
+        const dateStr = r.date ? new Date(r.date).toLocaleString() : (r.createdAt ? new Date(r.createdAt).toLocaleString() : "");
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${i+1}</td><td style="max-width:180px;word-break:break-all;">${JSON.stringify(r.data)}</td><td>${dateStr}</td>`;
+        tbody.appendChild(tr);
+      });
+      table.style.display = '';
+    } else {
+      tbody.innerHTML = `<tr><td colspan="3" style="color:#bfc7e4;">No responses yet.</td></tr>`;
+      table.style.display = '';
+    }
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="3" style="color:#c03221;">Error fetching responses.</td></tr>`;
+    table.style.display = '';
+  }
+});
 
     // --- SETTINGS: PATCH/UPDATE SETTINGS (OPTIONAL) ---
     document.getElementById('settingsForm').addEventListener('submit', async function(e){
