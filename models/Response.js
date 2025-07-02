@@ -6,4 +6,4 @@ const responseSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-export default mongoose.model("Response", responseSchema);
+export default mongoose.models.Response || mongoose.model("Response", ResponseSchema);
