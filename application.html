@@ -351,11 +351,16 @@
         return;
       }
 
+      // Prepare FormData and append all checked skills
       const formData = new FormData(this);
       formData.append('formCode', formCode);
-
+      // Remove any duplicate 'skills' if FormData auto-appended them
+      formData.delete('skills'); 
+      skillsChecked.forEach(input => formData.append('skills', input.value));
+      
       try {
-        const res = await fetch(`${API_BASE}/responses`, {
+        // Change the URL to your backend endpoint for applications!
+        const res = await fetch(`${API_BASE}/applications`, {
           method: "POST",
           body: formData
         });
