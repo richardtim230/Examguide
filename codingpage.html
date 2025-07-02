@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>NextGen Web Dev Class: HTML, CSS & JavaScript</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=0.80">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -92,7 +92,7 @@
       max-width: 510px;
     }
     .hero-title {
-      font-size: 2.6rem;
+      font-size: 2.06rem;
       font-weight: 900;
       color: var(--primary);
       margin-bottom: 10px;
@@ -335,7 +335,7 @@
         Learn everything from fundamentals to advanced tricks for building stunning, responsive websites & apps — <b>on your mobile or desktop</b>.<br>
         <span style="color:#012b5d;font-weight:600;">Project-focused. Community-powered. Certificate awarded.</span>
       </p>
-      <a href="https://your-registration-url.com" class="cta-btn" id="register" style="margin-top:14px;">Register Now</a>
+      <a href="registration.html?code=BELLI" class="cta-btn" id="register" style="margin-top:14px;">Register Now</a>
     </div>
     <div class="hero-right">
       <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
@@ -399,7 +399,7 @@
       </li>
     </ul>
     <div style="text-align:center;margin-top:30px;">
-      <a href="https://your-registration-url.com" class="cta-btn" style="font-size:1.15em;">Register for the Class</a>
+      <a href="registration.html?code=BELLI" class="cta-btn" style="font-size:1.15em;">Register for the Class</a>
     </div>
   </section>
   <footer>
@@ -408,7 +408,7 @@
   </footer>
   <script>
     // Replace registration URL everywhere
-    const registrationUrl = "https://your-registration-url.com"; // CHANGE TO YOUR ACTUAL URL
+    const registrationUrl = "registration.html?code=BELLI"; // CHANGE TO YOUR ACTUAL URL
     document.querySelectorAll('a.cta-btn').forEach(btn => btn.href = registrationUrl);
     document.querySelectorAll('nav a').forEach(link => {
       if(link.textContent.trim().toLowerCase().includes('register')) link.href = registrationUrl;
