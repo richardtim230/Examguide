@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechConf 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: #e74c3c;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            color: white;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        .about, .speakers, .schedule, .contact {
+            background-color: #f9f9f9;
+        }
+
+        .about h2, .speakers h2, .schedule h2, .contact h2 {
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .speakers ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .speakers li {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+
+        .schedule ul {
+            list-style: none;
+        }
+
+        .schedule li {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        .contact input, .contact textarea {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TechConf 2025</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#speakers">Speakers</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero section">
+        <h2>Welcome to the Future of Technology</h2>
+        <p>Join us on July 15, 2025, for an exciting conference in Lagos, Nigeria!</p>
+        <button onclick="showPopup()">Register Now</button>
+    </section>
+
+    <section id="about" class="about section">
+        <h2>About TechConf</h2>
+        <p>TechConf 2025 is the premier event for tech enthusiasts, featuring keynote speakers, hands-on workshops, and unparalleled networking opportunities. Held on July 15, 2025, at 10:00 AM WAT in Lagos, this conference aims to inspire innovation and collaboration.</p>
+    </section>
+
+    <section id="speakers" class="speakers section">
+        <h2>Featured Speakers</h2>
+        <ul>
+            <li>Dr. Amina Bello - AI Expert</li>
+            <li>John Okoro - Cloud Architect</li>
+            <li>Sarah Adebayo - Cybersecurity Specialist</li>
+        </ul>
+    </section>
+
+    <section id="schedule" class="schedule section">
+        <h2>Event Schedule</h2>
+        <ul>
+            <li>10:00 AM - Opening Keynote</li>
+            <li>11:30 AM - Workshop: AI Basics</li>
+            <li>2:00 PM - Panel Discussion</li>
+            <li>4:00 PM - Networking Session</li>
+        </ul>
+    </section>
+
+    <section id="contact" class="contact section">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="hidePopup()">×</span>
+            <h3>Registration Successful!</h3>
+            <p>Thank you for registering for TechConf 2025. We will send you a confirmation email at 05:17 AM WAT on July 03, 2025.</p>
+            <button onclick="hidePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
