@@ -305,10 +305,7 @@
             <option value="Other">Other</option>
           </select>
         </div>
-        <div class="form-row">
-          <label for="formCode">Form Code *</label>
-          <input type="text" id="formCode" placeholder="e.g. APP01" required>
-        </div>
+        <!-- Removed code input: code will be generated automatically -->
         <div class="form-row">
           <label for="formDesc">Description</label>
           <textarea id="formDesc" placeholder="Short description"></textarea>
@@ -515,6 +512,16 @@ function renderFormSelect(forms) {
   });
 }
 
+// Utility: Generate random 10-character alphanumeric code
+function generateCode(length = 10) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; ++i) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
 document.getElementById('createFormForm').addEventListener('submit', async function(e){
   e.preventDefault();
   const btn = document.getElementById('createFormBtn');
@@ -524,13 +531,14 @@ document.getElementById('createFormForm').addEventListener('submit', async funct
 
   const name = document.getElementById('formName').value.trim();
   const type = document.getElementById('formType').value.trim();
-  const code = document.getElementById('formCode').value.trim().toUpperCase();
+  // const code = document.getElementById('formCode').value.trim().toUpperCase(); // REMOVED
+  const code = generateCode(10); // AUTO-GENERATE CODE
   const desc = document.getElementById('formDesc').value.trim();
   const msg = document.getElementById('formCreateMsg');
   const err = document.getElementById('formCreateErr');
   msg.style.display = err.style.display = 'none';
 
-  if(!name || !type || !code) {
+  if(!name || !type) {
     err.textContent = "Please fill all required fields.";
     err.style.display = 'block';
     btn.innerHTML = origText;
@@ -548,7 +556,7 @@ document.getElementById('createFormForm').addEventListener('submit', async funct
     });
     const data = await res.json();
     if (res.ok && data.success) {
-      msg.textContent = "Form created successfully!";
+      msg.textContent = `Form created successfully! Code: ${code}`;
       msg.style.display = 'block';
       this.reset();
       fetchForms();
@@ -580,8 +588,6 @@ async function deleteForm(formId) {
 window.deleteForm = deleteForm;
 
 // --- RESPONSES: FETCH FOR FORM ---
-
-
 document.getElementById('responseFormSelect').addEventListener('change', async function(){
   const formId = this.value;
   const table = document.getElementById('responsesTable');
