@@ -629,24 +629,6 @@
 </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // CONFIG
-    const API_URL = "https://examguide.onrender.com/api/";
-    const token = localStorage.getItem("token");
-    let student = {};
-    let progressData = { labels: [], values: [] };
-    let resultsCache = [];
-    let setsCache = [];
-    let nextTest = null;
-    let nextTestStart = null;
-    let facultiesCache = [];
-    let departmentsCache = [];
-    let usersCache = [];
-    let chatListCache = [];
-    let chatPollingInterval = null;
-    let unreadMessages = [];
-// Place this VERY EARLY in your main JS (top of your main <script> or right after the spinner HTML)
-// This will guarantee the spinner is visible instantly and hides only after 10s AND all main data is loaded.
-
 (function() {
   const spinner = document.getElementById("preloaderSpinner");
   let spinnerCanHide = false;
@@ -676,6 +658,23 @@
   // Optionally, if there's a fatal error, you can also call hidePreloaderSpinner()
   // and show your own error modal after.
 })();
+    
+    // CONFIG
+    const API_URL = "https://examguide.onrender.com/api/";
+    const token = localStorage.getItem("token");
+    let student = {};
+    let progressData = { labels: [], values: [] };
+    let resultsCache = [];
+    let setsCache = [];
+    let nextTest = null;
+    let nextTestStart = null;
+    let facultiesCache = [];
+    let departmentsCache = [];
+    let usersCache = [];
+    let chatListCache = [];
+    let chatPollingInterval = null;
+    let unreadMessages = [];
+
     // ========== PROFILE / FACULTY / DEPARTMENT ==========
     async function fetchFacultiesAndDepartments() {
       const [faculties, departments] = await Promise.all([
