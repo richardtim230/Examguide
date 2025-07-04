@@ -654,11 +654,45 @@
     if (spinnerCanHide) hideSpinner();
     // else: spinner auto-hides after the 10s timeout
   }
-
-  // Optionally, if there's a fatal error, you can also call hidePreloaderSpinner()
-  // and show your own error modal after.
 })();
-    
+    // Place this at the VERY TOP of your main JS file, before any fetches are made
+
+// Save the original fetch function
+const originalFetch = window.fetch;
+
+// Utility: Force logout and redirect
+function forceLogout() {
+  localStorage.removeItem("token");
+  window.location.href = "mock-icthallb"; // Replace with your login page if different
+}
+
+// Patch global fetch
+window.fetch = async function(resource, options = {}) {
+  // Always add Authorization header if token exists and not already set
+  const token = localStorage.getItem("token");
+  if (token && resource && typeof resource === "string" && resource.startsWith("http")) {
+    options.headers = options.headers || {};
+    if (!options.headers["Authorization"] && !options.headers["authorization"]) {
+      options.headers["Authorization"] = "Bearer " + token;
+    }
+  }
+
+  try {
+    const response = await originalFetch(resource, options);
+
+    // If unauthorized, force logout
+    if (response.status === 401 || response.status === 403) {
+      forceLogout();
+      // Optionally: throw error to stop further code
+      throw new Error("Session expired. Logging out...");
+    }
+    return response;
+  } catch (err) {
+    // If fetch itself fails (e.g., network down), you can also force logout if desired
+    // forceLogout();
+    throw err;
+  }
+};
     // CONFIG
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
