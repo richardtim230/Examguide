@@ -170,17 +170,45 @@ async function loadReview() {
     }
 
     data.questions.forEach((q, idx) => {
+      // --- FIX: Use label/text for option display ---
       const optionsHtml = q.options.map(opt => {
+        // Get label for option (text, label, or fallback to string)
+        const label = typeof opt === "string"
+          ? opt
+          : (opt.text || opt.label || JSON.stringify(opt));
+
+        // Determine correct/selected logic
+        // Compare by value, text, or fallback to string equality
+        function optEquals(a, b) {
+          if (a === b) return true;
+          if (typeof a === "object" && typeof b === "object") {
+            if (a.value && b.value) return a.value === b.value;
+            if (a.text && b.text) return a.text === b.text;
+            return JSON.stringify(a) === JSON.stringify(b);
+          }
+          if (typeof a === "object" && typeof b === "string") {
+            return (a.value === b || a.text === b || a.label === b);
+          }
+          if (typeof b === "object" && typeof a === "string") {
+            return (b.value === a || b.text === a || b.label === a);
+          }
+          return false;
+        }
+
         let cls = '';
         let extra = '';
-        if (opt === q.correct) cls = 'correct';
-        if (opt === q.selected && q.selected !== q.correct) cls = 'wrong';
-        if (opt === q.selected) extra = ' <span style="color:#8338ec;font-weight:bold;">(Your Answer)</span>';
-        if (opt === q.correct && opt === q.selected) extra = ' <span style="color:#198754;font-weight:bold;">(Your Answer ✓)</span>';
-        return `<li class="${cls}">${opt}${extra}</li>`;
+        const isCorrect = optEquals(opt, q.correct);
+        const isSelected = optEquals(opt, q.selected);
+        if (isCorrect) cls = 'correct';
+        if (isSelected && !isCorrect) cls = 'wrong';
+        if (isSelected) extra = ' <span style="color:#8338ec;font-weight:bold;">(Your Answer)</span>';
+        if (isCorrect && isSelected) extra = ' <span style="color:#198754;font-weight:bold;">(Your Answer ✓)</span>';
+        return `<li class="${cls}">${label}${extra}</li>`;
       }).join('');
       let notAnswered = '';
-      if (!q.selected && q.selected !== 0) {
+      // Add not answered message if nothing selected
+      const hasSelected = typeof q.selected !== "undefined" && q.selected !== null && q.selected !== "";
+      if (!hasSelected) {
         notAnswered = `<div class="not-answered">You did not answer this question.</div>`;
       }
       container.innerHTML += `
