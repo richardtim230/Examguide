@@ -107,6 +107,35 @@
     <div id="reviewContent"></div>
   </div>
 <script>
+// --- GLOBAL AUTO-LOGOUT PATCH (optional but recommended) ---
+const originalFetch = window.fetch;
+function forceLogout() {
+  localStorage.removeItem("token");
+  window.location.href = "mock-icthallb";
+}
+window.fetch = async function(resource, options = {}) {
+  const token = localStorage.getItem("token");
+  if (token && resource && typeof resource === "string" && resource.startsWith("http")) {
+    options.headers = options.headers || {};
+    if (!options.headers["Authorization"] && !options.headers["authorization"]) {
+      options.headers["Authorization"] = "Bearer " + token;
+    }
+  }
+  try {
+    const response = await originalFetch(resource, options);
+    if (response.status === 401 || response.status === 403) {
+      forceLogout();
+      throw new Error("Session expired. Logging out...");
+    }
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+// --- END AUTO-LOGOUT PATCH ---
+
+const API_URL = "https://examguide.onrender.com";
+
 async function loadReview() {
   const urlParams = new URLSearchParams(window.location.search);
   const sessionId = urlParams.get('session');
@@ -120,7 +149,8 @@ async function loadReview() {
   container.innerHTML = '<div class="loading">Loading review...</div>';
 
   try {
-    const response = await fetch(`/api/results/${encodeURIComponent(sessionId)}/review`, {
+    // Always send token if available (handled by global fetch patch).
+    const response = await fetch(`${API_URL}/api/results/${encodeURIComponent(sessionId)}/review`, {
       credentials: "include"
     });
     if (!response.ok) {
