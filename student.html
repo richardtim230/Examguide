@@ -1404,23 +1404,7 @@ async function fetchAvailableTests() {
     if (typeof chatPollingInterval !== "undefined" && chatPollingInterval) clearInterval(chatPollingInterval);
   }
 }
-    // ========== INIT ==========
-    async function init() {
-      if (!token) return window.location.href = "mock-icthallb";
-      await fetchFacultiesAndDepartments();
-      await fetchAllUsers();
-      await fetchProfile();
-      await fetchHistory();
-      await fetchAnnouncements();
-      await fetchAvailableTests();
-      pollChatsForNotifications();
-      setInterval(pollChatsForNotifications, 8000);
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.notif-bell') && !e.target.closest('.notif-dropdown')) {
-          document.getElementById("notifDropdown").classList.remove("active");
-        }
-      });
-    }
+    
     // Place this at the end of your main <script> block, after all data-loading functions
 let currentSchedId = null;
 
@@ -1512,7 +1496,7 @@ async function showScheduleOnLoad() {
 window.addEventListener("load", function() {
   setTimeout(showScheduleOnLoad, 700);
 });
-    window.onload = init;
+    window.addEventListener("load", init);
 
 // Add this script to your student.html, after html2canvas import
 // Use this version for your fillCertInfo and downloadCertificate logic
@@ -1642,13 +1626,25 @@ async function setupLeaderboard() {
 // Call setupLeaderboard() after login or main dashboard page load
 window.addEventListener("DOMContentLoaded", setupLeaderboard);
 
-// add this line at the very END of your main async init():
-window.hidePreloaderSpinner();
-// Example:
-async function init() {
 
- window.hidePreloaderSpinner();
-  }
+// ========== INIT ==========
+    async function init() {
+      if (!token) return window.location.href = "mock-icthallb";
+      await fetchFacultiesAndDepartments();
+      await fetchAllUsers();
+      await fetchProfile();
+      await fetchHistory();
+      await fetchAnnouncements();
+      await fetchAvailableTests();
+      pollChatsForNotifications();
+      setInterval(pollChatsForNotifications, 8000);
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.notif-bell') && !e.target.closest('.notif-dropdown')) {
+          document.getElementById("notifDropdown").classList.remove("active");
+        }
+      });
+      window.hidePreloaderSpinner();
+    }
   </script>
 </body>
 </html>
