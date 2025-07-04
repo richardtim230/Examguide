@@ -223,6 +223,23 @@
   </style>
 </head>
 <body>
+  <!-- Place this at the very top inside your <body> -->
+<div id="preloaderSpinner" style="
+  position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;
+  background:rgba(255,255,255,0.97);display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.3s;
+">
+  <div style="text-align:center;">
+    <div style="
+      display:inline-block;width:80px;height:80px;border:8px solid #e3e8ee;
+      border-top:8px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;
+    "></div>
+    <div style="margin-top:18px;color:#3a86ff;font-weight:700;font-size:1.3em;">Loading dashboard...</div>
+  </div>
+</div>
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
   <div class="header">
   <span class="notif-bell" id="notifBell" onclick="toggleNotifDropdown()" title="Notifications">
     &#128276;
@@ -627,7 +644,38 @@
     let chatListCache = [];
     let chatPollingInterval = null;
     let unreadMessages = [];
+// Place this VERY EARLY in your main JS (top of your main <script> or right after the spinner HTML)
+// This will guarantee the spinner is visible instantly and hides only after 10s AND all main data is loaded.
 
+(function() {
+  const spinner = document.getElementById("preloaderSpinner");
+  let spinnerCanHide = false;
+  let dataLoaded = false;
+
+  // Hide spinner helper (safe for multiple calls)
+  function hideSpinner() {
+    if (spinner && spinner.style.display !== "none") {
+      spinner.style.opacity = "0";
+      setTimeout(() => { spinner.style.display = "none"; }, 350);
+    }
+  }
+
+  // Minimum spinner duration: 10 seconds
+  setTimeout(() => {
+    spinnerCanHide = true;
+    if (dataLoaded) hideSpinner();
+  }, 10000);
+
+  // Patch your main init() function to call this when all data is ready!
+  window.hidePreloaderSpinner = function() {
+    dataLoaded = true;
+    if (spinnerCanHide) hideSpinner();
+    // else: spinner auto-hides after the 10s timeout
+  }
+
+  // Optionally, if there's a fatal error, you can also call hidePreloaderSpinner()
+  // and show your own error modal after.
+})();
     // ========== PROFILE / FACULTY / DEPARTMENT ==========
     async function fetchFacultiesAndDepartments() {
       const [faculties, departments] = await Promise.all([
@@ -1595,6 +1643,14 @@ async function setupLeaderboard() {
 // Call setupLeaderboard() after login or main dashboard page load
 window.addEventListener("DOMContentLoaded", setupLeaderboard);
 
+// add this line at the very END of your main async init():
+window.hidePreloaderSpinner();
+// Example:
+async function init() {
+
+  await fetchFacultiesAndDepartments(), fetchAllUsers(), fetchProfile(), fetchHistory();
+  window.hidePreloaderSpinner();
+  }
   </script>
 </body>
 </html>
