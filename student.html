@@ -1405,8 +1405,6 @@ async function fetchAvailableTests() {
   }
 }
     
-    // Place this at the end of your main <script> block, after all data-loading functions
-let currentSchedId = null;
 
 // Utility to show modal and fill info
 function showScheduleModal(schedule) {
@@ -1626,7 +1624,7 @@ async function setupLeaderboard() {
 // Call setupLeaderboard() after login or main dashboard page load
 window.addEventListener("DOMContentLoaded", setupLeaderboard);
 
-
+let currentSchedId = null;
 // ========== INIT ==========
     async function init() {
       if (!token) return window.location.href = "mock-icthallb";
@@ -1634,7 +1632,6 @@ window.addEventListener("DOMContentLoaded", setupLeaderboard);
       await fetchAllUsers();
       await fetchProfile();
       await fetchHistory();
-      await showScheduleModal();
       await fetchAnnouncements();
       await fetchAvailableTests();
       pollChatsForNotifications();
