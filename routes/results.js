@@ -183,29 +183,24 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     ) {
       return res.status(403).json({ message: "Forbidden" });
     }
-    const questionSet = await QuestionSet.findById(result.examSet);
-    if (!questionSet) return res.status(404).json({ message: "Question set not found" });
+    // Use the snapshot of questions
+    const sessionQuestions = Array.isArray(result.questions) ? result.questions : [];
+    let answers = result.answers || {};
 
-    let answers = result.answers;
-    if (answers instanceof Map) {
-      answers = Object.fromEntries(answers);
-    }
-    answers = answers || {};
-
-    // ONLY include questions the student actually answered (non-empty, non-undefined)
-    const questions = questionSet.questions
-      .filter(q => typeof answers[String(q.id)] !== "undefined" && answers[String(q.id)] !== "")
-      .map((q) => ({
-        question: q.question,
-        options: q.options,
-        correct: q.answer,
-        selected: answers[String(q.id)],
-        explanation: q.explanation || ""
-      }));
+    // Compose review questions exactly as shown in-session (in order)
+    const questions = sessionQuestions.map(q => ({
+      id: q.id,
+      question: q.question,
+      options: q.options,
+      correct: q.answer,
+      selected: answers[String(q.id)] ?? "",
+      explanation: q.explanation || "",
+      questionImage: q.questionImage || null
+    }));
 
     res.json({
       sessionId: result._id,
-      examTitle: questionSet.title,
+      examTitle: result.examSetTitle || "", // or fetch title from set if you want
       questions
     });
   } catch (e) {
