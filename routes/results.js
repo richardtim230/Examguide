@@ -120,6 +120,8 @@ router.get("/leaderboard/top", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not fetch leaderboard", error: e.message });
   }
 });
+
+// Get result by resultId (for admin/student)
 router.get("/:resultId", authenticate, async (req, res) => {
   const { resultId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(resultId)) {
@@ -164,6 +166,8 @@ router.get("/:resultId", authenticate, async (req, res) => {
     questionsAnswered
   });
 });
+
+// REVIEW ENDPOINT: Only show answered questions
 router.get("/:sessionId/review", authenticate, async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -182,28 +186,22 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     const questionSet = await QuestionSet.findById(result.examSet);
     if (!questionSet) return res.status(404).json({ message: "Question set not found" });
 
-    // Defensive: Convert Map to object if needed
     let answers = result.answers;
     if (answers instanceof Map) {
       answers = Object.fromEntries(answers);
     }
     answers = answers || {};
-    // Debug logs (optional, can be removed in production)
-     console.log("answers keys:", Object.keys(answers));
-    if (questionSet.questions.length > 0) {
-    console.log("first question id:", questionSet.questions[0].id);
-    }
-    questionSet.questions.forEach(q => {
-     console.log("question id:", q.id, "selected:", answers[String(q.id)]);
-    });
 
-    const questions = questionSet.questions.map((q) => ({
-      question: q.question,
-      options: q.options,
-      correct: q.answer,
-      selected: answers[String(q.id)] ?? "",
-      explanation: q.explanation || ""
-    }));
+    // ONLY include questions the student actually answered (non-empty, non-undefined)
+    const questions = questionSet.questions
+      .filter(q => typeof answers[String(q.id)] !== "undefined" && answers[String(q.id)] !== "")
+      .map((q) => ({
+        question: q.question,
+        options: q.options,
+        correct: q.answer,
+        selected: answers[String(q.id)],
+        explanation: q.explanation || ""
+      }));
 
     res.json({
       sessionId: result._id,
