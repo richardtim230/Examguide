@@ -13,6 +13,7 @@ router.get("/", authenticate, authorizeRole("admin", "superadmin"), async (req, 
     .populate("user", "username faculty department")
     .populate("examSet", "title")
     .sort({ submittedAt: -1 });
+    .allowDiskUse(true); // <-- add this line
   res.json(results);
 });
 
