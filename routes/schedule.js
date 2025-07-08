@@ -30,7 +30,7 @@ router.get("/", authenticate, async (req, res) => {
   try {
     const schedules = await Schedule.find(filter)
       .sort({ start: -1 })
-      .allowDiskUse(true); // <-- add this line
+      
       .populate({
         path: "examSet",
         select: "title status questions faculty department schedule"
