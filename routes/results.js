@@ -7,16 +7,31 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-// Get all student results (admin only)
+// Get all student results (admin only) — with pagination
 router.get("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  // Parse pagination params, with defaults
+  const page = parseInt(req.query.page) > 0 ? parseInt(req.query.page) : 1;
+  const limit = parseInt(req.query.limit) > 0 ? parseInt(req.query.limit) : 20;
+  const skip = (page - 1) * limit;
+
+  // Query total count for frontend pagination
+  const total = await Result.countDocuments();
+
+  // Fetch paginated results
   const results = await Result.find()
     .populate("user", "username faculty department")
     .populate("examSet", "title")
-    .sort({ submittedAt: -1 });
-    .allowDiskUse(true); // <-- add this line
-  res.json(results);
-});
+    .sort({ submittedAt: -1 })
+    .skip(skip)
+    .limit(limit);
 
+  res.json({
+    total,       // total number of results in the collection
+    page,        // current page
+    limit,       // results per page
+    results      // paginated list
+  });
+});
 // Get results for a specific examSet (admin only)
 router.get("/exam/:examSet", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const results = await Result.find({ examSet: req.params.examSet })
