@@ -1524,10 +1524,7 @@ async function showScheduleOnLoad() {
   } catch (e) { /* fail silently */ }
 }
 
-// Auto-run after page load
-window.addEventListener("load", function() {
-  setTimeout(showScheduleOnLoad, 700);
-});
+
     window.addEventListener("load", init);
 
 // Add this script to your student.html, after html2canvas import
@@ -1661,22 +1658,25 @@ window.addEventListener("DOMContentLoaded", setupLeaderboard);
 let currentSchedId = null;
 // ========== INIT ==========
     async function init() {
-      if (!token) return window.location.href = "mock-icthallb";
-      await fetchFacultiesAndDepartments();
-      await fetchAllUsers();
-      await fetchProfile();
-      await fetchHistory();
-      await fetchAnnouncements();
-      await fetchAvailableTests();
-      pollChatsForNotifications();
-      setInterval(pollChatsForNotifications, 8000);
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.notif-bell') && !e.target.closest('.notif-dropdown')) {
-          document.getElementById("notifDropdown").classList.remove("active");
-        }
-      });
-      window.hidePreloaderSpinner();
+  if (!token) return window.location.href = "mock-icthallb";
+  await fetchFacultiesAndDepartments();
+  await fetchAllUsers();
+  await fetchProfile();
+  await fetchHistory();
+  await fetchAnnouncements();
+  await fetchAvailableTests();
+  pollChatsForNotifications();
+  setInterval(pollChatsForNotifications, 8000);
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.notif-bell') && !e.target.closest('.notif-dropdown')) {
+      document.getElementById("notifDropdown").classList.remove("active");
     }
+  });
+  window.hidePreloaderSpinner();
+
+  // <<< Add this here, after all data is loaded >>>
+  showScheduleOnLoad();
+}
   </script>
 </body>
 </html>
