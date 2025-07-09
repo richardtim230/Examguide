@@ -522,13 +522,26 @@ function getDepartmentsNames(deptIds) {
 
     // ========== Students ==========
     async function fetchStudents() {
-      const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-      let users = [];
-      try {
-        users = await resp.json();
-      } catch { users = []; }
-      let html = "";
-      users.forEach(u => {
+  const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  let users = [];
+  try { users = await resp.json(); } catch { users = []; }
+
+  // Group by faculty and department
+  const grouped = {};
+  users.forEach(u => {
+    const faculty = u.faculty || "Unknown Faculty";
+    const department = u.department || "Unknown Department";
+    if (!grouped[faculty]) grouped[faculty] = {};
+    if (!grouped[faculty][department]) grouped[faculty][department] = [];
+    grouped[faculty][department].push(u);
+  });
+
+  let html = "";
+  Object.keys(grouped).forEach(faculty => {
+    html += `<tr style="background:#fafaff;font-weight:700"><td colspan="6">${faculty}</td></tr>`;
+    Object.keys(grouped[faculty]).forEach(department => {
+      html += `<tr style="background:#f1f5ff;font-weight:500"><td colspan="6" style="padding-left:24px">${department}</td></tr>`;
+      grouped[faculty][department].forEach(u => {
         html += `<tr>
           <td>
             <a href="#" onclick="viewStudent('${u._id}');return false;" style="color:#3a86ff;font-weight:600;cursor:pointer;text-decoration:underline;">
@@ -552,8 +565,10 @@ function getDepartmentsNames(deptIds) {
           </td>
         </tr>`;
       });
-      document.querySelector("#studentsTable tbody").innerHTML = html;
-    }
+    });
+  });
+  document.querySelector("#studentsTable tbody").innerHTML = html;
+}
 
     async function viewStudent(id) {
       const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
