@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ... (unchanged head and CSS) ... -->
+</head>
+<body>
+  <!-- ... (unchanged HTML up to tables) ... -->
+
+<!-- Assessment Performance & Reviews Table -->
+<div class="section-title">Assessment Performance & Reviews</div>
+<div class="result-table-container">
+  <!-- Pagination controls will be injected above table -->
+  <div id="historyTablePag"></div>
+  <table class="result-table" id="historyTable">
+    <thead>
+      <tr>
+        <td>Test</td>
+        <td>Date</td>
+        <td>Score</td>
+        <td>
+    <button onclick="openReviewTab('${result._id}')">Review</button>
+  </td>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by JS -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Available Assessments Table -->
+<div class="section-title">Available Assessments</div>
+<div id="testSpinner" style="display:none;text-align:center;padding:20px;">
+  <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
+</div>
+<div class="table-responsive">
+  <!-- Pagination controls will be injected above table -->
+  <div id="availableTablePag"></div>
+  <table class="test-table" id="availableTable">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Description</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- ...rest of HTML remains unchanged... -->
+
+<script>
+  // ...other variables...
+  let availablePage = 1;
+  let availableTotalPages = 1;
+  let availableCache = [];
+
+  let historyPage = 1;
+  let historyTotalPages = 1;
+  let historyCache = [];
+
+  // ========== PAGINATED AVAILABLE ASSESSMENTS ==========
+  async function fetchAvailableTests() {
+    const spinner = document.getElementById("testSpinner");
+    const tbody = document.querySelector("#availableTable tbody");
+    spinner.style.display = "block";
+    tbody.innerHTML = "";
+
+    try {
+      if (!student.faculty || !student.department) {
+        spinner.style.display = "none";
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
+          Please complete your profile to see available assessments.</td></tr>`;
+        document.getElementById("upcomingTest").innerText = "None";
+        document.getElementById("testCountdown").innerText = "";
+        return;
+      }
+
+      const resp = await fetch(
+        API_URL +
+          `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
+        { headers: { Authorization: "Bearer " + token } }
+      );
+      const schedules = await resp.json();
+      spinner.style.display = "none";
+
+      // Deduplicate
+      const uniqueSchedules = [];
+      const seenExamSetIds = new Set();
+      for (const sched of schedules) {
+        const set = sched.examSet;
+        if (!set) continue;
+        const key = set._id || set.title;
+        if (!key || seenExamSetIds.has(key)) continue;
+        seenExamSetIds.add(key);
+        uniqueSchedules.push(sched);
+      }
+      availableCache = uniqueSchedules;
+      availablePage = 1;
+      renderAvailableTable();
+    } catch (err) {
+      spinner.style.display = "none";
+      document.querySelector("#availableTable tbody").innerHTML = `<tr><td colspan="6" style="text-align:center;color:#f25f5c;">
+        Failed to load assessments.</td></tr>`;
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    }
+  }
+
+  function renderAvailableTable() {
+    const tbody = document.querySelector("#availableTable tbody");
+    const page = availablePage;
+    const perPage = 5;
+    const total = availableCache.length;
+    availableTotalPages = Math.max(1, Math.ceil(total / perPage));
+    const startIdx = (page - 1) * perPage;
+    const endIdx = startIdx + perPage;
+    let html = "";
+    const now = Date.now();
+
+    availableCache.slice(startIdx, endIdx).forEach((sched) => {
+      const set = sched.examSet;
+      if (!set || set.status !== "ACTIVE") return;
+      const taken = resultsCache.some((r) => r.examSet === set.title);
+      const start = sched.start ? new Date(sched.start) : null;
+      const end = sched.end ? new Date(sched.end) : null;
+      const canTake =
+        !taken &&
+        set.status === "ACTIVE" &&
+        start &&
+        now >= start.getTime() &&
+        (!end || now <= end.getTime());
+
+      const isScheduled = start && now < start.getTime();
+
+      let statusLabel = taken
+        ? "Completed"
+        : canTake
+        ? "Available"
+        : isScheduled
+        ? "Scheduled"
+        : "Closed";
+
+      let btnHtml = canTake
+        ? `<button class="btn" onclick="startTest('${set._id}')">Start</button>`
+        : taken
+        ? `<span style="color:var(--muted);">Completed</span>`
+        : isScheduled
+        ? `<span style="color:var(--muted);">Not Yet Open</span>`
+        : `<span style="color:var(--muted);">Closed</span>`;
+
+      html += `<tr>
+        <td>${set.title}</td>
+        <td>${set.description ? set.description : "-"}</td>
+        <td>${start ? start.toLocaleString() : "-"}</td>
+        <td>${end ? end.toLocaleString() : "-"}</td>
+        <td>${statusLabel}</td>
+        <td>${btnHtml}</td>
+      </tr>`;
+    });
+
+    if (!html) html = `<tr><td colspan="6" style="text-align:center;color:#999;">No available assessments at this time.</td></tr>`;
+    tbody.innerHTML = html;
+
+    renderAvailablePagination();
+  }
+
+  function renderAvailablePagination() {
+    let pagDiv = document.getElementById("availableTablePag");
+    if (!pagDiv) {
+      pagDiv = document.createElement("div");
+      pagDiv.id = "availableTablePag";
+      pagDiv.style.textAlign = "center";
+      pagDiv.style.margin = "8px 0";
+      document.getElementById("availableTable").parentNode.insertBefore(pagDiv, document.getElementById("availableTable"));
+    }
+    pagDiv.innerHTML = `
+      <button class="btn" onclick="goToAvailablePage(${availablePage - 1})" ${availablePage <= 1 ? "disabled" : ""}>Prev</button>
+      <span style="margin:0 16px;">Page ${availablePage} of ${availableTotalPages}</span>
+      <button class="btn" onclick="goToAvailablePage(${availablePage + 1})" ${availablePage >= availableTotalPages ? "disabled" : ""}>Next</button>
+    `;
+  }
+
+  function goToAvailablePage(page) {
+    if (page < 1 || page > availableTotalPages) return;
+    availablePage = page;
+    renderAvailableTable();
+  }
+
+  // ========== PAGINATED HISTORY ==========
+  async function fetchHistory() {
+    if (!student.id) return;
+    const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
+    const results = await resp.json();
+    resultsCache = results;
+    historyCache = results;
+    historyPage = 1;
+    renderHistoryTable();
+    renderProgressList();
+    recommendTopics();
+  }
+
+  function renderHistoryTable() {
+    const tbody = document.querySelector("#historyTable tbody");
+    const page = historyPage;
+    const perPage = 5;
+    const total = historyCache.length;
+    historyTotalPages = Math.max(1, Math.ceil(total / perPage));
+    const startIdx = (page - 1) * perPage;
+    const endIdx = startIdx + perPage;
+    let html = "";
+
+    historyCache.slice(startIdx, endIdx).forEach(r => {
+      const examTitle =
+        r.examSet && typeof r.examSet === "object"
+          ? (r.examSet.title || "")
+          : "";
+      html += `<tr>
+        <td>${examTitle}</td>
+        <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+        <td>${r.score ?? "-"}</td>
+        <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
+      </tr>`;
+    });
+
+    if (!html) html = "<tr><td colspan=4>No history</td></tr>";
+    tbody.innerHTML = html;
+
+    renderHistoryPagination();
+  }
+
+  function renderHistoryPagination() {
+    let pagDiv = document.getElementById("historyTablePag");
+    if (!pagDiv) {
+      pagDiv = document.createElement("div");
+      pagDiv.id = "historyTablePag";
+      pagDiv.style.textAlign = "center";
+      pagDiv.style.margin = "8px 0";
+      document.getElementById("historyTable").parentNode.insertBefore(pagDiv, document.getElementById("historyTable"));
+    }
+    pagDiv.innerHTML = `
+      <button class="btn" onclick="goToHistoryPage(${historyPage - 1})" ${historyPage <= 1 ? "disabled" : ""}>Prev</button>
+      <span style="margin:0 16px;">Page ${historyPage} of ${historyTotalPages}</span>
+      <button class="btn" onclick="goToHistoryPage(${historyPage + 1})" ${historyPage >= historyTotalPages ? "disabled" : ""}>Next</button>
+    `;
+  }
+
+  function goToHistoryPage(page) {
+    if (page < 1 || page > historyTotalPages) return;
+    historyPage = page;
+    renderHistoryTable();
+  }
+
+  // ...rest of your script, including init(), remains unchanged...
+</script>
+</body>
+</html>
