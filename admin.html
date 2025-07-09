@@ -680,29 +680,29 @@ function showSection(id, el) {
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 
-    // ========== Dashboard Counts ==========
-    async function fetchDashboardCounts() {
-      const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
-      const sets = await resp.json();
-      document.getElementById("qSetCount").innerText = sets.length;
-      let qCount = 0;
-      sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
-      document.getElementById("questionCount").innerText = qCount;
+// ========== Dashboard Counts ==========
+async function fetchDashboardCounts() {
+  const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+  const sets = await resp.json();
+  document.getElementById("qSetCount").innerText = sets.length;
+  let qCount = 0;
+  sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
+  document.getElementById("questionCount").innerText = qCount;
 
-      const resp2 = await fetch(API_URL + "results", { headers: { Authorization: "Bearer " + token } });
-      const results = await resp2.json();
-      document.getElementById("resultCount").innerText = results.length;
+  // Use paginated API for result count!
+  const resp2 = await fetch(API_URL + "results?page=1&limit=1", { headers: { Authorization: "Bearer " + token } });
+  const data2 = await resp2.json();
+  document.getElementById("resultCount").innerText = data2.total || 0;
 
-      const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
-      const schedules = await resp3.json();
-      document.getElementById("scheduleCount").innerText = schedules.length;
+  const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+  const schedules = await resp3.json();
+  document.getElementById("scheduleCount").innerText = schedules.length;
 
-      const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
-      let students = [];
-      try { students = await resp4.json(); } catch { students = []; }
-      document.getElementById("studentCount").innerText = students.length;
-    }
-
+  const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  let students = [];
+  try { students = await resp4.json(); } catch { students = []; }
+  document.getElementById("studentCount").innerText = students.length;
+}
     // ========== Question Sets ==========
     async function fetchSets() {
   setSectionLoader("setsSection", true);
