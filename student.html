@@ -802,6 +802,37 @@ window.fetch = async function(resource, options = {}) {
   }
     }
 
+let broadcastCache = [];
+
+async function fetchBroadcasts() {
+  const resp = await fetch(API_URL + "broadcasts", { headers: { Authorization: "Bearer " + token } });
+  broadcastCache = await resp.json() || [];
+}
+
+function renderNotifDropdown() {
+  let html = "";
+
+  // Render broadcast notifications
+  if (broadcastCache.length) {
+    broadcastCache.forEach(b => {
+      html += `<div class="notif-item" style="background:#f7faff;cursor:pointer;" onclick="openBroadcastPopup('${b._id}')">
+        <span style="font-weight:bold;color:#3a86ff;">[Broadcast]</span> ${b.title}
+        <div class="notif-time">${(new Date(b.createdAt)).toLocaleString()}</div>
+      </div>`;
+    });
+    html += '<hr style="margin:5px 0;">';
+  }
+
+
+
+  document.getElementById("notifDropdown").innerHTML = html;
+}
+
+function openBroadcastPopup(broadcastId) {
+  const b = broadcastCache.find(x => x._id === broadcastId);
+  if (!b) return;
+  showBroadcastPopup(b);
+}
     async function checkForBroadcast() {
   try {
     const resp = await fetch(API_URL + "broadcasts/latest", {
@@ -1640,45 +1671,6 @@ async function downloadCertificate() {
   }, 180);
   }
 
-let broadcastCache = [];
-
-async function fetchBroadcasts() {
-  const resp = await fetch(API_URL + "broadcasts", { headers: { Authorization: "Bearer " + token } });
-  broadcastCache = await resp.json() || [];
-}
-
-function renderNotifDropdown() {
-  let html = "";
-
-  // Render broadcast notifications
-  if (broadcastCache.length) {
-    broadcastCache.forEach(b => {
-      html += `<div class="notif-item" style="background:#f7faff;cursor:pointer;" onclick="openBroadcastPopup('${b._id}')">
-        <span style="font-weight:bold;color:#3a86ff;">[Broadcast]</span> ${b.title}
-        <div class="notif-time">${(new Date(b.createdAt)).toLocaleString()}</div>
-      </div>`;
-    });
-    html += '<hr style="margin:5px 0;">';
-  }
-
-  // ...existing chat/messages rendering...
-  if (!chatListCache.length) html += "<div style='padding:18px;text-align:center;color:#aaa;'>No new messages.</div>";
-  else chatListCache.slice(0, 8).forEach(chat => {
-    html += `<div class="notif-item" onclick="openChatModal('${chat.otherUserId}')">
-      <div class="notif-title">${chat.otherUserName}</div>
-      <div class="notif-time">${(new Date(chat.lastMsgAt)).toLocaleString()}</div>
-      <div>${chat.lastMsgText ? chat.lastMsgText.substring(0, 60) : ""}</div>
-    </div>`;
-  });
-
-  document.getElementById("notifDropdown").innerHTML = html;
-}
-
-function openBroadcastPopup(broadcastId) {
-  const b = broadcastCache.find(x => x._id === broadcastId);
-  if (!b) return;
-  showBroadcastPopup(b);
-}
 
 // In your init() after fetching profile and chats:
 
