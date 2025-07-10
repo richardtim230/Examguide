@@ -572,28 +572,31 @@
     <!-- Announcements & Messaging -->
     <div class="announcement" id="announcementsPanel"></div>
     <!-- Test History with Review -->
-  <!-- Test History with Review -->
+<!-- ...existing HTML... -->
+
+<!-- Assessment Performance & Reviews -->
 <div class="section-title">Assessment Performance & Reviews</div>
 <div class="result-table-container">
   <table class="result-table" id="historyTable">
     <thead>
       <tr>
-        <td>Test</td>
-        <td>Date</td>
-        <td>Score</td>
-        <td>
-    <button onclick="openReviewTab('${result._id}')">Review</button>
-  </td>
+        <th>Test</th>
+        <th>Date</th>
+        <th>Score</th>
+        <th>
+          Review 
+        </th>
       </tr>
     </thead>
     <tbody>
       <!-- Populated by JS -->
     </tbody>
   </table>
-    
-    
-    <!-- Upcoming/scheduled tests -->
-    <div class="section-title">Available Assessments</div>
+  <div id="historyPagination" class="table-pagination"></div>
+</div>
+
+<!-- Upcoming/scheduled tests -->
+<div class="section-title">Available Assessments</div>
 <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
   <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
 </div>
@@ -611,8 +614,40 @@
     </thead>
     <tbody></tbody>
   </table>
+  <div id="availablePagination" class="table-pagination"></div>
 </div>
-  </div>
+
+<!-- ...rest of HTML ... -->
+
+<style>
+.table-pagination {
+  text-align: center;
+  margin: 12px 0 0 0;
+  user-select: none;
+}
+.table-pagination button {
+  margin: 0 5px;
+  padding: 4px 13px;
+  font-size: 1em;
+  background: #f7faff;
+  color: #3a86ff;
+  border: 1px solid #3a86ff44;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+.table-pagination button.active,
+.table-pagination button:hover {
+  background: #3a86ff;
+  color: #fff;
+}
+.table-pagination button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #e3e8ee !important;
+  color: #888 !important;
+}
+</style>
     <!-- Discussion/Help -->
     <div class="section-title">Need Academic Help?</div>
     <button class="btn" onclick="openDiscussion()">Go to Community Board</button>
