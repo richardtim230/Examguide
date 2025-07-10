@@ -823,7 +823,15 @@ function renderNotifDropdown() {
     html += '<hr style="margin:5px 0;">';
   }
 
-
+  // ...existing chat/messages rendering...
+  if (!chatListCache.length) html += "<div style='padding:18px;text-align:center;color:#aaa;'>No new messages.</div>";
+  else chatListCache.slice(0, 8).forEach(chat => {
+    html += `<div class="notif-item" onclick="openChatModal('${chat.otherUserId}')">
+      <div class="notif-title">${chat.otherUserName}</div>
+      <div class="notif-time">${(new Date(chat.lastMsgAt)).toLocaleString()}</div>
+      <div>${chat.lastMsgText ? chat.lastMsgText.substring(0, 60) : ""}</div>
+    </div>`;
+  });
 
   document.getElementById("notifDropdown").innerHTML = html;
 }
