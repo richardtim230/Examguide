@@ -1104,45 +1104,7 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
     }
 
    
-    async function fetchHistory() {
-      if (!student.id) return;
-      const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
-      const results = await resp.json();
-      resultsCache = results;
-      let html = "";
-      let setStats = {};
-      let badgeHtml = "";
-      if (results.length > 0) {
-        results.forEach(r => {
-          if (!setStats[r.examSet]) setStats[r.examSet] = [];
-          setStats[r.examSet].push(r.score ?? 0);
-        });
-        if (results.length >= 5) badgeHtml += `<span class="badge">5+ Assessments</span>`;
-        if (results.some(r=>r.score>=80)) badgeHtml += `<span class="badge">High Performer</span>`;
-      }
-      document.getElementById("badgePanel").innerHTML = badgeHtml;
-      progressData.labels = Object.keys(setStats);
-      progressData.values = progressData.labels.map(lbl => {
-        let arr = setStats[lbl] || [];
-        return arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : 0;
-      });
-      renderProgressChart(progressData);
-      results.slice(0, 10).forEach(r => {
-        
-  const examTitle =
-    r.examSet && typeof r.examSet === "object"
-      ? (r.examSet.title || r.examSet._id || "")
-      : (r.examSet || "");
-  html += `<tr>
-    <td>${examTitle}</td>
-    <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
-    <td>${r.score ?? "-"}</td>
-    <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
-  </tr>`;
-});
-      document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
-      recommendTopics();
-    }
+
     function renderProgressList() {
   const list = document.getElementById("progressList");
   if (!resultsCache.length) {
@@ -1162,185 +1124,7 @@ autoRefreshWithSpinner(1200); // 1.2 seconds spinner before reload
   list.innerHTML = items;
 }
     
-async function fetchHistory() {
-  if (!student.id) return;
-  const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
-  const results = await resp.json();
-  resultsCache = results;
 
-  // Update Progress Card
-  renderProgressList();
-
-
-
-  // Update Assessment Performance Table
-  let html = "";
-  results.slice(0, 10).forEach(r => {
-    const examTitle =
-  r.examSet && typeof r.examSet === "object"
-    ? (r.examSet.title || "")
-    : ""; // fallback to empty string, never show ID
-  html += `<tr>
-    <td>${examTitle}</td>
-    <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
-    <td>${r.score ?? "-"}</td>
-    <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
-  </tr>`;
-});
-  document.querySelector("#historyTable tbody").innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
-
-  recommendTopics();
-}
-    function openReviewTab(sessionId) {
-  window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
-    }
-    // This version fetches schedules (with populated examSet) and displays scheduled, available, and completed tests
-// ...inside fetchAvailableTests()
-
-async function fetchAvailableTests() {
-  const spinner = document.getElementById("testSpinner");
-  const tbody = document.querySelector("#availableTable tbody");
-  spinner.style.display = "block";
-  tbody.innerHTML = ""; // Clear previous table content
-
-  try {
-    // Defensive: ensure student object is loaded
-    if (!student.faculty || !student.department) {
-      spinner.style.display = "none";
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
-        Please complete your profile to see available assessments.</td></tr>`;
-      document.getElementById("upcomingTest").innerText = "None";
-      document.getElementById("testCountdown").innerText = "";
-      return;
-    }
-
-    const resp = await fetch(
-      API_URL +
-        `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
-      { headers: { Authorization: "Bearer " + token } }
-    );
-    const schedules = await resp.json();
-    spinner.style.display = "none";
-
-    // ======== PATCH: Remove Duplicate Schedules ========
-    // We'll use examSet._id as the uniqueness key. If missing, fallback to title.
-    const uniqueSchedules = [];
-    const seenExamSetIds = new Set();
-    for (const sched of schedules) {
-      const set = sched.examSet;
-      if (!set) continue;
-      const key = set._id || set.title;
-      if (!key || seenExamSetIds.has(key)) continue;
-      seenExamSetIds.add(key);
-      uniqueSchedules.push(sched);
-    }
-    // ======== END PATCH ========
-
-    if (!Array.isArray(uniqueSchedules) || uniqueSchedules.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
-        No available assessments at this time.</td></tr>`;
-      document.getElementById("upcomingTest").innerText = "None";
-      document.getElementById("testCountdown").innerText = "";
-      return;
-    }
-
-    let html = "";
-    let soonest = null;
-    const now = Date.now();
-
-    uniqueSchedules.forEach((sched) => {
-      const set = sched.examSet;
-      if (!set || set.status !== "ACTIVE") return;
-
-      const taken = resultsCache.some((r) => r.examSet === set.title);
-      const start = sched.start ? new Date(sched.start) : null;
-      const end = sched.end ? new Date(sched.end) : null;
-      const canTake =
-        !taken &&
-        set.status === "ACTIVE" &&
-        start &&
-        now >= start.getTime() &&
-        (!end || now <= end.getTime());
-
-      const isScheduled = start && now < start.getTime();
-
-      let statusLabel = taken
-        ? "Completed"
-        : canTake
-        ? "Available"
-        : isScheduled
-        ? "Scheduled"
-        : "Closed";
-
-      let btnHtml = canTake
-        ? `<button class="btn" onclick="startTest('${set._id}')">Start</button>`
-        : taken
-        ? `<span style="color:var(--muted);">Completed</span>`
-        : isScheduled
-        ? `<span style="color:var(--muted);">Not Yet Open</span>`
-        : `<span style="color:var(--muted);">Closed</span>`;
-
-      html += `<tr>
-        <td>${set.title}</td>
-        <td>${set.description ? set.description : "-"}</td>
-        <td>${start ? start.toLocaleString() : "-"}</td>
-        <td>${end ? end.toLocaleString() : "-"}</td>
-        <td>${statusLabel}</td>
-        <td>${btnHtml}</td>
-      </tr>`;
-
-      // Track soonest upcoming test (after now)
-      if (
-        set.status === "ACTIVE" &&
-        !taken &&
-        start &&
-        now < start.getTime() &&
-        (!soonest || start.getTime() < new Date(soonest.start).getTime())
-      ) {
-        soonest = { ...sched, examSet: set };
-      }
-    });
-
-    tbody.innerHTML =
-      html ||
-      `<tr><td colspan="6" style="text-align:center;color:#999;">
-        No available assessments at this time.</td></tr>`;
-
-    // Handle upcoming test display & countdown
-    if (
-      soonest &&
-      soonest.start &&
-      new Date(soonest.start).getTime() > now &&
-      soonest.examSet
-    ) {
-      nextTest = soonest.examSet;
-      nextTestStart = new Date(soonest.start).getTime();
-      document.getElementById("upcomingTest").innerText = soonest.examSet.title;
-      startCountdown();
-    } else if (uniqueSchedules.length > 0) {
-      // Show first ACTIVE test as current if no upcoming scheduled
-      const firstAvailable = uniqueSchedules.find(
-        (sched) => sched.examSet && sched.examSet.status === "ACTIVE"
-      );
-      if (firstAvailable && firstAvailable.examSet)
-        document.getElementById("upcomingTest").innerText =
-          firstAvailable.examSet.title;
-      else document.getElementById("upcomingTest").innerText = "None";
-      document.getElementById("testCountdown").innerText = "";
-    } else {
-      document.getElementById("upcomingTest").innerText = "None";
-      document.getElementById("testCountdown").innerText = "";
-    }
-  } catch (err) {
-    spinner.style.display = "none";
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#f25f5c;">
-      Failed to load assessments.</td></tr>`;
-    document.getElementById("upcomingTest").innerText = "None";
-    document.getElementById("testCountdown").innerText = "";
-  }
-}
-  
-    
   function startCountdown() {
   const countdownEl = document.getElementById("testCountdown");
   const testTitleEl = document.getElementById("upcomingTest");
@@ -1564,7 +1348,230 @@ async function downloadCertificate() {
     });
   }, 180);
   }
+// Place after all previous JS, or in existing <script> blocks
 
+// ===== PAGINATION GLOBALS =====
+const HISTORY_PAGE_SIZE = 5;
+const AVAILABLE_PAGE_SIZE = 5;
+let historyPage = 1;
+let availablePage = 1;
+let availableSchedulesCache = []; // stores uniqueSchedules (for Available Assessments)
+
+// ===== PAGINATION CONTROLS BUILDER =====
+function buildPagination(total, page, pageSize, onPageChangeFnName, targetDivId) {
+  const totalPages = Math.ceil(total / pageSize);
+  if (totalPages <= 1) {
+    document.getElementById(targetDivId).innerHTML = '';
+    return;
+  }
+  let html = '';
+  html += `<button onclick="${onPageChangeFnName}(1)" ${page === 1 ? 'disabled' : ''}>First</button>`;
+  html += `<button onclick="${onPageChangeFnName}(${page - 1})" ${page === 1 ? 'disabled' : ''}>&lt;</button>`;
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || Math.abs(page - i) <= 2) {
+      html += `<button onclick="${onPageChangeFnName}(${i})" ${page === i ? 'class="active"' : ''}>${i}</button>`;
+    } else if (i === page - 3 || i === page + 3) {
+      html += '<span style="margin:0 5px;">...</span>';
+    }
+  }
+  html += `<button onclick="${onPageChangeFnName}(${page + 1})" ${page === totalPages ? 'disabled' : ''}>&gt;</button>`;
+  html += `<button onclick="${onPageChangeFnName}(${totalPages})" ${page === totalPages ? 'disabled' : ''}>Last</button>`;
+  document.getElementById(targetDivId).innerHTML = html;
+}
+
+// ======= HISTORY TABLE PAGINATION =======
+function renderHistoryTablePage(page) {
+  if (!Array.isArray(resultsCache)) return;
+  historyPage = page;
+  const tbody = document.querySelector("#historyTable tbody");
+  const start = (page - 1) * HISTORY_PAGE_SIZE;
+  const end = start + HISTORY_PAGE_SIZE;
+
+  let html = "";
+  resultsCache.slice(start, end).forEach(r => {
+    const examTitle =
+      r.examSet && typeof r.examSet === "object"
+        ? (r.examSet.title || "")
+        : ""; // fallback to empty string, never show ID
+    html += `<tr>
+      <td>${examTitle}</td>
+      <td>${(new Date(r.submittedAt)).toLocaleString()}</td>
+      <td>${r.score ?? "-"}</td>
+      <td><button class="btn" onclick="openReviewTab('${r._id}')">Review</button></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html || "<tr><td colspan=4>No history</td></tr>";
+
+  // Pagination controls
+  buildPagination(resultsCache.length, page, HISTORY_PAGE_SIZE, 'renderHistoryTablePage', 'historyPagination');
+}
+
+// Override fetchHistory to use pagination
+async function fetchHistory() {
+  if (!student.id) return;
+  const resp = await fetch(API_URL + "results/user/" + student.id, { headers: { Authorization: "Bearer " + token } });
+  const results = await resp.json();
+  resultsCache = results;
+  renderHistoryTablePage(1); // Show first page
+  renderProgressList();
+  recommendTopics();
+}
+
+// ======= AVAILABLE ASSESSMENTS PAGINATION =======
+function renderAvailableTablePage(page) {
+  availablePage = page;
+  const tbody = document.querySelector("#availableTable tbody");
+  const start = (page - 1) * AVAILABLE_PAGE_SIZE;
+  const end = start + AVAILABLE_PAGE_SIZE;
+  let html = "";
+
+  if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
+      No available assessments at this time.</td></tr>`;
+    buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
+    return;
+  }
+
+  const now = Date.now();
+  availableSchedulesCache.slice(start, end).forEach((sched) => {
+    const set = sched.examSet;
+    if (!set || set.status !== "ACTIVE") return;
+    const taken = resultsCache.some((r) => r.examSet === set.title);
+    const startDt = sched.start ? new Date(sched.start) : null;
+    const endDt = sched.end ? new Date(sched.end) : null;
+    const canTake =
+      !taken &&
+      set.status === "ACTIVE" &&
+      startDt &&
+      now >= startDt.getTime() &&
+      (!endDt || now <= endDt.getTime());
+
+    const isScheduled = startDt && now < startDt.getTime();
+
+    let statusLabel = taken
+      ? "Completed"
+      : canTake
+      ? "Available"
+      : isScheduled
+      ? "Scheduled"
+      : "Closed";
+
+    let btnHtml = canTake
+      ? `<button class="btn" onclick="startTest('${set._id}')">Start</button>`
+      : taken
+      ? `<span style="color:var(--muted);">Completed</span>`
+      : isScheduled
+      ? `<span style="color:var(--muted);">Not Yet Open</span>`
+      : `<span style="color:var(--muted);">Closed</span>`;
+
+    html += `<tr>
+      <td>${set.title}</td>
+      <td>${set.description ? set.description : "-"}</td>
+      <td>${startDt ? startDt.toLocaleString() : "-"}</td>
+      <td>${endDt ? endDt.toLocaleString() : "-"}</td>
+      <td>${statusLabel}</td>
+      <td>${btnHtml}</td>
+    </tr>`;
+  });
+
+  tbody.innerHTML = html || `<tr><td colspan="6" style="text-align:center;color:#999;">
+    No available assessments at this time.</td></tr>`;
+
+  buildPagination(availableSchedulesCache.length, page, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
+}
+
+// Override fetchAvailableTests to cache schedules and use pagination
+async function fetchAvailableTests() {
+  const spinner = document.getElementById("testSpinner");
+  const tbody = document.querySelector("#availableTable tbody");
+  spinner.style.display = "block";
+  tbody.innerHTML = "";
+
+  try {
+    if (!student.faculty || !student.department) {
+      spinner.style.display = "none";
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
+        Please complete your profile to see available assessments.</td></tr>`;
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+      buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
+      return;
+    }
+
+    const resp = await fetch(
+      API_URL +
+        `schedules?faculty=${student.facultyId}&department=${student.departmentId}`,
+      { headers: { Authorization: "Bearer " + token } }
+    );
+    const schedules = await resp.json();
+    spinner.style.display = "none";
+
+    // Remove Duplicate Schedules, use examSet._id or title
+    const uniqueSchedules = [];
+    const seenExamSetIds = new Set();
+    for (const sched of schedules) {
+      const set = sched.examSet;
+      if (!set) continue;
+      const key = set._id || set.title;
+      if (!key || seenExamSetIds.has(key)) continue;
+      seenExamSetIds.add(key);
+      uniqueSchedules.push(sched);
+    }
+    availableSchedulesCache = uniqueSchedules;
+    renderAvailableTablePage(1); // Show first page
+
+    // Handle upcoming test display & countdown (reuse as in your original code)
+    let soonest = null;
+    const now = Date.now();
+    uniqueSchedules.forEach((sched) => {
+      const set = sched.examSet;
+      if (!set || set.status !== "ACTIVE") return;
+      const taken = resultsCache.some((r) => r.examSet === set.title);
+      const start = sched.start ? new Date(sched.start) : null;
+      if (
+        set.status === "ACTIVE" &&
+        !taken &&
+        start &&
+        now < start.getTime() &&
+        (!soonest || start.getTime() < new Date(soonest.start).getTime())
+      ) {
+        soonest = { ...sched, examSet: set };
+      }
+    });
+
+    if (
+      soonest &&
+      soonest.start &&
+      new Date(soonest.start).getTime() > now &&
+      soonest.examSet
+    ) {
+      nextTest = soonest.examSet;
+      nextTestStart = new Date(soonest.start).getTime();
+      document.getElementById("upcomingTest").innerText = soonest.examSet.title;
+      startCountdown();
+    } else if (uniqueSchedules.length > 0) {
+      const firstAvailable = uniqueSchedules.find(
+        (sched) => sched.examSet && sched.examSet.status === "ACTIVE"
+      );
+      if (firstAvailable && firstAvailable.examSet)
+        document.getElementById("upcomingTest").innerText =
+          firstAvailable.examSet.title;
+      else document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    } else {
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    }
+
+  } catch (err) {
+    spinner.style.display = "none";
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#f25f5c;">
+      Failed to load assessments.</td></tr>`;
+    document.getElementById("upcomingTest").innerText = "None";
+    document.getElementById("testCountdown").innerText = "";
+    buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
+  }
+}
 
 // ==============================
 // Leadership Scoreboard Feature
