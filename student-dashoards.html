@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Custom styles for enhanced visuals */
         .sidebar {
             transition: transform 0.3s ease-in-out, background 0.3s ease;
             background: linear-gradient(180deg, #1e3a8a, #3b82f6);
@@ -127,16 +87,20 @@
                 transform: translateX(0);
             }
         }
+        /* Focus trap for modal */
+        .focus-trap {
+            outline: 2px solid #6366f1;
+        }
     </style>
 </head>
 <body class="bg-gradient font-sans min-h-screen">
     <!-- Mobile Menu Button -->
-    <button id="menu-toggle" class="md:hidden fixed top-4 left-4 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700">
+    <button id="menu-toggle" class="md:hidden fixed top-4 left-4 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700" aria-label="Open Menu">
         <i class="fas fa-bars text-lg"></i>
     </button>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-72 z-index-1000 bg-blue-900 text-white p-8 md:static md:translate-x-0 shadow-2xl">
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-72 bg-blue-900 text-white p-8 md:static md:translate-x-0 shadow-2xl" aria-label="Sidebar Navigation">
         <div class="mb-10">
             <h1 class="text-3xl font-extrabold tracking-tight">EduHub</h1>
             <p class="text-sm text-blue-200">Student Dashboard</p>
@@ -226,12 +190,12 @@
                         <div>
                             <p class="font-medium text-gray-700">Marketplace</p>
                             <p class="text-gray-600 text-sm">Explore study materials and student essentials.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Visit Marketplace</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/marketplace', '_blank')">Visit Marketplace</button>
                         </div>
                         <div>
                             <p class="font-medium text-gray-700">Blog Home</p>
                             <p class="text-gray-600 text-sm">Read tips, tricks, and student stories.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Visit Blog</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/blog', '_blank')">Visit Blog</button>
                         </div>
                     </div>
                 </section>
@@ -432,12 +396,12 @@
                         <div>
                             <p class="font-medium text-gray-700">Calculus Textbook</p>
                             <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Download</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
                         </div>
                         <div>
                             <p class="font-medium text-gray-700">Physics Video Series</p>
                             <p class="text-gray-600 text-sm">Interactive lectures on mechanics.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Watch Now</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Now</button>
                         </div>
                     </div>
                 </section>
@@ -451,7 +415,7 @@
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Become a Marketer or Blogger!</h3>
                     <p class="text-gray-600 text-sm">Share your knowledge, sell study materials, or promote products to earn rewards.</p>
-                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Get Started</button>
+                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/become-contributor', '_blank')">Get Started</button>
                 </section>
             </div>
         </section>
@@ -466,7 +430,7 @@
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Inbox</h3>
                     <div class="space-y-4">
-                        <div class="border-b pb-2 cursor-pointer message-item" data-sender="Dr. Smith" data-conversation='[
+                        <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Dr. Smith" data-conversation='[
                             {"sender": "Dr. Smith", "message": "Great work on your recent assignment! Please review my feedback.", "time": "Oct 22, 2025, 3:00 PM"},
                             {"sender": "Temi Adebayo", "message": "Thank you, Dr. Smith! I’ll review it today.", "time": "Oct 22, 2025, 3:15 PM"}
                         ]'>
@@ -474,7 +438,7 @@
                             <p class="text-gray-600 text-sm">Feedback on your recent assignment...</p>
                             <p class="text-xs text-gray-500">Oct 22, 2025, 3:00 PM</p>
                         </div>
-                        <div class="border-b pb-2 cursor-pointer message-item" data-sender="Study Group" data-conversation='[
+                        <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Study Group" data-conversation='[
                             {"sender": "Sarah", "message": "Hey everyone, let’s meet for the CS301 project this Friday.", "time": "Oct 20, 2025, 10:00 AM"},
                             {"sender": "Temi Adebayo", "message": "Sounds good! What time works?", "time": "Oct 20, 2025, 10:10 AM"},
                             {"sender": "John", "message": "How about 2 PM?", "time": "Oct 20, 2025, 10:15 AM"}
@@ -488,13 +452,13 @@
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Send a Message</h3>
                     <div class="space-y-4">
-                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
                             <option>Select Recipient</option>
                             <option>Dr. Smith</option>
                             <option>Study Group</option>
                             <option>Academic Advisor</option>
                         </select>
-                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..."></textarea>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
                         <div class="flex space-x-3">
                             <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
                             <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
@@ -559,24 +523,22 @@
             <section class="bg-white rounded-2xl shadow-xl p-6 card text-center">
                 <h3 class="text-xl font-semibold text-indigo-900 mb-4">Are you sure you want to log out?</h3>
                 <p class="text-gray-600 text-sm mb-6">You will be signed out of your account and need to log in again to access your dashboard.</p>
-                <button class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 glow-button">Confirm Logout</button>
+                <button class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 glow-button" id="confirm-logout">Confirm Logout</button>
             </section>
         </section>
 
         <!-- Message Modal -->
-        <div id="message-modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50">
-            <div id="message-modal" class="modal bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-auto mt-20 p-6">
+        <div id="message-modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50" aria-modal="true" tabindex="-1">
+            <div id="message-modal" class="modal bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-auto mt-20 p-6" role="dialog" aria-labelledby="modal-title">
                 <div class="flex justify-between items-center mb-4">
                     <h3 id="modal-title" class="text-xl font-semibold text-indigo-900">Conversation</h3>
-                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700" aria-label="Close Modal">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                <div id="modal-conversation" class="max-h-96 overflow-y-auto space-y-4 mb-4 p-4 bg-gray-50 rounded-lg">
-                    <!-- Conversation messages will be populated here -->
-                </div>
+                <div id="modal-conversation" class="max-h-96 overflow-y-auto space-y-4 mb-4 p-4 bg-gray-50 rounded-lg"></div>
                 <div class="space-y-4">
-                    <textarea id="modal-message-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="3" placeholder="Type your reply..."></textarea>
+                    <textarea id="modal-message-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="3" placeholder="Type your reply..." aria-label="Reply message"></textarea>
                     <div class="flex justify-end space-x-3">
                         <button id="modal-cancel" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
                         <button id="modal-send" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
@@ -601,12 +563,28 @@
         const closeModalButton = document.getElementById('close-modal');
         const modalCancelButton = document.getElementById('modal-cancel');
         const modalSendButton = document.getElementById('modal-send');
+        const confirmLogoutButton = document.getElementById('confirm-logout');
+
+        // Remember last tab using localStorage
+        const TAB_STORAGE_KEY = 'student_dashboard_active_tab';
+
+        function setActiveTab(tabId) {
+            // Remove active class from all tabs and contents
+            navLinks.forEach(l => l.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            // Add active class to clicked link and corresponding content
+            const link = Array.from(navLinks).find(l => l.getAttribute('data-tab') === tabId);
+            if (link) link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
+            document.getElementById(tabId).classList.add('active');
+            // Store in localStorage and update hash
+            localStorage.setItem(TAB_STORAGE_KEY, tabId);
+            location.hash = tabId;
+        }
 
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('open');
         });
 
-        // Close sidebar when clicking outside on mobile
         document.addEventListener('click', (e) => {
             if (window.innerWidth < 768 && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
                 sidebar.classList.remove('open');
@@ -618,32 +596,72 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const tabId = link.getAttribute('data-tab');
-                
-                // Remove active class from all tabs and contents
-                navLinks.forEach(l => l.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg'));
-                tabContents.forEach(content => content.classList.remove('active'));
-
-                // Add active class to clicked link and corresponding content
-                link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
-                document.getElementById(tabId).classList.add('active');
-
-                // Close sidebar on mobile after clicking
+                setActiveTab(tabId);
                 if (window.innerWidth < 768) {
                     sidebar.classList.remove('open');
                 }
             });
         });
 
-        // Message modal handling
+        // On load, set tab from hash or localStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            let tabId = location.hash.replace('#', '') || localStorage.getItem(TAB_STORAGE_KEY) || 'dashboard';
+            if (!document.getElementById(tabId)) tabId = 'dashboard';
+            setActiveTab(tabId);
+        });
+
+        window.addEventListener('hashchange', () => {
+            let tabId = location.hash.replace('#', '') || 'dashboard';
+            if (document.getElementById(tabId)) setActiveTab(tabId);
+        });
+
+        // Message modal handling (focus trap for accessibility)
+        let lastFocusedElement = null;
+
+        function openModal() {
+            lastFocusedElement = document.activeElement;
+            modalOverlay.classList.add('open');
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            // Focus on input
+            setTimeout(() => {
+                modalMessageInput.focus();
+                modal.classList.add('focus-trap');
+            }, 100);
+            // Trap focus inside modal
+            document.addEventListener('keydown', trapTabKey);
+        }
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.classList.remove('focus-trap');
+            document.removeEventListener('keydown', trapTabKey);
+            if (lastFocusedElement) lastFocusedElement.focus();
+        }
+        function trapTabKey(e) {
+            if (e.key !== 'Tab') return;
+            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    last.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    first.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+
         messageItems.forEach(item => {
             item.addEventListener('click', () => {
                 const sender = item.getAttribute('data-sender');
                 const conversation = JSON.parse(item.getAttribute('data-conversation'));
-
-                // Set modal title
                 modalTitle.textContent = `Conversation with ${sender}`;
-
-                // Populate conversation
                 modalConversation.innerHTML = '';
                 conversation.forEach(msg => {
                     const isUser = msg.sender === 'Temi Adebayo';
@@ -656,29 +674,23 @@
                     `;
                     modalConversation.appendChild(messageDiv);
                 });
-
-                // Open modal
-                modalOverlay.classList.add('open');
-                modal.classList.add('open');
                 modalMessageInput.value = '';
-                modalMessageInput.focus();
+                openModal();
+            });
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    item.click();
+                }
             });
         });
-
-        // Close modal
-        const closeModal = () => {
-            modalOverlay.classList.remove('open');
-            modal.classList.remove('open');
-        };
 
         closeModalButton.addEventListener('click', closeModal);
         modalCancelButton.addEventListener('click', closeModal);
 
-        // Send message (simulated)
         modalSendButton.addEventListener('click', () => {
             const message = modalMessageInput.value.trim();
             if (message) {
-                const sender = modalTitle.textContent.replace('Conversation with ', '');
                 const time = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
                 const messageDiv = document.createElement('div');
                 messageDiv.className = 'p-3 rounded-lg bg-indigo-100 ml-auto max-w-xs';
@@ -690,14 +702,25 @@
                 modalConversation.appendChild(messageDiv);
                 modalConversation.scrollTop = modalConversation.scrollHeight;
                 modalMessageInput.value = '';
+                modalMessageInput.focus();
+            }
+        });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        // Accessibility: ESC to close modal
+        document.addEventListener('keydown', (e) => {
+            if (modalOverlay.classList.contains('open') && e.key === 'Escape') {
+                closeModal();
             }
         });
 
-        // Close modal on overlay click
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
+        // Logout logic (simulate logout)
+        confirmLogoutButton.addEventListener('click', () => {
+            // Simulate logout: clear localStorage, redirect to login page
+            localStorage.clear();
+            window.location.href = '/login'; // Replace with actual login page URL
         });
     </script>
 </body>
