@@ -1,3 +1,4 @@
+
 // =================== CONFIG ===================
 const API_URL = "https://examguide.onrender.com/api/";
 const token = localStorage.getItem("token");
@@ -41,139 +42,6 @@ function setSidebarActive(tabId) {
 function formatDate(dt) {
   if (!dt) return '-';
   return new Date(dt).toLocaleString();
-}
-
-// ============ PROFILE COMPLETENESS MODAL ==============
-function isProfileIncomplete(student) {
-  // Adjust required fields as needed!
-  return (
-    !student.fullname ||
-    !student.username ||
-    !student.email ||
-    !student.studentId ||
-    !student.level ||
-    !student.department ||
-    !student.faculty ||
-    !student.phone
-  );
-}
-
-function showProfileModal(forceValues = {}) {
-  // Remove existing modal if any
-  const prevModal = document.getElementById("profileUpdateModal");
-  if (prevModal) prevModal.remove();
-
-  let modal = document.createElement('div');
-  modal.id = "profileUpdateModal";
-  modal.style = `
-    position: fixed; z-index: 9999; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
-  `;
-  modal.innerHTML = `
-    <div style="background:#fff;max-width:98vw;width:400px;padding:30px 20px;border-radius:12px;box-shadow:0 10px 32px #0002;">
-      <h2 style="font-size:1.3em;font-weight:700;margin-bottom:10px;color:#2d3b57">Complete Your Profile</h2>
-      <div style="font-size:1em;color:#444;margin-bottom:18px;">Some important information is missing. Please update your details below to continue using the platform.</div>
-      <form id="profileUpdateForm">
-        <div style="margin-bottom:10px;">
-          <label>Full Name</label>
-          <input type="text" id="modal_fullname" class="modal-input" style="width:100%;" value="${forceValues.fullname||student.fullname||""}" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label>Username</label>
-          <input type="text" id="modal_username" class="modal-input" style="width:100%;" value="${forceValues.username||student.username||""}" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label>Email</label>
-          <input type="email" id="modal_email" class="modal-input" style="width:100%;" value="${forceValues.email||student.email||""}" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label>Phone</label>
-          <input type="text" id="modal_phone" class="modal-input" style="width:100%;" value="${forceValues.phone||student.phone||""}" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label>Student ID</label>
-          <input type="text" id="modal_studentId" class="modal-input" style="width:100%;" value="${forceValues.studentId||student.studentId||""}" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label>Year/Level</label>
-          <input type="text" id="modal_level" class="modal-input" style="width:100%;" value="${forceValues.level||student.level||""}" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label>Faculty</label>
-          <input type="text" id="modal_faculty" class="modal-input" style="width:100%;" value="${forceValues.faculty||student.faculty||""}" required />
-        </div>
-        <div style="margin-bottom:14px;">
-          <label>Department</label>
-          <input type="text" id="modal_department" class="modal-input" style="width:100%;" value="${forceValues.department||student.department||""}" required />
-        </div>
-        <button type="submit" class="btn" style="width:100%;background:#3a86ff;color:#fff;font-weight:700;">Save Profile</button>
-      </form>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  // Prevent closing modal by click
-  modal.addEventListener("click", function(e){
-    if (e.target === modal) {
-      // Don't close; require completion
-    }
-  });
-
-  // Profile update logic with correct endpoint and all fields
-  document.getElementById("profileUpdateForm").onsubmit = async function(e){
-    e.preventDefault();
-
-    const fullname = document.getElementById("modal_fullname").value.trim();
-    const username = document.getElementById("modal_username").value.trim();
-    const email = document.getElementById("modal_email").value.trim();
-    const phone = document.getElementById("modal_phone").value.trim();
-    const studentId = document.getElementById("modal_studentId").value.trim();
-    const level = document.getElementById("modal_level").value.trim();
-    const faculty = document.getElementById("modal_faculty").value.trim();
-    const department = document.getElementById("modal_department").value.trim();
-
-    // Ensure all fields are filled
-    if (!fullname || !username || !email || !phone || !studentId || !level || !faculty || !department) {
-      alert("Please fill all fields.");
-      return;
-    }
-
-    const payload = {
-      fullname,
-      username,
-      email,
-      phone,
-      studentId,
-      level,
-      faculty,
-      department
-    };
-
-    try {
-      const resp = await fetch(API_URL + "superadmin/me", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + (localStorage.getItem("token") || "")
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!resp.ok) {
-        const err = await resp.json();
-        alert(err.message || "Failed to update profile.");
-        return;
-      }
-
-      alert("Profile updated!");
-      document.body.removeChild(modal);
-      // Refetch user profile and rerun profile fill
-      if (typeof fetchProfile === "function") {
-        await fetchProfile();
-      }
-    } catch (err) {
-      alert("Error updating profile. Please try again.");
-    }
-  }
 }
 
 // ================= SIDEBAR & NAVIGATION ================
@@ -272,13 +140,7 @@ async function fetchProfile() {
   document.getElementById("editName").value = student.username || '';
   document.getElementById("editEmail").value = student.email || '';
   document.getElementById("editPhone").value = student.phone || '';
-
-  // Show forced modal if profile is incomplete
-  if (isProfileIncomplete(student)) {
-    showProfileModal();
-  }
 }
-
 
 // =================== DASHBOARD PROGRESS & LEADERBOARD ===================
 function renderProgressCircles() {
@@ -840,7 +702,7 @@ async function initDashboard() {
   if (!token) return window.location.href = "/login";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
-  await fetchProfile(); // This now handles modal if incomplete
+  await fetchProfile();
   await fetchHistory();
   await fetchLeaderboard();
   renderLeaderboard();
@@ -851,5 +713,3 @@ async function initDashboard() {
 }
 
 window.addEventListener("DOMContentLoaded", initDashboard);
-
-// ...rest of your script unchanged, no need to duplicate all functions again
