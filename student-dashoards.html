@@ -10,6 +10,7 @@
         .sidebar {
             transition: transform 0.3s ease-in-out, background 0.3s ease;
             background: linear-gradient(180deg, #1e3a8a, #3b82f6);
+            z-index: 50;
         }
         .sidebar.open {
             transform: translateX(0);
@@ -87,7 +88,6 @@
                 transform: translateX(0);
             }
         }
-        /* Focus trap for modal */
         .focus-trap {
             outline: 2px solid #6366f1;
         }
@@ -100,7 +100,7 @@
     </button>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-72 bg-blue-900 text-white p-8 md:static md:translate-x-0 shadow-2xl" aria-label="Sidebar Navigation">
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-72 bg-blue-900 text-white p-8 md:static md:translate-x-0 shadow-2xl z-50" aria-label="Sidebar Navigation">
         <div class="mb-10">
             <h1 class="text-3xl font-extrabold tracking-tight">EduHub</h1>
             <p class="text-sm text-blue-200">Student Dashboard</p>
@@ -117,6 +117,8 @@
             </ul>
         </nav>
     </aside>
+    <!-- Sidebar overlay for mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 hidden md:hidden"></div>
 
     <!-- Main Content -->
     <main class="md:ml-72 p-8 lg:p-12 min-h-screen">
@@ -547,9 +549,9 @@
             </div>
         </div>
     </main>
-
     <script>
-        // Mobile menu toggle
+        // Sidebar overlay logic
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -569,29 +571,32 @@
         const TAB_STORAGE_KEY = 'student_dashboard_active_tab';
 
         function setActiveTab(tabId) {
-            // Remove active class from all tabs and contents
             navLinks.forEach(l => l.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg'));
             tabContents.forEach(content => content.classList.remove('active'));
-            // Add active class to clicked link and corresponding content
             const link = Array.from(navLinks).find(l => l.getAttribute('data-tab') === tabId);
             if (link) link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
             document.getElementById(tabId).classList.add('active');
-            // Store in localStorage and update hash
             localStorage.setItem(TAB_STORAGE_KEY, tabId);
             location.hash = tabId;
         }
 
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth < 768 && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-                sidebar.classList.remove('open');
+            if (sidebar.classList.contains('open')) {
+                sidebarOverlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                sidebarOverlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
             }
         });
 
-        // Tab switching
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -599,11 +604,12 @@
                 setActiveTab(tabId);
                 if (window.innerWidth < 768) {
                     sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
                 }
             });
         });
 
-        // On load, set tab from hash or localStorage
         window.addEventListener('DOMContentLoaded', () => {
             let tabId = location.hash.replace('#', '') || localStorage.getItem(TAB_STORAGE_KEY) || 'dashboard';
             if (!document.getElementById(tabId)) tabId = 'dashboard';
@@ -615,20 +621,17 @@
             if (document.getElementById(tabId)) setActiveTab(tabId);
         });
 
-        // Message modal handling (focus trap for accessibility)
+        // Message modal logic
         let lastFocusedElement = null;
-
         function openModal() {
             lastFocusedElement = document.activeElement;
             modalOverlay.classList.add('open');
             modal.classList.add('open');
             modal.setAttribute('aria-hidden', 'false');
-            // Focus on input
             setTimeout(() => {
                 modalMessageInput.focus();
                 modal.classList.add('focus-trap');
             }, 100);
-            // Trap focus inside modal
             document.addEventListener('keydown', trapTabKey);
         }
         function closeModal() {
@@ -709,18 +712,15 @@
             if (e.target === modalOverlay) closeModal();
         });
 
-        // Accessibility: ESC to close modal
         document.addEventListener('keydown', (e) => {
             if (modalOverlay.classList.contains('open') && e.key === 'Escape') {
                 closeModal();
             }
         });
 
-        // Logout logic (simulate logout)
         confirmLogoutButton.addEventListener('click', () => {
-            // Simulate logout: clear localStorage, redirect to login page
             localStorage.clear();
-            window.location.href = '/login'; // Replace with actual login page URL
+            window.location.href = '/login'; // Replace with your actual login page URL
         });
     </script>
 </body>
