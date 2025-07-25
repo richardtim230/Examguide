@@ -92,80 +92,149 @@
         .focus-trap {
             outline: 2px solid #6366f1;
         }
-        .dashboard-table-title {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-        .dashboard-table {
+        /* Custom styles for tables and leaderboard */
+        .result-table, .test-table {
             width: 100%;
+            border-collapse: separate;
             border-spacing: 0;
             background: #fff;
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             box-shadow: 0 2px 16px #3a86ff18;
+            margin: 14px 0 22px 0;
+            font-size: 1.06rem;
         }
-        .dashboard-table th, .dashboard-table td {
-            padding: 12px 16px;
-            font-size: 1rem;
-        }
-        .dashboard-table th {
-            background: #f1f5f9;
-            color: #3b3b4f;
-            font-weight: 700;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .dashboard-table tbody tr:not(:last-child) {
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .dashboard-table td {
-            color: #23366e;
-            background: #fff;
-        }
-        .dashboard-table tr:hover td {
-            background: #f6f9fe;
-        }
-        .dashboard-table .action-btn {
-            padding: 7px 18px;
-            font-size: 0.97rem;
+        .result-table thead tr, .test-table thead tr {
             background: linear-gradient(90deg, #3a86ff 60%, #4cc9f0 100%);
             color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .result-table th, .result-table td,
+        .test-table th, .test-table td {
+            padding: 11px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e3e8ee;
+        }
+        .result-table th:last-child, .result-table td:last-child,
+        .test-table th:last-child, .test-table td:last-child {
+            text-align: center;
+        }
+        .result-table tbody tr, .test-table tbody tr {
             transition: background 0.18s;
-            box-shadow: 0 2px 7px #3a86ff22;
         }
-        .dashboard-table .action-btn:hover {
-            background: linear-gradient(90deg, #4cc9f0 0%, #3a86ff 100%);
+        .result-table tbody tr:nth-child(even),
+        .test-table tbody tr:nth-child(even) {
+            background: #f7faff;
         }
-        .table-section {
+        .result-table tbody tr:hover,
+        .test-table tbody tr:hover {
+            background: #e3f0ff;
+        }
+        .result-table td, .test-table td {
+            color: #23366e;
+        }
+        .result-table th:first-child, .result-table td:first-child,
+        .test-table th:first-child, .test-table td:first-child {
+            border-top-left-radius: 12px;
+        }
+        .result-table th:last-child, .result-table td:last-child,
+        .test-table th:last-child, .test-table td:last-child {
+            border-top-right-radius: 12px;
+        }
+        .table-pagination {
+            text-align: center;
+            margin: 12px 0 0 0;
+            user-select: none;
+        }
+        .table-pagination button {
+            margin: 0 5px;
+            padding: 4px 13px;
+            font-size: 1em;
+            background: #f7faff;
+            color: #3a86ff;
+            border: 1px solid #3a86ff44;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.13s;
+        }
+        .table-pagination button.active,
+        .table-pagination button:hover {
+            background: #3a86ff;
+            color: #fff;
+        }
+        .table-pagination button[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #e3e8ee !important;
+            color: #888 !important;
+        }
+        .scoreboard-container {
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 16px #3a86ff18;
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            margin-bottom: 2rem;
+            border-radius: 18px;
+            box-shadow: 0 2px 18px #3a86ff18;
+            padding: 24px 0 18px 0;
+            margin: 28px auto 18px auto;
+            max-width: 440px;
         }
-        .dashboard-progress-list {
-            margin-top: 1.5rem;
-        }
-        .dashboard-progress-list-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-        }
-        .dashboard-progress-list-item:last-child {
-            border-bottom: none;
-        }
-        .dashboard-progress-score {
+        .scoreboard-title {
+            text-align: center;
+            font-size: 1.25rem;
             font-weight: bold;
-            color: #2563eb;
+            color: #23366e;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
+        .scoreboard-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            gap: 16px;
+        }
+        .scoreboard-item {
+            background: #f7faff;
+            border-radius: 14px;
+            padding: 10px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px #3a86ff11;
+            min-width: 90px;
+            position: relative;
+        }
+        .scoreboard-avatar {
+            width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin-bottom: 4px;
+            border: 2px solid #3a86ff33;
+        }
+        .scoreboard-name { font-size: 1.07em; font-weight: 600; color: #23366e;}
+        .scoreboard-score { font-size: 1.01em; color: #455c8a; margin-top: 3px;}
+        .scoreboard-badge { display: inline-block; font-size: 1.36em; margin-top: 6px; }
+        .badge-rank-1 { color: #f7b500; }
+        .badge-rank-2 { color: #a8b0b8; }
+        .badge-rank-3 { color: #c47c39; }
+        /* Responsive */
+        @media (max-width: 800px) {
+            .result-table, .test-table {
+                font-size: 0.99rem;
+                min-width: 390px;
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+            }
+            .scoreboard-container {
+                max-width: 99vw;
+                padding: 10px 0 10px 0;
+            }
+        }
+        /* Loader style */
+        #preloaderSpinner {
+            position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;
+            background:rgba(255,255,255,0.97);display:flex;align-items:center;justify-content:center;
+            transition:opacity 0.3s;
+        }
+        #preloaderSpinner .spinner {
+            display:inline-block;width:80px;height:80px;border:8px solid #e3e8ee;
+            border-top:8px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gradient font-sans min-h-screen">
@@ -271,35 +340,40 @@
                 <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Available Mock Tests as Cards, with tabular content inside the card -->
+                <!-- Available Mock Tests -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-2">
-                    <div class="dashboard-table-title">Available Mock Tests</div>
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Mock Tests</h3>
                     <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
                         <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="dashboard-table" id="availableTable">
+                    <div class="table-responsive">
+                        <table class="test-table" id="availableTable">
                             <thead>
                                 <tr>
-                                    <th>Test Name</th>
+                                    <th>Test</th>
                                     <th>Description</th>
-                                    <th>Questions</th>
-                                    <th>Duration</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                              <!-- Populated by JS -->
-                            </tbody>
+                            <tbody></tbody>
                         </table>
+                        <div id="availablePagination" class="table-pagination"></div>
                     </div>
                 </section>
-                <!-- Recent Scores -->
+                <!-- Progress Overview -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <div class="dashboard-table-title">Recent Scores</div>
-                    <div class="dashboard-progress-list" id="progressList"></div>
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Overview</h3>
+                    <div id="progressList" style="max-height:110px;overflow-y:auto;"></div>
                 </section>
+            </div>
+            <!-- Upcoming Test Countdown -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 card mt-8">
+                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Upcoming Test</h3>
+                <div class="card-value" id="upcomingTest">None</div>
+                <div id="testCountdown" style="font-size:1.01rem; color:var(--primary);font-weight:600;"></div>
             </div>
         </section>
 
@@ -309,54 +383,23 @@
                 <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
                 <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
             </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Currently Scheduled Exam -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <div class="dashboard-table-title">Currently Scheduled Exam</div>
-                    <div id="currentExamCard" class="space-y-2">
-                        <!-- Populated by JS -->
-                    </div>
-                </section>
-                <!-- All Active Exams -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <div class="dashboard-table-title">All Active Exams</div>
-                    <div class="overflow-x-auto">
-                        <table class="dashboard-table" id="activeExamsTable">
-                            <thead>
-                                <tr>
-                                    <th>Exam Name</th>
-                                    <th>Description</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <!-- Exams History -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-2">
-                    <div class="dashboard-table-title">Exams History</div>
-                    <div class="overflow-x-auto">
-                        <table class="dashboard-table" id="examsHistoryTable">
-                            <thead>
-                                <tr>
-                                    <th>Exam Name</th>
-                                    <th>Description</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+            <!-- Assessment Performance Table -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 card">
+                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Assessment Performance & Reviews</h3>
+                <div class="result-table-container">
+                  <table class="result-table" id="historyTable">
+                    <thead>
+                      <tr>
+                        <th>Test</th>
+                        <th>Date</th>
+                        <th>Score</th>
+                        <th>Review</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <div id="historyPagination" class="table-pagination"></div>
+                </div>
             </div>
         </section>
 
@@ -495,7 +538,7 @@
         <!-- Modal root for dynamic popups -->
         <div id="modalRoot"></div>
     </main>
-    <script src="student_dashboard.js"></script>
+<script src="student_dashboard.js"></script>
  
 </body>
 </html>
