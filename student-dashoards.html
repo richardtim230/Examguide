@@ -346,6 +346,24 @@
                     <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
                         <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
                     </div>
+                    <!-- Added: Static sample tests for feature parity -->
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <p class="font-medium text-gray-700">Mathematics Mock Test</p>
+                            <p class="text-gray-600 text-sm">Covers algebra, calculus, and geometry. 50 questions, 60 minutes.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Physics Mock Test</p>
+                            <p class="text-gray-600 text-sm">Mechanics and thermodynamics focus. 40 questions, 50 minutes.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Chemistry Mock Test</p>
+                            <p class="text-gray-600 text-sm">Organic and inorganic chemistry. 45 questions, 55 minutes.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="test-table" id="availableTable">
                             <thead>
@@ -363,10 +381,50 @@
                         <div id="availablePagination" class="table-pagination"></div>
                     </div>
                 </section>
+                <!-- Recent Scores - Added for parity -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recent Scores</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-900">
+                                    <th class="p-3 rounded-tl-lg">Test Name</th>
+                                    <th class="p-3">Date</th>
+                                    <th class="p-3 rounded-tr-lg">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Mathematics Mock</td>
+                                    <td class="p-3">Oct 15, 2025</td>
+                                    <td class="p-3">82%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Physics Mock</td>
+                                    <td class="p-3">Oct 10, 2025</td>
+                                    <td class="p-3">76%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
                 <!-- Progress Overview -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Overview</h3>
-                    <div id="progressList" style="max-height:110px;overflow-y:auto;"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Mathematics</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Physics</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
             <!-- Upcoming Test Countdown -->
@@ -383,7 +441,84 @@
                 <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
                 <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
             </header>
-            <!-- Assessment Performance Table -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Currently Scheduled Exam - Added -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Currently Scheduled Exam</h3>
+                    <p class="font-medium text-gray-700">Chemistry 201</p>
+                    <p class="text-gray-600 text-sm">Organic chemistry fundamentals</p>
+                    <p class="text-gray-600 text-sm">Start: Nov 5, 2025 10:00 AM | End: Nov 5, 2025 12:00 PM</p>
+                    <p class="text-gray-600 text-sm">Location: Lecture Theatre A</p>
+                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Prepare Now</button>
+                </section>
+                <!-- All Active Exams - Added -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 lg:col-span-2">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">All Active Exams</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-900">
+                                    <th class="p-3 rounded-tl-lg">Exam Name</th>
+                                    <th class="p-3">Description</th>
+                                    <th class="p-3">Start Time</th>
+                                    <th class="p-3">End Time</th>
+                                    <th class="p-3 rounded-tr-lg">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Computer Science 301</td>
+                                    <td class="p-3">Data structures and algorithms</td>
+                                    <td class="p-3">Nov 10, 2025 2:00 PM</td>
+                                    <td class="p-3">Nov 10, 2025 4:00 PM</td>
+                                    <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start</button></td>
+                                </tr>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Mathematics 202</td>
+                                    <td class="p-3">Advanced calculus</td>
+                                    <td class="p-3">Nov 12, 2025 9:00 AM</td>
+                                    <td class="p-3">Nov 12, 2025 11:00 AM</td>
+                                    <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!-- Exams History - Added -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 lg:col-span-2">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Exams History</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-900">
+                                    <th class="p-3 rounded-tl-lg">Exam Name</th>
+                                    <th class="p-3">Description</th>
+                                    <th class="p-3">Start Time</th>
+                                    <th class="p-3">End Time</th>
+                                    <th class="p-3 rounded-tr-lg">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Mathematics 101</td>
+                                    <td class="p-3">Introductory calculus exam</td>
+                                    <td class="p-3">Sep 15, 2025 10:00 AM</td>
+                                    <td class="p-3">Sep 15, 2025 12:00 PM</td>
+                                    <td class="p-3">85%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Physics 102</td>
+                                    <td class="p-3">Mechanics and thermodynamics</td>
+                                    <td class="p-3">Sep 10, 2025 2:00 PM</td>
+                                    <td class="p-3">Sep 10, 2025 4:00 PM</td>
+                                    <td class="p-3">78%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            <!-- Assessment Performance Table (unchanged) -->
             <div class="bg-white rounded-2xl shadow-xl p-6 card">
                 <h3 class="text-xl font-semibold text-indigo-900 mb-4">Assessment Performance & Reviews</h3>
                 <div class="result-table-container">
@@ -538,7 +673,6 @@
         <!-- Modal root for dynamic popups -->
         <div id="modalRoot"></div>
     </main>
-<script src="student_dashboard.js"></script>
- 
+<!-- script src="student_dashboard.js"></script (excluded as requested) -->
 </body>
 </html>
