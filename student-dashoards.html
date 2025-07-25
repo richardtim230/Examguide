@@ -121,421 +121,414 @@
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 hidden md:hidden"></div>
 
     <!-- Main Content -->
-    <main class="md:ml-72 p-4 lg:p-8 min-h-screen">
+    <main class="md:ml-72 p-8 lg:p-12 min-h-screen">
         <!-- Dashboard Tab -->
         <section id="dashboard" class="tab-content active">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Welcome, Temi!</h2>
-                    <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full justify-items-stretch">
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Student Details</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <p><strong>Name:</strong> Temi Adebayo</p>
-                                <p><strong>Student ID:</strong> OAU123456</p>
-                                <p><strong>Department:</strong> Computer Science</p>
-                            </div>
-                            <div class="space-y-2">
-                                <p><strong>Year:</strong> 300 Level</p>
-                                <p><strong>Email:</strong> temi.adebayo@oau.edu</p>
-                                <p><strong>Phone:</strong> +234 123 456 7890</p>
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Welcome, Temi!</h2>
+                <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Student Details</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <p><strong>Name:</strong> Temi Adebayo</p>
+                            <p><strong>Student ID:</strong> OAU123456</p>
+                            <p><strong>Department:</strong> Computer Science</p>
+                        </div>
+                        <div class="space-y-2">
+                            <p><strong>Year:</strong> 300 Level</p>
+                            <p><strong>Email:</strong> temi.adebayo@oau.edu</p>
+                            <p><strong>Phone:</strong> +234 123 456 7890</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Tracker</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Mathematics</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
                             </div>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Tracker</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="text-center">
-                                <p class="font-medium text-gray-700">Mathematics</p>
-                                <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
-                                    <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="font-medium text-gray-700">Physics</p>
-                                <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
-                                    <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="font-medium text-gray-700">Chemistry</p>
-                                <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 85%;" title="85%">
-                                    <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">85%</div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="font-medium text-gray-700">Computer Science</p>
-                                <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 70%;" title="70%">
-                                    <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">70%</div>
-                                </div>
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Physics</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
                             </div>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Announcements</h3>
-                        <div class="space-y-4">
-                            <div class="border-l-4 border-indigo-500 pl-4">
-                                <p class="font-medium text-gray-700">Exam Schedule Update</p>
-                                <p class="text-gray-600 text-sm">New exam dates for 300 Level students released. Check the Exams section. <span class="block text-xs text-gray-500">Oct 20, 2025</span></p>
-                            </div>
-                            <div class="border-l-4 border-indigo-500 pl-4">
-                                <p class="font-medium text-gray-700">Mock Test Available</p>
-                                <p class="text-gray-600 text-sm">New Mathematics mock test added. Start practicing now! <span class="block text-xs text-gray-500">Oct 18, 2025</span></p>
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Chemistry</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 85%;" title="85%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">85%</div>
                             </div>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Quick Access</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <p class="font-medium text-gray-700">Marketplace</p>
-                                <p class="text-gray-600 text-sm">Explore study materials and student essentials.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/marketplace', '_blank')">Visit Marketplace</button>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-700">Blog Home</p>
-                                <p class="text-gray-600 text-sm">Read tips, tricks, and student stories.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/blog', '_blank')">Visit Blog</button>
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Computer Science</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 70%;" title="70%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">70%</div>
                             </div>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Achievements</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            <div class="text-center p-4 bg-yellow-50 rounded-lg">
-                                <i class="fas fa-trophy text-yellow-500 text-3xl mb-2"></i>
-                                <p class="text-sm font-medium">Top Scorer: Math</p>
-                            </div>
-                            <div class="text-center p-4 bg-blue-50 rounded-lg">
-                                <i class="fas fa-book-open text-blue-500 text-3xl mb-2"></i>
-                                <p class="text-sm font-medium">Consistent Learner</p>
-                            </div>
-                            <div class="text-center p-4 bg-green-50 rounded-lg">
-                                <i class="fas fa-star text-green-500 text-3xl mb-2"></i>
-                                <p class="text-sm font-medium">Mock Test Master</p>
-                            </div>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Announcements</h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-indigo-500 pl-4">
+                            <p class="font-medium text-gray-700">Exam Schedule Update</p>
+                            <p class="text-gray-600 text-sm">New exam dates for 300 Level students released. Check the Exams section. <span class="block text-xs text-gray-500">Oct 20, 2025</span></p>
                         </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <!-- Mock Tests Tab -->
-        <section id="mock-tests" class="tab-content">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Mock Tests</h2>
-                    <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full justify-items-stretch">
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full flex flex-col">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Mock Tests</h3>
-                        <div class="space-y-4 flex-1">
-                            <div>
-                                <p class="font-medium text-gray-700">Mathematics Mock Test</p>
-                                <p class="text-gray-600 text-sm">Covers algebra, calculus, and geometry. 50 questions, 60 minutes.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Start Test</button>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-700">Physics Mock Test</p>
-                                <p class="text-gray-600 text-sm">Mechanics and thermodynamics focus. 40 questions, 50 minutes.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Start Test</button>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-700">Chemistry Mock Test</p>
-                                <p class="text-gray-600 text-sm">Organic and inorganic chemistry. 45 questions, 55 minutes.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Start Test</button>
-                            </div>
+                        <div class="border-l-4 border-indigo-500 pl-4">
+                            <p class="font-medium text-gray-700">Mock Test Available</p>
+                            <p class="text-gray-600 text-sm">New Mathematics mock test added. Start practicing now! <span class="block text-xs text-gray-500">Oct 18, 2025</span></p>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full flex flex-col">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recent Scores</h3>
-                        <div class="overflow-x-auto flex-1">
-                            <table class="w-full text-left text-sm">
-                                <thead>
-                                    <tr class="bg-indigo-50 text-indigo-900">
-                                        <th class="p-3 rounded-tl-lg">Test Name</th>
-                                        <th class="p-3">Date</th>
-                                        <th class="p-3 rounded-tr-lg">Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                        <td class="p-3">Mathematics Mock</td>
-                                        <td class="p-3">Oct 15, 2025</td>
-                                        <td class="p-3">82%</td>
-                                    </tr>
-                                    <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                        <td class="p-3">Physics Mock</td>
-                                        <td class="p-3">Oct 10, 2025</td>
-                                        <td class="p-3">76%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Quick Access</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="font-medium text-gray-700">Marketplace</p>
+                            <p class="text-gray-600 text-sm">Explore study materials and student essentials.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/marketplace', '_blank')">Visit Marketplace</button>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full flex flex-col">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Overview</h3>
-                        <div class="grid grid-cols-2 gap-4 flex-1">
-                            <div class="text-center">
-                                <p class="font-medium text-gray-700">Mathematics</p>
-                                <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
-                                    <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="font-medium text-gray-700">Physics</p>
-                                <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
-                                    <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
-                                </div>
-                            </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Blog Home</p>
+                            <p class="text-gray-600 text-sm">Read tips, tricks, and student stories.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/blog', '_blank')">Visit Blog</button>
                         </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <!-- Exams Tab -->
-        <section id="exams" class="tab-content">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
-                    <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full justify-items-stretch">
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Currently Scheduled Exam</h3>
-                        <p class="font-medium text-gray-700">Chemistry 201</p>
-                        <p class="text-gray-600 text-sm">Organic chemistry fundamentals</p>
-                        <p class="text-gray-600 text-sm">Start: Nov 5, 2025 10:00 AM | End: Nov 5, 2025 12:00 PM</p>
-                        <p class="text-gray-600 text-sm">Location: Lecture Theatre A</p>
-                        <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Prepare Now</button>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full col-span-1 lg:col-span-2 flex flex-col">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">All Active Exams</h3>
-                        <div class="overflow-x-auto flex-1">
-                            <table class="w-full text-left text-sm">
-                                <thead>
-                                    <tr class="bg-indigo-50 text-indigo-900">
-                                        <th class="p-3 rounded-tl-lg">Exam Name</th>
-                                        <th class="p-3">Description</th>
-                                        <th class="p-3">Start Time</th>
-                                        <th class="p-3">End Time</th>
-                                        <th class="p-3 rounded-tr-lg">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                        <td class="p-3">Computer Science 301</td>
-                                        <td class="p-3">Data structures and algorithms</td>
-                                        <td class="p-3">Nov 10, 2025 2:00 PM</td>
-                                        <td class="p-3">Nov 10, 2025 4:00 PM</td>
-                                        <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Start</button></td>
-                                    </tr>
-                                    <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                        <td class="p-3">Mathematics 202</td>
-                                        <td class="p-3">Advanced calculus</td>
-                                        <td class="p-3">Nov 12, 2025 9:00 AM</td>
-                                        <td class="p-3">Nov 12, 2025 11:00 AM</td>
-                                        <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Start</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Achievements</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2"></i>
+                            <p class="text-sm font-medium">Top Scorer: Math</p>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full col-span-1 lg:col-span-2 flex flex-col">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Exams History</h3>
-                        <div class="overflow-x-auto flex-1">
-                            <table class="w-full text-left text-sm">
-                                <thead>
-                                    <tr class="bg-indigo-50 text-indigo-900">
-                                        <th class="p-3 rounded-tl-lg">Exam Name</th>
-                                        <th class="p-3">Description</th>
-                                        <th class="p-3">Start Time</th>
-                                        <th class="p-3">End Time</th>
-                                        <th class="p-3 rounded-tr-lg">Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                        <td class="p-3">Mathematics 101</td>
-                                        <td class="p-3">Introductory calculus exam</td>
-                                        <td class="p-3">Sep 15, 2025 10:00 AM</td>
-                                        <td class="p-3">Sep 15, 2025 12:00 PM</td>
-                                        <td class="p-3">85%</td>
-                                    </tr>
-                                    <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                        <td class="p-3">Physics 102</td>
-                                        <td class="p-3">Mechanics and thermodynamics</td>
-                                        <td class="p-3">Sep 10, 2025 2:00 PM</td>
-                                        <td class="p-3">Sep 10, 2025 4:00 PM</td>
-                                        <td class="p-3">78%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <i class="fas fa-book-open text-blue-500 text-3xl mb-2"></i>
+                            <p class="text-sm font-medium">Consistent Learner</p>
                         </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <!-- Study Resources Tab -->
-        <section id="study-resources" class="tab-content">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Study Resources</h2>
-                    <p class="text-gray-600 mt-2">Access essential materials to boost your learning</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full justify-items-stretch">
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Resources</h3>
-                        <ul class="list-disc list-inside space-y-2 text-sm">
-                            <li><a href="#" class="text-indigo-600 hover:underline">Mathematics Formula Sheet</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:underline">Physics Concept Notes</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:underline">Coding Practice Problems</a></li>
-                            <li><a href="#" class="text-indigo-600 hover:underline">Chemistry Lab Guides</a></li>
-                        </ul>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recommended Resources</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <p class="font-medium text-gray-700">Calculus Textbook</p>
-                                <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-700">Physics Video Series</p>
-                                <p class="text-gray-600 text-sm">Interactive lectures on mechanics.</p>
-                                <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Now</button>
-                            </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <i class="fas fa-star text-green-500 text-3xl mb-2"></i>
+                            <p class="text-sm font-medium">Mock Test Master</p>
                         </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Study Calendar</h3>
-                        <p class="text-gray-600 text-sm">Your upcoming exams and study sessions.</p>
-                        <div class="h-64 bg-indigo-50 rounded-lg flex items-center justify-center">
-                            <p class="text-gray-500">Interactive Calendar (Placeholder)</p>
-                        </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Become a Marketer or Blogger!</h3>
-                        <p class="text-gray-600 text-sm">Share your knowledge, sell study materials, or promote products to earn rewards.</p>
-                        <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto" onclick="window.open('https://example.com/become-contributor', '_blank')">Get Started</button>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <!-- Messages Tab -->
-        <section id="messages" class="tab-content">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Messages</h2>
-                    <p class="text-gray-600 mt-2">Stay connected with instructors and peers</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full justify-items-stretch">
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Inbox</h3>
-                        <div class="space-y-4">
-                            <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Dr. Smith" data-conversation='[
-                                {"sender": "Dr. Smith", "message": "Great work on your recent assignment! Please review my feedback.", "time": "Oct 22, 2025, 3:00 PM"},
-                                {"sender": "Temi Adebayo", "message": "Thank you, Dr. Smith! I’ll review it today.", "time": "Oct 22, 2025, 3:15 PM"}
-                            ]'>
-                                <p class="font-medium text-gray-700">Dr. Smith</p>
-                                <p class="text-gray-600 text-sm">Feedback on your recent assignment...</p>
-                                <p class="text-xs text-gray-500">Oct 22, 2025, 3:00 PM</p>
-                            </div>
-                            <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Study Group" data-conversation='[
-                                {"sender": "Sarah", "message": "Hey everyone, let’s meet for the CS301 project this Friday.", "time": "Oct 20, 2025, 10:00 AM"},
-                                {"sender": "Temi Adebayo", "message": "Sounds good! What time works?", "time": "Oct 20, 2025, 10:10 AM"},
-                                {"sender": "John", "message": "How about 2 PM?", "time": "Oct 20, 2025, 10:15 AM"}
-                            ]'>
-                                <p class="font-medium text-gray-700">Study Group</p>
-                                <p class="text-gray-600 text-sm">Meeting for CS301 project...</p>
-                                <p class="text-xs text-gray-500">Oct 20, 2025, 10:00 AM</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Send a Message</h3>
-                        <div class="space-y-4">
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
-                                <option>Select Recipient</option>
-                                <option>Dr. Smith</option>
-                                <option>Study Group</option>
-                                <option>Academic Advisor</option>
-                            </select>
-                            <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
-                            <div class="flex space-x-3">
-                                <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button w-full md:w-auto">Cancel</button>
-                                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Send</button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <!-- Profile Settings Tab -->
-        <section id="profile-settings" class="tab-content">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Profile Settings</h2>
-                    <p class="text-gray-600 mt-2">Manage your personal information and preferences</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full justify-items-stretch">
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Personal Information</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                                <input type="text" value="Temi Adebayo" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" value="temi.adebayo@oau.edu" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Phone</label>
-                                <input type="tel" value="+234 123 456 7890" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            </div>
-                            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Save Changes</button>
-                        </div>
-                    </section>
-                    <section class="bg-white rounded-2xl shadow-xl p-6 card w-full">
-                        <h3 class="text-xl font-semibold text-indigo-900 mb-4">Change Password</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Current Password</label>
-                                <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">New Password</label>
-                                <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
-                                <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            </div>
-                            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full md:w-auto">Update Password</button>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <!-- Logout Tab -->
-        <section id="logout" class="tab-content">
-            <div class="max-w-7xl mx-auto w-full">
-                <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card w-full">
-                    <h2 class="text-3xl font-bold text-indigo-900">Logout</h2>
-                    <p class="text-gray-600 mt-2">Safely end your session</p>
-                </header>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card text-center w-full">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Are you sure you want to log out?</h3>
-                    <p class="text-gray-600 text-sm mb-6">You will be signed out of your account and need to log in again to access your dashboard.</p>
-                    <button class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 glow-button w-full md:w-auto" id="confirm-logout">Confirm Logout</button>
+                    </div>
                 </section>
             </div>
         </section>
+
+        <!-- Mock Tests Tab -->
+        <section id="mock-tests" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Mock Tests</h2>
+                <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Mock Tests</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-medium text-gray-700">Mathematics Mock Test</p>
+                            <p class="text-gray-600 text-sm">Covers algebra, calculus, and geometry. 50 questions, 60 minutes.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Physics Mock Test</p>
+                            <p class="text-gray-600 text-sm">Mechanics and thermodynamics focus. 40 questions, 50 minutes.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Chemistry Mock Test</p>
+                            <p class="text-gray-600 text-sm">Organic and inorganic chemistry. 45 questions, 55 minutes.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recent Scores</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-900">
+                                    <th class="p-3 rounded-tl-lg">Test Name</th>
+                                    <th class="p-3">Date</th>
+                                    <th class="p-3 rounded-tr-lg">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Mathematics Mock</td>
+                                    <td class="p-3">Oct 15, 2025</td>
+                                    <td class="p-3">82%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Physics Mock</td>
+                                    <td class="p-3">Oct 10, 2025</td>
+                                    <td class="p-3">76%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Overview</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Mathematics</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="font-medium text-gray-700">Physics</p>
+                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
+                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Exams Tab -->
+        <section id="exams" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
+                <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Currently Scheduled Exam</h3>
+                    <p class="font-medium text-gray-700">Chemistry 201</p>
+                    <p class="text-gray-600 text-sm">Organic chemistry fundamentals</p>
+                    <p class="text-gray-600 text-sm">Start: Nov 5, 2025 10:00 AM | End: Nov 5, 2025 12:00 PM</p>
+                    <p class="text-gray-600 text-sm">Location: Lecture Theatre A</p>
+                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Prepare Now</button>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 lg:col-span-2">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">All Active Exams</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-900">
+                                    <th class="p-3 rounded-tl-lg">Exam Name</th>
+                                    <th class="p-3">Description</th>
+                                    <th class="p-3">Start Time</th>
+                                    <th class="p-3">End Time</th>
+                                    <th class="p-3 rounded-tr-lg">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Computer Science 301</td>
+                                    <td class="p-3">Data structures and algorithms</td>
+                                    <td class="p-3">Nov 10, 2025 2:00 PM</td>
+                                    <td class="p-3">Nov 10, 2025 4:00 PM</td>
+                                    <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start</button></td>
+                                </tr>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Mathematics 202</td>
+                                    <td class="p-3">Advanced calculus</td>
+                                    <td class="p-3">Nov 12, 2025 9:00 AM</td>
+                                    <td class="p-3">Nov 12, 2025 11:00 AM</td>
+                                    <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 lg:col-span-2">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Exams History</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-900">
+                                    <th class="p-3 rounded-tl-lg">Exam Name</th>
+                                    <th class="p-3">Description</th>
+                                    <th class="p-3">Start Time</th>
+                                    <th class="p-3">End Time</th>
+                                    <th class="p-3 rounded-tr-lg">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Mathematics 101</td>
+                                    <td class="p-3">Introductory calculus exam</td>
+                                    <td class="p-3">Sep 15, 2025 10:00 AM</td>
+                                    <td class="p-3">Sep 15, 2025 12:00 PM</td>
+                                    <td class="p-3">85%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-indigo-50 transition-colors">
+                                    <td class="p-3">Physics 102</td>
+                                    <td class="p-3">Mechanics and thermodynamics</td>
+                                    <td class="p-3">Sep 10, 2025 2:00 PM</td>
+                                    <td class="p-3">Sep 10, 2025 4:00 PM</td>
+                                    <td class="p-3">78%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Study Resources Tab -->
+        <section id="study-resources" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Study Resources</h2>
+                <p class="text-gray-600 mt-2">Access essential materials to boost your learning</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Resources</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                        <li><a href="#" class="text-indigo-600 hover:underline">Mathematics Formula Sheet</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline">Physics Concept Notes</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline">Coding Practice Problems</a></li>
+                        <li><a href="#" class="text-indigo-600 hover:underline">Chemistry Lab Guides</a></li>
+                    </ul>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recommended Resources</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-medium text-gray-700">Calculus Textbook</p>
+                            <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Physics Video Series</p>
+                            <p class="text-gray-600 text-sm">Interactive lectures on mechanics.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Now</button>
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Study Calendar</h3>
+                    <p class="text-gray-600 text-sm">Your upcoming exams and study sessions.</p>
+                    <div class="h-64 bg-indigo-50 rounded-lg flex items-center justify-center">
+                        <p class="text-gray-500">Interactive Calendar (Placeholder)</p>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Become a Marketer or Blogger!</h3>
+                    <p class="text-gray-600 text-sm">Share your knowledge, sell study materials, or promote products to earn rewards.</p>
+                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/become-contributor', '_blank')">Get Started</button>
+                </section>
+            </div>
+        </section>
+
+        <!-- Messages Tab -->
+        <section id="messages" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Messages</h2>
+                <p class="text-gray-600 mt-2">Stay connected with instructors and peers</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Inbox</h3>
+                    <div class="space-y-4">
+                        <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Dr. Smith" data-conversation='[
+                            {"sender": "Dr. Smith", "message": "Great work on your recent assignment! Please review my feedback.", "time": "Oct 22, 2025, 3:00 PM"},
+                            {"sender": "Temi Adebayo", "message": "Thank you, Dr. Smith! I’ll review it today.", "time": "Oct 22, 2025, 3:15 PM"}
+                        ]'>
+                            <p class="font-medium text-gray-700">Dr. Smith</p>
+                            <p class="text-gray-600 text-sm">Feedback on your recent assignment...</p>
+                            <p class="text-xs text-gray-500">Oct 22, 2025, 3:00 PM</p>
+                        </div>
+                        <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Study Group" data-conversation='[
+                            {"sender": "Sarah", "message": "Hey everyone, let’s meet for the CS301 project this Friday.", "time": "Oct 20, 2025, 10:00 AM"},
+                            {"sender": "Temi Adebayo", "message": "Sounds good! What time works?", "time": "Oct 20, 2025, 10:10 AM"},
+                            {"sender": "John", "message": "How about 2 PM?", "time": "Oct 20, 2025, 10:15 AM"}
+                        ]'>
+                            <p class="font-medium text-gray-700">Study Group</p>
+                            <p class="text-gray-600 text-sm">Meeting for CS301 project...</p>
+                            <p class="text-xs text-gray-500">Oct 20, 2025, 10:00 AM</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Send a Message</h3>
+                    <div class="space-y-4">
+                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
+                            <option>Select Recipient</option>
+                            <option>Dr. Smith</option>
+                            <option>Study Group</option>
+                            <option>Academic Advisor</option>
+                        </select>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
+                        <div class="flex space-x-3">
+                            <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
+                            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Profile Settings Tab -->
+        <section id="profile-settings" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Profile Settings</h2>
+                <p class="text-gray-600 mt-2">Manage your personal information and preferences</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Personal Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" value="Temi Adebayo" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" value="temi.adebayo@oau.edu" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Phone</label>
+                            <input type="tel" value="+234 123 456 7890" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Save Changes</button>
+                    </div>
+                </section>
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Change Password</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Current Password</label>
+                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">New Password</label>
+                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Update Password</button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Logout Tab -->
+        <section id="logout" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
+                <h2 class="text-3xl font-bold text-indigo-900">Logout</h2>
+                <p class="text-gray-600 mt-2">Safely end your session</p>
+            </header>
+            <section class="bg-white rounded-2xl shadow-xl p-6 card text-center">
+                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Are you sure you want to log out?</h3>
+                <p class="text-gray-600 text-sm mb-6">You will be signed out of your account and need to log in again to access your dashboard.</p>
+                <button class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 glow-button" id="confirm-logout">Confirm Logout</button>
+            </section>
+        </section>
+
         <!-- Message Modal -->
         <div id="message-modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50" aria-modal="true" tabindex="-1">
             <div id="message-modal" class="modal bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-auto mt-20 p-6" role="dialog" aria-labelledby="modal-title">
