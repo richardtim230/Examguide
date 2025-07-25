@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
+    <title>Student Dashboard | EduHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="logo.png">
     <style>
         .sidebar {
             transition: transform 0.3s ease-in-out, background 0.3s ease;
@@ -91,9 +92,161 @@
         .focus-trap {
             outline: 2px solid #6366f1;
         }
+        /* Custom styles for tables and leaderboard */
+        .result-table, .test-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 16px #3a86ff18;
+            margin: 14px 0 22px 0;
+            font-size: 1.06rem;
+        }
+        .result-table thead tr, .test-table thead tr {
+            background: linear-gradient(90deg, #3a86ff 60%, #4cc9f0 100%);
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .result-table th, .result-table td,
+        .test-table th, .test-table td {
+            padding: 11px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e3e8ee;
+        }
+        .result-table th:last-child, .result-table td:last-child,
+        .test-table th:last-child, .test-table td:last-child {
+            text-align: center;
+        }
+        .result-table tbody tr, .test-table tbody tr {
+            transition: background 0.18s;
+        }
+        .result-table tbody tr:nth-child(even),
+        .test-table tbody tr:nth-child(even) {
+            background: #f7faff;
+        }
+        .result-table tbody tr:hover,
+        .test-table tbody tr:hover {
+            background: #e3f0ff;
+        }
+        .result-table td, .test-table td {
+            color: #23366e;
+        }
+        .result-table th:first-child, .result-table td:first-child,
+        .test-table th:first-child, .test-table td:first-child {
+            border-top-left-radius: 12px;
+        }
+        .result-table th:last-child, .result-table td:last-child,
+        .test-table th:last-child, .test-table td:last-child {
+            border-top-right-radius: 12px;
+        }
+        .table-pagination {
+            text-align: center;
+            margin: 12px 0 0 0;
+            user-select: none;
+        }
+        .table-pagination button {
+            margin: 0 5px;
+            padding: 4px 13px;
+            font-size: 1em;
+            background: #f7faff;
+            color: #3a86ff;
+            border: 1px solid #3a86ff44;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.13s;
+        }
+        .table-pagination button.active,
+        .table-pagination button:hover {
+            background: #3a86ff;
+            color: #fff;
+        }
+        .table-pagination button[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #e3e8ee !important;
+            color: #888 !important;
+        }
+        .scoreboard-container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 2px 18px #3a86ff18;
+            padding: 24px 0 18px 0;
+            margin: 28px auto 18px auto;
+            max-width: 440px;
+        }
+        .scoreboard-title {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #23366e;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .scoreboard-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            gap: 16px;
+        }
+        .scoreboard-item {
+            background: #f7faff;
+            border-radius: 14px;
+            padding: 10px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px #3a86ff11;
+            min-width: 90px;
+            position: relative;
+        }
+        .scoreboard-avatar {
+            width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin-bottom: 4px;
+            border: 2px solid #3a86ff33;
+        }
+        .scoreboard-name { font-size: 1.07em; font-weight: 600; color: #23366e;}
+        .scoreboard-score { font-size: 1.01em; color: #455c8a; margin-top: 3px;}
+        .scoreboard-badge { display: inline-block; font-size: 1.36em; margin-top: 6px; }
+        .badge-rank-1 { color: #f7b500; }
+        .badge-rank-2 { color: #a8b0b8; }
+        .badge-rank-3 { color: #c47c39; }
+        /* Responsive */
+        @media (max-width: 800px) {
+            .result-table, .test-table {
+                font-size: 0.99rem;
+                min-width: 390px;
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+            }
+            .scoreboard-container {
+                max-width: 99vw;
+                padding: 10px 0 10px 0;
+            }
+        }
+        /* Loader style */
+        #preloaderSpinner {
+            position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;
+            background:rgba(255,255,255,0.97);display:flex;align-items:center;justify-content:center;
+            transition:opacity 0.3s;
+        }
+        #preloaderSpinner .spinner {
+            display:inline-block;width:80px;height:80px;border:8px solid #e3e8ee;
+            border-top:8px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gradient font-sans min-h-screen">
+
+    <!-- Loader -->
+    <div id="preloaderSpinner">
+      <div style="text-align:center;">
+        <div class="spinner"></div>
+        <div style="margin-top:18px;color:#3a86ff;font-weight:700;font-size:1.3em;">Loading dashboard...</div>
+      </div>
+    </div>
+
     <!-- Mobile Menu Button -->
     <button id="menu-toggle" class="md:hidden fixed top-4 left-4 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700" aria-label="Open Menu">
         <i class="fas fa-bars text-lg"></i>
@@ -117,75 +270,46 @@
             </ul>
         </nav>
     </aside>
+
     <!-- Sidebar overlay for mobile -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 hidden md:hidden"></div>
 
     <!-- Main Content -->
-    <main class="md:ml-72 p-8 lg:p-12 min-h-screen">
+    <main class="p-4 md:ml-72 md:p-8 lg:p-12 min-h-screen">
         <!-- Dashboard Tab -->
         <section id="dashboard" class="tab-content active">
             <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Welcome, Temi!</h2>
+                <h2 class="text-3xl font-bold text-indigo-900">Welcome, <span id="studentName"></span>!</h2>
                 <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Profile Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Student Details</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <p><strong>Name:</strong> Temi Adebayo</p>
-                            <p><strong>Student ID:</strong> OAU123456</p>
-                            <p><strong>Department:</strong> Computer Science</p>
+                            <p><strong>Name:</strong> <span id="profileName"></span></p>
+                            <p><strong>Student ID:</strong> <span id="studentId"></span></p>
+                            <p><strong>Department:</strong> <span id="profileDept"></span></p>
                         </div>
                         <div class="space-y-2">
-                            <p><strong>Year:</strong> 300 Level</p>
-                            <p><strong>Email:</strong> temi.adebayo@oau.edu</p>
-                            <p><strong>Phone:</strong> +234 123 456 7890</p>
+                            <p><strong>Year:</strong> <span id="studentLevel"></span></p>
+                            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                            <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
                         </div>
                     </div>
                 </section>
+                <!-- Progress Tracker Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Tracker</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center">
-                            <p class="font-medium text-gray-700">Mathematics</p>
-                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
-                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <p class="font-medium text-gray-700">Physics</p>
-                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
-                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <p class="font-medium text-gray-700">Chemistry</p>
-                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 85%;" title="85%">
-                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">85%</div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <p class="font-medium text-gray-700">Computer Science</p>
-                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 70%;" title="70%">
-                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">70%</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
                 </section>
+                <!-- Announcements Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Announcements</h3>
-                    <div class="space-y-4">
-                        <div class="border-l-4 border-indigo-500 pl-4">
-                            <p class="font-medium text-gray-700">Exam Schedule Update</p>
-                            <p class="text-gray-600 text-sm">New exam dates for 300 Level students released. Check the Exams section. <span class="block text-xs text-gray-500">Oct 20, 2025</span></p>
-                        </div>
-                        <div class="border-l-4 border-indigo-500 pl-4">
-                            <p class="font-medium text-gray-700">Mock Test Available</p>
-                            <p class="text-gray-600 text-sm">New Mathematics mock test added. Start practicing now! <span class="block text-xs text-gray-500">Oct 18, 2025</span></p>
-                        </div>
-                    </div>
+                    <div id="announcementsPanel" class="space-y-4"></div>
                 </section>
+                <!-- Quick Access Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Quick Access</h3>
                     <div class="space-y-6">
@@ -201,22 +325,10 @@
                         </div>
                     </div>
                 </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Achievements</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <div class="text-center p-4 bg-yellow-50 rounded-lg">
-                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2"></i>
-                            <p class="text-sm font-medium">Top Scorer: Math</p>
-                        </div>
-                        <div class="text-center p-4 bg-blue-50 rounded-lg">
-                            <i class="fas fa-book-open text-blue-500 text-3xl mb-2"></i>
-                            <p class="text-sm font-medium">Consistent Learner</p>
-                        </div>
-                        <div class="text-center p-4 bg-green-50 rounded-lg">
-                            <i class="fas fa-star text-green-500 text-3xl mb-2"></i>
-                            <p class="text-sm font-medium">Mock Test Master</p>
-                        </div>
-                    </div>
+                <!-- Achievements (Leaderboard) Card -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 xl:col-span-4">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Achievements & Leaderboard</h3>
+                    <div id="leaderboardContainer" class="scoreboard-container"></div>
                 </section>
             </div>
         </section>
@@ -228,69 +340,40 @@
                 <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                <!-- Available Mock Tests -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-2">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Mock Tests</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <p class="font-medium text-gray-700">Mathematics Mock Test</p>
-                            <p class="text-gray-600 text-sm">Covers algebra, calculus, and geometry. 50 questions, 60 minutes.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-700">Physics Mock Test</p>
-                            <p class="text-gray-600 text-sm">Mechanics and thermodynamics focus. 40 questions, 50 minutes.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-700">Chemistry Mock Test</p>
-                            <p class="text-gray-600 text-sm">Organic and inorganic chemistry. 45 questions, 55 minutes.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start Test</button>
-                        </div>
+                    <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
+                        <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
                     </div>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recent Scores</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
+                    <div class="table-responsive">
+                        <table class="test-table" id="availableTable">
                             <thead>
-                                <tr class="bg-indigo-50 text-indigo-900">
-                                    <th class="p-3 rounded-tl-lg">Test Name</th>
-                                    <th class="p-3">Date</th>
-                                    <th class="p-3 rounded-tr-lg">Score</th>
+                                <tr>
+                                    <th>Test</th>
+                                    <th>Description</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                    <td class="p-3">Mathematics Mock</td>
-                                    <td class="p-3">Oct 15, 2025</td>
-                                    <td class="p-3">82%</td>
-                                </tr>
-                                <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                    <td class="p-3">Physics Mock</td>
-                                    <td class="p-3">Oct 10, 2025</td>
-                                    <td class="p-3">76%</td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
+                        <div id="availablePagination" class="table-pagination"></div>
                     </div>
                 </section>
+                <!-- Progress Overview -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Overview</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center">
-                            <p class="font-medium text-gray-700">Mathematics</p>
-                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 75%;" title="75%">
-                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">75%</div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <p class="font-medium text-gray-700">Physics</p>
-                            <div class="w-20 h-20 mx-auto rounded-full progress-circle" style="--progress: 60%;" title="60%">
-                                <div class="flex items-center justify-center h-full text-sm font-bold text-gray-800">60%</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="progressList" style="max-height:110px;overflow-y:auto;"></div>
                 </section>
+            </div>
+            <!-- Upcoming Test Countdown -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 card mt-8">
+                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Upcoming Test</h3>
+                <div class="card-value" id="upcomingTest">None</div>
+                <div id="testCountdown" style="font-size:1.01rem; color:var(--primary);font-weight:600;"></div>
             </div>
         </section>
 
@@ -300,79 +383,23 @@
                 <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
                 <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
             </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Currently Scheduled Exam</h3>
-                    <p class="font-medium text-gray-700">Chemistry 201</p>
-                    <p class="text-gray-600 text-sm">Organic chemistry fundamentals</p>
-                    <p class="text-gray-600 text-sm">Start: Nov 5, 2025 10:00 AM | End: Nov 5, 2025 12:00 PM</p>
-                    <p class="text-gray-600 text-sm">Location: Lecture Theatre A</p>
-                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Prepare Now</button>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 lg:col-span-2">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">All Active Exams</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead>
-                                <tr class="bg-indigo-50 text-indigo-900">
-                                    <th class="p-3 rounded-tl-lg">Exam Name</th>
-                                    <th class="p-3">Description</th>
-                                    <th class="p-3">Start Time</th>
-                                    <th class="p-3">End Time</th>
-                                    <th class="p-3 rounded-tr-lg">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                    <td class="p-3">Computer Science 301</td>
-                                    <td class="p-3">Data structures and algorithms</td>
-                                    <td class="p-3">Nov 10, 2025 2:00 PM</td>
-                                    <td class="p-3">Nov 10, 2025 4:00 PM</td>
-                                    <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start</button></td>
-                                </tr>
-                                <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                    <td class="p-3">Mathematics 202</td>
-                                    <td class="p-3">Advanced calculus</td>
-                                    <td class="p-3">Nov 12, 2025 9:00 AM</td>
-                                    <td class="p-3">Nov 12, 2025 11:00 AM</td>
-                                    <td class="p-3"><button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Start</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 lg:col-span-2">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Exams History</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead>
-                                <tr class="bg-indigo-50 text-indigo-900">
-                                    <th class="p-3 rounded-tl-lg">Exam Name</th>
-                                    <th class="p-3">Description</th>
-                                    <th class="p-3">Start Time</th>
-                                    <th class="p-3">End Time</th>
-                                    <th class="p-3 rounded-tr-lg">Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                    <td class="p-3">Mathematics 101</td>
-                                    <td class="p-3">Introductory calculus exam</td>
-                                    <td class="p-3">Sep 15, 2025 10:00 AM</td>
-                                    <td class="p-3">Sep 15, 2025 12:00 PM</td>
-                                    <td class="p-3">85%</td>
-                                </tr>
-                                <tr class="border-b hover:bg-indigo-50 transition-colors">
-                                    <td class="p-3">Physics 102</td>
-                                    <td class="p-3">Mechanics and thermodynamics</td>
-                                    <td class="p-3">Sep 10, 2025 2:00 PM</td>
-                                    <td class="p-3">Sep 10, 2025 4:00 PM</td>
-                                    <td class="p-3">78%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+            <!-- Assessment Performance Table -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 card">
+                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Assessment Performance & Reviews</h3>
+                <div class="result-table-container">
+                  <table class="result-table" id="historyTable">
+                    <thead>
+                      <tr>
+                        <th>Test</th>
+                        <th>Date</th>
+                        <th>Score</th>
+                        <th>Review</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <div id="historyPagination" class="table-pagination"></div>
+                </div>
             </div>
         </section>
 
@@ -431,39 +458,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Inbox</h3>
-                    <div class="space-y-4">
-                        <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Dr. Smith" data-conversation='[
-                            {"sender": "Dr. Smith", "message": "Great work on your recent assignment! Please review my feedback.", "time": "Oct 22, 2025, 3:00 PM"},
-                            {"sender": "Temi Adebayo", "message": "Thank you, Dr. Smith! I’ll review it today.", "time": "Oct 22, 2025, 3:15 PM"}
-                        ]'>
-                            <p class="font-medium text-gray-700">Dr. Smith</p>
-                            <p class="text-gray-600 text-sm">Feedback on your recent assignment...</p>
-                            <p class="text-xs text-gray-500">Oct 22, 2025, 3:00 PM</p>
-                        </div>
-                        <div class="border-b pb-2 cursor-pointer message-item" tabindex="0" data-sender="Study Group" data-conversation='[
-                            {"sender": "Sarah", "message": "Hey everyone, let’s meet for the CS301 project this Friday.", "time": "Oct 20, 2025, 10:00 AM"},
-                            {"sender": "Temi Adebayo", "message": "Sounds good! What time works?", "time": "Oct 20, 2025, 10:10 AM"},
-                            {"sender": "John", "message": "How about 2 PM?", "time": "Oct 20, 2025, 10:15 AM"}
-                        ]'>
-                            <p class="font-medium text-gray-700">Study Group</p>
-                            <p class="text-gray-600 text-sm">Meeting for CS301 project...</p>
-                            <p class="text-xs text-gray-500">Oct 20, 2025, 10:00 AM</p>
-                        </div>
-                    </div>
+                    <div id="inboxList" class="space-y-4"></div>
                 </section>
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Send a Message</h3>
                     <div class="space-y-4">
-                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
+                        <select id="recipientSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
                             <option>Select Recipient</option>
-                            <option>Dr. Smith</option>
-                            <option>Study Group</option>
-                            <option>Academic Advisor</option>
                         </select>
-                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
+                        <textarea id="messageInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
                         <div class="flex space-x-3">
-                            <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
-                            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
+                            <button id="cancelMessageBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
+                            <button id="sendMessageBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
                         </div>
                     </div>
                 </section>
@@ -482,17 +488,17 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                            <input type="text" value="Temi Adebayo" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input id="editName" type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" value="temi.adebayo@oau.edu" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input id="editEmail" type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Phone</label>
-                            <input type="tel" value="+234 123 456 7890" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input id="editPhone" type="tel" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
-                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Save Changes</button>
+                        <button id="saveProfileBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Save Changes</button>
                     </div>
                 </section>
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
@@ -500,17 +506,17 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Current Password</label>
-                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input id="currentPassword" type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">New Password</label>
-                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input id="newPassword" type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
-                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input id="confirmNewPassword" type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
-                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Update Password</button>
+                        <button id="updatePasswordBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Update Password</button>
                     </div>
                 </section>
             </div>
@@ -529,199 +535,8 @@
             </section>
         </section>
 
-        <!-- Message Modal -->
-        <div id="message-modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50" aria-modal="true" tabindex="-1">
-            <div id="message-modal" class="modal bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-auto mt-20 p-6" role="dialog" aria-labelledby="modal-title">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 id="modal-title" class="text-xl font-semibold text-indigo-900">Conversation</h3>
-                    <button id="close-modal" class="text-gray-500 hover:text-gray-700" aria-label="Close Modal">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div id="modal-conversation" class="max-h-96 overflow-y-auto space-y-4 mb-4 p-4 bg-gray-50 rounded-lg"></div>
-                <div class="space-y-4">
-                    <textarea id="modal-message-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="3" placeholder="Type your reply..." aria-label="Reply message"></textarea>
-                    <div class="flex justify-end space-x-3">
-                        <button id="modal-cancel" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
-                        <button id="modal-send" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Modal root for dynamic popups -->
+        <div id="modalRoot"></div>
     </main>
-    <script>
-        // Sidebar overlay logic
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        const menuToggle = document.getElementById('menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const messageItems = document.querySelectorAll('.message-item');
-        const modalOverlay = document.getElementById('message-modal-overlay');
-        const modal = document.getElementById('message-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalConversation = document.getElementById('modal-conversation');
-        const modalMessageInput = document.getElementById('modal-message-input');
-        const closeModalButton = document.getElementById('close-modal');
-        const modalCancelButton = document.getElementById('modal-cancel');
-        const modalSendButton = document.getElementById('modal-send');
-        const confirmLogoutButton = document.getElementById('confirm-logout');
-
-        // Remember last tab using localStorage
-        const TAB_STORAGE_KEY = 'student_dashboard_active_tab';
-
-        function setActiveTab(tabId) {
-            navLinks.forEach(l => l.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            const link = Array.from(navLinks).find(l => l.getAttribute('data-tab') === tabId);
-            if (link) link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
-            document.getElementById(tabId).classList.add('active');
-            localStorage.setItem(TAB_STORAGE_KEY, tabId);
-            location.hash = tabId;
-        }
-
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            if (sidebar.classList.contains('open')) {
-                sidebarOverlay.classList.remove('hidden');
-                document.body.classList.add('overflow-hidden');
-            } else {
-                sidebarOverlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }
-        });
-
-        sidebarOverlay.addEventListener('click', () => {
-            sidebar.classList.remove('open');
-            sidebarOverlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const tabId = link.getAttribute('data-tab');
-                setActiveTab(tabId);
-                if (window.innerWidth < 768) {
-                    sidebar.classList.remove('open');
-                    sidebarOverlay.classList.add('hidden');
-                    document.body.classList.remove('overflow-hidden');
-                }
-            });
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            let tabId = location.hash.replace('#', '') || localStorage.getItem(TAB_STORAGE_KEY) || 'dashboard';
-            if (!document.getElementById(tabId)) tabId = 'dashboard';
-            setActiveTab(tabId);
-        });
-
-        window.addEventListener('hashchange', () => {
-            let tabId = location.hash.replace('#', '') || 'dashboard';
-            if (document.getElementById(tabId)) setActiveTab(tabId);
-        });
-
-        // Message modal logic
-        let lastFocusedElement = null;
-        function openModal() {
-            lastFocusedElement = document.activeElement;
-            modalOverlay.classList.add('open');
-            modal.classList.add('open');
-            modal.setAttribute('aria-hidden', 'false');
-            setTimeout(() => {
-                modalMessageInput.focus();
-                modal.classList.add('focus-trap');
-            }, 100);
-            document.addEventListener('keydown', trapTabKey);
-        }
-        function closeModal() {
-            modalOverlay.classList.remove('open');
-            modal.classList.remove('open');
-            modal.setAttribute('aria-hidden', 'true');
-            modal.classList.remove('focus-trap');
-            document.removeEventListener('keydown', trapTabKey);
-            if (lastFocusedElement) lastFocusedElement.focus();
-        }
-        function trapTabKey(e) {
-            if (e.key !== 'Tab') return;
-            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            const first = focusable[0];
-            const last = focusable[focusable.length - 1];
-            if (e.shiftKey) {
-                if (document.activeElement === first) {
-                    last.focus();
-                    e.preventDefault();
-                }
-            } else {
-                if (document.activeElement === last) {
-                    first.focus();
-                    e.preventDefault();
-                }
-            }
-        }
-
-        messageItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const sender = item.getAttribute('data-sender');
-                const conversation = JSON.parse(item.getAttribute('data-conversation'));
-                modalTitle.textContent = `Conversation with ${sender}`;
-                modalConversation.innerHTML = '';
-                conversation.forEach(msg => {
-                    const isUser = msg.sender === 'Temi Adebayo';
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `p-3 rounded-lg ${isUser ? 'bg-indigo-100 ml-auto' : 'bg-gray-200'} max-w-xs`;
-                    messageDiv.innerHTML = `
-                        <p class="text-sm font-medium ${isUser ? 'text-indigo-900' : 'text-gray-700'}">${msg.sender}</p>
-                        <p class="text-sm">${msg.message}</p>
-                        <p class="text-xs text-gray-500">${msg.time}</p>
-                    `;
-                    modalConversation.appendChild(messageDiv);
-                });
-                modalMessageInput.value = '';
-                openModal();
-            });
-            item.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    item.click();
-                }
-            });
-        });
-
-        closeModalButton.addEventListener('click', closeModal);
-        modalCancelButton.addEventListener('click', closeModal);
-
-        modalSendButton.addEventListener('click', () => {
-            const message = modalMessageInput.value.trim();
-            if (message) {
-                const time = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'p-3 rounded-lg bg-indigo-100 ml-auto max-w-xs';
-                messageDiv.innerHTML = `
-                    <p class="text-sm font-medium text-indigo-900">Temi Adebayo</p>
-                    <p class="text-sm">${message}</p>
-                    <p class="text-xs text-gray-500">${time}</p>
-                `;
-                modalConversation.appendChild(messageDiv);
-                modalConversation.scrollTop = modalConversation.scrollHeight;
-                modalMessageInput.value = '';
-                modalMessageInput.focus();
-            }
-        });
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (modalOverlay.classList.contains('open') && e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        confirmLogoutButton.addEventListener('click', () => {
-            localStorage.clear();
-            window.location.href = '/login'; // Replace with your actual login page URL
-        });
-    </script>
 </body>
 </html>
