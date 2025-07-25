@@ -513,12 +513,12 @@ function setupProfileSave() {
 }
 
 // ============ LOGOUT ===========
-document.getElementById("confirm-logout").onclick = () => {
-  localStorage.clear();
-  window.location.href = '/login';
-};
+// ... everything else above unchanged ...
 
-// ============ INIT ===========
+// REMOVE this from the global scope:
+// document.getElementById("confirm-logout").onclick = () => {...}
+
+// INSTEAD, add inside initDashboard at the END:
 async function initDashboard() {
   if (!token) return window.location.href = "/login";
   await fetchFacultiesAndDepartments();
@@ -533,8 +533,16 @@ async function initDashboard() {
   setupMessageSend();
   setupProfileSave();
   hidePreloaderSpinner();
-}
 
+  // Fix: Attach logout handler now that DOM is ready
+  const logoutBtn = document.getElementById("confirm-logout");
+  if (logoutBtn) {
+    logoutBtn.onclick = () => {
+      localStorage.clear();
+      window.location.href = '/login';
+    };
+  }
+}
 window.addEventListener("DOMContentLoaded", initDashboard);
 
 window.renderAvailableTablePage = renderAvailableTablePage;
