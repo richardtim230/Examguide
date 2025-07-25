@@ -74,7 +74,7 @@ function showProfileModal(forceValues = {}) {
       <div style="font-size:1em;color:#444;margin-bottom:18px;">Some important information is missing. Please update your details below to continue using the platform.</div>
       <form id="profileUpdateForm">
         <div style="margin-bottom:10px;">
-          <label>Name</label>
+          <label>Full Name</label>
           <input type="text" id="modal_fullname" class="modal-input" style="width:100%;" value="${forceValues.fullname||student.fullname||""}" required />
         </div>
         <div style="margin-bottom:10px;">
@@ -110,49 +110,66 @@ function showProfileModal(forceValues = {}) {
     </div>
   `;
   document.body.appendChild(modal);
+
   // Prevent closing modal by click
   modal.addEventListener("click", function(e){
     if (e.target === modal) {
       // Don't close; require completion
     }
   });
+
+  // Profile update logic with correct endpoint and all fields
   document.getElementById("profileUpdateForm").onsubmit = async function(e){
     e.preventDefault();
-    // Gather values
-    const data = {
-      fullname: document.getElementById("modal_fullname").value.trim(),
-      username: document.getElementById("modal_username").value.trim(),
-      email: document.getElementById("modal_email").value.trim(),
-      phone: document.getElementById("modal_phone").value.trim(),
-      studentId: document.getElementById("modal_studentId").value.trim(),
-      level: document.getElementById("modal_level").value.trim(),
-      faculty: document.getElementById("modal_faculty").value.trim(),
-      department: document.getElementById("modal_department").value.trim()
-    };
-    // Validate all fields filled
-    for (let key in data) {
-      if (!data[key]) {
-        alert("Please fill all fields.");
-        return;
-      }
+
+    const fullname = document.getElementById("modal_fullname").value.trim();
+    const username = document.getElementById("modal_username").value.trim();
+    const email = document.getElementById("modal_email").value.trim();
+    const phone = document.getElementById("modal_phone").value.trim();
+    const studentId = document.getElementById("modal_studentId").value.trim();
+    const level = document.getElementById("modal_level").value.trim();
+    const faculty = document.getElementById("modal_faculty").value.trim();
+    const department = document.getElementById("modal_department").value.trim();
+
+    // Ensure all fields are filled
+    if (!fullname || !username || !email || !phone || !studentId || !level || !faculty || !department) {
+      alert("Please fill all fields.");
+      return;
     }
-    // Update profile via backend
+
+    const payload = {
+      fullname,
+      username,
+      email,
+      phone,
+      studentId,
+      level,
+      faculty,
+      department
+    };
+
     try {
-      const resp = await fetchWithAuth(API_URL + "superadmin/me", {
+      const resp = await fetch(API_URL + "superadmin/me", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + (localStorage.getItem("token") || "")
+        },
+        body: JSON.stringify(payload)
       });
+
       if (!resp.ok) {
         const err = await resp.json();
         alert(err.message || "Failed to update profile.");
         return;
       }
+
       alert("Profile updated!");
-      // Remove modal
       document.body.removeChild(modal);
       // Refetch user profile and rerun profile fill
-      await fetchProfile();
+      if (typeof fetchProfile === "function") {
+        await fetchProfile();
+      }
     } catch (err) {
       alert("Error updating profile. Please try again.");
     }
