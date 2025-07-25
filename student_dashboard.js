@@ -13,7 +13,6 @@ let resultsCache = [];
 let availableSchedulesCache = [];
 let nextTest = null;
 let nextTestStart = null;
-let chatPollingInterval = null;
 
 // ============ UTILS ==============
 function hidePreloaderSpinner() {
@@ -254,8 +253,8 @@ function renderAvailableTablePage(page) {
   const now = Date.now();
   availableSchedulesCache.slice(start, end).forEach((sched) => {
     const set = sched.examSet;
-    if (!set || set.status !== "ACTIVE") return;
-    const taken = resultsCache.some((r) => (r.examSet && r.examSet.title) === set.title);
+    if (!set || !set.title) return;
+    const taken = resultsCache.some((r) => r.examSet && r.examSet.title === set.title);
     const startDt = sched.start ? new Date(sched.start) : null;
     const endDt = sched.end ? new Date(sched.end) : null;
     const canTake =
@@ -317,8 +316,8 @@ function renderExamAvailableTablePage(page) {
   const now = Date.now();
   availableSchedulesCache.slice(start, end).forEach((sched) => {
     const set = sched.examSet;
-    if (!set || set.status !== "ACTIVE") return;
-    const taken = resultsCache.some((r) => (r.examSet && r.examSet.title) === set.title);
+    if (!set || !set.title) return;
+    const taken = resultsCache.some((r) => r.examSet && r.examSet.title === set.title);
     const startDt = sched.start ? new Date(sched.start) : null;
     const endDt = sched.end ? new Date(sched.end) : null;
     const canTake =
@@ -486,6 +485,109 @@ async function fetchHistory() {
   recommendTopics();
 }
 
+// ============ AVAILABLE TESTS FETCH ===========
+async function fetchAvailableTests() {
+  const spinner = document.getElementById("testSpinner");
+  const tbody = document.querySelector("#availableTable tbody");
+  spinner.style.display = "block";
+  tbody.innerHTML = "";
+
+  try {
+    if (!student.faculty || !student.department) {
+      spinner.style.display = "none";
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
+        Please complete your profile to see available assessments.</td></tr>`;
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+      buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
+      buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
+      return;
+    }
+
+    const resp = await fetchWithAuth(
+      API_URL + `schedules?faculty=${student.facultyId}&department=${student.departmentId}`
+    );
+    const schedules = await resp.json();
+    spinner.style.display = "none";
+
+    // Defensive: ensure schedules is an array
+    if (!Array.isArray(schedules) || schedules.length === 0) {
+      availableSchedulesCache = [];
+      renderAvailableTablePage(1);
+      renderExamAvailableTablePage(1);
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+      return;
+    }
+
+    // Remove Duplicates, ensure examSet exists
+    const uniqueSchedules = [];
+    const seenExamSetIds = new Set();
+    for (const sched of schedules) {
+      const set = sched.examSet;
+      if (!set || !set.title) continue;
+      const key = set._id || set.title;
+      if (!key || seenExamSetIds.has(key)) continue;
+      seenExamSetIds.add(key);
+      uniqueSchedules.push(sched);
+    }
+    availableSchedulesCache = uniqueSchedules;
+    renderAvailableTablePage(1);
+    renderExamAvailableTablePage(1);
+
+    // Upcoming test logic
+    let soonest = null;
+    const now = Date.now();
+    uniqueSchedules.forEach((sched) => {
+      const set = sched.examSet;
+      if (!set || set.status !== "ACTIVE") return;
+      const taken = resultsCache.some((r) => r.examSet && r.examSet.title === set.title);
+      const start = sched.start ? new Date(sched.start) : null;
+      if (
+        set.status === "ACTIVE" &&
+        !taken &&
+        start &&
+        now < start.getTime() &&
+        (!soonest || start.getTime() < new Date(soonest.start).getTime())
+      ) {
+        soonest = { ...sched, examSet: set };
+      }
+    });
+
+    if (
+      soonest &&
+      soonest.start &&
+      new Date(soonest.start).getTime() > now &&
+      soonest.examSet
+    ) {
+      nextTest = soonest.examSet;
+      nextTestStart = new Date(soonest.start).getTime();
+      document.getElementById("upcomingTest").innerText = soonest.examSet.title;
+      startCountdown();
+    } else if (uniqueSchedules.length > 0) {
+      const firstAvailable = uniqueSchedules.find(
+        (sched) => sched.examSet && sched.examSet.status === "ACTIVE"
+      );
+      if (firstAvailable && firstAvailable.examSet)
+        document.getElementById("upcomingTest").innerText =
+          firstAvailable.examSet.title;
+      else document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    } else {
+      document.getElementById("upcomingTest").innerText = "None";
+      document.getElementById("testCountdown").innerText = "";
+    }
+  } catch (err) {
+    spinner.style.display = "none";
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#f25f5c;">
+      Failed to load assessments.</td></tr>`;
+    document.getElementById("upcomingTest").innerText = "None";
+    document.getElementById("testCountdown").innerText = "";
+    buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
+    buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
+  }
+}
+
 // ============ REVIEW ===========
 function openReviewTab(sessionId) {
   window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
@@ -591,6 +693,7 @@ window.startTest = function(examSetId) {
 
 window.renderAvailableTablePage = renderAvailableTablePage;
 window.renderHistoryTablePage = renderHistoryTablePage;
+window.renderExamAvailableTablePage = renderExamAvailableTablePage;
 window.openReviewTab = openReviewTab;
 
 // ============ INIT ===========
@@ -604,8 +707,6 @@ async function initDashboard() {
   renderLeaderboard();
   await fetchAnnouncements();
   await fetchAvailableTests();
-  renderAvailableTablePage(1);
-  renderExamAvailableTablePage(1);
   await fetchInbox();
   hidePreloaderSpinner();
 }
