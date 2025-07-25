@@ -43,6 +43,273 @@ function formatDate(dt) {
   return new Date(dt).toLocaleString();
 }
 
+// ============ PROFILE COMPLETENESS MODAL ==============
+function isProfileIncomplete(student) {
+  // Adjust required fields as needed!
+  return (
+    !student.fullname ||
+    !student.username ||
+    !student.email ||
+    !student.studentId ||
+    !student.level ||
+    !student.department ||
+    !student.faculty ||
+    !student.phone
+  );
+}
+
+function showProfileModal(forceValues = {}) {
+  // Remove existing modal if any
+  const prevModal = document.getElementById("profileUpdateModal");
+  if (prevModal) prevModal.remove();
+
+  let modal = document.createElement('div');
+  modal.id = "profileUpdateModal";
+  modal.style = `
+    position: fixed; z-index: 9999; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+  `;
+  modal.innerHTML = `
+    <div style="background:#fff;max-width:98vw;width:400px;padding:30px 20px;border-radius:12px;box-shadow:0 10px 32px #0002;">
+      <h2 style="font-size:1.3em;font-weight:700;margin-bottom:10px;color:#2d3b57">Complete Your Profile</h2>
+      <div style="font-size:1em;color:#444;margin-bottom:18px;">Some important information is missing. Please update your details below to continue using the platform.</div>
+      <form id="profileUpdateForm">
+        <div style="margin-bottom:10px;">
+          <label>Name</label>
+          <input type="text" id="modal_fullname" class="modal-input" style="width:100%;" value="${forceValues.fullname||student.fullname||""}" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Username</label>
+          <input type="text" id="modal_username" class="modal-input" style="width:100%;" value="${forceValues.username||student.username||""}" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Email</label>
+          <input type="email" id="modal_email" class="modal-input" style="width:100%;" value="${forceValues.email||student.email||""}" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Phone</label>
+          <input type="text" id="modal_phone" class="modal-input" style="width:100%;" value="${forceValues.phone||student.phone||""}" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Student ID</label>
+          <input type="text" id="modal_studentId" class="modal-input" style="width:100%;" value="${forceValues.studentId||student.studentId||""}" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Year/Level</label>
+          <input type="text" id="modal_level" class="modal-input" style="width:100%;" value="${forceValues.level||student.level||""}" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Faculty</label>
+          <input type="text" id="modal_faculty" class="modal-input" style="width:100%;" value="${forceValues.faculty||student.faculty||""}" required />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label>Department</label>
+          <input type="text" id="modal_department" class="modal-input" style="width:100%;" value="${forceValues.department||student.department||""}" required />
+        </div>
+        <button type="submit" class="btn" style="width:100%;background:#3a86ff;color:#fff;font-weight:700;">Save Profile</button>
+      </form>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  // Prevent closing modal by click
+  modal.addEventListener("click", function(e){
+    if (e.target === modal) {
+      // Don't close; require completion
+    }
+  });
+  document.getElementById("profileUpdateForm").onsubmit = async function(e){
+    e.preventDefault();
+    // Gather values
+    const data = {
+      fullname: document.getElementById("modal_fullname").value.trim(),
+      username: document.getElementById("modal_username").value.trim(),
+      email: document.getElementById("modal_email").value.trim(),
+      phone: document.getElementById("modal_phone").value.trim(),
+      studentId: document.getElementById("modal_studentId").value.trim(),
+      level: document.getElementById("modal_level").value.trim(),
+      faculty: document.getElementById("modal_faculty").value.trim(),
+      department: document.getElementById("modal_department").value.trim()
+    };
+    // Validate all fields filled
+    for (let key in data) {
+      if (!data[key]) {
+        alert("Please fill all fields.");
+        return;
+      }
+    }
+    // Update profile via backend
+    try {
+      const resp = await fetchWithAuth(API_URL + "superadmin/me", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      if (!resp.ok) {
+        const err = await resp.json();
+        alert(err.message || "Failed to update profile.");
+        return;
+      }
+      alert("Profile updated!");
+      // Remove modal
+      document.body.removeChild(modal);
+      // Refetch user profile and rerun profile fill
+      await fetchProfile();
+    } catch (err) {
+      alert("Error updating profile. Please try again.");
+    }
+  }
+}
+
+// ================= SIDEBAR & NAVIGATION ================
+(function setupSidebar() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  if (menuToggle && sidebar && sidebarOverlay) {
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      sidebarOverlay.classList.toggle('hidden');
+      document.body.classList.toggle('overflow-hidden');
+    });
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    });
+  }
+  // Tab switching
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const tabId = link.getAttribute('data-tab');
+      showTab(tabId);
+      setSidebarActive(tabId);
+      if (window.innerWidth < 768) {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+      localStorage.setItem('student_dashboard_active_tab', tabId);
+      location.hash = tabId;
+    });
+  });
+  // Restore last tab
+  window.addEventListener('DOMContentLoaded', () => {
+    let tabId = location.hash.replace('#', '') || localStorage.getItem('student_dashboard_active_tab') || 'dashboard';
+    if (!document.getElementById(tabId)) tabId = 'dashboard';
+    showTab(tabId);
+    setSidebarActive(tabId);
+  });
+  window.addEventListener('hashchange', () => {
+    let tabId = location.hash.replace('#', '') || 'dashboard';
+    if (document.getElementById(tabId)) {
+      showTab(tabId);
+      setSidebarActive(tabId);
+    }
+  });
+})();
+
+// =================== FETCH HELPERS ===================
+async function fetchWithAuth(url, options = {}) {
+  options.headers = options.headers || {};
+  if (token) options.headers['Authorization'] = 'Bearer ' + token;
+  const resp = await fetch(url, options);
+  if (resp.status === 401 || resp.status === 403) {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+    throw new Error("Session expired.");
+  }
+  return resp;
+}
+
+// =================== PROFILE ===================
+async function fetchFacultiesAndDepartments() {
+  const [faculties, departments] = await Promise.all([
+    fetchWithAuth(API_URL + "faculties").then(r => r.json()),
+    fetchWithAuth(API_URL + "departments").then(r => r.json())
+  ]);
+  facultiesCache = faculties;
+  departmentsCache = departments;
+}
+async function fetchAllUsers() {
+  const resp = await fetchWithAuth(API_URL + "users");
+  usersCache = await resp.json();
+}
+async function fetchProfile() {
+  const resp = await fetchWithAuth(API_URL + "auth/me");
+  const data = await resp.json();
+  student = data.user;
+  student.id = student._id || student.id;
+  // Map faculty/department IDs
+  const facultyObj = facultiesCache.find(f => f.name === student.faculty);
+  const departmentObj = departmentsCache.find(d => d.name === student.department);
+  student.facultyId = facultyObj ? facultyObj._id : "";
+  student.departmentId = departmentObj ? departmentObj._id : "";
+  document.getElementById("studentName").innerText = student.username || '';
+  document.getElementById("profileName").innerText = student.username || '';
+  document.getElementById("studentId").innerText = student.studentId || '';
+  document.getElementById("profileDept").innerText = student.department || '';
+  document.getElementById("studentLevel").innerText = student.level || '';
+  document.getElementById("profileEmail").innerText = student.email || '';
+  document.getElementById("profilePhone").innerText = student.phone || '';
+  // Profile settings tab
+  document.getElementById("editName").value = student.username || '';
+  document.getElementById("editEmail").value = student.email || '';
+  document.getElementById("editPhone").value = student.phone || '';
+
+  // Show forced modal if profile is incomplete
+  if (isProfileIncomplete(student)) {
+    showProfileModal();
+  }
+}
+
+// ...rest of your code remains unchanged (fetchHistory, fetchAvailableTests, etc.)...
+
+
+// =================== CONFIG ===================
+const API_URL = "https://examguide.onrender.com/api/";
+const token = localStorage.getItem("token");
+
+// =================== GLOBAL STATE ===================
+let student = {};
+let facultiesCache = [];
+let departmentsCache = [];
+let usersCache = [];
+let chatListCache = [];
+let leaderboardCache = [];
+let resultsCache = [];
+let availableSchedulesCache = [];
+let nextTest = null;
+let nextTestStart = null;
+
+// ============ UTILS ==============
+function hidePreloaderSpinner() {
+  const spinner = document.getElementById("preloaderSpinner");
+  if (spinner) {
+    spinner.style.opacity = "0";
+    setTimeout(() => { spinner.style.display = "none"; }, 350);
+  }
+}
+
+function showTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById(tabId);
+  if (el) el.classList.add('active');
+}
+
+function setSidebarActive(tabId) {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg');
+    if (link.getAttribute('data-tab') === tabId) {
+      link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
+    }
+  });
+}
+
+function formatDate(dt) {
+  if (!dt) return '-';
+  return new Date(dt).toLocaleString();
+}
+
 // ================= SIDEBAR & NAVIGATION ================
 (function setupSidebar() {
   const menuToggle = document.getElementById('menu-toggle');
@@ -701,7 +968,7 @@ async function initDashboard() {
   if (!token) return window.location.href = "/login";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
-  await fetchProfile();
+  await fetchProfile(); // This now handles modal if incomplete
   await fetchHistory();
   await fetchLeaderboard();
   renderLeaderboard();
@@ -712,3 +979,5 @@ async function initDashboard() {
 }
 
 window.addEventListener("DOMContentLoaded", initDashboard);
+
+// ...rest of your script unchanged, no need to duplicate all functions again
