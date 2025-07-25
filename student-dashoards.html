@@ -339,15 +339,15 @@
                 <h2 class="text-3xl font-bold text-indigo-900">Mock Tests</h2>
                 <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
             </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Available Mock Tests -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Available Mock Tests Table -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Mock Tests</h3>
                     <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
                         <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="test-table" id="availableTable">
+                    <div class="overflow-x-auto w-full">
+                        <table class="test-table w-full" id="availableTable">
                             <thead>
                                 <tr>
                                     <th>Test</th>
@@ -360,13 +360,24 @@
                             </thead>
                             <tbody></tbody>
                         </table>
-                        <div id="availablePagination" class="table-pagination"></div>
                     </div>
+                    <div id="availablePagination" class="table-pagination"></div>
                 </section>
-                <!-- Progress Overview -->
+                <!-- Your Progress -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Overview</h3>
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Your Progress</h3>
                     <div id="progressList" style="max-height:110px;overflow-y:auto;"></div>
+                </section>
+                <!-- Certificates -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Certificates</h3>
+                    <button id="downloadCertBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Download Certificate</button>
+                    <div id="badgePanel"></div>
+                </section>
+                <!-- Recommendations -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Personalized Study Recommendations</h3>
+                    <ul class="recommend-list" id="recommendations"></ul>
                 </section>
             </div>
             <!-- Upcoming Test Countdown -->
@@ -383,22 +394,42 @@
                 <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
                 <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
             </header>
-            <!-- Assessment Performance Table -->
-            <div class="bg-white rounded-2xl shadow-xl p-6 card">
-                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Assessment Performance & Reviews</h3>
-                <div class="result-table-container">
-                  <table class="result-table" id="historyTable">
-                    <thead>
-                      <tr>
-                        <th>Test</th>
-                        <th>Date</th>
-                        <th>Score</th>
-                        <th>Review</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
-                  <div id="historyPagination" class="table-pagination"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Assessment Performance & Reviews</h3>
+                    <div class="overflow-x-auto w-full">
+                      <table class="result-table w-full" id="historyTable">
+                        <thead>
+                          <tr>
+                            <th>Test</th>
+                            <th>Date</th>
+                            <th>Score</th>
+                            <th>Review</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                    <div id="historyPagination" class="table-pagination"></div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 card">
+                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Assessments</h3>
+                    <div class="overflow-x-auto w-full">
+                        <table class="test-table w-full" id="examAvailableTable">
+                            <thead>
+                              <tr>
+                                <th>Test</th>
+                                <th>Description</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="examAvailablePagination" class="table-pagination"></div>
                 </div>
             </div>
         </section>
@@ -538,7 +569,6 @@
         <!-- Modal root for dynamic popups -->
         <div id="modalRoot"></div>
     </main>
-<script src="student_dashboard.js"></script>
- 
+        <script src="student_dashboard.js"></script>
 </body>
 </html>
