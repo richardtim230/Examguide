@@ -8,11 +8,11 @@
        "skipLibCheck": true,
        "forceConsistentCasingInFileNames": true,
        "outDir": "./dist",
-       "rootDir": "./src",
+       "rootDir": "./",
        "moduleResolution": "node",
        "resolveJsonModule": true
      },
-     "include": ["src/**/*"],
+     "include": ["/**/*"],
      "exclude": ["node_modules"]
    }
    
