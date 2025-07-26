@@ -1,5 +1,6 @@
 // =================== CONFIG ===================
 const API_URL = "https://examguide.onrender.com/api/";
+const FILE_BASE_URL = "https://examguide.onrender.com"; // Change to your backend base URL
 const token = localStorage.getItem("token");
 
 // =================== GLOBAL STATE ===================
@@ -836,8 +837,8 @@ async function loadChatMessages(userId) {
       const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
       let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
       let img = (msg.file && msg.file.url)
-        ? `<img src="${msg.file.url}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;" alt="Attachment">`
-        : "";
+  ? `<img src="${FILE_BASE_URL}${msg.file.url}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;" alt="Attachment">`
+  : "";
       return `
         <div style="margin-bottom:9px;display:flex;flex-direction:column;align-items:${isMe?'flex-end':'flex-start'};">
           <div style="background:${isMe?'#3b82f6':'#ede9fe'};color:${isMe?'#fff':'#333'};padding:7px 13px;border-radius:13px;max-width:88%;box-shadow:0 1px 3px #0001;">
