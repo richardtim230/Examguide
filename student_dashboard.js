@@ -1,4 +1,3 @@
-
 // =================== CONFIG ===================
 const API_URL = "https://examguide.onrender.com/api/";
 const token = localStorage.getItem("token");
@@ -186,7 +185,7 @@ function renderLeaderboard() {
         ? lb.map((stu, idx) => `
           <div class="scoreboard-item rank-${idx+1}">
             <div class="scoreboard-rank">#${idx+1}</div>
-            <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="Profile">
+            <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="">
             <div class="scoreboard-name">${stu.fullname || stu.username}</div>
             <div class="scoreboard-score">${stu.totalScore} pts</div>
             <span class="scoreboard-badge badge-rank-${idx+1}">${['🥇','🥈','🥉'][idx]}</span>
@@ -210,6 +209,104 @@ async function fetchAnnouncements() {
       </div>`;
   });
   document.getElementById("announcementsPanel").innerHTML = html || "No new announcements.";
+}
+
+// =================== BROADCAST MESSAGES MODAL ===================
+async function openBroadcastModal() {
+  document.getElementById("broadcastModal").style.display = "flex";
+  try {
+    const resp = await fetchWithAuth(API_URL + "broadcasts");
+    const broadcasts = await resp.json();
+    let html = "";
+    if (!Array.isArray(broadcasts) || broadcasts.length === 0) {
+      html = `<div style="color:#888;text-align:center;">No broadcasts yet.</div>`;
+    } else {
+      html = broadcasts.map(b => `
+        <div style="border-left:4px solid #3a86ff;padding-left:12px;margin-bottom:16px;">
+          <div style="font-weight:bold;font-size:1.07em;">${b.title || ''}</div>
+          <div style="margin:7px 0;">${b.message || ''}</div>
+          ${b.image ? `<img src="${b.image}" alt="Broadcast image" style="max-width:100%;border-radius:8px;margin:8px 0;">` : ''}
+          ${b.link ? `<a href="${b.link}" target="_blank" style="color:#3a86ff;text-decoration:underline;">${b.link}</a>` : ''}
+          <div style="font-size:0.99em;color:#585;font-weight:500;margin-top:4px;">${formatDate(b.createdAt)}</div>
+        </div>
+      `).join('');
+    }
+    document.getElementById("broadcastList").innerHTML = html;
+  } catch (e) {
+    document.getElementById("broadcastList").innerHTML = "<div style='color:#f25f5c'>Failed to load broadcasts.</div>";
+  }
+}
+function closeBroadcastModal() {
+  document.getElementById("broadcastModal").style.display = "none";
+}
+
+// =================== SCHEDULED EXAM MODAL (Exam & Mock Test) ===================
+async function openScheduledExamModal() {
+  if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) {
+    document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams right now.</div>`;
+    document.getElementById("scheduledExamModal").style.display = "flex";
+    return;
+  }
+  const now = Date.now();
+  // Find the next scheduled exam (not taken, start in future, status active)
+  let sched = availableSchedulesCache.find(s => {
+    const set = s.examSet;
+    const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
+    const start = s.start ? new Date(s.start).getTime() : 0;
+    return set && set.status === "ACTIVE" && !taken && start > now;
+  });
+  // If none in future, show soonest active not taken exam
+  if (!sched) {
+    sched = availableSchedulesCache.find(s => {
+      const set = s.examSet;
+      const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
+      return set && set.status === "ACTIVE" && !taken;
+    });
+  }
+
+  if (!sched || !sched.examSet) {
+    document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams at this time.</div>`;
+    document.getElementById("scheduledExamModal").style.display = "flex";
+    return;
+  }
+  const set = sched.examSet;
+  const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
+  const startDt = sched.start ? new Date(sched.start) : null;
+  const endDt = sched.end ? new Date(sched.end) : null;
+
+  let canTake =
+    !taken &&
+    set.status === "ACTIVE" &&
+    startDt &&
+    now >= startDt.getTime() &&
+    (!endDt || now <= endDt.getTime());
+
+  let btnHtml = canTake
+    ? `<button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="startTest('${set._id}')">Start</button>`
+    : taken
+    ? `<span style="color:#999;">Already Completed</span>`
+    : startDt && now < startDt.getTime()
+    ? `<span style="color:#999;">Not Yet Open</span>`
+    : `<span style="color:#999;">Closed</span>`;
+
+  document.getElementById("scheduledExamContent").innerHTML = `
+    <div style="margin-bottom:14px;text-align:center;">
+      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(set.title)}&background=ede9fe&color=3b82f6&size=80&rounded=true" alt="Exam" style="width:80px;height:80px;border-radius:12px;margin-bottom:10px;">
+      <div style="font-size:1.25em;font-weight:bold;color:#3b82f6;">${set.title}</div>
+    </div>
+    <div style="margin-bottom:7px;">
+      <b>Start:</b> ${startDt ? startDt.toLocaleString() : '-'}
+    </div>
+    <div style="margin-bottom:7px;">
+      <b>End:</b> ${endDt ? endDt.toLocaleString() : '-'}
+    </div>
+    <div style="margin:14px 0;">${btnHtml}</div>
+  `;
+  document.getElementById("scheduledExamModal").style.display = "flex";
+}
+
+function closeScheduledExamModal() {
+  document.getElementById("scheduledExamModal").style.display = "none";
 }
 
 // =================== MOCK TESTS (Available Assessments) ===================
@@ -696,6 +793,10 @@ window.renderAvailableTablePage = renderAvailableTablePage;
 window.renderHistoryTablePage = renderHistoryTablePage;
 window.renderExamAvailableTablePage = renderExamAvailableTablePage;
 window.openReviewTab = openReviewTab;
+window.openBroadcastModal = openBroadcastModal;
+window.closeBroadcastModal = closeBroadcastModal;
+window.openScheduledExamModal = openScheduledExamModal;
+window.closeScheduledExamModal = closeScheduledExamModal;
 
 // ============ INIT ===========
 async function initDashboard() {
