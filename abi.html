@@ -8,9 +8,16 @@
     <style>
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .sidebar { transition: transform 0.3s ease; }
+        .sidebar { 
+            transition: transform 0.3s ease; 
+            z-index: 1001; /* Higher than overlay */
+        }
         .sidebar.open { transform: translateX(0); }
-        .sidebar-overlay { transition: opacity 0.3s ease; }
+        .sidebar-overlay { 
+            transition: opacity 0.3s ease; 
+            z-index: 1000; /* Below sidebar */
+            background-color: rgba(0, 0, 0, 0.5); /* Ensure visible when active */
+        }
         .progress-circle { 
             background: conic-gradient(#3b82f6 var(--progress), #e5e7eb 0); 
             display: flex; 
@@ -38,20 +45,18 @@
         @media (max-width: 767px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-            .sidebar-overlay { opacity: 0; }
-            .sidebar-overlay.hidden { display: none; }
-            .sidebar-overlay:not(.hidden) { opacity: 0.5; }
+            .sidebar-overlay { 
+                opacity: 0; 
+                display: none; 
+            }
+            .sidebar-overlay.active { 
+                display: block; 
+                opacity: 0.5; 
+            }
         }
     </style>
 </head>
 <body class="bg-gray-100 font-sans">
-    <div id="preloaderSpinner" class="fixed inset-0 flex items-center justify-center bg-white transition-opacity duration-300" style="z-index: 9999;">
-        <div class="text-center">
-            <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="mt-2 text-gray-600">Loading dashboard...</p>
-        </div>
-    </div>
-
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar fixed md:static w-64 bg-gray-800 text-white h-full md:h-auto overflow-y-auto">
@@ -295,319 +300,311 @@
             </div>
         </div>
     </div>
-<script>
-    // =================== CONFIG ===================
-    const API_URL = "https://examguide.onrender.com/api/";
-    const token = localStorage.getItem("token");
 
-    // =================== GLOBAL STATE ===================
-    let blogger = {};
-    let postsCache = [];
-    let followersCache = [];
-    let listingsCache = [];
+    <script>
+        // =================== CONFIG ===================
+        const API_URL = "https://examguide.onrender.com/api/";
+        const token = localStorage.getItem("token");
 
-    // ============ UTILS ==============
-    function hidePreloaderSpinner() {
-        const spinner = document.getElementById("preloaderSpinner");
-        if (spinner) {
-            spinner.style.opacity = "0";
-            setTimeout(() => { spinner.style.display = "none"; }, 350);
+        // =================== GLOBAL STATE ===================
+        let blogger = {};
+        let postsCache = [];
+        let followersCache = [];
+        let listingsCache = [];
+
+        // ============ UTILS ==============
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            const el = document.getElementById(tabId);
+            if (el) el.classList.add('active');
         }
-    }
 
-    function showTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        const el = document.getElementById(tabId);
-        if (el) el.classList.add('active');
-    }
-
-    function setSidebarActive(tabId) {
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg');
-            if (link.getAttribute('data-tab') === tabId) {
-                link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
-            }
-        });
-    }
-
-    // ================= SIDEBAR & NAVIGATION ================
-    (function setupSidebar() {
-        const menuToggle = document.getElementById('menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        if (menuToggle && sidebar && sidebarOverlay) {
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('open');
-                sidebarOverlay.classList.toggle('hidden');
-                document.body.classList.toggle('overflow-hidden');
-            });
-            sidebarOverlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            });
-        }
-        // Tab switching
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                const tabId = link.getAttribute('data-tab');
-                showTab(tabId);
-                setSidebarActive(tabId);
-                if (window.innerWidth < 768) {
-                    sidebar.classList.remove('open');
-                    sidebarOverlay.classList.add('hidden');
-                    document.body.classList.remove('overflow-hidden');
+        function setSidebarActive(tabId) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg');
+                if (link.getAttribute('data-tab') === tabId) {
+                    link.classList.add('text-blue-200', 'bg-indigo-700', 'rounded-lg');
                 }
-                localStorage.setItem('blogger_dashboard_active_tab', tabId);
-                location.hash = tabId;
             });
-        });
-        // Restore last tab
-        window.addEventListener('DOMContentLoaded', () => {
-            let tabId = location.hash.replace('#', '') || localStorage.getItem('blogger_dashboard_active_tab') || 'overview';
-            if (!document.getElementById(tabId)) tabId = 'overview';
-            showTab(tabId);
-            setSidebarActive(tabId);
-        });
-        window.addEventListener('hashchange', () => {
-            let tabId = location.hash.replace('#', '') || 'overview';
-            if (document.getElementById(tabId)) {
+        }
+
+        // ================= SIDEBAR & NAVIGATION ================
+        (function setupSidebar() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            if (menuToggle && sidebar && sidebarOverlay) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    sidebarOverlay.classList.toggle('active'); // Use 'active' class for overlay
+                    document.body.classList.toggle('overflow-hidden');
+                });
+                sidebarOverlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('active');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            }
+            // Tab switching
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', e => {
+                    console.log('Nav link clicked:', link.getAttribute('data-tab')); // Debug click
+                    e.preventDefault();
+                    const tabId = link.getAttribute('data-tab');
+                    showTab(tabId);
+                    setSidebarActive(tabId);
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.remove('open');
+                        sidebarOverlay.classList.remove('active');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                    localStorage.setItem('blogger_dashboard_active_tab', tabId);
+                    location.hash = tabId;
+                });
+            });
+            // Restore last tab
+            window.addEventListener('DOMContentLoaded', () => {
+                let tabId = location.hash.replace('#', '') || localStorage.getItem('blogger_dashboard_active_tab') || 'overview';
+                if (!document.getElementById(tabId)) tabId = 'overview';
                 showTab(tabId);
                 setSidebarActive(tabId);
-            }
-        });
-    })();
+            });
+            window.addEventListener('hashchange', () => {
+                let tabId = location.hash.replace('#', '') || 'overview';
+                if (document.getElementById(tabId)) {
+                    showTab(tabId);
+                    setSidebarActive(tabId);
+                }
+            });
+        })();
 
-    // =================== FETCH HELPERS ===================
-    async function fetchWithAuth(url, options = {}) {
-        options.headers = options.headers || {};
-        if (token) options.headers['Authorization'] = `Bearer ${token}`;
-        const resp = await fetch(url, options);
-        if (resp.status === 401 || resp.status === 403) {
-            localStorage.removeItem("token");
-            window.location.href = "/login";
-            throw new Error("Session expired.");
-        }
-        if (!resp.ok) {
-            throw new Error(`HTTP error! status: ${resp.status}`);
-        }
-        return resp;
-    }
-
-    // =================== PROFILE ===================
-    async function fetchProfile() {
-        const resp = await fetchWithAuth(API_URL + "auth/me");
-        const data = await resp.json();
-        blogger = data.user;
-        blogger.id = blogger._id || blogger.id;
-        document.getElementById("bloggerName").innerText = blogger.username || 'Sarah';
-        document.getElementById("editName").value = blogger.username || 'Sarah';
-        document.getElementById("editEmail").value = blogger.email || 'sarah@example.com';
-        document.getElementById("editPhone").value = blogger.phone || '+1234567890';
-    }
-
-    // =================== POSTS ===================
-    async function fetchPosts() {
-        const resp = await fetchWithAuth(API_URL + "posts");
-        postsCache = await resp.json();
-        renderPostsTable();
-    }
-
-    function renderPostsTable() {
-        const tbody = document.getElementById("postsTable");
-        let html = "";
-        postsCache.forEach(post => {
-            html += `
-                <tr>
-                    <td>${post.title}</td>
-                    <td>${new Date(post.createdAt).toLocaleDateString()}</td>
-                    <td>${post.views}</td>
-                    <td>${post.status}</td>
-                    <td>
-                        <button class="text-blue-500 hover:underline" onclick="openPostModal('${post._id}')">Edit</button>
-                        <button class="text-red-500 hover:underline" onclick="deletePost('${post._id}')">Delete</button>
-                    </td>
-                </tr>`;
-        });
-        tbody.innerHTML = html || "<tr><td colspan='5' class='text-gray-400 text-center'>No posts yet.</td></tr>";
-    }
-
-    window.openPostModal = function(postId) {
-        const modal = document.getElementById("postModal");
-        const titleInput = document.getElementById("postTitle");
-        const contentInput = document.getElementById("postContent");
-        const statusSelect = document.getElementById("postStatus");
-        if (postId) {
-            const post = postsCache.find(p => p._id === postId);
-            if (post) {
-                titleInput.value = post.title;
-                contentInput.value = post.content;
-                statusSelect.value = post.status.toLowerCase();
-            }
-        } else {
-            titleInput.value = "";
-            contentInput.value = "";
-            statusSelect.value = "draft";
-        }
-        modal.classList.remove("hidden");
-    };
-
-    window.deletePost = async function(postId) {
-        if (!confirm("Are you sure you want to delete this post?")) return;
-        await fetchWithAuth(API_URL + "posts/" + postId, { method: "DELETE" });
-        fetchPosts();
-    };
-
-    document.getElementById("createPostBtn").onclick = () => openPostModal();
-    document.getElementById("cancelPostBtn").onclick = () => {
-        document.getElementById("postModal").classList.add("hidden");
-    };
-    document.getElementById("savePostBtn").onclick = async () => {
-        const title = document.getElementById("postTitle").value.trim();
-        const content = document.getElementById("postContent").value.trim();
-        const status = document.getElementById("postStatus").value;
-        if (!title || !content) return alert("Title and content are required.");
-        const payload = { title, content, status };
-        await fetchWithAuth(API_URL + "posts", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
-        document.getElementById("postModal").classList.add("hidden");
-        fetchPosts();
-    };
-
-    // =================== FOLLOWERS ===================
-    async function fetchFollowers() {
-        const resp = await fetchWithAuth(API_URL + "followers");
-        followersCache = await resp.json();
-        renderFollowers();
-    }
-
-    function renderFollowers() {
-        const container = document.getElementById("followersContainer") || document.createElement("div");
-        container.id = "followersContainer";
-        let html = "";
-        followersCache.forEach(follower => {
-            html += `
-                <div class="bg-white p-4 rounded-lg shadow flex items-center">
-                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(follower.username)}&background=3a86ff&color=fff&rounded=true" class="w-10 h-10 rounded-full mr-3" alt="Profile">
-                    <p class="font-medium">${follower.username}</p>
-                </div>`;
-        });
-        container.innerHTML = html || "<div class='text-gray-400 text-center'>No followers yet.</div>";
-        if (!document.getElementById("followers").contains(container)) {
-            document.getElementById("followers").appendChild(container);
-        }
-    }
-
-    // =================== MARKETPLACE LISTINGS ===================
-    async function fetchListings() {
-        const resp = await fetchWithAuth(API_URL + "marketplace/listings");
-        listingsCache = await resp.json();
-        renderListingsTable();
-    }
-
-    function renderListingsTable() {
-        const tbody = document.getElementById("marketplaceTable");
-        let html = "";
-        listingsCache.forEach(listing => {
-            html += `
-                <tr>
-                    <td>${listing.item}</td>
-                    <td>$${listing.price}</td>
-                    <td>${listing.status}</td>
-                    <td>
-                        <button class="text-blue-500 hover:underline" onclick="editListing('${listing._id}')">Edit</button>
-                        <button class="text-red-500 hover:underline" onclick="deleteListing('${listing._id}')">Delete</button>
-                    </td>
-                </tr>`;
-        });
-        tbody.innerHTML = html || "<tr><td colspan='4' class='text-gray-400 text-center'>No listings yet.</td></tr>";
-    }
-
-    window.editListing = function(listingId) {
-        alert("Edit listing modal coming soon (integrate listing UI and fetch logic)");
-    };
-
-    window.deleteListing = async function(listingId) {
-        if (!confirm("Are you sure you want to delete this listing?")) return;
-        await fetchWithAuth(API_URL + "marketplace/listings/" + listingId, { method: "DELETE" });
-        fetchListings();
-    };
-
-    // =================== PROFILE SETTINGS ===================
-    document.getElementById("saveProfileBtn").onclick = async function() {
-        const username = document.getElementById("editName").value.trim();
-        const email = document.getElementById("editEmail").value.trim();
-        const phone = document.getElementById("editPhone").value.trim();
-        if (!username || !email) return alert("Name and email are required.");
-        const payload = { username, email, phone };
-        const resp = await fetchWithAuth(API_URL + "superadmin/me", {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
-        if (!resp.ok) {
-            const data = await resp.json();
-            alert(data.message || "Failed to update profile.");
-            return;
-        }
-        alert("Profile updated.");
-        fetchProfile();
-    };
-
-    document.getElementById("updatePasswordBtn").onclick = async function() {
-        const currentPassword = document.getElementById("currentPassword").value;
-        const newPassword = document.getElementById("newPassword").value;
-        const confirmNewPassword = document.getElementById("confirmNewPassword").value;
-        if (!currentPassword || !newPassword || !confirmNewPassword) return alert("All fields are required.");
-        if (newPassword !== confirmNewPassword) return alert("Passwords do not match.");
-        const resp = await fetchWithAuth(API_URL + "auth/change-password", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ currentPassword, newPassword })
-        });
-        if (!resp.ok) {
-            const data = await resp.json();
-            alert(data.message || "Failed to update password.");
-            return;
-        }
-        alert("Password updated.");
-        document.getElementById("currentPassword").value = "";
-        document.getElementById("newPassword").value = "";
-        document.getElementById("confirmNewPassword").value = "";
-    };
-
-    // =================== LOGOUT ===================
-    document.getElementById("confirm-logout").onclick = () => {
-        localStorage.clear();
-        window.location.href = '/login';
-    };
-
-    // =================== INIT ===================
-    async function initDashboard() {
-        try {
-            console.log("Token:", token); // Debug token
-            if (!token) throw new Error("No token found, redirecting to login.");
-            await fetchProfile();
-            await fetchPosts();
-            await fetchFollowers();
-            await fetchListings();
-            hidePreloaderSpinner();
-        } catch (error) {
-            console.error("Dashboard initialization error:", error);
-            hidePreloaderSpinner(); // Hide spinner even on error
-            if (error.message.includes("Session expired.")) {
+        // =================== FETCH HELPERS ===================
+        async function fetchWithAuth(url, options = {}) {
+            options.headers = options.headers || {};
+            if (token) options.headers['Authorization'] = `Bearer ${token}`;
+            const resp = await fetch(url, options);
+            if (resp.status === 401 || resp.status === 403) {
+                localStorage.removeItem("token");
                 window.location.href = "/login";
+                throw new Error("Session expired.");
+            }
+            if (!resp.ok) {
+                throw new Error(`HTTP error! status: ${resp.status}`);
+            }
+            return resp;
+        }
+
+        // =================== PROFILE ===================
+        async function fetchProfile() {
+            const resp = await fetchWithAuth(API_URL + "auth/me");
+            const data = await resp.json();
+            blogger = data.user;
+            blogger.id = blogger._id || blogger.id;
+            document.getElementById("bloggerName").innerText = blogger.username || 'Sarah';
+            document.getElementById("editName").value = blogger.username || 'Sarah';
+            document.getElementById("editEmail").value = blogger.email || 'sarah@example.com';
+            document.getElementById("editPhone").value = blogger.phone || '+1234567890';
+        }
+
+        // =================== POSTS ===================
+        async function fetchPosts() {
+            const resp = await fetchWithAuth(API_URL + "posts");
+            postsCache = await resp.json();
+            renderPostsTable();
+        }
+
+        function renderPostsTable() {
+            const tbody = document.getElementById("postsTable");
+            let html = "";
+            postsCache.forEach(post => {
+                html += `
+                    <tr>
+                        <td>${post.title}</td>
+                        <td>${new Date(post.createdAt).toLocaleDateString()}</td>
+                        <td>${post.views}</td>
+                        <td>${post.status}</td>
+                        <td>
+                            <button class="text-blue-500 hover:underline" onclick="openPostModal('${post._id}')">Edit</button>
+                            <button class="text-red-500 hover:underline" onclick="deletePost('${post._id}')">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+            tbody.innerHTML = html || "<tr><td colspan='5' class='text-gray-400 text-center'>No posts yet.</td></tr>";
+        }
+
+        window.openPostModal = function(postId) {
+            const modal = document.getElementById("postModal");
+            const titleInput = document.getElementById("postTitle");
+            const contentInput = document.getElementById("postContent");
+            const statusSelect = document.getElementById("postStatus");
+            if (postId) {
+                const post = postsCache.find(p => p._id === postId);
+                if (post) {
+                    titleInput.value = post.title;
+                    contentInput.value = post.content;
+                    statusSelect.value = post.status.toLowerCase();
+                }
             } else {
-                alert("Failed to load dashboard. Check console for details.");
+                titleInput.value = "";
+                contentInput.value = "";
+                statusSelect.value = "draft";
+            }
+            modal.classList.remove("hidden");
+        };
+
+        window.deletePost = async function(postId) {
+            if (!confirm("Are you sure you want to delete this post?")) return;
+            await fetchWithAuth(API_URL + "posts/" + postId, { method: "DELETE" });
+            fetchPosts();
+        };
+
+        document.getElementById("createPostBtn").onclick = () => openPostModal();
+        document.getElementById("cancelPostBtn").onclick = () => {
+            document.getElementById("postModal").classList.add("hidden");
+        };
+        document.getElementById("savePostBtn").onclick = async () => {
+            const title = document.getElementById("postTitle").value.trim();
+            const content = document.getElementById("postContent").value.trim();
+            const status = document.getElementById("postStatus").value;
+            if (!title || !content) return alert("Title and content are required.");
+            const payload = { title, content, status };
+            await fetchWithAuth(API_URL + "posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            document.getElementById("postModal").classList.add("hidden");
+            fetchPosts();
+        };
+
+        // =================== FOLLOWERS ===================
+        async function fetchFollowers() {
+            const resp = await fetchWithAuth(API_URL + "followers");
+            followersCache = await resp.json();
+            renderFollowers();
+        }
+
+        function renderFollowers() {
+            const container = document.getElementById("followersContainer") || document.createElement("div");
+            container.id = "followersContainer";
+            let html = "";
+            followersCache.forEach(follower => {
+                html += `
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(follower.username)}&background=3a86ff&color=fff&rounded=true" class="w-10 h-10 rounded-full mr-3" alt="Profile">
+                        <p class="font-medium">${follower.username}</p>
+                    </div>`;
+            });
+            container.innerHTML = html || "<div class='text-gray-400 text-center'>No followers yet.</div>";
+            if (!document.getElementById("followers").contains(container)) {
+                document.getElementById("followers").appendChild(container);
             }
         }
-    }
 
-    window.addEventListener("DOMContentLoaded", initDashboard);
-</script>
+        // =================== MARKETPLACE LISTINGS ===================
+        async function fetchListings() {
+            const resp = await fetchWithAuth(API_URL + "marketplace/listings");
+            listingsCache = await resp.json();
+            renderListingsTable();
+        }
+
+        function renderListingsTable() {
+            const tbody = document.getElementById("marketplaceTable");
+            let html = "";
+            listingsCache.forEach(listing => {
+                html += `
+                    <tr>
+                        <td>${listing.item}</td>
+                        <td>$${listing.price}</td>
+                        <td>${listing.status}</td>
+                        <td>
+                            <button class="text-blue-500 hover:underline" onclick="editListing('${listing._id}')">Edit</button>
+                            <button class="text-red-500 hover:underline" onclick="deleteListing('${listing._id}')">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+            tbody.innerHTML = html || "<tr><td colspan='4' class='text-gray-400 text-center'>No listings yet.</td></tr>";
+        }
+
+        window.editListing = function(listingId) {
+            alert("Edit listing modal coming soon (integrate listing UI and fetch logic)");
+        };
+
+        window.deleteListing = async function(listingId) {
+            if (!confirm("Are you sure you want to delete this listing?")) return;
+            await fetchWithAuth(API_URL + "marketplace/listings/" + listingId, { method: "DELETE" });
+            fetchListings();
+        };
+
+        // =================== PROFILE SETTINGS ===================
+        document.getElementById("saveProfileBtn").onclick = async function() {
+            const username = document.getElementById("editName").value.trim();
+            const email = document.getElementById("editEmail").value.trim();
+            const phone = document.getElementById("editPhone").value.trim();
+            if (!username || !email) return alert("Name and email are required.");
+            const payload = { username, email, phone };
+            const resp = await fetchWithAuth(API_URL + "superadmin/me", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!resp.ok) {
+                const data = await resp.json();
+                alert(data.message || "Failed to update profile.");
+                return;
+            }
+            alert("Profile updated.");
+            fetchProfile();
+        };
+
+        document.getElementById("updatePasswordBtn").onclick = async function() {
+            const currentPassword = document.getElementById("currentPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+            if (!currentPassword || !newPassword || !confirmNewPassword) return alert("All fields are required.");
+            if (newPassword !== confirmNewPassword) return alert("Passwords do not match.");
+            const resp = await fetchWithAuth(API_URL + "auth/change-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ currentPassword, newPassword })
+            });
+            if (!resp.ok) {
+                const data = await resp.json();
+                alert(data.message || "Failed to update password.");
+                return;
+            }
+            alert("Password updated.");
+            document.getElementById("currentPassword").value = "";
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmNewPassword").value = "";
+        };
+
+        // =================== LOGOUT ===================
+        document.getElementById("confirm-logout").onclick = () => {
+            localStorage.clear();
+            window.location.href = '/login';
+        };
+
+        // =================== INIT ===================
+        async function initDashboard() {
+            try {
+                console.log("Token:", token); // Debug token
+                if (!token) throw new Error("No token found, redirecting to login.");
+                await fetchProfile();
+                await fetchPosts();
+                await fetchFollowers();
+                await fetchListings();
+            } catch (error) {
+                console.error("Dashboard initialization error:", error);
+                if (error.message.includes("Session expired.")) {
+                    window.location.href = "/login";
+                } else {
+                    alert("Failed to load dashboard. Check console for details.");
+                }
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", initDashboard);
+    </script>
 </body>
 </html>
