@@ -36,6 +36,7 @@ import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
+import bloggerRoutes from './routes/blogger.routes';
 
 dotenv.config();
 
@@ -296,6 +297,7 @@ app.delete("/api/progress", authenticate, async (req, res) => {
 app.use("/api/superadmin", superadminRoutes);
 
 // --- Main Features ---
+app.use('/api', bloggerRoutes);
 app.use("/api/questionsets", questionSetRoutes);
 app.use("/api/results", resultsRoutes);
 app.use("/api/schedules", scheduleRoutes);
