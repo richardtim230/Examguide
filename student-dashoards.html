@@ -503,12 +503,12 @@
                         <div>
                             <p class="font-medium text-gray-700">Calculus Textbook</p>
                             <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Get Textbook</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
                         </div>
                         <div>
                             <p class="font-medium text-gray-700">Physics Video Series</p>
                             <p class="text-gray-600 text-sm">Interactive lectures on mechanics.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Series</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch</button>
                         </div>
                     </div>
                 </section>
@@ -576,7 +576,40 @@
                             <label class="block text-sm font-medium text-gray-700">Phone</label>
                             <input id="editPhone" type="tel" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
-                        <button id="saveProfileBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Save Changes</button>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Faculty</label>
+                            <select id="editFaculty" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Select Faculty</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Department</label>
+                            <select id="editDepartment" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Level/Year</label>
+                            <select id="editLevel" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Select Level</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                                <option value="500">500</option>
+                                <option value="600">600</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">User ID</label>
+                            <input id="editStudentId" type="text" readonly disabled class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-500">
+                        </div>
+                        <button id="saveProfileBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button relative">
+                            <span id="profileSaveText">Save Changes</span>
+                            <span id="profileSaveLoader" style="display:none;position:absolute;right:16px;top:50%;transform:translateY(-50%);">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </button>
                     </div>
                 </section>
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
@@ -651,7 +684,7 @@
   <button id="lightboxPrev" style="position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:2.2em;background:none;border:none;color:white;cursor:pointer;z-index:2;display:none;">&#8678;</button>
   <img id="lightboxImg" src="" style="max-width:96vw;max-height:90vh;border-radius:10px;box-shadow:0 2px 18px #0008;display:block;margin:auto;">
   <button id="lightboxNext" style="position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:2.2em;background:none;border:none;color:white;cursor:pointer;z-index:2;display:none;">&#8680;</button>
-      </div>
+</div>
     </main>
     <script src="student_dashboard.js"></script>
 </body>
