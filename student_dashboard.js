@@ -806,12 +806,10 @@ async function fetchInbox() {
     chatListCache.map(chat =>
       `<option value="${chat.otherUserId}">${chat.otherUserName}</option>`
     ).join('');
-}
-// --- Chat Modal Global State
+}// --- Chat Modal Global State
 let currentChatUserId = null;
 let currentChatUserName = null;
 
-// Replace openChatModal implementation with:
 window.openChatModal = async function(otherUserId) {
   const chat = chatListCache.find(c => c.otherUserId === otherUserId);
   currentChatUserId = otherUserId;
@@ -837,7 +835,9 @@ async function loadChatMessages(userId) {
     chatMessagesDiv.innerHTML = data.map(msg => {
       const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
       let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
-      let img = msg.imageUrl ? `<img src="${msg.imageUrl}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;" alt="Attachment">` : "";
+      let img = (msg.file && msg.file.url)
+        ? `<img src="${msg.file.url}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;" alt="Attachment">`
+        : "";
       return `
         <div style="margin-bottom:9px;display:flex;flex-direction:column;align-items:${isMe?'flex-end':'flex-start'};">
           <div style="background:${isMe?'#3b82f6':'#ede9fe'};color:${isMe?'#fff':'#333'};padding:7px 13px;border-radius:13px;max-width:88%;box-shadow:0 1px 3px #0001;">
@@ -862,22 +862,30 @@ document.getElementById("chatSendForm").onsubmit = async function(e) {
   const text = document.getElementById("chatInput").value.trim();
   const imageInput = document.getElementById("chatImage");
   const file = imageInput.files && imageInput.files[0];
-  if (!text && !file) return;
-
-  let formData = new FormData();
-  if (text) formData.append("text", text);
-  if (file) formData.append("image", file);
 
   try {
-    await fetchWithAuth(API_URL + "messages/" + currentChatUserId, {
-      method: "POST",
-      body: formData
-    });
+    if (file) {
+      // Send image (and optional text) to /file endpoint
+      let formData = new FormData();
+      if (text) formData.append("text", text);
+      formData.append("file", file);
+      await fetchWithAuth(API_URL + "messages/" + currentChatUserId + "/file", {
+        method: "POST",
+        body: formData
+      });
+    } else if (text) {
+      // Send text-only to base endpoint
+      await fetchWithAuth(API_URL + "messages/" + currentChatUserId, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      });
+    } else {
+      return; // Don't send empty message
+    }
     document.getElementById("chatInput").value = "";
     document.getElementById("chatImage").value = "";
-    // Refresh chat
     await loadChatMessages(currentChatUserId);
-    // Optionally, refresh inbox
     fetchInbox();
   } catch (err) {
     alert("Failed to send message.");
