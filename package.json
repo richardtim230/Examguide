@@ -1,12 +1,14 @@
+
 {
   "name": "cbt-platform-backend",
   "version": "1.0.0",
   "description": "Backend for ExamGuide CBT Platform (faculty/department organized, superadmin/admin/student roles)",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node dist/index.js",
+    "dev": "nodemon --ext ts --exec ts-node src/index.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -18,7 +20,15 @@
     "multer": "^2.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.14.9",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   },
   "engines": {
     "node": ">=18.0.0"
