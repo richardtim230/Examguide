@@ -105,7 +105,65 @@ async function fetchWithAuth(url, options = {}) {
   }
   return resp;
 }
+// --- BROADCAST MODAL LOGIC ---
 
+async function fetchLatestBroadcast() {
+  try {
+    const resp = await fetchWithAuth(API_URL + "broadcasts/latest");
+    const b = await resp.json();
+    // Assume broadcast has: _id, title, message, type, imageUrl, link, seenBy
+    if (!b || !b._id) return null;
+    // Use localStorage to avoid repeat in same session
+    const key = `broadcast_seen_${b._id}`;
+    if (localStorage.getItem(key)) return null;
+    return b;
+  } catch { return null; }
+}
+
+function showBroadcastModal(b) {
+  let color = {
+    info: "#3a86ff", 
+    success: "#43aa8b", 
+    warning: "#ffb300", 
+    danger: "#ff3b47"
+  }[b.type || "info"];
+  const html = `
+    <div class="modal-backdrop" style="position:fixed;inset:0;z-index:2000;background:rgba(58,134,255,0.13);display:flex;align-items:center;justify-content:center;" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:380px;border-radius:18px;box-shadow:0 6px 32px #0003;padding:0;">
+        <div style="background:${color};padding:14px 24px;border-top-left-radius:18px;border-top-right-radius:18px;color:#fff;font-weight:700;font-size:1.18em;">
+          ${b.title}
+          <button class="close-modal" onclick="closeModal(event)" style="float:right;background:none;border:none;font-size:1.7em;color:#fff;opacity:0.83;">&times;</button>
+        </div>
+        <div style="padding:22px 18px;">
+          ${b.imageUrl ? `<img src="${b.imageUrl}" alt="info" style="max-width:100%;border-radius:8px;margin-bottom:14px;">` : ""}
+          <div style="font-size:1.07em;margin-bottom:12px;white-space:pre-wrap;">${b.message}</div>
+          ${b.link ? `<a href="${b.link}" target="_blank" style="color:${color};text-decoration:underline;font-size:1.05em;">Read more</a><br>` : ""}
+          <button class="btn" style="width:100%;margin-top:18px;background:${color};" onclick="ackBroadcast('${b._id}')">OK, Got it</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById("modalRoot").innerHTML = html;
+}
+
+async function ackBroadcast(id) {
+  // POST to ack endpoint (optional; backend dependent)
+  try { await fetchWithAuth(API_URL + "broadcasts/ack/" + id, {method:"POST"}); } catch {}
+  localStorage.setItem(`broadcast_seen_${id}`, "1");
+  closeModal();
+}
+
+function closeModal(e) {
+  if (!e || (e.target && (e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')))) {
+    document.getElementById("modalRoot").innerHTML = "";
+  }
+}
+window.closeModal = closeModal; // Expose for in-modal onclicks
+
+// On dashboard tab load, show broadcast if exists
+async function maybeShowBroadcastOnDashboard() {
+  const b = await fetchLatestBroadcast();
+  if (b) showBroadcastModal(b);
+}
 // =================== PROFILE ===================
 async function fetchFacultiesAndDepartments() {
   const [faculties, departments] = await Promise.all([
@@ -699,7 +757,7 @@ window.openReviewTab = openReviewTab;
 
 // ============ INIT ===========
 async function initDashboard() {
-  if (!token) return window.location.href = "/login";
+  if (!token) return window.location.href = "/mock-icthallb";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
   await fetchProfile();
@@ -711,5 +769,8 @@ async function initDashboard() {
   await fetchInbox();
   hidePreloaderSpinner();
 }
-
+// Insert at the end of initDashboard or when dashboard tab is shown:
+if (document.getElementById('dashboard').classList.contains('active')) {
+  maybeShowBroadcastOnDashboard();
+}
 window.addEventListener("DOMContentLoaded", initDashboard);
