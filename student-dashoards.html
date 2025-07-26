@@ -646,6 +646,12 @@
     </form>
   </div>
 </div>
+        <!-- Chat Image Lightbox Modal with Swiping -->
+<div id="chatImageLightbox" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;flex-direction:column;">
+  <button id="lightboxPrev" style="position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:2.2em;background:none;border:none;color:white;cursor:pointer;z-index:2;display:none;">&#8678;</button>
+  <img id="lightboxImg" src="" style="max-width:96vw;max-height:90vh;border-radius:10px;box-shadow:0 2px 18px #0008;display:block;margin:auto;">
+  <button id="lightboxNext" style="position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:2.2em;background:none;border:none;color:white;cursor:pointer;z-index:2;display:none;">&#8680;</button>
+      </div>
     </main>
     <script src="student_dashboard.js"></script>
 </body>
