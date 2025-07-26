@@ -588,11 +588,12 @@ o-700', 'rounded-lg');
         // =================== INIT ===================
         async function initDashboard() {
             if (!token) return window.location.href = "/login";
+            hidePreloaderSpinner();
             await fetchProfile();
             await fetchPosts();
             await fetchFollowers();
             await fetchListings();
-            hidePreloaderSpinner();
+            
         }
 
         window.addEventListener("DOMContentLoaded", initDashboard);
