@@ -842,10 +842,13 @@ async function initDashboard() {
   await fetchAnnouncements();
   await fetchAvailableTests();
   await fetchInbox();
+  await fetchBroadcasts();
   hidePreloaderSpinner();
-}
-// Insert at the end of initDashboard or when dashboard tab is shown:
+  // Insert at the end of initDashboard or when dashboard tab is shown:
 if (document.getElementById('dashboard').classList.contains('active')) {
   maybeShowBroadcastOnDashboard();
 }
+  showScheduleOnLoad();
+}
+
 window.addEventListener("DOMContentLoaded", initDashboard);
