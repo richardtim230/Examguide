@@ -235,6 +235,41 @@
             border-top:8px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Modal Backdrop for new modals */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(33, 37, 41, 0.29);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-backdrop[style*="display: flex"] {
+            display: flex !important;
+        }
+        .modal {
+            background: #fff;
+            padding: 2em 1.5em 1.5em 1.5em;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px #0003;
+            min-width: 320px;
+            max-width: 95vw;
+            position: relative;
+            opacity: 1;
+            pointer-events: all;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            color: #3a86ff;
+            font-size: 1.5em;
+            cursor: pointer;
+            position: absolute;
+            right: 0.8em;
+            top: 0.65em;
+        }
     </style>
 </head>
 <body class="bg-gradient font-sans min-h-screen">
@@ -267,6 +302,12 @@
                 <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
                 <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
                 <li><a href="#logout" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+                <li>
+                  <a href="#" onclick="openBroadcastModal()" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcasts</span>
+                  </a>
+                </li>
             </ul>
         </nav>
     </aside>
@@ -335,9 +376,12 @@
 
         <!-- Mock Tests Tab -->
         <section id="mock-tests" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Mock Tests</h2>
-                <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex justify-between items-center">
+                <div>
+                  <h2 class="text-3xl font-bold text-indigo-900">Mock Tests</h2>
+                  <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
+                </div>
+                <button onclick="openScheduledExamModal()" class="ml-4 px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200">View Scheduled Exam</button>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                 <!-- Available Mock Tests Table -->
@@ -390,9 +434,12 @@
 
         <!-- Exams Tab -->
         <section id="exams" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
-                <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex justify-between items-center">
+                <div>
+                  <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
+                  <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
+                </div>
+                <button onclick="openScheduledExamModal()" class="ml-4 px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200">View Scheduled Exam</button>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white rounded-2xl shadow-xl p-6 card">
@@ -456,12 +503,12 @@
                         <div>
                             <p class="font-medium text-gray-700">Calculus Textbook</p>
                             <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Get Textbook</button>
                         </div>
                         <div>
                             <p class="font-medium text-gray-700">Physics Video Series</p>
                             <p class="text-gray-600 text-sm">Interactive lectures on mechanics.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Now</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Series</button>
                         </div>
                     </div>
                 </section>
@@ -497,7 +544,7 @@
                         <select id="recipientSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
                             <option>Select Recipient</option>
                         </select>
-                        <textarea id="messageInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
+                        <textarea id="messageInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..."></textarea>
                         <div class="flex space-x-3">
                             <button id="cancelMessageBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
                             <button id="sendMessageBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
@@ -568,7 +615,26 @@
 
         <!-- Modal root for dynamic popups -->
         <div id="modalRoot"></div>
+
+        <!-- Broadcast Messages Modal -->
+        <div id="broadcastModal" class="modal-backdrop" style="display:none;">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:500px;min-width:320px;">
+            <button class="close-modal" onclick="closeBroadcastModal()" style="float:right;font-size:1.5em;">&times;</button>
+            <h2 style="margin-bottom:1em;">📢 Broadcasts</h2>
+            <div id="broadcastList"></div>
+          </div>
+        </div>
+
+        <!-- Scheduled Exam Modal -->
+        <div id="scheduledExamModal" class="modal-backdrop" style="display:none;">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width:420px;">
+            <button class="close-modal" onclick="closeScheduledExamModal()" style="float:right;font-size:1.5em;">&times;</button>
+            <h2 style="margin-bottom:1em;">🗓️ Scheduled Exam</h2>
+            <div id="scheduledExamContent"></div>
+          </div>
+        </div>
+
     </main>
-        <script src="student_dashboard.js"></script>
+    <script src="student_dashboard.js"></script>
 </body>
 </html>
