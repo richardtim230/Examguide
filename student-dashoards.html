@@ -380,59 +380,5 @@
         </main>
     </div>
 
-    <script>
-        function openAnnouncementsModal() {
-            const modal = document.getElementById('announcementsModal');
-            const content = document.getElementById('announcementsModalContent');
-            const panelContent = document.getElementById('announcementsPanel').innerHTML;
-            content.innerHTML = panelContent || '<div class="text-gray-400">No new announcements.</div>';
-            modal.classList.remove('hidden');
-        }
-
-        function closeAnnouncementsModal() {
-            document.getElementById('announcementsModal').classList.add('hidden');
-        }
-
-        function openScheduledExamModal() {
-            const modal = document.getElementById('scheduledExamModal');
-            const titleEl = document.getElementById('modalTestTitle');
-            const descEl = document.getElementById('modalTestDescription');
-            const startEl = document.getElementById('modalTestStart');
-            const endEl = document.getElementById('modalTestEnd');
-            const statusEl = document.getElementById('modalTestStatus');
-            const startBtn = document.getElementById('modalStartButton');
-
-            if (nextTest && nextTestStart) {
-                const now = Date.now();
-                const startDt = new Date(nextTestStart);
-                const sched = availableSchedulesCache.find(s => s.examSet && s.examSet._id === nextTest._id);
-                const endDt = sched && sched.end ? new Date(sched.end) : null;
-                const taken = resultsCache.some(r => r.examSet && r.examSet.title === nextTest.title);
-                const canTake = !taken && nextTest.status === "ACTIVE" && now >= startDt.getTime() && (!endDt || now <= endDt.getTime());
-                const isScheduled = now < startDt.getTime();
-
-                titleEl.innerText = nextTest.title || 'Test Title';
-                descEl.innerText = nextTest.description || 'No description available.';
-                startEl.innerText = startDt ? startDt.toLocaleString() : '-';
-                endEl.innerText = endDt ? endDt.toLocaleString() : '-';
-                statusEl.innerText = taken ? 'Completed' : canTake ? 'Available' : isScheduled ? 'Scheduled' : 'Closed';
-                startBtn.style.display = canTake ? 'block' : 'none';
-                startBtn.onclick = canTake ? () => startTest(nextTest._id) : null;
-            } else {
-                titleEl.innerText = 'No Scheduled Test';
-                descEl.innerText = 'There are no upcoming tests scheduled at this time.';
-                startEl.innerText = '-';
-                endEl.innerText = '-';
-                statusEl.innerText = '-';
-                startBtn.style.display = 'none';
-            }
-
-            modal.classList.remove('hidden');
-        }
-
-        function closeScheduledExamModal() {
-            document.getElementById('scheduledExamModal').classList.add('hidden');
-        }
-    </script>
 </body>
 </html>
