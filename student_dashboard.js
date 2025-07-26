@@ -99,7 +99,7 @@ async function fetchWithAuth(url, options = {}) {
   const resp = await fetch(url, options);
   if (resp.status === 401 || resp.status === 403) {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/mock-icthallb";
     throw new Error("Session expired.");
   }
   return resp;
@@ -274,7 +274,7 @@ async function openBroadcastModal() {
 }
 function closeBroadcastModal() {
   document.getElementById("broadcastModal").style.display = "none";
-  window.location.href = '/';
+  window.location.href = '#';
   setTimeout(() => {
     if (window.opener) {
       window.close();
@@ -875,7 +875,7 @@ document.getElementById("updatePasswordBtn").onclick = async function() {
 // ============ LOGOUT ===========
 document.getElementById("confirm-logout").onclick = () => {
   localStorage.clear();
-  window.location.href = '/login';
+  window.location.href = '/mock-icthallb';
 };
 
 // ============ TEST START ===========
@@ -894,7 +894,7 @@ window.closeScheduledExamModal = closeScheduledExamModal;
 
 // ============ INIT ===========
 async function initDashboard() {
-  if (!token) return window.location.href = "/login";
+  if (!token) return window.location.href = "/mock-icthallb";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
   await fetchProfile();
