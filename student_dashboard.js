@@ -73,11 +73,6 @@ function formatDate(dt) {
         sidebarOverlay.classList.add('hidden');
         document.body.classList.remove('overflow-hidden');
       }
-      // Inside your tab switching handler
-if (tabId === "mock-tests" || tabId === "exams") {
-  maybeShowScheduledTestModal();
-}
- 
       localStorage.setItem('student_dashboard_active_tab', tabId);
       location.hash = tabId;
     });
@@ -105,140 +100,12 @@ async function fetchWithAuth(url, options = {}) {
   const resp = await fetch(url, options);
   if (resp.status === 401 || resp.status === 403) {
     localStorage.removeItem("token");
-    window.location.href = "/mock-icthallb";
+    window.location.href = "/login";
     throw new Error("Session expired.");
   }
   return resp;
 }
-function showScheduledTestModal(sched) {
-  // Sched: object with examSet (title/desc), start, end, status, etc.
-  let now = Date.now();
-  let status = "Closed";
-  if (sched.examSet.status === "ACTIVE") {
-    if (sched.start && now < new Date(sched.start).getTime()) status = "Scheduled";
-    else if (
-      sched.start &&
-      sched.end &&
-      now >= new Date(sched.start).getTime() &&
-      now <= new Date(sched.end).getTime()
-    ) status = "Available";
-    else if (sched.end && now > new Date(sched.end).getTime()) status = "Closed";
-  }
-  const taken = resultsCache.some(r =>
-    r.examSet && (r.examSet.title === sched.examSet.title)
-  );
-  const canTake =
-    status === "Available" && !taken;
 
-  let html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()" style="max-width:520px;">
-        <button class="close-modal" onclick="closeModal(event)" style="float:right;background:none;border:none;font-size:2em;color:#888;">&times;</button>
-        <div style="padding:22px 28px;">
-          <div style="font-size:1.3em;font-weight:700;color:#3a86ff;margin-bottom:8px;">Current Scheduled Test</div>
-          <div style="font-size:1.12em;font-weight:600;margin-bottom:6px;">${sched.examSet.title}</div>
-          <div style="color:#555;margin-bottom:12px;">${sched.examSet.description || ''}</div>
-          <div>
-            <b>Start:</b> ${sched.start ? new Date(sched.start).toLocaleString() : '-'}<br>
-            <b>End:</b> ${sched.end ? new Date(sched.end).toLocaleString() : '-'}<br>
-            <b>Status:</b> ${status}
-          </div>
-          <div style="margin-top:22px;text-align:center;">
-            ${canTake
-              ? `<button class="btn" onclick="startTest('${sched.examSet._id}')">Start Assessment</button>`
-              : status === "Scheduled"
-                ? `<span style="color:var(--primary);">Not open yet.</span>`
-                : taken
-                  ? `<span class="badge">Completed</span>`
-                  : `<span class="badge">Closed</span>`
-            }
-          </div>
-        </div>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-}
-window.showScheduledTestModal = showScheduledTestModal;
-
-// Handler to check for current/upcoming scheduled test and show modal
-function maybeShowScheduledTestModal() {
-  // Use availableSchedulesCache, which should be up-to-date after fetchAvailableTests()
-  if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) return;
-  const now = Date.now();
-  // Find currently running or next scheduled
-  let sched = availableSchedulesCache.find(s =>
-    s.examSet && s.examSet.status === "ACTIVE" &&
-    s.start && now <= new Date(s.end).getTime()
-  );
-  if (!sched) {
-    // Fallback: show first in future
-    sched = availableSchedulesCache.find(s =>
-      s.examSet && s.examSet.status === "ACTIVE" &&
-      s.start && now < new Date(s.start).getTime()
-    );
-  }
-  if (sched) showScheduledTestModal(sched);
-}
-
-// --- BROADCAST MODAL LOGIC ---
-
-async function fetchLatestBroadcast() {
-  try {
-    const resp = await fetchWithAuth(API_URL + "broadcasts/latest");
-    const b = await resp.json();
-    // Assume broadcast has: _id, title, message, type, imageUrl, link, seenBy
-    if (!b || !b._id) return null;
-    // Use localStorage to avoid repeat in same session
-    const key = `broadcast_seen_${b._id}`;
-    if (localStorage.getItem(key)) return null;
-    return b;
-  } catch { return null; }
-}
-
-function showBroadcastModal(b) {
-  let color = {
-    info: "#3a86ff", 
-    success: "#43aa8b", 
-    warning: "#ffb300", 
-    danger: "#ff3b47"
-  }[b.type || "info"];
-  const html = `
-    <div class="modal-backdrop" style="position:fixed;inset:0;z-index:2000;background:rgba(58,134,255,0.13);display:flex;align-items:center;justify-content:center;" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()" style="max-width:380px;border-radius:18px;box-shadow:0 6px 32px #0003;padding:0;">
-        <div style="background:${color};padding:14px 24px;border-top-left-radius:18px;border-top-right-radius:18px;color:#fff;font-weight:700;font-size:1.18em;">
-          ${b.title}
-          <button class="close-modal" onclick="closeModal(event)" style="float:right;background:none;border:none;font-size:1.7em;color:#fff;opacity:0.83;">&times;</button>
-        </div>
-        <div style="padding:22px 18px;">
-          ${b.imageUrl ? `<img src="${b.imageUrl}" alt="info" style="max-width:100%;border-radius:8px;margin-bottom:14px;">` : ""}
-          <div style="font-size:1.07em;margin-bottom:12px;white-space:pre-wrap;">${b.message}</div>
-          ${b.link ? `<a href="${b.link}" target="_blank" style="color:${color};text-decoration:underline;font-size:1.05em;">Read more</a><br>` : ""}
-          <button class="btn" style="width:100%;margin-top:18px;background:${color};" onclick="ackBroadcast('${b._id}')">OK, Got it</button>
-        </div>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-}
-
-async function ackBroadcast(id) {
-  // POST to ack endpoint (optional; backend dependent)
-  try { await fetchWithAuth(API_URL + "broadcasts/ack/" + id, {method:"POST"}); } catch {}
-  localStorage.setItem(`broadcast_seen_${id}`, "1");
-  closeModal();
-}
-
-function closeModal(e) {
-  if (!e || (e.target && (e.target.classList.contains('modal-backdrop') || e.target.classList.contains('close-modal')))) {
-    document.getElementById("modalRoot").innerHTML = "";
-  }
-}
-window.closeModal = closeModal; // Expose for in-modal onclicks
-
-// On dashboard tab load, show broadcast if exists
-async function maybeShowBroadcastOnDashboard() {
-  const b = await fetchLatestBroadcast();
-  if (b) showBroadcastModal(b);
-}
 // =================== PROFILE ===================
 async function fetchFacultiesAndDepartments() {
   const [faculties, departments] = await Promise.all([
@@ -832,7 +699,7 @@ window.openReviewTab = openReviewTab;
 
 // ============ INIT ===========
 async function initDashboard() {
-  if (!token) return window.location.href = "/mock-icthallb";
+  if (!token) return window.location.href = "/login";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
   await fetchProfile();
@@ -842,13 +709,7 @@ async function initDashboard() {
   await fetchAnnouncements();
   await fetchAvailableTests();
   await fetchInbox();
-  await fetchBroadcasts();
   hidePreloaderSpinner();
-  // Insert at the end of initDashboard or when dashboard tab is shown:
-if (document.getElementById('dashboard').classList.contains('active')) {
-  maybeShowBroadcastOnDashboard();
-}
-  showScheduleOnLoad();
 }
 
 window.addEventListener("DOMContentLoaded", initDashboard);
