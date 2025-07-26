@@ -106,6 +106,8 @@ async function fetchWithAuth(url, options = {}) {
 }
 
 // =================== PROFILE ===================
+
+// Populate faculty and department selects (for profile editing)
 async function fetchFacultiesAndDepartments() {
   const [faculties, departments] = await Promise.all([
     fetchWithAuth(API_URL + "faculties").then(r => r.json()),
@@ -113,33 +115,144 @@ async function fetchFacultiesAndDepartments() {
   ]);
   facultiesCache = faculties;
   departmentsCache = departments;
+
+  // Populate Faculty select
+  const facultySelect = document.getElementById("editFaculty");
+  if (facultySelect) {
+    facultySelect.innerHTML = `<option value="">Select Faculty</option>` +
+      faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
+  }
 }
+
+// When faculty changes, update department options
+if (document.getElementById("editFaculty")) {
+  document.getElementById("editFaculty").addEventListener("change", function() {
+    const selectedFaculty = this.value;
+    const deptSelect = document.getElementById("editDepartment");
+    if (!deptSelect) return;
+    const filteredDepts = departmentsCache.filter(d => d.faculty === selectedFaculty || d.faculty?._id === selectedFaculty);
+    deptSelect.innerHTML = `<option value="">Select Department</option>` +
+      filteredDepts.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
+  });
+}
+
+// Load all users (not needed for profile tab, but kept for chat, etc.)
 async function fetchAllUsers() {
   const resp = await fetchWithAuth(API_URL + "users");
   usersCache = await resp.json();
 }
+
+// Load and populate profile fields
 async function fetchProfile() {
   const resp = await fetchWithAuth(API_URL + "auth/me");
   const data = await resp.json();
   student = data.user;
   student.id = student._id || student.id;
-  // Map faculty/department IDs
-  const facultyObj = facultiesCache.find(f => f.name === student.faculty);
-  const departmentObj = departmentsCache.find(d => d.name === student.department);
-  student.facultyId = facultyObj ? facultyObj._id : "";
-  student.departmentId = departmentObj ? departmentObj._id : "";
+
+  // Fill profile fields
   document.getElementById("studentName").innerText = student.username || '';
   document.getElementById("profileName").innerText = student.username || '';
   document.getElementById("studentId").innerText = student.studentId || '';
-  document.getElementById("profileDept").innerText = student.department || '';
+  document.getElementById("profileDept").innerText = student.department?.name || student.department || '';
   document.getElementById("studentLevel").innerText = student.level || '';
   document.getElementById("profileEmail").innerText = student.email || '';
   document.getElementById("profilePhone").innerText = student.phone || '';
-  // Profile settings tab
-  document.getElementById("editName").value = student.username || '';
+
+  // Profile edit tab fields
+  document.getElementById("editName").value = student.fullname || '';
   document.getElementById("editEmail").value = student.email || '';
   document.getElementById("editPhone").value = student.phone || '';
+  document.getElementById("editStudentId").value = student.studentId || '';
+  document.getElementById("editLevel").value = student.level || '';
+  document.getElementById("editFaculty").value = student.faculty?._id || student.faculty || '';
+  // Trigger department select update
+  const event = new Event('change');
+  document.getElementById("editFaculty").dispatchEvent(event);
+  document.getElementById("editDepartment").value = student.department?._id || student.department || '';
 }
+
+// =================== PROFILE EDIT SAVE ===================
+document.getElementById("saveProfileBtn").onclick = async function() {
+  const btn = this;
+  document.getElementById("profileSaveText").style.display = "none";
+  document.getElementById("profileSaveLoader").style.display = "inline-block";
+
+  const fullname = document.getElementById("editName").value.trim();
+  const email = document.getElementById("editEmail").value.trim();
+  const phone = document.getElementById("editPhone").value.trim();
+  const faculty = document.getElementById("editFaculty").value || "";
+  const department = document.getElementById("editDepartment").value || "";
+  const level = document.getElementById("editLevel").value || "";
+
+  if (!fullname || !email) {
+    alert("Full name and email are required.");
+    document.getElementById("profileSaveText").style.display = "";
+    document.getElementById("profileSaveLoader").style.display = "none";
+    return;
+  }
+
+  // Use the correct API route for updating a student's own profile!
+  const resp = await fetchWithAuth(API_URL + "users/" + student.id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fullname, email, phone, faculty, department, level })
+  });
+
+  if (!resp.ok) {
+    const data = await resp.json();
+    alert(data.message || "Failed to update profile.");
+    document.getElementById("profileSaveText").style.display = "";
+    document.getElementById("profileSaveLoader").style.display = "none";
+    return;
+  }
+
+  alert("Profile updated.");
+  await fetchProfile();
+  document.getElementById("profileSaveText").style.display = "";
+  document.getElementById("profileSaveLoader").style.display = "none";
+};
+
+// =================== PASSWORD UPDATE WITH LOADER ===================
+document.getElementById("updatePasswordBtn").onclick = async function() {
+  const btn = this;
+  btn.disabled = true;
+  btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Updating...`;
+
+  const currentPassword = document.getElementById("currentPassword").value;
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    alert("All fields are required.");
+    btn.disabled = false;
+    btn.innerHTML = "Update Password";
+    return;
+  }
+  if (newPassword !== confirmNewPassword) {
+    alert("Passwords do not match.");
+    btn.disabled = false;
+    btn.innerHTML = "Update Password";
+    return;
+  }
+  const resp = await fetchWithAuth(API_URL + "auth/change-password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ currentPassword, newPassword })
+  });
+  if (!resp.ok) {
+    const data = await resp.json();
+    alert(data.message || "Failed to update password.");
+    btn.disabled = false;
+    btn.innerHTML = "Update Password";
+    return;
+  }
+  alert("Password updated.");
+  document.getElementById("currentPassword").value = "";
+  document.getElementById("newPassword").value = "";
+  document.getElementById("confirmNewPassword").value = "";
+  btn.disabled = false;
+  btn.innerHTML = "Update Password";
+};
+
 
 // =================== DASHBOARD PROGRESS & LEADERBOARD ===================
 // ---- Progress Tracker Show More Button
@@ -998,48 +1111,7 @@ document.getElementById("cancelMessageBtn").onclick = function() {
   document.getElementById("recipientSelect").selectedIndex = 0;
 }
 
-// ============ PROFILE SETTINGS ==========
-document.getElementById("saveProfileBtn").onclick = async function() {
-  const username = document.getElementById("editName").value.trim();
-  const email = document.getElementById("editEmail").value.trim();
-  const phone = document.getElementById("editPhone").value.trim();
-  if (!username || !email) return alert("Name and email are required.");
-  const payload = { username, email, phone };
-  const resp = await fetchWithAuth(API_URL + "superadmin/me", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-  if (!resp.ok) {
-    const data = await resp.json();
-    alert(data.message || "Failed to update profile.");
-    return;
-  }
-  alert("Profile updated.");
-  fetchProfile();
-};
 
-document.getElementById("updatePasswordBtn").onclick = async function() {
-  const currentPassword = document.getElementById("currentPassword").value;
-  const newPassword = document.getElementById("newPassword").value;
-  const confirmNewPassword = document.getElementById("confirmNewPassword").value;
-  if (!currentPassword || !newPassword || !confirmNewPassword) return alert("All fields are required.");
-  if (newPassword !== confirmNewPassword) return alert("Passwords do not match.");
-  const resp = await fetchWithAuth(API_URL + "auth/change-password", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ currentPassword, newPassword })
-  });
-  if (!resp.ok) {
-    const data = await resp.json();
-    alert(data.message || "Failed to update password.");
-    return;
-  }
-  alert("Password updated.");
-  document.getElementById("currentPassword").value = "";
-  document.getElementById("newPassword").value = "";
-  document.getElementById("confirmNewPassword").value = "";
-};
 
 // ============ LOGOUT ===========
 document.getElementById("confirm-logout").onclick = () => {
