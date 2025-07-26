@@ -1,6 +1,5 @@
 // =================== CONFIG ===================
 const API_URL = "https://examguide.onrender.com/api/";
-const FILE_BASE_URL = "https://examguide.onrender.com"; // Change to your backend base URL
 const token = localStorage.getItem("token");
 
 // =================== GLOBAL STATE ===================
@@ -807,9 +806,17 @@ async function fetchInbox() {
     chatListCache.map(chat =>
       `<option value="${chat.otherUserId}">${chat.otherUserName}</option>`
     ).join('');
-}// --- Chat Modal Global State
+}
+// --- Chat Modal Global State
 let currentChatUserId = null;
 let currentChatUserName = null;
+
+// Lightbox state
+let lightboxImages = []; // Array of all image URLs in current chat
+let lightboxIndex = 0;
+
+// For prepending the backend URL to images
+const FILE_BASE_URL = "https://examguide.onrender.com"; // change if your backend is different
 
 window.openChatModal = async function(otherUserId) {
   const chat = chatListCache.find(c => c.otherUserId === otherUserId);
@@ -829,6 +836,11 @@ async function loadChatMessages(userId) {
   try {
     const resp = await fetchWithAuth(API_URL + "messages/" + userId);
     const data = await resp.json();
+
+    // Collect all image URLs for this chat (for lightbox swiping)
+    lightboxImages = data.filter(msg => msg.file && msg.file.url)
+      .map(msg => FILE_BASE_URL + msg.file.url);
+
     if (!Array.isArray(data) || data.length === 0) {
       chatMessagesDiv.innerHTML = "<div style='color:#888;text-align:center;'>No messages yet.</div>";
       return;
@@ -837,8 +849,8 @@ async function loadChatMessages(userId) {
       const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
       let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
       let img = (msg.file && msg.file.url)
-  ? `<img src="${FILE_BASE_URL}${msg.file.url}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;" alt="Attachment">`
-  : "";
+        ? `<img src="${FILE_BASE_URL}${msg.file.url}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;cursor:pointer;" alt="Attachment" onclick="openImageLightbox('${FILE_BASE_URL}${msg.file.url}')">`
+        : "";
       return `
         <div style="margin-bottom:9px;display:flex;flex-direction:column;align-items:${isMe?'flex-end':'flex-start'};">
           <div style="background:${isMe?'#3b82f6':'#ede9fe'};color:${isMe?'#fff':'#333'};padding:7px 13px;border-radius:13px;max-width:88%;box-shadow:0 1px 3px #0001;">
@@ -898,6 +910,75 @@ function closeChatModal() {
   currentChatUserId = null;
   currentChatUserName = null;
 }
+
+// ---- Lightbox with Swiping ----
+function openImageLightbox(url) {
+  lightboxIndex = lightboxImages.indexOf(url);
+  if (lightboxIndex === -1) lightboxIndex = 0;
+  updateLightbox();
+  const lb = document.getElementById("chatImageLightbox");
+  lb.style.display = "flex";
+}
+
+function updateLightbox() {
+  const lbImg = document.getElementById("lightboxImg");
+  if (!lightboxImages.length) return;
+  lbImg.src = lightboxImages[lightboxIndex];
+  // Show/hide prev/next
+  document.getElementById("lightboxPrev").style.display = lightboxIndex > 0 ? "block" : "none";
+  document.getElementById("lightboxNext").style.display = lightboxIndex < lightboxImages.length - 1 ? "block" : "none";
+}
+
+document.getElementById("lightboxPrev").onclick = function(e) {
+  e.stopPropagation();
+  if (lightboxIndex > 0) {
+    lightboxIndex--;
+    updateLightbox();
+  }
+};
+document.getElementById("lightboxNext").onclick = function(e) {
+  e.stopPropagation();
+  if (lightboxIndex < lightboxImages.length - 1) {
+    lightboxIndex++;
+    updateLightbox();
+  }
+};
+
+document.getElementById("chatImageLightbox").onclick = function(e) {
+  // Only close if user clicks outside the image or arrows
+  if (e.target === this) {
+    this.style.display = "none";
+    document.getElementById("lightboxImg").src = "";
+    lightboxImages = [];
+    lightboxIndex = 0;
+  }
+};
+
+// ---- Touch swipe gestures ----
+let touchStartX = 0;
+let touchEndX = 0;
+const MIN_SWIPE = 40;
+
+document.getElementById("chatImageLightbox").addEventListener("touchstart", function(e) {
+  if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+});
+document.getElementById("chatImageLightbox").addEventListener("touchend", function(e) {
+  if (e.changedTouches.length === 1) {
+    touchEndX = e.changedTouches[0].clientX;
+    let diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > MIN_SWIPE) {
+      if (diff < 0 && lightboxIndex < lightboxImages.length - 1) {
+        // Swipe left, next
+        lightboxIndex++;
+        updateLightbox();
+      } else if (diff > 0 && lightboxIndex > 0) {
+        // Swipe right, prev
+        lightboxIndex--;
+        updateLightbox();
+      }
+    }
+  }
+});
 
 // Send message
 document.getElementById("sendMessageBtn").onclick = async function() {
