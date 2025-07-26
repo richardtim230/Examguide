@@ -99,7 +99,7 @@ async function fetchWithAuth(url, options = {}) {
   const resp = await fetch(url, options);
   if (resp.status === 401 || resp.status === 403) {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/mock-icthallb";
     throw new Error("Session expired.");
   }
   return resp;
@@ -212,6 +212,19 @@ async function fetchAnnouncements() {
 }
 
 // =================== BROADCAST MESSAGES MODAL ===================
+function formatBroadcastParagraphs(msg) {
+  if (!msg) return '';
+  // Split by two or more newlines, or by <br> tags, and wrap each paragraph
+  let parts = msg
+    .replace(/\r\n/g, "\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .split(/\n{2,}/)
+    .map(para => para.trim())
+    .filter(Boolean);
+
+  return parts.map(para => `<p style="margin: 0 0 10px 0; white-space: pre-line;">${para.replace(/\n/g, "<br>")}</p>`).join('');
+}
+
 async function openBroadcastModal() {
   document.getElementById("broadcastModal").style.display = "flex";
   try {
@@ -224,8 +237,10 @@ async function openBroadcastModal() {
       html = broadcasts.map(b => `
         <div style="border-left:4px solid #3a86ff;padding-left:12px;margin-bottom:16px;">
           <div style="font-weight:bold;font-size:1.07em;">${b.title || ''}</div>
-          <div style="margin:7px 0;">${b.message || ''}</div>
-          ${b.image ? `<img src="${b.image}" alt="Broadcast image" style="max-width:100%;border-radius:8px;margin:8px 0;">` : ''}
+          <div style="margin:7px 0;">
+            ${formatBroadcastParagraphs(b.message || '')}
+            ${b.image ? `<img src="${b.image}" alt="Broadcast image" style="max-width:100%;border-radius:8px;margin:10px 0;">` : ''}
+          </div>
           ${b.link ? `<a href="${b.link}" target="_blank" style="color:#3a86ff;text-decoration:underline;">${b.link}</a>` : ''}
           <div style="font-size:0.99em;color:#585;font-weight:500;margin-top:4px;">${formatDate(b.createdAt)}</div>
         </div>
@@ -238,42 +253,80 @@ async function openBroadcastModal() {
 }
 function closeBroadcastModal() {
   document.getElementById("broadcastModal").style.display = "none";
+  // Redirect to homepage and close tab (in case opened in new tab)
+  window.location.href = '/';
+  setTimeout(() => {
+    if (window.opener) {
+      window.close();
+    }
+  }, 100);
 }
 
 // =================== SCHEDULED EXAM MODAL (Exam & Mock Test) ===================
 async function openScheduledExamModal() {
+  // Only show the most recent (latest) schedule for the student's department & faculty, and must be an exam
+  // Most recent is start time closest to now but not in the past
   if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) {
     document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams right now.</div>`;
     document.getElementById("scheduledExamModal").style.display = "flex";
     return;
   }
   const now = Date.now();
-  // Find the next scheduled exam (not taken, start in future, status active)
-  let sched = availableSchedulesCache.find(s => {
-    const set = s.examSet;
-    const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
-    const start = s.start ? new Date(s.start).getTime() : 0;
-    return set && set.status === "ACTIVE" && !taken && start > now;
+
+  // Filter only schedules that are for the student's department & faculty and are not in the past (end > now)
+  // and are EXAM (not mock test) sets
+  // We'll treat "examSet.type" === "EXAM" or, if no type, fallback to status ACTIVE/INACTIVE
+  // If your backend uses a different field, adjust below
+  const relevantSchedules = availableSchedulesCache.filter(s => {
+    if (!s.examSet) return false;
+    // Only those whose examSet is for the faculty and department (already filtered by API, but double check)
+    let facultyOK = !student.facultyId || s.examSet.faculty === student.facultyId || s.faculty === student.facultyId;
+    let deptOK = !student.departmentId || s.examSet.department === student.departmentId || s.department === student.departmentId;
+    // Only EXAM type or where no type but status ACTIVE
+    let isExam = (s.examSet.type && s.examSet.type.toUpperCase() === "EXAM") ||
+      (!s.examSet.type && (s.examSet.status === "ACTIVE" || s.examSet.status === "INACTIVE"));
+    // Not ended yet
+    let end = s.end ? new Date(s.end).getTime() : Infinity;
+    return facultyOK && deptOK && isExam && end > now;
   });
-  // If none in future, show soonest active not taken exam
-  if (!sched) {
-    sched = availableSchedulesCache.find(s => {
-      const set = s.examSet;
-      const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
-      return set && set.status === "ACTIVE" && !taken;
+
+  // Find the one with start time closest to now but not in the past (or the one started most recently but still active)
+  let chosen = null;
+  let minStartDiff = Infinity;
+  relevantSchedules.forEach(s => {
+    let startT = s.start ? new Date(s.start).getTime() : 0;
+    let endT = s.end ? new Date(s.end).getTime() : Infinity;
+    // Only consider those not ended
+    if (endT > now) {
+      let diff = Math.abs(startT - now);
+      if ((startT <= now && now <= endT) || startT > now) {
+        if (diff < minStartDiff) {
+          minStartDiff = diff;
+          chosen = s;
+        }
+      }
+    }
+  });
+
+  // If none, fallback to any relevant schedule in the future
+  if (!chosen && relevantSchedules.length > 0) {
+    chosen = relevantSchedules.reduce((prev, curr) => {
+      let prevStart = prev.start ? new Date(prev.start).getTime() : Infinity;
+      let currStart = curr.start ? new Date(curr.start).getTime() : Infinity;
+      return currStart < prevStart ? curr : prev;
     });
   }
 
-  if (!sched || !sched.examSet) {
+  if (!chosen || !chosen.examSet) {
     document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams at this time.</div>`;
     document.getElementById("scheduledExamModal").style.display = "flex";
     return;
   }
-  const set = sched.examSet;
+  const set = chosen.examSet;
+  // Only allow start if now is between start and end, and not already taken
   const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
-  const startDt = sched.start ? new Date(sched.start) : null;
-  const endDt = sched.end ? new Date(sched.end) : null;
-
+  const startDt = chosen.start ? new Date(chosen.start) : null;
+  const endDt = chosen.end ? new Date(chosen.end) : null;
   let canTake =
     !taken &&
     set.status === "ACTIVE" &&
@@ -800,7 +853,7 @@ window.closeScheduledExamModal = closeScheduledExamModal;
 
 // ============ INIT ===========
 async function initDashboard() {
-  if (!token) return window.location.href = "/login";
+  if (!token) return window.location.href = "/mock-icthallb";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
   await fetchProfile();
