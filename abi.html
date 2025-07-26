@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAU ExamGuard - Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .progress-circle {
+            background: conic-gradient(#3b82f6 var(--progress), #e5e7eb 0);
+        }
+        .modal-enter {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div id="preloaderSpinner" class="fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        <span class="ml-4 text-lg">Loading dashboard...</span>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden md:hidden"></div>
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-indigo-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold">OAU ExamGuard</h1>
+                <p class="text-sm">Student Dashboard</p>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="#dashboard" data-tab="dashboard" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Dashboard</a>
+                <a href="#mock-tests" data-tab="mock-tests" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Mock Tests</a>
+                <a href="#exams" data-tab="exams" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Exams</a>
+                <a href="#study-resources" data-tab="study-resources" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Study Resources</a>
+                <a href="#messages" data-tab="messages" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Messages</a>
+                <a href="#profile-settings" data-tab="profile-settings" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Profile Settings</a>
+                <a href="#logout" data-tab="logout" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 overflow-y-auto md:ml-64">
+            <button id="menu-toggle" class="md:hidden mb-4 p-2 bg-indigo-900 text-white rounded-lg">Menu</button>
+
+            <div id="dashboard" class="tab-content active">
+                <h2 class="text-2xl font-bold mb-4">Welcome, <span id="studentName"></span>!</h2>
+                <p class="text-gray-600 mb-6">Your academic journey, beautifully organized</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Student Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p><strong>Name:</strong> <span id="profileName"></span></p>
+                                <p><strong>Student ID:</strong> <span id="studentId"></span></p>
+                                <p><strong>Department:</strong> <span id="profileDept"></span></p>
+                            </div>
+                            <div>
+                                <p><strong>Year:</strong> <span id="studentLevel"></span></p>
+                                <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                                <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Progress Tracker</h3>
+                        <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Announcements</h3>
+                        <div id="announcementsPanel"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Quick Access</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium">Marketplace</h4>
+                                <p class="text-sm text-gray-600">Explore study materials and student essentials.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Visit Marketplace</a>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Blog Home</h4>
+                                <p class="text-sm text-gray-600">Read tips, tricks, and student stories.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Visit Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Achievements & Leaderboard</h3>
+                        <div id="leaderboardContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mock-tests" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Mock Tests</h2>
+                <p class="text-gray-600 mb-6">Practice and improve your skills with our mock tests</p>
+                <!-- Modal for Mock Tests -->
+                <div id="mockTestModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
+                            <button id="closeMockTestModal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <img id="mockTestModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
+                            <div class="flex-1">
+                                <h4 id="mockTestModalTitle" class="text-lg font-semibold text-gray-800"></h4>
+                                <p id="mockTestModalDescription" class="text-gray-600 text-sm mb-2"></p>
+                                <p><strong>Start Time:</strong> <span id="mockTestModalStart" class="text-gray-600"></span></p>
+                                <p><strong>End Time:</strong> <span id="mockTestModalEnd" class="text-gray-600"></span></p>
+                                <div id="mockTestModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
+                                <div id="mockTestModalActions" class="mt-4">
+                                    <button id="mockTestModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <input type="checkbox" id="mockTestModalDontShow" class="mr-2">
+                            <label for="mockTestModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Available Mock Tests</h3>
+                    <div id="testSpinner" class="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 mx-auto hidden"></div>
+                    <table id="availableTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Description</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="availablePagination" class="mt-4 flex justify-center space-x-2"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
+                    <div id="progressList"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Certificates</h3>
+                    <a href="#" class="text-blue-600 hover:underline">Download Certificate</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Personalized Study Recommendations</h3>
+                    <ul id="recommendations" class="list-disc pl-5"></ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Upcoming Test</h3>
+                    <p id="upcomingTest">None</p>
+                    <p id="testCountdown"></p>
+                </div>
+            </div>
+
+            <div id="exams" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Exams</h2>
+                <p class="text-gray-600 mb-6">Stay on top of your upcoming and past exams</p>
+                <!-- Modal for Exams -->
+                <div id="examModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
+                            <button id="closeExamModal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <img id="examModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
+                            <div class="flex-1">
+                                <h4 id="examModalTitle" class="text-lg font-semibold text-gray-800"></h4>
+                                <p id="examModalDescription" class="text-gray-600 text-sm mb-2"></p>
+                                <p><strong>Start Time:</strong> <span id="examModalStart" class="text-gray-600"></span></p>
+                                <p><strong>End Time:</strong> <span id="examModalEnd" class="text-gray-600"></span></p>
+                                <div id="examModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
+                                <div id="examModalActions" class="mt-4">
+                                    <button id="examModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <input type="checkbox" id="examModalDontShow" class="mr-2">
+                            <label for="examModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Assessment Performance & Reviews</h3>
+                    <table id="historyTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Date</th>
+                                <th>Score</th>
+                                <th>Review</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="historyPagination" class="mt-4 flex justify-center space-x-2"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Available Assessments</h3>
+                    <table id="examAvailableTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Description</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="examAvailablePagination" class="mt-4 flex justify-center space-x-2"></div>
+                </div>
+            </div>
+
+            <div id="study-resources" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Study Resources</h2>
+                <p class="text-gray-600 mb-6">Access essential materials to boost your learning</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Available Resources</h3>
+                    <ul class="list-disc pl-5">
+                        <li>Mathematics Formula Sheet</li>
+                        <li>Physics Concept Notes</li>
+                        <li>Coding Practice Problems</li>
+                        <li>Chemistry Lab Guides</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Recommended Resources</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-medium">Calculus Textbook</h4>
+                            <p class="text-sm text-gray-600">Comprehensive guide for 300-level calculus.</p>
+                            <a href="#" class="text-blue-600 hover:underline">Download</a>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Physics Video Series</h4>
+                            <p class="text-sm text-gray-600">Interactive lectures on mechanics.</p>
+                            <a href="#" class="text-blue-600 hover:underline">Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Study Calendar</h3>
+                    <p>Your upcoming exams and study sessions.</p>
+                    <div class="bg-gray-200 h-64 flex items-center justify-center">
+                        Interactive Calendar (Placeholder)
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Become a Marketer or Blogger!</h3>
+                    <p>Share your knowledge, sell study materials, or promote products to earn rewards.</p>
+                    <a href="#" class="text-blue-600 hover:underline">Get Started</a>
+                </div>
+            </div>
+
+            <div id="messages" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Messages</h2>
+                <p class="text-gray-600 mb-6">Stay connected with instructors and peers</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Inbox</h3>
+                    <div id="inboxList"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Send a Message</h3>
+                    <div class="space-y-4">
+                        <select id="recipientSelect" class="w-full p-2 border rounded"></select>
+                        <textarea id="messageInput" class="w-full p-2 border rounded" rows="4" placeholder="Type your message..."></textarea>
+                        <div class="flex space-x-2">
+                            <button id="cancelMessageBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                            <button id="sendMessageBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profile-settings" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Profile Settings</h2>
+                <p class="text-gray-600 mb-6">Manage your personal information and preferences</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium">Full Name</label>
+                            <input id="editName" type="text" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Email</label>
+                            <input id="editEmail" type="email" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Phone</label>
+                            <input id="editPhone" type="tel" class="w-full p-2 border rounded">
+                       K
+System: To implement the modal for the "Mock Tests" and "Exams" tabs, we need to make changes to both the HTML and JavaScript files. Below, I'll provide the updated versions of these files, incorporating a beautifully styled modal that displays the most recent active exam with its title, description, start and end times, an image, and either a start button (if the exam has started) or a countdown timer (if it hasn't). The modal will use Tailwind CSS for styling, consistent with the existing dashboard design, and include animations for a smooth pop-up effect.
+
+### Approach
+1. **HTML Updates**: Add a modal structure to both the "Mock Tests" and "Exams" sections. The modal will include:
+   - A semi-transparent overlay to dim the background.
+   - A centered modal with a header, image, exam details, and action buttons (Start or Countdown).
+   - A close button and a "Don't show again" checkbox to control modal behavior.
+2. **JavaScript Updates**: Enhance the existing JavaScript to:
+   - Identify the most recent active or scheduled exam from `availableSchedulesCache`.
+   - Show the modal when the "Mock Tests" or "Exams" tabs are activated, unless the user has opted out for the session.
+   - Implement a countdown timer for exams that haven't started, updating in real-time.
+   - Display a "Start" button for exams that are currently active.
+   - Store the user's preference to skip the modal in `sessionStorage`.
+3. **Styling**: Use Tailwind CSS for a modern, responsive design with a subtle animation for the modal's appearance.
+4. **Image**: Use a placeholder exam-related image from Unsplash, which can be replaced with an exam-specific image if available.
+
+### Assumptions
+- The modal appears automatically when the "Mock Tests" or "Exams" tabs are opened, but only if there’s an active or scheduled exam.
+- The modal can be closed and won’t reopen until the tab is revisited, controlled via `sessionStorage`.
+- The modal content is identical for both tabs, as they use the same `availableSchedulesCache`.
+- The `artifact_id` from the original HTML file is reused, assuming it was previously assigned.
+
+### Updated Artifacts
+
+<xaiArtifact artifact_id="baeda8e9-3548-42b7-8323-115f6e71acd0" artifact_version_id="51ae329b-f3a1-48db-9b37-2b727a6649e7" title="student-dashboards.html" contentType="text/html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAU ExamGuard - Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .progress-circle {
+            background: conic-gradient(#3b82f6 var(--progress), #e5e7eb 0);
+        }
+        .modal-enter {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div id="preloaderSpinner" class="fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        <span class="ml-4 text-lg">Loading dashboard...</span>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden md:hidden"></div>
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-indigo-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold">OAU ExamGuard</h1>
+                <p class="text-sm">Student Dashboard</p>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="#dashboard" data-tab="dashboard" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Dashboard</a>
+                <a href="#mock-tests" data-tab="mock-tests" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Mock Tests</a>
+                <a href="#exams" data-tab="exams" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Exams</a>
+                <a href="#study-resources" data-tab="study-resources" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Study Resources</a>
+                <a href="#messages" data-tab="messages" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Messages</a>
+                <a href="#profile-settings" data-tab="profile-settings" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Profile Settings</a>
+                <a href="#logout" data-tab="logout" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 overflow-y-auto md:ml-64">
+            <button id="menu-toggle" class="md:hidden mb-4 p-2 bg-indigo-900 text-white rounded-lg">Menu</button>
+
+            <div id="dashboard" class="tab-content active">
+                <h2 class="text-2xl font-bold mb-4">Welcome, <span id="studentName"></span>!</h2>
+                <p class="text-gray-600 mb-6">Your academic journey, beautifully organized</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Student Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p><strong>Name:</strong> <span id="profileName"></span></p>
+                                <p><strong>Student ID:</strong> <span id="studentId"></span></p>
+                                <p><strong>Department:</strong> <span id="profileDept"></span></p>
+                            </div>
+                            <div>
+                                <p><strong>Year:</strong> <span id="studentLevel"></span></p>
+                                <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                                <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Progress Tracker</h3>
+                        <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Announcements</h3>
+                        <div id="announcementsPanel"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Quick Access</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium">Marketplace</h4>
+                                <p class="text-sm text-gray-600">Explore study materials and student essentials.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Visit Marketplace</a>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Blog Home</h4>
+                                <p class="text-sm text-gray-600">Read tips, tricks, and student stories.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Visit Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Achievements & Leaderboard</h3>
+                        <div id="leaderboardContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mock-tests" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Mock Tests</h2>
+                <p class="text-gray-600 mb-6">Practice and improve your skills with our mock tests</p>
+                <!-- Modal for Mock Tests -->
+                <div id="mockTestModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
+                            <button id="closeMockTestModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <img id="mockTestModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
+                            <div class="flex-1">
+                                <h4 id="mockTestModalTitle" class="text-lg font-semibold text-gray-800"></h4>
+                                <p id="mockTestModalDescription" class="text-gray-600 text-sm mb-2"></p>
+                                <p><strong>Start Time:</strong> <span id="mockTestModalStart" class="text-gray-600"></span></p>
+                                <p><strong>End Time:</strong> <span id="mockTestModalEnd" class="text-gray-600"></span></p>
+                                <div id="mockTestModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
+                                <div id="mockTestModalActions" class="mt-4">
+                                    <button id="mockTestModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <input type="checkbox" id="mockTestModalDontShow" class="mr-2">
+                            <label for="mockTestModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Available Mock Tests</h3>
+                    <div id="testSpinner" class="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 mx-auto hidden"></div>
+                    <table id="availableTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Description</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="availablePagination" class="mt-4 flex justify-center space-x-2"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
+                    <div id="progressList"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Certificates</h3>
+                    <a href="#" class="text-blue-600 hover:underline">Download Certificate</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Personalized Study Recommendations</h3>
+                    <ul id="recommendations" class="list-disc pl-5"></ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Upcoming Test</h3>
+                    <p id="upcomingTest">None</p>
+                    <p id="testCountdown"></p>
+                </div>
+            </div>
+
+            <div id="exams" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Exams</h2>
+                <p class="text-gray-600 mb-6">Stay on top of your upcoming and past exams</p>
+                <!-- Modal for Exams -->
+                <div id="examModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
+                            <button id="closeExamModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <img id="examModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
+                            <div class="flex-1">
+                                <h4 id="examModalTitle" class="text-lg font-semibold text-gray-800"></h4>
+                                <p id="examModalDescription" class="text-gray-600 text-sm mb-2"></p>
+                                <p><strong>Start Time:</strong> <span id="examModalStart" class="text-gray-600"></span></p>
+                                <p><strong>End Time:</strong> <span id="examModalEnd" class="text-gray-600"></span></p>
+                                <div id="examModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
+                                <div id="examModalActions" class="mt-4">
+                                    <button id="examModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <input type="checkbox" id="examModalDontShow" class="mr-2">
+                            <label for="examModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Assessment Performance & Reviews</h3>
+                    <table id="historyTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Date</th>
+                                <th>Score</th>
+                                <th>Review</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="historyPagination" class="mt-4 flex justify-center space-x-2"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Available Assessments</h3>
+                    <table id="examAvailableTable" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Description</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="examAvailablePagination" class="mt-4 flex justify-center space-x-2"></div>
+                </div>
+            </div>
+
+            <div id="study-resources" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Study Resources</h2>
+                <p class="text-gray-600 mb-6">Access essential materials to boost your learning</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Available Resources</h3>
+                    <ul class="list-disc pl-5">
+                        <li>Mathematics Formula Sheet</li>
+                        <li>Physics Concept Notes</li>
+                        <li>Coding Practice Problems</li>
+                        <li>Chemistry Lab Guides</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Recommended Resources</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-medium">Calculus Textbook</h4>
+                            <p class="text-sm text-gray-600">Comprehensive guide for 300-level calculus.</p>
+                            <a href="#" class="text-blue-600 hover:underline">Download</a>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Physics Video Series</h4>
+                            <p class="text-sm text-gray-600">Interactive lectures on mechanics.</p>
+                            <a href="#" class="text-blue-600 hover:underline">Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Study Calendar</h3>
+                    <p>Your upcoming exams and study sessions.</p>
+                    <div class="bg-gray-200 h-64 flex items-center justify-center">
+                        Interactive Calendar (Placeholder)
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Become a Marketer or Blogger!</h3>
+                    <p>Share your knowledge, sell study materials, or promote products to earn rewards.</p>
+                    <a href="#" class="text-blue-600 hover:underline">Get Started</a>
+                </div>
+            </div>
+
+            <div id="messages" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Messages</h2>
+                <p class="text-gray-600 mb-6">Stay connected with instructors and peers</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Inbox</h3>
+                    <div id="inboxList"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Send a Message</h3>
+                    <div class="space-y-4">
+                        <select id="recipientSelect" class="w-full p-2 border rounded"></select>
+                        <textarea id="messageInput" class="w-full p-2 border rounded" rows="4" placeholder="Type your message..."></textarea>
+                        <div class="flex space-x-2">
+                            <button id="cancelMessageBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                            <button id="sendMessageBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profile-settings" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Profile Settings</h2>
+                <p class="text-gray-600 mb-6">Manage your personal information and preferences</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium">Full Name</label>
+                            <input id="editName" type="text" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Email</label>
+                            <input id="editEmail" type="email" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Phone</label>
+                            <input id="editPhone" type="tel" class="w-full p-2 border rounded">
+                        </div>
+                        <button id="saveProfileBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save Changes</button>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Change Password</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium">Current Password</label>
+                            <input id="currentPassword" type="password" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">New Password</label>
+                            <input id="newPassword" type="password" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">Confirm New Password</label>
+                            <input id="confirmNewPassword" type="password" class="w-full p-2 border rounded">
+                        </div>
+                        <button id="updatePasswordBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Update Password</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="logout" class="tab-content hidden">
+                <h2 class="text-2xl font-bold mb-4">Logout</h2>
+                <p class="text-gray-600 mb-6">Safely end your session</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <p class="mb-4">Are you sure you want to log out? You will be signed out of your account and need to log in again to access your dashboard.</p>
+                    <button id="confirm-logout" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Confirm Logout</button>
+                </html>
+</body>
+<script src="abi.js"></script>
+</html>
