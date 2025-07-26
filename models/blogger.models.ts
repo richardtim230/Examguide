@@ -13,7 +13,7 @@ interface IUser extends Document {
   updatedAt: Date;
 }
 
-const UserSchema: Schema = new Schema({
+const UsersSchema: Schema = new Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String },
@@ -23,7 +23,7 @@ const UserSchema: Schema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-export const User = mongoose.model<IUser>('User', UserSchema);
+export const Users = mongoose.model<IUser>('Users', UsersSchema);
 
 // Post Interface and Schema
 interface IPost extends Document {
