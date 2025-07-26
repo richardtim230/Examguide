@@ -36,7 +36,7 @@ import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
-import bloggerRoutes from './routes/blogger.routes';
+import bloggerRoutes from './routes/blogger.routes.ts';
 
 dotenv.config();
 
