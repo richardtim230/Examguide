@@ -99,7 +99,7 @@ async function fetchWithAuth(url, options = {}) {
   const resp = await fetch(url, options);
   if (resp.status === 401 || resp.status === 403) {
     localStorage.removeItem("token");
-    window.location.href = "/mock-icthallb";
+    window.location.href = "/login";
     throw new Error("Session expired.");
   }
   return resp;
@@ -142,6 +142,8 @@ async function fetchProfile() {
 }
 
 // =================== DASHBOARD PROGRESS & LEADERBOARD ===================
+// ---- Progress Tracker Show More Button
+let progressShowAll = false;
 function renderProgressCircles() {
   let subjects = {};
   resultsCache.forEach(r => {
@@ -153,8 +155,11 @@ function renderProgressCircles() {
     label,
     percent: Math.round(arr.reduce((a, b) => a + b, 0) / arr.length)
   }));
+
+  let shownData = progressShowAll ? data : data.slice(0, 6);
+
   let html = '';
-  data.forEach(subject => {
+  shownData.forEach(subject => {
     html += `
       <div class="text-center">
         <p class="font-medium text-gray-700">${subject.label}</p>
@@ -164,7 +169,24 @@ function renderProgressCircles() {
       </div>
     `;
   });
+  if (data.length > 6 && !progressShowAll) {
+    html += `<div class="col-span-2 flex items-center justify-center mt-2">
+      <button id="progressShowMoreBtn" class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm" style="margin-top:8px;">Show More</button>
+    </div>`;
+  } else if (data.length > 6 && progressShowAll) {
+    html += `<div class="col-span-2 flex items-center justify-center mt-2">
+      <button id="progressShowLessBtn" class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm" style="margin-top:8px;">Show Less</button>
+    </div>`;
+  }
   document.getElementById("progress-circles").innerHTML = html || '<div class="text-gray-500 text-center col-span-2">No data yet.</div>';
+  if (data.length > 6) {
+    setTimeout(() => {
+      const btnMore = document.getElementById("progressShowMoreBtn");
+      const btnLess = document.getElementById("progressShowLessBtn");
+      if (btnMore) btnMore.onclick = () => { progressShowAll = true; renderProgressCircles(); };
+      if (btnLess) btnLess.onclick = () => { progressShowAll = false; renderProgressCircles(); };
+    }, 100);
+  }
 }
 
 async function fetchLeaderboard() {
@@ -214,7 +236,6 @@ async function fetchAnnouncements() {
 // =================== BROADCAST MESSAGES MODAL ===================
 function formatBroadcastParagraphs(msg) {
   if (!msg) return '';
-  // Split by two or more newlines, or by <br> tags, and wrap each paragraph
   let parts = msg
     .replace(/\r\n/g, "\n")
     .replace(/<br\s*\/?>/gi, "\n")
@@ -253,8 +274,7 @@ async function openBroadcastModal() {
 }
 function closeBroadcastModal() {
   document.getElementById("broadcastModal").style.display = "none";
-  // Redirect to homepage and close tab (in case opened in new tab)
-  window.location.href = '#';
+  window.location.href = '/';
   setTimeout(() => {
     if (window.opener) {
       window.close();
@@ -264,8 +284,6 @@ function closeBroadcastModal() {
 
 // =================== SCHEDULED EXAM MODAL (Exam & Mock Test) ===================
 async function openScheduledExamModal() {
-  // Only show the most recent (latest) schedule for the student's department & faculty, and must be an exam
-  // Most recent is start time closest to now but not in the past
   if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) {
     document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams right now.</div>`;
     document.getElementById("scheduledExamModal").style.display = "flex";
@@ -273,30 +291,23 @@ async function openScheduledExamModal() {
   }
   const now = Date.now();
 
-  // Filter only schedules that are for the student's department & faculty and are not in the past (end > now)
-  // and are EXAM (not mock test) sets
-  // We'll treat "examSet.type" === "EXAM" or, if no type, fallback to status ACTIVE/INACTIVE
-  // If your backend uses a different field, adjust below
+  // Filter only schedules for student's department & faculty, type EXAM or active/inactive
   const relevantSchedules = availableSchedulesCache.filter(s => {
     if (!s.examSet) return false;
-    // Only those whose examSet is for the faculty and department (already filtered by API, but double check)
     let facultyOK = !student.facultyId || s.examSet.faculty === student.facultyId || s.faculty === student.facultyId;
     let deptOK = !student.departmentId || s.examSet.department === student.departmentId || s.department === student.departmentId;
-    // Only EXAM type or where no type but status ACTIVE
     let isExam = (s.examSet.type && s.examSet.type.toUpperCase() === "EXAM") ||
       (!s.examSet.type && (s.examSet.status === "ACTIVE" || s.examSet.status === "INACTIVE"));
-    // Not ended yet
     let end = s.end ? new Date(s.end).getTime() : Infinity;
     return facultyOK && deptOK && isExam && end > now;
   });
 
-  // Find the one with start time closest to now but not in the past (or the one started most recently but still active)
+  // Find the one with start time closest to now but not in the past (or the most recently started and still active)
   let chosen = null;
   let minStartDiff = Infinity;
   relevantSchedules.forEach(s => {
     let startT = s.start ? new Date(s.start).getTime() : 0;
     let endT = s.end ? new Date(s.end).getTime() : Infinity;
-    // Only consider those not ended
     if (endT > now) {
       let diff = Math.abs(startT - now);
       if ((startT <= now && now <= endT) || startT > now) {
@@ -307,7 +318,6 @@ async function openScheduledExamModal() {
       }
     }
   });
-
   // If none, fallback to any relevant schedule in the future
   if (!chosen && relevantSchedules.length > 0) {
     chosen = relevantSchedules.reduce((prev, curr) => {
@@ -323,8 +333,7 @@ async function openScheduledExamModal() {
     return;
   }
   const set = chosen.examSet;
-  // Only allow start if now is between start and end, and not already taken
-  const taken = resultsCache.some(r => r.examSet && r.examSet.title === set.title);
+  const taken = isScheduleCompleted(chosen, set);
   const startDt = chosen.start ? new Date(chosen.start) : null;
   const endDt = chosen.end ? new Date(chosen.end) : null;
   let canTake =
@@ -335,7 +344,7 @@ async function openScheduledExamModal() {
     (!endDt || now <= endDt.getTime());
 
   let btnHtml = canTake
-    ? `<button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="startTest('${set._id}')">Start</button>`
+    ? `<button class="px-5 py-2 bg-green-600 text-white rounded-lg font-bold text-base shadow-md hover:bg-green-700 glow-button transition" style="margin:0.5em 0 0 0;" onclick="startTest('${set._id}')">Start</button>`
     : taken
     ? `<span style="color:#999;">Already Completed</span>`
     : startDt && now < startDt.getTime()
@@ -362,30 +371,26 @@ function closeScheduledExamModal() {
   document.getElementById("scheduledExamModal").style.display = "none";
 }
 
+// =================== SCHEDULE COMPLETION UTILITY ===================
+function isScheduleCompleted(sched, set) {
+  // Completed: there is a result for this examSet and the submission is within this schedule's window
+  return resultsCache.some(r => {
+    if (!r.examSet) return false;
+    const sameSet = (typeof r.examSet === 'object' ? r.examSet._id === set._id : r.examSet === set._id);
+    if (!sameSet) return false;
+    if (sched.start && sched.end && r.submittedAt) {
+      const submitted = new Date(r.submittedAt).getTime();
+      const schedStart = new Date(sched.start).getTime();
+      const schedEnd = new Date(sched.end).getTime();
+      return submitted >= schedStart && submitted <= schedEnd;
+    }
+    return true; // fallback
+  });
+}
+
 // =================== MOCK TESTS (Available Assessments) ===================
 const AVAILABLE_PAGE_SIZE = 5;
 let availablePage = 1;
-
-function buildPagination(total, page, pageSize, onPageChangeFnName, targetDivId) {
-  const totalPages = Math.ceil(total / pageSize);
-  if (totalPages <= 1) {
-    document.getElementById(targetDivId).innerHTML = '';
-    return;
-  }
-  let html = '';
-  html += `<button onclick="${onPageChangeFnName}(1)" ${page === 1 ? 'disabled' : ''}>First</button>`;
-  html += `<button onclick="${onPageChangeFnName}(${page - 1})" ${page === 1 ? 'disabled' : ''}>&lt;</button>`;
-  for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || Math.abs(page - i) <= 2) {
-      html += `<button onclick="${onPageChangeFnName}(${i})" ${page === i ? 'class="active"' : ''}>${i}</button>`;
-    } else if (i === page - 3 || i === page + 3) {
-      html += '<span style="margin:0 5px;">...</span>';
-    }
-  }
-  html += `<button onclick="${onPageChangeFnName}(${page + 1})" ${page === totalPages ? 'disabled' : ''}>&gt;</button>`;
-  html += `<button onclick="${onPageChangeFnName}(${totalPages})" ${page === totalPages ? 'disabled' : ''}>Last</button>`;
-  document.getElementById(targetDivId).innerHTML = html;
-}
 
 function renderAvailableTablePage(page) {
   availablePage = page;
@@ -405,33 +410,41 @@ function renderAvailableTablePage(page) {
   availableSchedulesCache.slice(start, end).forEach((sched) => {
     const set = sched.examSet;
     if (!set || !set.title) return;
-    const taken = resultsCache.some((r) => r.examSet && r.examSet.title === set.title);
+
     const startDt = sched.start ? new Date(sched.start) : null;
     const endDt = sched.end ? new Date(sched.end) : null;
-    const canTake =
-      !taken &&
+
+    const completed = isScheduleCompleted(sched, set);
+
+    let canTake =
+      !completed &&
       set.status === "ACTIVE" &&
-      startDt &&
-      now >= startDt.getTime() &&
+      startDt && now >= startDt.getTime() &&
       (!endDt || now <= endDt.getTime());
 
-    const isScheduled = startDt && now < startDt.getTime();
+    let isScheduled = startDt && now < startDt.getTime();
+    let isClosed = endDt && now > endDt.getTime();
 
-    let statusLabel = taken
-      ? "Completed"
-      : canTake
-      ? "Available"
-      : isScheduled
-      ? "Scheduled"
-      : "Closed";
+    let statusLabel =
+      completed
+        ? "Completed"
+        : canTake
+        ? "Available"
+        : isScheduled
+        ? "Scheduled"
+        : isClosed
+        ? "Closed"
+        : "Unavailable";
 
     let btnHtml = canTake
-      ? `<button class="btn" onclick="startTest('${set._id}')">Start</button>`
-      : taken
-      ? `<span style="color:var(--muted);">Completed</span>`
+      ? `<button class="px-4 py-1 bg-green-600 text-white rounded-lg font-semibold shadow hover:bg-green-700 transition glow-button" onclick="startTest('${set._id}')">Start</button>`
+      : completed
+      ? `<span style="color:#999;">Completed</span>`
       : isScheduled
-      ? `<span style="color:var(--muted);">Not Yet Open</span>`
-      : `<span style="color:var(--muted);">Closed</span>`;
+      ? `<span style="color:#999;">Not Yet Open</span>`
+      : isClosed
+      ? `<span style="color:#999;">Closed</span>`
+      : `<span style="color:#999;">Unavailable</span>`;
 
     html += `<tr>
       <td>${set.title}</td>
@@ -451,7 +464,6 @@ function renderAvailableTablePage(page) {
 
 // =================== EXAMS TAB (Available Assessments - Exams) ===================
 function renderExamAvailableTablePage(page) {
-  // For demo, use same availableSchedulesCache as mock, but you can split if needed
   const tbody = document.querySelector("#examAvailableTable tbody");
   const start = (page - 1) * AVAILABLE_PAGE_SIZE;
   const end = start + AVAILABLE_PAGE_SIZE;
@@ -468,33 +480,41 @@ function renderExamAvailableTablePage(page) {
   availableSchedulesCache.slice(start, end).forEach((sched) => {
     const set = sched.examSet;
     if (!set || !set.title) return;
-    const taken = resultsCache.some((r) => r.examSet && r.examSet.title === set.title);
+
     const startDt = sched.start ? new Date(sched.start) : null;
     const endDt = sched.end ? new Date(sched.end) : null;
-    const canTake =
-      !taken &&
+
+    const completed = isScheduleCompleted(sched, set);
+
+    let canTake =
+      !completed &&
       set.status === "ACTIVE" &&
-      startDt &&
-      now >= startDt.getTime() &&
+      startDt && now >= startDt.getTime() &&
       (!endDt || now <= endDt.getTime());
 
-    const isScheduled = startDt && now < startDt.getTime();
+    let isScheduled = startDt && now < startDt.getTime();
+    let isClosed = endDt && now > endDt.getTime();
 
-    let statusLabel = taken
-      ? "Completed"
-      : canTake
-      ? "Available"
-      : isScheduled
-      ? "Scheduled"
-      : "Closed";
+    let statusLabel =
+      completed
+        ? "Completed"
+        : canTake
+        ? "Available"
+        : isScheduled
+        ? "Scheduled"
+        : isClosed
+        ? "Closed"
+        : "Unavailable";
 
     let btnHtml = canTake
-      ? `<button class="btn" onclick="startTest('${set._id}')">Start</button>`
-      : taken
-      ? `<span style="color:var(--muted);">Completed</span>`
+      ? `<button class="px-4 py-1 bg-green-600 text-white rounded-lg font-semibold shadow hover:bg-green-700 transition glow-button" onclick="startTest('${set._id}')">Start</button>`
+      : completed
+      ? `<span style="color:#999;">Completed</span>`
       : isScheduled
-      ? `<span style="color:var(--muted);">Not Yet Open</span>`
-      : `<span style="color:var(--muted);">Closed</span>`;
+      ? `<span style="color:#999;">Not Yet Open</span>`
+      : isClosed
+      ? `<span style="color:#999;">Closed</span>`
+      : `<span style="color:#999;">Unavailable</span>`;
 
     html += `<tr>
       <td>${set.title}</td>
@@ -510,6 +530,28 @@ function renderExamAvailableTablePage(page) {
     No available assessments at this time.</td></tr>`;
 
   buildPagination(availableSchedulesCache.length, page, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
+}
+
+// ========== Pagination Builder ===========
+function buildPagination(total, page, pageSize, onPageChangeFnName, targetDivId) {
+  const totalPages = Math.ceil(total / pageSize);
+  if (totalPages <= 1) {
+    document.getElementById(targetDivId).innerHTML = '';
+    return;
+  }
+  let html = '';
+  html += `<button onclick="${onPageChangeFnName}(1)" ${page === 1 ? 'disabled' : ''}>First</button>`;
+  html += `<button onclick="${onPageChangeFnName}(${page - 1})" ${page === 1 ? 'disabled' : ''}>&lt;</button>`;
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || Math.abs(page - i) <= 2) {
+      html += `<button onclick="${onPageChangeFnName}(${i})" ${page === i ? 'class="active"' : ''}>${i}</button>`;
+    } else if (i === page - 3 || i === page + 3) {
+      html += '<span style="margin:0 5px;">...</span>';
+    }
+  }
+  html += `<button onclick="${onPageChangeFnName}(${page + 1})" ${page === totalPages ? 'disabled' : ''}>&gt;</button>`;
+  html += `<button onclick="${onPageChangeFnName}(${totalPages})" ${page === totalPages ? 'disabled' : ''}>Last</button>`;
+  document.getElementById(targetDivId).innerHTML = html;
 }
 
 // ========== Upcoming Countdown ===========
@@ -692,7 +734,7 @@ async function fetchAvailableTests() {
     uniqueSchedules.forEach((sched) => {
       const set = sched.examSet;
       if (!set || set.status !== "ACTIVE") return;
-      const taken = resultsCache.some((r) => r.examSet && r.examSet.title === set.title);
+      const taken = isScheduleCompleted(sched, set);
       const start = sched.start ? new Date(sched.start) : null;
       if (
         set.status === "ACTIVE" &&
@@ -746,7 +788,6 @@ function openReviewTab(sessionId) {
 
 // ============ MESSAGES ===========
 async function fetchInbox() {
-  // Example: Fetch last 10 messages for inbox
   const resp = await fetchWithAuth(API_URL + "messages/chats");
   chatListCache = await resp.json();
   let html = "";
@@ -853,7 +894,7 @@ window.closeScheduledExamModal = closeScheduledExamModal;
 
 // ============ INIT ===========
 async function initDashboard() {
-  if (!token) return window.location.href = "/mock-icthallb";
+  if (!token) return window.location.href = "/login";
   await fetchFacultiesAndDepartments();
   await fetchAllUsers();
   await fetchProfile();
