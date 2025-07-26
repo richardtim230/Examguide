@@ -1,19 +1,19 @@
 
-import express, { Request, Response } from 'express';
+import express, { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { User, Post, Follower, MarketplaceListing } from '../models/blogger.models.ts';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 // Middleware to verify JWT token
-const authMiddleware = async (req: Request, res: Response, next: Function) => {
+const authMiddleware = async (req: express.Request, res: express.Response, next: () => void) => {
   const token = req.headers.authorization?.split('Bearer ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
-    req.user = decoded as { id: string; role: string };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { id: string; role: string };
+    req.user = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Invalid token' });
@@ -21,7 +21,7 @@ const authMiddleware = async (req: Request, res: Response, next: Function) => {
 };
 
 // Get current user profile (/auth/me)
-router.get('/auth/me', authMiddleware, async (req: Request, res: Response) => {
+router.get('/auth/me', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -32,7 +32,7 @@ router.get('/auth/me', authMiddleware, async (req: Request, res: Response) => {
 });
 
 // Update user profile (/superadmin/me)
-router.put('/superadmin/me', authMiddleware, async (req: Request, res: Response) => {
+router.put('/superadmin/me', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { username, email, phone } = req.body;
   if (!username || !email) {
     return res.status(400).json({ message: 'Username and email are required' });
@@ -52,7 +52,7 @@ router.put('/superadmin/me', authMiddleware, async (req: Request, res: Response)
 });
 
 // Change password (/auth/change-password)
-router.post('/auth/change-password', authMiddleware, async (req: Request, res: Response) => {
+router.post('/auth/change-password', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { currentPassword, newPassword } = req.body;
   if (!currentPassword || !newPassword) {
     return res.status(400).json({ message: 'All fields are required' });
@@ -76,7 +76,7 @@ router.post('/auth/change-password', authMiddleware, async (req: Request, res: R
 });
 
 // Get all posts (/posts)
-router.get('/posts', authMiddleware, async (req: Request, res: Response) => {
+router.get('/posts', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const posts = await Post.find({ author: req.user.id }).sort({ createdAt: -1 });
     res.json(posts);
@@ -86,7 +86,7 @@ router.get('/posts', authMiddleware, async (req: Request, res: Response) => {
 });
 
 // Create a post (/posts)
-router.post('/posts', authMiddleware, async (req: Request, res: Response) => {
+router.post('/posts', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { title, content, status } = req.body;
   if (!title || !content) {
     return res.status(400).json({ message: 'Title and content are required' });
@@ -107,7 +107,7 @@ router.post('/posts', authMiddleware, async (req: Request, res: Response) => {
 });
 
 // Delete a post (/posts/:id)
-router.delete('/posts/:id', authMiddleware, async (req: Request, res: Response) => {
+router.delete('/posts/:id', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const post = await Post.findOneAndDelete({ _id: req.params.id, author: req.user.id });
     if (!post) return res.status(404).json({ message: 'Post not found or unauthorized' });
@@ -118,7 +118,7 @@ router.delete('/posts/:id', authMiddleware, async (req: Request, res: Response) 
 });
 
 // Get followers (/followers)
-router.get('/followers', authMiddleware, async (req: Request, res: Response) => {
+router.get('/followers', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const followers = await Follower.find({ blogger: req.user.id }).populate('follower', 'username');
     res.json(followers.map(f => ({ username: f.follower.username, _id: f.follower._id })));
@@ -128,7 +128,7 @@ router.get('/followers', authMiddleware, async (req: Request, res: Response) => 
 });
 
 // Get marketplace listings (/marketplace/listings)
-router.get('/marketplace/listings', authMiddleware, async (req: Request, res: Response) => {
+router.get('/marketplace/listings', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const listings = await MarketplaceListing.find({ seller: req.user.id }).sort({ createdAt: -1 });
     res.json(listings);
@@ -138,7 +138,7 @@ router.get('/marketplace/listings', authMiddleware, async (req: Request, res: Re
 });
 
 // Create a marketplace listing (/marketplace/listings)
-router.post('/marketplace/listings', authMiddleware, async (req: Request, res: Response) => {
+router.post('/marketplace/listings', authMiddleware, async (req: express.Request, res: express.Response) => {
   const { item, price, status } = req.body;
   if (!item || !price) {
     return res.status(400).json({ message: 'Item and price are required' });
@@ -159,7 +159,7 @@ router.post('/marketplace/listings', authMiddleware, async (req: Request, res: R
 });
 
 // Delete a marketplace listing (/marketplace/listings/:id)
-router.delete('/marketplace/listings/:id', authMiddleware, async (req: Request, res: Response) => {
+router.delete('/marketplace/listings/:id', authMiddleware, async (req: express.Request, res: express.Response) => {
   try {
     const listing = await MarketplaceListing.findOneAndDelete({ _id: req.params.id, seller: req.user.id });
     if (!listing) return res.status(404).json({ message: 'Listing not found or unauthorized' });
