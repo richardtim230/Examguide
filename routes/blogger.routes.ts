@@ -2,7 +2,7 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { User, Post, Follower, MarketplaceListing } from '../models/blogger.models';
+import { User, Post, Follower, MarketplaceListing } from '../models/blogger.models.ts';
 
 const router = express.Router();
 
