@@ -2,354 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.80">
-    <title>Student Dashboard | EduHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="logo.png">
-    <style>
-        .sidebar {
-            transition: transform 0.3s ease-in-out, background 0.3s ease;
-            background: linear-gradient(180deg, #1e3a8a, #3b82f6);
-            z-index: 50;
-        }
-        .sidebar.open {
-            transform: translateX(0);
-        }
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        .progress-circle {
-            background: conic-gradient(#22c55e 0% var(--progress), #e5e7eb 0% 100%);
-            transition: all 0.5s ease;
-        }
-        .progress-circle:hover {
-            transform: scale(1.1);
-        }
-        .glow-button {
-            position: relative;
-            overflow: hidden;
-        }
-        .glow-button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-        }
-        .glow-button:hover::after {
-            left: 100%;
-        }
-        .bg-gradient {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
-        }
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .modal {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateY(-50px);
-            opacity: 0;
-            pointer-events: none;
-        }
-        .modal.open {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-overlay {
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-        .modal-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-        }
-        .focus-trap {
-            outline: 2px solid #6366f1;
-        }
-        /* Custom styles for tables and leaderboard */
-        .result-table, .test-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: #fff;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 2px 16px #3a86ff18;
-            margin: 14px 0 22px 0;
-            font-size: 1.06rem;
-        }
-        .result-table thead tr, .test-table thead tr {
-            background: indigo;
-            color: #fff;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .result-table th, .result-table td,
-        .test-table th, .test-table td {
-            padding: 11px 14px;
-            text-align: left;
-            border-bottom: 1px solid #e3e8ee;
-        }
-        .result-table th:last-child, .result-table td:last-child,
-        .test-table th:last-child, .test-table td:last-child {
-            text-align: center;
-        }
-        .result-table tbody tr, .test-table tbody tr {
-            transition: background 0.18s;
-        }
-        .result-table tbody tr:nth-child(even),
-        .test-table tbody tr:nth-child(even) {
-            background: #f7faff;
-        }
-        .result-table tbody tr:hover,
-        .test-table tbody tr:hover {
-            background: #e3f0ff;
-        }
-        .result-table td, .test-table td {
-            color: #23366e;
-        }
-        .result-table th:first-child, .result-table td:first-child,
-        .test-table th:first-child, .test-table td:first-child {
-            border-top-left-radius: 12px;
-        }
-        .result-table th:last-child, .result-table td:last-child,
-        .test-table th:last-child, .test-table td:last-child {
-            border-top-right-radius: 12px;
-        }
-        .table-pagination {
-            text-align: center;
-            margin: 12px 0 0 0;
-            user-select: none;
-        }
-        .table-pagination button {
-            margin: 0 5px;
-            padding: 4px 13px;
-            font-size: 1em;
-            background: #f7faff;
-            color: #3a86ff;
-            border: 1px solid #3a86ff44;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: background 0.13s;
-        }
-        .table-pagination button.active,
-        .table-pagination button:hover {
-            background: #3a86ff;
-            color: #fff;
-        }
-        .table-pagination button[disabled] {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background: #e3e8ee !important;
-            color: #888 !important;
-        }
-        .scoreboard-container {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 2px 18px #3a86ff18;
-            padding: 24px 0 18px 0;
-            margin: 28px auto 18px auto;
-            max-width: 440px;
-        }
-        .scoreboard-title {
-            text-align: center;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #23366e;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        .scoreboard-list {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            gap: 16px;
-        }
-        .scoreboard-item {
-            background: #f7faff;
-            border-radius: 14px;
-            padding: 10px 16px;
-            text-align: center;
-            box-shadow: 0 2px 8px #3a86ff11;
-            min-width: 90px;
-            position: relative;
-        }
-        .scoreboard-avatar {
-            width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin-bottom: 4px;
-            border: 2px solid #3a86ff33;
-        }
-        .scoreboard-name { font-size: 1.07em; font-weight: 600; color: #23366e;}
-        .scoreboard-score { font-size: 1.01em; color: #455c8a; margin-top: 3px;}
-        .scoreboard-badge { display: inline-block; font-size: 1.36em; margin-top: 6px; }
-        .badge-rank-1 { color: #f7b500; }
-        .badge-rank-2 { color: #a8b0b8; }
-        .badge-rank-3 { color: #c47c39; }
-        /* Responsive */
-        @media (max-width: 800px) {
-            .result-table, .test-table {
-                font-size: 0.99rem;
-                min-width: 390px;
-                width: 100%;
-                display: block;
-                overflow-x: auto;
-            }
-            .scoreboard-container {
-                max-width: 99vw;
-                padding: 10px 0 10px 0;
-            }
-        }
-        /* Loader style */
-        #preloaderSpinner {
-            position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;
-            background:rgba(255,255,255,0.97);display:flex;align-items:center;justify-content:center;
-            transition:opacity 0.3s;
-        }
-        #preloaderSpinner .spinner {
-            display:inline-block;width:80px;height:80px;border:8px solid #e3e8ee;
-            border-top:8px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="student_dashboard.js"></script>
 </head>
-<body class="bg-gradient font-sans min-h-screen">
-
-    <!-- Loader -->
-    <div id="preloaderSpinner">
-      <div style="text-align:center;">
-        <div class="spinner"></div>
-        <div style="margin-top:18px;color:#3a86ff;font-weight:700;font-size:1.3em;">Loading dashboard...</div>
-      </div>
+<body class="bg-gray-100 font-sans">
+    <div id="preloaderSpinner" class="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50 transition-opacity duration-300">
+        <div class="text-lg">Loading dashboard...</div>
     </div>
 
-    <!-- Mobile Menu Button -->
-    <button id="menu-toggle" class="md:hidden fixed top-4 left-4 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700" aria-label="Open Menu">
-        <i class="fas fa-bars text-lg"></i>
-    </button>
-
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-72 bg-blue-900 text-white p-8 md:static md:translate-x-0 shadow-2xl z-50" aria-label="Sidebar Navigation">
-        <div class="mb-10">
-            <h1 class="text-3xl font-extrabold tracking-tight">OAU ExamGuard</h1>
-            <p class="text-sm text-blue-200">Student Dashboard</p>
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-gray-800 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-30">
+            <div class="p-4">
+                <h1 class="text-xl font-bold">OAU ExamGuard</h1>
+                <p class="text-sm">Student Dashboard</p>
+            </div>
+            <nav class="mt-4">
+                <a href="#dashboard" data-tab="dashboard" class="nav-link block px-4 py-2 hover:bg-indigo-700">Dashboard</a>
+                <a href="#mock-tests" data-tab="mock-tests" class="nav-link block px-4 py-2 hover:bg-indigo-700">Mock Tests</a>
+                <a href="#exams" data-tab="exams" class="nav-link block px-4 py-2 hover:bg-indigo-700">Exams</a>
+                <a href="#study-resources" data-tab="study-resources" class="nav-link block px-4 py-2 hover:bg-indigo-700">Study Resources</a>
+                <a href="#messages" data-tab="messages" class="nav-link block px-4 py-2 hover:bg-indigo-700">Messages</a>
+                <a href="#profile-settings" data-tab="profile-settings" class="nav-link block px-4 py-2 hover:bg-indigo-700">Profile Settings</a>
+                <a href="#logout" data-tab="logout" class="nav-link block px-4 py-2 hover:bg-indigo-700">Logout</a>
+            </nav>
         </div>
-        <nav>
-            <ul class="space-y-6">
-                <li><a href="#dashboard" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                <li><a href="#mock-tests" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="mock-tests"><i class="fas fa-file-alt"></i><span>Mock Tests</span></a></li>
-                <li><a href="#exams" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="exams"><i class="fas fa-graduation-cap"></i><span>Exams</span></a></li>
-                <li><a href="#study-resources" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="study-resources"><i class="fas fa-book"></i><span>Study Resources</span></a></li>
-                <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
-                <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
-                <li><a href="#logout" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
-            </ul>
-        </nav>
-    </aside>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden md:hidden z-20"></div>
 
-    <!-- Sidebar overlay for mobile -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 hidden md:hidden"></div>
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <div class="md:hidden p-4">
+                <button id="menu-toggle" class="text-gray-800">☰</button>
+            </div>
 
-    <!-- Main Content -->
-    <main class="p-4 md:ml-72 md:p-8 lg:p-12 min-h-screen">
-        <!-- Dashboard Tab -->
-        <section id="dashboard" class="tab-content active">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Welcome, <span id="studentName"></span>!</h2>
-                <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
-            </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Profile Card -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Student Details</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content p-6 hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold">Welcome, <span id="studentName">!</span></h2>
+                    <p class="text-gray-600">Your academic journey, beautifully organized</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Student Details</h3>
                         <div class="space-y-2">
                             <p><strong>Name:</strong> <span id="profileName"></span></p>
                             <p><strong>Student ID:</strong> <span id="studentId"></span></p>
                             <p><strong>Department:</strong> <span id="profileDept"></span></p>
-                        </div>
-                        <div class="space-y-2">
                             <p><strong>Year:</strong> <span id="studentLevel"></span></p>
                             <p><strong>Email:</strong> <span id="profileEmail"></span></p>
                             <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
                         </div>
                     </div>
-                </section>
-                <!-- Progress Tracker Card -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Tracker</h3>
-                    <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
-                </section>
-                <!-- Announcements Card -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Announcements</h3>
-                    <div id="announcementsPanel" class="space-y-4"></div>
-                </section>
-                <!-- Quick Access Card -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Quick Access</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <p class="font-medium text-gray-700">Marketplace</p>
-                            <p class="text-gray-600 text-sm">Explore study materials and student essentials.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/marketplace', '_blank')">Visit Marketplace</button>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-700">Blog Home</p>
-                            <p class="text-gray-600 text-sm">Read tips, tricks, and student stories.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/blog', '_blank')">Visit Blog</button>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Progress Tracker</h3>
+                        <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Announcements</h3>
+                        <div id="announcementsPanel"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Quick Access</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium">Marketplace</h4>
+                                <p class="text-sm text-gray-600">Explore study materials and student essentials.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Visit Marketplace</a>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Blog Home</h4>
+                                <p class="text-sm text-gray-600">Read tips, tricks, and student stories.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Visit Blog</a>
+                            </div>
                         </div>
                     </div>
-                </section>
-                <!-- Achievements (Leaderboard) Card -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 xl:col-span-4">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Achievements & Leaderboard</h3>
-                    <div id="leaderboardContainer" class="scoreboard-container"></div>
-                </section>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Achievements & Leaderboard</h3>
+                        <div id="leaderboardContainer"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Upcoming Test</h3>
+                        <p id="upcomingTest" class="font-medium">None</p>
+                        <p id="testCountdown" class="text-gray-600"></p>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <!-- Mock Tests Tab -->
-        <section id="mock-tests" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Mock Tests</h2>
-                <p class="text-gray-600 mt-2">Practice and improve your skills with our mock tests</p>
-            </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                <!-- Available Mock Tests Table -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Mock Tests</h3>
-                    <div id="testSpinner" style="display:none;text-align:center;padding:20px;">
-                        <div style="display:inline-block;width:38px;height:38px;border:4px solid #e3e8ee;border-top:4px solid #3a86ff;border-radius:50%;animation:spin 1s linear infinite;"></div>
-                    </div>
-                    <div class="overflow-x-auto w-full">
-                        <table class="test-table w-full" id="availableTable">
+            <!-- Mock Tests Tab -->
+            <div id="mock-tests" class="tab-content p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4">Mock Tests</h2>
+                <p class="text-gray-600 mb-6">Practice and improve your skills with our mock tests</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Available Mock Tests</h3>
+                        <div id="testSpinner" class="hidden text-center">Loading...</div>
+                        <table id="availableTable" class="w-full">
                             <thead>
-                                <tr>
+                                <tr class="text-left text-gray-600">
                                     <th>Test</th>
                                     <th>Description</th>
                                     <th>Start Time</th>
@@ -360,215 +112,272 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <div id="availablePagination" class="mt-4 flex space-x-2 justify-center"></div>
                     </div>
-                    <div id="availablePagination" class="table-pagination"></div>
-                </section>
-                <!-- Your Progress -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Your Progress</h3>
-                    <div id="progressList" style="max-height:110px;overflow-y:auto;"></div>
-                </section>
-                <!-- Certificates -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Certificates</h3>
-                    <button id="downloadCertBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Download Certificate</button>
-                    <div id="badgePanel"></div>
-                </section>
-                <!-- Recommendations -->
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Personalized Study Recommendations</h3>
-                    <ul class="recommend-list" id="recommendations"></ul>
-                </section>
-            </div>
-            <!-- Upcoming Test Countdown -->
-            <div class="bg-white rounded-2xl shadow-xl p-6 card mt-8">
-                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Upcoming Test</h3>
-                <div class="card-value" id="upcomingTest">None</div>
-                <div id="testCountdown" style="font-size:1.01rem; color:var(--primary);font-weight:600;"></div>
-            </div>
-        </section>
-
-        <!-- Exams Tab -->
-        <section id="exams" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
-                <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
-            </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Assessment Performance & Reviews</h3>
-                    <div class="overflow-x-auto w-full">
-                      <table class="result-table w-full" id="historyTable">
-                        <thead>
-                          <tr>
-                            <th>Test</th>
-                            <th>Date</th>
-                            <th>Score</th>
-                            <th>Review</th>
-                          </tr>
-                        </thead>
-                        <tbody></tbody>
-                      </table>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
+                        <div id="progressList"></div>
                     </div>
-                    <div id="historyPagination" class="table-pagination"></div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Certificates</h3>
+                        <a href="#" class="text-blue-600 hover:underline">Download Certificate</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Personalized Study Recommendations</h3>
+                        <ul id="recommendations" class="space-y-2"></ul>
+                    </div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Assessments</h3>
-                    <div class="overflow-x-auto w-full">
-                        <table class="test-table w-full" id="examAvailableTable">
+                <div class="mt-6 bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Upcoming Test</h3>
+                    <p id="upcomingTest" class="font-medium">None</p>
+                    <p id="testCountdown" class="text-gray-600"></p>
+                </div>
+            </div>
+
+            <!-- Exams Tab -->
+            <div id="exams" class="tab-content p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4">Exams</h2>
+                <p class="text-gray-600 mb-6">Stay on top of your upcoming and past exams</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Assessment Performance & Reviews</h3>
+                        <table id="historyTable" class="w-full">
                             <thead>
-                              <tr>
-                                <th>Test</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
+                                <tr class="text-left text-gray-600">
+                                    <th>Test</th>
+                                    <th>Date</th>
+                                    <th>Score</th>
+                                    <th>Review</th>
+                                </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <div id="historyPagination" class="mt-4 flex space-x-2 justify-center"></div>
                     </div>
-                    <div id="examAvailablePagination" class="table-pagination"></div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Available Assessments</h3>
+                        <table id="examAvailableTable" class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-600">
+                                    <th>Test</th>
+                                    <th>Description</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div id="examAvailablePagination" class="mt-4 flex space-x-2 justify-center"></div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Study Resources Tab -->
-        <section id="study-resources" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Study Resources</h2>
-                <p class="text-gray-600 mt-2">Access essential materials to boost your learning</p>
-            </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Resources</h3>
-                    <ul class="list-disc list-inside space-y-2 text-sm">
-                        <li><a href="#" class="text-indigo-600 hover:underline">Mathematics Formula Sheet</a></li>
-                        <li><a href="#" class="text-indigo-600 hover:underline">Physics Concept Notes</a></li>
-                        <li><a href="#" class="text-indigo-600 hover:underline">Coding Practice Problems</a></li>
-                        <li><a href="#" class="text-indigo-600 hover:underline">Chemistry Lab Guides</a></li>
-                    </ul>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recommended Resources</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <p class="font-medium text-gray-700">Calculus Textbook</p>
-                            <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-700">Physics Video Series</p>
-                            <p class="text-gray-600 text-sm">Interactive lectures on mechanics.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/physics-videos', '_blank')">Watch Now</button>
+            <!-- Study Resources Tab -->
+            <div id="study-resources" class="tab-content p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4">Study Resources</h2>
+                <p class="text-gray-600 mb-6">Access essential materials to boost your learning</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Available Resources</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-blue-600 hover:underline">Mathematics Formula Sheet</a></li>
+                            <li><a href="#" class="text-blue-600 hover:underline">Physics Concept Notes</a></li>
+                            <li><a href="#" class="text-blue-600 hover:underline">Coding Practice Problems</a></li>
+                            <li><a href="#" class="text-blue-600 hover:underline">Chemistry Lab Guides</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Recommended Resources</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium">Calculus Textbook</h4>
+                                <p class="text-sm text-gray-600">Comprehensive guide for 300-level calculus.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Download</a>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Physics Video Series</h4>
+                                <p class="text-sm text-gray-600">Interactive lectures on mechanics.</p>
+                                <a href="#" class="text-blue-600 hover:underline">Watch Now</a>
+                            </div>
                         </div>
                     </div>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Study Calendar</h3>
-                    <p class="text-gray-600 text-sm">Your upcoming exams and study sessions.</p>
-                    <div class="h-64 bg-indigo-50 rounded-lg flex items-center justify-center">
-                        <p class="text-gray-500">Interactive Calendar (Placeholder)</p>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Study Calendar</h3>
+                        <p class="text-gray-600">Your upcoming exams and study sessions.</p>
+                        <div class="border p-4">Interactive Calendar (Placeholder)</div>
                     </div>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Become a Marketer or Blogger!</h3>
-                    <p class="text-gray-600 text-sm">Share your knowledge, sell study materials, or promote products to earn rewards.</p>
-                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/become-contributor', '_blank')">Get Started</button>
-                </section>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Become a Marketer or Blogger!</h3>
+                        <p class="text-gray-600">Share your knowledge, sell study materials, or promote products to earn rewards.</p>
+                        <a href="#" class="text-blue-600 hover:underline">Get Started</a>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <!-- Messages Tab -->
-        <section id="messages" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Messages</h2>
-                <p class="text-gray-600 mt-2">Stay connected with instructors and peers</p>
-            </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Inbox</h3>
-                    <div id="inboxList" class="space-y-4"></div>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Send a Message</h3>
-                    <div class="space-y-4">
-                        <select id="recipientSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" aria-label="Select Recipient">
-                            <option>Select Recipient</option>
-                        </select>
-                        <textarea id="messageInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" rows="4" placeholder="Type your message..." aria-label="Type your message"></textarea>
-                        <div class="flex space-x-3">
-                            <button id="cancelMessageBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 glow-button">Cancel</button>
-                            <button id="sendMessageBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Send</button>
+            <!-- Messages Tab -->
+            <div id="messages" class="tab-content p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4">Messages</h2>
+                <p class="text-gray-600 mb-6">Stay connected with instructors and peers</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Inbox</h3>
+                        <div id="inboxList"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Send a Message</h3>
+                        <div class="space-y-4">
+                            <select id="recipientSelect" class="w-full p-2 border rounded"></select>
+                            <textarea id="messageInput" class="w-full p-2 border rounded" rows="4" placeholder="Type your message..."></textarea>
+                            <div class="flex space-x-2">
+                                <button id="cancelMessageBtn" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                                <button id="sendMessageBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Send</button>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
-        </section>
 
-        <!-- Profile Settings Tab -->
-        <section id="profile-settings" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Profile Settings</h2>
-                <p class="text-gray-600 mt-2">Manage your personal information and preferences</p>
-            </header>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Personal Information</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                            <input id="editName" type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <!-- Profile Settings Tab -->
+            <div id="profile-settings" class="tab-content p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4">Profile Settings</h2>
+                <p class="text-gray-600 mb-6">Manage your personal information and preferences</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium">Full Name</label>
+                                <input id="editName" type="text" class="w-full p-2 border rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">Email</label>
+                                <input id="editEmail" type="email" class="w-full p-2 border rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">Phone</label>
+                                <input id="editPhone" type="tel" class="w-full p-2 border rounded">
+                            </div>
+                            <button id="saveProfileBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save Changes</button>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Email</label>
-                            <input id="editEmail" type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Phone</label>
-                            <input id="editPhone" type="tel" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                        </div>
-                        <button id="saveProfileBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Save Changes</button>
                     </div>
-                </section>
-                <section class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Change Password</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Current Password</label>
-                            <input id="currentPassword" type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-4">Change Password</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium">Current Password</label>
+                                <input id="currentPassword" type="password" class="w-full p-2 border rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">New Password</label>
+                                <input id="newPassword" type="password" class="w-full p-2 border rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">Confirm New Password</label>
+                                <input id="confirmNewPassword" type="password" class="w-full p-2 border rounded">
+                            </div>
+                            <button id="updatePasswordBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Update Password</button>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">New Password</label>
-                            <input id="newPassword" type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
-                            <input id="confirmNewPassword" type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                        </div>
-                        <button id="updatePasswordBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button">Update Password</button>
                     </div>
-                </section>
+                </div>
             </div>
-        </section>
 
-        <!-- Logout Tab -->
-        <section id="logout" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Logout</h2>
-                <p class="text-gray-600 mt-2">Safely end your session</p>
-            </header>
-            <section class="bg-white rounded-2xl shadow-xl p-6 card text-center">
-                <h3 class="text-xl font-semibold text-indigo-900 mb-4">Are you sure you want to log out?</h3>
-                <p class="text-gray-600 text-sm mb-6">You will be signed out of your account and need to log in again to access your dashboard.</p>
-                <button class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 glow-button" id="confirm-logout">Confirm Logout</button>
-            </section>
-        </section>
+            <!-- Logout Tab -->
+            <div id="logout" class="tab-content p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4">Logout</h2>
+                <p class="text-gray-600 mb-6">Safely end your session</p>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <p class="mb-4">Are you sure you want to log out? You will be signed out of your account and need to log in again to access your dashboard.</p>
+                    <button id="confirm-logout" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Confirm Logout</button>
+                </div>
+            </div>
 
-        <!-- Modal root for dynamic popups -->
-        <div id="modalRoot"></div>
-    </main>
-        <script src="student_dashboard.js"></script>
+            <!-- Currently Scheduled Assessment Modal -->
+            <div id="currentAssessmentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-40">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Current Scheduled Assessment</h3>
+                        <button id="closeAssessmentModal" class="text-gray-600 hover:text-gray-800">&times;</button>
+                    </div>
+                    <div id="currentAssessmentContent">
+                        <p id="modalTestTitle" class="font-medium text-gray-700">Test Title Here</p>
+                        <p id="modalTestDescription" class="text-gray-600 text-sm">Short description about the test or any important info for the candidate goes here.</p>
+                        <div class="mt-4 space-y-2">
+                            <p><strong>Start:</strong> <span id="modalTestStart">-</span></p>
+                            <p><strong>End:</strong> <span id="modalTestEnd">-</span></p>
+                            <p><strong>Status:</strong> <span id="modalTestStatus">-</span></p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button id="startAssessmentBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Start Assessment</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Broadcast Message Modal -->
+            <div id="broadcastModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-40">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">🔔 Broadcast Message</h3>
+                        <button id="closeBroadcastModal" class="text-gray-600 hover:text-gray-800">&times;</button>
+                    </div>
+                    <div id="broadcastContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal JavaScript for Current Assessment
+        document.getElementById('closeAssessmentModal')?.addEventListener('click', () => {
+            document.getElementById('currentAssessmentModal').classList.add('hidden');
+        });
+
+        // Update modal with upcoming test data
+        function updateAssessmentModal() {
+            if (!nextTest || !nextTestStart) {
+                document.getElementById('currentAssessmentModal').classList.add('hidden');
+                return;
+            }
+            document.getElementById('modalTestTitle').innerText = nextTest.title || 'Test Title Here';
+            document.getElementById('modalTestDescription').innerText = nextTest.description || 'Short description about the test or any important info for the candidate goes here.';
+            document.getElementById('modalTestStart').innerText = nextTestStart ? new Date(nextTestStart).toLocaleString() : '-';
+            document.getElementById('modalTestEnd').innerText = nextTest.end ? new Date(nextTest.end).toLocaleString() : '-';
+            document.getElementById('modalTestStatus').innerText = nextTest.status || 'Scheduled';
+            document.getElementById('startAssessmentBtn').onclick = () => startTest(nextTest._id);
+            document.getElementById('currentAssessmentModal').classList.remove('hidden');
+        }
+
+        // Modal JavaScript for Broadcast Message
+        document.getElementById('closeBroadcastModal')?.addEventListener('click', () => {
+            document.getElementById('broadcastModal').classList.add('hidden');
+        });
+
+        // Override fetchAnnouncements to update broadcast modal
+        const originalFetchAnnouncements = fetchAnnouncements;
+        fetchAnnouncements = async function() {
+            await originalFetchAnnouncements();
+            const notifs = await (await fetchWithAuth(API_URL + "notifications")).json();
+            const latestNotif = notifs[0]; // Show the most recent announcement
+            if (latestNotif) {
+                document.getElementById('broadcastContent').innerHTML = `
+                    <p class="font-medium text-gray-700">${latestNotif.title}</p>
+                    <p class="text-gray-600 text-sm">${latestNotif.message}</p>
+                    <p class="text-xs text-gray-500">${formatDate(latestNotif.createdAt)}</p>
+                `;
+                document.getElementById('broadcastModal').classList.remove('hidden');
+            } else {
+                document.getElementById('broadcastModal').classList.add('hidden');
+            }
+        };
+
+        // Override fetchAvailableTests to update assessment modal
+        const originalFetchAvailableTests = fetchAvailableTests;
+        fetchAvailableTests = async function() {
+            await originalFetchAvailableTests();
+            updateAssessmentModal();
+        };
+    </script>
 </body>
 </html>
