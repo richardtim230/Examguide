@@ -73,6 +73,11 @@ function formatDate(dt) {
         sidebarOverlay.classList.add('hidden');
         document.body.classList.remove('overflow-hidden');
       }
+      // Inside your tab switching handler
+if (tabId === "mock-tests" || tabId === "exams") {
+  maybeShowScheduledTestModal();
+}
+ 
       localStorage.setItem('student_dashboard_active_tab', tabId);
       location.hash = tabId;
     });
@@ -100,11 +105,81 @@ async function fetchWithAuth(url, options = {}) {
   const resp = await fetch(url, options);
   if (resp.status === 401 || resp.status === 403) {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/mock-icthallb";
     throw new Error("Session expired.");
   }
   return resp;
 }
+function showScheduledTestModal(sched) {
+  // Sched: object with examSet (title/desc), start, end, status, etc.
+  let now = Date.now();
+  let status = "Closed";
+  if (sched.examSet.status === "ACTIVE") {
+    if (sched.start && now < new Date(sched.start).getTime()) status = "Scheduled";
+    else if (
+      sched.start &&
+      sched.end &&
+      now >= new Date(sched.start).getTime() &&
+      now <= new Date(sched.end).getTime()
+    ) status = "Available";
+    else if (sched.end && now > new Date(sched.end).getTime()) status = "Closed";
+  }
+  const taken = resultsCache.some(r =>
+    r.examSet && (r.examSet.title === sched.examSet.title)
+  );
+  const canTake =
+    status === "Available" && !taken;
+
+  let html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()" style="max-width:520px;">
+        <button class="close-modal" onclick="closeModal(event)" style="float:right;background:none;border:none;font-size:2em;color:#888;">&times;</button>
+        <div style="padding:22px 28px;">
+          <div style="font-size:1.3em;font-weight:700;color:#3a86ff;margin-bottom:8px;">Current Scheduled Test</div>
+          <div style="font-size:1.12em;font-weight:600;margin-bottom:6px;">${sched.examSet.title}</div>
+          <div style="color:#555;margin-bottom:12px;">${sched.examSet.description || ''}</div>
+          <div>
+            <b>Start:</b> ${sched.start ? new Date(sched.start).toLocaleString() : '-'}<br>
+            <b>End:</b> ${sched.end ? new Date(sched.end).toLocaleString() : '-'}<br>
+            <b>Status:</b> ${status}
+          </div>
+          <div style="margin-top:22px;text-align:center;">
+            ${canTake
+              ? `<button class="btn" onclick="startTest('${sched.examSet._id}')">Start Assessment</button>`
+              : status === "Scheduled"
+                ? `<span style="color:var(--primary);">Not open yet.</span>`
+                : taken
+                  ? `<span class="badge">Completed</span>`
+                  : `<span class="badge">Closed</span>`
+            }
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById("modalRoot").innerHTML = html;
+}
+window.showScheduledTestModal = showScheduledTestModal;
+
+// Handler to check for current/upcoming scheduled test and show modal
+function maybeShowScheduledTestModal() {
+  // Use availableSchedulesCache, which should be up-to-date after fetchAvailableTests()
+  if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) return;
+  const now = Date.now();
+  // Find currently running or next scheduled
+  let sched = availableSchedulesCache.find(s =>
+    s.examSet && s.examSet.status === "ACTIVE" &&
+    s.start && now <= new Date(s.end).getTime()
+  );
+  if (!sched) {
+    // Fallback: show first in future
+    sched = availableSchedulesCache.find(s =>
+      s.examSet && s.examSet.status === "ACTIVE" &&
+      s.start && now < new Date(s.start).getTime()
+    );
+  }
+  if (sched) showScheduledTestModal(sched);
+}
+
 // --- BROADCAST MODAL LOGIC ---
 
 async function fetchLatestBroadcast() {
