@@ -254,7 +254,7 @@ async function openBroadcastModal() {
 function closeBroadcastModal() {
   document.getElementById("broadcastModal").style.display = "none";
   // Redirect to homepage and close tab (in case opened in new tab)
-  window.location.href = '/';
+  window.location.href = '#';
   setTimeout(() => {
     if (window.opener) {
       window.close();
