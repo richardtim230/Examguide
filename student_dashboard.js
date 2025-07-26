@@ -807,8 +807,87 @@ async function fetchInbox() {
       `<option value="${chat.otherUserId}">${chat.otherUserName}</option>`
     ).join('');
 }
-window.openChatModal = function(otherUserId) {
-  alert("Chat modal coming soon (integrate chat UI and fetch logic)");
+// --- Chat Modal Global State
+let currentChatUserId = null;
+let currentChatUserName = null;
+
+// Replace openChatModal implementation with:
+window.openChatModal = async function(otherUserId) {
+  const chat = chatListCache.find(c => c.otherUserId === otherUserId);
+  currentChatUserId = otherUserId;
+  currentChatUserName = chat ? chat.otherUserName : "User";
+  document.getElementById("chatModalUser").innerText = "Chat with " + currentChatUserName;
+  document.getElementById("chatModal").style.display = "flex";
+  document.getElementById("chatInput").value = "";
+  document.getElementById("chatImage").value = "";
+  await loadChatMessages(otherUserId);
+}
+
+// Function to load chat messages for the selected user
+async function loadChatMessages(userId) {
+  const chatMessagesDiv = document.getElementById("chatMessages");
+  chatMessagesDiv.innerHTML = "<div style='color:#888;text-align:center;'>Loading...</div>";
+  try {
+    const resp = await fetchWithAuth(API_URL + "messages/" + userId);
+    const data = await resp.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      chatMessagesDiv.innerHTML = "<div style='color:#888;text-align:center;'>No messages yet.</div>";
+      return;
+    }
+    chatMessagesDiv.innerHTML = data.map(msg => {
+      const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
+      let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
+      let img = msg.imageUrl ? `<img src="${msg.imageUrl}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;" alt="Attachment">` : "";
+      return `
+        <div style="margin-bottom:9px;display:flex;flex-direction:column;align-items:${isMe?'flex-end':'flex-start'};">
+          <div style="background:${isMe?'#3b82f6':'#ede9fe'};color:${isMe?'#fff':'#333'};padding:7px 13px;border-radius:13px;max-width:88%;box-shadow:0 1px 3px #0001;">
+            ${content}
+            ${img}
+          </div>
+          <div style="font-size:0.7em;color:#888;margin-top:2px;">${formatDate(msg.createdAt)}</div>
+        </div>
+      `;
+    }).join('');
+    // Scroll to bottom
+    chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+  } catch (e) {
+    chatMessagesDiv.innerHTML = "<div style='color:#f25f5c'>Failed to load messages.</div>";
+  }
+}
+
+// Chat send (attach to form submit)
+document.getElementById("chatSendForm").onsubmit = async function(e) {
+  e.preventDefault();
+  if (!currentChatUserId) return;
+  const text = document.getElementById("chatInput").value.trim();
+  const imageInput = document.getElementById("chatImage");
+  const file = imageInput.files && imageInput.files[0];
+  if (!text && !file) return;
+
+  let formData = new FormData();
+  if (text) formData.append("text", text);
+  if (file) formData.append("image", file);
+
+  try {
+    await fetchWithAuth(API_URL + "messages/" + currentChatUserId, {
+      method: "POST",
+      body: formData
+    });
+    document.getElementById("chatInput").value = "";
+    document.getElementById("chatImage").value = "";
+    // Refresh chat
+    await loadChatMessages(currentChatUserId);
+    // Optionally, refresh inbox
+    fetchInbox();
+  } catch (err) {
+    alert("Failed to send message.");
+  }
+};
+
+function closeChatModal() {
+  document.getElementById("chatModal").style.display = "none";
+  currentChatUserId = null;
+  currentChatUserName = null;
 }
 
 // Send message
