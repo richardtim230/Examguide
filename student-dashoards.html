@@ -633,7 +633,19 @@
             <div id="scheduledExamContent"></div>
           </div>
         </div>
-
+<!-- Chat Modal for Inbox/DM -->
+<div id="chatModal" class="modal-backdrop" style="display:none;">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:430px;">
+    <button class="close-modal" onclick="closeChatModal()" style="float:right;font-size:1.5em;">&times;</button>
+    <h2 id="chatModalUser" class="text-xl font-bold mb-3"></h2>
+    <div id="chatMessages" style="max-height:340px;overflow-y:auto;border:1px solid #eee;background:#f9f9fd;border-radius:10px;padding:12px 8px 12px 8px;margin-bottom:12px;"></div>
+    <form id="chatSendForm" class="mt-2 flex flex-col gap-2">
+      <textarea id="chatInput" class="border p-2 rounded w-full" rows="2" placeholder="Type a message..."></textarea>
+      <input type="file" id="chatImage" accept="image/*" style="margin-bottom:6px;">
+      <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full">Send</button>
+    </form>
+  </div>
+</div>
     </main>
     <script src="student_dashboard.js"></script>
 </body>
