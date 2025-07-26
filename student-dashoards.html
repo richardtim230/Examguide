@@ -57,6 +57,20 @@
             z-index: 40;
         }
         #sidebar-overlay.hidden { display: none; }
+        .modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+            border-left: 4px solid #6366f1;
+            padding-left: 1rem;
+        }
+        .modal-backdrop {
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: none;
+        }
+        .modal-backdrop.active { display: flex; }
         @media (min-width: 768px) {
             #sidebar { transform: translateX(0); }
             #menu-toggle { display: none; }
@@ -147,13 +161,13 @@
                 </div>
 
                 <!-- Announcements Modal -->
-                <div id="announcementsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+                <div id="announcementsModal" class="modal-backdrop hidden items-center justify-center">
                     <div class="bg-white p-6 rounded-lg max-w-lg w-full">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold">📢 Announcements</h3>
-                            <button class="text-gray-500 hover:text-gray-700" onclick="closeAnnouncementsModal()">×</button>
+                            <h3 class="text-lg font-semibold">🔔 Broadcast Messages</h3>
+                            <button class="text-gray-500 hover:text-gray-700 text-xl" onclick="closeAnnouncementsModal()">×</button>
                         </div>
-                        <div id="announcementsModalContent" class="max-h-96 overflow-y-auto"></div>
+                        <div id="announcementsModalContent" class="modal-content"></div>
                     </div>
                 </div>
             </div>
@@ -222,6 +236,7 @@
                     <div class="bg-white p-6 rounded-lg shadow">
                         <h3 class="text-lg font-semibold mb-4">Available Assessments</h3>
                         <button class="btn bg-blue-500 text-white px-4 py-2 rounded mb-4" onclick="openScheduledExamModal()">View Current Scheduled Assessment</button>
+                        <div id="examTestSpinner" class="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 hidden mx-auto"></div>
                         <table id="examAvailableTable" class="w-full">
                             <thead>
                                 <tr>
@@ -240,23 +255,23 @@
                 </div>
 
                 <!-- Scheduled Exam Modal -->
-                <div id="scheduledExamModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+                <div id="scheduledExamModal" class="modal-backdrop hidden items-center justify-center">
                     <div class="bg-white p-6 rounded-lg max-w-lg w-full">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold">Current Scheduled Assessment</h3>
-                            <button class="text-gray-500 hover:text-gray-700" onclick="closeScheduledExamModal()">×</button>
+                            <h3 class="text-lg font-semibold">📚 Current Scheduled Assessment</h3>
+                            <button class="text-gray-500 hover:text-gray-700 text-xl" onclick="closeScheduledExamModal()">×</button>
                         </div>
-                        <div id="scheduledExamContent">
+                        <div id="scheduledExamContent" class="modal-content">
                             <h4 id="modalTestTitle" class="font-medium text-gray-700">Test Title Here</h4>
-                            <p id="modalTestDescription" class="text-gray-600 text-sm">Short description about the test or any important info for the candidate goes here.</p>
-                            <div class="grid grid-cols-2 gap-4 mt-4">
+                            <p id="modalTestDescription" class="text-gray-600 text-sm mb-4">Short description about the test or any important info for the candidate goes here.</p>
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <p><strong>Start:</strong> <span id="modalTestStart">-</span></p>
                                     <p><strong>End:</strong> <span id="modalTestEnd">-</span></p>
                                     <p><strong>Status:</strong> <span id="modalTestStatus">-</span></p>
                                 </div>
                             </div>
-                            <button id="modalStartButton" class="btn bg-blue-500 text-white px-4 py-2 rounded mt-4">Start Assessment</button>
+                            <button id="modalStartButton" class="btn bg-blue-500 text-white px-4 py-2 rounded mt-4 hidden">Start Assessment</button>
                         </div>
                     </div>
                 </div>
@@ -380,5 +395,59 @@
         </main>
     </div>
 
+    <script>
+        function openAnnouncementsModal() {
+            const modal = document.getElementById('announcementsModal');
+            const content = document.getElementById('announcementsModalContent');
+            const panelContent = document.getElementById('announcementsPanel').innerHTML;
+            content.innerHTML = panelContent || '<div class="text-gray-400 text-center">No new announcements.</div>';
+            modal.classList.add('active');
+        }
+
+        function closeAnnouncementsModal() {
+            document.getElementById('announcementsModal').classList.remove('active');
+        }
+
+        function openScheduledExamModal() {
+            const modal = document.getElementById('scheduledExamModal');
+            const titleEl = document.getElementById('modalTestTitle');
+            const descEl = document.getElementById('modalTestDescription');
+            const startEl = document.getElementById('modalTestStart');
+            const endEl = document.getElementById('modalTestEnd');
+            const statusEl = document.getElementById('modalTestStatus');
+            const startBtn = document.getElementById('modalStartButton');
+
+            if (nextTest && nextTestStart && availableSchedulesCache) {
+                const now = Date.now();
+                const startDt = new Date(nextTestStart);
+                const sched = availableSchedulesCache.find(s => s.examSet && s.examSet._id === nextTest._id);
+                const endDt = sched && sched.end ? new Date(sched.end) : null;
+                const taken = resultsCache.some(r => r.examSet && r.examSet.title === nextTest.title);
+                const canTake = !taken && nextTest.status === "ACTIVE" && now >= startDt.getTime() && (!endDt || now <= endDt.getTime());
+                const isScheduled = now < startDt.getTime();
+
+                titleEl.innerText = nextTest.title || 'Test Title';
+                descEl.innerText = nextTest.description || 'No description available.';
+                startEl.innerText = startDt ? startDt.toLocaleString() : '-';
+                endEl.innerText = endDt ? endDt.toLocaleString() : '-';
+                statusEl.innerText = taken ? 'Completed' : canTake ? 'Available' : isScheduled ? 'Scheduled' : 'Closed';
+                startBtn.classList.toggle('hidden', !canTake);
+                startBtn.onclick = canTake ? () => startTest(nextTest._id) : null;
+            } else {
+                titleEl.innerText = 'No Scheduled Test';
+                descEl.innerText = 'There are no upcoming tests scheduled at this time.';
+                startEl.innerText = '-';
+                endEl.innerText = '-';
+                statusEl.innerText = '-';
+                startBtn.classList.add('hidden');
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeScheduledExamModal() {
+            document.getElementById('scheduledExamModal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
