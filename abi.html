@@ -3,674 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAU ExamGuard - Student Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Blogger Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .progress-circle {
-            background: conic-gradient(#3b82f6 var(--progress), #e5e7eb 0);
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .sidebar { transition: transform 0.3s ease; }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar-overlay { transition: opacity 0.3s ease; }
+        .progress-circle { 
+            background: conic-gradient(#3b82f6 var(--progress), #e5e7eb 0); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
         }
-        .modal-enter {
-            opacity: 0;
-            transform: translateY(-50px);
+        .progress-circle::before { 
+            content: ''; 
+            width: 80%; 
+            height: 80%; 
+            background: white; 
+            border-radius: 50%; 
+            position: absolute; 
         }
-        .modal-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        .badge { 
+            display: inline-block; 
+            padding: 2px 8px; 
+            border-radius: 12px; 
+            font-size: 0.75rem; 
+            font-weight: 500; 
+            background: #e5e7eb; 
+            color: #374151; 
         }
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.5);
+        .badge-excellent { background: #10b981; color: white; }
+        @media (max-width: 767px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay { opacity: 0; }
+            .sidebar-overlay.hidden { display: none; }
+            .sidebar-overlay:not(.hidden) { opacity: 0.5; }
         }
     </style>
 </head>
 <body class="bg-gray-100 font-sans">
-    <div id="preloaderSpinner" class="fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-300">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-        <span class="ml-4 text-lg">Loading dashboard...</span>
+    <div id="preloaderSpinner" class="fixed inset-0 flex items-center justify-center bg-white transition-opacity duration-300" style="z-index: 9999;">
+        <div class="text-center">
+            <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-2 text-gray-600">Loading dashboard...</p>
+        </div>
     </div>
 
     <div class="flex h-screen overflow-hidden">
-        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden md:hidden"></div>
-        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-indigo-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-20">
-            <div class="p-4">
-                <h1 class="text-2xl font-bold">OAU ExamGuard</h1>
-                <p class="text-sm">Student Dashboard</p>
-            </div>
-            <nav class="p-4 space-y-2">
-                <a href="#dashboard" data-tab="dashboard" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Dashboard</a>
-                <a href="#mock-tests" data-tab="mock-tests" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Mock Tests</a>
-                <a href="#exams" data-tab="exams" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Exams</a>
-                <a href="#study-resources" data-tab="study-resources" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Study Resources</a>
-                <a href="#messages" data-tab="messages" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Messages</a>
-                <a href="#profile-settings" data-tab="profile-settings" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Profile Settings</a>
-                <a href="#logout" data-tab="logout" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Logout</a>
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar fixed md:static w-64 bg-gray-800 text-white h-full md:h-auto overflow-y-auto">
+            <div class="p-4 text-2xl font-bold">EduHub</div>
+            <div class="p-4 text-lg">Blogger Dashboard</div>
+            <nav class="mt-4">
+                <a href="#overview" data-tab="overview" class="nav-link block px-4 py-2 hover:bg-indigo-700 text-blue-200 rounded-lg">Overview</a>
+                <a href="#manage-posts" data-tab="manage-posts" class="nav-link block px-4 py-2 hover:bg-indigo-700">Manage Posts</a>
+                <a href="#analytics" data-tab="analytics" class="nav-link block px-4 py-2 hover:bg-indigo-700">Analytics</a>
+                <a href="#followers" data-tab="followers" class="nav-link block px-4 py-2 hover:bg-indigo-700">Followers</a>
+                <a href="#marketplace-listings" data-tab="marketplace-listings" class="nav-link block px-4 py-2 hover:bg-indigo-700">Marketplace Listings</a>
+                <a href="#profile-settings" data-tab="profile-settings" class="nav-link block px-4 py-2 hover:bg-indigo-700">Profile Settings</a>
+                <a href="#logout" data-tab="logout" class="nav-link block px-4 py-2 hover:bg-indigo-700">Logout</a>
             </nav>
-        </aside>
+        </div>
+        <div id="sidebar-overlay" class="sidebar-overlay fixed inset-0 bg-black opacity-0 hidden md:hidden"></div>
 
-        <main class="flex-1 p-6 overflow-y-auto md:ml-64">
-            <button id="menu-toggle" class="md:hidden mb-4 p-2 bg-indigo-900 text-white rounded-lg">Menu</button>
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <header class="bg-white shadow p-4 flex justify-between items-center md:hidden">
+                <button id="menu-toggle" class="text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+                <h1 class="text-xl font-bold">Blogger Dashboard</h1>
+            </header>
 
-            <div id="dashboard" class="tab-content active">
-                <h2 class="text-2xl font-bold mb-4">Welcome, <span id="studentName"></span>!</h2>
-                <p class="text-gray-600 mb-6">Your academic journey, beautifully organized</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Student Details</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <p><strong>Name:</strong> <span id="profileName"></span></p>
-                                <p><strong>Student ID:</strong> <span id="studentId"></span></p>
-                                <p><strong>Department:</strong> <span id="profileDept"></span></p>
-                            </div>
-                            <div>
-                                <p><strong>Year:</strong> <span id="studentLevel"></span></p>
-                                <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-                                <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
-                            </div>
-                        </div>
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content p-6">
+                <h2 class="text-2xl font-bold mb-4">Welcome, <span id="bloggerName">Sarah</span>!</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-600">Total Posts</p>
+                        <p class="text-2xl font-bold">24</p>
+                        <p class="text-green-500 text-sm">+2 this week</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Progress Tracker</h3>
-                        <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-600">Followers</p>
+                        <p class="text-2xl font-bold">1,234</p>
+                        <p class="text-green-500 text-sm">+45 this week</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Announcements</h3>
-                        <div id="announcementsPanel"></div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-600">Views</p>
+                        <p class="text-2xl font-bold">15.6K</p>
+                        <p class="text-green-500 text-sm">+1.2K this week</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Quick Access</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <h4 class="font-medium">Marketplace</h4>
-                                <p class="text-sm text-gray-600">Explore study materials and student essentials.</p>
-                                <a href="#" class="text-blue-600 hover:underline">Visit Marketplace</a>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Blog Home</h4>
-                                <p class="text-sm text-gray-600">Read tips, tricks, and student stories.</p>
-                                <a href="#" class="text-blue-600 hover:underline">Visit Blog</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Achievements & Leaderboard</h3>
-                        <div id="leaderboardContainer"></div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-600">Revenue</p>
+                        <p class="text-2xl font-bold">$120.50</p>
+                        <p class="text-gray-500 text-sm">From marketplace sales</p>
                     </div>
                 </div>
             </div>
 
-            <div id="mock-tests" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Mock Tests</h2>
-                <p class="text-gray-600 mb-6">Practice and improve your skills with our mock tests</p>
-                <!-- Modal for Mock Tests -->
-                <div id="mockTestModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
-                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
-                            <button id="closeMockTestModal" class="text-gray-500 hover:text-gray-700">&times;</button>
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <img id="mockTestModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
-                            <div class="flex-1">
-                                <h4 id="mockTestModalTitle" class="text-lg font-semibold text-gray-800"></h4>
-                                <p id="mockTestModalDescription" class="text-gray-600 text-sm mb-2"></p>
-                                <p><strong>Start Time:</strong> <span id="mockTestModalStart" class="text-gray-600"></span></p>
-                                <p><strong>End Time:</strong> <span id="mockTestModalEnd" class="text-gray-600"></span></p>
-                                <div id="mockTestModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
-                                <div id="mockTestModalActions" class="mt-4">
-                                    <button id="mockTestModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex items-center">
-                            <input type="checkbox" id="mockTestModalDontShow" class="mr-2">
-                            <label for="mockTestModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Available Mock Tests</h3>
-                    <div id="testSpinner" class="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 mx-auto hidden"></div>
-                    <table id="availableTable" class="w-full">
+            <!-- Manage Posts Tab -->
+            <div id="manage-posts" class="tab-content p-6">
+                <h2 class="text-2xl font-bold mb-4">Manage Posts</h2>
+                <button id="createPostBtn" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600">Create New Post</button>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <table class="w-full">
                         <thead>
-                            <tr>
-                                <th>Test</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div id="availablePagination" class="mt-4 flex justify-center space-x-2"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
-                    <div id="progressList"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Certificates</h3>
-                    <a href="#" class="text-blue-600 hover:underline">Download Certificate</a>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Personalized Study Recommendations</h3>
-                    <ul id="recommendations" class="list-disc pl-5"></ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Upcoming Test</h3>
-                    <p id="upcomingTest">None</p>
-                    <p id="testCountdown"></p>
-                </div>
-            </div>
-
-            <div id="exams" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Exams</h2>
-                <p class="text-gray-600 mb-6">Stay on top of your upcoming and past exams</p>
-                <!-- Modal for Exams -->
-                <div id="examModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
-                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
-                            <button id="closeExamModal" class="text-gray-500 hover:text-gray-700">&times;</button>
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <img id="examModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
-                            <div class="flex-1">
-                                <h4 id="examModalTitle" class="text-lg font-semibold text-gray-800"></h4>
-                                <p id="examModalDescription" class="text-gray-600 text-sm mb-2"></p>
-                                <p><strong>Start Time:</strong> <span id="examModalStart" class="text-gray-600"></span></p>
-                                <p><strong>End Time:</strong> <span id="examModalEnd" class="text-gray-600"></span></p>
-                                <div id="examModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
-                                <div id="examModalActions" class="mt-4">
-                                    <button id="examModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex items-center">
-                            <input type="checkbox" id="examModalDontShow" class="mr-2">
-                            <label for="examModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Assessment Performance & Reviews</h3>
-                    <table id="historyTable" class="w-full">
-                        <thead>
-                            <tr>
-                                <th>Test</th>
+                            <tr class="text-left text-gray-600">
+                                <th>Title</th>
                                 <th>Date</th>
-                                <th>Score</th>
-                                <th>Review</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div id="historyPagination" class="mt-4 flex justify-center space-x-2"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Available Assessments</h3>
-                    <table id="examAvailableTable" class="w-full">
-                        <thead>
-                            <tr>
-                                <th>Test</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
+                                <th>Views</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody id="postsTable">
+                            <tr>
+                                <td>Top 10 Study Hacks</td>
+                                <td>Oct 10, 2025</td>
+                                <td>2.5K</td>
+                                <td>Published</td>
+                                <td>
+                                    <button class="text-blue-500 hover:underline" onclick="openPostModal('1')">Edit</button>
+                                    <button class="text-red-500 hover:underline" onclick="deletePost('1')">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Coding Tips for Beginners</td>
+                                <td>Oct 5, 2025</td>
+                                <td>1.8K</td>
+                                <td>Draft</td>
+                                <td>
+                                    <button class="text-blue-500 hover:underline" onclick="openPostModal('2')">Edit</button>
+                                    <button class="text-red-500 hover:underline" onclick="deletePost('2')">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                    <div id="examAvailablePagination" class="mt-4 flex justify-center space-x-2"></div>
                 </div>
             </div>
 
-            <div id="study-resources" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Study Resources</h2>
-                <p class="text-gray-600 mb-6">Access essential materials to boost your learning</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Available Resources</h3>
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-content p-6">
+                <h2 class="text-2xl font-bold mb-4">Analytics</h2>
+                <div class="bg-white p-4 rounded-lg shadow mb-4">
+                    <h3 class="text-lg font-semibold mb-2">Views Over Time</h3>
+                    <div id="viewsChart" class="h-64 bg-gray-100 flex items-center justify-center">[Interactive Chart Placeholder]</div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-2">Top Posts</h3>
                     <ul class="list-disc pl-5">
-                        <li>Mathematics Formula Sheet</li>
-                        <li>Physics Concept Notes</li>
-                        <li>Coding Practice Problems</li>
-                        <li>Chemistry Lab Guides</li>
+                        <li>Top 10 Study Hacks - 2.5K Views</li>
+                        <li>Coding Tips for Beginners - 1.8K Views</li>
+                        <li>Mastering Time Management - 1.2K Views</li>
                     </ul>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Recommended Resources</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <h4 class="font-medium">Calculus Textbook</h4>
-                            <p class="text-sm text-gray-600">Comprehensive guide for 300-level calculus.</p>
-                            <a href="#" class="text-blue-600 hover:underline">Download</a>
-                        </div>
-                        <div>
-                            <h4 class="font-medium">Physics Video Series</h4>
-                            <p class="text-sm text-gray-600">Interactive lectures on mechanics.</p>
-                            <a href="#" class="text-blue-600 hover:underline">Watch Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Study Calendar</h3>
-                    <p>Your upcoming exams and study sessions.</p>
-                    <div class="bg-gray-200 h-64 flex items-center justify-center">
-                        Interactive Calendar (Placeholder)
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Become a Marketer or Blogger!</h3>
-                    <p>Share your knowledge, sell study materials, or promote products to earn rewards.</p>
-                    <a href="#" class="text-blue-600 hover:underline">Get Started</a>
-                </div>
             </div>
 
-            <div id="messages" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Messages</h2>
-                <p class="text-gray-600 mb-6">Stay connected with instructors and peers</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Inbox</h3>
-                    <div id="inboxList"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Send a Message</h3>
-                    <div class="space-y-4">
-                        <select id="recipientSelect" class="w-full p-2 border rounded"></select>
-                        <textarea id="messageInput" class="w-full p-2 border rounded" rows="4" placeholder="Type your message..."></textarea>
-                        <div class="flex space-x-2">
-                            <button id="cancelMessageBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
-                            <button id="sendMessageBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Send</button>
-                        </div>
+            <!-- Followers Tab -->
+            <div id="followers" class="tab-content p-6">
+                <h2 class="text-2xl font-bold mb-4">Recent Followers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center">
+                        <img src="https://ui-avatars.com/api/?name=Jane+Doe&background=3a86ff&color=fff&rounded=true" class="w-10 h-10 rounded-full mr-3" alt="Profile">
+                        <p class="font-medium">Jane Doe</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center">
+                        <img src="https://ui-avatars.com/api/?name=Mike+Smith&background=3a86ff&color=fff&rounded=true" class="w-10 h-10 rounded-full mr-3" alt="Profile">
+                        <p class="font-medium">Mike Smith</p>
                     </div>
                 </div>
             </div>
 
-            <div id="profile-settings" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Profile Settings</h2>
-                <p class="text-gray-600 mb-6">Manage your personal information and preferences</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium">Full Name</label>
-                            <input id="editName" type="text" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium">Email</label>
-                            <input id="editEmail" type="email" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium">Phone</label>
-                            <input id="editPhone" type="tel" class="w-full p-2 border rounded">
-                       K
-System: To implement the modal for the "Mock Tests" and "Exams" tabs, we need to make changes to both the HTML and JavaScript files. Below, I'll provide the updated versions of these files, incorporating a beautifully styled modal that displays the most recent active exam with its title, description, start and end times, an image, and either a start button (if the exam has started) or a countdown timer (if it hasn't). The modal will use Tailwind CSS for styling, consistent with the existing dashboard design, and include animations for a smooth pop-up effect.
-
-### Approach
-1. **HTML Updates**: Add a modal structure to both the "Mock Tests" and "Exams" sections. The modal will include:
-   - A semi-transparent overlay to dim the background.
-   - A centered modal with a header, image, exam details, and action buttons (Start or Countdown).
-   - A close button and a "Don't show again" checkbox to control modal behavior.
-2. **JavaScript Updates**: Enhance the existing JavaScript to:
-   - Identify the most recent active or scheduled exam from `availableSchedulesCache`.
-   - Show the modal when the "Mock Tests" or "Exams" tabs are activated, unless the user has opted out for the session.
-   - Implement a countdown timer for exams that haven't started, updating in real-time.
-   - Display a "Start" button for exams that are currently active.
-   - Store the user's preference to skip the modal in `sessionStorage`.
-3. **Styling**: Use Tailwind CSS for a modern, responsive design with a subtle animation for the modal's appearance.
-4. **Image**: Use a placeholder exam-related image from Unsplash, which can be replaced with an exam-specific image if available.
-
-### Assumptions
-- The modal appears automatically when the "Mock Tests" or "Exams" tabs are opened, but only if there’s an active or scheduled exam.
-- The modal can be closed and won’t reopen until the tab is revisited, controlled via `sessionStorage`.
-- The modal content is identical for both tabs, as they use the same `availableSchedulesCache`.
-- The `artifact_id` from the original HTML file is reused, assuming it was previously assigned.
-
-### Updated Artifacts
-
-<xaiArtifact artifact_id="baeda8e9-3548-42b7-8323-115f6e71acd0" artifact_version_id="51ae329b-f3a1-48db-9b37-2b727a6649e7" title="student-dashboards.html" contentType="text/html">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAU ExamGuard - Student Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .progress-circle {
-            background: conic-gradient(#3b82f6 var(--progress), #e5e7eb 0);
-        }
-        .modal-enter {
-            opacity: 0;
-            transform: translateY(-50px);
-        }
-        .modal-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 300ms ease-out, transform 300ms ease-out;
-        }
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.5);
-        }
-    </style>
-</head>
-<body class="bg-gray-100 font-sans">
-    <div id="preloaderSpinner" class="fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-300">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-        <span class="ml-4 text-lg">Loading dashboard...</span>
-    </div>
-
-    <div class="flex h-screen overflow-hidden">
-        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden md:hidden"></div>
-        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-indigo-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-20">
-            <div class="p-4">
-                <h1 class="text-2xl font-bold">OAU ExamGuard</h1>
-                <p class="text-sm">Student Dashboard</p>
-            </div>
-            <nav class="p-4 space-y-2">
-                <a href="#dashboard" data-tab="dashboard" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Dashboard</a>
-                <a href="#mock-tests" data-tab="mock-tests" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Mock Tests</a>
-                <a href="#exams" data-tab="exams" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Exams</a>
-                <a href="#study-resources" data-tab="study-resources" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Study Resources</a>
-                <a href="#messages" data-tab="messages" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Messages</a>
-                <a href="#profile-settings" data-tab="profile-settings" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Profile Settings</a>
-                <a href="#logout" data-tab="logout" class="nav-link block p-2 hover:bg-indigo-700 rounded-lg">Logout</a>
-            </nav>
-        </aside>
-
-        <main class="flex-1 p-6 overflow-y-auto md:ml-64">
-            <button id="menu-toggle" class="md:hidden mb-4 p-2 bg-indigo-900 text-white rounded-lg">Menu</button>
-
-            <div id="dashboard" class="tab-content active">
-                <h2 class="text-2xl font-bold mb-4">Welcome, <span id="studentName"></span>!</h2>
-                <p class="text-gray-600 mb-6">Your academic journey, beautifully organized</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Student Details</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <p><strong>Name:</strong> <span id="profileName"></span></p>
-                                <p><strong>Student ID:</strong> <span id="studentId"></span></p>
-                                <p><strong>Department:</strong> <span id="profileDept"></span></p>
-                            </div>
-                            <div>
-                                <p><strong>Year:</strong> <span id="studentLevel"></span></p>
-                                <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-                                <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Progress Tracker</h3>
-                        <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Announcements</h3>
-                        <div id="announcementsPanel"></div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Quick Access</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <h4 class="font-medium">Marketplace</h4>
-                                <p class="text-sm text-gray-600">Explore study materials and student essentials.</p>
-                                <a href="#" class="text-blue-600 hover:underline">Visit Marketplace</a>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Blog Home</h4>
-                                <p class="text-sm text-gray-600">Read tips, tricks, and student stories.</p>
-                                <a href="#" class="text-blue-600 hover:underline">Visit Blog</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-lg font-semibold mb-4">Achievements & Leaderboard</h3>
-                        <div id="leaderboardContainer"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="mock-tests" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Mock Tests</h2>
-                <p class="text-gray-600 mb-6">Practice and improve your skills with our mock tests</p>
-                <!-- Modal for Mock Tests -->
-                <div id="mockTestModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
-                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
-                            <button id="closeMockTestModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <img id="mockTestModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
-                            <div class="flex-1">
-                                <h4 id="mockTestModalTitle" class="text-lg font-semibold text-gray-800"></h4>
-                                <p id="mockTestModalDescription" class="text-gray-600 text-sm mb-2"></p>
-                                <p><strong>Start Time:</strong> <span id="mockTestModalStart" class="text-gray-600"></span></p>
-                                <p><strong>End Time:</strong> <span id="mockTestModalEnd" class="text-gray-600"></span></p>
-                                <div id="mockTestModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
-                                <div id="mockTestModalActions" class="mt-4">
-                                    <button id="mockTestModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex items-center">
-                            <input type="checkbox" id="mockTestModalDontShow" class="mr-2">
-                            <label for="mockTestModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Available Mock Tests</h3>
-                    <div id="testSpinner" class="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 mx-auto hidden"></div>
-                    <table id="availableTable" class="w-full">
+            <!-- Marketplace Listings Tab -->
+            <div id="marketplace-listings" class="tab-content p-6">
+                <h2 class="text-2xl font-bold mb-4">Marketplace Listings</h2>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <table class="w-full">
                         <thead>
-                            <tr>
-                                <th>Test</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
+                            <tr class="text-left text-gray-600">
+                                <th>Item</th>
+                                <th>Price</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div id="availablePagination" class="mt-4 flex justify-center space-x-2"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
-                    <div id="progressList"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Certificates</h3>
-                    <a href="#" class="text-blue-600 hover:underline">Download Certificate</a>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Personalized Study Recommendations</h3>
-                    <ul id="recommendations" class="list-disc pl-5"></ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Upcoming Test</h3>
-                    <p id="upcomingTest">None</p>
-                    <p id="testCountdown"></p>
-                </div>
-            </div>
-
-            <div id="exams" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Exams</h2>
-                <p class="text-gray-600 mb-6">Stay on top of your upcoming and past exams</p>
-                <!-- Modal for Exams -->
-                <div id="examModal" class="fixed inset-0 modal-overlay hidden z-50 flex items-center justify-center">
-                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 modal-enter">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-indigo-900">Currently Scheduled Exam</h3>
-                            <button id="closeExamModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <img id="examModalImage" src="https://images.unsplash.com/photo-1503676260728-1b7e0b0a62b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Exam Image" class="w-full md:w-1/3 rounded-lg object-cover">
-                            <div class="flex-1">
-                                <h4 id="examModalTitle" class="text-lg font-semibold text-gray-800"></h4>
-                                <p id="examModalDescription" class="text-gray-600 text-sm mb-2"></p>
-                                <p><strong>Start Time:</strong> <span id="examModalStart" class="text-gray-600"></span></p>
-                                <p><strong>End Time:</strong> <span id="examModalEnd" class="text-gray-600"></span></p>
-                                <div id="examModalCountdown" class="text-blue-600 font-semibold mt-2"></div>
-                                <div id="examModalActions" class="mt-4">
-                                    <button id="examModalStartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 hidden">Start Exam</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex items-center">
-                            <input type="checkbox" id="examModalDontShow" class="mr-2">
-                            <label for="examModalDontShow" class="text-sm text-gray-600">Don't show again this session</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Assessment Performance & Reviews</h3>
-                    <table id="historyTable" class="w-full">
-                        <thead>
+                        <tbody id="marketplaceTable">
                             <tr>
-                                <th>Test</th>
-                                <th>Date</th>
-                                <th>Score</th>
-                                <th>Review</th>
+                                <td>Calculus I Notes</td>
+                                <td>$5.99</td>
+                                <td>Active</td>
+                                <td>
+                                    <button class="text-blue-500 hover:underline" onclick="editListing('1')">Edit</button>
+                                    <button class="text-red-500 hover:underline" onclick="deleteListing('1')">Delete</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div id="historyPagination" class="mt-4 flex justify-center space-x-2"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Available Assessments</h3>
-                    <table id="examAvailableTable" class="w-full">
-                        <thead>
                             <tr>
-                                <th>Test</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <td>USB-C Cable</td>
+                                <td>$6.99</td>
+                                <td>Pending</td>
+                                <td>
+                                    <button class="text-blue-500 hover:underline" onclick="editListing('2')">Edit</button>
+                                    <button class="text-red-500 hover:underline" onclick="deleteListing('2')">Delete</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
-                    <div id="examAvailablePagination" class="mt-4 flex justify-center space-x-2"></div>
                 </div>
             </div>
 
-            <div id="study-resources" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Study Resources</h2>
-                <p class="text-gray-600 mb-6">Access essential materials to boost your learning</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Available Resources</h3>
-                    <ul class="list-disc pl-5">
-                        <li>Mathematics Formula Sheet</li>
-                        <li>Physics Concept Notes</li>
-                        <li>Coding Practice Problems</li>
-                        <li>Chemistry Lab Guides</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Recommended Resources</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <h4 class="font-medium">Calculus Textbook</h4>
-                            <p class="text-sm text-gray-600">Comprehensive guide for 300-level calculus.</p>
-                            <a href="#" class="text-blue-600 hover:underline">Download</a>
-                        </div>
-                        <div>
-                            <h4 class="font-medium">Physics Video Series</h4>
-                            <p class="text-sm text-gray-600">Interactive lectures on mechanics.</p>
-                            <a href="#" class="text-blue-600 hover:underline">Watch Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Study Calendar</h3>
-                    <p>Your upcoming exams and study sessions.</p>
-                    <div class="bg-gray-200 h-64 flex items-center justify-center">
-                        Interactive Calendar (Placeholder)
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Become a Marketer or Blogger!</h3>
-                    <p>Share your knowledge, sell study materials, or promote products to earn rewards.</p>
-                    <a href="#" class="text-blue-600 hover:underline">Get Started</a>
-                </div>
-            </div>
-
-            <div id="messages" class="tab-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Messages</h2>
-                <p class="text-gray-600 mb-6">Stay connected with instructors and peers</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Inbox</h3>
-                    <div id="inboxList"></div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Send a Message</h3>
-                    <div class="space-y-4">
-                        <select id="recipientSelect" class="w-full p-2 border rounded"></select>
-                        <textarea id="messageInput" class="w-full p-2 border rounded" rows="4" placeholder="Type your message..."></textarea>
-                        <div class="flex space-x-2">
-                            <button id="cancelMessageBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
-                            <button id="sendMessageBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="profile-settings" class="tab-content hidden">
+            <!-- Profile Settings Tab -->
+            <div id="profile-settings" class="tab-content p-6">
                 <h2 class="text-2xl font-bold mb-4">Profile Settings</h2>
-                <p class="text-gray-600 mb-6">Manage your personal information and preferences</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
-                    <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-2">Personal Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium">Full Name</label>
-                            <input id="editName" type="text" class="w-full p-2 border rounded">
+                            <label class="block text-gray-600">Full Name</label>
+                            <input id="editName" type="text" class="w-full p-2 border rounded" value="Sarah">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">Email</label>
-                            <input id="editEmail" type="email" class="w-full p-2 border rounded">
+                            <label class="block text-gray-600">Email</label>
+                            <input id="editEmail" type="email" class="w-full p-2 border rounded" value="sarah@example.com">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">Phone</label>
-                            <input id="editPhone" type="tel" class="w-full p-2 border rounded">
+                            <label class="block text-gray-600">Phone</label>
+                            <input id="editPhone" type="tel" class="w-full p-2 border rounded" value="+1234567890">
                         </div>
-                        <button id="saveProfileBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save Changes</button>
                     </div>
+                    <button id="saveProfileBtn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Changes</button>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow mt-6">
-                    <h3 class="text-lg font-semibold mb-4">Change Password</h3>
-                    <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow mt-4">
+                    <h3 class="text-lg font-semibold mb-2">Change Password</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium">Current Password</label>
+                            <label class="block text-gray-600">Current Password</label>
                             <input id="currentPassword" type="password" class="w-full p-2 border rounded">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">New Password</label>
+                            <label class="block text-gray-600">New Password</label>
                             <input id="newPassword" type="password" class="w-full p-2 border rounded">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">Confirm New Password</label>
+                            <label class="block text-gray-600">Confirm New Password</label>
                             <input id="confirmNewPassword" type="password" class="w-full p-2 border rounded">
                         </div>
-                        <button id="updatePasswordBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Update Password</button>
                     </div>
+                    <button id="updatePasswordBtn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update Password</button>
                 </div>
             </div>
 
-            <div id="logout" class="tab-content hidden">
+            <!-- Logout Tab -->
+            <div id="logout" class="tab-content p-6">
                 <h2 class="text-2xl font-bold mb-4">Logout</h2>
-                <p class="text-gray-600 mb-6">Safely end your session</p>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <p class="mb-4">Are you sure you want to log out? You will be signed out of your account and need to log in again to access your dashboard.</p>
-                    <button id="confirm-logout" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Confirm Logout</button>
-                </html>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <p class="text-gray-600 mb-4">Are you sure you want to log out?</p>
+                    <p class="text-gray-500 mb-4">You will be signed out of your account and need to log in again to access your dashboard.</p>
+                    <button id="confirm-logout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Confirm Logout</button>
+                </div>
+            </div>
+
+            <!-- Create/Edit Post Modal -->
+            <div id="postModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center" style="z-index: 1000;">
+                <div class="bg-white p-6 rounded-lg w-full max-w-md">
+                    <h3 class="text-lg font-semibold mb-4">Create/Edit Post</h3>
+                    <div class="mb-4">
+                        <label class="block text-gray-600">Title</label>
+                        <input id="postTitle" type="text" class="w-full p-2 border rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-600">Content</label>
+                        <textarea id="postContent" class="w-full p-2 border rounded" rows="5"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-600">Status</label>
+                        <select id="postStatus" class="w-full p-2 border rounded">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end">
+                        <button id="cancelPostBtn" class="mr-2 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                        <button id="savePostBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================== CONFIG ===================
+        const API_URL = "https://examguide.onrender.com/api/";
+        const token = localStorage.getItem("token");
+
+        // =================== GLOBAL STATE ===================
+        let blogger = {};
+        let postsCache = [];
+        let followersCache = [];
+        let listingsCache = [];
+
+        // ============ UTILS ==============
+        function hidePreloaderSpinner() {
+            const spinner = document.getElementById("preloaderSpinner");
+            if (spinner) {
+                spinner.style.opacity = "0";
+                setTimeout(() => { spinner.style.display = "none"; }, 350);
+            }
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            const el = document.getElementById(tabId);
+            if (el) el.classList.add('active');
+        }
+
+        function setSidebarActive(tabId) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-blue-200', 'bg-indigo-700', 'rounded-lg');
+                if (link.getAttribute('data-tab') === tabId) {
+                    link.classList.add('text-blue-200', 'bg-indig
+o-700', 'rounded-lg');
+                }
+            });
+        }
+
+        // ================= SIDEBAR & NAVIGATION ================
+        (function setupSidebar() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            if (menuToggle && sidebar && sidebarOverlay) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    sidebarOverlay.classList.toggle('hidden');
+                    document.body.classList.toggle('overflow-hidden');
+                });
+                sidebarOverlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            }
+            // Tab switching
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const tabId = link.getAttribute('data-tab');
+                    showTab(tabId);
+                    setSidebarActive(tabId);
+                    if (window.innerWidth < 768) {
+                        sidebar.classList.remove('open');
+                        sidebarOverlay.classList.add('hidden');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                    localStorage.setItem('blogger_dashboard_active_tab', tabId);
+                    location.hash = tabId;
+                });
+            });
+            // Restore last tab
+            window.addEventListener('DOMContentLoaded', () => {
+                let tabId = location.hash.replace('#', '') || localStorage.getItem('blogger_dashboard_active_tab') || 'overview';
+                if (!document.getElementById(tabId)) tabId = 'overview';
+                showTab(tabId);
+                setSidebarActive(tabId);
+            });
+            window.addEventListener('hashchange', () => {
+                let tabId = location.hash.replace('#', '') || 'overview';
+                if (document.getElementById(tabId)) {
+                    showTab(tabId);
+                    setSidebarActive(tabId);
+                }
+            });
+        })();
+
+        // =================== FETCH HELPERS ===================
+        async function fetchWithAuth(url, options = {}) {
+            options.headers = options.headers || {};
+            if (token) options.headers['Authorization'] = 'Bearer ' + token;
+            const resp = await fetch(url, options);
+            if (resp.status === 401 || resp.status === 403) {
+                localStorage.removeItem("token");
+                window.location.href = "/login";
+                throw new Error("Session expired.");
+            }
+            return resp;
+        }
+
+        // =================== PROFILE ===================
+        async function fetchProfile() {
+            const resp = await fetchWithAuth(API_URL + "auth/me");
+            const data = await resp.json();
+            blogger = data.user;
+            blogger.id = blogger._id || blogger.id;
+            document.getElementById("bloggerName").innerText = blogger.username || 'Sarah';
+            document.getElementById("editName").value = blogger.username || 'Sarah';
+            document.getElementById("editEmail").value = blogger.email || 'sarah@example.com';
+            document.getElementById("editPhone").value = blogger.phone || '+1234567890';
+        }
+
+        // =================== POSTS ===================
+        async function fetchPosts() {
+            const resp = await fetchWithAuth(API_URL + "posts");
+            postsCache = await resp.json();
+            renderPostsTable();
+        }
+
+        function renderPostsTable() {
+            const tbody = document.getElementById("postsTable");
+            let html = "";
+            postsCache.forEach(post => {
+                html += `
+                    <tr>
+                        <td>${post.title}</td>
+                        <td>${new Date(post.createdAt).toLocaleDateString()}</td>
+                        <td>${post.views}</td>
+                        <td>${post.status}</td>
+                        <td>
+                            <button class="text-blue-500 hover:underline" onclick="openPostModal('${post._id}')">Edit</button>
+                            <button class="text-red-500 hover:underline" onclick="deletePost('${post._id}')">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+            tbody.innerHTML = html || "<tr><td colspan='5' class='text-gray-400 text-center'>No posts yet.</td></tr>";
+        }
+
+        window.openPostModal = function(postId) {
+            const modal = document.getElementById("postModal");
+            const titleInput = document.getElementById("postTitle");
+            const contentInput = document.getElementById("postContent");
+            const statusSelect = document.getElementById("postStatus");
+            if (postId) {
+                const post = postsCache.find(p => p._id === postId);
+                if (post) {
+                    titleInput.value = post.title;
+                    contentInput.value = post.content;
+                    statusSelect.value = post.status.toLowerCase();
+                }
+            } else {
+                titleInput.value = "";
+                contentInput.value = "";
+                statusSelect.value = "draft";
+            }
+            modal.classList.remove("hidden");
+        };
+
+        window.deletePost = async function(postId) {
+            if (!confirm("Are you sure you want to delete this post?")) return;
+            await fetchWithAuth(API_URL + "posts/" + postId, { method: "DELETE" });
+            fetchPosts();
+        };
+
+        document.getElementById("createPostBtn").onclick = () => openPostModal();
+        document.getElementById("cancelPostBtn").onclick = () => {
+            document.getElementById("postModal").classList.add("hidden");
+        };
+        document.getElementById("savePostBtn").onclick = async () => {
+            const title = document.getElementById("postTitle").value.trim();
+            const content = document.getElementById("postContent").value.trim();
+            const status = document.getElementById("postStatus").value;
+            if (!title || !content) return alert("Title and content are required.");
+            const payload = { title, content, status };
+            await fetchWithAuth(API_URL + "posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            document.getElementById("postModal").classList.add("hidden");
+            fetchPosts();
+        };
+
+        // =================== FOLLOWERS ===================
+        async function fetchFollowers() {
+            const resp = await fetchWithAuth(API_URL + "followers");
+            followersCache = await resp.json();
+            renderFollowers();
+        }
+
+        function renderFollowers() {
+            const container = document.getElementById("followersContainer") || document.createElement("div");
+            container.id = "followersContainer";
+            let html = "";
+            followersCache.forEach(follower => {
+                html += `
+                    <div class="bg-white p-4 rounded-lg shadow flex items-center">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(follower.username)}&background=3a86ff&color=fff&rounded=true" class="w-10 h-10 rounded-full mr-3" alt="Profile">
+                        <p class="font-medium">${follower.username}</p>
+                    </div>`;
+            });
+            container.innerHTML = html || "<div class='text-gray-400 text-center'>No followers yet.</div>";
+            if (!document.getElementById("followers").contains(container)) {
+                document.getElementById("followers").appendChild(container);
+            }
+        }
+
+        // =================== MARKETPLACE LISTINGS ===================
+        async function fetchListings() {
+            const resp = await fetchWithAuth(API_URL + "marketplace/listings");
+            listingsCache = await resp.json();
+            renderListingsTable();
+        }
+
+        function renderListingsTable() {
+            const tbody = document.getElementById("marketplaceTable");
+            let html = "";
+            listingsCache.forEach(listing => {
+                html += `
+                    <tr>
+                        <td>${listing.item}</td>
+                        <td>$${listing.price}</td>
+                        <td>${listing.status}</td>
+                        <td>
+                            <button class="text-blue-500 hover:underline" onclick="editListing('${listing._id}')">Edit</button>
+                            <button class="text-red-500 hover:underline" onclick="deleteListing('${listing._id}')">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+            tbody.innerHTML = html || "<tr><td colspan='4' class='text-gray-400 text-center'>No listings yet.</td></tr>";
+        }
+
+        window.editListing = function(listingId) {
+            alert("Edit listing modal coming soon (integrate listing UI and fetch logic)");
+        };
+
+        window.deleteListing = async function(listingId) {
+            if (!confirm("Are you sure you want to delete this listing?")) return;
+            await fetchWithAuth(API_URL + "marketplace/listings/" + listingId, { method: "DELETE" });
+            fetchListings();
+        };
+
+        // =================== PROFILE SETTINGS ===================
+        document.getElementById("saveProfileBtn").onclick = async function() {
+            const username = document.getElementById("editName").value.trim();
+            const email = document.getElementById("editEmail").value.trim();
+            const phone = document.getElementById("editPhone").value.trim();
+            if (!username || !email) return alert("Name and email are required.");
+            const payload = { username, email, phone };
+            const resp = await fetchWithAuth(API_URL + "superadmin/me", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!resp.ok) {
+                const data = await resp.json();
+                alert(data.message || "Failed to update profile.");
+                return;
+            }
+            alert("Profile updated.");
+            fetchProfile();
+        };
+
+        document.getElementById("updatePasswordBtn").onclick = async function() {
+            const currentPassword = document.getElementById("currentPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+            if (!currentPassword || !newPassword || !confirmNewPassword) return alert("All fields are required.");
+            if (newPassword !== confirmNewPassword) return alert("Passwords do not match.");
+            const resp = await fetchWithAuth(API_URL + "auth/change-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ currentPassword, newPassword })
+            });
+            if (!resp.ok) {
+                const data = await resp.json();
+                alert(data.message || "Failed to update password.");
+                return;
+            }
+            alert("Password updated.");
+            document.getElementById("currentPassword").value = "";
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmNewPassword").value = "";
+        };
+
+        // =================== LOGOUT ===================
+        document.getElementById("confirm-logout").onclick = () => {
+            localStorage.clear();
+            window.location.href = '/login';
+        };
+
+        // =================== INIT ===================
+        async function initDashboard() {
+            if (!token) return window.location.href = "/login";
+            await fetchProfile();
+            await fetchPosts();
+            await fetchFollowers();
+            await fetchListings();
+            hidePreloaderSpinner();
+        }
+
+        window.addEventListener("DOMContentLoaded", initDashboard);
+    </script>
 </body>
-<script src="abi.js"></script>
 </html>
