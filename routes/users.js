@@ -102,7 +102,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "student", "superadmin")
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    ["fullname", "username", "email", "faculty", "department", "profilePic", "active", "role"].forEach(field => {
+    ["fullname", "username", "email", "level", "phone", "faculty", "department", "profilePic", "active", "role"].forEach(field => {
       if (req.body[field] !== undefined) user[field] = req.body[field];
     });
     if (req.body.password) {
