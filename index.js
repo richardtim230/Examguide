@@ -178,10 +178,19 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
 });
 
 // --- Auth Endpoints ---
-// Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
   try {
-    const {username, password, role, level, phone, email, faculty, department} = req.body;
+    const {
+      username,
+      password,
+      role,
+      level,
+      phone,
+      email,
+      faculty,
+      department,
+      fullname // <-- added fullname!
+    } = req.body;
     if (!username || !password)
       return res.status(400).json({message: "All fields required"});
     if (username.length < 3)
@@ -190,7 +199,17 @@ app.post("/api/auth/register", async (req, res) => {
     if (exists)
       return res.status(409).json({message: "Username already exists"});
     const hashed = await bcrypt.hash(password, 12);
-    const user = new User({username, password: hashed, role: role || "student", faculty, department});
+    const user = new User({
+      username,
+      password: hashed,
+      role: role || "student", // ensure student role!
+      faculty,
+      department,
+      email: email || "",
+      level: level || "",
+      phone: phone || "",
+      fullname: fullname || ""
+    });
     await user.save();
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({token, message: "Registration successful"});
