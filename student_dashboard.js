@@ -1144,7 +1144,130 @@ document.getElementById("cancelMessageBtn").onclick = function() {
   document.getElementById("recipientSelect").selectedIndex = 0;
 }
 
+function setGreeting() {
+  const hours = new Date().getHours();
+  let greet = "Welcome";
+  if (hours < 12) greet = "Good morning";
+  else if (hours < 18) greet = "Good afternoon";
+  else greet = "Good evening";
+  const name = student.fullname || student.username || "";
+  document.getElementById("greetingText").innerText = `${greet}, ${name}!`;
+  document.getElementById("profileAvatar").src =
+    student.profilePic ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3a86ff&color=fff&rounded=true`;
+}
 
+function renderBadges() {
+  let html = "";
+  if (student.badges && student.badges.length) {
+    html = student.badges
+      .map(
+        (b) =>
+          `<span class="inline-flex items-center px-3 py-1 m-1 rounded bg-yellow-100 text-yellow-900 text-sm font-bold">
+            <img src="${b.icon}" class="w-5 h-5 mr-2">${b.name}
+          </span>`
+      )
+      .join("");
+  } else {
+    html = '<span class="text-gray-400">No badges yet. Take more tests!</span>';
+  }
+  document.getElementById("badgePanel").innerHTML = html;
+}
+
+function showToast(msg, type = "info") {
+  const toast = document.createElement("div");
+  toast.className = `bg-indigo-600 text-white px-4 py-2 rounded shadow mb-2 animate-fadeIn`;
+  toast.innerText = msg;
+  document.getElementById("toastContainer").appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+const quotes = [
+  "Success is not the key to happiness. Happiness is the key to success.",
+  "Believe you can and you're halfway there.",
+  "Don’t watch the clock; do what it does. Keep going.",
+  "Progress, not perfection.",
+  "Every day is a chance to learn something new.",
+  "Push yourself, because no one else is going to do it for you."
+];
+function setQuote() {
+  document.getElementById("dailyQuote").innerText =
+    quotes[Math.floor(Math.random() * quotes.length)];
+}
+
+let darkModeEnabled = false;
+const darkmodeToggleBtn = document.getElementById("darkmodeToggle");
+if (darkmodeToggleBtn) {
+  darkmodeToggleBtn.onclick = function () {
+    darkModeEnabled = !darkModeEnabled;
+    document.body.classList.toggle("dark", darkModeEnabled);
+    document.body.classList.toggle("bg-gradient", !darkModeEnabled);
+    document.body.classList.toggle("bg-gray-900", darkModeEnabled);
+    darkmodeToggleBtn.innerHTML = darkModeEnabled
+      ? '<i class="fas fa-sun"></i>'
+      : '<i class="fas fa-moon"></i>';
+  };
+}
+
+document.getElementById("quickTestBtn")?.addEventListener("click", function () {
+  if (availableSchedulesCache && availableSchedulesCache.length) {
+    const first = availableSchedulesCache.find(
+      (s) => s.examSet && s.examSet.status === "ACTIVE"
+    );
+    if (first && first.examSet && first.examSet._id) {
+      window.startTest(first.examSet._id);
+    } else {
+      showToast("No active tests available now.");
+    }
+  } else {
+    showToast("No tests available.");
+  }
+});
+document.getElementById("joinGroupBtn")?.addEventListener("click", function () {
+  window.open("https://example.com/groups", "_blank");
+});
+document.getElementById("askQuestionBtn")?.addEventListener("click", function () {
+  window.open("https://example.com/ask-question", "_blank");
+});
+
+function renderResources(resources) {
+  let html = resources
+    .map(
+      (r) =>
+        `<div class="bg-white rounded shadow p-4 flex items-center space-x-4 mb-2">
+          <img src="${r.thumbnail}" alt="${r.name}" class="w-16 h-16 rounded-lg">
+          <div>
+            <div class="font-bold">${r.name}</div>
+            <div class="text-gray-600 text-sm">${r.desc}</div>
+            <button class="mt-2 px-3 py-1 bg-indigo-600 text-white rounded" onclick="window.open('${r.url}')">Open</button>
+          </div>
+        </div>`
+    )
+    .join("");
+  document.getElementById("resourcePreview").innerHTML = html;
+}
+
+function renderCalendar(events = []) {
+  const calDiv = document.getElementById("studyCalendar");
+  if (!calDiv) return;
+  if (!events.length) {
+    calDiv.innerHTML = `<div class="text-gray-500 text-center mt-12">No upcoming events scheduled.</div>`;
+    return;
+  }
+  calDiv.innerHTML = events
+    .map(
+      (ev) =>
+        `<div class="mb-2 p-2 bg-indigo-100 rounded-lg flex justify-between items-center">
+          <span class="font-semibold text-indigo-900">${ev.title}</span>
+          <span class="text-xs text-gray-700">${ev.date}</span>
+        </div>`
+    )
+    .join("");
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  setQuote();
+});
 
 // ============ LOGOUT ===========
 document.getElementById("confirm-logout").onclick = () => {
