@@ -103,8 +103,9 @@
   <div class="card-icon">📤</div>
 </div>
 
-<!-- ...existing HTML... -->
-    </div><!-- ...rest of your HTML above... -->
+
+    </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -241,8 +242,12 @@
   </table>
 </div>
 <div id="formModalRoot"></div>
+<!-- Only the relevant changes for schedule levels support are shown.
+Insert or replace these blocks in your admin.html accordingly. -->
 
-<!-- Schedules Table: change column header and row rendering -->
+<!-- ...existing HTML... -->
+
+<!-- Schedules Table: add Levels column -->
 <div class="section" id="schedulesSection" style="display:none; position: relative;">
   <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Test Schedules</div>
@@ -254,7 +259,8 @@
       <tr>
         <th>Set</th>
         <th>Faculty</th>
-        <th>Departments</th> <!-- updated header -->
+        <th>Departments</th>
+        <th>Levels</th> <!-- <-- NEW COLUMN -->
         <th>Start</th>
         <th>End</th>
         <th>Actions</th>
@@ -262,6 +268,33 @@
     </thead>
     <tbody></tbody>
   </table>
+</div>
+
+<!-- Schedule Modal (Add Modal Example) -->
+<div id="addScheduleModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:500px;">
+    <button class="close-modal" onclick="closeModal()">&times;</button>
+    <h2>Schedule New Test</h2>
+    <label>Question Set</label>
+    <select id="scheduleExamSet"></select>
+    <label>Faculty</label>
+    <select id="scheduleFaculty" onchange="updateScheduleDepartments()"></select>
+    <label>Departments</label>
+    <select id="scheduleDepartments" multiple style="min-height:80px"></select>
+    <label>Level(s)</label>
+    <select id="scheduleLevels" multiple style="min-height:70px">
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <option value="400">400</option>
+    </select>
+    <label>Start</label>
+    <input type="datetime-local" id="scheduleStart">
+    <label>End</label>
+    <input type="datetime-local" id="scheduleEnd">
+    <div id="scheduleMsg" style="margin:8px 0;color:#b00;font-weight:500;"></div>
+    <button class="btn" onclick="submitAddSchedule()">Create Schedule</button>
+  </div>
 </div>
 
 
@@ -995,23 +1028,24 @@ function setSectionLoader(sectionId, show = true) {
   loader.style.display = show ? "flex" : "none";
 }
 
-// ========== Schedules Section with Loader ==========
+// Update fetchSchedules to show Levels column
 async function fetchSchedules() {
   setSectionLoader("schedulesSection", true);
   try {
     const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
     const schedules = await resp.json();
     let html = "";
-    schedules.forEach(s => {
+    schedules.forEach(sched => {
       html += `<tr>
-        <td>${s.examSet?.title || '-'}</td>
-        <td>${getFacultyName(s.faculty)}</td>
-        <td>${getDepartmentsNames(s.departments || s.department)}</td>
-        <td>${(new Date(s.start)).toLocaleString()}</td>
-        <td>${(new Date(s.end)).toLocaleString()}</td>
+        <td>${sched.examSet?.title || '-'}</td>
+        <td>${getFacultyName(sched.faculty)}</td>
+        <td>${getDepartmentsNames(sched.departments)}</td>
+        <td>${(sched.levels || []).join(", ")}</td>
+        <td>${sched.start ? (new Date(sched.start)).toLocaleString() : '-'}</td>
+        <td>${sched.end ? (new Date(sched.end)).toLocaleString() : '-'}</td>
         <td>
-          <button class="action-btn" onclick="editSchedule('${s._id}')">Edit</button>
-          <button class="action-btn" onclick="deleteSchedule('${s._id}')">Delete</button>
+          <button class="action-btn" onclick="editSchedule('${sched._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteSchedule('${sched._id}')">Delete</button>
         </td>
       </tr>`;
     });
@@ -1579,41 +1613,36 @@ function populateScheduleModalFields() {
       }, 900);
     }
 
-    async function submitAddSchedule() {
-  const examSet = document.getElementById("scheduleSet").value;
-  const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
-  const departmentsSelect = document.getElementById("scheduleDepartments");
-  const departments = Array.from(departmentsSelect.selectedOptions).map(opt => opt.value);
+async function submitAddSchedule() {
+  const examSet = document.getElementById("scheduleExamSet").value;
+  const faculty = document.getElementById("scheduleFaculty").value;
+  const departments = getSelectedValues("scheduleDepartments");
+  const levels = getSelectedValues("scheduleLevels");
   const start = document.getElementById("scheduleStart").value;
   const end = document.getElementById("scheduleEnd").value;
-  const msg = document.getElementById("addScheduleMsg");
-  const spinner = document.getElementById("addScheduleSpinner");
+  const msg = document.getElementById("scheduleMsg");
   msg.innerText = "";
-  msg.className = "";
-  if (!examSet || !faculty || !departments.length || !start || !end) {
-    msg.innerText = "All fields required!";
-    msg.className = "error-msg";
+  if (!examSet || !faculty || !departments.length || !levels.length || !start || !end) {
+    msg.innerText = "All fields are required!";
     return;
   }
-  spinner.style.display = "inline-block";
-  const resp = await fetch(API_URL + "schedules", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ examSet, faculty, departments, start, end })
-  });
-  spinner.style.display = "none";
-  if (!resp.ok) {
-    const data = await resp.json();
-    msg.innerText = data.message || data.error || "Failed to schedule.";
-    msg.className = "error-msg";
-    return;
-  }
-  msg.innerText = "Successfully loaded!";
-  msg.className = "success-msg";
-  setTimeout(() => {
+  try {
+    const resp = await fetch(API_URL + "schedules", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({ examSet, faculty, departments, levels, start, end })
+    });
+    if (!resp.ok) {
+      const data = await resp.json();
+      msg.innerText = data.error || "Failed to create schedule.";
+      return;
+    }
+    msg.innerText = "Schedule created!";
     fetchSchedules();
-    closeModal();
-  }, 900);
+    setTimeout(closeModal, 900);
+  } catch (e) {
+    msg.innerText = "Network error.";
+  }
 }
 
     async function submitSendNotif() {
@@ -2218,3 +2247,6 @@ async function viewFormResponses(formId) {
   </script>
 </body>
 </html>
+
+
+
