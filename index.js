@@ -237,25 +237,48 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
-// Password reset
+
+// Password reset: allow by (username or email or studentId) + (previous password OR verification)
 app.post("/api/auth/reset", async (req, res) => {
   try {
-    const {username, password} = req.body;
-    if (!username || !password)
-      return res.status(400).json({message: "Username and new password required"});
-    const user = await User.findOne({username});
+    const { identifier, password, prevPassword } = req.body;
+    if (!identifier || !password)
+      return res.status(400).json({ message: "Identifier and new password required" });
+
+    // identifier can be username, email, or studentId
+    const user = await User.findOne({
+      $or: [
+        { username: identifier },
+        { email: identifier },
+        { studentId: identifier }
+      ]
+    });
+
     if (!user)
-      return res.status(404).json({message: "User not found"});
+      return res.status(404).json({ message: "User not found" });
+
+    // If previous password is provided, check it
+    if (prevPassword) {
+      const isMatch = await bcrypt.compare(prevPassword, user.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: "Previous password incorrect" });
+      }
+    } else {
+      
+      if (identifier !== user.email && identifier !== user.studentId) {
+        return res.status(403).json({ message: "Reset not allowed without previous password or valid email/user ID" });
+      }
+    }
+
     const hashed = await bcrypt.hash(password, 12);
     user.password = hashed;
     await user.save();
-    res.json({message: "Password reset successful"});
+    res.json({ message: "Password reset successful" });
   } catch (e) {
     console.error("Reset error:", e);
-    res.status(500).json({message: "Server error"});
+    res.status(500).json({ message: "Server error" });
   }
 });
-// ...existing code...
 
 // Get user info (protected) -- now returns user document with populated department/faculty
 app.get("/api/auth/me", authenticate, async (req, res) => {
