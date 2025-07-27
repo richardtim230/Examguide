@@ -22,13 +22,11 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     res.status(400).json({ error: e.message });
   }
 });
-
-// List all schedules (optionally filter by faculty/department/level)
 router.get("/", authenticate, async (req, res) => {
   const filter = {};
   if (req.query.faculty) filter.faculty = req.query.faculty;
-  if (req.query.department) filter.departments = req.query.department;
-  if (req.query.level) filter.levels = req.query.level; // <-- filter by level if provided
+  if (req.query.department) filter.departments = { $in: [req.query.department] };
+  if (req.query.level) filter.levels = { $in: [req.query.level] };
   try {
     const schedules = await Schedule.find(filter)
       .sort({ start: -1 })
