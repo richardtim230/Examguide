@@ -36,7 +36,7 @@ import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
-
+import bloggerRoutes from './routes/blogger.routes.ts';
 
 dotenv.config();
 
@@ -181,7 +181,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
   try {
-    const {username, level, phone, email, password, role, faculty, department} = req.body;
+    const {username, password, role, faculty, department} = req.body;
     if (!username || !password)
       return res.status(400).json({message: "All fields required"});
     if (username.length < 3)
@@ -199,7 +199,6 @@ app.post("/api/auth/register", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
-
 
 // Login
 app.post("/api/auth/login", async (req, res) => {
@@ -220,6 +219,7 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
+
 // Password reset
 app.post("/api/auth/reset", async (req, res) => {
   try {
@@ -238,26 +238,18 @@ app.post("/api/auth/reset", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
-// ...existing code...
 
+// Get user info (protected) -- now returns full user document, not just JWT claims!
 app.get("/api/auth/me", authenticate, async (req, res) => {
   try {
-    let user = await User.findById(req.user.id)
-      .populate("faculty", "name")
-      .populate("department", "name");
+    // Fetch full user info by ID
+    const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-
-    // Defensive: If faculty/department are strings, assign them to .facultyName/.departmentName
-    let userObj = user.toObject();
-    userObj.facultyName = typeof userObj.faculty === "string" ? userObj.faculty : (userObj.faculty?.name || "");
-    userObj.departmentName = typeof userObj.department === "string" ? userObj.department : (userObj.department?.name || "");
-
-    res.json({ user: userObj });
+    res.json({ user });
   } catch (e) {
     res.status(500).json({ message: "Could not fetch user info" });
   }
 });
-
 
 // Health check endpoint for /api/auth (for browser test)
 app.get("/api/auth", (req, res) => {
@@ -305,7 +297,7 @@ app.delete("/api/progress", authenticate, async (req, res) => {
 app.use("/api/superadmin", superadminRoutes);
 
 // --- Main Features ---
-
+app.use('/api', bloggerRoutes);
 app.use("/api/questionsets", questionSetRoutes);
 app.use("/api/results", resultsRoutes);
 app.use("/api/schedules", scheduleRoutes);
