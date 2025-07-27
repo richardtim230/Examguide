@@ -168,7 +168,7 @@ async function fetchProfile() {
   // Trigger department select update
   const event = new Event('change');
   document.getElementById("editFaculty").dispatchEvent(event);
-  document.getElementById("editDepartment").value = student.department?._id || student.department || '';
+  document.getElementById("editDepartment").value = student.department?.name || student.department || '';
 }
 
 // =================== PROFILE EDIT SAVE ===================
