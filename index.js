@@ -254,18 +254,24 @@ app.post("/api/auth/reset", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
-
-// Get user info (protected) -- now returns full user document, not just JWT claims!
 app.get("/api/auth/me", authenticate, async (req, res) => {
   try {
-    // Fetch full user info by ID
-    const user = await User.findById(req.user.id);
+    let user = await User.findById(req.user.id)
+      .populate("faculty", "name")
+      .populate("department", "name");
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.json({ user });
+
+    // Defensive: If faculty/department are strings, assign them to .facultyName/.departmentName
+    let userObj = user.toObject();
+    userObj.facultyName = typeof userObj.faculty === "string" ? userObj.faculty : (userObj.faculty?.name || "");
+    userObj.departmentName = typeof userObj.department === "string" ? userObj.department : (userObj.department?.name || "");
+
+    res.json({ user: userObj });
   } catch (e) {
     res.status(500).json({ message: "Could not fetch user info" });
   }
 });
+
 
 // Health check endpoint for /api/auth (for browser test)
 app.get("/api/auth", (req, res) => {
