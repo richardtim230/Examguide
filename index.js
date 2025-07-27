@@ -181,7 +181,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
   try {
-    const {username, password, role, faculty, department} = req.body;
+    const {username, level, phone, email, password, role, faculty, department} = req.body;
     if (!username || !password)
       return res.status(400).json({message: "All fields required"});
     if (username.length < 3)
@@ -238,18 +238,21 @@ app.post("/api/auth/reset", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
+// ...existing code...
 
-// Get user info (protected) -- now returns full user document, not just JWT claims!
+// Get user info (protected) -- now returns user document with populated department/faculty
 app.get("/api/auth/me", authenticate, async (req, res) => {
   try {
-    // Fetch full user info by ID
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id)
+      .populate("faculty", "name")
+      .populate("department", "name");
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ user });
   } catch (e) {
     res.status(500).json({ message: "Could not fetch user info" });
   }
 });
+
 
 // Health check endpoint for /api/auth (for browser test)
 app.get("/api/auth", (req, res) => {
