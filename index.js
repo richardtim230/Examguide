@@ -201,6 +201,7 @@ app.post("/api/auth/register", async (req, res) => {
 });
 
 // Login
+
 app.post("/api/auth/login", async (req, res) => {
   try {
     const {username, password} = req.body;
@@ -212,6 +213,23 @@ app.post("/api/auth/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(401).json({message: "Invalid username or password"});
+
+    // ---- AUTO-GENERATE studentId IF MISSING ----
+    function generateStudentId() {
+      const letters = Array.from({length: 3}, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join('');
+      const digits = Math.floor(1000 + Math.random() * 9000);
+      return `STU/${letters}${digits}`;
+    }
+    if (user.role === "student" && (!user.studentId || user.studentId.trim() === "")) {
+      let newId, exists;
+      do {
+        newId = generateStudentId();
+        exists = await User.findOne({studentId: newId});
+      } while (exists);
+      user.studentId = newId;
+      await user.save();
+    }
+
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "2h"});
     res.json({token, message: "Login successful"});
   } catch (e) {
@@ -219,7 +237,6 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({message: "Server error"});
   }
 });
-
 // Password reset
 app.post("/api/auth/reset", async (req, res) => {
   try {
