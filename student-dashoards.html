@@ -25,7 +25,7 @@
         }
         .progress-circle {
             background: conic-gradient(#22c55e 0% var(--progress), #e5e7eb 0% 100%);
-            transition: all 0.5s ease;
+            transition: all 1s cubic-bezier(.23,1,.32,1);
         }
         .progress-circle:hover {
             transform: scale(1.1);
@@ -270,6 +270,40 @@
             right: 0.8em;
             top: 0.65em;
         }
+        /* Toast Notification */
+        #toastContainer {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+        .animate-fadeIn {
+            animation: fadeInToast 0.5s;
+        }
+        @keyframes fadeInToast {
+            from { opacity: 0; transform: translateY(-10px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        /* Dark mode toggle styles */
+        .darkmode-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+        .badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3b82f6;
+            border-radius: 6px;
+            padding: 2px 9px;
+            font-size: 0.95em;
+            margin-left: 7px;
+        }
+        .badge-excellent {
+            background: #dcfce7;
+            color: #22c55e;
+        }
     </style>
 </head>
 <body class="bg-gradient font-sans min-h-screen">
@@ -281,6 +315,17 @@
         <div style="margin-top:18px;color:#3a86ff;font-weight:700;font-size:1.3em;">Loading dashboard...</div>
       </div>
     </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer"></div>
+
+    <!-- Daily Quote / Motivation -->
+    <div id="dailyQuote" class="text-indigo-900 font-semibold mb-4 px-4"></div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkmodeToggle" class="darkmode-toggle px-3 py-2 bg-indigo-600 text-white rounded-full shadow hover:bg-indigo-800" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <!-- Mobile Menu Button -->
     <button id="menu-toggle" class="md:hidden fixed top-4 left-4 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700" aria-label="Open Menu">
@@ -300,7 +345,7 @@
                 <li><a href="#exams" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="exams"><i class="fas fa-graduation-cap"></i><span>Exams</span></a></li>
                 <li><a href="#study-resources" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="study-resources"><i class="fas fa-book"></i><span>Study Resources</span></a></li>
                 <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
-                <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
+                <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile</span></a></li>
                 <li><a href="#logout" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
                 <li>
                   <a href="#" onclick="openBroadcastModal()" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors">
@@ -320,8 +365,13 @@
         <!-- Dashboard Tab -->
         <section id="dashboard" class="tab-content active">
             <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Welcome, <span id="studentName"></span>!</h2>
-                <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
+                <div class="flex items-center space-x-4">
+                    <img id="profileAvatar" src="" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-indigo-300">
+                    <div>
+                        <h2 class="text-3xl font-bold text-indigo-900" id="greetingText"></h2>
+                        <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
+                    </div>
+                </div>
             </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- Profile Card -->
@@ -364,12 +414,29 @@
                             <p class="text-gray-600 text-sm">Read tips, tricks, and student stories.</p>
                             <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/blog', '_blank')">Visit Blog</button>
                         </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Take Test Now</p>
+                            <p class="text-gray-600 text-sm">Start your next available test immediately.</p>
+                            <button class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 glow-button" id="quickTestBtn">Take Test Now</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Join Study Group</p>
+                            <p class="text-gray-600 text-sm">Collaborate and learn with your peers.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" id="joinGroupBtn">Join Group</button>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-700">Ask a Question</p>
+                            <p class="text-gray-600 text-sm">Get help from instructors and students.</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" id="askQuestionBtn">Ask Question</button>
+                        </div>
                     </div>
                 </section>
                 <!-- Achievements (Leaderboard) Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card col-span-1 xl:col-span-4">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Achievements & Leaderboard</h3>
                     <div id="leaderboardContainer" class="scoreboard-container"></div>
+                    <!-- Badges & Progress -->
+                    <div id="badgePanel" class="mt-6 flex flex-wrap gap-2"></div>
                 </section>
             </div>
         </section>
@@ -490,12 +557,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Resources</h3>
-                    <ul class="list-disc list-inside space-y-2 text-sm">
+                    <ul class="list-disc list-inside space-y-2 text-sm" id="resourceList">
                         <li><a href="#" class="text-indigo-600 hover:underline">Mathematics Formula Sheet</a></li>
                         <li><a href="#" class="text-indigo-600 hover:underline">Physics Concept Notes</a></li>
                         <li><a href="#" class="text-indigo-600 hover:underline">Coding Practice Problems</a></li>
                         <li><a href="#" class="text-indigo-600 hover:underline">Chemistry Lab Guides</a></li>
                     </ul>
+                    <!-- Resource Previews -->
+                    <div id="resourcePreview" class="mt-4"></div>
                 </section>
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Recommended Resources</h3>
@@ -503,7 +572,7 @@
                         <div>
                             <p class="font-medium text-gray-700">Calculus Textbook</p>
                             <p class="text-gray-600 text-sm">Comprehensive guide for 300-level calculus.</p>
-                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">Download</button>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button" onclick="window.open('https://example.com/calculus-textbook', '_blank')">View</button>
                         </div>
                         <div>
                             <p class="font-medium text-gray-700">Physics Video Series</p>
@@ -516,7 +585,8 @@
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Study Calendar</h3>
                     <p class="text-gray-600 text-sm">Your upcoming exams and study sessions.</p>
                     <div class="h-64 bg-indigo-50 rounded-lg flex items-center justify-center">
-                        <p class="text-gray-500">Interactive Calendar (Placeholder)</p>
+                        <!-- Interactive calendar placeholder -->
+                        <div id="studyCalendar" class="w-full h-full"></div>
                     </div>
                 </section>
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
