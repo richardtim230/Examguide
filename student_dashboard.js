@@ -1230,40 +1230,7 @@ document.getElementById("askQuestionBtn")?.addEventListener("click", function ()
   window.open("https://example.com/ask-question", "_blank");
 });
 
-function renderResources(resources) {
-  let html = resources
-    .map(
-      (r) =>
-        `<div class="bg-white rounded shadow p-4 flex items-center space-x-4 mb-2">
-          <img src="${r.thumbnail}" alt="${r.name}" class="w-16 h-16 rounded-lg">
-          <div>
-            <div class="font-bold">${r.name}</div>
-            <div class="text-gray-600 text-sm">${r.desc}</div>
-            <button class="mt-2 px-3 py-1 bg-indigo-600 text-white rounded" onclick="window.open('${r.url}')">Open</button>
-          </div>
-        </div>`
-    )
-    .join("");
-  document.getElementById("resourcePreview").innerHTML = html;
-}
 
-function renderCalendar(events = []) {
-  const calDiv = document.getElementById("studyCalendar");
-  if (!calDiv) return;
-  if (!events.length) {
-    calDiv.innerHTML = `<div class="text-gray-500 text-center mt-12">No upcoming events scheduled.</div>`;
-    return;
-  }
-  calDiv.innerHTML = events
-    .map(
-      (ev) =>
-        `<div class="mb-2 p-2 bg-indigo-100 rounded-lg flex justify-between items-center">
-          <span class="font-semibold text-indigo-900">${ev.title}</span>
-          <span class="text-xs text-gray-700">${ev.date}</span>
-        </div>`
-    )
-    .join("");
-}
 
 window.addEventListener("DOMContentLoaded", () => {
   setQuote();
