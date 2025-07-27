@@ -181,7 +181,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
 // Register (students by default, admins/superadmins must be promoted manually or via superadmin)
 app.post("/api/auth/register", async (req, res) => {
   try {
-    const {username, password, role, faculty, department} = req.body;
+    const {username, password, role, level, phone, email, faculty, department} = req.body;
     if (!username || !password)
       return res.status(400).json({message: "All fields required"});
     if (username.length < 3)
