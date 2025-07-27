@@ -43,6 +43,27 @@ function formatDate(dt) {
   return new Date(dt).toLocaleString();
 }
 
+// ==== Profile Name/ID Lookup Helpers ====
+function getDepartmentName(department) {
+  if (!department) return '';
+  if (typeof department === 'object' && department.name) return department.name;
+  if (typeof department === 'string') {
+    const found = departmentsCache.find(d => d._id === department);
+    return found ? found.name : department;
+  }
+  return '';
+}
+
+function getFacultyName(faculty) {
+  if (!faculty) return '';
+  if (typeof faculty === 'object' && faculty.name) return faculty.name;
+  if (typeof faculty === 'string') {
+    const found = facultiesCache.find(f => f._id === faculty);
+    return found ? found.name : faculty;
+  }
+  return '';
+}
+
 // ================= SIDEBAR & NAVIGATION ================
 (function setupSidebar() {
   const menuToggle = document.getElementById('menu-toggle');
@@ -150,13 +171,16 @@ async function fetchProfile() {
   student.id = student._id || student.id;
 
   // Fill profile fields
-  document.getElementById("studentName").innerText = student.username || '';
-  document.getElementById("profileName").innerText = student.username || '';
+  document.getElementById("studentName").innerText = student.fullname || student.username || '';
+  document.getElementById("profileName").innerText = student.fullname || student.username || '';
   document.getElementById("studentId").innerText = student.studentId || '';
-  document.getElementById("profileDept").innerText = student.department?.name || student.department || '';
+  document.getElementById("profileDept").innerText = getDepartmentName(student.department);
   document.getElementById("studentLevel").innerText = student.level || '';
   document.getElementById("profileEmail").innerText = student.email || '';
   document.getElementById("profilePhone").innerText = student.phone || '';
+  // If you want to show faculty name:
+  if (document.getElementById("profileFaculty"))
+    document.getElementById("profileFaculty").innerText = getFacultyName(student.faculty);
 
   // Profile edit tab fields
   document.getElementById("editName").value = student.fullname || '';
@@ -168,7 +192,17 @@ async function fetchProfile() {
   // Trigger department select update
   const event = new Event('change');
   document.getElementById("editFaculty").dispatchEvent(event);
-  document.getElementById("editDepartment").value = student.department?.name || student.department || '';
+
+  // Set department select value by ID (preferred)
+  let deptId = '';
+  if (student.department?._id) deptId = student.department._id;
+  else if (typeof student.department === 'string') deptId = student.department;
+  // If not an ID, try to find by name
+  if (!deptId && student.department?.name) {
+    const found = departmentsCache.find(d => d.name === student.department.name);
+    if (found) deptId = found._id;
+  }
+  document.getElementById("editDepartment").value = deptId;
 }
 
 // =================== PROFILE EDIT SAVE ===================
@@ -319,7 +353,7 @@ function renderLeaderboard() {
         ? lb.map((stu, idx) => `
           <div class="scoreboard-item rank-${idx+1}">
             <div class="scoreboard-rank">#${idx+1}</div>
-            <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="">
+            <img src="${stu.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(stu.fullname||stu.username)}&background=3a86ff&color=fff&rounded=true`}" class="scoreboard-avatar" alt="Avatar">
             <div class="scoreboard-name">${stu.fullname || stu.username}</div>
             <div class="scoreboard-score">${stu.totalScore} pts</div>
             <span class="scoreboard-badge badge-rank-${idx+1}">${['🥇','🥈','🥉'][idx]}</span>
