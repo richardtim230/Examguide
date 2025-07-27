@@ -1020,6 +1020,33 @@ async function viewStudentSession(resultId) {
 // =========================
 // Reusable Section Loader
 // =========================
+
+function populateScheduleModalFaculties() {
+  const facultySelect = document.getElementById("scheduleFaculty");
+  if (!facultySelect) return;
+  facultySelect.innerHTML = faculties.map(f => 
+    `<option value="${f._id}">${f.name}</option>`
+  ).join('');
+}
+
+function updateScheduleDepartments() {
+  const facultyId = document.getElementById("scheduleFaculty").value;
+  const deptSelect = document.getElementById("scheduleDepartments");
+  if (!deptSelect) return;
+  const filteredDepts = departments.filter(dep => dep.faculty === facultyId);
+  deptSelect.innerHTML = filteredDepts.map(d => 
+    `<option value="${d._id}">${d.name}</option>`
+  ).join('');
+}
+
+// Hook into openModal to load selects for schedules
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+  if (id === "addScheduleModal") {
+    populateScheduleModalFaculties();
+    updateScheduleDepartments();
+  }
+}    
 function setSectionLoader(sectionId, show = true) {
   const section = document.getElementById(sectionId);
   if (!section) return;
