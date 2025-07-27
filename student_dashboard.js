@@ -823,8 +823,6 @@ async function fetchHistory() {
   renderProgressCircles();
   recommendTopics();
 }
-
-// ============ AVAILABLE TESTS FETCH ===========
 async function fetchAvailableTests() {
   const spinner = document.getElementById("testSpinner");
   const tbody = document.querySelector("#availableTable tbody");
@@ -832,7 +830,7 @@ async function fetchAvailableTests() {
   tbody.innerHTML = "";
 
   try {
-    if (!student.faculty || !student.department) {
+    if (!student.faculty || !student.department || !student.level) {
       spinner.style.display = "none";
       tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
         Please complete your profile to see available assessments.</td></tr>`;
@@ -843,11 +841,13 @@ async function fetchAvailableTests() {
       return;
     }
 
+    // Use correct values for faculty/department/level
     const resp = await fetchWithAuth(
-      API_URL + `schedules?faculty=${student.facultyId}&department=${student.departmentId}`
+      API_URL + `schedules?faculty=${student.faculty}&department=${student.department}&level=${student.level}`
     );
     const schedules = await resp.json();
     spinner.style.display = "none";
+
 
     // Defensive: ensure schedules is an array
     if (!Array.isArray(schedules) || schedules.length === 0) {
