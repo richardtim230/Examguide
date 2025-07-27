@@ -98,11 +98,11 @@ router.get("/:id", authenticate, authorizeRole("admin", "superadmin"), async (re
 });
 
 // UPDATE user profile (admin or superadmin)
-router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.put("/:id", authenticate, authorizeRole("admin", "student", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    ["fullname", "username", "email", "faculty", "department", "profilePic", "active", "role"].forEach(field => {
+    ["fullname", "level", "phone", "username", "email", "faculty", "department", "profilePic", "active", "role"].forEach(field => {
       if (req.body[field] !== undefined) user[field] = req.body[field];
     });
     if (req.body.password) {
