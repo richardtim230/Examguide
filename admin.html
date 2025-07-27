@@ -1384,25 +1384,32 @@ async function deleteSchedule(id) {
         // ... other modals ...
   if (type === "addScheduleModal") {
     html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Schedule Test</h2>
-          <label>Exam Set</label>
-          <select id="scheduleSet"></select>
-          <label>Faculty</label>
-          <select id="scheduleFaculty" onchange="populateDepartmentsDropdownForSchedule()"></select>
-          <label>Departments <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
-          <select id="scheduleDepartments" multiple size="6" style="height:auto;"></select>
-          <label>Start Date & Time</label>
-          <input id="scheduleStart" type="datetime-local">
-          <label>End Date & Time</label>
-          <input id="scheduleEnd" type="datetime-local">
-          <span id="addScheduleMsg"></span>
-          <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-        </div>
-      </div>`;
+      
+<div id="addScheduleModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:500px;">
+    <button class="close-modal" onclick="closeModal()">&times;</button>
+    <h2>Schedule New Test</h2>
+    <label>Question Set</label>
+    <select id="scheduleExamSet"></select>
+    <label>Faculty</label>
+    <select id="scheduleFaculty" onchange="updateScheduleDepartments()"></select>
+    <label>Departments</label>
+    <select id="scheduleDepartments" multiple style="min-height:80px"></select>
+    <label>Level(s)</label>
+    <select id="scheduleLevels" multiple style="min-height:70px">
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <option value="400">400</option>
+    </select>
+    <label>Start</label>
+    <input type="datetime-local" id="scheduleStart">
+    <label>End</label>
+    <input type="datetime-local" id="scheduleEnd">
+    <div id="scheduleMsg" style="margin:8px 0;color:#b00;font-weight:500;"></div>
+    <button class="btn" onclick="submitAddSchedule()">Create Schedule</button>
+  </div>
+</div>`;
     document.getElementById("modalRoot").innerHTML = html;
     populateScheduleModalFields();
     return;
