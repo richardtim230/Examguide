@@ -1348,31 +1348,40 @@ async function deleteSchedule(id) {
           </div>`;
       }
         // ... other modals ...
-  if (type === "addScheduleModal") {
-    html = `
-      <div class="modal-backdrop" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="close-modal" onclick="closeModal(event)">&times;</button>
-          <h2>Schedule Test</h2>
-          <label>Exam Set</label>
-          <select id="scheduleSet"></select>
-          <label>Faculty</label>
-          <select id="scheduleFaculty" onchange="populateDepartmentsDropdownForSchedule()"></select>
-          <label>Departments <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
-          <select id="scheduleDepartments" multiple size="6" style="height:auto;"></select>
-          <label>Start Date & Time</label>
-          <input id="scheduleStart" type="datetime-local">
-          <label>End Date & Time</label>
-          <input id="scheduleEnd" type="datetime-local">
-          <span id="addScheduleMsg"></span>
-          <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-          <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-        </div>
-      </div>`;
-    document.getElementById("modalRoot").innerHTML = html;
-    populateScheduleModalFields();
-    return;
-  }
+if (type === "addScheduleModal") {
+  html = `
+    <div class="modal-backdrop" onclick="closeModal(event)">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="close-modal" onclick="closeModal(event)">&times;</button>
+        <h2>Schedule Test</h2>
+        <label>Exam Set</label>
+        <select id="scheduleSet"></select>
+        <label>Faculty</label>
+        <select id="scheduleFaculty" onchange="populateDepartmentsDropdownForSchedule()"></select>
+        <label>Departments <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
+        <select id="scheduleDepartments" multiple size="6" style="height:auto;"></select>
+        <label>Levels <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
+        <select id="scheduleLevels" multiple size="6" style="height:auto;">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value="400">400</option>
+          <option value="500">500</option>
+          <option value="600">600</option>
+        </select>
+        <label>Start Date & Time</label>
+        <input id="scheduleStart" type="datetime-local">
+        <label>End Date & Time</label>
+        <input id="scheduleEnd" type="datetime-local">
+        <span id="addScheduleMsg"></span>
+        <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
+        <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+      </div>
+    </div>`;
+  document.getElementById("modalRoot").innerHTML = html;
+  populateScheduleModalFields();
+  return;
+}
 
       if (html) {
         document.getElementById("modalRoot").innerHTML = html;
