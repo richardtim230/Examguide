@@ -64,6 +64,25 @@ function getFacultyName(faculty) {
   return '';
 }
 
+// ========== PROFILE PIC & GREETING HELPERS ==========
+function getProfilePicUrl(student) {
+  if (student.profilePic) return student.profilePic;
+  const name = encodeURIComponent(student.fullname || student.username || "Student");
+  return `https://ui-avatars.com/api/?name=${name}&background=ede9fe&color=3b82f6&size=128&rounded=true`;
+}
+function getGreetingData() {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) {
+    return { text: "Good morning", icon: "🌅", label: "Morning" };
+  } else if (hour >= 12 && hour < 17) {
+    return { text: "Good afternoon", icon: "🌞", label: "Afternoon" };
+  } else if (hour >= 17 && hour < 20) {
+    return { text: "Good evening", icon: "🌇", label: "Evening" };
+  } else {
+    return { text: "Good night", icon: "🌙", label: "Night" };
+  }
+}
+
 // ================= SIDEBAR & NAVIGATION ================
 (function setupSidebar() {
   const menuToggle = document.getElementById('menu-toggle');
@@ -170,8 +189,38 @@ async function fetchProfile() {
   student = data.user;
   student.id = student._id || student.id;
 
+  // ---- Profile Pic & Greeting (NEW) ----
+  const profilePic = getProfilePicUrl(student);
+  if (document.getElementById("studentProfilePic")) {
+    document.getElementById("studentProfilePic").src = profilePic;
+    document.getElementById("studentProfilePic").alt = (student.fullname || student.username || "Profile");
+  }
+  const greeting = getGreetingData();
+  if (document.getElementById("greetingHeader")) {
+    document.getElementById("greetingHeader").innerHTML = `${greeting.text}, <span id="studentName">${student.fullname || student.username || ''}</span>!`;
+  }
+  if (document.getElementById("greetingTimeIcon")) {
+    document.getElementById("greetingTimeIcon").innerHTML = `<span title="${greeting.label}">${greeting.icon}</span>`;
+  }
+  // Optionally, live update the greeting every minute
+  if (!window._greetingUpdater) {
+    window._greetingUpdater = setInterval(() => {
+      const updatedGreeting = getGreetingData();
+      if (document.getElementById("greetingHeader")) {
+        document.getElementById("greetingHeader").innerHTML = `${updatedGreeting.text}, <span id="studentName">${student.fullname || student.username || ''}</span>!`;
+      }
+      if (document.getElementById("greetingTimeIcon")) {
+        document.getElementById("greetingTimeIcon").innerHTML = `<span title="${updatedGreeting.label}">${updatedGreeting.icon}</span>`;
+      }
+    }, 60000);
+  }
+  // ---- END Profile Pic & Greeting (NEW) ----
+
   // Fill profile fields
-  document.getElementById("studentName").innerText = student.fullname || student.username || '';
+  // studentName is now set above in greeting, but still set for compatibility
+  if (document.getElementById("studentName")) {
+    document.getElementById("studentName").innerText = student.fullname || student.username || '';
+  }
   document.getElementById("profileName").innerText = student.fullname || student.username || '';
   document.getElementById("studentId").innerText = student.studentId || '';
   document.getElementById("profileDept").innerText = getDepartmentName(student.department);
@@ -204,6 +253,7 @@ async function fetchProfile() {
   }
   document.getElementById("editDepartment").value = deptId;
 }
+
 
 // =================== PROFILE EDIT SAVE ===================
 document.getElementById("saveProfileBtn").onclick = async function() {
