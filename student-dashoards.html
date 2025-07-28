@@ -8,6 +8,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="logo.png">
     <style>
+        #quoteBox .zoom-in {
+  animation: quoteZoomIn 0.5s;
+}
+#quoteBox .zoom-out {
+  animation: quoteZoomOut 0.5s;
+}
+@keyframes quoteZoomIn {
+  from { transform: scale(0.7); opacity:0; }
+  to   { transform: scale(1);   opacity:1; }
+}
+@keyframes quoteZoomOut {
+  from { transform: scale(1);   opacity:1; }
+  to   { transform: scale(0.7); opacity:0; }
+        }
         .sidebar {
             transition: transform 0.3s ease-in-out, background 0.3s ease;
             background: linear-gradient(180deg, #1e3a8a, #3b82f6);
@@ -320,15 +334,18 @@
         <!-- Dashboard Tab -->
         <section id="dashboard" class="tab-content active">
             <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex items-center justify-between relative">
-    <div class="flex items-center gap-6">
-        <img id="studentProfilePic" src="" alt="Profile" class="rounded-full border-4 border-indigo-100 shadow" style="width:80px;height:80px;object-fit:cover;">
-        <div>
-            <h2 id="greetingHeader" class="text-3xl font-bold text-indigo-900 mb-1">Welcome, <span id="studentName"></span>!</h2>
-            <p class="text-gray-600 mt-1" id="greetingSubtext">Your academic journey, beautifully organized</p>
-        </div>
+  <div class="flex items-center gap-6">
+    <img id="studentProfilePic" src="" alt="Profile" class="rounded-full border-4 border-indigo-100 shadow" style="width:80px;height:80px;object-fit:cover;">
+    <div>
+      <h2 id="greetingHeader" class="text-3xl font-bold text-indigo-900 mb-1"></h2>
+      <div id="quoteBox" class="mt-2">
+        <div id="motivationalQuote" class="text-gray-600 text-lg font-medium transition-transform duration-500"></div>
+        <div id="quoteAuthor" class="text-indigo-700 text-base font-semibold mt-1 transition-transform duration-500"></div>
+      </div>
     </div>
-    <div id="greetingTimeIcon" class="absolute top-6 right-8 text-3xl" title="Time of Day"></div>
-                </header>
+  </div>
+  <div id="greetingTimeIcon" class="absolute top-6 right-8 text-3xl" title="Time of Day"></div>
+    </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- Profile Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
