@@ -721,13 +721,36 @@ function showSection(id, el) {
     fetchDashboardCounts();
     fetchUploadersCount();
   }
-  
+  if (id === 'addScheduleModal') {
+    populateScheduleModalDropdowns();
+  }
   if (id === "uploaders") fetchUploaders();
 }
     
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 
+
+  // Add this function to populate faculties and departments when opening the Schedule modal
+async function populateScheduleModalDropdowns() {
+  // Fetch faculties and departments if not already fetched
+  if (!faculties.length) await fetchFaculties();
+  if (!departments.length) await fetchDepartments();
+
+  // Populate faculty dropdown
+  const facultySelect = document.getElementById("scheduleFaculty");
+  facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
+
+  // Default to the first faculty and populate departments
+  updateScheduleDepartments();
+}
+
+function updateScheduleDepartments() {
+  const facultyId = document.getElementById("scheduleFaculty").value;
+  const deptSelect = document.getElementById("scheduleDepartments");
+  const filtered = departments.filter(d => d.faculty === facultyId);
+  deptSelect.innerHTML = filtered.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
+  }
 // ========== Dashboard Counts ==========
 async function fetchDashboardCounts() {
   const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
