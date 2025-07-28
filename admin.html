@@ -103,9 +103,8 @@
   <div class="card-icon">📤</div>
 </div>
 
-
-    </div>
-
+<!-- ...existing HTML... -->
+    </div><!-- ...rest of your HTML above... -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -242,25 +241,20 @@
   </table>
 </div>
 <div id="formModalRoot"></div>
-<!-- Only the relevant changes for schedule levels support are shown.
-Insert or replace these blocks in your admin.html accordingly. -->
 
-<!-- ...existing HTML... -->
-
-<!-- Schedules Table: add Levels column -->
+<!-- Schedules Table: change column header and row rendering -->
 <div class="section" id="schedulesSection" style="display:none; position: relative;">
   <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Test Schedules</div>
   <div class="actions">
-  <button class="btn" onclick="openModal('addScheduleModal'); prepareScheduleModal();">+ Schedule Test</button>
-</div>
+    <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
+  </div>
   <table class="data-table" id="schedulesTable">
     <thead>
       <tr>
         <th>Set</th>
         <th>Faculty</th>
-        <th>Departments</th>
-        <th>Levels</th> <!-- <-- NEW COLUMN -->
+        <th>Departments</th> <!-- updated header -->
         <th>Start</th>
         <th>End</th>
         <th>Actions</th>
@@ -268,33 +262,6 @@ Insert or replace these blocks in your admin.html accordingly. -->
     </thead>
     <tbody></tbody>
   </table>
-</div>
-
-<!-- Schedule Modal (Add Modal Example) -->
-<div id="addScheduleModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeModal()">
-  <div class="modal" onclick="event.stopPropagation()" style="max-width:500px;">
-    <button class="close-modal" onclick="closeModal()">&times;</button>
-    <h2>Schedule New Test</h2>
-    <label>Question Set</label>
-    <select id="scheduleExamSet"></select>
-    <label>Faculty</label>
-    <select id="scheduleFaculty" onchange="updateScheduleDepartments()"></select>
-    <label>Departments</label>
-    <select id="scheduleDepartments" multiple style="min-height:80px"></select>
-    <label>Level(s)</label>
-    <select id="scheduleLevels" multiple style="min-height:70px">
-      <option value="100">100</option>
-      <option value="200">200</option>
-      <option value="300">300</option>
-      <option value="400">400</option>
-    </select>
-    <label>Start</label>
-    <input type="datetime-local" id="scheduleStart">
-    <label>End</label>
-    <input type="datetime-local" id="scheduleEnd">
-    <div id="scheduleMsg" style="margin:8px 0;color:#b00;font-weight:500;"></div>
-    <button class="btn" onclick="submitAddSchedule()">Create Schedule</button>
-  </div>
 </div>
 
 
@@ -721,37 +688,13 @@ function showSection(id, el) {
     fetchDashboardCounts();
     fetchUploadersCount();
   }
-  if (id === 'addScheduleModal') {
-    populateScheduleModalDropdowns();
-  }
+  
   if (id === "uploaders") fetchUploaders();
 }
     
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 
-// Call this when opening the modal
-async function prepareScheduleModal() {
-  // Fetch faculties and departments if not already loaded
-  if (faculties.length === 0) await fetchFaculties();
-  if (departments.length === 0) await fetchDepartments();
-
-  // Populate Faculty Select
-  const facultySelect = document.getElementById("scheduleFaculty");
-  facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
-
-  // Populate Department Select (initially for the first faculty)
-  updateScheduleDepartments();
-}
-
-function updateScheduleDepartments() {
-  const facultyId = document.getElementById("scheduleFaculty").value;
-  const deptSelect = document.getElementById("scheduleDepartments");
-  // Filter departments to only those with the selected faculty
-  const filtered = departments.filter(d => d.faculty === facultyId);
-  deptSelect.innerHTML = filtered.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
-    }
-  
 // ========== Dashboard Counts ==========
 async function fetchDashboardCounts() {
   const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
@@ -1044,33 +987,6 @@ async function viewStudentSession(resultId) {
 // =========================
 // Reusable Section Loader
 // =========================
-
-function populateScheduleModalFaculties() {
-  const facultySelect = document.getElementById("scheduleFaculty");
-  if (!facultySelect) return;
-  facultySelect.innerHTML = faculties.map(f => 
-    `<option value="${f._id}">${f.name}</option>`
-  ).join('');
-}
-
-function updateScheduleDepartments() {
-  const facultyId = document.getElementById("scheduleFaculty").value;
-  const deptSelect = document.getElementById("scheduleDepartments");
-  if (!deptSelect) return;
-  const filteredDepts = departments.filter(dep => dep.faculty === facultyId);
-  deptSelect.innerHTML = filteredDepts.map(d => 
-    `<option value="${d._id}">${d.name}</option>`
-  ).join('');
-}
-
-// Hook into openModal to load selects for schedules
-function openModal(id) {
-  document.getElementById(id).style.display = "flex";
-  if (id === "addScheduleModal") {
-    populateScheduleModalFaculties();
-    updateScheduleDepartments();
-  }
-}    
 function setSectionLoader(sectionId, show = true) {
   const section = document.getElementById(sectionId);
   if (!section) return;
@@ -1079,24 +995,23 @@ function setSectionLoader(sectionId, show = true) {
   loader.style.display = show ? "flex" : "none";
 }
 
-// Update fetchSchedules to show Levels column
+// ========== Schedules Section with Loader ==========
 async function fetchSchedules() {
   setSectionLoader("schedulesSection", true);
   try {
     const resp = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
     const schedules = await resp.json();
     let html = "";
-    schedules.forEach(sched => {
+    schedules.forEach(s => {
       html += `<tr>
-        <td>${sched.examSet?.title || '-'}</td>
-        <td>${getFacultyName(sched.faculty)}</td>
-        <td>${getDepartmentsNames(sched.departments)}</td>
-        <td>${(sched.levels || []).join(", ")}</td>
-        <td>${sched.start ? (new Date(sched.start)).toLocaleString() : '-'}</td>
-        <td>${sched.end ? (new Date(sched.end)).toLocaleString() : '-'}</td>
+        <td>${s.examSet?.title || '-'}</td>
+        <td>${getFacultyName(s.faculty)}</td>
+        <td>${getDepartmentsNames(s.departments || s.department)}</td>
+        <td>${(new Date(s.start)).toLocaleString()}</td>
+        <td>${(new Date(s.end)).toLocaleString()}</td>
         <td>
-          <button class="action-btn" onclick="editSchedule('${sched._id}')">Edit</button>
-          <button class="action-btn" onclick="deleteSchedule('${sched._id}')">Delete</button>
+          <button class="action-btn" onclick="editSchedule('${s._id}')">Edit</button>
+          <button class="action-btn" onclick="deleteSchedule('${s._id}')">Delete</button>
         </td>
       </tr>`;
     });
@@ -1106,7 +1021,8 @@ async function fetchSchedules() {
   }
 }
 
-/* --- Edit Schedule Modal: Multi-department & Multi-level support --- */
+
+/* --- Edit Schedule Modal: Multi-department support --- */
 async function editSchedule(id) {
   const resp = await fetch(API_URL + "schedules/" + id, { headers: { Authorization: "Bearer " + token } });
   if (!resp.ok) { alert("Could not load schedule."); return; }
@@ -1115,9 +1031,6 @@ async function editSchedule(id) {
   if (!departments.length) await fetchDepartments();
   const setsResp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
   const sets = await setsResp.json();
-  // Prepare levels (ensure s.levels is an array)
-  const levelList = ["100", "200", "300", "400"];
-  const selectedLevels = Array.isArray(s.levels) ? s.levels : [];
   let html = `
     <div class="modal-backdrop" onclick="closeModal(event)">
       <div class="modal" onclick="event.stopPropagation()" style="max-width:420px;">
@@ -1137,12 +1050,6 @@ async function editSchedule(id) {
         <select id="editScheduleDepartments" multiple size="6" style="height:auto;">
           <!-- Populated below -->
         </select>
-        <label>Level(s) <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
-        <select id="editScheduleLevels" multiple size="4" style="height:auto;">
-          ${levelList.map(lvl => 
-            `<option value="${lvl}" ${selectedLevels.includes(lvl) ? 'selected' : ''}>${lvl}</option>`
-          ).join('')}
-        </select>
         <label>Start Date & Time</label>
         <input id="editScheduleStart" type="datetime-local" value="${(new Date(s.start)).toISOString().slice(0,16)}">
         <label>End Date & Time</label>
@@ -1154,8 +1061,7 @@ async function editSchedule(id) {
     </div>`;
   document.getElementById("modalRoot").innerHTML = html;
   populateEditDepartmentsDropdownForSchedule(s.faculty, s.departments || s.department);
-  }
-
+}
 function populateEditDepartmentsDropdownForSchedule(selectedFaculty, selectedDepartments) {
   // If called by `onchange`, get current value from dropdown
   if (!selectedFaculty) selectedFaculty = document.getElementById('editScheduleFaculty').value;
@@ -1172,8 +1078,6 @@ async function submitEditSchedule(id) {
   const examSet = document.getElementById("editScheduleSet").value;
   const faculty = document.getElementById("editScheduleFaculty").value;
   const departmentsSelect = document.getElementById("editScheduleDepartments");
-  const levels = Array.from(document.getElementById("editScheduleLevels").selectedOptions).map(opt => opt.value);
-
   const departments = Array.from(departmentsSelect.selectedOptions).map(opt => opt.value);
   const start = document.getElementById("editScheduleStart").value;
   const end = document.getElementById("editScheduleEnd").value;
@@ -1445,38 +1349,30 @@ async function deleteSchedule(id) {
       }
         // ... other modals ...
   if (type === "addScheduleModal") {
-  html = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-modal" onclick="closeModal(event)">&times;</button>
-        <h2>Schedule Test</h2>
-        <label>Exam Set</label>
-        <select id="scheduleSet"></select>
-        <label>Faculty</label>
-        <select id="scheduleFaculty" onchange="populateDepartmentsDropdownForSchedule()"></select>
-        <label>Departments <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
-        <select id="scheduleDepartments" multiple size="6" style="height:auto;"></select>
-        <label>Level(s) <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
-        <select id="scheduleLevels" multiple size="4" style="height:auto;">
-          <option value="100">100</option>
-          <option value="200">200</option>
-          <option value="300">300</option>
-          <option value="400">400</option>
-        </select>
-        <label>Start Date & Time</label>
-        <input id="scheduleStart" type="datetime-local">
-        <label>End Date & Time</label>
-        <input id="scheduleEnd" type="datetime-local">
-        <span id="addScheduleMsg"></span>
-        <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
-        <button class="btn" onclick="submitAddSchedule()">Schedule</button>
-      </div>
-    </div>`;
-  document.getElementById("modalRoot").innerHTML = html;
-  populateScheduleModalFields();
-  return;
-}
-
+    html = `
+      <div class="modal-backdrop" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <button class="close-modal" onclick="closeModal(event)">&times;</button>
+          <h2>Schedule Test</h2>
+          <label>Exam Set</label>
+          <select id="scheduleSet"></select>
+          <label>Faculty</label>
+          <select id="scheduleFaculty" onchange="populateDepartmentsDropdownForSchedule()"></select>
+          <label>Departments <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
+          <select id="scheduleDepartments" multiple size="6" style="height:auto;"></select>
+          <label>Start Date & Time</label>
+          <input id="scheduleStart" type="datetime-local">
+          <label>End Date & Time</label>
+          <input id="scheduleEnd" type="datetime-local">
+          <span id="addScheduleMsg"></span>
+          <span class="spinner" id="addScheduleSpinner" style="display:none"></span>
+          <button class="btn" onclick="submitAddSchedule()">Schedule</button>
+        </div>
+      </div>`;
+    document.getElementById("modalRoot").innerHTML = html;
+    populateScheduleModalFields();
+    return;
+  }
 
       if (html) {
         document.getElementById("modalRoot").innerHTML = html;
@@ -1683,56 +1579,42 @@ function populateScheduleModalFields() {
       }, 900);
     }
 
-// ---- And update your submitAddSchedule() function like this ----
-
-async function submitAddSchedule() {
-  const set = document.getElementById("scheduleSet").value;
-  const faculty = document.getElementById("scheduleFaculty").value;
-  const departments = Array.from(document.getElementById("scheduleDepartments").selectedOptions).map(opt => opt.value);
-  const levels = Array.from(document.getElementById("scheduleLevels").selectedOptions).map(opt => opt.value);
+    async function submitAddSchedule() {
+  const examSet = document.getElementById("scheduleSet").value;
+  const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
+  const departmentsSelect = document.getElementById("scheduleDepartments");
+  const departments = Array.from(departmentsSelect.selectedOptions).map(opt => opt.value);
   const start = document.getElementById("scheduleStart").value;
   const end = document.getElementById("scheduleEnd").value;
   const msg = document.getElementById("addScheduleMsg");
   const spinner = document.getElementById("addScheduleSpinner");
   msg.innerText = "";
   msg.className = "";
-  if (!set || !faculty || departments.length === 0 || levels.length === 0 || !start || !end) {
-    msg.innerText = "All fields are required!";
+  if (!examSet || !faculty || !departments.length || !start || !end) {
+    msg.innerText = "All fields required!";
     msg.className = "error-msg";
     return;
   }
   spinner.style.display = "inline-block";
-  try {
-    const resp = await fetch(API_URL + "schedules", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-      body: JSON.stringify({
-        examSet: set,
-        faculty,
-        departments,
-        levels,
-        start,
-        end
-      })
-    });
-    spinner.style.display = "none";
-    if (!resp.ok) {
-      const data = await resp.json();
-      msg.innerText = data.error || "Failed to create schedule.";
-      msg.className = "error-msg";
-      return;
-    }
-    msg.innerText = "Schedule created!";
-    msg.className = "success-msg";
-    fetchSchedules();
-    setTimeout(closeModal, 900);
-  } catch (e) {
-    spinner.style.display = "none";
-    msg.innerText = "Network error.";
+  const resp = await fetch(API_URL + "schedules", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify({ examSet, faculty, departments, start, end })
+  });
+  spinner.style.display = "none";
+  if (!resp.ok) {
+    const data = await resp.json();
+    msg.innerText = data.message || data.error || "Failed to schedule.";
     msg.className = "error-msg";
+    return;
   }
+  msg.innerText = "Successfully loaded!";
+  msg.className = "success-msg";
+  setTimeout(() => {
+    fetchSchedules();
+    closeModal();
+  }, 900);
 }
-
 
     async function submitSendNotif() {
       const title = document.getElementById("notifTitle").value.trim();
@@ -2336,6 +2218,3 @@ async function viewFormResponses(formId) {
   </script>
 </body>
 </html>
-
-
-
