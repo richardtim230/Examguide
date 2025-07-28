@@ -1023,8 +1023,7 @@ async function fetchSchedules() {
     setSectionLoader("schedulesSection", false);
   }
     }
-
-/* --- Edit Schedule Modal: Multi-department support --- */
+/* --- Edit Schedule Modal: Multi-department and Levels support --- */
 async function editSchedule(id) {
   const resp = await fetch(API_URL + "schedules/" + id, { headers: { Authorization: "Bearer " + token } });
   if (!resp.ok) { alert("Could not load schedule."); return; }
@@ -1033,6 +1032,11 @@ async function editSchedule(id) {
   if (!departments.length) await fetchDepartments();
   const setsResp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
   const sets = await setsResp.json();
+
+  // Default/preselect levels if present
+  const levelsList = ["100", "200", "300", "400", "500", "600"];
+  const selectedLevels = Array.isArray(s.levels) ? s.levels : [];
+
   let html = `
     <div class="modal-backdrop" onclick="closeModal(event)">
       <div class="modal" onclick="event.stopPropagation()" style="max-width:420px;">
@@ -1052,6 +1056,10 @@ async function editSchedule(id) {
         <select id="editScheduleDepartments" multiple size="6" style="height:auto;">
           <!-- Populated below -->
         </select>
+        <label>Levels <span style="color:#888;font-size:0.95em;">(Ctrl/Cmd to select multiple)</span></label>
+        <select id="editScheduleLevels" multiple size="6" style="height:auto;">
+          ${levelsList.map(lvl => `<option value="${lvl}" ${selectedLevels.includes(lvl) ? 'selected' : ''}>${lvl}</option>`).join('')}
+        </select>
         <label>Start Date & Time</label>
         <input id="editScheduleStart" type="datetime-local" value="${(new Date(s.start)).toISOString().slice(0,16)}">
         <label>End Date & Time</label>
@@ -1064,6 +1072,7 @@ async function editSchedule(id) {
   document.getElementById("modalRoot").innerHTML = html;
   populateEditDepartmentsDropdownForSchedule(s.faculty, s.departments || s.department);
 }
+
 function populateEditDepartmentsDropdownForSchedule(selectedFaculty, selectedDepartments) {
   // If called by `onchange`, get current value from dropdown
   if (!selectedFaculty) selectedFaculty = document.getElementById('editScheduleFaculty').value;
@@ -1081,13 +1090,16 @@ async function submitEditSchedule(id) {
   const faculty = document.getElementById("editScheduleFaculty").value;
   const departmentsSelect = document.getElementById("editScheduleDepartments");
   const departments = Array.from(departmentsSelect.selectedOptions).map(opt => opt.value);
+  const levelsSelect = document.getElementById("editScheduleLevels");
+  const levels = Array.from(levelsSelect ? levelsSelect.selectedOptions : []).map(opt => opt.value);
   const start = document.getElementById("editScheduleStart").value;
   const end = document.getElementById("editScheduleEnd").value;
   const msg = document.getElementById("editScheduleMsg");
   const spinner = document.getElementById("editScheduleSpinner");
   msg.innerText = "";
   msg.className = "";
-  if (!examSet || !faculty || !departments.length || !start || !end) {
+  // Updated validation to require levels
+  if (!examSet || !faculty || !departments.length || !levels.length || !start || !end) {
     msg.innerText = "All fields required!";
     msg.className = "error-msg";
     return;
@@ -1096,7 +1108,7 @@ async function submitEditSchedule(id) {
   const resp = await fetch(API_URL + "schedules/" + id, {
     method: "PUT",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ examSet, faculty, departments, start, end })
+    body: JSON.stringify({ examSet, faculty, departments, levels, start, end })
   });
   spinner.style.display = "none";
   if (!resp.ok) {
