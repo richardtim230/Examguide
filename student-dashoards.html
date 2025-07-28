@@ -319,10 +319,16 @@
     <main class="p-4 md:ml-72 md:p-8 lg:p-12 min-h-screen">
         <!-- Dashboard Tab -->
         <section id="dashboard" class="tab-content active">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
-                <h2 class="text-3xl font-bold text-indigo-900">Welcome, <span id="studentName"></span>!</h2>
-                <p class="text-gray-600 mt-2">Your academic journey, beautifully organized</p>
-            </header>
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex items-center justify-between relative">
+    <div class="flex items-center gap-6">
+        <img id="studentProfilePic" src="" alt="Profile" class="rounded-full border-4 border-indigo-100 shadow" style="width:80px;height:80px;object-fit:cover;">
+        <div>
+            <h2 id="greetingHeader" class="text-3xl font-bold text-indigo-900 mb-1">Welcome, <span id="studentName"></span>!</h2>
+            <p class="text-gray-600 mt-1" id="greetingSubtext">Your academic journey, beautifully organized</p>
+        </div>
+    </div>
+    <div id="greetingTimeIcon" class="absolute top-6 right-8 text-3xl" title="Time of Day"></div>
+                </header>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- Profile Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
