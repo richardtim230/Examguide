@@ -1588,27 +1588,32 @@ function populateScheduleModalFields() {
       }, 900);
     }
 
-    async function submitAddSchedule() {
+async function submitAddSchedule() {
   const examSet = document.getElementById("scheduleSet").value;
   const faculty = document.getElementById("scheduleFaculty") ? document.getElementById("scheduleFaculty").value : "";
   const departmentsSelect = document.getElementById("scheduleDepartments");
   const departments = Array.from(departmentsSelect.selectedOptions).map(opt => opt.value);
+  const levelsSelect = document.getElementById("scheduleLevels");
+  const levels = Array.from(levelsSelect ? levelsSelect.selectedOptions : []).map(opt => opt.value);
   const start = document.getElementById("scheduleStart").value;
   const end = document.getElementById("scheduleEnd").value;
   const msg = document.getElementById("addScheduleMsg");
   const spinner = document.getElementById("addScheduleSpinner");
   msg.innerText = "";
   msg.className = "";
-  if (!examSet || !faculty || !departments.length || !start || !end) {
+
+  // Updated validation: all fields required, including levels
+  if (!examSet || !faculty || !departments.length || !levels.length || !start || !end) {
     msg.innerText = "All fields required!";
     msg.className = "error-msg";
     return;
   }
+
   spinner.style.display = "inline-block";
   const resp = await fetch(API_URL + "schedules", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-    body: JSON.stringify({ examSet, faculty, departments, start, end })
+    body: JSON.stringify({ examSet, faculty, departments, levels, start, end })
   });
   spinner.style.display = "none";
   if (!resp.ok) {
