@@ -510,6 +510,24 @@
                 <h2 class="text-3xl font-bold text-indigo-900">Study Resources</h2>
                 <p class="text-gray-600 mt-2">Access essential materials to boost your learning</p>
             </header>
+            <!-- AI Study Assistant Card -->
+<section class="bg-gradient-to-r from-indigo-50 via-blue-50 to-purple-50 rounded-2xl shadow-xl p-6 card border-2 border-indigo-200 relative overflow-hidden" style="box-shadow: 0 4px 24px #a5b4fc25;">
+    <div class="absolute -top-10 -right-10 opacity-20 text-indigo-300" style="font-size:7rem;pointer-events:none;">
+        <i class="fas fa-brain"></i>
+    </div>
+    <h3 class="text-2xl font-extrabold text-indigo-800 mb-2 flex items-center gap-2">
+        <i class="fas fa-robot"></i>
+        AI Study Assistant
+    </h3>
+    <p class="text-indigo-800 mb-4">Type any topic or concept you want to learn, and get a detailed, AI-generated lecture instantly.</p>
+    <form id="aiStudyForm" class="flex flex-col md:flex-row gap-3">
+        <input id="aiStudyInput" type="text" class="flex-1 p-3 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:border-transparent text-lg" placeholder="e.g. Quantum Mechanics, Dijkstra's Algorithm, Photosynthesis..." autocomplete="off" required>
+        <button type="submit" class="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg font-bold shadow-lg hover:from-indigo-500 hover:to-blue-600 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition-all text-lg glow-button">
+            <i class="fas fa-book-open-reader mr-1"></i> Read Now
+        </button>
+    </form>
+    <div id="aiStudyError" class="text-red-500 mt-2 hidden"></div>
+            </section>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Resources</h3>
@@ -710,5 +728,23 @@
 </div>
     </main>
     <script src="student_dashboard.js"></script>
+    <script>
+        // --- AI Study Assistant: Open Gemini API Lecture Page ---
+document.getElementById("aiStudyForm").onsubmit = function(e) {
+    e.preventDefault();
+    const topic = document.getElementById("aiStudyInput").value.trim();
+    const errorDiv = document.getElementById("aiStudyError");
+    if (!topic) {
+        errorDiv.textContent = "Please enter a topic!";
+        errorDiv.classList.remove("hidden");
+        return;
+    }
+    errorDiv.classList.add("hidden");
+    // You can replace this URL with your Gemini-powered endpoint/page
+    // Example: /ai-lecture.html?topic=...
+    const url = '/ai-lecture.html?topic=' + encodeURIComponent(topic);
+    window.open(url, '_blank');
+};
+    </script>
 </body>
 </html>
