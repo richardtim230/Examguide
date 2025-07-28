@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=0.81">
   <title>Lecture: <span id="topicTitle"></span> | EduHub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="logo.png">
@@ -178,6 +178,10 @@
     OAU ExamGuard AI Study Assistant &copy; 2025. For Nigerian University Students.
   </footer>
   <script>
+    // -------- GEMINI API SETUP --------
+    // Replace this API key with your actual key!
+    const GEMINI_API_KEY = 'AIzaSyA4repqpScWo7uXe8gUZ7PtgDiSZ76L5Ow';
+
     // --------- TOPIC FETCH ---------
     const params = new URLSearchParams(window.location.search);
     const topic = params.get("topic") || "Sample Topic";
@@ -185,6 +189,15 @@
     document.getElementById("topicLabel").textContent = "Lecture Note";
 
     // --------- PROMPT ENGINEERING ---------
+    // Structure required for this page:
+    // - outlines: array of strings (section names)
+    // - introduction: string
+    // - introQuote: string (optional, can be a famous educational quote)
+    // - notes: object (outline => full html or markdown content)
+    // - flashcards: array of {term, def}
+    // - summary: string
+    // - examTips: array of strings
+
     const SYSTEM_PROMPT = `
 You are an expert Nigerian university lecturer and instructional designer. 
 Generate a comprehensive, well-formatted lecture note for the given topic, tailored for Nigerian university students.
@@ -209,23 +222,26 @@ Instructions:
 Topic: ${topic}
 `;
 
-    // -------- GEMINI API CALL VIA BACKEND PROXY (RECOMMENDED) --------
-    // Replace this with your backend proxy endpoint!
-    const GEMINI_PROXY_URL = "https://your-backend.com/api/gemini-lecture"; // <-- CHANGE THIS!
-
+    // --------------- GEMINI FUNCTION ---------------
     async function fetchGeminiLecture(topic) {
-      const resp = await fetch(GEMINI_PROXY_URL, {
+      const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key="+GEMINI_API_KEY;
+      const data = {
+        contents: [{
+          role: "user",
+          parts: [{ text: SYSTEM_PROMPT }]
+        }]
+      };
+      const resp = await fetch(url, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ topic, prompt: SYSTEM_PROMPT })
+        body: JSON.stringify(data)
       });
-      if (!resp.ok) throw new Error("Failed to contact Gemini API (proxy)");
+      if (!resp.ok) throw new Error("Failed to contact Gemini API");
       const result = await resp.json();
-
-      // If you use the Node.js proxy provided in previous responses, result will be the JSON from Gemini
-      // Sometimes Gemini wraps JSON in code blocks, so extract clean JSON
-      let text = result.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-      if (!text) throw new Error("No valid response from Gemini API");
+      if (!result.candidates || !result.candidates[0]?.content?.parts[0]?.text)
+        throw new Error("No valid response from Gemini API");
+      // Gemini sometimes returns code blocks, strip them if present
+      let text = result.candidates[0].content.parts[0].text.trim();
       if (text.startsWith("```json")) text = text.replace(/^```json\s*/,"").replace(/```$/,"");
       if (text.startsWith("{") && text.endsWith("}")) return JSON.parse(text);
       // Try to parse even if not perfectly formatted
@@ -361,7 +377,7 @@ Topic: ${topic}
         const data = await fetchGeminiLecture(topic);
         renderLecture(data);
       } catch (e) {
-        showError("Sorry, we couldn't generate your lecture right now. Please try again or check your setup.");
+        showError("Sorry, we couldn't generate your lecture right now. Please try again or check your API key.");
         console.error(e);
       }
     }
