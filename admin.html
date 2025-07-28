@@ -252,8 +252,8 @@ Insert or replace these blocks in your admin.html accordingly. -->
   <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Test Schedules</div>
   <div class="actions">
-    <button class="btn" onclick="openModal('addScheduleModal')">+ Schedule Test</button>
-  </div>
+  <button class="btn" onclick="openModal('addScheduleModal'); prepareScheduleModal();">+ Schedule Test</button>
+</div>
   <table class="data-table" id="schedulesTable">
     <thead>
       <tr>
@@ -730,27 +730,28 @@ function showSection(id, el) {
     function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('mainContent').classList.add('shifted'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('mainContent').classList.remove('shifted'); }
 
+// Call this when opening the modal
+async function prepareScheduleModal() {
+  // Fetch faculties and departments if not already loaded
+  if (faculties.length === 0) await fetchFaculties();
+  if (departments.length === 0) await fetchDepartments();
 
-  // Add this function to populate faculties and departments when opening the Schedule modal
-async function populateScheduleModalDropdowns() {
-  // Fetch faculties and departments if not already fetched
-  if (!faculties.length) await fetchFaculties();
-  if (!departments.length) await fetchDepartments();
-
-  // Populate faculty dropdown
+  // Populate Faculty Select
   const facultySelect = document.getElementById("scheduleFaculty");
   facultySelect.innerHTML = faculties.map(f => `<option value="${f._id}">${f.name}</option>`).join('');
 
-  // Default to the first faculty and populate departments
+  // Populate Department Select (initially for the first faculty)
   updateScheduleDepartments();
 }
 
 function updateScheduleDepartments() {
   const facultyId = document.getElementById("scheduleFaculty").value;
   const deptSelect = document.getElementById("scheduleDepartments");
+  // Filter departments to only those with the selected faculty
   const filtered = departments.filter(d => d.faculty === facultyId);
   deptSelect.innerHTML = filtered.map(d => `<option value="${d._id}">${d.name}</option>`).join('');
-  }
+    }
+  
 // ========== Dashboard Counts ==========
 async function fetchDashboardCounts() {
   const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
