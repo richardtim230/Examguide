@@ -242,7 +242,7 @@
 </div>
 <div id="formModalRoot"></div>
 
-<!-- Schedules Table: change column header and row rendering -->
+<!-- Schedules Table: updated column header and row rendering to include Levels -->
 <div class="section" id="schedulesSection" style="display:none; position: relative;">
   <div class="section-loader" style="display:none;"><div class="spinner"></div></div>
   <div class="section-title">Test Schedules</div>
@@ -254,7 +254,8 @@
       <tr>
         <th>Set</th>
         <th>Faculty</th>
-        <th>Departments</th> <!-- updated header -->
+        <th>Departments</th>
+        <th>Levels</th> <!-- NEW COLUMN -->
         <th>Start</th>
         <th>End</th>
         <th>Actions</th>
@@ -996,6 +997,7 @@ function setSectionLoader(sectionId, show = true) {
 }
 
 // ========== Schedules Section with Loader ==========
+// Update this part of your fetchSchedules() function (or wherever you render #schedulesTable)
 async function fetchSchedules() {
   setSectionLoader("schedulesSection", true);
   try {
@@ -1006,9 +1008,10 @@ async function fetchSchedules() {
       html += `<tr>
         <td>${s.examSet?.title || '-'}</td>
         <td>${getFacultyName(s.faculty)}</td>
-        <td>${getDepartmentsNames(s.departments || s.department)}</td>
-        <td>${(new Date(s.start)).toLocaleString()}</td>
-        <td>${(new Date(s.end)).toLocaleString()}</td>
+        <td>${getDepartmentsNames(s.departments)}</td>
+        <td>${(s.levels && s.levels.length) ? s.levels.join(", ") : "-"}</td> <!-- NEW LEVELS COLUMN -->
+        <td>${s.start ? (new Date(s.start)).toLocaleString() : '-'}</td>
+        <td>${s.end ? (new Date(s.end)).toLocaleString() : '-'}</td>
         <td>
           <button class="action-btn" onclick="editSchedule('${s._id}')">Edit</button>
           <button class="action-btn" onclick="deleteSchedule('${s._id}')">Delete</button>
@@ -1019,8 +1022,7 @@ async function fetchSchedules() {
   } finally {
     setSectionLoader("schedulesSection", false);
   }
-}
-
+    }
 
 /* --- Edit Schedule Modal: Multi-department support --- */
 async function editSchedule(id) {
