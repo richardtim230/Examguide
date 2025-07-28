@@ -7,6 +7,29 @@ import dotenv from "dotenv";
 import path from "path";
 
 import fs from "fs";
+const profilePicsDir = "./uploads/profilepics";
+if (!fs.existsSync(profilePicsDir)) {
+  fs.mkdirSync(profilePicsDir, { recursive: true });
+}
+const profilePicStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, profilePicsDir);
+  },
+  filename: function (req, file, cb) {
+    // Use timestamp+originalname to prevent duplicates
+    const ext = path.extname(file.originalname);
+    const base = path.basename(file.originalname, ext);
+    cb(null, `${base.replace(/\s+/g,'_')}_${Date.now()}${ext}`);
+  }
+});
+const uploadProfilePic = multer({
+  storage: profilePicStorage,
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB max
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) cb(null, true);
+    else cb(new Error("Only image files allowed!"));
+  }
+});
 const uploadDir = "./uploads/broadcasts";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -177,8 +200,7 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
   }
 });
 
-// --- Auth Endpoints ---
-app.post("/api/auth/register", async (req, res) => {
+app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     const {
       username,
@@ -199,20 +221,28 @@ app.post("/api/auth/register", async (req, res) => {
     if (exists)
       return res.status(409).json({message: "Username already exists"});
     const hashed = await bcrypt.hash(password, 12);
+
+    let profilePicUrl = "";
+    if (req.file) {
+      // Use URL path for the uploaded profile pic
+      profilePicUrl = `/uploads/profilepics/${req.file.filename}`;
+    }
+
     const user = new User({
       username,
       password: hashed,
-      role: role || "student", // ensure student role!
+      role: role || "student",
       faculty,
       department,
       email: email || "",
       level: level || "",
       phone: phone || "",
-      fullname: fullname || ""
+      fullname: fullname || "",
+      profilePic: profilePicUrl
     });
     await user.save();
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
-    res.status(201).json({token, message: "Registration successful"});
+    res.status(201).json({token, message: "Registration successful", profilePic: profilePicUrl});
   } catch (e) {
     console.error("Register error:", e);
     res.status(500).json({message: "Server error"});
@@ -333,7 +363,7 @@ app.delete("/api/progress", authenticate, async (req, res) => {
 app.use("/api/superadmin", superadminRoutes);
 
 // --- Main Features ---
-
+app.use("/uploads/profilepics", express.static(path.join(process.cwd(), "uploads/profilepics")));
 app.use("/api/questionsets", questionSetRoutes);
 app.use("/api/results", resultsRoutes);
 app.use("/api/schedules", scheduleRoutes);
