@@ -144,7 +144,180 @@ async function fetchWithAuth(url, options = {}) {
   }
   return resp;
 }
+// ========== Motivational Quotes Data ==========
+const MOTIVATIONAL_QUOTES = [
+  { 
+    text: "Education is the most powerful weapon which you can use to change the world.",
+    author: "Nelson Mandela"
+  },
+  { 
+    text: "The future belongs to those who believe in the beauty of their dreams.",
+    author: "Eleanor Roosevelt"
+  },
+  { 
+    text: "Strive for progress, not perfection.",
+    author: "Unknown"
+  },
+  { 
+    text: "The expert in anything was once a beginner.",
+    author: "Helen Hayes"
+  },
+  { 
+    text: "Success is not the key to happiness. Happiness is the key to success.",
+    author: "Albert Schweitzer"
+  },
+  { 
+    text: "Do not wait to strike till the iron is hot; but make it hot by striking.",
+    author: "William Butler Yeats"
+  },
+  { 
+    text: "Opportunities don't happen. You create them.",
+    author: "Chris Grosser"
+  },
+  { 
+    text: "The beautiful thing about learning is that no one can take it away from you.",
+    author: "B.B. King"
+  },
+  { 
+    text: "The only limit to our realization of tomorrow will be our doubts of today.",
+    author: "Franklin D. Roosevelt"
+  },
+  { 
+    text: "Learning never exhausts the mind.",
+    author: "Leonardo da Vinci"
+  }
+  // ...add more quotes as desired
+];
 
+// ========== Greeting Name Helper ==========
+function getFirstName(fullname, username) {
+  if (!fullname && !username) return "";
+  const name = fullname || username;
+  return name.trim().split(/\s+/)[0]; // return only the first name part
+}
+
+// ========== Motivational Quote Rotation & Animation ==========
+function showRandomQuote(prevIdx = -1) {
+  let idx;
+  do {
+    idx = Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length);
+  } while (MOTIVATIONAL_QUOTES.length > 1 && idx === prevIdx);
+
+  const quote = MOTIVATIONAL_QUOTES[idx];
+  const qEl = document.getElementById("motivationalQuote");
+  const aEl = document.getElementById("quoteAuthor");
+  if (!qEl || !aEl) return;
+
+  // Animate out
+  qEl.classList.remove("zoom-in");
+  aEl.classList.remove("zoom-in");
+  qEl.classList.add("zoom-out");
+  aEl.classList.add("zoom-out");
+
+  setTimeout(() => {
+    qEl.textContent = `“${quote.text}”`;
+    aEl.textContent = `— ${quote.author}`;
+    qEl.classList.remove("zoom-out");
+    aEl.classList.remove("zoom-out");
+    qEl.classList.add("zoom-in");
+    aEl.classList.add("zoom-in");
+  }, 500); // must match zoom-out animation duration
+
+  // Schedule the next quote
+  clearTimeout(window._quoteTimer);
+  window._quoteTimer = setTimeout(() => showRandomQuote(idx), 6000);
+}
+
+function startQuoteRotation() {
+  showRandomQuote();
+}
+
+// ========== Profile Pic & Greeting Helpers ==========
+function getProfilePicUrl(student) {
+  if (student.profilePic) return student.profilePic;
+  const name = encodeURIComponent(student.fullname || student.username || "Student");
+  return `https://ui-avatars.com/api/?name=${name}&background=ede9fe&color=3b82f6&size=128&rounded=true`;
+}
+function getGreetingData() {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) {
+    return { text: "Good morning", icon: "🌅", label: "Morning" };
+  } else if (hour >= 12 && hour < 17) {
+    return { text: "Good afternoon", icon: "🌞", label: "Afternoon" };
+  } else if (hour >= 17 && hour < 20) {
+    return { text: "Good evening", icon: "🌇", label: "Evening" };
+  } else {
+    return { text: "Good night", icon: "🌙", label: "Night" };
+  }
+}
+
+// =================== PROFILE ===================
+async function fetchProfile() {
+  const resp = await fetchWithAuth(API_URL + "auth/me");
+  const data = await resp.json();
+  student = data.user;
+  student.id = student._id || student.id;
+
+  // ---- Profile Pic & Greeting (UPDATED) ----
+  const profilePic = getProfilePicUrl(student);
+  if (document.getElementById("studentProfilePic")) {
+    document.getElementById("studentProfilePic").src = profilePic;
+    document.getElementById("studentProfilePic").alt = (student.fullname || student.username || "Profile");
+  }
+  const greeting = getGreetingData();
+  // Use first name only
+  const firstName = getFirstName(student.fullname, student.username);
+  if (document.getElementById("greetingHeader")) {
+    document.getElementById("greetingHeader").innerHTML = `${greeting.text}, <span id="studentName">${firstName}</span>!`;
+  }
+  if (document.getElementById("greetingTimeIcon")) {
+    document.getElementById("greetingTimeIcon").innerHTML = `<span title="${greeting.label}">${greeting.icon}</span>`;
+  }
+  // Start quote rotation
+  startQuoteRotation();
+
+  // ...rest of your profile logic unchanged...
+  document.getElementById("profileName").innerText = student.fullname || student.username || '';
+  document.getElementById("studentId").innerText = student.studentId || '';
+  document.getElementById("profileDept").innerText = getDepartmentName(student.department);
+  document.getElementById("studentLevel").innerText = student.level || '';
+  document.getElementById("profileEmail").innerText = student.email || '';
+  document.getElementById("profilePhone").innerText = student.phone || '';
+  if (document.getElementById("profileFaculty"))
+    document.getElementById("profileFaculty").innerText = getFacultyName(student.faculty);
+
+  document.getElementById("editName").value = student.fullname || '';
+  document.getElementById("editEmail").value = student.email || '';
+  document.getElementById("editPhone").value = student.phone || '';
+  document.getElementById("editStudentId").value = student.studentId || '';
+  document.getElementById("editLevel").value = student.level || '';
+  document.getElementById("editFaculty").value = student.faculty?._id || student.faculty || '';
+  const event = new Event('change');
+  document.getElementById("editFaculty").dispatchEvent(event);
+
+  let deptId = '';
+  if (student.department?._id) deptId = student.department._id;
+  else if (typeof student.department === 'string') deptId = student.department;
+  if (!deptId && student.department?.name) {
+    const found = departmentsCache.find(d => d.name === student.department.name);
+    if (found) deptId = found._id;
+  }
+  document.getElementById("editDepartment").value = deptId;
+
+  // Optionally, live update the greeting every minute
+  if (!window._greetingUpdater) {
+    window._greetingUpdater = setInterval(() => {
+      const updatedGreeting = getGreetingData();
+      const updatedFirstName = getFirstName(student.fullname, student.username);
+      if (document.getElementById("greetingHeader")) {
+        document.getElementById("greetingHeader").innerHTML = `${updatedGreeting.text}, <span id="studentName">${updatedFirstName}</span>!`;
+      }
+      if (document.getElementById("greetingTimeIcon")) {
+        document.getElementById("greetingTimeIcon").innerHTML = `<span title="${updatedGreeting.label}">${updatedGreeting.icon}</span>`;
+      }
+    }, 60000);
+  }
+}
 // =================== PROFILE ===================
 
 // Populate faculty and department selects (for profile editing)
@@ -182,77 +355,7 @@ async function fetchAllUsers() {
   usersCache = await resp.json();
 }
 
-// Load and populate profile fields
-async function fetchProfile() {
-  const resp = await fetchWithAuth(API_URL + "auth/me");
-  const data = await resp.json();
-  student = data.user;
-  student.id = student._id || student.id;
 
-  // ---- Profile Pic & Greeting (NEW) ----
-  const profilePic = getProfilePicUrl(student);
-  if (document.getElementById("studentProfilePic")) {
-    document.getElementById("studentProfilePic").src = profilePic;
-    document.getElementById("studentProfilePic").alt = (student.fullname || student.username || "Profile");
-  }
-  const greeting = getGreetingData();
-  if (document.getElementById("greetingHeader")) {
-    document.getElementById("greetingHeader").innerHTML = `${greeting.text}, <span id="studentName">${student.fullname || student.username || ''}</span>!`;
-  }
-  if (document.getElementById("greetingTimeIcon")) {
-    document.getElementById("greetingTimeIcon").innerHTML = `<span title="${greeting.label}">${greeting.icon}</span>`;
-  }
-  // Optionally, live update the greeting every minute
-  if (!window._greetingUpdater) {
-    window._greetingUpdater = setInterval(() => {
-      const updatedGreeting = getGreetingData();
-      if (document.getElementById("greetingHeader")) {
-        document.getElementById("greetingHeader").innerHTML = `${updatedGreeting.text}, <span id="studentName">${student.fullname || student.username || ''}</span>!`;
-      }
-      if (document.getElementById("greetingTimeIcon")) {
-        document.getElementById("greetingTimeIcon").innerHTML = `<span title="${updatedGreeting.label}">${updatedGreeting.icon}</span>`;
-      }
-    }, 60000);
-  }
-  // ---- END Profile Pic & Greeting (NEW) ----
-
-  // Fill profile fields
-  // studentName is now set above in greeting, but still set for compatibility
-  if (document.getElementById("studentName")) {
-    document.getElementById("studentName").innerText = student.fullname || student.username || '';
-  }
-  document.getElementById("profileName").innerText = student.fullname || student.username || '';
-  document.getElementById("studentId").innerText = student.studentId || '';
-  document.getElementById("profileDept").innerText = getDepartmentName(student.department);
-  document.getElementById("studentLevel").innerText = student.level || '';
-  document.getElementById("profileEmail").innerText = student.email || '';
-  document.getElementById("profilePhone").innerText = student.phone || '';
-  // If you want to show faculty name:
-  if (document.getElementById("profileFaculty"))
-    document.getElementById("profileFaculty").innerText = getFacultyName(student.faculty);
-
-  // Profile edit tab fields
-  document.getElementById("editName").value = student.fullname || '';
-  document.getElementById("editEmail").value = student.email || '';
-  document.getElementById("editPhone").value = student.phone || '';
-  document.getElementById("editStudentId").value = student.studentId || '';
-  document.getElementById("editLevel").value = student.level || '';
-  document.getElementById("editFaculty").value = student.faculty?._id || student.faculty || '';
-  // Trigger department select update
-  const event = new Event('change');
-  document.getElementById("editFaculty").dispatchEvent(event);
-
-  // Set department select value by ID (preferred)
-  let deptId = '';
-  if (student.department?._id) deptId = student.department._id;
-  else if (typeof student.department === 'string') deptId = student.department;
-  // If not an ID, try to find by name
-  if (!deptId && student.department?.name) {
-    const found = departmentsCache.find(d => d.name === student.department.name);
-    if (found) deptId = found._id;
-  }
-  document.getElementById("editDepartment").value = deptId;
-}
 
 
 // =================== PROFILE EDIT SAVE ===================
