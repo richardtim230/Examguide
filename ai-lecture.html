@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.81">
-  <title>Lecture: <span id="topicTitle"></span> | EduHub</title>
+  <title>Lecture Note| OAU ExamGuard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="logo.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
       box-shadow: 0 2px 8px #6366f133;
     }
     .section-title {
-      font-size: 1.35rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #312e81;
       background: linear-gradient(90deg,#e0e7ff 60%,#fff 100%);
@@ -31,7 +31,7 @@
       letter-spacing: 0.01em;
     }
     .note-content {
-      font-size: 1.14rem;
+      font-size: 1.0rem;
       line-height: 1.8;
       color: #1e293b;
       background: #f1f5fd;
@@ -400,7 +400,7 @@ Topic: ${topic}
 
     // --- Ask More (open Google search for now) ---
     document.getElementById("askMoreBtn").onclick = function() {
-      const q = encodeURIComponent(topic + " lecture for Nigerian university students");
+      const q = encodeURIComponent(topic + " lecture Note");
       window.open("https://www.google.com/search?q=" + q, "_blank");
     };
 
