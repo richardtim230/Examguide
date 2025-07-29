@@ -1296,7 +1296,207 @@ document.getElementById("cancelMessageBtn").onclick = function() {
   document.getElementById("messageInput").value = "";
   document.getElementById("recipientSelect").selectedIndex = 0;
 }
+// --- Study Calendar Feature using FullCalendar ----
 
+// Storage key for personal events
+const CALENDAR_PERSONAL_EVENTS_KEY = "study_calendar_personal_events";
+
+function loadPersonalEvents() {
+  try {
+    return JSON.parse(localStorage.getItem(CALENDAR_PERSONAL_EVENTS_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+function savePersonalEvents(events) {
+  localStorage.setItem(CALENDAR_PERSONAL_EVENTS_KEY, JSON.stringify(events));
+}
+
+function getColorForEventType(type) {
+  if (type === "exam") return "#ef4444";      // red
+  if (type === "mock") return "#3b82f6";      // blue
+  return "#22c55e";                           // green (personal)
+}
+function getEventTypeLabel(type) {
+  if (type === "exam") return "Exam";
+  if (type === "mock") return "Mock Test";
+  return "Personal Study";
+}
+
+// Generate FullCalendar events from schedules and personal events
+function buildCalendarEvents() {
+  const events = [];
+  // Add exams and mocks from availableSchedulesCache
+  if (Array.isArray(availableSchedulesCache)) {
+    for (const sched of availableSchedulesCache) {
+      if (!sched.examSet) continue;
+      const set = sched.examSet;
+      const start = sched.start ? new Date(sched.start) : null;
+      // Decide event type by set.type or fallback to status/title
+      let type = "mock";
+      if (set.type && set.type.toLowerCase() === "exam") type = "exam";
+      else if (set.title && set.title.toLowerCase().includes("exam")) type = "exam";
+      // If it's not active, don't show
+      if (set.status !== "ACTIVE") continue;
+      events.push({
+        id: "sched_" + (sched._id || set._id),
+        title: set.title,
+        start: start ? start.toISOString() : null,
+        end: sched.end ? new Date(sched.end).toISOString() : null,
+        extendedProps: {
+          type,
+          description: set.description || "",
+          status: set.status,
+          isPersonal: false
+        },
+        color: getColorForEventType(type),
+        allDay: !(sched.start && String(sched.start).includes("T"))
+      });
+    }
+  }
+  // Add personal study events
+  for (const evt of loadPersonalEvents()) {
+    events.push({
+      ...evt,
+      color: getColorForEventType("personal"),
+      extendedProps: {
+        ...(evt.extendedProps || {}),
+        type: "personal",
+        isPersonal: true
+      }
+    });
+  }
+  return events;
+}
+
+// --- FullCalendar Initialization ---
+let calendarObj = null;
+function initStudyCalendarTab() {
+  // Wait for the tab to be visible, then render
+  setTimeout(() => {
+    const calEl = document.getElementById("studyCalendar");
+    if (!calEl) return;
+
+    // Destroy previous instance if exists
+    if (calendarObj) {
+      calendarObj.destroy();
+      calendarObj = null;
+    }
+    calendarObj = new FullCalendar.Calendar(calEl, {
+      initialView: 'dayGridMonth',
+      height: "100%",
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek'
+      },
+      events: buildCalendarEvents(),
+      eventClick: function(info) {
+        showCalendarEventDetails(info.event);
+      },
+      dateClick: function(info) {
+        // Optionally, allow quick add on date click
+      }
+    });
+    calendarObj.render();
+  }, 120); // Let the tab become visible
+}
+
+// --- Modal handlers ---
+document.getElementById("addPersonalEventBtn").onclick = function() {
+  document.getElementById("calendarEventModal").style.display = "flex";
+  document.getElementById("eventTitle").value = "";
+  document.getElementById("eventDate").value = "";
+  document.getElementById("eventTime").value = "";
+  document.getElementById("eventDesc").value = "";
+};
+function closeCalendarEventModal() {
+  document.getElementById("calendarEventModal").style.display = "none";
+}
+document.getElementById("calendarEventForm").onsubmit = function(e) {
+  e.preventDefault();
+  const title = document.getElementById("eventTitle").value.trim();
+  const date = document.getElementById("eventDate").value;
+  const time = document.getElementById("eventTime").value;
+  const desc = document.getElementById("eventDesc").value.trim();
+  if (!title || !date) return;
+
+  // Store as an all-day or timed event
+  const startStr = time ? `${date}T${time}` : date;
+  const evt = {
+    id: "personal_" + Date.now(),
+    title,
+    start: startStr,
+    allDay: !time,
+    extendedProps: {
+      type: "personal",
+      description: desc,
+      isPersonal: true
+    }
+  };
+  const events = loadPersonalEvents();
+  events.push(evt);
+  savePersonalEvents(events);
+  closeCalendarEventModal();
+  initStudyCalendarTab();
+};
+
+function showCalendarEventDetails(event) {
+  const modal = document.getElementById("calendarEventDetailsModal");
+  const content = document.getElementById("calendarEventDetailsContent");
+  const props = event.extendedProps || {};
+  let html = `<div class="mb-2">
+    <span class="text-lg font-semibold">${event.title}</span>
+    <span class="ml-2 px-2 py-1 rounded text-xs" style="background:${event.backgroundColor || event.color || '#eee'};color:#fff;">${getEventTypeLabel(props.type)}</span>
+  </div>
+  <div class="mb-2"><b>Date:</b> ${event.allDay ? (new Date(event.start).toLocaleDateString()) : (new Date(event.start).toLocaleString())}</div>
+  ${props.description ? `<div class="mb-2"><b>Description:</b> ${props.description}</div>` : ""}
+  `;
+  // Option to delete personal events
+  if (props.isPersonal) {
+    html += `<button class="px-3 py-1 mt-2 bg-red-600 text-white rounded" onclick="deletePersonalCalendarEvent('${event.id}')">Delete</button>`;
+  }
+  content.innerHTML = html;
+  modal.style.display = "flex";
+}
+function closeCalendarEventDetailsModal() {
+  document.getElementById("calendarEventDetailsModal").style.display = "none";
+}
+window.closeCalendarEventModal = closeCalendarEventModal;
+window.closeCalendarEventDetailsModal = closeCalendarEventDetailsModal;
+
+window.deletePersonalCalendarEvent = function(eventId) {
+  let events = loadPersonalEvents();
+  events = events.filter(e => e.id !== eventId);
+  savePersonalEvents(events);
+  closeCalendarEventDetailsModal();
+  initStudyCalendarTab();
+};
+
+// --- Re-render calendar when switching to the tab ---
+document.querySelector('a[data-tab="study-resources"]').addEventListener("click", function() {
+  setTimeout(initStudyCalendarTab, 250);
+});
+// Also, rerender on page load if study-resources is the active tab
+window.addEventListener("DOMContentLoaded", function() {
+  if (document.getElementById("study-resources")?.classList.contains("active")) {
+    setTimeout(initStudyCalendarTab, 350);
+  }
+});
+
+// When new data loaded (e.g., after fetchAvailableTests), rerender
+function rerenderStudyCalendarIfVisible() {
+  if (document.getElementById("study-resources")?.classList.contains("active")) {
+    setTimeout(initStudyCalendarTab, 100);
+  }
+}
+
+// Call rerenderStudyCalendarIfVisible after fetchAvailableTests
+const origFetchAvailableTests = fetchAvailableTests;
+fetchAvailableTests = async function() {
+  await origFetchAvailableTests.apply(this, arguments);
+  rerenderStudyCalendarIfVisible();
+};
 
 // ============ LOGOUT ===========
 document.getElementById("confirm-logout").onclick = () => {
