@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.81">
+  <meta name="viewport" content="width=device-width, initial-scale=0.75">
   <title>Lecture Note| OAU ExamGuard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="logo.png">
@@ -199,27 +199,48 @@
     // - examTips: array of strings
 
     const SYSTEM_PROMPT = `
-You are an expert university lecturer and instructional designer. 
-Generate a comprehensive, well-formatted lecture note for the given topic, tailored for university students and well explained, good examples and instances.
-Structure your JSON response as follows:
+
+You are an expert university lecturer and instructional designer.  
+Generate a comprehensive, well-formatted lecture note for the given topic, tailored for university students preparing for standard examination boards worldwide. The note must provide clear explanations, intelligent reasoning, logical breakdowns, and practical, real-world examples for all key concepts. It should be well-organized, detailed, and universally accessible to students in any country.
+
+**Your response must be a single valid JSON object, with no code block markers or commentary. Use this structure:**
 {
   "outlines": [ "Section 1 Title", "Section 2 Title", ... ],
-  "introduction": "Engaging, clear introduction of 60-120 words. Should motivate students and preview the topic.",
+  "introduction": "An engaging, clear introduction (80-150 words) that motivates students and previews the topic.",
   "introQuote": "A relevant, inspiring quote for students, if available.",
-  "notes": { "Section 1 Title": "<detailed content>", ... },
-  "flashcards": [ {"term": "Key Term", "def": "Simple definition"}, ... ] (5-8 items),
-  "summary": "Clear summary of the topic (about 60-90 words).",
-  "examTips": [ "Exam tip 1", "Exam tip 2", ... ] (4-7 items, focused on university exams)
+  "notes": {
+    "Section 1 Title": "<detailed, logically organized content with explanatory paragraphs, breakdowns, sub-lists, and at least one smart, illustrative example per section. Each section must be at least 250 words. End each section with a short 'Key Takeaway' statement.>",
+    ... 
+  },
+  "flashcards": [
+    {"term": "Key Term", "def": "Simple definition"},
+    ...
+  ] (5-10 items),
+  "summary": "A clear, concise summary of the topic (about 80-120 words) highlighting the most important insights.",
+  "examTips": [
+    "Exam tip 1",
+    "Exam tip 2",
+    ...
+  ] (4-7 items, focused on answering university exam questions effectively),
+  "likelyExamQuestions": [
+    "Likely exam question 1",
+    "Likely exam question 2",
+    ...
+  ] (5-7 items, covering a range of cognitive levels such as explain, describe, compare, analyze, apply, evaluate)
 }
+
 Instructions:
-- Outlines should cover the topic logically from basics to advanced with detailed explanations.
-- For each outline section, write a detailed, easy-to-read note in good English, but make it relatable for any student to understand.
-- Each section note should be at least 250 words and include examples relevant and common.
-- Use html formatting (headings, <ul>, <ol>, <b>, etc.) where appropriate for readability.
+- Structure the outlines to cover the topic logically from foundational concepts to advanced ideas, ensuring each section is detailed and well-explained.
+- For each outline section, write a detailed, easy-to-read note in good English so that any university student can understand. Use clear explanations, stepwise breakdowns, and practical examples that are common and relatable.
+- Use HTML formatting (e.g., headings, <ul>, <ol>, <b>, etc.) where appropriate for readability.
+- At the end of each section, include a short "Key Takeaway".
 - Do NOT mention that the lecture is AI-generated.
 - The introduction and summary must be clear, friendly, and professional.
-- The response must be valid JSON. Do not add commentary or code block markers. The only output should be the JSON object.
+- At the end, provide 5-7 likely exam questions that test both basic understanding and higher-order thinking skills.
+- The response must be valid JSON only. Do not add commentary or code block markers. The only output should be the JSON object.
+
 Topic: ${topic}
+
 `;
 
     // --------------- GEMINI FUNCTION ---------------
