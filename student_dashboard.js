@@ -1497,7 +1497,80 @@ fetchAvailableTests = async function() {
   await origFetchAvailableTests.apply(this, arguments);
   rerenderStudyCalendarIfVisible();
 };
+// --- Blogger/Marketer Application Modal Logic ---
 
+const BM_APP_KEY = "bm_application_status"; // Use localStorage for demo; use backend in production
+
+window.openBmAppModal = function() {
+  if (localStorage.getItem(BM_APP_KEY) === "submitted") {
+    openBmReviewModal();
+    return;
+  }
+  // Autofill with student data
+  document.getElementById("bmFullName").value = student.fullname || "";
+  document.getElementById("bmDepartment").value = getDepartmentName(student.department);
+  document.getElementById("bmLevel").value = student.level || "";
+  document.getElementById("bmPhone").value = student.phone || "";
+  // Reset form
+  document.getElementById("bmGender").value = "";
+  document.getElementById("bmAge").value = "";
+  document.getElementById("bmExpNum").value = "";
+  document.getElementById("bmExpType").value = "days";
+  document.getElementById("bmRole").value = "";
+  document.getElementById("bmPhoto").value = "";
+  document.getElementById("bmID").value = "";
+  document.getElementById("bmAppModal").style.display = "flex";
+};
+
+window.closeBmAppModal = function() {
+  document.getElementById("bmAppModal").style.display = "none";
+};
+
+window.openBmReviewModal = function() {
+  document.getElementById("bmReviewModal").style.display = "flex";
+};
+
+window.closeBmReviewModal = function() {
+  document.getElementById("bmReviewModal").style.display = "none";
+};
+
+// Prevent double submission
+document.getElementById("bmAppForm").onsubmit = async function(e) {
+  e.preventDefault();
+  if (localStorage.getItem(BM_APP_KEY) === "submitted") {
+    closeBmAppModal();
+    openBmReviewModal();
+    return;
+  }
+  // Collect and validate fields
+  const fullName = document.getElementById("bmFullName").value.trim();
+  const department = document.getElementById("bmDepartment").value.trim();
+  const level = document.getElementById("bmLevel").value.trim();
+  const phone = document.getElementById("bmPhone").value.trim();
+  const gender = document.getElementById("bmGender").value;
+  const age = document.getElementById("bmAge").value;
+  const expNum = document.getElementById("bmExpNum").value;
+  const expType = document.getElementById("bmExpType").value;
+  const role = document.getElementById("bmRole").value;
+  const photo = document.getElementById("bmPhoto").files[0];
+  const idFile = document.getElementById("bmID").files[0];
+
+  if(!fullName || !department || !level || !phone || !gender || !age || !expNum || !role || !photo || !idFile) {
+    alert("Please fill all required fields and upload documents.");
+    return;
+  }
+  // In production: Submit to backend API
+  // For demo, just save status in localStorage
+  localStorage.setItem(BM_APP_KEY, "submitted");
+  closeBmAppModal();
+  openBmReviewModal();
+};
+
+// Optionally: Attach to your "Get Started" button:
+const bmCardBtn = document.querySelector('section:has(.fa-bullhorn) button, section:has(.fa-book) + section button, section:has(.fa-users) button, section:has(.fa-blog) button, section:has(.fa-bullhorn) button, section .fa-bullhorn + button'); // or use a more specific selector
+const bmBtnManual = document.querySelector('button[onclick*="become-contributor"]');
+if (bmCardBtn) bmCardBtn.setAttribute('onclick', 'openBmAppModal()');
+if (bmBtnManual) bmBtnManual.setAttribute('onclick', 'openBmAppModal()');
 // ============ LOGOUT ===========
 document.getElementById("confirm-logout").onclick = () => {
   localStorage.clear();
