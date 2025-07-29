@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAU ExamGuard - Blogger/Marketer Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #4f46e5, #2dd4bf);
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 270px;
+            height: 100vh;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 50;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .sidebar-btn:hover, .sidebar-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        .main-content {
+            transition: margin-left 0.3s;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+            max-width: 100vw;
+            overflow-x: auto;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .action-btn {
+            transition: background-color 0.3s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .action-btn:hover {
+            background: #5b21b6;
+            transform: scale(1.05);
+        }
+        .modal {
+            transition: opacity 0.3s, transform 0.3s;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        .modal.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .modal-content {
+            max-width: 95vw;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .chart-container {
+            max-height: 200px;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .input-field {
+            transition: box-shadow 0.3s;
+            min-width: 0;
+        }
+        .input-field:focus {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+        }
+        table {
+            min-width: 600px;
+            max-width: 100vw;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: sticky;
+                left: 0;
+                width: 250px;
+            }
+            .hamburger {
+                display: none;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+        @media (max-width: 1023px) {
+            .sidebar {
+                padding: 1rem;
+            }
+            .sidebar-btn {
+                font-size: 0.875rem;
+                padding: 0.5rem 1rem;
+            }
+            .card h3 {
+                font-size: 1.125rem;
+            }
+            .action-btn {
+                font-size: 0.875rem;
+                padding: 0.5rem 1rem;
+            }
+            .modal-content {
+                width: 98vw;
+                max-width: 98vw;
+            }
+            .chart-container {
+                max-height: 150px;
+            }
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col lg:flex-row min-h-screen w-full">
+    <!-- Hamburger Menu -->
+    <button id="hamburgerBtn" class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-indigo-600 text-white rounded-full">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar text-white p-6">
+        <div class="flex items-center mb-8">
+            <img src="https://via.placeholder.com/40?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 mr-2">
+            <h1 class="text-lg font-bold">Blogger/Marketer</h1>
+        </div>
+        <nav class="space-y-1">
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base active" data-tab="overview">Overview</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="posts">Manage Posts</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="analytics">Analytics</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="followers">Followers</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="marketplace">Marketplace</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="earnings">Earnings</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="profile">Profile Settings</button>
+            <button class="sidebar-btn w-full text-left px-4 py-2 rounded-lg text-sm lg:text-base" data-tab="logout">Logout</button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content flex-1 p-4 sm:p-6 bg-gray-50 w-full">
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <header class="flex justify-between items-center mb-6 flex-wrap">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Welcome, Sarah!</h2>
+                <div class="flex items-center space-x-4">
+                    <img src="https://via.placeholder.com/40?text=Profile" alt="Profile" class="h-10 w-10 rounded-full">
+                </div>
+            </header>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <h3 class="text-lg font-semibold text-gray-800">Total Posts</h3>
+                    <p class="text-2xl font-bold text-indigo-600">24</p>
+                    <p class="text-sm text-gray-500">+2 this week</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <h3 class="text-lg font-semibold text-gray-800">Followers</h3>
+                    <p class="text-2xl font-bold text-indigo-600">1,234</p>
+                    <p class="text-sm text-gray-500">+45 this week</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <h3 class="text-lg font-semibold text-gray-800">Views</h3>
+                    <p class="text-2xl font-bold text-indigo-600">15.6K</p>
+                    <p class="text-sm text-gray-500">+1.2K this week</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <h3 class="text-lg font-semibold text-gray-800">Revenue</h3>
+                    <p class="text-2xl font-bold text-indigo-600">₦120,500</p>
+                    <p class="text-sm text-gray-500">Marketplace sales</p>
+                </div>
+            </div>
+            <!-- Quick Activity -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold mb-2 text-indigo-700">Recent Activity</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li>✅ Published blog post: <b>How to Ace Your Mock Exams</b></li>
+                        <li>🛒 Sold <b>Mathematics Notes</b> in marketplace</li>
+                        <li>➕ Gained <b>20</b> new followers</li>
+                    </ul>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold mb-2 text-indigo-700">Tips</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li>💡 Consistency is key. Post at least once a week.</li>
+                        <li>🛍️ List quality study materials in marketplace.</li>
+                        <li>📈 Share posts on social media for more reach.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Manage Posts Tab -->
+        <section id="posts" class="tab-content">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2 sm:mb-0">Manage Posts</h3>
+                <button id="createPostBtn" class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm sm:text-base">Create New Post</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md table-container">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-600">
+                            <th class="p-3">Title</th>
+                            <th class="p-3">Date</th>
+                            <th class="p-3">Views</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postTable">
+                        <!-- Posts will be loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Analytics Tab -->
+        <section id="analytics" class="tab-content">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Analytics</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Views Over Time</h4>
+                    <div class="chart-container w-full"><canvas id="viewsChart"></canvas></div>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Top Posts</h4>
+                    <ul class="space-y-2" id="topPostsList">
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Followers Tab -->
+        <section id="followers" class="tab-content">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Followers</h3>
+            <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-full">
+                <input type="text" placeholder="Search followers..." class="input-field w-full mb-4 p-2 rounded-lg border border-gray-300">
+                <div class="flex flex-wrap gap-4" id="followersList">
+                    <!-- Followers loaded here -->
+                </div>
+            </div>
+        </section>
+        <!-- Marketplace Tab -->
+        <section id="marketplace" class="tab-content">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Marketplace Listings</h3>
+            <div class="flex justify-end mb-3">
+                <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm" id="addListingBtn">Add Listing</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md table-container">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-600">
+                            <th class="p-3">Item</th>
+                            <th class="p-3">Price</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listingTable">
+                        <!-- Listings loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Earnings Tab -->
+        <section id="earnings" class="tab-content">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Earnings</h3>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold mb-2">Total Earnings</h4>
+                        <p class="text-3xl font-bold text-indigo-600 mb-1">₦120,500</p>
+                        <p class="text-gray-500">From sales, referrals, and campaigns</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2">Withdrawable Balance</h4>
+                        <p class="text-2xl font-bold text-green-600 mb-1">₦30,000</p>
+                        <button class="action-btn bg-green-600 text-white px-4 py-2 rounded-full mt-2">Request Withdrawal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h4 class="font-semibold mb-4">Recent Transactions</h4>
+                <div class="table-container">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-600">
+                            <th class="p-2">Date</th>
+                            <th class="p-2">Type</th>
+                            <th class="p-2">Amount</th>
+                            <th class="p-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-2">2025-07-29</td>
+                            <td class="p-2">Marketplace Sale</td>
+                            <td class="p-2">₦5,000</td>
+                            <td class="p-2 text-green-600">Completed</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">2025-07-25</td>
+                            <td class="p-2">Referral Bonus</td>
+                            <td class="p-2">₦2,000</td>
+                            <td class="p-2 text-green-600">Completed</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">2025-07-20</td>
+                            <td class="p-2">Withdrawal</td>
+                            <td class="p-2">₦10,000</td>
+                            <td class="p-2 text-yellow-600">Pending</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </section>
+        <!-- Profile Settings Tab -->
+        <section id="profile" class="tab-content">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Profile Settings</h3>
+            <div class="bg-white p-6 rounded-lg shadow-md max-w-xl">
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Full Name</label>
+                        <input type="text" value="Sarah Ajayi" class="input-field w-full p-2 rounded-lg border border-gray-300">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Email</label>
+                        <input type="email" value="sarah.ajayi@example.com" class="input-field w-full p-2 rounded-lg border border-gray-300">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Phone Number</label>
+                        <input type="text" value="08012345678" class="input-field w-full p-2 rounded-lg border border-gray-300">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Bio</label>
+                        <textarea class="input-field w-full p-2 rounded-lg border border-gray-300" rows="2">Passionate about student success and digital marketing.</textarea>
+                    </div>
+                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-2">Save Changes</button>
+                </form>
+            </div>
+        </section>
+        <!-- Logout Tab -->
+        <section id="logout" class="tab-content">
+            <div class="flex flex-col items-center justify-center min-h-[40vh]">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Logout</h3>
+                <p class="text-gray-500 mb-6">Are you sure you want to logout?</p>
+                <button class="action-btn bg-red-600 text-white px-6 py-3 rounded-full text-lg">Confirm Logout</button>
+            </div>
+        </section>
+        <!-- Modal for Creating/Editing Post -->
+        <div id="postModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="modal-content bg-white p-6 rounded-lg w-full max-w-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Create/Edit Post</h3>
+                <div class="space-y-4">
+                    <input id="postTitle" type="text" placeholder="Post Title" class="input-field w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                    <textarea id="postContent" placeholder="Post Content" class="input-field w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 h-32"></textarea>
+                    <select id="postStatus" class="input-field w-full p-3 rounded-lg border border-gray-300">
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                    </select>
+                    <div class="flex justify-end gap-2">
+                        <button id="cancelPostBtn" class="action-btn bg-gray-300 text-gray-800 px-4 py-2 rounded-full text-sm">Cancel</button>
+                        <button id="savePostBtn" class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for Creating/Editing Listing -->
+        <div id="listingModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="modal-content bg-white p-6 rounded-lg w-full max-w-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Add/Edit Listing</h3>
+                <div class="space-y-4">
+                    <input id="listingTitle" type="text" placeholder="Item Name" class="input-field w-full p-3 rounded-lg border border-gray-300">
+                    <input id="listingPrice" type="number" min="0" placeholder="Price (₦)" class="input-field w-full p-3 rounded-lg border border-gray-300">
+                    <select id="listingStatus" class="input-field w-full p-3 rounded-lg border border-gray-300">
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                    <div class="flex justify-end gap-2">
+                        <button id="cancelListingBtn" class="action-btn bg-gray-300 text-gray-800 px-4 py-2 rounded-full text-sm">Cancel</button>
+                        <button id="saveListingBtn" class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.sidebar-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const tab = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(tabEl => {
+                    tabEl.classList.remove('active');
+                    if(tabEl.id === tab) tabEl.classList.add('active');
+                });
+                // Close sidebar on mobile
+                if (window.innerWidth < 1024) {
+                    document.querySelector('.sidebar').classList.remove('open');
+                }
+            });
+        });
+
+        // Hamburger menu
+        document.getElementById('hamburgerBtn').addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.toggle('open');
+        });
+
+        // Sample Data
+        const postData = [
+            { title: "Top 10 Study Hacks", date: "2025-07-10", views: 2500, status: "Published" },
+            { title: "Coding Tips for Beginners", date: "2025-06-28", views: 1800, status: "Draft" }
+        ];
+        const listingData = [
+            { item: "Calculus I Notes", price: 599, status: "Active" },
+            { item: "USB-C Cable", price: 699, status: "Pending" }
+        ];
+        const followersData = [
+            { name: "Jane Doe", avatar: "https://via.placeholder.com/40?text=JD" },
+            { name: "Mike Smith", avatar: "https://via.placeholder.com/40?text=MS" },
+            { name: "Aisha Bello", avatar: "https://via.placeholder.com/40?text=AB" },
+            { name: "John Paul", avatar: "https://via.placeholder.com/40?text=JP" }
+        ];
+
+        // Load Posts
+        function loadPosts() {
+            const postTable = document.getElementById('postTable');
+            postTable.innerHTML = '';
+            postData.forEach((post, idx) => {
+                postTable.innerHTML += `
+                <tr class="border-t">
+                    <td class="p-3">${post.title}</td>
+                    <td class="p-3">${post.date}</td>
+                    <td class="p-3">${post.views}</td>
+                    <td class="p-3"><span class="text-${post.status === 'Published' ? 'green' : 'yellow'}-600">${post.status}</span></td>
+                    <td class="p-3">
+                        <button class="edit-post action-btn bg-indigo-600 text-white px-3 py-1 rounded text-sm mr-2" data-idx="${idx}">Edit</button>
+                        <button class="delete-post action-btn bg-red-600 text-white px-3 py-1 rounded text-sm" data-idx="${idx}">Delete</button>
+                    </td>
+                </tr>
+                `;
+            });
+        }
+        loadPosts();
+
+        // Post Modal
+        const postModal = document.getElementById('postModal');
+        document.getElementById('createPostBtn').addEventListener('click', () => {
+            postModal.classList.remove('hidden');
+            postModal.classList.add('show');
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postStatus').value = 'draft';
+            postModal.setAttribute('data-edit-idx', '');
+        });
+        document.getElementById('cancelPostBtn').addEventListener('click', () => {
+            postModal.classList.remove('show');
+            setTimeout(() => postModal.classList.add('hidden'), 300);
+        });
+        document.getElementById('savePostBtn').addEventListener('click', () => {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const status = document.getElementById('postStatus').value === 'published' ? 'Published' : 'Draft';
+            const idx = postModal.getAttribute('data-edit-idx');
+            if (title && content) {
+                if (idx) {
+                    postData[idx] = {...postData[idx], title, status };
+                } else {
+                    postData.push({ title, date: new Date().toISOString().slice(0,10), views: 0, status });
+                }
+                loadPosts();
+                attachPostActions();
+                postModal.classList.remove('show');
+                setTimeout(() => postModal.classList.add('hidden'), 300);
+            }
+        });
+        function attachPostActions() {
+            document.querySelectorAll('.edit-post').forEach(btn => {
+                btn.onclick = function () {
+                    const idx = this.getAttribute('data-idx');
+                    const post = postData[idx];
+                    document.getElementById('postTitle').value = post.title;
+                    document.getElementById('postContent').value = 'Sample content for ' + post.title;
+                    document.getElementById('postStatus').value = post.status.toLowerCase();
+                    postModal.classList.remove('hidden');
+                    postModal.classList.add('show');
+                    postModal.setAttribute('data-edit-idx', idx);
+                };
+            });
+            document.querySelectorAll('.delete-post').forEach(btn => {
+                btn.onclick = function () {
+                    const idx = this.getAttribute('data-idx');
+                    if (confirm('Are you sure you want to delete this post?')) {
+                        postData.splice(idx, 1);
+                        loadPosts();
+                        attachPostActions();
+                    }
+                };
+            });
+        }
+        attachPostActions();
+
+        // Analytics Tab
+        const chart = new Chart(document.getElementById('viewsChart'), {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Views',
+                    data: [500, 600, 800, 700, 900, 1200, 1100],
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+        // Top Posts
+        const topPostsList = document.getElementById('topPostsList');
+        topPostsList.innerHTML = '';
+        postData.slice(0,3).forEach(post => {
+            topPostsList.innerHTML += `<li class="text-gray-600">${post.title} - ${post.views} Views</li>`;
+        });
+
+        // Followers Tab
+        const followersList = document.getElementById('followersList');
+        followersData.forEach(f => {
+            followersList.innerHTML += `
+            <div class="flex flex-col items-center min-w-[80px] max-w-[110px] w-full">
+                <img src="${f.avatar}" alt="${f.name}" class="h-12 w-12 rounded-full mb-1">
+                <span class="text-sm text-gray-700 truncate w-full text-center">${f.name}</span>
+                <button class="action-btn bg-red-600 text-white px-2 py-1 rounded-full mt-1 text-xs">Remove</button>
+            </div>
+            `;
+        });
+
+        // Marketplace Tab
+        function loadListings() {
+            const listingTable = document.getElementById('listingTable');
+            listingTable.innerHTML = '';
+            listingData.forEach((item, idx) => {
+                listingTable.innerHTML += `
+                <tr class="border-t">
+                    <td class="p-3">${item.item}</td>
+                    <td class="p-3">₦${item.price.toLocaleString()}</td>
+                    <td class="p-3"><span class="text-${item.status === 'Active' ? 'green' : 'yellow'}-600">${item.status}</span></td>
+                    <td class="p-3">
+                        <button class="edit-listing action-btn bg-indigo-600 text-white px-3 py-1 rounded text-sm mr-2" data-idx="${idx}">Edit</button>
+                        <button class="delete-listing action-btn bg-red-600 text-white px-3 py-1 rounded text-sm" data-idx="${idx}">Delete</button>
+                    </td>
+                </tr>
+                `;
+            });
+        }
+        loadListings();
+
+        // Listing Modal
+        const listingModal = document.getElementById('listingModal');
+        document.getElementById('addListingBtn').addEventListener('click', () => {
+            listingModal.classList.remove('hidden');
+            listingModal.classList.add('show');
+            document.getElementById('listingTitle').value = '';
+            document.getElementById('listingPrice').value = '';
+            document.getElementById('listingStatus').value = 'active';
+            listingModal.setAttribute('data-edit-idx', '');
+        });
+        document.getElementById('cancelListingBtn').addEventListener('click', () => {
+            listingModal.classList.remove('show');
+            setTimeout(() => listingModal.classList.add('hidden'), 300);
+        });
+        document.getElementById('saveListingBtn').addEventListener('click', () => {
+            const title = document.getElementById('listingTitle').value;
+            const price = +document.getElementById('listingPrice').value;
+            const status = document.getElementById('listingStatus').value === 'active' ? 'Active' : 'Pending';
+            const idx = listingModal.getAttribute('data-edit-idx');
+            if (title && price) {
+                if (idx) {
+                    listingData[idx] = { ...listingData[idx], item: title, price, status };
+                } else {
+                    listingData.push({ item: title, price, status });
+                }
+                loadListings();
+                attachListingActions();
+                listingModal.classList.remove('show');
+                setTimeout(() => listingModal.classList.add('hidden'), 300);
+            }
+        });
+        function attachListingActions() {
+            document.querySelectorAll('.edit-listing').forEach(btn => {
+                btn.onclick = function () {
+                    const idx = this.getAttribute('data-idx');
+                    const l = listingData[idx];
+                    document.getElementById('listingTitle').value = l.item;
+                    document.getElementById('listingPrice').value = l.price;
+                    document.getElementById('listingStatus').value = l.status.toLowerCase();
+                    listingModal.classList.remove('hidden');
+                    listingModal.classList.add('show');
+                    listingModal.setAttribute('data-edit-idx', idx);
+                };
+            });
+            document.querySelectorAll('.delete-listing').forEach(btn => {
+                btn.onclick = function () {
+                    const idx = this.getAttribute('data-idx');
+                    if (confirm('Are you sure you want to delete this listing?')) {
+                        listingData.splice(idx, 1);
+                        loadListings();
+                        attachListingActions();
+                    }
+                };
+            });
+        }
+        attachListingActions();
+
+        // Logout
+        document.querySelector('#logout button')?.addEventListener('click', () => {
+            alert('You have been logged out!');
+            location.reload();
+        });
+
+    </script>
+</body>
+</html>
