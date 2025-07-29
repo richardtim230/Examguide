@@ -10,6 +10,40 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <link rel="icon" href="logo.png">
     <style>
+        
+#studyCalendar .fc {
+  font-size: 1rem;
+}
+#studyCalendar .fc-toolbar-title {
+  font-size: 1.2rem;
+}
+#studyCalendar .fc-button {
+  padding: 0.3em 0.7em;
+  font-size: 0.98em;
+  border-radius: 6px;
+  background: #6366f1; /* Indigo */
+  color: #fff;
+  border: none;
+}
+#studyCalendar .fc-button.fc-button-primary:not(:disabled):hover {
+  background: #4338ca;
+}
+#studyCalendar .fc-button.fc-button-primary:disabled {
+  background: #ddd;
+  color: #888;
+}
+#studyCalendar .fc-toolbar {
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+@media (max-width: 600px) {
+  #studyCalendar {
+    font-size: 0.93rem;
+  }
+  #studyCalendar .fc-toolbar-title {
+    font-size: 1rem;
+  }
+}
         #quoteBox .zoom-in {
   animation: quoteZoomIn 0.5s;
 }
@@ -556,13 +590,13 @@
                     </div>
                 </section>
                 
-<section class="bg-white height-auto rounded-2xl shadow-xl p-6 card relative">
+<section class="bg-white rounded-2xl shadow-xl p-6 card relative">
   <h3 class="text-xl font-semibold text-indigo-900 mb-4 flex items-center justify-between">
     Study Calendar
     <button id="addPersonalEventBtn" class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">+ Add Study Session</button>
   </h3>
   <p class="text-gray-600 text-sm mb-2">Your upcoming exams, mock tests, and personal study sessions.</p>
-  <div id="studyCalendar" class="h-96 bg-indigo-50 rounded-lg"></div>
+  <div id="studyCalendar" class="h-[30rem] md:h-96 bg-indigo-50 rounded-lg"></div>
 </section>
 <!-- Add Event Modal -->
 <div id="calendarEventModal" class="modal-backdrop" style="display:none;">
