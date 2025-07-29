@@ -1384,8 +1384,6 @@ function initStudyCalendarTab() {
     }
     calendarObj = new FullCalendar.Calendar(calEl, {
   initialView: 'dayGridMonth',
-  height: "100%", // or a fixed px value for mobile if needed
-  aspectRatio: 0.9, // Makes it less "wide"
   headerToolbar: {
     left: 'prev,next today',
     center: 'title',
