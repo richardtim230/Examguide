@@ -1383,13 +1383,15 @@ function initStudyCalendarTab() {
       calendarObj = null;
     }
     calendarObj = new FullCalendar.Calendar(calEl, {
-      initialView: 'dayGridMonth',
-      height: "100%",
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek'
-      },
+  initialView: 'dayGridMonth',
+  height: "100%", // or a fixed px value for mobile if needed
+  aspectRatio: 0.9, // Makes it less "wide"
+  headerToolbar: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek'
+  },
+    
       events: buildCalendarEvents(),
       eventClick: function(info) {
         showCalendarEventDetails(info.event);
