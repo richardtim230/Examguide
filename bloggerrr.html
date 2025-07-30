@@ -601,6 +601,7 @@
                         <option value="published">Published</option>
                     </select>
                     <div class="flex justify-end gap-2">
+                        <input type="file" id="postImage" accept="image/*" />
                         <button id="cancelPostBtn" class="action-btn bg-gray-300 text-gray-800 px-4 py-2 rounded-full text-sm">Cancel</button>
                         <button id="savePostBtn" class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Save</button>
                     </div>
@@ -632,6 +633,13 @@
     <div style="margin-top:14px;color:#4f46e5;font-weight:600;font-size:1.1em;">Loading...</div>
   </div>
 </div>
+    <div id="postViewModal" class="modal-backdrop hidden">
+  <div class="modal">
+    <button id="closePostViewModalBtn">&times;</button>
+    <h2 id="postViewModalTitle"></h2>
+    <div id="postViewModalContent"></div>
+  </div>
+    </div>
 <style>
 @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
