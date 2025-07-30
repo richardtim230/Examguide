@@ -1,5 +1,4 @@
-
-        // --- Sidebar NAV & TABS ---
+// --- Sidebar NAV & TABS ---
 const sidebar = document.getElementById('sidebar');
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -35,6 +34,10 @@ document.querySelectorAll('.sidebar-btn').forEach(btn => {
             sidebar.classList.remove('open');
             sidebarOverlay.style.display = "none";
             document.body.classList.remove('overflow-hidden');
+        }
+        // --- Analytics tab: render charts and lists only when shown
+        if(tab === "analytics") {
+            setTimeout(renderAnalyticsTab, 100);
         }
     });
 });
@@ -174,9 +177,17 @@ function attachPostActions() {
 }
 
 // --- ANALYTICS TAB ---
-if (window.Chart) {
-    // Views Over Time
-    new Chart(document.getElementById('viewsChart'), {
+function renderAnalyticsTab() {
+    // Destroy old charts if they exist to avoid Chart.js errors
+    if (window.viewsChart) {
+        window.viewsChart.destroy();
+    }
+    if (window.engagementChart) {
+        window.engagementChart.destroy();
+    }
+    // VIEWS OVER TIME CHART
+    const viewsChartCtx = document.getElementById('viewsChart').getContext('2d');
+    window.viewsChart = new Chart(viewsChartCtx, {
         type: 'line',
         data: {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -184,23 +195,36 @@ if (window.Chart) {
                 label: 'Views',
                 data: [500, 600, 800, 700, 900, 1200, 1100],
                 borderColor: '#4f46e5',
-                backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                backgroundColor: 'rgba(79, 70, 229, 0.10)',
+                pointBackgroundColor: '#6366f1',
                 fill: true,
                 tension: 0.4
             }]
         },
         options: {
             responsive: true,
-            scales: { y: { beginAtZero: true } }
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { beginAtZero: true }
+            }
         }
     });
-    // Top Posts
-    document.getElementById('topPosts').innerHTML = posts
-        .sort((a,b) => b.views - a.views)
-        .slice(0,3)
-        .map(p => `<li>${p.title} - ${p.views} Views</li>`).join('');
-    // Engagement by Source
-    new Chart(document.getElementById('engagementChart'), {
+
+    // TOP POSTS LIST
+    // Use posts array, sorted by views
+    const topPostsUl = document.getElementById('topPosts');
+    const topPostsSorted = [...posts].sort((a, b) => b.views - a.views).slice(0, 5);
+    topPostsUl.innerHTML = topPostsSorted.map(post =>
+        `<li class="flex items-center justify-between">
+            <span>${post.title}</span>
+            <span class="ml-4 font-bold text-indigo-700">${post.views.toLocaleString()} Views</span>
+        </li>`
+    ).join('');
+
+    // ENGAGEMENT CHART
+    const engagementChartCtx = document.getElementById('engagementChart').getContext('2d');
+    window.engagementChart = new Chart(engagementChartCtx, {
         type: 'doughnut',
         data: {
             labels: ['Blog', 'Marketplace', 'Campaigns', 'Referrals'],
@@ -208,12 +232,18 @@ if (window.Chart) {
                 label: 'Engagement',
                 data: [40, 22, 18, 20],
                 backgroundColor: [
-                    '#4f46e5', '#14b8a6', '#f59e42', '#f43f5e'
+                    '#4f46e5',
+                    '#14b8a6',
+                    '#f59e42',
+                    '#f43f5e'
                 ]
             }]
         },
         options: {
             responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
         }
     });
 }
@@ -317,76 +347,7 @@ function attachListingActions() {
         };
     });
 }
-// --- SAMPLE JAVASCRIPT FOR ANALYTICS TAB ---
 
-// 1. VIEWS OVER TIME CHART
-const viewsChartCtx = document.getElementById('viewsChart').getContext('2d');
-const viewsChart = new Chart(viewsChartCtx, {
-    type: 'line',
-    data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-            label: 'Views',
-            data: [500, 600, 800, 700, 900, 1200, 1100],
-            borderColor: '#4f46e5',
-            backgroundColor: 'rgba(79, 70, 229, 0.10)',
-            pointBackgroundColor: '#6366f1',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: false }
-        },
-        scales: {
-            x: { grid: { display: false } },
-            y: { beginAtZero: true }
-        }
-    }
-});
-
-// 2. TOP POSTS LIST (dynamic sample)
-const topPostsSample = [
-    { title: "Top 10 Study Hacks", views: 2500 },
-    { title: "Coding Tips for Beginners", views: 1800 },
-    { title: "Mastering Time Management", views: 1200 },
-    { title: "How to Focus for Long Hours", views: 900 },
-    { title: "Exam Day Checklist", views: 750 }
-];
-const topPostsUl = document.getElementById('topPosts');
-topPostsUl.innerHTML = topPostsSample.map(post =>
-    `<li class="flex items-center justify-between">
-        <span>${post.title}</span>
-        <span class="ml-4 font-bold text-indigo-700">${post.views.toLocaleString()} Views</span>
-    </li>`
-).join('');
-
-// 3. ENGAGEMENT BY SOURCE CHART
-const engagementChartCtx = document.getElementById('engagementChart').getContext('2d');
-const engagementChart = new Chart(engagementChartCtx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Blog', 'Marketplace', 'Campaigns', 'Referrals'],
-        datasets: [{
-            label: 'Engagement',
-            data: [40, 22, 18, 20],
-            backgroundColor: [
-                '#4f46e5',
-                '#14b8a6',
-                '#f59e42',
-                '#f43f5e'
-            ]
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { position: 'bottom' }
-        }
-    }
-});
 // --- COMMISSIONS TAB LOGIC ---
 function updateCommissionSummary() {
     let totalEarnings = commissions.filter(c => c.type === "Earning").reduce((a,c) => a + c.amount, 0);
@@ -461,4 +422,9 @@ function showToast(msg) {
     toast.textContent = msg;
     toast.classList.remove('hidden');
     setTimeout(() => toast.classList.add('hidden'), 2000);
+}
+
+// --- Initialize Analytics tab if user lands there on load (optional) ---
+if (document.getElementById('analytics').classList.contains('active')) {
+    setTimeout(renderAnalyticsTab, 100);
 }
