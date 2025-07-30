@@ -311,27 +311,43 @@
             </div>
         </section>
         <!-- ANALYTICS TAB -->
-        <section id="analytics" class="tab-content">
-            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Analytics</h3>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                <div class="card bg-white p-6 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Views Over Time</h4>
-                    <canvas id="viewsChart" class="chart-container"></canvas>
-                </div>
-                <div class="card bg-white p-6 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Top Posts</h4>
-                    <ul id="topPosts" class="space-y-2 text-sm sm:text-base text-gray-600">
-                        <li>Top 10 Study Hacks - 2,500 Views</li>
-                        <li>Coding Tips for Beginners - 1,800 Views</li>
-                        <li>Mastering Time Management - 1,200 Views</li>
-                    </ul>
-                </div>
+<section id="analytics" class="tab-content">
+    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Analytics</h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <!-- Views Over Time Chart -->
+        <div class="card bg-white p-6 rounded-lg shadow-md flex flex-col h-full">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">Views Over Time</h4>
+            <div class="w-full h-64 flex items-center justify-center">
+                <canvas id="viewsChart" class="chart-container w-full h-full"></canvas>
             </div>
-            <div class="card bg-white p-6 rounded-lg shadow-md mt-6">
-                <h4 class="text-lg font-semibold text-gray-800 mb-4">Engagement by Source</h4>
-                <canvas id="engagementChart"></canvas>
-            </div>
-        </section>
+        </div>
+        <!-- Top Posts List -->
+        <div class="card bg-white p-6 rounded-lg shadow-md flex flex-col h-full">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">Top Posts</h4>
+            <ul id="topPosts" class="space-y-2 text-sm sm:text-base text-gray-600 overflow-y-auto max-h-64 pr-2">
+                <li class="flex items-center justify-between">
+                    <span>Top 10 Study Hacks</span>
+                    <span class="ml-4 font-bold text-indigo-700">2,500 Views</span>
+                </li>
+                <li class="flex items-center justify-between">
+                    <span>Coding Tips for Beginners</span>
+                    <span class="ml-4 font-bold text-indigo-700">1,800 Views</span>
+                </li>
+                <li class="flex items-center justify-between">
+                    <span>Mastering Time Management</span>
+                    <span class="ml-4 font-bold text-indigo-700">1,200 Views</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Engagement By Source Doughnut Chart -->
+    <div class="card bg-white p-6 rounded-lg shadow-md mt-6 flex flex-col">
+        <h4 class="text-lg font-semibold text-gray-800 mb-4">Engagement by Source</h4>
+        <div class="w-full h-64 flex items-center justify-center">
+            <canvas id="engagementChart" class="w-full h-full"></canvas>
+        </div>
+    </div>
+</section>
         <!-- FOLLOWERS TAB -->
         <section id="followers" class="tab-content">
             <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Followers</h3>
@@ -932,7 +948,76 @@ function attachListingActions() {
         };
     });
 }
+// --- SAMPLE JAVASCRIPT FOR ANALYTICS TAB ---
 
+// 1. VIEWS OVER TIME CHART
+const viewsChartCtx = document.getElementById('viewsChart').getContext('2d');
+const viewsChart = new Chart(viewsChartCtx, {
+    type: 'line',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Views',
+            data: [500, 600, 800, 700, 900, 1200, 1100],
+            borderColor: '#4f46e5',
+            backgroundColor: 'rgba(79, 70, 229, 0.10)',
+            pointBackgroundColor: '#6366f1',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// 2. TOP POSTS LIST (dynamic sample)
+const topPostsSample = [
+    { title: "Top 10 Study Hacks", views: 2500 },
+    { title: "Coding Tips for Beginners", views: 1800 },
+    { title: "Mastering Time Management", views: 1200 },
+    { title: "How to Focus for Long Hours", views: 900 },
+    { title: "Exam Day Checklist", views: 750 }
+];
+const topPostsUl = document.getElementById('topPosts');
+topPostsUl.innerHTML = topPostsSample.map(post =>
+    `<li class="flex items-center justify-between">
+        <span>${post.title}</span>
+        <span class="ml-4 font-bold text-indigo-700">${post.views.toLocaleString()} Views</span>
+    </li>`
+).join('');
+
+// 3. ENGAGEMENT BY SOURCE CHART
+const engagementChartCtx = document.getElementById('engagementChart').getContext('2d');
+const engagementChart = new Chart(engagementChartCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Blog', 'Marketplace', 'Campaigns', 'Referrals'],
+        datasets: [{
+            label: 'Engagement',
+            data: [40, 22, 18, 20],
+            backgroundColor: [
+                '#4f46e5',
+                '#14b8a6',
+                '#f59e42',
+                '#f43f5e'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        }
+    }
+});
 // --- COMMISSIONS TAB LOGIC ---
 function updateCommissionSummary() {
     let totalEarnings = commissions.filter(c => c.type === "Earning").reduce((a,c) => a + c.amount, 0);
