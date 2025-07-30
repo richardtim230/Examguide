@@ -37,11 +37,11 @@ document.querySelectorAll('.sidebar-btn').forEach(btn => {
         }
         // --- Analytics tab: render charts and lists only when shown
         if(tab === "analytics") {
-            setTimeout(renderAnalyticsTab, 100);
+            // Wait until after tab is visible
+            setTimeout(renderAnalyticsTab, 0);
         }
     });
 });
-
 // --- Sample Data ---
 const posts = [
     { title: "Top 10 Study Hacks", date: "Oct 10, 2025", views: 2500, likes: 120, status: "Published" },
