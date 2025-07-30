@@ -21,16 +21,44 @@ document.addEventListener('click', function(e) {
         document.body.classList.remove('overflow-hidden');
     }
 });
-function showDashboardSpinner() {
-    document.getElementById('dashboardSpinner').style.display = 'flex';
-}
-function hideDashboardSpinner() {
-    document.getElementById('dashboardSpinner').style.display = 'none';
-                              }
+
 // --- GLOBALS ---
 let dashboard = null;
 let user = null;
 let quill;
+
+// --- SPINNER ---
+function showDashboardSpinner() {
+    let spinner = document.getElementById('dashboardSpinner');
+    if (!spinner) {
+        spinner = document.createElement('div');
+        spinner.id = 'dashboardSpinner';
+        spinner.style.display = 'flex';
+        spinner.style.position = 'fixed';
+        spinner.style.zIndex = '9999';
+        spinner.style.top = '0';
+        spinner.style.left = '0';
+        spinner.style.width = '100vw';
+        spinner.style.height = '100vh';
+        spinner.style.background = 'rgba(255,255,255,0.85)';
+        spinner.style.alignItems = 'center';
+        spinner.style.justifyContent = 'center';
+        spinner.innerHTML = `
+        <div style="text-align:center;">
+            <div class="spinner" style="display:inline-block;width:60px;height:60px;border:6px solid #e5e7eb;border-top:6px solid #6366f1;border-radius:50%;animation:spin 1s linear infinite;"></div>
+            <div style="margin-top:14px;color:#4f46e5;font-weight:600;font-size:1.1em;">Loading...</div>
+        </div>
+        <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+        `;
+        document.body.appendChild(spinner);
+    } else {
+        spinner.style.display = 'flex';
+    }
+}
+function hideDashboardSpinner() {
+    const spinner = document.getElementById('dashboardSpinner');
+    if (spinner) spinner.style.display = 'none';
+}
 
 // --- AUTH & DATA LOAD ---
 const API_URL = "https://examguide.onrender.com/api/";
@@ -87,7 +115,7 @@ async function saveDashboardField(field, value) {
     });
 }
 
-async function saveDashboardSubdoc(type, doc, mode, id) {
+async function saveDashboardSubdoc(type, doc, mode, id, fileInput) {
     let url = API_URL + `blogger-dashboard/${type}`;
     let method = "POST";
     if (mode === "update" && id) {
@@ -97,16 +125,24 @@ async function saveDashboardSubdoc(type, doc, mode, id) {
         url += `/${id}`;
         method = "DELETE";
     }
-    let options = {
-        method,
-        headers: {
-            "Authorization": "Bearer " + getToken(),
-            "Content-Type": "application/json"
-        }
-    };
-    if (method !== "DELETE") {
-        options.body = JSON.stringify(doc);
+
+    let headers = { "Authorization": "Bearer " + getToken() };
+    let body;
+
+    // For posts, check if fileInput and file present
+    if (type === "posts" && fileInput && fileInput.files && fileInput.files.length > 0) {
+        body = new FormData();
+        Object.keys(doc).forEach(key => body.append(key, doc[key]));
+        body.append('image', fileInput.files[0]);
+        // Don't set Content-Type for FormData
+    } else if (method !== "DELETE") {
+        headers["Content-Type"] = "application/json";
+        body = JSON.stringify(doc);
     }
+
+    let options = { method, headers };
+    if (method !== "DELETE") options.body = body;
+
     const res = await fetch(url, options);
     if (!res.ok) throw new Error("Failed to save " + type);
     return await res.json();
@@ -145,8 +181,9 @@ function renderPostsTable() {
             <td class="p-3">${post.views}</td>
             <td class="p-3">${post.likes}</td>
             <td class="p-3"><span class="text-${post.status === 'Published' ? 'green' : 'yellow'}-600">${post.status}</span></td>
-            <td class="p-3">
-                <button class="edit-post action-btn bg-indigo-600 text-white px-3 py-1 rounded text-sm mr-2" data-idx="${idx}" data-id="${post._id}">Edit</button>
+            <td class="p-3 flex flex-wrap gap-2">
+                <button class="view-post action-btn bg-blue-600 text-white px-3 py-1 rounded text-sm mr-1" data-idx="${idx}" data-id="${post._id}">View</button>
+                <button class="edit-post action-btn bg-indigo-600 text-white px-3 py-1 rounded text-sm mr-1" data-idx="${idx}" data-id="${post._id}">Edit</button>
                 <button class="delete-post action-btn bg-red-600 text-white px-3 py-1 rounded text-sm" data-idx="${idx}" data-id="${post._id}">Delete</button>
             </td>
         </tr>
@@ -155,7 +192,9 @@ function renderPostsTable() {
     attachPostActions();
 }
 
+// --- POSTS MODAL LOGIC ---
 const postModal = document.getElementById('postModal');
+const postImageInput = document.getElementById('postImage'); // <input type="file" id="postImage" accept="image/*" />
 function openPostModal(editIdx = null) {
     postModal.classList.add('flex');
     postModal.classList.remove('hidden');
@@ -168,12 +207,14 @@ function openPostModal(editIdx = null) {
         document.getElementById('postStatus').value = p.status ? p.status.toLowerCase() : "draft";
         postModal.dataset.editIdx = editIdx;
         postModal.dataset.postId = p._id;
+        if (postImageInput) postImageInput.value = "";
     } else {
         document.getElementById('postTitle').value = '';
         quill && quill.setText('');
         document.getElementById('postStatus').value = 'draft';
         delete postModal.dataset.editIdx;
         delete postModal.dataset.postId;
+        if (postImageInput) postImageInput.value = "";
     }
 }
 function closePostModal() {
@@ -186,6 +227,7 @@ document.getElementById('savePostBtn').onclick = async function() {
     const title = document.getElementById('postTitle').value.trim();
     const content = quill.root.innerHTML;
     const status = document.getElementById('postStatus').value;
+    const imageInput = postImageInput;
     if (!title || !content || quill.getLength() < 2) {
         showToast("Please enter both title and content.");
         return;
@@ -193,23 +235,29 @@ document.getElementById('savePostBtn').onclick = async function() {
     const idx = postModal.dataset.editIdx;
     const postId = postModal.dataset.postId;
     try {
+        showDashboardSpinner();
         if (idx !== undefined) {
             // Update post
-            await saveDashboardSubdoc('posts', { title, content, status: status.charAt(0).toUpperCase() + status.slice(1) }, "update", postId);
+            await saveDashboardSubdoc('posts', { title, content, status: status.charAt(0).toUpperCase() + status.slice(1) }, "update", postId, imageInput);
         } else {
             // Create post
             await saveDashboardSubdoc('posts', {
                 title,
                 content,
                 status: status.charAt(0).toUpperCase() + status.slice(1)
-            }, "create");
+            }, "create", null, imageInput);
         }
         await reloadDashboard();
         closePostModal();
     } catch (e) {
         showToast("Failed to save post.");
+    } finally {
+        hideDashboardSpinner();
     }
 };
+
+// --- POST VIEW MODAL ---
+const postViewModal = document.getElementById('postViewModal'); // <div id="postViewModal" ...>
 function attachPostActions() {
     document.querySelectorAll('.edit-post').forEach(btn => {
         btn.onclick = () => openPostModal(btn.dataset.idx);
@@ -218,15 +266,34 @@ function attachPostActions() {
         btn.onclick = async () => {
             if (confirm('Are you sure you want to delete this post?')) {
                 try {
+                    showDashboardSpinner();
                     await saveDashboardSubdoc('posts', {}, "delete", btn.dataset.id);
                     await reloadDashboard();
                 } catch {
                     showToast("Failed to delete post.");
+                } finally {
+                    hideDashboardSpinner();
                 }
             }
         };
     });
+    document.querySelectorAll('.view-post').forEach(btn => {
+        btn.onclick = () => openPostViewModal(btn.dataset.idx);
+    });
 }
+
+function openPostViewModal(idx) {
+    const p = dashboard.posts[idx];
+    if (!postViewModal) return;
+    document.getElementById('postViewModalTitle').textContent = p.title;
+    document.getElementById('postViewModalContent').innerHTML = p.content + (p.imageUrl ? `<div><img src="${p.imageUrl}" alt="Post image" style="max-width:100%;margin-top:1em;"></div>` : '');
+    postViewModal.classList.add('flex');
+    postViewModal.classList.remove('hidden');
+}
+document.getElementById('closePostViewModalBtn').onclick = function() {
+    postViewModal.classList.remove('flex');
+    postViewModal.classList.add('hidden');
+};
 function initQuillEditor() {
     if (!quill) {
         quill = new Quill('#quillEditor', {
@@ -407,6 +474,7 @@ document.getElementById('saveListingBtn').onclick = async function() {
     const idx = listingModal.dataset.editIdx;
     const listingId = listingModal.dataset.listingId;
     try {
+        showDashboardSpinner();
         if (idx !== undefined) {
             await saveDashboardSubdoc('listings', { item, price, stock, status }, "update", listingId);
         } else {
@@ -416,6 +484,8 @@ document.getElementById('saveListingBtn').onclick = async function() {
         closeListingModal();
     } catch {
         showToast("Failed to save listing.");
+    } finally {
+        hideDashboardSpinner();
     }
 };
 function attachListingActions() {
@@ -426,10 +496,13 @@ function attachListingActions() {
         btn.onclick = async () => {
             if (confirm('Are you sure you want to delete this listing?')) {
                 try {
+                    showDashboardSpinner();
                     await saveDashboardSubdoc('listings', {}, "delete", btn.dataset.id);
                     await reloadDashboard();
                 } catch {
                     showToast("Failed to delete listing.");
+                } finally {
+                    hideDashboardSpinner();
                 }
             }
         };
@@ -480,6 +553,7 @@ document.getElementById('sendMsgForm').onsubmit = async function(e) {
     const msg = document.getElementById('msgInput').value.trim();
     if (!name || !msg) return;
     try {
+        showDashboardSpinner();
         await saveDashboardSubdoc('messages', {
             from: user.fullname || user.username,
             msg,
@@ -492,13 +566,14 @@ document.getElementById('sendMsgForm').onsubmit = async function(e) {
         document.getElementById('msgInput').value = '';
     } catch {
         showToast("Failed to send message.");
+    } finally {
+        hideDashboardSpinner();
     }
 }
 
 // --- PROFILE TAB ---
 document.getElementById('profileForm').onsubmit = async function(e) {
     e.preventDefault();
-    // Only local effect for now; you may POST to /api/auth/me for real update later
     document.getElementById('profileSaveResult').textContent = "Profile updated!";
     document.getElementById('profileSaveResult').classList.remove('hidden');
     setTimeout(() => document.getElementById('profileSaveResult').classList.add('hidden'), 2000);
@@ -531,12 +606,14 @@ function showToast(msg) {
 
 // --- RELOAD DASHBOARD (helper) ---
 async function reloadDashboard() {
+    showDashboardSpinner();
     await fetchDashboard();
     renderPostsTable();
     renderListings();
     renderFollowers();
     updateCommissionSummary();
     renderMessages();
+    hideDashboardSpinner();
 }
 
 // --- INITIALIZATION ---
@@ -550,7 +627,6 @@ async function mainDashboardInit() {
         renderFollowers();
         updateCommissionSummary();
         renderMessages();
-        // If analytics tab is active on load
         if (document.getElementById('analytics').classList.contains('active')) {
             setTimeout(renderAnalyticsTab, 100);
         }
@@ -561,5 +637,4 @@ async function mainDashboardInit() {
         hideDashboardSpinner();
     }
 }
-    
 mainDashboardInit();
