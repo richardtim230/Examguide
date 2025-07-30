@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAU ExamGuard Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 font-sans transition-colors duration-300">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div id="sidebar" class="bg-gradient-to-b from-gray-800 to-gray-700 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20 shadow-lg">
+            <div class="flex items-center space-x-2 px-4">
+                <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">OAU ExamGuard</h2>
+            </div>
+            <nav>
+                <a href="#requests" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">User Requests</a>
+                <a href="#approved" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">Approved Users</a>
+                <a href="#posts" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">User Posts</a>
+                <a href="#listings" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">Listings</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
+                <button id="menu-toggle" class="md:hidden text-gray-600 dark:text-gray-200">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Admin Dashboard</h1>
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="search" placeholder="Search..." class="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <button id="dark-mode-toggle" class="bg-gray-200 dark:bg-gray-600 p-2 rounded-full">
+                        <i class="fas fa-moon text-gray-600 dark:text-yellow-400"></i>
+                    </button>
+                    <span class="text-gray-800 dark:text-gray-200">Welcome, Admin</span>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">Logout</button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- User Requests Section -->
+                <section id="requests" class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">User Requests</h2>
+                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Role</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Picture</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">ID Card</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">John Doe</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Blogger</td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><img src="https://via.placeholder.com/50" alt="User" class="w-10 h-10 rounded-full"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><img src="https://via.placeholder.com/50" alt="ID" class="w-10 h-10"></td>
+                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                            <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">Approve</button>
+                                            <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">Pending</button>
+                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Decline</button>
+                                            <button class="view-details bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Details</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
+                            <div class="space-x-2">
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Approved Users Section -->
+                <section id="approved" class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Approved Users</h2>
+                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Role</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Jane Smith</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Marketer</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Active</td>
+                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Suspend</button>
+                                            <button class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 transition">Delete</button>
+                                            <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Deactivate</button>
+                                            <button class="view-details bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600 transition">Details</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
+                            <div class="space-x-2">
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- User Posts Section -->
+                <section id="posts" class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">User Posts</h2>
+                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Title</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Author</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Blog Post Title</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">John Doe</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">2025-07-30</td>
+                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                            <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">View</button>
+                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
+                            <div class="space-x-2">
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Listings Section -->
+                <section id="listings" class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Listings</h2>
+                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Item</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Seller</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Price</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Textbook</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Jane Smith</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">$50</td>
+                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                            <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">View</button>
+                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
+                            <div class="space-x-2">
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
+                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal for User Details -->
+    <div id="user-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
+            <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">User Details</h3>
+            <div class="space-y-4">
+                <p><strong>Name:</strong> <span id="modal-name">John Doe</span></p>
+                <p><strong>Role:</strong> <span id="modal-role">Blogger</span></p>
+                <p><strong>Email:</strong> <span id="modal-email">john.doe@example.com</span></p>
+                <p><strong>Status:</strong> <span id="modal-status">Pending</span></p>
+                <div>
+                    <strong>Picture:</strong><br>
+                    <img id="modal-picture" src="https://via.placeholder.com/100" alt="User" class="w-20 h-20 rounded-full mt-2">
+                </div>
+                <div>
+                    <strong>ID Card:</strong><br>
+                    <img id="modal-idcard" src="https://via.placeholder.com/100" alt="ID" class="w-20 h-20 mt-2">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-2">
+                <button id="modal-close" class="bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-500 transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar toggle for mobile
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const icon = darkModeToggle.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+
+        // Search functionality (placeholder)
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase();
+            // Implement search logic here, filtering table rows
+            console.log(`Searching for: ${value}`);
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('user-modal');
+        const modalClose = document.getElementById('modal-close');
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', () => {
+                // Populate modal with data (placeholder)
+                document.getElementById('modal-name').textContent = 'John Doe';
+                document.getElementById('modal-role').textContent = 'Blogger';
+                document.getElementById('modal-email').textContent = 'john.doe@example.com';
+                document.getElementById('modal-status').textContent = 'Pending';
+                document.getElementById('modal-picture').src = 'https://via.placeholder.com/100';
+                document.getElementById('modal-idcard').src = 'https://via.placeholder.com/100';
+                modal.classList.remove('hidden');
+            });
+        });
+        modalClose.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Placeholder for action button functionality
+        document.querySelectorAll('button:not(#modal-close):not(#dark-mode-toggle):not(#menu-toggle)').forEach(button => {
+            button.addEventListener('click', () => {
+                alert(`${button.textContent} action triggered!`);
+                // Implement actual functionality here
+            });
+        });
+    </script>
+</body>
+</html>
