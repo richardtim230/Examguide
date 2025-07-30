@@ -1,333 +1,688 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OAU ExamGuard Admin Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Optional: Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --sidebar-width: 240px;
+            --primary-color: #2e3a59;
+            --accent-color: #1fa67a;
+            --background: #f6f7fb;
+            --card-bg: #fff;
+            --text-color: #222;
+            --header-height: 70px;
+            --border-radius: 8px;
+            --transition: 0.3s;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text-color);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary-color);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition);
+            max-width: 100vw;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 16px 16px 16px;
+            border-bottom: 1px solid #384a75;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 16px 0;
+        }
+
+        .sidebar nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            border-radius: var(--border-radius);
+            transition: background var(--transition);
+            font-size: 1rem;
+        }
+
+        .sidebar nav ul li a i {
+            margin-right: 10px;
+        }
+
+        .sidebar nav ul li a:hover, .sidebar nav ul li a.active {
+            background: var(--accent-color);
+        }
+
+        /* Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(35,38,45,0.23);
+            z-index: 999;
+            display: none;
+        }
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 28px 2vw;
+            transition: margin-left var(--transition);
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+            margin-bottom: 16px;
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .admin-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: none;
+        }
+
+        /* Sections */
+        .dashboard-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+            margin-bottom: 32px;
+            padding: 24px 16px;
+        }
+
+        .dashboard-section h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        /* Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+        }
+
+        thead {
+            background: #e3e8f3;
+            color: var(--primary-color);
+        }
+
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        th {
+            font-size: 1rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        img.user-pic, img.id-card, img.goods-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: #e3e8f3;
+            border: 1px solid #d2d8e6;
+        }
+
+        /* Status badges */
+        .status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.92em;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status.approved { background: #d3f9d8; color: #218c5c; }
+        .status.pending { background: #fff9db; color: #b8860b; }
+        .status.declined { background: #ffe2e2; color: #c0392b; }
+        .status.active { background: #e3f6fc; color: #1e90ff; }
+        .status.suspended { background: #f7d9e3; color: #d7263d; }
+        .status.deactivated { background: #f0f0f0; color: #888; }
+
+        /* Action Buttons */
+        .action-btn {
+            border: none;
+            border-radius: 5px;
+            padding: 6px 12px;
+            margin-right: 6px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background var(--transition), color var(--transition);
+            outline: none;
+        }
+
+        .action-approve { background: #1fa67a; color: #fff; }
+        .action-pending { background: #f7b731; color: #fff; }
+        .action-decline { background: #eb3b5a; color: #fff; }
+        .action-suspend { background: #d7263d; color: #fff; }
+        .action-delete { background: #c0392b; color: #fff; }
+        .action-activate { background: #218c5c; color: #fff; }
+        .action-deactivate { background: #888; color: #fff; }
+        .action-view { background: #1e90ff; color: #fff; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-content {
+                margin-left: 0;
+                padding: 18px 4vw;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                left: 0;
+                width: 80vw;
+                max-width: 100vw;
+                min-width: 0;
+                box-shadow: 3px 0 24px rgba(44,62,80,0.08);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-close {
+                display: block;
+            }
+            .sidebar-toggle {
+                display: inline-block;
+            }
+            .sidebar-overlay {
+                display: none;
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+        /* Small screens */
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 100vw;
+                max-width: 100vw;
+                min-width: 0;
+            }
+            .dashboard-header h1 {
+                font-size: 1.1rem;
+            }
+            th, td {
+                padding: 8px 4px;
+                font-size: 0.98em;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 font-sans transition-colors duration-300">
-    <div class="flex h-screen">
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
         <!-- Sidebar -->
-        <div id="sidebar" class="bg-gradient-to-b from-gray-800 to-gray-700 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20 shadow-lg">
-            <div class="flex items-center space-x-2 px-4">
-                <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">OAU ExamGuard</h2>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>OAU ExamGuard</h2>
+                <button class="sidebar-close" id="sidebarClose"><i class="fas fa-times"></i></button>
             </div>
             <nav>
-                <a href="#requests" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">User Requests</a>
-                <a href="#approved" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">Approved Users</a>
-                <a href="#posts" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">User Posts</a>
-                <a href="#listings" class="block py-2.5 px-4 rounded hover:bg-gray-600 transition-colors">Listings</a>
+                <ul>
+                    <li><a href="#requests"><i class="fas fa-user-check"></i> Requests</a></li>
+                    <li><a href="#approved-users"><i class="fas fa-users"></i> Approved Users</a></li>
+                    <li><a href="#posts"><i class="fas fa-newspaper"></i> User Posts</a></li>
+                    <li><a href="#goods"><i class="fas fa-box"></i> Goods Listings</a></li>
+                </ul>
             </nav>
-        </div>
+        </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- Header -->
-            <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
-                <button id="menu-toggle" class="md:hidden text-gray-600 dark:text-gray-200">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-                <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Admin Dashboard</h1>
-                <div class="flex items-center space-x-4">
-                    <input type="text" id="search" placeholder="Search..." class="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                    <button id="dark-mode-toggle" class="bg-gray-200 dark:bg-gray-600 p-2 rounded-full">
-                        <i class="fas fa-moon text-gray-600 dark:text-yellow-400"></i>
-                    </button>
-                    <span class="text-gray-800 dark:text-gray-200">Welcome, Admin</span>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">Logout</button>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <button id="sidebarToggle" class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+                <h1>Admin Dashboard</h1>
+                <div class="admin-profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin" alt="Admin" />
                 </div>
             </header>
 
-            <!-- Main Content Area -->
-            <main class="flex-1 overflow-y-auto p-6">
-                <!-- User Requests Section -->
-                <section id="requests" class="mb-8">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">User Requests</h2>
-                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Role</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Picture</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">ID Card</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">John Doe</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Blogger</td>
-                                        <td class="px-6 py-4 whitespace-nowrap"><img src="https://via.placeholder.com/50" alt="User" class="w-10 h-10 rounded-full"></td>
-                                        <td class="px-6 py-4 whitespace-nowrap"><img src="https://via.placeholder.com/50" alt="ID" class="w-10 h-10"></td>
-                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
-                                            <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">Approve</button>
-                                            <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">Pending</button>
-                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Decline</button>
-                                            <button class="view-details bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Details</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4 flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
-                            <div class="space-x-2">
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Approved Users Section -->
-                <section id="approved" class="mb-8">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Approved Users</h2>
-                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Role</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Jane Smith</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Marketer</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Active</td>
-                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
-                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Suspend</button>
-                                            <button class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 transition">Delete</button>
-                                            <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Deactivate</button>
-                                            <button class="view-details bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600 transition">Details</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4 flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
-                            <div class="space-x-2">
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- User Posts Section -->
-                <section id="posts" class="mb-8">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">User Posts</h2>
-                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Title</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Author</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Blog Post Title</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">John Doe</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">2025-07-30</td>
-                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
-                                            <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">View</button>
-                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Delete</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4 flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
-                            <div class="space-x-2">
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Listings Section -->
-                <section id="listings" class="mb-8">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Listings</h2>
-                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Item</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Seller</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Price</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Textbook</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">Jane Smith</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-800 dark:text-gray-200">$50</td>
-                                        <td class="px-6 py-4 whitespace-nowrap space-x-2">
-                                            <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">View</button>
-                                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">Delete</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4 flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-300">Showing 1-5 of 50</span>
-                            <div class="space-x-2">
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Previous</button>
-                                <button class="bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </main>
-        </div>
-    </div>
-
-    <!-- Modal for User Details -->
-    <div id="user-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
-            <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">User Details</h3>
-            <div class="space-y-4">
-                <p><strong>Name:</strong> <span id="modal-name">John Doe</span></p>
-                <p><strong>Role:</strong> <span id="modal-role">Blogger</span></p>
-                <p><strong>Email:</strong> <span id="modal-email">john.doe@example.com</span></p>
-                <p><strong>Status:</strong> <span id="modal-status">Pending</span></p>
-                <div>
-                    <strong>Picture:</strong><br>
-                    <img id="modal-picture" src="https://via.placeholder.com/100" alt="User" class="w-20 h-20 rounded-full mt-2">
+            <!-- Requests Section -->
+            <section id="requests" class="dashboard-section">
+                <h2>User Requests (Blogger & Marketer Applications)</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Picture</th>
+                                <th>ID Card</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Date Applied</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTable">
+                            <!-- Dynamically populated -->
+                        </tbody>
+                    </table>
                 </div>
-                <div>
-                    <strong>ID Card:</strong><br>
-                    <img id="modal-idcard" src="https://via.placeholder.com/100" alt="ID" class="w-20 h-20 mt-2">
+            </section>
+
+            <!-- Approved Users Section -->
+            <section id="approved-users" class="dashboard-section">
+                <h2>Approved Users</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Picture</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Date Approved</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvedUsersTable">
+                            <!-- Dynamically populated -->
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            <div class="mt-6 flex justify-end space-x-2">
-                <button id="modal-close" class="bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-500 transition">Close</button>
-            </div>
-        </div>
+            </section>
+
+            <!-- User Posts Section -->
+            <section id="posts" class="dashboard-section">
+                <h2>User Posts</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Post Title</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postsTable">
+                            <!-- Dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Goods Listings Section -->
+            <section id="goods" class="dashboard-section">
+                <h2>Goods Listings</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Seller</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date Listed</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="goodsTable">
+                            <!-- Dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
+<script>
+   // Sample data for demo purposes
+const requests = [
+    {
+        picture: 'https://randomuser.me/api/portraits/men/22.jpg',
+        idCard: 'https://i.imgur.com/AhQ2O8E.jpg',
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        role: 'Blogger',
+        date: '2025-07-12',
+        status: 'pending'
+    },
+    {
+        picture: 'https://randomuser.me/api/portraits/women/34.jpg',
+        idCard: 'https://i.imgur.com/AhQ2O8E.jpg',
+        name: 'Jane Smith',
+        email: 'janesmith@example.com',
+        role: 'Marketer',
+        date: '2025-07-10',
+        status: 'pending'
+    }
+];
 
-    <script>
-        // Sidebar toggle for mobile
-        const menuToggle = document.getElementById('menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full');
-        });
+const approvedUsers = [
+    {
+        picture: 'https://randomuser.me/api/portraits/men/65.jpg',
+        name: 'Peter Obi',
+        email: 'peterobi@example.com',
+        role: 'Blogger',
+        status: 'active',
+        dateApproved: '2025-07-15'
+    },
+    {
+        picture: 'https://randomuser.me/api/portraits/women/42.jpg',
+        name: 'Chidinma Okafor',
+        email: 'chidinma@example.com',
+        role: 'Marketer',
+        status: 'deactivated',
+        dateApproved: '2025-07-18'
+    }
+];
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                if (window.innerWidth < 768) {
-                    sidebar.classList.add('-translate-x-full');
-                }
-            });
-        });
+const posts = [
+    {
+        title: 'How to Prepare for OAU Exams',
+        author: 'Peter Obi',
+        date: '2025-07-20',
+        status: 'published'
+    },
+    {
+        title: 'Marketing Strategies for Students',
+        author: 'Chidinma Okafor',
+        date: '2025-07-22',
+        status: 'draft'
+    }
+];
 
-        // Dark mode toggle
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            const icon = darkModeToggle.querySelector('i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-        });
+const goods = [
+    {
+        image: 'https://i.imgur.com/MoN4F3A.jpg',
+        title: 'Casio FX Calculator',
+        seller: 'Peter Obi',
+        price: '₦4,500',
+        status: 'active',
+        dateListed: '2025-07-25'
+    },
+    {
+        image: 'https://i.imgur.com/MoN4F3A.jpg',
+        title: 'Lecture Note Bundle',
+        seller: 'Chidinma Okafor',
+        price: '₦2,000',
+        status: 'pending',
+        dateListed: '2025-07-26'
+    }
+];
 
-        // Search functionality (placeholder)
-        const searchInput = document.getElementById('search');
-        searchInput.addEventListener('input', (e) => {
-            const value = e.target.value.toLowerCase();
-            // Implement search logic here, filtering table rows
-            console.log(`Searching for: ${value}`);
-        });
+// Utility function for status badge
+function getStatusBadge(status) {
+    switch(status) {
+        case 'approved': return '<span class="status approved">Approved</span>';
+        case 'pending': return '<span class="status pending">Pending</span>';
+        case 'declined': return '<span class="status declined">Declined</span>';
+        case 'active': return '<span class="status active">Active</span>';
+        case 'suspended': return '<span class="status suspended">Suspended</span>';
+        case 'deactivated': return '<span class="status deactivated">Deactivated</span>';
+        default: return `<span class="status">${status}</span>`;
+    }
+}
 
-        // Modal functionality
-        const modal = document.getElementById('user-modal');
-        const modalClose = document.getElementById('modal-close');
-        document.querySelectorAll('.view-details').forEach(button => {
-            button.addEventListener('click', () => {
-                // Populate modal with data (placeholder)
-                document.getElementById('modal-name').textContent = 'John Doe';
-                document.getElementById('modal-role').textContent = 'Blogger';
-                document.getElementById('modal-email').textContent = 'john.doe@example.com';
-                document.getElementById('modal-status').textContent = 'Pending';
-                document.getElementById('modal-picture').src = 'https://via.placeholder.com/100';
-                document.getElementById('modal-idcard').src = 'https://via.placeholder.com/100';
-                modal.classList.remove('hidden');
-            });
-        });
-        modalClose.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
+// Requests Table
+function renderRequests() {
+    const table = document.getElementById('requestsTable');
+    table.innerHTML = '';
+    requests.forEach((req, idx) => {
+        table.innerHTML += `
+            <tr>
+                <td><img src="${req.picture}" class="user-pic" alt="User"></td>
+                <td><img src="${req.idCard}" class="id-card" alt="ID Card"></td>
+                <td>${req.name}</td>
+                <td>${req.email}</td>
+                <td>${req.role}</td>
+                <td>${req.date}</td>
+                <td>
+                    <button class="action-btn action-approve" onclick="changeRequestStatus(${idx}, 'approved')">Approve</button>
+                    <button class="action-btn action-pending" onclick="changeRequestStatus(${idx}, 'pending')">Pending</button>
+                    <button class="action-btn action-decline" onclick="changeRequestStatus(${idx}, 'declined')">Decline</button>
+                </td>
+            </tr>
+        `;
+    });
+}
 
-        // Placeholder for action button functionality
-        document.querySelectorAll('button:not(#modal-close):not(#dark-mode-toggle):not(#menu-toggle)').forEach(button => {
-            button.addEventListener('click', () => {
-                alert(`${button.textContent} action triggered!`);
-                // Implement actual functionality here
-            });
+// Approved Users Table
+function renderApprovedUsers() {
+    const table = document.getElementById('approvedUsersTable');
+    table.innerHTML = '';
+    approvedUsers.forEach((user, idx) => {
+        table.innerHTML += `
+            <tr>
+                <td><img src="${user.picture}" class="user-pic" alt="User"></td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.role}</td>
+                <td>${getStatusBadge(user.status)}</td>
+                <td>${user.dateApproved}</td>
+                <td>
+                    <button class="action-btn action-suspend" onclick="changeUserStatus(${idx}, 'suspended')">Suspend</button>
+                    <button class="action-btn action-delete" onclick="deleteUser(${idx})">Delete</button>
+                    <button class="action-btn action-activate" onclick="changeUserStatus(${idx}, 'active')">Activate</button>
+                    <button class="action-btn action-deactivate" onclick="changeUserStatus(${idx}, 'deactivated')">Deactivate</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// Posts Table
+function renderPosts() {
+    const table = document.getElementById('postsTable');
+    table.innerHTML = '';
+    posts.forEach((post, idx) => {
+        table.innerHTML += `
+            <tr>
+                <td>${post.title}</td>
+                <td>${post.author}</td>
+                <td>${post.date}</td>
+                <td>${post.status === 'published' ? getStatusBadge('active') : getStatusBadge('pending')}</td>
+                <td>
+                    <button class="action-btn action-view">View</button>
+                    <button class="action-btn action-delete" onclick="deletePost(${idx})">Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// Goods Table
+function renderGoods() {
+    const table = document.getElementById('goodsTable');
+    table.innerHTML = '';
+    goods.forEach((item, idx) => {
+        table.innerHTML += `
+            <tr>
+                <td><img src="${item.image}" class="goods-img" alt="Goods"></td>
+                <td>${item.title}</td>
+                <td>${item.seller}</td>
+                <td>${item.price}</td>
+                <td>${getStatusBadge(item.status)}</td>
+                <td>${item.dateListed}</td>
+                <td>
+                    <button class="action-btn action-approve" onclick="changeGoodsStatus(${idx}, 'active')">Activate</button>
+                    <button class="action-btn action-pending" onclick="changeGoodsStatus(${idx}, 'pending')">Pending</button>
+                    <button class="action-btn action-delete" onclick="deleteGoods(${idx})">Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// Action functions (Demo: only changes status locally)
+function changeRequestStatus(idx, status) {
+    requests[idx].status = status;
+    // If approved, move to approved users
+    if (status === 'approved') {
+        approvedUsers.push({
+            picture: requests[idx].picture,
+            name: requests[idx].name,
+            email: requests[idx].email,
+            role: requests[idx].role,
+            status: 'active',
+            dateApproved: new Date().toISOString().slice(0,10)
         });
-    </script>
+        requests.splice(idx, 1);
+    }
+    renderRequests();
+    renderApprovedUsers();
+}
+
+function changeUserStatus(idx, status) {
+    approvedUsers[idx].status = status;
+    renderApprovedUsers();
+}
+
+function deleteUser(idx) {
+    approvedUsers.splice(idx, 1);
+    renderApprovedUsers();
+}
+
+function deletePost(idx) {
+    posts.splice(idx, 1);
+    renderPosts();
+}
+
+function changeGoodsStatus(idx, status) {
+    goods[idx].status = status;
+    renderGoods();
+}
+
+function deleteGoods(idx) {
+    goods.splice(idx, 1);
+    renderGoods();
+}
+
+// Sidebar toggle for mobile
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarClose = document.getElementById('sidebarClose');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+// Open sidebar & overlay
+sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+});
+// Close sidebar when clicking close button
+sidebarClose.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+});
+// Close sidebar when clicking outside (overlay)
+sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+});
+
+// Listen for window resize to ensure sidebar width doesn't exceed viewport
+function adjustSidebarWidth() {
+    if (window.innerWidth <= 600) {
+        sidebar.style.width = '100vw';
+        sidebar.style.maxWidth = '100vw';
+    } else if (window.innerWidth <= 900) {
+        sidebar.style.width = '80vw';
+        sidebar.style.maxWidth = '100vw';
+    } else {
+        sidebar.style.width = '240px';
+        sidebar.style.maxWidth = '240px';
+    }
+}
+window.addEventListener('resize', adjustSidebarWidth);
+// Initial sidebar width adjustment
+adjustSidebarWidth();
+
+// Initial render
+renderRequests();
+renderApprovedUsers();
+renderPosts();
+renderGoods();
+</script>
+</body>
+</html>
