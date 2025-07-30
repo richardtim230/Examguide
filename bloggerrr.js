@@ -21,17 +21,43 @@ document.addEventListener('click', function(e) {
         document.body.classList.remove('overflow-hidden');
     }
 });
-
+function showDashboardSpinner() {
+    document.getElementById('dashboardSpinner').style.display = 'flex';
+}
+function hideDashboardSpinner() {
+    document.getElementById('dashboardSpinner').style.display = 'none';
+                              }
 // --- GLOBALS ---
 let dashboard = null;
 let user = null;
 let quill;
 
 // --- AUTH & DATA LOAD ---
+const API_URL = "https://examguide.onrender.com/api/";
+function getToken() {
+    return localStorage.getItem("token");
+}
+
+// Helper for authenticated fetches (handles 401)
+async function fetchWithAuth(url, options = {}) {
+    const token = getToken();
+    if (!token) {
+        window.location.href = "/mock-icthallb";
+        throw new Error("No token found");
+    }
+    options.headers = options.headers || {};
+    options.headers['Authorization'] = 'Bearer ' + token;
+    const resp = await fetch(url, options);
+    if (resp.status === 401 || resp.status === 403) {
+        localStorage.removeItem("token");
+        window.location.href = "/mock-icthallb";
+        throw new Error("Session expired.");
+    }
+    return resp;
+}
+
 async function fetchUser() {
-    const res = await fetch('/api/auth/me', {
-        headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
-    });
+    const res = await fetchWithAuth(API_URL + "auth/me");
     if (!res.ok) {
         throw new Error("Not authenticated");
     }
@@ -45,9 +71,7 @@ async function fetchUser() {
 }
 
 async function fetchDashboard() {
-    const res = await fetch('/api/blogger-dashboard', {
-        headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
-    });
+    const res = await fetchWithAuth(API_URL + "blogger-dashboard");
     if (!res.ok) {
         throw new Error("Could not load dashboard");
     }
@@ -56,18 +80,15 @@ async function fetchDashboard() {
 }
 
 async function saveDashboardField(field, value) {
-    await fetch('/api/blogger-dashboard', {
+    await fetchWithAuth(API_URL + "blogger-dashboard", {
         method: "PATCH",
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ [field]: value })
     });
 }
 
 async function saveDashboardSubdoc(type, doc, mode, id) {
-    let url = `/api/blogger-dashboard/${type}`;
+    let url = API_URL + `blogger-dashboard/${type}`;
     let method = "POST";
     if (mode === "update" && id) {
         url += `/${id}`;
@@ -79,7 +100,7 @@ async function saveDashboardSubdoc(type, doc, mode, id) {
     let options = {
         method,
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "Authorization": "Bearer " + getToken(),
             "Content-Type": "application/json"
         }
     };
@@ -521,6 +542,7 @@ async function reloadDashboard() {
 // --- INITIALIZATION ---
 async function mainDashboardInit() {
     try {
+        showDashboardSpinner();
         await fetchUser();
         await fetchDashboard();
         renderPostsTable();
@@ -534,7 +556,10 @@ async function mainDashboardInit() {
         }
     } catch (e) {
         showToast("Please login again.");
-        setTimeout(() => window.location.href = "/login", 1500);
+        setTimeout(() => window.location.href = "/mock-icthallb", 1500);
+    } finally {
+        hideDashboardSpinner();
     }
 }
+    
 mainDashboardInit();
