@@ -199,42 +199,44 @@
         <!-- OVERVIEW TAB -->
         <section id="overview" class="tab-content active">
             <header class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Welcome, <span id="dashboardUserName"></span>!</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">
+                    Welcome, <span id="overviewWelcomeName"></span>!
+                </h2>
                 <div class="flex items-center space-x-4 mt-3 md:mt-0">
-                    <img src="https://via.placeholder.com/40?text=Profile" alt="Profile" class="h-10 w-10 rounded-full" id="dashboardProfilePhoto">
+                    <img id="overviewProfilePic" src="https://via.placeholder.com/40?text=Profile" alt="Profile" class="h-10 w-10 rounded-full">
                 </div>
             </header>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
                 <div class="card bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-lg font-semibold text-gray-800">Total Posts</h3>
-                    <p class="text-2xl font-bold text-indigo-600" id="totalPostsCount"></p>
-                    <p class="text-sm text-gray-500" id="weeklyPostsChange"></p>
+                    <p class="text-2xl font-bold text-indigo-600" id="overviewTotalPosts">0</p>
+                    <p class="text-sm text-gray-500" id="overviewPostsStat"></p>
                 </div>
                 <div class="card bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-lg font-semibold text-gray-800">Followers</h3>
-                    <p class="text-2xl font-bold text-indigo-600" id="totalFollowersCount"></p>
-                    <p class="text-sm text-gray-500" id="weeklyFollowersChange"></p>
+                    <p class="text-2xl font-bold text-indigo-600" id="overviewTotalFollowers">0</p>
+                    <p class="text-sm text-gray-500" id="overviewFollowersStat"></p>
                 </div>
                 <div class="card bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-lg font-semibold text-gray-800">Views</h3>
-                    <p class="text-2xl font-bold text-indigo-600" id="totalViewsCount"></p>
-                    <p class="text-sm text-gray-500" id="weeklyViewsChange"></p>
+                    <p class="text-2xl font-bold text-indigo-600" id="overviewTotalViews">0</p>
+                    <p class="text-sm text-gray-500" id="overviewViewsStat"></p>
                 </div>
                 <div class="card bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-lg font-semibold text-gray-800">Revenue</h3>
-                    <p class="text-2xl font-bold text-indigo-600">&#8358;<span id="totalRevenue"></span></p>
-                    <p class="text-sm text-gray-500" id="revenueSource"></p>
+                    <p class="text-2xl font-bold text-indigo-600">&#8358;<span id="overviewRevenue">0</span></p>
+                    <p class="text-sm text-gray-500">From sales & campaigns</p>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="card bg-white p-6 rounded-lg shadow-md">
                     <h4 class="text-lg font-semibold text-gray-800 mb-3">Recent Activities</h4>
-                    <ul class="text-sm text-gray-700 space-y-2" id="recentActivities"></ul>
+                    <ul id="overviewRecentActivities" class="text-sm text-gray-700 space-y-2"></ul>
                 </div>
                 <div class="card bg-white p-6 rounded-lg shadow-md">
                     <h4 class="text-lg font-semibold text-gray-800 mb-3">Active Campaigns</h4>
-                    <ul class="text-sm text-gray-700 space-y-2" id="activeCampaigns"></ul>
-                    <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 action-btn" id="createCampaignBtn">Create New Campaign</button>
+                    <ul id="overviewCampaigns" class="text-sm text-gray-700 space-y-2"></ul>
+                    <button id="createCampaignBtn" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 action-btn">Create New Campaign</button>
                 </div>
             </div>
         </section>
@@ -265,7 +267,7 @@
                         </tr>
                     </thead>
                     <tbody id="postTable">
-                        <!-- Dynamic Posts will be rendered here -->
+                        <!-- Data will be injected here -->
                     </tbody>
                 </table>
             </div>
@@ -285,7 +287,7 @@
                 <div class="card bg-white p-6 rounded-lg shadow-md flex flex-col h-full">
                     <h4 class="text-lg font-semibold text-gray-800 mb-4">Top Posts</h4>
                     <ul id="topPosts" class="space-y-2 text-sm sm:text-base text-gray-600 overflow-y-auto max-h-64 pr-2">
-                        <!-- Dynamic Top Posts will be rendered here -->
+                        <!-- Data will be injected here -->
                     </ul>
                 </div>
             </div>
@@ -303,7 +305,7 @@
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h4 class="font-semibold text-gray-800 mb-3">Recent Followers</h4>
                 <div id="followersList" class="flex flex-wrap gap-4 mb-4">
-                    <!-- Dynamic followers will be rendered here -->
+                    <!-- Data will be injected here -->
                 </div>
                 <h4 class="font-semibold text-gray-800 mb-3">Send Broadcast Message</h4>
                 <form id="broadcastForm" class="flex flex-col md:flex-row gap-3">
@@ -337,7 +339,7 @@
                         </tr>
                     </thead>
                     <tbody id="listingTable">
-                        <!-- Dynamic listings will be rendered here -->
+                        <!-- Data will be injected here -->
                     </tbody>
                 </table>
             </div>
@@ -349,15 +351,15 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
                 <div class="card bg-white p-6 rounded-lg shadow-md flex flex-col">
                     <span class="font-semibold text-gray-700 mb-1">Total Earnings</span>
-                    <span class="text-2xl font-bold text-green-600">&#8358;<span id="totalEarnings"></span></span>
+                    <span class="text-2xl font-bold text-green-600">&#8358;<span id="totalEarnings">0</span></span>
                 </div>
                 <div class="card bg-white p-6 rounded-lg shadow-md flex flex-col">
                     <span class="font-semibold text-gray-700 mb-1">Withdrawn</span>
-                    <span class="text-2xl font-bold text-yellow-600">&#8358;<span id="totalWithdrawn"></span></span>
+                    <span class="text-2xl font-bold text-yellow-600">&#8358;<span id="totalWithdrawn">0</span></span>
                 </div>
                 <div class="card bg-white p-6 rounded-lg shadow-md flex flex-col">
                     <span class="font-semibold text-gray-700 mb-1">Available Balance</span>
-                    <span class="text-2xl font-bold text-indigo-600">&#8358;<span id="availableBalance"></span></span>
+                    <span class="text-2xl font-bold text-indigo-600">&#8358;<span id="availableBalance">0</span></span>
                 </div>
             </div>
             <div class="flex justify-end mb-4">
@@ -383,7 +385,7 @@
                         </tr>
                     </thead>
                     <tbody id="commissionTable">
-                        <!-- Dynamic commissions will be rendered here -->
+                        <!-- Data will be injected here -->
                     </tbody>
                 </table>
             </div>
@@ -396,14 +398,14 @@
                     <div class="flex-1">
                         <h4 class="font-semibold text-gray-800 mb-3">Inbox</h4>
                         <ul id="inboxList" class="space-y-3">
-                            <!-- Dynamic messages will be rendered here -->
+                            <!-- Data will be injected here -->
                         </ul>
                     </div>
                     <div class="flex-1">
                         <h4 class="font-semibold text-gray-800 mb-3">Send Message</h4>
                         <form id="sendMsgForm" class="flex flex-col gap-3">
                             <select id="recipientSelect" class="p-2 border rounded">
-                                <!-- Dynamic recipient options will be rendered here -->
+                                <!-- Data will be injected here -->
                             </select>
                             <textarea id="msgInput" rows="3" class="p-2 border rounded" placeholder="Type your message..."></textarea>
                             <button type="submit" class="bg-indigo-600 text-white rounded px-4 py-2 hover:bg-indigo-700 action-btn">Send</button>
@@ -420,15 +422,15 @@
                 <form id="profileForm" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Full Name</label>
-                        <input id="profileName" type="text" class="w-full p-2 border rounded">
+                        <input id="profileName" type="text" class="w-full p-2 border rounded" value="">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Email</label>
-                        <input id="profileEmail" type="email" class="w-full p-2 border rounded">
+                        <input id="profileEmail" type="email" class="w-full p-2 border rounded" value="">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Phone</label>
-                        <input id="profilePhone" type="text" class="w-full p-2 border rounded">
+                        <input id="profilePhone" type="text" class="w-full p-2 border rounded" value="">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Bio</label>
@@ -436,6 +438,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Profile Photo</label>
+                        <img id="profilePhotoPreview" src="https://via.placeholder.com/80?text=Profile" alt="Profile photo" class="h-20 w-20 rounded-full mb-2">
                         <input id="profilePhoto" type="file" accept="image/*" class="w-full p-2 border rounded bg-white">
                     </div>
                     <button type="submit" class="bg-indigo-600 text-white rounded px-4 py-2 hover:bg-indigo-700 action-btn">Save Changes</button>
@@ -491,20 +494,20 @@
         </div>
     </main>
     <div id="dashboardSpinner" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);align-items:center;justify-content:center;">
-      <div style="text-align:center;">
-        <div class="spinner" style="display: inline-block;width:60px;height:60px;border:6px solid #e5e7eb;border-top:6px solid #6366f1;border-radius:50%;animation:spin 1s linear infinite;"></div>
-        <div style="margin-top:14px;color:#4f46e5;font-weight:600;font-size:1.1em;">Loading...</div>
-      </div>
-    </div>
+  <div style="text-align:center;">
+    <div class="spinner" style="display: inline-block;width:60px;height:60px;border:6px solid #e5e7eb;border-top:6px solid #6366f1;border-radius:50%;animation:spin 1s linear infinite;"></div>
+    <div style="margin-top:14px;color:#4f46e5;font-weight:600;font-size:1.1em;">Loading...</div>
+  </div>
+</div>
     <div id="postViewModal" class="modal-backdrop hidden">
-      <div class="modal">
-        <button id="closePostViewModalBtn">&times;</button>
-        <h2 id="postViewModalTitle"></h2>
-        <div id="postViewModalContent"></div>
-      </div>
+  <div class="modal">
+    <button id="closePostViewModalBtn">&times;</button>
+    <h2 id="postViewModalTitle"></h2>
+    <div id="postViewModalContent"></div>
+  </div>
     </div>
-    <style>
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-4 py-2 text-white bg-indigo-700 rounded shadow-lg hidden z-50"></div>
     <!-- Quill JS (for the editor to show) -->
