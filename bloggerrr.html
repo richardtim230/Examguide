@@ -5,91 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogger/Marketer Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .glassmorphic {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        .neon-button:hover {
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.7);
+        }
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 via-purple-100 to-teal-100 min-h-screen font-inter">
+<body class="min-h-screen font-poppins text-gray-100">
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <nav class="bg-white md:w-64 p-6 shadow-lg md:h-screen sticky top-0 transition-all duration-300">
+        <nav class="glassmorphic md:w-64 p-6 shadow-xl md:h-screen sticky top-0 transition-all duration-500">
             <div class="flex items-center justify-between mb-8">
-                <h1 class="text-2xl font-bold text-gray-800">Blogger/Marketer</h1>
-                <button data-collapse-toggle="mobile-menu" class="md:hidden text-gray-800 focus:outline-none">
+                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">BloggerHub</h1>
+                <button data-collapse-toggle="mobile-menu" class="md:hidden text-gray-200 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                     </svg>
                 </button>
             </div>
-            <ul id="mobile-menu" class="space-y-4 md:block hidden">
-                <li><a data-tab="overview" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Overview</a></li>
-                <li><a data-tab="posts" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Manage Posts</a></li>
-                <li><a data-tab="analytics" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Analytics</a></li>
-                <li><a data-tab="followers" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Followers</a></li>
-                <li><a data-tab="marketplace" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Marketplace Listings</a></li>
-                <li><a data-tab="commissions" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Commissions</a></li>
-                <li><a data-tab="messages" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Messages</a></li>
-                <li><a data-tab="profile" class="block py-2 px-4 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300">Profile Settings</a></li>
-                <li><a data-tab="logout" class="block py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-all duration-300">Logout</a></li>
+            <ul id="mobile-menu" class="space-y-3 md:block hidden">
+                <li><a data-tab="overview" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Overview</a></li>
+                <li><a data-tab="posts" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Manage Posts</a></li>
+                <li><a data-tab="analytics" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Analytics</a></li>
+                <li><a data-tab="followers" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Followers</a></li>
+                <li><a data-tab="marketplace" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Marketplace Listings</a></li>
+                <li><a data-tab="commissions" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Commissions</a></li>
+                <li><a data-tab="messages" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Messages</a></li>
+                <li><a data-tab="profile" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-pink-500 hover:text-white transition-all duration-300 neon-glow">Profile Settings</a></li>
+                <li><a data-tab="logout" class="block py-3 px-4 rounded-lg text-gray-200 hover:bg-red-600 hover:text-white transition-all duration-300 neon-glow">Logout</a></li>
             </ul>
         </nav>
 
         <!-- Main Content -->
         <main class="flex-1 p-6 md:p-10">
             <!-- Overview Section -->
-            <section data-tab-content="overview" class="space-y-6">
-                <h2 class="text-3xl font-bold text-gray-800">Welcome, Sarah!</h2>
+            <section data-tab-content="overview" class="space-y-8 animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Welcome, Sarah!</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Total Posts</h3>
-                        <p class="text-2xl font-bold text-blue-600">24</p>
-                        <p class="text-sm text-green-500">+2 this week</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Total Posts</h3>
+                        <p class="text-3xl font-bold text-blue-400">24</p>
+                        <p class="text-sm text-green-400">+2 this week</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Followers</h3>
-                        <p class="text-2xl font-bold text-blue-600">1,234</p>
-                        <p class="text-sm text-green-500">+45 this week</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Followers</h3>
+                        <p class="text-3xl font-bold text-blue-400">1,234</p>
+                        <p class="text-sm text-green-400">+45 this week</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Views</h3>
-                        <p class="text-2xl font-bold text-blue-600">15.6K</p>
-                        <p class="text-sm text-green-500">+1.2K this week</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Views</h3>
+                        <p class="text-3xl font-bold text-blue-400">15.6K</p>
+                        <p class="text-sm text-green-400">+1.2K this week</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Revenue</h3>
-                        <p class="text-2xl font-bold text-blue-600">₦120,000</p>
-                        <p class="text-sm text-gray-500">This month from sales & campaigns</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Revenue</h3>
+                        <p class="text-3xl font-bold text-blue-400">₦120,000</p>
+                        <p class="text-sm text-gray-400">This month from sales & campaigns</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Recent Activities</h3>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                        <h3 class="text-xl font-semibold text-gray-200 mb-4">Recent Activities</h3>
                         <ul class="space-y-3">
-                            <li class="text-gray-600">Published new post: <span class="font-semibold">"7 Habits of Top Students"</span> - 2 hours ago</li>
-                            <li class="text-gray-600">New order for <span class="font-semibold">"Biology Notes"</span> - 5 hours ago</li>
-                            <li class="text-gray-600">Earned commission from <span class="font-semibold">Jane Doe</span> - 1 day ago</li>
-                            <li class="text-gray-600">Added new marketplace listing: <span class="font-semibold">"Math Formula Sheet"</span></li>
+                            <li class="text-gray-300">Published new post: <span class="font-semibold text-blue-400">"7 Habits of Top Students"</span> - 2 hours ago</li>
+                            <li class="text-gray-300">New order for <span class="font-semibold text-blue-400">"Biology Notes"</span> - 5 hours ago</li>
+                            <li class="text-gray-300">Earned commission from <span class="font-semibold text-blue-400">Jane Doe</span> - 1 day ago</li>
+                            <li class="text-gray-300">Added new marketplace listing: <span class="font-semibold text-blue-400">"Math Formula Sheet"</span></li>
                         </ul>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Active Campaigns</h3>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                        <h3 class="text-xl font-semibold text-gray-200 mb-4">Active Campaigns</h3>
                         <ul class="space-y-3">
-                            <li class="text-gray-600">Back-to-School Promo <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-sm">Active</span></li>
-                            <li class="text-gray-600">Exam Prep Referral <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full text-sm">Pending</span></li>
+                            <li class="text-gray-300">Back-to-School Promo <span class="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded-full text-sm">Active</span></li>
+                            <li class="text-gray-300">Exam Prep Referral <span class="bg-yellow-500 bg-opacity-20 text-yellow-400 px-2 py-1 rounded-full text-sm">Pending</span></li>
                         </ul>
-                        <button class="mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Create New Campaign</button>
+                        <button class="mt-4 bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Create New Campaign</button>
                     </div>
                 </div>
             </section>
 
             <!-- Manage Posts Section -->
-            <section data-tab-content="posts" class="space-y-6 hidden">
+            <section data-tab-content="posts" class="space-y-8 hidden animate-slide-in">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-bold text-gray-800">Manage Posts</h2>
-                    <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Create New Post</button>
+                    <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Manage Posts</h2>
+                    <button class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Create New Post</button>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 backdrop-blur-sm bg-opacity-80">
+                <div class="glassmorphic rounded-2xl p-6 neon-glow">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="text-gray-700">
+                            <tr class="text-gray-300">
                                 <th class="p-3">Title</th>
                                 <th class="p-3">Date</th>
                                 <th class="p-3">Views</th>
@@ -99,15 +122,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-t">
-                                <td class="p-3">Sample Post</td>
-                                <td class="p-3">2025-07-28</td>
-                                <td class="p-3">1,200</td>
-                                <td class="p-3">150</td>
-                                <td class="p-3"><span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-sm">Published</span></td>
+                            <tr class="border-t border-gray-700">
+                                <td class="p-3 text-blue-400">Sample Post</td>
+                                <td class="p-3 text-gray-300">2025-07-28</td>
+                                <td class="p-3 text-gray-300">1,200</td>
+                                <td class="p-3 text-gray-300">150</td>
+                                <td class="p-3"><span class="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded-full text-sm">Published</span></td>
                                 <td class="p-3">
-                                    <button class="text-blue-500 hover:underline">Edit</button>
-                                    <button class="text-red-500 hover:underline ml-2">Delete</button>
+                                    <button class="text-blue-400 hover:text-blue-300">Edit</button>
+                                    <button class="text-red-400 hover:text-red-300 ml-2">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -116,56 +139,56 @@
             </section>
 
             <!-- Analytics Section -->
-            <section data-tab-content="analytics" class="space-y-6 hidden">
-                <h2 class="text-3xl font-bold text-gray-800">Analytics</h2>
+            <section data-tab-content="analytics" class="space-y-8 hidden animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Analytics</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Views Over Time</h3>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                        <h3 class="text-xl font-semibold text-gray-200 mb-4">Views Over Time</h3>
                         <canvas id="viewsChart" class="w-full h-64"></canvas>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Top Posts</h3>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                        <h3 class="text-xl font-semibold text-gray-200 mb-4">Top Posts</h3>
                         <ul class="space-y-3">
-                            <li class="text-gray-600">7 Habits of Top Students - <span class="font-semibold">5.2K views</span></li>
-                            <li class="text-gray-600">Biology Notes - <span class="font-semibold">3.8K views</span></li>
+                            <li class="text-gray-300">7 Habits of Top Students - <span class="font-semibold text-blue-400">5.2K views</span></li>
+                            <li class="text-gray-300">Biology Notes - <span class="font-semibold text-blue-400">3.8K views</span></li>
                         </ul>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Engagement by Source</h3>
+                <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                    <h3 class="text-xl font-semibold text-gray-200 mb-4">Engagement by Source</h3>
                     <canvas id="engagementChart" class="w-full h-64"></canvas>
                 </div>
             </section>
 
             <!-- Followers Section -->
-            <section data-tab-content="followers" class="space-y-6 hidden">
-                <h2 class="text-3xl font-bold text-gray-800">Followers</h2>
-                <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Recent Followers</h3>
+            <section data-tab-content="followers" class="space-y-8 hidden animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Followers</h2>
+                <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                    <h3 class="text-xl font-semibold text-gray-200 mb-4">Recent Followers</h3>
                     <ul class="space-y-3">
                         <li class="flex items-center">
-                            <img src="https://via.placeholder.com/40" alt="Follower" class="w-10 h-10 rounded-full mr-3 border-2 border-blue-500">
-                            <span class="text-gray-600">Jane Doe</span>
+                            <img src="https://via.placeholder.com/40" alt="Follower" class="w-10 h-10 rounded-full mr-3 border-2 border-blue-400 neon-glow">
+                            <span class="text-gray-300">Jane Doe</span>
                         </li>
                     </ul>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Send Broadcast Message</h3>
-                    <textarea class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4" placeholder="Write your message..." required></textarea>
-                    <button class="mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Send</button>
+                <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                    <h3 class="text-xl font-semibold text-gray-200 mb-4">Send Broadcast Message</h3>
+                    <textarea class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" rows="4" placeholder="Write your message..." required></textarea>
+                    <button class="mt-4 bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Send</button>
                 </div>
             </section>
 
             <!-- Marketplace Listings Section -->
-            <section data-tab-content="marketplace" class="space-y-6 hidden">
+            <section data-tab-content="marketplace" class="space-y-8 hidden animate-slide-in">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-bold text-gray-800">Marketplace Listings</h2>
-                    <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Add New Listing</button>
+                    <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Marketplace Listings</h2>
+                    <button class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Add New Listing</button>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 backdrop-blur-sm bg-opacity-80">
+                <div class="glassmorphic rounded-2xl p-6 neon-glow">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="text-gray-700">
+                            <tr class="text-gray-300">
                                 <th class="p-3">Item</th>
                                 <th class="p-3">Price</th>
                                 <th class="p-3">Stock</th>
@@ -175,15 +198,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-t">
-                                <td class="p-3">Math Formula Sheet</td>
-                                <td class="p-3">₦5,000</td>
-                                <td class="p-3">10</td>
-                                <td class="p-3"><span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-sm">Active</span></td>
-                                <td class="p-3">25</td>
+                            <tr class="border-t border-gray-700">
+                                <td class="p-3 text-blue-400">Math Formula Sheet</td>
+                                <td class="p-3 text-gray-300">₦5,000</td>
+                                <td class="p-3 text-gray-300">10</td>
+                                <td class="p-3"><span class="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded-full text-sm">Active</span></td>
+                                <td class="p-3 text-gray-300">25</td>
                                 <td class="p-3">
-                                    <button class="text-blue-500 hover:underline">Edit</button>
-                                    <button class="text-red-500 hover:underline ml-2">Delete</button>
+                                    <button class="text-blue-400 hover:text-blue-300">Edit</button>
+                                    <button class="text-red-400 hover:text-red-300 ml-2">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -192,28 +215,28 @@
             </section>
 
             <!-- Commissions & Earnings Section -->
-            <section data-tab-content="commissions" class="space-y-6 hidden">
-                <h2 class="text-3xl font-bold text-gray-800">Commissions & Earnings</h2>
+            <section data-tab-content="commissions" class="space-y-8 hidden animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Commissions & Earnings</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Total Earnings</h3>
-                        <p class="text-2xl font-bold text-blue-600">₦120,000</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Total Earnings</h3>
+                        <p class="text-3xl font-bold text-blue-400">₦120,000</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Withdrawn</h3>
-                        <p class="text-2xl font-bold text-blue-600">₦0</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Withdrawn</h3>
+                        <p class="text-3xl font-bold text-blue-400">₦0</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-lg font-semibold text-gray-700">Available Balance</h3>
-                        <p class="text-2xl font-bold text-blue-600">₦120,000</p>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-lg font-semibold text-gray-200">Available Balance</h3>
+                        <p class="text-3xl font-bold text-blue-400">₦120,000</p>
                     </div>
                 </div>
-                <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Request Withdrawal</button>
-                <div class="bg-white rounded-xl shadow-lg p-6 backdrop-blur-sm bg-opacity-80">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Transaction History</h3>
+                <button class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Request Withdrawal</button>
+                <div class="glassmorphic rounded-2xl p-6 neon-glow">
+                    <h3 class="text-xl font-semibold text-gray-200 mb-4">Transaction History</h3>
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="text-gray-700">
+                            <tr class="text-gray-300">
                                 <th class="p-3">Date</th>
                                 <th class="p-3">Source</th>
                                 <th class="p-3">Amount</th>
@@ -222,12 +245,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-t">
-                                <td class="p-3">2025-07-28</td>
-                                <td class="p-3">Jane Doe</td>
-                                <td class="p-3">₦5,000</td>
-                                <td class="p-3"><span class="bg-green-100 text-green-600 px-2 py-1 rounded-full text-sm">Completed</span></td>
-                                <td class="p-3">Commission</td>
+                            <tr class="border-t border-gray-700">
+                                <td class="p-3 text-gray-300">2025-07-28</td>
+                                <td class="p-3 text-gray-300">Jane Doe</td>
+                                <td class="p-3 text-gray-300">₦5,000</td>
+                                <td class="p-3"><span class="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded-full text-sm">Completed</span></td>
+                                <td class="p-3 text-gray-300">Commission</td>
                             </tr>
                         </tbody>
                     </table>
@@ -235,109 +258,109 @@
             </section>
 
             <!-- Messages Section -->
-            <section data-tab-content="messages" class="space-y-6 hidden">
-                <h2 class="text-3xl font-bold text-gray-800">Messages</h2>
+            <section data-tab-content="messages" class="space-y-8 hidden animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Messages</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Inbox</h3>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                        <h3 class="text-xl font-semibold text-gray-200 mb-4">Inbox</h3>
                         <ul class="space-y-3">
                             <li class="flex items-center">
-                                <img src="https://via.placeholder.com/40" alt="Sender" class="w-10 h-10 rounded-full mr-3 border-2 border-blue-500">
-                                <span class="text-gray-600">John Smith: Great post! - 1 hour ago</span>
+                                <img src="https://via.placeholder.com/40" alt="Sender" class="w-10 h-10 rounded-full mr-3 border-2 border-blue-400 neon-glow">
+                                <span class="text-gray-300">John Smith: Great post! - 1 hour ago</span>
                             </li>
                         </ul>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Send Message</h3>
-                        <input type="text" class="w-full p-3 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Recipient" required>
-                        <textarea class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4" placeholder="Your message..." required></textarea>
-                        <button class="mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Send</button>
+                    <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                        <h3 class="text-xl font-semibold text-gray-200 mb-4">Send Message</h3>
+                        <input type="text" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200 mb-3" placeholder="Recipient" required>
+                        <textarea class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" rows="4" placeholder="Your message..." required></textarea>
+                        <button class="mt-4 bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Send</button>
                     </div>
                 </div>
             </section>
 
             <!-- Profile Settings Section -->
-            <section data-tab-content="profile" class="space-y-6 hidden">
-                <h2 class="text-3xl font-bold text-gray-800">Profile Settings</h2>
-                <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
+            <section data-tab-content="profile" class="space-y-8 hidden animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Profile Settings</h2>
+                <div class="glassmorphic p-6 rounded-2xl neon-glow">
                     <div class="flex items-center mb-6">
-                        <img src="https://via.placeholder.com/80" alt="Profile Photo" class="w-20 h-20 rounded-full border-4 border-blue-500 mr-4">
+                        <img src="https://via.placeholder.com/80" alt="Profile Photo" class="w-20 h-20 rounded-full border-4 border-blue-400 neon-glow mr-4 transform hover:scale-110 transition-all duration-300">
                         <div>
-                            <h3 class="text-xl font-semibold text-gray-800">Sarah Johnson</h3>
-                            <p class="text-gray-600">Update your profile details</p>
+                            <h3 class="text-xl font-semibold text-gray-200">Sarah Johnson</h3>
+                            <p class="text-gray-400">Update your profile details</p>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-gray-700 font-semibold">Full Name</label>
-                            <input type="text" value="Sarah Johnson" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                            <label class="block text-gray-200 font-semibold">Full Name</label>
+                            <input type="text" value="Sarah Johnson" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" required>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-semibold">Email</label>
-                            <input type="email" value="sarah@example.com" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                            <label class="block text-gray-200 font-semibold">Email</label>
+                            <input type="email" value="sarah@example.com" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" required>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-semibold">Phone</label>
-                            <input type="tel" value="+234123456789" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                            <label class="block text-gray-200 font-semibold">Phone</label>
+                            <input type="tel" value="+234123456789" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" required>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-semibold">Bio</label>
-                            <textarea class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4">Passionate about education and marketing.</textarea>
+                            <label class="block text-gray-200 font-semibold">Bio</label>
+                            <textarea class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" rows="4">Passionate about education and marketing.</textarea>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-semibold">Profile Photo</label>
-                            <input type="file" accept="image/*" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <label class="block text-gray-200 font-semibold">Profile Photo</label>
+                            <input type="file" accept="image/*" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200">
                         </div>
-                        <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Save Changes</button>
+                        <button class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Save Changes</button>
                     </div>
                 </div>
             </section>
 
             <!-- Logout Section -->
-            <section data-tab-content="logout" class="space-y-6 hidden">
-                <h2 class="text-3xl font-bold text-gray-800">Logout</h2>
-                <div class="bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-80">
-                    <p class="text-gray-600 mb-4">Are you sure you want to log out?</p>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-300">Confirm Logout</button>
+            <section data-tab-content="logout" class="space-y-8 hidden animate-slide-in">
+                <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Logout</h2>
+                <div class="glassmorphic p-6 rounded-2xl neon-glow">
+                    <p class="text-gray-300 mb-4">Are you sure you want to log out?</p>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 neon-button transition-all duration-300">Confirm Logout</button>
                 </div>
             </section>
 
             <!-- Create/Edit Post Modal -->
-            <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg w-full transform transition-all duration-300 scale-95">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Create/Edit Post</h3>
+            <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
+                <div class="glassmorphic p-6 rounded-2xl max-w-lg w-full transform transition-all duration-500 scale-95 neon-glow">
+                    <h3 class="text-xl font-semibold text-gray-200 mb-4">Create/Edit Post</h3>
                     <div class="space-y-4">
-                        <input type="text" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Post Title" required>
-                        <textarea class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="6" placeholder="Post Content" required></textarea>
-                        <select class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                        <input type="text" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" placeholder="Post Title" required>
+                        <textarea class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" rows="6" placeholder="Post Content" required></textarea>
+                        <select class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" required>
                             <option value="draft">Draft</option>
                             <option value="published">Published</option>
                         </select>
                         <div class="flex justify-end space-x-3">
-                            <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition-all duration-300">Cancel</button>
-                            <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Save</button>
+                            <button class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-all duration-300">Cancel</button>
+                            <button class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Add/Edit Listing Modal -->
-            <div id="listing-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg w-full transform transition-all duration-300 scale-95">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Add/Edit Listing</h3>
+            <div id="listing-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
+                <div class="glassmorphic p-6 rounded-2xl max-w-lg w-full transform transition-all duration-500 scale-95 neon-glow">
+                    <h3 class="text-xl font-semibold text-gray-200 mb-4">Add/Edit Listing</h3>
                     <div class="space-y-4">
-                        <input type="text" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Item Name" required>
-                        <input type="number" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Price (₦)" required>
-                        <input type="number" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Stock" required>
-                        <textarea class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4" placeholder="Description"></textarea>
-                        <select class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                        <input type="text" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" placeholder="Item Name" required>
+                        <input type="number" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" placeholder="Price (₦)" required>
+                        <input type="number" class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" placeholder="Stock" required>
+                        <textarea class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" rows="4" placeholder="Description"></textarea>
+                        <select class="w-full p-3 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-200" required>
                             <option value="active">Active</option>
                             <option value="pending">Pending</option>
                             <option value="inactive">Inactive</option>
                         </select>
                         <div class="flex justify-end space-x-3">
-                            <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition-all duration-300">Cancel</button>
-                            <button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">Save</button>
+                            <button class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-all duration-300">Cancel</button>
+                            <button class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg neon-button transition-all duration-300">Save</button>
                         </div>
                     </div>
                 </div>
@@ -346,165 +369,196 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white p-6 mt-10 shadow-lg backdrop-blur-sm bg-opacity-80">
+    <footer class="glassmorphic p-6 mt-10 shadow-xl">
         <div class="flex justify-between items-center">
-            <p class="text-gray-600">© 2025 Blogger/Marketer Dashboard</p>
+            <p class="text-gray-400">© 2025 BloggerHub. All rights reserved.</p>
             <div class="flex space-x-4">
-                <a href="#" class="text-blue-500 hover:text-blue-600"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.41 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.61.07-.61 1.01.07 1.54 1.04 1.54 1.04.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33s1.7.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.56 4.94.36.31.56.94.56 1.92v2.84c0 .27.18.58.69.48A9.96 9.96 0 0 0 12 2.04z"></path></svg></a>
-                <a href="#" class="text-blue-500 hover:text-blue-600"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.34-1.6.57-2.47.67 1.88-1.13 3.33-2.92 4.01-5.05-.88.52-1.85.88-2.88 1.08C20.3 1.75 19.07 1 17.7 1c-2.72 0-4.92 2.2-4.92 4.92 0 .39.04.77.13 1.13C8.64 6.87 5.07 4.92 2.67 2.05c-.42.72-.66 1.56-.66 2.46 0 1.7.86 3.2 2.17 4.08-.8-.03-1.55-.24-2.21-.6v.06c0 2.38 1.69 4.36 3.93 4.81-.41.11-.84.18-1.29.18-.31 0-.61-.03-.91-.09.62 1.93 2.41 3.33 4.53 3.37-1.66 1.3-3.75 2.07-6.02 2.07-.39 0-.77-.03-1.15-.09 2.13 1.37 4.66 2.17 7.38 2.17 8.85 0 13.69-7.33 13.69-13.69 0-.21 0-.42-.02-.62.94-.68 1.76-1.54 2.41-2.52z"></path></svg></a>
+                <a href="#" class="text-blue-400 hover:text-blue-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.41 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.61.07-.61 1.01.07 1.54 1.04 1.54 1.04.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33s1.7.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.56 4.94.36.31.56.94.56 1.92v2.84c0 .27.18.58.69.48A9.96 9.96 0 0 0 12 2.04z"></path></svg></a>
+                <a href="#" class="text-blue-400 hover:text-blue-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.34-1.6.57-2.47.67 1.88-1.13 3.33-2.92 4.01-5.05-.88.52-1.85.88-2.88 1.08C20.3 1.75 19.07 1 17.7 1c-2.72 0-4.92 2.2-4.92 4.92 0 .39.04.77.13 1.13C8.64 6.87 5.07 4.92 2.67 2.05c-.42.72-.66 1.56-.66 2.46 0 1.7.86 3.2 2.17 4.08-.8-.03-1.55-.24-2.21-.60v.06c0 2.38 1.69 4.36 3.93 4.81-.41.11-.84.18-1.29.18-.31 0-.61-.03-.91-.09.62 1.93 2.41 3.33 4.53 3.37-1.66 1.3-3.75 2.07-6.02 2.07-.39 0-.77-.03-1.15-.09 2.13 1.37 4.66 2.17 7.38 2.17 8.85 0 13.69-7.33 13.69-13.69 0-.21 0-.42-.02-.62.94-.68 1.76-1.54 2.41-2.52z"></path></svg></a>
             </div>
         </div>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    // Tab Switching
-    const tabs = document.querySelectorAll('[data-tab]');
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // Navigation Tab Switching
+    const navLinks = document.querySelectorAll('[data-tab]');
     const tabContents = document.querySelectorAll('[data-tab-content]');
+    const mobileMenuToggle = document.querySelector('[data-collapse-toggle="mobile-menu"]');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Hide all content sections
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            // Hide all tab contents
             tabContents.forEach(content => content.classList.add('hidden'));
-            // Remove active state from all tabs
-            tabs.forEach(t => t.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-500', 'text-white'));
-            // Show selected content
-            const target = document.querySelector(`[data-tab-content="${tab.dataset.tab}"]`);
-            target.classList.remove('hidden');
-            // Add active state to clicked tab
-            tab.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-500', 'text-white');
+            // Show selected tab content
+            const targetContent = document.querySelector(`[data-tab-content="${link.dataset.tab}"]`);
+            if (targetContent) targetContent.classList.remove('hidden');
+            // Close mobile menu
+            mobileMenu.classList.add('hidden');
         });
     });
 
     // Mobile Menu Toggle
-    const mobileMenuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => {
+    mobileMenuToggle.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
 
     // Modal Handling
     const postModal = document.getElementById('post-modal');
     const listingModal = document.getElementById('listing-modal');
-    const openPostModalButton = document.querySelector('button:contains("Create New Post")');
-    const openListingModalButton = document.querySelector('button:contains("Add New Listing")');
-    const closeModalButtons = document.querySelectorAll('button:contains("Cancel")');
+    const createPostBtn = document.querySelector('[data-tab-content="posts"] button');
+    const addListingBtn = document.querySelector('[data-tab-content="marketplace"] button');
+    const closeModalBtns = document.querySelectorAll('.bg-gray-700');
 
-    openPostModalButton.addEventListener('click', () => {
-        postModal.classList.remove('hidden');
-        postModal.querySelector('.scale-95').classList.remove('scale-95');
-    });
+    function openModal(modal) {
+        modal.classList.remove('hidden');
+        modal.querySelector('.scale-95').classList.remove('scale-95');
+    }
 
-    openListingModalButton.addEventListener('click', () => {
-        listingModal.classList.remove('hidden');
-        listingModal.querySelector('.scale-95').classList.remove('scale-95');
-    });
+    function closeModal(modal) {
+        modal.classList.add('hidden');
+        modal.querySelector('.transform').classList.add('scale-95');
+    }
 
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            postModal.classList.add('hidden');
-            listingModal.classList.add('hidden');
-            postModal.querySelector('.scale-95').classList.add('scale-95');
-            listingModal.querySelector('.scale-95').classList.add('scale-95');
+    createPostBtn.addEventListener('click', () => openModal(postModal));
+    addListingBtn.addEventListener('click', () => openModal(listingModal));
+    closeModalBtns.forEach(btn => btn.addEventListener('click', () => {
+        closeModal(postModal);
+        closeModal(listingModal);
+    }));
+
+    // Form Validation and Submission
+    const postForm = postModal.querySelector('form') || postModal.querySelector('.space-y-4');
+    const listingForm = listingModal.querySelector('form') || listingModal.querySelector('.space-y-4');
+    const broadcastForm = document.querySelector('[data-tab-content="followers"] textarea').parentElement;
+    const messageForm = document.querySelector('[data-tab-content="messages"] input + textarea').parentElement;
+    const profileForm = document.querySelector('[data-tab-content="profile"] .space-y-4');
+
+    function validateForm(form, fields) {
+        let isValid = true;
+        fields.forEach(field => {
+            const input = form.querySelector(`[name="${field.name}"]`) || form.querySelector(field.selector);
+            if (!input.value.trim() || (field.type === 'email' && !/^\S+@\S+\.\S+$/.test(input.value))) {
+                isValid = false;
+                input.classList.add('border-red-500');
+                input.classList.remove('border-gray-700');
+            } else {
+                input.classList.remove('border-red-500');
+                input.classList.add('border-gray-700');
+            }
         });
-    });
-
-    // Form Validation
-    const postForm = postModal.querySelector('form');
-    const listingForm = listingModal.querySelector('form');
-    const broadcastForm = document.querySelector('textarea[placeholder="Write your message..."]').parentNode;
-    const messageForm = document.querySelector('input[placeholder="Recipient"]').parentNode;
+        return isValid;
+    }
 
     postForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const title = postForm.querySelector('input').value;
-        const content = postForm.querySelector('textarea').value;
-        if (title.length < 5) {
-            showToast('Post title must be at least 5 characters long.', 'error');
-            return;
+        const fields = [
+            { name: 'title', selector: 'input[placeholder="Post Title"]' },
+            { name: 'content', selector: 'textarea[placeholder="Post Content"]' },
+            { name: 'status', selector: 'select' }
+        ];
+        if (validateForm(postForm, fields)) {
+            alert('Post saved successfully!');
+            closeModal(postModal);
+            // Simulate adding post to table
+            const tbody = document.querySelector('[data-tab-content="posts"] tbody');
+            const row = document.createElement('tr');
+            row.className = 'border-t border-gray-700';
+            row.innerHTML = `
+                <td class="p-3 text-blue-400">${postForm.querySelector('input').value}</td>
+                <td class="p-3 text-gray-300">${new Date().toISOString().split('T')[0]}</td>
+                <td class="p-3 text-gray-300">0</td>
+                <td class="p-3 text-gray-300">0</td>
+                <td class="p-3"><span class="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded-full text-sm">${postForm.querySelector('select').value}</span></td>
+                <td class="p-3">
+                    <button class="text-blue-400 hover:text-blue-300">Edit</button>
+                    <button class="text-red-400 hover:text-red-300 ml-2">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        } else {
+            alert('Please fill all required fields correctly.');
         }
-        if (content.length < 20) {
-            showToast('Post content must be at least 20 characters long.', 'error');
-            return;
-        }
-        showToast('Post saved successfully!', 'success');
-        postModal.classList.add('hidden');
     });
 
     listingForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = listingForm.querySelector('input[placeholder="Item Name"]').value;
-        const price = listingForm.querySelector('input[placeholder="Price (₦)"]').value;
-        const stock = listingForm.querySelector('input[placeholder="Stock"]').value;
-        if (name.length < 3) {
-            showToast('Item name must be at least 3 characters long.', 'error');
-            return;
+        const fields = [
+            { name: 'item', selector: 'input[placeholder="Item Name"]' },
+            { name: 'price', selector: 'input[placeholder="Price (₦)"]' },
+            { name: 'stock', selector: 'input[placeholder="Stock"]' },
+            { name: 'status', selector: 'select' }
+        ];
+        if (validateForm(listingForm, fields)) {
+            alert('Listing saved successfully!');
+            closeModal(listingModal);
+            // Simulate adding listing to table
+            const tbody = document.querySelector('[data-tab-content="marketplace"] tbody');
+            const row = document.createElement('tr');
+            row.className = 'border-t border-gray-700';
+            row.innerHTML = `
+                <td class="p-3 text-blue-400">${listingForm.querySelector('input[placeholder="Item Name"]').value}</td>
+                <td class="p-3 text-gray-300">₦${Number(listingForm.querySelector('input[placeholder="Price (₦)"]').value).toLocaleString()}</td>
+                <td class="p-3 text-gray-300">${listingForm.querySelector('input[placeholder="Stock"]').value}</td>
+                <td class="p-3"><span class="bg-green-500 bg-opacity-20 text-green-400 px-2 py-1 rounded-full text-sm">${listingForm.querySelector('select').value}</span></td>
+                <td class="p-3 text-gray-300">0</td>
+                <td class="p-3">
+                    <button class="text-blue-400 hover:text-blue-300">Edit</button>
+                    <button class="text-red-400 hover:text-red-300 ml-2">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        } else {
+            alert('Please fill all required fields correctly.');
         }
-        if (price <= 0) {
-            showToast('Price must be a positive number.', 'error');
-            return;
-        }
-        if (stock < 0) {
-            showToast('Stock cannot be negative.', 'error');
-            return;
-        }
-        showToast('Listing saved successfully!', 'success');
-        listingModal.classList.add('hidden');
     });
 
-    broadcastForm.querySelector('button').addEventListener('click', (e) => {
-        e.preventDefault();
-        const message = broadcastForm.querySelector('textarea').value;
-        if (message.length < 10) {
-            showToast('Broadcast message must be at least 10 characters long.', 'error');
-            return;
+    broadcastForm.querySelector('button').addEventListener('click', () => {
+        const textarea = broadcastForm.querySelector('textarea');
+        if (textarea.value.trim()) {
+            alert('Broadcast message sent!');
+            textarea.value = '';
+        } else {
+            textarea.classList.add('border-red-500');
+            alert('Please enter a message.');
         }
-        showToast('Broadcast message sent!', 'success');
     });
 
-    messageForm.querySelector('button').addEventListener('click', (e) => {
-        e.preventDefault();
-        const recipient = messageForm.querySelector('input').value;
-        const message = messageForm.querySelector('textarea').value;
-        if (!recipient) {
-            showToast('Recipient is required.', 'error');
-            return;
+    messageForm.querySelector('button').addEventListener('click', () => {
+        const inputs = [
+            { name: 'recipient', selector: 'input[placeholder="Recipient"]' },
+            { name: 'message', selector: 'textarea[placeholder="Your message..."]' }
+        ];
+        if (validateForm(messageForm, inputs)) {
+            alert('Message sent successfully!');
+            messageForm.querySelector('input').value = '';
+            messageForm.querySelector('textarea').value = '';
+            // Simulate adding to inbox
+            const inbox = document.querySelector('[data-tab-content="messages"] ul');
+            const li = document.createElement('li');
+            li.className = 'flex items-center';
+            li.innerHTML = `
+                <img src="https://via.placeholder.com/40" alt="Sender" class="w-10 h-10 rounded-full mr-3 border-2 border-blue-400 neon-glow">
+                <span class="text-gray-300">You to ${messageForm.querySelector('input').value}: ${messageForm.querySelector('textarea').value} - Just now</span>
+            `;
+            inbox.appendChild(li);
+        } else {
+            alert('Please fill all required fields correctly.');
         }
-        if (message.length < 5) {
-            showToast('Message must be at least 5 characters long.', 'error');
-            return;
-        }
-        showToast('Message sent!', 'success');
     });
 
-    // Profile Form Validation
-    const profileForm = document.querySelector('[data-tab-content="profile"] form');
-    profileForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = profileForm.querySelector('input[type="email"]').value;
-        const phone = profileForm.querySelector('input[type="tel"]').value;
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showToast('Invalid email format.', 'error');
-            return;
+    profileForm.querySelector('button').addEventListener('click', () => {
+        const fields = [
+            { name: 'name', selector: 'input[value="Sarah Johnson"]', type: 'text' },
+            { name: 'email', selector: 'input[value="sarah@example.com"]', type: 'email' },
+            { name: 'phone', selector: 'input[value="+234123456789"]', type: 'tel' }
+        ];
+        if (validateForm(profileForm, fields)) {
+            alert('Profile updated successfully!');
+        } else {
+            alert('Please fill all required fields correctly.');
         }
-        if (!/^\+?\d{10,14}$/.test(phone)) {
-            showToast('Invalid phone number.', 'error');
-            return;
-        }
-        showToast('Profile updated successfully!', 'success');
     });
-
-    // Toast Notification
-    function showToast(message, type) {
-        const toast = document.createElement('div');
-        toast.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white animate-pulse ${
-            type === 'success' ? 'bg-green-500' : 'bg-red-500'
-        }`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
-    }
 
     // Chart.js for Analytics
     const viewsChart = new Chart(document.getElementById('viewsChart'), {
@@ -525,17 +579,18 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: { display: true, text: 'Views', color: '#1f2937' },
-                    grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    title: { display: true, text: 'Views', color: '#e5e7eb' },
+                    ticks: { color: '#e5e7eb' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
                 },
                 x: {
-                    title: { display: true, text: 'Weeks', color: '#1f2937' },
-                    grid: { display: false }
+                    title: { display: true, text: 'Weeks', color: '#e5e7eb' },
+                    ticks: { color: '#e5e7eb' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
                 }
             },
             plugins: {
-                legend: { labels: { color: '#1f2937' } },
-                tooltip: { backgroundColor: '#1f2937' }
+                legend: { labels: { color: '#e5e7eb' } }
             }
         }
     });
@@ -543,33 +598,41 @@
     const engagementChart = new Chart(document.getElementById('engagementChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Social Media', 'Direct', 'Referral', 'Search'],
+            labels: ['Social Media', 'Direct', 'Referral', 'Organic'],
             datasets: [{
                 data: [40, 30, 20, 10],
-                backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'],
-                borderColor: '#ffffff',
+                backgroundColor: ['#3b82f6', '#ec4899', '#10b981', '#f59e0b'],
+                borderColor: '#1e293b',
                 borderWidth: 2
             }]
         },
         options: {
             responsive: true,
             plugins: {
-                legend: { position: 'bottom', labels: { color: '#1f2937' } },
-                tooltip: { backgroundColor: '#1f2937' }
+                legend: { position: 'bottom', labels: { color: '#e5e7eb' } }
             }
         }
     });
 
     // Logout Confirmation
-    const logoutButton = document.querySelector('[data-tab-content="logout"] button');
-    logoutButton.addEventListener('click', () => {
-        showToast('Logged out successfully!', 'success');
-        setTimeout(() => {
-            // Simulate logout redirect (replace with actual logic)
-            window.location.href = '#';
-        }, 1000);
+    document.querySelector('[data-tab-content="logout"] button').addEventListener('click', () => {
+        if (confirm('Are you sure you want to log out?')) {
+            alert('Logged out successfully!');
+            // Simulate logout (e.g., redirect to login page)
+            window.location.href = '/login';
+        }
+    });
+
+    // Delete Button Handling (Sample)
+    document.querySelectorAll('[data-tab-content="posts"] tbody button.text-red-400, [data-tab-content="marketplace"] tbody button.text-red-400').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete this item?')) {
+                btn.closest('tr').remove();
+                alert('Item deleted successfully!');
+            }
+        });
     });
 });
-    </script>
+</script>        
 </body>
 </html>
