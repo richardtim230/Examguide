@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4: Advanced Styling & Final Project Manual</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2980b9;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #c0392b;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .day {
+            background: #f0f3f5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 6px solid #2980b9;
+        }
+        .goal {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background: #e8ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        .note {
+            background: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2980b9;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: #1f6391;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .day {
+                padding: 15px;
+            }
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Week 4 Manual: Advanced Styling & Final Project</h1>
+        <p class="goal"><strong>Goal:</strong> Add interactivity to your web pages with CSS transitions, transforms, and animations, style forms, and create a polished multi-page website as your final project.</p>
+        <div class="nav-buttons">
+            <a href="week3-manual.html" class="nav-button">View Week 3 Manual</a>
+            <a href="javascript-schedule.html" class="nav-button">View JavaScript Learning Plan</a>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="day">
+            <h2>Day 1 (Thursday): Transitions, Transforms & Basic Animations</h2>
+            <h3>What's Happening Today?</h3>
+            <p>Today, you'll learn how to add smooth transitions, visual transformations, and basic animations to make your web pages more dynamic and engaging.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>CSS Transitions:</h4>
+            <ul>
+                <li><strong>Transitions:</strong> Smoothly change property values over time when triggered (e.g., on hover).</li>
+                <li><strong><code>transition-property</code>:</strong> Specifies which CSS properties to transition (e.g., <code>background-color</code>, <code>all</code>).</li>
+                <li><strong><code>transition-duration</code>:</strong> Sets the duration (e.g., <code>0.3s</code>, <code>300ms</code>).</li>
+                <li><strong><code>transition-timing-function</code>:</strong> Controls the speed curve (e.g., <code>ease</code>, <code>linear</code>, <code>ease-in-out</code>).</li>
+                <li><strong><code>transition-delay</code>:</strong> Delays the start of the transition (e.g., <code>0.1s</code>).</li>
+                <li><strong>Shorthand <code>transition</code>:</strong> Combines all properties (e.g., <code>transition: background-color 0.3s ease;</code>).</li>
+                <li>Example:</li>
+                <pre><code>button {
+    background-color: #3498db;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #1f6391;
+}</code></pre>
+            </ul>
+
+            <h4>CSS Transforms:</h4>
+            <ul>
+                <li><strong>Transforms:</strong> Modify an element's appearance or position (e.g., rotate, scale, move).</li>
+                <li><strong><code>translate(x, y)</code>:</strong> Moves an element (e.g., <code>translate(10px, 20px)</code>).</li>
+                <li><strong><code>rotate(deg)</code>:</strong> Rotates an element (e.g., <code>rotate(45deg)</code>).</li>
+                <li><strong><code>scale(x, y)</code>:</strong> Resizes an element (e.g., <code>scale(1.2)</code> for 20% larger).</li>
+                <li><strong><code>skew(x, y)</code>:</strong> Skews an element along the x/y axis (e.g., <code>skew(10deg, 0)</code>).</li>
+                <li>Example:</li>
+                <pre><code>.image {
+    transition: transform 0.3s ease;
+}
+.image:hover {
+    transform: scale(1.1) rotate(5deg);
+}</code></pre>
+            </ul>
+
+            <h4>Basic CSS Animations:</h4>
+            <ul>
+                <li><strong><code>@keyframes</code>:</strong> Defines the animation steps.</li>
+                <li><strong>Animation Properties:</strong></li>
+                <ul>
+                    <li><code>animation-name</code>: Links to a <code>@keyframes</code> rule.</li>
+                    <li><code>animation-duration</code>: Sets the duration.</li>
+                    <li><code>animation-iteration-count</code>: Number of times to repeat (e.g., <code>infinite</code>, <code>3</code>).</li>
+                    <li><code>animation-timing-function</code>: Like transitions (e.g., <code>ease</code>).</li>
+                </ul>
+                <li><strong>Shorthand <code>animation</code>:</strong> Combines properties.</li>
+                <li>Example:</li>
+                <pre><code>@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+.element {
+    animation: pulse 2s infinite ease-in-out;
+}</code></pre>
+                <li class="note"><strong>Note:</strong> Use animations sparingly to avoid overwhelming users. Test with Chrome DevTools to fine-tune timing.</li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Add Interactivity</h3>
+            <h4>Add Transition Effects:</h4>
+            <ul>
+                <li>Open your <code>index.html</code> or <code>recipe.html</code> and its CSS file.</li>
+                <li>Add a button or link with a hover transition:</li>
+                <pre><code>&lt;button class="cta-button"&gt;Learn More&lt;/button&gt;</code></pre>
+                <pre><code>.cta-button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.cta-button:hover {
+    background-color: #1f6391;
+    transform: translateY(-2px);
+}</code></pre>
+            </ul>
+
+            <h4>Apply a Transform:</h4>
+            <ul>
+                <li>Add a transform to an image on hover:</li>
+                <pre><code>&lt;img src="my-image.jpg" alt="Description" class="hover-image"&gt;</code></pre>
+                <pre><code>.hover-image {
+    transition: transform 0.3s ease;
+}
+.hover-image:hover {
+    transform: scale(1.05) rotate(2deg);
+}</code></pre>
+            </ul>
+
+            <h4>Create a Pulsating Effect:</h4>
+            <ul>
+                <li>Add a pulsating animation to an element (e.g., a badge or icon):</li>
+                <pre><code>&lt;div class="badge"&gt;New!&lt;/div&gt;</code></pre>
+                <pre><code>@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+.badge {
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    animation: pulse 1.5s infinite ease-in-out;
+}</code></pre>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Find Transition/Transform Examples:</strong> Browse websites and identify at least three examples of transitions or transforms (e.g., buttons that change color, images that zoom).</li>
+                <li>Take notes on what properties are used (use Chrome DevTools to inspect).</li>
+                <li>Try replicating one effect in your <code>recipe.html</code> or another page.</li>
+            </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day">
+            <h2>Day 2 (Friday): Forms & Pseudo-Classes/Elements</h2>
+            <h3>What's Happening Today?</h3>
+            <p>You'll learn how to style HTML forms to make them user-friendly and visually appealing, and use pseudo-classes and pseudo-elements to add dynamic and decorative effects.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>Styling Forms:</h4>
+            <ul>
+                <li><strong>Form Elements:</strong> Common elements include <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>, and <code>&lt;button&gt;</code>.</li>
+                <li><strong><code>&lt;input&gt;</code> Types:</strong> <code>text</code>, <code>email</code>, <code>password</code>, <code>submit</code>, etc.</li>
+                <li>Styling Tips:</li>
+                <ul>
+                    <li>Use padding and borders for clarity.</li>
+                    <li>Ensure sufficient contrast for readability.</li>
+                    <li>Style <code>:focus</code> states for accessibility.</li>
+                </ul>
+                <li>Example:</li>
+                <pre><code>input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+input[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}</code></pre>
+            </ul>
+
+            <h4>Pseudo-Classes:</h4>
+            <ul>
+                <li><strong>Pseudo-Classes:</strong> Style elements based on their state or position.</li>
+                <li>Common ones:</li>
+                <ul>
+                    <li><code>:hover</code>: When the mouse hovers over an element.</li>
+                    <li><code>:active</code>: When an element is being clicked.</li>
+                    <li><code>:focus</code>: When an element is selected (e.g., input field).</li>
+                    <li><code>:nth-child(n)</code>: Targets elements based on their position (e.g., <code>:nth-child(2)</code> for the second child).</li>
+                    <li><code>:first-child</code>, <code>:last-child</code>: Target the first or last child.</li>
+                </ul>
+                <li>Example:</li>
+                <pre><code>input:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+li:nth-child(odd) {
+    background-color: #f0f3f5;
+}</code></pre>
+            </ul>
+
+            <h4>Pseudo-Elements:</h4>
+            <ul>
+                <li><strong>Pseudo-Elements:</strong> Style specific parts of an element.</li>
+                <li>Common ones:</li>
+                <ul>
+                    <li><code>::before</code>: Inserts content before an element's content.</li>
+                    <li><code>::after</code>: Inserts content after an element's content.</li>
+                </ul>
+                <li>Requires <code>content</code> property (even if empty, e.g., <code>content: '';</code>).</li>
+                <li>Example:</li>
+                <pre><code>h2::before {
+    content: '★ ';
+    color: #e74c3c;
+}
+.button::after {
+    content: ' →';
+    margin-left: 5px;
+}</code></pre>
+            </ul>
+
+            <h3>Your Hands-On Activity: Create and Style a Contact Form</h3>
+            <h4>Create a Form:</h4>
+            <ul>
+                <li>Create a new HTML file (e.g., <code>contact.html</code>) and CSS file.</li>
+                <li>Add a contact form:</li>
+                <pre><code>&lt;section class="contact-form"&gt;
+    &lt;h2&gt;Contact Us&lt;/h2&gt;
+    &lt;form&gt;
+        &lt;label for="name"&gt;Name:&lt;/label&gt;
+        &lt;input type="text" id="name" name="name" required&gt;
+        &lt;label for="email"&gt;Email:&lt;/label&gt;
+        &lt;input type="email" id="email" name="email" required&gt;
+        &lt;label for="message"&gt;Message:&lt;/label&gt;
+        &lt;textarea id="message" name="message" rows="5"&gt;&lt;/textarea&gt;
+        &lt;button type="submit"&gt;Send&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/section&gt;</code></pre>
+            </ul>
+
+            <h4>Style the Form:</h4>
+            <ul>
+                <li>In your CSS file:</li>
+                <pre><code>.contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+input:focus, textarea:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #1f6391;
+}</code></pre>
+            </ul>
+
+            <h4>Add Pseudo-Elements:</h4>
+            <ul>
+                <li>Add a decorative element to your form heading:</li>
+                <pre><code>.contact-form h2::before {
+    content: '✉ ';
+    color: #e74c3c;
+}</code></pre>
+                <li>Add an arrow after the submit button:</li>
+                <pre><code>button::after {
+    content: ' →';
+    margin-left: 5px;
+}</code></pre>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Design a Login/Registration Form:</strong> Create a new HTML/CSS file pair.</li>
+                <li>Include inputs for username, password, and a submit button.</li>
+                <li>Style it with consistent padding, borders, and focus states.</li>
+                <li>Use pseudo-classes like <code>:hover</code> and <code>:focus</code> for interactivity.</li>
+                <li>Add a pseudo-element (e.g., <code>::before</code> for a decorative icon).</li>
+            </ul>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="day">
+            <h2>Day 3 (Saturday): Final Project & Review</h2>
+            <h3>What's Happening Today?</h3>
+            <p>Today, you'll review HTML and CSS best practices, debug with DevTools, and work on a multi-page website project (e.g., portfolio, product landing, or blog) that showcases everything you've learned.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>HTML & CSS Review:</h4>
+            <ul>
+                <li><strong>Semantic HTML:</strong> Use tags like <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code> for meaningful structure.</li>
+                <li><strong>External Stylesheets:</strong> Keep CSS in separate <code>.css</code> files for maintainability.</li>
+                <li><strong>Naming Conventions:</strong> Use clear, consistent class/ID names (e.g., <code>.navbar</code>, <code>.hero-section</code>).</li>
+                <li><strong>Basic Accessibility:</strong></li>
+                <ul>
+                    <li>Use <code>alt</code> attributes for images.</li>
+                    <li>Ensure sufficient color contrast.</li>
+                    <li>Use semantic tags for screen readers.</li>
+                    <li>Add <code>aria-label</code> where needed (e.g., for buttons with no text).</li>
+                </ul>
+            </ul>
+
+            <h4>Debugging with DevTools:</h4>
+            <ul>
+                <li><strong>Chrome DevTools:</strong> Right-click an element and select "Inspect" to open.</li>
+                <li>Key Features:</li>
+                <ul>
+                    <li><strong>Elements Tab:</strong> View and edit HTML/CSS in real-time.</li>
+                    <li><strong>Styles Pane:</strong> See applied styles and toggle properties.</li>
+                    <li><strong>Computed Tab:</strong> View final calculated styles (e.g., box model).</li>
+                    <li><strong>Console:</strong> Check for errors or warnings.</li>
+                </ul>
+                <li>Example: If a margin isn't working, check if a parent element's <code>overflow</code> or <code>display</code> is affecting it.</li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Build Your Multi-Page Website</h3>
+            <h4>Plan Your Project:</h4>
+            <ul>
+                <li>Revisit your multi-section page idea from Week 1 (e.g., portfolio, product landing, blog).</li>
+                <li>Create a folder structure:</li>
+                <pre><code>my-website/
+├── index.html
+├── about.html
+├── contact.html
+├── css/
+│   └── styles.css
+└── images/</code></pre>
+                <li>Pages to include:</li>
+                <ul>
+                    <li><code>index.html</code>: Home page with a hero section and overview.</li>
+                    <li><code>about.html</code>: About page with your bio or product details.</li>
+                    <li><code>contact.html</code>: Contact form from Day 2.</li>
+                </ul>
+            </ul>
+
+            <h4>Build the Structure:</h4>
+            <ul>
+                <li>Use semantic HTML for each page:</li>
+                <pre><code>&lt;header&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+    &lt;section class="hero"&gt;
+        &lt;h2&gt;Welcome&lt;/h2&gt;
+        &lt;p&gt;...&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section class="content"&gt;
+        &lt;!-- Page-specific content --&gt;
+    &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+    &lt;p&gt;© 2025 Your Name&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+            </ul>
+
+            <h4>Style with All Learned Techniques:</h4>
+            <ul>
+                <li>In <code>styles.css</code>, apply:</li>
+                <ul>
+                    <li><strong>Layout:</strong> Use Flexbox or Grid for page structure (e.g., navigation, content areas).</li>
+                    <li><strong>Styling:</strong> Use colors, fonts, and box model properties from Week 2.</li>
+                    <li><strong>Interactivity:</strong> Add transitions/transforms from Day 1.</li>
+                    <li><strong>Forms:</strong> Style navigation links or form elements with pseudo-classes/elements.</li>
+                </ul>
+                <li>Example:</li>
+                <pre><code>* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+nav ul {
+    display: flex;
+    list-style: none;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+nav a:hover {
+    color: #3498db;
+}
+.hero {
+    background: url('images/hero.jpg') no-repeat center/cover;
+    padding: 50px;
+    text-align: center;
+}
+.hero h2 {
+    font-size: 36px;
+    animation: fadeIn 1s ease-in;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}</code></pre>
+            </ul>
+
+            <h4>Debug and Test:</h4>
+            <ul>
+                <li>Use Chrome DevTools to:</li>
+                <ul>
+                    <li>Check for overlapping elements (use <code>z-index</code> if needed).</li>
+                    <li>Ensure responsiveness by testing in the "Device Toolbar" mode.</li>
+                    <li>Verify accessibility (e.g., sufficient contrast, <code>alt</code> attributes).</li>
+                </ul>
+                <li>Test navigation links to ensure they work across pages.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Polish Your Website:</strong> Add at least one new feature (e.g., a hover effect, an animation, or a styled form).</li>
+                <li><strong>Review Accessibility:</strong> Check your site with a screen reader (e.g., NVDA or VoiceOver) or use an online accessibility checker.</li>
+                <li><strong>Q&A Prep:</strong> Write down any questions about HTML/CSS or issues you encountered for a Q&A session.</li>
+            </ul>
+
+            <h3>End of Week 4!</h3>
+            <p>Congratulations! You've built a multi-page website using HTML and CSS, incorporating layouts, styling, and interactivity. You've learned semantic HTML, CSS selectors, the box model, Flexbox, Grid, transitions, animations, and form styling. You're ready to move on to JavaScript for dynamic functionality!</p>
+        </div>
+    </div>
+</body>
+</html>
