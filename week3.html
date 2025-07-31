@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>Week 3: CSS Layout & Positioning Manual</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2980b9;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #c0392b;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .day {
+            background: #f0f3f5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 6px solid #2980b9;
+        }
+        .goal {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background: #e8ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        .note {
+            background: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2980b9;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: #1f6391;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .day {
+                padding: 15px;
+            }
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Week 3 Manual: CSS - Layout & Positioning</h1>
+        <p class="goal"><strong>Goal:</strong> Master CSS layout techniques to arrange elements precisely on a web page, creating responsive and professional designs using floats, positioning, Flexbox, and CSS Grid.</p>
+        <div class="nav-buttons">
+            <a href="week2.html" class="nav-button">View Week 2 Manual</a>
+            <a href="dev2.html" class="nav-button">View JavaScript Learning Plan</a>
+<a href="week4.html" class="nav-button">View Week 4 Manual</a>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="day">
+            <h2>Day 1 (Thursday): Floats & Basic Positioning</h2>
+            <h3>What's Happening Today?</h3>
+            <p>Today, you'll learn how to arrange elements side by side using floats and control their position on the page with CSS positioning properties. These are foundational techniques for creating layouts before moving to more modern methods.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>Floats:</h4>
+            <ul>
+                <li><strong><code>float</code>:</strong> Moves an element to the left or right, allowing content to wrap around it (originally designed for text wrapping around images).</li>
+                <li>Values: <code>left</code>, <code>right</code>, <code>none</code>.</li>
+                <li>Example: <code>float: left;</code> makes an element move to the left, with other content wrapping around its right side.</li>
+                <li><strong>Clearing Floats:</strong> When elements are floated, they can disrupt the normal flow of the page. Use <code>clear</code> to ensure elements appear below floated elements.</li>
+                <ul>
+                    <li><code>clear: left;</code>, <code>clear: right;</code>, <code>clear: both;</code>.</li>
+                    <li><strong>Clearfix Hack:</strong> Used to ensure a parent container wraps around its floated children.</li>
+                </ul>
+                <li>Example (Float with Clearfix):</li>
+                <pre><code>.container {
+    overflow: auto; /* Clearfix method */
+}
+.float-left {
+    float: left;
+    width: 50%;
+}
+.float-right {
+    float: right;
+    width: 50%;
+}</code></pre>
+                <li class="note"><strong>Note:</strong> Floats are older and less flexible than Flexbox or Grid, but understanding them is useful for legacy code or specific use cases like image alignment.</li>
+            </ul>
+
+            <h4>CSS Positioning:</h4>
+            <ul>
+                <li><strong><code>position</code>:</strong> Defines how an element is positioned in the document.</li>
+                <ul>
+                    <li><code>static</code>: Default. Element follows normal flow.</li>
+                    <li><code>relative</code>: Positioned relative to its normal position. Use <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> to offset.</li>
+                    <li><code>absolute</code>: Positioned relative to the nearest positioned ancestor (not <code>static</code>). Removes element from normal flow.</li>
+                    <li><code>fixed</code>: Positioned relative to the viewport. Stays in place even when scrolling.</li>
+                    <li><code>sticky</code>: Toggles between <code>relative</code> and <code>fixed</code> based on scroll position.</li>
+                </ul>
+                <li><strong><code>z-index</code>:</strong> Controls stacking order of positioned elements (higher values appear on top).</li>
+                <li>Example:</li>
+                <pre><code>.relative-box {
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+.fixed-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}</code></pre>
+            </ul>
+
+            <h3>Your Hands-On Activity: Create a Two-Column Layout & Fixed Button</h3>
+            <h4>Create a Two-Column Layout with Floats:</h4>
+            <ul>
+                <li>Open your <code>index.html</code> or create a new <code>layout.html</code>.</li>
+                <li>Add two <code>&lt;div&gt;</code> elements for content (e.g., main content and sidebar).</li>
+                <pre><code>&lt;div class="container"&gt;
+    &lt;div class="main-content"&gt;
+        &lt;h2&gt;Main Content&lt;/h2&gt;
+        &lt;p&gt;This is the main content area...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="sidebar"&gt;
+        &lt;h2&gt;Sidebar&lt;/h2&gt;
+        &lt;p&gt;This is the sidebar content...&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <li>In <code>styles.css</code>, style the layout with floats:</li>
+                <pre><code>.container {
+    overflow: auto; /* Clearfix */
+}
+.main-content {
+    float: left;
+    width: 70%;
+    padding: 15px;
+}
+.sidebar {
+    float: right;
+    width: 30%;
+    padding: 15px;
+    background-color: #f0f3f5;
+}</code></pre>
+                <li>Add a footer below the floated elements using <code>clear: both;</code>:</li>
+                <pre><code>&lt;footer&gt;
+    &lt;p&gt;Footer content goes here.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+                <pre><code>footer {
+    clear: both;
+    text-align: center;
+    padding: 10px;
+}</code></pre>
+            </ul>
+
+            <h4>Add a "Back to Top" Button:</h4>
+            <ul>
+                <li>Add a button to your HTML:</li>
+                <pre><code>&lt;button class="back-to-top"&gt;Back to Top&lt;/button&gt;</code></pre>
+                <li>Style it with <code>position: fixed</code>:</li>
+                <pre><code>.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 100;
+}</code></pre>
+                <li class="note"><strong>Note:</strong> The button won't scroll with the page due to <code>position: fixed</code>. Test it by adding enough content to your page to enable scrolling.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Recreate a Magazine Layout:</strong> Create a new HTML file (e.g., <code>magazine.html</code>) and CSS file.</li>
+                <li>Design a simple magazine-style layout with:</li>
+                <ul>
+                    <li>A floated image on the left or right with text wrapping around it.</li>
+                    <li>A main article section and a sidebar with related content.</li>
+                    <li>Use <code>clear</code> or clearfix to ensure proper layout.</li>
+                </ul>
+                <li>Apply positioning to place a decorative element (e.g., a badge or icon) using <code>position: absolute</code> within a relatively positioned container.</li>
+            </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day">
+            <h2>Day 2 (Friday): Flexbox - 1D Layout</h2>
+            <h3>What's Happening Today?</h3>
+            <p>You'll learn Flexbox, a modern CSS layout model for arranging elements in a single dimension (row or column). It's powerful for creating responsive layouts with less hassle than floats.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>Flexbox Intro:</h4>
+            <ul>
+                <li>Flexbox is a one-dimensional layout system, ideal for rows or columns.</li>
+                <li>It consists of a <strong>flex container</strong> (parent) and <strong>flex items</strong> (children).</li>
+                <li>Apply <code>display: flex;</code> to the parent to enable Flexbox.</li>
+            </ul>
+
+            <h4>Flex Container Properties:</h4>
+            <ul>
+                <li><strong><code>display: flex;</code>:</strong> Turns an element into a flex container.</li>
+                <li><strong><code>flex-direction</code>:</strong> Defines the main axis (<code>row</code>, <code>row-reverse</code>, <code>column</code>, <code>column-reverse</code>).</li>
+                <li><strong><code>justify-content</code>:</strong> Aligns items along the main axis (<code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>).</li>
+                <li><strong><code>align-items</code>:</strong> Aligns items along the cross axis (<code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>baseline</code>, <code>stretch</code>).</li>
+                <li><strong><code>flex-wrap</code>:</strong> Controls whether items wrap to new lines (<code>nowrap</code>, <code>wrap</code>, <code>wrap-reverse</code>).</li>
+                <li><strong><code>align-content</code>:</strong> Aligns wrapped lines when there's extra space (<code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code>).</li>
+                <li>Example:</li>
+                <pre><code>.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}</code></pre>
+            </ul>
+
+            <h4>Flex Item Properties:</h4>
+            <ul>
+                <li><strong><code>order</code>:</strong> Changes the order of a flex item (default is 0).</li>
+                <li><strong><code>flex-grow</code>:</strong> Defines how much an item grows relative to others (e.g., <code>1</code>).</li>
+                <li><strong><code>flex-shrink</code>:</strong> Defines how much an item shrinks relative to others.</li>
+                <li><strong><code>flex-basis</code>:</strong> Sets the initial size of an item before growing/shrinking (e.g., <code>200px</code>).</li>
+                <li><strong><code>flex</code>:</strong> Shorthand for <code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code> (e.g., <code>flex: 1 1 200px;</code>).</li>
+                <li><strong><code>align-self</code>:</strong> Overrides <code>align-items</code> for a specific item.</li>
+                <li>Example:</li>
+                <pre><code>.flex-item {
+    flex: 1;
+    align-self: flex-end;
+}</code></pre>
+            </ul>
+
+            <h3>Your Hands-On Activity: Convert to Flexbox & Create a Navigation Bar</h3>
+            <h4>Convert Float Layout to Flexbox:</h4>
+            <ul>
+                <li>Open your <code>layout.html</code> or <code>index.html</code> from Day 1.</li>
+                <li>Replace the float-based layout with Flexbox:</li>
+                <pre><code>.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.main-content {
+    flex: 2; /* Takes up twice as much space as sidebar */
+    padding: 15px;
+}
+.sidebar {
+    flex: 1;
+    padding: 15px;
+    background-color: #f0f3f5;
+}</code></pre>
+                <li>Remove <code>float</code> and <code>clear</code> properties.</li>
+                <li>Test with Live Server and resize the browser to see how Flexbox handles wrapping (if <code>flex-wrap: wrap;</code> is set).</li>
+            </ul>
+
+            <h4>Create a Responsive Navigation Bar:</h4>
+            <ul>
+                <li>In your HTML, add a <code>&lt;nav&gt;</code> element with a list of links:</li>
+                <pre><code>&lt;nav class="navbar"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+                <li>Style it with Flexbox:</li>
+                <pre><code>.navbar ul {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0;
+}
+.navbar li {
+    padding: 10px;
+}
+.navbar a {
+    text-decoration: none;
+    color: #2980b9;
+}</code></pre>
+                <li>Add hover effects (you'll learn more about these next week):</li>
+                <pre><code>.navbar a:hover {
+    color: #1f6391;
+    text-decoration: underline;
+}</code></pre>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Build an Image Gallery or Product Cards:</strong> Create a new HTML file (e.g., <code>gallery.html</code>) and CSS file.</li>
+                <li>Add several images or product cards (use <code>&lt;div&gt;</code> with an <code>&lt;img&gt;</code> and text).</li>
+                <li>Use Flexbox to arrange them in a row, with wrapping for responsiveness:</li>
+                <pre><code>.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.gallery-item {
+    flex: 1 1 200px; /* Grow, shrink, basis */
+    text-align: center;
+}</code></pre>
+                <li>Test responsiveness by resizing your browser.</li>
+            </ul>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="day">
+            <h2>Day 3 (Saturday): CSS Grid - 2D Layout</h2>
+            <h3>What's Happening Today?</h3>
+            <p>You'll learn CSS Grid, a powerful two-dimensional layout system for creating complex page layouts. Grid is ideal for structuring entire pages or sections with precise control over rows and columns.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>CSS Grid Intro:</h4>
+            <ul>
+                <li>Grid is a two-dimensional layout system, controlling both rows and columns simultaneously.</li>
+                <li>Like Flexbox, it involves a <strong>grid container</strong> and <strong>grid items</strong>.</li>
+                <li>Apply <code>display: grid;</code> to the parent to enable Grid.</li>
+            </ul>
+
+            <h4>Grid Container Properties:</h4>
+            <ul>
+                <li><strong><code>display: grid;</code>:</strong> Turns an element into a grid container.</li>
+                <li><strong><code>grid-template-columns</code>:</strong> Defines the number and size of columns (e.g., <code>100px 200px</code>, <code>1fr 2fr</code>).</li>
+                <li><strong><code>grid-template-rows</code>:</strong> Defines the number and size of rows.</li>
+                <li><strong><code>gap</code>:</strong> Sets spacing between grid cells (e.g., <code>gap: 20px;</code>).</li>
+                <li><strong><code>fr</code> Unit:</strong> Represents a fraction of available space (e.g., <code>1fr 1fr</code> splits space equally).</li>
+                <li><strong><code>repeat()</code>:</strong> Simplifies defining multiple columns/rows (e.g., <code>repeat(3, 1fr)</code> for three equal columns).</li>
+                <li><strong><code>minmax()</code>:</strong> Sets a range for sizes (e.g., <code>minmax(100px, 1fr)</code>).</li>
+                <li>Example:</li>
+                <pre><code>.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 100px 200px;
+    gap: 15px;
+}</code></pre>
+            </ul>
+
+            <h4>Grid Item Properties:</h4>
+            <ul>
+                <li><strong><code>grid-column</code>:</strong> Specifies which column(s) an item spans (e.g., <code>grid-column: 1 / 3;</code> spans from column 1 to 3).</li>
+                <li><strong><code>grid-row</code>:</strong> Specifies which row(s) an item spans.</li>
+                <li>Example:</li>
+                <pre><code>.grid-item {
+    grid-column: 1 / span 2; /* Spans two columns */
+    grid-row: 1 / 2;
+}</code></pre>
+            </ul>
+
+            <h3>Your Hands-On Activity: Create a Grid Layout</h3>
+            <h4>Create a Dashboard or Blog Post Layout:</h4>
+            <ul>
+                <li>Create a new HTML file (e.g., <code>dashboard.html</code>) and CSS file.</li>
+                <li>Add semantic HTML for a dashboard or blog layout:</li>
+                <pre><code>&lt;div class="grid-container"&gt;
+    &lt;header&gt;Site Header&lt;/header&gt;
+    &lt;nav&gt;Navigation Menu&lt;/nav&gt;
+    &lt;main&gt;Main Content&lt;/main&gt;
+    &lt;aside&gt;Sidebar&lt;/aside&gt;
+    &lt;footer&gt;Footer&lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+                <li>Style with CSS Grid:</li>
+                <pre><code>.grid-container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 20px;
+    min-height: 100vh;
+}
+header {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+nav {
+    grid-column: 1 / 2;
+    grid-row: 2 / 4;
+    background-color: #f0f3f5;
+    padding: 15px;
+}
+main {
+    grid-column: 2 / 3;
+    grid-row: 2 / 4;
+    padding: 15px;
+}
+aside {
+    grid-column: 1 / 3;
+    grid-row: 4 / 5;
+    background-color: #e8ecef;
+    padding: 15px;
+}
+footer {
+    grid-column: 1 / 3;
+    grid-row: 5 / 6;
+    text-align: center;
+    padding: 10px;
+}</code></pre>
+                <li>Test with Live Server and adjust column/row sizes or gaps.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Recreate a Blog Archive Layout:</strong> Create a new HTML/CSS file pair.</li>
+                <li>Design a layout with a header, a grid of article previews (e.g., 3 columns), and a footer.</li>
+                <li>Use Grid to arrange the article previews:</li>
+                <pre><code>.articles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.article {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}</code></pre>
+                <li>Add placeholder content (e.g., <code>&lt;article&gt;</code> with a title, image, and summary).</li>
+                <li>Ensure responsiveness by testing different browser sizes.</li>
+            </ul>
+
+            <h3>End of Week 3!</h3>
+            <p>You've mastered CSS layout techniques, from older float-based layouts to modern Flexbox and Grid systems. You're now equipped to create complex, responsive page layouts. Next week, you'll add interactivity and polish to your projects!</p>
+        </div>
+    </div>
+</body>
+</html>
