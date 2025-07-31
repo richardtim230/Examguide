@@ -1,0 +1,562 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>OAU ExamGuard - Student Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-bg {
+            background: url('https://via.placeholder.com/1920x600?text=Dynamic+Blog+Banner') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .blog-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .blog-card:hover::before {
+            opacity: 1;
+        }
+        .search-bar {
+            transition: box-shadow 0.3s ease;
+        }
+        .search-bar:focus-within {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .category-btn {
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+        .category-btn.active, .category-btn:hover {
+            background-color: #4f46e5;
+            color: white;
+            transform: scale(1.05);
+        }
+        .pagination-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .pagination-btn:hover:not(.disabled) {
+            background-color: #5b21b6;
+            transform: scale(1.05);
+        }
+        .pagination-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .pagination-btn.disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .social-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.3);
+            color: #4f46e5;
+        }
+        .blog-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.5s ease;
+        }
+        .blog-card:hover .blog-img {
+            transform: scale(1.1);
+        }
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+        .tag-cloud a {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .tag-cloud a:hover {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .comment-preview {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
+            .blog-img {
+                height: 180px;
+            }
+            .sidebar {
+                position: static;
+                margin-top: 2rem;
+            }
+            .blog-card h3 {
+                font-size: 1.125rem;
+            }
+            .pagination-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
+            </div>
+            <div class="flex space-x-2 sm:space-x-4">
+                <a href="index.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Home</a>
+                <a href="#signup" class="bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-700 text-sm sm:text-base">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="hero-bg parallax text-white py-16 sm:py-20">
+        <div class="container mx-auto px-4 sm:px-6 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Student Blog Hub</h2>
+            <p class="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">Discover, share, and earn through your academic stories and insights. Join our vibrant community of student writers!</p>
+            <a href="#write" class="mt-6 inline-block bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Start Writing Now</a>
+        </div>
+    </section>
+
+    <!-- Blog Content Section -->
+    <section class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Main Blog Content -->
+                <div class="lg:w-3/4">
+                    <!-- Search and Filters -->
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <div class="search-bar flex-1 relative">
+                            <input type="text" id="searchInput" placeholder="Search blog posts..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                            <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active">All</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Study Tips</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Exam Prep</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Student Life</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Career Advice</button>
+                        </div>
+                    </div>
+
+                    <!-- Blog Posts -->
+                    <div id="blogPosts" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Study+Hacks" alt="Blog Post 1" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Top 10 Study Hacks for Exam Success</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">Discover proven strategies to boost your study efficiency and ace your exams with confidence.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">By Sarah | Oct 10, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"This really helped me organize my study schedule!" - Jane</p>
+                            </div>
+                        </div>
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Student+Life" alt="Blog Post 2" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Balancing Studies and Social Life</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">Learn how to manage your time effectively to enjoy both academics and fun.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">By Ahmed | Oct 8, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"Great tips for finding balance!" - Mike</p>
+                            </div>
+                        </div>
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Essay+Writing" alt="Blog Post 3" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">How to Write a Winning Essay</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">Tips and tricks to craft compelling essays that impress your professors.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">By Temi | Oct 5, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"My essays improved so much!" - Lisa</p>
+                            </div>
+                        </div>
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Finals+Prep" alt="Blog Post 4" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Preparing for Finals: A Step-by-Step Guide</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">A comprehensive guide to tackle your final exams with confidence.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">By Chidi | Oct 2, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"This guide was a lifesaver!" - Tom</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex justify-center mt-8">
+                        <div class="flex gap-2 flex-wrap">
+                            <button id="prevBtn" class="pagination-btn px-4 py-2 bg-indigo-600 text-white rounded-full text-sm sm:text-base disabled">Previous</button>
+                            <button class="pagination-btn px-4 py-2 bg-indigo-600 text-white rounded-full text-sm sm:text-base active">1</button>
+                            <button class="pagination-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm sm:text-base">2</button>
+                            <button class="pagination-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm sm:text-base">3</button>
+                            <button id="nextBtn" class="pagination-btn px-4 py-2 bg-indigo-600 text-white rounded-full text-sm sm:text-base">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="lg:w-1/4 sidebar">
+                    <!-- Popular Posts -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Popular Posts</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">5 Tips for Effective Time Management</p>
+                                <p class="text-sm text-gray-500">By Funmi | 1.2K Views</p>
+                            </div>
+                            <div>
+                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">How to Stay Motivated During Exams</p>
+                                <p class="text-sm text-gray-500">By David | 950 Views</p>
+                            </div>
+                            <div>
+                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Writing for Success: Essay Tips</p>
+                                <p class="text-sm text-gray-500">By Temi | 800 Views</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tag Cloud -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Explore Tags</h3>
+                        <div class="tag-cloud flex flex-wrap gap-2">
+                            <a href="#" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm hover:bg-indigo-600 hover:text-white">Study Tips</a>
+                            <a href="#" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm hover:bg-indigo-600 hover:text-white">Exams</a>
+                            <a href="#" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm hover:bg-indigo-600 hover:text-white">Productivity</a>
+                            <a href="#" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm hover:bg-indigo-600 hover:text-white">Motivation</a>
+                            <a href="#" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm hover:bg-indigo-600 hover:text-white">Student Life</a>
+                        </div>
+                    </div>
+
+                    <!-- Social Share -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Share Your Story</h3>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4">Connect with our community!</p>
+                        <div class="flex gap-4 justify-center">
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg></a>
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm13.5 12.5h-3v-5.5c0-1.31-.47-2.2-1.65-2.2-1.2 0-1.85.8-2.15 1.57v6.13h-3s.04-10.5 0-11.6h3v1.65c.4-.62 1.12-1.5 2.73-1.5 2 0 3.5 1.31 3.5 4.12v7.33z"></path></svg></a>
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.36 9.84v-6.95h-2.51v-2.89h2.51v-2.2c0-2.48 1.47-3.84 3.73-3.84 1.08 0 2.22.19 2.22.19v2.44h-1.25c-1.23 0-1.61.77-1.61 1.56v1.85h2.74l-.44 2.89h-2.3v6.95c4.74-.79 8.36-4.89 8.36-9.84 0-5.5-4.46-9.96-9.96-9.96z"></path></svg></a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 sm:py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Join the Writing Community!</h3>
+            <p class="text-base sm:text-lg mb-8">Share your knowledge, inspire others, and earn rewards with OAU ExamGuard. 🚀</p>
+            <a href="#signup" class="bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Start Writing Now! 📝</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simulated blog post data
+        const blogData = [
+            [
+                {
+                    title: "Top 10 Study Hacks for Exam Success",
+                    description: "Discover proven strategies to boost your study efficiency and ace your exams with confidence.",
+                    author: "Sarah",
+                    date: "Oct 10, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Study+Hacks",
+                    comment: "This really helped me organize my study schedule! - Jane"
+                },
+                {
+                    title: "Balancing Studies and Social Life",
+                    description: "Learn how to manage your time effectively to enjoy both academics and fun.",
+                    author: "Ahmed",
+                    date: "Oct 8, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Student+Life",
+                    comment: "Great tips for finding balance! - Mike"
+                },
+                {
+                    title: "How to Write a Winning Essay",
+                    description: "Tips and tricks to craft compelling essays that impress your professors.",
+                    author: "Temi",
+                    date: "Oct 5, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Essay+Writing",
+                    comment: "My essays improved so much! - Lisa"
+                },
+                {
+                    title: "Preparing for Finals: A Step-by-Step Guide",
+                    description: "A comprehensive guide to tackle your final exams with confidence.",
+                    author: "Chidi",
+                    date: "Oct 2, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Finals+Prep",
+                    comment: "This guide was a lifesaver! - Tom"
+                }
+            ],
+            [
+                {
+                    title: "Mastering Group Study Sessions",
+                    description: "Tips for productive group study and collaboration.",
+                    author: "Funmi",
+                    date: "Oct 1, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Group+Study",
+                    comment: "This made our study group so effective! - Emma"
+                },
+                {
+                    title: "Why Sleep is Key to Academic Success",
+                    description: "How proper rest can boost your grades.",
+                    author: "David",
+                    date: "Sep 28, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Sleep+Tips",
+                    comment: "I feel so much sharper now! - John"
+                },
+                {
+                    title: "Effective Note-Taking Strategies",
+                    description: "Learn the best ways to take notes that stick.",
+                    author: "Ngozi",
+                    date: "Sep 25, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Note+Taking",
+                    comment: "My notes are so much better now! - Sarah"
+                },
+                {
+                    title: "Staying Focused in a Digital Age",
+                    description: "Tips to avoid distractions and stay productive.",
+                    author: "Tobi",
+                    date: "Sep 20, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Focus+Tips",
+                    comment: "This helped me cut down on phone time! - Alex"
+                }
+            ],
+            [
+                {
+                    title: "Choosing the Right Study Environment",
+                    description: "How your surroundings impact your study success.",
+                    author: "Esther",
+                    date: "Sep 15, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Study+Environment",
+                    comment: "Found the perfect study spot thanks to this! - Mark"
+                },
+                {
+                    title: "Overcoming Exam Anxiety",
+                    description: "Strategies to stay calm and confident during exams.",
+                    author: "Ife",
+                    date: "Sep 10, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Exam+Anxiety",
+                    comment: "I was so much calmer during my finals! - Rachel"
+                },
+                {
+                    title: "Building a Study Routine",
+                    description: "Create a sustainable routine for long-term success.",
+                    author: "Kemi",
+                    date: "Sep 5, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Study+Routine",
+                    comment: "My productivity has skyrocketed! - Sam"
+                },
+                {
+                    title: "The Power of Mind Mapping",
+                    description: "Use mind maps to enhance your learning.",
+                    author: "Victor",
+                    date: "Sep 1, 2025",
+                    image: "https://via.placeholder.com/400x220?text=Mind+Mapping",
+                    comment: "Mind mapping changed how I study! - Lucy"
+                }
+            ]
+        ];
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Category filter
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                // Placeholder for filtering logic
+                console.log(`Filter by: ${this.textContent}`);
+            });
+        });
+
+        // Debounced search
+        const searchInput = document.getElementById('searchInput');
+        const blogPosts = document.getElementById('blogPosts');
+        let debounceTimeout;
+        searchInput.addEventListener('input', function () {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => {
+                const searchTerm = this.value.toLowerCase();
+                document.querySelectorAll('.blog-card').forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    card.style.display = title.includes(searchTerm) || description.includes(searchTerm) ? 'block' : 'none';
+                });
+            }, 300);
+        });
+
+        // Pagination
+        let currentPage = 1;
+        const totalPages = blogData.length;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updatePagination() {
+            // Update blog posts
+            blogPosts.innerHTML = '';
+            blogData[currentPage - 1].forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-card bg-white p-6 rounded-lg shadow-md fade-in';
+                postElement.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}" class="blog-img mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800">${post.title}</h3>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">${post.description}</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <p class="text-sm text-gray-500">By ${post.author} | ${post.date}</p>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                    </div>
+                    <div class="comment-preview p-3 mt-4">
+                        <p class="text-sm text-gray-600 italic">"${post.comment}"</p>
+                    </div>
+                `;
+                blogPosts.appendChild(postElement);
+            });
+
+            // Update pagination buttons
+            document.querySelectorAll('.pagination-btn').forEach(btn => {
+                btn.classList.remove('active', 'disabled');
+                if (btn.textContent === String(currentPage)) {
+                    btn.classList.add('active');
+                }
+            });
+            prevBtn.classList.toggle('disabled', currentPage === 1);
+            nextBtn.classList.toggle('disabled', currentPage === totalPages);
+        }
+
+        document.querySelectorAll('.pagination-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                if (this.classList.contains('disabled')) return;
+                if (this.id === 'prevBtn' && currentPage > 1) {
+                    currentPage--;
+                } else if (this.id === 'nextBtn' && currentPage < totalPages) {
+                    currentPage++;
+                } else if (!this.id) {
+                    currentPage = parseInt(this.textContent);
+                }
+                updatePagination();
+            });
+        });
+
+        // Initialize pagination
+        updatePagination();
+    </script>
+</body>
+</html>
