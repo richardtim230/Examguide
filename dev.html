@@ -1,395 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>1-Month Web Dev Plan: HTML &amp; CSS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.80">
-  <style>
-    :root {
-      --font-main: 'Inter', 'Segoe UI', Arial, sans-serif;
-      --color-bg: #f7fafd;
-      --color-week1: linear-gradient(90deg,#7fdfff 0%,#bde5fa 100%);
-      --color-week2: linear-gradient(90deg,#ffe9c6 0%,#ffd6a1 100%);
-      --color-week3: linear-gradient(90deg,#ffe3e3 0%,#ffb3b3 100%);
-      --color-week4: linear-gradient(90deg,#e7ffe8 0%,#b7ffd6 100%);
-      --color-card: #fff;
-      --color-heading: #283b4c;
-      --color-day: #555;
-      --color-accent: #ffad60;
-      --shadow-card: 0 4px 16px rgba(0,0,0,0.07);
-    }
-    body {
-      background: var(--color-bg);
-      font-family: var(--font-main);
-      color: #222;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: linear-gradient(90deg,#7fdfff 0%,#bde5fa 100%);
-      padding: 2.5rem 0 1.3rem 0;
-      text-align: center;
-      box-shadow: var(--shadow-card);
-      margin-bottom: 2.7rem;
-    }
-    header h1 {
-      margin: 0 0 0.6rem 0;
-      font-size: 2.6rem;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      color: var(--color-heading);
-      background: #e7f7ff;
-      border-radius: 24px;
-      display: inline-block;
-      padding: 0.3em 1em;
-      box-shadow: 0 2px 8px rgba(127,223,255,0.12);
-    }
-    header p {
-      font-size: 1.25rem;
-      margin: 0;
-      font-style: italic;
-      opacity: 0.96;
-      color: #222;
-    }
-    nav {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 10;
-      padding: 0.7em 0;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    }
-    nav a {
-      margin: 0 0.25em;
-      padding: 0.5em 1em;
-      color: #fff;
-      background: #4a90e2;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background 0.2s;
-      font-size: 1rem;
-    }
-    nav a:hover {
-      background: #357abd;
-    }
-    main {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 1rem 2rem 1rem;
-    }
-    .week {
-      margin-bottom: 2rem;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      background: var(--color-card);
-      transition: box-shadow 0.2s;
-    }
-    .week:hover {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    }
-    .week-header {
-      padding: 1.2em 1.5em;
-      font-size: 1.45rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--color-heading);
-      display: flex;
-      align-items: center;
-      gap: 1em;
-      background: var(--color-week1);
-      background-size: 200% 200%;
-      animation: weekbg 6s linear infinite alternate;
-    }
-    .week[data-week="2"] .week-header { background: var(--color-week2);}
-    .week[data-week="3"] .week-header { background: var(--color-week3);}
-    .week[data-week="4"] .week-header { background: var(--color-week4);}
-    @keyframes weekbg {
-      0% {background-position:0% 0%;}
-      100% {background-position:100% 100%;}
-    }
-    .week-theme {
-      color: #666;
-      font-size: 1.07rem;
-      margin: 0 1.5em 1em 1.5em;
-      font-style: italic;
-      opacity: 0.95;
-    }
-    .days {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(290px,1fr));
-      gap: 1.2rem;
-      padding: 0 1.5em 1em 1.5em;
-    }
-    .day-card {
-      background: var(--color-card);
-      border-radius: 18px;
-      box-shadow: 0 2px 12px rgba(74,144,226,0.07);
-      padding: 1.2em 1.1em 1.1em 1.1em;
-      display: flex;
-      flex-direction: column;
-      min-height: 340px;
-      position: relative;
-      transition: box-shadow 0.15s;
-    }
-    .day-card:hover {
-      box-shadow: 0 4px 24px rgba(74,144,226,0.14);
-    }
-    .day-marker {
-      font-size: 1.13rem;
-      font-weight: 600;
-      color: var(--color-accent);
-      margin-bottom: 0.33rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-      letter-spacing: 0.5px;
-    }
-    .day-marker span {
-      font-size: 1.18em;
-    }
-    .concepts {
-      margin-bottom: 0.7rem;
-    }
-    .concepts strong {
-      color: var(--color-heading);
-      font-weight: 700;
-    }
-    .activity, .homework {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5em;
-      margin-bottom: 0.4rem;
-      font-size: 1rem;
-    }
-    .activity span {
-      color: var(--color-accent);
-      font-size: 1.24em;
-      margin-right: 0.1em;
-    }
-    .homework span {
-      color: #4a90e2;
-      font-size: 1.1em;
-      margin-right: 0.1em;
-    }
-    .homework {
-      font-style: italic;
-      opacity: 0.95;
-    }
-    .final-session {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 2px 12px rgba(74,144,226,0.07);
-      padding: 1em;
-      margin: 1.4em 1.5em 1em 1.5em;
-      font-weight: 600;
-      color: #24a971;
-      text-align: center;
-      font-size: 1.09rem;
-      border: 1px solid #e2ffe6;
-    }
-    /* Collapsible week sections */
-    .week.collapsed .days,
-    .week.collapsed .week-theme,
-    .week.collapsed .final-session {
-      display: none;
-    }
-    .week-header {
-      cursor: pointer;
-      user-select: none;
-    }
-    .week-header:after {
-      content: "▼";
-      font-size: 1.08em;
-      margin-left: auto;
-      color: #283b4c;
-      transition: transform 0.2s;
-    }
-    .week.collapsed .week-header:after {
-      transform: rotate(-90deg);
-      opacity: 0.7;
-    }
-    /* Responsive */
-    @media (max-width: 900px) {
-      main {padding: 0 0.2rem 2rem 0.2rem;}
-      .week-header {font-size: 1.18rem;}
-      .days {grid-template-columns: 1fr;}
-    }
-  </style>
-  <script>
-    // Collapsible weeks
-    window.addEventListener('DOMContentLoaded',()=>{
-      document.querySelectorAll('.week-header').forEach(header=>{
-        header.addEventListener('click',()=>{
-          header.parentElement.classList.toggle('collapsed');
-        });
-      });
-    });
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>One-Month HTML & CSS Learning Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 15px;
+        }
+        .week {
+            margin-bottom: 30px;
+        }
+        .day {
+            background: #ecf0f1;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 5px solid #3498db;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .goal, .theme {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        .js-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .js-button:hover {
+            background-color: #2980b9;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .day {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>1-Month Web Dev Plan: HTML &amp; CSS</h1>
-    <p>Goal: Build web pages. Structure with HTML, style with CSS.<br>
-      From zero to basic sites.</p>
-  </header>
-  <nav>
-    <a href="#week1">Week 1</a>
-    <a href="#week2">Week 2</a>
-    <a href="#week3">Week 3</a>
-    <a href="#week4">Week 4</a>
-  </nav>
-  <main>
-    <!-- Week 1 -->
-    <section class="week" id="week1" data-week="1">
-      <div class="week-header">Week 1: HTML - Page Structure</div>
-      <div class="week-theme">&gt; Theme: Web page foundations.</div>
-      <div class="days">
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 1 (Thursday): HTML Basics &amp; First Page</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Web dev overview (client/server). HTML role.<br>
-            Basic document structure: <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>. <br>
-            <code>&lt;head&gt;</code> metadata (<code>&lt;title&gt;</code>, <code>&lt;meta charset&gt;</code>). Block elements: <code>&lt;h1&gt;-&lt;h6&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>.
-          </div>
-          <div class="activity"><span>📌</span>Create a simple bio page. Use headings, paragraphs, line breaks.</div>
-          <div class="homework"><span>Homework:</span> Research common HTML tags.</div>
+    <div class="container">
+        <h1>One-Month Web Development Plan: HTML & CSS</h1>
+        <p class="goal"><strong>Goal:</strong> Build web pages. Structure with HTML, style with CSS. From zero to basic sites.</p>
+        <a href="dev2.html" class="js-button">View JavaScript Learning Plan</a>
+
+        <!-- Week 1 -->
+        <div class="week">
+            <h2>Week 1: HTML - Page Structure</h2>
+            <p class="theme"><strong>Theme:</strong> Web page foundations.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): HTML Basics & First Page</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Web dev overview (client/server). HTML role.</li>
+                    <li>Basic document structure: &lt;!DOCTYPE html&gt;, &lt;html&gt;, &lt;head&gt;, &lt;body&gt;.</li>
+                    <li>&lt;head&gt; metadata (&lt;title&gt;, &lt;meta charset&gt;).</li>
+                    <li>Block elements: &lt;h1&gt;-&lt;h6&gt;, &lt;p&gt;, &lt;br&gt;, &lt;hr&gt;.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Create a simple bio page. Use headings, paragraphs, line breaks.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Research common HTML tags.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Text & Lists</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Text formatting: &lt;strong&gt;, &lt;em&gt;, &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;sup&gt;, &lt;sub&gt;.</li>
+                    <li>Lists: &lt;ol&gt;, &lt;ul&gt;, &lt;dl&gt;, &lt;li&gt;, &lt;dt&gt;, &lt;dd&gt;.</li>
+                    <li>Links: &lt;a&gt; (absolute/relative, target="_blank").</li>
+                    <li>Images: &lt;img&gt; (src, alt, width, height).</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Improve bio page: format text, add hobbies list, link to a site, add an image.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Plan HTML content for a simple recipe page.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): Semantic HTML & Tables</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Semantic HTML5: &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;section&gt;, &lt;aside&gt;, &lt;footer&gt;.</li>
+                    <li>Non-semantic: &lt;div&gt;, &lt;span&gt;.</li>
+                    <li>Tables: &lt;table&gt;, &lt;thead&gt;, &lt;tbody&gt;, &lt;tfoot&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt;. colspan, rowspan.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Re-structure bio page with semantic elements.</li>
+                    <li>Create a simple timetable or product comparison table.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Brainstorm a multi-section web page idea (e.g., portfolio, product page) using only HTML.</li>
+                </ul>
+            </div>
         </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 2 (Friday): Text &amp; Lists</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Text formatting: <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;sup&gt;</code>, <code>&lt;sub&gt;</code>. Lists: <code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;dl&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;dt&gt;</code>, <code>&lt;dd&gt;</code>.<br>
-            Links: <code>&lt;a&gt;</code> (absolute/relative, <code>target="_blank"</code>).<br>
-            Images: <code>&lt;img&gt;</code> (<code>src</code>, <code>alt</code>, <code>width</code>, <code>height</code>).
-          </div>
-          <div class="activity"><span>📌</span>Improve bio page: format text, add hobbies list, link to a site, add an image.</div>
-          <div class="homework"><span>Homework:</span> Plan HTML content for a simple recipe page.</div>
+
+        <!-- Week 2 -->
+        <div class="week">
+            <h2>Week 2: CSS - Styling</h2>
+            <p class="theme"><strong>Theme:</strong> Visual design.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): CSS Intro & Selectors</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>What is CSS? Separation of concerns.</li>
+                    <li>How to include CSS: Inline, Internal (&lt;style&gt;), External (&lt;link&gt;).</li>
+                    <li>CSS syntax (rulesets, selectors, properties, values).</li>
+                    <li>Basic selectors: Element, Class (.class), ID (#id).</li>
+                    <li>Cascade and Specificity (basic).</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Apply basic styles (text/background color) to bio page using all three methods, then refactor to external stylesheet.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Experiment with colors and fonts on your recipe page using element selectors.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Colors, Text & Box Model</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>CSS Colors: Named, Hex, RGB/RGBA, HSL/HSLA.</li>
+                    <li>Text Styling: font-family, font-size, font-weight, text-align, line-height, text-decoration, letter-spacing.</li>
+                    <li>CSS Box Model: content, padding, border, margin.</li>
+                    <li>box-sizing: border-box;.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Style recipe page (or multi-section page) with different fonts, colors, text alignment.</li>
+                    <li>Apply padding, borders, margins.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Use Chrome DevTools to inspect box models on websites.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): Backgrounds & Display</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Backgrounds: background-color, background-image, background-repeat, background-position, background-size.</li>
+                    <li>Shorthand background.</li>
+                    <li>Border properties: border-style, border-width, border-color, border-radius.</li>
+                    <li>Display properties: block, inline, inline-block.</li>
+                    <li>Chrome DevTools for styles.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Add a background image.</li>
+                    <li>Style borders.</li>
+                    <li>Experiment with display on &lt;li&gt; to make them horizontal.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Plan layout of your multi-section page.</li>
+                </ul>
+            </div>
         </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 3 (Saturday): Semantic HTML &amp; Tables</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Semantic HTML5: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>.<br>
-            Non-semantic: <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>. Tables: <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code>. <code>colspan</code>, <code>rowspan</code>.
-          </div>
-          <div class="activity"><span>📌</span>Re-structure bio page with semantic elements. Create a simple timetable or product comparison table.</div>
-          <div class="homework"><span>Homework:</span> Brainstorm a multi-section web page idea (e.g., portfolio, product page) using only HTML.</div>
+
+        <!-- Week 3 -->
+        <div class="week">
+            <h2>Week 3: CSS - Layout & Positioning</h2>
+            <p class="theme"><strong>Theme:</strong> Arranging elements.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): Floats & Basic Positioning</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Floats (float: left;, float: right;).</li>
+                    <li>Clearing floats (clear: both;, clearfix).</li>
+                    <li>CSS Positioning: static, relative, absolute, fixed, sticky.</li>
+                    <li>top, right, bottom, left. z-index.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Create a two-column layout with floats.</li>
+                    <li>Position a "Back to Top" button with fixed.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Recreate a simple magazine layout using floats and basic positioning.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Flexbox - 1D Layout</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Flexbox Intro (1D layout).</li>
+                    <li>Flex Container properties: display: flex;, flex-direction, justify-content, align-items, flex-wrap, align-content.</li>
+                    <li>Flex Item properties: order, flex-grow, flex-shrink, flex-basis, flex, align-self.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Convert previous float layouts to Flexbox.</li>
+                    <li>Create a responsive navigation bar, distribute items evenly.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Build an image gallery or product cards using Flexbox.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): CSS Grid - 2D Layout</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>CSS Grid Intro (2D layout).</li>
+                    <li>Grid Container properties: display: grid;, grid-template-columns, grid-template-rows, gap.</li>
+                    <li>Grid Item properties: grid-column, grid-row.</li>
+                    <li>fr unit, repeat(), minmax().</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Create a complex page layout (dashboard, blog post) with CSS Grid.</li>
+                    <li>Place items in specific grid areas.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Recreate a common website layout (e.g., blog archive) using CSS Grid.</li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </section>
-    <!-- Week 2 -->
-    <section class="week" id="week2" data-week="2">
-      <div class="week-header">Week 2: CSS - Styling</div>
-      <div class="week-theme">&gt; Theme: Visual design.</div>
-      <div class="days">
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 1 (Thursday): CSS Intro &amp; Selectors</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> What is CSS? Separation of concerns.<br>
-            How to include CSS: Inline, Internal (<code>&lt;style&gt;</code>), External (<code>&lt;link&gt;</code>).<br>
-            CSS syntax (rulesets, selectors, properties, values).<br>
-            Basic selectors: Element, Class (<code>.class</code>), ID (<code>#id</code>).<br>
-            Cascade and Specificity (basic).
-          </div>
-          <div class="activity"><span>📌</span>Apply basic styles (text/background color) to bio page using all three methods, then refactor to external stylesheet.</div>
-          <div class="homework"><span>Homework:</span> Experiment with colors and fonts on your recipe page using element selectors.</div>
+
+        <!-- Week 4 -->
+        <div class="week">
+            <h2>Week 4: Advanced Styling & Project</h2>
+            <p class="theme"><strong>Theme:</strong> Interactivity, refinement, full project.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): Transitions, Transforms & Basic Animations</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>CSS Transitions: transition-property, transition-duration, transition-timing-function, transition-delay.</li>
+                    <li>CSS Transforms: translate(), rotate(), scale(), skew().</li>
+                    <li>Basic CSS Animations: @keyframes, animation properties.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Add transition effects to buttons/links on hover.</li>
+                    <li>Apply a subtle transform on an image.</li>
+                    <li>Create a simple pulsating effect.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Find examples of transitions and transforms online.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Forms & Pseudo-Classes/Elements</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>Styling Forms: input, textarea, select, button.</li>
+                    <li>Pseudo-classes: :hover, :active, :focus, :nth-child(), :first-child, :last-child.</li>
+                    <li>Pseudo-elements: ::before, ::after.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Create and style a contact form.</li>
+                    <li>Use pseudo-classes for button appearance.</li>
+                    <li>Add decorative elements with ::before/::after.</li>
+                </ul>
+                <h4>Homework:</h4>
+                <ul>
+                    <li>Design and style a login/registration form.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): Final Project & Review</h3>
+                <h4>Concepts:</h4>
+                <ul>
+                    <li>HTML & CSS review.</li>
+                    <li>Best practices: Semantic HTML, external stylesheets, naming, basic accessibility.</li>
+                    <li>Debugging with DevTools.</li>
+                </ul>
+                <h4>Activity:</h4>
+                <ul>
+                    <li>Work on your multi-section page idea (portfolio, product landing, blog).</li>
+                    <li>Apply all learned HTML/CSS for structure, styling, layout.</li>
+                    <li>Final Output: A presentable, well-structured, styled multi-page simple website.</li>
+                    <li>Q&A: Open session for questions and troubleshooting.</li>
+                </ul>
+            </div>
         </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 2 (Friday): Colors, Text &amp; Box Model</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> CSS Colors: Named, Hex, RGB/RGBA, HSL/HSLA.<br>
-            Text Styling: <code>font-family</code>, <code>font-size</code>, <code>font-weight</code>, <code>text-align</code>, <code>line-height</code>, <code>text-decoration</code>, <code>letter-spacing</code>.<br>
-            CSS Box Model: content, padding, border, margin. <code>box-sizing: border-box;</code>.
-          </div>
-          <div class="activity"><span>📌</span>Style recipe page (or multi-section page) with different fonts, colors, text alignment. Apply padding, borders, margins.</div>
-          <div class="homework"><span>Homework:</span> Use Chrome DevTools to inspect box models on websites.</div>
-        </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 3 (Saturday): Backgrounds &amp; Display</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Backgrounds: <code>background-color</code>, <code>background-image</code>, <code>background-repeat</code>, <code>background-position</code>, <code>background-size</code>. Shorthand background.<br>
-            Border properties: <code>border-style</code>, <code>border-width</code>, <code>border-color</code>, <code>border-radius</code>.<br>
-            Display properties: block, inline, inline-block. Chrome DevTools for styles.
-          </div>
-          <div class="activity"><span>📌</span>Add a background image. Style borders. Experiment with display on <code>&lt;li&gt;</code> to make them horizontal.</div>
-          <div class="homework"><span>Homework:</span> Plan layout of your multi-section page.</div>
-        </div>
-      </div>
-    </section>
-    <!-- Week 3 -->
-    <section class="week" id="week3" data-week="3">
-      <div class="week-header">Week 3: CSS - Layout &amp; Positioning</div>
-      <div class="week-theme">&gt; Theme: Arranging elements.</div>
-      <div class="days">
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 1 (Thursday): Floats &amp; Basic Positioning</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Floats (<code>float: left;</code>, <code>float: right;</code>). Clearing floats (<code>clear: both;</code>, clearfix).<br>
-            CSS Positioning: static, relative, absolute, fixed, sticky. <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>. <code>z-index</code>.
-          </div>
-          <div class="activity"><span>📌</span>Create a two-column layout with floats. Position a "Back to Top" button with fixed.</div>
-          <div class="homework"><span>Homework:</span> Recreate a simple magazine layout using floats and basic positioning.</div>
-        </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 2 (Friday): Flexbox - 1D Layout</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Flexbox Intro (1D layout). Flex Container properties: <code>display: flex;</code>, <code>flex-direction</code>, <code>justify-content</code>, <code>align-items</code>, <code>flex-wrap</code>, <code>align-content</code>.<br>
-            Flex Item properties: <code>order</code>, <code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code>, <code>flex</code>, <code>align-self</code>.
-          </div>
-          <div class="activity"><span>📌</span>Convert previous float layouts to Flexbox. Create a responsive navigation bar, distribute items evenly.</div>
-          <div class="homework"><span>Homework:</span> Build an image gallery or product cards using Flexbox.</div>
-        </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 3 (Saturday): CSS Grid - 2D Layout</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> CSS Grid Intro (2D layout). Grid Container properties: <code>display: grid;</code>, <code>grid-template-columns</code>, <code>grid-template-rows</code>, <code>gap</code>.<br>
-            Grid Item properties: <code>grid-column</code>, <code>grid-row</code>. <code>fr</code> unit, <code>repeat()</code>, <code>minmax()</code>.
-          </div>
-          <div class="activity"><span>📌</span>Create a complex page layout (dashboard, blog post) with CSS Grid. Place items in specific grid areas.</div>
-          <div class="homework"><span>Homework:</span> Recreate a common website layout (e.g., blog archive) using CSS Grid.</div>
-        </div>
-      </div>
-    </section>
-    <!-- Week 4 -->
-    <section class="week" id="week4" data-week="4">
-      <div class="week-header">Week 4: Advanced Styling &amp; Project</div>
-      <div class="week-theme">&gt; Theme: Interactivity, refinement, full project.</div>
-      <div class="days">
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 1 (Thursday): Transitions, Transforms &amp; Basic Animations</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> CSS Transitions: <code>transition-property</code>, <code>transition-duration</code>, <code>transition-timing-function</code>, <code>transition-delay</code>.<br>
-            CSS Transforms: <code>translate()</code>, <code>rotate()</code>, <code>scale()</code>, <code>skew()</code>.<br>
-            Basic CSS Animations: <code>@keyframes</code>, animation properties.
-          </div>
-          <div class="activity"><span>📌</span>Add transition effects to buttons/links on hover. Apply a subtle transform on an image. Create a simple pulsating effect.</div>
-          <div class="homework"><span>Homework:</span> Find examples of transitions and transforms online.</div>
-        </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 2 (Friday): Forms &amp; Pseudo-Classes/Elements</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> Styling Forms: <code>input</code>, <code>textarea</code>, <code>select</code>, <code>button</code>.<br>
-            Pseudo-classes: <code>:hover</code>, <code>:active</code>, <code>:focus</code>, <code>:nth-child()</code>, <code>:first-child</code>, <code>:last-child</code>.<br>
-            Pseudo-elements: <code>::before</code>, <code>::after</code>.
-          </div>
-          <div class="activity"><span>📌</span>Create and style a contact form. Use pseudo-classes for button appearance. Add decorative elements with <code>::before</code>/<code>::after</code>.</div>
-          <div class="homework"><span>Homework:</span> Design and style a login/registration form.</div>
-        </div>
-        <div class="day-card">
-          <div class="day-marker"><span>📍</span>Day 3 (Saturday): Final Project &amp; Review</div>
-          <div class="concepts">
-            <strong>Concepts:</strong> HTML &amp; CSS review.<br>
-            Best practices: Semantic HTML, external stylesheets, naming, basic accessibility. Debugging with DevTools.
-          </div>
-          <div class="activity"><span>📌</span>Work on your multi-section page idea (portfolio, product landing, blog). Apply all learned HTML/CSS for structure, styling, layout.</div>
-          <div class="homework"><span>Final Output:</span> A presentable, well-structured, styled multi-page simple website.</div>
-        </div>
-      </div>
-      <div class="final-session">
-        📌📍Q&amp;A: Open session for questions and troubleshooting.
-      </div>
-    </section>
-  </main>
+    </div>
 </body>
 </html>
