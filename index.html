@@ -58,16 +58,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f9fafb;
         }
-        .hero-bg {
-            background: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image') center/cover no-repeat;
-            animation: bgSlide 15s infinite;
-        }
-        @keyframes bgSlide {
-            0% { background-image: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image'); }
-            33% { background-image: url('https://via.placeholder.com/1920x600?text=Study+Hard+Image'); }
-            66% { background-image: url('https://via.placeholder.com/1920x600?text=Success+Image'); }
-            100% { background-image: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image'); }
-        }
+        
         .feature-card {
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
@@ -124,7 +115,7 @@
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <img src="logo.png?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
                 <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
             </div>
             <div class="flex space-x-2 sm:space-x-4">
@@ -134,14 +125,18 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-bg text-white py-16 sm:py-20">
-        <div class="container mx-auto px-4 sm:px-6 text-center">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Ace Your Exams and Earn Cash with OAU ExamGuard 🚀</h2>
-            <p class="text-base sm:text-lg md:text-xl mb-8">Revolutionize your academic experience with our cutting-edge platform!</p>
+<!-- Hero Section -->
+<section class="hero-bg text-white py-16 sm:py-20" style="background: url('images (4).jpeg?text=Dynamic+Hero+Image') center/cover no-repeat;">
+    <div class="container mx-auto px-4 sm:px-6 text-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Ace Your Exams and Earn Cash with OAU ExamGuard 🚀</h2>
+        <p class="text-base sm:text-lg md:text-xl mb-8">Revolutionize your academic experience with our cutting-edge platform!</p>
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
             <a href="#signup" class="cta-button bg-indigo-600 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold">Sign Up Now and Start Excelling! 📚</a>
+            <a href="/gen-marketplace.html" class="cta-button bg-emerald-600 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-emerald-700">Visit Marketplace 🛒</a>
+            <a href="/blogg.html" class="cta-button bg-blue-600 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-blue-700">Visit Blog Page 📝</a>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- About Section -->
     <section class="py-12 sm:py-16 bg-gray-100">
