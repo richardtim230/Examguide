@@ -1,236 +1,339 @@
-<!DOCTYPE html>
+
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <title>HOME|DE-BRAINSTORMERS' ACADEMY</title>
+    <title>OAU ExamGuard - Ace Your Exams</title>
+
     <meta name="description" content="DE-BRAINSTORMERS' ACADEMY - An educational platform offering practice questions, school mock exams, academic archives, and the latest news from Obafemi Awolowo University. Enhance your learning experience with state-of-the-art labs, athletic excellence, and creative arts.">
     <meta name="keywords" content="DE-BRAINSTORMERS' ACADEMY, DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, educational platform, practice questions, school mock exams, academic archives, Ile Ife, Nigeria, state-of-the-art labs, athletic excellence, creative arts, exam preparation, student resources, latest educational news, science lab, debate team, sports day, Prof Richard, technology in education, OAU, oau, OAU MOCK EXAM, OAU Mock Exam, Examguide, Exam guide, ExamGuide, Exam Guide, OAU EXAM GUIDE, OAU Exam Guide, Obafemi Awolowo University, practice questions, school mock exams, academic archives, educational platform, state-of-the-art labs, athletic excellence, creative arts, Ile Ife, Nigeria">
    <meta property="og:image" content="https://img.freepik.com/free-photo/crop-people-studying-desktop_23-2147655986.jpg?uid=R108601234&ga=GA1.1.712161774.1734082676&semt=ais_hybrid?">
   <meta property="og:url" content="https://examguide.vercel.app">
   <meta property="og:type" content="website">
-
    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" href="logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles1.css">
-    <script defer src="gen-script.js"></script>
-        
-    <script type='text/javascript'>
-  window.smartlook||(function(d) {
-    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-    c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
-    })(document);
-    smartlook('init', '424bfe466de56c64d867be2f4112259c1c07021b', { region: 'eu' });
-    </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+        .hero-bg {
+            background: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image') center/cover no-repeat;
+            animation: bgSlide 15s infinite;
+        }
+        @keyframes bgSlide {
+            0% { background-image: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image'); }
+            33% { background-image: url('https://via.placeholder.com/1920x600?text=Study+Hard+Image'); }
+            66% { background-image: url('https://via.placeholder.com/1920x600?text=Success+Image'); }
+            100% { background-image: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image'); }
+        }
+        .feature-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .cta-button {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .cta-button:hover {
+            background-color: #5b21b6;
+            transform: scale(1.05);
+        }
+        .dynamic-img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+        .testimonial-slide {
+            display: none;
+        }
+        .testimonial-slide.active {
+            display: block;
+        }
+        .animate-icon {
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover .animate-icon {
+            transform: rotate(360deg);
+        }
+        @media (max-width: 640px) {
+            .hero-bg h2 {
+                font-size: 2rem;
+            }
+            .stats-counter {
+                font-size: 1.5rem;
+            }
+            .dynamic-img {
+                max-height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- Header Section -->
-<header>
-    <div class="logo-container">
-        <img src="Logo Design Templates_1729880876625.jpg" alt="DE-BRAINSTORMERS">
-    </div>
-        <div class="header-content">
-            <h1>DE-BRAINSTORMERS' ACADEMY</h1>
-            <p><i>Obafemi Awolowo University, Ile Ife</i></p>
-            <p>Email: dbsife@gmail.com | Phone: (234) 9155127634</p>
-        </div>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
+            </div>
+            <div class="flex space-x-2 sm:space-x-4">
+                <a href="#signup" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Sign In</a>
+                <a href="#signup" class="bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-700 text-sm sm:text-base">Sign Up</a>
+            </div>
+        </nav>
     </header>
 
-    <!-- Navigation Menu -->
-    <nav class="menu">
-        <button onclick="location.href='cbt-examoau'">CBT PRACTICE</button>
-        <button onclick="location.href='general-articles'">General Articles</button>
-        <button onclick="location.href='school-mock'">School Mock</button>
-        <button onclick="location.href='https://pdfdrive.com/'">Public Academic Archives</button>
-        <button onclick="location.href='https://wa.link/jhndw0'">Contact</button>
-    </nav>
-    <!-- Hamburger Button -->
-    <button class="menu-button" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </button>
-
-    <!-- Menu List -->
-    <div class="menu-container">
-        <button onclick="location.href='#home'">Home</button>
-        <button onclick="location.href='index.html.htm'">Practice Questions</button>
-        <button onclick="location.href='school-mock'">School Mock</button>
-        <button onclick="location.href='https://archive-ruby-omega.vercel.app/'">Academic Archives</button>
-        <button onclick="location.href='#contact'">JAMB</button>
-        <button onclick="location.href='#contact'">POST UTME</button>
-        <button onclick="location.href='https://student-support-alpha.vercel.app'">UNIVERSITIES</button>
-    </div>
-
-    
-
-
-        
-
-    <div class="carousel-container">
-        <div class="carousel-track">
-            <img src="deo1.jpg" alt="Image 1">
-            <img src="csc2.webp" alt="Image 2">
-            <img src="good morning 5.webp" alt="Image 3">
-            <img src="good afternoon 1.jpg" alt="Image 4">
-            <img src="good afternoon 2.webp" alt="Image 5">
-            <!-- Duplicate images for seamless effect -->
-            <img src="deo1.jpg" alt="Image 1">
-            <img src="csc2.webp" alt="Image 2">
-            <img src="good morning 5.webp" alt="Image 3">
-            <img src="good afternoon 1.jpg" alt="Image 4">
-            <img src="good afternoon 2.webp" alt="Image 5">
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-16 sm:py-20">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Ace Your Exams and Earn Cash with OAU ExamGuard 🚀</h2>
+            <p class="text-base sm:text-lg md:text-xl mb-8">Revolutionize your academic experience with our cutting-edge platform!</p>
+            <a href="#signup" class="cta-button bg-indigo-600 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold">Sign Up Now and Start Excelling! 📚</a>
         </div>
-    </div>
+    </section>
 
-
-    <!-- News Section -->
-    <section class="news" id="news">
-        <h2>Latest News</h2>
-        <div class="news-container">
-            <div class="news-item active">
-                <img src="zoo2.jpg" alt="News 1">
-                <p>Our new science lab is open for students!</p>
-            </div>
-            <div class="news-item">
-                <img src="csc2.webp" alt="News 2">
-                <p>Congratulations to the debate team for winning regionals!</p>
-            </div>
-            <div class="news-item">
-                <img src="mcb2.jpg" alt="News 3">
-                <p>Annual sports day event was a huge success!</p>
-            </div>
+    <!-- About Section -->
+    <section class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">What is OAU ExamGuard?</h3>
+            <p class="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto">Our innovative platform empowers students to prepare, practice, and excel in their exams while showcasing their writing skills and earning money.</p>
+            <img src="full-shot-woman-taking-selfie_23-2150384118.jpg?text=Students+Studying" alt="Students Studying" class="dynamic-img mt-8 mx-auto">
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features" id="features">
-        <h2>INTERESTING HUBS</h2>
-        <div class="grid">
-            <a href="https://example.com/labs"><img src="full-shot-woman-taking-selfie_23-2150384118.jpg" alt="State-of-the-Art Labs"></a>
-            <a href="https://example.com/sports"><img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg" alt="Athletic Excellence"></a>
-            <a href="https://example.com/arts"><img src="changing-word-impossible-possible-with-eraser_3446-349.jpg" alt="Creative Arts"></a>
-            <a href="https://example.com/arts"><img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg" alt="Creative Arts"></a>
+    <section class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Key Features</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <span class="text-4xl animate-icon">📚</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Past Questions & Answers</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Access a vast library of past exam questions with detailed solutions.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <span class="text-4xl animate-icon">📖</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Study Guides & Materials</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Comprehensive, tailored study guides for your courses.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <span class="text-4xl animate-icon">📝</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Mock Tests & Exams</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Weekly, monthly, and semester mock tests to keep you sharp.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <span class="text-4xl animate-icon">✍️</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Student Blogging</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Share your stories, earn cash, and build your brand.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <span class="text-4xl animate-icon">🛒</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Study Material Marketplace</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Buy and sell study materials with ease.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <span class="text-4xl animate-icon">🤝</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Peer Collaboration</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Connect and learn from fellow students.</p>
+                </div>
+            </div>
+            <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Exam+Preparation" alt="Exam Preparation" class="dynamic-img mt-12 mx-auto">
         </div>
     </section>
 
-    <!-- About the Author -->
-    <section class="about-author" id="about">
-        <h2>About the Author</h2>
-        <div class="author-container">
-            <img src="afro-male-student-holding-books-disposable-coffee-cup-standing-campus_23-2148093212.jpg" alt="Author Image">
-            <p>Prof Richard is a dedicated educator and web developer passionate about blending techn
-ology with education.</p>
+    <!-- Stats Section -->
+    <section class="py-12 sm:py-16 bg-indigo-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Our Impact</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
+                <div>
+                    <p class="stats-counter" id="students-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Students Joined</p>
+                </div>
+                <div>
+                    <p class="stats-counter" id="materials-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Study Materials Shared</p>
+                </div>
+                <div>
+                    <p class="stats-counter" id="posts-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Blog Posts Published</p>
+                </div>
+            </div>
         </div>
     </section>
 
-<!-- Gallery Section -->
-<section class="gallery" id="gallery">
-    <h2>Gallery</h2>
-    <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item">
-            <img src="mcb2.jpg" alt="Gallery Image 1" onclick="openModal(this)">
+    <!-- Benefits Section -->
+    <section class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Benefits</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">📈</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Improve Exam Performance</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Boost your grades with personalized study tools.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">💰</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Earn Money</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Sell study materials and get paid for your content.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">✍️</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Develop Writing Skills</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Hone your writing and build a personal brand.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">🌐</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Connect with Peers</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Learn from and collaborate with fellow students.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="changing-word-impossible-possible-with-eraser_3446-349.jpg?text=Student+Success" alt="Student Success" class="dynamic-img mt-12 mx-auto">
         </div>
-        <div class="gallery-item">
-            <img src="geology2.jpg" alt="Gallery Image 2" onclick="openModal(this)">
-        </div>
-        <div class="gallery-item">
-            <img src="zoo2.jpg" alt="Gallery Image 3" onclick="openModal(this)">
-        </div>
-        <div class="gallery-item">
-            <img src="csc2.webp" alt="Gallery Image 4" onclick="openModal(this)">
-        </div>
-        <div class="gallery-item">
-            <img src="changing-word-impossible-possible-with-eraser_3446-349.jpg" alt="Gallery Image 4" onclick="openModal(this)">
-        </div>
-        <div class="gallery-item">
-            <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg" alt="Gallery Image 4" onclick="openModal(this)">
-        </div>
-        <div class="gallery-item">
-            <img src="full-shot-woman-taking-selfie_23-2150384118.jpg" alt="Gallery Image 4" onclick="openModal(this)">
-        </div>
-        <!-- Add more gallery items as needed -->
-    </div>
-    <button id="showMoreBtn" onclick="showMoreImages()">Show More</button>
-</section>
+    </section>
 
-<!-- Modal for Image Preview -->
-<div id="imageModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="modalImage">
-                                                   </div>
-<!-- Footer Section -->
-<div id="popupNotification" class="popup-notification">
-  <div class="popup-content">
-    <img src="good morning 5.webp" alt="Notification" />
-    <h2>Welcome to Our Website</h2>
-    <p>Stay updated with the latest features, updates, and announcements. We're glad to have you here!</p>
-    <button onclick="closePopup()">Got it!</button>
-  </div>
-</div>
-        
-        <footer>
-    <div class="footer-container">
-        <!-- Quick Links -->
-        <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="https://examguide.vercel.app">Home</a></li>
-                <li><a href="#news">News</a></li>
-                <li><a href="#news">JAMB</a></li>
-                <li><a href="#news">POST UTME</a></li>
-                <li><a href="#news">UNIVERSITY RESOURCES</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="https://wa.link/jhndw0">Contact</a></li>
-            </ul>
+    <!-- Testimonial Section -->
+    <section class="py-12 sm:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">What Our Students Say</h3>
+            <div class="testimonial-slider relative">
+                <div class="testimonial-slide active text-center">
+                    <p class="text-gray-600 italic text-sm sm:text-base mb-4">"OAU ExamGuard helped me ace my exams and earn extra cash by selling my notes!"</p>
+                    <p class="font-semibold text-indigo-600">— Sarah, Computer Science Major</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-sm sm:text-base mb-4">"The mock tests were a game-changer. I felt so prepared!"</p>
+                    <p class="principle font-semibold text-indigo-600">— Ahmed, Engineering Student</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-sm sm:text-base mb-4">"Writing blogs on ExamGuard boosted my skills and my wallet!"</p>
+                    <p class="font-semibold text-indigo-600">— Temi, Literature Student</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-
-        <!-- Contact Info -->
-        <div class="footer-section">
-            <h3>Contact Us</h3>
-            <p>Obafemi Awolowo University, Ile Ife, Osun State, Nigeria</p>
-            <p>Email: dbsife@gmail.com</p>
-            <p>Phone: +234 9155127634</p>
+    <!-- CTA Section -->
+    <section class="py-12 sm:py-16 bg-indigo-600 text-white text-center">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Get Started Today!</h3>
+            <p class="text-base sm:text-lg mb-8">Join the OAU ExamGuard community and start achieving your academic goals! 🚀</p>
+            <a href="#signup" class="cta-button bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold">Sign Up Now! 📚</a>
+            <p class="text-lg sm:text-xl font-semibold mt-8">"Prepare. Practice. Excel. Earn." 🚀📚</p>
         </div>
+    </section>
 
-        
-<!-- Social Media -->
-<div class="footer-section">
-    <h3>Follow Us</h3>
-    <div class="social-icons">
-        <a href="https://facebook.com" target="_blank">
-            <i class="fab fa-facebook"></i> Facebook
-        </a>
-        <a href="https://twitter.com" target="_blank">
-            <i class="fab fa-twitter"></i> Twitter
-        </a>
-        <a href="https://instagram.com" target="_blank">
-            <i class="fab fa-instagram"></i> Instagram
-        </a>
-        <a href="https://wa.link/jhndw0" target="_blank">
-            <i class="fab fa-whatsapp"></i> WhatsApp 
-    </a>
-    </div>
-</div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
 
-    <p class="footer-bottom">&copy; 2025 DE-BRAINSTORMERS' ACADEMY. All rights reserved.</p>
-</footer>
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-        <script>
-  function closePopup() {
-    document.getElementById('popupNotification').style.display = 'none';
-  }
+        // Stats counter animation
+        function animateCounter(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let range = end - start;
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let value = Math.min(start + (progress / duration) * range, end);
+                obj.textContent = Math.floor(value);
+                if (progress < duration) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+        animateCounter('students-counter', 0, 5000, 2000);
+        animateCounter('materials-counter', 0, 10000, 2000);
+        animateCounter('posts-counter', 0, 2000, 2000);
 
-  // Show popup on every reload
-  window.onload = () => {
-    document.getElementById('popupNotification').style.display = 'flex';
-  };
-                            </script>
-                                              
+        // Testimonial slider
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = (index + 1) % slides.length;
+        }
+        setInterval(() => showSlide(currentSlide), 5000);
+    </script>
 </body>
 </html>
