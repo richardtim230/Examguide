@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Month JavaScript Learning Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 15px;
+        }
+        .week {
+            margin-bottom: 30px;
+        }
+        .day {
+            background: #ecf0f1;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 5px solid #3498db;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .goal, .theme {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .day {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>One-Month JavaScript Learning Plan: From Basics to Dynamic Web</h1>
+        <p class="goal"><strong>Goal:</strong> Equip students with fundamental JavaScript programming concepts and the ability to interact with HTML and CSS to create dynamic and interactive web pages.</p>
+
+        <!-- Week 1 -->
+        <div class="week">
+            <h2>Week 1: JavaScript Fundamentals - The Core Language</h2>
+            <p class="theme"><strong>Theme:</strong> Learning the basic syntax, variables, data types, and control flow that form the foundation of programming.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): Introduction, Variables & Data Types</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>What is JavaScript? (The "brain" of the web).</li>
+                    <li>How JavaScript works with HTML/CSS.</li>
+                    <li>Where to write JavaScript (internal &lt;script&gt; in &lt;head&gt; or &lt;body&gt;, external .js files). Emphasis on external.</li>
+                    <li>Using the Browser Console (Inspect Element -> Console tab) for output (console.log()) and debugging.</li>
+                    <li>Variables: var, let, const (explain differences and why let/const are preferred).</li>
+                    <li>Data Types: String (text), Number (integers, decimals), Boolean (true/false), Null, Undefined.</li>
+                    <li>Operators: Arithmetic (+, -, *, /, %), Assignment (=, +=, -=).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Set up index.html and script.js. Link script.js at the end of &lt;body&gt;.</li>
+                    <li>Use console.log() to print "Hello, JavaScript!"</li>
+                    <li>Declare variables with let and const for your name, age, and a boolean for "isStudent."</li>
+                    <li>Perform basic arithmetic operations and log results (e.g., let total = price1 + price2;).</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create variables for items in a shopping cart (item name, quantity, unit price).</li>
+                    <li>Calculate the total cost for each item and the grand total using variables and arithmetic operators. Log all results to the console.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Conditional Statements & Operators</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Making decisions in code using if, else if, and else statements.</li>
+                    <li>Understanding comparison operators (==, ===, !=, !==, >, <, >=, <=). Explain strict vs. loose equality.</li>
+                    <li>Logical operators (&& (AND), || (OR), ! (NOT)) to combine conditions.</li>
+                    <li>The switch statement for multiple choice scenarios.</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Write an if/else statement to check if a user is old enough to vote (e.g., age >= 18). Log the result.</li>
+                    <li>Create an if/else if/else chain for grading (A, B, C, D, F based on a score).</li>
+                    <li>Use logical operators to check if a user is both logged in and an admin.</li>
+                    <li>Write a switch statement that outputs a message based on a day of the week (1=Monday, 7=Sunday).</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create a simple "eligibility checker" program:</li>
+                    <li>Get a user's score and attendance percentage.</li>
+                    <li>Use if/else if/else and logical operators to determine if they passed (e.g., score >= 70 AND attendance >= 80, OR score >= 90). Log the outcome.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): Loops & Arrays</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Repeating actions efficiently using for and while loops.</li>
+                    <li>Storing collections of data in Arrays.</li>
+                    <li>Accessing and modifying array elements.</li>
+                    <li>Basic array properties (.length).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Use a for loop to print numbers from 1 to 10.</li>
+                    <li>Use a while loop to count down from 5 to 1.</li>
+                    <li>Create an array of your favorite fruits.</li>
+                    <li>Access the first, last, and a middle element using their index.</li>
+                    <li>Add a new fruit to the end of the array.</li>
+                    <li>Loop through your fruits array and print each one to the console.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create an array of numbers.</li>
+                    <li>Use a for loop to iterate through the array and calculate the sum of all numbers.</li>
+                    <li>Use a for loop (or another loop) to find the largest number in the array.</li>
+                    <li>Log both the sum and the largest number.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Week 2 -->
+        <div class="week">
+            <h2>Week 2: JavaScript Functions & Objects - Building Logic and Data Structures</h2>
+            <p class="theme"><strong>Theme:</strong> Organizing code into reusable blocks (functions) and representing real-world entities (objects).</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): Functions - Reusable Code Blocks</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Defining and calling functions.</li>
+                    <li>Parameters: Inputs to functions.</li>
+                    <li>Return Values: Outputs from functions.</li>
+                    <li>Function Declaration vs. Function Expression (briefly, hoisting concept).</li>
+                    <li>Arrow Functions: Modern, concise function syntax (introduce for simple cases).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Write a function greet(name) that logs "Hello, [name]!". Call it with different names.</li>
+                    <li>Write a function add(a, b) that returns the sum of two numbers. Log the result of calling it.</li>
+                    <li>Create an arrow function multiply(x, y) that multiplies two numbers.</li>
+                    <li>Write a function calculateArea(length, width) that calculates and returns the area of a rectangle.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create a function isPalindrome(word) that takes a word as input.</li>
+                    <li>The function should return true if the word is a palindrome (reads the same forwards and backward), and false otherwise. (Hint: convert to lowercase, remove spaces, reverse the string/array).</li>
+                    <li>Test with several words.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Objects - Representing Things</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Creating JavaScript Objects (collections of key-value pairs).</li>
+                    <li>Accessing object properties using dot notation (.) and bracket notation ([]).</li>
+                    <li>Adding and modifying object properties.</li>
+                    <li>Object methods (functions as properties).</li>
+                    <li>The this keyword (basic understanding in method context).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Create an object person with properties like name, age, city, and isStudent.</li>
+                    <li>Access and log individual properties (e.g., person.name).</li>
+                    <li>Add a new property (e.g., person.job = 'Developer';).</li>
+                    <li>Create a method within the person object (e.g., person.greet = function() { console.log('Hello, ' + this.name); };). Call the method.</li>
+                    <li>Create an array of objects (e.g., const books = [{title: 'A', author: 'B'}, {title: 'C', author: 'D'}];). Loop through and log titles.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create an object car with properties like make, model, year, color.</li>
+                    <li>Add a method getAge() that calculates and returns the car's age based on the current year.</li>
+                    <li>Add another method drive() that logs a message like "The [color] [make] [model] is driving."</li>
+                    <li>Call both methods and log their results.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): DOM Manipulation - Part 1 (Selecting & Content)</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Introduction to the DOM (Document Object Model): JavaScript's way of seeing and interacting with HTML.</li>
+                    <li>Selecting HTML elements: document.getElementById(), document.querySelector(), document.querySelectorAll().</li>
+                    <li>Modifying Content: element.textContent (for plain text), element.innerHTML (for HTML content - be careful!).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>In index.html, add a &lt;h1 id="main-title"&gt;Hello, World!&lt;/h1&gt; and a &lt;p class="intro"&gt;This is a paragraph.&lt;/p&gt;.</li>
+                    <li>In script.js: Select the h1 by ID and change its textContent to "Welcome to my Page!".</li>
+                    <li>Select the p by class and change its innerHTML to "This is an &lt;strong&gt;interactive&lt;/strong&gt; paragraph!".</li>
+                    <li>Select all paragraphs on the page and log their text content.</li>
+                    <li>Add a new div with an ID, then select it and put a message inside.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create a simple HTML page with a list of items (&lt;ul&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ul&gt;).</li>
+                    <li>Use JavaScript to select the &lt;ul&gt; element.</li>
+                    <li>Then, select all &lt;li&gt; elements.</li>
+                    <li>Loop through the &lt;li&gt; elements and change the textContent of every second item to "Changed Item".</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Week 3 -->
+        <div class="week">
+            <h2>Week 3: JavaScript & DOM Interaction - Making Pages Dynamic</h2>
+            <p class="theme"><strong>Theme:</strong> Making web pages truly interactive by dynamically changing styles, creating elements, and responding to user actions.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): DOM Manipulation - Part 2 (Styles, Classes & Elements)</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Modifying Styles: element.style.propertyName (inline styles - use sparingly).</li>
+                    <li>Managing Classes: element.classList.add(), element.classList.remove(), element.classList.toggle(), element.classList.contains(). (BEST WAY to change styles dynamically).</li>
+                    <li>Creating New Elements: document.createElement().</li>
+                    <li>Adding/Removing Elements: parentElement.appendChild(), parentElement.removeChild().</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Add a button and a div to your HTML.</li>
+                    <li>When the button is clicked (for now, using onclick in HTML), change the div's background-color using element.style.</li>
+                    <li>Create CSS classes like .highlight (yellow background) and .hidden (display: none;).</li>
+                    <li>Use classList.add() to add .highlight to an element.</li>
+                    <li>Use classList.toggle() to hide/show an element.</li>
+                    <li>Create a new &lt;li&gt; element with document.createElement(), set its textContent, and append it to an existing &lt;ul&gt;.</li>
+                    <li>Create another button that removes the last &lt;li&gt; from the &lt;ul&gt;.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Build a simple "Task List" HTML page with an empty &lt;ul&gt; and a button labeled "Add Task".</li>
+                    <li>When the "Add Task" button is clicked (use onclick for now): Create a new &lt;li&gt; element.</li>
+                    <li>Set its textContent to "New Task X" (where X is a number that increments).</li>
+                    <li>Append the new &lt;li&gt; to the &lt;ul&gt;.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Event Handling - Responding to Users</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>The core of interactivity: Event Listeners.</li>
+                    <li>Attaching event listeners: element.addEventListener('event', functionName).</li>
+                    <li>Common events: click, mouseover, mouseout, keydown, submit.</li>
+                    <li>The Event Object: Information about the event (e.g., event.target, event.key).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Remove all onclick from your HTML.</li>
+                    <li>Select a button by ID. Add an event listener to it that logs "Button clicked!" when clicked.</li>
+                    <li>Select a div. Add mouseover and mouseout listeners to change its background color or add/remove a class.</li>
+                    <li>Add an event listener to the entire document for the keydown event. Log event.key when a key is pressed.</li>
+                    <li>Create a simple HTML link (&lt;a&gt;) that tries to go to Google. Add a click event listener to it that logs "Link clicked!" and prevents the default link behavior (navigation) using event.preventDefault().</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Enhance your "Task List" from yesterday: Replace the onclick on the "Add Task" button with a proper addEventListener.</li>
+                    <li>When adding a task, also add a "Delete" button next to each &lt;li&gt;.</li>
+                    <li>Add a click event listener to each "Delete" button that removes its parent &lt;li&gt; from the list. (Hint: use event.target.parentNode.remove()).</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): Form Handling & Input Validation</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Getting values from form inputs.</li>
+                    <li>Handling the submit event of a &lt;form&gt;.</li>
+                    <li>Preventing default form submission (event.preventDefault()).</li>
+                    <li>Basic client-side input validation (checking if fields are empty, checking length).</li>
+                    <li>Displaying error messages to the user.</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Create a simple HTML form with a text input (id="username") and a password input (id="password") and a submit button.</li>
+                    <li>In script.js: Select the form and add a submit event listener.</li>
+                    <li>Inside the event listener, use event.preventDefault().</li>
+                    <li>Get the value of the username and password inputs.</li>
+                    <li>Log the values to the console.</li>
+                    <li>Implement basic validation: if either field is empty, log an error message instead of processing.</li>
+                    <li>Add an empty div (e.g., id="error-message") to your HTML. If validation fails, display an error message in this div.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Build a simple "Newsletter Signup" form: One email input (type="email"), one submit button.</li>
+                    <li>Use HTML required attribute.</li>
+                    <li>Add a submit event listener.</li>
+                    <li>Get the email value.</li>
+                    <li>Implement custom validation: Check if the email input is empty, check if the email includes an "@" symbol and a ".".</li>
+                    <li>Display clear success or error messages to the user on the page.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Week 4 -->
+        <div class="week">
+            <h2>Week 4: Advanced JavaScript Concepts & Mini-Project</h2>
+            <p class="theme"><strong>Theme:</strong> Exploring more advanced features like asynchronous operations and array methods, culminating in a dynamic mini-project.</p>
+
+            <div class="day">
+                <h3>Day 1 (Thursday): Asynchronous JavaScript (Introduction)</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Understanding Asynchronous Code: Code that doesn't run sequentially (e.g., waiting for a file to load, a network request, a timer).</li>
+                    <li>setTimeout(): Runs a function once after a specified delay.</li>
+                    <li>setInterval(): Runs a function repeatedly at specified intervals.</li>
+                    <li>Brief Introduction to Promises/Fetch: How JavaScript handles operations that take time, especially fetching data from external sources (fetch()). Explain that fetch returns a Promise.</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Use setTimeout() to log a message after 3 seconds.</li>
+                    <li>Use setInterval() to display a changing number every second on a div in your HTML. Add a button to clearInterval() to stop it.</li>
+                    <li>Discuss how a simple API call works conceptually (e.g., "Imagine we ask Google for weather data, it takes time, and JavaScript deals with it using Promises").</li>
+                    <li>Show a very simple fetch() example (just to see the syntax and concept, don't worry about understanding the data yet).</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>Create a simple HTML page with a timer display (&lt;span id="timer"&gt;0&lt;/span&gt;) and two buttons: "Start" and "Stop".</li>
+                    <li>Implement JavaScript: "Start" button starts setInterval() to increment the number in #timer every second.</li>
+                    <li>"Stop" button stops the setInterval() using clearInterval().</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 2 (Friday): Array Methods - Powerful Data Manipulation</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Efficiently working with arrays using built-in methods.</li>
+                    <li>forEach(): Iterating over elements.</li>
+                    <li>map(): Transforming elements into a new array.</li>
+                    <li>filter(): Creating a new array with elements that pass a test.</li>
+                    <li>reduce(): Reducing an array to a single value.</li>
+                    <li>(Briefly mention find(), some(), every() if time permits).</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Create an array of numbers.</li>
+                    <li>Use forEach() to print each number squared.</li>
+                    <li>Use map() to create a new array where each number is doubled. Log the new array.</li>
+                    <li>Create an array of objects (e.g., products: [{name: 'Laptop', price: 1200}, {name: 'Mouse', price: 25}]).</li>
+                    <li>Use filter() to get only products with a price over $100.</li>
+                    <li>Use reduce() to calculate the total price of all products.</li>
+                </ul>
+                <h4>Your Homework:</h4>
+                <ul>
+                    <li>You have an array of student objects, each with name and score properties.</li>
+                    <li>Use filter() to get all students who scored 70 or higher.</li>
+                    <li>Use map() to create a new array containing only the names of the passing students.</li>
+                    <li>Log the array of passing student names.</li>
+                </ul>
+            </div>
+
+            <div class="day">
+                <h3>Day 3 (Saturday): Mini-Project & Review</h3>
+                <h4>What's Happening Today?</h4>
+                <ul>
+                    <li>Review of all JavaScript concepts: Variables, data types, conditionals, loops, arrays, functions, objects, DOM manipulation, event handling, basic asynchronous, array methods.</li>
+                    <li>Debugging with DevTools: Reiterate the importance of console.log(), breakpoints, and the "Sources" tab.</li>
+                    <li>Mini-Project: Students will apply everything they've learned to build a small, interactive web application.</li>
+                </ul>
+                <h4>Your Hands-On Activity:</h4>
+                <ul>
+                    <li>Choose a Mini-Project:</li>
+                    <li>Option 1: Dynamic Image Gallery: Display a few images. Buttons to change the main image, or a slideshow with setInterval.</li>
+                    <li>Option 2: Simple Calculator: Basic arithmetic operations (addition, subtraction, etc.) using input fields and buttons.</li>
+                    <li>Option 3: Interactive To-Do List (Advanced): Add tasks, mark as complete (toggle class), delete tasks.</li>
+                    <li>Option 4: Basic Quiz Application: Display questions and options, check answers, show score.</li>
+                    <li>Implement: Focus on HTML structure, CSS styling, and then bring it alive with JavaScript.</li>
+                    <li>Use variables, functions, conditional logic, loops (if needed).</li>
+                    <li>Manipulate the DOM (change text, add/remove elements, modify styles/classes).</li>
+                    <li>Use event listeners for user interaction.</li>
+                    <li>If ambitious, try incorporating a setTimeout or setInterval.</li>
+                    <li>Final Output: Each student presents their interactive web application.</li>
+                    <li>Q&A: Open session for questions, debugging help, and sharing insights.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
