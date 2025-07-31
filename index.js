@@ -61,7 +61,7 @@ import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
 import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
 import BloggerDashboard from "./models/BloggerDashboard.js";
-import User from "./models/User.js";
+
 
 dotenv.config();
 
