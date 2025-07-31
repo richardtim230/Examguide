@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>Week 2: CSS Learning Manual</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2980b9;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #c0392b;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .day {
+            background: #f0f3f5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 6px solid #2980b9;
+        }
+        .goal {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background: #e8ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        .note {
+            background: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2980b9;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: #1f6391;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .day {
+                padding: 15px;
+            }
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Week 2 Manual: CSS - Styling Your Web Pages</h1>
+        <p class="goal"><strong>Goal:</strong> Learn how to style your HTML pages using CSS to create visually appealing and professional-looking web pages.</p>
+        <div class="nav-buttons">
+            <a href="week1.html" class="nav-button">View Week 1 Manual</a>
+            <a href="dev2.html" class="nav-button">View JavaScript Learning Plan</a>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="day">
+            <h2>Day 1 (Thursday): CSS Intro & Selectors</h2>
+            <h3>What's Happening Today?</h3>
+            <p>Today, you'll dive into CSS (Cascading Style Sheets), which controls the visual presentation of your HTML pages. You'll learn how to apply styles, use different types of selectors, and understand the concept of the cascade and specificity.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>What is CSS?</h4>
+            <ul>
+                <li>CSS stands for Cascading Style Sheets.</li>
+                <li>It controls the visual appearance of HTML elements (colors, fonts, layouts, etc.).</li>
+                <li>It separates presentation (CSS) from content and structure (HTML), a concept called <strong>separation of concerns</strong>.</li>
+            </ul>
+
+            <h4>How to Include CSS:</h4>
+            <ul>
+                <li><strong>Inline CSS:</strong> Styles applied directly in an HTML tag using the <code>style</code> attribute. Use sparingly (e.g., for quick tests).</li>
+                <li>Example: <code>&lt;p style="color: blue;"&gt;Blue text&lt;/p&gt;</code></li>
+                <li><strong>Internal CSS:</strong> Styles defined within a <code>&lt;style&gt;</code> tag in the <code>&lt;head&gt;</code> of your HTML file.</li>
+                <pre><code>&lt;head&gt;
+    &lt;style&gt;
+        p {
+            color: blue;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+                <li><strong>External CSS:</strong> Styles in a separate .css file, linked to HTML using <code>&lt;link&gt;</code>. This is the best practice for maintainability.</li>
+                <pre><code>&lt;head&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;</code></pre>
+                <li class="note"><strong>Note:</strong> External CSS is preferred for most projects as it keeps your HTML clean and makes styles reusable across multiple pages.</li>
+            </ul>
+
+            <h4>CSS Syntax:</h4>
+            <ul>
+                <li>A CSS rule consists of a <strong>selector</strong> and a <strong>declaration block</strong>.</li>
+                <li><strong>Selector:</strong> Targets the HTML element(s) to style (e.g., <code>p</code>, <code>.class</code>, <code>#id</code>).</li>
+                <li><strong>Declaration Block:</strong> Contains one or more declarations (property: value pairs) inside curly braces <code>{}</code>.</li>
+                <li>Example:</li>
+                <pre><code>h1 {
+    color: navy;
+    font-size: 24px;
+}</code></pre>
+            </ul>
+
+            <h4>Basic Selectors:</h4>
+            <ul>
+                <li><strong>Element Selector:</strong> Targets all instances of a specific HTML element (e.g., <code>p</code>, <code>h1</code>).</li>
+                <li>Example: <code>p { color: green; }</code> (styles all paragraphs).</li>
+                <li><strong>Class Selector:</strong> Targets elements with a specific class attribute. Use a dot (<code>.</code>) before the class name.</li>
+                <li>Example: <code>.intro { font-weight: bold; }</code> (styles elements with <code>class="intro"</code>).</li>
+                <li><strong>ID Selector:</strong> Targets a single element with a specific ID. Use a hash (<code>#</code>) before the ID name.</li>
+                <li>Example: <code>#main-title { text-align: center; }</code> (styles element with <code>id="main-title"</code>).</li>
+                <li class="note"><strong>Note:</strong> IDs must be unique per page. Classes can be reused on multiple elements.</li>
+            </ul>
+
+            <h4>Cascade and Specificity (Basic):</h4>
+            <ul>
+                <li><strong>Cascade:</strong> CSS rules are applied in order of appearance, with later rules overriding earlier ones if they target the same element.</li>
+                <li><strong>Specificity:</strong> Determines which rule wins when multiple rules target the same element. ID selectors are more specific than class selectors, which are more specific than element selectors.</li>
+                <li>Example: If <code>p { color: blue; }</code> and <code>.intro { color: red; }</code> both apply to a <code>&lt;p class="intro"&gt;</code>, the color will be red because class selectors have higher specificity.</li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Apply Styles to Your Bio Page</h3>
+            <h4>Set Up Your CSS File:</h4>
+            <ul>
+                <li>Open your "my-first-website" folder in VS Code.</li>
+                <li>Create a new file called <code>styles.css</code> in the same folder as <code>index.html</code>.</li>
+                <li>Link your CSS file to <code>index.html</code> by adding this in the <code>&lt;head&gt;</code>:</li>
+                <pre><code>&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
+            </ul>
+
+            <h4>Try Inline and Internal CSS (Just to Understand):</h4>
+            <ul>
+                <li>Add inline CSS to one paragraph in <code>index.html</code> (e.g., <code>&lt;p style="color: blue;"&gt;</code>).</li>
+                <li>Add internal CSS in the <code>&lt;head&gt;</code> of <code>index.html</code> using a <code>&lt;style&gt;</code> tag to style all <code>&lt;h1&gt;</code> elements (e.g., <code>h1 { font-size: 32px; }</code>).</li>
+                <li>Then, move those styles to <code>styles.css</code> to practice external CSS.</li>
+            </ul>
+
+            <h4>Style Your Bio Page:</h4>
+            <ul>
+                <li>In <code>styles.css</code>, add styles for:</li>
+                <ul>
+                    <li><code>h1</code>: Change the text color (e.g., <code>color: #2c3e50;</code>) and center it (<code>text-align: center;</code>).</li>
+                    <li><code>p</code>: Set a font size (e.g., <code>font-size: 16px;</code>) and add some margin (<code>margin: 10px 0;</code>).</li>
+                    <li>Add a class to one paragraph (e.g., <code>&lt;p class="intro"&gt;</code>) and style it with a different color or font weight (e.g., <code>.intro { color: #2980b9; font-weight: bold; }</code>).</li>
+                    <li>Add an ID to your main heading (e.g., <code>&lt;h1 id="main-title"&gt;</code>) and style it uniquely (e.g., <code>#main-title { text-decoration: underline; }</code>).</li>
+                </ul>
+                <li>Open <code>index.html</code> with Live Server to see your changes.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Style Your Recipe Page:</strong> Open your <code>recipe.html</code> from Week 1.</li>
+                <li>Create a new <code>recipe-styles.css</code> file and link it to <code>recipe.html</code>.</li>
+                <li>Experiment with:</li>
+                <ul>
+                    <li><strong>Colors:</strong> Change text colors for headings and paragraphs (e.g., <code>h2 { color: #e74c3c; }</code>).</li>
+                    <li><strong>Fonts:</strong> Try different font families (e.g., <code>font-family: Arial, sans-serif;</code>).</li>
+                    <li><strong>Element Selectors:</strong> Style all <code>&lt;li&gt;</code> elements in your ingredients or instructions lists.</li>
+                </ul>
+                <li>Save and view with Live Server.</li>
+            </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day">
+            <h2>Day 2 (Friday): Colors, Text & Box Model</h2>
+            <h3>What's Happening Today?</h3>
+            <p>You'll explore CSS colors, text styling properties, and the CSS Box Model, which is critical for understanding how elements are sized and spaced on a page.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>CSS Colors:</h4>
+            <ul>
+                <li><strong>Named Colors:</strong> Simple names like <code>red</code>, <code>blue</code>, <code>black</code>.</li>
+                <li><strong>Hex Colors:</strong> Six-digit codes (e.g., <code>#FF0000</code> for red). First two digits are red, next two are green, last two are blue.</li>
+                <li><strong>RGB/RGBA:</strong> RGB uses values 0-255 for red, green, blue (e.g., <code>rgb(255, 0, 0)</code> for red). RGBA adds alpha for opacity (0 to 1, e.g., <code>rgba(255, 0, 0, 0.5)</code> for semi-transparent red).</li>
+                <li><strong>HSL/HSLA:</strong> Hue (0-360), Saturation (0-100%), Lightness (0-100%). HSLA adds alpha. Example: <code>hsl(0, 100%, 50%)</code> for red.</li>
+                <li>Example:</li>
+                <pre><code>p {
+    color: #3498db; /* Hex */
+    background-color: rgba(255, 165, 0, 0.7); /* RGBA */
+}</code></pre>
+            </ul>
+
+            <h4>Text Styling:</h4>
+            <ul>
+                <li><strong><code>font-family</code>:</strong> Sets the typeface (e.g., <code>font-family: 'Arial', sans-serif;</code>). Always include a fallback font (e.g., <code>sans-serif</code>).</li>
+                <li><strong><code>font-size</code>:</strong> Sets text size (e.g., <code>16px</code>, <code>1.2em</code>, <code>1rem</code>). Pixels are absolute, em/rem are relative.</li>
+                <li><strong><code>font-weight</code>:</strong> Sets boldness (e.g., <code>normal</code>, <code>bold</code>, <code>700</code>).</li>
+                <li><strong><code>text-align</code>:</strong> Aligns text (<code>left</code>, <code>center</code>, <code>right</code>, <code>justify</code>).</li>
+                <li><strong><code>line-height</code>:</strong> Sets spacing between lines (e.g., <code>1.6</code> for 1.6 times the font size).</li>
+                <li><strong><code>text-decoration</code>:</strong> Adds underlines, overlines, or strikethrough (e.g., <code>underline</code>, <code>none</code>).</li>
+                <li><strong><code>letter-spacing</code>:</strong> Adjusts space between characters (e.g., <code>2px</code>).</li>
+                <li>Example:</li>
+                <pre><code>h2 {
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.4;
+}</code></pre>
+            </ul>
+
+            <h4>CSS Box Model:</h4>
+            <ul>
+                <li>Every HTML element is treated as a rectangular box with:</li>
+                <ul>
+                    <li><strong>Content:</strong> The actual content (text, images).</li>
+                    <li><strong>Padding:</strong> Space between content and border.</li>
+                    <li><strong>Border:</strong> Surrounds padding (and content).</li>
+                    <li><strong>Margin:</strong> Space outside the border, separating the element from others.</li>
+                </ul>
+                <li><strong><code>box-sizing</code>:</strong> Controls how width/height are calculated.</li>
+                <ul>
+                    <li><code>content-box</code> (default): Width/height only include content.</li>
+                    <li><code>border-box</code>: Width/height include content, padding, and border (recommended).</li>
+                </ul>
+                <li>Example:</li>
+                <pre><code>.box {
+    width: 200px;
+    padding: 10px;
+    border: 2px solid black;
+    margin: 15px;
+    box-sizing: border-box;
+}</code></pre>
+                <li class="note"><strong>Note:</strong> Always use <code>box-sizing: border-box;</code> to make sizing predictable. Apply it globally with <code>* { box-sizing: border-box; }</code>.</li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Style Your Recipe Page</h3>
+            <h4>Apply Text Styling:</h4>
+            <ul>
+                <li>Open your <code>recipe.html</code> and <code>recipe-styles.css</code>.</li>
+                <li>In <code>recipe-styles.css</code>, add styles for:</li>
+                <ul>
+                    <li><code>h1</code>: Use a different font family (e.g., <code>font-family: 'Georgia', serif;</code>) and center it.</li>
+                    <li><code>h2</code>: Use a vibrant color (e.g., <code>color: #e74c3c;</code>) and add <code>text-decoration: underline;</code>.</li>
+                    <li><code>p</code>: Set <code>font-size: 16px;</code> and <code>line-height: 1.6;</code>.</li>
+                    <li><code>ul li</code>: Add <code>letter-spacing: 1px;</code> to ingredients for readability.</li>
+                </ul>
+            </ul>
+
+            <h4>Apply Box Model Properties:</h4>
+            <ul>
+                <li>Add a class to your ingredients list (e.g., <code>&lt;ul class="ingredients"&gt;</code>).</li>
+                <li>Style it with:</li>
+                <pre><code>.ingredients {
+    padding: 15px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}</code></pre>
+                <li>Add padding and margin to your instructions list (<code>ol</code>) for spacing.</li>
+            </ul>
+
+            <h4>Experiment with Colors:</h4>
+            <ul>
+                <li>Try different color formats (Hex, RGB, HSL) for text or backgrounds.</li>
+                <li>Example: <code>background-color: rgba(200, 200, 200, 0.2);</code> for a subtle background.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Inspect Box Models:</strong> Open a website you like in Chrome. Right-click an element and select "Inspect" to open DevTools.</li>
+                <li>Look at the "Computed" tab or the box model diagram in the "Styles" panel to see how padding, border, and margin are applied.</li>
+                <li>Try changing values in DevTools (these changes are temporary) to see how they affect the layout.</li>
+                <li>Apply what you learned to tweak your <code>recipe.html</code> page with at least one new box model property (e.g., more padding or a thicker border).</li>
+            </ul>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="day">
+            <h2>Day 3 (Saturday): Backgrounds & Display</h2>
+            <h3>What's Happening Today?</h3>
+            <p>You'll learn how to enhance your pages with background images and colors, style borders creatively, and control how elements are displayed on the page using the display property.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>Background Properties:</h4>
+            <ul>
+                <li><strong><code>background-color</code>:</strong> Sets the background color of an element.</li>
+                <li><strong><code>background-image</code>:</strong> Sets an image as the background (e.g., <code>url('image.jpg')</code>).</li>
+                <li><strong><code>background-repeat</code>:</strong> Controls if/how the image repeats (<code>repeat</code>, <code>no-repeat</code>, <code>repeat-x</code>, <code>repeat-y</code>).</li>
+                <li><strong><code>background-position</code>:</strong> Sets the starting position of the background image (e.g., <code>center</code>, <code>top left</code>, <code>50% 50%</code>).</li>
+                <li><strong><code>background-size</code>:</strong> Controls the size of the background image (<code>auto</code>, <code>cover</code>, <code>contain</code>, or specific sizes like <code>100px 100px</code>).</li>
+                <li><strong>Shorthand <code>background</code>:</strong> Combines all background properties.</li>
+                <li>Example:</li>
+                <pre><code>.hero {
+    background: #f1f1f1 url('hero.jpg') no-repeat center/cover;
+}</code></pre>
+            </ul>
+
+            <h4>Border Properties:</h4>
+            <ul>
+                <li><strong><code>border-style</code>:</strong> Sets the style (e.g., <code>solid</code>, <code>dashed</code>, <code>dotted</code>).</li>
+                <li><strong><code>border-width</code>:</strong> Sets the thickness (e.g., <code>2px</code>).</li>
+                <li><strong><code>border-color</code>:</strong> Sets the color (e.g., <code>#333</code>).</li>
+                <li><strong><code>border-radius</code>:</strong> Rounds corners (e.g., <code>10px</code>).</li>
+                <li><strong>Shorthand <code>border</code>:</strong> Combines style, width, and color.</li>
+                <li>Example:</li>
+                <pre><code>.card {
+    border: 2px solid #2980b9;
+    border-radius: 8px;
+}</code></pre>
+            </ul>
+
+            <h4>Display Properties:</h4>
+            <ul>
+                <li><strong><code>display</code>:</strong> Controls how an element is rendered.</li>
+                <ul>
+                    <li><code>block</code>: Takes up full width, starts on a new line (e.g., <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>).</li>
+                    <li><code>inline</code>: Takes only the width of its content, stays on the same line (e.g., <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>).</li>
+                    <li><code>inline-block</code>: Like inline, but allows setting width/height and respects padding/margins fully.</li>
+                </ul>
+                <li>Example:</li>
+                <pre><code>li {
+    display: inline-block;
+    margin-right: 10px;
+}</code></pre>
+                <li class="note"><strong>Note:</strong> Use Chrome DevTools to inspect and toggle display properties to see their effects.</li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Enhance Your Page</h3>
+            <h4>Add a Background Image:</h4>
+            <ul>
+                <li>Find a free, high-quality image online (e.g., from Unsplash) and save it in your project folder (e.g., <code>images/background.jpg</code>).</li>
+                <li>In <code>recipe-styles.css</code>, add a background image to a section (e.g., your ingredients or instructions).</li>
+                <pre><code>.ingredients {
+    background-image: url('images/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 20px;
+}</code></pre>
+            </ul>
+
+            <h4>Style Borders:</h4>
+            <ul>
+                <li>Add a styled border to your table from Week 1 or a new section:</li>
+                <pre><code>table {
+    border: 1px solid #3498db;
+    border-radius: 5px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}</code></pre>
+            </ul>
+
+            <h4>Experiment with Display:</h4>
+            <ul>
+                <li>Make your list items (<code>&lt;li&gt;</code>) in your ingredients or goals list appear horizontally:</li>
+                <pre><code>ul li {
+    display: inline-block;
+    margin-right: 15px;
+}</code></pre>
+                <li>Compare <code>inline</code> vs. <code>inline-block</code> by toggling in DevTools.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Plan Layout of Your Multi-Section Page:</strong> Revisit your multi-section page idea from Week 1 (e.g., portfolio, product page).</li>
+                <li>In your <code>styles.css</code>, start planning styles for each section:</li>
+                <ul>
+                    <li>Add background colors or images to <code>&lt;header&gt;</code> or <code>&lt;section&gt;</code>.</li>
+                    <li>Style borders for visual separation.</li>
+                    <li>Experiment with <code>display</code> to adjust how elements (e.g., navigation links) are arranged.</li>
+                </ul>
+                <li>Save and view with Live Server to see the visual impact.</li>
+            </ul>
+
+            <h3>End of Week 2!</h3>
+            <p>You've now learned how to make your HTML pages visually appealing with CSS. You can control colors, fonts, spacing, and layout basics. Next week, you'll dive into advanced layouts with Flexbox and CSS Grid!</p>
+        </div>
+    </div>
+</body>
+</html>
