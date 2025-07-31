@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1: HTML Learning Manual</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9fb;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #2980b9;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #c0392b;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .day {
+            background: #f0f3f5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 6px solid #2980b9;
+        }
+        .goal {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background: #e8ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        .note {
+            background: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .js-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2980b9;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .js-button:hover {
+            background-color: #1f6391;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .day {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Week 1 Manual: HTML - Building Your Web Foundation</h1>
+        <p class="goal"><strong>Goal:</strong> Understand and build the core structure of a web page using HTML. You'll learn what each part does and start creating your own simple pages.</p>
+        <a href="javascript-schedule.html" class="js-button">View JavaScript Learning Plan</a>
+
+        <!-- Day 1 -->
+        <div class="day">
+            <h2>Day 1 (Thursday): HTML Basics & Your First Page</h2>
+            <h3>What's Happening Today?</h3>
+            <p>We're kicking off with the absolute basics. You'll learn what HTML is, what a web browser does, and how to create the fundamental structure of every web page. Think of it like learning how to lay the foundation and frame for a house.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>What is Web Development?</h4>
+            <ul>
+                <li><strong>Client-side:</strong> This is what you see in your browser (HTML, CSS, JavaScript). It runs on your computer.</li>
+                <li><strong>Server-side:</strong> This is what happens behind the scenes (databases, logic, sending data to your browser). It runs on a server. We're focusing on client-side for now.</li>
+            </ul>
+
+            <h4>What is HTML?</h4>
+            <ul>
+                <li>HTML stands for HyperText Markup Language.</li>
+                <li>It's not a programming language. It's a "markup" language. It tells the browser what content is (e.g., "this is a heading," "this is a paragraph," "this is an image").</li>
+                <li>It forms the structure and content of your webpage.</li>
+            </ul>
+
+            <h4>The Browser's Job:</h4>
+            <ul>
+                <li>Your web browser (Chrome, Firefox, Safari, Edge) reads HTML files.</li>
+                <li>It then interprets that HTML and displays the page visually for you.</li>
+            </ul>
+
+            <h4>Basic HTML Document Structure:</h4>
+            <p>Every HTML page starts the same way. Memorize this!</p>
+            <pre><code>&lt;!DOCTYPE html&gt;  &lt;!-- Tells the browser this is an HTML5 document --&gt;
+&lt;html lang="en"&gt; &lt;!-- The root element of the page. 'lang="en"' sets the language --&gt;
+&lt;head&gt;           &lt;!-- Contains metadata (info about the page), not visible on the page itself --&gt;
+    &lt;meta charset="UTF-8"&gt; &lt;!-- Specifies character encoding (important for all characters to display correctly) --&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt; &lt;!-- Good for responsive design (later) --&gt;
+    &lt;title&gt;Your Page Title Here&lt;/title&gt; &lt;!-- The text that appears in the browser tab --&gt;
+&lt;/head&gt;
+&lt;body&gt;           &lt;!-- Contains all the visible content of your web page --&gt;
+
+    &lt;!-- All your visible content goes here --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>Key Terms:</h4>
+            <ul>
+                <li><strong>Tags:</strong> HTML uses "tags" enclosed in angle brackets (e.g., <code>&lt;body&gt;</code>). Most tags come in pairs: an opening tag (<code>&lt;p&gt;</code>) and a closing tag (<code>&lt;/p&gt;</code>). Content goes between them. Some tags are "self-closing" (<code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>).</li>
+                <li><strong>Elements:</strong> An HTML element consists of the opening tag, the closing tag, and all the content in between.</li>
+                <li><strong>Attributes:</strong> Tags can have attributes which provide extra information about the element. They look like <code>attribute="value"</code> (e.g., <code>lang="en"</code>, <code>charset="UTF-8"</code>).</li>
+            </ul>
+
+            <h4>Common Block-Level Elements (They take up their own line):</h4>
+            <ul>
+                <li><strong>Headings (<code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>):</strong> Used for titles and subtitles. <code>&lt;h1&gt;</code> is the most important (main title), <code>&lt;h6&gt;</code> is the least. They are semantic, meaning they indicate the importance and structure of your content, not just size.</li>
+                <li>Example: <code>&lt;h1&gt;Main Title&lt;/h1&gt;</code></li>
+                <li><strong>Paragraphs (<code>&lt;p&gt;</code>):</strong> Used for blocks of regular text.</li>
+                <li>Example: <code>&lt;p&gt;This is a paragraph of text.&lt;/p&gt;</code></li>
+                <li><strong>Line Break (<code>&lt;br&gt;</code>):</strong> Forces a new line. It's self-closing. Use sparingly. Don't use it for spacing out paragraphs (CSS is for that).</li>
+                <li>Example: <code>Line one.&lt;br&gt;Line two.</code></li>
+                <li><strong>Horizontal Rule (<code>&lt;hr&gt;</code>):</strong> Draws a horizontal line. It's self-closing. Used to indicate a thematic break in content.</li>
+                <li>Example: <code>&lt;hr&gt;</code></li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Create Your First Bio Page</h3>
+            <h4>Set Up Your Workspace:</h4>
+            <ul>
+                <li><strong>Install VS Code:</strong> If you haven't, download and install Visual Studio Code (VS Code). It's a free, powerful code editor.</li>
+                <li><strong>Install "Live Server" Extension:</strong> In VS Code, go to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X), search for "Live Server" by Ritwick Dey, and install it. This will let you see your changes instantly in the browser.</li>
+            </ul>
+
+            <h4>Create Your File:</h4>
+            <ul>
+                <li>Open VS Code.</li>
+                <li>Go to File > New File.</li>
+                <li>Save it immediately as <code>index.html</code> in a new folder (e.g., "my-first-website"). Make sure the <code>.html</code> extension is there!</li>
+            </ul>
+
+            <h4>Add the Basic Structure:</h4>
+            <ul>
+                <li>In your empty <code>index.html</code> file, type <code>!</code> (exclamation mark) and press Tab. VS Code will generate the basic HTML structure for you.</li>
+                <li>Change the <code>&lt;title&gt;</code> tag's content to "My First Bio Page".</li>
+            </ul>
+
+            <h4>Add Your Content (inside the <code>&lt;body&gt;</code> tags):</h4>
+            <ul>
+                <li><strong>Your Name:</strong> Add your full name as an <code>&lt;h1&gt;</code> heading.</li>
+                <pre><code>&lt;h1&gt;Your Full Name&lt;/h1&gt;</code></pre>
+                <li><strong>About Me Paragraph:</strong> Write a short paragraph about yourself using <code>&lt;p&gt;</code>.</li>
+                <pre><code>&lt;p&gt;Hi there! My name is Your Name, and I'm excited to learn web development. I love [mention a hobby or interest].&lt;/p&gt;</code></pre>
+                <li><strong>A New Section:</strong> Add an <code>&lt;h2&gt;</code> heading called "My Interests".</li>
+                <pre><code>&lt;h2&gt;My Interests&lt;/h2&gt;</code></pre>
+                <li><strong>Another Paragraph:</strong> Write another paragraph about your interests.</li>
+                <pre><code>&lt;p&gt;I am passionate about [interest 1]. I also enjoy [interest 2].&lt;/p&gt;</code></pre>
+                <li><strong>Use Line Breaks and Horizontal Rule:</strong></li>
+                <pre><code>&lt;p&gt;This is some text.&lt;br&gt;And this is on a new line.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;This is more text after a horizontal line.&lt;/p&gt;</code></pre>
+            </ul>
+
+            <h4>View Your Page:</h4>
+            <ul>
+                <li>In VS Code, right-click anywhere in your <code>index.html</code> file and select "Open with Live Server".</li>
+                <li>Your default browser will open and display your page!</li>
+                <li>Any changes you save in VS Code will now automatically update in your browser.</li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Explore and Discover:</strong> Use a search engine (Google, Bing, etc.) and search for "common HTML tags" or "list of HTML elements."</li>
+                <li><strong>Find 5 New Tags:</strong> Pick 5 HTML tags you didn't learn today. For each tag, write down:</li>
+                <ul>
+                    <li>The tag name (e.g., <code>&lt;a&gt;</code>).</li>
+                    <li>What it's generally used for.</li>
+                    <li>Is it a block-level or inline element (don't worry if you don't know "inline" yet, just try to guess if it takes up its own line or sits within text).</li>
+                </ul>
+                <li><strong>Experiment:</strong> Try adding one or two of your researched tags to your <code>index.html</code> file and see what happens!</li>
+            </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day">
+            <h2>Day 2 (Friday): Text Formatting & Lists</h2>
+            <h3>What's Happening Today?</h3>
+            <p>You'll learn how to make your text look different (bold, italic, etc.), organize information using various types of lists, and add interactive links and images to your page.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>Text Formatting Elements:</h4>
+            <ul>
+                <li><strong><code>&lt;strong&gt;</code> and <code>&lt;b&gt;</code>:</strong></li>
+                <ul>
+                    <li><code>&lt;strong&gt;</code>: Semantic, indicates text with strong importance (e.g., warnings).</li>
+                    <li><code>&lt;b&gt;</code>: Just bold visually, no extra importance.</li>
+                    <li><strong>Best practice:</strong> Use <code>&lt;strong&gt;</code> when the text is important, otherwise use CSS for bolding.</li>
+                </ul>
+                <li><strong><code>&lt;em&gt;</code> and <code>&lt;i&gt;</code>:</strong></li>
+                <ul>
+                    <li><code>&lt;em&gt;</code>: Semantic, indicates emphasized text (e.g., spoken emphasis).</li>
+                    <li><code>&lt;i&gt;</code>: Just italic visually, for things like technical terms, foreign words.</li>
+                    <li><strong>Best practice:</strong> Use <code>&lt;em&gt;</code> for emphasis, otherwise use CSS for italicizing.</li>
+                </ul>
+                <li><strong><code>&lt;u&gt;</code>:</strong> Underlined text (use sparingly, as it can be confused with links).</li>
+                <li><strong><code>&lt;sup&gt;</code>:</strong> Superscript text (e.g., <code>2&lt;sup&gt;nd&lt;/sup&gt;</code>).</li>
+                <li><strong><code>&lt;sub&gt;</code>:</strong> Subscript text (e.g., <code>H&lt;sub&gt;2&lt;/sub&gt;O</code>).</li>
+            </ul>
+
+            <h4>List Elements:</h4>
+            <ul>
+                <li><strong>Unordered List (<code>&lt;ul&gt;</code>):</strong></li>
+                <ul>
+                    <li>Used for bulleted lists where the order doesn't matter.</li>
+                    <li>Each item in the list is a <code>&lt;li&gt;</code> (list item).</li>
+                    <li>Example:</li>
+                    <pre><code>&lt;ul&gt;
+    &lt;li&gt;Milk&lt;/li&gt;
+    &lt;li&gt;Eggs&lt;/li&gt;
+    &lt;li&gt;Bread&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                </ul>
+                <li><strong>Ordered List (<code>&lt;ol&gt;</code>):</strong></li>
+                <ul>
+                    <li>Used for numbered or lettered lists where the order does matter (e.g., steps in a recipe).</li>
+                    <li>Each item is also a <code>&lt;li&gt;</code>.</li>
+                    <li>Example:</li>
+                    <pre><code>&lt;ol&gt;
+    &lt;li&gt;Preheat oven.&lt;/li&gt;
+    &lt;li&gt;Mix ingredients.&lt;/li&gt;
+    &lt;li&gt;Bake for 30 minutes.&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+                </ul>
+                <li><strong>Definition List (<code>&lt;dl&gt;</code>):</strong></li>
+                <ul>
+                    <li>Used for terms and their definitions/descriptions.</li>
+                    <li><code>&lt;dt&gt;</code> (definition term) and <code>&lt;dd&gt;</code> (definition description).</li>
+                    <li>Example:</li>
+                    <pre><code>&lt;dl&gt;
+    &lt;dt&gt;HTML&lt;/dt&gt;
+    &lt;dd&gt;HyperText Markup Language, the language for structuring web content.&lt;/dd&gt;
+    &lt;dt&gt;CSS&lt;/dt&gt;
+    &lt;dd&gt;Cascading Style Sheets, the language for styling web content.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+                </ul>
+            </ul>
+
+            <h4>Link Element (<code>&lt;a&gt;</code> - Anchor Tag):</h4>
+            <ul>
+                <li>Used to create hyperlinks to other pages or resources.</li>
+                <li>The <code>href</code> attribute specifies the destination URL.</li>
+                <li><strong>Absolute URLs:</strong> For external websites (e.g., <code>https://www.google.com</code>).</li>
+                <li><strong>Relative URLs:</strong> For pages within your own website (e.g., <code>about.html</code>).</li>
+                <li><code>target="_blank"</code> attribute: Opens the linked document in a new browser tab.</li>
+                <li>Example: <code>&lt;a href="https://www.google.com" target="_blank"&gt;Go to Google&lt;/a&gt;</code></li>
+            </ul>
+
+            <h4>Image Element (<code>&lt;img&gt;</code>):</h4>
+            <ul>
+                <li>Used to embed images. It's a self-closing tag.</li>
+                <li><code>src</code> attribute: Specifies the path to the image file. Can be a URL or a relative path (e.g., <code>images/my-photo.jpg</code>).</li>
+                <li><code>alt</code> attribute: Crucial! Provides alternative text for the image.</li>
+                <ul>
+                    <li>Displayed if the image can't load.</li>
+                    <li>Read by screen readers for visually impaired users.</li>
+                    <li>Important for SEO (Search Engine Optimization).</li>
+                </ul>
+                <li><code>width</code> and <code>height</code> attributes: Can set the size of the image in pixels. (We'll use CSS for better control later, but these are good for initial sizing).</li>
+                <li>Example: <code>&lt;img src="my-photo.jpg" alt="A photo of me smiling" width="300" height="200"&gt;</code></li>
+            </ul>
+
+            <h3>Your Hands-On Activity: Enhance Your Bio Page</h3>
+            <p>Open <code>index.html</code> with Live Server (if not already open).</p>
+            <h4>Add Text Formatting:</h4>
+            <ul>
+                <li>In your "About Me" paragraph, make one important sentence or phrase <code>&lt;strong&gt;</code>.</li>
+                <li>Find a hobby or interest and make it <code>&lt;em&gt;</code>.</li>
+                <li>Try using <code>&lt;u&gt;</code> on a word (just to see it, use carefully in real projects).</li>
+            </ul>
+
+            <h4>Add a List of Hobbies (Unordered List):</h4>
+            <ul>
+                <li>Under your "My Interests" <code>&lt;h2&gt;</code>, create an <code>&lt;ul&gt;</code>.</li>
+                <li>Add 3-5 hobbies as <code>&lt;li&gt;</code> items.</li>
+                <pre><code>&lt;h2&gt;My Interests&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;Reading fantasy novels&lt;/li&gt;
+    &lt;li&gt;Hiking in national parks&lt;/li&gt;
+    &lt;li&gt;Playing board games&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </ul>
+
+            <h4>Add a "To-Do" List (Ordered List):</h4>
+            <ul>
+                <li>Add a new <code>&lt;h2&gt;</code> called "My Goals for Learning HTML/CSS".</li>
+                <li>Create an <code>&lt;ol&gt;</code> and list 3 goals as <code>&lt;li&gt;</code> items.</li>
+            </ul>
+
+            <h4>Add a Definition List for Web Dev Terms:</h4>
+            <ul>
+                <li>Add a new <code>&lt;h2&gt;</code> called "Key Web Dev Terms".</li>
+                <li>Create a <code>&lt;dl&gt;</code> with at least two <code>&lt;dt&gt;/&lt;dd&gt;</code> pairs for terms like "HTML" and "Browser".</li>
+            </ul>
+
+            <h4>Add a Link:</h4>
+            <ul>
+                <li>At the bottom of your page, add a link to your favorite website or a social media profile. Make sure it opens in a new tab (<code>target="_blank"</code>).</li>
+                <li>Example: <code>&lt;p&gt;Check out my &lt;a href="https://twitter.com/yourhandle" target="_blank"&gt;Twitter profile&lt;/a&gt;!&lt;/p&gt;</code></li>
+            </ul>
+
+            <h4>Add an Image:</h4>
+            <ul>
+                <li>Find an image (a picture of yourself, a pet, a landscape, etc.) and save it in the same folder as your <code>index.html</code> file. (Or create an <code>images</code> subfolder and put it there, then your <code>src</code> would be <code>images/my-image.jpg</code>).</li>
+                <li>Add the <code>&lt;img&gt;</code> tag to your page. Make sure to include <code>src</code> and <code>alt</code>. Try setting <code>width</code> and <code>height</code>.</li>
+                <li>Example: <code>&lt;img src="my_pic.jpg" alt="A happy person standing in front of a mountain." width="400"&gt;</code></li>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Plan Your Recipe Page:</strong> Create a new HTML file called <code>recipe.html</code>.</li>
+                <li><strong>Structure the Content:</strong> In this new file, use only the HTML tags you've learned so far (headings, paragraphs, lists, text formatting, maybe an image or two, and links if you want).</li>
+                <li><strong>Ingredients List:</strong> Use an <code>&lt;ul&gt;</code> for your ingredients.</li>
+                <li><strong>Instructions List:</strong> Use an <code>&lt;ol&gt;</code> for your cooking instructions.</li>
+                <li><strong>Add Text Formatting:</strong> Make ingredient names <code>&lt;strong&gt;</code> and emphasize key cooking verbs <code>&lt;em&gt;</code>.</li>
+                <li><strong>No Styling Yet!</strong> Just focus on the raw HTML structure.</li>
+            </ul>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="day">
+            <h2>Day 3 (Saturday): Semantic HTML & Tables</h2>
+            <h3>What's Happening Today?</h3>
+            <p>Today, you'll learn about using HTML in a smarter way (semantic HTML) to give meaning to your page sections, not just visual layout. You'll also learn how to create proper data tables.</p>
+
+            <h3>Concepts – Pay Attention to This:</h3>
+            <h4>Semantic HTML5 Elements – Giving Meaning to Your Content:</h4>
+            <ul>
+                <li>Before HTML5, we used <code>&lt;div&gt;</code> elements for almost everything. But <code>&lt;div&gt;</code> doesn't tell anyone what the content is.</li>
+                <li>Semantic HTML5 tags describe the purpose of the content they enclose. This is crucial for:</li>
+                <ul>
+                    <li><strong>Accessibility:</strong> Screen readers can better navigate pages.</li>
+                    <li><strong>SEO (Search Engine Optimization):</strong> Search engines understand your content better.</li>
+                    <li><strong>Readability:</strong> Your code is easier for other developers (and you!) to understand.</li>
+                </ul>
+            </ul>
+
+            <h4>Key Semantic Elements:</h4>
+            <ul>
+                <li><strong><code>&lt;header&gt;</code>:</strong> Introduces content, typically at the top of a document or a section. Often contains a logo, site title, and navigation.</li>
+                <li><strong><code>&lt;nav&gt;</code>:</strong> Contains navigation links (menus).</li>
+                <li><strong><code>&lt;main&gt;</code>:</strong> The dominant content of the <code>&lt;body&gt;</code>. There should only be one <code>&lt;main&gt;</code> element per page.</li>
+                <li><strong><code>&lt;article&gt;</code>:</strong> Represents self-contained, independent content that could be distributed independently (e.g., a blog post, a news story, a comment).</li>
+                <li><strong><code>&lt;section&gt;</code>:</strong> A thematic grouping of content, typically with a heading. Think of it as a distinct section within an article or page.</li>
+                <li><strong><code>&lt;aside&gt;</code>:</strong> Contains content that is tangentially related to the content around it, often presented as a sidebar.</li>
+                <li><strong><code>&lt;footer&gt;</code>:</strong> Contains authorship information, copyright data, related documents, etc. Typically at the bottom of a document or a section.</li>
+            </ul>
+
+            <h4>Non-Semantic Elements (Still useful!):</h4>
+            <ul>
+                <li><strong><code>&lt;div&gt;</code>:</strong> A generic block-level container. Use when no other semantic element is appropriate (e.g., for grouping elements for styling purposes).</li>
+                <li><strong><code>&lt;span&gt;</code>:</strong> A generic inline container. Use for styling small parts of text within a line.</li>
+            </ul>
+
+            <h4>Basic Table Elements:</h4>
+            <ul>
+                <li>Tables are for tabular data (rows and columns of data), NOT for page layout (we'll use CSS for layout later).</li>
+                <li><strong><code>&lt;table&gt;</code>:</strong> The main container for the entire table.</li>
+                <li><strong><code>&lt;thead&gt;</code>:</strong> Groups the header content in a table (e.g., column titles).</li>
+                <li><strong><code>&lt;tbody&gt;</code>:</strong> Groups the main body content of a table.</li>
+                <li><strong><code>&lt;tfoot&gt;</code>:</strong> Groups the footer content in a table (e.g., sums or totals).</li>
+                <li><strong><code>&lt;tr&gt;</code>:</strong> Table Row. Each <code>&lt;tr&gt;</code> defines a new row in the table.</li>
+                <li><strong><code>&lt;th&gt;</code>:</strong> Table Header cell. Content inside is typically bold and centered by default, indicates a header for a column or row.</li>
+                <li><strong><code>&lt;td&gt;</code>:</strong> Table Data cell. Contains the actual data for the table.</li>
+            </ul>
+
+            <h4>Attributes for Merging Cells:</h4>
+            <ul>
+                <li><strong><code>colspan</code>:</strong> Makes a cell span across multiple columns.</li>
+                <li><strong><code>rowspan</code>:</strong> Makes a cell span across multiple rows.</li>
+            </ul>
+
+            <h4>Example Table Structure:</h4>
+            <pre><code>&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Day&lt;/th&gt;
+            &lt;th&gt;Activity&lt;/th&gt;
+            &lt;th&gt;Time&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Monday&lt;/td&gt;
+            &lt;td&gt;Coding Class&lt;/td&gt;
+            &lt;td&gt;9:00 AM&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Tuesday&lt;/td&gt;
+            &lt;td&gt;Gym&lt;/td&gt;
+            &lt;td&gt;6:00 PM&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+
+            <h3>Your Hands-On Activity: Semantic Bio Page & Your First Table</h3>
+            <h4>Re-structure Your Bio Page Semantically:</h4>
+            <ul>
+                <li>Open your <code>index.html</code> file with Live Server.</li>
+                <li>Look at your page and decide which semantic HTML5 tags fit best for each section.</li>
+                <li>Wrap your entire page content (inside <code>&lt;body&gt;</code>) with <code>&lt;main&gt;</code> tags.</li>
+                <li>Identify your main name/title area: Wrap it in a <code>&lt;header&gt;</code> tag.</li>
+                <li>If you had navigation links (you will soon!), they would go in a <code>&lt;nav&gt;</code> tag.</li>
+                <li>Group your "About Me" and "My Interests" sections with <code>&lt;section&gt;</code> tags. Give each section an <code>&lt;h2&gt;</code> heading.</li>
+                <li>Add a <code>&lt;footer&gt;</code> tag at the bottom for copyright info or a simple note.</li>
+                <li>Example (Conceptual):</li>
+                <pre><code>&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Your Name&lt;/h1&gt;
+        &lt;p&gt;Welcome to my page!&lt;/p&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;section&gt;
+            &lt;h2&gt;About Me&lt;/h2&gt;
+            &lt;p&gt;...&lt;/p&gt;
+        &lt;/section&gt;
+
+        &lt;section&gt;
+            &lt;h2&gt;My Interests&lt;/h2&gt;
+            &lt;ul&gt;...&lt;/ul&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;© 2024 Your Name. All rights reserved.&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+                <li class="note"><strong>Note:</strong> You won't see any visual changes yet! Semantic HTML is about meaning, not appearance.</li>
+            </ul>
+
+            <h4>Create a Simple Table:</h4>
+            <ul>
+                <li>In your <code>index.html</code> (or create a new <code>table.html</code> if you prefer to keep <code>index.html</code> clean for your project), create a simple table.</li>
+                <li><strong>Idea 1: Daily Schedule (Simple):</strong></li>
+                <ul>
+                    <li>Columns: Day, Activity, Time.</li>
+                    <li>Include <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code>.</li>
+                </ul>
+                <li><strong>Idea 2: Product Comparison (Slightly More Complex):</strong></li>
+                <ul>
+                    <li>Columns: Feature, Product A, Product B.</li>
+                    <li>Include <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code>.</li>
+                </ul>
+                <li><strong>Experiment with colspan and rowspan (Optional, but try it!):</strong></li>
+                <ul>
+                    <li>Can you make a cell span across two columns (e.g., for a "Notes" section that goes across the bottom)?</li>
+                    <li>Can you make a cell span down two rows (e.g., if a person has two activities at the same time)?</li>
+                </ul>
+            </ul>
+
+            <h3>Your Homework:</h3>
+            <ul>
+                <li><strong>Refine Your Multi-Section Page Idea:</strong> Remember that simple portfolio or product page idea from Day 1 homework?</li>
+                <li><strong>Outline HTML Structure:</strong> On paper or in a simple text file, sketch out the main HTML structure using the semantic HTML5 elements you just learned.</li>
+                <li><strong>Think:</strong> What will be your <code>&lt;header&gt;</code>? What's the <code>&lt;nav&gt;</code>? What are the main <code>&lt;section&gt;</code>s or <code>&lt;article&gt;</code>s? What belongs in the <code>&lt;footer&gt;</code>?</li>
+                <li><strong>Don't write any content yet, just the nested tags.</strong> This is about planning the skeleton of a bigger project.</li>
+            </ul>
+
+            <h3>End of Week 1!</h3>
+            <p>You've just learned the core of HTML. You know how to structure pages, add text, images, links, lists, and even tables. Most importantly, you understand the meaning behind different HTML elements. Get ready for next week, where we make these pages look good with CSS!</p>
+        </div>
+    </div>
+</body>
+</html>
