@@ -212,70 +212,7 @@
 
 <!-- ...existing code below... -->
 
-<script>
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
 
-    // --- Fetch actual stats from backend ---
-    async function fetchStats() {
-        try {
-            // Updated endpoints for site-wide aggregates
-            const [studentsRes, postsRes, materialsRes] = await Promise.all([
-                fetch("/api/users/count"),        // Total registered students
-                fetch("/api/posts/count"),        // Total blog posts shared
-                fetch("/api/listings/count")      // Total marketplace items listed
-            ]);
-            const students = await studentsRes.json();
-            const posts = await postsRes.json();
-            const materials = await materialsRes.json();
-
-            animateCounter('students-counter', 0, students.count || 0, 2000);
-            animateCounter('posts-counter', 0, posts.count || 0, 2000);
-            animateCounter('materials-counter', 0, materials.count || 0, 2000);
-        } catch (err) {
-            // fallback to static values or show error
-            animateCounter('students-counter', 0, 5000, 2000);
-            animateCounter('materials-counter', 0, 10000, 2000);
-            animateCounter('posts-counter', 0, 2000, 2000);
-        }
-    }
-
-    // Stats counter animation
-    function animateCounter(id, start, end, duration) {
-        let obj = document.getElementById(id);
-        let range = end - start;
-        let startTime = null;
-        function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            let progress = timestamp - startTime;
-            let value = Math.min(start + (progress / duration) * range, end);
-            obj.textContent = Math.floor(value);
-            if (progress < duration) {
-                requestAnimationFrame(step);
-            }
-        }
-        requestAnimationFrame(step);
-    }
-
-    fetchStats();
-
-    // Testimonial slider
-    const slides = document.querySelectorAll('.testimonial-slide');
-    let currentSlide = 0;
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        slides[index].classList.add('active');
-        currentSlide = (index + 1) % slides.length;
-    }
-    setInterval(() => showSlide(currentSlide), 5000);
-</script>
     <!-- Benefits Section -->
     <section class="py-12 sm:py-16 bg-gray-100">
         <div class="container mx-auto px-4 sm:px-6">
@@ -356,47 +293,69 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+<script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
+    });
 
-        // Stats counter animation
-        function animateCounter(id, start, end, duration) {
-            let obj = document.getElementById(id);
-            let range = end - start;
-            let startTime = null;
-            function step(timestamp) {
-                if (!startTime) startTime = timestamp;
-                let progress = timestamp - startTime;
-                let value = Math.min(start + (progress / duration) * range, end);
-                obj.textContent = Math.floor(value);
-                if (progress < duration) {
-                    requestAnimationFrame(step);
-                }
+    // --- Fetch actual stats from backend ---
+    async function fetchStats() {
+        try {
+            // Updated endpoints for site-wide aggregates
+            const [studentsRes, postsRes, materialsRes] = await Promise.all([
+                fetch("/api/users/count"),        // Total registered students
+                fetch("/api/posts/count"),        // Total blog posts shared
+                fetch("/api/listings/count")      // Total marketplace items listed
+            ]);
+            const students = await studentsRes.json();
+            const posts = await postsRes.json();
+            const materials = await materialsRes.json();
+
+            animateCounter('students-counter', 0, students.count || 0, 2000);
+            animateCounter('posts-counter', 0, posts.count || 0, 2000);
+            animateCounter('materials-counter', 0, materials.count || 0, 2000);
+        } catch (err) {
+            // fallback to static values or show error
+            animateCounter('students-counter', 0, 5000, 2000);
+            animateCounter('materials-counter', 0, 10000, 2000);
+            animateCounter('posts-counter', 0, 2000, 2000);
+        }
+    }
+
+    // Stats counter animation
+    function animateCounter(id, start, end, duration) {
+        let obj = document.getElementById(id);
+        let range = end - start;
+        let startTime = null;
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            let progress = timestamp - startTime;
+            let value = Math.min(start + (progress / duration) * range, end);
+            obj.textContent = Math.floor(value);
+            if (progress < duration) {
+                requestAnimationFrame(step);
             }
-            requestAnimationFrame(step);
         }
-        animateCounter('students-counter', 0, 5000, 2000);
-        animateCounter('materials-counter', 0, 10000, 2000);
-        animateCounter('posts-counter', 0, 2000, 2000);
+        requestAnimationFrame(step);
+    }
 
-        // Testimonial slider
-        const slides = document.querySelectorAll('.testimonial-slide');
-        let currentSlide = 0;
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
-            currentSlide = (index + 1) % slides.length;
-        }
-        setInterval(() => showSlide(currentSlide), 5000);
-    </script>
+    fetchStats();
+
+    // Testimonial slider
+    const slides = document.querySelectorAll('.testimonial-slide');
+    let currentSlide = 0;
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+        currentSlide = (index + 1) % slides.length;
+    }
+    setInterval(() => showSlide(currentSlide), 5000);
+</script>
 </body>
 </html>
