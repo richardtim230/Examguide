@@ -60,7 +60,8 @@ import formsRoutes from "./routes/forms.js"; // <-- add this line
 import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
 import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
-
+import BloggerDashboard from "./models/BloggerDashboard.js";
+import User from "./models/User.js";
 
 dotenv.config();
 
@@ -358,6 +359,40 @@ app.delete("/api/progress", authenticate, async (req, res) => {
     res.json({ message: "Progress deleted" });
   } catch (e) {
     res.status(500).json({ message: "Could not delete progress" });
+  }
+});
+
+
+// Total registered students
+app.get("/api/users/count", async (req, res) => {
+  try {
+    const count = await User.countDocuments({});
+    res.json({ count });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
+  }
+});
+
+// Total blog posts shared (all users)
+app.get("/api/posts/count", async (req, res) => {
+  try {
+    // Aggregate sum of all posts arrays
+    const dashboards = await BloggerDashboard.find({}, 'posts');
+    const totalPosts = dashboards.reduce((sum, dash) => sum + (dash.posts ? dash.posts.length : 0), 0);
+    res.json({ count: totalPosts });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
+  }
+});
+
+// Total marketplace items listed (all users)
+app.get("/api/listings/count", async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'listings');
+    const totalListings = dashboards.reduce((sum, dash) => sum + (dash.listings ? dash.listings.length : 0), 0);
+    res.json({ count: totalListings });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
   }
 });
 // --- Superadmin & Student Profile Updates ---
