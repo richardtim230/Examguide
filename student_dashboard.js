@@ -1370,7 +1370,9 @@ function buildCalendarEvents() {
 }
 // Assignment submission logic for Week X (Day Y), sends to superadmins as inbox message using base64
 
-// Utility to build Week/Day dropdown (if not already present)
+// Assignment submission logic for Week X (Day Y), sends to admins as inbox message using base64 + text input
+
+// Utility to build Week/Day dropdown (if needed)
 function buildWeekDayDropdown(selectId) {
   const select = document.getElementById(selectId);
   if (!select) return;
@@ -1393,10 +1395,10 @@ function hideButtonSpinner(btn, originalText = "Submit") {
   btn.innerHTML = originalText;
 }
 
-// Get all superadmin users from usersCache
-function getSuperadmins() {
+// Get all admin users from usersCache
+function getAdmins() {
   if (!Array.isArray(usersCache)) return [];
-  return usersCache.filter(u => u.role === "superadmin" && u._id);
+  return usersCache.filter(u => u.role === "admin" && u._id);
 }
 
 // Convert file to base64 (returns a Promise)
@@ -1422,12 +1424,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const fileInput = document.getElementById("assignmentFile");
   const errorDiv = document.getElementById("submissionError");
   const weekDaySelect = document.getElementById("assignmentWeekDay");
+  const textInput = document.getElementById("assignmentText");
 
   submitBtn.onclick = async function() {
     errorDiv.textContent = "";
     errorDiv.classList.remove("text-green-600", "text-red-500");
     const weekDay = weekDaySelect.value;
     const files = fileInput.files;
+    const textValue = textInput.value.trim();
+
     if (!weekDay) {
       errorDiv.textContent = "Please select a Week & Day.";
       errorDiv.classList.add("text-red-500");
@@ -1438,14 +1443,19 @@ document.addEventListener("DOMContentLoaded", function() {
       errorDiv.classList.add("text-red-500");
       return;
     }
+    if (!textValue) {
+      errorDiv.textContent = "Please enter some assignment text.";
+      errorDiv.classList.add("text-red-500");
+      return;
+    }
     showButtonSpinner(submitBtn, "Submitting...");
 
     try {
       // Ensure usersCache is loaded
       if (!usersCache.length) await fetchAllUsers();
 
-      const superadmins = getAdmins();
-      if (!superadmins.length) throw new Error("No superadmin recipients found.");
+      const admins = getAdmins();
+      if (!admins.length) throw new Error("No admin recipients found.");
 
       // Only first file for demo (can loop for more)
       const file = files[0];
@@ -1453,12 +1463,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Compose message text (can include base64 as an attachment property)
       const msgText =
-        `Assignment Submission: ${weekDay.replace(/-/g, ', ').replace(/week (\d+)/, 'Week $1').replace(/day (\d+)/, 'Day $1')}\n` +
+        `Assignment Submission: ${weekDay.replace(/-/g, ', ').replace(/week(\d+)/, 'Week $1').replace(/day(\d+)/, 'Day $1')}\n` +
+        `Assignment Text: ${textValue}\n` +
         `Filename: ${file.name}\n` +
         `Base64: ${base64str}`;
 
-      // Send to all superadmins (as text message)
-      for (const admin of superadmins) {
+      // Send to all admins (as text message)
+      for (const admin of admins) {
         await fetchWithAuth(API_URL + "messages/" + admin._id, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1470,6 +1481,7 @@ document.addEventListener("DOMContentLoaded", function() {
       errorDiv.classList.add("text-green-600");
       fileInput.value = "";
       weekDaySelect.selectedIndex = 0;
+      textInput.value = "";
     } catch (e) {
       errorDiv.textContent = "Failed to submit assignment: " + (e.message || "Unknown error.");
       errorDiv.classList.add("text-red-500");
@@ -1478,6 +1490,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   };
 });
+
 // --- FullCalendar Initialization ---
 let calendarObj = null;
 function initStudyCalendarTab() {
