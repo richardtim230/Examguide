@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.85">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - Web Development Training</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -15,7 +15,6 @@
         }
         .sidebar {
             transition: transform 0.3s ease-in-out;
-            z-index: 70;
         }
         .sidebar-hidden {
             transform: translateX(-100%);
@@ -40,51 +39,33 @@
         .neon-text {
             text-shadow: 0 0 5px rgba(59, 130, 246, 0.8), 0 0 10px rgba(59, 130, 246, 0.6);
         }
+        .content-disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        body.no-scroll {
+            overflow: hidden;
+        }
         @media (min-width: 768px) {
             .sidebar-hidden {
                 transform: translateX(0);
             }
         }
-        /* Sidebar overlay styles */
-        .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 60;
-            transition: opacity 0.3s ease;
-        }
-        .sidebar-overlay-hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .sidebar-overlay-visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        /* When sidebar is active, disable body scroll */
-        body.sidebar-active {
-            overflow: hidden;
-            position: relative;
-        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans transition-colors duration-300" id="theme">
     <!-- Dark Mode Toggle -->
-    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" aria-label="Toggle dark mode" style="top:1rem; right:1rem;">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.[...]
-        </svg>
+    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" aria-label="Toggle dark mode">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
     </button>
 
     <!-- Mobile Menu Toggle -->
-    <button id="menuToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md" aria-label="Toggle menu" style="top:1rem; left:1rem;">
+    <button id="menuToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md" aria-label="Toggle menu">
         Menu
     </button>
 
-    <!-- Sidebar Overlay for click-outside detection and disabling scroll -->
-    <div id="sidebarOverlay" class="sidebar-overlay sidebar-overlay-hidden"></div>
-
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 gradient-bg text-white p-4 md:translate-x-0 sidebar-hidden z-70">
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 gradient-bg text-white p-4 md:translate-x-0 sidebar-hidden z-40">
         <h2 class="text-2xl font-bold mb-6 neon-text">Student Dashboard</h2>
         <nav>
             <ul class="space-y-2">
@@ -100,10 +81,10 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="md:ml-64 p-6 min-h-screen relative">
+    <main id="mainContent" class="md:ml-64 p-6 min-h-screen pt-16 md:pt-6">
         <!-- Dashboard Section -->
         <section id="dashboard" class="tab-content">
-            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Welcome to Your Dashboard</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text">Welcome to Your Dashboard</h1>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="glassmorphic p-6 rounded-lg shadow-lg">
                     <h2 class="text-xl font-semibold mb-4">Quick Stats</h2>
@@ -127,7 +108,7 @@
 
         <!-- Profile Section -->
         <section id="profile" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Your Profile</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text">Your Profile</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Student Information</h2>
                 <p><strong>Name:</strong> <span id="studentName">John Doe</span></p>
@@ -139,7 +120,7 @@
 
         <!-- Progress Section -->
         <section id="progress" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Your Progress</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text">Your Progress</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Course Progress</h2>
                 <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
@@ -153,27 +134,17 @@
 
         <!-- Assignments Section -->
         <section id="assignments" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Assignments</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text">Assignments</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg mb-6">
                 <h2 class="text-xl font-semibold mb-4">Submit Assignment</h2>
                 <div class="space-y-4">
                     <div>
                         <label for="assignmentWeek" class="block text-sm font-medium">Week</label>
                         <select id="assignmentWeek" class="mt-1 p-2 border rounded w-full max-w-xs bg-gray-800 text-gray-100" aria-label="Select assignment week">
-                            <option value="week1Day1">Week 1 (Day 1)</option>
-                            <option value="week1Day2">Week 1 (Day 2)</option>
-                            <option value="week1Day3">Week 1 (Day 3)</option>
-                            <option value="week2Day1">Week 2 (Day 1)</option>
-                            <option value="week2Day2">Week 2 (Day 2)</option>
-                            <option value="week2Day3">Week 2 (Day 3)</option>
-                            <option value="week3Day1">Week 3 (Day 1)</option>
-                            <option value="week3Day2">Week 3 (Day 2)</option>
-                            <option value="week3Day3">Week 3 (Day 3)</option>
-                            <option value="week4Day1">Week 4 (Day 1)</option>
-                            <option value="week4Day2">Week 4 (Day 2)</option>
-                            <option value="week4Day3">Week 4 (Day 3)</option>
-                            <option value="week5Day1">Week 5 (Day 1)</option>
-                            <option value="week5Day2">Week 5 (Day 2)</option>
+                            <option value="week1">Week 1</option>
+                            <option value="week2">Week 2</option>
+                            <option value="week3">Week 3</option>
+                            <option value="week4">Week 4</option>
                         </select>
                     </div>
                     <div>
@@ -210,7 +181,7 @@
 
         <!-- Calendar Section -->
         <section id="calendar" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Course Calendar</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text">Course Calendar</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Upcoming Deadlines</h2>
                 <ul id="calendarEvents" class="list-disc pl-5">
@@ -222,7 +193,7 @@
 
         <!-- Resources Section -->
         <section id="resources" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Learning Resources</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text">Learning Resources</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Course Materials</h2>
                 <ul class="list-disc pl-5">
@@ -378,14 +349,48 @@
                 const tab = this.getAttribute('data-tab');
                 document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
                 document.getElementById(tab).classList.remove('hidden');
-                closeSidebar();
+                toggleSidebar(false);
             });
         });
 
         // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function(e) {
-            e.stopPropagation();
-            openSidebar();
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        
+        function toggleSidebar(isOpen) {
+            if (isOpen) {
+                sidebar.classList.remove('sidebar-hidden');
+                mainContent.classList.add('content-disabled');
+                document.body.classList.add('no-scroll');
+            } else {
+                sidebar.classList.add('sidebar-hidden');
+                mainContent.classList.remove('content-disabled');
+                document.body.classList.remove('no-scroll');
+            }
+        }
+
+        menuToggle.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent event from bubbling to document
+            toggleSidebar(!sidebar.classList.contains('sidebar-hidden'));
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && !sidebar.classList.contains('sidebar-hidden')) {
+                toggleSidebar(false);
+            }
+        });
+
+        // Close sidebar on touch outside
+        document.addEventListener('touchstart', function(event) {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && !sidebar.classList.contains('sidebar-hidden')) {
+                toggleSidebar(false);
+            }
         });
 
         // Dark mode toggle
@@ -519,79 +524,8 @@
             });
         });
 
-        // --- SIDEBAR INTERACTION LOGIC ---
-
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        let isSidebarOpen = false;
-
-        function openSidebar() {
-            sidebar.classList.remove('sidebar-hidden');
-            sidebarOverlay.classList.remove('sidebar-overlay-hidden');
-            sidebarOverlay.classList.add('sidebar-overlay-visible');
-            document.body.classList.add('sidebar-active');
-            isSidebarOpen = true;
-        }
-
-        function closeSidebar() {
-            sidebar.classList.add('sidebar-hidden');
-            sidebarOverlay.classList.add('sidebar-overlay-hidden');
-            sidebarOverlay.classList.remove('sidebar-overlay-visible');
-            document.body.classList.remove('sidebar-active');
-            isSidebarOpen = false;
-        }
-
-        // Clicking/touching outside sidebar closes it (only active on mobile)
-        sidebarOverlay.addEventListener('mousedown', function(e) {
-            closeSidebar();
-        });
-        sidebarOverlay.addEventListener('touchstart', function(e) {
-            closeSidebar();
-        });
-
-        // Prevent clicks inside sidebar from closing it
-        sidebar.addEventListener('mousedown', function(e) {
-            e.stopPropagation();
-        });
-        sidebar.addEventListener('touchstart', function(e) {
-            e.stopPropagation();
-        });
-
-        // Also close sidebar with ESC key
-        document.addEventListener('keydown', function(e) {
-            if (isSidebarOpen && (e.key === 'Escape' || e.key === 'Esc')) {
-                closeSidebar();
-            }
-        });
-
-        // On desktop, always show sidebar, never overlay
-        function handleSidebarDisplay() {
-            if (window.innerWidth >= 768) {
-                sidebar.classList.remove('sidebar-hidden');
-                sidebarOverlay.classList.add('sidebar-overlay-hidden');
-                sidebarOverlay.classList.remove('sidebar-overlay-visible');
-                document.body.classList.remove('sidebar-active');
-            } else {
-                if (isSidebarOpen) {
-                    sidebarOverlay.classList.remove('sidebar-overlay-hidden');
-                    sidebarOverlay.classList.add('sidebar-overlay-visible');
-                    document.body.classList.add('sidebar-active');
-                } else {
-                    sidebar.classList.add('sidebar-hidden');
-                    sidebarOverlay.classList.add('sidebar-overlay-hidden');
-                    sidebarOverlay.classList.remove('sidebar-overlay-visible');
-                    document.body.classList.remove('sidebar-active');
-                }
-            }
-        }
-
-        window.addEventListener('resize', handleSidebarDisplay);
-
         // Initialize on load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeDashboard();
-            handleSidebarDisplay();
-        });
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
     </script>
 </body>
 </html>
