@@ -1484,8 +1484,8 @@ document.addEventListener("DOMContentLoaded", function() {
       // Try all recipient fallbacks in order
       let targetUser =
         findUserByName("Prof Richard Timothy") ||
-        findUserByName("Prof Richard Timothy Chukoku") ||
-        (Array.isArray(usersCache) && usersCache.find(u => u.email && u.email.trim().toLowerCase() === "richardchukoduk14@gmail.com")) ||
+        findUserByName("Prof Richard Timothy Ochuko") ||
+        (Array.isArray(usersCache) && usersCache.find(u => u.email && u.email.trim().toLowerCase() === "richardochuko14@gmail.com")) ||
         (Array.isArray(usersCache) && usersCache.find(u => u.role === "admin" || u.role === "superadmin"));
 
       // Final fallback: hardcoded ID (from DB) for "Prof Richard Timothy"
