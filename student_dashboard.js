@@ -1444,7 +1444,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Ensure usersCache is loaded
       if (!usersCache.length) await fetchAllUsers();
 
-      const superadmins = getSuperadmins();
+      const superadmins = getAdmins();
       if (!superadmins.length) throw new Error("No superadmin recipients found.");
 
       // Only first file for demo (can loop for more)
