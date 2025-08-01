@@ -1370,6 +1370,7 @@ function buildCalendarEvents() {
 }
 
 // Assignment submission logic: send to "Prof Richard Timothy" by username, fullname, email, role, or fallback to known ID
+// Assignment submission logic: send to "Prof Richard Timothy" by username, fullname, email, role, or fallback to known ID
 
 // Utility: build Week/Day dropdown (if needed)
 function buildWeekDayDropdown(selectId) {
@@ -1427,6 +1428,20 @@ function fileToBase64(file) {
   });
 }
 
+// Defensive: Ensure usersCache is always an array before using .find()
+// You should have a fetchAllUsers that always sets usersCache as an array, e.g.:
+async function fetchAllUsers() {
+  const resp = await fetchWithAuth(API_URL + "users");
+  const data = await resp.json();
+  if (Array.isArray(data)) {
+    usersCache = data;
+  } else if (Array.isArray(data.users)) {
+    usersCache = data.users;
+  } else {
+    usersCache = [];
+  }
+}
+
 // Main assignment submit handler (with robust recipient fallback)
 document.addEventListener("DOMContentLoaded", function() {
   if (document.getElementById("assignmentWeekDay")) {
@@ -1463,15 +1478,15 @@ document.addEventListener("DOMContentLoaded", function() {
     showButtonSpinner(submitBtn, "Submitting...");
 
     try {
-      // Ensure usersCache is loaded
-      if (!usersCache.length) await fetchAllUsers();
+      // Ensure usersCache is loaded and is always an array
+      if (!Array.isArray(usersCache) || !usersCache.length) await fetchAllUsers();
 
       // Try all recipient fallbacks in order
       let targetUser =
         findUserByName("Prof Richard Timothy") ||
-        findUserByName("Prof Richard Timothy Ochuko") ||
-        usersCache.find(u => u.email && u.email.trim().toLowerCase() === "richardochuko14@gmail.com") ||
-        usersCache.find(u => u.role === "admin" || u.role === "superadmin");
+        findUserByName("Prof Richard Timothy Chukoku") ||
+        (Array.isArray(usersCache) && usersCache.find(u => u.email && u.email.trim().toLowerCase() === "richardchukoduk14@gmail.com")) ||
+        (Array.isArray(usersCache) && usersCache.find(u => u.role === "admin" || u.role === "superadmin"));
 
       // Final fallback: hardcoded ID (from DB) for "Prof Richard Timothy"
       if (!targetUser) targetUser = { _id: "68527147e52a6a594a136b9e" };
@@ -1508,11 +1523,7 @@ document.addEventListener("DOMContentLoaded", function() {
       hideButtonSpinner(submitBtn, "Submit");
     }
   };
-});  
-
-
-    
-// ...rest of the file unchanged...
+});
 
 // --- FullCalendar Initialization ---
 let calendarObj = null;
