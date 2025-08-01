@@ -495,7 +495,7 @@
                 <div id="testCountdown" style="font-size:1.01rem; color:var(--primary);font-weight:600;"></div>
             </div>
         </section>
-<!-- Assignments Tab -->
+        <!-- Assignments Tab -->
 <section id="assignments" class="tab-content">
     <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex items-center justify-between">
         <div>
@@ -509,34 +509,38 @@
             <h3 class="text-xl font-semibold text-indigo-900 mb-4">Submit Assignment</h3>
             <div class="space-y-4">
                 <div>
-                    <label for="assignmentWeek" class="block text-sm font-medium text-gray-700">Week</label>
+                    <label for="assignmentWeekDay" class="block text-sm font-medium text-gray-700">Week</label>
                     <select id="assignmentWeekDay" class="mt-1 p-2 border rounded w-full bg-gray-50 text-gray-900" aria-label="Select assignment week and day">
-    <option value="">Select Week & Day</option>
-    <option value="week1-day1">Week 1 (Day 1)</option>
-    <option value="week1-day2">Week 1 (Day 2)</option>
-    <option value="week1-day3">Week 1 (Day 3)</option>
-    <option value="week2-day1">Week 2 (Day 1)</option>
-    <option value="week2-day2">Week 2 (Day 2)</option>
-    <option value="week2-day3">Week 2 (Day 3)</option>
-    <option value="week3-day1">Week 3 (Day 1)</option>
-    <option value="week3-day2">Week 3 (Day 2)</option>
-    <option value="week3-day3">Week 3 (Day 3)</option>
-    <option value="week4-day1">Week 4 (Day 1)</option>
-    <option value="week4-day2">Week 4 (Day 2)</option>
-    <option value="week4-day3">Week 4 (Day 3)</option>
-    <option value="week5-day1">Week 5 (Day 1)</option>
-    <option value="week5-day2">Week 5 (Day 2)</option>
-    <option value="week5-day3">Week 5 (Day 3)</option>
-    <option value="week6-day1">Week 6 (Day 1)</option>
-    <option value="week6-day2">Week 6 (Day 2)</option>
-    <option value="week6-day3">Week 6 (Day 3)</option>
-    <option value="week7-day1">Week 7 (Day 1)</option>
-    <option value="week7-day2">Week 7 (Day 2)</option>
-    <option value="week7-day3">Week 7 (Day 3)</option>
-    <option value="week8-day1">Week 8 (Day 1)</option>
-    <option value="week8-day2">Week 8 (Day 2)</option>
-    <option value="week8-day3">Week 8 (Day 3)</option>
-</select>
+                        <option value="">Select Week & Day</option>
+                        <option value="week1-day1">Week 1 (Day 1)</option>
+                        <option value="week1-day2">Week 1 (Day 2)</option>
+                        <option value="week1-day3">Week 1 (Day 3)</option>
+                        <option value="week2-day1">Week 2 (Day 1)</option>
+                        <option value="week2-day2">Week 2 (Day 2)</option>
+                        <option value="week2-day3">Week 2 (Day 3)</option>
+                        <option value="week3-day1">Week 3 (Day 1)</option>
+                        <option value="week3-day2">Week 3 (Day 2)</option>
+                        <option value="week3-day3">Week 3 (Day 3)</option>
+                        <option value="week4-day1">Week 4 (Day 1)</option>
+                        <option value="week4-day2">Week 4 (Day 2)</option>
+                        <option value="week4-day3">Week 4 (Day 3)</option>
+                        <option value="week5-day1">Week 5 (Day 1)</option>
+                        <option value="week5-day2">Week 5 (Day 2)</option>
+                        <option value="week5-day3">Week 5 (Day 3)</option>
+                        <option value="week6-day1">Week 6 (Day 1)</option>
+                        <option value="week6-day2">Week 6 (Day 2)</option>
+                        <option value="week6-day3">Week 6 (Day 3)</option>
+                        <option value="week7-day1">Week 7 (Day 1)</option>
+                        <option value="week7-day2">Week 7 (Day 2)</option>
+                        <option value="week7-day3">Week 7 (Day 3)</option>
+                        <option value="week8-day1">Week 8 (Day 1)</option>
+                        <option value="week8-day2">Week 8 (Day 2)</option>
+                        <option value="week8-day3">Week 8 (Day 3)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="assignmentText" class="block text-sm font-medium text-gray-700">Assignment Text</label>
+                    <textarea id="assignmentText" rows="4" class="mt-1 p-2 border rounded w-full bg-gray-50 text-gray-900" placeholder="Type your assignment or message here..."></textarea>
                 </div>
                 <div>
                     <label for="assignmentFile" class="block text-sm font-medium text-gray-700">Upload File</label>
@@ -570,7 +574,9 @@
             </div>
         </section>
     </div>
-</section>
+    </section>
+
+        
         <!-- Exams Tab -->
         <section id="exams" class="tab-content">
             <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex justify-between items-center">
