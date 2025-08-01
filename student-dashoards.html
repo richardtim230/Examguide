@@ -353,13 +353,16 @@
                 <li><a href="#study-resources" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="study-resources"><i class="fas fa-book"></i><span>Study Resources</span></a></li>
                 <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
                 <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
-                <li><a href="#logout" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+                <li><a href="#assignments" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="assignments"><i class="fas fa-book-alt"></i><span>Assignment Submission</span></a></li>
+                
                 <li>
                   <a href="#" onclick="openBroadcastModal()" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors">
                     <i class="fas fa-bullhorn"></i>
                     <span>Broadcasts</span>
                   </a>
                 </li>
+                <li><a href="#logout" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+                
             </ul>
         </nav>
     </aside>
@@ -591,7 +594,52 @@
                         </div>
                     </div>
                 </section>
-                
+                <!-- Assignments Section -->
+        <section id="assignments" class="tab-content hidden">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Assignments</h1>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-xl font-semibold mb-4">Submit Assignment</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="assignmentWeek" class="block text-sm font-medium">Week</label>
+                        <select id="assignmentWeek" class="mt-1 p-2 border rounded w-full max-w-xs bg-gray-800 text-gray-100" aria-label="Select assignment week">
+                            <option value="week1">Week 1</option>
+                            <option value="week2">Week 2</option>
+                            <option value="week3">Week 3</option>
+                            <option value="week4">Week 4</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="assignmentFile" class="block text-sm font-medium">Upload File</label>
+                        <div id="dropzone" class="dropzone p-4 border-2 border-dashed rounded w-full max-w-xs text-center bg-gray-800" aria-label="Drag and drop files here">
+                            <p>Drag & drop or click to upload</p>
+                            <input type="file" id="assignmentFile" class="hidden" multiple>
+                        </div>
+                        <div id="filePreview" class="mt-2"></div>
+                    </div>
+                    <button id="submitAssignmentBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" aria-label="Submit assignment">Submit</button>
+                    <p id="submissionError" class="text-red-400 min-h-[20px]"></p>
+                </div>
+            </div>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Assignment History</h2>
+                <div class="mb-4">
+                    <input type="text" id="searchAssignments" class="p-2 border rounded w-full max-w-xs bg-gray-800 text-gray-100" placeholder="Search assignments..." aria-label="Search assignments">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-gray-700">
+                                <th class="p-2 cursor-pointer" data-sort="week">Week</th>
+                                <th class="p-2 cursor-pointer" data-sort="title">Title</th>
+                                <th class="p-2 cursor-pointer" data-sort="date">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submittedAssignments"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 <section class="bg-white h-auto rounded-2xl shadow-xl p-6 card relative">
   <h3 class="text-xl font-semibold text-indigo-900 mb-4 flex items-center justify-between">
     Study Calendar
