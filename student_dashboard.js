@@ -1368,7 +1368,116 @@ function buildCalendarEvents() {
   }
   return events;
 }
+// Assignment submission logic for Week X (Day Y), sends to superadmins as inbox message using base64
 
+// Utility to build Week/Day dropdown (if not already present)
+function buildWeekDayDropdown(selectId) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+  let html = '<option value="">Select Week & Day</option>';
+  for (let w = 1; w <= 8; w++) {
+    for (let d = 1; d <= 3; d++) {
+      html += `<option value="week${w}-day${d}">Week ${w} (Day ${d})</option>`;
+    }
+  }
+  select.innerHTML = html;
+}
+
+// Spinner utility
+function showButtonSpinner(btn, loadingText = "Sending...") {
+  btn.disabled = true;
+  btn.innerHTML = `<span><i class="fas fa-spinner fa-spin"></i> ${loadingText}</span>`;
+}
+function hideButtonSpinner(btn, originalText = "Submit") {
+  btn.disabled = false;
+  btn.innerHTML = originalText;
+}
+
+// Get all superadmin users from usersCache
+function getSuperadmins() {
+  if (!Array.isArray(usersCache)) return [];
+  return usersCache.filter(u => u.role === "superadmin" && u._id);
+}
+
+// Convert file to base64 (returns a Promise)
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      resolve(e.target.result); // base64 string (with data:... prefix)
+    };
+    reader.onerror = function(e) {
+      reject(e);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Assignment submit handler
+document.addEventListener("DOMContentLoaded", function() {
+  if (document.getElementById("assignmentWeekDay")) {
+    buildWeekDayDropdown("assignmentWeekDay");
+  }
+  const submitBtn = document.getElementById("submitAssignmentBtn");
+  const fileInput = document.getElementById("assignmentFile");
+  const errorDiv = document.getElementById("submissionError");
+  const weekDaySelect = document.getElementById("assignmentWeekDay");
+
+  submitBtn.onclick = async function() {
+    errorDiv.textContent = "";
+    errorDiv.classList.remove("text-green-600", "text-red-500");
+    const weekDay = weekDaySelect.value;
+    const files = fileInput.files;
+    if (!weekDay) {
+      errorDiv.textContent = "Please select a Week & Day.";
+      errorDiv.classList.add("text-red-500");
+      return;
+    }
+    if (!files || !files.length) {
+      errorDiv.textContent = "Please upload a file.";
+      errorDiv.classList.add("text-red-500");
+      return;
+    }
+    showButtonSpinner(submitBtn, "Submitting...");
+
+    try {
+      // Ensure usersCache is loaded
+      if (!usersCache.length) await fetchAllUsers();
+
+      const superadmins = getSuperadmins();
+      if (!superadmins.length) throw new Error("No superadmin recipients found.");
+
+      // Only first file for demo (can loop for more)
+      const file = files[0];
+      const base64str = await fileToBase64(file);
+
+      // Compose message text (can include base64 as an attachment property)
+      const msgText =
+        `Assignment Submission: ${weekDay.replace(/-/g, ', ').replace(/week (\d+)/, 'Week $1').replace(/day (\d+)/, 'Day $1')}\n` +
+        `Filename: ${file.name}\n` +
+        `Base64: ${base64str}`;
+
+      // Send to all superadmins (as text message)
+      for (const admin of superadmins) {
+        await fetchWithAuth(API_URL + "messages/" + admin._id, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: msgText })
+        });
+      }
+
+      errorDiv.textContent = "Assignment submitted successfully!";
+      errorDiv.classList.add("text-green-600");
+      fileInput.value = "";
+      weekDaySelect.selectedIndex = 0;
+    } catch (e) {
+      errorDiv.textContent = "Failed to submit assignment: " + (e.message || "Unknown error.");
+      errorDiv.classList.add("text-red-500");
+    } finally {
+      hideButtonSpinner(submitBtn, "Submit");
+    }
+  };
+});
 // --- FullCalendar Initialization ---
 let calendarObj = null;
 function initStudyCalendarTab() {
