@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Web Development Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom Tailwind styles */
+        .glassmorphic {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        .modal {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .modal-hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        .dropzone {
+            transition: background-color 0.2s ease;
+        }
+        .dropzone-active {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+        }
+        .neon-text {
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.8), 0 0 10px rgba(59, 130, 246, 0.6);
+        }
+        @media (min-width: 768px) {
+            .sidebar-hidden {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans transition-colors duration-300" id="theme">
+    <!-- Dark Mode Toggle -->
+    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" aria-label="Toggle dark mode">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    </button>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="menuToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md" aria-label="Toggle menu">
+        Menu
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 gradient-bg text-white p-4 md:translate-x-0 sidebar-hidden z-40">
+        <h2 class="text-2xl font-bold mb-6 neon-text">Student Dashboard</h2>
+        <nav>
+            <ul class="space-y-2">
+                <li><a href="#dashboard" class="block p-2 rounded hover:bg-blue-700 tab-link" data-tab="dashboard" aria-label="Dashboard">Dashboard</a></li>
+                <li><a href="#profile" class="block p-2 rounded hover:bg-blue-700 tab-link" data-tab="profile" aria-label="Profile">Profile</a></li>
+                <li><a href="#progress" class="block p-2 rounded hover:bg-blue-700 tab-link" data-tab="progress" aria-label="Progress">Progress</a></li>
+                <li><a href="#assignments" class="block p-2 rounded hover:bg-blue-700 tab-link" data-tab="assignments" aria-label="Assignments">Assignments</a></li>
+                <li><a href="#calendar" class="block p-2 rounded hover:bg-blue-700 tab-link" data-tab="calendar" aria-label="Calendar">Calendar</a></li>
+                <li><a href="#resources" class="block p-2 rounded hover:bg-blue-700 tab-link" data-tab="resources" aria-label="Resources">Resources</a></li>
+                <li><a href="#" id="logoutBtn" class="block p-2 rounded hover:bg-red-600" aria-label="Logout">Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 p-6 min-h-screen">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="tab-content">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Welcome to Your Dashboard</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4">Quick Stats</h2>
+                    <p>Student ID: <span id="studentId">STU12345</span></p>
+                    <p>Completed Lessons: <span id="completedLessons">6</span>/12</p>
+                    <p>Assignments Submitted: <span id="assignmentsSubmitted">3</span>/4</p>
+                </div>
+                <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4">Notifications</h2>
+                    <ul id="notifications" class="list-disc pl-5">
+                        <li>New assignment for Week 4 available</li>
+                        <li>Deadline for Week 3 assignment: 2025-08-03</li>
+                    </ul>
+                </div>
+                <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4">Progress Overview</h2>
+                    <canvas id="progressChart" class="w-full"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="tab-content hidden">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Your Profile</h1>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Student Information</h2>
+                <p><strong>Name:</strong> <span id="studentName">John Doe</span></p>
+                <p><strong>Student ID:</strong> <span id="studentIdProfile">STU12345</span></p>
+                <p><strong>Email:</strong> <span id="studentEmail">john.doe@example.com</span></p>
+                <button id="editProfileBtn" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" aria-label="Edit profile">Edit Profile</button>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="tab-content hidden">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Your Progress</h1>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Course Progress</h2>
+                <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
+                    <div id="progressBar" class="bg-blue-500 h-4 rounded-full transition-all duration-500" style="width: 50%"></div>
+                </div>
+                <p>HTML/CSS: <span id="htmlCssProgress">Completed</span></p>
+                <p>JavaScript: <span id="jsProgress">Week 3 in Progress</span></p>
+                <p>Assignments: <span id="assignmentProgress">3/4 Submitted</span></p>
+            </div>
+        </section>
+
+        <!-- Assignments Section -->
+        <section id="assignments" class="tab-content hidden">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Assignments</h1>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-xl font-semibold mb-4">Submit Assignment</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="assignmentWeek" class="block text-sm font-medium">Week</label>
+                        <select id="assignmentWeek" class="mt-1 p-2 border rounded w-full max-w-xs bg-gray-800 text-gray-100" aria-label="Select assignment week">
+                            <option value="week1">Week 1</option>
+                            <option value="week2">Week 2</option>
+                            <option value="week3">Week 3</option>
+                            <option value="week4">Week 4</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="assignmentFile" class="block text-sm font-medium">Upload File</label>
+                        <div id="dropzone" class="dropzone p-4 border-2 border-dashed rounded w-full max-w-xs text-center bg-gray-800" aria-label="Drag and drop files here">
+                            <p>Drag & drop or click to upload</p>
+                            <input type="file" id="assignmentFile" class="hidden" multiple>
+                        </div>
+                        <div id="filePreview" class="mt-2"></div>
+                    </div>
+                    <button id="submitAssignmentBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" aria-label="Submit assignment">Submit</button>
+                    <p id="submissionError" class="text-red-400 min-h-[20px]"></p>
+                </div>
+            </div>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Assignment History</h2>
+                <div class="mb-4">
+                    <input type="text" id="searchAssignments" class="p-2 border rounded w-full max-w-xs bg-gray-800 text-gray-100" placeholder="Search assignments..." aria-label="Search assignments">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-gray-700">
+                                <th class="p-2 cursor-pointer" data-sort="week">Week</th>
+                                <th class="p-2 cursor-pointer" data-sort="title">Title</th>
+                                <th class="p-2 cursor-pointer" data-sort="date">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submittedAssignments"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar" class="tab-content hidden">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Course Calendar</h1>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Upcoming Deadlines</h2>
+                <ul id="calendarEvents" class="list-disc pl-5">
+                    <li>Week 4 Assignment: Due 2025-08-03</li>
+                    <li>Final Project Presentation: 2025-08-10</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="tab-content hidden">
+            <h1 class="text-3xl font-bold mb-6 neon-text">Learning Resources</h1>
+            <div class="glassmorphic p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Course Materials</h2>
+                <ul class="list-disc pl-5">
+                    <li><a href="week1-manual.html" class="text-blue-400 hover:underline" aria-label="HTML/CSS Week 1 Manual">HTML/CSS Week 1 Manual</a></li>
+                    <li><a href="week4-manual.html" class="text-blue-400 hover:underline" aria-label="HTML/CSS Week 4 Manual">HTML/CSS Week 4 Manual</a></li>
+                    <li><a href="javascript-week1-manual.html" class="text-blue-400 hover:underline" aria-label="JavaScript Week 1 Manual">JavaScript Week 1 Manual</a></li>
+                    <li><a href="javascript-week4-manual.html" class="text-blue-400 hover:underline" aria-label="JavaScript Week 4 Manual">JavaScript Week 4 Manual</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal modal-hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="glassmorphic p-6 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-xl font-semibold mb-4">Edit Profile</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="editName" class="block text-sm font-medium">Name</label>
+                    <input type="text" id="editName" class="mt-1 p-2 border rounded w-full bg-gray-800 text-gray-100" aria-label="Edit name">
+                </div>
+                <div>
+                    <label for="editEmail" class="block text-sm font-medium">Email</label>
+                    <input type="email" id="editEmail" class="mt-1 p-2 border rounded w-full bg-gray-800 text-gray-100" aria-label="Edit email">
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button id="cancelEditBtn" class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700" aria-label="Cancel edit">Cancel</button>
+                    <button id="saveProfileBtn" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700" aria-label="Save profile">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal modal-hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="glassmorphic p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 class="text-xl font-semibold mb-4">Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <div class="flex justify-end space-x-2 mt-4">
+                <button id="cancelLogoutBtn" class="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700" aria-label="Cancel logout">Cancel</button>
+                <button id="confirmLogoutBtn" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700" aria-label="Confirm logout">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Student data (simulated)
+        let student = {
+            id: 'STU12345',
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            completedLessons: 6,
+            assignmentsSubmitted: 3
+        };
+
+        let assignments = [
+            { id: 1, week: 'Week 1', title: 'HTML Structure', date: '2025-07-10' },
+            { id: 2, week: 'Week 2', title: 'CSS Styling', date: '2025-07-17' },
+            { id: 3, week: 'Week 3', title: 'JavaScript Functions', date: '2025-07-24' }
+        ];
+
+        let notifications = [
+            { id: 1, message: 'New assignment for Week 4 available', date: '2025-08-01' },
+            { id: 2, message: 'Deadline for Week 3 assignment: 2025-08-03', date: '2025-07-30' }
+        ];
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            document.getElementById('studentId').textContent = student.id;
+            document.getElementById('studentIdProfile').textContent = student.id;
+            document.getElementById('studentName').textContent = student.name;
+            document.getElementById('studentEmail').textContent = student.email;
+            document.getElementById('completedLessons').textContent = student.completedLessons;
+            document.getElementById('assignmentsSubmitted').textContent = student.assignmentsSubmitted;
+            document.getElementById('progressBar').style.width = `${(student.completedLessons / 12) * 100}%`;
+            document.getElementById('assignmentProgress').textContent = `${student.assignmentsSubmitted}/4 Submitted`;
+            displayNotifications();
+            displayAssignments();
+            initializeChart();
+        }
+
+        // Initialize progress chart
+        function initializeChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Remaining'],
+                    datasets: [{
+                        data: [student.completedLessons, 12 - student.completedLessons],
+                        backgroundColor: ['#3b82f6', '#4b5563'],
+                        borderColor: ['#1e3a8a', '#1f2937'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+        }
+
+        // Display notifications
+        function displayNotifications() {
+            const notificationList = document.getElementById('notifications');
+            notificationList.innerHTML = '';
+            notifications.forEach(notification => {
+                const li = document.createElement('li');
+                li.textContent = `${notification.message} (${notification.date})`;
+                notificationList.appendChild(li);
+            });
+        }
+
+        // Display assignments
+        function displayAssignments(search = '') {
+            const assignmentList = document.getElementById('submittedAssignments');
+            assignmentList.innerHTML = '';
+            let filteredAssignments = assignments.filter(a => 
+                a.week.toLowerCase().includes(search.toLowerCase()) || 
+                a.title.toLowerCase().includes(search.toLowerCase())
+            );
+            filteredAssignments.forEach(assignment => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2">${assignment.week}</td>
+                    <td class="p-2">${assignment.title}</td>
+                    <td class="p-2">${assignment.date}</td>
+                `;
+                assignmentList.appendChild(tr);
+            });
+        }
+
+        // Sort assignments
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', function() {
+                const key = this.getAttribute('data-sort');
+                assignments.sort((a, b) => a[key].localeCompare(b[key]));
+                displayAssignments(document.getElementById('searchAssignments').value);
+            });
+        });
+
+        // Search assignments
+        document.getElementById('searchAssignments').addEventListener('input', function() {
+            displayAssignments(this.value);
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const tab = this.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
+                document.getElementById(tab).classList.remove('hidden');
+                document.getElementById('sidebar').classList.add('sidebar-hidden');
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('sidebar-hidden');
+        });
+
+        // Dark mode toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.getElementById('theme').classList.toggle('bg-gray-100');
+            document.getElementById('theme').classList.toggle('bg-gray-900');
+            document.getElementById('theme').classList.toggle('text-gray-100');
+            document.getElementById('theme').classList.toggle('text-gray-900');
+        });
+
+        // Edit profile modal
+        document.getElementById('editProfileBtn').addEventListener('click', function() {
+            document.getElementById('editName').value = student.name;
+            document.getElementById('editEmail').value = student.email;
+            document.getElementById('editProfileModal').classList.remove('modal-hidden');
+        });
+
+        document.getElementById('cancelEditBtn').addEventListener('click', function() {
+            document.getElementById('editProfileModal').classList.add('modal-hidden');
+        });
+
+        document.getElementById('saveProfileBtn').addEventListener('click', function() {
+            try {
+                const newName = document.getElementById('editName').value.trim();
+                const newEmail = document.getElementById('editEmail').value.trim();
+                if (!newName || !newEmail) {
+                    throw new Error('Name and email cannot be empty');
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+                    throw new Error('Invalid email format');
+                }
+                student.name = newName;
+                student.email = newEmail;
+                document.getElementById('studentName').textContent = student.name;
+                document.getElementById('studentEmail').textContent = student.email;
+                document.getElementById('editProfileModal').classList.add('modal-hidden');
+                console.log('Profile updated:', student);
+            } catch (error) {
+                alert(error.message);
+                console.error('Error:', error.message);
+            }
+        });
+
+        // Logout modal
+        document.getElementById('logoutBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('logoutModal').classList.remove('modal-hidden');
+        });
+
+        document.getElementById('cancelLogoutBtn').addEventListener('click', function() {
+            document.getElementById('logoutModal').classList.add('modal-hidden');
+        });
+
+        document.getElementById('confirmLogoutBtn').addEventListener('click', function() {
+            console.log('User logged out');
+            alert('You have been logged out');
+            document.getElementById('logoutModal').classList.add('modal-hidden');
+        });
+
+        // Drag and drop file upload
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('assignmentFile');
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dropzone-active');
+        });
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('dropzone-active');
+        });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dropzone-active');
+            fileInput.files = e.dataTransfer.files;
+            displayFilePreview();
+        });
+        fileInput.addEventListener('change', displayFilePreview);
+
+        function displayFilePreview() {
+            const filePreview = document.getElementById('filePreview');
+            filePreview.innerHTML = '';
+            Array.from(fileInput.files).forEach(file => {
+                const p = document.createElement('p');
+                p.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                filePreview.appendChild(p);
+            });
+        }
+
+        // Assignment submission
+        document.getElementById('submitAssignmentBtn').addEventListener('click', function() {
+            try {
+                const week = document.getElementById('assignmentWeek').value;
+                const files = document.getElementById('assignmentFile').files;
+                if (files.length === 0) {
+                    throw new Error('Please select at least one file to upload');
+                }
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                Array.from(files).forEach(file => {
+                    if (file.size > maxSize) {
+                        throw new Error(`File ${file.name} exceeds 5MB limit`);
+                    }
+                    const newAssignment = {
+                        id: assignments.length + 1,
+                        week: week.charAt(0).toUpperCase() + week.slice(1),
+                        title: file.name,
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    assignments.push(newAssignment);
+                });
+                student.assignmentsSubmitted += files.length;
+                document.getElementById('assignmentsSubmitted').textContent = student.assignmentsSubmitted;
+                document.getElementById('assignmentProgress').textContent = `${student.assignmentsSubmitted}/4 Submitted`;
+                displayAssignments();
+                document.getElementById('submissionError').textContent = '';
+                document.getElementById('assignmentFile').value = '';
+                document.getElementById('filePreview').innerHTML = '';
+                console.log('Assignments submitted:', files.length);
+            } catch (error) {
+                document.getElementById('submissionError').textContent = error.message;
+                console.error('Error:', error.message);
+            }
+        });
+
+        // Keyboard accessibility
+        document.querySelectorAll('button, a, input, select').forEach(element => {
+            element.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+    </script>
+</body>
+</html>
