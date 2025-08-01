@@ -1161,7 +1161,7 @@ async function loadChatMessages(userId) {
     }
     chatMessagesDiv.innerHTML = data.map(msg => {
   const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
-  let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
+  let content = renderMessageContent(msg.text);
   let img = (msg.file && msg.file.url)
     ? `<img src="${FILE_BASE_URL}${msg.file.url}" ...>`
     : "";
