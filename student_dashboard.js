@@ -1127,7 +1127,22 @@ window.openChatModal = async function(otherUserId) {
   document.getElementById("chatImage").value = "";
   await loadChatMessages(otherUserId);
 }
-
+function renderMessageContent(text) {
+  if (!text) return "";
+  // Base64 image (starts with data:image/)
+  if (/data:image\/[a-zA-Z]+;base64,/.test(text)) {
+    return `<img src="${text}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;">`;
+  }
+  // Base64 file (e.g. PDF, Word)
+  if (/data:(application|text)\/[a-zA-Z0-9\-.]+;base64,/.test(text)) {
+    // Try to extract file extension for filename
+    let extMatch = text.match(/^data:([a-zA-Z0-9\/\-.]+);base64,/);
+    let ext = extMatch ? extMatch[1].split('/').pop() : 'file';
+    return `<a href="${text}" download="downloaded.${ext}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download ${ext.toUpperCase()} file</a>`;
+  }
+  // Default: render as text
+  return `<div>${text.replace(/\n/g, "<br>")}</div>`;
+}
 // Function to load chat messages for the selected user
 async function loadChatMessages(userId) {
   const chatMessagesDiv = document.getElementById("chatMessages");
@@ -1145,11 +1160,11 @@ async function loadChatMessages(userId) {
       return;
     }
     chatMessagesDiv.innerHTML = data.map(msg => {
-      const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
-      let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
-      let img = (msg.file && msg.file.url)
-        ? `<img src="${FILE_BASE_URL}${msg.file.url}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;cursor:pointer;" alt="Attachment" onclick="openImageLightbox('${FILE_BASE_URL}${msg.file.url}')">`
-        : "";
+  const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
+  let content = msg.text ? `<div>${msg.text.replace(/\n/g, "<br>")}</div>` : "";
+  let img = (msg.file && msg.file.url)
+    ? `<img src="${FILE_BASE_URL}${msg.file.url}" ...>`
+    : "";
       return `
         <div style="margin-bottom:9px;display:flex;flex-direction:column;align-items:${isMe?'flex-end':'flex-start'};">
           <div style="background:${isMe?'#3b82f6':'#ede9fe'};color:${isMe?'#fff':'#333'};padding:7px 13px;border-radius:13px;max-width:88%;box-shadow:0 1px 3px #0001;">
