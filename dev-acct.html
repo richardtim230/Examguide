@@ -359,17 +359,18 @@
         const mainContent = document.getElementById('mainContent');
         
         function toggleSidebar(isOpen) {
-            if (isOpen) {
-                sidebar.classList.remove('sidebar-hidden');
-                mainContent.classList.add('content-disabled');
-                document.body.classList.add('no-scroll');
-            } else {
-                sidebar.classList.add('sidebar-hidden');
-                mainContent.classList.remove('content-disabled');
-                document.body.classList.remove('no-scroll');
-            }
+    if (window.innerWidth < 768) {
+        if (isOpen) {
+            sidebar.classList.remove('sidebar-hidden');
+            mainContent.classList.add('content-disabled');
+            document.body.classList.add('no-scroll');
+        } else {
+            sidebar.classList.add('sidebar-hidden');
+            mainContent.classList.remove('content-disabled');
+            document.body.classList.remove('no-scroll');
         }
-
+    }
+}
         menuToggle.addEventListener('click', function(event) {
             event.stopPropagation(); // Prevent event from bubbling to document
             toggleSidebar(!sidebar.classList.contains('sidebar-hidden'));
@@ -392,7 +393,22 @@
                 toggleSidebar(false);
             }
         });
+// Responsive sidebar initialization
+function setSidebarInitialState() {
+    if (window.innerWidth >= 768) {
+        sidebar.classList.remove('sidebar-hidden');
+        mainContent.classList.remove('content-disabled');
+        document.body.classList.remove('no-scroll');
+    } else {
+        sidebar.classList.add('sidebar-hidden');
+        mainContent.classList.remove('content-disabled');
+        document.body.classList.remove('no-scroll');
+    }
+}
 
+// Run on load and resize
+window.addEventListener('DOMContentLoaded', setSidebarInitialState);
+window.addEventListener('resize', setSidebarInitialState);
         // Dark mode toggle
         document.getElementById('themeToggle').addEventListener('click', function() {
             document.getElementById('theme').classList.toggle('bg-gray-100');
