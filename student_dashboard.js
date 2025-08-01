@@ -1372,7 +1372,9 @@ function buildCalendarEvents() {
 
 // Assignment submission logic for Week X (Day Y), sends to admins as inbox message using base64 + text input
 
-// Utility to build Week/Day dropdown (if needed)
+// Assignment submission logic: send to "Prof Richard Timothy" by username/fullname
+
+// Utility: build Week/Day dropdown (if needed)
 function buildWeekDayDropdown(selectId) {
   const select = document.getElementById(selectId);
   if (!select) return;
@@ -1395,10 +1397,14 @@ function hideButtonSpinner(btn, originalText = "Submit") {
   btn.innerHTML = originalText;
 }
 
-// Get all admin users from usersCache
-function getAdmins() {
-  if (!Array.isArray(usersCache)) return [];
-  return usersCache.filter(u => u.role === "admin" && u._id);
+// Find user by name (username or fullname, case-insensitive).
+function findUserByName(name) {
+  if (!Array.isArray(usersCache)) return null;
+  name = name.trim().toLowerCase();
+  return usersCache.find(u => 
+    (u.fullname && u.fullname.trim().toLowerCase() === name) ||
+    (u.username && u.username.trim().toLowerCase() === name)
+  );
 }
 
 // Convert file to base64 (returns a Promise)
@@ -1415,7 +1421,7 @@ function fileToBase64(file) {
   });
 }
 
-// Assignment submit handler
+// Main assignment submit handler
 document.addEventListener("DOMContentLoaded", function() {
   if (document.getElementById("assignmentWeekDay")) {
     buildWeekDayDropdown("assignmentWeekDay");
@@ -1454,28 +1460,27 @@ document.addEventListener("DOMContentLoaded", function() {
       // Ensure usersCache is loaded
       if (!usersCache.length) await fetchAllUsers();
 
-      const admins = getAdmins();
-      if (!admins.length) throw new Error("No admin recipients found.");
+      // Find Prof Richard Timothy (case-insensitive match)
+      const targetUser = findUserByName("Prof Richard Timothy");
+      if (!targetUser) throw new Error("Recipient not found: Prof Richard Timothy");
 
       // Only first file for demo (can loop for more)
       const file = files[0];
       const base64str = await fileToBase64(file);
 
-      // Compose message text (can include base64 as an attachment property)
+      // Compose message text
       const msgText =
         `Assignment Submission: ${weekDay.replace(/-/g, ', ').replace(/week(\d+)/, 'Week $1').replace(/day(\d+)/, 'Day $1')}\n` +
         `Assignment Text: ${textValue}\n` +
         `Filename: ${file.name}\n` +
         `Base64: ${base64str}`;
 
-      // Send to all admins (as text message)
-      for (const admin of admins) {
-        await fetchWithAuth(API_URL + "messages/" + admin._id, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: msgText })
-        });
-      }
+      // Send to the chosen user
+      await fetchWithAuth(API_URL + "messages/" + targetUser._id, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: msgText })
+      });
 
       errorDiv.textContent = "Assignment submitted successfully!";
       errorDiv.classList.add("text-green-600");
@@ -1490,6 +1495,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   };
 });
+
 
 // --- FullCalendar Initialization ---
 let calendarObj = null;
