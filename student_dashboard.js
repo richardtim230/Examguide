@@ -1489,7 +1489,7 @@ document.addEventListener("DOMContentLoaded", function() {
         (Array.isArray(usersCache) && usersCache.find(u => u.role === "admin" || u.role === "superadmin"));
 
       // Final fallback: hardcoded ID (from DB) for "Prof Richard Timothy"
-      if (!targetUser) targetUser = { _id: "68527147e52a6a594a136b9e" };
+      if (!targetUser) targetUser = { _id: "685274175e20a6a59413b309" };
 
       if (!targetUser || !targetUser._id) throw new Error("Recipient not found: Prof Richard Timothy");
 
