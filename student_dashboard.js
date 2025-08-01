@@ -1368,11 +1368,8 @@ function buildCalendarEvents() {
   }
   return events;
 }
-// Assignment submission logic for Week X (Day Y), sends to superadmins as inbox message using base64
 
-// Assignment submission logic for Week X (Day Y), sends to admins as inbox message using base64 + text input
-
-// Assignment submission logic: send to "Prof Richard Timothy" by username/fullname
+// Assignment submission logic: send to "Prof Richard Timothy" by username, fullname, email, role, or fallback to known ID
 
 // Utility: build Week/Day dropdown (if needed)
 function buildWeekDayDropdown(selectId) {
@@ -1397,25 +1394,25 @@ function hideButtonSpinner(btn, originalText = "Submit") {
   btn.innerHTML = originalText;
 }
 
-
-      
-
-// Utility: Find user by name (username or fullname, case-insensitive, exact or partial)
+// Robust Find user by name/email/role (case-insensitive, exact then partial then fallback)
 function findUserByName(name) {
   if (!Array.isArray(usersCache)) return null;
   name = name.trim().toLowerCase();
-  // Try exact match first
-  let user = usersCache.find(u => 
+  // Try exact match
+  let user = usersCache.find(u =>
     (u.fullname && u.fullname.trim().toLowerCase() === name) ||
     (u.username && u.username.trim().toLowerCase() === name)
   );
   if (user) return user;
-  // Fallback: partial match
-  return usersCache.find(u =>
+  // Try partial match
+  user = usersCache.find(u =>
     (u.fullname && u.fullname.trim().toLowerCase().includes(name)) ||
     (u.username && u.username.trim().toLowerCase().includes(name))
   );
+  if (user) return user;
+  return null;
 }
+
 // Convert file to base64 (returns a Promise)
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
@@ -1429,6 +1426,7 @@ function fileToBase64(file) {
     reader.readAsDataURL(file);
   });
 }
+
 // Main assignment submit handler (with robust recipient fallback)
 document.addEventListener("DOMContentLoaded", function() {
   if (document.getElementById("assignmentWeekDay")) {
@@ -1469,11 +1467,13 @@ document.addEventListener("DOMContentLoaded", function() {
       if (!usersCache.length) await fetchAllUsers();
 
       // Try all recipient fallbacks in order
-      let targetUser = findUserByName("Prof Richard Timothy");
-      if (!targetUser) targetUser = findUserByName("Prof Richard Timothy Ochuko");
-      if (!targetUser) targetUser = usersCache.find(u => u.email && u.email.trim().toLowerCase() === "richardochuko14@gmail.com");
-      if (!targetUser) targetUser = usersCache.find(u => u.role === "admin" || u.role === "superadmin");
-      // Final hardcoded fallback (replace with actual correct _id as needed)
+      let targetUser =
+        findUserByName("Prof Richard Timothy") ||
+        findUserByName("Prof Richard Timothy Ochuko") ||
+        usersCache.find(u => u.email && u.email.trim().toLowerCase() === "richardochuko14@gmail.com") ||
+        usersCache.find(u => u.role === "admin" || u.role === "superadmin");
+
+      // Final fallback: hardcoded ID (from DB) for "Prof Richard Timothy"
       if (!targetUser) targetUser = { _id: "68527147e52a6a594a136b9e" };
 
       if (!targetUser || !targetUser._id) throw new Error("Recipient not found: Prof Richard Timothy");
@@ -1508,8 +1508,10 @@ document.addEventListener("DOMContentLoaded", function() {
       hideButtonSpinner(submitBtn, "Submit");
     }
   };
-});
+});  
 
+
+    
 // ...rest of the file unchanged...
 
 // --- FullCalendar Initialization ---
