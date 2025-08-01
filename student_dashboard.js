@@ -1129,19 +1129,32 @@ window.openChatModal = async function(otherUserId) {
 }
 function renderMessageContent(text) {
   if (!text) return "";
-  // Base64 image (starts with data:image/)
-  if (/data:image\/[a-zA-Z]+;base64,/.test(text)) {
-    return `<img src="${text}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;">`;
+  let html = "";
+  // Find all base64 images in the text
+  const imgRegex = /data:image\/[a-zA-Z]+;base64,[^\s]+/g;
+  let imgMatches = text.match(imgRegex);
+  if (imgMatches) {
+    imgMatches.forEach(base64Img => {
+      html += `<img src="${base64Img}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;">`;
+      // Remove image from text for later text rendering
+      text = text.replace(base64Img, "");
+    });
   }
-  // Base64 file (e.g. PDF, Word)
-  if (/data:(application|text)\/[a-zA-Z0-9\-.]+;base64,/.test(text)) {
-    // Try to extract file extension for filename
-    let extMatch = text.match(/^data:([a-zA-Z0-9\/\-.]+);base64,/);
-    let ext = extMatch ? extMatch[1].split('/').pop() : 'file';
-    return `<a href="${text}" download="downloaded.${ext}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download ${ext.toUpperCase()} file</a>`;
+  // Find other base64 files (e.g. pdf)
+  const fileRegex = /data:(application|text)\/[a-zA-Z0-9\-.]+;base64,[^\s]+/g;
+  let fileMatches = text.match(fileRegex);
+  if (fileMatches) {
+    fileMatches.forEach(base64File => {
+      let extMatch = base64File.match(/^data:([a-zA-Z0-9\/\-.]+);base64,/);
+      let ext = extMatch ? extMatch[1].split('/').pop() : 'file';
+      html += `<a href="${base64File}" download="downloaded.${ext}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download ${ext.toUpperCase()} file</a>`;
+      text = text.replace(base64File, "");
+    });
   }
-  // Default: render as text
-  return `<div>${text.replace(/\n/g, "<br>")}</div>`;
+  // Render leftover text
+  let safeText = text.trim();
+  if (safeText) html += `<div>${safeText.replace(/\n/g, "<br>")}</div>`;
+  return html;
 }
 // Function to load chat messages for the selected user
 async function loadChatMessages(userId) {
