@@ -45,18 +45,43 @@
                 transform: translateX(0);
             }
         }
+        /* Sidebar overlay styles */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 60;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar-overlay-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* When sidebar is active, disable body scroll */
+        body.sidebar-active {
+            overflow: hidden;
+            position: relative;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans transition-colors duration-300" id="theme">
     <!-- Dark Mode Toggle -->
-    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" aria-label="Toggle dark mode">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" aria-label="Toggle dark mode" style="top:1rem; right:1rem;">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.[...]
+        </svg>
     </button>
 
     <!-- Mobile Menu Toggle -->
-    <button id="menuToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md" aria-label="Toggle menu">
+    <button id="menuToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md" aria-label="Toggle menu" style="top:1rem; left:1rem;">
         Menu
     </button>
+
+    <!-- Sidebar Overlay for click-outside detection and disabling scroll -->
+    <div id="sidebarOverlay" class="sidebar-overlay sidebar-overlay-hidden"></div>
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 gradient-bg text-white p-4 md:translate-x-0 sidebar-hidden z-70">
@@ -75,10 +100,10 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="md:ml-64 p-6 min-h-screen">
+    <main class="md:ml-64 p-6 min-h-screen relative">
         <!-- Dashboard Section -->
         <section id="dashboard" class="tab-content">
-            <h1 class="text-3xl left-6 font-bold mb-6 neon-text">Welcome to Your Dashboard</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Welcome to Your Dashboard</h1>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="glassmorphic p-6 rounded-lg shadow-lg">
                     <h2 class="text-xl font-semibold mb-4">Quick Stats</h2>
@@ -102,7 +127,7 @@
 
         <!-- Profile Section -->
         <section id="profile" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text">Your Profile</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Your Profile</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Student Information</h2>
                 <p><strong>Name:</strong> <span id="studentName">John Doe</span></p>
@@ -114,7 +139,7 @@
 
         <!-- Progress Section -->
         <section id="progress" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text">Your Progress</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Your Progress</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Course Progress</h2>
                 <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
@@ -128,7 +153,7 @@
 
         <!-- Assignments Section -->
         <section id="assignments" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text">Assignments</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Assignments</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg mb-6">
                 <h2 class="text-xl font-semibold mb-4">Submit Assignment</h2>
                 <div class="space-y-4">
@@ -185,7 +210,7 @@
 
         <!-- Calendar Section -->
         <section id="calendar" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text">Course Calendar</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Course Calendar</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Upcoming Deadlines</h2>
                 <ul id="calendarEvents" class="list-disc pl-5">
@@ -197,7 +222,7 @@
 
         <!-- Resources Section -->
         <section id="resources" class="tab-content hidden">
-            <h1 class="text-3xl font-bold mb-6 neon-text">Learning Resources</h1>
+            <h1 class="text-3xl font-bold mb-6 neon-text" style="margin-top:3.5rem;">Learning Resources</h1>
             <div class="glassmorphic p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-semibold mb-4">Course Materials</h2>
                 <ul class="list-disc pl-5">
@@ -353,13 +378,14 @@
                 const tab = this.getAttribute('data-tab');
                 document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
                 document.getElementById(tab).classList.remove('hidden');
-                document.getElementById('sidebar').classList.add('sidebar-hidden');
+                closeSidebar();
             });
         });
 
         // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('sidebar-hidden');
+        document.getElementById('menuToggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            openSidebar();
         });
 
         // Dark mode toggle
@@ -493,8 +519,79 @@
             });
         });
 
+        // --- SIDEBAR INTERACTION LOGIC ---
+
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        let isSidebarOpen = false;
+
+        function openSidebar() {
+            sidebar.classList.remove('sidebar-hidden');
+            sidebarOverlay.classList.remove('sidebar-overlay-hidden');
+            sidebarOverlay.classList.add('sidebar-overlay-visible');
+            document.body.classList.add('sidebar-active');
+            isSidebarOpen = true;
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('sidebar-hidden');
+            sidebarOverlay.classList.add('sidebar-overlay-hidden');
+            sidebarOverlay.classList.remove('sidebar-overlay-visible');
+            document.body.classList.remove('sidebar-active');
+            isSidebarOpen = false;
+        }
+
+        // Clicking/touching outside sidebar closes it (only active on mobile)
+        sidebarOverlay.addEventListener('mousedown', function(e) {
+            closeSidebar();
+        });
+        sidebarOverlay.addEventListener('touchstart', function(e) {
+            closeSidebar();
+        });
+
+        // Prevent clicks inside sidebar from closing it
+        sidebar.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+        });
+        sidebar.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+        });
+
+        // Also close sidebar with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (isSidebarOpen && (e.key === 'Escape' || e.key === 'Esc')) {
+                closeSidebar();
+            }
+        });
+
+        // On desktop, always show sidebar, never overlay
+        function handleSidebarDisplay() {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('sidebar-hidden');
+                sidebarOverlay.classList.add('sidebar-overlay-hidden');
+                sidebarOverlay.classList.remove('sidebar-overlay-visible');
+                document.body.classList.remove('sidebar-active');
+            } else {
+                if (isSidebarOpen) {
+                    sidebarOverlay.classList.remove('sidebar-overlay-hidden');
+                    sidebarOverlay.classList.add('sidebar-overlay-visible');
+                    document.body.classList.add('sidebar-active');
+                } else {
+                    sidebar.classList.add('sidebar-hidden');
+                    sidebarOverlay.classList.add('sidebar-overlay-hidden');
+                    sidebarOverlay.classList.remove('sidebar-overlay-visible');
+                    document.body.classList.remove('sidebar-active');
+                }
+            }
+        }
+
+        window.addEventListener('resize', handleSidebarDisplay);
+
         // Initialize on load
-        document.addEventListener('DOMContentLoaded', initializeDashboard);
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+            handleSidebarDisplay();
+        });
     </script>
 </body>
 </html>
