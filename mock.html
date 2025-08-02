@@ -546,11 +546,9 @@ body {
           <div class="login-footer">By logging in, you agree to the ICT policy.</div>
         </div>
         <!-- Registration Section -->
-<!-- ... [rest of your HTML up to the registration form] ... -->
-<!-- Registration Section -->
 <div class="tab-section" id="registerSection" style="display:none;">
   <h2 class="tab-header">Register</h2>
-  <form id="registerForm" class="register-form" autocomplete="off" enctype="multipart/form-data">
+  <form id="registerForm" class="register-form" autocomplete="off">
     <input type="text" id="reg_fullname" placeholder="Full Name" required aria-label="Full Name">
     <input type="text" id="reg_username" placeholder="Username" required autocomplete="username" aria-label="Username">
     <input type="password" id="reg_password" placeholder="Password" required autocomplete="new-password" aria-label="Password">
@@ -571,8 +569,6 @@ body {
       <option value="400">400</option>
     </select>
     <input type="tel" id="reg_phone" placeholder="Phone Number" required pattern="[0-9]{11,14}" aria-label="Phone Number">
-    <label for="reg_profilePic" style="font-size:0.97em;color:#003366;margin-bottom:6px;">Profile Picture <span style="color:#bdeaff;">(optional, JPG/PNG, max 2MB)</span></label>
-    <input type="file" id="reg_profilePic" accept="image/*" aria-label="Profile Picture">
     <button type="submit" id="registerBtn">
       <span id="registerBtnText">Register</span>
       <span class="spinner" id="registerSpinner" style="display:none;"></span>
@@ -902,84 +898,75 @@ document.addEventListener('DOMContentLoaded', function() {
       await setLoading(false);
     });
 
-// REGISTRATION HANDLING
-const registerForm = document.getElementById('registerForm');
-const registerBtn = document.getElementById('registerBtn');
-const registerBtnText = document.getElementById('registerBtnText');
-const registerSpinner = document.getElementById('registerSpinner');
+    // REGISTRATION HANDLING
+    const registerForm = document.getElementById('registerForm');
+    const registerBtn = document.getElementById('registerBtn');
+    const registerBtnText = document.getElementById('registerBtnText');
+    const registerSpinner = document.getElementById('registerSpinner');
 
-async function setRegLoading(isLoading) {
-  if (isLoading) {
-    registerBtn.setAttribute("disabled", "disabled");
-    registerBtn.style.opacity = "0.7";
-    registerSpinner.style.display = "inline-block";
-    registerBtnText.style.display = "none";
-  } else {
-    registerBtn.removeAttribute("disabled");
-    registerBtn.style.opacity = "1";
-    registerSpinner.style.display = "none";
-    registerBtnText.style.display = "inline";
-  }
-}
-
-registerForm.addEventListener('submit', async function(e) {
-  e.preventDefault();
-  // Collect all registration details
-  let fullName = document.getElementById('reg_fullname').value.trim();
-  let username = document.getElementById('reg_username').value.trim();
-  let password = document.getElementById('reg_password').value;
-  let email = document.getElementById('reg_email').value.trim();
-  let faculty = document.getElementById('reg_faculty').value.trim();
-  let department = document.getElementById('reg_department').value.trim();
-  let level = document.getElementById('reg_level').value;
-  let phone = document.getElementById('reg_phone').value.trim();
-  let profilePicInput = document.getElementById('reg_profilePic');
-  let profilePicFile = profilePicInput && profilePicInput.files && profilePicInput.files[0];
-
-  // Basic validation
-  if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
-    showNotification("All fields are required!", "error");
-    return;
-  }
-  if (profilePicFile && profilePicFile.size > 2 * 1024 * 1024) {
-    showNotification("Profile picture must be less than 2MB.", "error");
-    return;
-  }
-
-  await setRegLoading(true);
-
-  try {
-    let formData = new FormData();
-    formData.append('fullname', fullName);
-    formData.append('username', username);
-    formData.append('password', password);
-    formData.append('email', email);
-    formData.append('faculty', faculty);
-    formData.append('department', department);
-    formData.append('level', level);
-    formData.append('phone', phone);
-    if (profilePicFile) {
-      formData.append('profilePic', profilePicFile);
+    async function setRegLoading(isLoading) {
+      if (isLoading) {
+        registerBtn.setAttribute("disabled", "disabled");
+        registerBtn.style.opacity = "0.7";
+        registerSpinner.style.display = "inline-block";
+        registerBtnText.style.display = "none";
+      } else {
+        registerBtn.removeAttribute("disabled");
+        registerBtn.style.opacity = "1";
+        registerSpinner.style.display = "none";
+        registerBtnText.style.display = "inline";
+      }
     }
 
-    let registerResponse = await fetch(API_URL + "register", {
-      method: "POST",
-      body: formData
+    registerForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      // Collect all registration details
+      let fullName = document.getElementById('reg_fullname').value.trim();
+      let username = document.getElementById('reg_username').value.trim();
+      let password = document.getElementById('reg_password').value;
+      let email = document.getElementById('reg_email').value.trim();
+      let faculty = document.getElementById('reg_faculty').value.trim();
+      let department = document.getElementById('reg_department').value.trim();
+      let level = document.getElementById('reg_level').value;
+      let phone = document.getElementById('reg_phone').value.trim();
+
+      // Basic validation
+      if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
+        showNotification("All fields are required!", "error");
+        return;
+      }
+
+      await setRegLoading(true);
+
+      try {
+        let registerResponse = await fetch(API_URL + "register", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            username,
+            password,
+            email,
+            fullname: fullName,
+            faculty,
+            department,
+            level,
+            phone
+          })
+        });
+        let registerData = await registerResponse.json();
+        if (registerResponse.ok) {
+          localStorage.setItem('token', registerData.token);
+          showNotification("Registered successfully!", "success");
+          setTimeout(() => { window.location.href = 'student-dashoards.html'; }, 1200);
+        } else {
+          showNotification(registerData.message || "Registration failed", "error");
+        }
+      } catch (err) {
+        showNotification("Network or server error. Please try again.", "error");
+      }
+
+      await setRegLoading(false);
     });
-    let registerData = await registerResponse.json();
-    if (registerResponse.ok) {
-      localStorage.setItem('token', registerData.token);
-      showNotification("Registered successfully!", "success");
-      setTimeout(() => { window.location.href = 'student-dashoards.html'; }, 1200);
-    } else {
-      showNotification(registerData.message || "Registration failed", "error");
-    }
-  } catch (err) {
-    showNotification("Network or server error. Please try again.", "error");
-  }
-
-  await setRegLoading(false);
-});
 
     // Password reset (unchanged)
     document.getElementById('forgotPassword').addEventListener('click', async function() {
