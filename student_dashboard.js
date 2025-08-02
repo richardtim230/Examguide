@@ -1637,7 +1637,62 @@ function findUserByName(name) {
   if (user) return user;
   return null;
 }
+// Converts image file to resized JPG base64 string, <50KB
+function imageFileToResizedJpgBase64(file, maxKb = 50, maxWidth = 800) {
+  return new Promise((resolve, reject) => {
+    // Only process image files
+    if (!file.type.startsWith('image/')) {
+      reject('Not an image file');
+      return;
+    }
 
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        // Resize if needed
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth) {
+          height = Math.round(height * maxWidth / width);
+          width = maxWidth;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let quality = 0.7; // Start quality
+        let base64 = '';
+        let dataSizeKb = 0;
+
+        // Try to get under maxKb
+        function tryExport() {
+          base64 = canvas.toDataURL('image/jpeg', quality);
+          // Compute size in KB
+          dataSizeKb = Math.round((base64.length * 3/4) / 1024);
+          if (dataSizeKb > maxKb && quality > 0.2) {
+            quality -= 0.1;
+            tryExport();
+          } else {
+            resolve(base64);
+          }
+        }
+        tryExport();
+      };
+      img.onerror = function() {
+        reject('Error loading image');
+      };
+      img.src = e.target.result;
+    };
+    reader.onerror = function(e) {
+      reject('Error reading file');
+    };
+    reader.readAsDataURL(file);
+  });
+}
 // Convert file to base64 (returns a Promise)
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
@@ -1719,8 +1774,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Only first file for demo (can loop for more)
       const file = files[0];
-      const base64str = await fileToBase64(file);
-
+      const base64str = await imageFileToResizedJpgBase64(file, 50, 800); // 50KB, max 800px wide
       // Compose message text
       const msgText =
         `Assignment Submission: ${weekDay.replace(/-/g, ', ').replace(/week(\d+)/, 'Week $1').replace(/day(\d+)/, 'Day $1')}\n` +
