@@ -1323,11 +1323,23 @@ window.openChatModal = async function(otherUserId) {
   document.getElementById("chatImage").value = "";
   await loadChatMessages(otherUserId);
 }
-function renderMessageContent(text, fileType = "") {
-  const isHtmlFile = fileType === "text/html" || (typeof text === "string" && text.trim().startsWith("<!DOCTYPE html"));
-  if (isHtmlFile) {
+function renderMessageContent(text, fileType = "", fileName = "file.html") {
+  // Detect if it's pasted HTML text
+  const isHtmlText = fileType === "text/html" && typeof text === "string"
+    && (text.trim().startsWith("<!DOCTYPE html") || text.trim().startsWith("<html"));
+  const isHtmlFileBase64 = typeof text === "string" && text.startsWith("data:text/html;base64,");
+  const isHtmlFileUrl = typeof text === "string" && text.startsWith("http");
+
+  // If it's a pasted HTML text, display in code box
+  if (isHtmlText && !isHtmlFileBase64 && !isHtmlFileUrl) {
     return `<pre style="white-space:pre-wrap;word-break:break-all;background:#f8fafc;padding:7px 11px;border-radius:8px;color:#2d3748;"><code>${escapeHtml(text)}</code></pre>`;
-                                         }
+  }
+
+  // If it's a file (base64 or url), offer as download
+  if (fileType === "text/html" && (isHtmlFileBase64 || isHtmlFileUrl)) {
+    return `<a href="${text}" download="${fileName}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download HTML file</a>`;
+  }
+
   if (!text) return "";
   let html = "";
   // Find all base64 images in the text
