@@ -18,7 +18,19 @@
   font-size: 1.2rem;
 }
 
-        
+.verse-bg {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 100%);
+  min-height: 120px;
+  position: relative;
+}
+.verse-bg img {
+  /* Example image styling */
+  filter: blur(1px) brightness(0.85);
+}
+#verseBox .text-indigo-900, #verseBox .text-indigo-700 {
+  /* Ensures text stands out on image */
+  text-shadow: 0 2px 6px #fff8, 0 1px 3px #0002;
+        }        
 #studyCalendar .fc-button {
   padding: 0.3em 0.7em;
   font-size: 0.98em;
@@ -394,10 +406,16 @@
   <div id="greetingTimeIcon" class="absolute top-6 right-8 text-3xl" title="Time of Day"></div>
     </header>
             <!-- Add just below motivational quotes in dashboard section -->
-<div id="verseBox" class="mt-4 bg-indigo-50 rounded-2xl p-4 shadow flex items-center transition-all duration-500" style="min-height: 60px;">
-  <div>
-    <div id="verseText" class="text-indigo-900 font-semibold text-lg mb-1"></div>
-    <div id="verseRef" class="text-indigo-700 text-sm"></div>
+<!-- Religious Verse Placeholder - styled box with image background -->
+<div id="verseBox" class="relative flex items-center justify-center rounded-2xl shadow-lg p-6 my-4 overflow-hidden verse-bg">
+  <img src="images (4).jpeg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none rounded-2xl" />
+  <div class="relative z-10 w-full text-center flex flex-col items-center justify-center">
+    <div id="verseText" class="text-indigo-900 font-bold text-lg md:text-xl lg:text-2xl mb-2" style="text-shadow: 0 2px 8px #fff8;">
+      <!-- Verse text goes here -->
+    </div>
+    <div id="verseRef" class="text-indigo-700 text-base md:text-lg font-medium" style="text-shadow: 0 1px 6px #fff5;">
+      <!-- Reference goes here -->
+    </div>
   </div>
 </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
