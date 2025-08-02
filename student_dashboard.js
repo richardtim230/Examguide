@@ -291,7 +291,7 @@ async function showRandomBibleVerse() {
   }, 500);
 
   clearTimeout(_verseTimer);
-  _verseTimer = setTimeout(showRandomBibleVerse, 10000);
+  _verseTimer = setTimeout(showRandomBibleVerse, 20000);
 }
 
 function startVerseRotation() {
