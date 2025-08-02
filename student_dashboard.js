@@ -1323,7 +1323,11 @@ window.openChatModal = async function(otherUserId) {
   document.getElementById("chatImage").value = "";
   await loadChatMessages(otherUserId);
 }
-function renderMessageContent(text) {
+function renderMessageContent(text, fileType = "") {
+  const isHtmlFile = fileType === "text/html" || (typeof text === "string" && text.trim().startsWith("<!DOCTYPE html"));
+  if (isHtmlFile) {
+    return `<pre style="white-space:pre-wrap;word-break:break-all;background:#f8fafc;padding:7px 11px;border-radius:8px;color:#2d3748;"><code>${escapeHtml(text)}</code></pre>`;
+                                         }
   if (!text) return "";
   let html = "";
   // Find all base64 images in the text
@@ -1361,28 +1365,25 @@ function escapeHtml(html) {
     .replace(/'/g, '&#039;');
 }
 
-// Function to load chat messages for the selected user
+// --- Update loadChatMessages to pass file type ---
 async function loadChatMessages(userId) {
   const chatMessagesDiv = document.getElementById("chatMessages");
   chatMessagesDiv.innerHTML = "<div style='color:#888;text-align:center;'>Loading...</div>";
   try {
     const resp = await fetchWithAuth(API_URL + "messages/" + userId);
     const data = await resp.json();
-
-    // Collect all image URLs for this chat (for lightbox swiping)
     lightboxImages = data.filter(msg => msg.file && msg.file.url)
       .map(msg => FILE_BASE_URL + msg.file.url);
-
     if (!Array.isArray(data) || data.length === 0) {
       chatMessagesDiv.innerHTML = "<div style='color:#888;text-align:center;'>No messages yet.</div>";
       return;
     }
     chatMessagesDiv.innerHTML = data.map(msg => {
-  const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
-  let content = renderMessageContent(msg.text);
-  let img = (msg.file && msg.file.url)
-    ? `<img src="${FILE_BASE_URL}${msg.file.url}" ...>`
-    : "";
+      const isMe = msg.from && (msg.from._id === student.id || msg.from === student.id);
+      let content = renderMessageContent(msg.text, msg.file?.type || "");
+      let img = (msg.file && msg.file.url)
+        ? `<img src="${FILE_BASE_URL}${msg.file.url}" ...>`
+        : "";
       return `
         <div style="margin-bottom:9px;display:flex;flex-direction:column;align-items:${isMe?'flex-end':'flex-start'};">
           <div style="background:${isMe?'#3b82f6':'#ede9fe'};color:${isMe?'#fff':'#333'};padding:7px 13px;border-radius:13px;max-width:88%;box-shadow:0 1px 3px #0001;">
@@ -1393,7 +1394,6 @@ async function loadChatMessages(userId) {
         </div>
       `;
     }).join('');
-    // Scroll to bottom
     chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
   } catch (e) {
     chatMessagesDiv.innerHTML = "<div style='color:#f25f5c'>Failed to load messages.</div>";
