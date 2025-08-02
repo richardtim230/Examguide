@@ -302,6 +302,71 @@ function startVerseRotation() {
 window.addEventListener("DOMContentLoaded", () => {
   startVerseRotation();
 });
+
+// --- Religion-aware Verse/Message Rotator ---
+
+// Add the Quran fetcher
+async function fetchRandomQuranVerse() {
+    // Quran: 114 chapters (surahs)
+    const surah = Math.floor(Math.random() * 114) + 1;
+    // Fetch surah info to get ayah count
+    const surahInfoResp = await fetch(`https://api.alquran.cloud/v1/surah/${surah}`);
+    const surahInfo = await surahInfoResp.json();
+    const ayahCount = surahInfo.data.numberOfAyahs;
+    const ayah = Math.floor(Math.random() * ayahCount) + 1;
+    // Fetch the verse (ayah)
+    const resp = await fetch(`https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/en.sahih`);
+    const data = await resp.json();
+    if (data && data.data) {
+        return {
+            text: data.data.text,
+            ref: `Qur'an ${surahInfo.data.englishName} ${surah}:${ayah}`
+        };
+    }
+    return { text: "Unable to fetch verse.", ref: "" };
+}
+
+async function showRandomReligiousMessage() {
+    const verseBox = document.getElementById("verseBox");
+    const verseTextEl = document.getElementById("verseText");
+    const verseRefEl = document.getElementById("verseRef");
+    if (!verseBox || !verseTextEl || !verseRefEl) return;
+
+    // Get religion from profile (you should load student object first)
+    const religion = student?.religion || localStorage.getItem('studentReligion') || "";
+
+    // Animate out
+    verseBox.classList.remove("zoom-in");
+    verseBox.classList.add("zoom-out");
+
+    setTimeout(async () => {
+        let verse = { text: "", ref: "" };
+        if (religion === "islam") {
+            verse = await fetchRandomQuranVerse();
+        } else if (religion === "christianity") {
+            verse = await fetchRandomBibleVerse();
+        } else {
+            verse = { text: "“Education is the key to success.”", ref: "— Unknown" }; // fallback
+        }
+        verseTextEl.textContent = `“${verse.text.trim()}”`;
+        verseRefEl.textContent = `— ${verse.ref}`;
+        verseBox.classList.remove("zoom-out");
+        verseBox.classList.add("zoom-in");
+    }, 500);
+
+    clearTimeout(window._verseTimer);
+    window._verseTimer = setTimeout(showRandomReligiousMessage, 10000);
+}
+
+function startReligiousVerseRotation() {
+    showRandomReligiousMessage();
+}
+
+// Call this in your dashboard/profile init logic
+window.addEventListener("DOMContentLoaded", () => {
+    startReligiousVerseRotation();
+});
+
 // ========== Profile Pic & Greeting Helpers ==========
 function getProfilePicUrl(student) {
   if (student.profilePic) return student.profilePic;
@@ -355,7 +420,7 @@ async function fetchProfile() {
   document.getElementById("profilePhone").innerText = student.phone || '';
   if (document.getElementById("profileFaculty"))
     document.getElementById("profileFaculty").innerText = getFacultyName(student.faculty);
-
+document.getElementById("editReligion").value = student.religion || '';
   document.getElementById("editName").value = student.fullname || '';
   document.getElementById("editEmail").value = student.email || '';
   document.getElementById("editPhone").value = student.phone || '';
@@ -440,7 +505,7 @@ document.getElementById("saveProfileBtn").onclick = async function() {
   const faculty = document.getElementById("editFaculty").value || "";
   const department = document.getElementById("editDepartment").value || "";
   const level = document.getElementById("editLevel").value || "";
-
+const religion = document.getElementById("editReligion").value || "";
   if (!fullname || !email) {
     alert("Full name and email are required.");
     document.getElementById("profileSaveText").style.display = "";
@@ -452,7 +517,7 @@ document.getElementById("saveProfileBtn").onclick = async function() {
   const resp = await fetchWithAuth(API_URL + "users/" + student.id, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fullname, email, phone, faculty, department, level })
+    body: JSON.stringify({ fullname, email, phone, faculty, department, level, religion })
   });
 
   if (!resp.ok) {
