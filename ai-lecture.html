@@ -8,105 +8,176 @@
   <link rel="icon" href="logo.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    .outline-chip {
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      user-select: none;
-    }
-    .outline-chip:hover, .outline-chip.active {
-      background: linear-gradient(90deg,#6366f1,#3b82f6);
+    /* ...[existing styles unchanged]... */
+    .reload-btn {
+      background: #6366f1;
       color: #fff;
-      box-shadow: 0 2px 8px #6366f133;
+      border: none;
+      border-radius: 0.5em;
+      padding: 0.6em 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 7px #6366f133;
+      transition: background .15s;
     }
-    .section-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #312e81;
-      background: linear-gradient(90deg,#e0e7ff 60%,#fff 100%);
-      border-left: 5px solid #6366f1;
-      border-radius: 0.5rem 0 0 0.5rem;
-      padding: 0.6em 1em 0.6em 1.2em;
-      margin: 2.2em 0 1.1em 0;
-      box-shadow: 0 1px 6px #6366f124;
-      letter-spacing: 0.01em;
+    .reload-btn:hover {
+      background: #4338ca;
     }
-    .note-content {
-      font-size: 1.0rem;
-      line-height: 1.8;
-      color: #1e293b;
-      background: #f1f5fd;
-      border-radius: 0.7em;
-      margin-bottom: 1.6em;
-      padding: 1.2em 1.5em 1.2em 1.5em;
-      box-shadow: 0 1px 7px #6366f111;
-    }
-    .intro-section {
-      background: #eef2ff;
-      border-left: 4px solid #6366f1;
-      border-radius: 0.8em;
-      padding: 1.2em 1.5em;
-      margin: 1.1em 0 2.2em 0;
-      font-size: 1.13rem;
-      color: #3730a3;
-      box-shadow: 0 1px 6px #6366f133;
-    }
-    .main-container {
-      max-width: 900px;
-      margin: 0 auto;
-      transition: background 0.4s;
-    }
-    .fade-in {
-      animation: fadeIn 0.7s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    @media (max-width:600px){
-      .main-container{padding:0.7em;}
-      .note-content,.section-title,.intro-section{padding-left:0.8em;padding-right:0.8em;}
-      #outlinesSidebar {display:none;}
-      #outlinesNav {flex-direction: row!important; overflow-x: auto;}
-    }
-    .darkmode .main-container, .darkmode body {
-      background: #020617 !important;
-    }
-    .darkmode .section-title {
-      color: #f1f5fd;
-      background: linear-gradient(90deg,#3730a3 60%,#020617 100%);
-      border-left: 5px solid #818cf8;
-      box-shadow: 0 1px 8px #6366f133;
-    }
-    .darkmode .note-content {
-      background: #181f38;
-      color: #e0e7ff;
-    }
-    .darkmode .intro-section {
-      background: #181f38;
-      color: #a5b4fc;
-      border-left: 4px solid #818cf8;
-    }
-    .darkmode .outline-chip {
-      background: #181f38 !important; color: #94a3b8 !important;
-    }
-    .darkmode .outline-chip.active, .darkmode .outline-chip:hover {
-      background: linear-gradient(90deg,#6366f1,#3b82f6)!important; color:#fff!important;
-    }
-    .darkmode .flashcard {
-      background: #232956;
-      color: #f1f5fd;
-    }
-    .collapsible-content {display:none;}
-    .collapsible.open .collapsible-content {display:block;}
-    .collapsible-toggle {
-      cursor:pointer; transition: background 0.2s;
-    }
-    .collapsible-toggle:hover {background: #e0e7ff;}
-    .darkmode .collapsible-toggle:hover {background: #232956;}
-    .progress-bar-bg {background: #e0e7ff;}
-    .progress-bar-fg {background: linear-gradient(90deg,#6366f1,#0ea5e9);}
-    .darkmode .progress-bar-bg {background:#232956;}
-    .darkmode .progress-bar-fg {background: linear-gradient(90deg,#818cf8,#38bdf8);}
+    /* ---- OAU ExamGuard Lecture Note Page Styles ---- */
+
+/* Outline Chip (sidebar/nav buttons) */
+.outline-chip {
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  user-select: none;
+}
+.outline-chip:hover, .outline-chip.active {
+  background: linear-gradient(90deg,#6366f1,#3b82f6);
+  color: #fff;
+  box-shadow: 0 2px 8px #6366f133;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #312e81;
+  background: linear-gradient(90deg,#e0e7ff 60%,#fff 100%);
+  border-left: 5px solid #6366f1;
+  border-radius: 0.5rem 0 0 0.5rem;
+  padding: 0.6em 1em 0.6em 1.2em;
+  margin: 2.2em 0 1.1em 0;
+  box-shadow: 0 1px 6px #6366f124;
+  letter-spacing: 0.01em;
+}
+
+/* Lecture Note Content */
+.note-content {
+  font-size: 1.0rem;
+  line-height: 1.8;
+  color: #1e293b;
+  background: #f1f5fd;
+  border-radius: 0.7em;
+  margin-bottom: 1.6em;
+  padding: 1.2em 1.5em 1.2em 1.5em;
+  box-shadow: 0 1px 7px #6366f111;
+}
+
+/* Introduction Section */
+.intro-section {
+  background: #eef2ff;
+  border-left: 4px solid #6366f1;
+  border-radius: 0.8em;
+  padding: 1.2em 1.5em;
+  margin: 1.1em 0 2.2em 0;
+  font-size: 1.13rem;
+  color: #3730a3;
+  box-shadow: 0 1px 6px #6366f133;
+}
+
+/* Main Container */
+.main-container {
+  max-width: 900px;
+  margin: 0 auto;
+  transition: background 0.4s;
+}
+
+/* Fade In Animation */
+.fade-in {
+  animation: fadeIn 0.7s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media (max-width:600px){
+  .main-container{padding:0.7em;}
+  .note-content,.section-title,.intro-section{padding-left:0.8em;padding-right:0.8em;}
+  #outlinesSidebar {display:none;}
+  #outlinesNav {flex-direction: row!important; overflow-x: auto;}
+}
+
+/* Dark Mode Styles */
+.darkmode .main-container, .darkmode body {
+  background: #020617 !important;
+}
+.darkmode .section-title {
+  color: #f1f5fd;
+  background: linear-gradient(90deg,#3730a3 60%,#020617 100%);
+  border-left: 5px solid #818cf8;
+  box-shadow: 0 1px 8px #6366f133;
+}
+.darkmode .note-content {
+  background: #181f38;
+  color: #e0e7ff;
+}
+.darkmode .intro-section {
+  background: #181f38;
+  color: #a5b4fc;
+  border-left: 4px solid #818cf8;
+}
+.darkmode .outline-chip {
+  background: #181f38 !important; color: #94a3b8 !important;
+}
+.darkmode .outline-chip.active, .darkmode .outline-chip:hover {
+  background: linear-gradient(90deg,#6366f1,#3b82f6)!important; color:#fff!important;
+}
+.darkmode .flashcard {
+  background: #232956;
+  color: #f1f5fd;
+}
+
+/* Flashcard Styles */
+.flashcard {
+  background: #fff;
+  border: 1px solid #e0e7ff;
+  border-radius: 0.7em;
+  padding: 1em 1.2em;
+  box-shadow: 0 1px 6px #6366f133;
+  font-weight: 600;
+  color: #312e81;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.flashcard:hover {
+  background: #f1f5fd;
+}
+.flashcard:focus {
+  outline: 2px solid #6366f1;
+}
+
+/* Collapsible Section */
+.collapsible-content {display:none;}
+.collapsible.open .collapsible-content {display:block;}
+.collapsible-toggle {
+  cursor:pointer; transition: background 0.2s;
+}
+.collapsible-toggle:hover {background: #e0e7ff;}
+.darkmode .collapsible-toggle:hover {background: #232956;}
+
+/* Progress Bar */
+.progress-bar-bg {background: #e0e7ff;}
+.progress-bar-fg {background: linear-gradient(90deg,#6366f1,#0ea5e9);}
+.darkmode .progress-bar-bg {background:#232956;}
+.darkmode .progress-bar-fg {background: linear-gradient(90deg,#818cf8,#38bdf8);}
+
+/* Reload Button (Error state) */
+.reload-btn {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.6em 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 7px #6366f133;
+  transition: background .15s;
+}
+.reload-btn:hover {
+  background: #4338ca;
+}
   </style>
 </head>
 <body class="bg-gradient-to-br from-indigo-50 to-white min-h-screen font-sans transition-colors">
@@ -170,7 +241,11 @@
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
         Generating your detailed lecture note...
       </div>
-      <div id="errorState" class="my-10 text-red-600 text-lg font-bold hidden text-center"></div>
+      <div id="errorState" class="my-10 text-red-600 text-lg font-bold hidden text-center flex flex-col items-center">
+        <!-- Error message displayed here -->
+        <span id="errorMessage"></span>
+        <button id="reloadBtn" class="reload-btn mt-4" style="display:none;"><i class="fas fa-rotate-right mr-2"></i>Try Again</button>
+      </div>
     </div>
   </main>
   <footer class="main-container text-center text-gray-400 py-7 mt-12 text-sm">
@@ -179,7 +254,6 @@
   </footer>
   <script>
     // -------- GEMINI API SETUP --------
-    // Replace this API key with your actual key!
     const GEMINI_API_KEY = 'AIzaSyB6j5eYA2tEjA0u9NhR6hKkfx9UB5dpSm8';
 
     // --------- TOPIC FETCH ---------
@@ -188,9 +262,7 @@
     document.getElementById("topicTitle").textContent = topic;
     document.getElementById("topicLabel").textContent = "Lecture Note";
 
-    
     const SYSTEM_PROMPT = `
-
 You are an expert and professional university lecturer and instructional designer.  
 Generate a comprehensive, well-formatted lecture note for the given topic, tailored for university students preparing for standard examination boards worldwide. The note must provide clear explanations, intelligent reasoning, logical breakdowns, and practical, real-world examples for all key concepts. It should be well-organized, detailed, and universally accessible to students in any country and any level.
 You must sound completely humanly and a passionate one, good at teaching and using accurate materials for teaching. 
@@ -220,7 +292,6 @@ Your response must be a single valid JSON object, with no code block markers or 
     ...
   ] (5-7 items, covering a range of cognitive levels such as explain, describe, compare, analyze, apply, evaluate)
 }
-
 Instructions:
 - Structure the outlines to cover the topic logically from foundational concepts to advanced ideas, ensuring each section is detailed and well-explained.
 - For each outline section, write a detailed, easy-to-read note in good English so that any university student can understand. Use clear explanations, stepwise breakdowns, and practical examples that are common and relatable.
@@ -232,9 +303,7 @@ Instructions:
 - The introduction and summary must be clear, friendly, and professional.
 - At the end, provide 5-7 likely exam questions that test both basic understanding and higher-order thinking skills.
 - The response must be valid JSON only. Do not add commentary or code block markers. The only output should be the JSON object.
-
 Topic: ${topic}
-
 `;
 
     // --------------- GEMINI FUNCTION ---------------
@@ -271,6 +340,8 @@ Topic: ${topic}
     // --------- RENDERING LOGIC -----------
     function renderLecture(data) {
       document.getElementById("loadingState").style.display = "none";
+      document.getElementById("errorState").classList.add("hidden");
+      document.getElementById("reloadBtn").style.display = "none";
       // Outlines Sidebar & Nav
       function renderOutlines() {
         const outlinesSidebar = document.getElementById("outlinesSidebar");
@@ -291,7 +362,7 @@ Topic: ${topic}
           outlinesSidebar.appendChild(sideBtn);
           // Mobile
           let mobBtn = document.createElement("button");
-          mobBtn.className = "outline-chip px-4 py-2 rounded-xl text-indigo-700 bg-indigo-100 font-semibold border-none shadow hover:shadow-lg transition-all";
+          mobBtn.className = "outline-chip px-4 py-2 rounded-xl text-indigo-700 bg-indigo-100 font-semibold border-none shadow hover:bg-indigo-50 transition-all";
           mobBtn.innerHTML = `<i class="fas fa-circle-dot text-xs mr-2 text-indigo-400"></i> ${outline}`;
           mobBtn.onclick = () => {
             document.getElementById("section-" + idx).scrollIntoView({behavior:'smooth',block:'start'});
@@ -382,21 +453,31 @@ Topic: ${topic}
     function showError(msg) {
       document.getElementById("loadingState").style.display = "none";
       const err = document.getElementById("errorState");
-      err.textContent = msg;
+      document.getElementById("errorMessage").textContent = msg;
       err.classList.remove("hidden");
+      document.getElementById("reloadBtn").style.display = "inline-block";
     }
 
     // ----------- INIT -----------
-    async function initLecture() {
+    async function initLecture(isReload=false) {
+      // Hide error and reload button
+      document.getElementById("errorState").classList.add("hidden");
+      document.getElementById("reloadBtn").style.display = "none";
+      document.getElementById("loadingState").style.display = "flex";
+      // Clear previous notes to prevent confusion
+      document.getElementById("notesContent").innerHTML = "";
+      document.getElementById("introduction").style.display = "none";
+      document.getElementById("flashcardsSection").style.display = "none";
+      document.getElementById("summaryContainer").style.display = "none";
       try {
         const data = await fetchGeminiLecture(topic);
         renderLecture(data);
       } catch (e) {
-        showError("Sorry, we couldn't generate your lecture right now. Please try again or check your API key.");
+        showError("Sorry, we couldn't generate your lecture at the moment. Please try again by clicking below. If the issue persists, check your internet connection or try later.");
         console.error(e);
       }
     }
-    window.addEventListener('DOMContentLoaded', initLecture);
+    window.addEventListener('DOMContentLoaded', () => initLecture());
 
     // --- Progress Bar: Track scroll ---
     function updateProgressBar() {
@@ -424,6 +505,11 @@ Topic: ${topic}
       document.body.classList.toggle("darkmode");
       document.querySelector("header").classList.toggle("bg-gray-900");
       document.querySelector("header").classList.toggle("bg-white");
+    };
+
+    // --- Reload Button Logic ---
+    document.getElementById("reloadBtn").onclick = function() {
+      initLecture(true);
     };
   </script>
 </body>
