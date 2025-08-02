@@ -372,6 +372,7 @@
                 <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
                 <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
                 <li><a href="#assignments" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="assignments"><i class="fas fa-file-alt"></i><span>Assignment Submission</span></a></li>
+                <li><a href="#studypadi" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="studypadi"><i class="fas fa-file-alt"></i><span>My StudyPadi</span></a></li>
                 
                 <li>
                   <a href="#" onclick="openBroadcastModal()" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors">
@@ -1007,6 +1008,56 @@
   <img id="lightboxImg" src="" style="max-width:96vw;max-height:90vh;border-radius:10px;box-shadow:0 2px 18px #0008;display:block;margin:auto;">
   <button id="lightboxNext" style="position:absolute;right:28px;top:50%;transform:translateY(-50%);font-size:2.2em;background:none;border:none;color:white;cursor:pointer;z-index:2;display:none;">&#8680;</button>
 </div>
+        <!-- My StudyPadi Tab -->
+<section id="studypadi" class="tab-content">
+  <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex items-center justify-between">
+    <div>
+      <h2 class="text-3xl font-bold text-indigo-900">My StudyPadi (AI Study Materials)</h2>
+      <p class="text-gray-600 mt-2">Generate personalized questions and answers from your study materials—powered by AI!</p>
+    </div>
+  </header>
+  <div class="bg-white rounded-2xl shadow-xl p-6 card max-w-3xl mx-auto">
+    <form id="studypadiForm" class="space-y-5">
+      <div>
+        <label class="block font-medium mb-1 text-gray-700">Upload Study Material</label>
+        <input type="file" id="studypadiFile" class="w-full p-2 border rounded bg-indigo-50" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx,.odt,.rtf,.epub,.jpg,.jpeg,.png" multiple required>
+        <div id="studypadiFilePreview" class="mt-2 text-sm text-gray-600"></div>
+      </div>
+      <div>
+        <label class="block font-medium mb-1 text-gray-700">Question Type</label>
+        <select id="studypadiQType" class="w-full p-2 border rounded bg-indigo-50" required>
+          <option value="mcq">MCQ (Multiple Choice)</option>
+          <option value="theory">Theory Questions</option>
+          <option value="fill">Fill in the Gap</option>
+          <option value="mixed">Mixture (Randomized)</option>
+        </select>
+      </div>
+      <div id="studypadiMcqOpts" class="transition-all">
+        <label class="block font-medium mb-1 text-gray-700">Number of MCQs</label>
+        <select id="studypadiNumMcq" class="w-full p-2 border rounded bg-indigo-50">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <label class="block font-medium mb-1 mt-3 text-gray-700">Options per MCQ</label>
+        <select id="studypadiNumOpts" class="w-full p-2 border rounded bg-indigo-50">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-medium mb-1 text-gray-700">Instructions / Focus Area (optional)</label>
+        <textarea id="studypadiInstructions" class="w-full p-2 border rounded bg-indigo-50" rows="2" placeholder="e.g. Focus on chapter 3, or cover key definitions..."></textarea>
+      </div>
+      <button type="submit" id="studypadiSubmit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full">Generate Questions</button>
+      <div id="studypadiError" class="text-red-500 text-sm mt-2 hidden"></div>
+    </form>
+  </div>
+</section>
     </main>
     <script src="student_dashboard.js"></script>
     <script>
@@ -1025,6 +1076,85 @@ document.getElementById("aiStudyForm").onsubmit = function(e) {
     // Example: /ai-lecture.html?topic=...
     const url = '/ai-lecture.html?topic=' + encodeURIComponent(topic);
     window.open(url, '_blank');
+};
+        // --- My StudyPadi Tab Logic ---
+
+// Preview uploaded files
+document.getElementById("studypadiFile").addEventListener("change", function() {
+  const files = Array.from(this.files);
+  document.getElementById("studypadiFilePreview").innerHTML = files.length
+    ? files.map(f => `<span class="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded mr-2 mb-1">${f.name}</span>`).join('')
+    : '';
+});
+
+// Show/hide MCQ settings based on selection
+document.getElementById("studypadiQType").addEventListener("change", function() {
+  document.getElementById("studypadiMcqOpts").style.display =
+    this.value === "mcq" || this.value === "mixed" ? "block" : "none";
+});
+document.getElementById("studypadiMcqOpts").style.display = "block";
+
+// Handle StudyPadi Form Submission
+document.getElementById("studypadiForm").onsubmit = async function(e) {
+  e.preventDefault();
+  const errorDiv = document.getElementById("studypadiError");
+  errorDiv.classList.add("hidden");
+  errorDiv.textContent = "";
+
+  // Gather data
+  const files = Array.from(document.getElementById("studypadiFile").files);
+  const qType = document.getElementById("studypadiQType").value;
+  const numMcq = document.getElementById("studypadiNumMcq").value;
+  const numOpts = document.getElementById("studypadiNumOpts").value;
+  const instructions = document.getElementById("studypadiInstructions").value.trim();
+
+  if (!files.length) {
+    errorDiv.textContent = "Please upload at least one study file.";
+    errorDiv.classList.remove("hidden");
+    return;
+  }
+
+  // Optionally, show a spinner or disable button
+  document.getElementById("studypadiSubmit").disabled = true;
+  document.getElementById("studypadiSubmit").textContent = "Generating...";
+
+  try {
+    // Prepare formData for file upload + params
+    const formData = new FormData();
+    files.forEach(f => formData.append("files", f));
+    formData.append("qType", qType);
+    if (qType === "mcq" || qType === "mixed") {
+      formData.append("numMcq", numMcq);
+      formData.append("numOpts", numOpts);
+    }
+    formData.append("instructions", instructions);
+
+    // --- Replace with your AI backend endpoint ---
+    // Example: const resp = await fetchWithAuth(API_URL + "studypadi/generate", { method: "POST", body: formData });
+    // const data = await resp.json();
+
+    // For demonstration, we'll just simulate a response:
+    const data = {
+      questions: [
+        { type: "mcq", question: "What is the capital of France?", options: ["London", "Paris", "Rome", "Berlin"], answer: "Paris" },
+        { type: "theory", question: "Describe the process of photosynthesis.", answer: "Photosynthesis is the process by which green plants..." },
+        { type: "fill", question: "The chemical symbol for water is ____.", answer: "H2O" }
+      ],
+      settings: { type: qType, numMcq, numOpts, instructions }
+    };
+
+    // Save to sessionStorage for preview
+    sessionStorage.setItem("studypadi_preview", JSON.stringify(data));
+
+    // Open preview in new tab
+    window.open("studypadi_preview.html", "_blank");
+  } catch (err) {
+    errorDiv.textContent = "Failed to generate questions. Please try again.";
+    errorDiv.classList.remove("hidden");
+  } finally {
+    document.getElementById("studypadiSubmit").disabled = false;
+    document.getElementById("studypadiSubmit").textContent = "Generate Questions";
+  }
 };
     </script>
 </body>
