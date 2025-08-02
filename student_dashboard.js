@@ -1324,30 +1324,21 @@ window.openChatModal = async function(otherUserId) {
   await loadChatMessages(otherUserId);
 }
 function renderMessageContent(text, fileType = "", fileName = "file.html") {
-  // Improved: Always show code block if text starts with HTML document
-  const isHtmlDoc = typeof text === "string" &&
-    (text.trim().startsWith("<!DOCTYPE html") || text.trim().startsWith("<") || text.trim().startsWith("<html"));
-
-  if (isHtmlDoc) {
-    return `<pre style="white-space:pre-wrap;word-break:break-all;background:#f8fafc;padding:7px 11px;border-radius:8px;color:#2d3748;"><code>${escapeHtml(text)}</code></pre>`;
-  }
-
-  // If it's a file (base64 or url), offer as download
-  if (fileType === "text/html" && (typeof text === "string" && (text.startsWith("data:text/html;base64,") || text.startsWith("http")))) {
-    return `<a href="${text}" download="${fileName}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download HTML file</a>`;
-  }
-
-  if (!text) return "";
+  // --- Image and file preview logic ---
   let html = "";
+
   // Find all base64 images in the text
   const imgRegex = /data:image\/[a-zA-Z]+;base64,[^\s]+/g;
   let imgMatches = text.match(imgRegex);
   if (imgMatches) {
     imgMatches.forEach(base64Img => {
-      html += `<img src="${base64Img}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;">`;
+      html += `<img src="${base64Img}" 
+        style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;cursor:pointer;" 
+        onclick="openImageLightbox('${base64Img.replace(/'/g, "\\'")}')">`;
       text = text.replace(base64Img, "");
     });
   }
+
   // Find other base64 files (e.g. pdf)
   const fileRegex = /data:(application|text)\/[a-zA-Z0-9\-.]+;base64,[^\s]+/g;
   let fileMatches = text.match(fileRegex);
@@ -1359,7 +1350,24 @@ function renderMessageContent(text, fileType = "", fileName = "file.html") {
       text = text.replace(base64File, "");
     });
   }
-  let safeText = text.trim();
+
+  // Improved: Always show code block if text starts with HTML document
+  const isHtmlDoc = typeof text === "string" &&
+    (text.trim().startsWith("<!DOCTYPE html") || text.trim().startsWith("<") || text.trim().startsWith("<html"));
+
+  if (isHtmlDoc) {
+    html += `<pre style="white-space:pre-wrap;word-break:break-all;background:#f8fafc;padding:7px 11px;border-radius:8px;color:#2d3748;"><code>${escapeHtml(text)}</code></pre>`;
+    return html;
+  }
+
+  // If it's a file (base64 or url), offer as download (for HTML files)
+  if (fileType === "text/html" && (typeof text === "string" && (text.startsWith("data:text/html;base64,") || text.startsWith("http")))) {
+    html += `<a href="${text}" download="${fileName}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download HTML file</a>`;
+    return html;
+  }
+
+  // --- Main message safe text rendering (always escape!) ---
+  let safeText = escapeHtml(text.trim());
   if (safeText) html += `<div>${safeText.replace(/\n/g, "<br>")}</div>`;
   return html;
 }
