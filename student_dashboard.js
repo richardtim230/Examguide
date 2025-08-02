@@ -1324,19 +1324,16 @@ window.openChatModal = async function(otherUserId) {
   await loadChatMessages(otherUserId);
 }
 function renderMessageContent(text, fileType = "", fileName = "file.html") {
-  // Detect if it's pasted HTML text
-  const isHtmlText = fileType === "text/html" && typeof text === "string"
-    && (text.trim().startsWith("<!DOCTYPE html") || text.trim().startsWith("<html"));
-  const isHtmlFileBase64 = typeof text === "string" && text.startsWith("data:text/html;base64,");
-  const isHtmlFileUrl = typeof text === "string" && text.startsWith("http");
+  // Improved: Always show code block if text starts with HTML document
+  const isHtmlDoc = typeof text === "string" &&
+    (text.trim().startsWith("<!DOCTYPE html") || text.trim().startsWith("<") || text.trim().startsWith("<html"));
 
-  // If it's a pasted HTML text, display in code box
-  if (isHtmlText && !isHtmlFileBase64 && !isHtmlFileUrl) {
+  if (isHtmlDoc) {
     return `<pre style="white-space:pre-wrap;word-break:break-all;background:#f8fafc;padding:7px 11px;border-radius:8px;color:#2d3748;"><code>${escapeHtml(text)}</code></pre>`;
   }
 
   // If it's a file (base64 or url), offer as download
-  if (fileType === "text/html" && (isHtmlFileBase64 || isHtmlFileUrl)) {
+  if (fileType === "text/html" && (typeof text === "string" && (text.startsWith("data:text/html;base64,") || text.startsWith("http")))) {
     return `<a href="${text}" download="${fileName}" target="_blank" style="color:#3b82f6;text-decoration:underline;">Download HTML file</a>`;
   }
 
@@ -1348,7 +1345,6 @@ function renderMessageContent(text, fileType = "", fileName = "file.html") {
   if (imgMatches) {
     imgMatches.forEach(base64Img => {
       html += `<img src="${base64Img}" style="max-width:120px;max-height:120px;border-radius:7px;margin:5px 0;">`;
-      // Remove image from text for later text rendering
       text = text.replace(base64Img, "");
     });
   }
@@ -1363,11 +1359,11 @@ function renderMessageContent(text, fileType = "", fileName = "file.html") {
       text = text.replace(base64File, "");
     });
   }
-  // Render leftover text
   let safeText = text.trim();
   if (safeText) html += `<div>${safeText.replace(/\n/g, "<br>")}</div>`;
   return html;
 }
+
 function escapeHtml(html) {
   return html
     .replace(/&/g, '&amp;')
