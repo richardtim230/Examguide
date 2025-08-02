@@ -322,6 +322,12 @@
             right: 0.8em;
             top: 0.65em;
         }
+        #verseBox.zoom-in {
+  animation: quoteZoomIn 0.5s;
+}
+#verseBox.zoom-out {
+  animation: quoteZoomOut 0.5s;
+        }
     </style>
 </head>
 <body class="bg-gradient font-sans min-h-screen">
@@ -387,6 +393,13 @@
   </div>
   <div id="greetingTimeIcon" class="absolute top-6 right-8 text-3xl" title="Time of Day"></div>
     </header>
+            <!-- Add just below motivational quotes in dashboard section -->
+<div id="verseBox" class="mt-4 bg-indigo-50 rounded-2xl p-4 shadow flex items-center transition-all duration-500" style="min-height: 60px;">
+  <div>
+    <div id="verseText" class="text-indigo-900 font-semibold text-lg mb-1"></div>
+    <div id="verseRef" class="text-indigo-700 text-sm"></div>
+  </div>
+</div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- Profile Card -->
                 <section class="bg-white rounded-2xl shadow-xl p-6 card">
