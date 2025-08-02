@@ -288,10 +288,10 @@ async function showRandomBibleVerse() {
     verseRefEl.textContent = `— ${verse.ref}`;
     verseBox.classList.remove("zoom-out");
     verseBox.classList.add("zoom-in");
-  }, 500);
+  }, 1000);
 
   clearTimeout(_verseTimer);
-  _verseTimer = setTimeout(showRandomBibleVerse, 20000);
+  _verseTimer = setTimeout(showRandomBibleVerse, 25000);
 }
 
 function startVerseRotation() {
@@ -352,10 +352,10 @@ async function showRandomReligiousMessage() {
         verseRefEl.textContent = `— ${verse.ref}`;
         verseBox.classList.remove("zoom-out");
         verseBox.classList.add("zoom-in");
-    }, 500);
+    }, 1000);
 
     clearTimeout(window._verseTimer);
-    window._verseTimer = setTimeout(showRandomReligiousMessage, 10000);
+    window._verseTimer = setTimeout(showRandomReligiousMessage, 25000);
 }
 
 function startReligiousVerseRotation() {
