@@ -231,7 +231,77 @@ function showRandomQuote(prevIdx = -1) {
 function startQuoteRotation() {
   showRandomQuote();
 }
+// --- Unlimited Random Bible Verse Rotator ---
 
+const BIBLE_BOOKS = [
+  { name: "Genesis", chapters: 50, verses: [31, 25, 24, 26, 32, 22, 24, 22, 29, 32, 32, 20, 18, 24, 21, 16, 27, 33, 38, 18, 34, 24, 20, 67, 34, 35, 46, 22, 35, 43, 55, 32, 20, 31, 29, 43, 36, 30, 23, 23, 57, 38, 34, 34, 28, 34, 31, 22, 33, 26] }, 
+  { name: "Exodus", chapters: 40, verses: [22,25,22,31,23,30,25,32,35,29,10,51,22,31,27,36,16,27,25,26,36,30,33,18,40,37,21,43,46,38,18,35,23,35,35,38,29,31,43,38] },
+  // ... (Add all Bible books, chapters, and verses count. For demo, let's keep it short. See below for a full list resource.)
+  { name: "John", chapters: 21, verses: [51,25,36,54,47,71,53,59,41,42,42,50,38,31,27,33,26,40,42,31,25] }
+  // Add all 66 books for full coverage!
+];
+
+const VERSE_API_URL = "https://bible-api.com/";
+
+function getRandomBibleReference() {
+  // Pick a random book
+  const book = BIBLE_BOOKS[Math.floor(Math.random() * BIBLE_BOOKS.length)];
+  // Random chapter
+  const chapter = Math.floor(Math.random() * book.chapters) + 1;
+  // Random verse (based on chapter's verse count)
+  const verseCount = book.verses[chapter - 1];
+  const verse = Math.floor(Math.random() * verseCount) + 1;
+  return `${book.name} ${chapter}:${verse}`;
+}
+
+async function fetchRandomBibleVerse() {
+  const ref = getRandomBibleReference();
+  try {
+    const resp = await fetch(`${VERSE_API_URL}${encodeURIComponent(ref)}`);
+    const data = await resp.json();
+    if (data && data.verses && data.verses.length > 0) {
+      return {
+        text: data.verses.map(v => v.text).join(" "),
+        ref: data.reference
+      };
+    }
+    return { text: "Unable to fetch verse.", ref: ref };
+  } catch {
+    return { text: "Unable to fetch verse.", ref: ref };
+  }
+}
+
+let _verseTimer = null;
+
+async function showRandomBibleVerse() {
+  const verseBox = document.getElementById("verseBox");
+  const verseTextEl = document.getElementById("verseText");
+  const verseRefEl = document.getElementById("verseRef");
+  if (!verseBox || !verseTextEl || !verseRefEl) return;
+
+  verseBox.classList.remove("zoom-in");
+  verseBox.classList.add("zoom-out");
+
+  setTimeout(async () => {
+    const verse = await fetchRandomBibleVerse();
+    verseTextEl.textContent = `“${verse.text.trim()}”`;
+    verseRefEl.textContent = `— ${verse.ref}`;
+    verseBox.classList.remove("zoom-out");
+    verseBox.classList.add("zoom-in");
+  }, 500);
+
+  clearTimeout(_verseTimer);
+  _verseTimer = setTimeout(showRandomBibleVerse, 10000);
+}
+
+function startVerseRotation() {
+  showRandomBibleVerse();
+}
+
+// Start on dashboard load (add to init logic)
+window.addEventListener("DOMContentLoaded", () => {
+  startVerseRotation();
+});
 // ========== Profile Pic & Greeting Helpers ==========
 function getProfilePicUrl(student) {
   if (student.profilePic) return student.profilePic;
