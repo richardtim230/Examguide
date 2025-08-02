@@ -1352,6 +1352,15 @@ function renderMessageContent(text) {
   if (safeText) html += `<div>${safeText.replace(/\n/g, "<br>")}</div>`;
   return html;
 }
+function escapeHtml(html) {
+  return html
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Function to load chat messages for the selected user
 async function loadChatMessages(userId) {
   const chatMessagesDiv = document.getElementById("chatMessages");
