@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   phone: { type: String, default: "" },
   studentId: { type: String, default: "" },
   level: { type: String, default: "" }, // or "year"
+  religion: { type: String, default: "" }, // or "year"
   password: { type: String, required: true },
   profilePic: { type: String, default: "" },
   // Accept either ObjectId (for populate) or string (for legacy/text)
