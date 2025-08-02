@@ -1020,7 +1020,7 @@
     <form id="studypadiForm" class="space-y-5">
       <div>
         <label class="block font-medium mb-1 text-gray-700">Upload Study Material</label>
-        <input type="file" id="studypadiFile" class="w-full p-2 border rounded bg-indigo-50" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx,.odt,.rtf,.epub,.jpg,.jpeg,.png" multiple required>
+        <input type="file" id="studypadiFile" class="w-full p-2 border rounded bg-indigo-50" accept=".pdf,.txt" multiple required>
         <div id="studypadiFilePreview" class="mt-2 text-sm text-gray-600"></div>
       </div>
       <div>
@@ -1055,8 +1055,195 @@
       </div>
       <button type="submit" id="studypadiSubmit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button w-full">Generate Questions</button>
       <div id="studypadiError" class="text-red-500 text-sm mt-2 hidden"></div>
+      <div id="studypadiProgress" class="w-full h-2 bg-indigo-100 rounded my-2 hidden"><div id="studypadiProgressBar" class="h-2 bg-indigo-500 rounded" style="width:0%"></div></div>
     </form>
+    <div id="studypadiOutput" class="mt-8"></div>
   </div>
+  <!-- PDF.js for PDF text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
+  <script>
+    // Gemini API Key (replace with your secured key)
+    const GEMINI_API_KEY = 'AIzaSyB6j5eYA2tEjA0u9NhR6hKkfx9UB5dpSm8';
+
+    // --- Preview uploaded files ---
+    document.getElementById("studypadiFile").addEventListener("change", function() {
+      const files = Array.from(this.files);
+      document.getElementById("studypadiFilePreview").innerHTML = files.length
+        ? files.map(f => `<span class="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded mr-2 mb-1">${f.name}</span>`).join('')
+        : '';
+    });
+
+    // --- Show/hide MCQ settings based on selection ---
+    document.getElementById("studypadiQType").addEventListener("change", function() {
+      document.getElementById("studypadiMcqOpts").style.display =
+        this.value === "mcq" || this.value === "mixed" ? "block" : "none";
+    });
+    document.getElementById("studypadiMcqOpts").style.display = "block";
+
+    // --- PDF/TXT Extraction Utility ---
+    async function extractTextFromFile(file) {
+      if (file.type === "application/pdf") {
+        const pdf = await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
+        let text = '';
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          text += content.items.map(item => item.str).join(' ') + '\n';
+        }
+        return text;
+      } else if (file.type === "text/plain") {
+        return await file.text();
+      } else {
+        return '';
+      }
+    }
+
+    // --- Build Gemini Prompt ---
+    function buildGeminiPrompt(qType, numMcq, numOpts, instructions, materialText) {
+      return `You are an expert instructional designer and exam question generator.
+Given the following study material, generate exam questions as specified. Your output MUST be a single JSON object, without any code block marker or commentary. Use this structure:
+{
+  "questions": [
+    // For MCQ: {"type":"mcq", "question":"...", "options":["..."], "answer":"..."}
+    // For Theory: {"type":"theory", "question":"...", "answer":"..."}
+    // For Fill: {"type":"fill", "question":"...", "answer":"..."}
+  ],
+  "answerSheet": [
+    // List of correct answers in order, with question number: {"number":1,"answer":"Paris"}
+  ]
+}
+Instructions:
+- Focus only on the content provided. If instructions are provided, prioritize them.
+- For MCQs, generate exactly ${numMcq} questions, each with ${numOpts} options.
+- For Theory, generate 10 questions.
+- For Fill in the Gap, generate 10 questions.
+- For Mixed, generate a mixture of MCQ, Theory, and Fill in the Gap (in random order, total 20).
+- All MCQ options must be plausible; only one correct answer.
+- Output must be valid JSON. No commentary, no code blocks, no explanations.
+- For each question, provide the correct answer.
+Study Material:
+${materialText}
+${instructions ? '\nUser instructions: ' + instructions : ''}
+`;
+    }
+
+    // --- Form Submission Handler ---
+    document.getElementById("studypadiForm").onsubmit = async function(e) {
+      e.preventDefault();
+      const errorDiv = document.getElementById("studypadiError");
+      const progressBar = document.getElementById("studypadiProgress");
+      const progressInner = document.getElementById("studypadiProgressBar");
+      errorDiv.classList.add("hidden");
+      errorDiv.textContent = "";
+      document.getElementById("studypadiOutput").innerHTML = "";
+      progressBar.style.display = "block"; progressInner.style.width = "0%";
+
+      // Get user selections
+      const files = Array.from(document.getElementById("studypadiFile").files);
+      const qType = document.getElementById("studypadiQType").value;
+      const numMcq = document.getElementById("studypadiNumMcq").value;
+      const numOpts = document.getElementById("studypadiNumOpts").value;
+      const instructions = document.getElementById("studypadiInstructions").value.trim();
+
+      if (!files.length) {
+        errorDiv.textContent = "Please upload at least one study file.";
+        errorDiv.classList.remove("hidden"); progressBar.style.display = "none"; return;
+      }
+      document.getElementById("studypadiSubmit").disabled = true; document.getElementById("studypadiSubmit").textContent = "Generating...";
+
+      try {
+        // Extract text from all files
+        let fullText = '';
+        for (let i = 0; i < files.length; i++) {
+          progressInner.style.width = (i/files.length*25)+"%";
+          fullText += "\n" + await extractTextFromFile(files[i]);
+        }
+        progressInner.style.width = "35%";
+
+        // Build prompt for Gemini
+        const prompt = buildGeminiPrompt(qType, numMcq, numOpts, instructions, fullText.slice(0, 12000)); // limit for Gemini
+
+        progressInner.style.width = "50%";
+        // Call Gemini API
+        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="+GEMINI_API_KEY;
+        const data = {
+          contents: [{
+            role: "user",
+            parts: [{ text: prompt }]
+          }]
+        };
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+        progressInner.style.width = "85%";
+        if (!resp.ok) throw new Error("Failed to contact Gemini API");
+        const result = await resp.json();
+        if (!result.candidates || !result.candidates[0]?.content?.parts[0]?.text)
+          throw new Error("No valid response from Gemini API");
+        let text = result.candidates[0].content.parts[0].text.trim();
+        if (text.startsWith("```json")) text = text.replace(/^```json\s*/,"").replace(/```$/,"");
+        let studypadiData;
+        try { studypadiData = JSON.parse(text); } catch {
+          const jsonMatch = text.match(/\{[\s\S]*\}/);
+          if (jsonMatch) studypadiData = JSON.parse(jsonMatch[0]);
+          else throw new Error("Could not parse Gemini response as JSON");
+        }
+        progressInner.style.width = "100%";
+        setTimeout(()=>progressBar.style.display="none", 500);
+
+        // Render output
+        document.getElementById("studypadiOutput").innerHTML = renderStudyPadiOutput(studypadiData);
+
+        // Download & answer sheet logic
+        document.getElementById("studypadiDownloadPdf").onclick = function() {
+          window.print();
+        };
+        document.getElementById("studypadiShowAnswers").onclick = function() {
+          const ans = document.getElementById("studypadiAnswerSheet");
+          ans.style.display = ans.style.display === "none" ? "block" : "none";
+        };
+      } catch (err) {
+        errorDiv.textContent = "Failed to generate questions: " + err.message;
+        errorDiv.classList.remove("hidden"); progressBar.style.display = "none";
+      } finally {
+        document.getElementById("studypadiSubmit").disabled = false;
+        document.getElementById("studypadiSubmit").textContent = "Generate Questions";
+      }
+    };
+
+    // --- Output Renderer ---
+    function renderStudyPadiOutput(data) {
+      if (!data || !data.questions || !data.questions.length) {
+        return `<div class="text-red-600 font-bold text-lg">No questions generated. Please try again with a different file or instructions.</div>`;
+      }
+      let html = `<div class="bg-indigo-50 rounded-xl p-6 mb-6">
+        <div class="flex flex-wrap gap-4 mb-7">
+          <button id="studypadiDownloadPdf" class="px-4 py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700">Download PDF</button>
+          <button id="studypadiShowAnswers" class="px-4 py-2 bg-emerald-500 text-white rounded shadow hover:bg-emerald-700">Show/Hide Answer Sheet</button>
+        </div>
+        <ol class="space-y-5 text-lg">`;
+      data.questions.forEach((q, i) => {
+        if (q.type === "mcq") {
+          html += `<li><b>Q${i+1} (MCQ):</b> ${q.question}<ul class="ml-6 mt-1 mb-3">`
+            + q.options.map(opt=>`<li>${opt}</li>`).join('')
+            + `</ul></li>`;
+        } else if (q.type === "theory") {
+          html += `<li><b>Q${i+1} (Theory):</b> ${q.question}</li>`;
+        } else if (q.type === "fill") {
+          html += `<li><b>Q${i+1} (Fill):</b> ${q.question}</li>`;
+        }
+      });
+      html += `</ol>
+        <div id="studypadiAnswerSheet" class="bg-white rounded-lg shadow p-4 mt-8" style="display:none;">
+          <b>Answer Sheet</b><br>
+          <ol class="mt-2">${(data.answerSheet||[]).map(ans=>`<li><b>Q${ans.number}:</b> ${ans.answer}</li>`).join('')}</ol>
+        </div>
+      </div>`;
+      return html;
+    }
+  </script>
 </section>
     </main>
     <script src="student_dashboard.js"></script>
@@ -1077,85 +1264,8 @@ document.getElementById("aiStudyForm").onsubmit = function(e) {
     const url = '/ai-lecture.html?topic=' + encodeURIComponent(topic);
     window.open(url, '_blank');
 };
-        // --- My StudyPadi Tab Logic ---
+        
 
-// Preview uploaded files
-document.getElementById("studypadiFile").addEventListener("change", function() {
-  const files = Array.from(this.files);
-  document.getElementById("studypadiFilePreview").innerHTML = files.length
-    ? files.map(f => `<span class="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded mr-2 mb-1">${f.name}</span>`).join('')
-    : '';
-});
-
-// Show/hide MCQ settings based on selection
-document.getElementById("studypadiQType").addEventListener("change", function() {
-  document.getElementById("studypadiMcqOpts").style.display =
-    this.value === "mcq" || this.value === "mixed" ? "block" : "none";
-});
-document.getElementById("studypadiMcqOpts").style.display = "block";
-
-// Handle StudyPadi Form Submission
-document.getElementById("studypadiForm").onsubmit = async function(e) {
-  e.preventDefault();
-  const errorDiv = document.getElementById("studypadiError");
-  errorDiv.classList.add("hidden");
-  errorDiv.textContent = "";
-
-  // Gather data
-  const files = Array.from(document.getElementById("studypadiFile").files);
-  const qType = document.getElementById("studypadiQType").value;
-  const numMcq = document.getElementById("studypadiNumMcq").value;
-  const numOpts = document.getElementById("studypadiNumOpts").value;
-  const instructions = document.getElementById("studypadiInstructions").value.trim();
-
-  if (!files.length) {
-    errorDiv.textContent = "Please upload at least one study file.";
-    errorDiv.classList.remove("hidden");
-    return;
-  }
-
-  // Optionally, show a spinner or disable button
-  document.getElementById("studypadiSubmit").disabled = true;
-  document.getElementById("studypadiSubmit").textContent = "Generating...";
-
-  try {
-    // Prepare formData for file upload + params
-    const formData = new FormData();
-    files.forEach(f => formData.append("files", f));
-    formData.append("qType", qType);
-    if (qType === "mcq" || qType === "mixed") {
-      formData.append("numMcq", numMcq);
-      formData.append("numOpts", numOpts);
-    }
-    formData.append("instructions", instructions);
-
-    // --- Replace with your AI backend endpoint ---
-    // Example: const resp = await fetchWithAuth(API_URL + "studypadi/generate", { method: "POST", body: formData });
-    // const data = await resp.json();
-
-    // For demonstration, we'll just simulate a response:
-    const data = {
-      questions: [
-        { type: "mcq", question: "What is the capital of France?", options: ["London", "Paris", "Rome", "Berlin"], answer: "Paris" },
-        { type: "theory", question: "Describe the process of photosynthesis.", answer: "Photosynthesis is the process by which green plants..." },
-        { type: "fill", question: "The chemical symbol for water is ____.", answer: "H2O" }
-      ],
-      settings: { type: qType, numMcq, numOpts, instructions }
-    };
-
-    // Save to sessionStorage for preview
-    sessionStorage.setItem("studypadi_preview", JSON.stringify(data));
-
-    // Open preview in new tab
-    window.open("studypadi_preview.html", "_blank");
-  } catch (err) {
-    errorDiv.textContent = "Failed to generate questions. Please try again.";
-    errorDiv.classList.remove("hidden");
-  } finally {
-    document.getElementById("studypadiSubmit").disabled = false;
-    document.getElementById("studypadiSubmit").textContent = "Generate Questions";
-  }
-};
     </script>
 </body>
 </html>
