@@ -2049,7 +2049,144 @@ window.openBroadcastModal = openBroadcastModal;
 window.closeBroadcastModal = closeBroadcastModal;
 window.openScheduledExamModal = openScheduledExamModal;
 window.closeScheduledExamModal = closeScheduledExamModal;
+// =================== EXAMS CUSTOM PRACTICE SESSION ===================
+const PRACTICE_TOPICS_ENDPOINT = API_URL + "questionsets/topics";
+const PRACTICE_SESSION_ENDPOINT = API_URL + "questionsets/practice";
+const PRACTICE_HISTORY_ENDPOINT = API_URL + "practice/history"; // Adjust if needed
 
+let availablePracticeTopics = [];
+
+// Populate topics multiselect
+async function fetchPracticeTopics() {
+  try {
+    const resp = await fetchWithAuth(PRACTICE_TOPICS_ENDPOINT);
+    let topics = await resp.json();
+    if (!Array.isArray(topics)) topics = [];
+    availablePracticeTopics = topics;
+    const select = document.getElementById("practiceTopics");
+    if (select)
+      select.innerHTML = topics.length
+        ? topics.map(t => `<option value="${t._id}">${t.name}</option>`).join('')
+        : `<option disabled>No topics available</option>`;
+  } catch (err) {
+    if (document.getElementById("practiceTopics"))
+      document.getElementById("practiceTopics").innerHTML = `<option disabled>Failed to load topics</option>`;
+  }
+}
+
+// Show/hide topics on mode change
+const modeElem = document.getElementById("practiceMode");
+if (modeElem) {
+  modeElem.addEventListener("change", function() {
+    document.getElementById("practiceTopicsDiv").style.display = this.value === "topic" ? "block" : "none";
+  });
+}
+
+// On page load, fetch topics if topics select is present
+if (document.getElementById("practiceTopics")) fetchPracticeTopics();
+
+// Handle form submit
+const practiceForm = document.getElementById("practiceSessionForm");
+if (practiceForm) {
+  practiceForm.onsubmit = async function(e) {
+    e.preventDefault();
+    const numQuestions = parseInt(document.getElementById("practiceNumQuestions").value);
+    const mode = document.getElementById("practiceMode").value;
+    const time = parseInt(document.getElementById("practiceTime").value);
+    let topics = [];
+    if (mode === "topic") {
+      topics = Array.from(document.getElementById("practiceTopics").selectedOptions).map(opt => opt.value);
+      if (!topics.length) {
+        showPracticeError("Please select at least one topic.");
+        return;
+      }
+    }
+    // Prepare request
+    const payload = { numQuestions, mode, time, topics };
+    showPracticeError(""); // clear error
+    const submitBtn = practiceForm.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    try {
+      const resp = await fetchWithAuth(PRACTICE_SESSION_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const result = await resp.json();
+      if (!resp.ok) {
+        showPracticeError(result.error || result.message || "Could not start practice session.");
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+      }
+      if (result.sessionId) {
+        window.location.href = `test.html?sessionId=${encodeURIComponent(result.sessionId)}`;
+      } else {
+        window.location.href = `test.html?practice=1`;
+      }
+    } catch (err) {
+      showPracticeError("Failed to start session. Try again.");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  };
+}
+
+function showPracticeError(msg) {
+  const div = document.getElementById("practiceSessionError");
+  if (!div) return;
+  if (!msg) {
+    div.classList.add("hidden"); div.textContent = "";
+  } else {
+    div.textContent = msg; div.classList.remove("hidden");
+  }
+}
+
+// ========== PRACTICE HISTORY TABLE ==========
+async function fetchPracticeHistory() {
+  if (!document.getElementById("practiceSessionsHistory")) return;
+  try {
+    const resp = await fetchWithAuth(PRACTICE_HISTORY_ENDPOINT);
+    const history = await resp.json();
+    renderPracticeHistory(history);
+  } catch {
+    document.getElementById("practiceSessionsHistory").innerHTML =
+      "<tr><td colspan=6>Failed to load practice history.</td></tr>";
+  }
+}
+
+function renderPracticeHistory(history) {
+  const tbody = document.getElementById("practiceSessionsHistory");
+  if (!tbody) return;
+  if (!Array.isArray(history) || !history.length) {
+    tbody.innerHTML = "<tr><td colspan=6>No practice sessions yet.</td></tr>";
+    return;
+  }
+  tbody.innerHTML = history.map(sess => `
+    <tr>
+      <td>${sess.createdAt ? (new Date(sess.createdAt)).toLocaleString() : "-"}</td>
+      <td>${sess.mode === "topic" ? "By Topic" : "Random"}</td>
+      <td>${sess.topics && sess.topics.length ? sess.topics.map(idOrTitle =>
+        availablePracticeTopics.find(t => t._id === idOrTitle)?.name || idOrTitle
+      ).join(', ') : "-"}</td>
+      <td>${sess.numQuestions || (sess.questions ? sess.questions.length : "-")}</td>
+      <td>${typeof sess.score === "number" ? sess.score + "%" : "-"}</td>
+      <td><button class="btn" onclick="openReviewTab('${sess._id || sess.sessionId || ""}')">Review</button></td>
+    </tr>
+  `).join('');
+}
+
+// On Exams tab activation/load, fetch history
+document.addEventListener("DOMContentLoaded", function() {
+  if (document.getElementById("practiceSessionsHistory")) {
+    fetchPracticeHistory();
+  }
+});
+
+// Helper: open review (if you have a review.html?session=...)
+window.openReviewTab = function(sessionId) {
+  if (!sessionId) return;
+  window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
+};
 // ============ INIT ===========
 async function initDashboard() {
   if (!token) return window.location.href = "/mock-icthallb";
