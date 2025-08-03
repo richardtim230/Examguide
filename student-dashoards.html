@@ -1070,15 +1070,10 @@
   <!-- PDF.js for PDF text extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
 <script>
-if (!window.pdfjsLib) {
-  // PDF.js loaded from CDN in HTML, if not, load here
-  const script = document.createElement("script");
-  script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js";
-  document.head.appendChild(script);
-}
+// --- STUDYPADI SCRIPT BLOCK ---
+// This file handles StudyPadi (AI Study Material Q&A) logic, including file processing, progress, Gemini API, and improved UI feedback.
 
-const GEMINI_API_KEY = 'AIzaSyB6j5eYA2tEjA0u9NhR6hKkfx9UB5dpSm8'; // Replace for production
-// Loader utility for PDF.js
+// --- PDF.js Loader Utility ---
 function ensurePdfjsLibLoaded() {
   return new Promise((resolve, reject) => {
     if (window.pdfjsLib) return resolve(window.pdfjsLib);
@@ -1098,7 +1093,7 @@ function ensurePdfjsLibLoaded() {
   });
 }
 
-// Use in extractTextFromFile
+// --- File Extraction Helpers ---
 async function extractTextFromFile(file) {
   if (file.type === "application/pdf") {
     await ensurePdfjsLibLoaded();
@@ -1110,41 +1105,26 @@ async function extractTextFromFile(file) {
       text += content.items.map(item => item.str).join(' ') + '\n';
     }
     return text;
-} else if (file.type === "text/plain") {
-    // TXT
+  } else if (file.type === "text/plain") {
     return await file.text();
   } else if (file.name.match(/\.(docx)$/i)) {
-    // DOCX: Use mammoth.js (must be loaded in HTML)
     if (!window.mammoth) {
       alert("DOCX support requires mammoth.js. Please load mammoth.browser.min.js from CDN.");
       return '';
     }
     const result = await mammoth.extractRawText({arrayBuffer: await file.arrayBuffer()});
     return result.value || '';
-  } else if (file.name.match(/\.(pptx)$/i)) {
-    // PPTX: Use pptx2json (optional, or fallback to filename)
-    alert("PPTX support not available in browser-only mode; please convert to PDF or TXT for best results.");
-    return '';
-  } else if (file.name.match(/\.(odt|rtf|epub)$/i)) {
-    // ODT/RTF/EPUB: Fallback to file.text()
-    return await file.text();
   } else if (file.type.startsWith("image/")) {
-    // Image to base64, then optional OCR (Tesseract.js must be loaded for OCR)
     const base64 = await fileToBase64(file);
-    // Optional: OCR using Tesseract.js
     if (window.Tesseract) {
       const { data: { text } } = await window.Tesseract.recognize(base64, "eng");
       return text || '';
-    } else {
-      // Just include base64 for Gemini Vision (if supported)
-      return base64;
     }
+    return '';
   } else {
     return await file.text();
   }
 }
-
-// Helper: Convert file to base64 string
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1154,23 +1134,17 @@ function fileToBase64(file) {
   });
 }
 
-// --- Build Gemini Prompt STRICTLY NO FILE/IMAGE/REFERENCE PHRASES ---
+// --- Prompt Generation ---
 function buildGeminiPrompt({qType, numMcq, numOpts, instructions, allTexts, imageBase64s}) {
-  // Merge all text and images (images as base64; only if Gemini Vision is supported)
   let studyContent = allTexts.join('\n\n');
-  // Optionally, append base64 images (for Gemini Vision endpoints)
-  // If not supported, ignore imageBase64s
-
-  // Remove any possible reference to files/images from instructions
   let cleanInstructions = (instructions || "")
     .replace(/(see attached|from the file|from the image|according to the text|according to the image|the document provided|the uploaded file|the uploaded image|as seen in the image|as shown in the file|according to|from the file|from the image)/gi, "")
     .trim();
 
-  // Compose prompt:
   return `
-You are an expert instructional designer and exam question generator. 
+You are an expert instructional designer and exam question generator.
 Given ONLY the following study material (see below), generate exam questions as specified.
-Your output MUST be a single JSON object, with NO code block markers, NO commentary, and NO references to files, images, or the material source in your questions or answers. 
+Your output MUST be a single JSON object, with NO code block markers, NO commentary, and NO references to files, images, or the material source in your questions or answers.
 DO NOT use phrases like "According to the text", "From the image provided", "From the document", "As shown above", or any similar reference.
 
 JSON structure:
@@ -1196,7 +1170,7 @@ Instructions:
 - For each question, provide the correct answer.
 - DO NOT use any phrase referencing the material, file, or image in your questions or answers. Write the questions as if they are independent and self-contained.
 
-User Instructions: 
+User Instructions:
 ${cleanInstructions}
 
 Study Material (text and/or OCR from images):
@@ -1206,16 +1180,102 @@ ${imageBase64s && imageBase64s.length ? '\n(If you are Gemini Vision, you may us
 `.trim();
 }
 
-// ---- Main Submit Handler ----
+// --- Improved Spinner Overlay ---
+function showSpinner(msg = "Generating StudyPadi...") {
+  let spinner = document.getElementById("studypadiSpinnerOverlay");
+  if (!spinner) {
+    spinner = document.createElement("div");
+    spinner.id = "studypadiSpinnerOverlay";
+    spinner.style.cssText = `
+      position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;
+      background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;flex-direction:column;
+    `;
+    spinner.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="spinner" style="width:64px;height:64px;border:8px solid #e0e7ef;border-top:8px solid #6366f1;border-radius:50%;animation:spin 1s linear infinite;"></div>
+        <div style="margin-top:20px;font-size:1.2em;color:#3a86ff;font-weight:bold;" id="studypadiSpinnerText">${msg}</div>
+      </div>
+    `;
+    document.body.appendChild(spinner);
+  } else {
+    document.getElementById('studypadiSpinnerText').textContent = msg;
+    spinner.style.display = "flex";
+  }
+}
+function hideSpinner() {
+  const spinner = document.getElementById("studypadiSpinnerOverlay");
+  if (spinner) spinner.style.display = "none";
+}
+
+// --- Progress Bar Helper ---
+function updateStudypadiProgress(percent, msg) {
+  const progressBar = document.getElementById("studypadiProgress");
+  const progressInner = document.getElementById("studypadiProgressBar");
+  if (progressBar && progressInner) {
+    progressBar.style.display = "block";
+    progressInner.style.width = `${percent}%`;
+    if (msg) {
+      let progressMsg = document.getElementById("studypadiProgressMsg");
+      if (!progressMsg) {
+        progressMsg = document.createElement("div");
+        progressMsg.id = "studypadiProgressMsg";
+        progressMsg.style = "margin-top:3px;color:#6366f1;font-size:0.97em;text-align:center;";
+        progressBar.parentNode.insertBefore(progressMsg, progressBar.nextSibling);
+      }
+      progressMsg.textContent = msg;
+    }
+  }
+}
+
+// --- Output Renderer with Summary ---
+function renderStudyPadiOutput(data) {
+  if (!data || !data.questions || !data.questions.length) {
+    return `<div class="text-red-600 font-bold text-lg">No questions generated. Please try again with a different file or instructions.</div>`;
+  }
+  let summary = `
+    <div class="mb-3 text-indigo-900 font-semibold">
+      <span>Question Type: ${window.lastQTypeLabel || ''}</span> &nbsp;
+      <span>${window.lastNumQuestions ? `| Number: ${window.lastNumQuestions}` : ''}</span>
+    </div>
+  `;
+  let html = summary + `<div class="bg-indigo-50 rounded-xl p-6 mb-6">
+    <div class="flex flex-wrap gap-4 mb-7">
+      <button id="studypadiDownloadPdf" class="px-4 py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700">Download PDF</button>
+      <button id="studypadiShowAnswers" class="px-4 py-2 bg-emerald-500 text-white rounded shadow hover:bg-emerald-700">Show/Hide Answer Sheet</button>
+    </div>
+    <ol class="space-y-5 text-lg">`;
+  data.questions.forEach((q, i) => {
+    if (q.type === "mcq") {
+      html += `<li><b>Q${i+1} (MCQ):</b> ${q.question}<ul class="ml-6 mt-1 mb-3">`
+        + q.options.map(opt=>`<li>${opt}</li>`).join('')
+        + `</ul></li>`;
+    } else if (q.type === "theory") {
+      html += `<li><b>Q${i+1} (Theory):</b> ${q.question}</li>`;
+    } else if (q.type === "fill") {
+      html += `<li><b>Q${i+1} (Fill):</b> ${q.question}</li>`;
+    }
+  });
+  html += `</ol>
+    <div id="studypadiAnswerSheet" class="bg-white rounded-lg shadow p-4 mt-8" style="display:none;">
+      <b>Answer Sheet</b><br>
+      <ol class="mt-2">${(data.answerSheet||[]).map(ans=>`<li><b>Q${ans.number}:</b> ${ans.answer}</li>`).join('')}</ol>
+    </div>
+  </div>`;
+  return html;
+}
+
+// --- Main Submit Handler ---
 document.getElementById("studypadiForm").onsubmit = async function(e) {
   e.preventDefault();
   const errorDiv = document.getElementById("studypadiError");
   const progressBar = document.getElementById("studypadiProgress");
   const progressInner = document.getElementById("studypadiProgressBar");
-  errorDiv.classList.add("hidden");
-  errorDiv.textContent = "";
+  if (progressBar) progressBar.style.display = "block";
+  if (progressInner) progressInner.style.width = "0%";
+  if (errorDiv) { errorDiv.classList.add("hidden"); errorDiv.textContent = ""; }
+
   document.getElementById("studypadiOutput").innerHTML = "";
-  progressBar.style.display = "block"; progressInner.style.width = "0%";
+  showSpinner("Extracting Study Material...");
 
   // Get user selections
   const files = Array.from(document.getElementById("studypadiFile").files);
@@ -1225,24 +1285,38 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
   const instructions = document.getElementById("studypadiInstructions").value.trim();
   if (!files.length) {
     errorDiv.textContent = "Please upload at least one study file.";
-    errorDiv.classList.remove("hidden"); progressBar.style.display = "none"; return;
+    errorDiv.classList.remove("hidden"); hideSpinner(); if (progressBar) progressBar.style.display = "none"; return;
   }
   document.getElementById("studypadiSubmit").disabled = true; document.getElementById("studypadiSubmit").textContent = "Generating...";
 
-  // Limit image count and text length for speed/reliability
+  // Store user selection for output summary
+  window.lastQTypeLabel = {
+    "mcq":"MCQ (Multiple Choice)",
+    "theory":"Theory",
+    "fill":"Fill in the Gap",
+    "mixed":"Mixed"
+  }[qType] || qType;
+  window.lastNumQuestions =
+    (qType === "mcq") ? numMcq
+    : (qType === "mixed") ? 20
+    : 10;
+
+  // Limits
   const MAX_IMAGES = 3;
   const MAX_CHARS = 10000;
   let allTexts = [];
   let imageBase64s = [];
   let truncated = false;
   try {
+    // --- File Extraction with Progress ---
     for (let i = 0; i < files.length; i++) {
-      progressInner.style.width = `${Math.floor((i/files.length)*30)}%`;
+      updateStudypadiProgress(Math.floor((i/files.length)*15), `Processing file ${i+1} of ${files.length}...`);
       if (files[i].type.startsWith("image/")) {
         if (imageBase64s.length >= MAX_IMAGES) continue;
         const base64 = await fileToBase64(files[i]);
         imageBase64s.push(base64);
         if (window.Tesseract) {
+          updateStudypadiProgress(Math.floor((i/files.length)*20), "Running OCR on image...");
           const { data: { text } } = await window.Tesseract.recognize(base64, "eng");
           if (text && text.trim()) allTexts.push(text.trim());
         }
@@ -1251,7 +1325,7 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
         if (txt && txt.trim()) allTexts.push(txt.trim());
       }
     }
-    progressInner.style.width = "35%";
+    updateStudypadiProgress(22, "Preparing study content...");
 
     // Combine and truncate text for Gemini API
     let studyContent = allTexts.join('\n\n');
@@ -1262,7 +1336,7 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
     if (!studyContent && !imageBase64s.length) {
       errorDiv.textContent = "No readable text or images could be extracted from your files.";
       errorDiv.classList.remove("hidden");
-      progressBar.style.display = "none";
+      hideSpinner(); if (progressBar) progressBar.style.display = "none";
       document.getElementById("studypadiSubmit").disabled = false;
       document.getElementById("studypadiSubmit").textContent = "Generate Questions";
       return;
@@ -1270,8 +1344,10 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
 
     // Compose prompt
     const prompt = buildGeminiPrompt({qType, numMcq, numOpts, instructions, allTexts: [studyContent], imageBase64s});
+    updateStudypadiProgress(35, "Sending prompt to AI...");
+
     // Call Gemini API
-    progressInner.style.width = "55%";
+    const GEMINI_API_KEY = 'AIzaSyB6j5eYA2tEjA0u9NhR6hKkfx9UB5dpSm8'; // Replace for production
     let url, data;
     if (imageBase64s.length) {
       url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + GEMINI_API_KEY;
@@ -1296,19 +1372,19 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
       };
     }
 
-    // Fast feedback if AI is slow
     let aiTimeout = setTimeout(() => {
-      errorDiv.textContent = "AI is taking longer than usual. Please wait...";
-      errorDiv.classList.remove("hidden");
+      showSpinner("AI is taking longer than usual. Please wait...");
+      updateStudypadiProgress(55, "Waiting for AI to generate questions...");
     }, 12000);
 
-    progressInner.style.width = "85%";
+    updateStudypadiProgress(50, "Waiting for AI to generate questions...");
     const resp = await fetch(url, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(data)
     });
     clearTimeout(aiTimeout);
+    updateStudypadiProgress(70, "Parsing AI response...");
     if (!resp.ok) throw new Error("Failed to contact Gemini API");
     const result = await resp.json();
     if (!result.candidates || !result.candidates[0]?.content?.parts[0]?.text)
@@ -1321,8 +1397,37 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
       if (jsonMatch) studypadiData = JSON.parse(jsonMatch[0]);
       else throw new Error("Could not parse Gemini response as JSON");
     }
-    progressInner.style.width = "100%";
-    setTimeout(()=>progressBar.style.display="none", 500);
+
+    // --- ENFORCE Output to match Selection ---
+    if (studypadiData && Array.isArray(studypadiData.questions)) {
+      if (qType === "mcq") {
+        studypadiData.questions = studypadiData.questions.filter(q => q.type === "mcq").slice(0, parseInt(numMcq));
+      } else if (qType === "theory") {
+        studypadiData.questions = studypadiData.questions.filter(q => q.type === "theory").slice(0, 10);
+      } else if (qType === "fill") {
+        studypadiData.questions = studypadiData.questions.filter(q => q.type === "fill").slice(0, 10);
+      } else if (qType === "mixed") {
+        let mcqs = studypadiData.questions.filter(q => q.type === "mcq");
+        let theory = studypadiData.questions.filter(q => q.type === "theory");
+        let fill = studypadiData.questions.filter(q => q.type === "fill");
+        let mixedQuestions = [];
+        while (mixedQuestions.length < 20 && (mcqs.length || theory.length || fill.length)) {
+          if (mcqs.length && mixedQuestions.length < 20) mixedQuestions.push(mcqs.shift());
+          if (theory.length && mixedQuestions.length < 20) mixedQuestions.push(theory.shift());
+          if (fill.length && mixedQuestions.length < 20) mixedQuestions.push(fill.shift());
+        }
+        studypadiData.questions = mixedQuestions.slice(0, 20);
+      }
+      // Update answerSheet to only include answers for displayed questions
+      if (Array.isArray(studypadiData.answerSheet)) {
+        const displayedIndexes = studypadiData.questions.map((_, idx) => idx + 1);
+        studypadiData.answerSheet = studypadiData.answerSheet.filter(ans => displayedIndexes.includes(ans.number));
+      }
+    }
+
+    updateStudypadiProgress(100, "Done!");
+    // Hide spinner and progress after a short delay
+    setTimeout(()=>{ hideSpinner(); if (progressBar) progressBar.style.display="none"; }, 500);
 
     // Render output & truncation note
     let truncNote = '';
@@ -1330,51 +1435,54 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
     document.getElementById("studypadiOutput").innerHTML =
       truncNote + renderStudyPadiOutput(studypadiData);
 
+    // Download PDF (print)
     document.getElementById("studypadiDownloadPdf").onclick = function() {
       window.print();
     };
+    // Show/Hide Answers
     document.getElementById("studypadiShowAnswers").onclick = function() {
       const ans = document.getElementById("studypadiAnswerSheet");
       ans.style.display = ans.style.display === "none" ? "block" : "none";
     };
   } catch (err) {
+    hideSpinner();
     errorDiv.textContent = "Failed to generate questions: " + err.message;
-    errorDiv.classList.remove("hidden"); progressBar.style.display = "none";
+    errorDiv.classList.remove("hidden"); if (progressBar) progressBar.style.display = "none";
   } finally {
     document.getElementById("studypadiSubmit").disabled = false;
     document.getElementById("studypadiSubmit").textContent = "Generate Questions";
+    updateStudypadiProgress(0, "");
+    setTimeout(()=>{
+      if (document.getElementById("studypadiProgress")) document.getElementById("studypadiProgress").style.display="none";
+      const msg = document.getElementById("studypadiProgressMsg"); if (msg) msg.textContent = "";
+    }, 1200);
   }
 };
 
-// --- Output Renderer ---
-function renderStudyPadiOutput(data) {
-  if (!data || !data.questions || !data.questions.length) {
-    return `<div class="text-red-600 font-bold text-lg">No questions generated. Please try again with a different file or instructions.</div>`;
-  }
-  let html = `<div class="bg-indigo-50 rounded-xl p-6 mb-6">
-    <div class="flex flex-wrap gap-4 mb-7">
-      <button id="studypadiDownloadPdf" class="px-4 py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700">Download PDF</button>
-      <button id="studypadiShowAnswers" class="px-4 py-2 bg-emerald-500 text-white rounded shadow hover:bg-emerald-700">Show/Hide Answer Sheet</button>
-    </div>
-    <ol class="space-y-5 text-lg">`;
-  data.questions.forEach((q, i) => {
-    if (q.type === "mcq") {
-      html += `<li><b>Q${i+1} (MCQ):</b> ${q.question}<ul class="ml-6 mt-1 mb-3">`
-        + q.options.map(opt=>`<li>${opt}</li>`).join('')
-        + `</ul></li>`;
-    } else if (q.type === "theory") {
-      html += `<li><b>Q${i+1} (Theory):</b> ${q.question}</li>`;
-    } else if (q.type === "fill") {
-      html += `<li><b>Q${i+1} (Fill):</b> ${q.question}</li>`;
-    }
-  });
-  html += `</ol>
-    <div id="studypadiAnswerSheet" class="bg-white rounded-lg shadow p-4 mt-8" style="display:none;">
-      <b>Answer Sheet</b><br>
-      <ol class="mt-2">${(data.answerSheet||[]).map(ans=>`<li><b>Q${ans.number}:</b> ${ans.answer}</li>`).join('')}</ol>
-    </div>
-  </div>`;
-  return html;
+// --- MCQ Options Visibility (show/hide based on type) ---
+document.getElementById("studypadiQType").addEventListener("change", function() {
+  const isMcq = this.value === "mcq";
+  document.getElementById("studypadiMcqOpts").style.display = isMcq ? "block" : "none";
+});
+document.getElementById("studypadiQType").dispatchEvent(new Event("change"));
+
+// --- File Preview ---
+document.getElementById("studypadiFile").addEventListener("change", function() {
+  const files = Array.from(this.files);
+  const preview = document.getElementById("studypadiFilePreview");
+  if (!files.length) { preview.innerHTML=""; return; }
+  preview.innerHTML = files.map(f=>`${f.name} (${(f.size/1024).toFixed(1)} KB)`).join('<br>');
+});
+
+// --- CSS for Spinner ---
+if (!document.getElementById('studypadiSpinnerCSS')) {
+  const style = document.createElement('style');
+  style.id = 'studypadiSpinnerCSS';
+  style.innerHTML = `
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.spinner { display:inline-block; }
+  `;
+  document.head.appendChild(style);
 }
 </script>
 
