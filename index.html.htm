@@ -1,308 +1,436 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" href="logo.png" type="image/x-icon">
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="SCHOOL PAST QUESTIONS">
-  <meta property="og:description" content="Conveniently scale through all you need for a reasonable academic success. A platform designed for easy and professional exam management.">
-  <meta property="og:image" content="https://img.freepik.com/premium-photo/young-student-using-laptop-taking-notes-studying-home-distance-learning_207258-265.jpg?w=360">
-  <meta property="og:url" content="https://examguide.vercel.app/index.html.htm">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter Card Meta Tags (optional for Twitter) -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="De-Brainstormers Exam Page">
-  <meta name="twitter:description" content="Log in to De-Brainstormers Exam Page to take your exams seamlessly. A platform designed for easy and professional exam management.">
-  <meta name="twitter:image" content="logo.png">
-    
-  <title>Students Support System</title>
-  <link rel="stylesheet" href="./stylo.css">
-  <style>
-    /* --- New Exam Session Config Section Styles --- */
-    #session-config-section {
-      display: none;
-      background: #f5faff;
-      border: 2px solid #007bff;
-      border-radius: 12px;
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 32px 24px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
-      text-align: center;
-      animation: fadeIn 0.6s;
-    }
-    #session-config-section.visible {
-      display: block;
-    }
-    #session-config-section label {
-      display: block;
-      margin: 18px 0 10px;
-      font-weight: bold;
-      color: #1a237e;
-    }
-    #session-config-section input,
-    #session-config-section select {
-      width: 80%;
-      padding: 10px;
-      border-radius: 7px;
-      border: 1px solid #bdbdbd;
-      margin-bottom: 12px;
-      font-size: 1rem;
-      background: #fff;
-    }
-    #session-config-section button {
-      margin: 10px 8px 0 8px;
-      padding: 10px 20px;
-      background: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    #session-config-section button:hover {
-      background: #0056b3;
-    }
-    /* Responsive */
-    @media (max-width: 600px) {
-      #session-config-section {
-        max-width: 98%;
-        padding: 18px 4vw;
-      }
-    }
-    /* --- End of New Styles --- */
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAU ExamGuard - Exam Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for enhanced professionalism */
+        .tooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+            background: #1f2937;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            max-width: 200px;
+        }
+        [data-tooltip]:hover .tooltip {
+            display: block;
+        }
+        .stepper-item.active::before {
+            content: '✔';
+            background: #10b981;
+        }
+        .stepper-item::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #d1d5db;
+            margin-right: 8px;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+        }
+    </style>
 </head>
-<body>
-
-  <header>
-    <h1>OAU EXAMINATION UNIT</h1>
-  </header>
-
-  <main>
-    <div class="content">
-      <img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
-    </div>  
-
-    <!-- Overlay for login and registration -->
-    <div id="overlay">
-      <!-- Login Section -->
-      <div id="login-box">
-        <h2>Login</h2>
-        <div class="content">
-          <img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
-        </div>
-        <input type="text" id="user-id" placeholder="Enter your User ID">
-        <button id="login-btn">Login</button>
-        <p style="margin-top: 10px;">Don't have an User ID? <button id="register-btn" class="back-btn">Register</button></p>
-      </div>
-
-      <div id="receipt-container">
-        <canvas id="receiptCanvas"></canvas>
-      </div>
-      
-      <!-- Registration Section -->
-      <div id="register-box" class="hidden">
-        <h2>Register</h2>
-        <input type="text" id="full-name" placeholder="Enter your Full Name">
-        <input type="text" id="department" placeholder="Enter your Department">
-        <input type="text" id="level" placeholder="Enter your Level">
-        <input type="text" id="courses" placeholder="Enter your Courses">
-        <input type="file" id="photo-upload" accept="image/*">
-        <p id="RF"><p></p>Registration Fee :  <strong>N2000</strong></p>
-        <label>
-          <input type="checkbox" id="agree-checkbox">
-          I agree to proceed with registration.
-        </label>
-        <button id="submit-register">Submit</button>
-        <button id="back-to-login" class="back-btn">Back to Login</button>
-      </div>
-      
-      <!-- Payment Page -->
-      <div id="paymentPage" class="hidden">
-        <h1>STUDENTS SUPPORT SYSTEM</h1>
-        <h2><em>Obafemi Awolowo University</em></h2>
-        <h3>Payment of User ID activation fee for the 2023/2024 academic session.</h3>
-        <p><strong>Full Name:</strong> <span id="paymentFullName"></span></p>
-        <p><strong>Department:</strong> <span id="paymentDepartment"></span></p>
-        <p><strong>Level:</strong> <span id="paymentLevel"></span></p>
-        <p><strong>User ID:</strong> <span id="paymentUserID"></span></p>
-        <p><strong>Amount to Pay:</strong> N2000.00</p>
-        <div class="payment-details">
-          <p><strong>Bank Name:</strong> Opay Microfinance Bank</p>
-          <p><strong>Account Number:</strong> 6112744499</p>
-          <p><strong>Account Name:</strong> OCHUKO TIMOTHY RICHARD</p>
-        </div>
-        <input type="file" id="receipt-upload" accept="image/*,application/pdf">
-        <button id="submit-receipt-btn">Submit Receipt</button>
-        <button id="generate-invoice-btn">Generate Invoice</button>
-        <button id="back-to-login-payment">Back to Login</button>
-      </div>
-
-      <!-- Tour Modal (unchanged) -->
-      <div id="tour-overlay">
-        <div id="tour-modal">
-          <div class="tour-content">
-            <div class="tour-image">
-              <img id="tour-image" src="deo1.jpg" alt="Tour Image">
+<body class="bg-gray-50 dark:bg-gray-900 font-sans transition-colors duration-300">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 shadow-lg p-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://via.placeholder.com/40" alt="OAU ExamGuard Logo" class="w-10 h-10">
+                <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600">OAU ExamGuard</h1>
             </div>
-            <div class="tour-text">
-              <h2 id="tour-title">Welcome to the Tour</h2>
-              <p id="tour-description">This is a quick overview of our application.</p>
+            <div class="flex items-center space-x-4">
+                <button id="dark-mode-toggle" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon text-gray-600 dark:text-yellow-400"></i>
+                </button>
+                <span class="text-gray-700 dark:text-gray-300 hidden md:block">Welcome, Student</span>
+                <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition" aria-label="Logout">Logout</button>
             </div>
-          </div>
-          <div class="tour-controls">
-            <button id="prev-btn">Previous</button>
-            <button id="next-btn">Next</button>
-            <button id="close-btn">Close</button>
-          </div>
-        </div>
-      </div>
+        </header>
 
-      <!-- Welcome Popup -->
-      <div id="welcome-popup" class="hidden">
-        <div class="profile-container">
-          <img id="profile-photo" src="" alt="Profile Photo" class="profile-pic">
-        </div>
-        <h2 id="welcome-message">Welcome!</h2>
-        <p id="student-details"></p>
-        <button id="continue-btn">Continue</button>
-      </div>
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-8">
+            <!-- Exam Customization Page -->
+            <section id="customization-page" class="max-w-3xl mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100 text-center">Configure Your Exam</h2>
+                <div class="flex justify-between mb-6">
+                    <div class="stepper-item active"><span class="text-sm font-medium text-gray-700 dark:text-gray-300">1. Select Options</span></div>
+                    <div class="stepper-item"><span class="text-sm font-medium text-gray-700 dark:text-gray-300">2. Start Exam</span></div>
+                </div>
+                <form id="exam-form" class="space-y-6">
+                    <div class="relative">
+                        <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Subject <span class="text-red-500">*</span></label>
+                        <select id="subject" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-600 focus:ring-opacity-50" required>
+                            <option value="">Select Subject</option>
+                            <option value="math">Mathematics</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                        </select>
+                        <div class="tooltip">Choose the subject for your exam</div>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="subject-error">Subject is required</p>
+                    </div>
+                    <div class="relative">
+                        <label for="topics" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Topics <span class="text-red-500">*</span></label>
+                        <select id="topics" multiple class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-600 focus:ring-opacity-50" required>
+                            <option value="algebra">Algebra</option>
+                            <option value="geometry">Geometry</option>
+                            <option value="mechanics">Mechanics</option>
+                            <option value="organic-chemistry">Organic Chemistry</option>
+                            <option value="genetics">Genetics</option>
+                        </select>
+                        <div class="tooltip">Select one or more topics (Ctrl/Cmd for multiple)</div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Hold Ctrl/Cmd to select multiple topics</p>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="topics-error">At least one topic is required</p>
+                    </div>
+                    <div class="relative">
+                        <label for="num-questions" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Number of Questions <span class="text-red-500">*</span></label>
+                        <select id="num-questions" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-600 focus:ring-opacity-50" required>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                        <div class="tooltip">Choose how many questions to attempt</div>
+                    </div>
+                    <div class="relative">
+                        <label for="year" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Question Year <span class="text-red-500">*</span></label>
+                        <select id="year" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-600 focus:ring-opacity-50" required>
+                            <option value="">Select Year</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                        </select>
+                        <div class="tooltip">Select the year of the question set</div>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="year-error">Year is required</p>
+                    </div>
+                    <div class="relative">
+                        <label for="time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Total Time (minutes) <span class="text-red-500">*</span></label>
+                        <select id="time" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-600 focus:ring-opacity-50" required>
+                            <option value="30">30</option>
+                            <option value="60">60</option>
+                            <option value="90">90</option>
+                            <option value="120">120</option>
+                        </select>
+                        <div class="tooltip">Set the duration for the exam</div>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white px-4 py-3 rounded-lg hover:from-blue-700 hover:to-green-700 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-600">Start Exam</button>
+                </form>
+            </section>
+
+            <!-- Exam Page (Hidden Initially) -->
+            <section id="exam-page" class="hidden">
+                <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Exam: <span id="exam-subject" class="capitalize">Mathematics</span></h2>
+                        <div class="flex items-center space-x-4">
+                            <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                Time Left: <span id="timer" class="bg-blue-100 dark:bg-blue-900 px-3 py-1 rounded-lg">60:00</span>
+                            </div>
+                            <button id="flag-question" class="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600 transition" aria-label="Flag question">Flag</button>
+                            <button id="toggle-review" class="bg-purple-500 text-white px-3 py-1 rounded-lg hover:bg-purple-600 transition md:hidden" aria-label="Toggle review panel">Review</button>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="relative pt-1">
+                            <div class="overflow-hidden h-3 mb-4 text-xs flex rounded bg-gray-200 dark:bg-gray-700">
+                                <div id="progress-bar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-blue-600 to-green-600" style="width: 10%"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                            <span>Progress: <span id="progress-text">1 of 10</span></span>
+                            <span>Answered: <span id="answered-count">0</span> | Flagged: <span id="flagged-count">0</span></span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Question Area -->
+                        <div class="flex-1">
+                            <div id="question-container" class="space-y-6">
+                                <div class="question bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-lg" role="region" aria-label="Current question">
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Question <span id="current-question">1</span> of <span id="total-questions">10</span></h3>
+                                    <p class="mt-2 text-gray-700 dark:text-gray-300 text-base">What is the value of x in the equation 2x + 3 = 7?</p>
+                                    <div class="mt-4 space-y-4">
+                                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                                            <input type="radio" name="q1" value="a" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" tabindex="0">
+                                            <span class="text-base">A) 1</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                                            <input type="radio" name="q1" value="b" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" tabindex="0">
+                                            <span class="text-base">B) 2</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                                            <input type="radio" name="q1" value="c" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" tabindex="0">
+                                            <span class="text-base">C) 3</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                                            <input type="radio" name="q1" value="d" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" tabindex="0">
+                                            <span class="text-base">D) 4</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex justify-between">
+                                <button id="prev-question" class="bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-gray-400" disabled aria-label="Previous question">Previous</button>
+                                <button id="next-question" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-600" aria-label="Next question">Next</button>
+                            </div>
+                        </div>
+                        <!-- Review Panel -->
+                        <div id="review-panel" class="md:w-80 bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-lg hidden md:block">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Review & Navigation</h3>
+                            <div id="question-nav" class="grid grid-cols-5 gap-2 mb-4">
+                                <button class="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-600" data-question="1">1</button>
+                                <!-- Add more buttons dynamically -->
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">Summary</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Answered: <span id="summary-answered">0</span></p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Flagged: <span id="summary-flagged">0</span></p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Remaining: <span id="summary-remaining">10</span></p>
+                                </div>
+                                <button id="submit-exam" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-green-600" aria-label="Submit exam">Submit Exam</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Submission Confirmation Modal -->
+            <div id="submit-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md">
+                    <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Confirm Submission</h3>
+                    <p class="text-gray-700 dark:text-gray-300">Are you sure you want to submit your exam? You have <span id="answered-count">0</span> of <span id="total-questions-modal">10</span> questions answered and <span id="flagged-count-modal">0</span> flagged.</p>
+                    <div class="mt-6 flex justify-end space-x-2">
+                        <button id="modal-cancel" class="bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition focus:outline-none focus:ring-2 focus:ring-gray-400">Cancel</button>
+                        <button id="modal-confirm" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-green-600">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-    
-    <!-- Floating button -->
-    <button id="history-btn" class="floating-btn">📖</button>
-    <div id="exam-history-section" class="hidden">
-      <h2>Exam History</h2>
-      <div id="exam-history-content"></div>
-    </div>
 
-    <!-- Circular Icon to Open Rewards Popup -->
-    <div id="rewardIcon" onclick="toggleRewardPopup()">🏆</div>
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const icon = darkModeToggle.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
 
-    <!-- Rewards Popup Modal -->
-    <div id="rewardPopup" class="reward-popup">
-      <div class="reward-content">
-        <h2>Your Rewards</h2>
-        <p>🎯 Exam Bonus: <span id="examBonus">₦0</span></p>
-        <p>🕒 Time Bonus: <span id="timeBonus">₦0</span></p>
-        <p>💰 Total Earned: <span id="totalReward">₦0</span></p>
-        <!-- Live Timer Display -->
-        <p>⏳ Time Spent: <span id="timeSpent">00:00:00</span></p>
-        <div class="progress-bar-container">
-          <p>₦3,000 Withdrawal Progress</p>
-          <div class="progress-bar"><div id="progressFill"></div></div>
-        </div>
-        <!-- Withdrawal Section -->
-        <div id="withdrawalSection" class="withdrawal-container">
-          <h3>Withdraw Your Earnings</h3>
-          <p>💰 Available Balance: <span id="withdrawableAmount">₦0</span></p>
-          <form id="withdrawForm">
-            <label for="bankName">Bank Name:</label>
-            <input type="text" id="bankName" required>
-            <label for="accountNumber">Account Number:</label>
-            <input type="number" id="accountNumber" required>
-            <label for="withdrawAmount">Amount to Withdraw:</label>
-            <input type="number" id="withdrawAmount" required>
-            <button type="submit">Request Withdrawal</button>
-          </form>
-        </div>
-        <button onclick="toggleRewardPopup()">Close</button>
-      </div>
-    </div>
+        // Exam customization form
+        const examForm = document.getElementById('exam-form');
+        const customizationPage = document.getElementById('customization-page');
+        const examPage = document.getElementById('exam-page');
+        const submitModal = document.getElementById('submit-modal');
+        let examSettings = {};
+        let answers = {};
+        let flaggedQuestions = new Set();
 
-    <!-- First Notification -->
-    <div id="notification1" class="notification hidden">
-      <div class="notification-content">
-        <img src="young-woman-with-curly-hair-using-tablet-cafe_273609-16296.webp" alt="Exam Alert" class="notification-image">
-        <h2>EXAM PREPARATIONS</h2>
-        <p>We wish you success on your exams. Do well to practice the questions on this app regularly. We are not assuring you that you'll see word for word questions but you'll see something familiar.[...]</p>
-        <button class="btn secondary" onclick="dismissNotification('notification1')">Dismiss</button>
-      </div>
-    </div>
+        examForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Form validation
+            const subject = document.getElementById('subject').value;
+            const topics = Array.from(document.getElementById('topics').selectedOptions).map(option => option.value);
+            const year = document.getElementById('year').value;
+            document.getElementById('subject-error').classList.toggle('hidden', !!subject);
+            document.getElementById('topics-error').classList.toggle('hidden', topics.length > 0);
+            document.getElementById('year-error').classList.toggle('hidden', !!year);
+            if (!subject || topics.length === 0 || !year) return;
 
-    <!-- Notification Popup -->
-    <div id="rewardPopupMessage" class="popup">You earned ₦0!</div>
+            examSettings = {
+                subject,
+                topics,
+                numQuestions: parseInt(document.getElementById('num-questions').value),
+                year,
+                time: parseInt(document.getElementById('time').value) * 60 // Convert to seconds
+            };
 
-    <!-- Course Selection Section -->
-    <section id="course-selection-section">
-      <div><button id="switch-mode-btn" class="icon-btn">🛠️</button></div>
-      <h3>Select a Department and enter the Access Code to Practice Related Examination Questions</h3>
-      <div id="courses-container">
-        <button class="course" data-course="Mathematics">Mathematics</button>
-        <button class="course" data-course="Chemistry">Chemistry</button>
-        <button class="course" data-course="Biology">Biology</button>
-        <button class="course" data-course="Botany">Botany</button>
-        <button class="course" data-course="Microbiology">Microbiology</button>
-        <button class="course" data-course="Physics">Physics</button>
-        <button class="course" data-course="Zoology">Zoology</button>
-        <button class="course" data-course="Geology">Geology</button>
-        <button class="course" data-course="Sociology">Sociology</button>
-        <button class="course" data-course="English">English</button>
-        <button class="course" data-course="Computer">Computer Science</button>
-        <button class="course" data-course="Mock-Exam" onclick="window.location.href='new-index.html';">General Mock Assessments</button>
-      </div>
-    </section>
+            // Initialize exam
+            document.getElementById('exam-subject').textContent = examSettings.subject;
+            document.getElementById('total-questions').textContent = examSettings.numQuestions;
+            document.getElementById('total-questions-modal').textContent = examSettings.numQuestions;
+            document.getElementById('summary-remaining').textContent = examSettings.numQuestions;
+            startTimer(examSettings.time);
+            loadQuestion(1);
+            updateQuestionNav(examSettings.numQuestions);
+            updateProgress();
 
-    <!-- Access Code Section -->
-    <section id="access-code-section" class="hidden">
-      <h2 id="selected-course-title">Enter Access Code for course under</h2>
-      <input type="text" id="access-code" placeholder="Enter your access code">
-      <button id="submit-code">Submit</button>
-      <button id="cancel-button">Cancel</button>
-    </section>
+            customizationPage.classList.add('hidden');
+            examPage.classList.remove('hidden');
+            document.querySelector('.stepper-item:not(.active)').classList.add('active');
+        });
 
-    <!-- New Exam Session Config Section (SHOW AFTER ACCESS CODE IS VALID) -->
-    <section id="session-config-section" class="hidden">
-      <h3>Configure Your Exam Session</h3>
-      <label for="num-questions">Number of Questions:</label>
-      <input type="number" id="num-questions" min="1" value="10">
-      <label for="question-year">Year:</label>
-      <select id="question-year"></select>
-      <label for="session-time">Time Limit (minutes):</label>
-      <input type="number" id="session-time" min="1" max="180" value="30">
-      <div style="margin-top: 16px;">
-        <button id="start-session-btn">Start Session</button>
-        <button id="cancel-session-btn">Cancel</button>
-      </div>
-    </section>
+        // Timer
+        let timeLeft = 0;
+        let timerInterval;
+        function startTimer(seconds) {
+            timeLeft = seconds;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Time is up! Your exam has been submitted.');
+                    submitExam();
+                }
+            }, 1000);
+        }
 
-    <!-- Exam Section (unchanged) -->
-    <section id="exam-section" class="hidden">
-      <h2 id="subject-title">Subject Title</h2>
-      <div id="questions-container">
-        <p id="question-text">Question will appear here...</p>
-        <img id="question-image" src="" alt="Question Image" class="hidden">
-        <div id="options-container"></div>
-      </div>
-      <div id="navigation">
-        <button id="prev-question" disabled>Previous</button>
-        <button id="next-question">Next</button>
-        <button id="end-exam" onclick="endExam()">Submit Examination</button>
-      </div>
-      <div id="confirmationModal" class="modal">
-        <div class="modal-content">
-          <p>Are you sure you want to submit the exam? Once submitted, you cannot make any changes.</p>
-          <button id="confirmYes" class="btn">Yes</button>
-          <button id="confirmNo" class="btn">No</button>
-        </div>
-      </div>
-      <div id="progress-container"></div>
-    </section>
-    
-    <!-- Animated Notification -->
-    <div id="reward-notification" class="hidden"></div>
+        // Question navigation
+        let currentQuestion = 1;
+        const questionContainer = document.getElementById('question-container');
+        const prevQuestionBtn = document.getElementById('prev-question');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const flagQuestionBtn = document.getElementById('flag-question');
+        const questionNav = document.getElementById('question-nav');
+        const reviewPanel = document.getElementById('review-panel');
+        const toggleReviewBtn = document.getElementById('toggle-review');
 
-    <section id="summary-section" class="hidden">
-      <h2>Summary</h2>
-      <div id="summary-content"></div>
-      <button id="restart-exam">Restart Exam</button>
-    </section>
+        function loadQuestion(index) {
+            currentQuestion = index;
+            document.getElementById('current-question').textContent = index;
+            // Placeholder: Load question data
+            questionContainer.innerHTML = `
+                <div class="question bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-lg ${flaggedQuestions.has(index) ? 'border-l-4 border-yellow-500' : ''}" role="region" aria-label="Question ${index}">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Question ${index} of ${examSettings.numQuestions}</h3>
+                    <p class="mt-2 text-gray-700 dark:text-gray-300 text-base">What is the value of x in the equation ${index}x + 3 = ${index + 4}?</p>
+                    <div class="mt-4 space-y-4">
+                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                            <input type="radio" name="q${index}" value="a" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" ${answers[index] === 'a' ? 'checked' : ''} tabindex="0">
+                            <span class="text-base">A) 1</span>
+                        </label>
+                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                            <input type="radio" name="q${index}" value="b" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" ${answers[index] === 'b' ? 'checked' : ''} tabindex="0">
+                            <span class="text-base">B) 2</span>
+                        </label>
+                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                            <input type="radio" name="q${index}" value="c" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" ${answers[index] === 'c' ? 'checked' : ''} tabindex="0">
+                            <span class="text-base">C) 3</span>
+                        </label>
+                        <label class="flex items-center space-x-3 text-gray-700 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition cursor-pointer">
+                            <input type="radio" name="q${index}" value="d" class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-600" ${answers[index] === 'd' ? 'checked' : ''} tabindex="0">
+                            <span class="text-base">D) 4</span>
+                        </label>
+                    </div>
+                </div>
+            `;
+            // Save answers
+            questionContainer.querySelectorAll(`input[name="q${index}"]`).forEach(input => {
+                input.addEventListener('change', () => {
+                    answers[index] = input.value;
+                    updateProgress();
+                    updateQuestionNav(examSettings.numQuestions);
+                });
+            });
+            updateQuestionNavButtons();
+        }
 
-  </main>
+        function updateQuestionNav(numQuestions) {
+            questionNav.innerHTML = '';
+            for (let i = 1; i <= numQuestions; i++) {
+                const btn = document.createElement('button');
+                btn.className = `px-2 py-1 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-600 ${i === currentQuestion ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500'} ${flaggedQuestions.has(i) ? 'border-2 border-yellow-500' : ''} ${answers[i] ? 'bg-green-600 hover:bg-green-700 text-white' : ''}`;
+                btn.textContent = i;
+                btn.dataset.question = i;
+                btn.setAttribute('aria-label', `Go to question ${i}`);
+                btn.addEventListener('click', () => loadQuestion(parseInt(btn.dataset.question)));
+                questionNav.appendChild(btn);
+            }
+        }
 
-  <script src="./scriptos.js"></script>
+        function updateQuestionNavButtons() {
+            prevQuestionBtn.disabled = currentQuestion === 1;
+            nextQuestionBtn.disabled = currentQuestion === examSettings.numQuestions;
+            flagQuestionBtn.textContent = flaggedQuestions.has(currentQuestion) ? 'Unflag' : 'Flag';
+            document.getElementById('summary-answered').textContent = Object.keys(answers).length;
+            document.getElementById('summary-flagged').textContent = flaggedQuestions.size;
+            document.getElementById('summary-remaining').textContent = examSettings.numQuestions - Object.keys(answers).length;
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(answers).length;
+            const total = examSettings.numQuestions;
+            const percentage = (answered / total) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-text').textContent = `${answered} of ${total}`;
+            document.getElementById('answered-count').textContent = answered;
+            document.getElementById('flagged-count').textContent = flaggedQuestions.size;
+            document.getElementById('flagged-count-modal').textContent = flaggedQuestions.size;
+        }
+
+        prevQuestionBtn.addEventListener('click', () => {
+            if (currentQuestion > 1) loadQuestion(currentQuestion - 1);
+        });
+
+        nextQuestionBtn.addEventListener('click', () => {
+            if (currentQuestion < examSettings.numQuestions) loadQuestion(currentQuestion + 1);
+        });
+
+        flagQuestionBtn.addEventListener('click', () => {
+            if (flaggedQuestions.has(currentQuestion)) {
+                flaggedQuestions.delete(currentQuestion);
+            } else {
+                flaggedQuestions.add(currentQuestion);
+            }
+            updateQuestionNav(examSettings.numQuestions);
+            updateQuestionNavButtons();
+        });
+
+        toggleReviewBtn.addEventListener('click', () => {
+            reviewPanel.classList.toggle('hidden');
+        });
+
+        // Submit exam
+        document.getElementById('submit-exam').addEventListener('click', () => {
+            submitModal.classList.remove('hidden');
+        });
+
+        document.getElementById('modal-cancel').addEventListener('click', () => {
+            submitModal.classList.add('hidden');
+        });
+
+        document.getElementById('modal-confirm').addEventListener('click', () => {
+            submitExam();
+        });
+
+        function submitExam() {
+            clearInterval(timerInterval);
+            alert('Exam submitted! Answers: ' + JSON.stringify(answers));
+            submitModal.classList.add('hidden');
+            examPage.classList.add('hidden');
+            customizationPage.classList.remove('hidden');
+            answers = {};
+            flaggedQuestions.clear();
+            document.querySelector('.stepper-item:last-child').classList.remove('active');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (examPage.classList.contains('hidden')) return;
+            if (e.key === 'ArrowLeft' && !prevQuestionBtn.disabled) loadQuestion(currentQuestion - 1);
+            if (e.key === 'ArrowRight' && !nextQuestionBtn.disabled) loadQuestion(currentQuestion + 1);
+            if (e.key === 'f') flagQuestionBtn.click();
+            if (e.key === 'Enter' && !submitModal.classList.contains('hidden')) document.getElementById('modal-confirm').click();
+            if (e.key === 'Escape' && !submitModal.classList.contains('hidden')) document.getElementById('modal-cancel').click();
+            if (e.key === 'r' && window.innerWidth < 768) toggleReviewBtn.click();
+        });
+    </script>
 </body>
 </html>
