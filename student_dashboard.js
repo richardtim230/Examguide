@@ -2182,11 +2182,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-// Helper: open review (if you have a review.html?session=...)
-window.openReviewTab = function(sessionId) {
-  if (!sessionId) return;
-  window.open('review.html?session=' + encodeURIComponent(sessionId), '_blank');
-};
+
 // ============ INIT ===========
 async function initDashboard() {
   if (!token) return window.location.href = "/mock-icthallb";
