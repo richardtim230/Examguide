@@ -1073,74 +1073,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchPracticeHistory();
   }
 });
-function renderExamAvailableTablePage(page) {
-  const tbody = document.querySelector("#examAvailableTable tbody");
-  const start = (page - 1) * AVAILABLE_PAGE_SIZE;
-  const end = start + AVAILABLE_PAGE_SIZE;
-  let html = "";
 
-  if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">
-      No available assessments at this time.</td></tr>`;
-    buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
-    return;
-  }
-
-  const now = Date.now();
-  availableSchedulesCache.slice(start, end).forEach((sched) => {
-    const set = sched.examSet;
-    if (!set || !set.title) return;
-
-    const startDt = sched.start ? new Date(sched.start) : null;
-    const endDt = sched.end ? new Date(sched.end) : null;
-
-    const completed = isScheduleCompleted(sched, set);
-
-    let canTake =
-      !completed &&
-      set.status === "ACTIVE" &&
-      startDt && now >= startDt.getTime() &&
-      (!endDt || now <= endDt.getTime());
-
-    let isScheduled = startDt && now < startDt.getTime();
-    let isClosed = endDt && now > endDt.getTime();
-
-    let statusLabel =
-      completed
-        ? "Completed"
-        : canTake
-        ? "Available"
-        : isScheduled
-        ? "Scheduled"
-        : isClosed
-        ? "Closed"
-        : "Unavailable";
-
-    let btnHtml = canTake
-      ? `<button class="px-4 py-1 bg-green-600 text-white rounded-lg font-semibold shadow hover:bg-green-700 transition glow-button" onclick="startTest('${set._id}')">Start</button>`
-      : completed
-      ? `<span style="color:#999;">Completed</span>`
-      : isScheduled
-      ? `<span style="color:#999;">Not Yet Open</span>`
-      : isClosed
-      ? `<span style="color:#999;">Closed</span>`
-      : `<span style="color:#999;">Unavailable</span>`;
-
-    html += `<tr>
-      <td>${set.title}</td>
-      <td>${set.description ? set.description : "-"}</td>
-      <td>${startDt ? startDt.toLocaleString() : "-"}</td>
-      <td>${endDt ? endDt.toLocaleString() : "-"}</td>
-      <td>${statusLabel}</td>
-      <td>${btnHtml}</td>
-    </tr>`;
-  });
-
-  tbody.innerHTML = html || `<tr><td colspan="6" style="text-align:center;color:#999;">
-    No available assessments at this time.</td></tr>`;
-
-  buildPagination(availableSchedulesCache.length, page, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
-}
 
 // ========== Pagination Builder ===========
 function buildPagination(total, page, pageSize, onPageChangeFnName, targetDivId) {
