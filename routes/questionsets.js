@@ -4,7 +4,7 @@ import QuestionSet from "../models/QuestionSet.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 // If you add a PracticeSession model, import it here
-// import PracticeSession from "../models/PracticeSession.js";
+ import PracticeSession from "../models/PracticeSession.js";
 
 const router = express.Router();
 
