@@ -1,10 +1,16 @@
 import express from "express";
+import mongoose from "mongoose";
 import QuestionSet from "../models/QuestionSet.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
+// If you add a PracticeSession model, import it here
+// import PracticeSession from "../models/PracticeSession.js";
+
 const router = express.Router();
 
-// Create new set
+// ===================== CRUD & ADMIN ========================
+
+// Create new set (topic)
 router.post("/", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { title, status, faculty, department, questions } = req.body;
   try {
@@ -139,6 +145,83 @@ router.put("/:id", authenticate, authorizeRole("admin", "uploader", "superadmin"
 router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   await QuestionSet.findByIdAndDelete(req.params.id);
   res.json({ message: "Question set deleted" });
+});
+
+// ===================== PRACTICE FEATURE ========================
+
+// Get all available topics (as QuestionSets), filterable by faculty/department
+router.get("/topics", authenticate, async (req, res) => {
+  const filter = {};
+  if (req.query.faculty) filter.faculty = req.query.faculty;
+  if (req.query.department) filter.department = req.query.department;
+  // If you add level to QuestionSet, filter.level = req.query.level;
+  try {
+    const sets = await QuestionSet.find(filter).sort({ title: 1 });
+    res.json(
+      sets.map(set => ({
+        _id: set._id,
+        name: set.title,
+        faculty: set.faculty,
+        department: set.department,
+      }))
+    );
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Start a practice session (random/topic)
+router.post("/practice", authenticate, async (req, res) => {
+  const { numQuestions = 20, mode = "random", time = 30, topics = [] } = req.body;
+
+  try {
+    let questionSets = [];
+
+    if (mode === "topic" && Array.isArray(topics) && topics.length > 0) {
+      // Find sets by IDs in 'topics'
+      questionSets = await QuestionSet.find({ _id: { $in: topics.map(id => new mongoose.Types.ObjectId(id)) } });
+    } else {
+      // Random mode: get all sets for the student's faculty/department (optional: restrict here)
+      const filter = {};
+      // If you want to restrict to student's faculty/department, uncomment:
+       //if (req.user.faculty) filter.faculty = req.user.faculty;
+      //if (req.user.department) filter.department = req.user.department;
+      questionSets = await QuestionSet.find(filter);
+    }
+
+    // Gather all questions from selected sets
+    let allQuestions = questionSets.flatMap(set =>
+      set.questions.map(q => ({
+        ...q.toObject ? q.toObject() : q,
+        topic: set.title,
+        setId: set._id
+      }))
+    );
+    if (allQuestions.length === 0) {
+      return res.status(404).json({ error: "No questions found for the selected topics." });
+    }
+
+    // Shuffle and pick numQuestions
+    allQuestions = allQuestions.sort(() => Math.random() - 0.5).slice(0, Number(numQuestions));
+
+    // Optionally: Create a session in DB (for review/history)
+     const session = await PracticeSession.create({
+     user: req.user.id,
+      questions: allQuestions,
+     topics: mode === "topic" ? topics : [],
+     numQuestions,
+    time,
+    mode
+   });
+
+    res.json({
+      questions: allQuestions,
+      time,
+       sessionId: session?._id || null
+    });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 export default router;
