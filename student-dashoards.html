@@ -636,8 +636,16 @@
 
         
         <!-- Exams Tab -->
-        
-<section class="bg-white rounded-2xl shadow-xl p-6 card mb-8">
+        <section id="exams" class="tab-content">
+            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex justify-between items-center">
+                <div>
+                  <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
+                  <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
+                </div>
+                <button onclick="openScheduledExamModal()" class="ml-4 px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200">View Scheduled Exam</button>
+            </header>
+            
+                <section class="bg-white rounded-2xl shadow-xl p-6 card mb-8">
   <h3 class="text-xl font-semibold text-indigo-900 mb-4">Custom Practice Session</h3>
   <form id="practiceSessionForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div>
@@ -686,6 +694,8 @@
     </table>
   </div>
 </section>
+        </section>
+
         <!-- Study Resources Tab -->
         <section id="study-resources" class="tab-content">
             <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card">
