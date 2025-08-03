@@ -1255,7 +1255,7 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
     progressInner.style.width = "55%";
     let url, data;
     if (imageBase64s.length) {
-      url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=" + GEMINI_API_KEY;
+      url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + GEMINI_API_KEY;
       data = {
         contents: [{
           role: "user",
