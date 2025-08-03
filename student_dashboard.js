@@ -958,6 +958,121 @@ function renderAvailableTablePage(page) {
 }
 
 // =================== EXAMS TAB (Available Assessments - Exams) ===================
+// =================== PRACTICE SESSION LOGIC ===================
+const PRACTICE_TOPICS_ENDPOINT = API_URL + "questionset/topics";
+const PRACTICE_SESSION_ENDPOINT = API_URL + "questionset/practice";
+const PRACTICE_HISTORY_ENDPOINT = API_URL + "practice/history"; // adjust as per backend
+let availablePracticeTopics = [];
+
+// Populate topics multiselect
+async function fetchPracticeTopics() {
+  try {
+    const resp = await fetchWithAuth(PRACTICE_TOPICS_ENDPOINT);
+    let topics = await resp.json();
+    if (!Array.isArray(topics)) topics = [];
+    availablePracticeTopics = topics;
+    const select = document.getElementById("practiceTopics");
+    select.innerHTML = topics.length
+      ? topics.map(t => `<option value="${t._id || t.id || t}">${t.name || t}</option>`).join('')
+      : `<option disabled>No topics available</option>`;
+  } catch (err) {
+    document.getElementById("practiceTopics").innerHTML = `<option disabled>Failed to load topics</option>`;
+  }
+}
+
+// Show/hide topics on mode change
+document.getElementById("practiceMode").addEventListener("change", function() {
+  document.getElementById("practiceTopicsDiv").style.display = this.value === "topic" ? "block" : "none";
+});
+
+// On page load, fetch topics if form present
+if (document.getElementById("practiceTopics")) fetchPracticeTopics();
+
+// Handle form submit
+document.getElementById("practiceSessionForm").onsubmit = async function(e) {
+  e.preventDefault();
+  const numQuestions = parseInt(document.getElementById("practiceNumQuestions").value);
+  const mode = document.getElementById("practiceMode").value;
+  const time = parseInt(document.getElementById("practiceTime").value);
+  let topics = [];
+  if (mode === "topic") {
+    topics = Array.from(document.getElementById("practiceTopics").selectedOptions).map(opt => opt.value);
+    if (!topics.length) {
+      showPracticeError("Please select at least one topic.");
+      return;
+    }
+  }
+  // Prepare request
+  const payload = { numQuestions, mode, time, topics };
+  showPracticeError(""); // clear
+  document.querySelector('#practiceSessionForm button[type="submit"]').disabled = true;
+  try {
+    const resp = await fetchWithAuth(PRACTICE_SESSION_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) {
+      const data = await resp.json();
+      showPracticeError(data.message || "Could not start practice session.");
+      document.querySelector('#practiceSessionForm button[type="submit"]').disabled = false;
+      return;
+    }
+    const result = await resp.json();
+    // Start the practice session (redirect to test or practice page)
+    window.location.href = `test.html?sessionId=${encodeURIComponent(result.sessionId)}`;
+  } catch (err) {
+    showPracticeError("Failed to start session. Try again.");
+  } finally {
+    document.querySelector('#practiceSessionForm button[type="submit"]').disabled = false;
+  }
+};
+function showPracticeError(msg) {
+  const div = document.getElementById("practiceSessionError");
+  if (!msg) {
+    div.classList.add("hidden"); div.textContent = "";
+  } else {
+    div.textContent = msg; div.classList.remove("hidden");
+  }
+}
+
+// ========== PRACTICE HISTORY TABLE ==========
+async function fetchPracticeHistory() {
+  try {
+    const resp = await fetchWithAuth(PRACTICE_HISTORY_ENDPOINT);
+    const history = await resp.json();
+    renderPracticeHistory(history);
+  } catch {
+    document.getElementById("practiceSessionsHistory").innerHTML =
+      "<tr><td colspan=6>Failed to load practice history.</td></tr>";
+  }
+}
+function renderPracticeHistory(history) {
+  if (!Array.isArray(history) || !history.length) {
+    document.getElementById("practiceSessionsHistory").innerHTML =
+      "<tr><td colspan=6>No practice sessions yet.</td></tr>";
+    return;
+  }
+  document.getElementById("practiceSessionsHistory").innerHTML = history.map(sess => `
+    <tr>
+      <td>${(new Date(sess.date)).toLocaleString()}</td>
+      <td>${sess.mode === "topic" ? "By Topic" : "Random"}</td>
+      <td>${sess.topics && sess.topics.length ? sess.topics.map(id =>
+        availablePracticeTopics.find(t => (t._id || t.id || t) === id)?.name || id
+      ).join(', ') : "-"}</td>
+      <td>${sess.numQuestions}</td>
+      <td>${sess.score !== undefined ? sess.score + "%" : "-"}</td>
+      <td><button class="btn" onclick="openReviewTab('${sess.sessionId}')">Review</button></td>
+    </tr>
+  `).join('');
+}
+
+// On Exams tab activation/load, fetch history
+document.addEventListener("DOMContentLoaded", function() {
+  if (document.getElementById("practiceSessionsHistory")) {
+    fetchPracticeHistory();
+  }
+});
 function renderExamAvailableTablePage(page) {
   const tbody = document.querySelector("#examAvailableTable tbody");
   const start = (page - 1) * AVAILABLE_PAGE_SIZE;
