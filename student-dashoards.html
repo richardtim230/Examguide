@@ -1069,8 +1069,7 @@
   </div>
   <!-- PDF.js for PDF text extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
-  <script>
-
+<script>
 if (!window.pdfjsLib) {
   // PDF.js loaded from CDN in HTML, if not, load here
   const script = document.createElement("script");
@@ -1211,17 +1210,19 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
   }
   document.getElementById("studypadiSubmit").disabled = true; document.getElementById("studypadiSubmit").textContent = "Generating...";
 
+  // Limit image count and text length for speed/reliability
+  const MAX_IMAGES = 3;
+  const MAX_CHARS = 10000;
+  let allTexts = [];
+  let imageBase64s = [];
+  let truncated = false;
   try {
-    // Extract text from all files (text & images separately for OCR)
-    let allTexts = [];
-    let imageBase64s = [];
     for (let i = 0; i < files.length; i++) {
       progressInner.style.width = `${Math.floor((i/files.length)*30)}%`;
       if (files[i].type.startsWith("image/")) {
-        // Get base64 for images
+        if (imageBase64s.length >= MAX_IMAGES) continue;
         const base64 = await fileToBase64(files[i]);
         imageBase64s.push(base64);
-        // If Tesseract.js is loaded, OCR image to text as well
         if (window.Tesseract) {
           const { data: { text } } = await window.Tesseract.recognize(base64, "eng");
           if (text && text.trim()) allTexts.push(text.trim());
@@ -1233,7 +1234,13 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
     }
     progressInner.style.width = "35%";
 
-    if (!allTexts.length && !imageBase64s.length) {
+    // Combine and truncate text for Gemini API
+    let studyContent = allTexts.join('\n\n');
+    if (studyContent.length > MAX_CHARS) {
+      studyContent = studyContent.slice(0, MAX_CHARS);
+      truncated = true;
+    }
+    if (!studyContent && !imageBase64s.length) {
       errorDiv.textContent = "No readable text or images could be extracted from your files.";
       errorDiv.classList.remove("hidden");
       progressBar.style.display = "none";
@@ -1243,15 +1250,12 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
     }
 
     // Compose prompt
-    const prompt = buildGeminiPrompt({qType, numMcq, numOpts, instructions, allTexts, imageBase64s});
-
-    // Call Gemini API (Vision endpoint if images, else text endpoint)
+    const prompt = buildGeminiPrompt({qType, numMcq, numOpts, instructions, allTexts: [studyContent], imageBase64s});
+    // Call Gemini API
     progressInner.style.width = "55%";
     let url, data;
     if (imageBase64s.length) {
-      // Use Gemini Vision if available (replace endpoint below with Vision endpoint as needed)
       url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=" + GEMINI_API_KEY;
-      // Each image is sent as a part of the content
       data = {
         contents: [{
           role: "user",
@@ -1273,12 +1277,19 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
       };
     }
 
+    // Fast feedback if AI is slow
+    let aiTimeout = setTimeout(() => {
+      errorDiv.textContent = "AI is taking longer than usual. Please wait...";
+      errorDiv.classList.remove("hidden");
+    }, 12000);
+
     progressInner.style.width = "85%";
     const resp = await fetch(url, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(data)
     });
+    clearTimeout(aiTimeout);
     if (!resp.ok) throw new Error("Failed to contact Gemini API");
     const result = await resp.json();
     if (!result.candidates || !result.candidates[0]?.content?.parts[0]?.text)
@@ -1294,10 +1305,12 @@ document.getElementById("studypadiForm").onsubmit = async function(e) {
     progressInner.style.width = "100%";
     setTimeout(()=>progressBar.style.display="none", 500);
 
-    // Render output
-    document.getElementById("studypadiOutput").innerHTML = renderStudyPadiOutput(studypadiData);
+    // Render output & truncation note
+    let truncNote = '';
+    if (truncated) truncNote = '<div class="text-yellow-700 font-semibold mb-2">Note: Only the first 10,000 characters of your material were used for speed and reliability.</div>';
+    document.getElementById("studypadiOutput").innerHTML =
+      truncNote + renderStudyPadiOutput(studypadiData);
 
-    // Download & answer sheet logic
     document.getElementById("studypadiDownloadPdf").onclick = function() {
       window.print();
     };
@@ -1344,11 +1357,9 @@ function renderStudyPadiOutput(data) {
   </div>`;
   return html;
 }
-
-        
+</script>
 
     
-  </script>
 </section>
     </main>
     <script src="student_dashboard.js"></script>
