@@ -713,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const profilePhoto = document.getElementById("profile-photo");
   const welcomeMessage = document.getElementById("welcome-message");
 
-  const activeUserIDs = ["OAU-OBdO1", "OAU-2GXnM", "OAU-3Loap", "OAU-P5nJv", "OAU-h11Pq", "OAU-fGSUo", "OAU-PZ5Tj", "OAU-4jGzj", "OAU-zXQI5", "OAU-Hjf0x", "OAU-8rBBf", "XR0QEV", "OAU-r55Vp", "OAU-Hjf0x", "OAU-wgUFd", "9KPGWE", "OAU-Lmgw1", "OAU-Vqd4v", "OAU-4IE79", "MQZiX", "OAU-4fL7Y", "OAU-hIvUm", "OAU-zA5yW", "OAU-pzss7", "OAU-HydrS", "OAU-PZ5Tj", "OAU-2ZlVX", "C4BVOZ", "OAU-2ZIVX", "OAU-pPKoh", "OAU-sTXn4", "9KPGWE", "OAU-gn5H1", "OAU-wQUVg", "OAU-yPb1k", "OAU-J74GF", "OAU-RDOyh", "OAU-ztclb", "3XHF8Z",  "OAU-HkCcs", "OAU-2iTtz", "OAU-Yw4iq", "OAU-HkCcs", "OAU-W3Ldz", "OAU-FG3JH", "OAU-JL36e", "OAU-xupDN", "OAU-a19AX", "OAU-HkCcs", "OAU-iM1rP", "OAU-yPb1k", "OAU-Mafoa", "OAU-Yw4iq", "OAU-ustAs"];
+  const activeUserIDs = ["OAU-OBdO1", "OAU-YTA7h", "OAU-2GXnM", "OAU-3Loap", "OAU-P5nJv", "OAU-h11Pq", "OAU-fGSUo", "OAU-PZ5Tj", "OAU-4jGzj", "OAU-zXQI5", "OAU-Hjf0x", "OAU-8rBBf", "XR0QEV", "OAU-r55Vp", "OAU-Hjf0x", "OAU-wgUFd", "9KPGWE", "OAU-Lmgw1", "OAU-Vqd4v", "OAU-4IE79", "MQZiX", "OAU-4fL7Y", "OAU-hIvUm", "OAU-zA5yW", "OAU-pzss7", "OAU-HydrS", "OAU-PZ5Tj", "OAU-2ZlVX", "C4BVOZ", "OAU-2ZIVX", "OAU-pPKoh", "OAU-sTXn4", "9KPGWE", "OAU-gn5H1", "OAU-wQUVg", "OAU-yPb1k", "OAU-J74GF", "OAU-RDOyh", "OAU-ztclb", "3XHF8Z",  "OAU-HkCcs", "OAU-2iTtz", "OAU-Yw4iq", "OAU-HkCcs", "OAU-W3Ldz", "OAU-FG3JH", "OAU-JL36e", "OAU-xupDN", "OAU-a19AX", "OAU-HkCcs", "OAU-iM1rP", "OAU-yPb1k", "OAU-Mafoa", "OAU-Yw4iq", "OAU-ustAs"];
   const morningMessages = ["Good morning", "Rise and Shine", "Hello! How was your night?", 
     "Good morning!",
     "Rise and shine!",
