@@ -30,7 +30,7 @@
     { "source": "/old-result-summary", "destination": "/result-summary", "permanent": true },
     { "source": "/old-advertisement", "destination": "/advertisement", "permanent": true },
     { "source": "/old-testsession", "destination": "/testsession", "permanent": true },
-        { "source": "/old-student-dashoards.html", "destination": "/MainStudentDashboard", "permanent": true },
+        { "source": "/old-student-dashoards.html", "destination": "/MainStudentDashboard", "permanent": true }
       
   ]
 }
