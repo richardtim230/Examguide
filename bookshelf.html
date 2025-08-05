@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="description" content="DE-BRAINSTORMERS' ACADEMY Online Bookstore - Explore curated catalogs by discipline (Science, Arts, Literature, History) with subjects and books by various authors. Read online with our immersive reader mode. Created by Richard O. Timothy for Obafemi Awolowo University students.">
+    <meta name="keywords" content="Online Bookstore, DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, book catalog, reader mode, educational books, academic resources, digital reading, Richard O. Timothy, student resources, digital learning, Ile Ife, Nigeria, exam preparation, science books, literature books, history books, arts books, online library">
+    <meta property="og:image" content="https://img.freepik.com/free-photo/open-book-with-glasses_23-2148883419.jpg?uid=R108601234&ga=GA1.1.712161774.1734082676&semt=ais_hybrid">
+    <meta property="og:url" content="https://examguide.vercel.app/bookstore">
+    <meta property="og:type" content="website">
+    <title>Online Bookstore - DE-BRAINSTORMERS' ACADEMY</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8)), url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        #readerModal {
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="header-gradient text-white py-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-3">DE-BRAINSTORMERS' Bookstore</h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto">Explore curated catalogs by discipline, browse subjects, and dive into books tailored for Obafemi Awolowo University students.</p>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+        <div class="mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Book Catalog</h2>
+            <div class="flex flex-wrap gap-4 mb-6">
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" onclick="showCatalogs()">All Catalogs</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" onclick="showSubjects('Science')">Science</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" onclick="showSubjects('Arts')">Arts</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" onclick="showSubjects('Literature')">Literature</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700" onclick="showSubjects('History')">History</button>
+            </div>
+            <div id="contentArea" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Content will be dynamically populated here -->
+            </div>
+        </div>
+    </main>
+
+    <div id="readerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="modal-content bg-white rounded-lg p-6 max-w-3xl w-full">
+            <h2 id="readerTitle" class="text-2xl font-semibold mb-4 text-gray-800"></h2>
+            <div id="readerContent" class="prose max-w-none text-gray-700"></div>
+            <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="closeReader()">Close</button>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>Created with love by Richard O. Timothy</p>
+    </footer>
+
+    <script>
+        const catalogs = {
+            Science: {
+                subjects: {
+                    Physics: [
+                        { id: 1, title: "Introduction to Physics", author: "John Doe", cover: "https://img.freepik.com/free-photo/book-with-science-equipment_23-2148883417.jpg", content: "This book covers fundamental physics concepts, including mechanics, thermodynamics, and electromagnetism, tailored for university students." },
+                        { id: 2, title: "Advanced Physics", author: "Alice Brown", cover: "https://img.freepik.com/free-photo/science-equipment-book_23-2148883418.jpg", content: "An advanced exploration of quantum mechanics and relativity for OAU students." }
+                    ],
+                    Chemistry: [
+                        { id: 3, title: "Chemistry Essentials", author: "Anna Lee", cover: "https://img.freepik.com/free-photo/science-equipment-book_23-2148883418.jpg", content: "An in-depth guide to chemistry principles, including organic, inorganic, and physical chemistry." },
+                        { id: 4, title: "Organic Chemistry", author: "Michael Chen", cover: "https://img.freepik.com/free-photo/book-with-science-equipment_23-2148883417.jpg", content: "A detailed study of organic compounds and reactions, ideal for science majors." }
+                    ]
+                }
+            },
+            Arts: {
+                subjects: {
+                    VisualArts: [
+                        { id: 5, title: "Art History", author: "Emma Davis", cover: "https://img.freepik.com/free-photo/art-book_23-2148883423.jpg", content: "A comprehensive guide to art history from Renaissance to modern times." },
+                        { id: 6, title: "Modern Art Techniques", author: "Sophie Green", cover: "https://img.freepik.com/free-photo/paint-brushes-book_23-2148883424.jpg", content: "Explore contemporary art techniques and their applications." }
+                    ],
+                    Music: [
+                        { id: 7, title: "Music Theory Basics", author: "James Wilson", cover: "https://img.freepik.com/free-photo/music-book_23-2148883425.jpg", content: "An introduction to music theory for beginners, covering scales and chords." },
+                        { id: 8, title: "History of Music", author: "Laura Adams", cover: "https://img.freepik.com/free-photo/music-book_23-2148883425.jpg", content: "A journey through the evolution of music across cultures." }
+                    ]
+                }
+            },
+            Literature: {
+                subjects: {
+                    AfricanLiterature: [
+                        { id: 9, title: "Things Fall Apart", author: "Chinua Achebe", cover: "https://img.freepik.com/free-photo/book-with-african-pattern_23-2148883421.jpg", content: "A seminal work exploring the impact of colonialism on Igbo society." },
+                        { id: 10, title: "Half of a Yellow Sun", author: "Chimamanda Ngozi Adichie", cover: "https://img.freepik.com/free-photo/open-book-with-glasses_23-2148883419.jpg", content: "A powerful novel set during the Nigerian Civil War." }
+                    ],
+                    ClassicLiterature: [
+                        { id: 11, title: "Pride and Prejudice", author: "Jane Austen", cover: "https://img.freepik.com/free-photo/open-book-with-glasses_23-2148883419.jpg", content: "A classic novel exploring love, class, and social expectations." },
+                        { id: 12, title: "Jane Eyre", author: "Charlotte Brontë", cover: "https://img.freepik.com/free-photo/book-with-glasses_23-2148883419.jpg", content: "A story of resilience and romance in 19th-century England." }
+                    ]
+                }
+            },
+            History: {
+                subjects: {
+                    AfricanHistory: [
+                        { id: 13, title: "Modern African History", author: "David Okoro", cover: "https://img.freepik.com/free-photo/historical-book_23-2148883422.jpg", content: "Examines African history from the colonial era to independence, focusing on Nigeria." },
+                        { id: 14, title: "Pre-Colonial Africa", author: "Fatima Bello", cover: "https://img.freepik.com/free-photo/historical-book_23-2148883422.jpg", content: "A study of African societies before European colonization." }
+                    ],
+                    WorldHistory: [
+                        { id: 15, title: "World History", author: "Mary Smith", cover: "https://img.freepik.com/free-photo/old-books-table_23-2148883420.jpg", content: "A comprehensive overview of world history, from ancient civilizations to modern times." },
+                        { id: 16, title: "The Age of Empires", author: "Robert King", cover: "https://img.freepik.com/free-photo/old-books-table_23-2148883420.jpg", content: "Explores the rise and fall of major world empires." }
+                    ]
+                }
+            }
+        };
+
+        const contentArea = document.getElementById('contentArea');
+        const readerModal = document.getElementById('readerModal');
+        const readerTitle = document.getElementById('readerTitle');
+        const readerContent = document.getElementById('readerContent');
+
+        function showCatalogs() {
+            contentArea.innerHTML = '';
+            Object.keys(catalogs).forEach(catalog => {
+                const catalogCard = document.createElement('div');
+                catalogCard.className = 'card bg-white rounded-lg shadow-md p-4 flex flex-col items-center';
+                catalogCard.innerHTML = `
+                    <img src="https://img.freepik.com/free-photo/open-book_23-2148883416.jpg" alt="${catalog}" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">${catalog}</h3>
+                    <p class="text-sm text-gray-600 mb-4">Explore subjects in ${catalog}</p>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="showSubjects('${catalog}')">View Subjects</button>
+                `;
+                contentArea.appendChild(catalogCard);
+            });
+        }
+
+        function showSubjects(catalog) {
+            contentArea.innerHTML = '';
+            const subjects = catalogs[catalog].subjects;
+            Object.keys(subjects).forEach(subject => {
+                const subjectCard = document.createElement('div');
+                subjectCard.className = 'card bg-white rounded-lg shadow-md p-4 flex flex-col items-center';
+                subjectCard.innerHTML = `
+                    <img src="https://img.freepik.com/free-photo/book-stack_23-2148883426.jpg" alt="${subject}" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">${subject}</h3>
+                    <p class="text-sm text-gray-600 mb-4">Books related to ${subject}</p>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="showBooks('${catalog}', '${subject}')">View Books</button>
+                `;
+                contentArea.appendChild(subjectCard);
+            });
+            const backButton = document.createElement('button');
+            backButton.className = 'mt-4 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700';
+            backButton.textContent = 'Back to Catalogs';
+            backButton.onclick = showCatalogs;
+            contentArea.appendChild(backButton);
+        }
+
+        function showBooks(catalog, subject) {
+            contentArea.innerHTML = '';
+            const books = catalogs[catalog].subjects[subject];
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'card bg-white rounded-lg shadow-md p-4 flex flex-col';
+                bookCard.innerHTML = `
+                    <img src="${book.cover}" alt="${book.title}" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">${book.title}</h3>
+                    <p class="text-sm text-gray-600 mb-2">by ${book.author}</p>
+                    <span class="inline-block px-3 py-1 text-sm text-white bg-blue-600 rounded-full mb-4">${subject}</span>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="openReader(${book.id})">Read Now</button>
+                `;
+                contentArea.appendChild(bookCard);
+            });
+            const backButton = document.createElement('button');
+            backButton.className = 'mt-4 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700';
+            backButton.textContent = 'Back to Subjects';
+            backButton.onclick = () => showSubjects(catalog);
+            contentArea.appendChild(backButton);
+        }
+
+        function openReader(bookId) {
+            let book;
+            Object.values(catalogs).forEach(catalog => {
+                Object.values(catalog.subjects).forEach(subject => {
+                    const found = subject.find(b => b.id === bookId);
+                    if (found) book = found;
+                });
+            });
+            if (book) {
+                readerTitle.textContent = book.title;
+                readerContent.textContent = book.content;
+                readerModal.classList.remove('hidden');
+            }
+        }
+
+        function closeReader() {
+            readerModal.classList.add('hidden');
+        }
+
+        // Initialize with catalogs
+        showCatalogs();
+    </script>
+</body>
+</html>
