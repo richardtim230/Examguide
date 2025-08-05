@@ -299,7 +299,37 @@
                 alert('Failed to copy URL');
             }
         });
-
+uploadButton.addEventListener('click', async function() {
+    imageCanvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('image', blob, (outputName.value || 'edited-image') + '.' + outputFormat.value.split('/')[1]);
+        
+        uploadButton.disabled = true;
+        uploadButton.textContent = 'Uploading...';
+        
+        try {
+            const response = await fetch('https://examguide.onrender.com/api/images', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (result.url) {
+                // Use the absolute URL for frontend consumption
+                dataUrl.value = 'https://examguide.onrender.com' + result.url;
+                copyButton.disabled = false;
+                downloadButton.disabled = false;
+                alert('Image uploaded! URL ready.');
+            } else {
+                alert('Upload failed.');
+            }
+        } catch (err) {
+            alert('Error uploading image.');
+        } finally {
+            uploadButton.disabled = false;
+            uploadButton.textContent = 'Upload & Get URL';
+        }
+    }, outputFormat.value, outputFormat.value === 'image/jpeg' ? 0.8 : undefined);
+});
         downloadButton.addEventListener('click', function() {
             const format = outputFormat.value || 'image/png';
             const extension = format.split('/')[1];
