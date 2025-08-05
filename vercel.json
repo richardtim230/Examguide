@@ -12,7 +12,8 @@
     { "source": "/result-summary", "destination": "/summary.html" },
     { "source": "/mock-icthallb", "destination": "/mock.html" },
     { "source": "/testsession", "destination": "/test.html" },
-    { "source": "/advertisement", "destination": "/advert.html" }
+    { "source": "/advertisement", "destination": "/advert.html" },
+        { "source": "/photo-editor", "destination": "/photo-editor.html" }
     
     
   ],
