@@ -40,15 +40,27 @@
                     hover:file:bg-blue-100">
             </div>
 
-            <div class="mb-6">
-                <h2 class="text-lg font-semibold mb-2">Original Image Properties</h2>
-                <div class="text-sm text-gray-600">
-                    <p><strong>File Name:</strong> <span id="originalName">N/A</span></p>
-                    <p><strong>Dimensions:</strong> <span id="originalDimensions">N/A</span></p>
-                    <p><strong>File Size:</strong> <span id="originalSize">N/A</span></p>
-                    <p><strong>Format:</strong> <span id="originalFormat">N/A</span></p>
-                </div>
-            </div>
+            <div class="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
+    <h2 class="text-lg font-semibold mb-3 text-gray-800">Original Image Properties</h2>
+    <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+        <div class="flex justify-between p-2 bg-white rounded-md">
+            <span class="font-medium">File Name:</span>
+            <span id="originalName" class="text-gray-600">N/A</span>
+        </div>
+        <div class="flex justify-between p-2 bg-white rounded-md">
+            <span class="font-medium">Dimensions:</span>
+            <span id="originalDimensions" class="text-gray-600">N/A</span>
+        </div>
+        <div class="flex justify-between p-2 bg-white rounded-md">
+            <span class="font-medium">File Size:</span>
+            <span id="originalSize" class="text-gray-600">N/A</span>
+        </div>
+        <div class="flex justify-between p-2 bg-white rounded-md">
+            <span class="font-medium">Format:</span>
+            <span id="originalFormat" class="text-gray-600">N/A</span>
+        </div>
+    </div>
+</div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
