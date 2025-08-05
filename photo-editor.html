@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Editor & URL Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+        .canvas-container {
+            max-width: 100%;
+            max-height: 400px;
+            overflow: auto;
+        }
+        #imageCanvas {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="header-gradient text-white py-8 text-center">
+        <h1 class="text-4xl font-bold mb-2">Image Editor & URL Converter</h1>
+        <p class="text-lg">Transform your images with ease: resize, edit, remove background, and convert to URL</p>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="mb-6">
+                <input type="file" id="imageInput" accept="image/*" class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
+                    file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
+                    hover:file:bg-blue-100">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h2 class="text-lg font-semibold mb-2">Image Preview</h2>
+                    <div class="canvas-container">
+                        <canvas id="imageCanvas" class="border border-gray-200 rounded-md"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold mb-2">Edit Options</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Resize (Width)</label>
+                            <input type="number" id="resizeWidth" min="10" max="2000" value="500" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Brightness</label>
+                            <input type="range" id="brightness" min="0" max="2" step="0.1" value="1" class="w-full">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Contrast</label>
+                            <input type="range" id="contrast" min="0" max="2" step="0.1" value="1" class="w-full">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Rotation (degrees)</label>
+                            <input type="number" id="rotation" min="0" max="360" value="0" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Output Format</label>
+                            <select id="outputFormat" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                                <option value="image/png">PNG</option>
+                                <option value="image/jpeg">JPEG</option>
+                                <option value="image/webp">WebP</option>
+                            </select>
+                        </div>
+                        <button id="removeBackground" class="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700">Remove Background</button>
+                        <button id="applyEdits" class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700">Apply Edits</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-lg font-semibold mb-2">Data URL</h2>
+                <textarea id="dataUrl" readonly class="w-full h-32 p-2 border border-gray-300 rounded-md font-mono text-sm bg-gray-50" placeholder="Data URL will appear here"></textarea>
+                <div class="flex space-x-4 mt-2">
+                    <button id="copyButton" disabled class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400">Copy URL</button>
+                    <button id="downloadButton" disabled class="flex-1 py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400">Download Image</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>Created with love by Richard O. Timothy</p>
+    </footer>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const imageCanvas = document.getElementById('imageCanvas');
+        const dataUrl = document.getElementById('dataUrl');
+        const copyButton = document.getElementById('copyButton');
+        const downloadButton = document.getElementById('downloadButton');
+        const resizeWidth = document.getElementById('resizeWidth');
+        const brightness = document.getElementById('brightness');
+        const contrast = document.getElementById('contrast');
+        const rotation = document.getElementById('rotation');
+        const outputFormat = document.getElementById('outputFormat');
+        const applyEdits = document.getElementById('applyEdits');
+        const removeBackground = document.getElementById('removeBackground');
+        const ctx = imageCanvas.getContext('2d');
+        let originalImage = new Image();
+        let editedImage = new Image();
+
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImage.src = e.target.result;
+                    editedImage.src = e.target.result;
+                    originalImage.onload = function() {
+                        applyImageEdits();
+                    };
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a valid image file');
+                imageInput.value = '';
+                dataUrl.value = '';
+                copyButton.disabled = true;
+                downloadButton.disabled = true;
+                imageCanvas.width = 0;
+                imageCanvas.height = 0;
+            }
+        });
+
+        function applyImageEdits() {
+            const width = parseInt(resizeWidth.value) || 500;
+            const brightnessValue = parseFloat(brightness.value) || 1;
+            const contrastValue = parseFloat(contrast.value) || 1;
+            const rotationValue = parseInt(rotation.value) || 0;
+
+            imageCanvas.width = width;
+            imageCanvas.height = (editedImage.height * width) / editedImage.width;
+
+            ctx.save();
+            ctx.filter = `brightness(${brightnessValue}) contrast(${contrastValue})`;
+            if (rotationValue) {
+                ctx.translate(imageCanvas.width / 2, imageCanvas.height / 2);
+                ctx.rotate((rotationValue * Math.PI) / 180);
+                ctx.translate(-imageCanvas.width / 2, -imageCanvas.height / 2);
+            }
+            ctx.drawImage(editedImage, 0, 0, imageCanvas.width, imageCanvas.height);
+            ctx.restore();
+
+            const format = outputFormat.value || 'image/png';
+            const quality = format === 'image/jpeg' ? 0.8 : undefined;
+            dataUrl.value = imageCanvas.toDataURL(format, quality);
+            copyButton.disabled = false;
+            downloadButton.disabled = false;
+        }
+
+        function removeImageBackground() {
+            const width = parseInt(resizeWidth.value) || 500;
+            imageCanvas.width = width;
+            imageCanvas.height = (originalImage.height * width) / originalImage.width;
+
+            ctx.drawImage(originalImage, 0, 0, imageCanvas.width, imageCanvas.height);
+            const imageData = ctx.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+            const data = imageData.data;
+
+            // Simple background removal using thresholding (assumes light background)
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                // Threshold for near-white pixels (adjustable)
+                if (r > 200 && g > 200 && b > 200) {
+                    data[i + 3] = 0; // Set alpha to 0 (transparent)
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+            editedImage.src = imageCanvas.toDataURL('image/png');
+            editedImage.onload = applyImageEdits;
+        }
+
+        applyEdits.addEventListener('click', applyImageEdits);
+        removeBackground.addEventListener('click', removeImageBackground);
+
+        copyButton.addEventListener('click', function() {
+            dataUrl.select();
+            try {
+                document.execCommand('copy');
+                alert('URL copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy URL');
+            }
+        });
+
+        downloadButton.addEventListener('click', function() {
+            const format = outputFormat.value || 'image/png';
+            const extension = format.split('/')[1];
+            const link = document.createElement('a');
+            link.href = imageCanvas.toDataURL(format, format === 'image/jpeg' ? 0.8 : undefined);
+            link.download = `edited-image.${extension}`;
+            link.click();
+        });
+    </script>
+</body>
+</html>
