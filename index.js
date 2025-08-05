@@ -30,6 +30,31 @@ const uploadProfilePic = multer({
     else cb(new Error("Only image files allowed!"));
   }
 });
+// 1. Setup a directory for editor uploads
+const editorUploadsDir = "./uploads/editor";
+if (!fs.existsSync(editorUploadsDir)) {
+  fs.mkdirSync(editorUploadsDir, { recursive: true });
+}
+const editorImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, editorUploadsDir);
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    const base = path.basename(file.originalname, ext);
+    cb(null, `${base.replace(/\s+/g,'_')}_${Date.now()}${ext}`);
+  }
+});
+const uploadEditorImage = multer({
+  storage: editorImageStorage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) cb(null, true);
+    else cb(new Error("Only image files allowed!"));
+  }
+});
+
+
 const uploadDir = "./uploads/broadcasts";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -317,7 +342,16 @@ app.get("/api/auth/me", authenticate, async (req, res) => {
   }
 });
 
+// 2. Serve editor uploads statically
+app.use("/uploads/editor", express.static(path.join(process.cwd(), "uploads/editor")));
 
+// 3. Add API endpoint for uploads from the editor
+app.post("/api/images", uploadEditorImage.single("image"), (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+  // Return the public URL of the uploaded image
+  const imageUrl = `/uploads/editor/${req.file.filename}`;
+  res.json({ url: imageUrl });
+});
 
 // Health check endpoint for /api/auth (for browser test)
 app.get("/api/auth", (req, res) => {
