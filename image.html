@@ -50,7 +50,7 @@
             background-color: #28a745;
             color: white;
         }
-        #downloadPdf {
+        #viewData {
             background-color: #007bff;
             color: white;
         }
@@ -69,35 +69,6 @@
         .card p {
             margin: 5px 0;
             font-size: 14px;
-        }
-        #pdfContent {
-            position: absolute;
-            left: -9999px;
-            width: 210mm; /* A4 width */
-            font-size: 6pt; /* Set font size for PDF */
-        }
-        #pdfContent .card {
-            border: 1px solid #000;
-            margin-bottom: 10pt;
-            padding: 10pt;
-            page-break-inside: avoid;
-            width: 190mm; /* Fit within A4 margins */
-        }
-        @media print {
-            .form-container, .button-group {
-                display: none;
-            }
-            .cards-container {
-                display: block;
-            }
-            .card {
-                font-size: 6pt !important;
-                page-break-inside: avoid;
-                width: 190mm;
-                margin-bottom: 10pt;
-                border: 1px solid #000;
-                box-shadow: none;
-            }
         }
         @media (max-width: 600px) {
             .cards-container {
@@ -128,19 +99,16 @@
             </div>
             <div class="button-group">
                 <button id="addSet">Add Set</button>
-                <button id="downloadPdf">Download PDF</button>
+                <button id="viewData">View</button>
             </div>
         </div>
         <div class="cards-container" id="cardsContainer"></div>
-        <div id="pdfContent"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         const cardsContainer = document.getElementById('cardsContainer');
-        const pdfContent = document.getElementById('pdfContent');
         const addSetButton = document.getElementById('addSet');
-        const downloadPdfButton = document.getElementById('downloadPdf');
+        const viewDataButton = document.getElementById('viewData');
         let sets = [];
 
         addSetButton.addEventListener('click', () => {
@@ -159,36 +127,68 @@
             }
         });
 
-        downloadPdfButton.addEventListener('click', () => {
+        viewDataButton.addEventListener('click', () => {
             if (sets.length === 0) {
-                alert('No data to download.');
+                alert('No data to view.');
                 return;
             }
 
-            // Prepare PDF content
-            pdfContent.innerHTML = '';
-            sets.forEach(set => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <p><strong>Sample Common Name:</strong> ${set.commonName}</p>
-                    <p><strong>Collected By:</strong> ${set.collectedBy}</p>
-                    <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
-                    <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
-                `;
-                pdfContent.appendChild(card);
-            });
-
-            // Add slight delay to ensure content is rendered
-            setTimeout(() => {
-                const opt = {
-                    margin: 10,
-                    filename: 'sample_data.pdf',
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                    html2canvas: { scale: 2 }
-                };
-                html2pdf().from(pdfContent).set(opt).save();
-            }, 500);
+            // Create HTML for the new tab
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Sample Data View</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 10mm;
+                            font-size: 6pt;
+                        }
+                        .print-container {
+                            width: 190mm; /* Fit within A4 margins */
+                            margin: 0 auto;
+                        }
+                        .card {
+                            border: 1px solid #000;
+                            padding: 10pt;
+                            margin-bottom: 10pt;
+                            page-break-inside: avoid;
+                            background: white;
+                        }
+                        .card p {
+                            margin: 5pt 0;
+                        }
+                        @page {
+                            size: A4;
+                            margin: 10mm;
+                        }
+                        @media print {
+                            .card {
+                                font-size: 6pt;
+                                page-break-inside: avoid;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="print-container">
+                        ${sets.map(set => `
+                            <div class="card">
+                                <p><strong>Sample Common Name:</strong> ${set.commonName}</p>
+                                <p><strong>Collected By:</strong> ${set.collectedBy}</p>
+                                <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
+                                <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
         });
 
         function renderCards() {
