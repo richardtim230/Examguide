@@ -15,6 +15,13 @@
             width: 210mm;
             font-size: 6pt;
         }
+        .pdf-hidden {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 210mm;
+        }
         @media print {
             .no-print {
                 display: none;
@@ -58,7 +65,7 @@
         <button id="downloadPdf" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 no-print">Download PDF</button>
 
         <!-- PDF Preview (Hidden, used for generating PDF) -->
-        <div id="pdfContent" class="hidden">
+        <div id="pdfContent" class="pdf-hidden">
             <div class="a4-container">
                 <div id="pdfDataSets" class="grid grid-cols-4 gap-4"></div>
             </div>
@@ -131,7 +138,22 @@
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-            html2pdf().set(opt).from(element).save();
+
+            html2pdf().set(opt).from(element).output('blob').then((blob) => {
+                const url = URL.createObjectURL(blob);
+                const newTab = window.open(url, '_blank');
+                if (newTab) {
+                    newTab.onload = () => {
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'data_sets.pdf';
+                        link.click();
+                        setTimeout(() => URL.revokeObjectURL(url), 100);
+                    };
+                } else {
+                    alert('Please allow popups to open the PDF in a new tab.');
+                }
+            });
         }
 
         document.getElementById('addSet').addEventListener('click', addDataSet);
