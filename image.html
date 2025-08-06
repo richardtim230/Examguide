@@ -71,7 +71,17 @@
             font-size: 14px;
         }
         #pdfContent {
-            display: none;
+            position: absolute;
+            left: -9999px;
+            width: 210mm; /* A4 width */
+            font-size: 6pt; /* Set font size for PDF */
+        }
+        #pdfContent .card {
+            border: 1px solid #000;
+            margin-bottom: 10pt;
+            padding: 10pt;
+            page-break-inside: avoid;
+            width: 190mm; /* Fit within A4 margins */
         }
         @media print {
             .form-container, .button-group {
@@ -83,9 +93,9 @@
             .card {
                 font-size: 6pt !important;
                 page-break-inside: avoid;
-                width: 100%;
+                width: 190mm;
                 margin-bottom: 10pt;
-                border: none;
+                border: 1px solid #000;
                 box-shadow: none;
             }
         }
@@ -169,12 +179,16 @@
                 pdfContent.appendChild(card);
             });
 
-            const opt = {
-                margin: 10,
-                filename: 'sample_data.pdf',
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            html2pdf().from(pdfContent).set(opt).save();
+            // Add slight delay to ensure content is rendered
+            setTimeout(() => {
+                const opt = {
+                    margin: 10,
+                    filename: 'sample_data.pdf',
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    html2canvas: { scale: 2 }
+                };
+                html2pdf().from(pdfContent).set(opt).save();
+            }, 500);
         });
 
         function renderCards() {
