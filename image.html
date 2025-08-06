@@ -3,115 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Data Collection</title>
+    <title>Data Collection and PDF Download</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
+        @page {
+            size: A4;
+            margin: 10mm;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .a4-container {
+            width: 210mm;
+            font-size: 6pt;
         }
-        .form-container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #addSet {
-            background-color: #28a745;
-            color: white;
-        }
-        #viewData {
-            background-color: #007bff;
-            color: white;
-        }
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .card p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        @media (max-width: 600px) {
-            .cards-container {
-                grid-template-columns: 1fr;
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                margin: 0;
             }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="form-container">
-            <h2>Sample Data Collection</h2>
-            <div class="form-group">
-                <label for="commonName">Sample Common Name:</label>
-                <input type="text" id="commonName" required>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-7xl mx-auto">
+        <!-- Input Form -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-bold mb-4">Add Data Set</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Common Name</label>
+                    <input id="commonName" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Collected By</label>
+                    <input id="collectedBy" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Collecting Site</label>
+                    <input id="collectingSite" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Date Collected</label>
+                    <input id="dateCollected" type="date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="collectedBy">Collected By:</label>
-                <input type="text" id="collectedBy" required>
-            </div>
-            <div class="form-group">
-                <label for="collectingSite">Collecting Site:</label>
-                <input type="text" id="collectingSite" required>
-            </div>
-            <div class="form-group">
-                <label for="dateCollected">Date Collected:</label>
-                <input type="date" id="dateCollected" required>
-            </div>
-            <div class="button-group">
-                <button id="addSet">Add Set</button>
-                <button id="viewData">View</button>
+            <button id="addSet" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 no-print">Add Set</button>
+        </div>
+
+        <!-- Data Sets Display -->
+        <div id="dataSets" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6"></div>
+
+        <!-- Download Button -->
+        <button id="downloadPdf" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 no-print">Download PDF</button>
+
+        <!-- PDF Preview (Hidden, used for generating PDF) -->
+        <div id="pdfContent" class="hidden">
+            <div class="a4-container">
+                <div id="pdfDataSets" class="grid grid-cols-4 gap-4"></div>
             </div>
         </div>
-        <div class="cards-container" id="cardsContainer"></div>
     </div>
 
     <script>
-        const cardsContainer = document.getElementById('cardsContainer');
-        const addSetButton = document.getElementById('addSet');
-        const viewDataButton = document.getElementById('viewData');
-        let sets = [];
+        const dataSets = [];
 
-        addSetButton.addEventListener('click', () => {
+        function addDataSet() {
             const commonName = document.getElementById('commonName').value;
             const collectedBy = document.getElementById('collectedBy').value;
             const collectingSite = document.getElementById('collectingSite').value;
@@ -119,99 +76,66 @@
 
             if (commonName && collectedBy && collectingSite && dateCollected) {
                 const set = { commonName, collectedBy, collectingSite, dateCollected };
-                sets.push(set);
-                renderCards();
-                clearForm();
+                dataSets.push(set);
+                renderDataSets();
+                clearInputs();
             } else {
                 alert('Please fill in all fields.');
             }
-        });
-
-        viewDataButton.addEventListener('click', () => {
-            if (sets.length === 0) {
-                alert('No data to view.');
-                return;
-            }
-
-            // Create HTML for the new tab
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Sample Data View</title>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 10mm;
-                            font-size: 6pt;
-                        }
-                        .print-container {
-                            width: 190mm; /* Fit within A4 margins */
-                            margin: 0 auto;
-                        }
-                        .card {
-                            border: 1px solid #000;
-                            padding: 10pt;
-                            margin-bottom: 10pt;
-                            page-break-inside: avoid;
-                            background: white;
-                        }
-                        .card p {
-                            margin: 5pt 0;
-                        }
-                        @page {
-                            size: A4;
-                            margin: 10mm;
-                        }
-                        @media print {
-                            .card {
-                                font-size: 6pt;
-                                page-break-inside: avoid;
-                            }
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="print-container">
-                        ${sets.map(set => `
-                            <div class="card">
-                                <p><strong>Sample Common Name:</strong> ${set.commonName}</p>
-                                <p><strong>Collected By:</strong> ${set.collectedBy}</p>
-                                <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
-                                <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-        });
-
-        function renderCards() {
-            cardsContainer.innerHTML = '';
-            sets.forEach(set => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <p><strong>Sample Common Name:</strong> ${set.commonName}</p>
-                    <p><strong>Collected By:</strong> ${set.collectedBy}</p>
-                    <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
-                    <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
-                `;
-                cardsContainer.appendChild(card);
-            });
         }
 
-        function clearForm() {
+        function clearInputs() {
             document.getElementById('commonName').value = '';
             document.getElementById('collectedBy').value = '';
             document.getElementById('collectingSite').value = '';
             document.getElementById('dateCollected').value = '';
         }
+
+        function renderDataSets() {
+            const dataSetsContainer = document.getElementById('dataSets');
+            const pdfDataSetsContainer = document.getElementById('pdfDataSets');
+            dataSetsContainer.innerHTML = '';
+            pdfDataSetsContainer.innerHTML = '';
+
+            dataSets.forEach((set, index) => {
+                // Render for screen
+                const card = document.createElement('div');
+                card.className = 'bg-white p-4 rounded-lg shadow-md';
+                card.innerHTML = `
+                    <p><strong>Common Name:</strong> ${set.commonName}</p>
+                    <p><strong>Collected By:</strong> ${set.collectedBy}</p>
+                    <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
+                    <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
+                `;
+                dataSetsContainer.appendChild(card);
+
+                // Render for PDF
+                const pdfCard = document.createElement('div');
+                pdfCard.className = 'border border-gray-300 p-2';
+                pdfCard.innerHTML = `
+                    <p><strong>Common Name:</strong> ${set.commonName}</p>
+                    <p><strong>Collected By:</strong> ${set.collectedBy}</p>
+                    <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
+                    <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
+                `;
+                pdfDataSetsContainer.appendChild(pdfCard);
+            });
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('pdfContent');
+            const opt = {
+                margin: 10,
+                filename: 'data_sets.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        document.getElementById('addSet').addEventListener('click', addDataSet);
+        document.getElementById('downloadPdf').addEventListener('click', downloadPDF);
     </script>
 </body>
 </html>
