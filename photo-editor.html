@@ -35,16 +35,6 @@
     <h1 class="text-4xl font-bold mb-2">Image Editor & URL Converter</h1>
     <p class="text-lg">Transform your images: resize, edit, remove background, and convert to URL</p>
 </header>
-
-    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
-        <div class="bg-white w-95vw rounded-lg shadow-lg p-6">
-            <div class="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
-    <label for="imageInput" class="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
-    <input type="file" id="imageInput" accept="image/*" class="block w-full text-sm text-gray-500
-        file:mr-4 file:py-2 file:px-6 file:rounded-full file:border-0
-        file:text-sm file:font-semibold file:bg-blue-600 file:text-white
-        hover:file:bg-blue-700 file:transition file:duration-200">
-</div>
 <div class="relative overflow-hidden bg-blue-50 py-2 px-4 rounded-lg shadow-sm mb-6">
     <div class="news-carousel flex animate-slide-right whitespace-nowrap">
         <span class="text-sm font-medium text-blue-800 mx-4">Ensure to Click Upload Button to Generate the Actual URL</span>
@@ -60,6 +50,16 @@
             animation: slide-right 10s linear infinite;
         }
     </style>
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white w-95vw rounded-lg shadow-lg p-6">
+            <div class="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
+    <label for="imageInput" class="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+    <input type="file" id="imageInput" accept="image/*" class="block w-full text-sm text-gray-500
+        file:mr-4 file:py-2 file:px-6 file:rounded-full file:border-0
+        file:text-sm file:font-semibold file:bg-blue-600 file:text-white
+        hover:file:bg-blue-700 file:transition file:duration-200">
+</div>
+
             <div class="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
     <h2 class="text-lg font-semibold mb-3 text-gray-800">Original Image Properties</h2>
     <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
