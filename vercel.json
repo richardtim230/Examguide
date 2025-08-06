@@ -14,6 +14,7 @@
     { "source": "/testsession", "destination": "/test.html" },
     { "source": "/advertisement", "destination": "/advert.html" },
         { "source": "/photo-editor", "destination": "/photo-editor.html" },
+            { "source": "/css-lecturemanual", "destination": "/wweeek2.html" },
         { "source": "/MainStudentDashboard", "destination": "/student-dashoards.html" }
     
     
