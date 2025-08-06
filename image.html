@@ -3,161 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Collection and PDF Download</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="DE-BRAINSTORMERS' ACADEMY Data Collector - Collect and organize data sets (Common Name, Collected By, Collecting Site, Date Collected) in card format. Download as a formatted A4 PDF. Created by Richard O. Timothy for Obafemi Awolowo University students.">
+    <meta name="keywords" content="Data Collector, DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, data sets, PDF download, card layout, Common Name, Collected By, Collecting Site, Date Collected, Richard O. Timothy, educational tools, responsive design, Ile Ife, Nigeria, data management">
+    <meta property="og:image" content="https://img.freepik.com/free-photo/notebook-with-data_23-2148883427.jpg?uid=R108601234&ga=GA1.1.712161774.1734082676&semt=ais_hybrid">
+    <meta property="og:url" content="https://examguide.vercel.app/data-collector">
+    <meta property="og:type" content="website">
+    <title>Data Collector - DE-BRAINSTORMERS' ACADEMY</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        @page {
-            size: A4;
-            margin: 10mm;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .a4-container {
-            width: 210mm;
-            font-size: 6pt;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .pdf-hidden {
-            visibility: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 210mm;
+        .header-gradient {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8)), url('https://img.freepik.com/free-photo/open-book-with-glasses_23-2148883419.jpg?uid=R108601234&ga=GA1.1.712161774.1734082676&semt=ais_hybrid');
+            background-size: cover;
+            background-position: center;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        #pdfContent {
+            display: none;
         }
         @media print {
-            .no-print {
-                display: none;
-            }
-            body {
-                margin: 0;
+            #pdfContent {
+                display: block;
             }
         }
     </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-7xl mx-auto">
-        <!-- Input Form -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-bold mb-4">Add Data Set</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="header-gradient text-white py-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-3">DE-BRAINSTORMERS' Data Collector</h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto">Collect and organize data sets for research and academic purposes, downloadable as a formatted A4 PDF.</p>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add Data Set</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Common Name</label>
-                    <input id="commonName" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <label for="commonName" class="block text-sm font-medium text-gray-700">Common Name</label>
+                    <input type="text" id="commonName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g., Sample Plant">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Collected By</label>
-                    <input id="collectedBy" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <label for="collectedBy" class="block text-sm font-medium text-gray-700">Collected By</label>
+                    <input type="text" id="collectedBy" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g., John Doe">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Collecting Site</label>
-                    <input id="collectingSite" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <label for="collectingSite" class="block text-sm font-medium text-gray-700">Collecting Site</label>
+                    <input type="text" id="collectingSite" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g., Ile Ife">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Date Collected</label>
-                    <input id="dateCollected" type="date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <label for="dateCollected" class="block text-sm font-medium text-gray-700">Date Collected</label>
+                    <input type="date" id="dateCollected" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                 </div>
             </div>
-            <button id="addSet" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 no-print">Add Set</button>
+            <button id="addSet" class="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Add Data Set</button>
         </div>
 
-        <!-- Data Sets Display -->
-        <div id="dataSets" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6"></div>
-
-        <!-- Download Button -->
-        <button id="downloadPdf" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 no-print">Download PDF</button>
-
-        <!-- PDF Preview (Hidden, used for generating PDF) -->
-        <div id="pdfContent" class="pdf-hidden">
-            <div class="a4-container">
-                <div id="pdfDataSets" class="grid grid-cols-4 gap-4"></div>
+        <div class="mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Collected Data Sets</h2>
+            <div id="dataSets" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Data sets will be dynamically populated here -->
             </div>
         </div>
-    </div>
+
+        <div class="flex justify-end mb-6">
+            <button id="downloadPdf" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" disabled>Download PDF</button>
+        </div>
+
+        <div id="pdfContent" class="absolute left-0 top-0 w-[210mm] h-[297mm] p-4 bg-white">
+            <h2 class="text-[6pt] font-bold mb-2">Collected Data Sets</h2>
+            <div id="pdfDataSets" class="grid grid-cols-4 gap-2 text-[6pt]"></div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>Created with love by Richard O. Timothy</p>
+    </footer>
 
     <script>
         const dataSets = [];
+        const addSetButton = document.getElementById('addSet');
+        const downloadPdfButton = document.getElementById('downloadPdf');
+        const dataSetsContainer = document.getElementById('dataSets');
+        const pdfDataSetsContainer = document.getElementById('pdfDataSets');
+        const commonNameInput = document.getElementById('commonName');
+        const collectedByInput = document.getElementById('collectedBy');
+        const collectingSiteInput = document.getElementById('collectingSite');
+        const dateCollectedInput = document.getElementById('dateCollected');
 
-        function addDataSet() {
-            const commonName = document.getElementById('commonName').value;
-            const collectedBy = document.getElementById('collectedBy').value;
-            const collectingSite = document.getElementById('collectingSite').value;
-            const dateCollected = document.getElementById('dateCollected').value;
+        addSetButton.addEventListener('click', () => {
+            const commonName = commonNameInput.value.trim();
+            const collectedBy = collectedByInput.value.trim();
+            const collectingSite = collectingSiteInput.value.trim();
+            const dateCollected = dateCollectedInput.value;
 
             if (commonName && collectedBy && collectingSite && dateCollected) {
-                const set = { commonName, collectedBy, collectingSite, dateCollected };
-                dataSets.push(set);
+                const dataSet = { commonName, collectedBy, collectingSite, dateCollected };
+                dataSets.push(dataSet);
                 renderDataSets();
                 clearInputs();
+                downloadPdfButton.disabled = false;
             } else {
-                alert('Please fill in all fields.');
+                alert('Please fill in all fields');
             }
-        }
-
-        function clearInputs() {
-            document.getElementById('commonName').value = '';
-            document.getElementById('collectedBy').value = '';
-            document.getElementById('collectingSite').value = '';
-            document.getElementById('dateCollected').value = '';
-        }
+        });
 
         function renderDataSets() {
-            const dataSetsContainer = document.getElementById('dataSets');
-            const pdfDataSetsContainer = document.getElementById('pdfDataSets');
             dataSetsContainer.innerHTML = '';
             pdfDataSetsContainer.innerHTML = '';
-
-            dataSets.forEach((set, index) => {
-                // Render for screen
+            dataSets.forEach((dataSet, index) => {
+                // Render card for display
                 const card = document.createElement('div');
-                card.className = 'bg-white p-4 rounded-lg shadow-md';
+                card.className = 'card bg-white rounded-lg shadow-md p-4';
                 card.innerHTML = `
-                    <p><strong>Common Name:</strong> ${set.commonName}</p>
-                    <p><strong>Collected By:</strong> ${set.collectedBy}</p>
-                    <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
-                    <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Set ${index + 1}</h3>
+                    <p class="text-sm text-gray-600"><strong>Common Name:</strong> ${dataSet.commonName}</p>
+                    <p class="text-sm text-gray-600"><strong>Collected By:</strong> ${dataSet.collectedBy}</p>
+                    <p class="text-sm text-gray-600"><strong>Collecting Site:</strong> ${dataSet.collectingSite}</p>
+                    <p class="text-sm text-gray-600"><strong>Date Collected:</strong> ${dataSet.dateCollected}</p>
                 `;
                 dataSetsContainer.appendChild(card);
 
                 // Render for PDF
                 const pdfCard = document.createElement('div');
-                pdfCard.className = 'border border-gray-300 p-2';
+                pdfCard.className = 'border border-gray-200 p-2';
                 pdfCard.innerHTML = `
-                    <p><strong>Common Name:</strong> ${set.commonName}</p>
-                    <p><strong>Collected By:</strong> ${set.collectedBy}</p>
-                    <p><strong>Collecting Site:</strong> ${set.collectingSite}</p>
-                    <p><strong>Date Collected:</strong> ${set.dateCollected}</p>
+                    <p><strong>Common Name:</strong> ${dataSet.commonName}</p>
+                    <p><strong>Collected By:</strong> ${dataSet.collectedBy}</p>
+                    <p><strong>Collecting Site:</strong> ${dataSet.collectingSite}</p>
+                    <p><strong>Date Collected:</strong> ${dataSet.dateCollected}</p>
                 `;
                 pdfDataSetsContainer.appendChild(pdfCard);
             });
         }
 
-        function downloadPDF() {
+        function clearInputs() {
+            commonNameInput.value = '';
+            collectedByInput.value = '';
+            collectingSiteInput.value = '';
+            dateCollectedInput.value = '';
+        }
+
+        downloadPdfButton.addEventListener('click', () => {
             const element = document.getElementById('pdfContent');
             const opt = {
                 margin: 10,
-                filename: 'data_sets.pdf',
+                filename: 'data-sets.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-
-            html2pdf().set(opt).from(element).output('blob').then((blob) => {
-                const url = URL.createObjectURL(blob);
-                const newTab = window.open(url, '_blank');
-                if (newTab) {
-                    newTab.onload = () => {
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = 'data_sets.pdf';
-                        link.click();
-                        setTimeout(() => URL.revokeObjectURL(url), 100);
-                    };
-                } else {
-                    alert('Please allow popups to open the PDF in a new tab.');
-                }
-            });
-        }
-
-        document.getElementById('addSet').addEventListener('click', addDataSet);
-        document.getElementById('downloadPdf').addEventListener('click', downloadPDF);
+            html2pdf().from(element).set(opt).save();
+        });
     </script>
 </body>
 </html>
