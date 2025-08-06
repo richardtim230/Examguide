@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DE-BRAINSTORMERS' ACADEMY Data Collector - Collect and organize data sets (Common Name, Collected By, Collecting Site, Date Collected) in card format. Download as a formatted A4 PDF. Created by Richard O. Timothy for Obafemi Awolowo University students.">
-    <meta name="keywords" content="Data Collector, DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, data sets, PDF download, card layout, Common Name, Collected By, Collecting Site, Date Collected, Richard O. Timothy, educational tools, responsive design, Ile Ife, Nigeria, data management">
+    <meta name="description" content="DE-BRAINSTORMERS' ACADEMY Data Collector - Collect and organize data sets (Common Name, Collected By, Collecting Site, Date Collected) in card format. View in a formatted A4 layout in a new tab. Created by Richard O. Timothy for Obafemi Awolowo University students.">
+    <meta name="keywords" content="Data Collector, DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, data sets, A4 layout, card layout, Common Name, Collected By, Collecting Site, Date Collected, Richard O. Timothy, educational tools, responsive design, Ile Ife, Nigeria, data management">
     <meta property="og:image" content="https://img.freepik.com/free-photo/notebook-with-data_23-2148883427.jpg?uid=R108601234&ga=GA1.1.712161774.1734082676&semt=ais_hybrid">
     <meta property="og:url" content="https://examguide.vercel.app/data-collector">
     <meta property="og:type" content="website">
     <title>Data Collector - DE-BRAINSTORMERS' ACADEMY</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -44,7 +43,7 @@
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <header class="header-gradient text-white py-12 text-center">
         <h1 class="text-4xl md:text-5xl font-bold mb-3">DE-BRAINSTORMERS' Data Collector</h1>
-        <p class="text-lg md:text-xl max-w-2xl mx-auto">Collect and organize data sets for research and academic purposes, downloadable as a formatted A4 PDF.</p>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto">Collect and organize data sets for research and academic purposes, viewable in a formatted A4 layout.</p>
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
@@ -87,12 +86,7 @@
         </div>
 
         <div class="flex justify-end mb-6">
-            <button id="downloadPdf" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" disabled>Download PDF</button>
-        </div>
-
-        <div id="pdfContent" class="fixed" style="left: -9999px; width: 210mm; min-height: 297mm; padding: 10mm; background: white;">
-            <h2 style="font-size: 6pt; font-weight: bold; margin-bottom: 4mm;">Collected Data Sets</h2>
-            <div id="pdfDataSets" class="grid grid-cols-4 gap-2" style="font-size: 6pt;"></div>
+            <button id="openNewTab" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" disabled>Open in New Tab</button>
         </div>
     </main>
 
@@ -103,10 +97,8 @@
     <script>
         const dataSets = [];
         const addSetButton = document.getElementById('addSet');
-        const downloadPdfButton = document.getElementById('downloadPdf');
+        const openNewTabButton = document.getElementById('openNewTab');
         const dataSetsContainer = document.getElementById('dataSets');
-        const pdfContent = document.getElementById('pdfContent');
-        const pdfDataSetsContainer = document.getElementById('pdfDataSets');
         const commonNameInput = document.getElementById('commonName');
         const collectedByInput = document.getElementById('collectedBy');
         const collectingSiteInput = document.getElementById('collectingSite');
@@ -123,7 +115,7 @@
                 dataSets.push(dataSet);
                 renderDataSets();
                 clearInputs();
-                downloadPdfButton.disabled = false;
+                openNewTabButton.disabled = false;
             } else {
                 alert('Please fill in all fields');
             }
@@ -131,9 +123,7 @@
 
         function renderDataSets() {
             dataSetsContainer.innerHTML = '';
-            pdfDataSetsContainer.innerHTML = '';
             dataSets.forEach((dataSet, index) => {
-                // Render card for display
                 const card = document.createElement('div');
                 card.className = 'card bg-white rounded-lg shadow-md p-4';
                 card.innerHTML = `
@@ -144,18 +134,6 @@
                     <p class="text-sm text-gray-600"><strong>Date Collected:</strong> ${dataSet.dateCollected}</p>
                 `;
                 dataSetsContainer.appendChild(card);
-
-                // Render for PDF
-                const pdfCard = document.createElement('div');
-                pdfCard.className = 'border border-gray-200 p-1';
-                pdfCard.style.cssText = 'page-break-inside: avoid;';
-                pdfCard.innerHTML = `
-                    <p style="line-height: 1.2;"><strong>Common Name:</strong> ${dataSet.commonName}</p>
-                    <p style="line-height: 1.2;"><strong>Collected By:</strong> ${dataSet.collectedBy}</p>
-                    <p style="line-height: 1.2;"><strong>Collecting Site:</strong> ${dataSet.collectingSite}</p>
-                    <p style="line-height: 1.2;"><strong>Date Collected:</strong> ${dataSet.dateCollected}</p>
-                `;
-                pdfDataSetsContainer.appendChild(pdfCard);
             });
         }
 
@@ -166,19 +144,58 @@
             dateCollectedInput.value = '';
         }
 
-        downloadPdfButton.addEventListener('click', () => {
-            const element = document.getElementById('pdfContent');
-            const opt = {
-                margin: 10,
-                filename: 'data-sets.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            // Delay to ensure DOM rendering
-            setTimeout(() => {
-                html2pdf().from(element).set(opt).save();
-            }, 100);
+        openNewTabButton.addEventListener('click', () => {
+            const newWindow = window.open('', '_blank');
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Data Sets - DE-BRAINSTORMERS' ACADEMY</title>
+                    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+                    <style>
+                        body {
+                            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .a4-page {
+                            width: 210mm;
+                            min-height: 297mm;
+                            padding: 10mm;
+                            background: white;
+                            margin: 0 auto;
+                            box-sizing: border-box;
+                        }
+                        .data-card {
+                            page-break-inside: avoid;
+                            border: 0.5mm solid #e5e7eb;
+                            padding: 1mm;
+                            font-size: 6pt;
+                            line-height: 1.2;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="a4-page">
+                        <h2 style="font-size: 6pt; font-weight: bold; margin-bottom: 4mm;">Collected Data Sets</h2>
+                        <div class="grid grid-cols-4 gap-2">
+                            ${dataSets.map(dataSet => `
+                                <div class="data-card">
+                                    <p><strong>Common Name:</strong> ${dataSet.commonName}</p>
+                                    <p><strong>Collected By:</strong> ${dataSet.collectedBy}</p>
+                                    <p><strong>Collecting Site:</strong> ${dataSet.collectingSite}</p>
+                                    <p><strong>Date Collected:</strong> ${dataSet.dateCollected}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            newWindow.document.write(htmlContent);
+            newWindow.document.close();
         });
     </script>
 </body>
