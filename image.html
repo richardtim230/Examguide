@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DE-BRAINSTORMERS' ACADEMY Data Collector - Collect and organize data sets (Common Name, Collected By, Collecting Site, Date Collected) in card format. View in a formatted A4 layout in a new tab. Created by Richard O. Timothy for Obafemi Awolowo University students.">
+    <meta name="description" content="Data Collector - Collect and organize data sets (Common Name, Collected By, Collecting Site, Date Collected) in card format. View in a formatted A4 layout in a new tab. Created by Richard O. Timothy for Obafemi Awolowo University students.">
     <meta name="keywords" content="Data Collector, DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, data sets, A4 layout, card layout, Common Name, Collected By, Collecting Site, Date Collected, Richard O. Timothy, educational tools, responsive design, Ile Ife, Nigeria, data management">
     <meta property="og:image" content="https://img.freepik.com/free-photo/notebook-with-data_23-2148883427.jpg?uid=R108601234&ga=GA1.1.712161774.1734082676&semt=ais_hybrid">
     <meta property="og:url" content="https://examguide.vercel.app/data-collector">
     <meta property="og:type" content="website">
-    <title>Data Collector - DE-BRAINSTORMERS' ACADEMY</title>
+    <title>Data Collector</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         * {
@@ -42,7 +42,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <header class="header-gradient text-white py-12 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-3">DE-BRAINSTORMERS' Data Collector</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-3">Data Collector</h1>
         <p class="text-lg md:text-xl max-w-2xl mx-auto">Collect and organize data sets for research and academic purposes, viewable in a formatted A4 layout.</p>
     </header>
 
@@ -59,7 +59,7 @@
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add Data Set</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label for="commonName" class="block text-sm font-medium text-gray-700">Common Name</label>
+                    <label for="commonName" class="block text-sm font-medium text-gray-700">Sample Name</label>
                     <input type="text" id="commonName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="e.g., Sample Plant">
                 </div>
                 <div>
@@ -128,7 +128,7 @@
                 card.className = 'card bg-white rounded-lg shadow-md p-4';
                 card.innerHTML = `
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">Set ${index + 1}</h3>
-                    <p class="text-sm text-gray-600"><strong>Common Name:</strong> ${dataSet.commonName}</p>
+                    <p class="text-sm text-gray-600"><strong>Name:</strong> ${dataSet.commonName}</p>
                     <p class="text-sm text-gray-600"><strong>Collected By:</strong> ${dataSet.collectedBy}</p>
                     <p class="text-sm text-gray-600"><strong>Collecting Site:</strong> ${dataSet.collectingSite}</p>
                     <p class="text-sm text-gray-600"><strong>Date Collected:</strong> ${dataSet.dateCollected}</p>
