@@ -375,7 +375,7 @@
             <ul class="space-y-6">
                 <li><a href="#dashboard" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
                 <li><a href="#mock-tests" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="mock-tests"><i class="fas fa-file-alt"></i><span>Mock Tests</span></a></li>
-                <li><a href="#exams" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="exams"><i class="fas fa-graduation-cap"></i><span>Exams</span></a></li>
+                
                 <li><a href="#study-resources" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="study-resources"><i class="fas fa-book"></i><span>Study Resources</span></a></li>
                 <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
                 <li><a href="#profile-settings" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="profile-settings"><i class="fas fa-user"></i><span>Profile Settings</span></a></li>
@@ -636,37 +636,7 @@
     </section>
 
         
-        <!-- Exams Tab -->
-        <section id="exams" class="tab-content">
-            <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex justify-between items-center">
-                <div>
-                  <h2 class="text-3xl font-bold text-indigo-900">Exams</h2>
-                  <p class="text-gray-600 mt-2">Stay on top of your upcoming and past exams</p>
-                </div>
-                <button onclick="openScheduledExamModal()" class="ml-4 px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200">View Scheduled Exam</button>
-            </header>
-            
-                <div class="bg-white rounded-2xl shadow-xl p-6 card">
-                    <h3 class="text-xl font-semibold text-indigo-900 mb-4">Available Assessments</h3>
-                    <div class="overflow-x-auto w-full">
-                        <table class="test-table w-full" id="examAvailableTable">
-                            <thead>
-                              <tr>
-                                <th>Test</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div id="examAvailablePagination" class="table-pagination"></div>
-                </div>
-            </div>
-        </section>
+        
 
         <!-- Study Resources Tab -->
         <section id="study-resources" class="tab-content">
