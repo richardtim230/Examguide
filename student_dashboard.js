@@ -1118,7 +1118,7 @@ async function fetchAvailableTests() {
       document.getElementById("upcomingTest").innerText = "None";
       document.getElementById("testCountdown").innerText = "";
       buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
-      buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
+   
       return;
     }
 
@@ -1153,7 +1153,6 @@ async function fetchAvailableTests() {
     }
     availableSchedulesCache = uniqueSchedules;
     renderAvailableTablePage(1);
-    renderExamAvailableTablePage(1);
 
     // Upcoming test logic
     let soonest = null;
@@ -1204,7 +1203,7 @@ async function fetchAvailableTests() {
     document.getElementById("upcomingTest").innerText = "None";
     document.getElementById("testCountdown").innerText = "";
     buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
-    buildPagination(0, 1, AVAILABLE_PAGE_SIZE, 'renderExamAvailableTablePage', 'examAvailablePagination');
+    
   }
 }
 
@@ -1995,9 +1994,8 @@ async function initDashboard() {
   renderLeaderboard();
   await fetchAnnouncements();
   await fetchInbox();
-  hidePreloaderSpinner();
   await fetchAvailableTests();
-  
+  hidePreloaderSpinner();
   
 }
 
