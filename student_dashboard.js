@@ -1994,9 +1994,10 @@ async function initDashboard() {
   await fetchLeaderboard();
   renderLeaderboard();
   await fetchAnnouncements();
+  await fetchInbox();
   hidePreloaderSpinner();
   await fetchAvailableTests();
-  await fetchInbox();
+  
   
 }
 
