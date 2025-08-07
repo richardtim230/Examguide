@@ -1994,9 +1994,10 @@ async function initDashboard() {
   await fetchLeaderboard();
   renderLeaderboard();
   await fetchAnnouncements();
+  hidePreloaderSpinner();
   await fetchAvailableTests();
   await fetchInbox();
-  hidePreloaderSpinner();
+  
 }
 
 window.addEventListener("DOMContentLoaded", initDashboard);
