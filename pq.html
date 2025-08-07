@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>OAU ExamGuard - Exam Session</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .exam-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2e7d32;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: #fff;
+            display: none;
+        }
+        .sidebar h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+        .tool-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background-color: #388e3c;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        .tool-btn:hover {
+            background-color: #43a047;
+        }
+        .tool-btn img {
+            width: 20px;
+            margin-right: 0.5rem;
+        }
+        .nav-toggle {
+            display: none;
+            background-color: #2e7d32;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .main-content {
+            flex-grow: 1;
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            max-width: 100%;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            color: #1e1e1e;
+        }
+        .header .user-info {
+            font-size: 1rem;
+            color: #666;
+        }
+        .timer-box {
+            background-color: #d32f2f;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .question-section {
+            margin-bottom: 1.5rem;
+        }
+        .question-section h2 {
+            font-size: 1.25rem;
+            color: #1e1e1e;
+            margin-bottom: 0.5rem;
+        }
+        .question-text {
+            font-size: 1rem;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .option-item input[type="radio"] {
+            margin: 0;
+            cursor: pointer;
+        }
+        .option-text {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            flex-grow: 1;
+            background-color: #f9fafb;
+            cursor: pointer;
+        }
+        .option-text:hover {
+            background-color: #e5e7eb;
+        }
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        .nav-btn, .submit-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .nav-btn {
+            background-color: #e0e0e0;
+            color: #1e1e1e;
+            border: none;
+        }
+        .nav-btn:hover {
+            background-color: #ccc;
+        }
+        .submit-btn {
+            background-color: #2e7d32;
+            color: #fff;
+            border: none;
+        }
+        .submit-btn:hover {
+            background-color: #388e3c;
+        }
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(2.5rem, 1fr));
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .palette-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            cursor: pointer;
+            background-color: #fff;
+        }
+        .palette-btn.answered {
+            background-color: #2e7d32;
+            color: #fff;
+        }
+        .palette-btn.current {
+            border: 2px solid #d32f2f;
+        }
+        @media (max-width: 768px) {
+            .exam-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                display: none;
+                width: 100%;
+            }
+            .nav-toggle {
+                display: block;
+                margin-bottom: 1rem;
+            }
+            .sidebar.active {
+                display: block;
+            }
+            .palette {
+                grid-template-columns: repeat(auto-fill, minmax(2rem, 1fr));
+            }
+            .palette-btn {
+                width: 2rem;
+                height: 2rem;
+                font-size: 0.75rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .timer-box {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="exam-container">
+        <button class="nav-toggle" onclick="toggleSidebar()">☰ Menu</button>
+        <div class="sidebar" id="sidebar">
+            <h3>Quick Tools</h3>
+            <div class="tool-btn">
+                <img src="https://via.placeholder.com/20/2e7d32/fff?text=C" alt="Calculator">
+                <span>Calculator</span>
+            </div>
+            <div class="tool-btn">
+                <img src="https://via.placeholder.com/20/2e7d32/fff?text=R" alt="Rough Sheet">
+                <span>Rough Sheet</span>
+            </div>
+            <h3>Subjects</h3>
+            <div class="tool-btn">
+                <img src="https://via.placeholder.com/20/2e7d32/fff?text=M" alt="Mathematics">
+                <span>Mathematics</span>
+            </div>
+            <div class="tool-btn">
+                <img src="https://via.placeholder.com/20/2e7d32/fff?text=P" alt="Physics">
+                <span>Physics</span>
+            </div>
+            <div class="tool-btn">
+                <img src="https://via.placeholder.com/20/2e7d32/fff?text=C" alt="Chemistry">
+                <span>Chemistry</span>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Mathematics in Physics</h1>
+                    <div class="user-info">PROPER</div>
+                </div>
+                <div class="timer-box" id="timer">23:43</div>
+            </div>
+            <div class="question-section">
+                <h2>Question 1</h2>
+                <div class="question-text">This question is based on S.L. Ayorinde's DEPENDENCE. <br> Tayo regards Yemi's establishment of Christian television station as</div>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="answer" id="a">
+                        <label for="a" class="option-text">A: Opportunistic</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="answer" id="b">
+                        <label for="b" class="option-text">B: Believer's duty</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="answer" id="c">
+                        <label for="c" class="option-text">C: Next move</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="answer" id="d">
+                        <label for="d" class="option-text">D: Ambitious</label>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div>
+                    <button class="nav-btn" onclick="prevQuestion()">Previous</button>
+                    <button class="nav-btn" onclick="nextQuestion()">Next</button>
+                </div>
+                <button class="submit-btn" onclick="submitExam()">Submit</button>
+            </div>
+            <div class="palette">
+                <button class="palette-btn current">1</button>
+                <button class="palette-btn">2</button>
+                <button class="palette-btn">3</button>
+                <button class="palette-btn answered">4</button>
+                <button class="palette-btn">5</button>
+                <!-- Add more dynamically based on total questions -->
+            </div>
+        </div>
+    </div>
+    <script>
+        let timeLeft = 1423; // 23:43 in seconds
+        const timerElement = document.getElementById('timer');
+        let currentQuestion = 1;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                submitExam();
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                updateQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < 50) {
+                currentQuestion++;
+                updateQuestion();
+            }
+        }
+
+        function updateQuestion() {
+            // Update question text and options dynamically here
+            const paletteButtons = document.querySelectorAll('.palette-btn');
+            paletteButtons.forEach((btn, index) => {
+                btn.classList.toggle('current', index + 1 === currentQuestion);
+            });
+        }
+
+        function submitExam() {
+            alert('Exam submitted successfully!');
+            // Redirect or update UI as needed
+        }
+
+        document.querySelectorAll('.option-item input').forEach(input => {
+            input.addEventListener('change', () => {
+                const paletteBtn = document.querySelector(`.palette-btn:nth-child(${currentQuestion})`);
+                paletteBtn.classList.add('answered');
+            });
+        });
+
+        updateTimer();
+    </script>
+</body>
+</html>
