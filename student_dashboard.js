@@ -1,3 +1,4 @@
+
 // =================== CONFIG ===================
 const API_URL = "https://examguide.onrender.com/api/";
 const token = localStorage.getItem("token");
@@ -70,6 +71,7 @@ function getProfilePicUrl(student) {
   const name = encodeURIComponent(student.fullname || student.username || "Student");
   return `https://ui-avatars.com/api/?name=${name}&background=ede9fe&color=3b82f6&size=128&rounded=true`;
 }
+
 function getGreetingData() {
   const hour = new Date().getHours();
   if (hour >= 5 && hour < 12) {
@@ -144,6 +146,7 @@ async function fetchWithAuth(url, options = {}) {
   }
   return resp;
 }
+
 // ========== Motivational Quotes Data ==========
 const MOTIVATIONAL_QUOTES = [
   { 
@@ -186,14 +189,13 @@ const MOTIVATIONAL_QUOTES = [
     text: "Learning never exhausts the mind.",
     author: "Leonardo da Vinci"
   }
-  // ...add more quotes as desired
 ];
 
 // ========== Greeting Name Helper ==========
 function getFirstName(fullname, username) {
   if (!fullname && !username) return "";
   const name = fullname || username;
-  return name.trim().split(/\s+/)[0]; // return only the first name part
+  return name.trim().split(/\s+/)[0];
 }
 
 // ========== Motivational Quote Rotation & Animation ==========
@@ -208,7 +210,6 @@ function showRandomQuote(prevIdx = -1) {
   const aEl = document.getElementById("quoteAuthor");
   if (!qEl || !aEl) return;
 
-  // Animate out
   qEl.classList.remove("zoom-in");
   aEl.classList.remove("zoom-in");
   qEl.classList.add("zoom-out");
@@ -221,9 +222,8 @@ function showRandomQuote(prevIdx = -1) {
     aEl.classList.remove("zoom-out");
     qEl.classList.add("zoom-in");
     aEl.classList.add("zoom-in");
-  }, 500); // must match zoom-out animation duration
+  }, 500);
 
-  // Schedule the next quote
   clearTimeout(window._quoteTimer);
   window._quoteTimer = setTimeout(() => showRandomQuote(idx), 6000);
 }
@@ -231,8 +231,8 @@ function showRandomQuote(prevIdx = -1) {
 function startQuoteRotation() {
   showRandomQuote();
 }
-// --- Unlimited Random Bible Verse Rotator ---
 
+// --- Unlimited Random Bible Verse Rotator ---
 const BIBLE_BOOKS = [
   {"name":"Genesis","chapters":50,"verses":[31,25,24,26,32,22,24,22,29,32,32,20,18,24,21,16,27,33,38,18,34,24,20,67,34,35,46,22,35,43,55,32,20,31,29,43,36,30,23,23,57,38,34,34,28,34,31,22,33,26]},
   {"name":"Exodus","chapters":40,"verses":[22,25,22,31,23,30,25,32,35,29,10,51,22,31,27,36,16,27,25,26,36,30,33,18,40,37,21,43,46,38,18,35,23,35,35,38,29,31,43,38]},
@@ -305,11 +305,8 @@ const BIBLE_BOOKS = [
 const VERSE_API_URL = "https://bible-api.com/";
 
 function getRandomBibleReference() {
-  // Pick a random book
   const book = BIBLE_BOOKS[Math.floor(Math.random() * BIBLE_BOOKS.length)];
-  // Random chapter
   const chapter = Math.floor(Math.random() * book.chapters) + 1;
-  // Random verse (based on chapter's verse count)
   const verseCount = book.verses[chapter - 1];
   const verse = Math.floor(Math.random() * verseCount) + 1;
   return `${book.name} ${chapter}:${verse}`;
@@ -332,120 +329,60 @@ async function fetchRandomBibleVerse() {
   }
 }
 
-let _verseTimer = null;
+async function fetchRandomQuranVerse() {
+  const surah = Math.floor(Math.random() * 114) + 1;
+  const surahInfoResp = await fetch(`https://api.alquran.cloud/v1/surah/${surah}`);
+  const surahInfo = await surahInfoResp.json();
+  const ayahCount = surahInfo.data.numberOfAyahs;
+  const ayah = Math.floor(Math.random() * ayahCount) + 1;
+  const resp = await fetch(`https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/en.sahih`);
+  const data = await resp.json();
+  if (data && data.data) {
+    return {
+      text: data.data.text,
+      ref: `Qur'an ${surahInfo.data.englishName} ${surah}:${ayah}`
+    };
+  }
+  return { text: "Unable to fetch verse.", ref: "" };
+}
 
-async function showRandomBibleVerse() {
+async function showRandomReligiousMessage() {
   const verseBox = document.getElementById("verseBox");
   const verseTextEl = document.getElementById("verseText");
   const verseRefEl = document.getElementById("verseRef");
   if (!verseBox || !verseTextEl || !verseRefEl) return;
 
+  const religion = student?.religion || localStorage.getItem('studentReligion') || "";
   verseBox.classList.remove("zoom-in");
   verseBox.classList.add("zoom-out");
 
   setTimeout(async () => {
-    const verse = await fetchRandomBibleVerse();
+    let verse = { text: "", ref: "" };
+    if (religion === "islam") {
+      verse = await fetchRandomQuranVerse();
+    } else if (religion === "christianity") {
+      verse = await fetchRandomBibleVerse();
+    } else {
+      verse = { text: "“Education is the key to success.”", ref: "— Unknown" };
+    }
     verseTextEl.textContent = `“${verse.text.trim()}”`;
     verseRefEl.textContent = `— ${verse.ref}`;
     verseBox.classList.remove("zoom-out");
     verseBox.classList.add("zoom-in");
   }, 1000);
 
-  clearTimeout(_verseTimer);
-  _verseTimer = setTimeout(showRandomBibleVerse, 25000);
-}
-
-function startVerseRotation() {
-  showRandomBibleVerse();
-}
-
-// Start on dashboard load (add to init logic)
-window.addEventListener("DOMContentLoaded", () => {
-  startVerseRotation();
-});
-
-// --- Religion-aware Verse/Message Rotator ---
-
-// Add the Quran fetcher
-async function fetchRandomQuranVerse() {
-    // Quran: 114 chapters (surahs)
-    const surah = Math.floor(Math.random() * 114) + 1;
-    // Fetch surah info to get ayah count
-    const surahInfoResp = await fetch(`https://api.alquran.cloud/v1/surah/${surah}`);
-    const surahInfo = await surahInfoResp.json();
-    const ayahCount = surahInfo.data.numberOfAyahs;
-    const ayah = Math.floor(Math.random() * ayahCount) + 1;
-    // Fetch the verse (ayah)
-    const resp = await fetch(`https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/en.sahih`);
-    const data = await resp.json();
-    if (data && data.data) {
-        return {
-            text: data.data.text,
-            ref: `Qur'an ${surahInfo.data.englishName} ${surah}:${ayah}`
-        };
-    }
-    return { text: "Unable to fetch verse.", ref: "" };
-}
-
-async function showRandomReligiousMessage() {
-    const verseBox = document.getElementById("verseBox");
-    const verseTextEl = document.getElementById("verseText");
-    const verseRefEl = document.getElementById("verseRef");
-    if (!verseBox || !verseTextEl || !verseRefEl) return;
-
-    // Get religion from profile (you should load student object first)
-    const religion = student?.religion || localStorage.getItem('studentReligion') || "";
-
-    // Animate out
-    verseBox.classList.remove("zoom-in");
-    verseBox.classList.add("zoom-out");
-
-    setTimeout(async () => {
-        let verse = { text: "", ref: "" };
-        if (religion === "islam") {
-            verse = await fetchRandomQuranVerse();
-        } else if (religion === "christianity") {
-            verse = await fetchRandomBibleVerse();
-        } else {
-            verse = { text: "“Education is the key to success.”", ref: "— Unknown" }; // fallback
-        }
-        verseTextEl.textContent = `“${verse.text.trim()}”`;
-        verseRefEl.textContent = `— ${verse.ref}`;
-        verseBox.classList.remove("zoom-out");
-        verseBox.classList.add("zoom-in");
-    }, 1000);
-
-    clearTimeout(window._verseTimer);
-    window._verseTimer = setTimeout(showRandomReligiousMessage, 25000);
+  clearTimeout(window._verseTimer);
+  window._verseTimer = setTimeout(showRandomReligiousMessage, 25000);
 }
 
 function startReligiousVerseRotation() {
-    showRandomReligiousMessage();
+  showRandomReligiousMessage();
 }
 
-// Call this in your dashboard/profile init logic
 window.addEventListener("DOMContentLoaded", () => {
-    startReligiousVerseRotation();
+  startReligiousVerseRotation();
+  startQuoteRotation();
 });
-
-// ========== Profile Pic & Greeting Helpers ==========
-function getProfilePicUrl(student) {
-  if (student.profilePic) return student.profilePic;
-  const name = encodeURIComponent(student.fullname || student.username || "Student");
-  return `https://ui-avatars.com/api/?name=${name}&background=ede9fe&color=3b82f6&size=128&rounded=true`;
-}
-function getGreetingData() {
-  const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) {
-    return { text: "Good morning", icon: "🌅", label: "Morning" };
-  } else if (hour >= 12 && hour < 17) {
-    return { text: "Good afternoon", icon: "🌞", label: "Afternoon" };
-  } else if (hour >= 17 && hour < 20) {
-    return { text: "Good evening", icon: "🌇", label: "Evening" };
-  } else {
-    return { text: "Good night", icon: "🌙", label: "Night" };
-  }
-}
 
 // =================== PROFILE ===================
 async function fetchProfile() {
@@ -454,14 +391,12 @@ async function fetchProfile() {
   student = data.user;
   student.id = student._id || student.id;
 
-  // ---- Profile Pic & Greeting (UPDATED) ----
   const profilePic = getProfilePicUrl(student);
   if (document.getElementById("studentProfilePic")) {
     document.getElementById("studentProfilePic").src = profilePic;
     document.getElementById("studentProfilePic").alt = (student.fullname || student.username || "Profile");
   }
   const greeting = getGreetingData();
-  // Use first name only
   const firstName = getFirstName(student.fullname, student.username);
   if (document.getElementById("greetingHeader")) {
     document.getElementById("greetingHeader").innerHTML = `${greeting.text}, <span id="studentName">${firstName}</span>!`;
@@ -469,10 +404,7 @@ async function fetchProfile() {
   if (document.getElementById("greetingTimeIcon")) {
     document.getElementById("greetingTimeIcon").innerHTML = `<span title="${greeting.label}">${greeting.icon}</span>`;
   }
-  // Start quote rotation
-  startQuoteRotation();
 
-  // ...rest of your profile logic unchanged...
   document.getElementById("profileName").innerText = student.fullname || student.username || '';
   document.getElementById("studentId").innerText = student.studentId || '';
   document.getElementById("profileDept").innerText = getDepartmentName(student.department);
@@ -481,7 +413,7 @@ async function fetchProfile() {
   document.getElementById("profilePhone").innerText = student.phone || '';
   if (document.getElementById("profileFaculty"))
     document.getElementById("profileFaculty").innerText = getFacultyName(student.faculty);
-document.getElementById("editReligion").value = student.religion || '';
+  document.getElementById("editReligion").value = student.religion || '';
   document.getElementById("editName").value = student.fullname || '';
   document.getElementById("editEmail").value = student.email || '';
   document.getElementById("editPhone").value = student.phone || '';
@@ -500,7 +432,6 @@ document.getElementById("editReligion").value = student.religion || '';
   }
   document.getElementById("editDepartment").value = deptId;
 
-  // Optionally, live update the greeting every minute
   if (!window._greetingUpdater) {
     window._greetingUpdater = setInterval(() => {
       const updatedGreeting = getGreetingData();
@@ -514,9 +445,8 @@ document.getElementById("editReligion").value = student.religion || '';
     }, 60000);
   }
 }
-// =================== PROFILE ===================
 
-// Populate faculty and department selects (for profile editing)
+// Populate faculty and department selects
 async function fetchFacultiesAndDepartments() {
   const [faculties, departments] = await Promise.all([
     fetchWithAuth(API_URL + "faculties").then(r => r.json()),
@@ -525,7 +455,6 @@ async function fetchFacultiesAndDepartments() {
   facultiesCache = faculties;
   departmentsCache = departments;
 
-  // Populate Faculty select
   const facultySelect = document.getElementById("editFaculty");
   if (facultySelect) {
     facultySelect.innerHTML = `<option value="">Select Faculty</option>` +
@@ -533,7 +462,6 @@ async function fetchFacultiesAndDepartments() {
   }
 }
 
-// When faculty changes, update department options
 if (document.getElementById("editFaculty")) {
   document.getElementById("editFaculty").addEventListener("change", function() {
     const selectedFaculty = this.value;
@@ -545,14 +473,10 @@ if (document.getElementById("editFaculty")) {
   });
 }
 
-// Load all users (not needed for profile tab, but kept for chat, etc.)
 async function fetchAllUsers() {
   const resp = await fetchWithAuth(API_URL + "users");
   usersCache = await resp.json();
 }
-
-
-
 
 // =================== PROFILE EDIT SAVE ===================
 document.getElementById("saveProfileBtn").onclick = async function() {
@@ -566,7 +490,7 @@ document.getElementById("saveProfileBtn").onclick = async function() {
   const faculty = document.getElementById("editFaculty").value || "";
   const department = document.getElementById("editDepartment").value || "";
   const level = document.getElementById("editLevel").value || "";
-const religion = document.getElementById("editReligion").value || "";
+  const religion = document.getElementById("editReligion").value || "";
   if (!fullname || !email) {
     alert("Full name and email are required.");
     document.getElementById("profileSaveText").style.display = "";
@@ -574,7 +498,6 @@ const religion = document.getElementById("editReligion").value || "";
     return;
   }
 
-  // Use the correct API route for updating a student's own profile!
   const resp = await fetchWithAuth(API_URL + "users/" + student.id, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -637,7 +560,6 @@ document.getElementById("updatePasswordBtn").onclick = async function() {
 };
 
 // =================== DASHBOARD PROGRESS & LEADERBOARD ===================
-// ---- Progress Tracker Show More Button
 let progressShowAll = false;
 function renderProgressCircles() {
   let subjects = {};
@@ -767,6 +689,7 @@ async function openBroadcastModal() {
     document.getElementById("broadcastList").innerHTML = "<div style='color:#f25f5c'>Failed to load broadcasts.</div>";
   }
 }
+
 function closeBroadcastModal() {
   document.getElementById("broadcastModal").style.display = "none";
   window.location.href = '#';
@@ -777,27 +700,24 @@ function closeBroadcastModal() {
   }, 100);
 }
 
-// =================== SCHEDULED EXAM MODAL (Exam & Mock Test) ===================
+// =================== SCHEDULED MOCK TEST MODAL ===================
 async function openScheduledExamModal() {
   if (!Array.isArray(availableSchedulesCache) || availableSchedulesCache.length === 0) {
-    document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams right now.</div>`;
+    document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled mock tests right now.</div>`;
     document.getElementById("scheduledExamModal").style.display = "flex";
     return;
   }
   const now = Date.now();
 
-  // Filter only schedules for student's department & faculty, type EXAM or active/inactive
   const relevantSchedules = availableSchedulesCache.filter(s => {
     if (!s.examSet) return false;
     let facultyOK = !student.facultyId || s.examSet.faculty === student.facultyId || s.faculty === student.facultyId;
     let deptOK = !student.departmentId || s.examSet.department === student.departmentId || s.department === student.departmentId;
-    let isExam = (s.examSet.type && s.examSet.type.toUpperCase() === "EXAM") ||
-      (!s.examSet.type && (s.examSet.status === "ACTIVE" || s.examSet.status === "INACTIVE"));
+    let isMockTest = s.examSet.type && s.examSet.type.toUpperCase() === "MOCK_TEST";
     let end = s.end ? new Date(s.end).getTime() : Infinity;
-    return facultyOK && deptOK && isExam && end > now;
+    return facultyOK && deptOK && isMockTest && end > now;
   });
 
-  // Find the one with start time closest to now but not in the past (or the most recently started and still active)
   let chosen = null;
   let minStartDiff = Infinity;
   relevantSchedules.forEach(s => {
@@ -813,7 +733,7 @@ async function openScheduledExamModal() {
       }
     }
   });
-  // If none, fallback to any relevant schedule in the future
+
   if (!chosen && relevantSchedules.length > 0) {
     chosen = relevantSchedules.reduce((prev, curr) => {
       let prevStart = prev.start ? new Date(prev.start).getTime() : Infinity;
@@ -823,7 +743,7 @@ async function openScheduledExamModal() {
   }
 
   if (!chosen || !chosen.examSet) {
-    document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled exams at this time.</div>`;
+    document.getElementById("scheduledExamContent").innerHTML = `<div style="color:#888;">No scheduled mock tests at this time.</div>`;
     document.getElementById("scheduledExamModal").style.display = "flex";
     return;
   }
@@ -848,7 +768,7 @@ async function openScheduledExamModal() {
 
   document.getElementById("scheduledExamContent").innerHTML = `
     <div style="margin-bottom:14px;text-align:center;">
-      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(set.title)}&background=ede9fe&color=3b82f6&size=80&rounded=true" alt="Exam" style="width:80px;height:80px;border-radius:12px;margin-bottom:10px;">
+      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(set.title)}&background=ede9fe&color=3b82f6&size=80&rounded=true" alt="Mock Test" style="width:80px;height:80px;border-radius:12px;margin-bottom:10px;">
       <div style="font-size:1.25em;font-weight:bold;color:#3b82f6;">${set.title}</div>
     </div>
     <div style="margin-bottom:7px;">
@@ -868,7 +788,6 @@ function closeScheduledExamModal() {
 
 // =================== SCHEDULE COMPLETION UTILITY ===================
 function isScheduleCompleted(sched, set) {
-  // Completed: there is a result for this examSet and the submission is within this schedule's window
   return resultsCache.some(r => {
     if (!r.examSet) return false;
     const sameSet = (typeof r.examSet === 'object' ? r.examSet._id === set._id : r.examSet === set._id);
@@ -879,7 +798,7 @@ function isScheduleCompleted(sched, set) {
       const schedEnd = new Date(sched.end).getTime();
       return submitted >= schedStart && submitted <= schedEnd;
     }
-    return true; // fallback
+    return true;
   });
 }
 
@@ -957,7 +876,6 @@ function renderAvailableTablePage(page) {
   buildPagination(availableSchedulesCache.length, page, AVAILABLE_PAGE_SIZE, 'renderAvailableTablePage', 'availablePagination');
 }
 
-// =================== EXAMS TAB (Available Assessments - Exams) ===================
 
 
 // ========== Pagination Builder ===========
