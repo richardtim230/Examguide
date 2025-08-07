@@ -375,6 +375,7 @@
             <ul class="space-y-6">
                 <li><a href="#dashboard" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
                 <li><a href="#mock-tests" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="mock-tests"><i class="fas fa-file-alt"></i><span>Mock Tests</span></a></li>
+                <li><a href="#past-questions" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="past-questions"><i class="fas fa-file-alt"></i><span>Past Questions and Answers</span></a></li>
                 
                 <li><a href="#study-resources" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="study-resources"><i class="fas fa-book"></i><span>Study Resources</span></a></li>
                 <li><a href="#messages" class="nav-link flex items-center space-x-3 text-lg hover:text-blue-200 transition-colors" data-tab="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
@@ -555,6 +556,155 @@
             </div>
             </div>
         </section>
+        <section id="past-questions" class="tab-content">
+    <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex justify-between items-center">
+        <div>
+            <h2 class="text-3xl font-bold text-indigo-900">Past Questions and Answers</h2>
+            <p class="text-gray-600 mt-2">Master your exams with tailored past question practice sessions</p>
+        </div>
+        <button class="ml-4 px-3 py-1 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200">Start New Practice</button>
+    </header>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl shadow-xl p-6 card">
+            <h3 class="text-xl font-semibold text-indigo-900 mb-4">Configure Your Practice Session</h3>
+            <form class="practice-form grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="form-group">
+                    <label for="subject" class="text-sm font-medium text-gray-700">Subject</label>
+                    <select id="subject" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                        <option>Select Subject</option>
+                        <option>Mathematics</option>
+                        <option>Physics</option>
+                        <option>Chemistry</option>
+                        <option>Biology</option>
+                        <option>Computer Science</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="year" class="text-sm font-medium text-gray-700">Year</label>
+                    <select id="year" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                        <option>Select Year</option>
+                        <option>2024</option>
+                        <option>2023</option>
+                        <option>2022</option>
+                        <option>2021</option>
+                        <option>2020</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="questions" class="text-sm font-medium text-gray-700">Total Questions</label>
+                    <select id="questions" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                        <option>Select Number of Questions</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time" class="text-sm font-medium text-gray-700">Time (Minutes)</label>
+                    <select id="time" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                        <option>Select Time</option>
+                        <option>30</option>
+                        <option>60</option>
+                        <option>90</option>
+                        <option>120</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="difficulty" class="text-sm font-medium text-gray-700">Difficulty Level</label>
+                    <select id="difficulty" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                        <option>Select Difficulty</option>
+                        <option>Easy</option>
+                        <option>Medium</option>
+                        <option>Hard</option>
+                    </select>
+                </div>
+                <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 glow-button sm:col-span-2">Start Practice</button>
+            </form>
+        </div>
+        <div class="bg-white rounded-2xl shadow-xl p-6 card">
+            <h3 class="text-xl font-semibold text-indigo-900 mb-4">Search Past Questions</h3>
+            <input type="text" id="search-questions" class="block w-full p-2 border border-gray-300 rounded-lg" placeholder="Search by topic, subject, or year...">
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+        <section class="bg-white rounded-2xl shadow-xl p-6 card">
+            <h3 class="text-xl font-semibold text-indigo-900 mb-4">Past Test History</h3>
+            <div class="overflow-x-auto w-full">
+                <table class="result-table w-full" id="pastTestTable">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Year</th>
+                            <th>Date Taken</th>
+                            <th>Score</th>
+                            <th>Time Spent</th>
+                            <th>Difficulty</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="pastTestPagination" class="table-pagination"></div>
+        </section>
+        <section class="bg-white rounded-2xl shadow-xl p-6 card">
+            <h3 class="text-xl font-semibold text-indigo-900 mb-4">Performance Overview</h3>
+            <div id="progress-chart-placeholder" class="text-center">
+                <p class="text-gray-600">Your performance trends will be displayed here.</p>
+            </div>
+        </section>
+        <section class="bg-white rounded-2xl shadow-xl p-6 card">
+            <h3 class="text-xl font-semibold text-indigo-900 mb-4">Practice Tips</h3>
+            <ul class="recommend-list">
+                <li class="text-gray-600">Start with easier questions to build confidence.</li>
+                <li class="text-gray-600">Review incorrect answers to understand mistakes.</li>
+                <li class="text-gray-600">Simulate exam conditions by timing your practice.</li>
+                <li class="text-gray-600">Use the search feature to focus on specific topics.</li>
+            </ul>
+        </section>
+    </div>
+</section>
+
+<style>
+    #past-questions {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .practice-form select, .practice-form input {
+        max-width: 100%;
+        font-size: 0.875rem;
+    }
+
+    .practice-form button {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .result-table th, .result-table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 0.875rem;
+    }
+
+    .result-table th {
+        background-color: #f4f4f4;
+        color: #1f2937;
+    }
+
+    @media (max-width: 768px) {
+        .practice-form {
+            grid-template-columns: 1fr;
+        }
+
+        .practice-form button {
+            max-width: 100%;
+        }
+    }
+</style>
         <!-- Assignments Tab -->
 <section id="assignments" class="tab-content">
     <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex items-center justify-between">
