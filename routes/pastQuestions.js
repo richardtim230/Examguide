@@ -6,7 +6,7 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 import Question from '../models/Question.js';
 import UserAnswer from '../models/UserAnswer.js';
-
+const router = express.Router();
 
 // ========== Multer Setup for Image Upload ==========
 const storage = multer.diskStorage({
