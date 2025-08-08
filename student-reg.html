@@ -274,7 +274,8 @@
       document.getElementById("password").value = generatePassword();
     };
 
-    // Avatar preview
+    // Avatar preview and base64 storage logic (for consistency with student.html)
+    let profilePicBase64 = "";
     document.getElementById("profilePic").addEventListener("change", function(e) {
       const file = e.target.files[0];
       const preview = document.getElementById("avatarPreview");
@@ -286,12 +287,14 @@
           img.src = ev.target.result;
           preview.style.display = "flex";
           name.textContent = file.name;
+          profilePicBase64 = ev.target.result; // Save base64 string for payload
         };
         reader.readAsDataURL(file);
       } else {
         preview.style.display = "none";
         img.src = "#";
         name.textContent = "";
+        profilePicBase64 = "";
       }
     });
 
@@ -352,7 +355,7 @@
       }
     }
 
-    // Submit handler
+    // Submit handler (sends base64 profilePic in payload, like student.html modal)
     document.getElementById("studentForm").onsubmit = async function(e) {
       e.preventDefault();
       showMsg("", true);
@@ -361,38 +364,34 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Registering...`;
 
-      const formData = new FormData();
-      [
-        "fullname",
-        "username",
-        "email",
-        "phone",
-        "level",
-        "religion",
-        "faculty",
-        "department",
-        "password"
-      ].forEach(function(name) {
-        formData.append(name, document.getElementById(name).value);
-      });
-      const profilePicInput = document.getElementById("profilePic");
-      if(profilePicInput.files.length > 0) {
-        formData.append("profilePic", profilePicInput.files[0]);
-      }
+      // Prepare payload
+      const payload = {
+        fullname: document.getElementById("fullname").value,
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        level: document.getElementById("level").value,
+        religion: document.getElementById("religion").value,
+        faculty: document.getElementById("faculty").value,
+        department: document.getElementById("department").value,
+        password: document.getElementById("password").value,
+        profilePic: profilePicBase64 // Send base64 string if present
+      };
 
-      // API: POST /api/users (admin only)
       try {
         const resp = await fetch(BASE_URL + "/api/auth/register", {
-  method: "POST",
-  body: formData,
-  credentials: "include"
-});
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include"
+        });
         const json = await resp.json();
         if(resp.ok) {
           showMsg("Student registered successfully!", false);
           document.getElementById("studentForm").reset();
           document.getElementById("password").value = generatePassword();
           document.getElementById("avatarPreview").style.display = "none";
+          profilePicBase64 = "";
         } else {
           showMsg(json.message || "Registration failed.", true);
         }
