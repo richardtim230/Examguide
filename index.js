@@ -148,7 +148,7 @@ app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
 // Get all faculties
-app.get("/api/faculties", authenticate, async (req, res) => {
+app.get("/api/faculties", async (req, res) => {
   const list = await Faculty.find().sort({ name: 1 });
   res.json(list);
 });
@@ -176,7 +176,7 @@ app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin")
 
 // ===== DEPARTMENT ROUTES =====
 // Get all departments
-app.get("/api/departments", authenticate, async (req, res) => {
+app.get("/api/departments", async (req, res) => {
   const list = await Department.find().sort({ name: 1 });
   res.json(list);
 });
