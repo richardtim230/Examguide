@@ -41,11 +41,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
     <title>OAU ExamGuard - General Marketplace</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f9fafb;
@@ -71,7 +72,7 @@
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             border-radius: 16px;
             background: white;
-        }
+            }
         .product-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
@@ -165,12 +166,35 @@
             background: linear-gradient(135deg, #fef3c7, #fef9c3);
             border-radius: 12px;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
         .deal-card:hover {
             transform: scale(1.03);
         }
         .rating-stars {
             color: #f59e0b;
+        }
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .autocomplete-item:hover {
+            background: #4f46e5;
+            color: white;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -206,6 +230,7 @@
 </head>
 <body>
     <!-- Header -->
+<!-- Header -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
@@ -232,31 +257,31 @@
             <p class="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">Discover student essentials: foodstuffs, gadgets, utilities, and more, all in one vibrant marketplace!</p>
             <a href="#sell" class="mt-6 inline-block bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Sell Your Items</a>
         </div>
-    </section>
+                        </section>
 
     <!-- Featured Deals Section -->
     <section class="py-8 bg-gray-100">
         <div class="container mx-auto px-4 sm:px-6">
             <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Featured Deals</h3>
             <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 overflow-x-auto pb-4">
-                <div class="deal-card flex p-4 shadow-md fade-in">
-                    <img src="images (8).jpeg?text=Phone+Charger" alt="Phone Charger" class="w-24 h-24 object-cover rounded-lg mr-4">
+                <a href="item-detail.html?title=Fast+Phone+Charger&description=High-speed+USB-C+charger+with+20W+power+delivery,+compatible+with+most+devices&price=9990&originalPrice=14990&seller=Temi&date=Oct+12,+2025&rating=4.8&image=https://via.placeholder.com/150x100?text=Phone+Charger&availability=In+Stock&category=Gadgets&condition=New&reviews=15" target="_blank" class="deal-card flex p-4 shadow-md fade-in">
+                    <img src="https://via.placeholder.com/150x100?text=Phone+Charger" alt="Phone Charger" class="w-24 h-24 object-cover rounded-lg mr-4">
                     <div>
                         <h4 class="text-lg font-semibold text-gray-800">Fast Phone Charger</h4>
-                        <p class="text-indigo-600 font-semibold">$9.99 <span class="line-through text-gray-500">$14.99</span></p>
-                        <p class="text-sm text-gray-600">By Temi | 4.8 ★★★★☆</p>
+                        <p class="text-indigo-600 font-semibold">₦9,990 <span class="line-through text-gray-500">₦14,990</span></p>
+                        <p class="text-sm text-gray-600">By Temi | 4.8 ★★★★☆ (15 reviews)</p>
                         <button class="deal-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mt-2 hover:bg-indigo-700">Grab Deal</button>
                     </div>
-                </div>
-                <div class="deal-card flex p-4 shadow-md fade-in">
-                    <img src="images (9).jpeg?text=Snack+Pack" alt="Snack Pack" class="w-24 h-24 object-cover rounded-lg mr-4">
+                </a>
+                <a href="item-detail.html?title=Snack+Combo+Pack&description=Assorted+pack+of+chips,+cookies,+and+drinks+for+quick+snacks,+perfect+for+study+breaks&price=4990&originalPrice=7990&seller=Chidi&date=Oct+10,+2025&rating=4.5&image=https://via.placeholder.com/150x100?text=Snack+Pack&availability=In+Stock&category=Foodstuffs&condition=New&reviews=12" target="_blank" class="deal-card flex p-4 shadow-md fade-in">
+                    <img src="https://via.placeholder.com/150x100?text=Snack+Pack" alt="Snack Pack" class="w-24 h-24 object-cover rounded-lg mr-4">
                     <div>
                         <h4 class="text-lg font-semibold text-gray-800">Snack Combo Pack</h4>
-                        <p class="text-indigo-600 font-semibold">$4.99 <span class="line-through text-gray-500">$7.99</span></p>
-                        <p class="text-sm text-gray-600">By Chidi | 4.5 ★★★★☆</p>
+                        <p class="text-indigo-600 font-semibold">₦4,990 <span class="line-through text-gray-500">₦7,990</span></p>
+                        <p class="text-sm text-gray-600">By Chidi | 4.5 ★★★★☆ (12 reviews)</p>
                         <button class="deal-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mt-2 hover:bg-indigo-700">Grab Deal</button>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -272,13 +297,14 @@
                         <div class="search-bar flex-1 relative">
                             <input type="text" id="searchInput" placeholder="Search items..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
                             <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <div id="autocompleteDropdown" class="autocomplete-dropdown hidden"></div>
                         </div>
                         <div class="flex gap-2 flex-wrap">
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active">All</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Foodstuffs</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Gadgets</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Utilities</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Others</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active" data-category="All">All (12)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Foodstuffs">Foodstuffs (4)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Gadgets">Gadgets (4)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Utilities">Utilities (3)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Others">Others (1)</button>
                         </div>
                     </div>
                     <div class="flex justify-end mb-4">
@@ -292,46 +318,7 @@
 
                     <!-- Product Grid -->
                     <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="https://via.placeholder.com/300x180?text=Rice+Bag" alt="Rice Bag" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">5kg Rice Bag</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">High-quality rice for your daily meals, locally sourced.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$8.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Sarah | Oct 10, 2025 | <span class="rating-stars">★★★★☆ 4.7</span></p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="https://via.placeholder.com/300x180?text=USB+Cable" alt="USB Cable" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">USB-C Cable</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Durable USB-C cable for fast charging and data transfer.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$6.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Ahmed | Oct 8, 2025 | <span class="rating-stars">★★★★★ 4.9</span></p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="https://via.placeholder.com/300x180?text=Water+Bottle" alt="Water Bottle" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Insulated Water Bottle</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Keeps drinks hot or cold for 12 hours, perfect for campus.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$12.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Temi | Oct 5, 2025 | <span class="rating-stars">★★★★☆ 4.5</span></p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="https://via.placeholder.com/300x180?text=Headphones" alt="Headphones" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Wireless Headphones</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Noise-canceling headphones for focused study sessions.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$29.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Chidi | Oct 2, 2025 | <span class="rating-stars">★★★★★ 4.8</span></p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
+                        <!-- Products will be dynamically inserted here -->
                     </div>
 
                     <!-- Pagination -->
@@ -353,16 +340,31 @@
                         <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filter by Price</h3>
                         <div class="space-y-2">
                             <div class="flex items-center">
-                                <input type="checkbox" id="price-0-10" class="mr-2">
-                                <label for="price-0-10" class="text-sm sm:text-base text-gray-600">Under $10</label>
+                                <input type="checkbox" id="price-0-10000" class="mr-2">
+                                <label for="price-0-10000" class="text-sm sm:text-base text-gray-600">Under ₦10,000</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="price-10-20" class="mr-2">
-                                <label for="price-10-20" class="text-sm sm:text-base text-gray-600">$10 - $20</label>
+                                <input type="checkbox" id="price-10000-20000" class="mr-2">
+                                <label for="price-10000-20000" class="text-sm sm:text-base text-gray-600">₦10,000 - ₦20,000</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="price-20-plus" class="mr-2">
-                                <label for="price-20-plus" class="text-sm sm:text-base text-gray-600">$20+</label>
+                                <input type="checkbox" id="price-20000-plus" class="mr-2">
+                                <label for="price-20000-plus" class="text-sm sm:text-base text-gray-600">₦20,000+</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Condition Filter -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filter by Condition</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="condition-new" class="mr-2">
+                                <label for="condition-new" class="text-sm sm:text-base text-gray-600">New</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="condition-used" class="mr-2">
+                                <label for="condition-used" class="text-sm sm:text-base text-gray-600">Used</label>
                             </div>
                         </div>
                     </div>
@@ -371,10 +373,10 @@
                     <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                         <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Top Categories</h3>
                         <div class="space-y-2">
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Foodstuffs</a>
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Gadgets</a>
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Utilities</a>
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Fashion</a>
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Foodstuffs (4)</a>
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Gadgets (4)</a>
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Utilities (3)</a>
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Fashion (1)</a>
                         </div>
                     </div>
 
@@ -382,14 +384,14 @@
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Trending Items</h3>
                         <div class="space-y-4">
-                            <div>
+                            <a href="item-detail.html?title=Portable+Fan&description=Compact+fan+for+cooling+on+hot+campus+days&price=15990&seller=Funmi&date=Sep+28,+2025&rating=4.6&image=https://via.placeholder.com/300x180?text=Portable+Fan&availability=In+Stock&category=Utilities&condition=New&reviews=10" target="_blank">
                                 <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Portable Fan</p>
-                                <p class="text-sm text-gray-500">By Funmi | $15.99 | ★★★★☆ 4.6</p>
-                            </div>
-                            <div>
+                                <p class="text-sm text-gray-500">By Funmi | ₦15,990 | ★★★★☆ 4.6 (10 reviews)</p>
+                            </a>
+                            <a href="item-detail.html?title=Snack+Variety+Pack&description=Assorted+snacks+for+quick+bites+between+classes&price=6500&seller=David&date=Sep+25,+2025&rating=4.7&image=https://via.placeholder.com/300x180?text=Snack+Pack&availability=In+Stock&category=Foodstuffs&condition=New&reviews=8" target="_blank">
                                 <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Snack Variety Pack</p>
-                                <p class="text-sm text-gray-500">By David | $6.50 | ★★★★☆ 4.7</p>
-                            </div>
+                                <p class="text-sm text-gray-500">By David | ₦6,500 | ★★★★☆ 4.7 (8 reviews)</p>
+                            </a>
                         </div>
                     </div>
                 </aside>
@@ -424,118 +426,195 @@
             [
                 {
                     title: "5kg Rice Bag",
-                    description: "High-quality rice for your daily meals, locally sourced.",
-                    price: 8.99,
+                    description: "High-quality rice for your daily meals, locally sourced. Perfect for students looking for affordable bulk food.",
+                    price: 8990,
                     seller: "Sarah",
                     date: "Oct 10, 2025",
                     rating: 4.7,
-                    image: "black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Rice+Bag"
+                    image: "https://via.placeholder.com/300x180?text=Rice+Bag",
+                    availability: "In Stock",
+                    category: "Foodstuffs",
+                    condition: "New",
+                    reviews: 20
                 },
                 {
                     title: "USB-C Cable",
-                    description: "Durable USB-C cable for fast charging and data transfer.",
-                    price: 6.99,
+                    description: "Durable USB-C cable for fast charging and data transfer. Supports up to 60W power delivery.",
+                    price: 6990,
                     seller: "Ahmed",
                     date: "Oct 8, 2025",
                     rating: 4.9,
-                    image: "atom-biotechnology-nuclear-medicine-with-scientist-rsquo-s-hands-digital-transformation-remix_53876-126746 (1).webp?text=USB+Cable"
+                    image: "https://via.placeholder.com/300x180?text=USB+Cable",
+                    availability: "In Stock",
+                    category: "Gadgets",
+                    condition: "New",
+                    reviews: 25
                 },
                 {
                     title: "Insulated Water Bottle",
-                    description: "Keeps drinks hot or cold for 12 hours, perfect for campus.",
-                    price: 12.99,
+                    description: "Keeps drinks hot or cold for 12 hours, perfect for campus life. Made from stainless steel.",
+                    price: 12990,
                     seller: "Temi",
                     date: "Oct 5, 2025",
                     rating: 4.5,
-                    image: "afro-male-student-holding-books-disposable-coffee-cup-standing-campus_23-2148093212.jpg?text=Water+Bottle"
+                    image: "https://via.placeholder.com/300x180?text=Water+Bottle",
+                    availability: "In Stock",
+                    category: "Utilities",
+                    condition: "New",
+                    reviews: 18
                 },
                 {
                     title: "Wireless Headphones",
-                    description: "Noise-canceling headphones for focused study sessions.",
-                    price: 29.99,
+                    description: "Noise-canceling headphones for focused study sessions. Up to 20 hours of battery life.",
+                    price: 29990,
                     seller: "Chidi",
                     date: "Oct 2, 2025",
                     rating: 4.8,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Headphones",
+                    availability: "In Stock",
+                    category: "Gadgets",
+                    condition: "New",
+                    reviews: 30
                 }
             ],
             [
                 {
                     title: "Portable Fan",
-                    description: "Compact fan for cooling on hot campus days.",
-                    price: 15.99,
+                    description: "Compact fan for cooling on hot campus days. USB-powered with adjustable speed.",
+                    price: 15990,
                     seller: "Funmi",
                     date: "Sep 28, 2025",
                     rating: 4.6,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Portable+Fan",
+                    availability: "In Stock",
+                    category: "Utilities",
+                    condition: "New",
+                    reviews: 10
                 },
                 {
                     title: "Snack Variety Pack",
-                    description: "Assorted snacks for quick bites between classes.",
-                    price: 6.50,
+                    description: "Assorted snacks for quick bites between classes. Includes chips, biscuits, and candy.",
+                    price: 6500,
                     seller: "David",
                     date: "Sep 25, 2025",
                     rating: 4.7,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Snack+Pack",
+                    availability: "In Stock",
+                    category: "Foodstuffs",
+                    condition: "New",
+                    reviews: 8
                 },
                 {
                     title: "Laptop Stand",
-                    description: "Adjustable stand for ergonomic laptop use.",
-                    price: 19.99,
+                    description: "Adjustable stand for ergonomic laptop use. Foldable and lightweight for portability.",
+                    price: 19990,
                     seller: "Ngozi",
                     date: "Sep 20, 2025",
                     rating: 4.8,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Laptop+Stand",
+                    availability: "In Stock",
+                    category: "Gadgets",
+                    condition: "New",
+                    reviews: 15
                 },
                 {
                     title: "Reusable Tote Bag",
-                    description: "Eco-friendly tote for carrying books and groceries.",
-                    price: 9.99,
+                    description: "Eco-friendly tote for carrying books and groceries. Durable and stylish design.",
+                    price: 9990,
                     seller: "Tobi",
                     date: "Sep 15, 2025",
                     rating: 4.5,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Tote+Bag",
+                    availability: "In Stock",
+                    category: "Others",
+                    condition: "New",
+                    reviews: 12
                 }
             ],
             [
                 {
                     title: "Bluetooth Speaker",
-                    description: "Portable speaker with high-quality sound for music and study.",
-                    price: 24.99,
+                    description: "Portable speaker with high-quality sound for music and study. Waterproof and durable.",
+                    price: 24990,
                     seller: "Esther",
                     date: "Sep 10, 2025",
                     rating: 4.9,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Bluetooth+Speaker",
+                    availability: "In Stock",
+                    category: "Gadgets",
+                    condition: "New",
+                    reviews: 22
                 },
                 {
                     title: "Instant Noodles Pack",
-                    description: "Pack of 10 instant noodles for quick meals.",
-                    price: 5.99,
+                    description: "Pack of 10 instant noodles for quick meals. Includes assorted flavors.",
+                    price: 5990,
                     seller: "Ife",
                     date: "Sep 5, 2025",
                     rating: 4.6,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Noodles+Pack",
+                    availability: "In Stock",
+                    category: "Foodstuffs",
+                    condition: "New",
+                    reviews: 17
                 },
                 {
                     title: "Desk Lamp",
-                    description: "LED desk lamp with adjustable brightness for late-night study.",
-                    price: 17.99,
+                    description: "LED desk lamp with adjustable brightness for late-night study. USB-powered.",
+                    price: 17990,
                     seller: "Kemi",
                     date: "Sep 1, 2025",
                     rating: 4.7,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Desk+Lamp",
+                    availability: "In Stock",
+                    category: "Utilities",
+                    condition: "New",
+                    reviews: 14
                 },
                 {
                     title: "Phone Case",
-                    description: "Stylish and durable phone case for iPhone 13.",
-                    price: 11.99,
+                    description: "Stylish and durable phone case for iPhone 13. Shockproof and lightweight.",
+                    price: 11990,
                     seller: "Victor",
                     date: "Aug 28, 2025",
                     rating: 4.8,
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    image: "https://via.placeholder.com/300x180?text=Phone+Case",
+                    availability: "In Stock",
+                    category: "Gadgets",
+                    condition: "New",
+                    reviews: 19
                 }
             ]
         ];
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartCount = document.getElementById('cartCount');
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        function addToCart(item, quantity = 1) {
+            const existingItem = cart.find(cartItem => cartItem.title === item.title);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...item, quantity });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        function updateCartButtons() {
+            document.querySelectorAll('.cart-btn, .deal-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = button.closest('.product-card, .deal-card');
+                    const title = card.querySelector('h3, h4').textContent;
+                    const item = productData.flat().find(p => p.title === title);
+                    addToCart(item);
+                });
+            });
+        }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -547,43 +626,63 @@
             });
         });
 
-        // Cart functionality
-        let cartItems = 0;
-        const cartCount = document.getElementById('cartCount');
-        function updateCartButtons() {
-            document.querySelectorAll('.cart-btn, .deal-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    cartItems++;
-                    cartCount.textContent = cartItems;
-                });
-            });
-        }
-
-        // Category filter
-        document.querySelectorAll('.category-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                // Placeholder for filtering logic
-                console.log(`Filter by: ${this.textContent}`);
-            });
-        });
-
-        // Debounced search
+        // Autocomplete search
         const searchInput = document.getElementById('searchInput');
-        const productGrid = document.getElementById('productGrid');
+        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
         let debounceTimeout;
         searchInput.addEventListener('input', function () {
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(() => {
                 const searchTerm = this.value.toLowerCase();
-                document.querySelectorAll('.product-card').forEach(card => {
-                    const title = card.querySelector('h3').textContent.toLowerCase();
-                    const description = card.querySelector('p').textContent.toLowerCase();
-                    card.style.display = title.includes(searchTerm) || description.includes(searchTerm) ? 'block' : 'none';
-                });
+                autocompleteDropdown.innerHTML = '';
+                if (searchTerm) {
+                    const suggestions = productData.flat().filter(item =>
+                        item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm)
+                    ).slice(0, 5);
+                    suggestions.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'autocomplete-item text-sm p-2';
+                        div.textContent = item.title;
+                        div.addEventListener('click', () => {
+                            searchInput.value = item.title;
+                            autocompleteDropdown.classList.add('hidden');
+                            filterProducts(searchTerm, getActiveCategory());
+                        });
+                        autocompleteDropdown.appendChild(div);
+                    });
+                    autocompleteDropdown.classList.toggle('hidden', suggestions.length === 0);
+                } else {
+                    autocompleteDropdown.classList.add('hidden');
+                    filterProducts('', getActiveCategory());
+                }
+                filterProducts(searchTerm, getActiveCategory());
             }, 300);
         });
+
+        // Category filter
+        function getActiveCategory() {
+            return document.querySelector('.category-btn.active')?.dataset.category || 'All';
+        }
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                filterProducts(searchInput.value.toLowerCase(), this.dataset.category);
+            });
+        });
+
+        // Filter products
+        const productGrid = document.getElementById('productGrid');
+        function filterProducts(searchTerm, category) {
+            const filteredData = productData.map(page =>
+                page.filter(item =>
+                    (category === 'All' || item.category === category) &&
+                    (item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm))
+                )
+            );
+            currentPage = 1;
+            updateProductGrid(filteredData);
+        }
 
         // Sorting functionality
         const sortSelect = document.getElementById('sortSelect');
@@ -599,37 +698,42 @@
             } else if (sortValue === 'rating') {
                 sortedData.sort((a, b) => b.rating - a.rating);
             }
-            updateProductGrid([sortedData.slice(0, 4)]); // Display first 4 items for simplicity
+            const paginatedData = [];
+            for (let i = 0; i < sortedData.length; i += 4) {
+                paginatedData.push(sortedData.slice(i, i + 4));
+            }
+            updateProductGrid(paginatedData.length > 0 ? paginatedData : [[]]);
         });
 
         // Pagination
         let currentPage = 1;
-        const totalPages = productData.length;
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-
         function updateProductGrid(data) {
             productGrid.innerHTML = '';
-            data[currentPage - 1].forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.className = 'product-card bg-white p-6 rounded-lg shadow-md fade-in';
-                productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.title}" class="product-img mb-4">
-                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800">${product.title}</h3>
-                    <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">${product.description}</p>
-                    <p class="text-indigo-600 font-semibold mt-2">$${product.price.toFixed(2)}</p>
-                    <div class="flex justify-between items-center mt-4">
-                        <p class="text-sm text-gray-500">By ${product.seller} | ${product.date} | <span class="rating-stars">★★★★☆ ${product.rating.toFixed(1)}</span></p>
-                        <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                    </div>
-                `;
-                productGrid.appendChild(productElement);
-            });
+            if (data[currentPage - 1]?.length > 0) {
+                data[currentPage - 1].forEach(product => {
+                    const productElement = document.createElement('a');
+                    productElement.href = `item-detail.html?title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&price=${product.price}&seller=${encodeURIComponent(product.seller)}&date=${encodeURIComponent(product.date)}&rating=${product.rating}&image=${encodeURIComponent(product.image)}&availability=${encodeURIComponent(product.availability)}&category=${encodeURIComponent(product.category)}&condition=${encodeURIComponent(product.condition)}&reviews=${product.reviews}`;
+                    productElement.target = '_blank';
+                    productElement.className = 'product-card bg-white p-6 rounded-lg shadow-md fade-in';
+                    productElement.innerHTML = `
+                        <img src="${product.image}" alt="${product.title}" class="product-img mb-4">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800">${product.title}</h3>
+                        <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">${product.description}</p>
+                        <p class="text-indigo-600 font-semibold mt-2">₦${product.price.toLocaleString()}</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <p class="text-sm text-gray-500">By ${product.seller} | ${product.date} | <span class="rating-stars">★★★★☆ ${product.rating.toFixed(1)}</span> (${product.reviews} reviews)</p>
+                            <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
+                        </div>
+                    `;
+                    productGrid.appendChild(productElement);
+                });
+            } else {
+                productGrid.innerHTML = '<p class="text-center text-gray-600 col-span-full">No items found.</p>';
+            }
 
-            // Reattach cart button listeners
             updateCartButtons();
-
-            // Update pagination buttons
             document.querySelectorAll('.pagination-btn').forEach(btn => {
                 btn.classList.remove('active', 'disabled');
                 if (btn.textContent === String(currentPage)) {
@@ -637,7 +741,7 @@
                 }
             });
             prevBtn.classList.toggle('disabled', currentPage === 1);
-            nextBtn.classList.toggle('disabled', currentPage === totalPages);
+            nextBtn.classList.toggle('disabled', currentPage === data.length || data.length === 0);
         }
 
         document.querySelectorAll('.pagination-btn').forEach(button => {
@@ -645,7 +749,7 @@
                 if (this.classList.contains('disabled')) return;
                 if (this.id === 'prevBtn' && currentPage > 1) {
                     currentPage--;
-                } else if (this.id === 'nextBtn' && currentPage < totalPages) {
+                } else if (this.id === 'nextBtn' && currentPage < productData.length) {
                     currentPage++;
                 } else if (!this.id) {
                     currentPage = parseInt(this.textContent);
@@ -654,9 +758,9 @@
             });
         });
 
-        // Initialize product grid and cart buttons
+        // Initialize
         updateProductGrid(productData);
-        updateCartButtons();
+        updateCartCount();
     </script>
 </body>
 </html>
