@@ -382,11 +382,11 @@
 
       // API: POST /api/users (admin only)
       try {
-        const resp = await fetch(BASE_URL + "/api/users", {
-          method: "POST",
-          body: formData,
-          credentials: "include"
-        });
+        const resp = await fetch(BASE_URL + "/api/auth/register", {
+  method: "POST",
+  body: formData,
+  credentials: "include"
+});
         const json = await resp.json();
         if(resp.ok) {
           showMsg("Student registered successfully!", false);
