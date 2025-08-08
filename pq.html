@@ -446,8 +446,12 @@
                 difficulty: config.difficulty
             });
             const resp = await fetch(`${API_URL}?${params.toString()}`, {
-                headers: { "Authorization": "Bearer " + (localStorage.getItem("token") || "") }
-            });
+    headers: { "Authorization": "Bearer " + (localStorage.getItem("token") || "") }
+});
+if (!resp.ok) {
+    const errorText = await resp.text();
+    throw new Error(`API Error: ${resp.status} - ${errorText}`);
+}
             questions = await resp.json();
             if (!Array.isArray(questions) || questions.length === 0) {
                 throw new Error("No questions found for this configuration.");
