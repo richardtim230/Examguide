@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.80">
-    <title>OAU ExamGuard - Exam Session</title>
+    <title>OAU ExamGuard - Past Questions Practice</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,7 +63,7 @@
             flex-grow: 1;
             background-color: #fff;
             border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             padding: 1.5rem;
             max-width: 100%;
         }
@@ -89,9 +89,12 @@
             border-radius: 0.25rem;
             font-weight: 600;
             margin-top: 0.5rem;
+            min-width: 70px;
+            text-align: center;
         }
         .question-section {
             margin-bottom: 1.5rem;
+            min-height: 230px;
         }
         .question-section h2 {
             font-size: 1.25rem;
@@ -106,7 +109,7 @@
         .options {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
         .option-item {
             display: flex;
@@ -174,13 +177,35 @@
             font-size: 0.875rem;
             cursor: pointer;
             background-color: #fff;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
         .palette-btn.answered {
             background-color: #2e7d32;
             color: #fff;
+            border-color: #2e7d32;
         }
         .palette-btn.current {
             border: 2px solid #d32f2f;
+            box-shadow: 0 0 6px #d32f2f44;
+        }
+        .palette-btn:focus {
+            outline: 2px solid #388e3c;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.1em;
+            color: #2e7d32;
+            padding: 15px 0;
+        }
+        .feedback-box {
+            background: #e0ffe0;
+            color: #1e1e1e;
+            border: 1px solid #2e7d32;
+            padding: 1.2em;
+            border-radius: 0.4em;
+            margin: 1.5em 0;
+            text-align: center;
+            font-size: 1.2em;
         }
         @media (max-width: 768px) {
             .exam-container {
@@ -245,107 +270,221 @@
         <div class="main-content">
             <div class="header">
                 <div>
-                    <h1>Mathematics in Physics</h1>
-                    <div class="user-info">PROPER</div>
+                    <h1 id="exam-title">Past Question Practice</h1>
+                    <div class="user-info" id="exam-info">PROPER</div>
                 </div>
-                <div class="timer-box" id="timer">23:43</div>
+                <div class="timer-box" id="timer">--:--</div>
             </div>
             <div class="question-section">
-                <h2>Question 1</h2>
-                <div class="question-text">This question is based on S.L. Ayorinde's DEPENDENCE. <br> Tayo regards Yemi's establishment of Christian television station as</div>
-                <div class="options">
-                    <div class="option-item">
-                        <input type="radio" name="answer" id="a">
-                        <label for="a" class="option-text">A: Opportunistic</label>
-                    </div>
-                    <div class="option-item">
-                        <input type="radio" name="answer" id="b">
-                        <label for="b" class="option-text">B: Believer's duty</label>
-                    </div>
-                    <div class="option-item">
-                        <input type="radio" name="answer" id="c">
-                        <label for="c" class="option-text">C: Next move</label>
-                    </div>
-                    <div class="option-item">
-                        <input type="radio" name="answer" id="d">
-                        <label for="d" class="option-text">D: Ambitious</label>
-                    </div>
-                </div>
+                <h2 id="question-number">Question 1</h2>
+                <div class="question-text" id="question-text"></div>
+                <div class="options" id="options"></div>
             </div>
             <div class="nav-controls">
                 <div>
-                    <button class="nav-btn" onclick="prevQuestion()">Previous</button>
-                    <button class="nav-btn" onclick="nextQuestion()">Next</button>
+                    <button class="nav-btn" id="prev-btn" onclick="prevQuestion()">Previous</button>
+                    <button class="nav-btn" id="next-btn" onclick="nextQuestion()">Next</button>
                 </div>
-                <button class="submit-btn" onclick="submitExam()">Submit</button>
+                <button class="submit-btn" id="submit-btn" onclick="submitExam()">Submit</button>
             </div>
-            <div class="palette">
-                <button class="palette-btn current">1</button>
-                <button class="palette-btn">2</button>
-                <button class="palette-btn">3</button>
-                <button class="palette-btn answered">4</button>
-                <button class="palette-btn">5</button>
-                <!-- Add more dynamically based on total questions -->
-            </div>
+            <div class="palette" id="palette"></div>
+            <div id="loading" class="loading" style="display:none;">Loading questions...</div>
+            <div id="feedback" class="feedback-box" style="display:none;"></div>
         </div>
     </div>
     <script>
-        let timeLeft = 1423; // 23:43 in seconds
-        const timerElement = document.getElementById('timer');
-        let currentQuestion = 1;
+    // ============ CONFIG/PARAMS ============
+    const API_URL = "https://examguide.onrender.com/api/past-questions";
+    let config = {};
+    let questions = [];
+    let answers = {};
+    let timeLeft = 0;
+    let timerInterval;
+    let currentQuestion = 0;
+    let submitted = false;
 
-        function updateTimer() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            if (timeLeft > 0) {
-                timeLeft--;
-                setTimeout(updateTimer, 1000);
-            } else {
-                submitExam();
-            }
+    // ============ UTILS ============
+    function parseConfig() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('subject')) {
+            config = {
+                subject: urlParams.get('subject'),
+                year: urlParams.get('year'),
+                count: urlParams.get('count'),
+                time: urlParams.get('time'),
+                difficulty: urlParams.get('difficulty')
+            };
+        } else if (localStorage.getItem('pqConfig')) {
+            config = JSON.parse(localStorage.getItem('pqConfig'));
         }
+        // Fallbacks
+        if (!config.time) config.time = 30;
+        if (!config.count) config.count = 20;
+        if (!config.subject) config.subject = "Mathematics";
+        if (!config.year) config.year = "2024";
+        if (!config.difficulty) config.difficulty = "Medium";
+        timeLeft = (parseInt(config.time, 10) || 30) * 60;
+    }
+    parseConfig();
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
-        }
+    function showLoading(show) {
+        document.getElementById("loading").style.display = show ? "" : "none";
+    }
 
-        function prevQuestion() {
-            if (currentQuestion > 1) {
-                currentQuestion--;
-                updateQuestion();
-            }
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < 50) {
-                currentQuestion++;
-                updateQuestion();
-            }
-        }
-
-        function updateQuestion() {
-            // Update question text and options dynamically here
-            const paletteButtons = document.querySelectorAll('.palette-btn');
-            paletteButtons.forEach((btn, index) => {
-                btn.classList.toggle('current', index + 1 === currentQuestion);
+    // ============ LOAD QUESTIONS ============
+    async function loadQuestions() {
+        showLoading(true);
+        try {
+            const params = new URLSearchParams({
+                subject: config.subject,
+                year: config.year,
+                count: config.count,
+                difficulty: config.difficulty
             });
-        }
+            const resp = await fetch(`${API_URL}?${params.toString()}`);
+            questions = await resp.json();
+            if (!Array.isArray(questions) || questions.length === 0) {
+                throw new Error("No questions found for this configuration.");
+            }
+            // Setup UI
+            currentQuestion = 0;
+            answers = {};
+            submitted = false;
+            showLoading(false);
+            renderQuestion(currentQuestion);
+            renderPalette();
+            updateTimer();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) submitExam();
+            }, 1000);
 
-        function submitExam() {
-            alert('Exam submitted successfully!');
-            // Redirect or update UI as needed
+            document.getElementById("submit-btn").disabled = false;
+            document.getElementById("feedback").style.display = "none";
+        } catch (err) {
+            showLoading(false);
+            document.getElementById("question-text").innerHTML = `<span style="color:#d32f2f;">${err.message || "Failed to load questions."}</span>`;
+            document.getElementById("options").innerHTML = "";
         }
+    }
 
+    // ============ RENDER QUESTION ============
+    function renderQuestion(idx) {
+        if (!questions.length) return;
+        currentQuestion = idx;
+        const q = questions[idx];
+        document.getElementById('exam-title').textContent = `${config.subject} (${config.year}) - ${config.difficulty}`;
+        document.getElementById('exam-info').textContent = `Practice | ${config.count} Questions | ${config.time} min`;
+        document.getElementById('question-number').textContent = `Question ${idx + 1} of ${questions.length}`;
+        document.getElementById('question-text').innerHTML = q.text || q.question || "No question text available.";
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        const opts = q.options || q.choices || [];
+        opts.forEach((opt, i) => {
+            const optId = `opt${idx}_${i}`;
+            const checked = answers[q._id] === opt ? 'checked' : '';
+            optionsDiv.innerHTML += `
+                <div class="option-item">
+                    <input type="radio" name="answer" id="${optId}" value="${opt}" ${checked}>
+                    <label for="${optId}" class="option-text">${String.fromCharCode(65 + i)}: ${opt}</label>
+                </div>
+            `;
+        });
+        // Option select handler:
         document.querySelectorAll('.option-item input').forEach(input => {
             input.addEventListener('change', () => {
-                const paletteBtn = document.querySelector(`.palette-btn:nth-child(${currentQuestion})`);
-                paletteBtn.classList.add('answered');
+                answers[q._id] = input.value;
+                renderPalette();
             });
         });
+        renderPalette();
+        // Update navigation buttons
+        document.getElementById("prev-btn").disabled = (idx === 0);
+        document.getElementById("next-btn").disabled = (idx === questions.length - 1);
+    }
 
-        updateTimer();
+    // ============ TIMER ============
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // ============ PALETTE ============
+    function renderPalette() {
+        const paletteDiv = document.getElementById('palette');
+        paletteDiv.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const answered = answers[q._id];
+            paletteDiv.innerHTML += `<button class="palette-btn ${answered ? 'answered' : ''} ${idx === currentQuestion ? 'current' : ''}" onclick="paletteGoTo(${idx})">${idx + 1}</button>`;
+        });
+    }
+    window.paletteGoTo = function(idx) {
+        if (submitted) return;
+        renderQuestion(idx);
+    };
+
+    // ============ NAVIGATION ============
+    function prevQuestion() {
+        if (currentQuestion > 0) renderQuestion(currentQuestion - 1);
+    }
+    function nextQuestion() {
+        if (currentQuestion < questions.length - 1) renderQuestion(currentQuestion + 1);
+    }
+    window.prevQuestion = prevQuestion;
+    window.nextQuestion = nextQuestion;
+
+    // ============ SUBMIT ============
+    async function submitExam() {
+        if (submitted) return;
+        clearInterval(timerInterval);
+        document.getElementById("submit-btn").disabled = true;
+        showLoading(true);
+
+        // Prepare answers array for backend
+        const answersArray = questions.map(q => ({
+            questionId: q._id,
+            answer: answers[q._id] || null
+        }));
+
+        try {
+            const resp = await fetch(`${API_URL}/submit`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    answers: answersArray,
+                    questionIds: questions.map(q => q._id)
+                })
+            });
+            const result = await resp.json();
+            showLoading(false);
+            submitted = true;
+            document.getElementById("feedback").style.display = "";
+            document.getElementById("feedback").innerHTML = `
+                <span>Practice submitted!</span><br>
+                <b>Score:</b> ${result.score}/${result.total}
+                ${result.feedback && result.feedback.length ? `<div><b>Feedback:</b><ul>${result.feedback.map(f=>`<li>${f}</li>`).join("")}</ul></div>` : ""}
+                <br><button onclick="window.location.href='student-dashoards.html#past-questions'" style="margin-top:1em;padding:0.6em 1.2em;background:#2e7d32;color:#fff;border:none;border-radius:0.25em;cursor:pointer;">Back to Dashboard</button>
+            `;
+        } catch (err) {
+            showLoading(false);
+            document.getElementById("feedback").style.display = "";
+            document.getElementById("feedback").innerHTML = `<span style="color:#d32f2f;">Failed to submit: ${err.message || "Unknown error."}</span>`;
+        }
+    }
+    window.submitExam = submitExam;
+
+    // ============ SIDEBAR MOBILE ============
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('active');
+    }
+    window.toggleSidebar = toggleSidebar;
+
+    // ============ INIT ============
+    window.onload = loadQuestions;
     </script>
 </body>
 </html>
