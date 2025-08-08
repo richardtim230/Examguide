@@ -6,8 +6,8 @@
     <title>OAU ExamGuard - Past Questions Practice</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
             margin: 0;
             padding: 0;
             max-width: 100%;
@@ -22,28 +22,31 @@
         }
         .sidebar {
             width: 250px;
-            background-color: #2e7d32;
-            border-radius: 0.5rem;
+            background: linear-gradient(180deg, #1e3a8a, #3b82f6);
+            border-radius: 0.75rem;
             padding: 1rem; 
             max-width: 90vw;
             color: #fff;
             display: none;
+            box-shadow: 0 2px 18px #3a86ff18;
         }
         .sidebar h3 {
             font-size: 1.125rem;
             margin-bottom: 1rem;
+            color: #fff;
         }
         .tool-btn {
             display: flex;
             align-items: center;
             padding: 0.5rem;
-            background-color: #388e3c;
-            border-radius: 0.25rem;
+            background-color: #6366f1;
+            border-radius: 0.45rem;
             margin-bottom: 0.5rem;
             cursor: pointer;
+            transition: background 0.18s;
         }
         .tool-btn:hover {
-            background-color: #43a047;
+            background-color: #4338ca;
         }
         .tool-btn img {
             width: 20px;
@@ -51,19 +54,20 @@
         }
         .nav-toggle {
             display: none;
-            background-color: #2e7d32;
+            background-color: #6366f1;
             color: #fff;
             border: none;
             padding: 0.5rem;
             border-radius: 0.25rem;
             cursor: pointer;
             font-size: 1rem;
+            box-shadow: 0 2px 8px #6366f155;
         }
         .main-content {
             flex-grow: 1;
             background-color: #fff;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 18px #3a86ff18;
             padding: 1.5rem;
             max-width: 100%;
         }
@@ -76,21 +80,37 @@
         }
         .header h1 {
             font-size: 1.5rem;
-            color: #1e1e1e;
+            color: #1e3a8a;
+            font-weight: bold;
+            letter-spacing: 0.4px;
         }
         .header .user-info {
-            font-size: 1rem;
-            color: #666;
+            font-size: 1.07rem;
+            color: #6366f1;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .header .username-box {
+            background: #e0e7ff;
+            color: #23366e;
+            border-radius: 10px;
+            padding: 0.5em 1.2em;
+            margin-left: 1.5em;
+            font-weight: 700;
+            font-size: 1em;
+            box-shadow: 0 2px 8px #6366f122;
         }
         .timer-box {
-            background-color: #d32f2f;
+            background-color: #6366f1;
             color: #fff;
             padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            font-weight: 600;
+            border-radius: 0.45rem;
+            font-weight: 700;
             margin-top: 0.5rem;
             min-width: 70px;
             text-align: center;
+            box-shadow: 0 1px 6px #1e3a8a22;
+            font-size: 1.15em;
         }
         .question-section {
             margin-bottom: 1.5rem;
@@ -98,38 +118,47 @@
         }
         .question-section h2 {
             font-size: 1.25rem;
-            color: #1e1e1e;
+            color: #1e3a8a;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
         .question-text {
-            font-size: 1rem;
-            color: #374151;
+            font-size: 1.04rem;
+            color: #23366e;
             margin-bottom: 1rem;
+            background: #e0e7ff44;
+            border-radius: 0.5em;
+            padding: 0.5em 0.7em;
+            box-shadow: 0 1px 6px #6366f111;
         }
         .options {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.7rem;
         }
         .option-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.55rem;
         }
         .option-item input[type="radio"] {
             margin: 0;
             cursor: pointer;
+            accent-color: #6366f1;
         }
         .option-text {
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 0.25rem;
+            padding: 0.52rem 0.8rem;
+            border: 1px solid #6366f122;
+            border-radius: 0.33rem;
             flex-grow: 1;
-            background-color: #f9fafb;
+            background-color: #f3f4f6;
             cursor: pointer;
+            font-size: 1em;
+            transition: background 0.18s, border-color 0.18s;
         }
-        .option-text:hover {
-            background-color: #e5e7eb;
+        .option-text:hover, .option-item input:checked + .option-text {
+            background-color: #e0e7ff;
+            border-color: #6366f1;
         }
         .nav-controls {
             display: flex;
@@ -139,26 +168,31 @@
         }
         .nav-btn, .submit-btn {
             padding: 0.75rem 1.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
+            border-radius: 0.33rem;
+            font-size: 0.98rem;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s;
+            font-weight: 600;
         }
         .nav-btn {
-            background-color: #e0e0e0;
-            color: #1e1e1e;
+            background-color: #e0e7ff;
+            color: #23366e;
             border: none;
+            box-shadow: 0 1px 4px #6366f122;
         }
         .nav-btn:hover {
-            background-color: #ccc;
+            background-color: #6366f1;
+            color: #fff;
         }
         .submit-btn {
-            background-color: #2e7d32;
+            background: linear-gradient(90deg, #6366f1 60%, #1e3a8a 100%);
             color: #fff;
             border: none;
+            box-shadow: 0 2px 12px #6366f122;
         }
         .submit-btn:hover {
-            background-color: #388e3c;
+            background: linear-gradient(90deg, #4338ca 60%, #6366f1 100%);
+            color: #fff;
         }
         .palette {
             display: grid;
@@ -169,47 +203,71 @@
         .palette-btn {
             width: 2.5rem;
             height: 2.5rem;
-            border: 1px solid #ccc;
-            border-radius: 0.25rem;
+            border: 1.5px solid #6366f155;
+            border-radius: 0.29rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.875rem;
+            font-size: 0.98rem;
             cursor: pointer;
             background-color: #fff;
-            transition: box-shadow 0.2s, border-color 0.2s;
+            transition: box-shadow 0.18s, border-color 0.15s;
+            font-weight: 600;
+            color: #23366e;
         }
         .palette-btn.answered {
-            background-color: #2e7d32;
+            background-color: #6366f1;
             color: #fff;
-            border-color: #2e7d32;
+            border-color: #1e3a8a;
         }
         .palette-btn.current {
-            border: 2px solid #d32f2f;
-            box-shadow: 0 0 6px #d32f2f44;
+            border: 2.2px solid #3b82f6;
+            box-shadow: 0 0 6px #6366f166;
         }
         .palette-btn:focus {
-            outline: 2px solid #388e3c;
+            outline: 2px solid #6366f1;
         }
         .loading {
             text-align: center;
-            font-size: 1.1em;
-            color: #2e7d32;
+            font-size: 1.08em;
+            color: #6366f1;
             padding: 15px 0;
         }
         .feedback-box {
             background: #e0ffe0;
-            color: #1e1e1e;
-            border: 1px solid #2e7d32;
+            color: #1e3a8a;
+            border: 1.5px solid #22c55e;
             padding: 1.2em;
-            border-radius: 0.4em;
+            border-radius: 0.6em;
             margin: 1.5em 0;
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.16em;
+            box-shadow: 0 2px 12px #22c55e15;
+        }
+        .stats-box {
+            background: #e0e7ff;
+            color: #23366e;
+            border: 1px solid #6366f144;
+            border-radius: 0.6em;
+            padding: 1em 1.2em;
+            margin-bottom: 1.3em;
+            font-size: 1.05em;
+            font-weight: 600;
+            box-shadow: 0 1px 8px #6366f122;
+            display: flex;
+            gap: 2em;
+            flex-wrap: wrap;
+        }
+        .stats-item {
+            margin-right: 2em;
+        }
+        .stats-item b {
+            color: #1e3a8a;
         }
         @media (max-width: 768px) {
             .exam-container {
                 flex-direction: column;
+                padding: 8px;
             }
             .sidebar {
                 display: none;
@@ -228,7 +286,7 @@
             .palette-btn {
                 width: 2rem;
                 height: 2rem;
-                font-size: 0.75rem;
+                font-size: 0.83rem;
             }
             .header {
                 flex-direction: column;
@@ -236,6 +294,10 @@
             }
             .timer-box {
                 margin-top: 0.5rem;
+            }
+            .stats-box {
+                font-size: 0.99em;
+                gap: 1em;
             }
         }
     </style>
@@ -246,24 +308,24 @@
         <div class="sidebar" id="sidebar">
             <h3>Quick Tools</h3>
             <div class="tool-btn">
-                <img src="https://via.placeholder.com/20/2e7d32/fff?text=C" alt="Calculator">
+                <img src="https://via.placeholder.com/20/6366f1/fff?text=C" alt="Calculator">
                 <span>Calculator</span>
             </div>
             <div class="tool-btn">
-                <img src="https://via.placeholder.com/20/2e7d32/fff?text=R" alt="Rough Sheet">
+                <img src="https://via.placeholder.com/20/6366f1/fff?text=R" alt="Rough Sheet">
                 <span>Rough Sheet</span>
             </div>
             <h3>Subjects</h3>
             <div class="tool-btn">
-                <img src="https://via.placeholder.com/20/2e7d32/fff?text=M" alt="Mathematics">
+                <img src="https://via.placeholder.com/20/6366f1/fff?text=M" alt="Mathematics">
                 <span>Mathematics</span>
             </div>
             <div class="tool-btn">
-                <img src="https://via.placeholder.com/20/2e7d32/fff?text=P" alt="Physics">
+                <img src="https://via.placeholder.com/20/6366f1/fff?text=P" alt="Physics">
                 <span>Physics</span>
             </div>
             <div class="tool-btn">
-                <img src="https://via.placeholder.com/20/2e7d32/fff?text=C" alt="Chemistry">
+                <img src="https://via.placeholder.com/20/6366f1/fff?text=C" alt="Chemistry">
                 <span>Chemistry</span>
             </div>
         </div>
@@ -271,9 +333,16 @@
             <div class="header">
                 <div>
                     <h1 id="exam-title">Past Question Practice</h1>
-                    <div class="user-info" id="exam-info">PROPER</div>
+                    <div class="user-info" id="exam-info">Practice Mode</div>
                 </div>
+                <div class="username-box" id="username-box">User: ...</div>
                 <div class="timer-box" id="timer">--:--</div>
+            </div>
+            <div class="stats-box" id="stats-box" style="display:none;">
+                <div class="stats-item" id="total-answered"></div>
+                <div class="stats-item" id="total-correct"></div>
+                <div class="stats-item" id="total-wrong"></div>
+                <div class="stats-item" id="time-spent"></div>
             </div>
             <div class="question-section">
                 <h2 id="question-number">Question 1</h2>
@@ -295,13 +364,23 @@
     <script>
     // ============ CONFIG/PARAMS ============
     const API_URL = "https://examguide.onrender.com/api/past-questions";
+    const USER_API = "https://examguide.onrender.com/api/auth/me";
+    const ANSWER_API = "https://examguide.onrender.com/api/past-questions/save-answers"; // Should be implemented in backend
     let config = {};
     let questions = [];
     let answers = {};
+    let correctChoices = {};
+    let wrongChoices = {};
+    let totalCorrect = 0;
+    let totalWrong = 0;
     let timeLeft = 0;
     let timerInterval;
     let currentQuestion = 0;
     let submitted = false;
+    let startTime = 0;
+    let username = "";
+    let userId = "";
+    let timeSpent = 0;
 
     // ============ UTILS ============
     function parseConfig() {
@@ -331,9 +410,34 @@
         document.getElementById("loading").style.display = show ? "" : "none";
     }
 
+    function formatSeconds(sec) {
+        const mins = Math.floor(sec / 60);
+        const remSec = sec % 60;
+        return `${mins}m ${remSec}s`;
+    }
+
+    // ============ FETCH LOGGED IN USER ============
+    async function fetchLoggedInUser() {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) throw new Error("Not logged in.");
+            const resp = await fetch(USER_API, {
+                headers: { "Authorization": "Bearer " + token }
+            });
+            if (!resp.ok) throw new Error("Failed to fetch user.");
+            const data = await resp.json();
+            username = data.user?.username || data.user?.fullname || "Unknown";
+            userId = data.user?._id || data.user?.id || "";
+            document.getElementById("username-box").textContent = "User: " + username;
+        } catch (err) {
+            document.getElementById("username-box").textContent = "User: Guest";
+        }
+    }
+
     // ============ LOAD QUESTIONS ============
     async function loadQuestions() {
         showLoading(true);
+        await fetchLoggedInUser();
         try {
             const params = new URLSearchParams({
                 subject: config.subject,
@@ -341,15 +445,22 @@
                 count: config.count,
                 difficulty: config.difficulty
             });
-            const resp = await fetch(`${API_URL}?${params.toString()}`);
+            const resp = await fetch(`${API_URL}?${params.toString()}`, {
+                headers: { "Authorization": "Bearer " + (localStorage.getItem("token") || "") }
+            });
             questions = await resp.json();
             if (!Array.isArray(questions) || questions.length === 0) {
                 throw new Error("No questions found for this configuration.");
             }
-            // Setup UI
             currentQuestion = 0;
             answers = {};
+            correctChoices = {};
+            wrongChoices = {};
+            totalCorrect = 0;
+            totalWrong = 0;
             submitted = false;
+            startTime = Date.now();
+            timeSpent = 0;
             showLoading(false);
             renderQuestion(currentQuestion);
             renderPalette();
@@ -360,9 +471,9 @@
                 updateTimer();
                 if (timeLeft <= 0) submitExam();
             }, 1000);
-
             document.getElementById("submit-btn").disabled = false;
             document.getElementById("feedback").style.display = "none";
+            document.getElementById("stats-box").style.display = "none";
         } catch (err) {
             showLoading(false);
             document.getElementById("question-text").innerHTML = `<span style="color:#d32f2f;">${err.message || "Failed to load questions."}</span>`;
@@ -397,12 +508,15 @@
             input.addEventListener('change', () => {
                 answers[q._id] = input.value;
                 renderPalette();
+                // Optionally update stats live
+                updateStats();
             });
         });
         renderPalette();
         // Update navigation buttons
         document.getElementById("prev-btn").disabled = (idx === 0);
         document.getElementById("next-btn").disabled = (idx === questions.length - 1);
+        updateStats();
     }
 
     // ============ TIMER ============
@@ -410,6 +524,9 @@
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
         document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        // Update time spent
+        timeSpent = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById("time-spent").textContent = `Time spent: ${formatSeconds(timeSpent)}`;
     }
 
     // ============ PALETTE ============
@@ -436,6 +553,35 @@
     window.prevQuestion = prevQuestion;
     window.nextQuestion = nextQuestion;
 
+    // ============ UPDATE STATS ============
+    function updateStats() {
+        let total = 0;
+        let correct = 0;
+        let wrong = 0;
+        correctChoices = {};
+        wrongChoices = {};
+        questions.forEach(q => {
+            if (answers[q._id]) {
+                total++;
+                // For live stats, can check if answer matches correctAnswer if available
+                if (q.correctAnswer && answers[q._id] === q.correctAnswer) {
+                    correct++;
+                    correctChoices[q._id] = answers[q._id];
+                } else if (q.correctAnswer && answers[q._id] !== q.correctAnswer) {
+                    wrong++;
+                    wrongChoices[q._id] = answers[q._id];
+                }
+            }
+        });
+        totalCorrect = correct;
+        totalWrong = wrong;
+        document.getElementById("stats-box").style.display = "";
+        document.getElementById("total-answered").textContent = `Answered: ${total}`;
+        document.getElementById("total-correct").textContent = `Correct: ${correct}`;
+        document.getElementById("total-wrong").textContent = `Wrong: ${wrong}`;
+        document.getElementById("time-spent").textContent = `Time spent: ${formatSeconds(timeSpent)}`;
+    }
+
     // ============ SUBMIT ============
     async function submitExam() {
         if (submitted) return;
@@ -450,24 +596,52 @@
         }));
 
         try {
+            // Submit for scoring and feedback
             const resp = await fetch(`${API_URL}/submit`, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
                 body: JSON.stringify({
+                    userId,
+                    username,
                     answers: answersArray,
-                    questionIds: questions.map(q => q._id)
+                    questionIds: questions.map(q => q._id),
+                    timeSpent: Math.floor((Date.now() - startTime) / 1000)
                 })
             });
             const result = await resp.json();
+
+            // Save user answers, correct/wrong choices, time spent to backend for tracking
+            await fetch(ANSWER_API, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
+                body: JSON.stringify({
+                    userId,
+                    username,
+                    answers: answersArray,
+                    correctChoices: result.correctChoices || {},
+                    wrongChoices: result.wrongChoices || {},
+                    totalCorrect: result.score,
+                    totalWrong: (answersArray.length - result.score),
+                    timeSpent: Math.floor((Date.now() - startTime) / 1000)
+                })
+            });
+
             showLoading(false);
             submitted = true;
             document.getElementById("feedback").style.display = "";
             document.getElementById("feedback").innerHTML = `
                 <span>Practice submitted!</span><br>
                 <b>Score:</b> ${result.score}/${result.total}
-                ${result.feedback && result.feedback.length ? `<div><b>Feedback:</b><ul>${result.feedback.map(f=>`<li>${f}</li>`).join("")}</ul></div>` : ""}
-                <br><button onclick="window.location.href='student-dashoards.html#past-questions'" style="margin-top:1em;padding:0.6em 1.2em;background:#2e7d32;color:#fff;border:none;border-radius:0.25em;cursor:pointer;">Back to Dashboard</button>
+                <br>
+                <b>Total Correct:</b> ${result.score} &nbsp; <b>Total Wrong:</b> ${result.total - result.score}
+                ${result.feedback && result.feedback.length ? `<div style="margin-top:1em;"><b>Feedback:</b><ul style="text-align:left;">${result.feedback.map(f=>`<li>${f}</li>`).join("")}</ul></div>` : ""}
+                <br>
+                <button onclick="window.location.href='student-dashoards.html#past-questions'" style="margin-top:1.3em;padding:0.6em 1.2em;background:#6366f1;color:#fff;border:none;border-radius:0.3em;cursor:pointer;">Back to Dashboard</button>
             `;
+            document.getElementById("stats-box").style.display = "";
+            document.getElementById("total-correct").textContent = `Correct: ${result.score}`;
+            document.getElementById("total-wrong").textContent = `Wrong: ${result.total - result.score}`;
+            document.getElementById("time-spent").textContent = `Time spent: ${formatSeconds(Math.floor((Date.now() - startTime) / 1000))}`;
         } catch (err) {
             showLoading(false);
             document.getElementById("feedback").style.display = "";
