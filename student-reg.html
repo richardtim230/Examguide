@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Student Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <!-- Google Fonts for better typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1976d2;
+      --primary-dark: #115293;
+      --background: #f4f6fa;
+      --white: #fff;
+      --border: #e0e3e7;
+      --radius: 10px;
+      --transition: 0.2s;
+      --error: #d32f2f;
+      --success: #388e3c;
+      --shadow: 0 2px 16px rgba(25, 118, 210, 0.07);
+      --input-bg: #f9fafd;
+    }
+    body {
+      background: var(--background);
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 520px;
+      margin: 40px auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin: 0 0 24px 0;
+      font-weight: 600;
+      font-size: 2rem;
+      letter-spacing: .5px;
+    }
+    .form-row {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .form-row > .field {
+      flex: 1 1 0;
+      min-width: 140px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .label {
+      font-weight: 600;
+      margin-bottom: .5rem;
+      color: var(--primary-dark);
+      font-size: 1rem;
+    }
+    .input, select {
+      padding: .7rem .9rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1.05rem;
+      background: var(--input-bg);
+      transition: border-color var(--transition);
+      outline: none;
+      color: #222;
+    }
+    .input:focus, select:focus {
+      border-color: var(--primary);
+      background: #eef4fb;
+    }
+    select:invalid {
+      color: #a0a5aa;
+    }
+    .input[type="file"] {
+      padding: 0.7rem 0;
+      background: none;
+    }
+    .password-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .input[readonly] {
+      background: #f1f6fc;
+      color: #575757;
+      border-style: dashed;
+    }
+    .btn {
+      padding: 0.9rem 2.4rem;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 1.08rem;
+      cursor: pointer;
+      transition: background var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 16px rgba(25, 118, 210, 0.04);
+      margin: 16px 0 0 0;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .btn:hover, .btn:focus {
+      background: var(--primary-dark);
+    }
+    .icon-btn {
+      padding: .7rem 1.1rem;
+      background: #e3e9f8;
+      color: var(--primary);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      transition: background var(--transition);
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+    .icon-btn:hover, .icon-btn:focus {
+      background: #dbe3fa;
+      color: var(--primary-dark);
+    }
+    .msg, .success-msg {
+      margin-bottom: 1.1rem;
+      font-weight: 500;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      display: none;
+    }
+    .msg {
+      color: var(--error);
+      background: #fbeaea;
+      border: 1px solid #f7c4c4;
+    }
+    .success-msg {
+      color: var(--success);
+      background: #eafbea;
+      border: 1px solid #c4f7c4;
+    }
+    .avatar-preview {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .avatar-preview img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+      background: #f4f6fa;
+      box-shadow: 0 2px 8px #eee;
+    }
+    .avatar-preview span {
+      color: #888;
+      font-size: 0.99rem;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 18px 7px; max-width: 100vw; }
+      h2 { font-size: 1.35rem; }
+      .form-row { flex-direction: column; gap: 0; }
+      .password-row { flex-direction: column; gap: 0.6rem; }
+      .btn, .icon-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <form class="container" id="studentForm" enctype="multipart/form-data" autocomplete="off">
+    <h2><i class="fa-solid fa-user-plus"></i> Student Registration</h2>
+    <div id="msg" class="msg"></div>
+    <div id="successMsg" class="success-msg"></div>
+    <div class="form-row">
+      <div class="field">
+        <label class="label" for="fullname">Full Name</label>
+        <input class="input" name="fullname" id="fullname" required autocomplete="off" placeholder="e.g. John Doe"/>
+      </div>
+      <div class="field">
+        <label class="label" for="username">Username</label>
+        <input class="input" name="username" id="username" required minlength="3" autocomplete="off" placeholder="e.g. johndoe123"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label class="label" for="email">Email</label>
+        <input class="input" name="email" id="email" type="email" required autocomplete="off" placeholder="e.g. john@gmail.com"/>
+      </div>
+      <div class="field">
+        <label class="label" for="phone">Phone</label>
+        <input class="input" name="phone" id="phone" required autocomplete="off" placeholder="e.g. 08012345678"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label class="label" for="level">Level / Year</label>
+        <input class="input" name="level" id="level" required autocomplete="off" placeholder="e.g. 200"/>
+      </div>
+      <div class="field">
+        <label class="label" for="religion">Religion</label>
+        <input class="input" name="religion" id="religion" autocomplete="off" placeholder="e.g. Christianity"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label class="label" for="faculty">Faculty</label>
+        <select class="input" name="faculty" id="faculty" required>
+          <option value="">Select Faculty</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label" for="department">Department</label>
+        <select class="input" name="department" id="department" required>
+          <option value="">Select Department</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label" for="profilePic">Profile Picture</label>
+      <div class="avatar-preview" id="avatarPreview" style="display:none;">
+        <img id="avatarImg" src="#" alt="Preview" />
+        <span id="avatarName"></span>
+      </div>
+      <input class="input" name="profilePic" id="profilePic" type="file" accept="image/*" />
+    </div>
+    <div class="password-row field">
+      <label class="label" for="password">Password (auto-generated)</label>
+      <div style="display:flex;align-items:center;width:100%;">
+        <input class="input" name="password" id="password" readonly style="flex:1;" />
+        <button type="button" class="icon-btn" id="generatePasswordBtn" title="Generate Password">
+          <i class="fa-solid fa-bolt"></i> Generate
+        </button>
+      </div>
+    </div>
+    <button type="submit" class="btn" id="submitBtn">
+      <i class="fa-solid fa-paper-plane"></i> Register
+    </button>
+  </form>
+  <script>
+    // Backend base URL
+    const BASE_URL = "https://examguide.onrender.com";
+
+    // Password generator
+    function generatePassword(len = 10) {
+      const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#";
+      let pass = "";
+      for(let i=0; i<len; i++) {
+        pass += chars[Math.floor(Math.random()*chars.length)];
+      }
+      return pass;
+    }
+    document.getElementById("password").value = generatePassword();
+
+    document.getElementById("generatePasswordBtn").onclick = function() {
+      document.getElementById("password").value = generatePassword();
+    };
+
+    // Avatar preview
+    document.getElementById("profilePic").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById("avatarPreview");
+      const img = document.getElementById("avatarImg");
+      const name = document.getElementById("avatarName");
+      if(file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          img.src = ev.target.result;
+          preview.style.display = "flex";
+          name.textContent = file.name;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = "none";
+        img.src = "#";
+        name.textContent = "";
+      }
+    });
+
+    // Fetch Faculties and Departments
+    let allDepartments = [];
+    function fetchFaculties() {
+      fetch(BASE_URL + "/api/faculties", { credentials: "include" })
+        .then(r => r.json())
+        .then(list => {
+          let facultySelect = document.getElementById("faculty");
+          facultySelect.innerHTML = '<option value="">Select Faculty</option>';
+          list.forEach(f => {
+            let opt = document.createElement("option");
+            opt.value = f._id || f.id;
+            opt.textContent = f.name;
+            facultySelect.appendChild(opt);
+          });
+        });
+    }
+    function fetchDepartments() {
+      fetch(BASE_URL + "/api/departments", { credentials: "include" })
+        .then(r => r.json())
+        .then(list => {
+          allDepartments = list;
+          filterDepartments();
+        });
+    }
+    function filterDepartments() {
+      let facultyId = document.getElementById("faculty").value;
+      let deptSelect = document.getElementById("department");
+      deptSelect.innerHTML = '<option value="">Select Department</option>';
+      allDepartments
+        .filter(d => !facultyId || d.faculty === facultyId || d.faculty?._id === facultyId)
+        .forEach(d => {
+          let opt = document.createElement("option");
+          opt.value = d._id || d.id;
+          opt.textContent = d.name;
+          deptSelect.appendChild(opt);
+        });
+    }
+    document.getElementById("faculty").addEventListener("change", filterDepartments);
+
+    fetchFaculties();
+    fetchDepartments();
+
+    // Message helpers
+    function showMsg(text, isError) {
+      var msgBox = document.getElementById("msg");
+      var successBox = document.getElementById("successMsg");
+      msgBox.style.display = "none";
+      successBox.style.display = "none";
+      if (isError) {
+        msgBox.textContent = text;
+        msgBox.style.display = "block";
+      } else {
+        successBox.textContent = text;
+        successBox.style.display = "block";
+      }
+    }
+
+    // Submit handler
+    document.getElementById("studentForm").onsubmit = async function(e) {
+      e.preventDefault();
+      showMsg("", true);
+      showMsg("", false);
+      var submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Registering...`;
+
+      const formData = new FormData();
+      [
+        "fullname",
+        "username",
+        "email",
+        "phone",
+        "level",
+        "religion",
+        "faculty",
+        "department",
+        "password"
+      ].forEach(function(name) {
+        formData.append(name, document.getElementById(name).value);
+      });
+      const profilePicInput = document.getElementById("profilePic");
+      if(profilePicInput.files.length > 0) {
+        formData.append("profilePic", profilePicInput.files[0]);
+      }
+
+      // API: POST /api/users (admin only)
+      try {
+        const resp = await fetch(BASE_URL + "/api/users", {
+          method: "POST",
+          body: formData,
+          credentials: "include"
+        });
+        const json = await resp.json();
+        if(resp.ok) {
+          showMsg("Student registered successfully!", false);
+          document.getElementById("studentForm").reset();
+          document.getElementById("password").value = generatePassword();
+          document.getElementById("avatarPreview").style.display = "none";
+        } else {
+          showMsg(json.message || "Registration failed.", true);
+        }
+      } catch(e) {
+        showMsg("Network error.", true);
+      }
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Register`;
+    };
+  </script>
+</body>
+</html>
