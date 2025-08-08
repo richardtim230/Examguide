@@ -174,6 +174,69 @@
         .fade-in {
             animation: fadeIn 0.5s ease forwards;
         }
+        /* Rich modal styles */
+        .modal-overlay {
+            position: fixed;
+            z-index: 1000;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(30, 41, 59, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+            padding: 2rem;
+            max-width: 600px;
+            width: 95vw;
+            position: relative;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #e5e7eb;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.3rem;
+            color: #4b5563;
+            cursor: pointer;
+        }
+        .modal-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+        .modal-date {
+            color: #7c3aed;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .modal-desc {
+            font-size: 1.15rem;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+        .modal-comment {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 10px;
+            font-style: italic;
+            color: #4b5563;
+        }
         @media (max-width: 768px) {
             .hero-bg {
                 background-attachment: scroll;
@@ -196,62 +259,12 @@
                 padding: 0.5rem 1rem;
                 font-size: 0.875rem;
             }
-        }
-        /* Full Story Page Styling */
-        .full-story-banner {
-            background: linear-gradient(90deg, #4f46e5 60%, #a78bfa 100%);
-            color: white;
-            padding: 2.5rem 1rem 1.5rem 1rem;
-            text-align: center;
-        }
-        .full-story-profile-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border: 3px solid white;
-            border-radius: 50%;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-        }
-        .full-story-content {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 18px;
-            box-shadow: 0 6px 32px rgba(79,70,229,0.09);
-            padding: 2rem 1.5rem;
-            margin-top: -60px;
-            position: relative;
-            z-index: 2;
-        }
-        .full-story-img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1.2rem;
-        }
-        .full-story-tags {
-            margin-top: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .full-story-tag {
-            background: #ede9fe;
-            color: #4f46e5;
-            padding: 6px 15px;
-            border-radius: 15px;
-            font-size: 0.92rem;
-            font-weight: 500;
-        }
-        .full-story-comment {
-            background: #f1f5f9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 2rem;
-            font-style: italic;
-            color: #374151;
+            .modal-content {
+                padding: 1rem;
+            }
+            .modal-title {
+                font-size: 1.15rem;
+            }
         }
     </style>
 </head>
@@ -296,8 +309,8 @@
                     <!-- Search and Filters -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-8">
                         <div class="search-bar flex-1 relative">
-                            <input type="text" id="searchInput" placeholder="Search Sarah's posts..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-ind[...]">
-                            <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="rou[...]"/></svg>
+                            <input type="text" id="searchInput" placeholder="Search Sarah's posts..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-ind[...]
+                            <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="rou[...]
                         </div>
                         <div class="flex gap-2 flex-wrap">
                             <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active">All</button>
@@ -309,7 +322,7 @@
 
                     <!-- Blog Posts -->
                     <div id="blogPosts" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-                        <!-- Blog posts are rendered here by JS -->
+                        <!-- Blog post cards will be injected by JS -->
                     </div>
 
                     <!-- Pagination -->
@@ -331,8 +344,8 @@
                         <p class="text-sm sm:text-base text-gray-600 mb-4">Hi, I'm Sarah, a Computer Science major passionate about sharing study tips and tech insights. Follow my journey as I navigat[...]
                         <div class="flex gap-4 justify-center">
                             <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A1[...]</svg></a>
-                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.7[...]
-                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.3[...]
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.7[...]</svg></a>
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.3[...]</svg></a>
                         </div>
                     </div>
 
@@ -387,6 +400,23 @@
         </div>
     </footer>
 
+    <!-- Rich Post Modal (hidden by default) -->
+    <div id="postModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+            <img id="modalImg" class="modal-img" src="" alt="Post Image">
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-date" id="modalDate"></div>
+            <div class="modal-desc" id="modalDesc"></div>
+            <div class="modal-comment" id="modalComment"></div>
+            <div class="mt-4 flex gap-3 text-indigo-600">
+                <a id="shareTwitter" href="#" target="_blank" class="hover:text-blue-500">Share on Twitter</a>
+                <a id="shareFacebook" href="#" target="_blank" class="hover:text-blue-700">Share on Facebook</a>
+                <a id="shareWhatsapp" href="#" target="_blank" class="hover:text-green-500">Share on WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Simulated blog post data for Sarah
         const blogData = [
@@ -397,8 +427,21 @@
                     date: "Oct 10, 2025",
                     image: "images (24).jpeg?text=Study+Hacks",
                     comment: "This really helped me organize my study schedule! - Jane",
-                    tags: ["Study Tips","Productivity","Exams"],
-                    fullStory: "In this post, Sarah shares her top 10 study hacks that have helped her excel in exams. From using Pomodoro technique, summarizing notes, to collaborative study sessions and healthy routines. Each hack is explained with practical examples and actionable advice. If you want to ace your exams, these hacks will help you organize, stay focused, and manage your time wisely."
+                    story: `Full Story: <br><br>
+                        Studying for exams can be overwhelming, but with the right hacks, you can make it easier. Here are my top 10 tips: 
+                        <ol>
+                            <li><strong>Set clear goals</strong> for each study session.</li>
+                            <li>Use the Pomodoro technique for focused study.</li>
+                            <li>Summarize notes after each class.</li>
+                            <li>Practice past questions regularly.</li>
+                            <li>Take breaks and hydrate.</li>
+                            <li>Use flashcards for quick revision.</li>
+                            <li>Join study groups for support.</li>
+                            <li>Teach others to reinforce your learning.</li>
+                            <li>Track your progress.</li>
+                            <li>Stay positive and sleep well!</li>
+                        </ol>
+                        With these hacks, you'll be ready for exam success!`
                 },
                 {
                     title: "Coding Tips for Beginners",
@@ -406,8 +449,16 @@
                     date: "Oct 5, 2025",
                     image: "images (4).jpeg?text=Coding+Tips",
                     comment: "Great advice for new coders! - Mike",
-                    tags: ["Coding","Tech Insights"],
-                    fullStory: "Sarah discusses her journey into coding, sharing tips for beginners such as picking the right language, practicing regularly, joining coding communities, and building small projects. She also lists her favorite resources and offers encouragement for those just starting out."
+                    story: `Full Story: <br><br>
+                        Starting with coding? Here are some essentials:<br>
+                        <ul>
+                            <li>Pick one language and master its basics (Python is great for beginners).</li>
+                            <li>Practice by building small projects.</li>
+                            <li>Read code written by others.</li>
+                            <li>Use GitHub to host your code.</li>
+                            <li>Ask questions and be active in coding communities.</li>
+                        </ul>
+                        Remember, consistent practice is key!`
                 },
                 {
                     title: "Mastering Time Management",
@@ -415,8 +466,8 @@
                     date: "Sep 28, 2025",
                     image: "images (7).jpeg?text=Time+Management",
                     comment: "This changed my daily routine! - Lisa",
-                    tags: ["Productivity","Student Life"],
-                    fullStory: "Sarah offers a personal account of how she juggles academic life, coding, and her social calendar. She details her calendar habits, prioritization strategies, and how to set boundaries. Readers can find actionable steps to master their own time."
+                    story: `Full Story: <br><br>
+                        Balancing school and life is tough! I use planners, prioritize tasks, and set boundaries for social media and gaming. I also reward myself after completing big tasks. Try using digital planners and reminders to stay organized!`
                 },
                 {
                     title: "Navigating Campus Life",
@@ -424,8 +475,8 @@
                     date: "Sep 20, 2025",
                     image: "images (8).jpeg?text=Campus+Life",
                     comment: "Really helpful for new students! - Tom",
-                    tags: ["Campus Life","Student Life"],
-                    fullStory: "Sarah shares insights into campus life, covering everything from joining clubs, finding study spots, making friends, and balancing freedom with discipline. The advice is practical and encouraging for anyone new to university."
+                    story: `Full Story: <br><br>
+                        University is a new world! Get involved in clubs, make friends from other departments, and don’t hesitate to seek help from lecturers. Always balance academics with fun. Explore the campus and enjoy your journey!`
                 }
             ],
             [
@@ -435,8 +486,8 @@
                     date: "Sep 15, 2025",
                     image: "images (4).jpeg?text=Debugging",
                     comment: "Debugging is so much easier now! - Emma",
-                    tags: ["Coding","Tech Insights"],
-                    fullStory: "Sarah breaks down her process for debugging code - from reading error messages, using print statements, code reviews, and leveraging IDE tools. She shares real-world examples from her own projects and tips for staying calm under pressure."
+                    story: `Full Story: <br><br>
+                        Debugging is an art. Start by reading error messages carefully, isolate problems, and use print statements or debugging tools. Don’t be afraid to Google errors!`
                 },
                 {
                     title: "Why I Love Open Source",
@@ -444,8 +495,8 @@
                     date: "Sep 10, 2025",
                     image: "images (7).jpeg?text=Open+Source",
                     comment: "Inspired me to start contributing! - John",
-                    tags: ["Open Source","Tech Insights"],
-                    fullStory: "Sarah explains how open source changed her perspective on coding, the sense of community she found, and how contributing improved her skills. She shares how to get started, find beginner-friendly projects, and the rewards of giving back."
+                    story: `Full Story: <br><br>
+                        Open source projects help you learn, collaborate, and give back to the community. Start by finding beginner-friendly issues on GitHub and join a project that interests you!`
                 }
             ]
         ];
@@ -509,7 +560,7 @@
         function updatePagination() {
             // Update blog posts
             blogPosts.innerHTML = '';
-            blogData[currentPage - 1].forEach((post, postIdx) => {
+            blogData[currentPage - 1].forEach((post, idx) => {
                 const postElement = document.createElement('div');
                 postElement.className = 'blog-card bg-white p-6 rounded-lg shadow-md fade-in';
                 postElement.innerHTML = `
@@ -518,7 +569,7 @@
                     <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">${post.description}</p>
                     <div class="flex justify-between items-center mt-4">
                         <p class="text-sm text-gray-500">${post.date}</p>
-                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium read-more-link" data-page="${currentPage-1}" data-idx="${postIdx}" target="_blank">Read More</a>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium read-more-btn" data-page="${currentPage-1}" data-idx="${idx}" target="_blank" rel="noopener">Read More</a>
                     </div>
                     <div class="comment-preview p-3 mt-4">
                         <p class="text-sm text-gray-600 italic">"${post.comment}"</p>
@@ -537,22 +588,13 @@
             prevBtn.classList.toggle('disabled', currentPage === 1);
             nextBtn.classList.toggle('disabled', currentPage === totalPages);
 
-            // Attach Read More handlers after rendering
-            setTimeout(attachReadMoreHandlers, 100);
-        }
-
-        // "Read More" handler
-        function attachReadMoreHandlers() {
-            document.querySelectorAll('.read-more-link').forEach(link => {
-                link.addEventListener('click', function (e) {
+            // Add event listener for "Read More" (rich modal)
+            document.querySelectorAll('.read-more-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const page = parseInt(this.getAttribute('data-page'));
-                    const idx = parseInt(this.getAttribute('data-idx'));
-                    const post = blogData[page][idx];
-                    // Save post data to localStorage for new tab retrieval
-                    localStorage.setItem('fullStoryPost', JSON.stringify(post));
-                    // Open full story page in new tab
-                    window.open('student-blog-full.html', '_blank');
+                    const page = parseInt(btn.getAttribute('data-page'));
+                    const idx = parseInt(btn.getAttribute('data-idx'));
+                    openPostModal(blogData[page][idx]);
                 });
             });
         }
@@ -571,8 +613,47 @@
             });
         });
 
-        // Initial pagination and handlers
+        // Initialize pagination
         updatePagination();
+
+        // Rich modal logic
+        const postModal = document.getElementById('postModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        function openPostModal(post) {
+            document.getElementById('modalImg').src = post.image;
+            document.getElementById('modalTitle').textContent = post.title;
+            document.getElementById('modalDate').textContent = post.date;
+            document.getElementById('modalDesc').innerHTML = post.story || post.description;
+            document.getElementById('modalComment').textContent = post.comment;
+
+            // Share links
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(post.title + " - " + post.description);
+            document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+            document.getElementById('shareFacebook').href = `https://facebook.com/sharer.php?u=${url}&quote=${text}`;
+            document.getElementById('shareWhatsapp').href = `https://wa.me/?text=${text} ${url}`;
+
+            postModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        closeModalBtn.addEventListener('click', () => {
+            postModal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+        // ESC key closes modal
+        document.addEventListener('keydown', function(e){
+            if (e.key === "Escape") {
+                postModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        // Click outside modal closes it
+        postModal.addEventListener('click', function(e) {
+            if (e.target === postModal) {
+                postModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
 
     </script>
 </body>
