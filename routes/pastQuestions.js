@@ -2,6 +2,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 import Question from '../models/Question.js';
 import UserAnswer from '../models/UserAnswer.js';
