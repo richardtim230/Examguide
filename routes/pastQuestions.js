@@ -1,4 +1,3 @@
-// Change all require() statements to import
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
@@ -6,7 +5,6 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 import Question from '../models/Question.js';
 import UserAnswer from '../models/UserAnswer.js';
-const router = express.Router();
 
 // ========== Multer Setup for Image Upload ==========
 const storage = multer.diskStorage({
@@ -29,10 +27,13 @@ const upload = multer({
   }
 });
 
+// Initialize router
+const router = express.Router();
+
 // ========== ENDPOINTS ==========
 
 // GET /api/past-questions - Students: Fetch questions with filters
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authenticate, async (req, res) => {
   try {
     const { subject, year, count, difficulty } = req.query;
     const filter = {};
@@ -50,7 +51,7 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // POST /api/past-questions/submit - Students: Submit answers for scoring/feedback
-router.post('/submit', authMiddleware, async (req, res) => {
+router.post('/submit', authenticate, async (req, res) => {
   try {
     const { answers, questionIds, timeSpent } = req.body;
     let score = 0;
@@ -89,7 +90,7 @@ router.post('/submit', authMiddleware, async (req, res) => {
 });
 
 // POST /api/past-questions/save-answers - Students: Save answers/stats/cumulative history
-router.post('/save-answers', authMiddleware, async (req, res) => {
+router.post('/save-answers', authenticate, async (req, res) => {
   try {
     const { userId, username, answers, correctChoices, wrongChoices, totalCorrect, totalWrong, timeSpent } = req.body;
 
@@ -117,7 +118,7 @@ router.post('/save-answers', authMiddleware, async (req, res) => {
 // POST /api/past-questions - Admin: Create a new past question (with optional image)
 router.post(
   '/',
-  [authMiddleware, adminMiddleware, upload.single('image')],
+  [authenticate, authorizeRole('admin'), upload.single('image')],
   async (req, res) => {
     try {
       const {
@@ -194,7 +195,7 @@ router.post(
 // PUT /api/past-questions/:id - Admin: Update a past question (with optional image update)
 router.put(
   '/:id',
-  [authMiddleware, adminMiddleware, upload.single('image')],
+  [authenticate, authorizeRole('admin'), upload.single('image')],
   async (req, res) => {
     try {
       const updateFields = { ...req.body };
@@ -230,7 +231,7 @@ router.put(
 );
 
 // DELETE /api/past-questions/:id - Admin: Delete a past question
-router.delete('/:id', [authMiddleware, adminMiddleware], async (req, res) => {
+router.delete('/:id', [authenticate, authorizeRole('admin')], async (req, res) => {
   try {
     const question = await Question.findByIdAndDelete(req.params.id);
     if (!question) return res.status(404).json({ error: "Question not found." });
@@ -241,7 +242,7 @@ router.delete('/:id', [authMiddleware, adminMiddleware], async (req, res) => {
 });
 
 // GET /api/past-questions/admin/all - Admin: List all questions (with filters)
-router.get('/admin/all', [authMiddleware, adminMiddleware], async (req, res) => {
+router.get('/admin/all', [authenticate, authorizeRole('admin')], async (req, res) => {
   try {
     const { subject, year, difficulty, topic, tag } = req.query;
     const filter = {};
@@ -259,7 +260,7 @@ router.get('/admin/all', [authMiddleware, adminMiddleware], async (req, res) => 
 });
 
 // GET /api/past-questions/:id - Admin: Get a single question
-router.get('/:id', [authMiddleware, adminMiddleware], async (req, res) => {
+router.get('/:id', [authenticate, authorizeRole('admin')], async (req, res) => {
   try {
     const question = await Question.findById(req.params.id);
     if (!question) return res.status(404).json({ error: "Question not found." });
