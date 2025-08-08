@@ -174,69 +174,6 @@
         .fade-in {
             animation: fadeIn 0.5s ease forwards;
         }
-        /* Rich modal styles */
-        .modal-overlay {
-            position: fixed;
-            z-index: 1000;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(30, 41, 59, 0.85);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-        .modal-content {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.35);
-            padding: 2rem;
-            max-width: 600px;
-            width: 95vw;
-            position: relative;
-            font-family: 'Inter', sans-serif;
-        }
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #e5e7eb;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            font-size: 1.3rem;
-            color: #4b5563;
-            cursor: pointer;
-        }
-        .modal-img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-        .modal-title {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #4f46e5;
-        }
-        .modal-date {
-            color: #7c3aed;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        .modal-desc {
-            font-size: 1.15rem;
-            color: #374151;
-            margin-bottom: 1rem;
-        }
-        .modal-comment {
-            background: #f1f5f9;
-            padding: 1rem;
-            border-radius: 10px;
-            font-style: italic;
-            color: #4b5563;
-        }
         @media (max-width: 768px) {
             .hero-bg {
                 background-attachment: scroll;
@@ -258,12 +195,6 @@
             .pagination-btn, .follow-btn {
                 padding: 0.5rem 1rem;
                 font-size: 0.875rem;
-            }
-            .modal-content {
-                padding: 1rem;
-            }
-            .modal-title {
-                font-size: 1.15rem;
             }
         }
     </style>
@@ -293,9 +224,9 @@
             <p class="text-sm sm:text-base mt-2"><span id="followersCount">1,234</span> Followers</p>
             <button id="followBtn" class="follow-btn bg-indigo-600 text-white px-4 sm:px-6 py-2 rounded-full text-sm sm:text-base mt-4">Follow</button>
             <div class="flex justify-center gap-4 mt-4">
-                <a href="#" class="social-icon text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 01[...]</svg></a>
-                <a href="#" class="social-icon text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v[...]</svg></a>
-                <a href="#" class="social-icon text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.36 9.84v-6.95h-2[...]</svg></a>
+                <a href="#" class="social-icon text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg></a>
+                <a href="#" class="social-icon text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm13.5 12.5h-3v-5.5c0-1.31-.47-2.2-1.65-2.2-1.2 0-1.85.8-2.15 1.57v6.13h-3s.04-10.5 0-11.6h3v1.65c.4-.62 1.12-1.5 2.73-1.5 2 0 3.5 1.31 3.5 4.12v7.33z"></path></svg></a>
+                <a href="#" class="social-icon text-white"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.36 9.84v-6.95h-2.51v-2.89h2.51v-2.2c0-2.48 1.47-3.84 3.73-3.84 1.08 0 2.22.19 2.22.19v2.44h-1.25c-1.23 0-1.61.77-1.61 1.56v1.85h2.74l-.44 2.89h-2.3v6.95c4.74-.79 8.36-4.89 8.36-9.84 0-5.5-4.46-9.96-9.96-9.96z"></path></svg></a>
             </div>
         </div>
     </section>
@@ -309,8 +240,8 @@
                     <!-- Search and Filters -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-8">
                         <div class="search-bar flex-1 relative">
-                            <input type="text" id="searchInput" placeholder="Search Sarah's posts..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-ind[...]
-                            <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="rou[...]
+                            <input type="text" id="searchInput" placeholder="Search Sarah's posts..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                            <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                         <div class="flex gap-2 flex-wrap">
                             <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active">All</button>
@@ -322,7 +253,54 @@
 
                     <!-- Blog Posts -->
                     <div id="blogPosts" class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-                        <!-- Blog post cards will be injected by JS -->
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Study+Hacks" alt="Blog Post 1" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Top 10 Study Hacks for Exam Success</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">Discover proven strategies to boost your study efficiency and ace your exams with confidence.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">Oct 10, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"This really helped me organize my study schedule!" - Jane</p>
+                            </div>
+                        </div>
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Coding+Tips" alt="Blog Post 2" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Coding Tips for Beginners</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">Essential tips to start your coding journey as a computer science student.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">Oct 5, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"Great advice for new coders!" - Mike</p>
+                            </div>
+                        </div>
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Time+Management" alt="Blog Post 3" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Mastering Time Management</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">How I balance studies, coding projects, and social life.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">Sep 28, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"This changed my daily routine!" - Lisa</p>
+                            </div>
+                        </div>
+                        <div class="blog-card bg-white p-6 rounded-lg shadow-md fade-in">
+                            <img src="https://via.placeholder.com/400x220?text=Campus+Life" alt="Blog Post 4" class="blog-img mb-4">
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Navigating Campus Life</h3>
+                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">Tips for thriving in the university environment as a freshman.</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <p class="text-sm text-gray-500">Sep 20, 2025</p>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
+                            </div>
+                            <div class="comment-preview p-3 mt-4">
+                                <p class="text-sm text-gray-600 italic">"Really helpful for new students!" - Tom</p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Pagination -->
@@ -341,11 +319,11 @@
                     <!-- Student Bio -->
                     <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                         <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">About Sarah</h3>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4">Hi, I'm Sarah, a Computer Science major passionate about sharing study tips and tech insights. Follow my journey as I navigat[...]
+                        <p class="text-sm sm:text-base text-gray-600 mb-4">Hi, I'm Sarah, a Computer Science major passionate about sharing study tips and tech insights. Follow my journey as I navigate university life and coding challenges!</p>
                         <div class="flex gap-4 justify-center">
-                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A1[...]</svg></a>
-                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.7[...]</svg></a>
-                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.3[...]</svg></a>
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg></a>
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm13.5 12.5h-3v-5.5c0-1.31-.47-2.2-1.65-2.2-1.2 0-1.85.8-2.15 1.57v6.13h-3s.04-10.5 0-11.6h3v1.65c.4-.62 1.12-1.5 2.73-1.5 2 0 3.5 1.31 3.5 4.12v7.33z"></path></svg></a>
+                            <a href="#" class="social-icon text-gray-600"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.95 3.62 9.05 8.36 9.84v-6.95h-2.51v-2.89h2.51v-2.2c0-2.48 1.47-3.84 3.73-3.84 1.08 0 2.22.19 2.22.19v2.44h-1.25c-1.23 0-1.61.77-1.61 1.56v1.85h2.74l-.44 2.89h-2.3v6.95c4.74-.79 8.36-4.89 8.36-9.84 0-5.5-4.46-9.96-9.96-9.96z"></path></svg></a>
                         </div>
                     </div>
 
@@ -400,23 +378,6 @@
         </div>
     </footer>
 
-    <!-- Rich Post Modal (hidden by default) -->
-    <div id="postModal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <button class="modal-close" id="closeModalBtn">&times;</button>
-            <img id="modalImg" class="modal-img" src="" alt="Post Image">
-            <div class="modal-title" id="modalTitle"></div>
-            <div class="modal-date" id="modalDate"></div>
-            <div class="modal-desc" id="modalDesc"></div>
-            <div class="modal-comment" id="modalComment"></div>
-            <div class="mt-4 flex gap-3 text-indigo-600">
-                <a id="shareTwitter" href="#" target="_blank" class="hover:text-blue-500">Share on Twitter</a>
-                <a id="shareFacebook" href="#" target="_blank" class="hover:text-blue-700">Share on Facebook</a>
-                <a id="shareWhatsapp" href="#" target="_blank" class="hover:text-green-500">Share on WhatsApp</a>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Simulated blog post data for Sarah
         const blogData = [
@@ -426,57 +387,28 @@
                     description: "Discover proven strategies to boost your study efficiency and ace your exams with confidence.",
                     date: "Oct 10, 2025",
                     image: "images (24).jpeg?text=Study+Hacks",
-                    comment: "This really helped me organize my study schedule! - Jane",
-                    story: `Full Story: <br><br>
-                        Studying for exams can be overwhelming, but with the right hacks, you can make it easier. Here are my top 10 tips: 
-                        <ol>
-                            <li><strong>Set clear goals</strong> for each study session.</li>
-                            <li>Use the Pomodoro technique for focused study.</li>
-                            <li>Summarize notes after each class.</li>
-                            <li>Practice past questions regularly.</li>
-                            <li>Take breaks and hydrate.</li>
-                            <li>Use flashcards for quick revision.</li>
-                            <li>Join study groups for support.</li>
-                            <li>Teach others to reinforce your learning.</li>
-                            <li>Track your progress.</li>
-                            <li>Stay positive and sleep well!</li>
-                        </ol>
-                        With these hacks, you'll be ready for exam success!`
+                    comment: "This really helped me organize my study schedule! - Jane"
                 },
                 {
                     title: "Coding Tips for Beginners",
                     description: "Essential tips to start your coding journey as a computer science student.",
                     date: "Oct 5, 2025",
                     image: "images (4).jpeg?text=Coding+Tips",
-                    comment: "Great advice for new coders! - Mike",
-                    story: `Full Story: <br><br>
-                        Starting with coding? Here are some essentials:<br>
-                        <ul>
-                            <li>Pick one language and master its basics (Python is great for beginners).</li>
-                            <li>Practice by building small projects.</li>
-                            <li>Read code written by others.</li>
-                            <li>Use GitHub to host your code.</li>
-                            <li>Ask questions and be active in coding communities.</li>
-                        </ul>
-                        Remember, consistent practice is key!`
+                    comment: "Great advice for new coders! - Mike"
                 },
                 {
                     title: "Mastering Time Management",
                     description: "How I balance studies, coding projects, and social life.",
                     date: "Sep 28, 2025",
                     image: "images (7).jpeg?text=Time+Management",
-                    comment: "This changed my daily routine! - Lisa",
-                    story: `Full Story: <br><br>
-                        Balancing school and life is tough! I use planners, prioritize tasks, and set boundaries for social media and gaming. I also reward myself after completing big tasks. Try using digital planners and reminders to stay organized!`
+                    comment: "This changed my daily routine! - Lisa"
                 },
                 {
                     title: "Navigating Campus Life",
                     description: "Tips for thriving in the university environment as a freshman.",
                     date: "Sep 20, 2025",
                     image: "images (8).jpeg?text=Campus+Life",
-                    comment: "Really helpful for new students! - Tom",
-                    story: `Full Story: <br><br>
-                        University is a new world! Get involved in clubs, make friends from other departments, and don’t hesitate to seek help from lecturers. Always balance academics with fun. Explore the campus and enjoy your journey!`
+                    comment: "Really helpful for new students! - Tom"
                 }
             ],
             [
@@ -485,18 +417,14 @@
                     description: "Learn how to troubleshoot code effectively with these expert tips.",
                     date: "Sep 15, 2025",
                     image: "images (4).jpeg?text=Debugging",
-                    comment: "Debugging is so much easier now! - Emma",
-                    story: `Full Story: <br><br>
-                        Debugging is an art. Start by reading error messages carefully, isolate problems, and use print statements or debugging tools. Don’t be afraid to Google errors!`
+                    comment: "Debugging is so much easier now! - Emma"
                 },
                 {
                     title: "Why I Love Open Source",
                     description: "Exploring the benefits of contributing to open source projects.",
                     date: "Sep 10, 2025",
                     image: "images (7).jpeg?text=Open+Source",
-                    comment: "Inspired me to start contributing! - John",
-                    story: `Full Story: <br><br>
-                        Open source projects help you learn, collaborate, and give back to the community. Start by finding beginner-friendly issues on GitHub and join a project that interests you!`
+                    comment: "Inspired me to start contributing! - John"
                 }
             ]
         ];
@@ -560,7 +488,7 @@
         function updatePagination() {
             // Update blog posts
             blogPosts.innerHTML = '';
-            blogData[currentPage - 1].forEach((post, idx) => {
+            blogData[currentPage - 1].forEach(post => {
                 const postElement = document.createElement('div');
                 postElement.className = 'blog-card bg-white p-6 rounded-lg shadow-md fade-in';
                 postElement.innerHTML = `
@@ -569,7 +497,7 @@
                     <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-3">${post.description}</p>
                     <div class="flex justify-between items-center mt-4">
                         <p class="text-sm text-gray-500">${post.date}</p>
-                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium read-more-btn" data-page="${currentPage-1}" data-idx="${idx}" target="_blank" rel="noopener">Read More</a>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Read More</a>
                     </div>
                     <div class="comment-preview p-3 mt-4">
                         <p class="text-sm text-gray-600 italic">"${post.comment}"</p>
@@ -587,16 +515,6 @@
             });
             prevBtn.classList.toggle('disabled', currentPage === 1);
             nextBtn.classList.toggle('disabled', currentPage === totalPages);
-
-            // Add event listener for "Read More" (rich modal)
-            document.querySelectorAll('.read-more-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = parseInt(btn.getAttribute('data-page'));
-                    const idx = parseInt(btn.getAttribute('data-idx'));
-                    openPostModal(blogData[page][idx]);
-                });
-            });
         }
 
         document.querySelectorAll('.pagination-btn').forEach(button => {
@@ -615,46 +533,6 @@
 
         // Initialize pagination
         updatePagination();
-
-        // Rich modal logic
-        const postModal = document.getElementById('postModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        function openPostModal(post) {
-            document.getElementById('modalImg').src = post.image;
-            document.getElementById('modalTitle').textContent = post.title;
-            document.getElementById('modalDate').textContent = post.date;
-            document.getElementById('modalDesc').innerHTML = post.story || post.description;
-            document.getElementById('modalComment').textContent = post.comment;
-
-            // Share links
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent(post.title + " - " + post.description);
-            document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
-            document.getElementById('shareFacebook').href = `https://facebook.com/sharer.php?u=${url}&quote=${text}`;
-            document.getElementById('shareWhatsapp').href = `https://wa.me/?text=${text} ${url}`;
-
-            postModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        closeModalBtn.addEventListener('click', () => {
-            postModal.style.display = 'none';
-            document.body.style.overflow = '';
-        });
-        // ESC key closes modal
-        document.addEventListener('keydown', function(e){
-            if (e.key === "Escape") {
-                postModal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        });
-        // Click outside modal closes it
-        postModal.addEventListener('click', function(e) {
-            if (e.target === postModal) {
-                postModal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        });
-
     </script>
 </body>
 </html>
