@@ -1,10 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const { authMiddleware, adminMiddleware } = require('../middleware/auth');
-const Question = require('../models/Question'); // Mongoose model for past questions
-const UserAnswer = require('../models/UserAnswer'); // Mongoose model for user answers
+// Change all require() statements to import
+import express from 'express';
+import multer from 'multer';
+import path from 'path';
+
+import Question from '../models/Question.js';
+import UserAnswer from '../models/UserAnswer.js';
+
 
 // ========== Multer Setup for Image Upload ==========
 const storage = multer.diskStorage({
