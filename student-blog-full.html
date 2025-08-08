@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sarah's Blog - Full Story</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+        }
+        .full-story-banner {
+            background: linear-gradient(90deg, #4f46e5 60%, #a78bfa 100%);
+            color: white;
+            padding: 2.5rem 1rem 1.5rem 1rem;
+            text-align: center;
+        }
+        .full-story-profile-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 3px solid white;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+        .full-story-content {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 6px 32px rgba(79,70,229,0.09);
+            padding: 2rem 1.5rem;
+            margin-top: -60px;
+            position: relative;
+            z-index: 2;
+        }
+        .full-story-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+        }
+        .full-story-tags {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .full-story-tag {
+            background: #ede9fe;
+            color: #4f46e5;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+        .full-story-comment {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-style: italic;
+            color: #374151;
+        }
+        .back-btn {
+            background: #4f46e5;
+            color: white;
+            padding: 0.6rem 1.3rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(79,70,229,0.15);
+            transition: background 0.3s;
+        }
+        .back-btn:hover {
+            background: #5b21b6;
+        }
+        @media (max-width: 600px) {
+            .full-story-img { height: 180px; }
+            .full-story-content { padding: 1rem 0.5rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="full-story-banner">
+        <img src="images (24).jpeg?text=Profile" alt="Sarah's Profile" class="full-story-profile-img">
+        <h2 class="text-2xl font-bold mb-2">Sarah's Blog</h2>
+        <p class="text-base mb-1">Computer Science Major | Sharing study tips, tech insights, and my academic journey</p>
+        <button class="back-btn" onclick="window.close()">← Back</button>
+    </div>
+    <div class="full-story-content" id="fullStoryContent">
+        <!-- Full blog story is rendered here -->
+    </div>
+    <script>
+        // Get post data
+        let post = null;
+        try {
+            post = JSON.parse(localStorage.getItem('fullStoryPost'));
+        } catch (e) { post = null; }
+
+        if (post) {
+            document.getElementById('fullStoryContent').innerHTML = `
+                <img src="${post.image}" alt="${post.title}" class="full-story-img">
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">${post.title}</h1>
+                <p class="text-sm text-gray-500 mb-3">${post.date}</p>
+                <p class="text-base text-gray-800 mb-4">${post.fullStory || post.description}</p>
+                <div class="full-story-tags">
+                    ${(post.tags || []).map(tag => `<span class="full-story-tag">${tag}</span>`).join('')}
+                </div>
+                <div class="full-story-comment">${post.comment || ''}</div>
+            `;
+        } else {
+            document.getElementById('fullStoryContent').innerHTML = `
+                <div class="text-center text-gray-500 py-12">
+                    <p>Sorry, this blog post could not be loaded.</p>
+                    <a href="student-blog.html" class="back-btn">Back to Blog</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
