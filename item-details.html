@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>OAU ExamGuard - Item Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .item-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: transform 0.5s ease;
+        }
+        .item-container:hover .item-img {
+            transform: scale(1.05);
+        }
+        .cart-btn, .buy-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .cart-btn:hover, .buy-btn:hover {
+            background: #5b21b6;
+            transform: scale(1.05);
+        }
+        .quantity-selector {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .quantity-btn {
+            transition: background-color 0.3s ease;
+        }
+        .quantity-btn:hover {
+            background: #4f46e5;
+            color: white;
+        }
+        .rating-stars {
+            color: #f59e0b;
+        }
+        .seller-card {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-radius: 12px;
+        }
+        .action-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .action-btn:hover {
+            background: #5b21b6;
+            transform: scale(1.05);
+        }
+        .review-card {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        @media (max-width: 768px) {
+            .item-img {
+                max-height: 300px;
+            }
+            .cart-btn, .buy-btn, .action-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            .quantity-selector {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
+            </div>
+            <div class="flex space-x-2 sm:space-x-4 items-center">
+                <a href="index.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Home</a>
+                <a href="blog.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Blogs</a>
+                <a href="marketplace.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Study Materials</a>
+                <a href="general-marketplace.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">General Marketplace</a>
+                <a href="#cart" class="cart-icon text-indigo-600 hover:text-indigo-800">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span id="cartCount" class="cart-count">0</span>
+                </a>
+                <a href="#signup" class="bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-700 text-sm sm:text-base">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Item Detail Section -->
+    <section class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col lg:flex-row gap-8 item-container">
+                <!-- Item Image -->
+                <div class="lg:w-1/2">
+                    <img id="itemImage" src="https://via.placeholder.com/600x400?text=Item+Image" alt="Item Image" class="item-img mb-6 fade-in">
+                </div>
+                <!-- Item Details -->
+                <div class="lg:w-1/2">
+                    <h2 id="itemTitle" class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 fade-in">Item Title</h2>
+                    <p id="itemRating" class="text-lg text-gray-600 mb-4 fade-in"><span class="rating-stars">★★★★☆</span> <span id="itemRatingValue">4.5</span> (<span id="itemReviews">0</span> reviews)</p>
+                    <p id="itemPrice" class="text-2xl text-indigo-600 font-semibold mb-4 fade-in">₦0</p>
+                    <p id="itemAvailability" class="text-lg text-gray-600 mb-4 fade-in">Availability: In Stock</p>
+                    <p id="itemCategory" class="text-lg text-gray-600 mb-4 fade-in">Category: Unknown</p>
+                    <p id="itemCondition" class="text-lg text-gray-600 mb-4 fade-in">Condition: New</p>
+                    <p id="itemDescription" class="text-base sm:text-lg text-gray-600 mb-6 fade-in">Item description goes here.</p>
+                    <div class="flex items-center mb-6 fade-in">
+                        <p class="text-sm sm:text-base text-gray-600">Sold by: <span id="itemSeller" class="font-medium">Seller Name</span></p>
+                        <p class="text-sm sm:text-base text-gray-600 ml-4">Listed on: <span id="itemDate">Date</span></p>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6 fade-in">
+                        <div class="quantity-selector flex items-center">
+                            <button id="decreaseQty" class="quantity-btn px-3 py-2 bg-gray-200 text-gray-800">-</button>
+                            <input id="quantityInput" type="number" value="1" min="1" max="10" class="w-16 text-center p-2 border-none focus:outline-none">
+                            <button id="increaseQty" class="quantity-btn px-3 py-2 bg-gray-200 text-gray-800">+</button>
+                        </div>
+                        <button id="addToCartBtn" class="cart-btn bg-indigo-600 text-white px-6 py-3 rounded-full text-base sm:text-lg hover:bg-indigo-700">Add to Cart</button>
+                        <button id="buyNowBtn" class="buy-btn bg-green-600 text-white px-6 py-3 rounded-full text-base sm:text-lg hover:bg-green-700">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Seller Info -->
+            <div class="mt-12">
+                <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">About the Seller</h3>
+                <div class="seller-card p-6 shadow-md fade-in">
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/50?text=Seller" alt="Seller Profile" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <p id="sellerName" class="text-lg font-medium text-gray-800">Seller Name</p>
+                            <p class="text-sm text-gray-600">Trusted seller with 4.8 average rating across 100+ sales</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="action-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm mt-4 inline-block hover:bg-indigo-600 hover:text-white">Contact Seller</a>
+                </div>
+            </div>
+            <!-- Customer Reviews -->
+            <div class="mt-12">
+                <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Customer Reviews</h3>
+                <div id="reviewsList" class="space-y-6">
+                    <div class="review-card p-4 fade-in">
+                        <div class="flex items-center mb-2">
+                            <p class="text-lg font-medium text-gray-800">Adewale</p>
+                            <p class="text-sm text-gray-600 ml-4"><span class="rating-stars">★★★★★</span> 5.0</p>
+                        </div>
+                        <p class="text-sm text-gray-600">Great product! Exactly as described and delivered quickly. Highly recommend!</p>
+                        <p class="text-xs text-gray-500 mt-2">Posted on Oct 1, 2025</p>
+                    </div>
+                    <div class="review-card p-4 fade-in">
+                        <div class="flex items-center mb-2">
+                            <p class="text-lg font-medium text-gray-800">Funke</p>
+                            <p class="text-sm text-gray-600 ml-4"><span class="rating-stars">★★★★☆</span> 4.0</p>
+                        </div>
+                        <p class="text-sm text-gray-600">Good quality, but shipping took a bit longer than expected.</p>
+                        <p class="text-xs text-gray-500 mt-2">Posted on Sep 28, 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Items Section -->
+    <section class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Related Items</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <a href="item-detail.html?title=Portable+Fan&description=Compact+fan+for+cooling+on+hot+campus+days&price=15990&seller=Funmi&date=Sep+28,+2025&rating=4.6&image=https://via.placeholder.com/300x180?text=Portable+Fan&availability=In+Stock&category=Utilities&condition=New&reviews=10" target="_blank" class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <img src="https://via.placeholder.com/300x180?text=Portable+Fan" alt="Portable Fan" class="item-img mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Portable Fan</h3>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Compact fan for cooling on hot campus days.</p>
+                    <p class="text-indigo-600 font-semibold mt-2">₦15,990</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <p class="text-sm text-gray-500">By Funmi | Sep 28, 2025 | <span class="rating-stars">★★★★☆ 4.6</span> (10 reviews)</p>
+                    </div>
+                </a>
+                <a href="item-detail.html?title=Snack+Variety+Pack&description=Assorted+snacks+for+quick+bites+between+classes&price=6500&seller=David&date=Sep+25,+2025&rating=4.7&image=https://via.placeholder.com/300x180?text=Snack+Pack&availability=In+Stock&category=Foodstuffs&condition=New&reviews=8" target="_blank" class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <img src="https://via.placeholder.com/300x180?text=Snack+Pack" alt="Snack Variety Pack" class="item-img mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Snack Variety Pack</h3>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Assorted snacks for quick bites between classes.</p>
+                    <p class="text-indigo-600 font-semibold mt-2">₦6,500</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <p class="text-sm text-gray-500">By David | Sep 25, 2025 | <span class="rating-stars">★★★★☆ 4.7</span> (8 reviews)</p>
+                    </div>
+                </a>
+                <a href="item-detail.html?title=Laptop+Stand&description=Adjustable+stand+for+ergonomic+laptop+use&price=19990&seller=Ngozi&date=Sep+20,+2025&rating=4.8&image=https://via.placeholder.com/300x180?text=Laptop+Stand&availability=In+Stock&category=Gadgets&condition=New&reviews=15" target="_blank" class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
+                    <img src="https://via.placeholder.com/300x180?text=Laptop+Stand" alt="Laptop Stand" class="item-img mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Laptop Stand</h3>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Adjustable stand for ergonomic laptop use.</p>
+                    <p class="text-indigo-600 font-semibold mt-2">₦19,990</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <p class="text-sm text-gray-500">By Ngozi | Sep 20, 2025 | <span class="rating-stars">★★★★☆ 4.8</span> (15 reviews)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Parse URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const item = {
+            title: decodeURIComponent(urlParams.get('title') || 'Item Title'),
+            description: decodeURIComponent(urlParams.get('description') || 'Item description goes here.'),
+            price: parseInt(urlParams.get('price') || '0'),
+            originalPrice: parseInt(urlParams.get('originalPrice') || '0') || null,
+            seller: decodeURIComponent(urlParams.get('seller') || 'Seller Name'),
+            date: decodeURIComponent(urlParams.get('date') || 'Date'),
+            rating: parseFloat(urlParams.get('rating') || '4.5').toFixed(1),
+            image: decodeURIComponent(urlParams.get('image') || 'https://via.placeholder.com/600x400?text=Item+Image'),
+            availability: decodeURIComponent(urlParams.get('availability') || 'In Stock'),
+            category: decodeURIComponent(urlParams.get('category') || 'Unknown'),
+            condition: decodeURIComponent(urlParams.get('condition') || 'New'),
+            reviews: parseInt(urlParams.get('reviews') || '0')
+        };
+
+        // Populate item details
+        document.getElementById('itemTitle').textContent = item.title;
+        document.getElementById('itemImage').src = item.image;
+        document.getElementById('itemImage').alt = item.title;
+        document.getElementById('itemDescription').textContent = item.description;
+        document.getElementById('itemPrice').textContent = `₦${item.price.toLocaleString()}${item.originalPrice ? ` (was ₦${item.originalPrice.toLocaleString()})` : ''}`;
+        document.getElementById('itemSeller').textContent = item.seller;
+        document.getElementById('sellerName').textContent = item.seller;
+        document.getElementById('itemDate').textContent = item.date;
+        document.getElementById('itemRating').innerHTML = `<span class="rating-stars">★★★★☆</span> <span id="itemRatingValue">${item.rating}</span> (${item.reviews} reviews)`;
+        document.getElementById('itemAvailability').textContent = `Availability: ${item.availability}`;
+        document.getElementById('itemCategory').textContent = `Category: ${item.category}`;
+        document.getElementById('itemCondition').textContent = `Condition: ${item.condition}`;
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartCount = document.getElementById('cartCount');
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        function addToCart(quantity) {
+            const existingItem = cart.find(cartItem => cartItem.title === item.title);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...item, quantity });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        updateCartCount();
+
+        // Quantity selector
+        const quantityInput = document.getElementById('quantityInput');
+        document.getElementById('decreaseQty').addEventListener('click', () => {
+            let value = parseInt(quantityInput.value);
+            if (value > 1) quantityInput.value = value - 1;
+        });
+        document.getElementById('increaseQty').addEventListener('click', () => {
+            let value = parseInt(quantityInput.value);
+            if (value < 10) quantityInput.value = value + 1;
+        });
+        quantityInput.addEventListener('input', () => {
+            let value = parseInt(quantityInput.value);
+            if (isNaN(value) || value < 1) quantityInput.value = 1;
+            if (value > 10) quantityInput.value = 10;
+        });
+
+        // Add to Cart and Buy Now
+        document.getElementById('addToCartBtn').addEventListener('click', () => {
+            addToCart(parseInt(quantityInput.value));
+        });
+        document.getElementById('buyNowBtn').addEventListener('click', () => {
+            addToCart(parseInt(quantityInput.value));
+            alert('Proceeding to checkout...'); // Placeholder for checkout
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
