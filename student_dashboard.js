@@ -1966,7 +1966,19 @@ document.getElementById("confirm-logout").onclick = () => {
   localStorage.clear();
   window.location.href = '/mock-icthallb';
 };
+document.querySelector('.practice-form').onsubmit = function(e) {
+  e.preventDefault();
+  const subject = document.getElementById('subject').value;
+  const year = document.getElementById('year').value;
+  const questions = document.getElementById('questions').value;
+  const time = document.getElementById('time').value;
+  const difficulty = document.getElementById('difficulty').value;
 
+  // Save to localStorage for robustness
+  localStorage.setItem('pqConfig', JSON.stringify({subject, year, questions, time, difficulty}));
+  // Redirect to pq.html with query params
+  window.location.href = `pq.html?subject=${encodeURIComponent(subject)}&year=${year}&count=${questions}&time=${time}&difficulty=${difficulty}`;
+};
 // ============ TEST START ===========
 window.startTest = function(examSetId) {
   window.location.href = `test.html?examSet=${encodeURIComponent(examSetId)}`;
