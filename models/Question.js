@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+import mongoose from "mongoose";
 const QuestionSchema = new mongoose.Schema({
   subject: { type: String, required: true },
   year: { type: String, required: true },
@@ -16,4 +15,5 @@ const QuestionSchema = new mongoose.Schema({
   // You can add a field for file type if supporting different media types
 });
 
-module.exports = mongoose.model('Question', QuestionSchema);
+
+export default mongoose.model("Question", QuestionSchema);
