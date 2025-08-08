@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-import pastQuestionsRoutes from "./routes/PastQuestions.js";
+import pastQuestionsRoutes from "./routes/pastQuestions.js";
 import fs from "fs";
 const profilePicsDir = "./uploads/profilepics";
 if (!fs.existsSync(profilePicsDir)) {
@@ -437,7 +437,7 @@ app.use("/api/blogger-dashboard", bloggerDashboardRoutes);
 app.use("/uploads/profilepics", express.static(path.join(process.cwd(), "uploads/profilepics")));
 app.use("/api/questionsets", questionSetRoutes);
 app.use("/api/results", resultsRoutes);
-app.use("/api/past-questions", PastQuestionsRoutes);
+app.use("/api/past-questions", pastQuestionsRoutes);
 app.use("/uploads/questions", express.static(path.join(process.cwd(), "uploads/questions")));
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/notifications", notificationsRoutes);
