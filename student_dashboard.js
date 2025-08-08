@@ -437,29 +437,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========== Profile Pic & Greeting Helpers ==========
-function getProfilePicUrl(student) {
-  if (student.profilePic) {
-    // If already absolute, return as is
-    if (/^https?:\/\//i.test(student.profilePic)) return student.profilePic;
-    // If relative, prepend backend base url
-    return FILE_BASE_URL + student.profilePic;
-  }
-  // fallback
-  const name = encodeURIComponent(student.fullname || student.username || "Student");
-  return `https://ui-avatars.com/api/?name=${name}&background=ede9fe&color=3b82f6&size=128&rounded=true`;
-}
-function getGreetingData() {
-  const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) {
-    return { text: "Good morning", icon: "🌅", label: "Morning" };
-  } else if (hour >= 12 && hour < 17) {
-    return { text: "Good afternoon", icon: "🌞", label: "Afternoon" };
-  } else if (hour >= 17 && hour < 20) {
-    return { text: "Good evening", icon: "🌇", label: "Evening" };
-  } else {
-    return { text: "Good night", icon: "🌙", label: "Night" };
-  }
-}
 
 // =================== PROFILE ===================
 async function fetchProfile() {
