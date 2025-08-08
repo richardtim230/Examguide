@@ -1,57 +1,18 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <title>OAU ExamGuard - Study Material Marketplace</title>
+    <title>OAU ExamGuard - Study Materials Marketplace</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #f9fafb;
         }
         .hero-bg {
-            background: url('images (7).jpeg?text=Marketplace+Banner') center/cover no-repeat;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             position: relative;
             overflow: hidden;
         }
@@ -62,16 +23,19 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
         }
         .product-card {
             position: relative;
             overflow: hidden;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-radius: 16px;
+            background: white;
+            cursor: pointer;
         }
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
         }
         .product-card::before {
             content: '';
@@ -80,7 +44,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -97,7 +61,7 @@
             transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
         }
         .category-btn.active, .category-btn:hover, .sort-btn.active, .sort-btn:hover {
-            background-color: #4f46e5;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
             transform: scale(1.05);
         }
@@ -105,11 +69,11 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .pagination-btn:hover:not(.disabled) {
-            background-color: #5b21b6;
+            background: #5b21b6;
             transform: scale(1.05);
         }
         .pagination-btn.active {
-            background-color: #4f46e5;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
         }
         .pagination-btn.disabled {
@@ -117,11 +81,11 @@
             color: #9ca3af;
             cursor: not-allowed;
         }
-        .cart-btn {
+        .cart-btn, .deal-btn {
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        .cart-btn:hover {
-            background-color: #5b21b6;
+        .cart-btn:hover, .deal-btn:hover {
+            background: #5b21b6;
             transform: scale(1.05);
         }
         .cart-icon {
@@ -139,7 +103,7 @@
         }
         .product-img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             border-radius: 12px;
             transition: transform 0.5s ease;
@@ -151,11 +115,45 @@
             position: sticky;
             top: 100px;
         }
-        .filter-option {
+        .filter-option, .category-link {
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .filter-option:hover {
-            background-color: #4f46e5;
+        .filter-option:hover, .category-link:hover {
+            background: #4f46e5;
+            color: white;
+        }
+        .deal-card {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .deal-card:hover {
+            transform: scale(1.03);
+        }
+        .rating-stars {
+            color: #f59e0b;
+        }
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .autocomplete-item:hover {
+            background: #4f46e5;
             color: white;
         }
         @keyframes fadeIn {
@@ -163,14 +161,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in {
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.6s ease forwards;
         }
         @media (max-width: 768px) {
             .hero-bg {
                 background-attachment: scroll;
             }
             .product-img {
-                height: 160px;
+                height: 140px;
             }
             .sidebar {
                 position: static;
@@ -179,9 +177,13 @@
             .product-card h3 {
                 font-size: 1.125rem;
             }
-            .pagination-btn, .cart-btn, .category-btn, .sort-btn {
+            .pagination-btn, .cart-btn, .category-btn, .sort-btn, .deal-btn {
                 padding: 0.5rem 1rem;
                 font-size: 0.875rem;
+            }
+            .deal-card {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -191,12 +193,13 @@
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="logo.png?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
                 <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
             </div>
             <div class="flex space-x-2 sm:space-x-4 items-center">
-                <a href="student-dashoards.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Home</a>
-                <a href="blogg.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Blogs</a>
+                <a href="index.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Home</a>
+                <a href="blog.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Blogs</a>
+                <a href="general-marketplace.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">General Marketplace</a>
                 <a href="#cart" class="cart-icon text-indigo-600 hover:text-indigo-800">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     <span id="cartCount" class="cart-count">0</span>
@@ -210,8 +213,35 @@
     <section class="hero-bg text-white py-16 sm:py-20">
         <div class="container mx-auto px-4 sm:px-6 text-center relative z-10">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Study Materials Marketplace</h2>
-            <p class="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">Buy, sell, and share high-quality study materials crafted by students for students.</p>
-            <a href="#sell" class="mt-6 inline-block bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Sell Your Materials</a>
+            <p class="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">Find textbooks, past questions, and study guides to ace your exams at OAU!</p>
+            <a href="#sell" class="mt-6 inline-block bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Sell Your Study Materials</a>
+        </div>
+    </section>
+
+    <!-- Featured Deals Section -->
+    <section class="py-8 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Featured Study Deals</h3>
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 overflow-x-auto pb-4">
+                <a href="item-detail.html?title=CHM101+Past+Questions&description=Complete+set+of+CHM101+past+questions+from+2015-2024,+with+solutions&price=2990&originalPrice=4990&seller=Ade&date=Oct+15,+2025&rating=4.8&image=https://via.placeholder.com/150x100?text=CHM101+PQs&availability=In+Stock&category=Past+Questions&condition=New&reviews=22" target="_blank" class="deal-card flex p-4 shadow-md fade-in">
+                    <img src="https://via.placeholder.com/150x100?text=CHM101+PQs" alt="CHM101 Past Questions" class="w-24 h-24 object-cover rounded-lg mr-4">
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-800">CHM101 Past Questions</h4>
+                        <p class="text-indigo-600 font-semibold">₦2,990 <span class="line-through text-gray-500">₦4,990</span></p>
+                        <p class="text-sm text-gray-600">By Ade | 4.8 ★★★★☆ (22 reviews)</p>
+                        <button class="deal-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mt-2 hover:bg-indigo-700">Grab Deal</button>
+                    </div>
+                </a>
+                <a href="item-detail.html?title=Mathematics+Textbook&description=Calculus+textbook+for+MTH101,+2nd+edition,+like+new&price=7990&originalPrice=9990&seller=Funke&date=Oct+12,+2025&rating=4.6&image=https://via.placeholder.com/150x100?text=Math+Textbook&availability=In+Stock&category=Textbooks&condition=Used&reviews=18" target="_blank" class="deal-card flex p-4 shadow-md fade-in">
+                    <img src="https://via.placeholder.com/150x100?text=Math+Textbook" alt="Mathematics Textbook" class="w-24 h-24 object-cover rounded-lg mr-4">
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-800">Mathematics Textbook</h4>
+                        <p class="text-indigo-600 font-semibold">₦7,990 <span class="line-through text-gray-500">₦9,990</span></p>
+                        <p class="text-sm text-gray-600">By Funke | 4.6 ★★★★☆ (18 reviews)</p>
+                        <button class="deal-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mt-2 hover:bg-indigo-700">Grab Deal</button>
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -226,12 +256,13 @@
                         <div class="search-bar flex-1 relative">
                             <input type="text" id="searchInput" placeholder="Search study materials..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600">
                             <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <div id="autocompleteDropdown" class="autocomplete-dropdown hidden"></div>
                         </div>
                         <div class="flex gap-2 flex-wrap">
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active">All</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Notes</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Textbooks</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base">Past Questions</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active" data-category="All">All (12)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Textbooks">Textbooks (4)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Past Questions">Past Questions (4)</button>
+                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Study Guides">Study Guides (4)</button>
                         </div>
                     </div>
                     <div class="flex justify-end mb-4">
@@ -239,52 +270,13 @@
                             <option value="price-asc">Price: Low to High</option>
                             <option value="price-desc">Price: High to Low</option>
                             <option value="newest">Newest First</option>
-                            <option value="popularity">Most Popular</option>
+                            <option value="rating">Highest Rated</option>
                         </select>
                     </div>
 
                     <!-- Product Grid -->
                     <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Calculus+Notes" alt="Calculus Notes" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Calculus I Notes</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Comprehensive notes for Calculus I, covering derivatives and integrals.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$5.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Sarah | Oct 10, 2025</p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="atom-biotechnology-nuclear-medicine-with-scientist-rsquo-s-hands-digital-transformation-remix_53876-126746 (1).webp?text=Physics+Textbook" alt="Physics Textbook" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Physics 101 Textbook</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Complete textbook for introductory physics, includes practice problems.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$12.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Ahmed | Oct 8, 2025</p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Past+Questions" alt="Past Questions" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Math Past Questions</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Collection of past exam questions for Mathematics 101.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$3.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Temi | Oct 5, 2025</p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
-                        <div class="product-card bg-white p-6 rounded-lg shadow-md fade-in">
-                            <img src="african-american-graduate-student-with-books_380164-234157.jpg?text=Chemistry+Notes" alt="Chemistry Notes" class="product-img mb-4">
-                            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Organic Chemistry Notes</h3>
-                            <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">Detailed notes on organic chemistry reactions and mechanisms.</p>
-                            <p class="text-indigo-600 font-semibold mt-2">$6.99</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <p class="text-sm text-gray-500">By Chidi | Oct 2, 2025</p>
-                                <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                            </div>
-                        </div>
+                        <!-- Products will be dynamically inserted here -->
                     </div>
 
                     <!-- Pagination -->
@@ -306,44 +298,57 @@
                         <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filter by Price</h3>
                         <div class="space-y-2">
                             <div class="flex items-center">
-                                <input type="checkbox" id="price-0-5" class="mr-2">
-                                <label for="price-0-5" class="text-sm sm:text-base text-gray-600">Under $5</label>
+                                <input type="checkbox" id="price-0-5000" class="mr-2">
+                                <label for="price-0-5000" class="text-sm sm:text-base text-gray-600">Under ₦5,000</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="price-5-10" class="mr-2">
-                                <label for="price-5-10" class="text-sm sm:text-base text-gray-600">$5 - $10</label>
+                                <input type="checkbox" id="price-5000-10000" class="mr-2">
+                                <label for="price-5000-10000" class="text-sm sm:text-base text-gray-600">₦5,000 - ₦10,000</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="price-10-plus" class="mr-2">
-                                <label for="price-10-plus" class="text-sm sm:text-base text-gray-600">$10+</label>
+                                <input type="checkbox" id="price-10000-plus" class="mr-2">
+                                <label for="price-10000-plus" class="text-sm sm:text-base text-gray-600">₦10,000+</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Popular Items -->
+                    <!-- Condition Filter -->
                     <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Popular Items</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Statistics 101 Notes</p>
-                                <p class="text-sm text-gray-500">By Funmi | $4.99</p>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filter by Condition</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="condition-new" class="mr-2">
+                                <label for="condition-new" class="text-sm sm:text-base text-gray-600">New</label>
                             </div>
-                            <div>
-                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Biology Past Questions</p>
-                                <p class="text-sm text-gray-500">By David | $3.50</p>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="condition-used" class="mr-2">
+                                <label for="condition-used" class="text-sm sm:text-base text-gray-600">Used</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Seller Spotlight -->
+                    <!-- Top Categories -->
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Top Categories</h3>
+                        <div class="space-y-2">
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Textbooks (4)</a>
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Past Questions (4)</a>
+                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Study Guides (4)</a>
+                        </div>
+                    </div>
+
+                    <!-- Trending Items -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Seller Spotlight</h3>
-                        <div class="flex items-center">
-                            <img src="https://via.placeholder.com/50?text=Seller" alt="Seller Profile" class="w-12 h-12 rounded-full mr-3">
-                            <div>
-                                <p class="text-sm sm:text-base font-medium text-gray-800">Funmi Ade</p>
-                                <p class="text-sm text-gray-500">Top seller with 50+ materials shared</p>
-                            </div>
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Trending Study Materials</h3>
+                        <div class="space-y-4">
+                            <a href="item-detail.htmls?title=PHY101+Past+Questions&description=Comprehensive+PHY101+past+questions+from+2018-2024,+with+detailed+solutions&price=3500&seller=Tobi&date=Sep+25,+2025&rating=4.7&image=https://via.placeholder.com/300x180?text=PHY101+PQs&availability=In+Stock&category=Past+Questions&condition=New&reviews=15" target="_blank">
+                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">PHY101 Past Questions</p>
+                                <p class="text-sm text-gray-500">By Tobi | ₦3,500 | ★★★★☆ 4.7 (15 reviews)</p>
+                            </a>
+                            <a href="item-details.html?title=Organic+Chemistry+Textbook&description=Organic+Chemistry+textbook,+3rd+edition,+slightly+used+but+in+excellent+condition&price=8500&seller=Chidi&date=Sep+20,+2025&rating=4.5&image=https://via.placeholder.com/300x180?text=Chem+Textbook&availability=In+Stock&category=Textbooks&condition=Used&reviews=12" target="_blank">
+                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Organic Chemistry Textbook</p>
+                                <p class="text-sm text-gray-500">By Chidi | ₦8,500 | ★★★★☆ 4.5 (12 reviews)</p>
+                            </a>
                         </div>
                     </div>
                 </aside>
@@ -354,8 +359,8 @@
     <!-- CTA Section -->
     <section class="py-12 sm:py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
         <div class="container mx-auto px-4 sm:px-6">
-            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Share Your Study Materials!</h3>
-            <p class="text-base sm:text-lg mb-8">Earn money by selling your notes, textbooks, and past questions on OAU ExamGuard. 🚀</p>
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Sell Your Study Materials Today!</h3>
+            <p class="text-base sm:text-lg mb-8">Share your textbooks and notes to help fellow students and earn cash. 🚀</p>
             <a href="#sell" class="bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Start Selling Now!</a>
         </div>
     </section>
@@ -377,107 +382,196 @@
         const productData = [
             [
                 {
-                    title: "Calculus I Notes",
-                    description: "Comprehensive notes for Calculus I, covering derivatives and integrals.",
-                    price: 5.99,
+                    title: "MTH101 Calculus Textbook",
+                    description: "Comprehensive calculus textbook for MTH101, 2nd edition, in excellent condition.",
+                    price: 7990,
                     seller: "Sarah",
                     date: "Oct 10, 2025",
-                    image: "black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Calculus+Notes"
+                    rating: 4.6,
+                    image: "https://via.placeholder.com/300x180?text=Calculus+Textbook",
+                    availability: "In Stock",
+                    category: "Textbooks",
+                    condition: "Used",
+                    reviews: 20
                 },
                 {
-                    title: "Physics 101 Textbook",
-                    description: "Complete textbook for introductory physics, includes practice problems.",
-                    price: 12.99,
+                    title: "CHM101 Past Questions",
+                    description: "Complete set of CHM101 past questions from 2015-2024, with detailed solutions.",
+                    price: 2990,
                     seller: "Ahmed",
                     date: "Oct 8, 2025",
-                    image: "atom-biotechnology-nuclear-medicine-with-scientist-rsquo-s-hands-digital-transformation-remix_53876-126746 (1).webp?text=Physics+Textbook"
+                    rating: 4.8,
+                    image: "https://via.placeholder.com/300x180?text=CHM101+PQs",
+                    availability: "In Stock",
+                    category: "Past Questions",
+                    condition: "New",
+                    reviews: 25
                 },
                 {
-                    title: "Math Past Questions",
-                    description: "Collection of past exam questions for Mathematics 101.",
-                    price: 3.99,
+                    title: "PHY101 Study Guide",
+                    description: "Detailed study guide for PHY101, covering all topics with practice questions.",
+                    price: 4990,
                     seller: "Temi",
                     date: "Oct 5, 2025",
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Past+Questions"
+                    rating: 4.7,
+                    image: "https://via.placeholder.com/300x180?text=PHY101+Guide",
+                    availability: "In Stock",
+                    category: "Study Guides",
+                    condition: "New",
+                    reviews: 18
                 },
                 {
-                    title: "Organic Chemistry Notes",
-                    description: "Detailed notes on organic chemistry reactions and mechanisms.",
-                    price: 6.99,
+                    title: "Organic Chemistry Textbook",
+                    description: "Organic Chemistry textbook, 3rd edition, slightly used but in excellent condition.",
+                    price: 8500,
                     seller: "Chidi",
                     date: "Oct 2, 2025",
-                    image: "black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Chemistry+Notes"
+                    rating: 4.5,
+                    image: "https://via.placeholder.com/300x180?text=Chem+Textbook",
+                    availability: "In Stock",
+                    category: "Textbooks",
+                    condition: "Used",
+                    reviews: 15
                 }
             ],
             [
                 {
-                    title: "Statistics 101 Notes",
-                    description: "In-depth notes for introductory statistics, including probability.",
-                    price: 4.99,
-                    seller: "Funmi",
+                    title: "PHY101 Past Questions",
+                    description: "Comprehensive PHY101 past questions from 2018-2024, with detailed solutions.",
+                    price: 3500,
+                    seller: "Tobi",
                     date: "Sep 28, 2025",
-                    image: "afro-male-student-holding-books-disposable-coffee-cup-standing-campus_23-2148093212.jpg?text=Statistics+Notes"
+                    rating: 4.7,
+                    image: "https://via.placeholder.com/300x180?text=PHY101+PQs",
+                    availability: "In Stock",
+                    category: "Past Questions",
+                    condition: "New",
+                    reviews: 12
                 },
                 {
-                    title: "Biology Past Questions",
-                    description: "Past exam questions for Biology 101 with answers.",
-                    price: 3.50,
-                    seller: "David",
+                    title: "MTH101 Study Guide",
+                    description: "Concise study guide for MTH101, with summaries and practice problems.",
+                    price: 3990,
+                    seller: "Funmi",
                     date: "Sep 25, 2025",
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Biology+Questions"
+                    rating: 4.6,
+                    image: "https://via.placeholder.com/300x180?text=MTH101+Guide",
+                    availability: "In Stock",
+                    category: "Study Guides",
+                    condition: "New",
+                    reviews: 10
                 },
                 {
-                    title: "Computer Science Textbook",
-                    description: "Textbook covering programming fundamentals in Python.",
-                    price: 15.99,
+                    title: "CHM101 Study Guide",
+                    description: "In-depth study guide for CHM101, with key concepts and practice questions.",
+                    price: 4500,
                     seller: "Ngozi",
                     date: "Sep 20, 2025",
-                    image: "atom-biotechnology-nuclear-medicine-with-scientist-rsquo-s-hands-digital-transformation-remix_53876-126746 (1).webp?text=CS+Textbook"
+                    rating: 4.8,
+                    image: "https://via.placeholder.com/300x180?text=CHM101+Guide",
+                    availability: "In Stock",
+                    category: "Study Guides",
+                    condition: "New",
+                    reviews: 14
                 },
                 {
-                    title: "Economics Notes",
-                    description: "Summary notes for introductory economics principles.",
-                    price: 5.49,
-                    seller: "Tobi",
+                    title: "Physics Textbook",
+                    description: "Fundamentals of Physics textbook for PHY101, 4th edition, like new.",
+                    price: 9000,
+                    seller: "David",
                     date: "Sep 15, 2025",
-                    image: "black-graduation-cap-placed-file-folder-desk_43157-2133.jpg?text=Economics+Notes"
+                    rating: 4.5,
+                    image: "https://via.placeholder.com/300x180?text=Physics+Textbook",
+                    availability: "In Stock",
+                    category: "Textbooks",
+                    condition: "Used",
+                    reviews: 16
                 }
             ],
             [
                 {
-                    title: "Algebra II Notes",
-                    description: "Detailed notes on advanced algebra topics for second-year students.",
-                    price: 7.99,
+                    title: "MTH101 Past Questions",
+                    description: "MTH101 past questions from 2016-2024, with worked solutions.",
+                    price: 3200,
                     seller: "Esther",
                     date: "Sep 10, 2025",
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    rating: 4.9,
+                    image: "https://via.placeholder.com/300x180?text=MTH101+PQs",
+                    availability: "In Stock",
+                    category: "Past Questions",
+                    condition: "New",
+                    reviews: 22
                 },
                 {
-                    title: "Chemistry Past Questions",
-                    description: "Collection of past exam questions for Chemistry 102.",
-                    price: 4.99,
+                    title: "CHM101 Textbook",
+                    description: "General Chemistry textbook for CHM101, 5th edition, in great condition.",
+                    price: 8200,
                     seller: "Ife",
                     date: "Sep 5, 2025",
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    rating: 4.6,
+                    image: "https://via.placeholder.com/300x180?text=CHM101+Textbook",
+                    availability: "In Stock",
+                    category: "Textbooks",
+                    condition: "Used",
+                    reviews: 17
                 },
                 {
-                    title: "Microeconomics Textbook",
-                    description: "Comprehensive textbook for microeconomics with case studies.",
-                    price: 14.99,
+                    title: "PHY101 Past Questions",
+                    description: "PHY101 past questions from 2017-2024, with solutions and explanations.",
+                    price: 3400,
                     seller: "Kemi",
                     date: "Sep 1, 2025",
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    rating: 4.7,
+                    image: "https://via.placeholder.com/300x180?text=PHY101+PQs",
+                    availability: "In Stock",
+                    category: "Past Questions",
+                    condition: "New",
+                    reviews: 19
                 },
                 {
-                    title: "Data Structures Notes",
-                    description: "Notes on data structures and algorithms for CS students.",
-                    price: 8.99,
+                    title: "MTH101 Study Guide",
+                    description: "Detailed MTH101 study guide with practice questions and solutions.",
+                    price: 4200,
                     seller: "Victor",
                     date: "Aug 28, 2025",
-                    image: "african-american-graduate-student-with-books_380164-234157.jpg?text=Headphones"
+                    rating: 4.8,
+                    image: "https://via.placeholder.com/300x180?text=MTH101+Guide",
+                    availability: "In Stock",
+                    category: "Study Guides",
+                    condition: "New",
+                    reviews: 13
                 }
             ]
         ];
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartCount = document.getElementById('cartCount');
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        function addToCart(item, quantity = 1) {
+            const existingItem = cart.find(cartItem => cartItem.title === item.title);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...item, quantity });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        function updateCartButtons() {
+            document.querySelectorAll('.cart-btn, .deal-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = button.closest('.product-card, .deal-card');
+                    const title = card.querySelector('h3, h4').textContent;
+                    const item = productData.flat().find(p => p.title === title);
+                    addToCart(item);
+                });
+            });
+        }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -489,41 +583,63 @@
             });
         });
 
-        // Cart functionality
-        let cartItems = 0;
-        const cartCount = document.getElementById('cartCount');
-        document.querySelectorAll('.cart-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                cartItems++;
-                cartCount.textContent = cartItems;
-            });
-        });
-
-        // Category filter
-        document.querySelectorAll('.category-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                // Placeholder for filtering logic
-                console.log(`Filter by: ${this.textContent}`);
-            });
-        });
-
-        // Debounced search
+        // Autocomplete search
         const searchInput = document.getElementById('searchInput');
-        const productGrid = document.getElementById('productGrid');
+        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
         let debounceTimeout;
         searchInput.addEventListener('input', function () {
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(() => {
                 const searchTerm = this.value.toLowerCase();
-                document.querySelectorAll('.product-card').forEach(card => {
-                    const title = card.querySelector('h3').textContent.toLowerCase();
-                    const description = card.querySelector('p').textContent.toLowerCase();
-                    card.style.display = title.includes(searchTerm) || description.includes(searchTerm) ? 'block' : 'none';
-                });
+                autocompleteDropdown.innerHTML = '';
+                if (searchTerm) {
+                    const suggestions = productData.flat().filter(item =>
+                        item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm)
+                    ).slice(0, 5);
+                    suggestions.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'autocomplete-item text-sm p-2';
+                        div.textContent = item.title;
+                        div.addEventListener('click', () => {
+                            searchInput.value = item.title;
+                            autocompleteDropdown.classList.add('hidden');
+                            filterProducts(searchTerm, getActiveCategory());
+                        });
+                        autocompleteDropdown.appendChild(div);
+                    });
+                    autocompleteDropdown.classList.toggle('hidden', suggestions.length === 0);
+                } else {
+                    autocompleteDropdown.classList.add('hidden');
+                    filterProducts('', getActiveCategory());
+                }
+                filterProducts(searchTerm, getActiveCategory());
             }, 300);
         });
+
+        // Category filter
+        function getActiveCategory() {
+            return document.querySelector('.category-btn.active')?.dataset.category || 'All';
+        }
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                filterProducts(searchInput.value.toLowerCase(), this.dataset.category);
+            });
+        });
+
+        // Filter products
+        const productGrid = document.getElementById('productGrid');
+        function filterProducts(searchTerm, category) {
+            const filteredData = productData.map(page =>
+                page.filter(item =>
+                    (category === 'All' || item.category === category) &&
+                    (item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm))
+                )
+            );
+            currentPage = 1;
+            updateProductGrid(filteredData);
+        }
 
         // Sorting functionality
         const sortSelect = document.getElementById('sortSelect');
@@ -536,46 +652,45 @@
                 sortedData.sort((a, b) => b.price - a.price);
             } else if (sortValue === 'newest') {
                 sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
-            } else if (sortValue === 'popularity') {
-                // Placeholder for popularity sorting (e.g., based on views or purchases)
-                sortedData.sort(() => Math.random() - 0.5); // Random for demo
+            } else if (sortValue === 'rating') {
+                sortedData.sort((a, b) => b.rating - a.rating);
             }
-            updateProductGrid([sortedData.slice(0, 4)]); // Display first 4 items for simplicity
+            const paginatedData = [];
+            for (let i = 0; i < sortedData.length; i += 4) {
+                paginatedData.push(sortedData.slice(i, i + 4));
+            }
+            updateProductGrid(paginatedData.length > 0 ? paginatedData : [[]]);
         });
 
         // Pagination
         let currentPage = 1;
-        const totalPages = productData.length;
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-
         function updateProductGrid(data) {
             productGrid.innerHTML = '';
-            data[currentPage - 1].forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.className = 'product-card bg-white p-6 rounded-lg shadow-md fade-in';
-                productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.title}" class="product-img mb-4">
-                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800">${product.title}</h3>
-                    <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">${product.description}</p>
-                    <p class="text-indigo-600 font-semibold mt-2">$${product.price.toFixed(2)}</p>
-                    <div class="flex justify-between items-center mt-4">
-                        <p class="text-sm text-gray-500">By ${product.seller} | ${product.date}</p>
-                        <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                    </div>
-                `;
-                productGrid.appendChild(productElement);
-            });
-
-            // Reattach cart button listeners
-            document.querySelectorAll('.cart-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    cartItems++;
-                    cartCount.textContent = cartItems;
+            if (data[currentPage - 1]?.length > 0) {
+                data[currentPage - 1].forEach(product => {
+                    const productElement = document.createElement('a');
+                    productElement.href = `item-details.html?title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&price=${product.price}&seller=${encodeURIComponent(product.seller)}&date=${encodeURIComponent(product.date)}&rating=${product.rating}&image=${encodeURIComponent(product.image)}&availability=${encodeURIComponent(product.availability)}&category=${encodeURIComponent(product.category)}&condition=${encodeURIComponent(product.condition)}&reviews=${product.reviews}`;
+                    productElement.target = '_blank';
+                    productElement.className = 'product-card bg-white p-6 rounded-lg shadow-md fade-in';
+                    productElement.innerHTML = `
+                        <img src="${product.image}" alt="${product.title}" class="product-img mb-4">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800">${product.title}</h3>
+                        <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">${product.description}</p>
+                        <p class="text-indigo-600 font-semibold mt-2">₦${product.price.toLocaleString()}</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <p class="text-sm text-gray-500">By ${product.seller} | ${product.date} | <span class="rating-stars">★★★★☆ ${product.rating.toFixed(1)}</span> (${product.reviews} reviews)</p>
+                            <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
+                        </div>
+                    `;
+                    productGrid.appendChild(productElement);
                 });
-            });
+            } else {
+                productGrid.innerHTML = '<p class="text-center text-gray-600 col-span-full">No items found.</p>';
+            }
 
-            // Update pagination buttons
+            updateCartButtons();
             document.querySelectorAll('.pagination-btn').forEach(btn => {
                 btn.classList.remove('active', 'disabled');
                 if (btn.textContent === String(currentPage)) {
@@ -583,7 +698,7 @@
                 }
             });
             prevBtn.classList.toggle('disabled', currentPage === 1);
-            nextBtn.classList.toggle('disabled', currentPage === totalPages);
+            nextBtn.classList.toggle('disabled', currentPage === data.length || data.length === 0);
         }
 
         document.querySelectorAll('.pagination-btn').forEach(button => {
@@ -591,7 +706,7 @@
                 if (this.classList.contains('disabled')) return;
                 if (this.id === 'prevBtn' && currentPage > 1) {
                     currentPage--;
-                } else if (this.id === 'nextBtn' && currentPage < totalPages) {
+                } else if (this.id === 'nextBtn' && currentPage < productData.length) {
                     currentPage++;
                 } else if (!this.id) {
                     currentPage = parseInt(this.textContent);
@@ -600,8 +715,9 @@
             });
         });
 
-        // Initialize product grid
+        // Initialize
         updateProductGrid(productData);
+        updateCartCount();
     </script>
 </body>
 </html>
