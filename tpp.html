@@ -85,20 +85,76 @@
     <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 py-8">
         <!-- Exam Header -->
-        <section class="exam-bg text-white mb-8">
-            <h2 class="text-2xl sm:text-3xl font-bold">Mathematics (CMTH105) - 2024/2025</h2>
-            <div class="flex justify-between items-center mt-4">
-                <p class="text-lg">Total Questions: 50</p>
-                <p class="timer" id="timer">40:00</p>
-            </div>
-            <div class="mt-4">
-                <div class="progress-bar">
-                    <div class="progress" id="progress-bar" style="width: 0%;"></div>
-                </div>
-                <p class="text-sm mt-2 text-center">Progress: <span id="progress-text">0%</span></p>
-            </div>
-        </section>
+<section class="custom-header mb-8">
+  <!-- Top: Past Questions and Answers with image background -->
+  <div class="header-top flex items-center justify-center rounded-t-xl overflow-hidden relative" style="height: 90px;">
+    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80" alt="Header Background" 
+      class="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none" />
+    <h2 class="relative z-10 text-2xl sm:text-3xl font-bold text-white text-center w-full" style="letter-spacing: 2px;">
+      Past Questions and Answers
+    </h2>
+  </div>
+  <!-- Bottom: Subject and session with gradient -->
+  <div class="header-bottom bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-5 px-2 rounded-b-xl text-center">
+    <div class="text-xl sm:text-2xl font-semibold" style="letter-spacing: 2px;">Mathematics</div>
+    <div class="text-lg sm:text-xl font-medium mt-2">(CMTH105)</div>
+    <div class="text-base sm:text-lg mt-1">2024/2025</div>
+  </div>
+</section>
 
+<!-- Stats: Total Questions, Timer, Progress -->
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+  <div class="stat-box bg-white shadow-md px-6 py-4 rounded-lg flex flex-col items-center w-full sm:w-auto">
+    <span class="text-gray-700 text-lg font-semibold">Total Questions</span>
+    <span class="text-indigo-700 text-xl font-bold mt-2">50</span>
+  </div>
+  <div class="stat-box bg-white shadow-md px-6 py-4 rounded-lg flex flex-col items-center w-full sm:w-auto">
+    <span class="text-gray-700 text-lg font-semibold">Timer</span>
+    <span class="timer text-red-500 text-xl font-bold mt-2" id="timer">40:00</span>
+  </div>
+  <div class="stat-box bg-white shadow-md px-6 py-4 rounded-lg flex flex-col items-center w-full sm:w-auto">
+    <span class="text-gray-700 text-lg font-semibold">Progress</span>
+    <div class="progress-bar w-full my-2">
+      <div class="progress" id="progress-bar" style="width: 0%;"></div>
+    </div>
+    <span class="text-indigo-600 text-base font-semibold" id="progress-text">0%</span>
+  </div>
+</div>
+
+<style>
+  .custom-header {
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.09);
+    overflow: hidden;
+  }
+  .header-top {
+    position: relative;
+    min-height: 90px;
+    background: #eee;
+  }
+  .header-bottom {
+    border-top: 2px solid rgba(255,255,255,0.25);
+  }
+  .stat-box {
+    min-width: 180px;
+    min-height: 90px;
+    transition: box-shadow 0.2s;
+  }
+  .progress-bar {
+    height: 10px;
+    background: #e0e7ff;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 140px;
+    margin: 0 auto;
+  }
+  .progress {
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+  }
+</style>
         <!-- Question Section -->
         <section class="mb-12">
             <div class="card bg-white p-6 rounded-lg shadow-md">
