@@ -85,74 +85,88 @@
     <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 py-8">
         <!-- Exam Header -->
+<!-- Exam Header -->
 <section class="custom-header mb-8">
   <!-- Top: Past Questions and Answers with image background -->
-  <div class="header-top flex items-center justify-center rounded-t-xl overflow-hidden relative" style="height: 90px;">
+  <div class="header-top relative flex items-center justify-center rounded-t-xl overflow-hidden" style="height: 110px;">
     <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80" alt="Header Background" 
-      class="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none" />
-    <h2 class="relative z-10 text-2xl sm:text-3xl font-bold text-white text-center w-full" style="letter-spacing: 2px;">
+      class="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none" />
+    <h2 class="relative z-10 w-full text-center font-extrabold text-white text-3xl sm:text-4xl tracking-wide drop-shadow-lg" style="letter-spacing: 2px;">
       Past Questions and Answers
     </h2>
   </div>
   <!-- Bottom: Subject and session with gradient -->
-  <div class="header-bottom bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-5 px-2 rounded-b-xl text-center">
-    <div class="text-xl sm:text-2xl font-semibold" style="letter-spacing: 2px;">Mathematics</div>
-    <div class="text-lg sm:text-xl font-medium mt-2">(CMTH105)</div>
-    <div class="text-base sm:text-lg mt-1">2024/2025</div>
+  <div class="header-bottom bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-6 px-2 rounded-b-xl text-center">
+    <div class="text-2xl sm:text-3xl font-bold tracking-wide">Mathematics</div>
+    <div class="text-xl sm:text-2xl font-semibold mt-2">(CMTH105)</div>
+    <div class="text-lg sm:text-xl font-medium mt-1">2024/2025</div>
   </div>
 </section>
 
-<!-- Stats: Total Questions, Timer, Progress -->
-<div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
-  <div class="stat-box bg-white shadow-md px-6 py-4 rounded-lg flex flex-col items-center w-full sm:w-auto">
-    <span class="text-gray-700 text-lg font-semibold">Total Questions</span>
-    <span class="text-indigo-700 text-xl font-bold mt-2">50</span>
+<!-- Stats Row -->
+<div class="flex flex-row items-center justify-between mb-4 gap-3 sm:gap-8 w-full">
+  <!-- Total Questions -->
+  <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-start min-w-[140px]">
+    <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Total Questions</span>
+    <span class="text-indigo-700 font-extrabold text-2xl sm:text-3xl mt-1">50</span>
   </div>
-  <div class="stat-box bg-white shadow-md px-6 py-4 rounded-lg flex flex-col items-center w-full sm:w-auto">
-    <span class="text-gray-700 text-lg font-semibold">Timer</span>
-    <span class="timer text-red-500 text-xl font-bold mt-2" id="timer">40:00</span>
+  <!-- Timer -->
+  <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-end min-w-[140px]">
+    <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Timer</span>
+    <span class="timer text-red-600 font-extrabold text-2xl sm:text-3xl mt-1" id="timer">40:00</span>
   </div>
-  <div class="stat-box bg-white shadow-md px-6 py-4 rounded-lg flex flex-col items-center w-full sm:w-auto">
-    <span class="text-gray-700 text-lg font-semibold">Progress</span>
+</div>
+<!-- Progress Centered -->
+<div class="flex justify-center mb-8">
+  <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-center w-full max-w-xs">
+    <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Progress</span>
     <div class="progress-bar w-full my-2">
       <div class="progress" id="progress-bar" style="width: 0%;"></div>
     </div>
-    <span class="text-indigo-600 text-base font-semibold" id="progress-text">0%</span>
+    <span class="text-indigo-600 font-bold text-base sm:text-lg" id="progress-text">0%</span>
   </div>
 </div>
 
 <style>
   .custom-header {
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.09);
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.09);
     overflow: hidden;
   }
   .header-top {
     position: relative;
-    min-height: 90px;
+    min-height: 110px;
     background: #eee;
   }
   .header-bottom {
-    border-top: 2px solid rgba(255,255,255,0.25);
+    border-top: 2px solid rgba(255,255,255,0.12);
   }
   .stat-box {
-    min-width: 180px;
-    min-height: 90px;
+    min-width: 140px;
+    min-height: 80px;
     transition: box-shadow 0.2s;
+    box-shadow: 0 2px 10px rgba(79, 70, 229, 0.06);
   }
   .progress-bar {
-    height: 10px;
+    height: 12px;
     background: #e0e7ff;
-    border-radius: 5px;
+    border-radius: 6px;
     width: 100%;
-    max-width: 140px;
+    max-width: 180px;
     margin: 0 auto;
   }
   .progress {
     height: 100%;
     background: #4f46e5;
-    border-radius: 5px;
+    border-radius: 6px;
     transition: width 0.3s ease;
+  }
+  @media (max-width: 640px) {
+    .header-top h2 { font-size: 1.45rem; }
+    .header-bottom { padding-top: 18px; padding-bottom: 18px; }
+    .stat-box { min-width: 100px; padding-left: 15px; padding-right: 15px; }
+    .progress-bar { height: 10px; }
+    .custom-header { border-radius: 10px; }
   }
 </style>
         <!-- Question Section -->
