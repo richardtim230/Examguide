@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>OAU ExamGuard - Ace Your Exams</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+        .hero-bg {
+            background: url('images (12).jpeg?text=Dynamic+Hero+Image') center/cover no-repeat;
+            animation: bgSlide 15s infinite;
+        }
+        @keyframes bgSlide {
+            0% { background-image: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image'); }
+            33% { background-image: url('https://via.placeholder.com/1920x600?text=Study+Hard+Image'); }
+            66% { background-image: url('https://via.placeholder.com/1920x600?text=Success+Image'); }
+            100% { background-image: url('https://via.placeholder.com/1920x600?text=Dynamic+Hero+Image'); }
+        }
+        .feature-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .cta-button {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .cta-button:hover {
+            background-color: #5b21b6;
+            transform: scale(1.05);
+        }
+        .dynamic-img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+        .testimonial-slide {
+            display: none;
+        }
+        .testimonial-slide.active {
+            display: block;
+        }
+        .animate-icon {
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover .animate-icon {
+            transform: rotate(360deg);
+        }
+        @media (max-width: 640px) {
+            .hero-bg h2 {
+                font-size: 2rem;
+            }
+            .stats-counter {
+                font-size: 1.5rem;
+            }
+            .dynamic-img {
+                max-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="logo.png?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
+            </div>
+            <div class="flex space-x-2 sm:space-x-4">
+                <a href="#signup" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Sign In</a>
+                <a href="#signup" class="bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-700 text-sm sm:text-base">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-16 sm:py-20">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Ace Your Exams and Earn Cash with OAU ExamGuard 🚀</h2>
+            <p class="text-base sm:text-lg md:text-xl mb-8">Revolutionize your academic experience with our cutting-edge platform!</p>
+            <a href="#signup" class="cta-button bg-indigo-600 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold">Sign Up Now and Start Excelling! 📚</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">What is OAU ExamGuard?</h3>
+            <p class="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto">Our innovative platform empowers students to prepare, practice, and excel in their exams while showcasing their writing skills and earning money.</p>
+            <img src="https://via.placeholder.com/600x300?text=Students+Studying" alt="Students Studying" class="dynamic-img mt-8 mx-auto">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Key Features</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <a href="#past-questions" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">📚</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Past Questions & Answers Platform</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Access a vast library of past exam questions with detailed solutions.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#study-guides" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">📖</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Study Guides & Materials</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Comprehensive, tailored study guides for your courses.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#mock-tests" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">📝</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Mock Tests & Exams</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Weekly, monthly, and semester mock tests to keep you sharp.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#blogging" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">✍️</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Student Blogging</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Share your stories, earn cash, and build your brand.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#marketplace" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">🛒</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Study Material Marketplace</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Buy and sell study materials with ease.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#collaboration" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">🤝</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Peer Collaboration</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Connect and learn from fellow students.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#image-editor" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">🖼️</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Image Editor</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Edit and annotate images for your study notes and diagrams.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#data-tools" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">📊</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">Data Collection Paperwork Tools</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Tools for collecting data, surveys, and managing paperwork efficiently.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+                <a href="#ai-recommendations" class="feature-card bg-white p-6 rounded-lg shadow-md block">
+                    <span class="text-4xl animate-icon">🤖</span>
+                    <h4 class="text-lg sm:text-xl font-semibold mt-4">AI-Powered Recommendations</h4>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Get personalized study suggestions based on your progress.</p>
+                    <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Explore</button>
+                </a>
+            </div>
+            <img src="https://via.placeholder.com/600x300?text=Exam+Preparation" alt="Exam Preparation" class="dynamic-img mt-12 mx-auto">
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 sm:py-16 bg-indigo-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Our Impact</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
+                <div>
+                    <p class="stats-counter" id="students-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Students Joined</p>
+                </div>
+                <div>
+                    <p class="stats-counter" id="materials-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Study Materials Shared</p>
+                </div>
+                <div>
+                    <p class="stats-counter" id="posts-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Blog Posts Published</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">Benefits</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">📈</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Improve Exam Performance</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Boost your grades with personalized study tools.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">💰</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Earn Money</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Sell study materials and get paid for your content.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">✍️</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Develop Writing Skills</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Hone your writing and build a personal brand.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4">🌐</span>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-semibold">Connect with Peers</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Learn from and collaborate with fellow students.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="https://via.placeholder.com/600x300?text=Student+Success" alt="Student Success" class="dynamic-img mt-12 mx-auto">
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-12 sm:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-12">What Our Students Say</h3>
+            <div class="testimonial-slider relative">
+                <div class="testimonial-slide active text-center">
+                    <p class="text-gray-600 italic text-sm sm:text-base mb-4">"OAU ExamGuard helped me ace my exams and earn extra cash by selling my notes!"</p>
+                    <p class="font-semibold text-indigo-600">— Sarah, Computer Science Major</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-sm sm:text-base mb-4">"The mock tests were a game-changer. I felt so prepared!"</p>
+                    <p class="font-semibold text-indigo-600">— Ahmed, Engineering Student</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-sm sm:text-base mb-4">"Writing blogs on ExamGuard boosted my skills and my wallet!"</p>
+                    <p class="font-semibold text-indigo-600">— Temi, Literature Student</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 sm:py-16 bg-indigo-600 text-white text-center">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Get Started Today!</h3>
+            <p class="text-base sm:text-lg mb-8">Join the OAU ExamGuard community and start achieving your academic goals! 🚀</p>
+            <a href="#signup" class="cta-button bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold">Sign Up Now! 📚</a>
+            <p class="text-lg sm:text-xl font-semibold mt-8">"Prepare. Practice. Excel. Earn." 🚀📚</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Stats counter animation
+        function animateCounter(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let range = end - start;
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let value = Math.min(start + (progress / duration) * range, end);
+                obj.textContent = Math.floor(value);
+                if (progress < duration) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+        animateCounter('students-counter', 0, 5000, 2000);
+        animateCounter('materials-counter', 0, 10000, 2000);
+        animateCounter('posts-counter', 0, 2000, 2000);
+
+        // Testimonial slider
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = (index + 1) % slides.length;
+        }
+        setInterval(() => showSlide(currentSlide), 5000);
+
+        // Prevent default on feature card buttons if needed
+        document.querySelectorAll('.feature-card button').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // Could add modal or something here
+                alert('Exploring feature!');
+            });
+        });
+    </script>
+</body>
+</html>
