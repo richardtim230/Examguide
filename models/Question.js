@@ -10,7 +10,7 @@ const QuestionSchema = new mongoose.Schema({
   explanation: { type: String, default: "" }, // Optional explanation
   topic: { type: String, default: "" },
   tags: [{ type: String }],
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
   createdAt: { type: Date, default: Date.now }
   // You can add a field for file type if supporting different media types
 });
