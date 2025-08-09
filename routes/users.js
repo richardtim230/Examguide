@@ -7,7 +7,7 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
 // GET all users (supports ?role, ?faculty, ?department; populates faculty/department names)
-router.get("/", authenticate, async (req, res) => {
+router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
   if (req.query.faculty) filter.faculty = req.query.faculty;
