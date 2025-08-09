@@ -180,8 +180,7 @@ router.post(
         correctAnswer,
         explanation: explanation || "",
         topic: topic || "",
-        tags: tagsArr,
-        createdBy: req.user._id
+        tags: tagsArr
       });
 
       await newQuestion.save();
