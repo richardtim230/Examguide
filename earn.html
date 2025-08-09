@@ -13,6 +13,13 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+        .breakdown-card {
+    min-height: 150px;
+}
+.earnings-amount {
+    font-size: 1.4rem;
+    font-weight: bold;
+        }
         .header-bg {
             background: url('images (7).jpeg?text=Earnings+Background') center/cover no-repeat;
             padding: 2.5rem;
@@ -78,27 +85,48 @@
                     <p class="text-gray-600 mt-2">Withdrawable: ₦80,000</p>
                     <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-4">Withdraw</button>
                 </div>
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Earnings Breakdown</h3>
-                    <ul class="space-y-2">
-                        <li class="flex justify-between text-gray-700">
-                            <span>From Practiced Questions:</span>
-                            <span class="earnings-amount">₦70,000</span>
-                        </li>
-                        <li class="flex justify-between text-gray-700">
-                            <span>From Reading Posts:</span>
-                            <span class="earnings-amount">₦20,000</span>
-                        </li>
-                        <li class="flex justify-between text-gray-700">
-                            <span>Bonus from Purchases:</span>
-                            <span class="earnings-amount">₦20,000</span>
-                        </li>
-                        <li class="flex justify-between text-gray-700">
-                            <span>Admin Spend Bonus:</span>
-                            <span class="earnings-amount">₦10,000</span>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Earnings Breakdown Section (Grid Layout) -->
+<div class="card p-6">
+    <h3 class="text-2xl font-extrabold text-gray-800 mb-6 text-center relative">
+        <span class="inline-block px-5 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-green-400 text-white shadow">
+            Earnings Breakdown
+        </span>
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- Practiced Questions -->
+        <div class="breakdown-card bg-gradient-to-r from-green-50 to-indigo-50 border border-green-200 rounded-2xl shadow-md flex flex-col items-center justify-center py-6 px-4 transition hover:shadow-lg">
+            <div class="mb-3">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19V5m0 0l-7 7m7-7l7 7"/></svg>
+            </div>
+            <span class="text-lg font-semibold text-gray-700 text-center">From Practiced Questions</span>
+            <span class="earnings-amount mt-2 text-2xl font-extrabold text-green-600">₦70,000</span>
+        </div>
+        <!-- Reading Posts -->
+        <div class="breakdown-card bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-2xl shadow-md flex flex-col items-center justify-center py-6 px-4 transition hover:shadow-lg">
+            <div class="mb-3">
+                <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19h16M4 15h16M4 11h16M4 7h16"/></svg>
+            </div>
+            <span class="text-lg font-semibold text-gray-700 text-center">From Reading Posts</span>
+            <span class="earnings-amount mt-2 text-2xl font-extrabold text-purple-600">₦20,000</span>
+        </div>
+        <!-- Bonus from Purchases -->
+        <div class="breakdown-card bg-gradient-to-r from-yellow-50 to-indigo-50 border border-yellow-200 rounded-2xl shadow-md flex flex-col items-center justify-center py-6 px-4 transition hover:shadow-lg">
+            <div class="mb-3">
+                <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <span class="text-lg font-semibold text-gray-700 text-center">Bonus from Purchases</span>
+            <span class="earnings-amount mt-2 text-2xl font-extrabold text-yellow-600">₦20,000</span>
+        </div>
+        <!-- Admin Spend Bonus -->
+        <div class="breakdown-card bg-gradient-to-r from-indigo-50 to-blue-50 border border-blue-200 rounded-2xl shadow-md flex flex-col items-center justify-center py-6 px-4 transition hover:shadow-lg">
+            <div class="mb-3">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-lg font-semibold text-gray-700 text-center">Admin Spend Bonus</span>
+            <span class="earnings-amount mt-2 text-2xl font-extrabold text-blue-600">₦10,000</span>
+        </div>
+    </div>
+</div>
             </div>
         </section>
 
