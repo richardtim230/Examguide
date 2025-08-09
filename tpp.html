@@ -171,34 +171,70 @@
 </style>
         <!-- Question Section -->
         <section class="mb-12">
-            <div class="card bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold mb-4">Question 1:</h3>
-                <p class="text-lg mb-4">What is your name?</p>
-                <div class="space-y-2">
-                    <label class="flex items-center">
-                        <input type="radio" name="answer" class="mr-2">
-                        <span class="text-gray-700">A. ____________________</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="radio" name="answer" class="mr-2">
-                        <span class="text-gray-700">B. ____________________</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="radio" name="answer" class="mr-2">
-                        <span class="text-gray-700">C. ____________________</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="radio" name="answer" class="mr-2">
-                        <span class="text-gray-700">D. ____________________</span>
-                    </label>
-                </div>
-                <div class="flex justify-between mt-6">
-                    <button class="action-btn bg-gray-500 text-white px-4 py-2 rounded-full text-sm">Prev</button>
-                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Submit</button>
-                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Next</button>
-                </div>
-            </div>
-        </section>
+  <div class="question-card bg-white p-7 rounded-2xl shadow-xl border border-gray-100 max-w-xl mx-auto">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="q-badge flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold text-lg w-12 h-12 rounded-full shadow">
+        1
+      </div>
+      <h3 class="text-2xl font-extrabold text-gray-900">Question 1</h3>
+    </div>
+    <p class="text-lg text-gray-800 mb-6 font-medium">What is your name?</p>
+    <form class="space-y-5 mb-8">
+      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
+        <input type="radio" name="answer" class="radio-big accent-indigo-600" />
+        <span class="text-base sm:text-lg font-semibold text-gray-700">A. ____________________</span>
+      </label>
+      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
+        <input type="radio" name="answer" class="radio-big accent-indigo-600" />
+        <span class="text-base sm:text-lg font-semibold text-gray-700">B. ____________________</span>
+      </label>
+      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
+        <input type="radio" name="answer" class="radio-big accent-indigo-600" />
+        <span class="text-base sm:text-lg font-semibold text-gray-700">C. ____________________</span>
+      </label>
+      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
+        <input type="radio" name="answer" class="radio-big accent-indigo-600" />
+        <span class="text-base sm:text-lg font-semibold text-gray-700">D. ____________________</span>
+      </label>
+    </form>
+    <div class="flex justify-between gap-4">
+      <button class="action-btn bg-gray-400 text-white px-7 py-2 rounded-full font-bold shadow-sm hover:bg-gray-500 transition">Prev</button>
+      <button class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-7 py-2 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition">Submit</button>
+      <button class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-7 py-2 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition">Next</button>
+    </div>
+  </div>
+</section>
+
+<style>
+.question-card {
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(79, 70, 229, 0.11);
+  border: 1.5px solid #ececff;
+}
+.q-badge {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 8px rgba(79,70,229,0.08);
+}
+.radio-big {
+  width: 22px;
+  height: 22px;
+  accent-color: #4f46e5;
+}
+.option-row input[type="radio"]:focus + span {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  .question-card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+  .q-badge { min-width: 40px; min-height: 40px; font-size: 1rem; }
+  .option-row { font-size: 1rem; }
+}
+</style>
 
         <!-- Question Navigator -->
         <section class="mb-12">
