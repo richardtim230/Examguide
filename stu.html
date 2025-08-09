@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>OAU ExamGuard - Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+        .header-bg {
+            background: url('https://via.placeholder.com/1920x300?text=Dashboard+Hero') center/cover no-repeat;
+            padding: 2rem;
+            border-radius: 12px;
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .action-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+        .dynamic-img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .stats-counter {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+        @media (max-width: 640px) {
+            .header-bg h2 {
+                font-size: 1.5rem;
+            }
+            .stats-counter {
+                font-size: 1.25rem;
+            }
+            .dynamic-img {
+                max-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <button id="toggle-sidebar" class="sm:hidden text-indigo-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 ml-3 sm:ml-0 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard Dashboard</h1>
+            </div>
+            <div class="hidden sm:flex space-x-4">
+                <a href="#articles" class="text-indigo-600 hover:text-indigo-800 font-medium">Articles</a>
+                <a href="#marketplace" class="text-indigo-600 hover:text-indigo-800 font-medium">Marketplace</a>
+                <a href="#messages" class="text-indigo-600 hover:text-indigo-800 font-medium">Messages</a>
+                <a href="#profile" class="text-indigo-600 hover:text-indigo-800 font-medium">Profile</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar (Mobile) -->
+    <aside id="sidebar" class="sidebar sm:hidden fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 sidebar-hidden">
+        <div class="p-4">
+            <button id="close-sidebar" class="text-indigo-600 mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-4">
+                <a href="#articles" class="text-indigo-600 hover:text-indigo-800 font-medium">Articles</a>
+                <a href="#marketplace" class="text-indigo-600 hover:text-indigo-800 font-medium">Marketplace</a>
+                <a href="#messages" class="text-indigo-600 hover:text-indigo-800 font-medium">Messages</a>
+                <a href="#profile" class="text-indigo-600 hover:text-indigo-800 font-medium">Profile</a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Overlay for Mobile Sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30"></div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 py-8 flex-grow">
+        <!-- Dashboard Header -->
+        <section class="header-bg text-white mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center">Welcome to Your Smart Student Dashboard 🚀</h2>
+            <p class="text-base sm:text-lg text-center mt-2">Manage your studies, connect with peers, and earn rewards!</p>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="mb-12">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Your Stats</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <p class="stats-counter" id="posts-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Posts Published</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <p class="stats-counter" id="engagements-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Total Engagements</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <p class="stats-counter" id="earnings-counter">0</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Earnings ($)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section id="articles" class="mb-12">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Manage Your Articles</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold">Write New Article</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">Create and publish blogs or academic articles.</p>
+                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-4">Start Writing</button>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold">My Articles</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">View, edit, publish, or unpublish your articles.</p>
+                    <div class="mt-4 space-x-2">
+                        <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">View</button>
+                        <button class="action-btn bg-gray-600 text-white px-4 py-2 rounded-full text-sm">Edit</button>
+                        <button class="action-btn bg-red-600 text-white px-4 py-2 rounded-full text-sm">Delete</button>
+                    </div>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://via.placeholder.com/300x150?text=Article+Preview" alt="Article Preview" class="dynamic-img mb-4">
+                    <h4 class="text-lg font-semibold">Sample Article</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">Status: Published</p>
+                    <div class="mt-4 space-x-2">
+                        <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Unpublish</button>
+                        <button class="action-btn bg-green-600 text-white px-4 py-2 rounded-full text-sm">Update</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marketplace Section -->
+        <section id="marketplace" class="mb-12">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Marketplace Listings</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold">Create Listing</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">Post study materials or resources for sale.</p>
+                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-4">Add Listing</button>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://via.placeholder.com/300x150?text=Study+Material" alt="Study Material" class="dynamic-img mb-4">
+                    <h4 class="text-lg font-semibold">Math Notes</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">Price: $5.00</p>
+                    <div class="mt-4 space-x-2">
+                        <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Edit</button>
+                        <button class="action-btn bg-red-600 text-white px-4 py-2 rounded-full text-sm">Delete</button>
+                    </div>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold">Browse Marketplace</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">Explore study materials from other students.</p>
+                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-4">Browse</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages & Comments Section -->
+        <section id="messages" class="mb-12">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Messages & Comments</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold">Direct Messages</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">View and respond to direct messages from peers.</p>
+                    <div class="mt-4">
+                        <div class="bg-gray-100 p-3 rounded-lg mb-2">
+                            <p class="text-sm">John: Can you share your physics notes?</p>
+                        </div>
+                        <textarea class="w-full p-2 border rounded-lg text-sm" placeholder="Type your reply..."></textarea>
+                        <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-2 text-sm">Send</button>
+                    </div>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-lg font-semibold">Comments</h4>
+                    <p class="text-gray-600 text-sm sm:text-base mt-2">Manage comments on your posts.</p>
+                    <div class="mt-4">
+                        <div class="bg-gray-100 p-3 rounded-lg mb-2">
+                            <p class="text-sm">Temi: Great article on calculus!</p>
+                        </div>
+                        <textarea class="w-full p-2 border rounded-lg text-sm" placeholder="Type your reply..."></textarea>
+                        <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full mt-2 text-sm">Reply</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sidebar toggle
+        const toggleSidebar = document.getElementById('toggle-sidebar');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebarMenu() {
+            sidebar.classList.toggle('sidebar-hidden');
+            overlay.classList.toggle('hidden');
+        }
+
+        toggleSidebar.addEventListener('click', toggleSidebarMenu);
+        closeSidebar.addEventListener('click', toggleSidebarMenu);
+        overlay.addEventListener('click', toggleSidebarMenu);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                if (!sidebar.classList.contains('sidebar-hidden')) {
+                    toggleSidebarMenu();
+                }
+            });
+        });
+
+        // Stats counter animation
+        function animateCounter(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let range = end - start;
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let value = Math.min(start + (progress / duration) * range, end);
+                obj.textContent = Math.floor(value);
+                if (progress < duration) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+        animateCounter('posts-counter', 0, 50, 2000);
+        animateCounter('engagements-counter', 0, 1000, 2000);
+        animateCounter('earnings-counter', 0, 200, 2000);
+
+        // Button actions (placeholder for demo)
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Action triggered: ' + btn.textContent);
+            });
+        });
+    </script>
+</body>
+</html>
