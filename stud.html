@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>OAU ExamGuard - Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .action-btn {
+            background-color: #4f46e5;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .action-btn:hover {
+            background-color: #5b21b6;
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .dynamic-img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        @media (min-width: 768px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+            .mobile-nav-toggle {
+                display: none;
+            }
+        }
+        @media (max-width: 767px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 50;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard Dashboard</h1>
+            </div>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button id="mobile-nav-toggle" class="md:hidden text-indigo-600 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+                <a href="#profile" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base hidden md:block">Profile</a>
+                <a href="#logout" class="bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-700 text-sm sm:text-base">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-indigo-600 text-white w-64 p-6 md:p-8 md:block">
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="#dashboard" class="text-white hover:text-indigo-200 font-medium">Dashboard</a></li>
+                    <li><a href="#write-article" class="text-white hover:text-indigo-200 font-medium">Write Article</a></li>
+                    <li><a href="#post-stats" class="text-white hover:text-indigo-200 font-medium">Post Stats</a></li>
+                    <li><a href="#marketplace" class="text-white hover:text-indigo-200 font-medium">Marketplace</a></li>
+                    <li><a href="#messages" class="text-white hover:text-indigo-200 font-medium">Messages & Comments</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Dashboard -->
+        <main class="flex-1 p-4 sm:p-6 md:p-8">
+            <!-- Welcome Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Welcome, Student!</h2>
+                <p class="text-sm sm:text-base text-gray-600">Your personalized dashboard to excel in academics and earn rewards.</p>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="mb-12">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Quick Actions</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <span class="text-3xl">✍️</span>
+                        <h4 class="text-lg sm:text-xl font-semibold mt-4">Write Article</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Create and publish blogs or articles.</p>
+                        <button class="action-btn text-white px-4 py-2 rounded-full mt-4 text-sm">Start Writing</button>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <span class="text-3xl">📊</span>
+                        <h4 class="text-lg sm:text-xl font-semibold mt-4">View Stats</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Check engagement on your posts.</p>
+                        <button class="action-btn text-white px-4 py-2 rounded-full mt-4 text-sm">View Stats</button>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <span class="text-3xl">🛒</span>
+                        <h4 class="text-lg sm:text-xl font-semibold mt-4">Post to Marketplace</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">List study materials for sale.</p>
+                        <button class="action-btn text-white px-4 py-2 rounded-full mt-4 text-sm">Add Listing</button>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <span class="text-3xl">💬</span>
+                        <h4 class="text-lg sm:text-xl font-semibold mt-4">Messages</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">View and respond to messages.</p>
+                        <button class="action-btn text-white px-4 py-2 rounded-full mt-4 text-sm">Check Messages</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article Management -->
+            <section class="mb-12">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Manage Your Articles</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <img src="https://via.placeholder.com/300x150?text=Article+Thumbnail" alt="Article Thumbnail" class="dynamic-img mb-4">
+                        <h4 class="text-lg sm:text-xl font-semibold">My First Study Guide</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Status: Published</p>
+                        <div class="flex space-x-2 mt-4">
+                            <button class="action-btn text-white px-3 py-1 rounded-full text-sm">Edit</button>
+                            <button class="bg-red-600 text-white px-3 py-1 rounded-full text-sm hover:bg-red-700">Delete</button>
+                            <button class="bg-gray-600 text-white px-3 py-1 rounded-full text-sm hover:bg-gray-700">Unpublish</button>
+                        </div>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <img src="https://via.placeholder.com/300x150?text=Article+Thumbnail" alt="Article Thumbnail" class="dynamic-img mb-4">
+                        <h4 class="text-lg sm:text-xl font-semibold">Exam Tips Blog</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Status: Draft</p>
+                        <div class="flex space-x-2 mt-4">
+                            <button class="action-btn text-white px-3 py-1 rounded-full text-sm">Edit</button>
+                            <button class="bg-red-600 text-white px-3 py-1 rounded-full text-sm hover:bg-red-700">Delete</button>
+                            <button class="action-btn text-white px-3 py-1 rounded-full text-sm">Publish</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Post Stats -->
+            <section class="mb-12">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Post Engagement Stats</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg sm:text-xl font-semibold">Total Views</h4>
+                        <p class="text-2xl sm:text-3xl font-bold text-indigo-600">1,234</p>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg sm:text-xl font-semibold">Likes</h4>
+                        <p class="text-2xl sm:text-3xl font-bold text-indigo-600">567</p>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg sm:text-xl font-semibold">Comments</h4>
+                        <p class="text-2xl sm:text-3xl font-bold text-indigo-600">89</p>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg sm:text-xl font-semibold">Shares</h4>
+                        <p class="text-2xl sm:text-3xl font-bold text-indigo-600">45</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marketplace Listings -->
+            <section class="mb-12">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Your Marketplace Listings</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <img src="https://via.placeholder.com/300x150?text=Study+Material" alt="Study Material" class="dynamic-img mb-4">
+                        <h4 class="text-lg sm:text-xl font-semibold">Math Study Notes</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">Price: $5.00</p>
+                        <div class="flex space-x-2 mt-4">
+                            <button class="action-btn text-white px-3 pyiller-1 rounded-full text-sm">Edit</button>
+                            <button class="bg-red-600 text-white px-3 py-1 rounded-full text-sm hover:bg-red-700">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages & Comments -->
+            <section class="mb-12">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Messages & Comments</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg sm:text-xl font-semibold">Direct Message</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">From: John Doe</p>
+                        <p class="text-gray-600 text-sm sm:text-base">Great article! Can you share more tips?</p>
+                        <button class="action-btn text-white px-4 py-2 rounded-full mt-4 text-sm">Reply</button>
+                    </div>
+                    <div class="card bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg sm:text-xl font-semibold">Comment on Article</h4>
+                        <p class="text-gray-600 text-sm sm:text-base">From: Jane Smith</p>
+                        <p class="text-gray-600 text-sm sm:text-base">This helped me so much, thank you!</p>
+                        <button class="action-btn text-white px-4 py-2 rounded-full mt-4 text-sm">Reply</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Writing Article -->
+    <div id="write-article-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg max-w-lg w-full">
+            <h3 class="text-xl font-semibold mb-4">Write New Article</h3>
+            <textarea class="w-full h-40 p-2 border rounded-lg mb-4" placeholder="Write your article here..."></textarea>
+            <div class="flex justify-end space-x-2">
+                <button class="bg-gray-600 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-700" onclick="closeModal('write-article-modal')">Cancel</button>
+                <button class="action-btn text-white px-4 py-2 rounded-full text-sm">Save Draft</button>
+                <button class="action-btn text-white px-4 py-2 rounded-full text-sm">Publish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Marketplace Listing -->
+    <div id="marketplace-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg max-w-lg w-full">
+            <h3 class="text-xl font-semibold mb-4">Add Marketplace Listing</h3>
+            <input type="text" class="w-full p-2 border rounded-lg mb-4" placeholder="Item Title">
+            <input type="number" class="w-full p-2 border rounded-lg mb-4" placeholder="Price ($)">
+            <textarea class="w-full h-20 p-2 border rounded-lg mb-4" placeholder="Description"></textarea>
+            <div class="flex justify-end space-x-2">
+                <button class="bg-gray-600 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-700" onclick="closeModal('marketplace-modal')">Cancel</button>
+                <button class="action-btn text-white px-4 py-2 rounded-full text-sm">Post Listing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Replying to Messages -->
+    <div id="message-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg max-w-lg w-full">
+            <h3 class="text-xl font-semibold mb-4">Reply to Message</h3>
+            <textarea class="w-full h-20 p-2 border rounded-lg mb-4" placeholder="Your reply..."></textarea>
+            <div class="flex justify-end space-x-2">
+                <button class="bg-gray-600 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-700" onclick="closeModal('message-modal')">Cancel</button>
+                <button class="action-btn text-white px-4 py-2 rounded-full text-sm">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle mobile sidebar
+        const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+        const sidebar = document.getElementById('sidebar');
+        mobileNavToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                if (sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // Modal handling
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Quick action buttons
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const action = this.parentElement.querySelector('h4').textContent;
+                if (action === 'Write Article') {
+                    openModal('write-article-modal');
+                } else if (action === 'Post to Marketplace') {
+                    openModal('marketplace-modal');
+                } else if (action === 'Messages') {
+                    openModal('message-modal');
+                } else if (action === 'View Stats') {
+                    document.getElementById('post-stats').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
