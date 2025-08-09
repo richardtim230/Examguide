@@ -254,7 +254,20 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       // Use URL path for the uploaded profile pic
       profilePicUrl = `/uploads/profilepics/${req.file.filename}`;
     }
-
+    // After handling req.file (inside /api/auth/register)
+if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:image")) {
+  // Extract file extension (png/jpg/jpeg)
+  const matches = req.body.profilePic.match(/^data:image\/([a-zA-Z]+);base64,(.+)$/);
+  if (matches) {
+    const ext = matches[1];
+    const data = matches[2];
+    const buffer = Buffer.from(data, 'base64');
+    const filename = `profile_${Date.now()}.${ext}`;
+    const filePath = path.join(profilePicsDir, filename);
+    fs.writeFileSync(filePath, buffer);
+    profilePicUrl = `/uploads/profilepics/${filename}`;
+  }
+}
     const user = new User({
       username,
       password: hashed,
@@ -267,6 +280,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       fullname: fullname || "",
       profilePic: profilePicUrl
     });
+
     await user.save();
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({token, message: "Registration successful", profilePic: profilePicUrl});
