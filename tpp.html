@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>OAU ExamGuard - Exam Session</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+        .exam-bg {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .action-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .action-btn:hover {
+            background-color: #5b21b6;
+            transform: scale(1.05);
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e0e7ff;
+            border-radius: 5px;
+        }
+        .progress {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ef4444;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @media (max-width: 640px) {
+            .exam-bg h2 {
+                font-size: 1.5rem;
+            }
+            .timer {
+                font-size: 1.25rem;
+            }
+            .progress-bar {
+                height: 8px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard Exam</h1>
+            </div>
+            <div class="flex space-x-4">
+                <button id="calculator-toggle" class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Toggle Calculator</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 py-8">
+        <!-- Exam Header -->
+        <section class="exam-bg text-white mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold">Mathematics (CMTH105) - 2024/2025</h2>
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-lg">Total Questions: 50</p>
+                <p class="timer" id="timer">40:00</p>
+            </div>
+            <div class="mt-4">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar" style="width: 0%;"></div>
+                </div>
+                <p class="text-sm mt-2 text-center">Progress: <span id="progress-text">0%</span></p>
+            </div>
+        </section>
+
+        <!-- Question Section -->
+        <section class="mb-12">
+            <div class="card bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Question 1:</h3>
+                <p class="text-lg mb-4">What is your name?</p>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="answer" class="mr-2">
+                        <span class="text-gray-700">A. ____________________</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="answer" class="mr-2">
+                        <span class="text-gray-700">B. ____________________</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="answer" class="mr-2">
+                        <span class="text-gray-700">C. ____________________</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="answer" class="mr-2">
+                        <span class="text-gray-700">D. ____________________</span>
+                    </label>
+                </div>
+                <div class="flex justify-between mt-6">
+                    <button class="action-btn bg-gray-500 text-white px-4 py-2 rounded-full text-sm">Prev</button>
+                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Submit</button>
+                    <button class="action-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Next</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question Navigator -->
+        <section class="mb-12">
+            <div class="card bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Question Navigator</h3>
+                <div class="grid grid-cols-5 sm:grid-cols-10 gap-2">
+                    <button class="action-btn bg-indigo-600 text-white px-3 py-2 rounded-full text-sm pulse" data-question="1">1</button>
+                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="2">2</button>
+                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="3">3</button>
+                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="4">4</button>
+                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="5">5</button>
+                    <!-- Add more buttons dynamically if needed -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Calculator (Hidden by default) -->
+    <div id="calculator" class="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg hidden z-50">
+        <button id="close-calculator" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="grid grid-cols-4 gap-2">
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">7</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">8</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">9</button>
+            <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded">/</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">4</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">5</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">6</button>
+            <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded">x</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">1</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">2</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">3</button>
+            <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded">-</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">0</button>
+            <button class="action-btn bg-gray-200 text-gray-700 px-3 py-2 rounded">.</button>
+            <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded">+</button>
+            <button class="action-btn bg-indigo-600 text-white px-3 py-2 rounded">=</button>
+        </div>
+        <input type="text" id="calc-display" class="w-full mt-2 p-2 border rounded-lg text-right" readonly>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Timer
+        let timeLeft = 40 * 60; // 40 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            const progress = ((40 * 60 - timeLeft) / (40 * 60)) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${Math.round(progress)}%`;
+
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                alert('Time is up!');
+            }
+        }
+        updateTimer();
+
+        // Calculator Toggle
+        const calculatorToggle = document.getElementById('calculator-toggle');
+        const calculator = document.getElementById('calculator');
+        const closeCalculator = document.getElementById('close-calculator');
+        const calcDisplay = document.getElementById('calc-display');
+
+        calculatorToggle.addEventListener('click', () => {
+            calculator.classList.toggle('hidden');
+        });
+
+        closeCalculator.addEventListener('click', () => {
+            calculator.classList.add('hidden');
+        });
+
+        let currentInput = '';
+        document.querySelectorAll('#calculator button').forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.textContent;
+                if (value === '=') {
+                    try {
+                        currentInput = eval(currentInput).toString();
+                    } catch {
+                        currentInput = 'Error';
+                    }
+                } else if (value === 'C') {
+                    currentInput = '';
+                } else {
+                    currentInput += value;
+                }
+                calcDisplay.value = currentInput;
+            });
+        });
+
+        // Question Navigation
+        document.querySelectorAll('.pulse').forEach(button => {
+            button.addEventListener('click', () => {
+                alert(`Navigating to Question ${button.dataset.question}`);
+            });
+        });
+    </script>
+</body>
+</html>
