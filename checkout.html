@@ -1,0 +1,394 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>OAU ExamGuard - Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .cart-item {
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.3s ease;
+        }
+        .cart-item:hover {
+            background-color: #f3f4f6;
+        }
+        .quantity-selector {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .quantity-btn {
+            transition: background-color 0.3s ease;
+        }
+        .quantity-btn:hover {
+            background: #4f46e5;
+            color: white;
+        }
+        .remove-btn, .checkout-btn, .continue-shopping-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .remove-btn:hover, .checkout-btn:hover, .continue-shopping-btn:hover {
+            background: #5b21b6;
+            transform: scale(1.05);
+        }
+        .cart-icon {
+            position: relative;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+        }
+        .summary-card {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-radius: 12px;
+        }
+        .form-input {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        @media (max-width: 768px) {
+            .cart-item img {
+                width: 80px;
+                height: 80px;
+            }
+            .quantity-selector {
+                width: 100px;
+            }
+            .remove-btn, .checkout-btn, .continue-shopping-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            .form-input {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50?text=Logo" alt="OAU ExamGuard Logo" class="h-10 w-10 sm:h-12 sm:w-12 mr-3">
+                <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">OAU ExamGuard</h1>
+            </div>
+            <div class="flex space-x-2 sm:space-x-4 items-center">
+                <a href="index.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Home</a>
+                <a href="blog.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Blogs</a>
+                <a href="marketplace.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">Study Materials</a>
+                <a href="general-marketplace.html" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm sm:text-base">General Marketplace</a>
+                <a href="#cart" class="cart-icon text-indigo-600 hover:text-indigo-800">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span id="cartCount" class="cart-count">0</span>
+                </a>
+                <a href="#signup" class="bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-700 text-sm sm:text-base">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Checkout</h2>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Cart Items -->
+                <div class="lg:w-2/3">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Your Cart</h3>
+                        <div id="cartItems" class="space-y-6">
+                            <!-- Cart items will be dynamically inserted here -->
+                        </div>
+                        <div id="emptyCartMessage" class="text-center text-gray-600 hidden">Your cart is empty. <a href="marketplace.html" class="text-indigo-600 hover:text-indigo-800">Shop Study Materials</a> or <a href="general-marketplace.html" class="text-indigo-600 hover:text-indigo-800">Explore General Marketplace</a>.</div>
+                    </div>
+                </div>
+
+                <!-- Order Summary and Checkout Form -->
+                <div class="lg:w-1/3">
+                    <div class="summary-card p-6 shadow-md mb-8">
+                        <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Order Summary</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Subtotal</span>
+                                <span id="subtotal">₦0</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Estimated Delivery</span>
+                                <span id="deliveryFee">₦1,500</span>
+                            </div>
+                            <div class="flex justify-between font-semibold text-gray-800">
+                                <span>Total</span>
+                                <span id="total">₦0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">Delivery Details</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm sm:text-base font-medium text-gray-600">Full Name</label>
+                                <input id="name" type="text" class="form-input w-full p-3 mt-1 rounded-lg border border-gray-300 focus:outline-none" required>
+                                <p id="nameError" class="error-message mt-1">Please enter your full name.</p>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm sm:text-base font-medium text-gray-600">Email</label>
+                                <input id="email" type="email" class="form-input w-full p-3 mt-1 rounded-lg border border-gray-300 focus:outline-none" required>
+                                <p id="emailError" class="error-message mt-1">Please enter a valid email address.</p>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm sm:text-base font-medium text-gray-600">Phone Number</label>
+                                <input id="phone" type="tel" class="form-input w-full p-3 mt-1 rounded-lg border border-gray-300 focus:outline-none" required>
+                                <p id="phoneError" class="error-message mt-1">Please enter a valid phone number.</p>
+                            </div>
+                            <div>
+                                <label for="address" class="block text-sm sm:text-base font-medium text-gray-600">Delivery Address</label>
+                                <textarea id="address" class="form-input w-full p-3 mt-1 rounded-lg border border-gray-300 focus:outline-none" rows="4" required></textarea>
+                                <p id="addressError" class="error-message mt-1">Please enter your delivery address.</p>
+                            </div>
+                            <button id="placeOrderBtn" class="checkout-btn bg-indigo-600 text-white px-6 py-3 rounded-full w-full text-base sm:text-lg hover:bg-indigo-700">Place Order</button>
+                        </div>
+                    </div>
+                    <a href="marketplace.html" class="continue-shopping-btn mt-4 inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-base sm:text-lg hover:bg-indigo-600 hover:text-white text-center w-full">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const emptyCartMessage = document.getElementById('emptyCartMessage');
+        const cartCount = document.getElementById('cartCount');
+        const subtotalElement = document.getElementById('subtotal');
+        const deliveryFeeElement = document.getElementById('deliveryFee');
+        const totalElement = document.getElementById('total');
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        function updateCartSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const deliveryFee = 1500; // Fixed delivery fee
+            const total = subtotal + deliveryFee;
+            subtotalElement.textContent = `₦${subtotal.toLocaleString()}`;
+            deliveryFeeElement.textContent = `₦${deliveryFee.toLocaleString()}`;
+            totalElement.textContent = `₦${total.toLocaleString()}`;
+        }
+
+        function renderCartItems() {
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartItemsContainer.classList.add('hidden');
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                cartItemsContainer.classList.remove('hidden');
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item flex items-center p-4 fade-in';
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}" class="w-20 h-20 object-cover rounded-lg mr-4">
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-gray-800">${item.title}</h4>
+                            <p class="text-sm text-gray-600">By ${item.seller} | ₦${item.price.toLocaleString()} each</p>
+                            <p class="text-sm text-gray-600">Category: ${item.category} | Condition: ${item.condition}</p>
+                        </div>
+                        <div class="quantity-selector flex items-center mr-4">
+                            <button class="quantity-btn px-3 py-2 bg-gray-200 text-gray-800" data-index="${index}" data-action="decrease">-</button>
+                            <input type="number" value="${item.quantity}" min="1" max="10" class="w-16 text-center p-2 border-none focus:outline-none" data-index="${index}">
+                            <button class="quantity-btn px-3 py-2 bg-gray-200 text-gray-800" data-index="${index}" data-action="increase">+</button>
+                        </div>
+                        <button class="remove-btn bg-red-600 text-white px-4 py-2 rounded-full text-sm hover:bg-red-700" data-index="${index}">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+            updateCartCount();
+            updateCartSummary();
+        }
+
+        function updateCartItem(index, action) {
+            if (action === 'increase' && cart[index].quantity < 10) {
+                cart[index].quantity++;
+            } else if (action === 'decrease' && cart[index].quantity > 1) {
+                cart[index].quantity--;
+            } else if (action === 'remove') {
+                cart.splice(index, 1);
+            } else if (action === 'input') {
+                const input = document.querySelector(`input[data-index="${index}"]`);
+                let value = parseInt(input.value);
+                if (isNaN(value) || value < 1) value = 1;
+                if (value > 10) value = 10;
+                cart[index].quantity = value;
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCartItems();
+        }
+
+        cartItemsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quantity-btn')) {
+                const index = parseInt(e.target.dataset.index);
+                const action = e.target.dataset.action;
+                updateCartItem(index, action);
+            } else if (e.target.classList.contains('remove-btn')) {
+                const index = parseInt(e.target.dataset.index);
+                updateCartItem(index, 'remove');
+            }
+        });
+
+        cartItemsContainer.addEventListener('input', (e) => {
+            if (e.target.type === 'number') {
+                const index = parseInt(e.target.dataset.index);
+                updateCartItem(index, 'input');
+            }
+        });
+
+        // Form validation and checkout
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        const inputs = {
+            name: document.getElementById('name'),
+            email: document.getElementById('email'),
+            phone: document.getElementById('phone'),
+            address: document.getElementById('address')
+        };
+        const errors = {
+            name: document.getElementById('nameError'),
+            email: document.getElementById('emailError'),
+            phone: document.getElementById('phoneError'),
+            address: document.getElementById('addressError')
+        };
+
+        placeOrderBtn.addEventListener('click', () => {
+            let isValid = true;
+            if (!inputs.name.value.trim()) {
+                errors.name.style.display = 'block';
+                isValid = false;
+            } else {
+                errors.name.style.display = 'none';
+            }
+            if (!inputs.email.value.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+                errors.email.style.display = 'block';
+                isValid = false;
+            } else {
+                errors.email.style.display = 'none';
+            }
+            if (!inputs.phone.value.match(/^\+?\d{10,14}$/)) {
+                errors.phone.style.display = 'block';
+                isValid = false;
+            } else {
+                errors.phone.style.display = 'none';
+            }
+            if (!inputs.address.value.trim()) {
+                errors.address.style.display = 'block';
+                isValid = false;
+            } else {
+                errors.address.style.display = 'none';
+            }
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before checking out.');
+                isValid = false;
+            }
+            if (isValid) {
+                alert('Order placed successfully! You will receive a confirmation soon.');
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCartItems();
+                Object.values(inputs).forEach(input => input.value = '');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize
+        renderCartItems();
+    </script>
+</body>
+</html>
