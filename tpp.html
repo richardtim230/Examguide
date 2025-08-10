@@ -12,37 +12,119 @@
             background-color: #f9fafb;
             overflow-x: hidden;
         }
-        .exam-bg { background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
-        .card { transition: transform 0.3s, box-shadow 0.3s;}
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.2);}
-        .action-btn { transition: background-color 0.3s, transform 0.2s;}
-        .action-btn:hover { background-color: #5b21b6; transform: scale(1.05);}
-        .progress-bar { height: 10px; background: #e0e7ff; border-radius: 5px;}
-        .progress { height: 100%; background: #4f46e5; border-radius: 5px; transition: width 0.3s;}
-        .timer { font-size: 1.5rem; font-weight: bold; color: #ef4444;}
-        .pulse { animation: pulse 2s infinite;}
-        @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
-        @media (max-width: 640px) {
-            .exam-bg h2 { font-size: 1.5rem;}
-            .timer { font-size: 1.25rem;}
-            .progress-bar { height: 8px;}
+        .exam-bg {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        /* Modal styles */
-        .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(30,41,59,0.18); z-index:1000; display: flex; justify-content: center; align-items: center;
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .modal-content {
-            background: white; border-radius: 1em; box-shadow: 0 8px 32px #6366f122;
-            padding: 2em 2.5em; min-width: 300px; max-width: 90vw;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .action-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .action-btn:hover {
+            background-color: #5b21b6;
+            transform: scale(1.05);
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e0e7ff;
+            border-radius: 5px;
+        }
+        .progress {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ef4444;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        .toast-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(30,41,59,0.27);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toast-modal {
+            min-width: 320px;
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 8px 38px rgba(30,41,59,0.15);
+            padding: 2rem 1.5rem;
             text-align: center;
+            font-size: 1.16em;
+            color: #1e293b;
+            animation: fadeInUp 0.2s;
         }
-        .modal-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.1em; color: #3b82f6; }
-        .modal-btns { display: flex; justify-content: center; gap: 1em; margin-top: 1.5em;}
-        .modal-btn { padding: 0.7em 1.3em; border-radius: 0.5em; font-weight: 600; font-size: 1em; border: none; cursor: pointer;}
-        .modal-btn-confirm { background: linear-gradient(90deg,#6366f1 60%,#1e3a8a 100%); color: #fff;}
-        .modal-btn-cancel { background: #e0e7ff; color: #23366e;}
-        .modal-btn-confirm:hover { background: linear-gradient(90deg,#4338ca 60%,#6366f1 100%);}
-        .modal-btn-cancel:hover { background: #6366f1; color: #fff;}
+        .toast-modal h3 {
+            font-size: 1.16em;
+            margin-bottom: 1em;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+        .toast-modal .btn-row {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            margin-top: 1.2em;
+        }
+        .toast-modal .btn {
+            padding: 0.6em 1.25em;
+            border-radius: 0.6em;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 10px #4f46e522;
+            transition: background 0.18s;
+        }
+        .toast-modal .btn-confirm {
+            background: linear-gradient(90deg, #6366f1 60%, #a78bfa 100%);
+            color: #fff;
+        }
+        .toast-modal .btn-cancel {
+            background: #e0e7ff;
+            color: #6366f1;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to   { opacity: 1; transform: translateY(0);}
+        }
+        @media (max-width: 640px) {
+            .exam-bg h2 {
+                font-size: 1.5rem;
+            }
+            .timer {
+                font-size: 1.25rem;
+            }
+            .progress-bar {
+                height: 8px;
+            }
+            .toast-modal {
+                min-width: 90vw;
+                padding: 1.2em 0.7em;
+                font-size: 1em;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -58,15 +140,16 @@
             </div>
         </nav>
     </header>
+
     <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 py-8">
         <!-- Exam Header -->
         <section class="custom-header mb-8">
             <div class="header-top relative flex items-center justify-center rounded-t-xl overflow-hidden" style="height: 110px;">
                 <img src="images (7).jpeg?auto=format&fit=crop&w=800&q=80" alt="Header Background" 
-                  class="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none" />
+                class="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none" />
                 <h2 class="relative z-10 w-full text-center font-extrabold text-white text-3xl sm:text-4xl tracking-wide drop-shadow-lg" style="letter-spacing: 2px;">
-                  Past Questions and Answers
+                    Past Questions and Answers
                 </h2>
             </div>
             <div class="header-bottom bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-6 px-2 rounded-b-xl text-center">
@@ -75,31 +158,40 @@
                 <div class="text-lg sm:text-xl font-medium mt-1" id="session-year">2024/2025</div>
             </div>
         </section>
-        <div class="flex flex-row items-center justify-between mb-4 gap-3 sm:gap-8 w-full">
+
+        <!-- Stats Row -->
+        <div class="flex flex-row items-center justify-between mb-4 gap-3 sm:gap-8 w-full" id="stats-row">
+            <!-- Total Questions -->
             <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-start min-w-[140px]">
                 <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Total Questions</span>
                 <span class="text-indigo-700 font-extrabold text-2xl sm:text-3xl mt-1" id="total-questions">--</span>
             </div>
+            <!-- Timer -->
             <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-end min-w-[140px]">
                 <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Timer</span>
                 <span class="timer text-red-600 font-extrabold text-2xl sm:text-3xl mt-1" id="timer">--:--</span>
             </div>
         </div>
+
         <!-- Question Section -->
         <section class="mb-12">
-            <div class="question-card bg-white p-7 rounded-2xl shadow-xl border border-gray-100 max-w-xl mx-auto">
+            <div class="question-card bg-white p-7 rounded-2xl shadow-xl border border-gray-100 max-w-xl mx-auto" id="question-card">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="q-badge flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold text-lg w-12 h-12 rounded-full shadow"
-                        id="question-badge">1</div>
-                    <h3 class="text-2xl font-extrabold text-gray-900" id="question-title">Question 1</h3>
+                    <div class="q-badge flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold text-lg w-12 h-12 rounded-full shadow" id="q-badge">
+                        1
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-gray-900" id="q-title">Question 1</h3>
                 </div>
-                <p class="text-lg text-gray-800 mb-6 font-medium" id="question-text">Loading...</p>
-                <form class="space-y-5 mb-8" id="options-form"></form>
+                <p class="text-lg text-gray-800 mb-6 font-medium" id="q-text">Loading...</p>
+                <form class="space-y-5 mb-8" id="options-form">
+                    <!-- Options will be injected here -->
+                </form>
                 <div class="flex justify-between gap-4">
-                    <button class="action-btn bg-gray-400 text-white px-7 py-2 rounded-full font-bold shadow-sm hover:bg-gray-500 transition" id="prev-btn" disabled>Prev</button>
+                    <button class="action-btn bg-gray-400 text-white px-7 py-2 rounded-full font-bold shadow-sm hover:bg-gray-500 transition" id="prev-btn">Prev</button>
                     <button class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-7 py-2 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition" id="submit-btn">Submit</button>
-                    <button class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-7 py-2 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition" id="next-btn" disabled>Next</button>
+                    <button class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-7 py-2 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition" id="next-btn">Next</button>
                 </div>
+                <!-- Progress Centered -->
                 <div class="flex justify-center mb-8">
                     <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-center w-full max-w-xs">
                         <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Progress</span>
@@ -110,26 +202,31 @@
                     </div>
                 </div>
             </div>
-            <div id="loading" class="text-center py-8 text-indigo-600 font-bold" style="display:none;">Loading questions...</div>
         </section>
+
         <!-- Question Navigator -->
         <section class="mb-12">
             <div class="card bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-xl font-semibold mb-4">Question Navigator</h3>
-                <div class="grid grid-cols-5 sm:grid-cols-10 gap-2" id="question-navigator"></div>
+                <div class="grid grid-cols-5 sm:grid-cols-10 gap-2" id="navigator">
+                    <!-- Question buttons will be injected here -->
+                </div>
             </div>
         </section>
     </main>
-    <!-- Custom Modal for Submit Confirmation -->
-    <div id="modal-backdrop" class="modal-backdrop" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-title">Are you sure you want to submit?</div>
-            <div class="modal-btns">
-                <button class="modal-btn modal-btn-confirm" id="modal-confirm-btn">Yes, Submit</button>
-                <button class="modal-btn modal-btn-cancel" id="modal-cancel-btn">Cancel</button>
+
+    <!-- Toast Modal for confirmation -->
+    <div id="toast-modal-backdrop" class="toast-backdrop hidden">
+        <div class="toast-modal">
+            <h3>Are you sure you want to submit?</h3>
+            <div>This action will end your exam and show your result.</div>
+            <div class="btn-row">
+                <button class="btn btn-cancel" id="toast-cancel">Cancel</button>
+                <button class="btn btn-confirm" id="toast-confirm">Submit</button>
             </div>
         </div>
     </div>
+
     <!-- Calculator (Hidden by default) -->
     <div id="calculator" class="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg hidden z-50">
         <button id="close-calculator" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
@@ -157,6 +254,7 @@
         </div>
         <input type="text" id="calc-display" class="w-full mt-2 p-2 border rounded-lg text-right" readonly>
     </div>
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4 sm:px-6 text-center">
@@ -168,19 +266,19 @@
             </div>
         </div>
     </footer>
+
     <script>
-    // ============ CONFIG/PARAMS ============
+    // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/past-questions";
     const USER_API = "https://examguide.onrender.com/api/auth/me";
     const ANSWER_API = "https://examguide.onrender.com/api/past-questions/save-answers";
-    let config = {};
     let questions = [];
     let answers = {};
     let correctChoices = {};
     let wrongChoices = {};
     let totalCorrect = 0;
     let totalWrong = 0;
-    let timeLeft = 0;
+    let timeLeft = 40 * 60; // 40 mins default
     let timerInterval;
     let currentQuestion = 0;
     let submitted = false;
@@ -188,33 +286,45 @@
     let username = "";
     let userId = "";
     let timeSpent = 0;
+    let config = {
+        subject: "Mathematics",
+        year: "2024/2025",
+        count: 50,
+        time: 40,
+        difficulty: "Medium"
+    };
 
+    // Load config from query/localStorage if present
     function parseConfig() {
         const urlParams = new URLSearchParams(window.location.search);
-        config = {
-            subject: urlParams.get('subject') || "Mathematics",
-            year: urlParams.get('year') || "2024",
-            count: urlParams.get('count') || 50,
-            time: urlParams.get('time') || 40,
-            difficulty: urlParams.get('difficulty') || "Medium"
-        };
+        if (urlParams.get('subject')) {
+            config = {
+                subject: urlParams.get('subject'),
+                year: urlParams.get('year'),
+                count: urlParams.get('count'),
+                time: urlParams.get('time'),
+                difficulty: urlParams.get('difficulty')
+            };
+        } else if (localStorage.getItem('tppConfig')) {
+            config = JSON.parse(localStorage.getItem('tppConfig'));
+        }
+        // Fallbacks
+        if (!config.time) config.time = 40;
+        if (!config.count) config.count = 50;
+        if (!config.subject) config.subject = "Mathematics";
+        if (!config.year) config.year = "2024/2025";
+        if (!config.difficulty) config.difficulty = "Medium";
         timeLeft = (parseInt(config.time, 10) || 40) * 60;
-        document.getElementById("subject-title").textContent = config.subject;
-        document.getElementById("session-year").textContent = config.year;
-        document.getElementById("total-questions").textContent = config.count;
-    }
-    parseConfig();
-
-    function showLoading(show) {
-        document.getElementById("loading").style.display = show ? "" : "none";
+        document.getElementById('subject-title').textContent = config.subject;
+        document.getElementById('session-year').textContent = config.year;
+        document.getElementById('total-questions').textContent = config.count;
     }
 
-    function formatSeconds(sec) {
-        const mins = Math.floor(sec / 60);
-        const remSec = sec % 60;
-        return `${mins}m ${remSec}s`;
+    function showToastModal(show) {
+        document.getElementById('toast-modal-backdrop').classList.toggle('hidden', !show);
     }
 
+    // ========== USER INFO ==========
     async function fetchLoggedInUser() {
         try {
             const token = localStorage.getItem("token");
@@ -232,8 +342,8 @@
         }
     }
 
+    // ========== LOAD QUESTIONS ==========
     async function loadQuestions() {
-        showLoading(true);
         await fetchLoggedInUser();
         try {
             const params = new URLSearchParams({
@@ -245,15 +355,10 @@
             const resp = await fetch(`${API_URL}?${params.toString()}`, {
                 headers: { "Authorization": "Bearer " + (localStorage.getItem("token") || "") }
             });
-            if (!resp.ok) {
-                const errorText = await resp.text();
-                throw new Error(`API Error: ${resp.status} - ${errorText}`);
-            }
             questions = await resp.json();
             if (!Array.isArray(questions) || questions.length === 0) {
                 throw new Error("No questions found for this configuration.");
             }
-            document.getElementById("total-questions").textContent = questions.length;
             currentQuestion = 0;
             answers = {};
             correctChoices = {};
@@ -263,7 +368,6 @@
             submitted = false;
             startTime = Date.now();
             timeSpent = 0;
-            showLoading(false);
             renderQuestion(currentQuestion);
             renderNavigator();
             updateTimer();
@@ -271,116 +375,115 @@
             timerInterval = setInterval(() => {
                 timeLeft--;
                 updateTimer();
-                if (timeLeft <= 0) showSubmitModal();
+                if (timeLeft <= 0 && !submitted) showToastModal(true);
             }, 1000);
             document.getElementById("submit-btn").disabled = false;
         } catch (err) {
-            showLoading(false);
-            document.getElementById("question-text").innerHTML = `<span style="color:#d32f2f;">${err.message || "Failed to load questions."}</span>`;
+            document.getElementById("q-text").innerHTML = `<span style="color:#d32f2f;">${err.message || "Failed to load questions."}</span>`;
             document.getElementById("options-form").innerHTML = "";
         }
     }
 
+    // ========== RENDER QUESTION ==========
     function renderQuestion(idx) {
         if (!questions.length) return;
         currentQuestion = idx;
         const q = questions[idx];
-        document.getElementById('question-badge').textContent = idx + 1;
-        document.getElementById('question-title').textContent = `Question ${idx + 1}`;
-        document.getElementById('question-text').textContent = q.text || q.question || "No question text available.";
-        // Render options:
+        document.getElementById('q-badge').textContent = (idx + 1);
+        document.getElementById('q-title').textContent = `Question ${idx + 1}`;
+        document.getElementById('q-text').textContent = q.text || q.question || "No question text available.";
+        // Render options
         const optionsForm = document.getElementById('options-form');
         optionsForm.innerHTML = '';
-        const opts = q.options || q.choices || [];
-        opts.forEach((opt, i) => {
+        (q.options || []).forEach((opt, i) => {
             const optId = `opt${idx}_${i}`;
             const checked = answers[q._id] === opt ? 'checked' : '';
             optionsForm.innerHTML += `
                 <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
-                    <input type="radio" name="answer" id="${optId}" value="${opt}" ${checked}>
+                    <input type="radio" name="answer" class="radio-big accent-indigo-600" id="${optId}" value="${opt}" ${checked}>
                     <span class="text-base sm:text-lg font-semibold text-gray-700">${String.fromCharCode(65 + i)}. ${opt}</span>
                 </label>
             `;
         });
         // Option select handler:
-        optionsForm.querySelectorAll('input[type="radio"]').forEach(input => {
+        document.querySelectorAll('.option-row input').forEach(input => {
             input.addEventListener('change', () => {
                 answers[q._id] = input.value;
                 updateProgress();
                 renderNavigator();
             });
         });
-        // Navigation buttons
+        // Update navigation buttons
         document.getElementById("prev-btn").disabled = (idx === 0);
         document.getElementById("next-btn").disabled = (idx === questions.length - 1);
         updateProgress();
     }
 
+    // ========== NAVIGATOR ==========
+    function renderNavigator() {
+        const navDiv = document.getElementById('navigator');
+        navDiv.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const answered = answers[q._id];
+            navDiv.innerHTML += `<button class="action-btn ${answered ? 'bg-indigo-600 text-white pulse' : 'bg-gray-300 text-gray-700'} px-3 py-2 rounded-full text-sm" data-question="${idx}">${idx + 1}</button>`;
+        });
+        // Add event listeners for navigation
+        document.querySelectorAll('#navigator button').forEach(btn => {
+            btn.onclick = function() {
+                if (!submitted) renderQuestion(parseInt(btn.dataset.question, 10));
+            };
+        });
+    }
+
+    // ========== PROGRESS BAR ==========
+    function updateProgress() {
+        const total = questions.length;
+        const answered = Object.keys(answers).length;
+        const percent = total ? Math.round((answered / total) * 100) : 0;
+        document.getElementById('progress-bar').style.width = `${percent}%`;
+        document.getElementById('progress-text').textContent = `${percent}%`;
+    }
+
+    // ========== TIMER ==========
     function updateTimer() {
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
         document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
-    function updateProgress() {
-        const total = questions.length;
-        let answered = 0;
-        questions.forEach(q => {
-            if (answers[q._id]) answered++;
-        });
-        const progress = total ? (answered / total) * 100 : 0;
-        document.getElementById('progress-bar').style.width = `${progress}%`;
-        document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
-    }
-
-    function renderNavigator() {
-        const navDiv = document.getElementById('question-navigator');
-        navDiv.innerHTML = '';
-        questions.forEach((q, idx) => {
-            const answered = answers[q._id];
-            navDiv.innerHTML += `<button class="action-btn ${idx === currentQuestion ? 'bg-indigo-600 text-white pulse' : answered ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-300 text-gray-700'} px-3 py-2 rounded-full text-sm" data-question="${idx+1}" onclick="goToQuestion(${idx})">${idx+1}</button>`;
-        });
-    }
-    window.goToQuestion = function(idx) {
-        if (submitted) return;
-        renderQuestion(idx);
-    };
-
-    document.getElementById("prev-btn").onclick = function() {
+    // ========== NAVIGATION ==========
+    document.getElementById('prev-btn').onclick = function() {
         if (currentQuestion > 0) renderQuestion(currentQuestion - 1);
     };
-    document.getElementById("next-btn").onclick = function() {
+    document.getElementById('next-btn').onclick = function() {
         if (currentQuestion < questions.length - 1) renderQuestion(currentQuestion + 1);
     };
 
-    // MODAL LOGIC
-    function showSubmitModal() {
-        document.getElementById("modal-backdrop").style.display = "";
-    }
-    function hideSubmitModal() {
-        document.getElementById("modal-backdrop").style.display = "none";
-    }
-    document.getElementById("submit-btn").onclick = showSubmitModal;
-    document.getElementById("modal-cancel-btn").onclick = hideSubmitModal;
-    document.getElementById("modal-confirm-btn").onclick = () => {
-        hideSubmitModal();
-        submitExam();
+    // ========== SUBMIT ==========
+    document.getElementById('submit-btn').onclick = function(e) {
+        showToastModal(true);
+    };
+
+    // ========== TOAST HANDLERS ==========
+    document.getElementById('toast-cancel').onclick = function() {
+        showToastModal(false);
+    };
+    document.getElementById('toast-confirm').onclick = async function() {
+        showToastModal(false);
+        await submitExam();
     };
 
     async function submitExam() {
         if (submitted) return;
         clearInterval(timerInterval);
         document.getElementById("submit-btn").disabled = true;
-        showLoading(true);
-
         // Prepare answers array for backend
         const answersArray = questions.map(q => ({
             questionId: q._id,
             answer: answers[q._id] || null
         }));
-
         try {
-            // Submit for scoring and feedback
+            // Submit for scoring/feedback
             const resp = await fetch(`${API_URL}/submit`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
@@ -393,8 +496,7 @@
                 })
             });
             const result = await resp.json();
-
-            // Save user answers, correct/wrong choices, time spent to backend for tracking
+            // Save user answers to backend (optional for stats)
             await fetch(ANSWER_API, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
@@ -409,30 +511,26 @@
                     timeSpent: Math.floor((Date.now() - startTime) / 1000)
                 })
             });
-
-            // Store result in sessionStorage and redirect
-            sessionStorage.setItem('examResult', JSON.stringify({
+            submitted = true;
+            // Store result data for result page
+            localStorage.setItem("tppExamResult", JSON.stringify({
                 score: result.score,
                 total: result.total,
                 correctChoices: result.correctChoices,
                 wrongChoices: result.wrongChoices,
-                feedback: result.feedback || [],
+                feedback: result.feedback,
                 timeSpent: Math.floor((Date.now() - startTime) / 1000),
                 subject: config.subject,
                 year: config.year
             }));
-
-            showLoading(false);
-            submitted = true;
-            window.location.href = "rest.html";
+            // Redirect to result page
+            window.location.href = "tpp-result.html";
         } catch (err) {
-            showLoading(false);
-            // fallback: show error modal
             alert("Failed to submit: " + (err.message || "Unknown error."));
         }
     }
 
-    // ============ Calculator Toggle ============
+    // ========== CALCULATOR ==========
     const calculatorToggle = document.getElementById('calculator-toggle');
     const calculator = document.getElementById('calculator');
     const closeCalculator = document.getElementById('close-calculator');
@@ -441,6 +539,7 @@
     calculatorToggle.addEventListener('click', () => {
         calculator.classList.toggle('hidden');
     });
+
     closeCalculator.addEventListener('click', () => {
         calculator.classList.add('hidden');
     });
@@ -464,8 +563,11 @@
         });
     });
 
-    // ============ INIT ============
-    window.onload = loadQuestions;
+    // ========== INIT ==========
+    window.onload = function() {
+        parseConfig();
+        loadQuestions();
+    };
     </script>
 </body>
 </html>
