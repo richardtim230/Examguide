@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.73">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <title>OAU ExamGuard - Exam Result</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,47 +11,6 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f9fafb;
             overflow-x: hidden;
-        }
-        .exam-bg {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-        }
-        .action-btn {
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .action-btn:hover {
-            background-color: #5b21b6;
-            transform: scale(1.05);
-        }
-        .progress-bar {
-            height: 10px;
-            background: #e0e7ff;
-            border-radius: 5px;
-        }
-        .progress {
-            height: 100%;
-            background: #4f46e5;
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
-        .timer {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ef4444;
-        }
-        .result-header {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
         }
         .result-summary {
             background: linear-gradient(100deg, #4f46e5 80%, #a78bfa 100%);
@@ -62,47 +21,55 @@
             margin-bottom: 2rem;
             text-align: center;
         }
-        .result-summary .score {
+        .result-header {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+        .score {
             font-size: 2.2rem;
             font-weight: 800;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
         }
-        .result-summary .percent {
+        .percent {
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-        .result-summary .remark {
+        .remark {
             font-size: 1.1rem;
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .feedback-list {
+            text-align: left;
+            margin: 1.5em auto 0;
+            background: #fff;
+            color: #4f46e5;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #6366f122;
+            padding: 1.3em 1.5em;
+            max-width: 600px;
+            font-size: 1.08em;
         }
-        .pulse {
-            animation: pulse 2s infinite;
+        .stat-box {
+            min-width: 140px;
+            min-height: 80px;
+            box-shadow: 0 2px 10px rgba(79, 70, 229, 0.06);
+        }
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ef4444;
         }
         @media (max-width: 640px) {
-            .exam-bg h2 {
-                font-size: 1.5rem;
-            }
-            .timer {
-                font-size: 1.25rem;
-            }
-            .progress-bar {
-                height: 8px;
-            }
             .result-summary {
                 padding: 1.2rem 0.5rem;
                 border-radius: 10px;
             }
-            .result-summary .score {
-                font-size: 1.6rem;
-            }
             .result-header { font-size: 1.2rem; }
+            .score { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -119,209 +86,61 @@
             </div>
         </nav>
     </header>
-
     <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 py-8">
         <!-- Exam Header -->
-<section class="custom-header mb-8">
-  <!-- Top: Past Questions and Answers with image background -->
-  <div class="header-top relative flex items-center justify-center rounded-t-xl overflow-hidden" style="height: 110px;">
-    <img src="images (7).jpeg?auto=format&fit=crop&w=800&q=80" alt="Header Background" 
-      class="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none" />
-    <h2 class="relative z-10 w-full text-center font-extrabold text-white text-3xl sm:text-4xl tracking-wide drop-shadow-lg" style="letter-spacing: 2px;">
-      Past Questions and Answers
-    </h2>
-  </div>
-  <!-- Bottom: Subject and session with gradient -->
-  <div class="header-bottom bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-6 px-2 rounded-b-xl text-center">
-    <div class="text-2xl sm:text-3xl font-bold tracking-wide">Mathematics</div>
-    <div class="text-xl sm:text-2xl font-semibold mt-2">(MTH105)</div>
-    <div class="text-lg sm:text-xl font-medium mt-1">2024/2025</div>
-  </div>
-</section>
-
-<!-- Result Summary (NEW) -->
-<div class="result-summary">
-    <div class="result-header">Overall Performance</div>
-    <div class="score">42 / 50</div>
-    <div class="percent">84%</div>
-    <div class="remark">Remark: Excellent Performance!</div>
-    <div class="flex flex-row justify-center gap-6 mt-3">
-        <div class="flex flex-col items-center">
-            <span class="font-semibold">Correct</span>
-            <span class="text-green-400 font-bold text-xl">42</span>
-        </div>
-        <div class="flex flex-col items-center">
-            <span class="font-semibold">Wrong</span>
-            <span class="text-red-400 font-bold text-xl">8</span>
-        </div>
-        <div class="flex flex-col items-center">
-            <span class="font-semibold">Time Used</span>
-            <span class="text-indigo-200 font-bold text-xl" id="time-used">34:18</span>
-        </div>
-    </div>
-</div>
-
-<!-- Stats Row -->
-<div class="flex flex-row items-center justify-between mb-4 gap-3 sm:gap-8 w-full">
-  <!-- Total Questions -->
-  <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-start min-w-[140px]">
-    <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Total Questions</span>
-    <span class="text-indigo-700 font-extrabold text-2xl sm:text-3xl mt-1">50</span>
-  </div>
-  <!-- Time Used -->
-  <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-end min-w-[140px]">
-    <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Time Used</span>
-    <span class="timer text-red-600 font-extrabold text-2xl sm:text-3xl mt-1" id="timer">34:18</span>
-  </div>
-</div>
-
-<style>
-  .custom-header {
-    border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.09);
-    overflow: hidden;
-  }
-  .header-top {
-    position: relative;
-    min-height: 110px;
-    background: #eee;
-  }
-  .header-bottom {
-    border-top: 2px solid rgba(255,255,255,0.12);
-  }
-  .stat-box {
-    min-width: 140px;
-    min-height: 80px;
-    transition: box-shadow 0.2s;
-    box-shadow: 0 2px 10px rgba(79, 70, 229, 0.06);
-  }
-  .progress-bar {
-    height: 12px;
-    background: #e0e7ff;
-    border-radius: 6px;
-    width: 100%;
-    max-width: 180px;
-    margin: 0 auto;
-  }
-  .progress {
-    height: 100%;
-    background: #4f46e5;
-    border-radius: 6px;
-    transition: width 0.3s ease;
-  }
-  @media (max-width: 640px) {
-    .header-top h2 { font-size: 1.45rem; }
-    .header-bottom { padding-top: 18px; padding-bottom: 18px; }
-    .stat-box { min-width: 100px; padding-left: 15px; padding-right: 15px; }
-    .progress-bar { height: 10px; }
-    .custom-header { border-radius: 10px; }
-  }
-</style>
-        <!-- Question Section -->
-        <section class="mb-12">
-  <div class="question-card bg-white p-7 rounded-2xl shadow-xl border border-gray-100 max-w-xl mx-auto">
-    <div class="flex items-center gap-3 mb-3">
-      <div class="q-badge flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold text-lg w-12 h-12 rounded-full shadow">
-        1
-      </div>
-      <h3 class="text-2xl font-extrabold text-gray-900">Question 1</h3>
-    </div>
-    <p class="text-lg text-gray-800 mb-6 font-medium">What is your name?</p>
-    <form class="space-y-5 mb-8">
-      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
-        <input type="radio" name="answer" class="radio-big accent-indigo-600" disabled />
-        <span class="text-base sm:text-lg font-semibold text-gray-700">A. ____________________</span>
-      </label>
-      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
-        <input type="radio" name="answer" class="radio-big accent-indigo-600" disabled />
-        <span class="text-base sm:text-lg font-semibold text-gray-700">B. ____________________</span>
-      </label>
-      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
-        <input type="radio" name="answer" class="radio-big accent-indigo-600" disabled />
-        <span class="text-base sm:text-lg font-semibold text-gray-700">C. ____________________</span>
-      </label>
-      <label class="option-row flex items-center gap-2 cursor-pointer transition hover:bg-indigo-50 px-3 py-2 rounded-lg">
-        <input type="radio" name="answer" class="radio-big accent-indigo-600" disabled />
-        <span class="text-base sm:text-lg font-semibold text-gray-700">D. ____________________</span>
-      </label>
-    </form>
-    <div class="flex justify-between gap-4">
-      <button class="action-btn bg-gray-400 text-white px-5 py-1.5 rounded-full font-bold shadow-sm hover:bg-gray-500 transition">Prev</button>
-      <button id="toggle-explanation" class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-1.5 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition">Show/Hide Explanations</button>
-      <button class="action-btn bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-1.5 rounded-full font-bold shadow hover:from-indigo-700 hover:to-purple-700 transition">Next</button>
-    </div>
-      <!-- Progress Centered -->
-<div class="flex justify-center mb-8">
-  <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-center w-full max-w-xs">
-    <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Progress</span>
-    <div class="progress-bar w-full my-2">
-      <div class="progress" id="progress-bar" style="width: 84%;"></div>
-    </div>
-    <span class="text-indigo-600 font-bold text-base sm:text-lg" id="progress-text">84%</span>
-  </div>
-</div>
-  </div>
-</section>
-
-<!-- Explanations Section (Hidden by default, shows when Show/Hide Explanations is clicked) -->
-<section id="explanation-section" class="mb-6 max-w-xl mx-auto hidden">
-  <div class="card bg-indigo-50 p-6 rounded-lg shadow-md border border-indigo-200">
-    <h4 class="text-lg font-extrabold text-indigo-700 mb-3">Explanation</h4>
-    <p class="text-base text-indigo-900 font-medium mb-2">
-      The correct answer to "What is your name?" is dependent on the candidate. This question is likely a sample or placeholder and does not have a universal explanation.  
-    </p>
-    <!-- You can dynamically append more explanations per question -->
-  </div>
-</section>
-
-<style>
-.question-card {
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(79, 70, 229, 0.11);
-  border: 1.5px solid #ececff;
-}
-.q-badge {
-  min-width: 48px;
-  min-height: 48px;
-  font-size: 1.3rem;
-  box-shadow: 0 2px 8px rgba(79,70,229,0.08);
-}
-.radio-big {
-  width: 22px;
-  height: 22px;
-  accent-color: #4f46e5;
-}
-.option-row input[type="radio"]:focus + span {
-  outline: 2px solid #7c3aed;
-  outline-offset: 2px;
-}
-@media (max-width: 640px) {
-  .question-card {
-    padding: 1rem;
-    border-radius: 12px;
-  }
-  .q-badge { min-width: 40px; min-height: 40px; font-size: 1rem; }
-  .option-row { font-size: 1rem; }
-}
-</style>
-
-        <!-- Question Navigator -->
-        <section class="mb-12">
-            <div class="card bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold mb-4">Question Navigator</h3>
-                <div class="grid grid-cols-5 sm:grid-cols-10 gap-2">
-                    <button class="action-btn bg-indigo-600 text-white px-3 py-2 rounded-full text-sm pulse" data-question="1">1</button>
-                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="2">2</button>
-                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="3">3</button>
-                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="4">4</button>
-                    <button class="action-btn bg-gray-300 text-gray-700 px-3 py-2 rounded-full text-sm" data-question="5">5</button>
-                    <!-- Add more buttons dynamically if needed -->
-                </div>
+        <section class="custom-header mb-8">
+            <div class="header-top relative flex items-center justify-center rounded-t-xl overflow-hidden" style="height: 110px;">
+                <img src="images (7).jpeg?auto=format&fit=crop&w=800&q=80" alt="Header Background" 
+                      class="absolute inset-0 w-full h-full object-cover opacity-70 pointer-events-none" />
+                <h2 class="relative z-10 w-full text-center font-extrabold text-white text-3xl sm:text-4xl tracking-wide drop-shadow-lg" style="letter-spacing: 2px;">
+                  Past Questions and Answers
+                </h2>
+            </div>
+            <div class="header-bottom bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-6 px-2 rounded-b-xl text-center">
+                <div class="text-2xl sm:text-3xl font-bold tracking-wide" id="subject-title">Mathematics</div>
+                <div class="text-xl sm:text-2xl font-semibold mt-2" id="session-year">2024/2025</div>
             </div>
         </section>
+        <!-- Result Summary -->
+        <div class="result-summary" id="result-summary">
+            <div class="result-header">Overall Performance</div>
+            <div class="score" id="score"></div>
+            <div class="percent" id="percent"></div>
+            <div class="remark" id="remark"></div>
+            <div class="flex flex-row justify-center gap-6 mt-3">
+                <div class="flex flex-col items-center">
+                    <span class="font-semibold">Correct</span>
+                    <span class="text-green-400 font-bold text-xl" id="correct"></span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="font-semibold">Wrong</span>
+                    <span class="text-red-400 font-bold text-xl" id="wrong"></span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="font-semibold">Time Used</span>
+                    <span class="text-indigo-200 font-bold text-xl" id="time-used"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Stats Row -->
+        <div class="flex flex-row items-center justify-between mb-4 gap-3 sm:gap-8 w-full">
+            <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-start min-w-[140px]">
+                <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Total Questions</span>
+                <span class="text-indigo-700 font-extrabold text-2xl sm:text-3xl mt-1" id="total-questions">--</span>
+            </div>
+            <div class="stat-box bg-white shadow px-6 py-4 rounded-lg flex flex-col items-end min-w-[140px]">
+                <span class="text-gray-700 font-bold text-lg sm:text-xl tracking-wide">Time Used</span>
+                <span class="timer text-red-600 font-extrabold text-2xl sm:text-3xl mt-1" id="timer">--:--</span>
+            </div>
+        </div>
+        <!-- Feedback Section -->
+        <section id="feedback-section"></section>
+        <!-- Button to go back -->
+        <div class="text-center mt-10">
+            <a href="student-dashoards.html#past-questions" class="bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-indigo-700 transition">Back to Dashboard</a>
+        </div>
     </main>
-
     <!-- Calculator (Hidden by default) -->
     <div id="calculator" class="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg hidden z-50">
         <button id="close-calculator" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
@@ -349,7 +168,6 @@
         </div>
         <input type="text" id="calc-display" class="w-full mt-2 p-2 border rounded-lg text-right" readonly>
     </div>
-
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4 sm:px-6 text-center">
@@ -361,58 +179,88 @@
             </div>
         </div>
     </footer>
-
     <script>
-        // Time Used (static for result page, but could be made dynamic if result data provided)
-        document.getElementById('timer').textContent = "34:18";
-        document.getElementById('time-used').textContent = "34:18";
+    function formatSeconds(sec) {
+        if (!sec || isNaN(sec)) return "--:--";
+        const mins = Math.floor(sec / 60);
+        const remSec = sec % 60;
+        return `${mins}:${remSec < 10 ? '0' : ''}${remSec}`;
+    }
 
-        // Calculator Toggle
-        const calculatorToggle = document.getElementById('calculator-toggle');
-        const calculator = document.getElementById('calculator');
-        const closeCalculator = document.getElementById('close-calculator');
-        const calcDisplay = document.getElementById('calc-display');
+    function getRemark(percent) {
+        if (percent >= 80) return "Excellent Performance!";
+        if (percent >= 65) return "Very Good!";
+        if (percent >= 50) return "Fair!";
+        if (percent >= 40) return "Needs Improvement!";
+        return "Poor Performance!";
+    }
 
-        calculatorToggle.addEventListener('click', () => {
-            calculator.classList.toggle('hidden');
-        });
+    function updateResultPage() {
+        const result = JSON.parse(sessionStorage.getItem('examResult') || "{}");
+        // Fallbacks
+        const score = result.score || 0;
+        const total = result.total || 0;
+        const percent = total ? Math.round((score / total) * 100) : 0;
+        const timeUsed = result.timeSpent || 0;
+        const subject = result.subject || "Mathematics";
+        const year = result.year || "2024/2025";
+        document.getElementById("score").textContent = `${score} / ${total}`;
+        document.getElementById("percent").textContent = `${percent}%`;
+        document.getElementById("remark").textContent = getRemark(percent);
+        document.getElementById("correct").textContent = score;
+        document.getElementById("wrong").textContent = total - score;
+        document.getElementById("time-used").textContent = formatSeconds(timeUsed);
+        document.getElementById("total-questions").textContent = total;
+        document.getElementById("timer").textContent = formatSeconds(timeUsed);
+        document.getElementById("subject-title").textContent = subject;
+        document.getElementById("session-year").textContent = year;
 
-        closeCalculator.addEventListener('click', () => {
-            calculator.classList.add('hidden');
-        });
+        // Feedback
+        const feedbackSection = document.getElementById('feedback-section');
+        if (result.feedback && result.feedback.length > 0) {
+            let html = `<div class="feedback-list"><b>Feedback:</b><ul>`;
+            result.feedback.forEach(f => {
+                html += `<li>${f}</li>`;
+            });
+            html += `</ul></div>`;
+            feedbackSection.innerHTML = html;
+        } else {
+            feedbackSection.innerHTML = "";
+        }
+    }
+    updateResultPage();
 
-        let currentInput = '';
-        document.querySelectorAll('#calculator button').forEach(button => {
-            button.addEventListener('click', () => {
-                const value = button.textContent;
-                if (value === '=') {
-                    try {
-                        currentInput = eval(currentInput.replace('x','*')).toString();
-                    } catch {
-                        currentInput = 'Error';
-                    }
-                } else if (value === 'C') {
-                    currentInput = '';
-                } else {
-                    currentInput += value;
+    // Calculator Toggle
+    const calculatorToggle = document.getElementById('calculator-toggle');
+    const calculator = document.getElementById('calculator');
+    const closeCalculator = document.getElementById('close-calculator');
+    const calcDisplay = document.getElementById('calc-display');
+
+    calculatorToggle.addEventListener('click', () => {
+        calculator.classList.toggle('hidden');
+    });
+    closeCalculator.addEventListener('click', () => {
+        calculator.classList.add('hidden');
+    });
+
+    let currentInput = '';
+    document.querySelectorAll('#calculator button').forEach(button => {
+        button.addEventListener('click', () => {
+            const value = button.textContent;
+            if (value === '=') {
+                try {
+                    currentInput = eval(currentInput.replace('x','*')).toString();
+                } catch {
+                    currentInput = 'Error';
                 }
-                calcDisplay.value = currentInput;
-            });
+            } else if (value === 'C') {
+                currentInput = '';
+            } else {
+                currentInput += value;
+            }
+            calcDisplay.value = currentInput;
         });
-
-        // Show/Hide Explanation
-        const toggleExplanation = document.getElementById('toggle-explanation');
-        const explanationSection = document.getElementById('explanation-section');
-        toggleExplanation.addEventListener('click', () => {
-            explanationSection.classList.toggle('hidden');
-        });
-
-        // Question Navigation
-        document.querySelectorAll('.pulse').forEach(button => {
-            button.addEventListener('click', () => {
-                alert(`Navigating to Question ${button.dataset.question}`);
-            });
-        });
+    });
     </script>
 </body>
 </html>
