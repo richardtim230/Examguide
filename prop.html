@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.70">
+    <title>Proposal for Web Development Program</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+        .letter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid #6b46c1;
+            padding-bottom: 1rem;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4a1a8e;
+        }
+        .from-to {
+            margin-bottom: 2rem;
+            font-style: italic;
+            color: #555;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #6b46c1;
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #d53f8c;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #333;
+        }
+        .closing {
+            margin-top: 3rem;
+            text-align: right;
+            font-style: italic;
+            color: #555;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 640px) {
+            .letter-container {
+                padding: 1.5rem;
+            }
+            th, td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .header h1 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <main class="container mx-auto px-4 sm:px-6 py-8 flex-grow">
+        <div class="letter-container">
+            <!-- Header -->
+            <div class="header">
+                <h1>Nigerian Association of Science Students, OAU Chapter, Ile Ife, Osun State</h1>
+            </div>
+
+            <!-- From-To -->
+            <div class="from-to">
+                <p>From the office of the general secretary elect</p>
+                <p>To</p>
+                <p>The Departmental Representative Council</p>
+            </div>
+
+            <!-- Greeting -->
+            <p>Dear Departmental Representative Council,</p>
+
+            <!-- Introduction -->
+            <p class="mt-4">
+                I hope this letter finds you well. I wanted to share an exciting opportunity, I came across a web development program that teaches students how to build websites and create user interfaces using languages like HTML, CSS, and JavaScript. It is designed for a wide range of students, from the Faculty of Science to other faculties, so everyone can join in.
+            </p>
+            <p class="mt-3">
+                I spoke with the coordinator about partnering with our faculty. He explained that the regular registration fee is N5000, which covers two months of training and a certificate stamped by the school, as he plans to work with the ICT team for that. After some discussion, he agreed to a special rate of N3000 for NASSITES, with the condition that the faculty handles the certificates, which can include the faculty name and signature and not compulsorily the academy unless we want to, either in hard copy or digital form.
+            </p>
+            <p class="mt-3">
+                Since students are currently on holiday, this program could be a wonderful way to keep them engaged and learning from home. It is a productive activity that fits right into their break time.
+            </p>
+
+            <!-- Program Details -->
+            <div class="mt-6">
+                <h2 class="section-title">Key Details</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Detail</th>
+                            <th>Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Duration</td>
+                            <td>Two months</td>
+                        </tr>
+                        <tr>
+                            <td>Regular Fee</td>
+                            <td>N5000, includes school-stamped certificate</td>
+                        </tr>
+                        <tr>
+                            <td>Special Fee for NASSITES</td>
+                            <td>N3000, with faculty-issued certificate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Requirements -->
+            <div class="mt-6">
+                <h2 class="section-title">What Students Need</h2>
+                <p class="text-gray-700">
+                    Students will need a phone and a laptop if available. If no laptop, they can just use their phone.
+                </p>
+            </div>
+
+            <!-- Tools -->
+            <div class="mt-6">
+                <h2 class="section-title">Tools for the Program</h2>
+                <p class="text-gray-700">
+                    The tools are straightforward and work on different devices:
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Phone (Android or iOS)</td>
+                            <td>Trebedit and Code Editor</td>
+                        </tr>
+                        <tr>
+                            <td>PC or Laptop</td>
+                            <td>VS Code</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Closing -->
+            <div class="closing">
+                <p>Best regards,</p>
+                <p>The General Secretary Elect</p>
+                <p>Nigerian Association of Science Students, OAU Chapter</p>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+</html>
