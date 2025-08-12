@@ -118,7 +118,7 @@ router.post('/save-answers', authenticate, async (req, res) => {
 // POST /api/past-questions - Admin: Create a new past question (with optional image)
 router.post(
   '/',
-  [authenticate, authorizeRole('admin'), upload.single('image')],
+  [authenticate, authorizeRole('admin', 'pq-uploader'), upload.single('image')],
   async (req, res) => {
     try {
       const {
@@ -194,7 +194,7 @@ router.post(
 // PUT /api/past-questions/:id - Admin: Update a past question (with optional image update)
 router.put(
   '/:id',
-  [authenticate, authorizeRole('admin'), upload.single('image')],
+  [authenticate, authorizeRole('admin', 'pq-uploader'), upload.single('image')],
   async (req, res) => {
     try {
       const updateFields = { ...req.body };
@@ -230,7 +230,7 @@ router.put(
 );
 
 // DELETE /api/past-questions/:id - Admin: Delete a past question
-router.delete('/:id', [authenticate, authorizeRole('admin')], async (req, res) => {
+router.delete('/:id', [authenticate, authorizeRole('admin', 'pq-uploader')], async (req, res) => {
   try {
     const question = await Question.findByIdAndDelete(req.params.id);
     if (!question) return res.status(404).json({ error: "Question not found." });
@@ -259,7 +259,7 @@ router.get('/admin/all', [authenticate, authorizeRole('admin')], async (req, res
 });
 
 // GET /api/past-questions/:id - Admin: Get a single question
-router.get('/:id', [authenticate, authorizeRole('admin')], async (req, res) => {
+router.get('/:id', [authenticate, authorizeRole('admin', 'pq-uploader')], async (req, res) => {
   try {
     const question = await Question.findById(req.params.id);
     if (!question) return res.status(404).json({ error: "Question not found." });
