@@ -33,7 +33,7 @@ const router = express.Router();
 // ========== ENDPOINTS ==========
 
 // GET /api/past-questions - Students: Fetch questions with filters
-router.get('/', authenticate, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const { subject, year, count, difficulty } = req.query;
     const filter = {};
