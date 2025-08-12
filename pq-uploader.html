@@ -499,6 +499,8 @@
               <input id="tags" type="text" placeholder="e.g. theory, calculation">
               <label>Question Text (Rich Format)</label>
               <div id="quillEditor" class="quill-editor"></div>
+              <label>Image (optional)</label>
+<input id="questionImage" type="file" accept="image/*">
               <label>Options</label>
               <input id="optionA" type="text" placeholder="Option A" required>
               <input id="optionB" type="text" placeholder="Option B" required>
@@ -547,43 +549,59 @@
 
     // ========== SUBMIT HANDLER ==========
     async function submitAddPastQuestion() {
-      const subject = document.getElementById("subject").value.trim();
-      const year = document.getElementById("year").value.trim();
-      const difficulty = document.getElementById("difficulty").value;
-      const topic = document.getElementById("topic").value.trim();
-      const tags = document.getElementById("tags").value.trim().split(",").map(t=>t.trim()).filter(Boolean);
-      const text = window.pqQuill.root.innerHTML;
-      const optionA = document.getElementById("optionA").value.trim();
-      const optionB = document.getElementById("optionB").value.trim();
-      const optionC = document.getElementById("optionC").value.trim();
-      const optionD = document.getElementById("optionD").value.trim();
-      const correctLetter = document.getElementById("correctAnswer").value;
-      const options = [optionA, optionB, optionC, optionD];
-      const correctAnswer = options["ABCD".indexOf(correctLetter)];
-      const explanation = window.explQuill.root.innerHTML;
-      const msg = document.getElementById("addPastQMsg");
-      msg.innerText = "";
-      if (!subject || !year || !text || options.some(o=>!o) || !correctAnswer) { msg.innerText = "All fields required!"; return; }
-      if (!options.includes(correctAnswer)) { msg.innerText = "Correct answer must match one of the options."; return; }
-      try {
-        const resp = await fetch(API_URL + "past-questions", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-          body: JSON.stringify({ subject, year, difficulty, topic, tags, text, options, correctAnswer, explanation })
-        });
-        const data = await resp.json();
-        console.log("Add PQ response", resp.status, data);
-        if (!resp.ok) {
-          msg.innerText = data.error || data.message || "Failed to add question.";
-          return;
-        }
-        msg.innerText = "Past Question added!";
-        fetchPastQuestions();
-        setTimeout(() => { closeModal(); }, 1200);
-      } catch (err) {
-        msg.innerText = "Network error.";
-      }
+  const subject = document.getElementById("subject").value.trim();
+  const year = document.getElementById("year").value.trim();
+  const difficulty = document.getElementById("difficulty").value;
+  const topic = document.getElementById("topic").value.trim();
+  const tags = document.getElementById("tags").value.trim().split(",").map(t=>t.trim()).filter(Boolean);
+  const text = window.pqQuill.root.innerHTML;
+  const optionA = document.getElementById("optionA").value.trim();
+  const optionB = document.getElementById("optionB").value.trim();
+  const optionC = document.getElementById("optionC").value.trim();
+  const optionD = document.getElementById("optionD").value.trim();
+  const correctLetter = document.getElementById("correctAnswer").value;
+  const options = [optionA, optionB, optionC, optionD];
+  const correctAnswer = options["ABCD".indexOf(correctLetter)];
+  const explanation = window.explQuill.root.innerHTML;
+  const imageInput = document.getElementById("questionImage");
+  const imageFile = imageInput.files[0];
+
+  const msg = document.getElementById("addPastQMsg");
+  msg.innerText = "";
+  if (!subject || !year || !text || options.some(o=>!o) || !correctAnswer) { msg.innerText = "All fields required!"; return; }
+  if (!options.includes(correctAnswer)) { msg.innerText = "Correct answer must match one of the options."; return; }
+
+  try {
+    const formData = new FormData();
+    formData.append("subject", subject);
+    formData.append("year", year);
+    formData.append("difficulty", difficulty);
+    formData.append("topic", topic);
+    formData.append("tags", JSON.stringify(tags));
+    formData.append("text", text);
+    formData.append("options", JSON.stringify(options));
+    formData.append("correctAnswer", correctAnswer);
+    formData.append("explanation", explanation);
+    if (imageFile) formData.append("image", imageFile);
+
+    const resp = await fetch(API_URL + "past-questions", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+      body: formData
+      // Do NOT set Content-Type header; browser will set it correctly.
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      msg.innerText = data.error || data.message || "Failed to add question.";
+      return;
     }
+    msg.innerText = "Past Question added!";
+    fetchPastQuestions();
+    setTimeout(() => { closeModal(); }, 1200);
+  } catch (err) {
+    msg.innerText = "Network error.";
+  }
+}
 
     // ========== NAV ==========
     function showSection(id, el) {
