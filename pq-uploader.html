@@ -424,7 +424,7 @@
       const resp = await fetch(API_URL + "auth/me", { headers: { Authorization: "Bearer " + token } });
       if (!resp.ok) { localStorage.removeItem("token"); window.location.href = "mock.html"; return; }
       admin = await resp.json();
-      if (!admin || !admin.user || (admin.user.role !== "admin" && admin.user.role !== "superadmin")) {
+      if (!admin || !admin.user || (admin.user.role !== "pq-uploader" && admin.user.role !== "superadmin")) {
         alert("Unauthorized.");
         window.location.href = "mock-icthallb";
         return;
