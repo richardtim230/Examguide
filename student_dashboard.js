@@ -146,48 +146,208 @@ async function fetchWithAuth(url, options = {}) {
 }
 // ========== Motivational Quotes Data ==========
 const MOTIVATIONAL_QUOTES = [
-  { 
+  {
     text: "Education is the most powerful weapon which you can use to change the world.",
     author: "Nelson Mandela"
   },
-  { 
+  {
     text: "The future belongs to those who believe in the beauty of their dreams.",
     author: "Eleanor Roosevelt"
   },
-  { 
+  {
     text: "Strive for progress, not perfection.",
     author: "Unknown"
   },
-  { 
+  {
     text: "The expert in anything was once a beginner.",
     author: "Helen Hayes"
   },
-  { 
+  {
     text: "Success is not the key to happiness. Happiness is the key to success.",
     author: "Albert Schweitzer"
   },
-  { 
+  {
     text: "Do not wait to strike till the iron is hot; but make it hot by striking.",
     author: "William Butler Yeats"
   },
-  { 
+  {
     text: "Opportunities don't happen. You create them.",
     author: "Chris Grosser"
   },
-  { 
+  {
     text: "The beautiful thing about learning is that no one can take it away from you.",
     author: "B.B. King"
   },
-  { 
+  {
     text: "The only limit to our realization of tomorrow will be our doubts of today.",
     author: "Franklin D. Roosevelt"
   },
-  { 
+  {
     text: "Learning never exhausts the mind.",
     author: "Leonardo da Vinci"
+  },
+  {
+    text: "Believe you can and you're halfway there.",
+    author: "Theodore Roosevelt"
+  },
+  {
+    text: "The mind is everything. What you think you become.",
+    author: "Buddha"
+  },
+  {
+    text: "The best way to predict the future is to create it.",
+    author: "Peter Drucker"
+  },
+  {
+    text: "Don't watch the clock; do what it does. Keep going.",
+    author: "Sam Levenson"
+  },
+  {
+    text: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs"
+  },
+  {
+    text: "If you want to achieve greatness, stop asking for permission.",
+    author: "Unknown"
+  },
+  {
+    text: "The journey of a thousand miles begins with a single step.",
+    author: "Lao Tzu"
+  },
+  {
+    text: "Success is walking from failure to failure with no loss of enthusiasm.",
+    author: "Winston Churchill"
+  },
+  {
+    text: "Your time is limited, don't waste it living someone else's life.",
+    author: "Steve Jobs"
+  },
+  {
+    text: "The harder you work for something, the greater you'll feel when you achieve it.",
+    author: "Unknown"
+  },
+  {
+    text: "Push yourself, because no one else is going to do it for you.",
+    author: "Unknown"
+  },
+  {
+    text: "Great things never come from comfort zones.",
+    author: "Unknown"
+  },
+  {
+    text: "Dream it. Wish it. Do it.",
+    author: "Unknown"
+  },
+  {
+    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    author: "Winston Churchill"
+  },
+  {
+    text: "The only place where success comes before work is in the dictionary.",
+    author: "Vidal Sassoon"
+  },
+  {
+    text: "It always seems impossible until it's done.",
+    author: "Nelson Mandela"
+  },
+  {
+    text: "You are never too old to set another goal or to dream a new dream.",
+    author: "C.S. Lewis"
+  },
+  {
+    text: "The mind is not a vessel to be filled, but a fire to be kindled.",
+    author: "Plutarch"
+  },
+  {
+    text: "The best revenge is massive success.",
+    author: "Frank Sinatra"
+  },
+  {
+    text: "What you get by achieving your goals is not as important as what you become by achieving your goals.",
+    author: "Zig Ziglar"
+  },
+  {
+    text: "The future depends on what you do today.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    text: "The only way to learn mathematics is to do mathematics.",
+    author: "Paul Halmos"
+  },
+  {
+    text: "Develop a passion for learning. If you do, you will never cease to grow.",
+    author: "Anthony J. D'Angelo"
+  },
+  {
+    text: "The roots of education are bitter, but the fruit is sweet.",
+    author: "Aristotle"
+  },
+  {
+    text: "Education is not preparation for life; education is life itself.",
+    author: "John Dewey"
+  },
+  {
+    text: "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.",
+    author: "Brian Herbert"
+  },
+  {
+    text: "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    text: "An investment in knowledge pays the best interest.",
+    author: "Benjamin Franklin"
+  },
+  {
+    text: "The beautiful thing about learning is that nobody can take it away from you.",
+    author: "B.B. King"
+  },
+  {
+    text: "To acquire knowledge, one must study; but to acquire wisdom, one must observe.",
+    author: "Marilyn vos Savant"
+  },
+  {
+    text: "The more that you read, the more things you will know. The more that you learn, the more places you'll go.",
+    author: "Dr. Seuss"
+  },
+  {
+    text: "Change is the end result of all true learning.",
+    author: "Leo Buscaglia"
+  },
+  {
+    text: "Learning is not attained by chance, it must be sought for with ardor and attended to with diligence.",
+    author: "Abigail Adams"
+  },
+  {
+    text: "The greatest enemy of knowledge is not ignorance, it is the illusion of knowledge.",
+    author: "Stephen Hawking"
+  },
+  {
+    text: "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.",
+    author: "Richard Feynman"
+  },
+  {
+    text: "The only true wisdom is in knowing you know nothing.",
+    author: "Socrates"
+  },
+  {
+    text: "Tell me and I forget. Teach me and I remember. Involve me and I learn.",
+    author: "Benjamin Franklin"
+  },
+  {
+    text: "The whole purpose of education is to turn mirrors into windows.",
+    author: "Sydney J. Harris"
+  },
+  {
+    text: "You don't have to be great to start, but you have to start to be great.",
+    author: "Zig Ziglar"
+  },
+  {
+    text: "The best way to learn is by doing. The only way to do is to be.",
+    author: "Unknown"
   }
-  // ...add more quotes as desired
 ];
+
 
 // ========== Greeting Name Helper ==========
 function getFirstName(fullname, username) {
