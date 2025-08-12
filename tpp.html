@@ -460,64 +460,69 @@
             updateProgress();
         }
 
-        async function submitExam() {
-            if (submitted) return;
-            clearInterval(timerInterval);
-            document.getElementById("submit-btn").disabled = true;
-            const answersArray = questions.map(q => ({
-                questionId: q._id,
-                answer: answers[q._id] || null
-            }));
-            try {
-                // Submit for scoring and feedback
-                const resp = await fetch(`${API_URL}/submit`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
-                    body: JSON.stringify({
-                        userId,
-                        username,
-                        answers: answersArray,
-                        questionIds: questions.map(q => q._id),
-                        timeSpent: Math.floor((Date.now() - startTime) / 1000)
-                    })
-                });
-                const result = await resp.json();
 
-                // Save user answers, correct/wrong choices, time spent to backend for tracking
-                await fetch(ANSWER_API, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
-                    body: JSON.stringify({
-                        userId,
-                        username,
-                        answers: answersArray,
-                        correctChoices: result.correctChoices || {},
-                        wrongChoices: result.wrongChoices || {},
-                        totalCorrect: result.score,
-                        totalWrong: (answersArray.length - result.score),
-                        timeSpent: Math.floor((Date.now() - startTime) / 1000)
-                    })
-                });
-
-                submitted = true;
-                document.getElementById("feedback-box").style.display = "";
-                document.getElementById("feedback-box").innerHTML = `
-                    <span>Exam submitted!</span><br>
-                    <b>Score:</b> ${result.score}/${result.total}
-                    <br>
-                    <b>Total Correct:</b> ${result.score} &nbsp; <b>Total Wrong:</b> ${result.total - result.score}
-                    ${result.feedback && result.feedback.length ? `<div style="margin-top:1em;"><b>Feedback:</b><ul style="text-align:left;">${result.feedback.map(f=>`<li>${f}</li>`).join("")}</ul></div>` : ""}
-                    <br>
-                    <button onclick="window.location.href='student-dashoards.html#past-questions'" style="margin-top:1.3em;padding:0.6em 1.2em;background:#6366f1;color:#fff;border:none;border-radius:0.3em;">Go to Dashboard</button>
-                `;
-            } catch (err) {
-                document.getElementById("feedback-box").style.display = "";
-                document.getElementById("feedback-box").innerHTML = `<span style="color:#d32f2f;">Failed to submit: ${err.message || "Unknown error."}</span>`;
-            }
+    async function submitExam() {
+        if (submitted) return;
+        // Show confirmation dialog
+        if (!window.confirm("Are you sure you want to submit your exam? This action cannot be undone.")) {
+            return;
         }
-        document.getElementById("submit-btn").addEventListener("click", submitExam);
+        clearInterval(timerInterval);
+        document.getElementById("submit-btn").disabled = true;
+        const answersArray = questions.map(q => ({
+            questionId: q._id,
+            answer: answers[q._id] || null
+        }));
+        try {
+            // Submit for scoring and feedback
+            const resp = await fetch(`${API_URL}/submit`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
+                body: JSON.stringify({
+                    userId,
+                    username,
+                    answers: answersArray,
+                    questionIds: questions.map(q => q._id),
+                    timeSpent: Math.floor((Date.now() - startTime) / 1000)
+                })
+            });
+            const result = await resp.json();
 
-        // Calculator Toggle
+            // Save user answers, correct/wrong choices, time spent to backend for tracking
+            await fetch(ANSWER_API, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem("token") || "")},
+                body: JSON.stringify({
+                    userId,
+                    username,
+                    answers: answersArray,
+                    correctChoices: result.correctChoices || {},
+                    wrongChoices: result.wrongChoices || {},
+                    totalCorrect: result.score,
+                    totalWrong: (answersArray.length - result.score),
+                    timeSpent: Math.floor((Date.now() - startTime) / 1000)
+                })
+            });
+
+            submitted = true;
+            // REDIRECT to the result page with config as query params
+            const params = new URLSearchParams({
+                subject: config.subject,
+                year: config.year,
+                count: config.count,
+                time: config.time,
+                difficulty: config.difficulty,
+                score: result.score,
+                total: result.total
+            });
+            window.location.href = "tpp-result.html?" + params.toString();
+        } catch (err) {
+            document.getElementById("feedback-box").style.display = "";
+            document.getElementById("feedback-box").innerHTML = `<span style="color:#d32f2f;">Failed to submit: ${err.message || "Unknown error."}</span>`;
+        }
+    }
+    document.getElementById("submit-btn").addEventListener("click", submitExam);
+
         const calculatorToggle = document.getElementById('calculator-toggle');
         const calculator = document.getElementById('calculator');
         const closeCalculator = document.getElementById('close-calculator');
