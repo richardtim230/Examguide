@@ -547,8 +547,7 @@
       }
     }
 
-    // ========== SUBMIT HANDLER ==========
-    async function submitAddPastQuestion() {
+async function submitAddPastQuestion() {
   const subject = document.getElementById("subject").value.trim();
   const year = document.getElementById("year").value.trim();
   const difficulty = document.getElementById("difficulty").value;
@@ -564,7 +563,7 @@
   const correctAnswer = options["ABCD".indexOf(correctLetter)];
   const explanation = window.explQuill.root.innerHTML;
   const imageInput = document.getElementById("questionImage");
-  const imageFile = imageInput.files[0];
+  const imageFile = imageInput && imageInput.files[0];
 
   const msg = document.getElementById("addPastQMsg");
   msg.innerText = "";
@@ -590,7 +589,16 @@
       body: formData
       // Do NOT set Content-Type header; browser will set it correctly.
     });
-    const data = await resp.json();
+
+    let data;
+    try {
+      data = await resp.json();
+    } catch {
+      // If response is not JSON (e.g., server error), show generic message
+      msg.innerText = "Server returned an invalid response.";
+      return;
+    }
+
     if (!resp.ok) {
       msg.innerText = data.error || data.message || "Failed to add question.";
       return;
@@ -599,10 +607,9 @@
     fetchPastQuestions();
     setTimeout(() => { closeModal(); }, 1200);
   } catch (err) {
-    msg.innerText = "Network error.";
+    msg.innerText = "Network error. Please check your connection or try again.";
   }
 }
-
     // ========== NAV ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
