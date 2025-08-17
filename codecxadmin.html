@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>CODECX Institute - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .notification {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @media (max-width: 640px) {
+            .grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <button id="toggle-sidebar" class="sm:hidden text-gray-600 focus:outline-none mr-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-800">CODECX Institute Admin Dashboard</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span id="notification-badge" class="bg-red-500 text-white px-2 py-1 rounded-full text-sm hidden">New!</span>
+                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700" onclick="simulateNewRegistration()">Simulate New Reg</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar (Mobile) -->
+    <aside id="sidebar" class="sidebar sm:hidden fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-30 sidebar-hidden">
+        <div class="p-4">
+            <button id="close-sidebar" class="text-gray-600 mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-4">
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Registrations</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Settings</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Logout</a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Overlay for Sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-20" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 py-8 flex-grow">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Student Registrations</h2>
+        <div id="registrations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </main>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal flex">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Full Size Image" class="w-full h-auto">
+        </div>
+    </div>
+
+    <script>
+        const registrations = []; // Simulate data storage
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('sidebar-hidden');
+            overlay.classList.toggle('hidden');
+        }
+
+        document.getElementById('toggle-sidebar').addEventListener('click', toggleSidebar);
+        document.getElementById('close-sidebar').addEventListener('click', toggleSidebar);
+
+        function addRegistration(data) {
+            registrations.push(data);
+            renderRegistrations();
+            showNotification();
+        }
+
+        function renderRegistrations() {
+            const grid = document.getElementById('registrations-grid');
+            grid.innerHTML = '';
+            registrations.forEach((reg, index) => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white p-6 rounded-lg shadow-md';
+                card.innerHTML = `
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Registrant #${index + 1}</h3>
+                    <p><strong>Name:</strong> ${reg.name}</p>
+                    <p><strong>Email:</strong> ${reg.email}</p>
+                    <p><strong>Phone:</strong> ${reg.phone}</p>
+                    <p><strong>Matric No:</strong> ${reg.matric}</p>
+                    <p><strong>NASS Due Paid:</strong> ${reg.nassDue ? 'Yes' : 'No'}</p>
+                    <div class="mt-4">
+                        <p><strong>Passport:</strong></p>
+                        <img src="${reg.passport}" alt="Passport" class="w-full h-auto cursor-pointer" onclick="openModal('${reg.passport}')">
+                    </div>
+                    <div class="mt-4">
+                        <p><strong>Payment Receipt:</strong></p>
+                        <img src="${reg.paymentReceipt}" alt="Payment Receipt" class="w-full h-auto cursor-pointer" onclick="openModal('${reg.paymentReceipt}')">
+                    </div>
+                    ${reg.nassReceipt ? `
+                    <div class="mt-4">
+                        <p><strong>NASS Receipt:</strong></p>
+                        <img src="${reg.nassReceipt}" alt="NASS Receipt" class="w-full h-auto cursor-pointer" onclick="openModal('${reg.nassReceipt}')">
+                    </div>` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function showNotification() {
+            const badge = document.getElementById('notification-badge');
+            badge.classList.remove('hidden');
+            badge.classList.add('notification');
+            alert('New registration received!');
+            setTimeout(() => badge.classList.add('hidden'), 5000);
+        }
+
+        function openModal(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Simulate new registration for demo
+        function simulateNewRegistration() {
+            const newReg = {
+                name: 'John Doe',
+                email: 'john@example.com',
+                phone: '1234567890',
+                matric: 'MAT/12345',
+                nassDue: true,
+                passport: 'https://via.placeholder.com/200x200?text=Passport',
+                paymentReceipt: 'https://via.placeholder.com/200x100?text=Payment+Receipt',
+                nassReceipt: 'https://via.placeholder.com/200x100?text=NASS+Receipt'
+            };
+            addRegistration(newReg);
+        }
+
+        // Initial load
+        simulateNewRegistration(); // Add one for demo
+    </script>
+</body>
+</html>
