@@ -6,9 +6,9 @@ const CodecxRegistrationSchema = new mongoose.Schema({
     phone:    { type: String, required: true },
     matricNumber: { type: String, required: true },
     nassDue:  { type: String, enum: ["yes", "no"], default: "no" },
-    passportPath: { type: String, default: "" },
-    paymentReceiptPath: { type: String, default: "" },
-    nassReceiptPath: { type: String, default: "" },
+    passportBase64: { type: String, default: "" },
+    paymentReceiptBase64: { type: String, default: "" },
+    nassReceiptBase64: { type: String, default: "" },
     submittedAt: { type: Date, default: Date.now }
 }, { collection: "codecxregistrations" });
 
