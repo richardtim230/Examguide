@@ -138,6 +138,36 @@
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
     let registrations = [];
 
+
+
+
+    async function checkAdminAuth() {
+      const token = localStorage.getItem('codecxAdminToken');
+      if (!token) {
+        showError("You are not logged in. Redirecting...");
+        setTimeout(logout, 1300);
+        return;
+      }
+      try {
+        const resp = await fetch(PROFILE_API, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await resp.json();
+        if (resp.ok && data.user && data.user.role === 'admin') {
+          renderProfile(data.user);
+        } else {
+          showError("Unauthorized access. Logging out...");
+          setTimeout(logout, 1300);
+        }
+      } catch (err) {
+        showError("Login session error. Logging out...");
+        setTimeout(logout, 1300);
+      }
+    }
+
+    // On page load, check auth
+    checkAdminAuth();
+    
     // Utility for date formatting
     function formatDate(dateStr) {
         if (!dateStr) return "";
