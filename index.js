@@ -73,6 +73,7 @@ import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 
 // ===== Routes =====
+import codecxregRoutes from "./routes/codecxreg.js";
 import questionSetRoutes from "./routes/questionsets.js";
 import resultsRoutes from "./routes/results.js";
 import scheduleRoutes from "./routes/schedule.js";
@@ -447,6 +448,7 @@ app.get("/api/listings/count", async (req, res) => {
 app.use("/api/superadmin", superadminRoutes);
 
 // --- Main Features ---
+app.use("/api/codecxreg", codecxregRoutes);
 app.use("/api/blogger-dashboard", bloggerDashboardRoutes);
 app.use("/uploads/profilepics", express.static(path.join(process.cwd(), "uploads/profilepics")));
 app.use("/api/questionsets", questionSetRoutes);
