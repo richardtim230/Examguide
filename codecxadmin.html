@@ -134,7 +134,87 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
 <script>
-    const API_HOST = "https://examguide.onrender.com";
+    // Place this in your dashboard script section!
+
+const API_HOST = "https://examguide.onrender.com";
+
+// Helper to build correct image URLs (fixes broken images)
+function getFullImageUrl(path) {
+    if (!path) return "https://ui-avatars.com/api/?name=No+Pic";
+    // Remove trailing slash from API_HOST if present
+    let host = API_HOST.endsWith('/') ? API_HOST.slice(0, -1) : API_HOST;
+    // Ensure path starts with a single slash
+    let cleanPath = path.startsWith('/') ? path : '/' + path;
+    return host + cleanPath;
+}
+
+// Example usage in your rendering function:
+function renderRegistrations() {
+    const grid = document.getElementById("registrationsGrid");
+    grid.innerHTML = '';
+    if (!registrations.length) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 text-lg">No registrations found.</div>`;
+        return;
+    }
+    registrations.forEach((reg, idx) => {
+        grid.innerHTML += `
+        <div class="registrant-card">
+            <div class="card-header">
+                <img src="${getFullImageUrl(reg.passportPath)}" 
+                    alt="Passport" 
+                    class="registrant-passport"
+                    onclick="openImageModal('${getFullImageUrl(reg.passportPath)}')"
+                    title="Click to view full size">
+                <div>
+                    <div class="text-lg font-semibold text-indigo-700 mb-1">${reg.fullName}</div>
+                    <div class="text-sm text-gray-500">${reg.matricNumber}</div>
+                    <div class="text-xs text-gray-400">Submitted: ${formatDate(reg.submittedAt)}</div>
+                </div>
+            </div>
+            <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                <div>
+                    <span class="detail-label">Email:</span>
+                    <div class="text-gray-800">${reg.email}</div>
+                </div>
+                <div>
+                    <span class="detail-label">Phone:</span>
+                    <div class="text-gray-800">${reg.phone}</div>
+                </div>
+                <div>
+                    <span class="detail-label">NASS Due:</span>
+                    <div>${reg.nassDue === "yes"
+                        ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
+                        : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>'}</div>
+                </div>
+            </div>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                <div>
+                    <span class="detail-label">Payment Receipt:</span><br>
+                    ${reg.paymentReceiptPath
+                        ? `<img src="${getFullImageUrl(reg.paymentReceiptPath)}" alt="Payment Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${getFullImageUrl(reg.paymentReceiptPath)}')" title="Click to view full size">`
+                        : `<span class="text-gray-400 text-sm">Not uploaded</span>`
+                    }
+                </div>
+                <div>
+                    <span class="detail-label">NASS Receipt:</span><br>
+                    ${reg.nassReceiptPath
+                        ? `<img src="${getFullImageUrl(reg.nassReceiptPath)}" alt="NASS Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${getFullImageUrl(reg.nassReceiptPath)}')" title="Click to view full size">`
+                        : `<span class="text-gray-400 text-sm">Not uploaded</span>`
+                    }
+                </div>
+            </div>
+            <div class="card-actions">
+                <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition">
+                    <i class="fas fa-folder-open mr-1"></i> Open Folder
+                </button>
+                <button class="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition">
+                    <i class="fas fa-envelope mr-1"></i> Contact
+                </button>
+            </div>
+        </div>
+        `;
+    });
+}
     const API_BASE = `${API_HOST}/api/codecxreg`;
 
     let registrations = [];
@@ -158,73 +238,7 @@
         }
     }
 
-    // Render all registrations as cards
-    function renderRegistrations() {
-        const grid = document.getElementById("registrationsGrid");
-        grid.innerHTML = '';
-        if (!registrations.length) {
-            grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 text-lg">No registrations found.</div>`;
-            return;
-        }
-        registrations.forEach((reg, idx) => {
-            grid.innerHTML += `
-            <div class="registrant-card">
-                <div class="card-header">
-                    <img src="${reg.passportPath ? API_HOST + reg.passportPath : 'https://ui-avatars.com/api/?name=No+Pic'}" 
-                        alt="Passport" 
-                        class="registrant-passport"
-                        onclick="openImageModal('${reg.passportPath ? API_HOST + reg.passportPath : ''}')"
-                        title="Click to view full size">
-                    <div>
-                        <div class="text-lg font-semibold text-indigo-700 mb-1">${reg.fullName}</div>
-                        <div class="text-sm text-gray-500">${reg.matricNumber}</div>
-                        <div class="text-xs text-gray-400">Submitted: ${formatDate(reg.submittedAt)}</div>
-                    </div>
-                </div>
-                <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
-                    <div>
-                        <span class="detail-label">Email:</span>
-                        <div class="text-gray-800">${reg.email}</div>
-                    </div>
-                    <div>
-                        <span class="detail-label">Phone:</span>
-                        <div class="text-gray-800">${reg.phone}</div>
-                    </div>
-                    <div>
-                        <span class="detail-label">NASS Due:</span>
-                        <div>${reg.nassDue === "yes"
-                            ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
-                            : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>'}</div>
-                    </div>
-                </div>
-                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
-                    <div>
-                        <span class="detail-label">Payment Receipt:</span><br>
-                        ${reg.paymentReceiptPath
-                            ? `<img src="${API_HOST + reg.paymentReceiptPath}" alt="Payment Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${API_HOST + reg.paymentReceiptPath}')" title="Click to view full size">`
-                            : `<span class="text-gray-400 text-sm">Not uploaded</span>`
-                        }
-                    </div>
-                    <div>
-                        <span class="detail-label">NASS Receipt:</span><br>
-                        ${reg.nassReceiptPath
-                            ? `<img src="${API_HOST + reg.nassReceiptPath}" alt="NASS Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${API_HOST + reg.nassReceiptPath}')" title="Click to view full size">`
-                            : `<span class="text-gray-400 text-sm">Not uploaded</span>`
-                        }
-                    </div>
-                </div>
-                <div class="card-actions">
-                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition">
-                        <i class="fas fa-folder-open mr-1"></i> Open Folder
-                    </button>
-                    <button class="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition">
-                        <i class="fas fa-envelope mr-1"></i> Contact
-                    </button>
-                </div>
-            </div>
-            `;
-        });
-    }
+
 
     // Utility for date formatting
     function formatDate(dateStr) {
