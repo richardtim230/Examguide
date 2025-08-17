@@ -13,6 +13,7 @@
         }
         .sidebar {
             transition: transform 0.3s ease-in-out;
+            margin-bottom: 5px;
         }
         .sidebar-hidden {
             transform: translateX(-100%);
@@ -91,7 +92,7 @@
     </header>
 
     <!-- Sidebar (Mobile) -->
-    <aside id="sidebar" class="sidebar sm:hidden fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-30 sidebar-hidden">
+    <aside id="sidebar" class="sidebar sm:hidden fixed top-5 left-0 h-full w-64 bg-white shadow-lg z-30 sidebar-hidden">
         <div class="p-4">
             <button id="close-sidebar" class="text-gray-600 mb-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -200,9 +201,9 @@
                 phone: '1234567890',
                 matric: 'MAT/12345',
                 nassDue: true,
-                passport: 'https://via.placeholder.com/200x200?text=Passport',
-                paymentReceipt: 'https://via.placeholder.com/200x100?text=Payment+Receipt',
-                nassReceipt: 'https://via.placeholder.com/200x100?text=NASS+Receipt'
+                passport: 'images (4).jpeg?text=Passport',
+                paymentReceipt: 'images (4).jpeg?text=Payment+Receipt',
+                nassReceipt: 'images (7).jpeg?text=NASS+Receipt'
             };
             addRegistration(newReg);
         }
