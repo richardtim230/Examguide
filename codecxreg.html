@@ -6,6 +6,8 @@
     <title>CODECX Institute - Web Development Class Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Toastify CSS for toast notifications -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -24,7 +26,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             border: 1px solid #e5e7eb;
         }
-        .success-container {
+        .success-container, .feedback-container {
             max-width: 650px;
             padding: 2.5rem;
             background: #f3f4f6;
@@ -39,12 +41,30 @@
         }
         .submit-btn {
             transition: background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .submit-btn:hover {
-            background-color: #4f46e5;
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
         }
         @media (max-width: 640px) {
-            .form-container, .success-container {
+            .form-container, .success-container, .feedback-container {
                 padding: 1.5rem;
                 margin: 1rem;
             }
@@ -65,28 +85,28 @@
         <form id="reg-form">
             <div class="mb-5">
                 <label for="full-name" class="block text-gray-700 font-medium mb-2 required">Full Name</label>
-                <input type="text" id="full-name" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
+                <input type="text" id="full-name" name="full-name" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
             </div>
             <div class="mb-5">
                 <label for="email" class="block text-gray-700 font-medium mb-2 required">Email Address</label>
-                <input type="email" id="email" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
+                <input type="email" id="email" name="email" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
                 <p class="text-sm text-gray-500 mt-1">Please provide a valid email address for communication.</p>
             </div>
             <div class="mb-5">
                 <label for="phone" class="block text-gray-700 font-medium mb-2 required">Phone Number</label>
-                <input type="tel" id="phone" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
+                <input type="tel" id="phone" name="phone" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
                 <p class="text-sm text-gray-500 mt-1">Please provide a valid phone number for SMS notifications.</p>
             </div>
             <div class="mb-5">
                 <label for="matric-number" class="block text-gray-700 font-medium mb-2 required">Matric Number</label>
-                <input type="text" id="matric-number" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
+                <input type="text" id="matric-number" name="matric-number" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
             </div>
             <div class="mb-5">
                 <label for="passport" class="block text-gray-700 font-medium mb-2 required">Passport Photograph</label>
-                <input type="file" id="passport" accept="image/*" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
+                <input type="file" id="passport" name="passport" accept="image/*" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
             </div>
             <div class="mb-5 flex items-center">
-                <input type="checkbox" id="nass-due" class="mr-2 h-5 w-5 border-gray-300 rounded text-gray-600 focus:ring-gray-500">
+                <input type="checkbox" id="nass-due" name="nass-due" class="mr-2 h-5 w-5 border-gray-300 rounded text-gray-600 focus:ring-gray-500">
                 <label for="nass-due" class="text-gray-700">I have paid my NASS DUE (optional, for documentation purposes)</label>
             </div>
             <div class="mb-5">
@@ -100,13 +120,15 @@
             </div>
             <div class="mb-5">
                 <label for="payment-receipt" class="block text-gray-700 font-medium mb-2 required">Upload Payment Receipt</label>
-                <input type="file" id="payment-receipt" accept="image/*,application/pdf" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
+                <input type="file" id="payment-receipt" name="payment-receipt" accept="image/*,application/pdf" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
             </div>
             <div class="mb-6">
                 <label for="nass-receipt" class="block text-gray-700 font-medium mb-2">Upload NASS Receipt (optional)</label>
-                <input type="file" id="nass-receipt" accept="image/*,application/pdf" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300">
+                <input type="file" id="nass-receipt" name="nass-receipt" accept="image/*,application/pdf" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300">
             </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold submit-btn">Submit Registration</button>
+            <button type="submit" id="submit-btn" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold submit-btn flex items-center justify-center">
+                <span id="btn-text">Submit Registration</span>
+            </button>
         </form>
     </div>
 
@@ -114,18 +136,149 @@
         <h1 class="text-3xl font-bold text-gray-800 mb-4">Registration Submitted</h1>
         <p class="text-lg text-gray-700 mb-4">Your application has been received and is under review. We will contact you via email and SMS shortly.</p>
         <p class="text-gray-700">Please ensure your provided email and phone number are accurate for notifications.</p>
+        <button id="feedback-btn" class="mt-6 bg-indigo-500 text-white px-5 py-2 rounded-lg font-semibold">Give Feedback</button>
     </div>
 
+    <!-- Feedback Page -->
+    <div id="feedback-page" class="feedback-container hidden">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">We Value Your Feedback!</h1>
+        <form id="feedback-form" class="max-w-lg mx-auto">
+            <div class="mb-4">
+                <label for="feedback-text" class="block text-gray-700 font-medium mb-2 required">Your Feedback</label>
+                <textarea id="feedback-text" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" rows="5" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="feedback-name" class="block text-gray-700 font-medium mb-2">Your Name (optional)</label>
+                <input type="text" id="feedback-name" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300">
+            </div>
+            <button type="submit" id="feedback-submit-btn" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center">
+                <span id="feedback-btn-text">Submit Feedback</span>
+            </button>
+            <button type="button" id="back-to-success" class="mt-4 w-full bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold">Back</button>
+        </form>
+    </div>
+
+    <!-- Toastify JS for toast notifications -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         const form = document.getElementById('reg-form');
         const registrationForm = document.getElementById('registration-form');
         const successMessage = document.getElementById('success-message');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
 
-        form.addEventListener('submit', (e) => {
+        const feedbackPage = document.getElementById('feedback-page');
+        const feedbackBtn = document.getElementById('feedback-btn');
+        const feedbackForm = document.getElementById('feedback-form');
+        const feedbackSubmitBtn = document.getElementById('feedback-submit-btn');
+        const feedbackBtnText = document.getElementById('feedback-btn-text');
+        const backToSuccess = document.getElementById('back-to-success');
+
+        function showToast(message, type = "success") {
+            Toastify({
+                text: message,
+                duration: 3500,
+                gravity: "top",
+                position: "center",
+                backgroundColor: type === "success"
+                    ? "linear-gradient(90deg,#6366f1,#4338ca)"
+                    : "linear-gradient(90deg,#ef4444,#f87171)",
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // Simulate form submission (in a real case, this would send data to a server)
-            registrationForm.classList.add('hidden');
+
+            // Disable button and show spinner
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span>Submitting...';
+
+            // Gather form data
+            const formData = new FormData();
+            formData.append('fullName', document.getElementById('full-name').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('phone', document.getElementById('phone').value);
+            formData.append('matricNumber', document.getElementById('matric-number').value);
+            formData.append('passport', document.getElementById('passport').files[0]);
+            formData.append('nassDue', document.getElementById('nass-due').checked ? 'yes' : 'no');
+            formData.append('paymentReceipt', document.getElementById('payment-receipt').files[0]);
+            if (document.getElementById('nass-receipt').files.length) {
+                formData.append('nassReceipt', document.getElementById('nass-receipt').files[0]);
+            }
+
+            // Call backend API
+            try {
+                const response = await fetch('/api/codecxreg', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showToast("Registration submitted successfully!", "success");
+                    registrationForm.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                } else {
+                    const resJson = await response.json();
+                    showToast("Registration failed: " + (resJson.message || "Server error"), "error");
+                }
+            } catch (err) {
+                showToast("Network or server error. Please try again.", "error");
+            } finally {
+                submitBtn.disabled = false;
+                btnText.innerHTML = 'Submit Registration';
+            }
+        });
+
+        // Feedback button on success page
+        feedbackBtn.addEventListener('click', () => {
+            successMessage.classList.add('hidden');
+            feedbackPage.classList.remove('hidden');
+        });
+
+        // Back button on feedback page
+        backToSuccess.addEventListener('click', () => {
+            feedbackPage.classList.add('hidden');
             successMessage.classList.remove('hidden');
+        });
+
+        // Feedback form submission
+        feedbackForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            feedbackSubmitBtn.disabled = true;
+            feedbackBtnText.innerHTML = '<span class="spinner"></span>Submitting...';
+
+            // Prepare feedback data
+            const feedbackText = document.getElementById('feedback-text').value;
+            const feedbackName = document.getElementById('feedback-name').value;
+
+            try {
+                // Send feedback to backend
+                const res = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        feedback: feedbackText,
+                        name: feedbackName
+                    })
+                });
+                if (res.ok) {
+                    showToast("Thank you for your feedback!", "success");
+                    feedbackForm.reset();
+                    setTimeout(() => {
+                        feedbackPage.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+                    }, 1500);
+                } else {
+                    const resJson = await res.json();
+                    showToast("Feedback failed: " + (resJson.message || "Server error"), "error");
+                }
+            } catch (err) {
+                showToast("Network or server error. Please try again.", "error");
+            } finally {
+                feedbackSubmitBtn.disabled = false;
+                feedbackBtnText.innerHTML = 'Submit Feedback';
+            }
         });
     </script>
 </body>
