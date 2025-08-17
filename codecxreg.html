@@ -161,6 +161,9 @@
     <!-- Toastify JS for toast notifications -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
+        // Replace all fetch URLs with the full backend URL:
+const API_BASE = "https://examguide.onrender.com";
+
         const form = document.getElementById('reg-form');
         const registrationForm = document.getElementById('registration-form');
         const successMessage = document.getElementById('success-message');
@@ -209,7 +212,7 @@
 
             // Call backend API
             try {
-                const response = await fetch('/api/codecxreg', {
+                const response = await fetch(`${API_BASE}/api/codecxreg`, {
                     method: 'POST',
                     body: formData
                 });
@@ -254,7 +257,7 @@
 
             try {
                 // Send feedback to backend
-                const res = await fetch('/api/feedback', {
+                const res = await fetch(`${API_BASE}/api/feedback`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
