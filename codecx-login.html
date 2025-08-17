@@ -285,13 +285,7 @@
           if (profileRes.ok && profileData.user && profileData.user.role === 'admin') {
             showSuccess('Login successful! Redirecting...');
             setTimeout(() => { window.location.href = 'codecxadmin.html'; }, 900);
-          } else if (profileRes.ok && profileData.user && profileData.user.role) {
-            showSuccess('Welcome, ' + profileData.user.role + '! Redirecting...');
-            setTimeout(() => { window.location.href = 'codecxadmin.html'; }, 900);
-          } else {
-            showSuccess('Login successful! Redirecting...');
-            setTimeout(() => { window.location.href = 'codecxadmin.html'; }, 900);
-          }
+          } 
         } else {
           showError(data.message || 'Invalid credentials.');
         }
