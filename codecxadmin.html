@@ -2,214 +2,283 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <title>CODECX Institute - Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>CODECX Admin Dashboard – Registrations</title>
+    <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9fafb;
+        body { font-family: 'Segoe UI', Arial, sans-serif; }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-            margin-bottom: 5px;
+        .registrant-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(44,62,80,0.08);
+            padding: 1.5rem 1rem 1rem 1rem;
+            position: relative;
+            transition: box-shadow .3s;
         }
-        .sidebar-hidden {
-            transform: translateX(-100%);
+        .registrant-card:hover {
+            box-shadow: 0 8px 30px rgba(44,62,80,0.13);
         }
-        .card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        .registrant-passport {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 6px rgba(44,62,80,0.09);
+            cursor: pointer;
+            border: 2px solid #d1d5db;
+            transition: box-shadow .2s;
         }
-        .notification {
-            animation: fadeIn 0.5s ease-in;
+        .registrant-passport:hover {
+            box-shadow: 0 6px 18px rgba(44,62,80,0.17);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .detail-label {
+            font-size: 0.97rem;
+            color: #6366f1;
+            font-weight: 600;
         }
-        .modal {
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        /* Modal styles for full image view */
+        #imageModal {
             display: none;
             position: fixed;
-            z-index: 50;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.7);
             justify-content: center;
             align-items: center;
         }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 800px;
+        #imageModal.active { display: flex; }
+        #imageModal img {
+            max-width: 95vw; max-height: 85vh;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(44,62,80,0.19);
         }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+        #imageModal .close-btn {
+            position: absolute;
+            top: 2vw; right: 3vw;
+            background: #fff;
+            color: #1a237e;
+            border: none;
+            font-size: 2rem;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            box-shadow: 0 2px 7px rgba(44,62,80,0.12);
             cursor: pointer;
         }
-        @media (max-width: 640px) {
-            .grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-            }
+        @media (max-width: 600px) {
+            .card-grid { gap: 1rem; }
+            .registrant-card { padding: 1rem .5rem; }
+            .card-header { flex-direction: column; gap: .5rem;}
+            #imageModal .close-btn { top: 6vw; right: 6vw; }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
-        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center">
-                <button id="toggle-sidebar" class="sm:hidden text-gray-600 focus:outline-none mr-3">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-                <h1 class="text-xl sm:text-2xl font-bold text-gray-800">CODECX Institute Admin Dashboard</h1>
-            </div>
-            <div class="flex items-center space-x-4">
-                <span id="notification-badge" class="bg-red-500 text-white px-2 py-1 rounded-full text-sm hidden">New!</span>
-                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700" onclick="simulateNewRegistration()">Simulate New Reg</button>
-            </div>
-        </nav>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Main header -->
+    <header class="flex items-center justify-between px-6 py-5 bg-white shadow">
+        <h1 class="text-2xl md:text-3xl font-bold text-indigo-900">CODECX Admin Dashboard</h1>
+        <div class="flex items-center gap-2">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff" class="w-10 h-10 rounded-full" alt="Admin">
+            <span class="text-base font-medium text-gray-700 hidden sm:inline">Admin</span>
+        </div>
     </header>
-
-    <!-- Sidebar (Mobile) -->
-    <aside id="sidebar" class="sidebar sm:hidden fixed top-5 left-0 h-full w-64 bg-white shadow-lg z-20 sidebar-hidden">
-        <div class="p-4">
-            <button id="close-sidebar" class="text-gray-600 mb-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            <nav class="flex z-60 flex-col space-y-4">
-                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Registrations</a>
-                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Settings</a>
-                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Logout</a>
-            </nav>
+    <!-- Page content -->
+    <main class="px-3 py-6 md:px-10 md:py-10">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-7">
+            <div>
+                <h2 class="text-xl md:text-2xl font-bold text-indigo-800 mb-2">Student Registrations</h2>
+                <p class="text-gray-500 text-base">Review, manage, and access all recent student registrations. Each card represents a registrant’s folder.</p>
+            </div>
+            <div class="flex flex-col gap-3 md:flex-row items-center">
+                <div class="bg-white rounded-lg px-5 py-2 shadow flex items-center gap-2">
+                    <span class="text-gray-600 font-semibold">Total Applications:</span>
+                    <span id="totalCount" class="text-indigo-700 text-xl font-bold">0</span>
+                </div>
+                <button id="refreshBtn" class="bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold mt-4 md:mt-0 shadow hover:bg-indigo-700 transition flex items-center gap-1">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
         </div>
-    </aside>
-
-    <!-- Overlay for Sidebar -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-15" onclick="toggleSidebar()"></div>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 sm:px-6 py-8 flex-grow">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Student Registrations</h2>
-        <div id="registrations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <!-- Registrant cards grid -->
+        <section class="card-grid" id="registrationsGrid">
+            <!-- Cards dynamically rendered here -->
+        </section>
     </main>
-
-    <!-- Image Modal -->
-    <div id="imageModal" class="modal flex">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" src="" alt="Full Size Image" class="w-full h-auto">
-        </div>
+    <!-- Modal for full image view -->
+    <div id="imageModal">
+        <button class="close-btn" onclick="closeImageModal()">&times;</button>
+        <img id="modalImg" src="" alt="Full Size">
     </div>
-
+    <!-- Toastify notification -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
-        const registrations = []; // Simulate data storage
+        const API_BASE = 'https://examguide.onrender.com/api/codecxreg';
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            sidebar.classList.toggle('sidebar-hidden');
-            overlay.classList.toggle('hidden');
+        let registrations = [];
+
+        // Fetch registrations from backend
+        async function fetchRegistrations(showToastOnNew = false) {
+            try {
+                const res = await fetch(API_BASE);
+                if (!res.ok) throw new Error('Could not retrieve registrations');
+                const data = await res.json();
+                // If data is not array, handle error
+                if (!Array.isArray(data)) throw new Error('Invalid response format');
+                // Compare for new entries
+                if (showToastOnNew && registrations.length > 0 && data.length > registrations.length) {
+                    const newRegs = data.length - registrations.length;
+                    showToast(`${newRegs} new application${newRegs>1?'s':''} received!`, "success");
+                }
+                registrations = data;
+                renderRegistrations();
+                updateTotalCount();
+            } catch (err) {
+                showToast("Error fetching registrations: " + err.message, "error");
+            }
         }
 
-        document.getElementById('toggle-sidebar').addEventListener('click', toggleSidebar);
-        document.getElementById('close-sidebar').addEventListener('click', toggleSidebar);
-
-        function addRegistration(data) {
-            registrations.push(data);
-            renderRegistrations();
-            showNotification();
-        }
-
+        // Render all registrations as cards
         function renderRegistrations() {
-            const grid = document.getElementById('registrations-grid');
+            const grid = document.getElementById("registrationsGrid");
             grid.innerHTML = '';
-            registrations.forEach((reg, index) => {
-                const card = document.createElement('div');
-                card.className = 'card bg-white p-6 rounded-lg shadow-md';
-                card.innerHTML = `
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Registrant #${index + 1}</h3>
-                    <p><strong>Name:</strong> ${reg.name}</p>
-                    <p><strong>Email:</strong> ${reg.email}</p>
-                    <p><strong>Phone:</strong> ${reg.phone}</p>
-                    <p><strong>Matric No:</strong> ${reg.matric}</p>
-                    <p><strong>NASS Due Paid:</strong> ${reg.nassDue ? 'Yes' : 'No'}</p>
-                    <div class="mt-4">
-                        <p><strong>Passport:</strong></p>
-                        <img src="${reg.passport}" alt="Passport" class="w-full h-auto cursor-pointer" onclick="openModal('${reg.passport}')">
+            if (!registrations.length) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 text-lg">No registrations found.</div>`;
+                return;
+            }
+            registrations.forEach((reg, idx) => {
+                grid.innerHTML += `
+                <div class="registrant-card">
+                    <div class="card-header">
+                        <img src="${reg.passportPath || 'https://ui-avatars.com/api/?name=No+Pic'}" 
+                            alt="Passport" 
+                            class="registrant-passport"
+                            onclick="openImageModal('${reg.passportPath}')"
+                            title="Click to view full size">
+                        <div>
+                            <div class="text-lg font-semibold text-indigo-700 mb-1">${reg.fullName}</div>
+                            <div class="text-sm text-gray-500">${reg.matricNumber}</div>
+                            <div class="text-xs text-gray-400">Submitted: ${formatDate(reg.submittedAt)}</div>
+                        </div>
                     </div>
-                    <div class="mt-4">
-                        <p><strong>Payment Receipt:</strong></p>
-                        <img src="${reg.paymentReceipt}" alt="Payment Receipt" class="w-full h-auto cursor-pointer" onclick="openModal('${reg.paymentReceipt}')">
+                    <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                        <div>
+                            <span class="detail-label">Email:</span>
+                            <div class="text-gray-800">${reg.email}</div>
+                        </div>
+                        <div>
+                            <span class="detail-label">Phone:</span>
+                            <div class="text-gray-800">${reg.phone}</div>
+                        </div>
+                        <div>
+                            <span class="detail-label">NASS Due:</span>
+                            <div>${reg.nassDue === "yes"
+                                ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
+                                : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>'}</div>
+                        </div>
                     </div>
-                    ${reg.nassReceipt ? `
-                    <div class="mt-4">
-                        <p><strong>NASS Receipt:</strong></p>
-                        <img src="${reg.nassReceipt}" alt="NASS Receipt" class="w-full h-auto cursor-pointer" onclick="openModal('${reg.nassReceipt}')">
-                    </div>` : ''}
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                        <div>
+                            <span class="detail-label">Payment Receipt:</span><br>
+                            ${reg.paymentReceiptPath
+                                ? `<img src="${reg.paymentReceiptPath}" alt="Payment Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${reg.paymentReceiptPath}')" title="Click to view full size">`
+                                : `<span class="text-gray-400 text-sm">Not uploaded</span>`
+                            }
+                        </div>
+                        <div>
+                            <span class="detail-label">NASS Receipt:</span><br>
+                            ${reg.nassReceiptPath
+                                ? `<img src="${reg.nassReceiptPath}" alt="NASS Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${reg.nassReceiptPath}')" title="Click to view full size">`
+                                : `<span class="text-gray-400 text-sm">Not uploaded</span>`
+                            }
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition">
+                            <i class="fas fa-folder-open mr-1"></i> Open Folder
+                        </button>
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition">
+                            <i class="fas fa-envelope mr-1"></i> Contact
+                        </button>
+                    </div>
+                </div>
                 `;
-                grid.appendChild(card);
             });
         }
 
-        function showNotification() {
-            const badge = document.getElementById('notification-badge');
-            badge.classList.remove('hidden');
-            badge.classList.add('notification');
-            alert('New registration received!');
-            setTimeout(() => badge.classList.add('hidden'), 5000);
+        // Utility for date formatting
+        function formatDate(dateStr) {
+            if (!dateStr) return "";
+            let d = new Date(dateStr);
+            return d.toLocaleString("en-NG", { year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" });
         }
 
-        function openModal(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modal.style.display = 'flex';
-            modalImg.src = src;
+        // Modal logic for full image
+        function openImageModal(imgSrc) {
+            if (!imgSrc) return;
+            document.getElementById("modalImg").src = imgSrc;
+            document.getElementById("imageModal").classList.add("active");
+            document.body.style.overflow = 'hidden';
+        }
+        function closeImageModal() {
+            document.getElementById("modalImg").src = "";
+            document.getElementById("imageModal").classList.remove("active");
+            document.body.style.overflow = '';
         }
 
-        function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
+        // Toast notification
+        function showToast(msg, type="info") {
+            Toastify({
+                text: msg,
+                duration: 3500,
+                gravity: "top",
+                position: "center",
+                backgroundColor: type === "success"
+                    ? "linear-gradient(90deg,#22c55e,#16a34a)"
+                    : type === "error"
+                        ? "linear-gradient(90deg,#ef4444,#dc2626)"
+                        : "linear-gradient(90deg,#6366f1,#312e81)"
+            }).showToast();
         }
 
-        // Simulate new registration for demo
-        function simulateNewRegistration() {
-            const newReg = {
-                name: 'John Doe',
-                email: 'john@example.com',
-                phone: '1234567890',
-                matric: 'MAT/12345',
-                nassDue: true,
-                passport: 'images (4).jpeg?text=Passport',
-                paymentReceipt: 'images (4).jpeg?text=Payment+Receipt',
-                nassReceipt: 'images (7).jpeg?text=NASS+Receipt'
-            };
-            addRegistration(newReg);
+        // Update total applications count
+        function updateTotalCount() {
+            document.getElementById("totalCount").textContent = registrations.length;
         }
 
-        // Initial load
-        simulateNewRegistration(); // Add one for demo
+        // Poll backend for new registrations (every 60s)
+        setInterval(() => fetchRegistrations(true), 60000);
+
+        // Refresh button
+        document.getElementById("refreshBtn").onclick = () => fetchRegistrations();
+
+        // Initial fetch
+        fetchRegistrations();
+
+        // Modal close on outside click
+        document.getElementById("imageModal").addEventListener("click", function(e) {
+            if (e.target === this) closeImageModal();
+        });
     </script>
 </body>
 </html>
