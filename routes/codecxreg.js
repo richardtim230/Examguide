@@ -6,21 +6,7 @@ import CodecxRegistration from "../models/CodecxRegistration.js";
 
 const router = express.Router();
 
-const uploadsDir = "./uploads/codecxreg";
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadsDir);
-    },
-    filename: function (req, file, cb) {
-        const ext = path.extname(file.originalname);
-        const base = path.basename(file.originalname, ext);
-        cb(null, `${base.replace(/\s+/g,'_')}_${Date.now()}${ext}`);
-    }
-});
+const storage = multer.memoryStorage(); // store files in memory as Buffer
 const upload = multer({ storage });
 
 // Registration endpoint
@@ -38,15 +24,25 @@ router.post("/", upload.fields([
             return res.status(400).json({ message: "All required fields must be provided." });
         }
 
+        // Convert files to base64
+        function fileToBase64(file) {
+            if (!file) return "";
+            return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+        }
+
+        const passportBase64 = fileToBase64(req.files.passport?.[0]);
+        const paymentReceiptBase64 = fileToBase64(req.files.paymentReceipt?.[0]);
+        const nassReceiptBase64 = fileToBase64(req.files.nassReceipt?.[0]);
+
         const registration = new CodecxRegistration({
             fullName,
             email,
             phone,
             matricNumber,
             nassDue: nassDue === "yes" ? "yes" : "no",
-            passportPath: req.files.passport?.[0]?.path || "",
-            paymentReceiptPath: req.files.paymentReceipt?.[0]?.path || "",
-            nassReceiptPath: req.files.nassReceipt?.[0]?.path || ""
+            passportBase64,
+            paymentReceiptBase64,
+            nassReceiptBase64
         });
 
         await registration.save();
