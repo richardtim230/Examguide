@@ -132,153 +132,153 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <!-- Font Awesome for icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script>
-        const API_BASE = 'https://examguide.onrender.com/api/codecxreg';
 
-        let registrations = [];
+<script>
+    const API_HOST = "https://examguide.onrender.com";
+    const API_BASE = `${API_HOST}/api/codecxreg`;
 
-        // Fetch registrations from backend
-        async function fetchRegistrations(showToastOnNew = false) {
-            try {
-                const res = await fetch(API_BASE);
-                if (!res.ok) throw new Error('Could not retrieve registrations');
-                const data = await res.json();
-                // If data is not array, handle error
-                if (!Array.isArray(data)) throw new Error('Invalid response format');
-                // Compare for new entries
-                if (showToastOnNew && registrations.length > 0 && data.length > registrations.length) {
-                    const newRegs = data.length - registrations.length;
-                    showToast(`${newRegs} new application${newRegs>1?'s':''} received!`, "success");
-                }
-                registrations = data;
-                renderRegistrations();
-                updateTotalCount();
-            } catch (err) {
-                showToast("Error fetching registrations: " + err.message, "error");
+    let registrations = [];
+
+    // Fetch registrations from backend
+    async function fetchRegistrations(showToastOnNew = false) {
+        try {
+            const res = await fetch(API_BASE);
+            if (!res.ok) throw new Error('Could not retrieve registrations');
+            const data = await res.json();
+            if (!Array.isArray(data)) throw new Error('Invalid response format');
+            if (showToastOnNew && registrations.length > 0 && data.length > registrations.length) {
+                const newRegs = data.length - registrations.length;
+                showToast(`${newRegs} new application${newRegs>1?'s':''} received!`, "success");
             }
+            registrations = data;
+            renderRegistrations();
+            updateTotalCount();
+        } catch (err) {
+            showToast("Error fetching registrations: " + err.message, "error");
         }
+    }
 
-        // Render all registrations as cards
-        function renderRegistrations() {
-            const grid = document.getElementById("registrationsGrid");
-            grid.innerHTML = '';
-            if (!registrations.length) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 text-lg">No registrations found.</div>`;
-                return;
-            }
-            registrations.forEach((reg, idx) => {
-                grid.innerHTML += `
-                <div class="registrant-card">
-                    <div class="card-header">
-                        <img src="${reg.passportPath || 'https://ui-avatars.com/api/?name=No+Pic'}" 
-                            alt="Passport" 
-                            class="registrant-passport"
-                            onclick="openImageModal('${reg.passportPath}')"
-                            title="Click to view full size">
-                        <div>
-                            <div class="text-lg font-semibold text-indigo-700 mb-1">${reg.fullName}</div>
-                            <div class="text-sm text-gray-500">${reg.matricNumber}</div>
-                            <div class="text-xs text-gray-400">Submitted: ${formatDate(reg.submittedAt)}</div>
-                        </div>
-                    </div>
-                    <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
-                        <div>
-                            <span class="detail-label">Email:</span>
-                            <div class="text-gray-800">${reg.email}</div>
-                        </div>
-                        <div>
-                            <span class="detail-label">Phone:</span>
-                            <div class="text-gray-800">${reg.phone}</div>
-                        </div>
-                        <div>
-                            <span class="detail-label">NASS Due:</span>
-                            <div>${reg.nassDue === "yes"
-                                ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
-                                : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>'}</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
-                        <div>
-                            <span class="detail-label">Payment Receipt:</span><br>
-                            ${reg.paymentReceiptPath
-                                ? `<img src="${reg.paymentReceiptPath}" alt="Payment Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${reg.paymentReceiptPath}')" title="Click to view full size">`
-                                : `<span class="text-gray-400 text-sm">Not uploaded</span>`
-                            }
-                        </div>
-                        <div>
-                            <span class="detail-label">NASS Receipt:</span><br>
-                            ${reg.nassReceiptPath
-                                ? `<img src="${reg.nassReceiptPath}" alt="NASS Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${reg.nassReceiptPath}')" title="Click to view full size">`
-                                : `<span class="text-gray-400 text-sm">Not uploaded</span>`
-                            }
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition">
-                            <i class="fas fa-folder-open mr-1"></i> Open Folder
-                        </button>
-                        <button class="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition">
-                            <i class="fas fa-envelope mr-1"></i> Contact
-                        </button>
+    // Render all registrations as cards
+    function renderRegistrations() {
+        const grid = document.getElementById("registrationsGrid");
+        grid.innerHTML = '';
+        if (!registrations.length) {
+            grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 text-lg">No registrations found.</div>`;
+            return;
+        }
+        registrations.forEach((reg, idx) => {
+            grid.innerHTML += `
+            <div class="registrant-card">
+                <div class="card-header">
+                    <img src="${reg.passportPath ? API_HOST + reg.passportPath : 'https://ui-avatars.com/api/?name=No+Pic'}" 
+                        alt="Passport" 
+                        class="registrant-passport"
+                        onclick="openImageModal('${reg.passportPath ? API_HOST + reg.passportPath : ''}')"
+                        title="Click to view full size">
+                    <div>
+                        <div class="text-lg font-semibold text-indigo-700 mb-1">${reg.fullName}</div>
+                        <div class="text-sm text-gray-500">${reg.matricNumber}</div>
+                        <div class="text-xs text-gray-400">Submitted: ${formatDate(reg.submittedAt)}</div>
                     </div>
                 </div>
-                `;
-            });
-        }
-
-        // Utility for date formatting
-        function formatDate(dateStr) {
-            if (!dateStr) return "";
-            let d = new Date(dateStr);
-            return d.toLocaleString("en-NG", { year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" });
-        }
-
-        // Modal logic for full image
-        function openImageModal(imgSrc) {
-            if (!imgSrc) return;
-            document.getElementById("modalImg").src = imgSrc;
-            document.getElementById("imageModal").classList.add("active");
-            document.body.style.overflow = 'hidden';
-        }
-        function closeImageModal() {
-            document.getElementById("modalImg").src = "";
-            document.getElementById("imageModal").classList.remove("active");
-            document.body.style.overflow = '';
-        }
-
-        // Toast notification
-        function showToast(msg, type="info") {
-            Toastify({
-                text: msg,
-                duration: 3500,
-                gravity: "top",
-                position: "center",
-                backgroundColor: type === "success"
-                    ? "linear-gradient(90deg,#22c55e,#16a34a)"
-                    : type === "error"
-                        ? "linear-gradient(90deg,#ef4444,#dc2626)"
-                        : "linear-gradient(90deg,#6366f1,#312e81)"
-            }).showToast();
-        }
-
-        // Update total applications count
-        function updateTotalCount() {
-            document.getElementById("totalCount").textContent = registrations.length;
-        }
-
-        // Poll backend for new registrations (every 60s)
-        setInterval(() => fetchRegistrations(true), 60000);
-
-        // Refresh button
-        document.getElementById("refreshBtn").onclick = () => fetchRegistrations();
-
-        // Initial fetch
-        fetchRegistrations();
-
-        // Modal close on outside click
-        document.getElementById("imageModal").addEventListener("click", function(e) {
-            if (e.target === this) closeImageModal();
+                <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                    <div>
+                        <span class="detail-label">Email:</span>
+                        <div class="text-gray-800">${reg.email}</div>
+                    </div>
+                    <div>
+                        <span class="detail-label">Phone:</span>
+                        <div class="text-gray-800">${reg.phone}</div>
+                    </div>
+                    <div>
+                        <span class="detail-label">NASS Due:</span>
+                        <div>${reg.nassDue === "yes"
+                            ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
+                            : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>'}</div>
+                    </div>
+                </div>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                    <div>
+                        <span class="detail-label">Payment Receipt:</span><br>
+                        ${reg.paymentReceiptPath
+                            ? `<img src="${API_HOST + reg.paymentReceiptPath}" alt="Payment Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${API_HOST + reg.paymentReceiptPath}')" title="Click to view full size">`
+                            : `<span class="text-gray-400 text-sm">Not uploaded</span>`
+                        }
+                    </div>
+                    <div>
+                        <span class="detail-label">NASS Receipt:</span><br>
+                        ${reg.nassReceiptPath
+                            ? `<img src="${API_HOST + reg.nassReceiptPath}" alt="NASS Receipt" class="w-full rounded-lg mt-1 cursor-pointer shadow-sm" onclick="openImageModal('${API_HOST + reg.nassReceiptPath}')" title="Click to view full size">`
+                            : `<span class="text-gray-400 text-sm">Not uploaded</span>`
+                        }
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition">
+                        <i class="fas fa-folder-open mr-1"></i> Open Folder
+                    </button>
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition">
+                        <i class="fas fa-envelope mr-1"></i> Contact
+                    </button>
+                </div>
+            </div>
+            `;
         });
-    </script>
+    }
+
+    // Utility for date formatting
+    function formatDate(dateStr) {
+        if (!dateStr) return "";
+        let d = new Date(dateStr);
+        return d.toLocaleString("en-NG", { year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" });
+    }
+
+    // Modal logic for full image
+    function openImageModal(imgSrc) {
+        if (!imgSrc) return;
+        document.getElementById("modalImg").src = imgSrc;
+        document.getElementById("imageModal").classList.add("active");
+        document.body.style.overflow = 'hidden';
+    }
+    function closeImageModal() {
+        document.getElementById("modalImg").src = "";
+        document.getElementById("imageModal").classList.remove("active");
+        document.body.style.overflow = '';
+    }
+
+    // Toast notification
+    function showToast(msg, type="info") {
+        Toastify({
+            text: msg,
+            duration: 3500,
+            gravity: "top",
+            position: "center",
+            backgroundColor: type === "success"
+                ? "linear-gradient(90deg,#22c55e,#16a34a)"
+                : type === "error"
+                    ? "linear-gradient(90deg,#ef4444,#dc2626)"
+                    : "linear-gradient(90deg,#6366f1,#312e81)"
+        }).showToast();
+    }
+
+    // Update total applications count
+    function updateTotalCount() {
+        document.getElementById("totalCount").textContent = registrations.length;
+    }
+
+    // Poll backend for new registrations (every 60s)
+    setInterval(() => fetchRegistrations(true), 60000);
+
+    // Refresh button
+    document.getElementById("refreshBtn").onclick = () => fetchRegistrations();
+
+    // Initial fetch
+    fetchRegistrations();
+
+    // Modal close on outside click
+    document.getElementById("imageModal").addEventListener("click", function(e) {
+        if (e.target === this) closeImageModal();
+    });
+</script>
 </body>
 </html>
