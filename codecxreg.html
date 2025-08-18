@@ -6,7 +6,6 @@
     <title>CODECX Institute - Web Development Class Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Toastify CSS for toast notifications -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         body {
@@ -76,6 +75,23 @@
                 background: navy;
             }
         }
+        .login-details-container {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            background: #eef2ff;
+            border-radius: 10px;
+            border: 1.5px solid #6366f1;
+            color: #1e293b;
+            text-align: left;
+        }
+        .login-details-container h3 {
+            color: #312e81;
+            margin-bottom: 0.6rem;
+        }
+        .login-details-container .cred-label {
+            font-weight: bold;
+            color: #4338ca;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -134,17 +150,17 @@
 
     <div id="success-message" class="success-container hidden">
         <h1 class="text-3xl font-bold mb-4 rounded-lg py-3 px-2 bg-[#1a237e] text-white">
-  Registration Submitted
+            Registration Submitted
         </h1>
         <p class="text-lg text-gray-700 mb-4">Your application has been received and is under review. We will contact you via email and SMS shortly.</p>
         <p class="text-gray-700">Please ensure your provided email and phone number are accurate for notifications.</p>
+        <div id="login-details" class="login-details-container hidden"></div>
         <button id="feedback-btn" class="mt-6 bg-indigo-500 text-white px-5 py-2 rounded-lg font-semibold">Give Feedback</button>
     </div>
 
-    <!-- Feedback Page -->
     <div id="feedback-page" class="feedback-container hidden">
         <h1 class="text-3xl font-bold mb-4 rounded-lg py-3 px-2 bg-[#1a237e] text-white">
-  We Value Your Feedback! 
+            We Value Your Feedback! 
         </h1>
         <form id="feedback-form" class="max-w-lg mx-auto">
             <div class="mb-4">
@@ -162,17 +178,17 @@
         </form>
     </div>
 
-    <!-- Toastify JS for toast notifications -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         // Replace all fetch URLs with the full backend URL:
-const API_BASE = "https://examguide.onrender.com";
+        const API_BASE = "https://examguide.onrender.com";
 
         const form = document.getElementById('reg-form');
         const registrationForm = document.getElementById('registration-form');
         const successMessage = document.getElementById('success-message');
         const submitBtn = document.getElementById('submit-btn');
         const btnText = document.getElementById('btn-text');
+        const loginDetailsDiv = document.getElementById('login-details');
 
         const feedbackPage = document.getElementById('feedback-page');
         const feedbackBtn = document.getElementById('feedback-btn');
@@ -221,12 +237,23 @@ const API_BASE = "https://examguide.onrender.com";
                     body: formData
                 });
 
+                const resJson = await response.json();
+
                 if (response.ok) {
                     showToast("Registration submitted successfully!", "success");
                     registrationForm.classList.add('hidden');
                     successMessage.classList.remove('hidden');
+                    // Show login details on success page if provided
+                    if (resJson.login && resJson.login.username && resJson.login.password) {
+                        loginDetailsDiv.innerHTML = `
+                            <h3 class="text-lg font-bold mb-2">Your Login Details</h3>
+                            <div class="mb-1"><span class="cred-label">Username:</span> ${resJson.login.username}</div>
+                            <div class="mb-1"><span class="cred-label">Password:</span> ${resJson.login.password}</div>
+                            <p class="text-xs mt-2 text-gray-700">Please save these credentials securely. They are also saved in the backend for your future login.</p>
+                        `;
+                        loginDetailsDiv.classList.remove('hidden');
+                    }
                 } else {
-                    const resJson = await response.json();
                     showToast("Registration failed: " + (resJson.message || "Server error"), "error");
                 }
             } catch (err) {
@@ -274,6 +301,7 @@ const API_BASE = "https://examguide.onrender.com";
                     feedbackForm.reset();
                     setTimeout(() => {
                         feedbackPage.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
                         successMessage.classList.remove('hidden');
                     }, 1500);
                 } else {
