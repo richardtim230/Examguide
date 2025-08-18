@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CODECX Admin Login</title>
+  <title>CODECX Login</title>
   <meta name="viewport" content="width=device-width,initial-scale=0.9">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -168,7 +168,6 @@
       .logo img { width: 44px; height: 44px; }
       .login-title { font-size: 1.2rem; }
     }
-    /* Decorative gradient orb */
     .orb {
       position: absolute;
       top: -60px; right: -60px;
@@ -196,13 +195,13 @@
     <div class="logo">
       <img src="https://ui-avatars.com/api/?name=CODECX&background=6366f1&color=fff&size=128" alt="CODECX Logo" />
     </div>
-    <div class="login-title">Admin Login</div>
-    <div class="login-subtitle">Sign in to access the CODECX Admin Dashboard</div>
+    <div class="login-title">Login</div>
+    <div class="login-subtitle">Sign in to access your CODECX Dashboard</div>
     <div class="login-form">
-      <form id="admin-login-form" autocomplete="off">
+      <form id="codecx-login-form" autocomplete="off">
         <div>
           <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" name="username" class="form-input" required autofocus placeholder="Your admin username">
+          <input type="text" id="username" name="username" class="form-input" required autofocus placeholder="Your username or matric number">
         </div>
         <div>
           <label for="password" class="form-label">Password</label>
@@ -218,8 +217,10 @@
     </div>
   </div>
   <script>
+    // Endpoints
     const LOGIN_API = "https://examguide.onrender.com/api/auth/login";
     const PROFILE_API = "https://examguide.onrender.com/api/auth/me";
+    const CODECX_REG_API = "https://examguide.onrender.com/api/codecxreg";
 
     function showError(message) {
       const errorBox = document.getElementById('login-error');
@@ -252,7 +253,7 @@
       }
     }
 
-    document.getElementById('admin-login-form').addEventListener('submit', async function(e) {
+    document.getElementById('codecx-login-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       clearMessages();
       setLoading(true);
@@ -267,6 +268,7 @@
       }
 
       try {
+        // Attempt login
         const res = await fetch(LOGIN_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -275,17 +277,63 @@
         const data = await res.json();
 
         if (res.ok && data.token) {
-          localStorage.setItem('codecxAdminToken', data.token);
+          // Store token for both admin and students
+          localStorage.setItem('token', data.token);
 
-          // Optionally - fetch profile to check role/admin
+          // Get profile/role
           let profileRes = await fetch(PROFILE_API, {
             headers: { 'Authorization': 'Bearer ' + data.token }
           });
           let profileData = await profileRes.json();
-          if (profileRes.ok && profileData.user && profileData.user.role === 'admin') {
-            showSuccess('Login successful! Redirecting...');
+          if (!profileRes.ok || !profileData.user) {
+            showError("Unable to fetch account details. Please try again.");
+            setLoading(false);
+            return;
+          }
+
+          if (profileData.user.role === 'admin') {
+            localStorage.setItem('codecxAdminToken', data.token);
+            showSuccess('Login successful! Redirecting to admin dashboard...');
             setTimeout(() => { window.location.href = 'codecxadmin.html'; }, 900);
-          } 
+            setLoading(false);
+            return;
+          } else if (profileData.user.role === 'codec') {
+            // Fetch CODECX registration info and check if account is active
+            let regRes = await fetch(CODECX_REG_API);
+            let regList = await regRes.json();
+            if (!regRes.ok || !Array.isArray(regList)) {
+              showError("Unable to verify student account. Please try again.");
+              setLoading(false);
+              return;
+            }
+            // Find student registration by username/matric/email
+            const regCandidate = regList.find(
+              reg => (
+                reg.loginUsername === username ||
+                reg.matricNumber === username ||
+                reg.email === profileData.user.email
+              )
+            );
+            if (!regCandidate) {
+              showError("Account not found. Please check your credentials or contact admin.");
+              setLoading(false);
+              return;
+            }
+            // Check if account is active
+            if (!regCandidate.active) {
+              showError("Your account is not active yet. Please wait for admin review and activation.");
+              setLoading(false);
+              return;
+            }
+            showSuccess("Login successful! Redirecting...");
+            setTimeout(() => { window.location.href = "codecxcandidate.html"; }, 900);
+            setLoading(false);
+            return;
+          } else {
+            showError("Access denied. You do not have permission to access this portal.");
+            setLoading(false);
+            return;
+          }
         } else {
           showError(data.message || 'Invalid credentials.');
         }
