@@ -92,6 +92,16 @@
         .upload-box:hover {
             background: #eef2ff;
         }
+        #logoutBtn {
+            background: #ef4444;
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: background .2s;
+        }
+        #logoutBtn:hover { background: #b91c1c; }
         @media (max-width: 600px) {
             .profile-header { flex-direction: column; gap: 1rem;}
             .profile-card { padding: 1rem .5rem; }
@@ -107,12 +117,13 @@
         <div class="flex items-center gap-2">
             <img id="studentHeaderAvatar" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" class="w-10 h-10 rounded-full" alt="Student">
             <span id="studentHeaderName" class="text-base font-medium text-gray-700 hidden sm:inline">Student</span>
+            <button id="logoutBtn" onclick="logout()">Logout</button>
         </div>
     </header>
 
     <!-- Main Profile Card -->
     <main class="px-3 py-6 md:px-10 md:py-10">
-        <div class="profile-card mb-8">
+        <div class="profile-card mb-8" id="profileCard" style="display:none;">
             <div class="profile-header">
                 <img id="studentPassport" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" class="passport-img" alt="Passport">
                 <div>
@@ -144,7 +155,7 @@
         </div>
 
         <!-- Assignment Upload & Attendance Marking -->
-        <div class="section-card mb-8">
+        <div class="section-card mb-8" id="activitySection" style="display:none;">
             <h2 class="text-lg font-semibold text-indigo-800 mb-2">Today's Activities</h2>
             <div class="mb-4">
                 <div class="upload-box" onclick="document.getElementById('assignmentInput').click()">
@@ -161,7 +172,7 @@
         </div>
 
         <!-- Daily Activities History -->
-        <div class="section-card mb-8">
+        <div class="section-card mb-8" id="historySection" style="display:none;">
             <h2 class="text-lg font-semibold text-indigo-800 mb-2">Daily Activities History</h2>
             <table class="activity-table w-full mb-2 rounded-lg overflow-hidden">
                 <thead>
@@ -178,7 +189,7 @@
         </div>
 
         <!-- Admin Feedback -->
-        <div class="section-card mb-8">
+        <div class="section-card mb-8" id="notesSection" style="display:none;">
             <h2 class="text-lg font-semibold text-indigo-800 mb-2">Admin Feedback & Notes</h2>
             <div id="studentNotes" class="text-gray-700 mb-2">No feedback yet.</div>
         </div>
@@ -195,31 +206,9 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
-    // Demo: Simulated student data
-    const student = {
-        fullName: "John Doe",
-        matricNumber: "20/123456",
-        course: "Computer Science",
-        department: "Faculty of Science",
-        status: "Active",
-        email: "john.doe@university.edu",
-        phone: "08012345678",
-        nassDue: "yes",
-        passportBase64: "",
-        paymentReceiptBase64: "",
-        nassReceiptBase64: "",
-        adminNote: "Good progress. Please keep up with assignments.",
-        activities: [
-            { date: "2025-08-18", submittedAssignment: true, markedPresent: true },
-            { date: "2025-08-17", submittedAssignment: true, markedPresent: true },
-            { date: "2025-08-16", submittedAssignment: false, markedPresent: true },
-            { date: "2025-08-15", submittedAssignment: true, markedPresent: false }
-        ],
-        today: {
-            assignmentSubmitted: false,
-            attendanceMarked: false
-        }
-    };
+    // Backend API endpoints
+    const API_BASE = "https://examguide.onrender.com/api";
+    const CODECX_REG_ENDPOINT = API_BASE + "/codecxreg";
 
     // Utility for date formatting
     function formatDate(dateStr) {
@@ -228,32 +217,115 @@
         return d.toLocaleDateString("en-NG", { year:"numeric", month:"short", day:"numeric" });
     }
 
-    // Render student profile
-    function renderStudentProfile() {
+    // LOGOUT function
+    function logout() {
+        localStorage.removeItem('token');
+        window.location.href = "codecxlogin.html"; // Change to your login page
+    }
+
+    function showToast(msg, type="info") {
+        Toastify({
+            text: msg,
+            duration: 3500,
+            gravity: "top",
+            position: "center",
+            backgroundColor: type === "success"
+                ? "linear-gradient(90deg,#22c55e,#16a34a)"
+                : type === "error"
+                    ? "linear-gradient(90deg,#ef4444,#dc2626)"
+                    : "linear-gradient(90deg,#6366f1,#312e81)"
+        }).showToast();
+    }
+
+    // Fetch user registration data from backend using JWT
+    async function fetchLoggedInCandidate() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            logout();
+            return;
+        }
+        try {
+            // Get user identity from JWT (decode or backend /api/auth/me endpoint)
+            // Here, we use backend endpoint for security
+            const authResp = await fetch(API_BASE + "/auth/me", {
+                headers: { "Authorization": "Bearer " + token }
+            });
+            const authData = await authResp.json();
+            if (!authResp.ok || !authData.user) {
+                logout();
+                return;
+            }
+            // Determine user by username, email or matricNumber
+            let username = authData.user.username || authData.user.matricNumber || authData.user.loginUsername;
+            // Now, find corresponding registration
+            // GET all registrations for efficiency (could be optimized to search by matricNumber)
+            const regResp = await fetch(CODECX_REG_ENDPOINT);
+            const regList = await regResp.json();
+            if (!regResp.ok || !Array.isArray(regList)) {
+                showToast("Unable to fetch candidate data.", "error");
+                logout();
+                return;
+            }
+            // Find exact match for logged in user
+            const candidate = regList.find(
+                reg => (
+                    reg.matricNumber === username ||
+                    reg.loginUsername === username ||
+                    reg.email === authData.user.email
+                )
+            );
+            if (!candidate) {
+                showToast("You are not registered with CODECX.", "error");
+                logout();
+                return;
+            }
+            // Prevent display of someone else's data
+            renderStudentDashboard(candidate);
+        } catch (err) {
+            showToast("Error fetching user data.", "error");
+            logout();
+        }
+    }
+
+    // Render candidate dashboard
+    function renderStudentDashboard(student) {
+        // Show relevant sections
+        document.getElementById("profileCard").style.display = "";
+        document.getElementById("activitySection").style.display = "";
+        document.getElementById("historySection").style.display = "";
+        document.getElementById("notesSection").style.display = "";
+
         document.getElementById("studentHeaderAvatar").src = student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName) + '&background=6366f1&color=fff';
         document.getElementById("studentHeaderName").textContent = student.fullName;
         document.getElementById("studentPassport").src = student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName) + '&background=6366f1&color=fff';
         document.getElementById("studentName").textContent = student.fullName;
         document.getElementById("studentMatric").textContent = student.matricNumber;
-        document.getElementById("studentCourseDept").textContent = student.course + " | " + student.department;
-        document.getElementById("studentStatus").innerHTML = `<span class="px-2 py-1 rounded ${student.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-700"}">${student.status}</span>`;
+        document.getElementById("studentCourseDept").textContent = (student.course ? student.course : "") + (student.department ? " | " + student.department : "");
+        document.getElementById("studentStatus").innerHTML = `<span class="px-2 py-1 rounded ${student.active ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-700"}">${student.active ? "Active" : "Inactive"}</span>`;
         document.getElementById("studentEmail").textContent = student.email;
         document.getElementById("studentPhone").textContent = student.phone;
         document.getElementById("studentNassDue").innerHTML = student.nassDue === "yes"
             ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
             : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>';
         document.getElementById("studentNotes").textContent = student.adminNote || "No feedback yet.";
+
+        // Assignment and attendance logic (simulate today's activities)
+        window.student = student; // for activity/receipt logic
+        window.student.today = window.student.today || { assignmentSubmitted: false, attendanceMarked: false };
+        renderTodayStatus();
+        renderActivitiesTable();
     }
 
-    // Render daily activities table
+    // Render daily activities table (from student.activities)
     function renderActivitiesTable() {
         const tbody = document.getElementById("activitiesTableBody");
         tbody.innerHTML = "";
-        if (!student.activities || !student.activities.length) {
+        const activities = window.student.activities || [];
+        if (!activities.length) {
             tbody.innerHTML = `<tr><td colspan="3" class="text-gray-400 text-sm">No activity records found.</td></tr>`;
             return;
         }
-        student.activities.forEach(act => {
+        activities.forEach(act => {
             tbody.innerHTML += `
                 <tr>
                     <td>${formatDate(act.date)}</td>
@@ -278,19 +350,20 @@
         if (!file) return;
         // Simulate upload
         setTimeout(() => {
-            student.today.assignmentSubmitted = true;
+            window.student.today.assignmentSubmitted = true;
             document.getElementById("assignmentStatus").textContent = "Submitted";
             showToast("Assignment uploaded successfully!", "success");
             // Add today's record to activities
             const todayStr = new Date().toISOString().split('T')[0];
-            let todayActivity = student.activities.find(act => act.date === todayStr);
+            let todayActivity = window.student.activities?.find(act => act.date === todayStr);
             if (todayActivity) {
                 todayActivity.submittedAssignment = true;
             } else {
-                student.activities.unshift({
+                window.student.activities = window.student.activities || [];
+                window.student.activities.unshift({
                     date: todayStr,
                     submittedAssignment: true,
-                    markedPresent: student.today.attendanceMarked
+                    markedPresent: window.student.today.attendanceMarked
                 });
             }
             renderActivitiesTable();
@@ -298,22 +371,23 @@
     }
     // Mark attendance
     document.getElementById("attendanceBtn").onclick = function() {
-        if (student.today.attendanceMarked) {
+        if (window.student.today.attendanceMarked) {
             showToast("You have already marked attendance today.", "info");
             return;
         }
-        student.today.attendanceMarked = true;
+        window.student.today.attendanceMarked = true;
         document.getElementById("attendanceStatus").textContent = "Marked Present";
         showToast("Attendance marked for today!", "success");
         // Add today's record to activities
         const todayStr = new Date().toISOString().split('T')[0];
-        let todayActivity = student.activities.find(act => act.date === todayStr);
+        let todayActivity = window.student.activities?.find(act => act.date === todayStr);
         if (todayActivity) {
             todayActivity.markedPresent = true;
         } else {
-            student.activities.unshift({
+            window.student.activities = window.student.activities || [];
+            window.student.activities.unshift({
                 date: todayStr,
-                submittedAssignment: student.today.assignmentSubmitted,
+                submittedAssignment: window.student.today.assignmentSubmitted,
                 markedPresent: true
             });
         }
@@ -322,22 +396,22 @@
 
     // Render today's activity status
     function renderTodayStatus() {
-        document.getElementById("assignmentStatus").textContent = student.today.assignmentSubmitted ? "Submitted" : "Not submitted";
-        document.getElementById("attendanceStatus").textContent = student.today.attendanceMarked ? "Marked Present" : "";
+        document.getElementById("assignmentStatus").textContent = window.student.today.assignmentSubmitted ? "Submitted" : "Not submitted";
+        document.getElementById("attendanceStatus").textContent = window.student.today.attendanceMarked ? "Marked Present" : "";
     }
 
     // Receipt modal
     function openReceiptModal(type) {
         let src, label;
         if (type === "payment") {
-            src = student.paymentReceiptBase64;
+            src = window.student.paymentReceiptBase64;
             label = "Payment Receipt";
         } else {
-            src = student.nassReceiptBase64;
+            src = window.student.nassReceiptBase64;
             label = "NASS Receipt";
         }
         const content = src
-            ? `<img src="${src}" alt="${label}" class="w-full rounded-lg shadow mb-2"><a href="${src}" download="${student.fullName}_${label}.jpg" class="action-btn">Download</a>`
+            ? `<img src="${src}" alt="${label}" class="w-full rounded-lg shadow mb-2"><a href="${src}" download="${window.student.fullName}_${label}.jpg" class="action-btn">Download</a>`
             : `<div class="text-gray-500 text-center">No ${label} uploaded.</div>`;
         document.getElementById("receiptModalContent").innerHTML = `<h3 class="font-semibold text-indigo-700 mb-2">${label}</h3>${content}`;
         document.getElementById("receiptModal").classList.remove("hidden");
@@ -351,26 +425,8 @@
         if (e.target === this) closeReceiptModal();
     });
 
-    // Toast
-    function showToast(msg, type="info") {
-        Toastify({
-            text: msg,
-            duration: 3500,
-            gravity: "top",
-            position: "center",
-            backgroundColor: type === "success"
-                ? "linear-gradient(90deg,#22c55e,#16a34a)"
-                : type === "error"
-                    ? "linear-gradient(90deg,#ef4444,#dc2626)"
-                    : "linear-gradient(90deg,#6366f1,#312e81)"
-        }).showToast();
-    }
-
-    // Initial render
-    renderStudentProfile();
-    renderActivitiesTable();
-    renderTodayStatus();
-
+    // On page load, fetch logged-in user's data and render
+    window.onload = fetchLoggedInCandidate;
     </script>
 </body>
 </html>
