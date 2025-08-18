@@ -2,12 +2,24 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import bcrypt from "bcryptjs";
 import CodecxRegistration from "../models/CodecxRegistration.js";
 
 const router = express.Router();
 
 const storage = multer.memoryStorage(); // store files in memory as Buffer
 const upload = multer({ storage });
+
+// Utility functions for login details
+function generateUsername(matricNumber, fullName) {
+    // Prefer matricNumber, else sanitized fullName + random digits
+    if (matricNumber) return matricNumber.trim();
+    return (fullName.replace(/\s+/g, "").toLowerCase() + Math.floor(Math.random()*1000));
+}
+function generatePassword() {
+    // Simple random password, improve as needed
+    return "Codecx" + Math.floor(10000 + Math.random() * 90000);
+}
 
 // Registration endpoint
 router.post("/", upload.fields([
@@ -34,6 +46,12 @@ router.post("/", upload.fields([
         const paymentReceiptBase64 = fileToBase64(req.files.paymentReceipt?.[0]);
         const nassReceiptBase64 = fileToBase64(req.files.nassReceipt?.[0]);
 
+        // Generate login details
+        const loginUsername = generateUsername(matricNumber, fullName);
+        const loginPasswordPlain = generatePassword();
+        const loginPasswordHash = await bcrypt.hash(loginPasswordPlain, 12);
+
+        // Save to registration DB
         const registration = new CodecxRegistration({
             fullName,
             email,
@@ -42,22 +60,58 @@ router.post("/", upload.fields([
             nassDue: nassDue === "yes" ? "yes" : "no",
             passportBase64,
             paymentReceiptBase64,
-            nassReceiptBase64
+            nassReceiptBase64,
+            loginUsername,
+            loginPasswordPlain,
+            loginPasswordHash,
+            active: false // Not active until marked reviewed
         });
 
         await registration.save();
 
-        res.json({ message: "Registration received successfully!", registration });
+        res.json({
+            message: "Registration received successfully!",
+            registration,
+            login: {
+                username: loginUsername,
+                password: loginPasswordPlain // show only once to admin
+            }
+        });
     } catch (e) {
         res.status(500).json({ message: "Server error", error: e.message });
     }
 });
 
-// Optionally: GET all registrations (for admin dashboard)
+// GET all registrations (for admin dashboard)
+// Exclude loginPasswordPlain in list for security
 router.get("/", async (req, res) => {
     try {
-        const registrations = await CodecxRegistration.find().sort({ submittedAt: -1 });
+        const registrations = await CodecxRegistration.find({}, { loginPasswordPlain: 0 }).sort({ submittedAt: -1 });
         res.json(registrations);
+    } catch (e) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// GET single registration (admin view, shows login details)
+router.get("/:id", async (req, res) => {
+    try {
+        const reg = await CodecxRegistration.findById(req.params.id);
+        if (!reg) return res.status(404).json({ message: "Registration not found" });
+        res.json(reg);
+    } catch (e) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// PATCH activate candidate account (mark as reviewed)
+router.patch("/:id/activate", async (req, res) => {
+    try {
+        const reg = await CodecxRegistration.findById(req.params.id);
+        if (!reg) return res.status(404).json({ message: "Registration not found" });
+        reg.active = true;
+        await reg.save();
+        res.json({ message: "Account activated!", registration: reg });
     } catch (e) {
         res.status(500).json({ message: "Server error" });
     }
