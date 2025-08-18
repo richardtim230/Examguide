@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import bcrypt from "bcryptjs";
 import CodecxRegistration from "../models/CodecxRegistration.js";
+import User from "../models/User.js"; // Your provided model
 
 const router = express.Router();
 
@@ -104,16 +105,47 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// PATCH activate candidate account (mark as reviewed)
+
 router.patch("/:id/activate", async (req, res) => {
     try {
         const reg = await CodecxRegistration.findById(req.params.id);
         if (!reg) return res.status(404).json({ message: "Registration not found" });
+
         reg.active = true;
         await reg.save();
-        res.json({ message: "Account activated!", registration: reg });
+
+        // Sync with main User collection
+        let user = await User.findOne({
+            $or: [
+                { username: reg.loginUsername },
+                { email: reg.email }
+            ]
+        });
+
+        if (!user) {
+            user = new User({
+                username: reg.loginUsername,
+                password: reg.loginPasswordHash, // Hashed password!
+                role: "codec",
+                email: reg.email,
+                fullname: reg.fullName,
+                phone: reg.phone,
+                active: true
+            });
+        } else {
+            // Update existing user
+            user.password = reg.loginPasswordHash;
+            user.role = "codec";
+            user.email = reg.email;
+            user.fullname = reg.fullName;
+            user.phone = reg.phone;
+            user.active = true;
+        }
+        await user.save();
+
+        res.json({ message: "Account activated!", registration: reg, user });
     } catch (e) {
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: "Server error", error: e.message });
     }
 });
 
