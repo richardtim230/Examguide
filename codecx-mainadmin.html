@@ -406,6 +406,7 @@
             showToast("Cannot register: Missing candidate details.", "error");
             return;
         }
+const API_URL = "https://examguide.onrender.com/api/auth/";
 
         // Fill fields for user schema
         const userData = {
@@ -426,8 +427,8 @@
 
         try {
             // You may need to add Authorization headers here if the endpoint is protected!
-            const res = await fetch("/api/users", {
-                method: "POST",
+            const res = await fetch(API_URL + "register", {
+          method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     // "Authorization": "Bearer " + localStorage.getItem("token"),
