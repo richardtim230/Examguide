@@ -58,7 +58,6 @@
             gap: 1rem;
             margin-top: 1rem;
         }
-        /* Modal styles for full image view */
         #imageModal {
             display: none;
             position: fixed;
@@ -86,7 +85,6 @@
             box-shadow: 0 2px 7px rgba(44,62,80,0.12);
             cursor: pointer;
         }
-        /* Candidate Folder Modal */
         #folderModal {
             background: rgba(0,0,0,0.60);
         }
@@ -108,6 +106,22 @@
         .activity-table td {
             font-size: 0.95rem;
         }
+        .login-details-box {
+            background: #eef2ff;
+            border: 1.5px solid #6366f1;
+            border-radius: 10px;
+            padding: 18px 14px;
+            margin: 16px 0 8px 0;
+            color: #1e293b;
+        }
+        .login-details-box h3 {
+            color: #312e81;
+            margin-bottom: 0.5rem;
+        }
+        .login-details-box .cred-label {
+            font-weight: bold;
+            color: #4338ca;
+        }
         @media (max-width: 600px) {
             .card-grid { gap: 1rem; }
             .registrant-card { padding: 1rem .5rem; }
@@ -118,7 +132,6 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
-    <!-- Main header -->
     <header class="flex items-center justify-between px-6 py-5 bg-white shadow">
         <h1 class="text-2xl md:text-3xl font-bold text-indigo-900">CODECX Admin Dashboard</h1>
         <div class="flex items-center gap-2">
@@ -126,12 +139,11 @@
             <span class="text-base font-medium text-gray-700 hidden sm:inline">Admin</span>
         </div>
     </header>
-    <!-- Page content -->
     <main class="px-3 py-6 md:px-10 md:py-10">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-7">
             <div>
                 <h2 class="text-xl md:text-2xl font-bold text-indigo-800 mb-2">Student Registrations</h2>
-                <p class="text-gray-500 text-base">Review, manage, and access all recent student registrations. Each card represents a registrant’s folder.</p>
+                <p class="text-gray-500 text-base">Review, manage, and activate CODECX student accounts. Click a folder to see registration details, login credentials, and activate account.</p>
             </div>
             <div class="flex flex-col gap-3 md:flex-row items-center">
                 <div class="bg-white rounded-lg px-5 py-2 shadow flex items-center gap-2">
@@ -143,45 +155,30 @@
                 </button>
             </div>
         </div>
-        <!-- Registrant cards grid -->
-        <section class="card-grid" id="registrationsGrid">
-            <!-- Cards dynamically rendered here -->
-        </section>
+        <section class="card-grid" id="registrationsGrid"></section>
     </main>
-    <!-- Modal for full image view -->
     <div id="imageModal">
         <button class="close-btn" onclick="closeImageModal()">&times;</button>
         <img id="modalImg" src="" alt="Full Size">
     </div>
-    <!-- Candidate Folder Modal -->
     <div id="folderModal" class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center hidden">
         <div class="modal-content bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative animate__animated animate__fadeIn">
             <button class="absolute top-4 right-4 text-2xl font-bold text-indigo-800 hover:text-red-500" onclick="closeFolderModal()">&times;</button>
-            <div id="folderContent">
-              <!-- Candidate details will be injected here -->
-            </div>
+            <div id="folderContent"></div>
         </div>
     </div>
-    <!-- Toastify notification -->
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <!-- Font Awesome for icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <!-- Animate.css (already loaded in <head>) -->
-
 <script>
-    // API endpoint
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
     let registrations = [];
     let currentModalCandidate = null;
 
-    // Utility for date formatting
     function formatDate(dateStr) {
         if (!dateStr) return "";
         let d = new Date(dateStr);
         return d.toLocaleString("en-NG", { year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" });
     }
-
-    // Modal logic for full image
     function openImageModal(imgSrc) {
         if (!imgSrc) return;
         document.getElementById("modalImg").src = imgSrc;
@@ -193,8 +190,6 @@
         document.getElementById("imageModal").classList.remove("active");
         document.body.style.overflow = '';
     }
-
-    // Toast notification
     function showToast(msg, type="info") {
         Toastify({
             text: msg,
@@ -208,13 +203,9 @@
                     : "linear-gradient(90deg,#6366f1,#312e81)"
         }).showToast();
     }
-
-    // Update total applications count
     function updateTotalCount() {
         document.getElementById("totalCount").textContent = registrations.length;
     }
-
-    // Rendering registrations with base64 images
     function renderRegistrations() {
         const grid = document.getElementById("registrationsGrid");
         grid.innerHTML = '';
@@ -271,7 +262,7 @@
                 </div>
                 <div class="card-actions">
                     <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition"
-                        onclick='openFolderModal(${JSON.stringify(reg).replace(/'/g, "&#39;")})'>
+                        onclick='openFolderModal("${reg._id}")'>
                         <i class="fas fa-folder-open mr-1"></i> Open Folder
                     </button>
                     <button class="bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition" onclick="location.href='mailto:${reg.email}?subject=CODECX Registration&body=Dear ${reg.fullName},'">
@@ -283,45 +274,39 @@
         });
     }
 
-    // Candidate Folder Modal Logic
-    function openFolderModal(candidate) {
-        currentModalCandidate = candidate;
-        // Prepare document downloads if base64 present
-        function downloadButton(base64, label) {
-            if (!base64) return `<span class="text-xs text-gray-400">Not uploaded</span>`;
-            return `<a href="${base64}" download="${candidate.fullName}_${label}.jpg" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs font-semibold mr-2 hover:bg-indigo-200 transition">Download</a>`;
+    // Fetch full candidate details from backend by ID
+    async function fetchCandidateDetails(id) {
+        try {
+            const res = await fetch(`${API_BASE}/${id}`);
+            if (!res.ok) throw new Error("Could not fetch candidate details.");
+            return await res.json();
+        } catch (err) {
+            showToast("Error: " + err.message, "error");
+            return null;
         }
-        // Quick actions: phone/email links
-        const phoneLink = candidate.phone ? `<a href="tel:${candidate.phone}" class="text-indigo-700 underline">${candidate.phone}</a>` : '';
-        const emailLink = candidate.email ? `<a href="mailto:${candidate.email}" class="text-indigo-700 underline">${candidate.email}</a>` : '';
-        // Expanded fields
-        const course = candidate.course || "<span class='text-gray-400'>Unknown</span>";
-        const department = candidate.department || "<span class='text-gray-400'>Unknown</span>";
-        const status = candidate.status || "<span class='text-gray-400'>Pending</span>";
+    }
 
-        // Activities: Array of objects [{date, submittedAssignment, markedPresent}]
-        let activityRows = "";
-        if (Array.isArray(candidate.activities) && candidate.activities.length) {
-          activityRows = candidate.activities.map(act =>
-            `<tr>
-                <td>${formatDate(act.date)}</td>
-                <td>
-                  ${act.submittedAssignment
-                    ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Yes</span>"
-                    : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>No</span>"}
-                </td>
-                <td>
-                  ${act.markedPresent
-                    ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Present</span>"
-                    : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>Absent</span>"}
-                </td>
-            </tr>`
-          ).join("");
-        } else {
-          activityRows = `<tr><td colspan="3" class="text-gray-400 text-sm">No activity records found.</td></tr>`;
-        }
+    // Modal logic
+    async function openFolderModal(candidateId) {
+        const candidate = await fetchCandidateDetails(candidateId);
+        if (!candidate) return;
+        currentModalCandidate = candidate;
 
         // Modal content
+        let loginDetailsHtml = "";
+        if (candidate.loginUsername && candidate.loginPasswordPlain) {
+            loginDetailsHtml = `
+                <div class="login-details-box">
+                    <h3 class="text-lg font-bold mb-2">Login Credentials</h3>
+                    <div class="mb-1"><span class="cred-label">Username:</span> ${candidate.loginUsername}</div>
+                    <div class="mb-1"><span class="cred-label">Password:</span> ${candidate.loginPasswordPlain}</div>
+                    <p class="text-xs mt-2 text-gray-700">This candidate can use these credentials to log in. You can activate their account below.</p>
+                </div>
+            `;
+        } else {
+            loginDetailsHtml = `<div class="text-sm text-red-600 font-semibold mt-2">No login credentials found for this candidate.</div>`;
+        }
+
         document.getElementById("folderContent").innerHTML = `
             <div class="flex flex-col md:flex-row gap-6 pb-4">
                 <div>
@@ -334,114 +319,56 @@
                         : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">NASS Not Paid</span>'}</div>
                 </div>
                 <div class="flex-1 grid grid-cols-1 gap-2">
-                    <div><strong>Email:</strong> ${emailLink}</div>
-                    <div><strong>Phone:</strong> ${phoneLink}</div>
-                    <div><strong>Course:</strong> ${course}</div>
-                    <div><strong>Department:</strong> ${department}</div>
-                    <div><strong>Status:</strong> <span class="font-semibold">${status}</span></div>
+                    <div><strong>Email:</strong> <a href="mailto:${candidate.email}" class="text-indigo-700 underline">${candidate.email}</a></div>
+                    <div><strong>Phone:</strong> <a href="tel:${candidate.phone}" class="text-indigo-700 underline">${candidate.phone}</a></div>
                     <div><strong>Payment Receipt:</strong><br>
                         ${candidate.paymentReceiptBase64
                             ? `<img src="${candidate.paymentReceiptBase64}" alt="Payment Receipt" class="w-36 rounded-lg mt-1 cursor-pointer shadow" onclick="openImageModal('${candidate.paymentReceiptBase64}')">`
                             : `<span class="text-gray-400 text-sm">Not uploaded</span>`}
-                        ${downloadButton(candidate.paymentReceiptBase64, 'PaymentReceipt')}
                     </div>
                     <div><strong>NASS Receipt:</strong><br>
                         ${candidate.nassReceiptBase64
                             ? `<img src="${candidate.nassReceiptBase64}" alt="NASS Receipt" class="w-36 rounded-lg mt-1 cursor-pointer shadow" onclick="openImageModal('${candidate.nassReceiptBase64}')">`
                             : `<span class="text-gray-400 text-sm">Not uploaded</span>`}
-                        ${downloadButton(candidate.nassReceiptBase64, 'NASSReceipt')}
                     </div>
                 </div>
             </div>
-            <hr class="my-4">
-            <div>
-                <label class="block font-semibold text-indigo-800 mb-1">Admin Notes:</label>
-                <textarea id="candidateNote" class="w-full border rounded-lg px-3 py-1 text-gray-800 mb-2" rows="3" placeholder="Add notes about this candidate...">${candidate.adminNote || ""}</textarea>
-                <button onclick="saveNote('${candidate._id}')" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-700 transition mr-2">Save Note</button>
-                <button onclick="window.print()" class="bg-gray-300 text-indigo-800 px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-400 transition"><i class="fas fa-print"></i> Print Folder</button>
-            </div>
-            <hr class="my-4">
-            <div>
-                <h4 class="font-semibold text-indigo-800 mb-2">Daily Activities</h4>
-                <table class="activity-table w-full mb-2 rounded-lg overflow-hidden">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Assignment Submitted</th>
-                            <th>Attendance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${activityRows}
-                    </tbody>
-                </table>
-            </div>
+            ${loginDetailsHtml}
             <div class="mt-4 flex gap-2">
                 <button id="reviewedBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition"
-                    onclick="registerCandidateAsCodec(currentModalCandidate)">
-                    <i class="fas fa-check mr-1"></i> Mark as Reviewed
+                    onclick="activateCandidateAccount('${candidate._id}')">
+                    <i class="fas fa-check mr-1"></i> Mark as Reviewed & Activate
                 </button>
-                <button class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-red-700 transition">Reject</button>
-                <button class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition" onclick="location.href='mailto:${candidate.email}?subject=Regarding your CODECX Registration'"><i class="fas fa-envelope"></i> Email Candidate</button>
+                <button class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition" onclick="location.href='mailto:${candidate.email}?subject=CODECX Registration'"><i class="fas fa-envelope"></i> Email Candidate</button>
             </div>
         `;
         document.getElementById("folderModal").classList.remove("hidden");
         document.body.style.overflow = 'hidden';
     }
+
     function closeFolderModal() {
         document.getElementById("folderModal").classList.add("hidden");
         document.body.style.overflow = '';
     }
 
-    // Example saveNote function (replace with backend logic if needed)
-    function saveNote(candidateId) {
-        const note = document.getElementById('candidateNote').value;
-        showToast("Notes saved locally. (Integrate backend save for persistence.)", "success");
-        // TODO: POST note to backend for candidateId
-    }
-
-    // Register candidate as codec user (when reviewed)
-    async function registerCandidateAsCodec(candidate) {
-        if (!candidate || !candidate.email || !candidate.fullName) {
-            showToast("Cannot register: Missing candidate details.", "error");
-            return;
-        }
-const API_URL = "https://examguide.onrender.com/api/auth/";
-
-        // Fill fields for user schema
-        const userData = {
-            fullname: candidate.fullName,
-            username: candidate.matricNumber || (candidate.email.split('@')[0] || ("codec" + Date.now())),
-            email: candidate.email,
-            password: candidate.matricNumber || ("Codec@" + Date.now()), // Set to something, admin can reset later
-            role: "codec", // Assign codec role
-            faculty: candidate.faculty || "",
-            department: candidate.department || "",
-            profilePic: candidate.passportBase64 || "",
-            active: true,
-            phone: candidate.phone || "",
-            studentId: candidate.matricNumber || "",
-            level: candidate.level || "",
-            religion: candidate.religion || "",
-        };
-
+    // Activate candidate account (mark as reviewed)
+    async function activateCandidateAccount(candidateId) {
+        // PATCH or POST to backend to "activate" candidate account
+        // For demo: set a flag (e.g., active: true) in CodecxRegistration
         try {
-            // You may need to add Authorization headers here if the endpoint is protected!
-            const res = await fetch(API_URL + "register", {
-          method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    // "Authorization": "Bearer " + localStorage.getItem("token"),
-                },
-                body: JSON.stringify(userData)
+            const res = await fetch(`${API_BASE}/${candidateId}/activate`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" }
             });
             const data = await res.json();
             if (res.ok) {
-                showToast("Candidate registered as CODEC user!", "success");
+                showToast("Candidate account activated!", "success");
                 document.getElementById("reviewedBtn").disabled = true;
-                document.getElementById("reviewedBtn").textContent = "Reviewed & Registered";
+                document.getElementById("reviewedBtn").textContent = "Activated & Reviewed";
+                // Optionally, re-fetch registrations to update status
+                fetchRegistrations();
             } else {
-                showToast(data.message || "Failed to register.", "error");
+                showToast(data.message || "Activation failed.", "error");
             }
         } catch (err) {
             showToast("Network error: " + err.message, "error");
@@ -454,11 +381,6 @@ const API_URL = "https://examguide.onrender.com/api/auth/";
             const res = await fetch(API_BASE);
             if (!res.ok) throw new Error('Could not retrieve registrations');
             const data = await res.json();
-            if (!Array.isArray(data)) throw new Error('Invalid response format');
-            if (showToastOnNew && registrations.length > 0 && data.length > registrations.length) {
-                const newRegs = data.length - registrations.length;
-                showToast(`${newRegs} new application${newRegs>1?'s':''} received!`, "success");
-            }
             registrations = data;
             renderRegistrations();
             updateTotalCount();
@@ -467,16 +389,10 @@ const API_URL = "https://examguide.onrender.com/api/auth/";
         }
     }
 
-    // Poll backend for new registrations (every 60s)
     setInterval(() => fetchRegistrations(true), 60000);
-
-    // Refresh button
     document.getElementById("refreshBtn").onclick = () => fetchRegistrations();
-
-    // Initial fetch
     fetchRegistrations();
 
-    // Modal close on outside click
     document.getElementById("imageModal").addEventListener("click", function(e) {
         if (e.target === this) closeImageModal();
     });
