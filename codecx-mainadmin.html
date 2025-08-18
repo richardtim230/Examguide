@@ -172,6 +172,7 @@
     // API endpoint
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
     let registrations = [];
+    let currentModalCandidate = null;
 
     // Utility for date formatting
     function formatDate(dateStr) {
@@ -284,6 +285,7 @@
 
     // Candidate Folder Modal Logic
     function openFolderModal(candidate) {
+        currentModalCandidate = candidate;
         // Prepare document downloads if base64 present
         function downloadButton(base64, label) {
             if (!base64) return `<span class="text-xs text-gray-400">Not uploaded</span>`;
@@ -298,11 +300,6 @@
         const status = candidate.status || "<span class='text-gray-400'>Pending</span>";
 
         // Activities: Array of objects [{date, submittedAssignment, markedPresent}]
-        // Example structure for demo purposes:
-        // candidate.activities = [
-        //   { date: "2025-08-17", submittedAssignment: true, markedPresent: true },
-        //   { date: "2025-08-16", submittedAssignment: false, markedPresent: true }
-        // ]
         let activityRows = "";
         if (Array.isArray(candidate.activities) && candidate.activities.length) {
           activityRows = candidate.activities.map(act =>
@@ -380,7 +377,10 @@
                 </table>
             </div>
             <div class="mt-4 flex gap-2">
-                <button class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition">Mark as Reviewed</button>
+                <button id="reviewedBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-green-700 transition"
+                    onclick="registerCandidateAsCodec(currentModalCandidate)">
+                    <i class="fas fa-check mr-1"></i> Mark as Reviewed
+                </button>
                 <button class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-red-700 transition">Reject</button>
                 <button class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition" onclick="location.href='mailto:${candidate.email}?subject=Regarding your CODECX Registration'"><i class="fas fa-envelope"></i> Email Candidate</button>
             </div>
@@ -398,6 +398,53 @@
         const note = document.getElementById('candidateNote').value;
         showToast("Notes saved locally. (Integrate backend save for persistence.)", "success");
         // TODO: POST note to backend for candidateId
+    }
+
+    // Register candidate as codec user (when reviewed)
+    async function registerCandidateAsCodec(candidate) {
+        if (!candidate || !candidate.email || !candidate.fullName) {
+            showToast("Cannot register: Missing candidate details.", "error");
+            return;
+        }
+
+        // Fill fields for user schema
+        const userData = {
+            fullname: candidate.fullName,
+            username: candidate.matricNumber || (candidate.email.split('@')[0] || ("codec" + Date.now())),
+            email: candidate.email,
+            password: candidate.matricNumber || ("Codec@" + Date.now()), // Set to something, admin can reset later
+            role: "codec", // Assign codec role
+            faculty: candidate.faculty || "",
+            department: candidate.department || "",
+            profilePic: candidate.passportBase64 || "",
+            active: true,
+            phone: candidate.phone || "",
+            studentId: candidate.matricNumber || "",
+            level: candidate.level || "",
+            religion: candidate.religion || "",
+        };
+
+        try {
+            // You may need to add Authorization headers here if the endpoint is protected!
+            const res = await fetch("/api/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Authorization": "Bearer " + localStorage.getItem("token"),
+                },
+                body: JSON.stringify(userData)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                showToast("Candidate registered as CODEC user!", "success");
+                document.getElementById("reviewedBtn").disabled = true;
+                document.getElementById("reviewedBtn").textContent = "Reviewed & Registered";
+            } else {
+                showToast(data.message || "Failed to register.", "error");
+            }
+        } catch (err) {
+            showToast("Network error: " + err.message, "error");
+        }
     }
 
     // Fetch registrations from backend
