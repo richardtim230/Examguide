@@ -117,6 +117,7 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 // ===== CORS Config =====
 const allowedOrigins = [
   "https://examguide.vercel.app",
+  "https://examguard.com.ng/",
   "https://examguide.vercel.app/mock-icthallb"
 ];
 const app = express();
