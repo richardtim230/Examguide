@@ -2137,7 +2137,7 @@ document.querySelector('.practice-form').onsubmit = function(e) {
   // Save to localStorage for robustness
   localStorage.setItem('pqConfig', JSON.stringify({subject, year, questions, time, difficulty}));
   // Redirect to pq.html with query params
-  window.location.href = `pq.html?subject=${encodeURIComponent(subject)}&year=${year}&count=${questions}&time=${time}&difficulty=${difficulty}`;
+  window.location.href = `tpp.html?subject=${encodeURIComponent(subject)}&year=${year}&count=${questions}&time=${time}&difficulty=${difficulty}`;
 };
 // ============ TEST START ===========
 window.startTest = function(examSetId) {
