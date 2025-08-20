@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>CODECX Institute for Developers</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #d1d9e6;
+            background-color: #111827;
+            line-height: 1.5;
+        }
+        header {
+            background: linear-gradient(90deg, #141e30, #243b55);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #242e4c;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li a {
+            color: #d1d9e6;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s, transform 0.2s;
+        }
+        nav ul li a:hover {
+            color: #3b82f6;
+            transform: scale(1.1);
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+        }
+        .code-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .code-snippet {
+            position: absolute;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 12px;
+            white-space: pre;
+            animation: fall linear infinite;
+            pointer-events: none;
+        }
+        .code-snippet.html { color: #3b82f6; }
+        .code-snippet.css { color: #4ade80; }
+        .code-snippet.js { color: #fde68a; }
+        @keyframes fall {
+            0% { transform: translateY(-100%); opacity: 0.8;}
+            100% { transform: translateY(100vh); opacity: 0.3;}
+        }
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .hero p {
+            font-size: 20px;
+            color: #a0aec0;
+            margin-bottom: 32px;
+        }
+        .cta-button {
+            background: #3b82f6;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 6px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            display: inline-block;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: #2563eb;
+        }
+        /* Pricing Cards Section (NEW) */
+        .pricing-section {
+            padding: 80px 20px;
+            background-color: #16213e;
+            text-align: center;
+        }
+        .pricing-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 40px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .pricing-card {
+            background: rgba(20, 30, 48, 0.95);
+            border: 1px solid #243b55;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: left;
+            box-shadow: 0 2px 16px rgba(30, 41, 59, 0.15);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pricing-card:hover {
+            transform: translateY(-4px) scale(1.025);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
+        }
+        .pricing-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pricing-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .pricing-icon {
+            font-size: 24px;
+            color: #3b82f6;
+        }
+        .pricing-desc {
+            color: #a0aec0;
+            font-size: 16px;
+            margin-bottom: 16px;
+            margin-top: 4px;
+        }
+        .pricing-price {
+            font-size: 36px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .pricing-price span {
+            font-size: 18px;
+            font-weight: 400;
+            color: #a0aec0;
+        }
+        .pricing-features {
+            margin: 24px 0 32px 0;
+            padding: 0;
+            list-style: none;
+        }
+        .pricing-features li {
+            font-size: 16px;
+            color: #e5e7eb;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .pricing-features li .check {
+            color: #4ade80;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .pricing-btn {
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 12px 0;
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .pricing-btn:hover {
+            background: #3b82f6;
+        }
+        /* Most Popular badge */
+        .popular-badge {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.21);
+            z-index: 2;
+        }
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background-color: #10172c;
+            text-align: center;
+        }
+        .features h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 40px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: rgba(20,30,48,0.95);
+            padding: 24px;
+            border: 1px solid #243b55;
+            border-radius: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.12);
+            color: #e5e7eb;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(59,130,246,0.10);
+        }
+        .feature-card h3 {
+            font-size: 20px;
+            color: #3b82f6;
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: #a0aec0;
+        }
+        /* Courses Section */
+        .courses {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #111827, #141e30);
+            text-align: center;
+        }
+        .courses h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 40px;
+        }
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .course-card {
+            background: rgba(20,30,48,0.95);
+            padding: 24px;
+            border-radius: 10px;
+            border: 1px solid #243b55;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.12);
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(59,130,246,0.10);
+        }
+        .course-card h3 {
+            font-size: 20px;
+            color: #3b82f6;
+            margin-bottom: 12px;
+        }
+        .course-card p {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-bottom: 16px;
+        }
+        .course-card .course-cta {
+            background: #2563eb;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 4px;
+            display: inline-block;
+            border: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .course-card .course-cta:hover {
+            background: #3b82f6;
+        }
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 20px;
+            background-color: #10172c;
+            text-align: center;
+        }
+        .testimonials h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 40px;
+        }
+        .testimonial-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-slide {
+            display: none;
+            padding: 24px;
+            background: rgba(20,30,48,0.95);
+            border-radius: 10px;
+            border: 1px solid #243b55;
+        }
+        .testimonial-slide.active {
+            display: block;
+        }
+        .testimonial-slide p {
+            font-size: 16px;
+            color: #e5e7eb;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+        .testimonial-slide span {
+            font-size: 14px;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .carousel-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .carousel-btn {
+            background: #2563eb;
+            border: none;
+            padding: 8px 16px;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: #3b82f6;
+        }
+        /* Stats Section */
+        .stats {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #111827, #141e30);
+            text-align: center;
+        }
+        .stats h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 40px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stat-item {
+            padding: 20px;
+        }
+        .stat-item h3 {
+            font-size: 36px;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .stat-item p {
+            font-size: 16px;
+            color: #e5e7eb;
+        }
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, #141e30, #243b55);
+            padding: 40px 20px;
+            border-top: 1px solid #243b55;
+            text-align: center;
+            color: #a0aec0;
+            font-size: 14px;
+        }
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .newsletter {
+            margin-bottom: 24px;
+        }
+        .newsletter input[type="email"] {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #243b55;
+            border-radius: 4px;
+            background: #111827;
+            color: #d1d9e6;
+            width: 250px;
+            margin-right: 10px;
+        }
+        .newsletter button {
+            background: #2563eb;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .newsletter button:hover {
+            background: #3b82f6;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .feature-grid, .course-grid, .stats-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter input[type="email"] {
+                width: 200px;
+            }
+            .hamburger {
+                display: flex;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(90deg, #141e30, #243b55);
+                padding: 20px;
+                border-bottom: 1px solid #243b55;
+            }
+            nav ul.active {
+                display: flex;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            nav ul li a {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">CODECX Institute</div>
+        <nav>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="code-background"></div>
+        <div class="hero-content">
+            <h1>Code the Future with CODECX Institute</h1>
+            <p>Master web development with vibrant, expert-led courses in HTML, CSS, and JavaScript.</p>
+            <a href="#courses" class="cta-button">Start Coding Now</a>
+        </div>
+    </section>
+    <!-- Pricing Cards Section -->
+    <section id="pricing" class="pricing-section">
+        <h2>Choose Your Plan</h2>
+        <div class="pricing-grid">
+            <!-- Basic Plan -->
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <span class="pricing-title">Basic</span>
+                    <span class="pricing-icon">&#128274;</span>
+                </div>
+                <div class="pricing-desc">For small institutions</div>
+                <div class="pricing-price">$29<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li><span class="check">&#10003;</span> Up to 100 students</li>
+                    <li><span class="check">&#10003;</span> Basic proctoring features</li>
+                    <li><span class="check">&#10003;</span> 24/7 support</li>
+                </ul>
+                <button class="pricing-btn">Select Basic Plan</button>
+            </div>
+            <!-- Pro Plan -->
+            <div class="pricing-card" style="margin-top: 32px;">
+                <div class="popular-badge">Most Popular</div>
+                <div class="pricing-header">
+                    <span class="pricing-title">Pro</span>
+                    <span class="pricing-icon">&#128274;</span>
+                </div>
+                <div class="pricing-desc">For growing institutions</div>
+                <div class="pricing-price">$99<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li><span class="check">&#10003;</span> Up to 500 students</li>
+                    <li><span class="check">&#10003;</span> Advanced AI proctoring</li>
+                    <li><span class="check">&#10003;</span> Priority support</li>
+                    <li><span class="check">&#10003;</span> Custom branding</li>
+                </ul>
+                <button class="pricing-btn">Select Pro Plan</button>
+            </div>
+        </div>
+    </section>
+    <section id="features" class="features">
+        <h2>Why CODECX Shines</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Expert Instructors</h3>
+                <p>Learn from industry pros with a passion for teaching web development.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Hands-On Projects</h3>
+                <p>Create stunning projects using HTML, CSS, and JavaScript.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Flexible Learning</h3>
+                <p>Study at your own pace with colorful, engaging online courses.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Vibrant Community</h3>
+                <p>Join a lively community of coders for support and inspiration.</p>
+            </div>
+        </div>
+    </section>
+    <section id="courses" class="courses">
+        <h2>Our Courses</h2>
+        <div class="course-grid">
+            <div class="course-card">
+                <h3>HTML Fundamentals</h3>
+                <p>Build the structure of the web with semantic HTML5, from basics to advanced layouts.</p>
+                <a href="#" class="course-cta">Enroll Now</a>
+            </div>
+            <div class="course-card">
+                <h3>CSS Styling Mastery</h3>
+                <p>Create responsive, visually stunning designs with CSS, including animations and grids.</p>
+                <a href="#" class="course-cta">Enroll Now</a>
+            </div>
+            <div class="course-card">
+                <h3>JavaScript Essentials</h3>
+                <p>Add interactivity to your websites with JavaScript, covering DOM, events, and more.</p>
+                <a href="#" class="course-cta">Enroll Now</a>
+            </div>
+            <div class="course-card">
+                <h3>Full-Stack Web Development</h3>
+                <p>Master front-end and back-end skills to build complete web applications.</p>
+                <a href="#" class="course-cta">Enroll Now</a>
+            </div>
+        </div>
+    </section>
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Students Say</h2>
+        <div class="testimonial-carousel">
+            <div class="testimonial-slide active">
+                <p>"CODECX's courses transformed my career with hands-on projects and expert guidance!"</p>
+                <span>Jane Doe, Web Developer</span>
+            </div>
+            <div class="testimonial-slide">
+                <p>"The community and flexible learning made mastering CSS a breeze!"</p>
+                <span>John Smith, Frontend Engineer</span>
+            </div>
+            <div class="testimonial-slide">
+                <p>"From beginner to pro, CODECX's JavaScript course was a game-changer."</p>
+                <span>Alice Johnson, Student</span>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="carousel-btn" onclick="prevSlide()">Previous</button>
+            <button class="carousel-btn" onclick="nextSlide()">Next</button>
+        </div>
+    </section>
+    <section id="stats" class="stats">
+        <h2>Our Impact</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>10,000+</h3>
+                <p>Students Trained</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Courses Offered</p>
+            </div>
+            <div class="stat-item">
+                <h3>95%</h3>
+                <p>Satisfaction Rate</p>
+            </div>
+        </div>
+    </section>
+    <footer id="contact">
+        <div class="newsletter">
+            <h3>Stay Updated</h3>
+            <input type="email" placeholder="Enter your email" aria-label="Email for newsletter">
+            <button>Subscribe</button>
+        </div>
+        <p>&copy; 2025 CODECX Institute for Developers. All rights reserved.</p>
+        <p>Contact: <a href="mailto:info@codecx.com">info@codecx.com</a> | <a href="#">Community</a> | <a href="#">Support</a></p>
+    </footer>
+    <script>
+        // JavaScript for Colorful Coding Animation Background
+        const codeBackground = document.querySelector('.code-background');
+        const snippets = [
+            { text: '<div class="container">Hello World!</div>', type: 'html' },
+            { text: 'body { background: linear-gradient(#141e30, #243b55); }', type: 'css' },
+            { text: 'function code() { console.log("CODECX!"); }', type: 'js' },
+            { text: '<header>CODECX Institute</header>', type: 'html' },
+            { text: '.hero { min-height: 80vh; }', type: 'css' },
+            { text: 'const learn = () => "Web Development";', type: 'js' },
+            { text: '<section class="features">...</section>', type: 'html' },
+            { text: 'a:hover { color: #3b82f6; }', type: 'css' },
+            { text: 'document.querySelector(".code-background");', type: 'js' },
+            { text: 'let developer = { skill: "coding" };', type: 'js' }
+        ];
+        function createSnippet() {
+            const snippet = document.createElement('div');
+            const { text, type } = snippets[Math.floor(Math.random() * snippets.length)];
+            snippet.classList.add('code-snippet', type);
+            snippet.textContent = text;
+            snippet.style.left = `${Math.random() * 100}vw`;
+            snippet.style.animationDuration = `${Math.random() * 15 + 10}s`; // 10-25s fall time
+            snippet.style.fontSize = `${Math.random() * 4 + 10}px`; // 10-14px
+            codeBackground.appendChild(snippet);
+            setTimeout(() => { snippet.remove(); }, parseFloat(snippet.style.animationDuration) * 1000);
+        }
+        for (let i = 0; i < 15; i++) createSnippet();
+        setInterval(createSnippet, 1200);
+        // Testimonial Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const totalSlides = slides.length;
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+        function nextSlide() { currentSlide = (currentSlide + 1) % totalSlides; showSlide(currentSlide); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; showSlide(currentSlide); }
+        setInterval(nextSlide, 5000);
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navUl = document.querySelector('nav ul');
+            hamburger.classList.toggle('active');
+            navUl.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
