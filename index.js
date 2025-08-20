@@ -115,18 +115,8 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 }
 
 // ===== CORS Config =====
-const allowedOrigins = [
-  "https://examguard.com.ng",
-  "https://examguide.vercel.app"
-];
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (
-      allowedOrigins.some(o => origin === o || origin.startsWith(o + "/"))
-    ) return callback(null, true);
-    return callback(new Error("CORS not allowed from this origin: " + origin), false);
-  },
+  origin: true, // Reflects the request origin
   credentials: true,
 }));
 app.use(express.json());
