@@ -116,17 +116,15 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 
 // ===== CORS Config =====
 const allowedOrigins = [
-  "https://examguard.com.ng/mock.html",
-  "https://examguide.vercel.app",
-  "https://examguard.com.ng/",
-  "https://examguide.vercel.app/mock-icthallb"
+  "https://examguard.com.ng",
+  "https://examguide.vercel.app"
 ];
-const app = express();
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    if (
+      allowedOrigins.some(o => origin === o || origin.startsWith(o + "/"))
+    ) return callback(null, true);
     return callback(new Error("CORS not allowed from this origin: " + origin), false);
   },
   credentials: true,
