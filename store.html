@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Online E-Book Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .navbar {
+            background-color: #343a40;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        .nav-link {
+            color: #ddd !important;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #fff !important;
+        }
+        .section {
+            display: none;
+            padding: 40px 0;
+        }
+        .active-section {
+            display: block;
+        }
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .book-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        .book-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .book-info {
+            padding: 15px;
+            text-align: center;
+        }
+        .editor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        #editor {
+            min-height: 300px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .review-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .review-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        footer {
+            background-color: #343a40;
+            color: #ddd;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .catalog-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            .book-img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">E-Book Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#catalog" onclick="showSection('catalog')">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#editor" onclick="showSection('editor')">Editor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reviews" onclick="showSection('reviews')">Reviews</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="catalog" class="section active-section">
+            <h2 class="text-center mb-4">E-Book Catalog</h2>
+            <div class="catalog-grid">
+                <div class="book-card">
+                    <img src="images (7).jpeg?text=Book+1" alt="Book 1" class="book-img">
+                    <div class="book-info">
+                        <h5>Book Title 1</h5>
+                        <p>Author: John Doe</p>
+                        <p>A thrilling adventure story.</p>
+                        <button class="btn btn-primary">Read Now</button>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <img src="images (4).jpeg?text=Book+2" alt="Book 2" class="book-img">
+                    <div class="book-info">
+                        <h5>Book Title 2</h5>
+                        <p>Author: Jane Smith</p>
+                        <p>A romantic novel.</p>
+                        <button class="btn btn-primary">Read Now</button>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <img src="images (7).jpeg?text=Book+3" alt="Book 3" class="book-img">
+                    <div class="book-info">
+                        <h5>Book Title 3</h5>
+                        <p>Author: Alex Johnson</p>
+                        <p>Sci-fi epic.</p>
+                        <button class="btn btn-primary">Read Now</button>
+                    </div>
+                </div>
+                <!-- Add more books as needed -->
+            </div>
+        </section>
+
+        <section id="editor" class="section">
+            <h2 class="text-center mb-4">E-Book Editor</h2>
+            <div class="editor-container">
+                <div contenteditable="true" id="editor" placeholder="Start editing your e-book here..."></div>
+                <div class="text-center">
+                    <button class="btn btn-success" onclick="saveEditorContent()">Save Changes</button>
+                    <button class="btn btn-secondary" onclick="clearEditor()">Clear</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="section">
+            <h2 class="text-center mb-4">Reviews</h2>
+            <div id="review-list">
+                <!-- Reviews will be appended here -->
+            </div>
+            <div class="review-form">
+                <h4>Leave a Review</h4>
+                <form id="reviewForm">
+                    <div class="mb-3">
+                        <label for="reviewerName" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="reviewerName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewText" class="form-label">Your Review</label>
+                        <textarea class="form-control" id="reviewText" rows="4" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 E-Book Platform. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
+            document.getElementById(sectionId).classList.add('active-section');
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector(`a[href="#${sectionId}"]`).classList.add('active');
+        }
+
+        function saveEditorContent() {
+            const content = document.getElementById('editor').innerHTML;
+            alert('Content saved: ' + content);
+            // In a real app, save to server or local storage
+        }
+
+        function clearEditor() {
+            document.getElementById('editor').innerHTML = '';
+        }
+
+        const reviewForm = document.getElementById('reviewForm');
+        const reviewList = document.getElementById('review-list');
+
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reviewerName').value;
+            const text = document.getElementById('reviewText').value;
+
+            const reviewCard = document.createElement('div');
+            reviewCard.classList.add('review-card');
+            reviewCard.innerHTML = `
+                <h5>${name}</h5>
+                <p>${text}</p>
+                <small>${new Date().toLocaleDateString()}</small>
+            `;
+            reviewList.prepend(reviewCard);
+
+            reviewForm.reset();
+        });
+    </script>
+</body>
+</html>
