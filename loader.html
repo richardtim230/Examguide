@@ -90,5 +90,54 @@
       <div class="spinner"></div>
     </div>
   </div>
+  <script>
+window.onload = function() {
+    // Show the loader for a minimum time
+    const MIN_WAIT = 1500; // ms
+
+    // Role-based redirects
+    const roleRedirects = {
+        "superadmin": "supaadmin.html",
+        "admin": "admin.html",
+        "uploader": "uploader.html",
+        "pq-uploader": "pq-uploader.html",
+        "student": "MainStudentDashboard",
+        "default": "student-dashoards.html"
+    };
+
+    // Helper: Sleep for ms
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function doRedirect() {
+        const token = localStorage.getItem('token');
+        let role = "default";
+        if (token) {
+            try {
+                const resp = await fetch("https://examguide.onrender.com/api/auth/me", {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data && data.user && data.user.role) {
+                        role = data.user.role;
+                    }
+                }
+            } catch (e) {
+                // API/network error: fallback to default
+            }
+        }
+        // Wait a minimum amount of time for the loader effect
+        await sleep(MIN_WAIT);
+
+        // Redirect
+        const target = roleRedirects[role] || roleRedirects["default"];
+        window.location.href = target;
+    }
+
+    doRedirect();
+};
+</script>
 </body>
 </html>
