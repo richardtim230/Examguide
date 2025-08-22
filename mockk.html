@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <title>OAU ExamGuard - Login & Registration</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #276EF1;
+            --accent: #003366;
+            --error: #e74c3c;
+            --success: #27ae60;
+            --background: #f5f7fa;
+            --card-bg: #fff;
+            --shadow: 0 6px 32px 0 rgba(39,110,241,.11), 0 1.5px 4px 0 rgba(39,110,241,.03);
+            --radius: 20px;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: var(--background);
+            min-height: 100vh;
+        }
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar-header {
+            width: 340px;
+            min-width: 250px;
+            background: linear-gradient(135deg, #276EF1 0%, #003366 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 2rem 2rem 2rem;
+            box-shadow: 0 4px 20px rgba(39,110,241,.10);
+            z-index: 2;
+        }
+        .sidebar-header img {
+            width: 90px;
+            margin-bottom: 1.3rem;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 6px;
+        }
+        .sidebar-header h1 {
+            font-size: 2.1rem;
+            margin: 0 0 .4rem 0;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.11);
+        }
+        .sidebar-header p {
+            font-size: 1.07rem;
+            margin: 0 0 2.15rem 0;
+            letter-spacing: .8px;
+            opacity: 0.96;
+        }
+        .sidebar-header ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+        .sidebar-header ul li {
+            margin: 1.05rem 0;
+            font-size: 1.07rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            opacity: 0.97;
+        }
+        .sidebar-header ul li i {
+            color: #ffe463;
+            font-size: 1.32em;
+        }
+        .sidebar-header .support {
+            margin-top: 2rem;
+            font-size: .97rem;
+            color: #e3e6ff;
+            opacity: .84;
+        }
+        .main-content {
+            flex: 1 1 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--background);
+            min-width: 0;
+            padding: 4vw 2vw;
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 410px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.2rem 2rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 2vw 0;
+            position: relative;
+        }
+        .auth-card .mini-logo {
+            width: 50px;
+            margin: 0 auto 0.2rem;
+            display: block;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            gap: 0.2rem;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: .7rem 0;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.09rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            transition: border 0.2s, color 0.2s;
+        }
+        .tab-btn.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+        form {
+            display: none;
+            animation: fadeIn .4s;
+        }
+        form.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: .45rem;
+            color: #222;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: .65rem .8rem;
+            border: 1.5px solid #d6e0ef;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f8fbff;
+            transition: border 0.2s, background 0.15s;
+            outline: none;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            background: #fff;
+        }
+        .form-group .toggle-visibility {
+            position: absolute;
+            right: 16px;
+            top: 38px;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        .form-group.position-relative {
+            position: relative;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .form-actions label {
+            font-size: .97rem;
+            user-select: none;
+        }
+        .form-actions .link {
+            color: var(--primary);
+            cursor: pointer;
+            font-size: .97rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .btn-primary {
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: .93rem 0;
+            font-size: 1.11rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: .5rem;
+            box-shadow: 0 2px 10px rgba(39,110,241,.09);
+            transition: background 0.17s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background: #1B428C;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #fff;
+            border-top: 3px solid #00c6ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg);}
+          100% { transform: rotate(360deg);}
+        }
+        .divider {
+            text-align: center;
+            color: #bbb;
+            margin: 1.3rem 0 .7rem;
+            font-size: .99rem;
+            position: relative;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            display: inline-block;
+            width: 39%;
+            height: 1.2px;
+            background: #e0e4ed;
+            vertical-align: middle;
+            margin: 0 1%;
+        }
+        .social-login {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .social-btn {
+            flex: 1;
+            padding: .7rem 0;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 600;
+            font-size: .99rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .6em;
+        }
+        .social-btn.google {
+            background: #ea4335;
+        }
+        .social-btn.facebook {
+            background: #1877f3;
+        }
+        .message {
+            padding: .82rem;
+            border-radius: 8px;
+            margin-bottom: .9rem;
+            font-size: .99rem;
+            line-height: 1.4;
+            border: 1.5px solid;
+            word-break: break-word;
+            text-align: center;
+        }
+        .message.error { background: #fdecea; color: var(--error); border-color: #f8c6c6;}
+        .message.success { background: #eaf7ea; color: var(--success); border-color: #b3e6c6;}
+        .form-tip {
+            color: #888;
+            font-size: .93rem;
+            margin-top: -.6rem;
+            margin-bottom: .8rem;
+        }
+        .toast {
+            display: none;
+            position: fixed;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #003366ee;
+            color: #fff;
+            padding: 14px 36px 14px 18px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px #00000033;
+            z-index: 1100;
+            font-size: 1.09rem;
+            min-width: 260px;
+            max-width: 410px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s, top 0.4s;
+            pointer-events: none;
+            border: 1.5px solid #00c6ff;
+        }
+        .toast.show {
+            display: block;
+            opacity: 1;
+            top: 70px;
+            pointer-events: auto;
+            animation: notiPopFadeIn 0.5s;
+        }
+        .toast.success {
+            background: #25d366ee;
+            color: #1b2e11;
+            border: 1.5px solid #17a84b;
+        }
+        .toast.error {
+            background: #ff4136ee;
+            color: #fff;
+            border: 1.5px solid #c9251b;
+        }
+        .toast .close-noti {
+            position: absolute;
+            right: 12px;
+            top: 10px;
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            padding: 0;
+        }
+        .toast .close-noti:hover {
+            opacity: 1;
+        }
+        @keyframes notiPopFadeIn {
+          from { opacity: 0; top: 45px; }
+          to { opacity: 1; top: 70px; }
+        }
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+                min-height: unset;
+            }
+            .sidebar-header {
+                width: 100vw;
+                min-width: 0;
+                max-width: none;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 1.1rem 1vw;
+                box-shadow: none;
+                border-radius: 0 0 18px 18px;
+                gap: 1.4vw;
+            }
+            .sidebar-header > * {
+                margin-bottom: 0 !important;
+            }
+            .sidebar-header img {
+                width: 60px;
+                margin: 0 1.4vw 0 0;
+                padding: 3px;
+            }
+            .sidebar-header h1 {
+                font-size: 1.3rem;
+                margin-bottom: 0.18rem;
+            }
+            .sidebar-header p {
+                font-size: .99rem;
+                margin-bottom: 0.5rem;
+            }
+            .sidebar-header ul {
+                margin: 0.44rem 0 0 0;
+                width: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .sidebar-header ul li {
+                font-size: .99rem;
+                margin: 0.12rem 0;
+            }
+            .sidebar-header .support {
+                margin-top: 0.5rem;
+                font-size: .94rem;
+            }
+            .main-content {
+                padding: 4vw 1vw 2vw 1vw;
+            }
+        }
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        .auth-card {
+            min-width: 0;
+        }
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: .8rem .3rem 1.3rem .3rem;
+                max-width: 99vw;
+            }
+            .sidebar-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 1.1rem 0.2rem;
+                gap: 0.15rem;
+            }
+            .sidebar-header img { margin: 0 0 0.65rem 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="sidebar-header">
+        <img src="logo.png" alt="OAU Logo">
+        <div>
+            <h1>OAU ExamGuard</h1>
+            <p>Your Exam, Our Priority</p>
+            <ul>
+                <li><i class="bi bi-shield-lock"></i> Secure exam sessions</li>
+                <li><i class="bi bi-person-badge"></i> Verified student access</li>
+                <li><i class="bi bi-graph-up-arrow"></i> Progress analytics</li>
+                <li><i class="bi bi-phone"></i> Mobile friendly</li>
+            </ul>
+            <div class="support">
+                <i class="bi bi-envelope"></i> Free email support
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="auth-card">
+            <img class="mini-logo" src="logo.png" alt="OAU Logo">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                <button class="tab-btn" data-tab="register"><i class="bi bi-person-plus"></i> Register</button>
+            </div>
+            <div id="messageBox"></div>
+            <!-- Toast notification -->
+            <div id="toast" class="toast">
+                <button class="close-noti" onclick="hideToast()" aria-label="Close notification">&times;</button>
+                <span id="toastMsg"></span>
+            </div>
+            <form id="loginForm" class="active" autocomplete="on">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="login-username" required autocomplete="username">
+                </div>
+                <div class="form-group position-relative">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="login-password" required autocomplete="current-password">
+                    <span class="toggle-visibility" data-target="login-password" title="Show/Hide Password"><i class="bi bi-eye"></i></span>
+                </div>
+                <div class="form-actions">
+                    <label><input type="checkbox" id="rememberMe"> Remember me</label>
+                    <a class="link" href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    <span id="loginBtnText">Login</span>
+                    <span class="spinner" id="loginSpinner" style="display:none;"></span>
+                </button>
+                <div class="divider">OR</div>
+                <div class="social-login">
+                    <button class="social-btn google" type="button" title="Login with Google"><i class="bi bi-google"></i> Google</button>
+                    <button class="social-btn facebook" type="button" title="Login with Facebook"><i class="bi bi-facebook"></i> Facebook</button>
+                </div>
+            </form>
+            <form id="registerForm" autocomplete="on">
+                <div class="form-group">
+                    <label for="reg-fullname">Full Name</label>
+                    <input type="text" id="reg-fullname" name="reg-fullname" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" name="reg-username" required autocomplete="username">
+                </div>
+                <div class="form-group position-relative">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" name="reg-password" required minlength="8" autocomplete="new-password">
+                    <span class="toggle-visibility" data-target="reg-password" title="Show/Hide Password"><i class="bi bi-eye"></i></span>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" name="reg-email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="reg-faculty">Faculty</label>
+                    <select id="reg-faculty" name="reg-faculty" required>
+                        <option value="">Select Faculty</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-department">Department</label>
+                    <select id="reg-department" name="reg-department" required disabled>
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-level">Level</label>
+                    <select id="reg-level" name="reg-level" required>
+                        <option value="">Select Level</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="300">300</option>
+                        <option value="400">400</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number</label>
+                    <input type="tel" id="reg-phone" name="reg-phone" required pattern="[0-9]{11,14}">
+                </div>
+                <button type="submit" class="btn-primary" id="registerBtn">
+                    <span id="registerBtnText">Register</span>
+                    <span class="spinner" id="registerSpinner" style="display:none;"></span>
+                </button>
+                <div class="divider">OR</div>
+                <div class="social-login">
+                    <button class="social-btn google" type="button" title="Register with Google"><i class="bi bi-google"></i> Google</button>
+                    <button class="social-btn facebook" type="button" title="Register with Facebook"><i class="bi bi-facebook"></i> Facebook</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // Faculties and Departments (OAU)
+    const facultyDepartments = {
+        "Administration": [
+            "Management and Accounting",
+            "Public Administration",
+            "Local Government and Development Studies",
+            "International Relations"
+        ],
+        "Agriculture": [
+            "Agricultural Economics",
+            "Animal Science",
+            "Crop Production and Protection",
+            "Family, Nutrition and Consumer Sciences",
+            "Soil Science",
+            "Agricultural Extension and Rural Development"
+        ],
+        "Arts": [
+            "African Languages and Literatures",
+            "Dramatic Arts",
+            "English Language",
+            "Foreign Languages",
+            "History",
+            "Linguistics and African Languages",
+            "Music",
+            "Philosophy",
+            "Religious Studies"
+        ],
+        "Basic Medical Sciences": [
+            "Anatomy and Cell Biology",
+            "Human Nutrition and Dietetics",
+            "Medical Microbiology and Parasitology",
+            "Chemical Pathology",
+            "Haematology and Immunology",
+            "Morbid Anatomy and Forensic Medicine",
+            "Physiology"
+        ],
+        "Clinical Sciences": [
+            "Community Health",
+            "Medicine",
+            "Nursing Science",
+            "Obstetrics, Gynaecology and Perinatology",
+            "Paediatrics and Child Health",
+            "Psychiatry",
+            "Radiology",
+            "Surgery"
+        ],
+        "Dentistry": [
+            "Child Dental Health",
+            "Oral and Maxillofacial Surgery and Oral Pathology",
+            "Preventive and Community Dentistry",
+            "Restorative Dentistry"
+        ],
+        "Education": [
+            "Adult Education and Lifelong Learning",
+            "Educational Foundations and Counselling",
+            "Educational Management",
+            "Educational Technology",
+            "Fine and Applied Arts Education",
+            "Institute of Education",
+            "Physical and Health Education",
+            "Science and Technology Education",
+            "Social Sciences Education"
+        ],
+        "Environmental Design and Management": [
+            "Architecture",
+            "Building",
+            "Estate Management",
+            "Fine and Applied Arts",
+            "Quantity Surveying",
+            "Urban and Regional Planning"
+        ],
+        "Law": [
+            "Business Law",
+            "International Law",
+            "Jurisprudence and Private Law",
+            "Public Law"
+        ],
+        "Pharmacy": [
+            "Clinical Pharmacy and Pharmacy Administration",
+            "Pharmaceutical Chemistry",
+            "Pharmaceutical Microbiology",
+            "Pharmaceutics",
+            "Pharmacognosy",
+            "Pharmacology"
+        ],
+        "Science": [
+            "Biochemistry and Molecular Biology",
+            "Botany",
+            "Chemistry",
+            "Computer Science and Engineering",
+            "Geology",
+            "Mathematics",
+            "Microbiology",
+            "Physics",
+            "Statistics",
+            "Zoology"
+        ],
+        "Social Sciences": [
+            "Demography and Social Statistics",
+            "Economics",
+            "Geography",
+            "Political Science",
+            "Psychology",
+            "Sociology and Anthropology"
+        ],
+        "Technology": [
+            "Agricultural and Environmental Engineering",
+            "Chemical Engineering",
+            "Civil Engineering",
+            "Computer Science and Engineering",
+            "Electronic and Electrical Engineering",
+            "Food Science and Technology",
+            "Materials Science and Engineering",
+            "Mechanical Engineering"
+        ],
+        "Health Sciences": [
+            "Medical Rehabilitation",
+            "Nursing Science"
+        ]
+    };
+
+    // Populate faculties
+    const facultySelect = document.getElementById('reg-faculty');
+    const deptSelect = document.getElementById('reg-department');
+    function populateFaculties() {
+        facultySelect.innerHTML = `<option value="">Select Faculty</option>`;
+        Object.keys(facultyDepartments).forEach(faculty => {
+            const opt = document.createElement("option");
+            opt.value = faculty;
+            opt.textContent = faculty;
+            facultySelect.appendChild(opt);
+        });
+    }
+    function populateDepartments(faculty) {
+        deptSelect.innerHTML = `<option value="">Select Department</option>`;
+        if (facultyDepartments[faculty]) {
+            facultyDepartments[faculty].forEach(dept => {
+                const opt = document.createElement("option");
+                opt.value = dept;
+                opt.textContent = dept;
+                deptSelect.appendChild(opt);
+            });
+            deptSelect.disabled = false;
+        } else {
+            deptSelect.disabled = true;
+        }
+    }
+    facultySelect.addEventListener('change', function() {
+        populateDepartments(this.value);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        populateFaculties();
+        deptSelect.disabled = true;
+    });
+
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const forms = {
+        login: document.getElementById('loginForm'),
+        register: document.getElementById('registerForm')
+    };
+    const messageBox = document.getElementById('messageBox');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            for (const k in forms) forms[k].classList.remove('active');
+            forms[btn.dataset.tab].classList.add('active');
+            messageBox.innerHTML = '';
+        });
+    });
+
+    // Password visibility toggle
+    document.querySelectorAll('.toggle-visibility').forEach(span => {
+        span.addEventListener('click', function() {
+            const input = document.getElementById(this.dataset.target);
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+            } else {
+                input.type = 'password';
+                this.innerHTML = '<i class="bi bi-eye"></i>';
+            }
+        });
+    });
+
+    /* TOAST NOTIFICATION */
+    function showToast(message, type = "") {
+        const toast = document.getElementById('toast');
+        const msgBox = document.getElementById('toastMsg');
+        msgBox.textContent = message;
+        toast.className = type ? `toast show ${type}` : 'toast show';
+        toast.style.display = 'block';
+        setTimeout(() => {
+            if (toast.classList.contains('show')) {
+                hideToast();
+            }
+        }, 3500);
+    }
+    function hideToast() {
+        const toast = document.getElementById('toast');
+        toast.className = 'toast';
+        setTimeout(() => { toast.style.display = 'none'; }, 400);
+    }
+
+    // --- LOGIN & REGISTRATION LOGIC (imitated from mock.html) ---
+    // Backend API endpoints (imitate mock.html)
+    const API_URL = "https://examguide.onrender.com/api/auth/";
+
+    // Helper: Validate username
+    function validateUsername(username) {
+        return username.trim().length > 0;
+    }
+
+    // Spinner helpers
+    const loginBtn = document.getElementById('loginBtn');
+    const loginBtnText = document.getElementById('loginBtnText');
+    const loginSpinner = document.getElementById('loginSpinner');
+    async function setLoginLoading(isLoading) {
+        if (isLoading) {
+            loginBtn.setAttribute("disabled", "disabled");
+            loginSpinner.style.display = "inline-block";
+            loginBtnText.style.display = "none";
+        } else {
+            loginBtn.removeAttribute("disabled");
+            loginSpinner.style.display = "none";
+            loginBtnText.style.display = "inline";
+        }
+    }
+    const registerBtn = document.getElementById('registerBtn');
+    const registerBtnText = document.getElementById('registerBtnText');
+    const registerSpinner = document.getElementById('registerSpinner');
+    async function setRegLoading(isLoading) {
+        if (isLoading) {
+            registerBtn.setAttribute("disabled", "disabled");
+            registerSpinner.style.display = "inline-block";
+            registerBtnText.style.display = "none";
+        } else {
+            registerBtn.removeAttribute("disabled");
+            registerSpinner.style.display = "none";
+            registerBtnText.style.display = "inline";
+        }
+    }
+
+    // LOGIN HANDLING
+    forms.login.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+        if (!validateUsername(username) || !password) {
+            showToast("Both fields are required!", "error");
+            return;
+        }
+        await setLoginLoading(true);
+
+        try {
+            let loginResponse = await fetch(API_URL + "login", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            });
+            let loginData = await loginResponse.json();
+
+            if (loginResponse.ok) {
+                localStorage.setItem('token', loginData.token);
+                // Get user role and redirect accordingly
+                try {
+                    let profileResp = await fetch(API_URL.replace(/auth\/$/, '') + "auth/me", {
+                        headers: { 'Authorization': 'Bearer ' + loginData.token }
+                    });
+                    let profileData = await profileResp.json();
+                    if (profileResp.ok && profileData.user) {
+                        const role = profileData.user.role;
+                        if (role === 'superadmin') {
+                            showToast("Welcome, Superadmin!", "success");
+                            setTimeout(() => { window.location.href = "supaadmin.html"; }, 1000);
+                            await setLoginLoading(false);
+                            return;
+                        }
+                        if (role === 'admin') {
+                            showToast("Welcome, Admin!", "success");
+                            setTimeout(() => { window.location.href = "admin.html"; }, 1000);
+                            await setLoginLoading(false);
+                            return;
+                        }
+                        if (role === 'uploader') {
+                            showToast("Welcome, Uploader!", "success");
+                            setTimeout(() => { window.location.href = "uploader.html"; }, 1000);
+                            await setLoginLoading(false);
+                            return;
+                        }
+                        if (role === 'pq-uploader') {
+                            showToast("Welcome, PQ-Uploader!", "success");
+                            setTimeout(() => { window.location.href = "pq-uploader.html"; }, 1000);
+                            await setLoginLoading(false);
+                            return;
+                        }
+                        // Default: student
+                        showToast("Welcome, Student!", "success");
+                        setTimeout(() => { window.location.href = "MainStudentDashboard"; }, 1000);
+                        await setLoginLoading(false);
+                        return;
+                    }
+                } catch {
+                    // fallback
+                    showToast("Login successful!", "success");
+                    setTimeout(() => { window.location.href = "student-dashoards.html"; }, 1000);
+                }
+                await setLoginLoading(false);
+                return;
+            }
+            showToast(loginData.message || "Login failed", "error");
+        } catch (err) {
+            showToast("Network or server error. Please try again.", "error");
+        }
+        await setLoginLoading(false);
+    });
+
+    // REGISTRATION HANDLING
+    forms.register.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        // Collect all registration details
+        const fullName = document.getElementById('reg-fullname').value.trim();
+        const username = document.getElementById('reg-username').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const email = document.getElementById('reg-email').value.trim();
+        const faculty = document.getElementById('reg-faculty').value.trim();
+        const department = document.getElementById('reg-department').value.trim();
+        const level = document.getElementById('reg-level').value;
+        const phone = document.getElementById('reg-phone').value.trim();
+
+        if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
+            showToast("All fields are required!", "error");
+            return;
+        }
+
+        await setRegLoading(true);
+
+        try {
+            let registerResponse = await fetch(API_URL + "register", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username,
+                    password,
+                    email,
+                    fullname: fullName,
+                    faculty,
+                    department,
+                    level,
+                    phone
+                })
+            });
+            let registerData = await registerResponse.json();
+            if (registerResponse.ok) {
+                localStorage.setItem('token', registerData.token);
+                showToast("Registered successfully!", "success");
+                setTimeout(() => { window.location.href = 'student-dashoards.html'; }, 1200);
+            } else {
+                showToast(registerData.message || "Registration failed", "error");
+            }
+        } catch (err) {
+            showToast("Network or server error. Please try again.", "error");
+        }
+
+        await setRegLoading(false);
+    });
+
+    // Social Login/Register (Simulated)
+    document.querySelectorAll('.social-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            showToast("Social login/registration is not implemented in this demo.", "error");
+        });
+    });
+
+    // Forgot Password (imitate mock.html logic)
+    document.getElementById('forgotPassword').addEventListener('click', async function(e) {
+        e.preventDefault();
+        let username = prompt("Enter your username for password reset:");
+        if (username === null) return;
+        username = username.trim();
+        if (!validateUsername(username)) {
+            showToast("Username cannot be empty.", "error");
+            return;
+        }
+        let newPass = prompt("Enter your new password:");
+        if (!newPass) {
+            showToast("Password cannot be empty.", "error");
+            return;
+        }
+        await setLoginLoading(true);
+        try {
+            let resp = await fetch(API_URL + "reset", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password: newPass})
+            });
+            let data = await resp.json();
+            if (resp.ok) {
+                showToast("Password reset successful!", "success");
+            } else {
+                showToast(data.message || "Password reset failed", "error");
+            }
+        } catch (err) {
+            showToast("Network or server error. Please try again.", "error");
+        }
+        await setLoginLoading(false);
+    });
+
+    // Responsive: scroll to top of form on mobile when switching
+    function onTabSwitchScroll() {
+        if (window.innerWidth < 700) {
+            setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 100);
+        }
+    }
+    tabBtns.forEach(btn => btn.addEventListener('click', onTabSwitchScroll));
+</script>
+</body>
+</html>
