@@ -840,32 +840,32 @@
                         }
                         if (role === 'admin') {
                             showToast("Welcome, Admin!", "success");
-                            setTimeout(() => { window.location.href = "admin.html"; }, 1000);
+                            setTimeout(() => { window.location.href = "loader.html"; }, 1000);
                             await setLoginLoading(false);
                             return;
                         }
                         if (role === 'uploader') {
                             showToast("Welcome, Uploader!", "success");
-                            setTimeout(() => { window.location.href = "uploader.html"; }, 1000);
+                            setTimeout(() => { window.location.href = "loader.html"; }, 1000);
                             await setLoginLoading(false);
                             return;
                         }
                         if (role === 'pq-uploader') {
                             showToast("Welcome, PQ-Uploader!", "success");
-                            setTimeout(() => { window.location.href = "pq-uploader.html"; }, 1000);
+                            setTimeout(() => { window.location.href = "loader.html"; }, 1000);
                             await setLoginLoading(false);
                             return;
                         }
                         // Default: student
                         showToast("Welcome, Student!", "success");
-                        setTimeout(() => { window.location.href = "MainStudentDashboard"; }, 1000);
+                        setTimeout(() => { window.location.href = "loader.html"; }, 1000);
                         await setLoginLoading(false);
                         return;
                     }
                 } catch {
                     // fallback
                     showToast("Login successful!", "success");
-                    setTimeout(() => { window.location.href = "student-dashoards.html"; }, 1000);
+                    setTimeout(() => { window.location.href = "loader.html"; }, 1000);
                 }
                 await setLoginLoading(false);
                 return;
@@ -916,7 +916,7 @@
             if (registerResponse.ok) {
                 localStorage.setItem('token', registerData.token);
                 showToast("Registered successfully!", "success");
-                setTimeout(() => { window.location.href = 'student-dashoards.html'; }, 1200);
+                setTimeout(() => { window.location.href = 'loader.html'; }, 1200);
             } else {
                 showToast(registerData.message || "Registration failed", "error");
             }
