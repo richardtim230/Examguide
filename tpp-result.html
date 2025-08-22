@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <title>OAU ExamGuard - Result</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -135,6 +136,90 @@
             .question-card { padding: 1rem; border-radius: 12px; }
             .q-badge { min-width: 40px; min-height: 40px; font-size: 1rem; }
         }
+        .eg-summary-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.7);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px #6366f111;
+  padding: 2.2em 1.2em 1.5em 1.2em;
+  margin: 0 auto 2em auto;
+  max-width: 360px;
+  gap: 1.2em;
+  position: relative;
+}
+
+.eg-main-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.4em;
+}
+.eg-main-score-ring {
+  width: 85px; height: 85px;
+  background: linear-gradient(135deg, #6366f1 50%, #a5b4fc 100%);
+  border-radius: 50%;
+  box-shadow: 0 4px 18px #6366f133, 0 1.5px 5px #a5b4fc33;
+  display: flex;
+  align-items: center; justify-content: center;
+  margin-bottom: 0.4em;
+  border: 6px solid rgba(99,102,241,0.11);
+}
+.eg-main-score-value {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 8px #6366f122;
+}
+.eg-main-score-label {
+  margin-top: 0.1em;
+  font-size: 1.16rem;
+  color: #6366f1;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.eg-summary-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1em 2em;
+  justify-content: center;
+  width: 100%;
+}
+.eg-summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 65px;
+}
+.eg-stat-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 0.18em;
+  box-shadow: 0 2px 8px #6366f122;
+}
+.eg-correct { background: #dcfce7; color: #16a34a; }
+.eg-wrong { background: #fee2e2; color: #dc2626; }
+.eg-time { background: #e0e7ff; color: #4f46e5; }
+.eg-total { background: #fef9c3; color: #eab308; }
+.eg-stat-label {
+  font-size: 1rem; color: #6366f1; font-weight: 600; margin-bottom: 0.1em;
+}
+.eg-stat-value {
+  font-size: 1.17rem; font-weight: 700; color: #1e293b;
+}
+@media (max-width: 640px) {
+  .eg-summary-container { padding: 1.2em 0.5em 1.2em 0.5em; }
+  .eg-main-score-ring { width: 64px; height: 64px;}
+  .eg-main-score-value { font-size: 1.45rem;}
+  .eg-summary-stats { gap: 0.7em 1.2em;}
+  .eg-stat-icon { width: 28px; height: 28px; font-size: 1.1rem; }
+  .eg-summary-item { min-width: 49px;}
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -166,28 +251,37 @@
         </section>
 
         <!-- Result Summary -->
-        <div class="summary-stat" id="result-summary">
-            <div class="summary-item">
-                <div class="summary-label">Score</div>
-                <div class="summary-value" id="score-value">-</div>
-            </div>
-            <div class="summary-item">
-                <div class="summary-label">Correct</div>
-                <div class="summary-value" id="correct-value">-</div>
-            </div>
-            <div class="summary-item">
-                <div class="summary-label">Wrong</div>
-                <div class="summary-value" id="wrong-value">-</div>
-            </div>
-            <div class="summary-item">
-                <div class="summary-label">Time Spent</div>
-                <div class="summary-value" id="timespent-value">-</div>
-            </div>
-            <div class="summary-item">
-                <div class="summary-label">Total</div>
-                <div class="summary-value" id="total-value">-</div>
-            </div>
-        </div>
+        <!-- Modern Result Summary Section -->
+<div class="eg-summary-container">
+  <div class="eg-main-score">
+    <div class="eg-main-score-ring">
+      <span class="eg-main-score-value" id="score-value">3/6</span>
+    </div>
+    <span class="eg-main-score-label">Score</span>
+  </div>
+  <div class="eg-summary-stats">
+    <div class="eg-summary-item">
+      <div class="eg-stat-icon eg-correct"><i class="bi bi-check-circle"></i></div>
+      <div class="eg-stat-label">Correct</div>
+      <div class="eg-stat-value" id="correct-value">3</div>
+    </div>
+    <div class="eg-summary-item">
+      <div class="eg-stat-icon eg-wrong"><i class="bi bi-x-circle"></i></div>
+      <div class="eg-stat-label">Wrong</div>
+      <div class="eg-stat-value" id="wrong-value">3</div>
+    </div>
+    <div class="eg-summary-item">
+      <div class="eg-stat-icon eg-time"><i class="bi bi-clock-history"></i></div>
+      <div class="eg-stat-label">Time</div>
+      <div class="eg-stat-value" id="timespent-value">30m 0s</div>
+    </div>
+    <div class="eg-summary-item">
+      <div class="eg-stat-icon eg-total"><i class="bi bi-list-ol"></i></div>
+      <div class="eg-stat-label">Total</div>
+      <div class="eg-stat-value" id="total-value">6</div>
+    </div>
+  </div>
+</div>
 
         <!-- Question Review -->
         <section class="mb-12">
