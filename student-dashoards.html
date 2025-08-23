@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- PDF.js for PDF extraction -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <!-- mammoth.js for DOCX extraction -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.0.0-beta.10/mammoth.browser.min.js"></script>
 
@@ -18,7 +18,279 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <link rel="icon" href="logo.png">
     <style>
-        
+        :root {
+  --eg-primary: #276EF1;
+  --eg-accent: #003366;
+  --eg-gold: #d4af37;
+  --eg-bg: #f9fafb;
+  --eg-bubble-bot: #e0e7ff;
+  --eg-bubble-user: #276ef1;
+  --eg-radius: 20px;
+}
+/* Floating chat button */
+#eg-chat-btn {
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 200;
+  background: linear-gradient(135deg, var(--eg-primary), var(--eg-gold));
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+  box-shadow: 0 4px 24px #00336633;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.18s;
+  outline: none;
+}
+#eg-chat-btn:active { transform: scale(0.95);}
+#eg-chat-window {
+  position: fixed;
+  bottom: 110px;
+  right: 38px;
+  width: 370px;
+  max-width: 99vw;
+  height: 510px;
+  max-height: 85vh;
+  background: rgba(255,255,255,0.98);
+  border-radius: var(--eg-radius);
+  box-shadow: 0 8px 40px #00336633;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9000;
+  border: 2.5px solid var(--eg-primary);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(35px) scale(0.98);
+  transition: opacity 0.25s, transform 0.29s;
+}
+#eg-chat-window.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
+.eg-chat-header {
+  background: linear-gradient(90deg, var(--eg-primary) 70%, var(--eg-gold) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1.1em 1.3em;
+  border-top-left-radius: var(--eg-radius);
+  border-top-right-radius: var(--eg-radius);
+  border-bottom: 1.5px solid #e0e7ff66;
+  position: relative;
+}
+.eg-bot-logo {
+  width: 44px; height: 44px;
+  border-radius: 15px;
+  background: #fff;
+  padding: 2.5px;
+  box-shadow: 0 2px 10px #276EF144;
+  border: 2px solid var(--eg-gold);
+  object-fit: contain;
+}
+.eg-brand-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #fff;
+}
+.eg-header-desc {
+  font-size: 0.99rem;
+  color: #e0e7ff;
+  font-weight: 400;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.eg-close-btn {
+  position: absolute;
+  top: 11px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.18s;
+  outline: none;
+}
+.eg-close-btn:hover { opacity: 1; }
+#eg-chat-body {
+  flex: 1 1 0;
+  background: transparent;
+  overflow-y: auto;
+  padding: 1.2em 1.15em 0.7em 1.15em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  scrollbar-width: thin;
+  scrollbar-color: #d4af37 #e0e7ff;
+}
+#eg-chat-body::-webkit-scrollbar { width: 7px; }
+#eg-chat-body::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3.5px;}
+#eg-chat-body::-webkit-scrollbar-track { background: #f3f4f6;}
+.eg-bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5em;
+  margin-bottom: 2px;
+}
+.eg-bubble-row.user { justify-content: flex-end; }
+.eg-bubble-row.bot { justify-content: flex-start; }
+.eg-bot-avatar {
+  width: 34px; height: 34px;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 2px 7px #00336611;
+  border: 1.5px solid #d4af37;
+  object-fit: contain;
+}
+.eg-user-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--eg-primary);
+  font-weight: bold;
+  box-shadow: 0 2px 7px #00336608;
+}
+.eg-bubble {
+  max-width: 69%;
+  padding: 0.72em 1.1em;
+  border-radius: 18px;
+  font-size: 1.04rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 10px #00336607;
+  margin-bottom: 1.5px;
+  word-break: break-word;
+}
+.eg-bubble.bot {
+  background: var(--eg-bubble-bot);
+  color: var(--eg-accent);
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 6px;
+  border: 1.4px solid #d4af37;
+}
+.eg-bubble.user {
+  background: var(--eg-bubble-user);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 6px;
+  border: 1.4px solid #276EF1;
+}
+/* Typing indicator */
+.eg-typing {
+  display: inline-block;
+  min-width: 35px;
+  height: 22px;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.eg-typing span {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 1.5px;
+  background: #6366f1;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: eg-typing 1.2s infinite;
+}
+.eg-typing span:nth-child(2) { animation-delay: 0.2s;}
+.eg-typing span:nth-child(3) { animation-delay: 0.4s;}
+@keyframes eg-typing {
+  0%, 80%, 100% { transform: scale(1);}
+  40% { transform: scale(1.4);}
+}
+#eg-chat-input-row {
+  display: flex;
+  align-items: center;
+  padding: 1em 1.15em;
+  background: #f3f4f6;
+  border-top: 1.5px solid #e0e7ff;
+  gap: 10px;
+}
+#eg-chat-input {
+  flex: 1;
+  border: none;
+  background: #fff;
+  border-radius: 13px;
+  font-size: 1.04rem;
+  padding: 0.8em 1em;
+  outline: none;
+  transition: border 0.18s;
+  box-shadow: 0 1px 6px #00336609;
+  border: 1.5px solid #e0e7ff;
+}
+#eg-chat-input:focus {
+  border: 1.5px solid var(--eg-primary);
+  background: #f9fafb;
+}
+#eg-send-btn {
+  background: linear-gradient(135deg, var(--eg-primary) 60%, var(--eg-gold) 100%);
+  color: #fff;
+  font-size: 1.35rem;
+  border: none;
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 7px #276EF120;
+  transition: background 0.2s, transform 0.15s;
+  outline: none;
+}
+#eg-send-btn:active { transform: scale(0.93);}
+#eg-send-btn:disabled { opacity: 0.54; cursor: not-allowed;}
+#eg-image-btn {
+  background: #e0e7ff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  color: var(--eg-primary);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+#eg-image-btn:active { background: #c7d2fe;}
+.eg-preview-img {
+  max-width: 56px;
+  max-height: 56px;
+  border-radius: 8px;
+  margin-right: 6px;
+  border: 1.5px solid #e0e7ff;
+  display: inline-block;
+}
+/* Responsive */
+@media (max-width: 600px) {
+  #eg-chat-window {
+    width: 98vw; max-width: 99vw; right: 1vw; left: 1vw;
+    height: 97vh; max-height: 99vh;
+    bottom: 0;
+    border-radius: 10px;
+    padding-bottom: 1em;
+  }
+  #eg-chat-btn { right: 14px; bottom: 14px; }
+  .eg-chat-header { padding: 1em 0.7em 1em 1.1em;}
+  #eg-chat-input-row { padding: 0.7em 0.7em;}
+  #eg-chat-input { font-size: 0.98rem;}
+}
 #studyCalendar .fc {
   font-size: 1rem;
 }
@@ -1204,6 +1476,33 @@
     </form>
     <div id="studypadiOutput" class="mt-8"></div>
   </div>
+    <!-- ExamGuard Chatbot Floating Button & Modal (Place at end of <body> or in dashboard root) -->
+<!-- Place your examguard-logo.png in your project root or update the img src -->
+
+<!-- Floating chat button -->
+<button id="eg-chat-btn" aria-label="Open chat with ExamGuard Bot">
+  <i class="bi bi-robot"></i>
+</button>
+
+<!-- Chat window/modal -->
+<div id="eg-chat-window" aria-label="ExamGuard Bot Chat" role="dialog" aria-modal="true">
+  <div class="eg-chat-header">
+    <img src="logo.png" alt="ExamGuard Bot" class="eg-bot-logo">
+    <div>
+      <div class="eg-brand-title">ExamGuard Bot</div>
+      <div class="eg-header-desc">Your secure test assistant</div>
+    </div>
+    <button class="eg-close-btn" aria-label="Close chat" id="eg-close-btn"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div id="eg-chat-body"></div>
+  <form id="eg-chat-input-row" autocomplete="off" enctype="multipart/form-data">
+    <input type="file" id="eg-image-input" style="display:none" accept="image/*">
+    <button type="button" id="eg-image-btn" title="Send Image"><i class="bi bi-image"></i></button>
+    <div id="eg-image-preview" style="display:none"></div>
+    <input type="text" id="eg-chat-input" placeholder="Type your message..." autocomplete="off" required aria-label="Type your message">
+    <button type="submit" id="eg-send-btn" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
+  </form>
+    </div>
   <!-- PDF.js for PDF text extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
 <script>
