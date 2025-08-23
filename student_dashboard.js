@@ -2047,6 +2047,216 @@ fetchAvailableTests = async function() {
   await origFetchAvailableTests.apply(this, arguments);
   rerenderStudyCalendarIfVisible();
 };
+// ========== ExamGuard Chatbot Section JavaScript ==========
+
+// To use: make sure you have student object with profile info in global scope (as in your dashboard code)
+// Replace YOUR_GEMINI_API_KEY with your real Gemini API key!
+
+// Minimal fallback for user info in case student isn't loaded yet
+let egChatUser = { name: "Student" };
+function waitForStudentData(cb) {
+  if (typeof student !== "undefined" && student.fullname) {
+    egChatUser = {
+      name: student.fullname,
+      email: student.email,
+      id: student._id || student.id,
+      department: student.department?.name || "",
+      level: student.level || "",
+      phone: student.phone || "",
+      username: student.username || "",
+    };
+    cb();
+  } else {
+    setTimeout(() => waitForStudentData(cb), 350);
+  }
+}
+
+// --- UI logic ---
+const chatBtn = document.getElementById('eg-chat-btn');
+const chatWindow = document.getElementById('eg-chat-window');
+const closeBtn = document.getElementById('eg-close-btn');
+chatBtn.onclick = () => chatWindow.classList.add('open');
+closeBtn.onclick = () => chatWindow.classList.remove('open');
+document.addEventListener('keydown', e => {
+  if (e.key === "Escape") chatWindow.classList.remove('open');
+});
+
+// --- Messaging logic ---
+const chatBody = document.getElementById('eg-chat-body');
+const chatForm = document.getElementById('eg-chat-input-row');
+const chatInput = document.getElementById('eg-chat-input');
+const sendBtn = document.getElementById('eg-send-btn');
+const imgBtn = document.getElementById('eg-image-btn');
+const imgInput = document.getElementById('eg-image-input');
+const imgPreview = document.getElementById('eg-image-preview');
+let pendingImageData = null;
+
+function userAvatar(name = "U") {
+  return `<span class="eg-user-avatar">${name.slice(0,1).toUpperCase()}</span>`;
+}
+function botAvatar() {
+  return `<img class="eg-bot-avatar" src="examguard-logo.png" alt="Bot">`;
+}
+function addMessage(content, from = "bot", isImg = false) {
+  const row = document.createElement("div");
+  row.className = `eg-bubble-row ${from}`;
+  let bubbleHTML = from === "bot"
+    ? botAvatar()
+    : "";
+  if (isImg) {
+    bubbleHTML += `<div class="eg-bubble ${from}"><img src="${content}" class="eg-preview-img" alt="sent image"></div>`;
+  } else {
+    bubbleHTML += `<div class="eg-bubble ${from}">${content}</div>`;
+  }
+  bubbleHTML += from === "user" ? userAvatar(egChatUser.name) : "";
+  row.innerHTML = bubbleHTML;
+  chatBody.appendChild(row);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+function showTyping() {
+  const row = document.createElement("div");
+  row.className = "eg-bubble-row bot";
+  row.id = "eg-typing-row";
+  row.innerHTML = botAvatar() +
+    `<div class="eg-bubble bot"><span class="eg-typing"><span></span><span></span><span></span></span></div>`;
+  chatBody.appendChild(row);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+function hideTyping() {
+  const typing = document.getElementById('eg-typing-row');
+  if (typing) typing.remove();
+}
+
+// --- Image Handling ---
+imgBtn.onclick = function(e) {
+  e.preventDefault();
+  imgInput.click();
+};
+imgInput.onchange = function() {
+  const file = imgInput.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    alert("Please select an image file.");
+    imgInput.value = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    pendingImageData = e.target.result;
+    imgPreview.innerHTML = `<img src="${pendingImageData}" class="eg-preview-img" alt="preview"> <button type="button" id="eg-remove-img" title="Remove Image" style="color:red;background:none;border:none;font-size:1.1em;vertical-align:middle;"><i class="bi bi-x-circle"></i></button>`;
+    imgPreview.style.display = "inline-block";
+    document.getElementById("eg-remove-img").onclick = function() {
+      imgPreview.style.display = "none";
+      imgPreview.innerHTML = "";
+      imgInput.value = "";
+      pendingImageData = null;
+    };
+  };
+  reader.readAsDataURL(file);
+};
+
+// --- Gemini API Integration (replace API_KEY placeholder) ---
+async function geminiChatApi(messages, imageData = null) {
+  const apiKey = "YOUR_GEMINI_API_KEY"; // <<< INSERT YOUR KEY HERE
+  let url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey;
+  let payload = {
+    contents: [
+      {
+        parts: [
+          {text: `The following is a conversation with a helpful, secure, ExamGuard Bot for OAU. The logged in user is ${egChatUser.name} (email: ${egChatUser.email}, department: ${egChatUser.department}, level: ${egChatUser.level}). Always address the user by their first name if possible. Only answer exam and study-related questions, and never provide answers to live or upcoming exams. If user sends an image, try to analyze or describe its content if possible. If not sure, ask the user for clarification.`}
+        ]
+      },
+      ...messages
+    ]
+  };
+  if (imageData) {
+    payload.contents.push({
+      parts: [
+        {text: "User sent an image. Please analyze and reply as ExamGuard Bot."},
+        {inline_data: {mime_type:"image/png", data: imageData.split(',')[1]}}
+      ]
+    });
+  }
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error("Gemini API error");
+  const data = await res.json();
+  let reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't get that. Can you rephrase?";
+  return reply;
+}
+
+// --- Chat conversation state ---
+let conversation = [];
+function addToConversation(userMsg, role = "user") {
+  if (role === "user") {
+    conversation.push({parts: [{text: userMsg}]});
+  } else {
+    conversation.push({parts: [{text: userMsg}], role: "model"});
+  }
+  // Keep last 10 messages only for context
+  if (conversation.length > 10) conversation = conversation.slice(-10);
+}
+
+chatForm.onsubmit = async function(e) {
+  e.preventDefault();
+  const text = chatInput.value.trim();
+  sendBtn.disabled = true;
+  chatInput.disabled = true;
+  imgBtn.disabled = true;
+  if (!text && !pendingImageData) {
+    sendBtn.disabled = false; chatInput.disabled = false; imgBtn.disabled = false;
+    return;
+  }
+
+  // User message (text and/or image)
+  if (pendingImageData) {
+    addMessage(pendingImageData, "user", true);
+    if (text) addMessage(text, "user");
+  } else {
+    addMessage(text, "user");
+  }
+  let userMsgObj = { parts: [] };
+  if (text) userMsgObj.parts.push({text});
+  if (pendingImageData) userMsgObj.parts.push({inline_data:{mime_type: "image/png", data: pendingImageData.split(',')[1]}});
+  conversation.push(userMsgObj);
+
+  chatInput.value = "";
+  imgInput.value = "";
+  imgPreview.style.display = "none";
+  imgPreview.innerHTML = "";
+  pendingImageData = null;
+
+  showTyping();
+
+  try {
+    const reply = await geminiChatApi(conversation, pendingImageData);
+    hideTyping();
+    addToConversation(reply, "bot");
+    addMessage(reply, "bot");
+  } catch (err) {
+    hideTyping();
+    addMessage("Sorry, I couldn't reach the AI service. Please try again later.", "bot");
+  }
+  sendBtn.disabled = false;
+  chatInput.disabled = false;
+  imgBtn.disabled = false;
+  chatInput.focus();
+};
+
+// Welcome message
+waitForStudentData(function() {
+  setTimeout(() => {
+    addMessage(`👋 Hello, <b>${egChatUser.name.split(" ")[0]}</b>! I'm <b>ExamGuard Bot</b>, your secure test assistant. How can I help you today?`);
+  }, 500);
+});
+
+chatBtn.addEventListener('click', () => {
+  setTimeout(() => chatInput.focus(), 400);
+});
+
 // --- Blogger/Marketer Application Modal Logic ---
 
 const BM_APP_KEY = "bm_application_status"; // Use localStorage for demo; use backend in production
