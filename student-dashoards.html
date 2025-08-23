@@ -774,6 +774,29 @@
                     <div id="leaderboardContainer" class="scoreboard-container"></div>
                 </section>
             </div>
+            <button id="eg-chat-btn" aria-label="Open chat with ExamGuard Bot">
+  <i class="bi bi-robot"></i>
+</button>
+
+<!-- Chat window/modal -->
+<div id="eg-chat-window" aria-label="ExamGuard Bot Chat" role="dialog" aria-modal="true">
+  <div class="eg-chat-header">
+    <img src="logo.png" alt="ExamGuard Bot" class="eg-bot-logo">
+    <div>
+      <div class="eg-brand-title">ExamGuard Bot</div>
+      <div class="eg-header-desc">Your secure test assistant</div>
+    </div>
+    <button class="eg-close-btn" aria-label="Close chat" id="eg-close-btn"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div id="eg-chat-body"></div>
+  <form id="eg-chat-input-row" autocomplete="off" enctype="multipart/form-data">
+    <input type="file" id="eg-image-input" style="display:none" accept="image/*">
+    <button type="button" id="eg-image-btn" title="Send Image"><i class="bi bi-image"></i></button>
+    <div id="eg-image-preview" style="display:none"></div>
+    <input type="text" id="eg-chat-input" placeholder="Type your message..." autocomplete="off" required aria-label="Type your message">
+    <button type="submit" id="eg-send-btn" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
+  </form>
+    </div>
         </section>
 
         <!-- Mock Tests Tab -->
@@ -1480,29 +1503,7 @@
 <!-- Place your examguard-logo.png in your project root or update the img src -->
 
 <!-- Floating chat button -->
-<button id="eg-chat-btn" aria-label="Open chat with ExamGuard Bot">
-  <i class="bi bi-robot"></i>
-</button>
 
-<!-- Chat window/modal -->
-<div id="eg-chat-window" aria-label="ExamGuard Bot Chat" role="dialog" aria-modal="true">
-  <div class="eg-chat-header">
-    <img src="logo.png" alt="ExamGuard Bot" class="eg-bot-logo">
-    <div>
-      <div class="eg-brand-title">ExamGuard Bot</div>
-      <div class="eg-header-desc">Your secure test assistant</div>
-    </div>
-    <button class="eg-close-btn" aria-label="Close chat" id="eg-close-btn"><i class="bi bi-x-lg"></i></button>
-  </div>
-  <div id="eg-chat-body"></div>
-  <form id="eg-chat-input-row" autocomplete="off" enctype="multipart/form-data">
-    <input type="file" id="eg-image-input" style="display:none" accept="image/*">
-    <button type="button" id="eg-image-btn" title="Send Image"><i class="bi bi-image"></i></button>
-    <div id="eg-image-preview" style="display:none"></div>
-    <input type="text" id="eg-chat-input" placeholder="Type your message..." autocomplete="off" required aria-label="Type your message">
-    <button type="submit" id="eg-send-btn" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
-  </form>
-    </div>
   <!-- PDF.js for PDF text extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
 <script>
