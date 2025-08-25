@@ -268,12 +268,11 @@
             }
             // Find exact match for logged in user
             const candidate = regList.find(
-                reg => (
-                    reg.matricNumber === username ||
-                    reg.loginUsername === username ||
-                    reg.email === authData.user.email
-                )
-            );
+  reg =>
+    reg.matricNumber === authData.user.matricNumber ||
+    reg.loginUsername === authData.user.loginUsername ||
+    reg.email === authData.user.email
+);
             if (!candidate) {
                 showToast("You are not registered with CODECX.", "error");
                 logout();
