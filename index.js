@@ -282,17 +282,33 @@ if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:ima
   }
 });
 
+
+// In routes/auth.js or index.js
 app.post("/api/auth/login", async (req, res) => {
   try {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
     if (!username || !password)
-      return res.status(400).json({message: "All fields required"});
-    const user = await User.findOne({username});
+      return res.status(400).json({ message: "All fields required" });
+
+    // Try to find matching user by username or matricNumber
+    const user = await User.findOne({
+      $or: [
+        { username: username },
+        { matricNumber: username },
+        { loginUsername: username }
+      ]
+    });
+
     if (!user)
-      return res.status(401).json({message: "Invalid username or password"});
+      return res.status(401).json({ message: "Invalid username or password" });
+
+    // Optionally, check if user is active
+    if (user.active === false)
+      return res.status(403).json({ message: "Account not yet activated. Contact admin." });
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(401).json({message: "Invalid username or password"});
+      return res.status(401).json({ message: "Invalid username or password" });
 
     // ---- AUTO-GENERATE studentId IF MISSING ----
     function generateStudentId() {
@@ -310,14 +326,17 @@ app.post("/api/auth/login", async (req, res) => {
       await user.save();
     }
 
-    const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "2h"});
-    res.json({token, message: "Login successful"});
+    const token = jwt.sign(
+      { username: user.username, id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "2h" }
+    );
+    res.json({ token, message: "Login successful" });
   } catch (e) {
     console.error("Login error:", e);
-    res.status(500).json({message: "Server error"});
+    res.status(500).json({ message: "Server error" });
   }
 });
-
 // Password reset
 app.post("/api/auth/reset", async (req, res) => {
   try {
