@@ -1,4 +1,5 @@
 import express from "express";
+const app = express();
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
