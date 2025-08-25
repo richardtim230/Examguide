@@ -205,15 +205,16 @@ router.post(
         questionsData = JSON.parse(raw);
       } else if (Array.isArray(req.body)) {
         questionsData = req.body;
+      } else if (typeof req.body === 'object' && Array.isArray(req.body.data)) {
+        questionsData = req.body.data;
       } else if (typeof req.body.data === "string") {
         questionsData = JSON.parse(req.body.data);
-      } else if (Array.isArray(req.body)) {
-        questionsData = req.body;
-      } else if (typeof req.body === "string") {
+      } else if (typeof req.body === 'string') {
         questionsData = JSON.parse(req.body);
       } else {
-        questionsData = req.body;
+        return res.status(400).json({ error: "No questions provided." });
       }
+
       if (!Array.isArray(questionsData) || questionsData.length === 0) {
         return res.status(400).json({ error: "No questions provided." });
       }
