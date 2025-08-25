@@ -113,7 +113,7 @@ router.post("/", upload.fields([
             loginUsername,
             loginPasswordPlain,
             loginPasswordHash,
-            active: true // Not active until marked reviewed
+            active: false // Not active until marked reviewed
         });
 
         await registration.save();
@@ -133,7 +133,7 @@ router.post("/", upload.fields([
                 email: email,
                 fullname: fullName,
                 phone: phone,
-                active: true // User exists immediately, but is inactive!
+                active: false // User exists immediately, but is inactive!
             });
             await user.save();
         }
