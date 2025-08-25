@@ -113,7 +113,7 @@ router.post("/", upload.fields([
             loginUsername,
             loginPasswordPlain,
             loginPasswordHash,
-            active: false // Not active until marked reviewed
+            active: true // Not active until marked reviewed
         });
 
         await registration.save();
