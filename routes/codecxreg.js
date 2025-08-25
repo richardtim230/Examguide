@@ -4,8 +4,6 @@ import path from "path";
 import fs from "fs";
 import bcrypt from "bcryptjs";
 import CodecxRegistration from "../models/CodecxRegistration.js";
-import User from "../models/User.js"; // Your provided model
-// ...existing imports...
 
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -187,37 +185,9 @@ router.patch("/:id/activate", async (req, res) => {
         reg.active = true;
         await reg.save();
 
-        // Sync with main User collection
-        let user = await User.findOne({
-            $or: [
-                { username: reg.loginUsername },
-                { email: reg.email }
-            ]
-        });
-
-        if (!user) {
-            user = new User({
-                username: reg.loginUsername,
-                password: reg.loginPasswordHash, // Hashed password!
-                role: "codec",
-                email: reg.email,
-                fullname: reg.fullName,
-                phone: reg.phone,
-                active: true
-            });
-        } else {
-            // Update existing user
-            user.password = reg.loginPasswordHash;
-            user.role = "codec";
-            user.email = reg.email;
-            user.fullname = reg.fullName;
-            user.phone = reg.phone;
-            user.active = true;
-        }
-        await user.save();
-
-        res.json({ message: "Account activated!", registration: reg, user });
+        res.json({ message: "Account activated!", registration: reg });
     } catch (e) {
+        console.error("[ACTIVATION ERROR]", e);
         res.status(500).json({ message: "Server error", error: e.message });
     }
 });
