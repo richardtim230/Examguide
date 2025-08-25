@@ -17,7 +17,7 @@ const CodecxRegistrationSchema = new mongoose.Schema({
     loginPasswordHash: { type: String, default: "" },  // For future authentication
 
     // Activation status
-    active: { type: Boolean, default: true }
+    active: { type: Boolean, default: "" }
 }, { collection: "codecxregistrations" });
 
 export default mongoose.model("CodecxRegistration", CodecxRegistrationSchema);
