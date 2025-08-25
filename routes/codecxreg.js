@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import bcrypt from "bcryptjs";
 import CodecxRegistration from "../models/CodecxRegistration.js";
-
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
@@ -113,7 +113,7 @@ router.post("/", upload.fields([
             loginUsername,
             loginPasswordPlain,
             loginPasswordHash,
-            active: false // Not active until marked reviewed
+            active: true // Not active until marked reviewed
         });
 
         await registration.save();
@@ -133,7 +133,7 @@ router.post("/", upload.fields([
                 email: email,
                 fullname: fullName,
                 phone: phone,
-                active: false // User exists immediately, but is inactive!
+                active: true // User exists immediately, but is inactive!
             });
             await user.save();
         }
