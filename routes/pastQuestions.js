@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 import Question from '../models/Question.js';
@@ -35,11 +36,12 @@ const router = express.Router();
 // GET /api/past-questions - Students: Fetch questions with filters
 router.get('/', async (req, res) => {
   try {
-    const { subject, year, count, difficulty } = req.query;
+    const { subject, year, count, courseCode, topic } = req.query;
     const filter = {};
     if (subject) filter.subject = subject;
     if (year) filter.year = year;
-    if (difficulty) filter.difficulty = difficulty;
+    if (courseCode) filter.courseCode = courseCode;
+    if (topic) filter.topic = topic;
 
     let query = Question.find(filter);
     if (count) query = query.limit(Number(count));
@@ -76,7 +78,6 @@ router.post('/submit', authenticate, async (req, res) => {
       }
     });
 
-    // Return all needed data for frontend and stats
     res.json({
       score,
       total: answers.length,
@@ -124,7 +125,7 @@ router.post(
       const {
         subject,
         year,
-        difficulty,
+        courseCode,
         text,
         options, // Array of choices
         correctAnswer,
@@ -154,7 +155,7 @@ router.post(
       }
 
       // Validate required fields
-      if (!subject || !year || !difficulty || !text || !optionsArr || !correctAnswer) {
+      if (!subject || !year || !courseCode || !text || !optionsArr || !correctAnswer) {
         return res.status(400).json({ error: "Missing required fields." });
       }
       if (!Array.isArray(optionsArr) || optionsArr.length < 2) {
@@ -173,20 +174,69 @@ router.post(
       const newQuestion = new Question({
         subject,
         year,
-        difficulty,
+        courseCode,
         text,
         image: imageUrl, // Save image path
         options: optionsArr,
         correctAnswer,
         explanation: explanation || "",
         topic: topic || "",
-        tags: tagsArr
+        tags: tagsArr,
+        createdBy: req.user?._id
       });
 
       await newQuestion.save();
       res.status(201).json({ message: "Question created.", question: newQuestion });
     } catch (err) {
       res.status(500).json({ error: 'Error creating question', detail: err.message });
+    }
+  }
+);
+
+// Bulk upload: POST /api/past-questions/bulk-upload
+router.post(
+  '/bulk-upload',
+  [authenticate, authorizeRole('admin', 'pq-uploader'), upload.single('jsonFile')],
+  async (req, res) => {
+    try {
+      let questionsData = [];
+      if (req.file) {
+        const raw = fs.readFileSync(req.file.path, 'utf-8');
+        questionsData = JSON.parse(raw);
+      } else if (Array.isArray(req.body)) {
+        questionsData = req.body;
+      } else if (typeof req.body.data === "string") {
+        questionsData = JSON.parse(req.body.data);
+      } else if (Array.isArray(req.body)) {
+        questionsData = req.body;
+      } else if (typeof req.body === "string") {
+        questionsData = JSON.parse(req.body);
+      } else {
+        questionsData = req.body;
+      }
+      if (!Array.isArray(questionsData) || questionsData.length === 0) {
+        return res.status(400).json({ error: "No questions provided." });
+      }
+
+      // Validate and map each question
+      const bulk = questionsData.map(q => ({
+        subject: q.subject,
+        year: q.year,
+        courseCode: q.courseCode,
+        text: q.text,
+        options: q.options,
+        correctAnswer: q.correctAnswer,
+        explanation: q.explanation || '',
+        topic: q.topic || '',
+        tags: q.tags || [],
+        createdBy: req.user?._id,
+      }));
+
+      // InsertMany
+      const inserted = await Question.insertMany(bulk);
+      res.status(201).json({ message: `${inserted.length} questions uploaded.`, inserted });
+    } catch (err) {
+      res.status(500).json({ error: 'Error bulk uploading questions', detail: err.message });
     }
   }
 );
@@ -241,13 +291,13 @@ router.delete('/:id', [authenticate, authorizeRole('admin', 'pq-uploader')], asy
 });
 
 // GET /api/past-questions/admin/all - Admin: List all questions (with filters)
-router.get('/admin/all', [authenticate, authorizeRole('admin')], async (req, res) => {
+router.get('/admin/all', [authenticate, authorizeRole('admin', 'pq-uploader', 'superadmin')], async (req, res) => {
   try {
-    const { subject, year, difficulty, topic, tag } = req.query;
+    const { subject, year, courseCode, topic, tag } = req.query;
     const filter = {};
     if (subject) filter.subject = subject;
     if (year) filter.year = year;
-    if (difficulty) filter.difficulty = difficulty;
+    if (courseCode) filter.courseCode = courseCode;
     if (topic) filter.topic = topic;
     if (tag) filter.tags = tag;
 
