@@ -22,6 +22,9 @@ function generatePassword() {
     return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
 
+// ...other imports...
+import User from "../models/User.js"; // already present
+
 // Registration endpoint
 router.post("/", upload.fields([
     { name: "passport", maxCount: 1 },
@@ -70,18 +73,41 @@ router.post("/", upload.fields([
 
         await registration.save();
 
+        // ******* CREATE USER ACCOUNT IMMEDIATELY *******
+        let user = await User.findOne({
+            $or: [
+                { username: loginUsername },
+                { email: email }
+            ]
+        });
+        if (!user) {
+            user = new User({
+                username: loginUsername,
+                password: loginPasswordHash,
+                role: "codec",
+                email: email,
+                fullname: fullName,
+                phone: phone,
+                active: false // User exists immediately, but is inactive!
+            });
+            await user.save();
+        }
+        // ******* END USER CREATION *******
+
         res.json({
             message: "Registration received successfully!",
             registration,
             login: {
                 username: loginUsername,
-                password: loginPasswordPlain // show only once to admin
+                password: loginPasswordPlain // show only once to admin/user
             }
         });
     } catch (e) {
         res.status(500).json({ message: "Server error", error: e.message });
     }
 });
+
+        
 
 // GET all registrations (for admin dashboard)
 // Exclude loginPasswordPlain in list for security
