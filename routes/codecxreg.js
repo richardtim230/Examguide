@@ -25,7 +25,6 @@ function generatePassword() {
 }
 
 
-// Add this route to 
 router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -51,17 +50,17 @@ router.post("/login", async (req, res) => {
         if (!isMatch)
             return res.status(401).json({ message: "Invalid username or password." });
 
-        // Issue JWT (the payload can be customized as needed)
+        // Issue JWT (the payload must match /auth/login)
         const token = jwt.sign(
             {
                 id: candidate._id,
-                loginUsername: candidate.loginUsername,
-                matricNumber: candidate.matricNumber,
+                role: "codecx-candidate",
                 email: candidate.email,
-                type: "codecx-candidate"
+                loginUsername: candidate.loginUsername,
+                matricNumber: candidate.matricNumber
             },
             process.env.JWT_SECRET,
-            { expiresIn: "2h" }
+            { expiresIn: "2d" }
         );
 
         res.json({ token, message: "Login successful!" });
