@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CODECX Student Login</title>
+    <meta name="viewport" content="width=device-width,initial-scale=0.85">
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg,#eef2ff 0%,#c7d2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px rgba(44,62,80,0.13);
+            padding: 2.5rem 2rem;
+            max-width: 420px;
+            width: 100%;
+        }
+        .login-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #312e81;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.02em;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+        .logo-img {
+            display:block;
+            margin:auto;
+            width:56px;
+            height:56px;
+            border-radius:50%;
+            box-shadow:0 2px 8px #6366f133;
+            margin-bottom:20px;
+        }
+        .forgot-link {
+            font-size: 0.97em;
+            color: #6366f1;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .forgot-link:hover {
+            color: #312e81;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="logo.png" class="logo-img" alt="CODECX Logo">
+        <div class="login-title">CODECX Student Login</div>
+        <form id="loginForm" autocomplete="off">
+            <div class="mb-5">
+                <label for="username" class="block text-gray-700 font-medium mb-2">Username / Matric Number</label>
+                <input type="text" id="username" name="username" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required autocomplete="username">
+            </div>
+            <div class="mb-5">
+                <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required autocomplete="current-password">
+            </div>
+            <button type="submit" id="loginBtn" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center transition">
+                <span id="loginBtnText">Login</span>
+            </button>
+            <div class="mt-4 text-center">
+                <span class="forgot-link" onclick="forgotPassword()">Forgot Password?</span>
+            </div>
+        </form>
+        <div id="support" class="text-xs text-gray-500 text-center mt-5">
+            Need help? <a href="mailto:support@codecx.com" class="text-indigo-600 underline">Contact Support</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        const API_BASE = "https://examguide.onrender.com/api";
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+
+        function showToast(message, type = "success") {
+            Toastify({
+                text: message,
+                duration: 3500,
+                gravity: "top",
+                position: "center",
+                backgroundColor: type === "success"
+                    ? "linear-gradient(90deg,#6366f1,#4338ca)"
+                    : "linear-gradient(90deg,#ef4444,#f87171)",
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginBtn.disabled = true;
+            loginBtnText.innerHTML = '<span class="spinner"></span>Logging in...';
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+                const resJson = await response.json();
+
+                if (response.ok) {
+                    showToast("Login successful!", "success");
+                    localStorage.setItem("token", resJson.token);
+                    // Redirect to CODECX student dashboard
+                    setTimeout(() => {
+                        window.location.href = "codecxcandidate.html";
+                    }, 1000);
+                } else {
+                    showToast(resJson.message || "Invalid login credentials", "error");
+                }
+            } catch (err) {
+                showToast("Network or server error. Please try again.", "error");
+            } finally {
+                loginBtn.disabled = false;
+                loginBtnText.innerHTML = 'Login';
+            }
+        });
+
+        function forgotPassword() {
+            showToast("Please contact CODECX admin to reset your password.", "info");
+        }
+    </script>
+</body>
+</html>
