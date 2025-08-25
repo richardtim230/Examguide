@@ -202,11 +202,28 @@
       width: auto;
       max-width: 100%;
       white-space: nowrap;
+      position: relative;
     }
     .btn:hover {
       background: linear-gradient(90deg,#ffe066 0%,#ffc300 100%);
       color: #1e3a8a;
       box-shadow: 0 4px 16px #ffe06644;
+    }
+    .btn .spinner {
+      display: inline-block;
+      vertical-align: middle;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid #fff;
+      border-top: 2.5px solid #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 10px;
+      margin-bottom: 2px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
     }
     .data-table {
       width: 100%; border-collapse: collapse; margin-top: 12px;
@@ -363,7 +380,8 @@
         Use this dashboard to upload, edit, and manage Past Questions for students.<br>
         <ul>
           <li>Upload rich-formatted questions with images and explanations.</li>
-          <li>Organize questions by subject, year, difficulty, and topic.</li>
+          <li>Organize questions by subject, year, <b>course code</b>, and topic.</li>
+          <li>Bulk upload using JSON file or paste (see "Bulk Upload" button).</li>
           <li>Review, edit, and delete questions efficiently.</li>
           <li>Contact superadmin for advanced settings.</li>
         </ul>
@@ -372,8 +390,9 @@
     <!-- Past Questions Section -->
     <div class="section" id="pastquestionsSection" style="display:none;">
       <div class="section-title">Manage Past Questions</div>
-      <div class="actions" style="margin-bottom: 12px;">
-        <button class="btn" onclick="openModal('addPastQModal')">+ Add Past Question</button>
+      <div class="actions" style="margin-bottom: 12px; display: flex; gap: 10px; flex-wrap:wrap;">
+        <button class="btn" onclick="openModal('addPastQModal')" id="addQuestionBtn">+ Add Past Question</button>
+        <button class="btn" onclick="openModal('bulkUploadModal')" id="bulkUploadBtn">Bulk Upload (JSON)</button>
       </div>
       <div style="overflow-x:auto;">
         <table class="data-table" id="pastQuestionsTable">
@@ -381,7 +400,7 @@
             <tr>
               <th>Subject</th>
               <th>Year</th>
-              <th>Difficulty</th>
+              <th>Course Code</th>
               <th>Question</th>
               <th>Actions</th>
             </tr>
@@ -448,15 +467,15 @@
       });
       pastQuestions = await resp.json();
       let html = "";
-      pastQuestions.forEach(q => {
+      (pastQuestions || []).forEach(q => {
         html += `<tr>
           <td>${q.subject}</td>
           <td>${q.year}</td>
-          <td>${q.difficulty}</td>
+          <td>${q.courseCode || '-'}</td>
           <td>${q.text?.replace(/(<([^>]+)>)/gi, "")?.slice(0,60) || "..."}</td>
           <td style="white-space:nowrap;">
             <button class="btn" style="padding:3px 13px;font-size:0.96em;" onclick="editPastQuestion('${q._id}')">Edit</button>
-            <button class="btn" style="padding:3px 13px;font-size:0.96em;background:#ffe066;color:#1e3a8a;" onclick="deletePastQuestion('${q._id}')">Delete</button>
+            <button class="btn" style="padding:3px 13px;font-size:0.96em;background:#ffe066;color:#1e3a8a;" onclick="deletePastQuestion('${q._id}', this)">Delete</button>
           </td>
         </tr>`;
       });
@@ -465,12 +484,14 @@
     function editPastQuestion(id) {
       alert("In production, this will open a modal with the Quill editor prefilled for editing.");
     }
-    async function deletePastQuestion(id) {
+    async function deletePastQuestion(id, btn) {
       if (!confirm("Delete this past question?")) return;
+      setBtnLoading(btn, true);
       await fetch(API_URL + "past-questions/" + id, {
         method: "DELETE",
         headers: { Authorization: "Bearer " + token }
       });
+      setBtnLoading(btn, false);
       fetchPastQuestions();
     }
 
@@ -487,12 +508,8 @@
               <input id="subject" type="text" placeholder="e.g. Mathematics" required>
               <label>Year</label>
               <input id="year" type="text" placeholder="e.g. 2024" required>
-              <label>Difficulty</label>
-              <select id="difficulty">
-                <option value="Easy">Easy</option>
-                <option value="Medium" selected>Medium</option>
-                <option value="Hard">Hard</option>
-              </select>
+              <label>Course Code</label>
+              <input id="courseCode" type="text" placeholder="e.g. MTH106" required>
               <label>Topic (Optional)</label>
               <input id="topic" type="text" placeholder="e.g. Algebra">
               <label>Tags (comma separated)</label>
@@ -500,7 +517,7 @@
               <label>Question Text (Rich Format)</label>
               <div id="quillEditor" class="quill-editor"></div>
               <label>Image (optional)</label>
-<input id="questionImage" type="file" accept="image/*">
+              <input id="questionImage" type="file" accept="image/*">
               <label>Options</label>
               <input id="optionA" type="text" placeholder="Option A" required>
               <input id="optionB" type="text" placeholder="Option B" required>
@@ -516,9 +533,34 @@
               <label>Explanation (Rich Format, Optional)</label>
               <div id="quillExplanation" class="quill-editor"></div>
               <span id="addPastQMsg"></span>
-              <button class="btn" onclick="submitAddPastQuestion()">Add</button>
+              <button class="btn" id="addPastQBtn" onclick="submitAddPastQuestion()">Add<span class="spinner" style="display:none"></span></button>
             </div>
           </div>`;
+      }
+      if (type === "bulkUploadModal") {
+        html = `
+          <div class="modal-backdrop" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+              <button class="close-modal" onclick="closeModal(event)">&times;</button>
+              <h2>Bulk Upload Questions (JSON)</h2>
+              <label>Upload JSON File</label>
+              <input id="bulkJsonFile" type="file" accept=".json">
+              <div style="text-align:center; margin: 12px 0; color: #6366f1; font-weight: 600;">OR</div>
+              <label>Paste JSON Array Below</label>
+              <textarea id="bulkJsonPaste" placeholder='[{"subject":"Mathematics", "year":"2024", "courseCode":"MTH106", ...}, ...]' style="min-height:120px;"></textarea>
+              <span id="bulkUploadMsg"></span>
+              <button class="btn" id="bulkUploadActionBtn" onclick="submitBulkUpload()">Upload<span class="spinner" style="display:none"></span></button>
+              <div style="font-size:0.93em;color:#888;margin-top:9px;">
+                Example JSON:<br>
+                <code>
+                  [
+                    {"subject":"Mathematics","year":"2024","courseCode":"MTH106","text":"...","options":["a","b","c","d"],"correctAnswer":"a"}
+                  ]
+                </code>
+              </div>
+            </div>
+          </div>
+        `;
       }
       if (html) {
         document.getElementById("modalRoot").innerHTML = html;
@@ -526,9 +568,9 @@
           window.pqQuill = new Quill('#quillEditor', {
             theme: 'snow',
             modules: { toolbar: [
-              ['bold', 'italic', 'underline', 'strike'], 
-              [{'header': 1}, {'header': 2}], 
-              [{'list': 'ordered'}, {'list': 'bullet'}], 
+              ['bold', 'italic', 'underline', 'strike'],
+              [{'header': 1}, {'header': 2}],
+              [{'list': 'ordered'}, {'list': 'bullet'}],
               ['link', 'image'], ['clean']]
             }
           });
@@ -547,69 +589,156 @@
       }
     }
 
-async function submitAddPastQuestion() {
-  const subject = document.getElementById("subject").value.trim();
-  const year = document.getElementById("year").value.trim();
-  const difficulty = document.getElementById("difficulty").value;
-  const topic = document.getElementById("topic").value.trim();
-  const tags = document.getElementById("tags").value.trim().split(",").map(t=>t.trim()).filter(Boolean);
-  const text = window.pqQuill.root.innerHTML;
-  const optionA = document.getElementById("optionA").value.trim();
-  const optionB = document.getElementById("optionB").value.trim();
-  const optionC = document.getElementById("optionC").value.trim();
-  const optionD = document.getElementById("optionD").value.trim();
-  const correctLetter = document.getElementById("correctAnswer").value;
-  const options = [optionA, optionB, optionC, optionD];
-  const correctAnswer = options["ABCD".indexOf(correctLetter)];
-  const explanation = window.explQuill.root.innerHTML;
-  const imageInput = document.getElementById("questionImage");
-  const imageFile = imageInput && imageInput.files[0];
-
-  const msg = document.getElementById("addPastQMsg");
-  msg.innerText = "";
-  if (!subject || !year || !text || options.some(o=>!o) || !correctAnswer) { msg.innerText = "All fields required!"; return; }
-  if (!options.includes(correctAnswer)) { msg.innerText = "Correct answer must match one of the options."; return; }
-
-  try {
-    const formData = new FormData();
-    formData.append("subject", subject);
-    formData.append("year", year);
-    formData.append("difficulty", difficulty);
-    formData.append("topic", topic);
-    formData.append("tags", JSON.stringify(tags));
-    formData.append("text", text);
-    formData.append("options", JSON.stringify(options));
-    formData.append("correctAnswer", correctAnswer);
-    formData.append("explanation", explanation);
-    if (imageFile) formData.append("image", imageFile);
-
-    const resp = await fetch(API_URL + "past-questions", {
-      method: "POST",
-      headers: { Authorization: "Bearer " + token },
-      body: formData
-      // Do NOT set Content-Type header; browser will set it correctly.
-    });
-
-    let data;
-    try {
-      data = await resp.json();
-    } catch {
-      // If response is not JSON (e.g., server error), show generic message
-      msg.innerText = "Server returned an invalid response.";
-      return;
+    // Spinner helper
+    function setBtnLoading(btn, isLoading) {
+      if (!btn) return;
+      let spinner = btn.querySelector('.spinner');
+      if (!spinner) {
+        spinner = document.createElement('span');
+        spinner.className = "spinner";
+        btn.appendChild(spinner);
+      }
+      spinner.style.display = isLoading ? "inline-block" : "none";
+      btn.disabled = isLoading;
     }
 
-    if (!resp.ok) {
-      msg.innerText = data.error || data.message || "Failed to add question.";
-      return;
+    async function submitAddPastQuestion() {
+      const btn = document.getElementById("addPastQBtn");
+      setBtnLoading(btn, true);
+      const subject = document.getElementById("subject").value.trim();
+      const year = document.getElementById("year").value.trim();
+      const courseCode = document.getElementById("courseCode").value.trim();
+      const topic = document.getElementById("topic").value.trim();
+      const tags = document.getElementById("tags").value.trim().split(",").map(t=>t.trim()).filter(Boolean);
+      const text = window.pqQuill.root.innerHTML;
+      const optionA = document.getElementById("optionA").value.trim();
+      const optionB = document.getElementById("optionB").value.trim();
+      const optionC = document.getElementById("optionC").value.trim();
+      const optionD = document.getElementById("optionD").value.trim();
+      const correctLetter = document.getElementById("correctAnswer").value;
+      const options = [optionA, optionB, optionC, optionD];
+      const correctAnswer = options["ABCD".indexOf(correctLetter)];
+      const explanation = window.explQuill.root.innerHTML;
+      const imageInput = document.getElementById("questionImage");
+      const imageFile = imageInput && imageInput.files[0];
+
+      const msg = document.getElementById("addPastQMsg");
+      msg.innerText = "";
+      if (!subject || !year || !courseCode || !text || options.some(o=>!o) || !correctAnswer) { msg.innerText = "All fields required!"; setBtnLoading(btn, false); return; }
+      if (!options.includes(correctAnswer)) { msg.innerText = "Correct answer must match one of the options."; setBtnLoading(btn, false); return; }
+
+      try {
+        const formData = new FormData();
+        formData.append("subject", subject);
+        formData.append("year", year);
+        formData.append("courseCode", courseCode);
+        formData.append("topic", topic);
+        formData.append("tags", JSON.stringify(tags));
+        formData.append("text", text);
+        formData.append("options", JSON.stringify(options));
+        formData.append("correctAnswer", correctAnswer);
+        formData.append("explanation", explanation);
+        if (imageFile) formData.append("image", imageFile);
+
+        const resp = await fetch(API_URL + "past-questions", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + token },
+          body: formData
+        });
+
+        let data;
+        try {
+          data = await resp.json();
+        } catch {
+          msg.innerText = "Server returned an invalid response.";
+          setBtnLoading(btn, false);
+          return;
+        }
+
+        if (!resp.ok) {
+          msg.innerText = data.error || data.message || "Failed to add question.";
+          setBtnLoading(btn, false);
+          return;
+        }
+        msg.innerText = "Past Question added!";
+        fetchPastQuestions();
+        setTimeout(() => { closeModal(); }, 1200);
+      } catch (err) {
+        msg.innerText = "Network error. Please check your connection or try again.";
+      }
+      setBtnLoading(btn, false);
     }
-    msg.innerText = "Past Question added!";
-    fetchPastQuestions();
-    setTimeout(() => { closeModal(); }, 1200);
-  } catch (err) {
-    msg.innerText = "Network error. Please check your connection or try again.";
-  }
-}
+
+    async function submitBulkUpload() {
+      const input = document.getElementById("bulkJsonFile");
+      const textarea = document.getElementById("bulkJsonPaste");
+      const file = input.files[0];
+      const msg = document.getElementById("bulkUploadMsg");
+      const btn = document.getElementById("bulkUploadActionBtn");
+      setBtnLoading(btn, true);
+      msg.innerText = "";
+
+      // Priority: file > textarea
+      if (file) {
+        const formData = new FormData();
+        formData.append("jsonFile", file);
+
+        msg.innerText = "Uploading...";
+        const resp = await fetch(API_URL + "past-questions/bulk-upload", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + token },
+          body: formData
+        });
+        const data = await resp.json();
+        if (!resp.ok) {
+          msg.innerText = data.error || "Upload failed.";
+          setBtnLoading(btn, false);
+          return;
+        }
+        msg.innerText = data.message || "Upload successful!";
+        fetchPastQuestions();
+        setTimeout(() => { closeModal(); }, 1500);
+        setBtnLoading(btn, false);
+        return;
+      }
+
+      // If no file, try textarea
+      if (textarea.value.trim()) {
+        let jsonArr;
+        try {
+          jsonArr = JSON.parse(textarea.value);
+          if (!Array.isArray(jsonArr)) throw new Error("Not an array");
+        } catch (e) {
+          msg.innerText = "Invalid JSON array pasted.";
+          setBtnLoading(btn, false);
+          return;
+        }
+        msg.innerText = "Uploading...";
+        const resp = await fetch(API_URL + "past-questions/bulk-upload", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(jsonArr)
+        });
+        const data = await resp.json();
+        if (!resp.ok) {
+          msg.innerText = data.error || "Upload failed.";
+          setBtnLoading(btn, false);
+          return;
+        }
+        msg.innerText = data.message || "Upload successful!";
+        fetchPastQuestions();
+        setTimeout(() => { closeModal(); }, 1500);
+        setBtnLoading(btn, false);
+        return;
+      }
+
+      msg.innerText = "Please select a JSON file or paste JSON.";
+      setBtnLoading(btn, false);
+    }
+
     // ========== NAV ==========
     function showSection(id, el) {
       document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
