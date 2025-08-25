@@ -5,7 +5,11 @@ import fs from "fs";
 import bcrypt from "bcryptjs";
 import CodecxRegistration from "../models/CodecxRegistration.js";
 import User from "../models/User.js"; // Your provided model
+// ...existing imports...
 
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 const router = express.Router();
 
 const storage = multer.memoryStorage(); // store files in memory as Buffer
@@ -22,6 +26,51 @@ function generatePassword() {
     return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
 
+
+// Add this route to 
+router.post("/login", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password)
+            return res.status(400).json({ message: "Username and password required." });
+
+        // Find registration by loginUsername, matricNumber, or email
+        const candidate = await CodecxRegistration.findOne({
+            $or: [
+                { loginUsername: username },
+                { matricNumber: username },
+                { email: username }
+            ]
+        });
+
+        if (!candidate)
+            return res.status(401).json({ message: "Invalid username or password." });
+
+        if (!candidate.active)
+            return res.status(403).json({ message: "Account not yet activated. Please contact admin." });
+
+        const isMatch = await bcrypt.compare(password, candidate.loginPasswordHash);
+        if (!isMatch)
+            return res.status(401).json({ message: "Invalid username or password." });
+
+        // Issue JWT (the payload can be customized as needed)
+        const token = jwt.sign(
+            {
+                id: candidate._id,
+                loginUsername: candidate.loginUsername,
+                matricNumber: candidate.matricNumber,
+                email: candidate.email,
+                type: "codecx-candidate"
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "2h" }
+        );
+
+        res.json({ token, message: "Login successful!" });
+    } catch (e) {
+        res.status(500).json({ message: "Server error", error: e.message });
+    }
+});
 
 // Registration endpoint
 router.post("/", upload.fields([
