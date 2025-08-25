@@ -58,9 +58,8 @@ router.post("/login", async (req, res) => {
                 email: candidate.email,
                 loginUsername: candidate.loginUsername,
                 matricNumber: candidate.matricNumber
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: "2d" }
+            },process.env.JWT_SECRET || "your_jwt_secret",
+            { expiresIn: "2h" }
         );
 
         res.json({ token, message: "Login successful!" });
