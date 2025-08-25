@@ -133,7 +133,7 @@ router.post("/", upload.fields([
                 email: email,
                 fullname: fullName,
                 phone: phone,
-                active: false // User exists immediately, but is inactive!
+                active: true // User exists immediately, but is inactive!
             });
             await user.save();
         }
