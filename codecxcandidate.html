@@ -273,11 +273,13 @@
     reg.loginUsername === authData.user.loginUsername ||
     reg.email === authData.user.email
 );
-            if (!candidate) {
+            if (authData.user.role !== "codecx-candidate") {
+  // Not a student, logout or show error
                 showToast("You are not registered with CODECX.", "error");
                 logout();
                 return;
-            }
+}
+            
             // Prevent display of someone else's data
             renderStudentDashboard(candidate);
         } catch (err) {
