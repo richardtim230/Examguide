@@ -1,433 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=0.90">
-    <title>CODECX Student Dashboard</title>
-    <!-- Tailwind CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Toastify CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <!-- Animate.css for modal animation -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; }
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-        .profile-card {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 18px rgba(44,62,80,0.08);
-            padding: 1.5rem 1rem;
-            position: relative;
-            transition: box-shadow .3s;
-        }
-        .profile-card:hover {
-            box-shadow: 0 8px 30px rgba(44,62,80,0.13);
-        }
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .passport-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 2px 6px rgba(44,62,80,0.09);
-            border: 2px solid #d1d5db;
-        }
-        .detail-label {
-            font-size: 0.97rem;
-            color: #6366f1;
-            font-weight: 600;
-        }
-        .action-btn {
-            display: inline-block;
-            margin: 0 0.5rem 0.5rem 0;
-            background: #6366f1;
-            color: #fff;
-            border-radius: 8px;
-            padding: 0.5rem 1.2rem;
-            font-weight: 600;
-            transition: background .2s;
-        }
-        .action-btn:hover { background: #312e81; }
-        .section-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(44,62,80,0.09);
-            padding: 1rem 1rem;
-            margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-        .activity-table th, .activity-table td {
-            padding: 6px 10px;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-        }
-        .activity-table th {
-            background: #f3f4f6;
-            color: #6366f1;
-            font-weight: 600;
-            font-size: 0.97rem;
-        }
-        .activity-table td {
-            font-size: 0.95rem;
-        }
-        .upload-box {
-            border: 2px dashed #6366f1;
-            border-radius: 10px;
-            padding: 1rem;
-            background: #f8fafc;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 1rem;
-        }
-        .upload-box:hover {
-            background: #eef2ff;
-        }
-        #logoutBtn {
-            background: #ef4444;
-            color: #fff;
-            border-radius: 8px;
-            padding: 0.5rem 1.2rem;
-            font-weight: 600;
-            margin-left: 1rem;
-            transition: background .2s;
-        }
-        #logoutBtn:hover { background: #b91c1c; }
-        @media (max-width: 600px) {
-            .profile-header { flex-direction: column; gap: 1rem;}
-            .profile-card { padding: 1rem .5rem; }
-            .section-card { padding: 0.5rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>CODECX Student Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.80">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body class="bg-gray-100 min-h-screen">
-
-    <!-- Header -->
-    <header class="flex items-center justify-between px-6 py-5 bg-white shadow">
-        <h1 class="text-2xl md:text-3xl font-bold text-indigo-900">CODECX Student Dashboard</h1>
-        <div class="flex items-center gap-2">
-            <img id="studentHeaderAvatar" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" class="w-10 h-10 rounded-full" alt="Student">
-            <span id="studentHeaderName" class="text-base font-medium text-gray-700 hidden sm:inline">Student</span>
-            <button id="logoutBtn" onclick="logout()">Logout</button>
+<body class="bg-gray-50 min-h-screen">
+  <header class="bg-white shadow px-4 py-4 flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-indigo-800">CODECX Student Dashboard</h1>
+    <div class="flex items-center gap-2">
+      <img id="studentAvatar" class="w-10 h-10 rounded-full" src="" alt="avatar" />
+      <span id="studentNameHeader" class="font-semibold"></span>
+      <button onclick="logout()" class="ml-3 px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700">Logout</button>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto py-8 px-2">
+    <section class="bg-white rounded shadow p-6 mb-8" id="profileSection">
+      <h2 class="text-xl font-semibold mb-4">Profile</h2>
+      <div class="flex items-center mb-4">
+        <img id="studentPassport" class="w-20 h-20 rounded-full border mr-6" src="" alt="Passport"/>
+        <div>
+          <div id="studentFullName" class="text-lg font-bold"></div>
+          <div id="studentMatric" class="text-sm text-gray-500"></div>
+          <div id="studentEmail" class="text-sm text-gray-600"></div>
+          <div id="studentPhone" class="text-sm text-gray-600"></div>
+          <div id="studentNassDue" class="text-sm"></div>
+          <div id="studentStatus" class="text-sm mt-2"></div>
         </div>
-    </header>
-
-    <!-- Main Profile Card -->
-    <main class="px-3 py-6 md:px-10 md:py-10">
-        <div class="profile-card mb-8" id="profileCard" style="display:none;">
-            <div class="profile-header">
-                <img id="studentPassport" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" class="passport-img" alt="Passport">
-                <div>
-                    <div id="studentName" class="text-xl font-bold text-indigo-700 mb-1">Student Name</div>
-                    <div id="studentMatric" class="text-sm text-gray-500 mb-1">Matric Number</div>
-                    <div id="studentCourseDept" class="text-sm text-gray-700 mb-1">Course & Department</div>
-                    <div id="studentStatus" class="text-xs font-semibold mb-1"><span class="px-2 py-1 rounded bg-gray-200 text-gray-700">Status</span></div>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-3">
-                <div>
-                    <span class="detail-label">Email:</span>
-                    <div id="studentEmail" class="text-gray-800">student@email.com</div>
-                </div>
-                <div>
-                    <span class="detail-label">Phone:</span>
-                    <div id="studentPhone" class="text-gray-800">08012345678</div>
-                </div>
-                <div>
-                    <span class="detail-label">NASS Due:</span>
-                    <div id="studentNassDue"></div>
-                </div>
-            </div>
-            <div class="mt-4 flex flex-wrap gap-2">
-                <button class="action-btn" onclick="openReceiptModal('payment')"><i class="fas fa-receipt mr-1"></i>View Payment Receipt</button>
-                <button class="action-btn" onclick="openReceiptModal('nass')"><i class="fas fa-file-invoice mr-1"></i>View NASS Receipt</button>
-                <button class="action-btn" onclick="window.print()"><i class="fas fa-print mr-1"></i>Print Profile</button>
-            </div>
-        </div>
-
-        <!-- Assignment Upload & Attendance Marking -->
-        <div class="section-card mb-8" id="activitySection" style="display:none;">
-            <h2 class="text-lg font-semibold text-indigo-800 mb-2">Today's Activities</h2>
-            <div class="mb-4">
-                <div class="upload-box" onclick="document.getElementById('assignmentInput').click()">
-                    <i class="fas fa-upload"></i> Upload Assignment
-                </div>
-                <input type="file" id="assignmentInput" class="hidden" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onchange="submitAssignment(event)">
-                <button id="attendanceBtn" class="action-btn bg-green-600 hover:bg-green-700"><i class="fas fa-user-check mr-1"></i>Mark Attendance</button>
-                <span id="attendanceStatus" class="ml-2 text-green-700 font-semibold"></span>
-            </div>
-            <div>
-                <span class="detail-label">Assignment Submission:</span>
-                <span id="assignmentStatus" class="ml-2 text-indigo-700 font-semibold"></span>
-            </div>
-        </div>
-
-        <!-- Daily Activities History -->
-        <div class="section-card mb-8" id="historySection" style="display:none;">
-            <h2 class="text-lg font-semibold text-indigo-800 mb-2">Daily Activities History</h2>
-            <table class="activity-table w-full mb-2 rounded-lg overflow-hidden">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Assignment Submitted</th>
-                        <th>Attendance</th>
-                    </tr>
-                </thead>
-                <tbody id="activitiesTableBody">
-                    <!-- Dynamically rendered -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Admin Feedback -->
-        <div class="section-card mb-8" id="notesSection" style="display:none;">
-            <h2 class="text-lg font-semibold text-indigo-800 mb-2">Admin Feedback & Notes</h2>
-            <div id="studentNotes" class="text-gray-700 mb-2">No feedback yet.</div>
-        </div>
-
-        <!-- Receipt Modal -->
-        <div id="receiptModal" class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center hidden">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative animate__animated animate__fadeIn">
-                <button class="absolute top-4 right-4 text-2xl font-bold text-indigo-800 hover:text-red-500" onclick="closeReceiptModal()">&times;</button>
-                <div id="receiptModalContent"></div>
-            </div>
-        </div>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script>
-    // Backend API endpoints
+      </div>
+      <div class="flex flex-wrap gap-3 mb-3">
+        <button onclick="showReceipt('payment')" class="px-3 py-1 bg-indigo-600 text-white rounded">View Payment Receipt</button>
+        <button onclick="showReceipt('nass')" class="px-3 py-1 bg-indigo-600 text-white rounded">View NASS Receipt</button>
+      </div>
+    </section>
+    <section class="bg-white rounded shadow p-6 mb-8" id="activitySection">
+      <h2 class="text-xl font-semibold mb-4">Activity</h2>
+      <div class="mb-3">
+        <button id="attendanceBtn" class="px-3 py-1 bg-green-600 text-white rounded mb-2">Mark Attendance</button>
+        <span id="attendanceStatus" class="ml-3 font-semibold"></span>
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Upload Assignment:</label>
+        <input id="assignmentInput" type="file" class="mb-2"/>
+        <button onclick="submitAssignment()" class="px-3 py-1 bg-indigo-600 text-white rounded mb-2">Submit</button>
+        <span id="assignmentStatus" class="ml-2"></span>
+      </div>
+    </section>
+    <section class="bg-white rounded shadow p-6 mb-8" id="historySection">
+      <h2 class="text-xl font-semibold mb-4">History</h2>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr>
+            <th class="px-2 py-1 border">Date</th>
+            <th class="px-2 py-1 border">Assignment</th>
+            <th class="px-2 py-1 border">Attendance</th>
+          </tr>
+        </thead>
+        <tbody id="historyTable"></tbody>
+      </table>
+    </section>
+    <section class="bg-white rounded shadow p-6" id="notesSection">
+      <h2 class="text-xl font-semibold mb-4">Admin Notes</h2>
+      <div id="adminNote" class="text-gray-700"></div>
+    </section>
+    <!-- Receipt Modal -->
+    <div id="receiptModal" class="fixed inset-0 z-30 bg-black bg-opacity-60 flex items-center justify-center hidden">
+      <div class="bg-white p-6 rounded shadow relative max-w-lg w-full">
+        <button onclick="closeReceipt()" class="absolute top-2 right-2 text-lg font-bold">&times;</button>
+        <div id="receiptModalContent"></div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script>
     const API_BASE = "https://examguide.onrender.com/api";
-    const CODECX_REG_ENDPOINT = API_BASE + "/codecxreg";
 
-    // Utility for date formatting
-    function formatDate(dateStr) {
-        if (!dateStr) return "";
-        let d = new Date(dateStr);
-        return d.toLocaleDateString("en-NG", { year:"numeric", month:"short", day:"numeric" });
-    }
-
-    // LOGOUT function
-    function logout() {
-        localStorage.removeItem('token');
-        window.location.href = "codecxlogin.html"; // Change to your login page
-    }
-
+    // --- Utility functions
     function showToast(msg, type="info") {
-        Toastify({
-            text: msg,
-            duration: 3500,
-            gravity: "top",
-            position: "center",
-            backgroundColor: type === "success"
-                ? "linear-gradient(90deg,#22c55e,#16a34a)"
-                : type === "error"
-                    ? "linear-gradient(90deg,#ef4444,#dc2626)"
-                    : "linear-gradient(90deg,#6366f1,#312e81)"
-        }).showToast();
+      Toastify({
+        text: msg,
+        duration: 3500,
+        gravity: "top",
+        position: "center",
+        backgroundColor: type === "success" ? "#16a34a" :
+                          type === "error" ? "#dc2626" : "#6366f1"
+      }).showToast();
+    }
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = "codexcclogin.html";
     }
 
-    // Fetch user registration data from backend using JWT
-    async function fetchLoggedInCandidate() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            logout();
-            return;
-        }
-        try {
-            // Get user identity from JWT (decode or backend /api/auth/me endpoint)
-            // Here, we use backend endpoint for security
-            const authResp = await fetch(API_BASE + "/auth/me", {
-                headers: { "Authorization": "Bearer " + token }
-            });
-            const authData = await authResp.json();
-            if (!authResp.ok || !authData.user) {
-                logout();
-                return;
-            }
-            // Determine user by username, email or matricNumber
-            let username = authData.user.username || authData.user.matricNumber || authData.user.loginUsername;
-            // Now, find corresponding registration
-            // GET all registrations for efficiency (could be optimized to search by matricNumber)
-            const regResp = await fetch(CODECX_REG_ENDPOINT);
-            const regList = await regResp.json();
-            if (!regResp.ok || !Array.isArray(regList)) {
-                showToast("Unable to fetch candidate data.", "error");
-                logout();
-                return;
-            }
-            // Find exact match for logged in user
-            const candidate = regList.find(
-  reg =>
-    reg.matricNumber === authData.user.matricNumber ||
-    reg.loginUsername === authData.user.loginUsername ||
-    reg.email === authData.user.email
-);
-            if (authData.user.role !== "codecx-candidate") {
-  // Not a student, logout or show error
-                showToast("You are not registered with CODECX.", "error");
-                logout();
-                return;
-}
-            
-            // Prevent display of someone else's data
-            renderStudentDashboard(candidate);
-        } catch (err) {
-            showToast("Error fetching user data.", "error");
-            logout();
-        }
+    // --- Receipt Modal
+    function showReceipt(type) {
+      const student = window.student;
+      let src = type === "payment" ? student.paymentReceiptBase64 : student.nassReceiptBase64;
+      let label = type === "payment" ? "Payment Receipt" : "NASS Receipt";
+      document.getElementById("receiptModalContent").innerHTML = src
+        ? `<h3 class="mb-2 font-semibold">${label}</h3><img src="${src}" alt="${label}" class="mb-2 rounded shadow"/><a href="${src}" download="${student.fullName}_${label}.jpg" class="px-3 py-1 bg-indigo-600 text-white rounded">Download</a>`
+        : `<div class="text-gray-500">No ${label} available.</div>`;
+      document.getElementById("receiptModal").classList.remove("hidden");
     }
-
-    // Render candidate dashboard
-    function renderStudentDashboard(student) {
-        // Show relevant sections
-        document.getElementById("profileCard").style.display = "";
-        document.getElementById("activitySection").style.display = "";
-        document.getElementById("historySection").style.display = "";
-        document.getElementById("notesSection").style.display = "";
-
-        document.getElementById("studentHeaderAvatar").src = student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName) + '&background=6366f1&color=fff';
-        document.getElementById("studentHeaderName").textContent = student.fullName;
-        document.getElementById("studentPassport").src = student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName) + '&background=6366f1&color=fff';
-        document.getElementById("studentName").textContent = student.fullName;
-        document.getElementById("studentMatric").textContent = student.matricNumber;
-        document.getElementById("studentCourseDept").textContent = (student.course ? student.course : "") + (student.department ? " | " + student.department : "");
-        document.getElementById("studentStatus").innerHTML = `<span class="px-2 py-1 rounded ${student.active ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-700"}">${student.active ? "Active" : "Inactive"}</span>`;
-        document.getElementById("studentEmail").textContent = student.email;
-        document.getElementById("studentPhone").textContent = student.phone;
-        document.getElementById("studentNassDue").innerHTML = student.nassDue === "yes"
-            ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
-            : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">Not Paid</span>';
-        document.getElementById("studentNotes").textContent = student.adminNote || "No feedback yet.";
-
-        // Assignment and attendance logic (simulate today's activities)
-        window.student = student; // for activity/receipt logic
-        window.student.today = window.student.today || { assignmentSubmitted: false, attendanceMarked: false };
-        renderTodayStatus();
-        renderActivitiesTable();
-    }
-
-    // Render daily activities table (from student.activities)
-    function renderActivitiesTable() {
-        const tbody = document.getElementById("activitiesTableBody");
-        tbody.innerHTML = "";
-        const activities = window.student.activities || [];
-        if (!activities.length) {
-            tbody.innerHTML = `<tr><td colspan="3" class="text-gray-400 text-sm">No activity records found.</td></tr>`;
-            return;
-        }
-        activities.forEach(act => {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${formatDate(act.date)}</td>
-                    <td>
-                        ${act.submittedAssignment
-                            ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Yes</span>"
-                            : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>No</span>"}
-                    </td>
-                    <td>
-                        ${act.markedPresent
-                            ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Present</span>"
-                            : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>Absent</span>"}
-                    </td>
-                </tr>
-            `;
-        });
-    }
-
-    // Assignment upload
-    function submitAssignment(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        // Simulate upload
-        setTimeout(() => {
-            window.student.today.assignmentSubmitted = true;
-            document.getElementById("assignmentStatus").textContent = "Submitted";
-            showToast("Assignment uploaded successfully!", "success");
-            // Add today's record to activities
-            const todayStr = new Date().toISOString().split('T')[0];
-            let todayActivity = window.student.activities?.find(act => act.date === todayStr);
-            if (todayActivity) {
-                todayActivity.submittedAssignment = true;
-            } else {
-                window.student.activities = window.student.activities || [];
-                window.student.activities.unshift({
-                    date: todayStr,
-                    submittedAssignment: true,
-                    markedPresent: window.student.today.attendanceMarked
-                });
-            }
-            renderActivitiesTable();
-        }, 900);
-    }
-    // Mark attendance
-    document.getElementById("attendanceBtn").onclick = function() {
-        if (window.student.today.attendanceMarked) {
-            showToast("You have already marked attendance today.", "info");
-            return;
-        }
-        window.student.today.attendanceMarked = true;
-        document.getElementById("attendanceStatus").textContent = "Marked Present";
-        showToast("Attendance marked for today!", "success");
-        // Add today's record to activities
-        const todayStr = new Date().toISOString().split('T')[0];
-        let todayActivity = window.student.activities?.find(act => act.date === todayStr);
-        if (todayActivity) {
-            todayActivity.markedPresent = true;
-        } else {
-            window.student.activities = window.student.activities || [];
-            window.student.activities.unshift({
-                date: todayStr,
-                submittedAssignment: window.student.today.assignmentSubmitted,
-                markedPresent: true
-            });
-        }
-        renderActivitiesTable();
-    };
-
-    // Render today's activity status
-    function renderTodayStatus() {
-        document.getElementById("assignmentStatus").textContent = window.student.today.assignmentSubmitted ? "Submitted" : "Not submitted";
-        document.getElementById("attendanceStatus").textContent = window.student.today.attendanceMarked ? "Marked Present" : "";
-    }
-
-    // Receipt modal
-    function openReceiptModal(type) {
-        let src, label;
-        if (type === "payment") {
-            src = window.student.paymentReceiptBase64;
-            label = "Payment Receipt";
-        } else {
-            src = window.student.nassReceiptBase64;
-            label = "NASS Receipt";
-        }
-        const content = src
-            ? `<img src="${src}" alt="${label}" class="w-full rounded-lg shadow mb-2"><a href="${src}" download="${window.student.fullName}_${label}.jpg" class="action-btn">Download</a>`
-            : `<div class="text-gray-500 text-center">No ${label} uploaded.</div>`;
-        document.getElementById("receiptModalContent").innerHTML = `<h3 class="font-semibold text-indigo-700 mb-2">${label}</h3>${content}`;
-        document.getElementById("receiptModal").classList.remove("hidden");
-        document.body.style.overflow = 'hidden';
-    }
-    function closeReceiptModal() {
-        document.getElementById("receiptModal").classList.add("hidden");
-        document.body.style.overflow = '';
+    function closeReceipt() {
+      document.getElementById("receiptModal").classList.add("hidden");
     }
     document.getElementById("receiptModal").addEventListener("click", function(e) {
-        if (e.target === this) closeReceiptModal();
+      if (e.target === this) closeReceipt();
     });
 
-    // On page load, fetch logged-in user's data and render
-    window.onload = fetchLoggedInCandidate;
-    </script>
+    // --- Main Logic
+    async function loadDashboard() {
+      const token = localStorage.getItem('token');
+      if (!token) return logout();
+
+      // 1. Get user info from JWT
+      let user;
+      try {
+        const resp = await fetch(`${API_BASE}/auth/me`, {
+          headers: { "Authorization": "Bearer " + token }
+        });
+        const data = await resp.json();
+        if (!resp.ok || !data.user) throw new Error();
+        user = data.user;
+      } catch (e) {
+        showToast("Session expired. Please log in again.", "error");
+        return logout();
+      }
+
+      // 2. Fetch candidate registration by matricNumber
+      let candidate;
+      try {
+        // Prefer matricNumber, fallback to loginUsername/email if needed
+        let matric = user.matricNumber || user.loginUsername;
+        let response = await fetch(`${API_BASE}/codecxreg?matricNumber=${encodeURIComponent(matric)}`);
+        if (!response.ok) throw new Error();
+        let regList = await response.json();
+        // If your backend returns an array, find first match (adjust as needed)
+        candidate = Array.isArray(regList) ? regList[0] : regList;
+        if (!candidate || (!candidate.matricNumber && !candidate.loginUsername)) throw new Error();
+      } catch (e) {
+        showToast("Unable to load your registration record.", "error");
+        return logout();
+      }
+      window.student = candidate; // for modal/receipt
+
+      // 3. Render profile
+      document.getElementById("studentAvatar").src =
+        candidate.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(candidate.fullName || "Student");
+      document.getElementById("studentNameHeader").textContent = candidate.fullName || "";
+      document.getElementById("studentPassport").src =
+        candidate.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(candidate.fullName || "Student");
+      document.getElementById("studentFullName").textContent = candidate.fullName || "";
+      document.getElementById("studentMatric").textContent = "Matric No: " + (candidate.matricNumber || "");
+      document.getElementById("studentEmail").textContent = candidate.email || "";
+      document.getElementById("studentPhone").textContent = candidate.phone || "";
+      document.getElementById("studentNassDue").innerHTML =
+        candidate.nassDue === "yes"
+          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">NASS Paid</span>'
+          : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">NASS Not Paid</span>';
+      document.getElementById("studentStatus").innerHTML =
+        candidate.active
+          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Active</span>'
+          : '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Pending Review</span>';
+
+      // 4. Render notes
+      document.getElementById("adminNote").textContent = candidate.adminNote || "No feedback yet.";
+
+      // 5. Render activity history
+      renderHistory(candidate.activities || []);
+
+      // 6. Initialize today's activity status
+      window.student.today = window.student.today || { assignmentSubmitted: false, attendanceMarked: false };
+      renderTodayStatus();
+    }
+
+    // --- Attendance and Assignment
+    document.getElementById("attendanceBtn").onclick = function() {
+      if (window.student.today.attendanceMarked) {
+        showToast("You have already marked attendance today.", "info");
+        return;
+      }
+      window.student.today.attendanceMarked = true;
+      renderTodayStatus();
+      showToast("Attendance marked for today!", "success");
+      updateTodayHistory({ attendance: true });
+    };
+
+    function submitAssignment() {
+      const fileInput = document.getElementById("assignmentInput");
+      if (!fileInput.files.length) {
+        showToast("Please select a file.", "error");
+        return;
+      }
+      // Simulate upload (replace with your backend submission if needed)
+      setTimeout(() => {
+        window.student.today.assignmentSubmitted = true;
+        renderTodayStatus();
+        showToast("Assignment uploaded successfully!", "success");
+        updateTodayHistory({ assignment: true });
+      }, 900);
+    }
+
+    function renderTodayStatus() {
+      document.getElementById("attendanceStatus").textContent =
+        window.student.today.attendanceMarked ? "Marked Present" : "";
+      document.getElementById("assignmentStatus").textContent =
+        window.student.today.assignmentSubmitted ? "Submitted" : "Not submitted";
+    }
+
+    function updateTodayHistory({ attendance = false, assignment = false }) {
+      const todayStr = new Date().toISOString().split('T')[0];
+      let activities = window.student.activities = window.student.activities || [];
+      let today = activities.find(act => act.date === todayStr);
+      if (!today) {
+        today = { date: todayStr, submittedAssignment: false, markedPresent: false };
+        activities.unshift(today);
+      }
+      if (attendance) today.markedPresent = true;
+      if (assignment) today.submittedAssignment = true;
+      renderHistory(activities);
+    }
+
+    function renderHistory(activities) {
+      const tbody = document.getElementById("historyTable");
+      tbody.innerHTML = "";
+      if (!activities.length) {
+        tbody.innerHTML = `<tr><td colspan="3" class="text-gray-400 text-center">No records yet.</td></tr>`;
+        return;
+      }
+      activities.forEach(act => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="border px-2 py-1">${act.date}</td>
+            <td class="border px-2 py-1">
+              ${act.submittedAssignment
+                ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Yes</span>"
+                : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>No</span>"
+              }
+            </td>
+            <td class="border px-2 py-1">
+              ${act.markedPresent
+                ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Present</span>"
+                : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>Absent</span>"
+              }
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    window.onload = loadDashboard;
+  </script>
 </body>
 </html>
