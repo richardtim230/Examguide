@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import CodecxRegistration from "../models/CodecxRegistration.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
@@ -32,11 +33,11 @@ router.post("/login", async (req, res) => {
     return res.status(403).json({ message: "Your account is not activated yet. Please wait for admin review." });
   }
 
-  // Generate JWT token (adjust secret and payload as needed)
+  // Generate JWT token with standard payload for frontend
   const token = jwt.sign(
     {
-      userId: candidate._id,
-      role: "codec",
+      id: candidate._id,
+      role: "codecx-candidate",
       email: candidate.email,
       loginUsername: candidate.loginUsername,
       matricNumber: candidate.matricNumber
@@ -46,6 +47,11 @@ router.post("/login", async (req, res) => {
   );
 
   res.json({ token });
+});
+
+// Authenticated user info endpoint
+router.get("/me", authenticate, (req, res) => {
+  res.json({ user: req.user });
 });
 
 export default router;
