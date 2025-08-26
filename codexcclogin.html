@@ -125,11 +125,11 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, password })
                 });
-                const resJson = await response.json();
+                const respJson = await response.json();
 
                 if (response.ok) {
                     showToast("Login successful!", "success");
-                    localStorage.setItem("token", resJson.token);
+                    localStorage.setItem('token', respJson.token);
                     // Redirect to CODECX student dashboard
                     setTimeout(() => {
                         window.location.href = "codecxcandidate.html";
