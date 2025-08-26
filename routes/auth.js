@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import CodecxRegistration from "../models/CodecxRegistration.js";
 import { authenticate } from "../middleware/authenticate.js";
-
+import User from "../models/User.js";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
 
 // Authenticated user info endpoint
 router.get("/me", authenticate, (req, res) => {
-  res.json({ user: req.user });
+  resp.json({ user: req.user });
 });
 
 export default router;
