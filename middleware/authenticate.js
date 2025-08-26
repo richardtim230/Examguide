@@ -14,7 +14,7 @@ export function authenticate(req, res, next) {
 }
 
 export function authorizeRole(...roles) {
-  return (req, res, next) => {
+  return (req, resp, next) => {
     // Defensive: check req.user exists
     if (!req.user || !req.user.role) {
       return res.status(403).json({ message: "Forbidden" });
