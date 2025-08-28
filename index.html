@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.75">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OAU ExamGuard - Ace Your Exams</title>
     <meta name="description" content="OAU ExamGuard helps you prepare, practice, and shine in your exams—while having fun and earning rewards!">
     <meta name="keywords" content="OAU, ExamGuard, student, exams, study, notes, marketplace, blogging, community">
-    <meta property="og:image" content="https://img.freepik.com/free-photo/crop-people-studying-desktop_23-2147655986.jpg">
+    <meta property="og:image" content="examguard-logo-metaai.png">
     <meta property="og:url" content="https://examguide.vercel.app">
     <meta property="og:type" content="website">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -16,9 +16,165 @@
             font-family: 'Roboto', 'Poppins', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #eaf0fc 100%);
         }
-        .hero-bg {
-            background: linear-gradient(135deg, #276EF1 0%, #003366 100%), url('images (7).jpeg') center/cover no-repeat;
+        /* Header blending and logo */
+        .header-blend {
+            background: linear-gradient(135deg, #276EF1 0%, #003366 70%);
+            position: relative;
+            overflow: visible;
         }
+        .header-logo-img {
+            width: 128px;
+            height: 128px;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px #00336644;
+            background: transparent;
+        }
+        @media (max-width: 640px) {
+            .header-logo-img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        .nav-header-logo span {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1.1px;
+            text-shadow: 0 2px 7px #00336650;
+            display: block;
+            text-align: center;
+            margin-top: 0.3rem;
+        }
+        .nav-header-logo small {
+            font-size: .95rem;
+            font-weight: 400;
+            color: #ffe463;
+            text-shadow: 0 2px 7px #00336650;
+        }
+        .nav-header-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+        .nav-bar-trigger {
+            background: none;
+            border: none;
+            font-size: 2.3rem;
+            color: #ffe463;
+            cursor: pointer;
+            margin-left: 0.4rem;
+            margin-right: 0.5rem;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* Hamburger bars */
+        .nav-bar-trigger .bar {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: #ffe463;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        /* Modal styles for nav menu */
+        .nav-modal-bg {
+            background: rgba(39,110,241,0.22);
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: none;
+            transition: all 0.23s;
+        }
+        .nav-modal-bg.active {
+            display: block;
+        }
+        .nav-modal {
+            background: #fff;
+            border-radius: 1.15rem;
+            box-shadow: 0 7px 34px #00336633;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            max-width: 370px;
+            margin: 7vh auto 0 auto;
+            position: relative;
+        }
+        .nav-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.15rem;
+            background: none;
+            border: none;
+            font-size: 1.7rem;
+            color: #276EF1;
+            cursor: pointer;
+        }
+        .nav-list a {
+            display: block;
+            color: #003366;
+            font-size: 1.17rem;
+            padding: 0.67rem 0;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: background 0.18s;
+        }
+        .nav-list a:hover {
+            background: #eaf0fc;
+        }
+        .nav-action {
+            background: #276EF1;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 2rem;
+            padding: 0.85rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+            transition: background 0.18s;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            display: block;
+            margin-top: 1rem;
+        }
+        .nav-action:hover {
+            background: #003366;
+        }
+        /* Responsive header layout */
+        @media (max-width: 900px) {
+            .nav-header-logo span {
+                font-size: 1.37rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .nav-header-logo span {
+                font-size: 1.06rem;
+            }
+            .nav-modal {
+                margin-top: 4vh;
+            }
+        }
+        .header-blend .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1.3rem;
+            padding-bottom: 1.1rem;
+        }
+        @media (max-width: 640px) {
+            .header-blend .container {
+                flex-direction: column;
+                gap: 0.7rem;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+        }
+        /* Content styles (unchanged from previous) */
         .feature-card {
             transition: transform 0.32s, box-shadow 0.32s;
             border: 1.5px solid #276EF1;
@@ -63,373 +219,316 @@
         .feature-card:hover .animate-icon {
             transform: rotate(360deg) scale(1.2);
         }
-        .nav-header-logo span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #276EF1;
-            letter-spacing: 1.2px;
-        }
-        .nav-header-logo img {
-            height: 2.7rem;
-            width: 2.7rem;
-            margin-right: 0.6rem;
-            border-radius: 8px;
-            border: 2px solid #003366;
-            background: #fff;
-        }
-        .nav-modal-bg {
-            background: rgba(39,110,241,0.24);
-            position: fixed;
-            inset: 0;
-            z-index: 60;
-            display: none;
-            transition: all 0.23s;
-        }
-        .nav-modal-bg.active {
-            display: block;
-        }
-        .nav-modal {
-            background: #fff;
-            border-radius: 1.15rem;
-            box-shadow: 0 7px 34px #00336633;
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            max-width: 370px;
-            margin: 6vh auto 0 auto;
-            position: relative;
-        }
-        .nav-modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.15rem;
-            background: none;
-            border: none;
-            font-size: 1.35rem;
-            color: #276EF1;
-            cursor: pointer;
-        }
-        .nav-bar-trigger {
-            background: none;
-            border: none;
-            font-size: 2.1rem;
-            color: #276EF1;
-            cursor: pointer;
-            margin-left: 1.1rem;
-            margin-right: 0.5rem;
-        }
-        @media (max-width: 640px) {
-            .hero-bg h2 {
-                font-size: 2.2rem;
-            }
-            .stats-counter {
-                font-size: 1.45rem;
-            }
-            .dynamic-img {
-                max-height: 200px;
-            }
-        }
     </style>
 </head>
 <body>
-<header class="bg-white shadow-md sticky top-0 z-50">
-    <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-        <div class="nav-header-logo flex items-center">
-            <img src="logo.png" alt="OAU ExamGuard Logo">
-            <span>OAU ExamGuard</span>
+    <!-- Header with blended logo image -->
+    <header class="header-blend shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
+            <div class="nav-header-logo">
+                <img src="examguard-logo-metaai.png" alt="ExamGuard Logo" class="header-logo-img">
+                <span>ExamGuard<br><small>Your Exam, Our Priority</small></span>
+            </div>
+            <button class="nav-bar-trigger" id="navBarTrigger" aria-label="Open menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
-        <button class="nav-bar-trigger" id="navBarTrigger" aria-label="Open menu">&#9776;</button>
-    </nav>
-</header>
-<div class="nav-modal-bg" id="navModalBg">
-    <div class="nav-modal">
-        <button class="nav-modal-close" id="navModalClose" aria-label="Close menu">&times;</button>
-        <div class="nav-list mb-4">
-            <a href="#why-examguard">Why ExamGuard?</a>
-            <a href="#features">Features</a>
-            <a href="#community">Community</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <a href="mock.html" class="nav-action bg-indigo-600 hover:bg-indigo-800 text-white font-semibold rounded-full py-2 px-6 text-center">Get Started</a>
-    </div>
-</div>
-<!-- Hero Section -->
-<section class="hero-bg text-white py-16 sm:py-20">
-    <div class="container mx-auto px-4 sm:px-6 text-center">
-        <h2 class="text-4xl sm:text-5xl font-bold mb-4 tracking-wide drop-shadow-md">Step Up, Stand Out.<br><span class="text-yellow-300">Your Exam Success Starts Here!</span></h2>
-        <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto">Join the movement! OAU ExamGuard is where real students get real results—and have fun along the way.</p>
-        <div class="flex flex-wrap justify-center gap-4 mb-6">
-            <a href="mock.html" class="cta-button bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold">Sign Up & Start Winning!</a>
-            <a href="/gen-marketplace.html" class="cta-button bg-yellow-400 text-indigo-900 px-6 py-3 rounded-full font-semibold hover:bg-yellow-500">Discover Marketplace 🛒</a>
-            <a href="/blogg.html" class="cta-button bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">Read Blogs 📝</a>
-        </div>
-        <div class="mt-8">
-            <span class="inline-block bg-white text-indigo-900 font-semibold py-1 px-4 rounded-full shadow-md">"Your journey, your way."</span>
+    </header>
+    <!-- Navigation Modal (mobile nav menu style) -->
+    <div class="nav-modal-bg" id="navModalBg">
+        <div class="nav-modal">
+            <button class="nav-modal-close" id="navModalClose" aria-label="Close menu">&times;</button>
+            <div class="nav-list mb-4">
+                <a href="#why-examguard">Why ExamGuard?</a>
+                <a href="#features">Features</a>
+                <a href="#community">Community</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <a href="mock.html" class="nav-action">Get Started</a>
         </div>
     </div>
-</section>
-<!-- About Section -->
-<section id="why-examguard" class="py-12 sm:py-16 bg-gray-100">
-    <div class="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center">
-        <div class="md:w-1/2">
-            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-5">Why do students love ExamGuard?</h3>
-            <p class="text-lg text-gray-700 mb-6">Because we get it. Exams can be tough, but you don’t have to do it alone. ExamGuard gives you everything you need—from past questions to peer support—to help you shine.</p>
-            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                <li>Easy access to verified past questions</li>
-                <li>Marketplace for sharing and selling notes</li>
-                <li>Earn rewards for your contributions</li>
-                <li>See your strengths with simple analytics</li>
-                <li>Join study groups and find your people</li>
-                <li>Works perfectly on your phone and laptop</li>
-                <li>Friendly support, anytime you need it</li>
-            </ul>
-            <a href="mock.html" class="cta-button bg-indigo-600 text-white px-5 py-2 rounded-full font-semibold shadow-lg">Join the community</a>
-        </div>
-        <div class="md:w-1/2 mt-10 md:mt-0 md:pl-8 flex items-center justify-center">
-            <img src="full-shot-woman-taking-selfie_23-2150384118.jpg" alt="Students Studying" class="dynamic-img mx-auto">
-        </div>
-    </div>
-</section>
-<!-- Features Section -->
-<section id="features" class="py-12 sm:py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-700 mb-12">What you get with ExamGuard</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-10">
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📚</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Past Questions</h4>
-                <p class="text-gray-600 mt-2 text-base">Browse hundreds of real exam questions—with answers that make sense.</p>
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-16 sm:py-20">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-4xl sm:text-5xl font-bold mb-4 tracking-wide drop-shadow-md">Step Up, Stand Out.<br><span class="text-yellow-300">Your Exam Success Starts Here!</span></h2>
+            <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto">Join the movement! OAU ExamGuard is where real students get real results—and have fun along the way.</p>
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <a href="mock.html" class="cta-button bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold">Sign Up & Start Winning!</a>
+                <a href="/gen-marketplace.html" class="cta-button bg-yellow-400 text-indigo-900 px-6 py-3 rounded-full font-semibold hover:bg-yellow-500">Discover Marketplace 🛒</a>
+                <a href="/blogg.html" class="cta-button bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">Read Blogs 📝</a>
             </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📝</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Mock Tests & Practice</h4>
-                <p class="text-gray-600 mt-2 text-base">Practice anytime with friendly quizzes and instant feedback.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">🛒</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Buy & Sell Notes</h4>
-                <p class="text-gray-600 mt-2 text-base">Share your wisdom or find the perfect study guide—on your terms.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">💰</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Earn Rewards</h4>
-                <p class="text-gray-600 mt-2 text-base">Get paid for helping others, writing blogs, sharing notes, and more.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">🤝</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Peer Support</h4>
-                <p class="text-gray-600 mt-2 text-base">Make new friends, join study groups, and help each other out.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📊</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Track Your Progress</h4>
-                <p class="text-gray-600 mt-2 text-base">See how you’re improving with simple, clear stats.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📱</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Works Everywhere</h4>
-                <p class="text-gray-600 mt-2 text-base">Study on your phone, tablet, or laptop—whenever, wherever.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">✉️</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">24/7 Friendly Help</h4>
-                <p class="text-gray-600 mt-2 text-base">Questions? We’re here for you, day and night.</p>
+            <div class="mt-8">
+                <span class="inline-block bg-white text-indigo-900 font-semibold py-1 px-4 rounded-full shadow-md">"Your journey, your way."</span>
             </div>
         </div>
-        <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg" alt="Exam Preparation" class="dynamic-img mt-12 mx-auto">
-    </div>
-</section>
-<!-- Stats Section -->
-<section class="py-12 sm:py-16 bg-indigo-50">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">You’re in good company</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-            <div>
-                <p class="stats-counter" id="students-counter">...</p>
-                <p class="text-indigo-900 text-base">Students on ExamGuard</p>
+    </section>
+    <!-- About, Features, Stats, Benefits, Community, Testimonials, CTA, Footer -->
+    <!-- ... same as previous file ... -->
+    <!-- About Section -->
+    <section id="why-examguard" class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2">
+                <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-5">Why do students love ExamGuard?</h3>
+                <p class="text-lg text-gray-700 mb-6">Because we get it. Exams can be tough, but you don’t have to do it alone. ExamGuard gives you everything you need—from past questions to peer support—to help you shine.</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li>Easy access to verified past questions</li>
+                    <li>Marketplace for sharing and selling notes</li>
+                    <li>Earn rewards for your contributions</li>
+                    <li>See your strengths with simple analytics</li>
+                    <li>Join study groups and find your people</li>
+                    <li>Works perfectly on your phone and laptop</li>
+                    <li>Friendly support, anytime you need it</li>
+                </ul>
+                <a href="mock.html" class="cta-button bg-indigo-600 text-white px-5 py-2 rounded-full font-semibold shadow-lg">Join the community</a>
             </div>
-            <div>
-                <p class="stats-counter" id="materials-counter">...</p>
-                <p class="text-indigo-900 text-base">Notes & Guides Shared</p>
-            </div>
-            <div>
-                <p class="stats-counter" id="posts-counter">...</p>
-                <p class="text-indigo-900 text-base">Student Blogs Published</p>
+            <div class="md:w-1/2 mt-10 md:mt-0 md:pl-8 flex items-center justify-center">
+                <img src="full-shot-woman-taking-selfie_23-2150384118.jpg" alt="Students Studying" class="dynamic-img mx-auto">
             </div>
         </div>
-    </div>
-</section>
-<!-- Benefits Section -->
-<section class="py-12 sm:py-16 bg-gray-100">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">Why ExamGuard works</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-10">
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">📈</span>
-                <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Get Higher Scores</h4>
-                    <p class="text-gray-700 text-base">You’ll be amazed how much more confident and prepared you feel.</p>
+    </section>
+    <!-- Features Section -->
+    <section id="features" class="py-12 sm:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-700 mb-12">What you get with ExamGuard</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-10">
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">📚</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Past Questions</h4>
+                    <p class="text-gray-600 mt-2 text-base">Browse hundreds of real exam questions—with answers that make sense.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">📝</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Mock Tests & Practice</h4>
+                    <p class="text-gray-600 mt-2 text-base">Practice anytime with friendly quizzes and instant feedback.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">🛒</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Buy & Sell Notes</h4>
+                    <p class="text-gray-600 mt-2 text-base">Share your wisdom or find the perfect study guide—on your terms.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">💰</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Earn Rewards</h4>
+                    <p class="text-gray-600 mt-2 text-base">Get paid for helping others, writing blogs, sharing notes, and more.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">🤝</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Peer Support</h4>
+                    <p class="text-gray-600 mt-2 text-base">Make new friends, join study groups, and help each other out.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">📊</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Track Your Progress</h4>
+                    <p class="text-gray-600 mt-2 text-base">See how you’re improving with simple, clear stats.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">📱</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">Works Everywhere</h4>
+                    <p class="text-gray-600 mt-2 text-base">Study on your phone, tablet, or laptop—whenever, wherever.</p>
+                </div>
+                <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                    <span class="text-4xl animate-icon">✉️</span>
+                    <h4 class="text-xl font-semibold mt-4 text-indigo-900">24/7 Friendly Help</h4>
+                    <p class="text-gray-600 mt-2 text-base">Questions? We’re here for you, day and night.</p>
                 </div>
             </div>
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">💰</span>
+            <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg" alt="Exam Preparation" class="dynamic-img mt-12 mx-auto">
+        </div>
+    </section>
+    <!-- Stats Section -->
+    <section class="py-12 sm:py-16 bg-indigo-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">You’re in good company</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
                 <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Make Some Money</h4>
-                    <p class="text-gray-700 text-base">Your notes and ideas are valuable—why not get rewarded for them?</p>
+                    <p class="stats-counter" id="students-counter">...</p>
+                    <p class="text-indigo-900 text-base">Students on ExamGuard</p>
                 </div>
-            </div>
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">✍️</span>
                 <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Grow Your Skills</h4>
-                    <p class="text-gray-700 text-base">Whether it’s writing, explaining, or connecting, ExamGuard helps you shine.</p>
+                    <p class="stats-counter" id="materials-counter">...</p>
+                    <p class="text-indigo-900 text-base">Notes & Guides Shared</p>
                 </div>
-            </div>
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">🌐</span>
                 <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Meet & Collaborate</h4>
-                    <p class="text-gray-700 text-base">Find your squad, learn together, and celebrate your wins.</p>
+                    <p class="stats-counter" id="posts-counter">...</p>
+                    <p class="text-indigo-900 text-base">Student Blogs Published</p>
                 </div>
             </div>
         </div>
-        <img src="changing-word-impossible-possible-with-eraser_3446-349.jpg" alt="Student Success" class="dynamic-img mt-12 mx-auto">
-    </div>
-</section>
-<!-- Community Section -->
-<section id="community" class="py-12 sm:py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-10">Hang Out, Learn, and Grow</h3>
-        <div class="max-w-3xl mx-auto text-center mb-8">
-            <p class="text-lg text-gray-700">Ask questions, swap ideas, make friends, and team up for group projects. ExamGuard is your place to connect and succeed, together.</p>
-        </div>
-        <div class="flex flex-wrap justify-center gap-4">
-            <span class="inline-block bg-indigo-100 text-indigo-900 font-semibold py-2 px-6 rounded-full shadow-sm">Study Groups</span>
-            <span class="inline-block bg-yellow-100 text-yellow-900 font-semibold py-2 px-6 rounded-full shadow-sm">Mentors</span>
-            <span class="inline-block bg-green-100 text-green-900 font-semibold py-2 px-6 rounded-full shadow-sm">Discussions</span>
-            <span class="inline-block bg-blue-100 text-blue-900 font-semibold py-2 px-6 rounded-full shadow-sm">Events</span>
-        </div>
-    </div>
-</section>
-<!-- Testimonial Section -->
-<section class="py-12 sm:py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">What students are saying</h3>
-        <div class="testimonial-slider relative">
-            <div class="testimonial-slide active text-center">
-                <p class="text-gray-600 italic text-base mb-4">"ExamGuard made studying fun and stress-free. I love the mock tests!"</p>
-                <p class="font-semibold text-indigo-700">— Sarah, Computer Science</p>
+    </section>
+    <!-- Benefits Section -->
+    <section class="py-12 sm:py-16 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">Why ExamGuard works</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-10">
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4 text-indigo-700">📈</span>
+                    <div>
+                        <h4 class="text-lg font-semibold text-indigo-900">Get Higher Scores</h4>
+                        <p class="text-gray-700 text-base">You’ll be amazed how much more confident and prepared you feel.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4 text-indigo-700">💰</span>
+                    <div>
+                        <h4 class="text-lg font-semibold text-indigo-900">Make Some Money</h4>
+                        <p class="text-gray-700 text-base">Your notes and ideas are valuable—why not get rewarded for them?</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4 text-indigo-700">✍️</span>
+                    <div>
+                        <h4 class="text-lg font-semibold text-indigo-900">Grow Your Skills</h4>
+                        <p class="text-gray-700 text-base">Whether it’s writing, explaining, or connecting, ExamGuard helps you shine.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4 text-indigo-700">🌐</span>
+                    <div>
+                        <h4 class="text-lg font-semibold text-indigo-900">Meet & Collaborate</h4>
+                        <p class="text-gray-700 text-base">Find your squad, learn together, and celebrate your wins.</p>
+                    </div>
+                </div>
             </div>
-            <div class="testimonial-slide text-center">
-                <p class="text-gray-600 italic text-base mb-4">"Selling my notes helped me pay for textbooks—plus I met amazing people."</p>
-                <p class="font-semibold text-indigo-700">— Ahmed, Engineering</p>
+            <img src="changing-word-impossible-possible-with-eraser_3446-349.jpg" alt="Student Success" class="dynamic-img mt-12 mx-auto">
+        </div>
+    </section>
+    <!-- Community Section -->
+    <section id="community" class="py-12 sm:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-10">Hang Out, Learn, and Grow</h3>
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <p class="text-lg text-gray-700">Ask questions, swap ideas, make friends, and team up for group projects. ExamGuard is your place to connect and succeed, together.</p>
             </div>
-            <div class="testimonial-slide text-center">
-                <p class="text-gray-600 italic text-base mb-4">"Writing blogs built my confidence—and my wallet!"</p>
-                <p class="font-semibold text-indigo-700">— Temi, Literature</p>
-            </div>
-            <div class="testimonial-slide text-center">
-                <p class="text-gray-600 italic text-base mb-4">"ExamGuard’s analytics showed me exactly what I needed to work on."</p>
-                <p class="font-semibold text-indigo-700">— Blessing, Pharmacy</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="inline-block bg-indigo-100 text-indigo-900 font-semibold py-2 px-6 rounded-full shadow-sm">Study Groups</span>
+                <span class="inline-block bg-yellow-100 text-yellow-900 font-semibold py-2 px-6 rounded-full shadow-sm">Mentors</span>
+                <span class="inline-block bg-green-100 text-green-900 font-semibold py-2 px-6 rounded-full shadow-sm">Discussions</span>
+                <span class="inline-block bg-blue-100 text-blue-900 font-semibold py-2 px-6 rounded-full shadow-sm">Events</span>
             </div>
         </div>
-    </div>
-</section>
-<!-- CTA Section -->
-<section class="py-12 sm:py-16 bg-indigo-600 text-white text-center">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-3xl font-bold mb-4">Ready to join?</h3>
-        <p class="text-lg mb-8">Your journey begins with ExamGuard. Let’s make studying easier—and more rewarding—together!</p>
-        <a href="mock.html" class="cta-button bg-white text-indigo-700 px-7 py-4 rounded-full text-lg font-semibold shadow-md">Sign Up Now 🚀</a>
-        <p class="text-xl font-semibold mt-8">"Ace Exams. Earn. Connect. Grow."</p>
-    </div>
-</section>
-<!-- Footer -->
-<footer class="bg-indigo-900 text-white py-8">
-    <div class="container mx-auto px-4 sm:px-6 text-center">
-        <p class="text-base opacity-90">© 2025 OAU ExamGuard. All rights reserved.</p>
-        <div class="mt-4 space-x-4">
-            <a href="#" class="text-indigo-200 hover:text-white text-base">Privacy Policy</a>
-            <a href="#" class="text-indigo-200 hover:text-white text-base">Terms of Service</a>
-            <a href="#" class="text-indigo-200 hover:text-white text-base">Contact Us</a>
+    </section>
+    <!-- Testimonial Section -->
+    <section class="py-12 sm:py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">What students are saying</h3>
+            <div class="testimonial-slider relative">
+                <div class="testimonial-slide active text-center">
+                    <p class="text-gray-600 italic text-base mb-4">"ExamGuard made studying fun and stress-free. I love the mock tests!"</p>
+                    <p class="font-semibold text-indigo-700">— Sarah, Computer Science</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-base mb-4">"Selling my notes helped me pay for textbooks—plus I met amazing people."</p>
+                    <p class="font-semibold text-indigo-700">— Ahmed, Engineering</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-base mb-4">"Writing blogs built my confidence—and my wallet!"</p>
+                    <p class="font-semibold text-indigo-700">— Temi, Literature</p>
+                </div>
+                <div class="testimonial-slide text-center">
+                    <p class="text-gray-600 italic text-base mb-4">"ExamGuard’s analytics showed me exactly what I needed to work on."</p>
+                    <p class="font-semibold text-indigo-700">— Blessing, Pharmacy</p>
+                </div>
+            </div>
         </div>
-    </div>
-</footer>
-<script>
-    // Nav Modal (menu) logic
-    const navBarTrigger = document.getElementById('navBarTrigger');
-    const navModalBg = document.getElementById('navModalBg');
-    const navModalClose = document.getElementById('navModalClose');
-    navBarTrigger.addEventListener('click', function() {
-        navModalBg.classList.add('active');
-    });
-    navModalClose.addEventListener('click', function() {
-        navModalBg.classList.remove('active');
-    });
-    navModalBg.addEventListener('click', function(e) {
-        if (e.target === navModalBg) {
-            navModalBg.classList.remove('active');
-        }
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-            navModalBg.classList.remove('active');
+    </section>
+    <!-- CTA Section -->
+    <section class="py-12 sm:py-16 bg-indigo-600 text-white text-center">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="text-3xl font-bold mb-4">Ready to join?</h3>
+            <p class="text-lg mb-8">Your journey begins with ExamGuard. Let’s make studying easier—and more rewarding—together!</p>
+            <a href="mock.html" class="cta-button bg-white text-indigo-700 px-7 py-4 rounded-full text-lg font-semibold shadow-md">Sign Up Now 🚀</a>
+            <p class="text-xl font-semibold mt-8">"Ace Exams. Earn. Connect. Grow."</p>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-indigo-900 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-base opacity-90">© 2025 OAU ExamGuard. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-indigo-200 hover:text-white text-base">Privacy Policy</a>
+                <a href="#" class="text-indigo-200 hover:text-white text-base">Terms of Service</a>
+                <a href="#" class="text-indigo-200 hover:text-white text-base">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Hamburger menu logic
+        const navBarTrigger = document.getElementById('navBarTrigger');
+        const navModalBg = document.getElementById('navModalBg');
+        const navModalClose = document.getElementById('navModalClose');
+        navBarTrigger.addEventListener('click', function() {
+            navModalBg.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
-    });
+        navModalClose.addEventListener('click', function() {
+            navModalBg.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        navModalBg.addEventListener('click', function(e) {
+            if (e.target === navModalBg) {
+                navModalBg.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                navModalBg.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        // Animated stat counters and testimonial slider
+        async function fetchStats() {
+            try {
+                const [studentsRes, postsRes, materialsRes] = await Promise.all([
+                    fetch("/api/users/count"),
+                    fetch("/api/posts/count"),
+                    fetch("/api/listings/count")
+                ]);
+                const students = await studentsRes.json();
+                const posts = await postsRes.json();
+                const materials = await materialsRes.json();
 
-    // --- Fetch actual stats from backend ---
-    async function fetchStats() {
-        try {
-            const [studentsRes, postsRes, materialsRes] = await Promise.all([
-                fetch("/api/users/count"),
-                fetch("/api/posts/count"),
-                fetch("/api/listings/count")
-            ]);
-            const students = await studentsRes.json();
-            const posts = await postsRes.json();
-            const materials = await materialsRes.json();
-
-            animateCounter('students-counter', 0, students.count || 0, 2000);
-            animateCounter('posts-counter', 0, posts.count || 0, 2000);
-            animateCounter('materials-counter', 0, materials.count || 0, 2000);
-        } catch (err) {
-            animateCounter('students-counter', 0, 5000, 2000);
-            animateCounter('materials-counter', 0, 10000, 2000);
-            animateCounter('posts-counter', 0, 2000, 2000);
-        }
-    }
-
-    function animateCounter(id, start, end, duration) {
-        let obj = document.getElementById(id);
-        let range = end - start;
-        let startTime = null;
-        function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            let progress = timestamp - startTime;
-            let value = Math.min(start + (progress / duration) * range, end);
-            obj.textContent = Math.floor(value);
-            if (progress < duration) {
-                requestAnimationFrame(step);
+                animateCounter('students-counter', 0, students.count || 0, 2000);
+                animateCounter('posts-counter', 0, posts.count || 0, 2000);
+                animateCounter('materials-counter', 0, materials.count || 0, 2000);
+            } catch (err) {
+                animateCounter('students-counter', 0, 5000, 2000);
+                animateCounter('materials-counter', 0, 10000, 2000);
+                animateCounter('posts-counter', 0, 2000, 2000);
             }
         }
-        requestAnimationFrame(step);
-    }
-
-    fetchStats();
-
-    // Testimonial slider
-    const slides = document.querySelectorAll('.testimonial-slide');
-    let currentSlide = 0;
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        slides[index].classList.add('active');
-        currentSlide = (index + 1) % slides.length;
-    }
-    setInterval(() => showSlide(currentSlide), 5000);
-</script>
+        function animateCounter(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let range = end - start;
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let value = Math.min(start + (progress / duration) * range, end);
+                obj.textContent = Math.floor(value);
+                if (progress < duration) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+        fetchStats();
+        // Testimonial slider
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = (index + 1) % slides.length;
+        }
+        setInterval(() => showSlide(currentSlide), 5000);
+    </script>
 </body>
 </html>
