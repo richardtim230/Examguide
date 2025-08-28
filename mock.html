@@ -16,6 +16,8 @@
             --card-bg: #fff;
             --shadow: 0 6px 32px 0 rgba(39,110,241,.11), 0 1.5px 4px 0 rgba(39,110,241,.03);
             --radius: 20px;
+            --modal-bg: #fff;
+            --modal-backdrop: rgba(0,0,0,0.24);
         }
         * { box-sizing: border-box; }
         body {
@@ -55,6 +57,10 @@
             font-weight: 900;
             letter-spacing: 1.5px;
             text-shadow: 0 1px 6px rgba(0,0,0,0.11);
+            background: linear-gradient(90deg,#ffe46355,#276EF144 80%);
+            border-radius: 12px;
+            padding: .6rem 1rem;
+            display: inline-block;
         }
         .sidebar-header p {
             font-size: 1.07rem;
@@ -226,13 +232,13 @@
         }
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #fff;
+            width: 28px;
+            height: 28px;
+            border: 3px solid #f0f0f0;
             border-top: 3px solid #00c6ff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-left: 10px;
+            margin-bottom: 8px;
         }
         @keyframes spin {
           0% { transform: rotate(0deg);}
@@ -297,62 +303,109 @@
             margin-top: -.6rem;
             margin-bottom: .8rem;
         }
-        .toast {
-            display: none;
+        /* MODAL STYLES */
+        .modal-backdrop {
             position: fixed;
-            top: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #003366ee;
-            color: #fff;
-            padding: 14px 36px 14px 18px;
-            border-radius: 12px;
-            box-shadow: 0 4px 18px #00000033;
-            z-index: 1100;
-            font-size: 1.09rem;
-            min-width: 260px;
-            max-width: 410px;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--modal-backdrop);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-backdrop.show {
+            display: flex;
+        }
+        .custom-modal {
+            background: var(--modal-bg);
+            border-radius: 22px;
+            box-shadow: 0 8px 40px #00336633, 0 1.5px 4px #276EF1aa;
+            max-width: 97vw;
+            min-width: 300px;
+            width: 100%;
+            max-width: 390px;
+            padding: 2.7rem 1.2rem 1.7rem 1.2rem;
+            position: relative;
             text-align: center;
-            opacity: 0;
-            transition: opacity 0.4s, top 0.4s;
-            pointer-events: none;
-            border: 1.5px solid #00c6ff;
+            animation: modalIn .5s;
         }
-        .toast.show {
-            display: block;
-            opacity: 1;
-            top: 70px;
-            pointer-events: auto;
-            animation: notiPopFadeIn 0.5s;
+        @keyframes modalIn {
+          from { opacity: 0; transform: scale(0.95);}
+          to { opacity: 1; transform: scale(1);}
         }
-        .toast.success {
-            background: #25d366ee;
-            color: #1b2e11;
-            border: 1.5px solid #17a84b;
+        .custom-modal .modal-spinner {
+            margin: 0 auto 18px auto;
         }
-        .toast.error {
-            background: #ff4136ee;
+        .custom-modal .modal-status-icon {
+            font-size: 2.7rem;
+            margin-bottom: 0.7rem;
+        }
+        .custom-modal .modal-status-icon.success { color: var(--success);}
+        .custom-modal .modal-status-icon.error { color: var(--error);}
+        .custom-modal .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        .custom-modal .modal-message {
+            font-size: 1.07rem;
+            margin-bottom: 1.1rem;
+            color: #1B428C;
+        }
+        .custom-modal .modal-details {
+            background: #f8fbff;
+            border-radius: 12px;
+            padding: 1rem .7rem;
+            margin-bottom: 1.2rem;
+            text-align: left;
+            font-size: 1rem;
+            border: 1px solid #e0e4ed;
+        }
+        .custom-modal .modal-details dt {
+            font-weight: 600;
+            color: #003366;
+        }
+        .custom-modal .modal-details dd {
+            margin: 0 0 0.7rem 0;
+            padding-left: 0.2rem;
+        }
+        .custom-modal .modal-actions {
+            margin-top: 1.3rem;
+            display: flex;
+            gap: .9rem;
+            justify-content: center;
+        }
+        .custom-modal .modal-btn {
+            padding: .67rem 1.2rem;
+            border-radius: 10px;
+            border: none;
+            background: var(--primary);
             color: #fff;
-            border: 1.5px solid #c9251b;
+            font-size: 1.07rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            min-width: 110px;
         }
-        .toast .close-noti {
+        .custom-modal .modal-btn.secondary {
+            background: #f5f7fa;
+            color: #003366;
+            border: 1.5px solid #276EF1;
+        }
+        .custom-modal .close-modal {
             position: absolute;
-            right: 12px;
-            top: 10px;
+            top: 11px;
+            right: 15px;
             background: transparent;
             border: none;
-            color: inherit;
-            font-size: 20px;
+            font-size: 1.8rem;
+            color: #888;
             cursor: pointer;
             opacity: 0.7;
-            padding: 0;
         }
-        .toast .close-noti:hover {
+        .custom-modal .close-modal:hover {
             opacity: 1;
-        }
-        @keyframes notiPopFadeIn {
-          from { opacity: 0; top: 45px; }
-          to { opacity: 1; top: 70px; }
         }
         @media (max-width: 900px) {
             .layout {
@@ -380,30 +433,33 @@
                 padding: 3px;
             }
             .sidebar-header h1 {
-                font-size: 1.3rem;
+                font-size: 1.52rem;
                 margin-bottom: 0.18rem;
+                padding: .4rem .5rem;
+                background: linear-gradient(90deg,#ffe46333,#276EF133 80%);
+                border-radius: 9px;
             }
             .sidebar-header p {
                 font-size: .99rem;
                 margin-bottom: 0.5rem;
             }
             .examguard-logo {
-    display: block;
-    width: 100px;
-    max-width: 90vw;
-    margin: 0 auto 1.3rem auto;
-    border-radius: 20px;
-    box-shadow: 0 6px 32px rgba(39,110,241,.18), 0 1.5px 4px #00336633;
-    background: #fff;
-    padding: 7px;
-    border: 2.5px solid #d4af37;
-}
-@media (max-width: 600px) {
-    .examguard-logo {
-        width: 70px;
-        margin-bottom: 0.7rem;
-    }
-}
+                display: block;
+                width: 100px;
+                max-width: 90vw;
+                margin: 0 auto 1.3rem auto;
+                border-radius: 20px;
+                box-shadow: 0 6px 32px rgba(39,110,241,.18), 0 1.5px 4px #00336633;
+                background: #fff;
+                padding: 7px;
+                border: 2.5px solid #d4af37;
+            }
+            @media (max-width: 600px) {
+                .examguard-logo {
+                    width: 70px;
+                    margin-bottom: 0.7rem;
+                }
+            }
             .sidebar-header ul {
                 margin: 0.44rem 0 0 0;
                 width: auto;
@@ -472,11 +528,6 @@
                 <button class="tab-btn" data-tab="register"><i class="bi bi-person-plus"></i> Register</button>
             </div>
             <div id="messageBox"></div>
-            <!-- Toast notification -->
-            <div id="toast" class="toast">
-                <button class="close-noti" onclick="hideToast()" aria-label="Close notification">&times;</button>
-                <span id="toastMsg"></span>
-            </div>
             <form id="loginForm" class="active" autocomplete="on">
                 <div class="form-group">
                     <label for="login-username">Username</label>
@@ -556,6 +607,13 @@
                 </div>
             </form>
         </div>
+    </div>
+</div>
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="custom-modal" id="customModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-modal" id="closeModalBtn" aria-label="Close modal">&times;</button>
+        <div id="modalContent"></div>
     </div>
 </div>
 <script>
@@ -745,28 +803,62 @@
         });
     });
 
-    /* TOAST NOTIFICATION */
-    function showToast(message, type = "") {
-        const toast = document.getElementById('toast');
-        const msgBox = document.getElementById('toastMsg');
-        msgBox.textContent = message;
-        toast.className = type ? `toast show ${type}` : 'toast show';
-        toast.style.display = 'block';
-        setTimeout(() => {
-            if (toast.classList.contains('show')) {
-                hideToast();
-            }
-        }, 3500);
-    }
-    function hideToast() {
-        const toast = document.getElementById('toast');
-        toast.className = 'toast';
-        setTimeout(() => { toast.style.display = 'none'; }, 400);
-    }
+    /* UNIVERSAL MODAL SYSTEM */
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const customModal = document.getElementById('customModal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModalBtn = document.getElementById('closeModalBtn');
 
-    // --- LOGIN & REGISTRATION LOGIC (imitated from mock.html) ---
-    // Backend API endpoints (imitate mock.html)
-    const API_URL = "https://examguide.onrender.com/api/auth/";
+    function openModal(contentHtml, allowClose = false) {
+        modalContent.innerHTML = contentHtml;
+        modalBackdrop.classList.add('show');
+        if (allowClose) {
+            closeModalBtn.style.display = 'block';
+        } else {
+            closeModalBtn.style.display = 'none';
+        }
+    }
+    function closeModal() {
+        modalBackdrop.classList.remove('show');
+        modalContent.innerHTML = '';
+    }
+    closeModalBtn.onclick = closeModal;
+    modalBackdrop.addEventListener('click', function(e){
+        if(e.target === modalBackdrop && closeModalBtn.style.display === 'block') closeModal();
+    });
+
+    function showLoadingModal(message="Please wait...", subMsg="Processing your request...") {
+        openModal(`
+            <div class="modal-spinner spinner"></div>
+            <div class="modal-title">${message}</div>
+            <div class="modal-message">${subMsg}</div>
+        `);
+    }
+    function showStatusModal(type, title, msg, allowClose=true) {
+        let icon = type === "success"
+            ? '<span class="modal-status-icon success"><i class="bi bi-check-circle-fill"></i></span>'
+            : '<span class="modal-status-icon error"><i class="bi bi-x-circle-fill"></i></span>';
+        openModal(`
+            ${icon}
+            <div class="modal-title">${title}</div>
+            <div class="modal-message">${msg}</div>
+        `, allowClose);
+    }
+    function showConfirmationModal(detailsObj, onConfirm, onCancel) {
+        let detailsHtml = Object.entries(detailsObj).map(([k,v])=>
+            `<dt>${k}:</dt><dd>${v}</dd>`
+        ).join('');
+        openModal(`
+            <div class="modal-title">Are the information correct?</div>
+            <dl class="modal-details">${detailsHtml}</dl>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" id="modalCancelBtn">Cancel</button>
+                <button class="modal-btn" id="modalConfirmBtn">Proceed</button>
+            </div>
+        `, true);
+        document.getElementById('modalCancelBtn').onclick = function(){closeModal(); if(onCancel) onCancel();};
+        document.getElementById('modalConfirmBtn').onclick = function(){closeModal(); if(onConfirm) onConfirm();};
+    }
 
     // Helper: Validate username
     function validateUsername(username) {
@@ -809,13 +901,14 @@
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value;
         if (!validateUsername(username) || !password) {
-            showToast("Both fields are required!", "error");
+            showStatusModal("error","Login Error","Both fields are required!");
             return;
         }
+        showLoadingModal("Logging in...","Please wait while we log you in.");
         await setLoginLoading(true);
 
         try {
-            let loginResponse = await fetch(API_URL + "login", {
+            let loginResponse = await fetch("https://examguide.onrender.com/api/auth/login", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username, password})
@@ -826,58 +919,40 @@
                 localStorage.setItem('token', loginData.token);
                 // Get user role and redirect accordingly
                 try {
-                    let profileResp = await fetch(API_URL.replace(/auth\/$/, '') + "auth/me", {
+                    let profileResp = await fetch("https://examguide.onrender.com/api/auth/me", {
                         headers: { 'Authorization': 'Bearer ' + loginData.token }
                     });
                     let profileData = await profileResp.json();
                     if (profileResp.ok && profileData.user) {
                         const role = profileData.user.role;
-                        if (role === 'superadmin') {
-                            showToast("Welcome, Superadmin!", "success");
-                            setTimeout(() => { window.location.href = "supaadmin.html"; }, 1000);
-                            await setLoginLoading(false);
-                            return;
+                        let roleMsg = "Welcome!";
+                        switch (role) {
+                            case 'superadmin': roleMsg = "Welcome, Superadmin!"; break;
+                            case 'admin': roleMsg = "Welcome, Admin!"; break;
+                            case 'uploader': roleMsg = "Welcome, Uploader!"; break;
+                            case 'pq-uploader': roleMsg = "Welcome, PQ-Uploader!"; break;
+                            default: roleMsg = "Welcome, Student!";
                         }
-                        if (role === 'admin') {
-                            showToast("Welcome, Admin!", "success");
-                            setTimeout(() => { window.location.href = "loader.html"; }, 1000);
-                            await setLoginLoading(false);
-                            return;
-                        }
-                        if (role === 'uploader') {
-                            showToast("Welcome, Uploader!", "success");
-                            setTimeout(() => { window.location.href = "loader.html"; }, 1000);
-                            await setLoginLoading(false);
-                            return;
-                        }
-                        if (role === 'pq-uploader') {
-                            showToast("Welcome, PQ-Uploader!", "success");
-                            setTimeout(() => { window.location.href = "loader.html"; }, 1000);
-                            await setLoginLoading(false);
-                            return;
-                        }
-                        // Default: student
-                        showToast("Welcome, Student!", "success");
-                        setTimeout(() => { window.location.href = "loader.html"; }, 1000);
+                        showStatusModal("success", "Login Successful", roleMsg, false);
+                        setTimeout(() => { window.location.href = (role === 'superadmin') ? "supaadmin.html" : "loader.html"; }, 1300);
                         await setLoginLoading(false);
                         return;
                     }
                 } catch {
-                    // fallback
-                    showToast("Login successful!", "success");
-                    setTimeout(() => { window.location.href = "loader.html"; }, 1000);
+                    showStatusModal("success", "Login Successful", "You have been logged in!", false);
+                    setTimeout(() => { window.location.href = "loader.html"; }, 1200);
                 }
                 await setLoginLoading(false);
                 return;
             }
-            showToast(loginData.message || "Login failed", "error");
+            showStatusModal("error","Login Failed",loginData.message || "Login failed");
         } catch (err) {
-            showToast("Network or server error. Please try again.", "error");
+            showStatusModal("error","Network Error","Network or server error. Please try again.");
         }
         await setLoginLoading(false);
     });
 
-    // REGISTRATION HANDLING
+    // REGISTRATION HANDLING (with confirmation modal)
     forms.register.addEventListener('submit', async function(e) {
         e.preventDefault();
         // Collect all registration details
@@ -891,81 +966,98 @@
         const phone = document.getElementById('reg-phone').value.trim();
 
         if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
-            showToast("All fields are required!", "error");
+            showStatusModal("error","Registration Error","All fields are required!");
             return;
         }
 
-        await setRegLoading(true);
-
-        try {
-            let registerResponse = await fetch(API_URL + "register", {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    username,
-                    password,
-                    email,
-                    fullname: fullName,
-                    faculty,
-                    department,
-                    level,
-                    phone
-                })
-            });
-            let registerData = await registerResponse.json();
-            if (registerResponse.ok) {
-                localStorage.setItem('token', registerData.token);
-                showToast("Registered successfully!", "success");
-                setTimeout(() => { window.location.href = 'loader.html'; }, 1200);
-            } else {
-                showToast(registerData.message || "Registration failed", "error");
+        // Show confirmation modal
+        showConfirmationModal({
+            "Full Name": fullName,
+            "Username": username,
+            "Email": email,
+            "Faculty": faculty,
+            "Department": department,
+            "Level": level,
+            "Phone": phone
+        }, async function proceedReg(){
+            showLoadingModal("Registering...","Please wait while we create your account.");
+            await setRegLoading(true);
+            try {
+                let registerResponse = await fetch("https://examguide.onrender.com/api/auth/register", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        email,
+                        fullname: fullName,
+                        faculty,
+                        department,
+                        level,
+                        phone
+                    })
+                });
+                let registerData = await registerResponse.json();
+                if (registerResponse.ok) {
+                    localStorage.setItem('token', registerData.token);
+                    showStatusModal("success","Registration Successful","Registered successfully!",false);
+                    setTimeout(() => { window.location.href = 'loader.html'; }, 1300);
+                } else {
+                    showStatusModal("error","Registration Failed",registerData.message || "Registration failed");
+                }
+            } catch (err) {
+                showStatusModal("error","Network Error","Network or server error. Please try again.");
             }
-        } catch (err) {
-            showToast("Network or server error. Please try again.", "error");
-        }
-
-        await setRegLoading(false);
+            await setRegLoading(false);
+        }, function cancelReg(){});
     });
 
     // Social Login/Register (Simulated)
     document.querySelectorAll('.social-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            showToast("Social login/registration is yet to be implemented.", "error");
+            showStatusModal("error","Feature Unavailable","Social login/registration is yet to be implemented.");
         });
     });
 
-    // Forgot Password (imitate mock.html logic)
+    // Forgot Password (now with confirmation modal)
     document.getElementById('forgotPassword').addEventListener('click', async function(e) {
         e.preventDefault();
         let username = prompt("Enter your username for password reset:");
         if (username === null) return;
         username = username.trim();
         if (!validateUsername(username)) {
-            showToast("Username cannot be empty.", "error");
+            showStatusModal("error","Password Reset Error","Username cannot be empty.");
             return;
         }
         let newPass = prompt("Enter your new password:");
         if (!newPass) {
-            showToast("Password cannot be empty.", "error");
+            showStatusModal("error","Password Reset Error","Password cannot be empty.");
             return;
         }
-        await setLoginLoading(true);
-        try {
-            let resp = await fetch(API_URL + "reset", {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username, password: newPass})
-            });
-            let data = await resp.json();
-            if (resp.ok) {
-                showToast("Password reset successful!", "success");
-            } else {
-                showToast(data.message || "Password reset failed", "error");
+        // Confirm details before proceeding
+        showConfirmationModal({
+            "Username": username,
+            "New Password": newPass.replace(/./g,"*") // Mask password
+        }, async function proceedReset(){
+            showLoadingModal("Resetting Password...","Please wait while we reset your password.");
+            await setLoginLoading(true);
+            try {
+                let resp = await fetch("https://examguide.onrender.com/api/auth/reset", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username, password: newPass})
+                });
+                let data = await resp.json();
+                if (resp.ok) {
+                    showStatusModal("success","Password Reset","Password reset successful!");
+                } else {
+                    showStatusModal("error","Password Reset Failed",data.message || "Password reset failed");
+                }
+            } catch (err) {
+                showStatusModal("error","Network Error","Network or server error. Please try again.");
             }
-        } catch (err) {
-            showToast("Network or server error. Please try again.", "error");
-        }
-        await setLoginLoading(false);
+            await setLoginLoading(false);
+        }, function cancelReset(){});
     });
 
     // Responsive: scroll to top of form on mobile when switching
