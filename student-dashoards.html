@@ -166,30 +166,6 @@
   font-weight: bold;
   box-shadow: 0 2px 7px #00336608;
 }
-
-@media (min-width: 1024px) {
-  .dashboard-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2.5rem;
-    align-items: stretch;
-  }
-  .dashboard-card {
-    background: linear-gradient(135deg, #fff 80%, #e0e7ff 100%);
-    border-radius: 26px;
-    box-shadow: 0 8px 32px #00336622;
-    padding: 2.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: box-shadow 0.25s, transform 0.18s;
-    min-height: 360px;
-  }
-  .dashboard-card:hover {
-    box-shadow: 0 16px 40px #276ef155;
-    transform: translateY(-2px) scale(1.02);
-  }
-}
 .eg-bubble {
   max-width: 69%;
   padding: 0.72em 1.1em;
@@ -731,9 +707,8 @@ class="sidebar fixed top-0 left-0 h-screen w-72 bg-blue-900 text-white p-8 md:bl
 
     <!-- Main Content -->
    
-  <main class="main-gap p-4 md:ml-72 md:p-8 lg:p-12 min-h-screen">
+ <main class="main-gap max-w-7xl mx-auto p-4 md:ml-72 md:p-8 lg:p-12 min-h-screen">
         <!-- Dashboard Tab -->
-     
         <section id="dashboard" class="tab-content active">
             <header class="bg-white rounded-2xl shadow-xl p-8 mb-8 card flex items-center justify-between relative">
   <div class="flex items-center gap-6">
@@ -761,9 +736,10 @@ class="sidebar fixed top-0 left-0 h-screen w-72 bg-blue-900 text-white p-8 md:bl
     </div>
   </div>
 </div>
-            <div class="dashboard-cards grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-12">
-  <section class="dashboard-card bg-gradient-to-br from-white to-indigo-50 rounded-3xl shadow-2xl p-8 flex flex-col justify-between hover:shadow-indigo-200 transition-shadow duration-300">
-    <!-- Student Details -->
+   
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                <!-- Profile Card -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Student Details</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="space-y-2">
@@ -779,8 +755,7 @@ class="sidebar fixed top-0 left-0 h-screen w-72 bg-blue-900 text-white p-8 md:bl
                     </div>
                 </section>
                 <!-- Progress Tracker Card -->
-                <section class="dashboard-card bg-gradient-to-br from-white to-indigo-50 rounded-3xl shadow-2xl p-8 flex flex-col justify-between hover:shadow-indigo-200 transition-shadow duration-300">
-    <!-- Progress Tracker -->
+                <section class="bg-white rounded-2xl shadow-xl p-6 card">
                     <h3 class="text-xl font-semibold text-indigo-900 mb-4">Progress Tracker</h3>
                     <div id="progress-circles" class="grid grid-cols-2 gap-4"></div>
                 </section>
