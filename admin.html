@@ -357,6 +357,12 @@
       </svg>
     </button>
   <script>
+<!-- PATCH: Robust API error handling, correct array checks, and fallback "0" for dashboard counts -->
+
+<!-- Find your existing dashboard count code and replace with the following: -->
+
+
+    
     // ========== CONFIG ==========
     const API_URL = "https://examguide.onrender.com/api/";
     const token = localStorage.getItem("token");
@@ -521,11 +527,14 @@ function getDepartmentsNames(deptIds) {
       fetchDepartments();
     }
 
-    // ========== Students ==========
-    async function fetchStudents() {
-  const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  // ========== Students ==========
+async function fetchStudents() {
   let users = [];
-  try { users = await resp.json(); } catch { users = []; }
+  try {
+    const resp = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+    users = await resp.json();
+    if (!Array.isArray(users)) users = [];
+  } catch { users = []; }
 
   // Group by faculty and department
   const grouped = {};
@@ -570,6 +579,7 @@ function getDepartmentsNames(deptIds) {
   });
   document.querySelector("#studentsTable tbody").innerHTML = html;
 }
+
 
     async function viewStudent(id) {
       const resp = await fetch(API_URL + "users/" + id, { headers: { Authorization: "Bearer " + token } });
@@ -698,26 +708,53 @@ function showSection(id, el) {
 
 // ========== Dashboard Counts ==========
 async function fetchDashboardCounts() {
-  const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
-  const sets = await resp.json();
-  document.getElementById("qSetCount").innerText = sets.length;
+  // Question Sets and Questions
+  let sets = [];
+  try {
+    const resp = await fetch(API_URL + "questionsets", { headers: { Authorization: "Bearer " + token } });
+    sets = await resp.json();
+    if (!Array.isArray(sets)) sets = [];
+  } catch { sets = []; }
+  document.getElementById("qSetCount").innerText = sets.length || 0;
   let qCount = 0;
   sets.forEach(s => qCount += (s.questions ? s.questions.length : 0));
-  document.getElementById("questionCount").innerText = qCount;
+  document.getElementById("questionCount").innerText = qCount || 0;
 
-  // Use paginated API for result count!
-  const resp2 = await fetch(API_URL + "results?page=1&limit=1", { headers: { Authorization: "Bearer " + token } });
-  const data2 = await resp2.json();
-  document.getElementById("resultCount").innerText = data2.total || 0;
+  // Total Results
+  let resultCount = 0;
+  try {
+    const resp2 = await fetch(API_URL + "results?page=1&limit=1", { headers: { Authorization: "Bearer " + token } });
+    const data2 = await resp2.json();
+    resultCount = typeof data2.total === "number" ? data2.total : 0;
+  } catch { resultCount = 0; }
+  document.getElementById("resultCount").innerText = resultCount;
 
-  const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
-  const schedules = await resp3.json();
-  document.getElementById("scheduleCount").innerText = schedules.length;
+  // Scheduled Tests
+  let schedules = [];
+  try {
+    const resp3 = await fetch(API_URL + "schedules", { headers: { Authorization: "Bearer " + token } });
+    schedules = await resp3.json();
+    if (!Array.isArray(schedules)) schedules = [];
+  } catch { schedules = []; }
+  document.getElementById("scheduleCount").innerText = schedules.length || 0;
 
-  const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+  // Students
   let students = [];
-  try { students = await resp4.json(); } catch { students = []; }
-  document.getElementById("studentCount").innerText = students.length;
+  try {
+    const resp4 = await fetch(API_URL + "users?role=student", { headers: { Authorization: "Bearer " + token } });
+    students = await resp4.json();
+    if (!Array.isArray(students)) students = [];
+  } catch { students = []; }
+  document.getElementById("studentCount").innerText = students.length || 0;
+
+  // Uploaders
+  let uploaders = [];
+  try {
+    const resp5 = await fetch(API_URL + "users?role=uploader", { headers: { Authorization: "Bearer " + token } });
+    uploaders = await resp5.json();
+    if (!Array.isArray(uploaders)) uploaders = [];
+  } catch { uploaders = []; }
+  document.getElementById("uploadersCount").innerText = uploaders.length || 0;
 }
     // ========== Question Sets ==========
     async function fetchSets() {
