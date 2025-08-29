@@ -2,443 +2,439 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.75">
-    <title>OAU ExamGuard - Ace Your Exams</title>
-    <meta name="description" content="OAU ExamGuard helps you prepare, practice, and shine in your exams—while having fun and earning rewards!">
-    <meta name="keywords" content="OAU, ExamGuard, student, exams, study, notes, marketplace, blogging, community">
-    <meta property="og:image" content="https://img.freepik.com/free-photo/crop-people-studying-desktop_23-2147655986.jpg">
-    <meta property="og:url" content="https://examguide.vercel.app">
-    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=0.81">
+    <title>OAU ExamGuard - Ace Your Exams Instantly</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700,400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #eaf0fc 100%);
+            background: linear-gradient(135deg, #1b1c2a 0%, #291f3b 100%);
+            color: #eaeaea;
         }
-        .hero-bg {
-            background: linear-gradient(135deg, #276EF1 0%, #003366 100%), url('images (7).jpeg') center/cover no-repeat;
+        .gradient-text {
+            background: linear-gradient(90deg, #fd7e14, #a259ec, #f857a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .animated-headline {
+            animation: fadeInDown 1.3s cubic-bezier(.64,.09,.08,1) both;
+        }
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-40px);}
+            100% { opacity: 1; transform: translateY(0);}
         }
         .feature-card {
-            transition: transform 0.32s, box-shadow 0.32s;
-            border: 1.5px solid #276EF1;
-            background: #fff;
+            background: linear-gradient(120deg, #23244a 60%, #18192a 100%);
+            border-radius: 1.3rem;
+            box-shadow: 0 8px 32px #a259ec44;
+            border: 1px solid #2d2f4a;
+            transition: transform .22s, box-shadow .22s;
         }
         .feature-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 10px 18px rgba(39,110,241,.13), 0 2px 8px #00336622;
+            transform: scale(1.05) translateY(-6px);
+            box-shadow: 0 14px 48px #fd7e1444;
+            z-index: 2;
         }
-        .cta-button {
-            transition: background 0.25s, transform 0.18s;
-            box-shadow: 0 2px 9px #276EF133;
+        .feature-icon {
+            font-size: 2.7rem;
+            margin-bottom: 0.7rem;
+            background: linear-gradient(90deg, #fd7e14, #a259ec);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .cta-button:hover {
-            background: #003366;
+        .big-image {
+            border-radius: 1.2rem;
+            box-shadow: 0 8px 32px #fd7e1444;
+            border: 2px solid #fd7e14;
+            object-fit: cover;
+            width: 100%;
+            max-height: 320px;
+        }
+        .stat-card {
+            background: #23244a;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin: 0.7rem;
+            text-align: center;
             color: #fff;
-            transform: scale(1.04);
         }
-        .dynamic-img {
-            width: 100%;
-            max-height: 300px;
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #fd7e14, #a259ec);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .testimonial-card {
+            background: #23244a;
+            border-radius: 1.2rem;
+            padding: 2rem 1.5rem;
+            margin: 1rem;
+            color: #eaeaea;
+            box-shadow: 0 2px 10px #fd7e1433;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .testimonial-img {
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
             object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 4px 18px #276ef133;
-            border: 2.5px solid #276EF1;
+            border: 2px solid #fd7e14;
         }
-                .dynamic-image {
-            width: 100%;
-            height: auto;
-                    bottom: 2px;
+        .step-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 1rem;
+            background: #a259ec22;
             object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 4px 18px #276ef133;
-            border: 2.5px solid #276EF1;
-                }
-        .stats-counter {
-            font-size: 2.6rem;
-            font-weight: bolder;
-            color: #276EF1;
+            margin-right: 1rem;
         }
-        .testimonial-slide {
-            display: none;
-        }
-        .testimonial-slide.active {
-            display: block;
-        }
-        .animate-icon {
-            transition: transform 0.6s;
-            color: #276EF1;
-        }
-        .feature-card:hover .animate-icon {
-            transform: rotate(360deg) scale(1.2);
-        }
-        .nav-header-logo span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #276EF1;
-            letter-spacing: 1.2px;
-        }
-        .nav-header-logo img {
-            height: 2.7rem;
-            width: 2.7rem;
-            margin-right: 0.6rem;
-            border-radius: 8px;
-            border: 2px solid #003366;
-            background: #fff;
-        }
-        .nav-modal-bg {
-            background: rgba(39,110,241,0.24);
-            position: fixed;
-            inset: 0;
-            z-index: 60;
-            display: none;
-            transition: all 0.23s;
-        }
-        .nav-modal-bg.active {
-            display: block;
-        }
-        .nav-modal {
-            background: #fff;
-            border-radius: 1.15rem;
-            box-shadow: 0 7px 34px #00336633;
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            max-width: 370px;
-            margin: 6vh auto 0 auto;
-            position: relative;
-        }
-        .nav-modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.15rem;
-            background: none;
-            border: none;
+        .cta-big {
+            background: linear-gradient(90deg, #fd7e14, #a259ec);
+            color: #fff;
             font-size: 1.35rem;
-            color: #276EF1;
-            cursor: pointer;
+            padding: 1.1rem 2.5rem;
+            border-radius: 999px;
+            font-weight: bold;
+            margin: 2rem auto 0 auto;
+            box-shadow: 0 6px 32px #fd7e1444;
+            display: inline-block;
+            text-align: center;
+            transition: transform .18s, box-shadow .18s;
         }
-        .nav-bar-trigger {
-            background: none;
+        .cta-big:hover {
+            transform: scale(1.06);
+            box-shadow: 0 8px 42px #fd7e1444;
+        }
+        .btn-outline {
+            border: 2.5px solid #a259ec;
+            color: #a259ec;
+            background: transparent;
+            border-radius: 999px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 700;
+            margin-left: 0.7rem;
+            transition: background .18s, color .18s;
+        }
+        .btn-outline:hover {
+            background: #a259ec;
+            color: #fff;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #fd7e14, #a259ec);
+            color: #fff;
+            border-radius: 999px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 2px 14px #fd7e1422;
+            transition: box-shadow .25s, transform .18s;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 4px 24px #fd7e1444;
+            transform: scale(1.05);
+        }
+        .suggest-btn {
+            background: #23244a;
+            color: #eaeaea;
+            border: 1.5px solid #a259ec;
+            border-radius: 0.7rem;
+            padding: 0.5rem 1.1rem;
+            margin: 0.5rem;
+            font-weight: 500;
+            transition: background .18s, color .18s;
+        }
+        .suggest-btn:hover {
+            background: #a259ec;
+            color: #fff;
+        }
+        .input-prompt {
+            background: #23244a;
+            border-radius: 1.1rem;
+            border: 1.5px solid #a259ec;
+            padding: 1rem 1.2rem;
+            color: #eaeaea;
+            font-size: 1.1rem;
+            width: 100%;
+            margin: 0.8rem 0 1.2rem 0;
+            transition: box-shadow 0.2s;
+        }
+        .input-prompt:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #a259ec88;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform .5s cubic-bezier(.64,.09,.08,1);
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #23244a;
+            color: #fff;
+            border-radius: 999px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            box-shadow: 0 2px 10px #a259ec44;
             border: none;
-            font-size: 2.1rem;
-            color: #276EF1;
-            cursor: pointer;
-            margin-left: 1.1rem;
-            margin-right: 0.5rem;
+            z-index: 3;
         }
-        @media (max-width: 640px) {
-            .hero-bg h2 {
-                font-size: 2.2rem;
-            }
-            .stats-counter {
-                font-size: 1.45rem;
-            }
-            .dynamic-img {
-                max-height: 200px;
-            }
+        .carousel-btn.left { left: 10px;}
+        .carousel-btn.right { right: 10px;}
+        @media (max-width: 660px) {
+            .feature-card { padding: 1rem; }
+            .big-image { max-height: 180px; }
+            .cta-big { font-size: 1rem; padding: 0.8rem 1.3rem;}
+            .testimonial-card { flex-direction: column; align-items: flex-start;}
         }
     </style>
 </head>
 <body>
-<header class="bg-white shadow-md sticky top-0 z-50">
-    <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-        <div class="nav-header-logo flex items-center">
-            <img src="logo.png" alt="OAU ExamGuard Logo">
-            <span>OAU ExamGuard</span>
+    <!-- Header -->
+    <header class="w-full sticky top-0 z-40 flex items-center justify-between px-5 py-4" style="background:rgba(31,32,54,0.98); box-shadow:0 2px 14px #21224522;">
+        <div class="flex items-center">
+            <img src="logo.png" alt="OAU ExamGuard Logo" style="height:2.2rem;width:2.2rem; border-radius:8px; margin-right:0.7rem;">
+            <span class="font-bold gradient-text text-lg tracking-wider">ExamGuard</span>
         </div>
-        <button class="nav-bar-trigger" id="navBarTrigger" aria-label="Open menu">&#9776;</button>
-    </nav>
-</header>
-<div class="nav-modal-bg" id="navModalBg">
-    <div class="nav-modal">
-        <button class="nav-modal-close" id="navModalClose" aria-label="Close menu">&times;</button>
-        <div class="nav-list mb-4">
-            <a href="#why-examguard">Why ExamGuard?</a>
-            <a href="#features">Features</a>
-            <a href="#community">Community</a>
-            <a href="#contact">Contact</a>
+        <div>
+            <a href="mock.html" class="btn-outline">Sign In</a>
+            <a href="mock.html" class="btn-primary">Sign Up</a>
         </div>
-        <a href="mock.html" class="nav-action bg-indigo-600 hover:bg-indigo-800 text-white font-semibold rounded-full py-2 px-6 text-center">Get Started</a>
-    </div>
-</div>
-<!-- Hero Section -->
-<section class="hero-bg text-white py-16 sm:py-20">
-    <div class="container mx-auto px-4 sm:px-6 text-center">
-        <h2 class="text-4xl sm:text-5xl font-bold mb-4 tracking-wide drop-shadow-md">Step Up, Stand Out.<br><span class="text-yellow-300">Your Exam Success Starts Here!</span></h2>
-        <img src="IMG-20250821-WA0016.jpg" alt="Exam Preparation" class="dynamic-image mt-12 mx-auto">
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 py-12">
+        <div class="w-full md:w-1/2 text-center md:text-left">
+            <h1 class="gradient-text animated-headline font-extrabold text-4xl sm:text-5xl mb-6" style="line-height:1.15;">
+                Ace Your Exams, Instantly.
+            </h1>
+            <div class="text-lg text-gray-200 mb-6">
+                Turn your hard work into real results—before your next exam comes up. 
+                <span class="font-semibold text-yellow-300">Join thousands of students maximizing their scores and earning rewards!</span>
+            </div>
+            <div>
+                <input class="input-prompt" type="text" placeholder="E.g. 'I want to study for MTH101'" id="searchPrompt" />
+            </div>
+            <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-5">
+                <button class="suggest-btn" onclick="setPrompt('Mock Test for Chemistry')">Mock Test</button>
+                <button class="suggest-btn" onclick="setPrompt('Past Questions for Physics')">Past Questions</button>
+                <button class="suggest-btn" onclick="setPrompt('Marketplace')">Marketplace</button>
+                <button class="suggest-btn" onclick="setPrompt('Blogging')">Blogging</button>
+            </div>
+            <a href="mock.html" class="cta-big mt-4">Get Started Free →</a>
+        </div>
+        <div class="w-full md:w-1/2 flex justify-center">
+            <img src="https://img.freepik.com/free-photo/crop-people-studying-desktop_23-2147655986.jpg" alt="Hero Students" class="big-image shadow-card">
+        </div>
+    </section>
 
-        <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto">Join the movement! OAU ExamGuard is where real students get real results—and have fun along the way.</p>
-        <div class="flex flex-wrap justify-center gap-4 mb-6">
-            <a href="mock.html" class="cta-button bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold">Sign Up & Start Winning!</a>
-            <a href="/gen-marketplace.html" class="cta-button bg-yellow-400 text-indigo-900 px-6 py-3 rounded-full font-semibold hover:bg-yellow-500">Discover Marketplace 🛒</a>
-            <a href="/blogg.html" class="cta-button bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">Read Blogs 📝</a>
+    <!-- Stats Section -->
+    <section class="max-w-4xl mx-auto py-6 flex flex-wrap justify-center gap-6">
+        <div class="stat-card">
+            <div class="stat-number" id="students-counter">0</div>
+            <div>Active Students</div>
         </div>
-        <div class="mt-8">
-            <span class="inline-block bg-white text-indigo-900 font-semibold py-1 px-4 rounded-full shadow-md">"Your journey, your way."</span>
+        <div class="stat-card">
+            <div class="stat-number" id="materials-counter">0</div>
+            <div>Notes Shared</div>
         </div>
-    </div>
-</section>
-<!-- About Section -->
-<section id="why-examguard" class="py-12 sm:py-16 bg-gray-100">
-    <div class="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center">
-        <div class="md:w-1/2">
-            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-5">Why do students love ExamGuard?</h3>
-            <p class="text-lg text-gray-700 mb-6">Because we get it. Exams can be tough, but you don’t have to do it alone. ExamGuard gives you everything you need—from past questions to peer support—to help you shine.</p>
-            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                <li>Easy access to verified past questions</li>
-                <li>Marketplace for sharing and selling notes</li>
-                <li>Earn rewards for your contributions</li>
-                <li>See your strengths with simple analytics</li>
-                <li>Join study groups and find your people</li>
-                <li>Works perfectly on your phone and laptop</li>
-                <li>Friendly support, anytime you need it</li>
-            </ul>
-            <a href="mock-icthallb" class="cta-button bg-indigo-600 text-white px-5 py-2 rounded-full font-semibold shadow-lg">Join the community</a>
+        <div class="stat-card">
+            <div class="stat-number" id="posts-counter">0</div>
+            <div>Blogs Published</div>
         </div>
-        
-    </div>
-</section>
-<!-- Features Section -->
-<section id="features" class="py-12 sm:py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-700 mb-12">What you get with ExamGuard</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 sm:gap-10">
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📚</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Past Questions</h4>
-                <p class="text-gray-600 mt-2 text-base">Browse hundreds of real exam questions—with answers that make sense.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📝</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Mock Tests & Practice</h4>
-                <p class="text-gray-600 mt-2 text-base">Practice anytime with friendly quizzes and instant feedback.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">🛒</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Buy & Sell Notes</h4>
-                <p class="text-gray-600 mt-2 text-base">Share your wisdom or find the perfect study guide—on your terms.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">💰</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Earn Rewards</h4>
-                <p class="text-gray-600 mt-2 text-base">Get paid for helping others, writing blogs, sharing notes, and more.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">🤝</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Peer Support</h4>
-                <p class="text-gray-600 mt-2 text-base">Make new friends, join study groups, and help each other out.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📊</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Track Your Progress</h4>
-                <p class="text-gray-600 mt-2 text-base">See how you’re improving with simple, clear stats.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">📱</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">Works Everywhere</h4>
-                <p class="text-gray-600 mt-2 text-base">Study on your phone, tablet, or laptop—whenever, wherever.</p>
-            </div>
-            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
-                <span class="text-4xl animate-icon">✉️</span>
-                <h4 class="text-xl font-semibold mt-4 text-indigo-900">24/7 Friendly Help</h4>
-                <p class="text-gray-600 mt-2 text-base">Questions? We’re here for you, day and night.</p>
-            </div>
-        </div>
-        <img src="black-graduation-cap-placed-file-folder-desk_43157-2133.jpg" alt="Exam Preparation" class="dynamic-img mt-12 mx-auto">
-    </div>
-</section>
-<!-- Stats Section -->
-<section class="py-12 sm:py-16 bg-indigo-50">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">You’re in good company</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-            <div>
-                <p class="stats-counter" id="students-counter">...</p>
-                <p class="text-indigo-900 text-base">Students on ExamGuard</p>
-            </div>
-            <div>
-                <p class="stats-counter" id="materials-counter">...</p>
-                <p class="text-indigo-900 text-base">Notes & Guides Shared</p>
-            </div>
-            <div>
-                <p class="stats-counter" id="posts-counter">...</p>
-                <p class="text-indigo-900 text-base">Student Blogs Published</p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Benefits Section -->
-<section class="py-12 sm:py-16 bg-gray-100">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">Why ExamGuard works</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-10">
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">📈</span>
-                <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Get Higher Scores</h4>
-                    <p class="text-gray-700 text-base">You’ll be amazed how much more confident and prepared you feel.</p>
+    </section>
+
+    <!-- Features Carousel Section -->
+    <section class="max-w-6xl mx-auto py-16">
+        <h2 class="gradient-text text-3xl font-bold text-center mb-12">Packed With Everything You Need</h2>
+        <div class="carousel" id="featureCarousel">
+            <button class="carousel-btn left" onclick="moveCarousel(-1)">&#8249;</button>
+            <div class="carousel-track" id="carouselTrack">
+                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
+                    <div class="feature-icon">📚</div>
+                    <h3 class="font-bold text-xl gradient-text mb-2">Verified Past Questions</h3>
+                    <p class="text-gray-300">Access hundreds of real, up-to-date exam questions and clear solutions.</p>
+                    <img src="https://img.freepik.com/free-photo/books-stack-table_1150-17726.jpg" alt="Past Questions" class="big-image mt-6">
+                </div>
+                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="font-bold text-xl gradient-text mb-2">Mock Tests & Quizzes</h3>
+                    <p class="text-gray-300">Practice anytime with interactive quizzes and instant feedback.</p>
+                    <img src="https://img.freepik.com/free-photo/person-writing-desk_1098-18251.jpg" alt="Mock Test" class="big-image mt-6">
+                </div>
+                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
+                    <div class="feature-icon">🛒</div>
+                    <h3 class="font-bold text-xl gradient-text mb-2">Student Marketplace</h3>
+                    <p class="text-gray-300">Share your notes, buy guides, and earn money for contributing.</p>
+                    <img src="https://img.freepik.com/free-photo/top-view-trolley-with-books_23-2148520241.jpg" alt="Marketplace" class="big-image mt-6">
+                </div>
+                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="font-bold text-xl gradient-text mb-2">Progress Analytics</h3>
+                    <p class="text-gray-300">Track improvements, strengths and areas to focus.</p>
+                    <img src="https://img.freepik.com/free-photo/graph-business-table_1150-12070.jpg" alt="Analytics" class="big-image mt-6">
+                </div>
+                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="font-bold text-xl gradient-text mb-2">Peer Support & Community</h3>
+                    <p class="text-gray-300">Join study groups, find mentors, and collaborate for success.</p>
+                    <img src="https://img.freepik.com/free-photo/group-students-talking_1150-10157.jpg" alt="Community" class="big-image mt-6">
+                </div>
+                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="font-bold text-xl gradient-text mb-2">Earn Rewards</h3>
+                    <p class="text-gray-300">Get paid for sharing notes, writing blogs, or helping others.</p>
+                    <img src="https://img.freepik.com/free-photo/money-coins-stack-glass-jar_1150-17886.jpg" alt="Earn Rewards" class="big-image mt-6">
                 </div>
             </div>
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">💰</span>
+            <button class="carousel-btn right" onclick="moveCarousel(1)">&#8250;</button>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="max-w-4xl mx-auto py-16">
+        <h2 class="gradient-text text-3xl font-bold text-center mb-10">How ExamGuard Works</h2>
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+            <div class="flex items-center w-full md:w-1/3">
+                <img src="https://img.freepik.com/free-photo/young-woman-studying-home_1150-11010.jpg" class="step-img" alt="Step 1">
                 <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Make Some Money</h4>
-                    <p class="text-gray-700 text-base">Your notes and ideas are valuable—why not get rewarded for them?</p>
+                    <div class="font-bold gradient-text mb-1">1. Find Your Exam</div>
+                    <div class="text-gray-300">Select your course, mock, or topic. Everything is at your fingertips.</div>
                 </div>
             </div>
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">✍️</span>
+            <div class="flex items-center w-full md:w-1/3">
+                <img src="https://img.freepik.com/free-photo/person-holding-pencil-closeup_1150-11077.jpg" class="step-img" alt="Step 2">
                 <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Grow Your Skills</h4>
-                    <p class="text-gray-700 text-base">Whether it’s writing, explaining, or connecting, ExamGuard helps you shine.</p>
+                    <div class="font-bold gradient-text mb-1">2. Practice & Track</div>
+                    <div class="text-gray-300">Take quizzes, review notes, and watch your stats grow.</div>
                 </div>
             </div>
-            <div class="flex items-start">
-                <span class="text-3xl mr-4 text-indigo-700">🌐</span>
+            <div class="flex items-center w-full md:w-1/3">
+                <img src="https://img.freepik.com/free-photo/close-up-hands-holding-money_1150-17891.jpg" class="step-img" alt="Step 3">
                 <div>
-                    <h4 class="text-lg font-semibold text-indigo-900">Meet & Collaborate</h4>
-                    <p class="text-gray-700 text-base">Find your squad, learn together, and celebrate your wins.</p>
+                    <div class="font-bold gradient-text mb-1">3. Earn & Connect</div>
+                    <div class="text-gray-300">Earn rewards and connect with peers for even more success.</div>
                 </div>
             </div>
         </div>
-        <img src="changing-word-impossible-possible-with-eraser_3446-349.jpg" alt="Student Success" class="dynamic-img mt-12 mx-auto">
-    </div>
-</section>
-<!-- Community Section -->
-<section id="community" class="py-12 sm:py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-10">Hang Out, Learn, and Grow</h3>
-        <div class="max-w-3xl mx-auto text-center mb-8">
-            <p class="text-lg text-gray-700">Ask questions, swap ideas, make friends, and team up for group projects. ExamGuard is your place to connect and succeed, together.</p>
+        <div class="text-center mt-10">
+            <a href="mock.html" class="cta-big">Try ExamGuard Now →</a>
         </div>
-        <div class="flex flex-wrap justify-center gap-4">
-            <span class="inline-block bg-indigo-100 text-indigo-900 font-semibold py-2 px-6 rounded-full shadow-sm">Study Groups</span>
-            <span class="inline-block bg-yellow-100 text-yellow-900 font-semibold py-2 px-6 rounded-full shadow-sm">Mentors</span>
-            <span class="inline-block bg-green-100 text-green-900 font-semibold py-2 px-6 rounded-full shadow-sm">Discussions</span>
-            <span class="inline-block bg-blue-100 text-blue-900 font-semibold py-2 px-6 rounded-full shadow-sm">Events</span>
+    </section>
+
+    <!-- Testimonials Section (Slider) -->
+    <section class="max-w-5xl mx-auto py-16">
+        <h2 class="gradient-text text-3xl font-bold text-center mb-10">Student Success Stories</h2>
+        <div class="carousel" id="testimonialCarousel">
+            <button class="carousel-btn left" onclick="moveTestimonial(-1)">&#8249;</button>
+            <div class="carousel-track" id="testimonialTrack">
+                <div class="testimonial-card w-full md:w-1/2">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="testimonial-img" alt="Sarah">
+                    <div>
+                        <div class="font-bold gradient-text">Sarah, Comp. Sci.</div>
+                        <div class="italic text-gray-200">"ExamGuard made studying fun and stress-free. The mock tests helped me score higher!"</div>
+                    </div>
+                </div>
+                <div class="testimonial-card w-full md:w-1/2">
+                    <img src="https://randomuser.me/api/portraits/men/21.jpg" class="testimonial-img" alt="Ahmed">
+                    <div>
+                        <div class="font-bold gradient-text">Ahmed, Engineering</div>
+                        <div class="italic text-gray-200">"Selling my notes helped me pay for textbooks—and I met amazing people."</div>
+                    </div>
+                </div>
+                <div class="testimonial-card w-full md:w-1/2">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-img" alt="Temi">
+                    <div>
+                        <div class="font-bold gradient-text">Temi, Literature</div>
+                        <div class="italic text-gray-200">"Blogging built my confidence—and my wallet!"</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn right" onclick="moveTestimonial(1)">&#8250;</button>
         </div>
-    </div>
-</section>
-<!-- Testimonial Section -->
-<section class="py-12 sm:py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-2xl sm:text-3xl font-bold text-center text-indigo-900 mb-12">What students are saying</h3>
-        <div class="testimonial-slider relative">
-            <div class="testimonial-slide active text-center">
-                <p class="text-gray-600 italic text-base mb-4">"ExamGuard made studying fun and stress-free. I love the mock tests!"</p>
-                <p class="font-semibold text-indigo-700">— Sarah, Computer Science</p>
-            </div>
-            <div class="testimonial-slide text-center">
-                <p class="text-gray-600 italic text-base mb-4">"Selling my notes helped me pay for textbooks—plus I met amazing people."</p>
-                <p class="font-semibold text-indigo-700">— Ahmed, Engineering</p>
-            </div>
-            <div class="testimonial-slide text-center">
-                <p class="text-gray-600 italic text-base mb-4">"Writing blogs built my confidence—and my wallet!"</p>
-                <p class="font-semibold text-indigo-700">— Temi, Literature</p>
-            </div>
-            <div class="testimonial-slide text-center">
-                <p class="text-gray-600 italic text-base mb-4">"ExamGuard’s analytics showed me exactly what I needed to work on."</p>
-                <p class="font-semibold text-indigo-700">— Blessing, Pharmacy</p>
-            </div>
+    </section>
+
+    <!-- Big CTA Section -->
+    <section class="py-16" style="background: linear-gradient(90deg,#fd7e14 0%,#a259ec 100%); text-align:center;">
+        <h2 class="text-white text-3xl font-bold mb-4">Ready to Join the Movement?</h2>
+        <p class="text-white text-lg mb-8">Your journey begins with ExamGuard. Make studying easier—and more rewarding—today!</p>
+        <a href="mock.html" class="cta-big" style="background:#fff; color:#a259ec;">Sign Up Now 🚀</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="background:#18192a; color:#cfc8ec; text-align:center; padding:2rem 0 1rem 0; font-size:1rem;">
+        <div class="mb-2">© 2025 OAU ExamGuard. All rights reserved.</div>
+        <div>
+            <a href="#" style="color:#a259ec;" class="mx-2 hover:underline">Privacy Policy</a>
+            <a href="#" style="color:#a259ec;" class="mx-2 hover:underline">Terms of Service</a>
+            <a href="#" style="color:#a259ec;" class="mx-2 hover:underline">Contact Us</a>
         </div>
-    </div>
-</section>
-<!-- CTA Section -->
-<section class="py-12 sm:py-16 bg-indigo-600 text-white text-center">
-    <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-3xl font-bold mb-4">Ready to join?</h3>
-        <p class="text-lg mb-8">Your journey begins with ExamGuard. Let’s make studying easier—and more rewarding—together!</p>
-        <a href="mock.html" class="cta-button bg-white text-indigo-700 px-7 py-4 rounded-full text-lg font-semibold shadow-md">Sign Up Now 🚀</a>
-        <p class="text-xl font-semibold mt-8">"Ace Exams. Earn. Connect. Grow."</p>
-    </div>
-</section>
-<!-- Footer -->
-<footer class="bg-indigo-900 text-white py-8">
-    <div class="container mx-auto px-4 sm:px-6 text-center">
-        <p class="text-base opacity-90">© 2025 OAU ExamGuard. All rights reserved.</p>
-        <div class="mt-4 space-x-4">
-            <a href="#" class="text-indigo-200 hover:text-white text-base">Privacy Policy</a>
-            <a href="#" class="text-indigo-200 hover:text-white text-base">Terms of Service</a>
-            <a href="#" class="text-indigo-200 hover:text-white text-base">Contact Us</a>
-        </div>
-    </div>
-</footer>
-<script>
-    // Nav Modal (menu) logic
-    const navBarTrigger = document.getElementById('navBarTrigger');
-    const navModalBg = document.getElementById('navModalBg');
-    const navModalClose = document.getElementById('navModalClose');
-    navBarTrigger.addEventListener('click', function() {
-        navModalBg.classList.add('active');
-    });
-    navModalClose.addEventListener('click', function() {
-        navModalBg.classList.remove('active');
-    });
-    navModalBg.addEventListener('click', function(e) {
-        if (e.target === navModalBg) {
-            navModalBg.classList.remove('active');
+    </footer>
+    <script>
+        // Prompt suggestion interactivity
+        function setPrompt(text) {
+            document.getElementById('searchPrompt').value = text;
         }
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-            navModalBg.classList.remove('active');
-        });
-    });
-
-    // --- Fetch actual stats from backend ---
-    async function fetchStats() {
-        try {
-            const [studentsRes, postsRes, materialsRes] = await Promise.all([
-                fetch("/api/users/count"),
-                fetch("/api/posts/count"),
-                fetch("/api/listings/count")
-            ]);
-            const students = await studentsRes.json();
-            const posts = await postsRes.json();
-            const materials = await materialsRes.json();
-
-            animateCounter('students-counter', 0, students.count || 0, 2000);
-            animateCounter('posts-counter', 0, posts.count || 0, 2000);
-            animateCounter('materials-counter', 0, materials.count || 0, 2000);
-        } catch (err) {
-            animateCounter('students-counter', 0, 5000, 2000);
-            animateCounter('materials-counter', 0, 10000, 2000);
-            animateCounter('posts-counter', 0, 2000, 2000);
-        }
-    }
-
-    function animateCounter(id, start, end, duration) {
-        let obj = document.getElementById(id);
-        let range = end - start;
-        let startTime = null;
-        function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            let progress = timestamp - startTime;
-            let value = Math.min(start + (progress / duration) * range, end);
-            obj.textContent = Math.floor(value);
-            if (progress < duration) {
-                requestAnimationFrame(step);
+        // Animated counters
+        function animateCounter(id, end, duration = 1800) {
+            let obj = document.getElementById(id);
+            let start = 0;
+            let range = end - start;
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let value = Math.min(start + (progress / duration) * range, end);
+                obj.textContent = Math.floor(value);
+                if (progress < duration) requestAnimationFrame(step);
+                else obj.textContent = end;
             }
+            requestAnimationFrame(step);
         }
-        requestAnimationFrame(step);
-    }
+        animateCounter('students-counter', 5000);
+        animateCounter('materials-counter', 12000);
+        animateCounter('posts-counter', 2800);
 
-    fetchStats();
+        // Feature carousel logic
+        let featureIndex = 0;
+        const featureTrack = document.getElementById('carouselTrack');
+        const featureCards = featureTrack.children;
+        function moveCarousel(dir) {
+            featureIndex += dir;
+            if (featureIndex < 0) featureIndex = 0;
+            if (featureIndex > featureCards.length - 3) featureIndex = featureCards.length - 3;
+            featureTrack.style.transform = `translateX(${-featureIndex * 340}px)`;
+        }
 
-    // Testimonial slider
-    const slides = document.querySelectorAll('.testimonial-slide');
-    let currentSlide = 0;
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        slides[index].classList.add('active');
-        currentSlide = (index + 1) % slides.length;
-    }
-    setInterval(() => showSlide(currentSlide), 5000);
-</script>
+        // Testimonial carousel logic
+        let testimonialIndex = 0;
+        const testimonialTrack = document.getElementById('testimonialTrack');
+        const testimonialCards = testimonialTrack.children;
+        function moveTestimonial(dir) {
+            testimonialIndex += dir;
+            if (testimonialIndex < 0) testimonialIndex = 0;
+            if (testimonialIndex > testimonialCards.length - 1) testimonialIndex = testimonialCards.length - 1;
+            testimonialTrack.style.transform = `translateX(${-testimonialIndex * 580}px)`;
+        }
+        // Auto-slide for testimonials
+        setInterval(() => {
+            testimonialIndex = (testimonialIndex + 1) % testimonialCards.length;
+            moveTestimonial(0);
+        }, 6000);
+    </script>
 </body>
 </html>
