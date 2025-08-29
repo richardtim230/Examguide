@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.81">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
   <title>ExamGuard Nigeria - Your Smarter Exam Partner</title>
   <link rel="icon" href="logo.png">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400|Nunito:700,400|Roboto:400,700&display=swap" rel="stylesheet">
@@ -158,6 +158,95 @@
       opacity: .97;
       font-family: 'Roboto', Arial, sans-serif;
     }
+    /* Blog-Marketplace Section */
+    section.blog-market {
+      background: linear-gradient(90deg, #f9fafb 70%, #e0e7ff 100%);
+      padding: 42px 0 32px 0;
+      text-align: center;
+    }
+    .bm-title {
+      font-size: 1.5rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: .9em;
+    }
+    .bm-grid {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .bm-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 14px #276EF122;
+      padding: 1.5rem 1.3rem 1.3rem 1.3rem;
+      text-align: left;
+      max-width: 300px;
+      min-width: 210px;
+      margin-bottom: 1em;
+      display: flex; flex-direction: column;
+      align-items: flex-start;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .bm-card:hover { box-shadow: 0 8px 24px #276EF144; transform: scale(1.03);}
+    .bm-icon { font-size: 2.1rem; color: var(--primary); margin-bottom: .6em;}
+    .bm-title2 { font-size: 1.07em; font-family: 'Nunito', Arial, sans-serif; font-weight: 700; margin-bottom: .3em;}
+    .bm-desc { font-size: .96em; color: #23366e; font-family: 'Roboto', Arial, sans-serif;}
+    .bm-link {
+      margin-top: 1em;
+      font-size: .99em;
+      background: linear-gradient(90deg, var(--primary) 80%, var(--gold) 100%);
+      color: #fff; border: none; border-radius: 7px; padding: .5em 1em;
+      cursor: pointer; font-weight: 700;
+      box-shadow: 0 1px 7px #276EF120;
+      transition: background var(--transition), transform var(--transition);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .bm-link:hover { background: #003366; transform: scale(1.05);}
+    /* Image Showcase Section */
+    section.img-showcase {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 2vw 25px 2vw;
+    }
+    .img-title {
+      font-size: 1.35rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: .9em;
+      text-align: center;
+    }
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 28px;
+      align-items: stretch;
+    }
+    .img-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 14px #276EF122;
+      padding: 1em;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      transition: box-shadow var(--transition), transform var(--transition);
+      min-height: 240px;
+    }
+    .img-card:hover { box-shadow: 0 8px 24px #276EF144; transform: scale(1.03);}
+    .img-label { margin-top: .8em; font-size: 1.01em; font-weight: 700; color: var(--primary);}
+    .img-preview {
+      max-width: 100%;
+      max-height: 160px;
+      border-radius: 8px;
+      box-shadow: 0 1px 8px #00336618;
+      object-fit: cover;
+      margin-bottom: .5em;
+      background: #f8fafc;
+    }
     /* Stats */
     .stats-section {
       background: linear-gradient(90deg, #f9fafb 50%, #e0e7ff 100%);
@@ -218,11 +307,14 @@
       max-width: 580px;
       margin: 0 auto;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      /* Fix testimonial overflow */
     }
     .carousel-inner {
       display: flex;
       transition: transform 0.6s cubic-bezier(.77,.2,.29,1.01);
+      width: 100%;
+      /* Fix: force full width, no cut-off */
     }
     .testimonial-card {
       min-width: 100%;
@@ -231,12 +323,13 @@
       border-radius: 14px;
       box-shadow: 0 2px 14px #276EF122;
       padding: 1.8rem 1rem 1.2rem 1rem;
-      margin: 10px 10px;
+      margin: 0;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       opacity: 0.94;
+      /* Fix: remove margin that causes cut-off */
     }
     .testimonial-avatar {
       width: 65px;
@@ -499,14 +592,18 @@
     /* Responsive */
     @media (max-width: 950px) {
       .features-grid { grid-template-columns: 1fr 1fr; }
+      .img-grid { grid-template-columns: 1fr 1fr;}
       .stats-counters { gap: 20px; }
       .tips-list { gap: 7px;}
+      .bm-grid { flex-direction: column; align-items: center; gap: 12px;}
     }
     @media (max-width: 650px) {
       header.hero { padding: 36px 0 22px 0; }
       .hero-title { font-size: 1.5rem; }
       section.features { padding: 20px 1vw 10px 1vw; }
       .features-grid { grid-template-columns: 1fr; gap: 10px;}
+      .img-grid { grid-template-columns: 1fr;}
+      .img-card { min-height: 180px;}
       .counter-card { padding: .9rem .7rem; min-width: 80px;}
       section.testimonials { padding: 18px 0 13px 0; }
       .carousel { max-width: 97vw;}
@@ -517,6 +614,7 @@
       .newsletter-form { flex-direction: column;}
       .newsletter-input, .newsletter-btn { border-radius: 11px; width: 99%; margin-bottom: 8px;}
       .whatsapp-float { width: 44px; height: 44px; font-size: 1.5rem; right: 12px; bottom: 12px;}
+      .bm-card { max-width: 98vw;}
     }
   </style>
 </head>
@@ -581,6 +679,57 @@
         <div class="feature-title">WhatsApp Help</div>
         <div class="feature-desc">Quick support anytime via WhatsApp. Just say hi!</div>
       </div>
+    </div>
+  </section>
+
+  <!-- BLOG & MARKETPLACE -->
+  <section class="blog-market">
+    <div class="bm-title">Explore More Ways to Earn & Grow</div>
+    <div class="bm-grid">
+      <div class="bm-card">
+        <div class="bm-icon"><i class="bi bi-journal-richtext"></i></div>
+        <div class="bm-title2">Write Articles, Get Paid</div>
+        <div class="bm-desc">Share your thoughts, stories, study tips, or help others with subject guides. Every published article earns you cash and recognition!</div>
+        <a href="blogg.html" class="bm-link"><i class="bi bi-pencil-square"></i> Visit Blog</a>
+      </div>
+      <div class="bm-card">
+        <div class="bm-icon"><i class="bi bi-book"></i></div>
+        <div class="bm-title2">Read & Earn</div>
+        <div class="bm-desc">Learning pays! Read blog articles, study tips, and guides from other students and earn rewards.</div>
+        <a href="blogg.html" class="bm-link"><i class="bi bi-cash-coin"></i> Start Reading</a>
+      </div>
+      <div class="bm-card">
+        <div class="bm-icon"><i class="bi bi-shop"></i></div>
+        <div class="bm-title2">Marketplace</div>
+        <div class="bm-desc">Buy and sell study materials, textbooks, notes, and more. Make money and help fellow students succeed.</div>
+        <a href="gen-marketplace.html" class="bm-link"><i class="bi bi-bag"></i> Visit Marketplace</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE SHOWCASE -->
+  <section class="img-showcase">
+    <div class="img-title">See How It Looks</div>
+    <div class="img-grid">
+      <div class="img-card">
+        <img src="dashboard-preview.png" alt="Student Dashboard" class="img-preview">
+        <div class="img-label">Student Dashboard</div>
+      </div>
+      <div class="img-card">
+        <img src="mock-exam-preview.png" alt="Mock Exam" class="img-preview">
+        <div class="img-label">Mock Exam Section</div>
+      </div>
+      <div class="img-card">
+        <img src="past-questions-preview.png" alt="Past Questions" class="img-preview">
+        <div class="img-label">Past Questions Practice</div>
+      </div>
+      <div class="img-card">
+        <img src="earnings-preview.png" alt="Student Earnings" class="img-preview">
+        <div class="img-label">Student Earnings Dashboard</div>
+      </div>
+    </div>
+    <div style="text-align:center; color:#23366e; margin-top:1.2em;font-size:.98em;">
+      <i class="bi bi-images"></i> All images are for illustration. Dashboard and features may look even better on your device!
     </div>
   </section>
 
