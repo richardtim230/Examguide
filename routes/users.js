@@ -6,7 +6,6 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-// GET all users (supports ?role, ?faculty, ?department; populates faculty/department names)
 router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
@@ -14,19 +13,29 @@ router.get("/", async (req, res) => {
   if (req.query.department) filter.department = req.query.department;
 
   try {
-    const users = await User.find(filter)
-      .populate("faculty", "name")
-      .populate("department", "name")
-      .select("-password")
-      .sort({ createdAt: -1 });
+    let users = await User.find(filter).select("-password").sort({ createdAt: -1 });
 
-    const data = users.map(u => {
+    // Only call populate for users with ObjectId refs
+    users = await Promise.all(users.map(async u => {
       const obj = u.toObject();
-      obj.facultyName = obj.faculty?.name || "";
-      obj.departmentName = obj.department?.name || "";
+      // If faculty is ObjectId, populate name
+      if (mongoose.Types.ObjectId.isValid(obj.faculty)) {
+        const fac = await mongoose.model("Faculty").findById(obj.faculty);
+        obj.facultyName = fac ? fac.name : "";
+      } else {
+        obj.facultyName = obj.faculty || "";
+      }
+      // Same for department
+      if (mongoose.Types.ObjectId.isValid(obj.department)) {
+        const dept = await mongoose.model("Department").findById(obj.department);
+        obj.departmentName = dept ? dept.name : "";
+      } else {
+        obj.departmentName = obj.department || "";
+      }
       return obj;
-    });
-    res.json(data);
+    }));
+
+    res.json(users);
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
   }
