@@ -308,6 +308,40 @@
       margin-right: 1rem;
       cursor: pointer;
     }
+    .sidebar {
+  position: fixed;
+  top: var(--topbar-height, 56px); /* aligns under the topbar */
+  left: 0;
+  height: calc(100vh - var(--topbar-height, 56px));
+  width: var(--sidebar-width, 220px);
+  background: #fff;
+  border-right: 1px solid var(--border);
+  box-shadow: 1px 0 10px #1976d211;
+  padding: 2.4rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  z-index: 2;
+  /* Optional: prevent content overflow */
+  overflow-y: auto;
+}
+.layout-content {
+  margin-left: var(--sidebar-width, 220px);
+}
+@media (max-width: 950px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 0.7rem;
+  }
+  .layout-content {
+    margin-left: 0;
+  }
+}
   </style>
 </head>
 <body>
