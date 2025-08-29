@@ -500,6 +500,33 @@
             }
             .sidebar-header img { margin: 0 0 0.65rem 0; }
         }
+
+        /* Fix: Make login/register card bigger and reduce gap on desktop */
+@media (min-width: 1024px) {
+    .main-content {
+        padding: 2vw 0; /* Reduce horizontal padding */
+        justify-content: flex-start; /* Align closer to sidebar */
+    }
+    .auth-card {
+        max-width: 520px; /* Make card wider */
+        padding: 2.5rem 2.3rem 2.3rem 2.3rem; /* Slightly larger inner padding */
+        margin-left: 4vw; /* Move card closer to sidebar */
+        margin-right: auto;
+    }
+}
+
+/* Optional: If you still want to keep it centered but bigger */
+@media (min-width: 1024px) {
+    .main-content {
+        justify-content: center;
+        padding: 2vw 0;
+    }
+    .auth-card {
+        max-width: 520px;
+        padding: 2.5rem 2.3rem 2.3rem 2.3rem;
+        margin: 0;
+    }
+}
     </style>
 </head>
 <body>
