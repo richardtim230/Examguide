@@ -524,7 +524,27 @@
     position: relative;
 }
     }
-
+@media (min-width: 900px) {
+    .sidebar-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 340px;
+        min-width: 250px;
+        background: linear-gradient(135deg, #276EF1 0%, #003366 100%);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2.5rem 2rem 2rem 2rem;
+        box-shadow: 0 4px 20px rgba(39,110,241,.10);
+        z-index: 2;
+    }
+    .main-content {
+        margin-left: 340px; /* Same as sidebar width! */
+    }
+}
     </style>
 </head>
 <body>
