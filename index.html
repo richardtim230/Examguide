@@ -1,440 +1,777 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.81">
-    <title>OAU ExamGuard - Ace Your Exams Instantly</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:700,400&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1b1c2a 0%, #291f3b 100%);
-            color: #eaeaea;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #fd7e14, #a259ec, #f857a6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .animated-headline {
-            animation: fadeInDown 1.3s cubic-bezier(.64,.09,.08,1) both;
-        }
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-40px);}
-            100% { opacity: 1; transform: translateY(0);}
-        }
-        .feature-card {
-            background: linear-gradient(120deg, #23244a 60%, #18192a 100%);
-            border-radius: 1.3rem;
-            box-shadow: 0 8px 32px #a259ec44;
-            border: 1px solid #2d2f4a;
-            transition: transform .22s, box-shadow .22s;
-        }
-        .feature-card:hover {
-            transform: scale(1.05) translateY(-6px);
-            box-shadow: 0 14px 48px #fd7e1444;
-            z-index: 2;
-        }
-        .feature-icon {
-            font-size: 2.7rem;
-            margin-bottom: 0.7rem;
-            background: linear-gradient(90deg, #fd7e14, #a259ec);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .big-image {
-            border-radius: 1.2rem;
-            box-shadow: 0 8px 32px #fd7e1444;
-            border: 2px solid #fd7e14;
-            object-fit: cover;
-            width: 100%;
-            max-height: 320px;
-        }
-        .stat-card {
-            background: #23244a;
-            border-radius: 1rem;
-            padding: 1.2rem;
-            margin: 0.7rem;
-            text-align: center;
-            color: #fff;
-        }
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #fd7e14, #a259ec);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .testimonial-card {
-            background: #23244a;
-            border-radius: 1.2rem;
-            padding: 2rem 1.5rem;
-            margin: 1rem;
-            color: #eaeaea;
-            box-shadow: 0 2px 10px #fd7e1433;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
-        .testimonial-img {
-            border-radius: 50%;
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-            border: 2px solid #fd7e14;
-        }
-        .step-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 1rem;
-            background: #a259ec22;
-            object-fit: cover;
-            margin-right: 1rem;
-        }
-        .cta-big {
-            background: linear-gradient(90deg, #fd7e14, #a259ec);
-            color: #fff;
-            font-size: 1.35rem;
-            padding: 1.1rem 2.5rem;
-            border-radius: 999px;
-            font-weight: bold;
-            margin: 2rem auto 0 auto;
-            box-shadow: 0 6px 32px #fd7e1444;
-            display: inline-block;
-            text-align: center;
-            transition: transform .18s, box-shadow .18s;
-        }
-        .cta-big:hover {
-            transform: scale(1.06);
-            box-shadow: 0 8px 42px #fd7e1444;
-        }
-        .btn-outline {
-            border: 2.5px solid #a259ec;
-            color: #a259ec;
-            background: transparent;
-            border-radius: 999px;
-            padding: 0.6rem 1.5rem;
-            font-weight: 700;
-            margin-left: 0.7rem;
-            transition: background .18s, color .18s;
-        }
-        .btn-outline:hover {
-            background: #a259ec;
-            color: #fff;
-        }
-        .btn-primary {
-            background: linear-gradient(90deg, #fd7e14, #a259ec);
-            color: #fff;
-            border-radius: 999px;
-            padding: 0.6rem 1.5rem;
-            font-weight: 700;
-            box-shadow: 0 2px 14px #fd7e1422;
-            transition: box-shadow .25s, transform .18s;
-        }
-        .btn-primary:hover {
-            box-shadow: 0 4px 24px #fd7e1444;
-            transform: scale(1.05);
-        }
-        .suggest-btn {
-            background: #23244a;
-            color: #eaeaea;
-            border: 1.5px solid #a259ec;
-            border-radius: 0.7rem;
-            padding: 0.5rem 1.1rem;
-            margin: 0.5rem;
-            font-weight: 500;
-            transition: background .18s, color .18s;
-        }
-        .suggest-btn:hover {
-            background: #a259ec;
-            color: #fff;
-        }
-        .input-prompt {
-            background: #23244a;
-            border-radius: 1.1rem;
-            border: 1.5px solid #a259ec;
-            padding: 1rem 1.2rem;
-            color: #eaeaea;
-            font-size: 1.1rem;
-            width: 100%;
-            margin: 0.8rem 0 1.2rem 0;
-            transition: box-shadow 0.2s;
-        }
-        .input-prompt:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px #a259ec88;
-        }
-        .carousel {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform .5s cubic-bezier(.64,.09,.08,1);
-        }
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #23244a;
-            color: #fff;
-            border-radius: 999px;
-            width: 38px;
-            height: 38px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.6rem;
-            box-shadow: 0 2px 10px #a259ec44;
-            border: none;
-            z-index: 3;
-        }
-        .carousel-btn.left { left: 10px;}
-        .carousel-btn.right { right: 10px;}
-        @media (max-width: 660px) {
-            .feature-card { padding: 1rem; }
-            .big-image { max-height: 180px; }
-            .cta-big { font-size: 1rem; padding: 0.8rem 1.3rem;}
-            .testimonial-card { flex-direction: column; align-items: flex-start;}
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.81">
+  <title>ExamGuard Nigeria - Your Smarter Exam Partner</title>
+  <link rel="icon" href="logo.png">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400|Nunito:700,400|Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --primary: #276EF1;
+      --secondary: #0e1a32;
+      --accent: #ffe463;
+      --gold: #d4af37;
+      --bg: #f6f9fc;
+      --white: #fff;
+      --shadow: 0 8px 40px 0 rgba(39,110,241,.13), 0 1.5px 8px 0 rgba(39,110,241,.06);
+      --radius: 18px;
+      --transition: .22s cubic-bezier(.45,.02,.29,1.25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', 'Montserrat', 'Roboto', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--secondary);
+      min-height: 100vh;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    header.hero {
+      background: linear-gradient(120deg, #276EF1 0%, #003366 55%, #ffe463 100%);
+      color: var(--white);
+      padding: 72px 0 49px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-logo {
+      width: 85px;
+      border-radius: 22px;
+      border: 3px solid var(--gold);
+      box-shadow: 0 3px 18px #00336644;
+      background: #fff;
+      margin-bottom: 1.1rem;
+    }
+    .hero-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      margin-bottom: .7rem;
+      text-shadow: 0 2px 14px #00336622;
+    }
+    .hero-desc {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 2.2rem;
+      opacity: 0.97;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+    .hero-actions {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .btn-main, .btn-secondary {
+      padding: 0.85em 2.1em;
+      font-size: 1rem;
+      border-radius: 11px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #00336622;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+      margin-bottom: 0.4em;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .btn-main {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 80%);
+      color: var(--secondary);
+    }
+    .btn-main:hover {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--gold) 90%);
+      color: var(--white);
+      transform: scale(1.05);
+    }
+    .btn-secondary {
+      background: #fff;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    /* Features Section */
+    section.features {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 53px 2vw 23px 2vw;
+      text-align: center;
+    }
+    .features-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: .7rem;
+      color: var(--primary);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 28px;
+      margin-top: 2rem;
+      margin-bottom: 1.2rem;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem 1.3rem 1.3rem 1.3rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      cursor: pointer;
+      text-align: left;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 14px 32px #276EF144;
+    }
+    .feature-icon {
+      font-size: 2.3rem;
+      color: var(--primary);
+      margin-bottom: 0.7rem;
+      transition: color var(--transition);
+    }
+    .feature-card:hover .feature-icon {
+      color: var(--gold);
+    }
+    .feature-title {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.11rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .feature-desc {
+      font-size: .98rem;
+      color: #23366e;
+      opacity: .97;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    /* Stats */
+    .stats-section {
+      background: linear-gradient(90deg, #f9fafb 50%, #e0e7ff 100%);
+      padding: 45px 0 33px 0;
+      text-align: center;
+    }
+    .stats-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .stats-counters {
+      display: flex;
+      justify-content: center;
+      gap: 38px;
+      flex-wrap: wrap;
+    }
+    .counter-card {
+      background: #fff;
+      border-radius: 13px;
+      box-shadow: 0 1px 8px #00336613;
+      padding: 1.5rem 1.4rem;
+      margin: 0.5em 0;
+      min-width: 120px;
+      text-align: center;
+    }
+    .counter-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.18rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      letter-spacing: 1px;
+      transition: color var(--transition);
+    }
+    .counter-label {
+      font-size: 1rem;
+      color: #003366;
+      font-weight: 700;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    /* Testimonials Carousel */
+    section.testimonials {
+      background: var(--white);
+      padding: 48px 0 33px 0;
+      text-align: center;
+    }
+    .testimonials-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .carousel {
+      max-width: 580px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(.77,.2,.29,1.01);
+    }
+    .testimonial-card {
+      min-width: 100%;
+      box-sizing: border-box;
+      background: #f6f8fa;
+      border-radius: 14px;
+      box-shadow: 0 2px 14px #276EF122;
+      padding: 1.8rem 1rem 1.2rem 1rem;
+      margin: 0 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0.94;
+    }
+    .testimonial-avatar {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: .7rem;
+      border: 2px solid var(--accent);
+      box-shadow: 0 2px 10px #00336616;
+    }
+    .testimonial-quote {
+      font-size: 1rem;
+      color: #003366;
+      font-style: italic;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    .testimonial-name {
+      font-size: .98rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .testimonial-role {
+      font-size: 0.93rem;
+      color: #555;
+      margin-bottom: 0.09em;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    .carousel-controls {
+      margin-top: 1em;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+    .carousel-btn {
+      background: #fff;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .carousel-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    /* FAQ */
+    section.faq {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 40px 2vw 31px 2vw;
+    }
+    .faq-title {
+      font-size: 1.6rem;
+      color: var(--primary);
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      margin-bottom: 1em;
+      text-align: center;
+    }
+    .faq-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .faq-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #00336609;
+      margin-bottom: .9em;
+      padding: 1.1em 1.1em .6em 1.1em;
+      cursor: pointer;
+      transition: box-shadow var(--transition);
+      position: relative;
+    }
+    .faq-item.open {
+      box-shadow: 0 8px 20px #276EF122;
+    }
+    .faq-q {
+      font-size: 1.04em;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .faq-a {
+      font-size: .99em;
+      color: #23366e;
+      font-family: 'Roboto', Arial, sans-serif;
+      margin-top: 0.6em;
+      display: none;
+      opacity: 0.93;
+      line-height: 1.45;
+    }
+    .faq-item.open .faq-a {
+      display: block;
+      animation: fadeIn 0.42s;
+    }
+    .faq-arrow {
+      font-size: 1.2em;
+      transition: transform var(--transition);
+    }
+    .faq-item.open .faq-arrow {
+      transform: rotate(90deg);
+      color: var(--gold);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* Tips / Quick Links */
+    section.tips {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 33px 2vw 18px 2vw;
+      text-align: center;
+    }
+    .tips-title {
+      font-size: 1.2rem;
+      font-family: 'Nunito', Arial, sans-serif;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: .7em;
+    }
+    .tips-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2em;
+      margin-bottom: 1em;
+    }
+    .tip-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 8px #00336613;
+      padding: .9em 1.1em;
+      font-size: .97rem;
+      color: #23366e;
+      font-family: 'Roboto', Arial, sans-serif;
+      min-width: 180px;
+      max-width: 220px;
+    }
+    .tip-icon { font-size: 1.3em; color: var(--primary); margin-right: .4em;}
+    .quick-links {
+      margin-top: 1.2em;
+      display: flex; flex-wrap: wrap; gap: 13px; justify-content: center;
+    }
+    .quick-link-btn {
+      background: linear-gradient(90deg, var(--primary) 70%, var(--gold) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      padding: .7em 1.3em;
+      font-size: .99em;
+      box-shadow: 0 1px 7px #276EF120;
+      transition: background var(--transition), transform var(--transition);
+      cursor: pointer;
+    }
+    .quick-link-btn:hover { background: #003366; transform: scale(1.06);}
+    /* Contact/Newsletter */
+    section.contact {
+      background: linear-gradient(90deg, #276EF1 60%, #ffe463 100%);
+      padding: 38px 0 32px 0;
+      color: #fff;
+      text-align: center;
+    }
+    .contact-title {
+      font-size: 1.5rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 800;
+      margin-bottom: 0.7em;
+    }
+    .contact-desc {
+      font-size: 1.09em;
+      font-family: 'Nunito', Arial, sans-serif;
+      margin-bottom: 1.2em;
+      opacity: 0.93;
+      font-weight: 500;
+    }
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .newsletter-input {
+      padding: .9em;
+      font-size: 1em;
+      border-radius: 11px 0 0 11px;
+      border: none;
+      outline: none;
+      background: #fff;
+      color: #003366;
+      width: 65%;
+      min-width: 140px;
+      font-weight: 700;
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    .newsletter-btn {
+      padding: .9em 1.6em;
+      font-size: 1em;
+      border-radius: 0 11px 11px 0;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .newsletter-btn:hover {
+      background: #1B428C;
+      transform: scale(1.06);
+    }
+    /* WhatsApp floating */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 200;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      width: 58px;
+      height: 58px;
+      box-shadow: 0 4px 24px #00336633;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.18s;
+      outline: none;
+      animation: bounce 2.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(-8px);}
+    }
+    .whatsapp-float:hover { background: #128C7E; }
+    /* Footer */
+    footer {
+      background: #003366;
+      color: #fff;
+      text-align: center;
+      padding: 1.3em 0 .9em 0;
+      font-size: .96em;
+      font-family: 'Nunito', Arial, sans-serif;
+      letter-spacing: 0.7px;
+    }
+    /* Responsive */
+    @media (max-width: 950px) {
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .stats-counters { gap: 20px; }
+      .tips-list { gap: 7px;}
+    }
+    @media (max-width: 650px) {
+      header.hero { padding: 36px 0 22px 0; }
+      .hero-title { font-size: 1.5rem; }
+      section.features { padding: 20px 1vw 10px 1vw; }
+      .features-grid { grid-template-columns: 1fr; gap: 10px;}
+      .counter-card { padding: .9rem .7rem; min-width: 80px;}
+      section.testimonials { padding: 18px 0 13px 0; }
+      .carousel { max-width: 97vw;}
+      .testimonial-card { padding: 1.1rem 0.4rem;}
+      section.faq { padding: 18px 1vw 10px 1vw;}
+      section.tips { padding: 12px 1vw 7px 1vw;}
+      section.contact { padding: 13px 0 11px 0;}
+      .newsletter-form { flex-direction: column;}
+      .newsletter-input, .newsletter-btn { border-radius: 11px; width: 99%; margin-bottom: 8px;}
+      .whatsapp-float { width: 44px; height: 44px; font-size: 1.5rem; right: 12px; bottom: 12px;}
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="w-full sticky top-0 z-40 flex items-center justify-between px-5 py-4" style="background:rgba(31,32,54,0.98); box-shadow:0 2px 14px #21224522;">
-        <div class="flex items-center">
-            <img src="logo.png" alt="OAU ExamGuard Logo" style="height:2.2rem;width:2.2rem; border-radius:8px; margin-right:0.7rem;">
-            <span class="font-bold gradient-text text-lg tracking-wider">ExamGuard</span>
-        </div>
-        <div>
-            <a href="mock.html" class="btn-outline">Sign In</a>
-            <a href="mock.html" class="btn-primary">Sign Up</a>
-        </div>
-    </header>
-    
-    <!-- Hero Section -->
-    <section class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 py-12">
-        <div class="w-full md:w-1/2 text-center md:text-left">
-            <h1 class="gradient-text animated-headline font-extrabold text-4xl sm:text-5xl mb-6" style="line-height:1.15;">
-                Ace Your Exams, Instantly.
-            </h1>
-            <div class="text-lg text-gray-200 mb-6">
-                Turn your hard work into real results—before your next exam comes up. 
-                <span class="font-semibold text-yellow-300">Join thousands of students maximizing their scores and earning rewards!</span>
-            </div>
-            <div>
-                <input class="input-prompt" type="text" placeholder="E.g. 'I want to study for MTH101'" id="searchPrompt" />
-            </div>
-            <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-5">
-                <button class="suggest-btn" onclick="setPrompt('Mock Test for Chemistry')">Mock Test</button>
-                <button class="suggest-btn" onclick="setPrompt('Past Questions for Physics')">Past Questions</button>
-                <button class="suggest-btn" onclick="setPrompt('Marketplace')">Marketplace</button>
-                <button class="suggest-btn" onclick="setPrompt('Blogging')">Blogging</button>
-            </div>
-            <a href="mock.html" class="cta-big mt-4">Get Started Free →</a>
-        </div>
-        <div class="w-full md:w-1/2 flex justify-center">
-            <img src="https://img.freepik.com/free-photo/crop-people-studying-desktop_23-2147655986.jpg" alt="Hero Students" class="big-image shadow-card">
-        </div>
-    </section>
+  <!-- HERO -->
+  <header class="hero">
+    <img src="logo.png" alt="ExamGuard" class="hero-logo">
+    <div class="hero-title">Hey there, Welcome to ExamGuard Nigeria!</div>
+    <div class="hero-desc">
+      Your trusted partner for smarter, stress-free exams and practice.<br>
+      Built for students, teachers, and schools in Nigeria—with love.<br>
+      Ready to make exams easier, more fun, and truly yours?
+    </div>
+    <div class="hero-actions">
+      <a href="mock.html"><button class="btn-main"><i class="bi bi-play-circle"></i> Try a Free Demo</button></a>
+      <a href="student-dashoards.html"><button class="btn-secondary"><i class="bi bi-person-circle"></i> Student Portal</button></a>
+      <a href="mailto:support@examguard.com"><button class="btn-secondary"><i class="bi bi-envelope"></i> Contact Support</button></a>
+    </div>
+  </header>
 
-    <!-- Stats Section -->
-    <section class="max-w-4xl mx-auto py-6 flex flex-wrap justify-center gap-6">
-        <div class="stat-card">
-            <div class="stat-number" id="students-counter">0</div>
-            <div>Active Students</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" id="materials-counter">0</div>
-            <div>Notes Shared</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" id="posts-counter">0</div>
-            <div>Blogs Published</div>
-        </div>
-    </section>
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="features-title">What can ExamGuard do for you?</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
+        <div class="feature-title">Secure Exams (Peace of Mind)</div>
+        <div class="feature-desc">We take cheating out of the equation, so you can focus on showing what you know. No stress, just honesty.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-person-badge"></i></div>
+        <div class="feature-title">Verified Access</div>
+        <div class="feature-desc">Simple sign-in, safe profiles. Your details are protected, always.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-graph-up-arrow"></i></div>
+        <div class="feature-title">See Your Progress</div>
+        <div class="feature-desc">Watch yourself improve over time. Smart analytics show you what’s working—and what needs work.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-phone"></i></div>
+        <div class="feature-title">Works on Your Phone</div>
+        <div class="feature-desc">On campus, at home, on the go—ExamGuard just works. No laptop needed.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-people"></i></div>
+        <div class="feature-title">Community & Support</div>
+        <div class="feature-desc">Get help, share tips, and cheer each other on. Our support team and student community have your back.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-stars"></i></div>
+        <div class="feature-title">Fun & Rewards</div>
+        <div class="feature-desc">Earn badges, climb leaderboards, and unlock achievements. Exams don’t have to be boring!</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-lightbulb"></i></div>
+        <div class="feature-title">Smart Study Tips</div>
+        <div class="feature-desc">Personalised advice and reminders to help you study smarter, not harder.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-whatsapp"></i></div>
+        <div class="feature-title">WhatsApp Help</div>
+        <div class="feature-desc">Quick support anytime via WhatsApp. Just say hi!</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Features Carousel Section -->
-    <section class="max-w-6xl mx-auto py-16">
-        <h2 class="gradient-text text-3xl font-bold text-center mb-12">Packed With Everything You Need</h2>
-        <div class="carousel" id="featureCarousel">
-            <button class="carousel-btn left" onclick="moveCarousel(-1)">&#8249;</button>
-            <div class="carousel-track" id="carouselTrack">
-                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
-                    <div class="feature-icon">📚</div>
-                    <h3 class="font-bold text-xl gradient-text mb-2">Verified Past Questions</h3>
-                    <p class="text-gray-300">Access hundreds of real, up-to-date exam questions and clear solutions.</p>
-                    <img src="https://img.freepik.com/free-photo/books-stack-table_1150-17726.jpg" alt="Past Questions" class="big-image mt-6">
-                </div>
-                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
-                    <div class="feature-icon">📝</div>
-                    <h3 class="font-bold text-xl gradient-text mb-2">Mock Tests & Quizzes</h3>
-                    <p class="text-gray-300">Practice anytime with interactive quizzes and instant feedback.</p>
-                    <img src="https://img.freepik.com/free-photo/person-writing-desk_1098-18251.jpg" alt="Mock Test" class="big-image mt-6">
-                </div>
-                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
-                    <div class="feature-icon">🛒</div>
-                    <h3 class="font-bold text-xl gradient-text mb-2">Student Marketplace</h3>
-                    <p class="text-gray-300">Share your notes, buy guides, and earn money for contributing.</p>
-                    <img src="https://img.freepik.com/free-photo/top-view-trolley-with-books_23-2148520241.jpg" alt="Marketplace" class="big-image mt-6">
-                </div>
-                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="font-bold text-xl gradient-text mb-2">Progress Analytics</h3>
-                    <p class="text-gray-300">Track improvements, strengths and areas to focus.</p>
-                    <img src="https://img.freepik.com/free-photo/graph-business-table_1150-12070.jpg" alt="Analytics" class="big-image mt-6">
-                </div>
-                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
-                    <div class="feature-icon">🤝</div>
-                    <h3 class="font-bold text-xl gradient-text mb-2">Peer Support & Community</h3>
-                    <p class="text-gray-300">Join study groups, find mentors, and collaborate for success.</p>
-                    <img src="https://img.freepik.com/free-photo/group-students-talking_1150-10157.jpg" alt="Community" class="big-image mt-6">
-                </div>
-                <div class="feature-card flex flex-col items-center p-7 mx-4 min-w-[300px]">
-                    <div class="feature-icon">💰</div>
-                    <h3 class="font-bold text-xl gradient-text mb-2">Earn Rewards</h3>
-                    <p class="text-gray-300">Get paid for sharing notes, writing blogs, or helping others.</p>
-                    <img src="https://img.freepik.com/free-photo/money-coins-stack-glass-jar_1150-17886.jpg" alt="Earn Rewards" class="big-image mt-6">
-                </div>
-            </div>
-            <button class="carousel-btn right" onclick="moveCarousel(1)">&#8250;</button>
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-title">Our Journey So Far</div>
+    <div class="stats-counters">
+      <div class="counter-card">
+        <span class="counter-number" data-target="7200">0</span>
+        <div class="counter-label"><i class="bi bi-people"></i> Students Helped</div>
+      </div>
+      <div class="counter-card">
+        <span class="counter-number" data-target="450">0</span>
+        <div class="counter-label"><i class="bi bi-file-earmark-text"></i> Exams Taken</div>
+      </div>
+      <div class="counter-card">
+        <span class="counter-number" data-target="60">0</span>
+        <div class="counter-label"><i class="bi bi-mortarboard"></i> Institutions Served</div>
+      </div>
+      <div class="counter-card">
+        <span class="counter-number" data-target="95">0</span>
+        <div class="counter-label"><i class="bi bi-award"></i> Success Rate (%)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials-title">Real Stories, Real People</div>
+    <div class="carousel" id="testimonialCarousel">
+      <div class="carousel-inner" id="carouselInner">
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Student" class="testimonial-avatar">
+          <div class="testimonial-quote">"I used ExamGuard for my mock exams and it made everything easier. I could study on my phone whenever I wanted!"</div>
+          <div class="testimonial-name">Tunde, OAU</div>
+          <div class="testimonial-role">Student</div>
         </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="max-w-4xl mx-auto py-16">
-        <h2 class="gradient-text text-3xl font-bold text-center mb-10">How ExamGuard Works</h2>
-        <div class="flex flex-col md:flex-row gap-12 items-center">
-            <div class="flex items-center w-full md:w-1/3">
-                <img src="https://img.freepik.com/free-photo/young-woman-studying-home_1150-11010.jpg" class="step-img" alt="Step 1">
-                <div>
-                    <div class="font-bold gradient-text mb-1">1. Find Your Exam</div>
-                    <div class="text-gray-300">Select your course, mock, or topic. Everything is at your fingertips.</div>
-                </div>
-            </div>
-            <div class="flex items-center w-full md:w-1/3">
-                <img src="https://img.freepik.com/free-photo/person-holding-pencil-closeup_1150-11077.jpg" class="step-img" alt="Step 2">
-                <div>
-                    <div class="font-bold gradient-text mb-1">2. Practice & Track</div>
-                    <div class="text-gray-300">Take quizzes, review notes, and watch your stats grow.</div>
-                </div>
-            </div>
-            <div class="flex items-center w-full md:w-1/3">
-                <img src="https://img.freepik.com/free-photo/close-up-hands-holding-money_1150-17891.jpg" class="step-img" alt="Step 3">
-                <div>
-                    <div class="font-bold gradient-text mb-1">3. Earn & Connect</div>
-                    <div class="text-gray-300">Earn rewards and connect with peers for even more success.</div>
-                </div>
-            </div>
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Educator" class="testimonial-avatar">
+          <div class="testimonial-quote">"Now I spend less time marking and more time helping my students. The analytics are a game-changer."</div>
+          <div class="testimonial-name">Mrs Aisha, UI</div>
+          <div class="testimonial-role">Lecturer</div>
         </div>
-        <div class="text-center mt-10">
-            <a href="mock.html" class="cta-big">Try ExamGuard Now →</a>
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/men/48.jpg" alt="Parent" class="testimonial-avatar">
+          <div class="testimonial-quote">"My daughter got her confidence back thanks to ExamGuard. It’s safe, simple, and really supportive."</div>
+          <div class="testimonial-name">Mr. Okeke, UNN</div>
+          <div class="testimonial-role">Parent</div>
         </div>
-    </section>
-
-    <!-- Testimonials Section (Slider) -->
-    <section class="max-w-5xl mx-auto py-16">
-        <h2 class="gradient-text text-3xl font-bold text-center mb-10">Student Success Stories</h2>
-        <div class="carousel" id="testimonialCarousel">
-            <button class="carousel-btn left" onclick="moveTestimonial(-1)">&#8249;</button>
-            <div class="carousel-track" id="testimonialTrack">
-                <div class="testimonial-card w-full md:w-1/2">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="testimonial-img" alt="Sarah">
-                    <div>
-                        <div class="font-bold gradient-text">Sarah, Comp. Sci.</div>
-                        <div class="italic text-gray-200">"ExamGuard made studying fun and stress-free. The mock tests helped me score higher!"</div>
-                    </div>
-                </div>
-                <div class="testimonial-card w-full md:w-1/2">
-                    <img src="https://randomuser.me/api/portraits/men/21.jpg" class="testimonial-img" alt="Ahmed">
-                    <div>
-                        <div class="font-bold gradient-text">Ahmed, Engineering</div>
-                        <div class="italic text-gray-200">"Selling my notes helped me pay for textbooks—and I met amazing people."</div>
-                    </div>
-                </div>
-                <div class="testimonial-card w-full md:w-1/2">
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-img" alt="Temi">
-                    <div>
-                        <div class="font-bold gradient-text">Temi, Literature</div>
-                        <div class="italic text-gray-200">"Blogging built my confidence—and my wallet!"</div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-btn right" onclick="moveTestimonial(1)">&#8250;</button>
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Admin" class="testimonial-avatar">
+          <div class="testimonial-quote">"We use ExamGuard for all our internal exams now. The students love the badges and the support is awesome."</div>
+          <div class="testimonial-name">Joy, LASU</div>
+          <div class="testimonial-role">School Admin</div>
         </div>
-    </section>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carouselPrev"><i class="bi bi-arrow-left"></i></button>
+        <button class="carousel-btn" id="carouselNext"><i class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
 
-    <!-- Big CTA Section -->
-    <section class="py-16" style="background: linear-gradient(90deg,#fd7e14 0%,#a259ec 100%); text-align:center;">
-        <h2 class="text-white text-3xl font-bold mb-4">Ready to Join the Movement?</h2>
-        <p class="text-white text-lg mb-8">Your journey begins with ExamGuard. Make studying easier—and more rewarding—today!</p>
-        <a href="mock.html" class="cta-big" style="background:#fff; color:#a259ec;">Sign Up Now 🚀</a>
-    </section>
+  <!-- TIPS / QUICK LINKS -->
+  <section class="tips">
+    <div class="tips-title">Top Tips for Exam Success</div>
+    <div class="tips-list">
+      <div class="tip-card"><span class="tip-icon"><i class="bi bi-lightbulb"></i></span>Take practice tests before the real thing!</div>
+      <div class="tip-card"><span class="tip-icon"><i class="bi bi-clock"></i></span>Time yourself—don’t rush, don’t drag.</div>
+      <div class="tip-card"><span class="tip-icon"><i class="bi bi-chat-left-text"></i></span>Ask questions. There's no shame in seeking help!</div>
+      <div class="tip-card"><span class="tip-icon"><i class="bi bi-emoji-smile"></i></span>Celebrate every little win.</div>
+    </div>
+    <div class="quick-links">
+      <a href="mock.html"><button class="quick-link-btn"><i class="bi bi-rocket-takeoff"></i> Start Mock Test</button></a>
+      <a href="student-dashoards.html"><button class="quick-link-btn"><i class="bi bi-person"></i> My Dashboard</button></a>
+      <a href="mailto:support@examguard.com"><button class="quick-link-btn"><i class="bi bi-envelope"></i> Email Support</button></a>
+      <a href="https://wa.me/2348000000000"><button class="quick-link-btn"><i class="bi bi-whatsapp"></i> WhatsApp Help</button></a>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="footer" style="background:#18192a; color:#cfc8ec; text-align:center; padding:2rem 0 1rem 0; font-size:1rem;">
-        <div class="mb-2">© 2025 OAU ExamGuard. All rights reserved.</div>
-        <div>
-            <a href="#" style="color:#a259ec;" class="mx-2 hover:underline">Privacy Policy</a>
-            <a href="#" style="color:#a259ec;" class="mx-2 hover:underline">Terms of Service</a>
-            <a href="#" style="color:#a259ec;" class="mx-2 hover:underline">Contact Us</a>
-        </div>
-    </footer>
-    <script>
-        // Prompt suggestion interactivity
-        function setPrompt(text) {
-            document.getElementById('searchPrompt').value = text;
-        }
-        // Animated counters
-        function animateCounter(id, end, duration = 1800) {
-            let obj = document.getElementById(id);
-            let start = 0;
-            let range = end - start;
-            let startTime = null;
-            function step(timestamp) {
-                if (!startTime) startTime = timestamp;
-                let progress = timestamp - startTime;
-                let value = Math.min(start + (progress / duration) * range, end);
-                obj.textContent = Math.floor(value);
-                if (progress < duration) requestAnimationFrame(step);
-                else obj.textContent = end;
-            }
-            requestAnimationFrame(step);
-        }
-        animateCounter('students-counter', 5000);
-        animateCounter('materials-counter', 12000);
-        animateCounter('posts-counter', 2800);
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq-title">Got Questions?</div>
+    <ul class="faq-list">
+      <li class="faq-item">
+        <div class="faq-q"><span class="faq-arrow"><i class="bi bi-chevron-right"></i></span>How do I register?</div>
+        <div class="faq-a">Just click “Student Portal”, fill in your details, and you’re good to go. No long process!</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q"><span class="faq-arrow"><i class="bi bi-chevron-right"></i></span>Is ExamGuard free?</div>
+        <div class="faq-a">Yes! You can start with free mock tests. Some features may require school/institution sign-up.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q"><span class="faq-arrow"><i class="bi bi-chevron-right"></i></span>Can I use my phone?</div>
+        <div class="faq-a">Of course! ExamGuard works smoothly on smartphones and tablets.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q"><span class="faq-arrow"><i class="bi bi-chevron-right"></i></span>What if I need help?</div>
+        <div class="faq-a">Our support team is on WhatsApp, email, and phone. You’re never alone.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q"><span class="faq-arrow"><i class="bi bi-chevron-right"></i></span>Are my details safe?</div>
+        <div class="faq-a">Totally. We take privacy very seriously. Your info never leaves ExamGuard.</div>
+      </li>
+    </ul>
+  </section>
 
-        // Feature carousel logic
-        let featureIndex = 0;
-        const featureTrack = document.getElementById('carouselTrack');
-        const featureCards = featureTrack.children;
-        function moveCarousel(dir) {
-            featureIndex += dir;
-            if (featureIndex < 0) featureIndex = 0;
-            if (featureIndex > featureCards.length - 3) featureIndex = featureCards.length - 3;
-            featureTrack.style.transform = `translateX(${-featureIndex * 340}px)`;
-        }
+  <!-- CONTACT / NEWSLETTER -->
+  <section class="contact">
+    <div class="contact-title">Get Exam Tips & Updates</div>
+    <div class="contact-desc">Drop your email and we’ll send you exam tips, news, and special offers (no spam, promise!)</div>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" class="newsletter-input" placeholder="Your email address" required>
+      <button type="submit" class="newsletter-btn"><i class="bi bi-send"></i> Subscribe</button>
+    </form>
+    <div id="newsletterMsg" style="margin-top:1em;font-size:1.05em;"></div>
+    <div style="margin-top:1.3em;">
+      <a href="mailto:support@examguard.com" style="color:#fff;text-decoration:underline;"><i class="bi bi-envelope"></i> support@examguard.com</a>
+      <span style="margin-left:1em;"><i class="bi bi-telephone"></i> +234-800-EXAMGUARD</span>
+    </div>
+  </section>
 
-        // Testimonial carousel logic
-        let testimonialIndex = 0;
-        const testimonialTrack = document.getElementById('testimonialTrack');
-        const testimonialCards = testimonialTrack.children;
-        function moveTestimonial(dir) {
-            testimonialIndex += dir;
-            if (testimonialIndex < 0) testimonialIndex = 0;
-            if (testimonialIndex > testimonialCards.length - 1) testimonialIndex = testimonialCards.length - 1;
-            testimonialTrack.style.transform = `translateX(${-testimonialIndex * 580}px)`;
-        }
-        // Auto-slide for testimonials
-        setInterval(() => {
-            testimonialIndex = (testimonialIndex + 1) % testimonialCards.length;
-            moveTestimonial(0);
-        }, 6000);
-    </script>
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/2348000000000" target="_blank" title="WhatsApp Support">
+    <div class="whatsapp-float"><i class="bi bi-whatsapp"></i></div>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2025 ExamGuard Nigeria. Made for students, by students.<br>
+    <span style="font-size:.89em;">Follow us:
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-twitter-x"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+    </span>
+  </footer>
+
+  <!-- INTERACTIVITY SCRIPTS -->
+  <script>
+    // Counter Animation
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.counter-number').forEach(counter => {
+        let target = +counter.getAttribute('data-target');
+        let count = 0, step = Math.ceil(target/65);
+        let update = () => {
+          count += step;
+          if (count > target) count = target;
+          counter.textContent = count.toLocaleString();
+          if (count < target) setTimeout(update, 17);
+        };
+        update();
+      });
+    });
+
+    // Testimonials Carousel
+    let carouselIdx = 0;
+    const carouselInner = document.getElementById('carouselInner');
+    const testimonials = carouselInner.children.length;
+    function showCarousel(idx) {
+      carouselInner.style.transform = `translateX(-${idx * 100}%)`;
+    }
+    document.getElementById('carouselPrev').onclick = () => {
+      carouselIdx = (carouselIdx - 1 + testimonials) % testimonials;
+      showCarousel(carouselIdx);
+    };
+    document.getElementById('carouselNext').onclick = () => {
+      carouselIdx = (carouselIdx + 1) % testimonials;
+      showCarousel(carouselIdx);
+    };
+    setInterval(() => {
+      carouselIdx = (carouselIdx + 1) % testimonials;
+      showCarousel(carouselIdx);
+    }, 6000);
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.faq-item').forEach(i => i !== item && i.classList.remove('open'));
+        item.classList.toggle('open');
+      });
+    });
+
+    // Newsletter Form
+    document.getElementById('newsletterForm').onsubmit = function(e) {
+      e.preventDefault();
+      let email = this.querySelector('.newsletter-input').value;
+      let msgBox = document.getElementById('newsletterMsg');
+      msgBox.innerHTML = '<span style="color:#ffe463;font-weight:700;"><i class="bi bi-check-circle"></i> Thanks for subscribing! You’ll hear from us soon.</span>';
+      this.reset();
+      setTimeout(()=>msgBox.innerHTML='',4000);
+    };
+  </script>
 </body>
 </html>
