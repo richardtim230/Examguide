@@ -231,7 +231,7 @@
       border-radius: 14px;
       box-shadow: 0 2px 14px #276EF122;
       padding: 1em;
-      width: 90%;
+      
       text-align: center;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
       transition: box-shadow var(--transition), transform var(--transition);
@@ -708,31 +708,96 @@
     </div>
   </section>
 
-  <!-- IMAGE SHOWCASE -->
-  <section class="img-showcase">
-    <div class="img-title">See How It Looks</div>
-    <div class="img-grid">
-      <div class="img-card">
-        <img src="Screenshot_20250829-074235~2.png" alt="Student Dashboard" class="img-preview">
-        <div class="img-label">Student Dashboard</div>
-      </div>
-      <div class="img-card">
-        <img src="Screenshot_20250829-074257~2.png" alt="Mock Exam" class="img-preview">
-        <div class="img-label">Mock Exam Section</div>
-      </div>
-      <div class="img-card">
-        <img src="Screenshot_20250829-074433~2.png" alt="Past Questions" class="img-preview">
-        <div class="img-label">Past Questions Practice</div>
-      </div>
-      <div class="img-card">
-        <img src="Screenshot_20250829-065946~2.png" alt="Student Earnings" class="img-preview">
-        <div class="img-label">Student Earnings Dashboard</div>
-      </div>
+
+
+<!-- IMAGE SHOWCASE (Full Width, Large Images) -->
+<section class="img-showcase">
+  <div class="img-title">See How It Looks</div>
+  <div class="img-grid-large">
+    <div class="img-card-large">
+<img src="Screenshot_20250829-074235~2.png"  alt="Student Dashboard" class="img-preview-large">
+      <div class="img-label-large">Student Dashboard</div>
     </div>
-    <div style="text-align:center; color:#23366e; margin-top:1.2em;font-size:.98em;">
-      <i class="bi bi-images"></i> All images are for illustration. Dashboard and features may look even better on your device!
+    <div class="img-card-large">
+<img src="Screenshot_20250829-074257~2.png" alt="Mock Exam" class="img-preview-large">
+      <div class="img-label-large">Mock Exam Section</div>
     </div>
-  </section>
+    <div class="img-card-large">
+<img src="Screenshot_20250829-074433~2.png" alt="Past Questions" class="img-preview-large">
+      <div class="img-label-large">Past Questions Practice</div>
+    </div>
+    <div class="img-card-large">
+      <img src="Screenshot_20250829-065946~2.png" alt="Student Earnings" class="img-preview-large">
+      <div class="img-label-large">Student Earnings Dashboard</div>
+    </div>
+  </div>
+  <div style="text-align:center; color:#23366e; margin-top:1.2em;font-size:.98em;">
+    <i class="bi bi-images"></i> All images are for illustration. Dashboard and features may look even better on your device!
+  </div>
+</section>
+
+<!-- ...below sections... -->
+<style>
+.img-showcase {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 2vw 25px 2vw;
+}
+.img-title {
+  font-size: 1.35rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: .9em;
+  text-align: center;
+}
+.img-grid-large {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 38px;
+  align-items: stretch;
+}
+.img-card-large {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 3px 18px #276EF144;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  min-height: 340px;
+  width: 100%;
+}
+.img-preview-large {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-bottom: 1.5px solid #f3f4f6;
+  display: block;
+}
+.img-label-large {
+  padding: 1em 0 .7em 0;
+  font-size: 1.09em;
+  font-weight: 700;
+  background: linear-gradient(90deg,#f9fafb 60%,#e0e7ff 100%);
+  color: var(--primary);
+  text-align: center;
+  letter-spacing: .5px;
+}
+@media (max-width: 950px) {
+  .img-grid-large { grid-template-columns: 1fr; gap: 28px;}
+  .img-preview-large { height: 230px;}
+  .img-card-large { min-height: 220px;}
+}
+@media (max-width: 650px) {
+  .img-title { font-size: 1.08rem;}
+  .img-preview-large { height: 160px;}
+  .img-card-large { min-height: 120px;}
+}
+</style>      
+  
 
   <!-- STATS -->
   <section class="stats-section">
