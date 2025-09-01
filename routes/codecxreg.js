@@ -35,7 +35,14 @@ function generateUsername(matricNumber, fullName) {
 function generatePassword() {
   return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
-
+router.get("/admin/all", async (req, res) => {
+  try {
+    const students = await CodecxRegistration.find({});
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 // Registration endpoint
 router.post("/", upload.fields([
   { name: "passport", maxCount: 1 }
