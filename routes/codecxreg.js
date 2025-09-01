@@ -38,7 +38,7 @@ function generatePassword() {
 
 // ... (existing imports and code above)
 
-router.get("/admin/dashboard", async (req, res) => {
+router.get("/admin/all", async (req, res) => {
   try {
     // Fetch all students
     const students = await CodecxRegistration.find({});
