@@ -28,21 +28,21 @@ function authMiddleware(req, res, next) {
 }
 
 // Utility functions
-function generateUsername(email, fullName) {
-  if (email) return email.trim().toLowerCase();
+function generateUsername(matricNumber, fullName) {
+  if (matricNumber) return matricNumber.trim();
   return (fullName.replace(/\s+/g, "").toLowerCase() + Math.floor(Math.random()*1000));
 }
 function generatePassword() {
   return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
 
-// Registration endpoint - students sign up with fullName, email, phone
+// Registration endpoint
 router.post("/", upload.fields([
   { name: "passport", maxCount: 1 }
 ]), async (req, res) => {
   try {
-    const { fullName, email, phone } = req.body;
-    if (!fullName || !email || !phone) {
+    const { fullName, email, phone, matricNumber } = req.body;
+    if (!fullName || !email || !phone || !matricNumber) {
       return res.status(400).json({ message: "All required fields must be provided." });
     }
     function fileToBase64(file) {
@@ -50,14 +50,15 @@ router.post("/", upload.fields([
       return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
     }
     const passportBase64 = fileToBase64(req.files.passport?.[0]);
-    const loginUsername = generateUsername(email, fullName);
+    const loginUsername = generateUsername(matricNumber, fullName);
     const loginPasswordPlain = generatePassword();
     const loginPasswordHash = await bcrypt.hash(loginPasswordPlain, 12);
 
     const registration = new CodecxRegistration({
       fullName,
-      email: email.trim().toLowerCase(),
+      email,
       phone,
+      matricNumber,
       passportBase64,
       loginUsername,
       loginPasswordPlain,
@@ -73,11 +74,11 @@ router.post("/", upload.fields([
 
     await registration.save();
 
-    // Create user account immediately (using email as username for uniqueness)
+    // Create user account immediately
     let user = await User.findOne({
       $or: [
         { username: loginUsername },
-        { email: email.trim().toLowerCase() }
+        { email: email }
       ]
     });
     if (!user) {
@@ -85,7 +86,7 @@ router.post("/", upload.fields([
         username: loginUsername,
         password: loginPasswordHash,
         role: "codec",
-        email: email.trim().toLowerCase(),
+        email: email,
         fullname: fullName,
         phone: phone,
         active: true
@@ -115,8 +116,9 @@ router.post("/login", async (req, res) => {
 
     const candidate = await CodecxRegistration.findOne({
       $or: [
-        { loginUsername: username.trim().toLowerCase() },
-        { email: username.trim().toLowerCase() }
+        { loginUsername: username },
+        { matricNumber: username },
+        { email: username }
       ]
     });
 
@@ -135,7 +137,8 @@ router.post("/login", async (req, res) => {
         id: candidate._id,
         role: "codecx-candidate",
         email: candidate.email,
-        loginUsername: candidate.loginUsername
+        loginUsername: candidate.loginUsername,
+        matricNumber: candidate.matricNumber
       },process.env.JWT_SECRET || "your_jwt_secret",
       { expiresIn: "2h" }
     );
@@ -155,6 +158,7 @@ router.get("/me", authMiddleware, async (req, res) => {
       fullName: candidate.fullName,
       email: candidate.email,
       phone: candidate.phone,
+      matricNumber: candidate.matricNumber,
       loginUsername: candidate.loginUsername,
       username: candidate.loginUsername,
       passportBase64: candidate.passportBase64,
@@ -232,17 +236,13 @@ router.put("/progress", authMiddleware, async (req, res) => {
   }
 });
 
-// Record payment (manual verification from frontend)
+// Record payment (can be called from verification page or webhook)
 router.post("/payments", authMiddleware, async (req, res) => {
   try {
     const { amount, ref } = req.body;
     if (!amount || !ref) return res.status(400).json({ message: "Amount and reference required" });
     const candidate = await CodecxRegistration.findById(req.user.id);
     if (!candidate) return res.status(404).json({ message: "User not found" });
-
-    // Prevent duplicate payment records
-    const alreadyPaid = candidate.payments.some(p => p.ref === ref);
-    if (alreadyPaid) return res.status(200).json({ message: "Payment already recorded", payments: candidate.payments, hasPaid: candidate.hasPaid, lastPaymentRef: candidate.lastPaymentRef });
 
     candidate.payments.push({
       date: new Date(),
@@ -305,38 +305,30 @@ router.post("/chat", authMiddleware, async (req, res) => {
   }
 });
 
+// --- Paystack Webhook for automatic payment update ---
 router.post("/paystack-webhook", express.json({ type: "application/json" }), async (req, res) => {
-  // Your Paystack secret key (never use public key for webhook validation!)
-  const secret = process.env.PAYSTACK_SECRET_KEY || process.env.SECRET_KEY || "sk_test_xxx";
+  const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY || "sk_test_xxx";
   const signature = req.headers["x-paystack-signature"];
-  const hash = crypto.createHmac('sha512', secret)
+  const hash = crypto.createHmac("sha512", PAYSTACK_SECRET)
     .update(JSON.stringify(req.body))
-    .digest('hex');
-  if (hash !== signature) {
-    console.error("Paystack webhook: Invalid signature");
-    return res.sendStatus(401);
-  }
+    .digest("hex");
+  if (hash !== signature) return res.status(401).send("Invalid signature");
 
   const event = req.body;
-  // Only handle successful charge events
   if (event.event === "charge.success" && event.data && event.data.status === "success") {
-    const email = event.data.customer.email?.trim().toLowerCase();
-    
+    const email = event.data.customer.email;
+    const matricNumber = event.data.metadata ? event.data.metadata.matricNumber : null;
     let student = null;
-    if (email) {
+    if (matricNumber) {
+      student = await CodecxRegistration.findOne({ matricNumber });
+    } else {
       student = await CodecxRegistration.findOne({ email });
     }
-    if (!student) {
-      console.error("Webhook: Student not found for", email);
-      return res.status(404).json({ message: "Student not found" });
-    }
+    if (!student) return res.status(404).json({ message: "Student not found" });
 
     // Prevent duplicate payment records
     const alreadyPaid = student.payments.some(p => p.ref === event.data.reference);
-    if (alreadyPaid) {
-      console.log("Webhook: Duplicate payment for", student.email);
-      return res.status(200).json({ message: "Payment already recorded" });
-    }
+    if (alreadyPaid) return res.status(200).json({ message: "Payment already recorded" });
 
     student.hasPaid = true;
     student.lastPaymentRef = event.data.reference;
@@ -348,11 +340,10 @@ router.post("/paystack-webhook", express.json({ type: "application/json" }), asy
     });
     student.activities.push({ date: new Date(), activity: `Payment made via Paystack: ₦${event.data.amount / 100}`, status: "Success" });
     await student.save();
-    console.log("Webhook: Student payment updated for", student.email);
     return res.status(200).json({ message: "Student payment updated" });
   }
-  // Always respond quickly to all events (Paystack expects 2xx)
-  return res.sendStatus(200);
+  // Respond quickly to all events (Paystack expects 2xx)
+  return res.status(200).json({ received: true });
 });
 
 export default router;
