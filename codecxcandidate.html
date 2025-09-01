@@ -1,547 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CODECX Student Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(110deg, #6366f1 0%, #e0e7ff 100%);
-            min-height: 100vh;
-            margin: 0;
-        }
-        .sidebar {
-            background: linear-gradient(135deg,#6366f1 0%,#4338ca 100%);
-            color: #fff;
-            width: 260px;
-            min-width: 220px;
-            height: 100vh;
-            position: fixed;
-            top: 0; left: 0;
-            z-index: 30;
-            box-shadow: 0 4px 32px #6366f133;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem 1.5rem 1rem;
-        }
-        .sidebar .logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #fff;
-            margin-bottom: .9rem;
-            box-shadow: 0 2px 10px #4338ca33;
-        }
-        .sidebar h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: .04em;
-            margin-bottom: .85rem;
-            text-align: center;
-        }
-        .sidebar nav {
-            width: 100%;
-        }
-        .sidebar nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .sidebar nav ul li {
-            margin: .6rem 0;
-        }
-        .sidebar nav ul li a {
-            display: flex;
-            align-items: center;
-            gap: .7rem;
-            color: #e0e7ff;
-            font-size: 1.11rem;
-            font-weight: 500;
-            padding: .6rem 1.1rem;
-            border-radius: .8rem;
-            transition: background .17s, color .17s;
-            text-decoration: none;
-        }
-        .sidebar nav ul li a.active, .sidebar nav ul li a:hover {
-            background: #fff2;
-            color: #fff;
-        }
-        .sidebar .logout-btn {
-            margin-top: auto;
-            padding: .7rem 1.1rem;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: .8rem;
-            font-size: 1.07rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 8px #ef444433;
-            display: flex;
-            align-items: center;
-            gap: .8rem;
-            transition: background .2s;
-        }
-        .sidebar .logout-btn:hover {
-            background: #b91c1c;
-        }
-        .main {
-            margin-left: 260px;
-            min-height: 100vh;
-            padding: 2.2rem 2vw 2vw 2vw;
-            background: linear-gradient(110deg, #f8fafc 70%, #e0e7ff 100%);
-        }
-        .dashboard-header {
-            display: flex;
-            align-items: center;
-            gap: 1.6rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .avatar-wrap {
-            display: flex;
-            align-items: center;
-            gap: 1.1rem;
-        }
-        .avatar-img {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #6366f1;
-            box-shadow: 0 2px 14px #6366f133;
-        }
-        .dashboard-header .hello {
-            font-size: 1.32rem;
-            font-weight: 700;
-            color: #312e81;
-        }
-        .dashboard-header .role-badge {
-            background: #6366f1;
-            color: #fff;
-            font-size: .97rem;
-            border-radius: 8px;
-            padding: .22rem .65rem;
-            font-weight: 600;
-            margin-left: .7rem;
-            display: inline-block;
-        }
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 2.2rem;
-        }
-        .dashboard-card {
-            background: #fff;
-            border-radius: 1.3rem;
-            box-shadow: 0 4px 24px #6366f113;
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.1rem;
-            transition: box-shadow .19s;
-            position: relative;
-        }
-        .dashboard-card .card-title {
-            font-size: 1.16rem;
-            font-weight: 700;
-            color: #4338ca;
-            margin-bottom: .4rem;
-        }
-        .dashboard-card .card-icon {
-            font-size: 2.3rem;
-            color: #6366f1;
-            margin-bottom: .7rem;
-        }
-        .dashboard-card .card-content {
-            font-size: 1.07rem;
-            color: #444;
-            flex: 1 1 0;
-        }
-        .dashboard-card .card-action-btn {
-            background: linear-gradient(90deg,#6366f1 65%,#4338ca);
-            color: #fff;
-            border-radius: .8rem;
-            padding: .63rem 1.15rem;
-            border: none;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 8px #6366f133;
-            transition: background .18s;
-            margin-top: 1rem;
-        }
-        .dashboard-card .card-action-btn:hover {
-            background: #4338ca;
-        }
-        .dashboard-section-title {
-            font-size: 1.14rem;
-            font-weight: 700;
-            color: #6366f1;
-            margin-top: 2.7rem;
-            margin-bottom: 1.2rem;
-        }
-        /* Table styles */
-        .table-wrap {
-            width: 100%;
-            overflow-x: auto;
-            margin-bottom: 2.2rem;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 2px 10px #6366f11b;
-        }
-        table th, table td {
-            padding: .83rem 1.1rem;
-            border-bottom: 1.5px solid #f3f4f6;
-        }
-        table th {
-            background: #f3f4f6;
-            font-size: 1rem;
-            color: #4338ca;
-            font-weight: 600;
-        }
-        table tr:last-child td { border-bottom: none; }
-        .status-badge {
-            display: inline-block;
-            padding: .19rem .7rem;
-            border-radius: .8rem;
-            font-size: .95rem;
-            font-weight: 600;
-            background: #6366f1;
-            color: #fff;
-        }
-        .status-badge.unpaid {
-            background: #ef4444;
-        }
-        .status-badge.paid {
-            background: #27ae60;
-        }
-        /* Responsive */
-        @media (max-width: 900px) {
-            .sidebar {
-                position: relative;
-                width: 100vw;
-                height: auto;
-                min-width: 0;
-                border-radius: 0 0 2rem 2rem;
-                padding: 1.1rem .7rem 1.1rem .7rem;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-                gap: 1.2rem;
-                box-shadow: none;
-            }
-            .sidebar .logo { margin-bottom: 0;}
-            .sidebar h2 { font-size: 1.05rem; margin-bottom: 0;}
-            .sidebar nav { margin-left: 2vw;}
-            .sidebar .logout-btn { margin-top: 0;}
-            .main { margin-left: 0; padding-top: 1.3rem; }
-        }
-        @media (max-width: 600px) {
-            .main { padding: 1.3rem 2vw 1.6vw 2vw;}
-            .sidebar { padding: .5rem .3rem .9rem .3rem; border-radius: 0 0 1.2rem 1.2rem;}
-            .dashboard-header { flex-direction: column; gap: 1.1rem;}
-            .dashboard-card { padding: 1.1rem .7rem 1rem .7rem; min-height: 200px;}
-            .dashboard-section-title { font-size: .99rem;}
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>CODECX Student Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.80">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body>
-    <div class="sidebar">
-        <img src="https://cdn-icons-png.flaticon.com/512/2721/2721296.png" class="logo" alt="CODECX Logo">
-        <h2>CODECX Student</h2>
-        <nav>
-            <ul>
-                <li><a href="#" class="active" id="nav-dashboard"><i class="bi bi-house-fill"></i> Dashboard</a></li>
-                <li><a href="#" id="nav-profile"><i class="bi bi-person-circle"></i> Profile</a></li>
-                <li><a href="#" id="nav-courses"><i class="bi bi-journal-code"></i> Courses</a></li>
-                <li><a href="#" id="nav-payments"><i class="bi bi-cash-coin"></i> Payments</a></li>
-                <li><a href="#" id="nav-support"><i class="bi bi-question-circle"></i> Support</a></li>
-            </ul>
-        </nav>
-        <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+<body class="bg-gray-50 min-h-screen">
+  <header class="bg-white shadow px-4 py-4 flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-indigo-800">CODECX Student Dashboard</h1>
+    <div class="flex items-center gap-2">
+      <img id="studentAvatar" class="w-10 h-10 rounded-full" src="" alt="avatar" />
+      <span id="studentNameHeader" class="font-semibold"></span>
+      <button onclick="logout()" class="ml-3 px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700">Logout</button>
     </div>
-    <div class="main" id="main-content">
-        <!-- Dashboard Header -->
-        <div class="dashboard-header">
-            <div class="avatar-wrap">
-                <img src="" id="avatar-img" class="avatar-img" alt="Student Avatar">
-                <div>
-                    <div class="hello">Hello, <span id="studentName">Student</span> <span class="role-badge">Student</span></div>
-                    <div id="studentEmail" style="color:#6366f1; font-size:.99rem; margin-top:.2rem;"></div>
-                </div>
-            </div>
-            <div>
-                <span class="status-badge" id="paymentStatus">Unpaid</span>
-            </div>
+  </header>
+  <main class="max-w-3xl mx-auto py-8 px-2">
+    <section class="bg-white rounded shadow p-6 mb-8" id="profileSection">
+      <h2 class="text-xl font-semibold mb-4">Profile</h2>
+      <div class="flex items-center mb-4">
+        <img id="studentPassport" class="w-20 h-20 rounded-full border mr-6" src="" alt="Passport"/>
+        <div>
+          <div id="studentFullName" class="text-lg font-bold"></div>
+          <div id="studentMatric" class="text-sm text-gray-500"></div>
+          <div id="studentEmail" class="text-sm text-gray-600"></div>
+          <div id="studentPhone" class="text-sm text-gray-600"></div>
+          <div id="studentNassDue" class="text-sm"></div>
+          <div id="studentStatus" class="text-sm mt-2"></div>
         </div>
-        <!-- Card Grid -->
-        <div class="card-grid">
-            <div class="dashboard-card">
-                <div class="card-icon"><i class="bi bi-journal-code"></i></div>
-                <div class="card-title">My Courses</div>
-                <div class="card-content" id="coursesList">Loading...</div>
-                <button class="card-action-btn" id="viewCoursesBtn">View All</button>
-            </div>
-            <div class="dashboard-card">
-                <div class="card-icon"><i class="bi bi-cash-coin"></i></div>
-                <div class="card-title">Payment Status</div>
-                <div class="card-content" id="paymentCardContent">Checking status...</div>
-                <button class="card-action-btn" id="payNowBtn">Pay Now</button>
-            </div>
-            <div class="dashboard-card">
-                <div class="card-icon"><i class="bi bi-award-fill"></i></div>
-                <div class="card-title">Progress</div>
-                <div class="card-content" id="progressContent">Checking progress...</div>
-                <button class="card-action-btn" id="viewProgressBtn">View Details</button>
-            </div>
-            <div class="dashboard-card">
-                <div class="card-icon"><i class="bi bi-question-circle"></i></div>
-                <div class="card-title">Support</div>
-                <div class="card-content">Need help? Reach out for support, feedback, or FAQs.</div>
-                <button class="card-action-btn" id="supportBtn">Contact Support</button>
-            </div>
-        </div>
-        <!-- Recent Payments Table -->
-        <div class="dashboard-section-title">Recent Payments</div>
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Reference</th>
-                    </tr>
-                </thead>
-                <tbody id="paymentsTable">
-                    <tr><td colspan="4" style="text-align:center;">Loading...</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- Recent Activities Table -->
-        <div class="dashboard-section-title">Recent Activity</div>
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Activity</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="activityTable">
-                    <tr><td colspan="3" style="text-align:center;">Loading...</td></tr>
-                </tbody>
-            </table>
-        </div>
+      </div>
+      <div class="flex flex-wrap gap-3 mb-3">
+        <button onclick="showReceipt('payment')" class="px-3 py-1 bg-indigo-600 text-white rounded">View Payment Receipt</button>
+        <button onclick="showReceipt('nass')" class="px-3 py-1 bg-indigo-600 text-white rounded">View NASS Receipt</button>
+      </div>
+    </section>
+    <section class="bg-white rounded shadow p-6 mb-8" id="activitySection">
+      <h2 class="text-xl font-semibold mb-4">Activity</h2>
+      <div class="mb-3">
+        <button id="attendanceBtn" class="px-3 py-1 bg-green-600 text-white rounded mb-2">Mark Attendance</button>
+        <span id="attendanceStatus" class="ml-3 font-semibold"></span>
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Upload Assignment:</label>
+        <input id="assignmentInput" type="file" class="mb-2"/>
+        <button onclick="submitAssignment()" class="px-3 py-1 bg-indigo-600 text-white rounded mb-2">Submit</button>
+        <span id="assignmentStatus" class="ml-2"></span>
+      </div>
+    </section>
+    <section class="bg-white rounded shadow p-6 mb-8" id="historySection">
+      <h2 class="text-xl font-semibold mb-4">History</h2>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr>
+            <th class="px-2 py-1 border">Date</th>
+            <th class="px-2 py-1 border">Assignment</th>
+            <th class="px-2 py-1 border">Attendance</th>
+          </tr>
+        </thead>
+        <tbody id="historyTable"></tbody>
+      </table>
+    </section>
+    <section class="bg-white rounded shadow p-6" id="notesSection">
+      <h2 class="text-xl font-semibold mb-4">Admin Notes</h2>
+      <div id="adminNote" class="text-gray-700"></div>
+    </section>
+    <!-- Receipt Modal -->
+    <div id="receiptModal" class="fixed inset-0 z-30 bg-black bg-opacity-60 flex items-center justify-center hidden">
+      <div class="bg-white p-6 rounded shadow relative max-w-lg w-full">
+        <button onclick="closeReceipt()" class="absolute top-2 right-2 text-lg font-bold">&times;</button>
+        <div id="receiptModalContent"></div>
+      </div>
     </div>
-    <!-- Modal -->
-    <div id="modalBackdrop" style="display:none; position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(60,72,128,0.15);z-index:99;align-items:center;justify-content:center;">
-        <div id="modalCard" style="background:white;border-radius:1.3rem;box-shadow:0 8px 32px #6366f133;max-width:97vw;width:340px;padding:2.1rem 1.3rem;text-align:center;position:relative;">
-            <button id="closeModalBtn" style="position:absolute;top:9px;right:14px;background:none;border:none;font-size:1.6rem;color:#888;cursor:pointer;">&times;</button>
-            <div id="modalContent"></div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script>
-        // API base and token
-        const API_BASE = "https://examguide.onrender.com";
-        const token = localStorage.getItem("codecx_token");
-        // Elements
-        const studentName = document.getElementById("studentName");
-        const studentEmail = document.getElementById("studentEmail");
-        const avatarImg = document.getElementById("avatar-img");
-        const paymentStatus = document.getElementById("paymentStatus");
-        const paymentCardContent = document.getElementById("paymentCardContent");
-        const coursesList = document.getElementById("coursesList");
-        const progressContent = document.getElementById("progressContent");
-        const paymentsTable = document.getElementById("paymentsTable");
-        const activityTable = document.getElementById("activityTable");
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script>
+    const API_BASE = "https://examguide.onrender.com/api";
 
-        // Modal helpers
-        const modalBackdrop = document.getElementById("modalBackdrop");
-        const modalCard = document.getElementById("modalCard");
-        const modalContent = document.getElementById("modalContent");
-        document.getElementById("closeModalBtn").onclick = closeModal;
-        function openModal(html) {
-            modalContent.innerHTML = html;
-            modalBackdrop.style.display = "flex";
-        }
-        function closeModal() {
-            modalBackdrop.style.display = "none";
-            modalContent.innerHTML = "";
-        }
-        modalBackdrop.onclick = function(e) {
-            if(e.target === modalBackdrop) closeModal();
-        };
+    // --- Utility functions
+    function showToast(msg, type="info") {
+      Toastify({
+        text: msg,
+        duration: 3500,
+        gravity: "top",
+        position: "center",
+        backgroundColor: type === "success" ? "#16a34a" :
+                          type === "error" ? "#dc2626" : "#6366f1"
+      }).showToast();
+    }
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = "codexcclogin.html";
+    }
 
-        // Toast helper
-        function showToast(msg, type="success") {
-            Toastify({
-                text: msg,
-                duration: 3500,
-                gravity: "top",
-                position: "center",
-                backgroundColor: type==="success"
-                    ? "linear-gradient(90deg,#6366f1,#4338ca)"
-                    : "linear-gradient(90deg,#ef4444,#f87171)",
-                stopOnFocus: true
-            }).showToast();
-        }
+    // --- Receipt Modal
+    function showReceipt(type) {
+      const student = window.student;
+      let src = type === "payment" ? student.paymentReceiptBase64 : student.nassReceiptBase64;
+      let label = type === "payment" ? "Payment Receipt" : "NASS Receipt";
+      document.getElementById("receiptModalContent").innerHTML = src
+        ? `<h3 class="mb-2 font-semibold">${label}</h3><img src="${src}" alt="${label}" class="mb-2 rounded shadow"/><a href="${src}" download="${student.fullName}_${label}.jpg" class="px-3 py-1 bg-indigo-600 text-white rounded">Download</a>`
+        : `<div class="text-gray-500">No ${label} available.</div>`;
+      document.getElementById("receiptModal").classList.remove("hidden");
+    }
+    function closeReceipt() {
+      document.getElementById("receiptModal").classList.add("hidden");
+    }
+    document.getElementById("receiptModal").addEventListener("click", function(e) {
+      if (e.target === this) closeReceipt();
+    });
 
-        // Logout
-        document.getElementById("logoutBtn").onclick = function() {
-            localStorage.removeItem("codecx_token");
-            showToast("Logged out successfully!", "success");
-            setTimeout(()=>{window.location.href="/login.html";},900);
-        };
+    // --- Main Logic
+    async function loadDashboard() {
+      const token = localStorage.getItem('token');
+      if (!token) return logout();
 
-        // NAVIGATION (for demo, just scroll to section)
-        document.getElementById("nav-dashboard").onclick = function(e){e.preventDefault(); window.scrollTo({top:0,behavior:"smooth"});};
-        document.getElementById("nav-profile").onclick = function(e){e.preventDefault(); openProfileModal();};
-        document.getElementById("nav-courses").onclick = function(e){e.preventDefault(); openCoursesModal();};
-        document.getElementById("nav-payments").onclick = function(e){e.preventDefault(); openPaymentsModal();};
-        document.getElementById("nav-support").onclick = function(e){e.preventDefault(); openSupportModal();};
 
-        // Card buttons
-        document.getElementById("viewCoursesBtn").onclick = openCoursesModal;
-        document.getElementById("payNowBtn").onclick = openPaymentsModal;
-        document.getElementById("viewProgressBtn").onclick = openProgressModal;
-        document.getElementById("supportBtn").onclick = openSupportModal;
 
-        // MODAL CONTENT
-        function openProfileModal() {
-            openModal(`
-                <div style="margin-bottom:1.2rem;">
-                    <img src="${avatarImg.src || 'https://cdn-icons-png.flaticon.com/512/2721/2721296.png'}" style="width:60px;height:60px;border-radius:50%;background:#6366f1;box-shadow:0 2px 14px #6366f133;">
-                </div>
-                <div style="font-weight:700;color:#6366f1;font-size:1.13rem;margin-bottom:.6rem;">${studentName.textContent}</div>
-                <div style="color:#4338ca;font-size:.97rem;margin-bottom:.3rem;">${studentEmail.textContent}</div>
-                <div style="margin-top:.8rem;font-size:.97rem;">
-                    <b>Payment Status:</b> <span class="status-badge ${paymentStatus.textContent==='Paid'?'paid':'unpaid'}">${paymentStatus.textContent}</span>
-                </div>
-            `);
-        }
-        function openCoursesModal() {
-            openModal(`
-                <div style="font-size:1.05rem;color:#4338ca;font-weight:700;margin-bottom:.8rem;">Your Courses</div>
-                <div>${coursesList.innerHTML}</div>
-            `);
-        }
-        function openPaymentsModal() {
-            openModal(`
-                <div style="font-size:1.05rem;color:#4338ca;font-weight:700;margin-bottom:.8rem;">Payment Status</div>
-                <div>${paymentCardContent.innerHTML}</div>
-                <button style="margin-top:1.3rem;padding:.67rem 1.2rem;border-radius:10px;border:none;background:linear-gradient(90deg,#6366f1,#4338ca);color:#fff;font-size:1.07rem;font-weight:700;cursor:pointer;" id="modalPayBtn">Make Payment</button>
-            `);
-            document.getElementById("modalPayBtn").onclick = function() {
-                showToast("Redirecting to payment gateway...", "success");
-                setTimeout(()=>{window.open("https://paystack.com/pay/codecx","_blank");},800);
-            }
-        }
-        function openProgressModal() {
-            openModal(`
-                <div style="font-size:1.05rem;color:#4338ca;font-weight:700;margin-bottom:.8rem;">Progress</div>
-                <div>${progressContent.innerHTML}</div>
-            `);
-        }
-        function openSupportModal() {
-            openModal(`
-                <div style="font-size:1.05rem;color:#4338ca;font-weight:700;margin-bottom:.8rem;">
-                    Support & Feedback
-                </div>
-                <div>
-                    <p style="margin-bottom:.6rem;">For issues, feedback, or help, email: <b>support@codecx.edu.ng</b></p>
-                    <button style="margin-top:.6rem;padding:.6rem 1.2rem;border-radius:10px;border:none;background:#6366f1;color:#fff;font-size:1.07rem;font-weight:700;cursor:pointer;" onclick="window.open('mailto:support@codecx.edu.ng')">Send Email</button>
-                </div>
-            `);
-        }
+      // 2. Fetch candidate registration by matricNumber
+      let candidate;
+      try {
+        // Prefer matricNumber, fallback to loginUsername/email if needed
+        let matric = user.matricNumber || user.loginUsername;
+        let response = await fetch(`${API_BASE}/codecxreg?matricNumber=${encodeURIComponent(matric)}`);
+        if (!response.ok) throw new Error();
+        let regList = await response.json();
+        // If your backend returns an array, find first match (adjust as needed)
+        candidate = Array.isArray(regList) ? regList[0] : regList;
+        if (!candidate || (!candidate.matricNumber && !candidate.loginUsername)) throw new Error();
+      } catch (e) {
+        showToast("Unable to load your registration record.", "error");
+        return logout();
+      }
+      window.student = candidate; // for modal/receipt
 
-        // LOAD USER DATA
-        async function loadStudentData() {
-            if(!token) {
-                showToast("Session expired. Please login.","error");
-                setTimeout(()=>{window.location.href="/login.html";},1100);
-                return;
-            }
-            // Fetch student profile
-            try {
-                const resp = await fetch(API_BASE+"/api/codecxreg/me",{
-                    headers:{Authorization:"Bearer "+token}
-                });
-                if(!resp.ok) throw new Error("Not authorized");
-                const data = await resp.json();
-                studentName.textContent = data.fullName || "Student";
-                studentEmail.textContent = data.email || "";
-                avatarImg.src = data.passportBase64 || "https://cdn-icons-png.flaticon.com/512/2721/2721296.png";
-                // Payment status (simulate)
-                if(data.hasPaid) {
-                    paymentStatus.textContent = "Paid";
-                    paymentStatus.classList.remove("unpaid");
-                    paymentStatus.classList.add("paid");
-                    paymentCardContent.innerHTML = `<span class="status-badge paid">Paid</span> Thank you for your payment!<br>Transaction Ref: <b>${data.lastPaymentRef||"-"}</b>`;
-                } else {
-                    paymentStatus.textContent = "Unpaid";
-                    paymentStatus.classList.remove("paid");
-                    paymentStatus.classList.add("unpaid");
-                    paymentCardContent.innerHTML = `<span class="status-badge unpaid">Unpaid</span> You have not completed payment.<br><button class="card-action-btn" onclick="window.open('https://paystack.com/pay/codecx','_blank')">Pay Now</button>`;
-                }
-                // Courses
-                if(data.courses && data.courses.length) {
-                    coursesList.innerHTML = `<ul style="padding-left:.7rem;">${data.courses.map(c=>`<li style="margin-bottom:.46rem;"><i class="bi bi-dot" style="color:#6366f1;"></i> ${c.name}</li>`).join("")}</ul>`;
-                } else {
-                    coursesList.innerHTML = "No courses enrolled yet.";
-                }
-                // Progress
-                progressContent.innerHTML = data.progress
-                    ? `<b>Completed:</b> ${data.progress.completed} / ${data.progress.total} <br>
-                        <b>Current Grade:</b> ${data.progress.grade || "-"}`
-                    : `No progress data available.`;
-                // Payments Table
-                paymentsTable.innerHTML = (data.payments && data.payments.length)
-                    ? data.payments.map(p=>`
-                        <tr>
-                            <td>${new Date(p.date).toLocaleDateString()}</td>
-                            <td>₦${p.amount}</td>
-                            <td><span class="status-badge ${p.status==='Paid'?'paid':'unpaid'}">${p.status}</span></td>
-                            <td>${p.ref}</td>
-                        </tr>
-                    `).join("")
-                    : `<tr><td colspan="4" style="text-align:center;">No payments found.</td></tr>`;
-                // Activity Table
-                activityTable.innerHTML = (data.activities && data.activities.length)
-                    ? data.activities.map(a=>`
-                        <tr>
-                            <td>${new Date(a.date).toLocaleDateString()}</td>
-                            <td>${a.activity}</td>
-                            <td><span class="status-badge ${a.status==='Success'?'paid':'unpaid'}">${a.status}</span></td>
-                        </tr>
-                    `).join("")
-                    : `<tr><td colspan="3" style="text-align:center;">No activities yet.</td></tr>`;
-            } catch(e) {
-                showToast("Error loading dashboard. Please login again.","error");
-                setTimeout(()=>{window.location.href="/login.html";},1800);
-            }
-        }
-        loadStudentData();
+      // 3. Render profile
+      document.getElementById("studentAvatar").src =
+        candidate.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(candidate.fullName || "Student");
+      document.getElementById("studentNameHeader").textContent = candidate.fullName || "";
+      document.getElementById("studentPassport").src =
+        candidate.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(candidate.fullName || "Student");
+      document.getElementById("studentFullName").textContent = candidate.fullName || "";
+      document.getElementById("studentMatric").textContent = "Matric No: " + (candidate.matricNumber || "");
+      document.getElementById("studentEmail").textContent = candidate.email || "";
+      document.getElementById("studentPhone").textContent = candidate.phone || "";
+      document.getElementById("studentNassDue").innerHTML =
+        candidate.nassDue === "yes"
+          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">NASS Paid</span>'
+          : '<span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold">NASS Not Paid</span>';
+      document.getElementById("studentStatus").innerHTML =
+        candidate.active
+          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Active</span>'
+          : '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Pending Review</span>';
 
-        // Demo for buttons without backend (remove if backend supports direct endpoints for profile, payments, etc.)
-        window.openProfileModal = openProfileModal;
-        window.openCoursesModal = openCoursesModal;
-        window.openPaymentsModal = openPaymentsModal;
-        window.openProgressModal = openProgressModal;
-        window.openSupportModal = openSupportModal;
-    </script>
+      // 4. Render notes
+      document.getElementById("adminNote").textContent = candidate.adminNote || "No feedback yet.";
+
+      // 5. Render activity history
+      renderHistory(candidate.activities || []);
+
+      // 6. Initialize today's activity status
+      window.student.today = window.student.today || { assignmentSubmitted: false, attendanceMarked: false };
+      renderTodayStatus();
+    }
+
+    // --- Attendance and Assignment
+    document.getElementById("attendanceBtn").onclick = function() {
+      if (window.student.today.attendanceMarked) {
+        showToast("You have already marked attendance today.", "info");
+        return;
+      }
+      window.student.today.attendanceMarked = true;
+      renderTodayStatus();
+      showToast("Attendance marked for today!", "success");
+      updateTodayHistory({ attendance: true });
+    };
+
+    function submitAssignment() {
+      const fileInput = document.getElementById("assignmentInput");
+      if (!fileInput.files.length) {
+        showToast("Please select a file.", "error");
+        return;
+      }
+      // Simulate upload (replace with your backend submission if needed)
+      setTimeout(() => {
+        window.student.today.assignmentSubmitted = true;
+        renderTodayStatus();
+        showToast("Assignment uploaded successfully!", "success");
+        updateTodayHistory({ assignment: true });
+      }, 900);
+    }
+
+    function renderTodayStatus() {
+      document.getElementById("attendanceStatus").textContent =
+        window.student.today.attendanceMarked ? "Marked Present" : "";
+      document.getElementById("assignmentStatus").textContent =
+        window.student.today.assignmentSubmitted ? "Submitted" : "Not submitted";
+    }
+
+    function updateTodayHistory({ attendance = false, assignment = false }) {
+      const todayStr = new Date().toISOString().split('T')[0];
+      let activities = window.student.activities = window.student.activities || [];
+      let today = activities.find(act => act.date === todayStr);
+      if (!today) {
+        today = { date: todayStr, submittedAssignment: false, markedPresent: false };
+        activities.unshift(today);
+      }
+      if (attendance) today.markedPresent = true;
+      if (assignment) today.submittedAssignment = true;
+      renderHistory(activities);
+    }
+
+    function renderHistory(activities) {
+      const tbody = document.getElementById("historyTable");
+      tbody.innerHTML = "";
+      if (!activities.length) {
+        tbody.innerHTML = `<tr><td colspan="3" class="text-gray-400 text-center">No records yet.</td></tr>`;
+        return;
+      }
+      activities.forEach(act => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="border px-2 py-1">${act.date}</td>
+            <td class="border px-2 py-1">
+              ${act.submittedAssignment
+                ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Yes</span>"
+                : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>No</span>"
+              }
+            </td>
+            <td class="border px-2 py-1">
+              ${act.markedPresent
+                ? "<span class='bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold'>Present</span>"
+                : "<span class='bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs font-semibold'>Absent</span>"
+              }
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    window.onload = loadDashboard;
+  </script>
 </body>
 </html>
