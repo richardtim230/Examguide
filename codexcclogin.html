@@ -2,35 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CODECX Student Login</title>
-    <meta name="viewport" content="width=device-width,initial-scale=0.85">
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODECX Institute – Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg,#eef2ff 0%,#c7d2fe 100%);
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
+            background: linear-gradient(115deg, #6366f1 0%, #4338ca 100%);
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .login-container {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 18px rgba(44,62,80,0.13);
-            padding: 2.5rem 2rem;
+        .login-outer {
+            width: 100vw;
+            min-height: 100vh;
+            background: linear-gradient(120deg,#e0e7ff 60%, #6366f1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-panel {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 8px 32px rgba(60, 72, 128, 0.13), 0 1.5px 8px rgba(60, 72, 128, 0.09);
             max-width: 420px;
             width: 100%;
+            padding: 2.5rem 2.1rem 2.1rem 2.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            position: relative;
         }
-        .login-title {
+        .login-panel .logo-img {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px #6366f133;
+            margin-bottom: 0.3rem;
+        }
+        .login-panel h1 {
             font-size: 2rem;
-            font-weight: bold;
-            color: #312e81;
+            font-weight: 700;
+            background: linear-gradient(90deg,#6366f1 45%,#4338ca 100%);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            margin-bottom: 0.15rem;
             text-align: center;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.04em;
+        }
+        .login-panel p {
+            font-size: 1.09rem;
+            color: #312e81;
+            margin-bottom: 0.7rem;
+            text-align: center;
+        }
+        .input-group {
+            width: 100%;
+            margin-bottom: 1.1rem;
+            text-align: left;
+        }
+        .input-group label {
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 0.15rem;
+            display: block;
+            font-size: 1.01rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: 1.5px solid #e0e7ff;
+            font-size: 1rem;
+            outline: none;
+            transition: box-shadow 0.2s, border 0.2s;
+            background: #f8fafc;
+        }
+        .input-group input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px #6366f140;
+        }
+        .input-group.password-group {
+            position: relative;
+        }
+        .show-hide-btn {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #6366f1;
+            cursor: pointer;
+            padding: 0;
+        }
+        .submit-btn {
+            background: linear-gradient(90deg, #6366f1 65%, #4338ca);
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            padding: 0.9rem 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            transition: background 0.25s;
+            width: 100%;
+        }
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         .spinner {
             border: 3px solid #f3f3f3;
@@ -41,113 +133,187 @@
             animation: spin 1s linear infinite;
             display: inline-block;
             vertical-align: middle;
-            margin-right: 8px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg);}
             100% { transform: rotate(360deg);}
         }
-        .logo-img {
-            display:block;
-            margin:auto;
-            width:56px;
-            height:56px;
-            border-radius:50%;
-            box-shadow:0 2px 8px #6366f133;
-            margin-bottom:20px;
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-size: 0.97rem;
+            margin-top: 0.1rem;
         }
-        .forgot-link {
-            font-size: 0.97em;
+        .link-text {
             color: #6366f1;
+            font-weight: 500;
             text-decoration: underline;
             cursor: pointer;
+            transition: color 0.2s;
         }
-        .forgot-link:hover {
+        .link-text:hover {
             color: #312e81;
+        }
+        #login-message {
+            font-size: 1rem;
+            color: #ef4444;
+            background: #fbe9e7;
+            padding: 0.7rem 1rem;
+            border-radius: 9px;
+            margin-top: 0.6rem;
+            display: none;
+            text-align: center;
+        }
+        .login-extra {
+            font-size: 0.97rem;
+            color: #6b7280;
+            margin-top: 0.6rem;
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .login-panel {
+                padding: 1.4rem 0.35rem;
+                max-width: 96vw;
+                border-radius: 1.1rem;
+            }
+            .login-panel h1 { font-size: 1.24rem;}
+            .login-panel p { font-size: .99rem;}
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="logo.png" class="logo-img" alt="CODECX Logo">
-        <div class="login-title">CODECX Student Login</div>
-        <form id="loginForm" autocomplete="off">
-            <div class="mb-5">
-                <label for="username" class="block text-gray-700 font-medium mb-2">Username / Matric Number</label>
-                <input type="text" id="username" name="username" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required autocomplete="username">
+    <div class="login-outer">
+        <div class="login-panel">
+            <img src="https://cdn-icons-png.flaticon.com/512/2721/2721296.png" alt="CODECX Logo" class="logo-img">
+            <h1>CODECX Institute</h1>
+            <p>Access your student dashboard and resources</p>
+            <form id="login-form" autocomplete="on" style="width:100%;">
+                <div class="input-group">
+                    <label for="username">Username / Matric Number / Email</label>
+                    <input type="text" id="username" name="username" required autocomplete="username" placeholder="Enter your username, matric or email">
+                </div>
+                <div class="input-group password-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Enter your password">
+                    <button type="button" id="show-hide-btn" class="show-hide-btn" tabindex="-1" aria-label="Show/Hide password">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                <div class="actions-row">
+                    <label><input type="checkbox" id="rememberMe"> Remember me</label>
+                    <span class="link-text" id="forgot-link">Forgot password?</span>
+                </div>
+                <button type="submit" id="login-btn" class="submit-btn mt-2">
+                    <span id="btn-text">Login</span>
+                </button>
+                <div id="login-message"></div>
+            </form>
+            <div class="login-extra">
+                Don't have an account yet?
+                <a href="/codecxreg.html" class="link-text">Register here</a>
             </div>
-            <div class="mb-5">
-                <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
-                <input type="password" id="password" name="password" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required autocomplete="current-password">
-            </div>
-            <button type="submit" id="loginBtn" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center transition">
-                <span id="loginBtnText">Login</span>
-            </button>
-            <div class="mt-4 text-center">
-                <span class="forgot-link" onclick="forgotPassword()">Forgot Password?</span>
-            </div>
-        </form>
-        <div id="support" class="text-xs text-gray-500 text-center mt-5">
-            Need help? <a href="mailto:support@codecx.com" class="text-indigo-600 underline">Contact Support</a>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
-        const API_BASE = "https://examguide.onrender.com/api";
-        const loginForm = document.getElementById('loginForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginBtnText = document.getElementById('loginBtnText');
+        // Autofill using URL params
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name) || "";
+        }
+        document.getElementById('username').value = getQueryParam('username');
+        document.getElementById('password').value = getQueryParam('password');
 
-        function showToast(message, type = "success") {
+        // Show/hide password feature
+        const passwordInput = document.getElementById('password');
+        const showHideBtn = document.getElementById('show-hide-btn');
+        let isPasswordVisible = false;
+        showHideBtn.onclick = function() {
+            isPasswordVisible = !isPasswordVisible;
+            passwordInput.type = isPasswordVisible ? "text" : "password";
+            showHideBtn.innerHTML = isPasswordVisible
+                ? '<i class="bi bi-eye-slash"></i>'
+                : '<i class="bi bi-eye"></i>';
+        };
+
+        // Forgot password link
+        document.getElementById('forgot-link').onclick = function () {
             Toastify({
-                text: message,
+                text: 'Please contact the admin to reset your password.',
                 duration: 3500,
                 gravity: "top",
                 position: "center",
-                backgroundColor: type === "success"
-                    ? "linear-gradient(90deg,#6366f1,#4338ca)"
-                    : "linear-gradient(90deg,#ef4444,#f87171)",
+                backgroundColor: "linear-gradient(90deg,#6366f1,#4338ca)",
                 stopOnFocus: true
             }).showToast();
-        }
+        };
+
+        // Login handling
+        const API_BASE = "https://examguide.onrender.com"; // Update to your backend
+        const loginForm = document.getElementById('login-form');
+        const loginBtn = document.getElementById('login-btn');
+        const btnText = document.getElementById('btn-text');
+        const loginMessage = document.getElementById('login-message');
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             loginBtn.disabled = true;
-            loginBtnText.innerHTML = '<span class="spinner"></span>Logging in...';
+            btnText.innerHTML = '<span class="spinner"></span>Logging in...';
+            loginMessage.style.display = "none";
 
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch(`${API_BASE}/codecxreg/login`, {
+                const response = await fetch(`${API_BASE}/api/codecxreg/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, password })
                 });
-                const respJson = await response.json();
-
-                if (response.ok) {
-                    showToast("Login successful!", "success");
-                    localStorage.setItem('token', respJson.token);
-                    // Redirect to CODECX student dashboard
+                const data = await response.json();
+                if (response.ok && data.token) {
+                    Toastify({
+                        text: "Login successful!",
+                        duration: 3500,
+                        gravity: "top",
+                        position: "center",
+                        backgroundColor: "linear-gradient(90deg,#6366f1,#4338ca)",
+                        stopOnFocus: true
+                    }).showToast();
+                    localStorage.setItem("codecx_token", data.token);
                     setTimeout(() => {
-                        window.location.href = "codecxcandidate.html";
-                    }, 1000);
+                        window.location.href = "/dashboard.html"; // Change to your dashboard URL
+                    }, 1200);
                 } else {
-                    showToast(resJson.message || "Invalid login credentials", "error");
+                    loginMessage.textContent = data.message || "Login failed";
+                    loginMessage.style.display = "block";
+                    Toastify({
+                        text: data.message || "Login failed",
+                        duration: 3500,
+                        gravity: "top",
+                        position: "center",
+                        backgroundColor: "linear-gradient(90deg,#ef4444,#f87171)",
+                        stopOnFocus: true
+                    }).showToast();
                 }
-            } catch (err) {
-                showToast("Network or server error. Please try again.", "error");
+            } catch (error) {
+                loginMessage.textContent = "Network or server error. Please try again.";
+                loginMessage.style.display = "block";
+                Toastify({
+                    text: "Network or server error. Please try again.",
+                    duration: 3500,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "linear-gradient(90deg,#ef4444,#f87171)",
+                    stopOnFocus: true
+                }).showToast();
             } finally {
                 loginBtn.disabled = false;
-                loginBtnText.innerHTML = 'Login';
+                btnText.innerHTML = "Login";
             }
         });
-
-        function forgotPassword() {
-            showToast("Please contact CODECX admin to reset your password.", "info");
-        }
     </script>
 </body>
 </html>
