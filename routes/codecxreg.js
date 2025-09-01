@@ -36,14 +36,47 @@ function generatePassword() {
   return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
 
-router.get("/admin/all", async (req, res) => {
+// ... (existing imports and code above)
+
+router.get("/admin/dashboard", async (req, res) => {
   try {
+    // Fetch all students
     const students = await CodecxRegistration.find({});
-    res.json(students);
+
+    // Example stats
+    const totalStudents = students.length;
+    const paidCount = students.filter(s => s.hasPaid).length;
+    const unpaidCount = totalStudents - paidCount;
+    const assignmentCount = students.reduce(
+      (acc, s) => acc + (s.activities?.filter(a => a.activity === "Submitted assignment").length || 0),
+      0
+    );
+    const attendanceCount = students.reduce(
+      (acc, s) => acc + (s.activities?.filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).length || 0),
+      0
+    );
+    const quizCount = students.reduce(
+      (acc, s) => acc + (s.activities?.filter(a => /^Quiz completed - Day \d+$/.test(a.activity)).length || 0),
+      0
+    );
+
+    res.json({
+      students,
+      stats: {
+        totalStudents,
+        paidCount,
+        unpaidCount,
+        assignmentCount,
+        attendanceCount,
+        quizCount
+      }
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
+
 
 // Registration endpoint
 router.post("/", upload.fields([
