@@ -2,22 +2,247 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CODECX Student Dashboard</title>
-  <meta name="viewport" content="width=device-width,initial-scale=0.80">
+  <title>CODECX Masterclass Student Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    .locked {
+      filter: grayscale(0.7) blur(1px);
+      position: relative;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .locked::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.4);
+      border-radius: 1rem;
+      z-index: 1;
+    }
+    .padlock-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.5rem;
+      color: #6366f1;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .feature-badge {
+      background: #6366f1;
+      color: #fff;
+      font-size: .95rem;
+      border-radius: 8px;
+      padding: .22rem .65rem;
+      font-weight: 600;
+      margin-left: .7rem;
+      display: inline-block;
+    }
+    .feature-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-section .padlock-icon {
+      pointer-events: none;
+    }
+    .feature-section.locked * {
+      pointer-events: none;
+    }
+    .feature-section.locked .padlock-icon {
+      display: block;
+    }
+    /* For chat/messages */
+    .chat-message {
+      margin-bottom: 1.1rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+    }
+    .chat-message .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e0e7ff;
+      object-fit: cover;
+    }
+    .chat-message .bubble {
+      background: #f3f4f6;
+      color: #312e81;
+      border-radius: 1rem 1rem 1rem 0.6rem;
+      padding: 0.7rem 1.1rem;
+      font-size: 1rem;
+      max-width: 80vw;
+      box-shadow: 0 2px 8px #6366f111;
+    }
+    .chat-message.me .bubble {
+      background: #6366f1;
+      color: #fff;
+      border-radius: 1rem 1rem 0.6rem 1rem;
+    }
+    .chat-message.me {
+      flex-direction: row-reverse;
+    }
+    .scroll-area {
+      max-height: 280px;
+      overflow-y: auto;
+      border-radius: 1rem;
+      background: #f8fafc;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .resource-card {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px #6366f11a;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+    }
+    .resource-card .title {
+      font-weight: 700;
+      color: #4338ca;
+      font-size: 1.07rem;
+    }
+    .resource-card .desc {
+      color: #444;
+      font-size: 0.97rem;
+    }
+    .resource-card .link {
+      color: #6366f1;
+      font-weight: 500;
+      text-decoration: underline;
+      font-size: 0.97rem;
+      margin-top: .5rem;
+    }
+    /* Leaderboard */
+    .leaderboard {
+      background: #f3f4f6;
+      border-radius: 1rem;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .leaderboard-row .position {
+      font-weight: 700;
+      color: #6366f1;
+      width: 2rem;
+      text-align: center;
+    }
+    .leaderboard-row .name {
+      font-weight: 500;
+      flex: 1;
+    }
+    .leaderboard-row .score {
+      font-weight: 700;
+      color: #16a34a;
+      min-width: 3rem;
+      text-align: right;
+    }
+    /* Code Editor */
+    .code-editor {
+      border-radius: 1rem;
+      background: #23272e;
+      color: #eee;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', 'monospace';
+      font-size: 1rem;
+      min-height: 110px;
+      max-height: 350px;
+      overflow: auto;
+    }
+    .code-editor label {
+      color: #a5b4fc;
+      margin-bottom: .4rem;
+      display: block;
+    }
+    .code-editor textarea {
+      width: 100%;
+      min-height: 80px;
+      background: #23272e;
+      color: #eee;
+      border: none;
+      border-radius: 0.7rem;
+      padding: .8rem;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      resize: vertical;
+    }
+    .run-btn {
+      background: #6366f1;
+      color: #fff;
+      border-radius: .7rem;
+      padding: .4rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      margin-top: .8rem;
+      transition: background .18s;
+    }
+    .run-btn:hover { background: #4338ca;}
+    .output-area {
+      background: #181a20;
+      border-radius: 0.7rem;
+      color: #16a34a;
+      font-family: inherit;
+      padding: .6rem 1rem;
+      margin-top: .6rem;
+      min-height: 1.2rem;
+      white-space: pre-wrap;
+    }
+    /* Profile editing modal */
+    .profile-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(60,72,128,0.15);
+      z-index: 99;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .profile-modal-card {
+      background: white;
+      border-radius: 1.3rem;
+      box-shadow: 0 8px 32px #6366f133;
+      max-width: 97vw;
+      width: 340px;
+      padding: 2.1rem 1.3rem;
+      text-align: center;
+      position: relative;
+    }
+    .profile-modal-card input, .profile-modal-card button {
+      margin-bottom: .7rem;
+    }
+  </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
   <header class="bg-white shadow px-4 py-4 flex items-center justify-between">
-    <h1 class="text-2xl font-bold text-indigo-800">CODECX Student Dashboard</h1>
+    <h1 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
+      CODECX Masterclass Student Dashboard
+      <span class="feature-badge">Web Developer Program</span>
+    </h1>
     <div class="flex items-center gap-2">
       <img id="studentAvatar" class="w-10 h-10 rounded-full" src="" alt="avatar" />
       <span id="studentNameHeader" class="font-semibold"></span>
+      <button onclick="openProfileModal()" class="ml-3 px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit Profile</button>
       <button onclick="logout()" class="ml-3 px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700">Logout</button>
     </div>
   </header>
-  <main class="max-w-3xl mx-auto py-8 px-2">
+  <main class="max-w-5xl mx-auto py-8 px-2">
+    <!-- Profile -->
     <section class="bg-white rounded shadow p-6 mb-8" id="profileSection">
       <h2 class="text-xl font-semibold mb-4">Profile</h2>
       <div class="flex items-center mb-4">
@@ -31,6 +256,68 @@
         </div>
       </div>
     </section>
+    <!-- Masterclass Features (locked if unpaid) -->
+    <section id="masterclassSection" class="feature-section bg-white rounded shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        Masterclass Features
+        <span class="feature-badge">Premium</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="resource-card">
+          <div class="title"><i class="bi bi-camera-video mr-2"></i> Live Coding Sessions</div>
+          <div class="desc">Join weekly live interactive coding classes with top instructors. Participate, ask questions, and build projects together.</div>
+          <div class="link">Next session: <span id="nextSession"></span></div>
+        </div>
+        <div class="resource-card">
+          <div class="title"><i class="bi bi-collection-play mr-2"></i> Video Library</div>
+          <div class="desc">Access a library of recorded masterclass lessons & practical walk-throughs, available 24/7.</div>
+          <a href="#" class="link" id="videoLibraryLink" target="_blank">Browse videos</a>
+        </div>
+        <div class="resource-card">
+          <div class="title"><i class="bi bi-code-slash mr-2"></i> Challenge & Projects</div>
+          <div class="desc">Take part in exclusive coding challenges, hackathons, and practical projects for certificates and portfolio.</div>
+          <a href="#" class="link" id="challengesLink" target="_blank">See current challenge</a>
+        </div>
+        <div class="resource-card">
+          <div class="title"><i class="bi bi-journal-richtext mr-2"></i> Masterclass Notes & Resources</div>
+          <div class="desc">Download handouts, cheatsheets, and curated learning resources from top instructors, tailored for web devs.</div>
+          <a href="#" class="link" id="resourcesLink" target="_blank">Download resources</a>
+        </div>
+      </div>
+      <i class="bi bi-lock-fill padlock-icon" style="display:none"></i>
+      <div id="unlockMessage" class="mt-5 text-center text-indigo-700 font-semibold hidden">
+        <i class="bi bi-lock-fill"></i> These features are locked. Please complete payment to unlock full access!
+      </div>
+    </section>
+    <!-- Leaderboard -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        Leaderboard <span class="feature-badge">Community</span>
+      </h2>
+      <div class="leaderboard" id="leaderboardArea"></div>
+    </section>
+    <!-- Code Editor -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        Code Playground <span class="feature-badge">Try Code</span>
+      </h2>
+      <div class="code-editor">
+        <label for="codeInput">Write HTML/JS code &rarr; <span class="text-xs text-gray-400">Try small snippets!</span></label>
+        <textarea id="codeInput" spellcheck="false" placeholder="Type your code here..."></textarea>
+        <button class="run-btn" onclick="runCode()">Run &rarr;</button>
+        <div class="output-area" id="outputArea"></div>
+      </div>
+    </section>
+    <!-- Chat/Community -->
+    <section class="bg-white rounded shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Community & Chat</h2>
+      <div class="scroll-area" id="chatArea"></div>
+      <form id="chatForm" class="flex gap-2">
+        <input id="chatInput" type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 border rounded" autocomplete="off"/>
+        <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded">Send</button>
+      </form>
+    </section>
+    <!-- Courses, Progress, Payments, Activity -->
     <section class="bg-white rounded shadow p-6 mb-8" id="coursesSection">
       <h2 class="text-xl font-semibold mb-4">Courses</h2>
       <div id="coursesList" class="flex flex-wrap gap-3 mb-4"></div>
@@ -86,6 +373,17 @@
       <h2 class="text-xl font-semibold mb-4">Admin Notes</h2>
       <div id="adminNote" class="text-gray-700"></div>
     </section>
+    <!-- Profile Modal -->
+    <div id="profileModal" class="profile-modal hidden">
+      <div class="profile-modal-card">
+        <button onclick="closeProfileModal()" class="absolute top-2 right-2 text-lg font-bold">&times;</button>
+        <h3 class="font-bold text-lg mb-3">Edit Profile</h3>
+        <input id="editFullName" type="text" class="w-full px-3 py-2 border rounded mb-2" placeholder="Full Name"/>
+        <input id="editEmail" type="email" class="w-full px-3 py-2 border rounded mb-2" placeholder="Email"/>
+        <input id="editPhone" type="text" class="w-full px-3 py-2 border rounded mb-2" placeholder="Phone"/>
+        <button onclick="saveProfile()" class="w-full px-3 py-2 bg-indigo-600 text-white rounded">Save Changes</button>
+      </div>
+    </div>
     <!-- Modal -->
     <div id="receiptModal" class="fixed inset-0 z-30 bg-black bg-opacity-60 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded shadow relative max-w-lg w-full">
@@ -111,8 +409,6 @@
       localStorage.removeItem('codecx_token');
       window.location.href = "codexcclogin.html";
     }
-
-    // Modal helpers
     function showReceiptModal(html) {
       document.getElementById("receiptModalContent").innerHTML = html;
       document.getElementById("receiptModal").classList.remove("hidden");
@@ -123,9 +419,80 @@
     document.getElementById("receiptModal").addEventListener("click", function(e) {
       if (e.target === this) closeReceipt();
     });
+    // Profile Modal
+    function openProfileModal() {
+      document.getElementById("profileModal").classList.remove("hidden");
+      document.getElementById("editFullName").value = student.fullName || "";
+      document.getElementById("editEmail").value = student.email || "";
+      document.getElementById("editPhone").value = student.phone || "";
+    }
+    function closeProfileModal() {
+      document.getElementById("profileModal").classList.add("hidden");
+    }
+    async function saveProfile() {
+      const fullName = document.getElementById("editFullName").value.trim();
+      const email = document.getElementById("editEmail").value.trim();
+      const phone = document.getElementById("editPhone").value.trim();
+      if (!fullName || !email || !phone) return showToast("All fields required.", "error");
+      try {
+        const resp = await fetch(API_BASE + "/profile", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+          body: JSON.stringify({ fullName, email, phone })
+        });
+        if (resp.ok) {
+          showToast("Profile updated!", "success");
+          closeProfileModal();
+          loadDashboard();
+        } else {
+          showToast("Failed to update profile.", "error");
+        }
+      } catch {
+        showToast("Failed to update profile.", "error");
+      }
+    }
 
     let student = {};
     let token = localStorage.getItem('codecx_token');
+    // Demo leaderboard
+    function renderLeaderboard() {
+      const leaderboard = [
+        { position: 1, name: "Jane Doe", score: 299 },
+        { position: 2, name: "Richard Tim", score: 266 },
+        { position: 3, name: "Amina Bello", score: 233 },
+        { position: 4, name: "Samuel Obi", score: 198 },
+        { position: 5, name: "Student You", score: 151 },
+      ];
+      const lb = document.getElementById("leaderboardArea");
+      lb.innerHTML = leaderboard.map(row =>
+        `<div class="leaderboard-row">
+          <span class="position">${row.position}</span>
+          <span class="name">${row.name}</span>
+          <span class="score">${row.score}</span>
+        </div>`
+      ).join('');
+    }
+    // Code editor
+    function runCode() {
+      const code = document.getElementById("codeInput").value;
+      let output = "";
+      try {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        const iframeWin = iframe.contentWindow || iframe;
+        iframeWin.document.open();
+        iframeWin.document.write(`<script>${code}<\/script>`);
+        iframeWin.document.close();
+        setTimeout(() => {
+          output = iframeWin.document.body.innerHTML || "No output";
+          document.getElementById("outputArea").textContent = output;
+          document.body.removeChild(iframe);
+        }, 300);
+      } catch (e) {
+        document.getElementById("outputArea").textContent = "Error: " + e.message;
+      }
+    }
 
     async function loadDashboard() {
       if (!token) return logout();
@@ -135,7 +502,6 @@
         });
         if (!resp.ok) throw new Error();
         student = await resp.json();
-        // Render profile
         document.getElementById("studentAvatar").src =
           student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
         document.getElementById("studentNameHeader").textContent = student.fullName || "";
@@ -149,25 +515,37 @@
           student.hasPaid
             ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
             : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>';
-        // Admin Note
         document.getElementById("adminNote").textContent = student.adminNote || "No feedback yet.";
-        // Courses
+        // Masterclass Features Lock
+        const masterclassSection = document.getElementById("masterclassSection");
+        const unlockMessage = document.getElementById("unlockMessage");
+        if (!student.hasPaid) {
+          masterclassSection.classList.add("locked");
+          masterclassSection.querySelector(".padlock-icon").style.display = "block";
+          unlockMessage.classList.remove("hidden");
+        } else {
+          masterclassSection.classList.remove("locked");
+          masterclassSection.querySelector(".padlock-icon").style.display = "none";
+          unlockMessage.classList.add("hidden");
+        }
+        document.getElementById("videoLibraryLink").href = student.hasPaid ? "https://codecx-masterclass-videos.com" : "javascript:void(0)";
+        document.getElementById("challengesLink").href = student.hasPaid ? "https://codecx-challenges.com" : "javascript:void(0)";
+        document.getElementById("resourcesLink").href = student.hasPaid ? "https://codecx-resources.com" : "javascript:void(0)";
+        document.getElementById("nextSession").textContent = "Sat, Sep 7, 5pm";
         renderCourses(student.courses || []);
-        // Activities
         renderActivities(student.activities || []);
-        // Payments
         renderPayments(student.payments || []);
         document.getElementById("paymentStatus").innerHTML = student.hasPaid
           ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
           : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>';
-        // Progress
         renderProgress(student.progress || {});
+        renderLeaderboard();
+        renderChat(student.chatMessages || []);
       } catch (e) {
         showToast("Error loading dashboard, please login again.", "error");
         return logout();
       }
     }
-
     function renderCourses(courses) {
       const coursesList = document.getElementById("coursesList");
       coursesList.innerHTML = "";
@@ -224,7 +602,6 @@
         showToast("Failed to remove course.", "error");
       }
     }
-
     function renderActivities(activities) {
       const tbody = document.getElementById("activityTable");
       tbody.innerHTML = "";
@@ -261,7 +638,6 @@
         showToast("Failed to mark attendance.", "error");
       }
     };
-
     function renderPayments(payments) {
       const tbody = document.getElementById("paymentsTable");
       tbody.innerHTML = "";
@@ -289,7 +665,6 @@
         <a href="https://paystack.com/pay/codecx" target="_blank" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded">Proceed</a>
       `);
     };
-
     function renderProgress(progress) {
       document.getElementById("progressContent").innerHTML =
         `<div><b>Completed:</b> ${progress.completed || 0} / ${progress.total || 0}</div>
@@ -321,14 +696,12 @@
         showToast("Failed to update progress.", "error");
       }
     }
-
     async function submitAssignment() {
       const fileInput = document.getElementById("assignmentInput");
       if (!fileInput.files.length) {
         showToast("Please select a file.", "error");
         return;
       }
-      // Simulate upload log as assignment activity
       try {
         const resp = await fetch(API_BASE + "/activities", {
           method: "POST",
@@ -346,6 +719,41 @@
       }
       fileInput.value = "";
     }
+    // --- Chat/Community
+    function renderChat(messages) {
+      const chatArea = document.getElementById("chatArea");
+      chatArea.innerHTML = "";
+      if (!messages || !messages.length) {
+        chatArea.innerHTML = `<div class="text-gray-400 text-center">No messages yet. Start the conversation!</div>`;
+        return;
+      }
+      messages.forEach(msg => {
+        chatArea.innerHTML += `
+          <div class="chat-message ${msg.me ? 'me' : ''}">
+            <img src="${msg.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(msg.sender || 'Student')}" class="avatar" />
+            <div class="bubble">${msg.text}</div>
+          </div>
+        `;
+      });
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+    document.getElementById("chatForm").onsubmit = async function(e) {
+      e.preventDefault();
+      const input = document.getElementById("chatInput");
+      const text = input.value.trim();
+      if (!text) return;
+      // Simulate sending chat (replace with real backend if available)
+      student.chatMessages = student.chatMessages || [];
+      student.chatMessages.push({
+        me: true,
+        sender: student.fullName,
+        avatar: student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student"),
+        text
+      });
+      renderChat(student.chatMessages);
+      input.value = "";
+      // Optionally, POST to backend for shared chat
+    };
 
     window.onload = loadDashboard;
   </script>
