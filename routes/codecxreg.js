@@ -35,6 +35,7 @@ function generateUsername(matricNumber, fullName) {
 function generatePassword() {
   return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
+
 router.get("/admin/all", async (req, res) => {
   try {
     const students = await CodecxRegistration.find({});
@@ -43,6 +44,7 @@ router.get("/admin/all", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 // Registration endpoint
 router.post("/", upload.fields([
   { name: "passport", maxCount: 1 }
@@ -76,7 +78,8 @@ router.post("/", upload.fields([
       courses: [],
       progress: { completed: 0, total: 0, grade: "-" },
       payments: [],
-      activities: []
+      activities: [],
+      chatMessages: []
     });
 
     await registration.save();
@@ -222,7 +225,7 @@ router.delete("/courses", authMiddleware, async (req, res) => {
   }
 });
 
-// Update progress
+// Update progress summary (not daily progress, handled by activities)
 router.put("/progress", authMiddleware, async (req, res) => {
   try {
     const { completed, total, grade } = req.body;
@@ -268,13 +271,27 @@ router.post("/payments", authMiddleware, async (req, res) => {
   }
 });
 
-// Add activity (for custom logs)
+// Add activity (for daily quiz completion, attendance, assignment, etc.)
 router.post("/activities", authMiddleware, async (req, res) => {
   try {
     const { activity, status } = req.body;
     if (!activity) return res.status(400).json({ message: "Activity required" });
     const candidate = await CodecxRegistration.findById(req.user.id);
     if (!candidate) return res.status(404).json({ message: "User not found" });
+
+    // Prevent duplicate attendance/quiz for a day
+    if (/^Attendance marked - Day (\d+)$/.test(activity)) {
+      const day = activity.match(/^Attendance marked - Day (\d+)$/)[1];
+      if (candidate.activities.some(a => a.activity === activity)) {
+        return res.status(400).json({ message: "Attendance already marked for day " + day });
+      }
+    }
+    if (/^Quiz completed - Day (\d+)$/.test(activity)) {
+      const day = activity.match(/^Quiz completed - Day (\d+)$/)[1];
+      if (candidate.activities.some(a => a.activity === activity)) {
+        return res.status(400).json({ message: "Quiz already completed for day " + day });
+      }
+    }
 
     candidate.activities.push({
       date: new Date(),
@@ -289,14 +306,70 @@ router.post("/activities", authMiddleware, async (req, res) => {
   }
 });
 
-// (Optional) Chat messages
-router.post("/chat", authMiddleware, async (req, res) => {
+// QUIZ: Fetch quiz for a given day (example demo; replace with dynamic if needed)
+router.get("/quiz/:day", authMiddleware, async (req, res) => {
+  const day = parseInt(req.params.day);
+  if (!day || day < 1 || day > 60) return res.status(400).json({ message: "Invalid day" });
+  // Demo: generate 10 sample quiz questions per day
+  let topic = "";
+  if (day <= 20) topic = "HTML";
+  else if (day <= 40) topic = "CSS";
+  else topic = "JavaScript";
+  const questions = [];
+  for (let i = 1; i <= 10; i++) {
+    questions.push({
+      question: `${topic} Sample Question ${i} (Day ${day})`,
+      options: [
+        `${topic} Option A`,
+        `${topic} Option B`,
+        `${topic} Option C`,
+        `${topic} Option D`
+      ],
+      answer: `${topic} Option A`
+    });
+  }
+  res.json({ questions });
+});
+
+// COMMUNITY CHAT - Get all messages
+router.get("/chat", authMiddleware, async (req, res) => {
   try {
-    const { text } = req.body;
-    if (!text) return res.status(400).json({ message: "Text required" });
     const candidate = await CodecxRegistration.findById(req.user.id);
     if (!candidate) return res.status(404).json({ message: "User not found" });
 
+    // Fetch all messages for all users (global chat)
+    // For demo, we'll use all chatMessages from all students
+    const allStudents = await CodecxRegistration.find({}, { chatMessages: 1, fullName: 1, passportBase64: 1 });
+    let allMessages = [];
+    allStudents.forEach(s => {
+      if (Array.isArray(s.chatMessages)) {
+        s.chatMessages.forEach(m => {
+          allMessages.push({
+            ...m,
+            sender: s.fullName,
+            avatar: s.passportBase64 || "",
+            me: String(s._id) === String(candidate._id) && m.me === true
+          });
+        });
+      }
+    });
+    // Sort by date ascending
+    allMessages.sort((a, b) => new Date(a.date) - new Date(b.date));
+    res.json({ chatMessages: allMessages });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// COMMUNITY CHAT - Post a new message
+router.post("/chat", authMiddleware, async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text || !text.trim()) return res.status(400).json({ message: "Text required" });
+    const candidate = await CodecxRegistration.findById(req.user.id);
+    if (!candidate) return res.status(404).json({ message: "User not found" });
+
+    // Add to this student's chatMessages
     candidate.chatMessages = candidate.chatMessages || [];
     candidate.chatMessages.push({
       me: true,
@@ -306,7 +379,7 @@ router.post("/chat", authMiddleware, async (req, res) => {
       date: new Date()
     });
     await candidate.save();
-    res.json({ success: true, chatMessages: candidate.chatMessages });
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
@@ -341,7 +414,7 @@ router.post("/paystack-webhook", express.json({ type: "application/json" }), asy
     student.lastPaymentRef = event.data.reference;
     student.payments.push({
       date: new Date(),
-      amount: event.data.amount / 100, // Paystack sends amount in kobo
+      amount: event.data.amount / 100,
       status: "Paid",
       ref: event.data.reference
     });
