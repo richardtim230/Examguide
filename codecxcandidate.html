@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
-    /* ... previous styles ... */
     .locked {
       filter: grayscale(0.7) blur(1px);
       position: relative;
@@ -57,36 +56,221 @@
     .feature-section.locked .padlock-icon {
       display: block;
     }
-    /* ... previous styles ... */
-    .modal-quiz-bg {
+    .chat-message {
+      margin-bottom: 1.1rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      word-break: break-word;
+    }
+    .chat-message .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e0e7ff;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .chat-message .bubble {
+      background: #f3f4f6;
+      color: #312e81;
+      border-radius: 1rem 1rem 1rem 0.6rem;
+      padding: 0.7rem 1.1rem;
+      font-size: 1rem;
+      max-width: 80vw;
+      box-shadow: 0 2px 8px #6366f111;
+      word-break: break-word;
+    }
+    .chat-message.me .bubble {
+      background: #6366f1;
+      color: #fff;
+      border-radius: 1rem 1rem 0.6rem 1rem;
+    }
+    .chat-message.me {
+      flex-direction: row-reverse;
+    }
+    .scroll-area {
+      max-height: 280px;
+      overflow-y: auto;
+      border-radius: 1rem;
+      background: #f8fafc;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .resource-card {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px #6366f11a;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-width: 0;
+    }
+    .resource-card .title {
+      font-weight: 700;
+      color: #4338ca;
+      font-size: 1.07rem;
+      word-break: break-word;
+    }
+    .resource-card .desc {
+      color: #444;
+      font-size: 0.97rem;
+      word-break: break-word;
+    }
+    .resource-card .link {
+      color: #6366f1;
+      font-weight: 500;
+      text-decoration: underline;
+      font-size: 0.97rem;
+      margin-top: .5rem;
+      word-break: break-word;
+    }
+    header {
+      min-width: 0;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      min-width: 0;
+      flex: 1 1 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    header .feature-badge {
+      font-size: .95rem;
+      padding: .15rem .5rem;
+      margin-left: 0.4rem;
+    }
+    header .flex {
+      gap: 1vw;
+    }
+    #studentNameHeader {
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    @media (max-width: 900px) {
+      main {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .grid-cols-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.1rem;
+        padding-right: 0;
+      }
+      header .feature-badge {
+        font-size: 0.85rem;
+        padding: .13rem .35rem;
+      }
+      #studentNameHeader {
+        max-width: 60px;
+      }
+      section {
+        padding: 1rem !important;
+      }
+      .resource-card {
+        padding: 0.7rem 0.6rem;
+      }
+      .scroll-area {
+        padding: 0.6rem;
+        font-size: 0.97rem;
+      }
+      main {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      word-break: break-word;
+    }
+    /* Modal styles */
+    .custom-modal-bg {
       position: fixed;
       inset: 0;
-      background: rgba(38,38,38,0.30);
-      z-index: 100;
+      background: rgba(60,72,128,0.22);
+      z-index: 9999;
       display: none;
       align-items: center;
       justify-content: center;
     }
-    .modal-quiz-bg.show {
+    .custom-modal-bg.show {
       display: flex;
     }
-    .modal-quiz {
-      background: #fff;
-      border-radius: 1.2rem;
+    .custom-modal {
+      background: white;
+      border-radius: 1.4rem;
+      box-shadow: 0 8px 32px #6366f133;
       max-width: 97vw;
+      min-width: 300px;
       width: 100%;
       max-width: 390px;
-      padding: 2rem 1.3rem 1.5rem 1.3rem;
-      box-shadow: 0 8px 40px #00336633, 0 1.5px 4px #276EF1aa;
+      padding: 2.2rem 1.2rem 1.7rem 1.2rem;
       position: relative;
-      text-align: left;
-      animation: modalIn .4s;
+      text-align: center;
+      animation: modalIn .5s;
     }
     @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.97);}
+      from { opacity: 0; transform: scale(0.95);}
       to { opacity: 1; transform: scale(1);}
     }
-    .modal-quiz .modal-close {
+    .custom-modal .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #6366f1;
+    }
+    .custom-modal .modal-message {
+      font-size: 1.07rem;
+      margin-bottom: 1.1rem;
+      color: #1B428C;
+    }
+    .custom-modal .modal-quiz {
+      text-align: left;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 1rem .7rem;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      border: 1px solid #e0e4ed;
+    }
+    .custom-modal .modal-actions {
+      margin-top: 1.3rem;
+      display: flex;
+      gap: .9rem;
+      justify-content: center;
+    }
+    .custom-modal .modal-btn {
+      padding: .67rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      background: #6366f1;
+      color: #fff;
+      font-size: 1.07rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-width: 110px;
+    }
+    .custom-modal .modal-btn.secondary {
+      background: #f5f7fa;
+      color: #003366;
+      border: 1.5px solid #6366f1;
+    }
+    .custom-modal .close-modal {
       position: absolute;
       top: 11px;
       right: 15px;
@@ -97,74 +281,29 @@
       cursor: pointer;
       opacity: 0.7;
     }
-    .modal-quiz .modal-close:hover {
+    .custom-modal .close-modal:hover {
       opacity: 1;
     }
-    .modal-quiz .modal-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.7rem;
-      color: #6366f1;
-      text-align: left;
-    }
-    .modal-quiz .modal-message {
-      font-size: 1.07rem;
-      margin-bottom: 1.1rem;
-      color: #1B428C;
-    }
-    .modal-quiz .modal-btn {
-      padding: .67rem 1.2rem;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(90deg,#6366f1,#4338ca);
-      color: #fff;
-      font-size: 1.07rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
-      min-width: 120px;
-      margin-top: 1rem;
-    }
-    .modal-quiz .modal-btn.secondary {
-      background: #f5f7fa;
-      color: #003366;
-      border: 1.5px solid #6366f1;
-    }
-    .modal-quiz .quiz-question {
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: #312e81;
-    }
-    .modal-quiz .quiz-options label {
+    .modal-quiz-options label {
       display: block;
-      margin-bottom: 0.6rem;
+      margin-bottom: .7rem;
       cursor: pointer;
-      padding-left: 2px;
-      font-size: 1rem;
-      color: #4338ca;
+      padding: .2rem .1rem;
+      border-radius: 7px;
+      transition: background .14s;
     }
-    .modal-quiz .modal-status {
-      margin-top: 1rem;
-      font-size: 1rem;
+    .modal-quiz-options input[type="radio"]:checked + span {
+      background: #6366f1;
+      color: #fff;
       font-weight: 600;
-      color: #27ae60;
+      padding: .2rem .5rem;
     }
-    @media (max-width: 600px) {
-      .modal-quiz {
-        padding: 1rem .3rem 1.1rem .3rem;
-        max-width: 99vw;
-      }
+    .modal-quiz-options input[type="radio"] {
+      margin-right: 0.4em;
     }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-  <!-- Attendance Quiz Modal -->
-  <div class="modal-quiz-bg" id="quizModalBg">
-    <div class="modal-quiz" id="quizModal">
-      <button class="modal-close" id="closeQuizModalBtn" aria-label="Close quiz modal">&times;</button>
-      <div id="quizModalContent"></div>
-    </div>
-  </div>
   <header class="bg-white shadow px-4 py-4 flex flex-wrap items-center justify-between gap-2 min-w-0">
     <h1 class="text-2xl font-bold text-indigo-800 flex-1 min-w-0 truncate">
       CODECX Masterclass Student Dashboard
@@ -242,19 +381,20 @@
     <section class="bg-white rounded shadow p-6 mb-8" id="coursesSection">
       <h2 class="text-xl font-semibold mb-4">Courses</h2>
       <div id="coursesList" class="flex flex-wrap gap-3 mb-4"></div>
-      <div class="flex gap-2">
-        <select id="courseDropdown" class="px-2 py-1 border rounded w-full max-w-xs">
-          <option value="">Select course (Choose One)</option>
+      <div class="flex gap-2 flex-wrap">
+        <select id="courseSelect" class="px-2 py-1 border rounded bg-white">
+          <option value="">-- Select a Course --</option>
           <option value="HTML Only">HTML Only</option>
           <option value="CSS Only">CSS Only</option>
           <option value="JavaScript Only">JavaScript Only</option>
-          <option value="HTML and CSS Only">HTML and CSS Only</option>
-          <option value="HTML and JavaScript Only">HTML and JavaScript Only</option>
+          <option value="HTML and CSS only">HTML and CSS only</option>
+          <option value="HTML and JavaScript only">HTML and JavaScript only</option>
           <option value="CSS and JavaScript Only">CSS and JavaScript Only</option>
-          <option value="All three">All three</option>
+          <option value="All three">All three (HTML, CSS, JS)</option>
           <option value="Full Backend">Full Backend</option>
           <option value="FullStack">FullStack</option>
           <option value="Coupon Code">Coupon Code</option>
+          <!-- Expand with more as needed -->
         </select>
         <button onclick="addCourse()" class="px-3 py-1 bg-indigo-600 text-white rounded">Add Course</button>
       </div>
@@ -306,7 +446,14 @@
       <h2 class="text-xl font-semibold mb-4">Admin Notes</h2>
       <div id="adminNote" class="text-gray-700"></div>
     </section>
-    <!-- Modal -->
+    <!-- Modal for Attendance Quiz -->
+    <div class="custom-modal-bg" id="attendanceQuizBg">
+      <div class="custom-modal" id="attendanceQuizModal">
+        <button class="close-modal" onclick="closeAttendanceQuiz()">&times;</button>
+        <div id="attendanceQuizContent"></div>
+      </div>
+    </div>
+    <!-- Modal for Receipt/Payment -->
     <div id="receiptModal" class="fixed inset-0 z-30 bg-black bg-opacity-60 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded shadow relative max-w-lg w-full">
         <button onclick="closeReceipt()" class="absolute top-2 right-2 text-lg font-bold">&times;</button>
@@ -323,8 +470,8 @@
         duration: 3500,
         gravity: "top",
         position: "center",
-        backgroundColor: type === "success" ? "linear-gradient(90deg,#16a34a,#22d3ee)" :
-                          type === "error" ? "linear-gradient(90deg,#dc2626,#f87171)" : "linear-gradient(90deg,#6366f1,#4338ca)"
+        backgroundColor: type === "success" ? "#16a34a" :
+                          type === "error" ? "#dc2626" : "#6366f1"
       }).showToast();
     }
     function logout() {
@@ -332,7 +479,6 @@
       window.location.href = "codexcclogin.html";
     }
 
-    // --- Modal helpers
     function showReceiptModal(html) {
       document.getElementById("receiptModalContent").innerHTML = html;
       document.getElementById("receiptModal").classList.remove("hidden");
@@ -344,18 +490,74 @@
       if (e.target === this) closeReceipt();
     });
 
-    // -- Attendance Quiz Modal
-    function showQuizModal(contentHtml) {
-      document.getElementById("quizModalContent").innerHTML = contentHtml;
-      document.getElementById("quizModalBg").classList.add("show");
+    // Attendance Quiz Modal
+    function openAttendanceQuizModal(quiz) {
+      document.getElementById("attendanceQuizBg").classList.add("show");
+      let html = "";
+      if (!quiz) {
+        html = `<div class="modal-title">Attendance</div>
+                <div class="modal-message">Attendance not opened yet. No quiz available.</div>
+                <div class="modal-actions">
+                  <button class="modal-btn" onclick="closeAttendanceQuiz()">Close</button>
+                </div>`;
+      } else {
+        html = `<div class="modal-title">Quiz of the Day</div>
+          <div class="modal-message">${quiz.question}</div>
+          <form id="quizForm" class="modal-quiz">
+            <div class="modal-quiz-options">` +
+            quiz.options.map((opt, idx) =>
+              `<label><input type="radio" name="quizOption" value="${opt}"><span>${opt}</span></label>`
+            ).join("") +
+            `</div>
+          </form>
+          <div class="modal-actions">
+            <button class="modal-btn" onclick="submitAttendanceQuiz('${quiz.answer.replace(/'/g,"&#39;")}')">Submit</button>
+            <button class="modal-btn secondary" onclick="closeAttendanceQuiz()">Cancel</button>
+          </div>`;
+      }
+      document.getElementById("attendanceQuizContent").innerHTML = html;
     }
-    function closeQuizModal() {
-      document.getElementById("quizModalBg").classList.remove("show");
+    function closeAttendanceQuiz() {
+      document.getElementById("attendanceQuizBg").classList.remove("show");
     }
-    document.getElementById("closeQuizModalBtn").onclick = closeQuizModal;
-    document.getElementById("quizModalBg").onclick = function(e){
-      if (e.target === this) closeQuizModal();
-    };
+    function submitAttendanceQuiz(correctAnswer) {
+      const quizForm = document.getElementById("quizForm");
+      if (!quizForm) return;
+      const selected = quizForm.querySelector('input[name="quizOption"]:checked');
+      if (!selected) {
+        showToast("Please select an answer.", "error");
+        return;
+      }
+      if (selected.value === correctAnswer) {
+        closeAttendanceQuiz();
+        markAttendanceBackend();
+      } else {
+        showToast("Incorrect answer. Try again!", "error");
+      }
+    }
+
+    // Example quiz of the day (simulate API call)
+    function fetchQuizOfTheDay() {
+      // Simulate quiz fetch (replace with API if available)
+      // Return null if no quiz today
+      // Return quiz object if available
+      // For demo, alternate quiz/no quiz
+      const today = new Date().getDate();
+      if (today % 2 === 1) { // quiz available on odd days
+        return {
+          question: "What does HTML stand for?",
+          options: [
+            "HyperText Markup Language",
+            "HighlyTextual Modern Language",
+            "Hyperlink Transfer Mark Language",
+            "Home Tool Markup Language"
+          ],
+          answer: "HyperText Markup Language"
+        };
+      } else {
+        return null;
+      }
+    }
 
     let student = {};
     let token = localStorage.getItem('codecx_token');
@@ -375,10 +577,9 @@
         document.getElementById("studentPassport").src =
           student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
         document.getElementById("studentFullName").textContent = student.fullName || "";
-        // Show matric number if available
-        document.getElementById("studentMatric").textContent = student.matricNumber
-          ? "Matric No: " + student.matricNumber
-          : "";
+        // Matric number fix: try all possible fields
+        let matricNo = student.matricNumber || student.loginUsername || student.username || "";
+        document.getElementById("studentMatric").textContent = "Matric No: " + matricNo;
         document.getElementById("studentEmail").textContent = student.email || "";
         document.getElementById("studentPhone").textContent = student.phone || "";
         document.getElementById("studentStatus").innerHTML =
@@ -437,7 +638,7 @@
       });
     }
     async function addCourse() {
-      const select = document.getElementById("courseDropdown");
+      const select = document.getElementById("courseSelect");
       const courseName = select.value;
       if (!courseName) return showToast("Please select a course.", "error");
       try {
@@ -496,59 +697,18 @@
         `;
       });
     }
-
-    // --- Attendance Quiz Feature ---
-    document.getElementById("attendanceBtn").onclick = async function() {
-      // Simulate quiz fetch from backend (replace with real API if needed)
-      let quizOfTheDay = await fetchQuizOfTheDay();
-      if (!quizOfTheDay) {
-        showQuizModal(`<div class="modal-title">Attendance Not Opened Yet</div>
-          <div class="modal-message">There is no quiz available for today. Attendance cannot be marked now.</div>
-          <button class="modal-btn secondary" onclick="closeQuizModal()">Close</button>
-        `);
-        return;
-      }
-      // Build quiz modal
-      showQuizModal(`
-        <div class="modal-title">Quiz of the Day</div>
-        <div class="quiz-question">${quizOfTheDay.question}</div>
-        <form id="quizForm">
-          <div class="quiz-options">
-            ${quizOfTheDay.options.map((opt, idx) =>
-              `<label><input type="radio" name="quizOption" value="${opt}" required> ${opt}</label>`
-            ).join('')}
-          </div>
-          <button type="submit" class="modal-btn">Submit & Mark Attendance</button>
-          <button type="button" class="modal-btn secondary" onclick="closeQuizModal()">Cancel</button>
-        </form>
-        <div id="quizStatus"></div>
-      `);
-      document.getElementById("quizForm").onsubmit = async function(e){
-        e.preventDefault();
-        const selected = document.querySelector('input[name="quizOption"]:checked');
-        if (!selected) {
-          showToast("Please select an answer.", "error");
-          return;
-        }
-        // Simulate correct answer check
-        if (selected.value === quizOfTheDay.answer) {
-          document.getElementById("quizStatus").innerHTML =
-            `<span style="color:#27ae60;">Correct! Attendance marked.</span>`;
-          await markAttendanceWithQuiz();
-          setTimeout(closeQuizModal, 1300);
-        } else {
-          document.getElementById("quizStatus").innerHTML =
-            `<span style="color:#dc2626;">Incorrect! Attendance not marked.</span>`;
-          showToast("Incorrect answer. Attendance not marked.", "error");
-        }
-      };
+    // Attendance button triggers quiz modal
+    document.getElementById("attendanceBtn").onclick = function() {
+      const quiz = fetchQuizOfTheDay();
+      openAttendanceQuizModal(quiz);
     };
-    async function markAttendanceWithQuiz() {
+    // Attendance marking after quiz
+    async function markAttendanceBackend() {
       try {
         const resp = await fetch(API_BASE + "/activities", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-          body: JSON.stringify({ activity: "Marked attendance (quiz of the day)", status: "Success" })
+          body: JSON.stringify({ activity: "Marked attendance", status: "Success" })
         });
         if (resp.ok) {
           showToast("Attendance marked!", "success");
@@ -560,20 +720,6 @@
         showToast("Failed to mark attendance.", "error");
       }
     }
-    // Simulate backend quiz fetch (replace with real API if available)
-    async function fetchQuizOfTheDay() {
-      // Simulate: every day has a quiz except Sundays
-      const today = new Date();
-      if (today.getDay() === 0) return null; // Sunday
-      // Example quiz: can expand with real backend logic
-      return {
-        question: "Which language is best for web page structure?",
-        options: ["JavaScript", "HTML", "CSS", "Python"],
-        answer: "HTML"
-      };
-      // To randomize, you can pick from a list of quizzes here
-    }
-
     function renderPayments(payments) {
       const tbody = document.getElementById("paymentsTable");
       tbody.innerHTML = "";
@@ -655,8 +801,6 @@
       }
       fileInput.value = "";
     }
-
-    // --- Chat/Community
     function renderChat(messages) {
       const chatArea = document.getElementById("chatArea");
       chatArea.innerHTML = "";
@@ -679,7 +823,6 @@
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
       if (!text) return;
-      // Simulate sending chat (replace with real backend if available)
       student.chatMessages = student.chatMessages || [];
       student.chatMessages.push({
         me: true,
@@ -689,7 +832,6 @@
       });
       renderChat(student.chatMessages);
       input.value = "";
-      // Optionally, POST to backend for shared chat
     };
 
     window.onload = loadDashboard;
