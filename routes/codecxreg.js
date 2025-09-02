@@ -257,7 +257,7 @@ router.post("/", upload.fields([
       user = new User({
         username: loginUsername,
         password: loginPasswordHash,
-        role: "codec",
+        role: "admin",
         email: email,
         fullname: fullName,
         phone: phone,
