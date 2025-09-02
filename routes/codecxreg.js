@@ -39,43 +39,14 @@ function generatePassword() {
 // ... (existing imports and code above)
 
 router.get("/admin/all", async (req, res) => {
-  try {
-    // Fetch all students
-    const students = await CodecxRegistration.find({});
 
-    // Example stats
-    const totalStudents = students.length;
-    const paidCount = students.filter(s => s.hasPaid).length;
-    const unpaidCount = totalStudents - paidCount;
-    const assignmentCount = students.reduce(
-      (acc, s) => acc + (s.activities?.filter(a => a.activity === "Submitted assignment").length || 0),
-      0
-    );
-    const attendanceCount = students.reduce(
-      (acc, s) => acc + (s.activities?.filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).length || 0),
-      0
-    );
-    const quizCount = students.reduce(
-      (acc, s) => acc + (s.activities?.filter(a => /^Quiz completed - Day \d+$/.test(a.activity)).length || 0),
-      0
-    );
-
-    res.json({
-      students,
-      stats: {
-        totalStudents,
-        paidCount,
-        unpaidCount,
-        assignmentCount,
-        attendanceCount,
-        quizCount
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
+    try {
+        const registrations = await CodecxRegistration.find().sort({ submittedAt: -1 });
+        res.json(registrations);
+    } catch (e) {
+        res.status(500).json({ message: "Server error" });
+    }
 });
-
 
 
 
