@@ -37,18 +37,30 @@ function generatePassword() {
 }
 
 // Open (no authentication) admin candidates endpoint for testing
+// Open (no authentication) admin candidates endpoint for testing
 router.get('/admin', async (req, res) => {
   try {
     const students = await CodecxRegistration.aggregate([
-  { $match: { active: true } },           // Only active students
-  { $sort: { fullName: 1 } },             // Sort by name
-  { $project: {                           // Select fields to show
-      fullName: 1,
-      email: 1,
-      phone: 1,
-      hasPaid: 1
-  } }
-], { allowDiskUse: true });
+      { $match: { active: true } },           // Only active students
+      { $sort: { fullName: 1 } },             // Sort by name
+      { $project: {                           // Select fields to show
+        _id: 1,
+        fullName: 1,
+        email: 1,
+        phone: 1,
+        matricNumber: 1,
+        hasPaid: 1,
+        payments: 1,
+        activities: 1,
+        assignments: 1,
+        attendance: 1,
+        attendanceMarked: 1,
+        quizzes: 1,
+        courses: 1,
+        progress: 1,
+        passportBase64: 1
+      } }
+    ], { allowDiskUse: true });
     const totalStudents = students.length;
     const paidCount = students.filter(s => s.hasPaid).length;
     const unpaidCount = totalStudents - paidCount;
@@ -63,7 +75,6 @@ router.get('/admin', async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
-// ...existing imports and code...
 
 // GET: Get full details ("folder") for a student by id (accessible to any logged-in user for testing)
 router.get('/student/:id', async (req, res) => {
