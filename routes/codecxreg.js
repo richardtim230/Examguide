@@ -37,7 +37,7 @@ function generatePassword() {
 }
 
 // Open (no authentication) admin candidates endpoint for testing
-router.get('/admin/all', async (req, res) => {
+router.get('/admin', async (req, res) => {
   try {
     const students = await CodecxRegistration.find().lean();
     // Calculate stats
