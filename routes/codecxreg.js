@@ -39,8 +39,9 @@ function generatePassword() {
 // Open (no authentication) admin candidates endpoint for testing
 router.get('/admin', async (req, res) => {
   try {
-    const students = await CodecxRegistration.find().lean();
-    // Calculate stats
+    const students = await CodecxRegistration.aggregate([
+  { $sort: { fullName: 1 } }
+], { allowDiskUse: true });
     const totalStudents = students.length;
     const paidCount = students.filter(s => s.hasPaid).length;
     const unpaidCount = totalStudents - paidCount;
