@@ -78,7 +78,7 @@ router.get("/admin/all", async (req, res) => {
 
 
 
-// Registration endpoint
+
 router.post("/", upload.fields([
   { name: "passport", maxCount: 1 }
 ]), async (req, res) => {
@@ -87,6 +87,24 @@ router.post("/", upload.fields([
     if (!fullName || !email || !phone || !matricNumber) {
       return res.status(400).json({ message: "All required fields must be provided." });
     }
+
+    // --- Prevent duplicate registration ---
+    const existing = await CodecxRegistration.findOne({
+      $or: [
+        { email: email },
+        { phone: phone },
+        { matricNumber: matricNumber }
+      ]
+    });
+    if (existing) {
+      // Find which field is duplicated
+      let field = '';
+      if (existing.email === email) field = 'email';
+      else if (existing.matricNumber === matricNumber) field = 'matric number';
+      else if (existing.phone === phone) field = 'phone number';
+      return res.status(409).json({ message: `Registration failed: This ${field} has already been used for registration.` });
+    }
+
     function fileToBase64(file) {
       if (!file) return "";
       return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
@@ -149,6 +167,7 @@ router.post("/", upload.fields([
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
+
 
 // Login endpoint
 router.post("/login", async (req, res) => {
