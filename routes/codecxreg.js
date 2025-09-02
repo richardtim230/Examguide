@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import crypto from "crypto";
 import CodecxRegistration from "../models/CodecxRegistration.js";
 import User from "../models/User.js";
+import Quiz from "../models/Quiz.js";
 
 dotenv.config();
 const router = express.Router();
@@ -13,7 +14,7 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// JWT Middleware
+// --- Helper middlewares ---
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.status(401).json({ message: "Missing token" });
@@ -36,8 +37,240 @@ function generatePassword() {
   return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
 
-// Open (no authentication) admin candidates endpoint for testing
-// Open (no authentication) admin candidates endpoint for testing
+// --- ENROLL NEW STUDENT (ADMIN) ---
+router.post('/admin/enroll', upload.fields([{ name: "passport", maxCount: 1 }]), async (req, res) => {
+  try {
+    const { fullName, email, phone, matricNumber } = req.body;
+    if (!fullName || !email || !phone || !matricNumber) {
+      return res.status(400).json({ message: "All required fields must be provided." });
+    }
+    // Prevent duplicate registration
+    const existing = await CodecxRegistration.findOne({
+      $or: [
+        { email },
+        { phone },
+        { matricNumber }
+      ]
+    });
+    if (existing) {
+      let field = '';
+      if (existing.email === email) field = 'email';
+      else if (existing.matricNumber === matricNumber) field = 'matric number';
+      else if (existing.phone === phone) field = 'phone number';
+      return res.status(409).json({ message: `Registration failed: This ${field} has already been used.` });
+    }
+    function fileToBase64(file) {
+      if (!file) return "";
+      return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+    }
+    const passportBase64 = fileToBase64(req.files.passport?.[0]);
+    const loginUsername = generateUsername(matricNumber, fullName);
+    const loginPasswordPlain = generatePassword();
+    const loginPasswordHash = await bcrypt.hash(loginPasswordPlain, 12);
+
+    const registration = new CodecxRegistration({
+      fullName,
+      email,
+      phone,
+      matricNumber,
+      passportBase64,
+      loginUsername,
+      loginPasswordPlain,
+      loginPasswordHash,
+      active: true,
+      hasPaid: false,
+      lastPaymentRef: "",
+      courses: [],
+      progress: { completed: 0, total: 0, grade: "-" },
+      payments: [],
+      activities: [],
+      chatMessages: []
+    });
+
+    await registration.save();
+
+    // Create user account immediately
+    let user = await User.findOne({
+      $or: [
+        { username: loginUsername },
+        { email }
+      ]
+    });
+    if (!user) {
+      user = new User({
+        username: loginUsername,
+        password: loginPasswordHash,
+        role: "student",
+        email,
+        fullname: fullName,
+        phone,
+        active: true
+      });
+      await user.save();
+    }
+
+    res.json({
+      message: "Student enrolled successfully!",
+      registration,
+      login: {
+        username: loginUsername,
+        password: loginPasswordPlain
+      }
+    });
+  } catch (e) {
+    res.status(500).json({ message: "Server error", error: e.message });
+  }
+});
+
+// --- ALL SUBMITTED ASSIGNMENTS (ADMIN) ---
+router.get('/admin/assignments', async (req, res) => {
+  try {
+    const students = await CodecxRegistration.find({ assignments: { $exists: true, $not: { $size: 0 } } });
+    let assignments = [];
+    students.forEach(student => {
+      (student.assignments || []).forEach((a, idx) => {
+        assignments.push({
+          studentId: student._id,
+          fullName: student.fullName,
+          matricNumber: student.matricNumber,
+          passportBase64: student.passportBase64,
+          assignmentIndex: idx,
+          assignment: a
+        });
+      });
+    });
+    res.json({ assignments });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// --- VIEW ASSIGNMENT CODE/FILE (ADMIN) ---
+router.get('/admin/assignment/:studentId/:assignmentIndex', async (req, res) => {
+  try {
+    const { studentId, assignmentIndex } = req.params;
+    const student = await CodecxRegistration.findById(studentId);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+    const idx = parseInt(assignmentIndex);
+    const assignment = (student.assignments || [])[idx];
+    if (!assignment) return res.status(404).json({ message: "Assignment not found" });
+
+    // If file is a URL, try to fetch it (if stored remotely)
+    if (assignment.url && /^https?:/.test(assignment.url)) {
+      // If you want to proxy remote code, use node-fetch (optional)
+      // If not, just respond with the URL
+      return res.json({ url: assignment.url });
+    } else {
+      // Return code/content property if available
+      return res.json({ code: assignment.code || '', ...assignment });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// --- QUIZ QUESTIONS CRUD (ADMIN) ---
+
+// Create a new quiz day (with questions)
+router.post('/admin/quiz', async (req, res) => {
+  try {
+    const { day, topic, questions } = req.body;
+    if (!day || !topic || !questions || !Array.isArray(questions) || !questions.length) {
+      return res.status(400).json({ message: "All fields required (day, topic, questions[])" });
+    }
+    let quiz = await Quiz.findOne({ day });
+    if (quiz) {
+      // Update existing quiz
+      quiz.topic = topic;
+      quiz.questions = questions;
+      await quiz.save();
+      res.json({ message: "Quiz updated", quiz });
+    } else {
+      quiz = new Quiz({ day, topic, questions });
+      await quiz.save();
+      res.json({ message: "Quiz created", quiz });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// Get all quizzes (all days)
+router.get('/admin/quizzes', async (req, res) => {
+  try {
+    const quizzes = await Quiz.find({}).sort({ day: 1 });
+    res.json({ quizzes });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// Get quiz for a specific day
+router.get('/admin/quiz/:day', async (req, res) => {
+  try {
+    const day = parseInt(req.params.day);
+    const quiz = await Quiz.findOne({ day });
+    if (!quiz) return res.status(404).json({ message: "Quiz not found" });
+    res.json({ quiz });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// Add a single question to a day/topic
+router.post('/admin/quiz/:day/question', async (req, res) => {
+  try {
+    const day = parseInt(req.params.day);
+    const { topic, question, options, answer } = req.body;
+    if (!question || !options || !answer) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+    let quiz = await Quiz.findOne({ day });
+    if (!quiz) {
+      quiz = new Quiz({ day, topic, questions: [] });
+    }
+    quiz.questions.push({ day, topic, question, options, answer });
+    await quiz.save();
+    res.json({ message: "Question added", quiz });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// Edit a question (by index in questions[])
+router.put('/admin/quiz/:day/question/:qIdx', async (req, res) => {
+  try {
+    const day = parseInt(req.params.day);
+    const qIdx = parseInt(req.params.qIdx);
+    const { question, options, answer } = req.body;
+    let quiz = await Quiz.findOne({ day });
+    if (!quiz || !quiz.questions[qIdx]) return res.status(404).json({ message: "Question not found" });
+    if (question) quiz.questions[qIdx].question = question;
+    if (options) quiz.questions[qIdx].options = options;
+    if (answer) quiz.questions[qIdx].answer = answer;
+    await quiz.save();
+    res.json({ message: "Question updated", quiz });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// Delete a question (by index)
+router.delete('/admin/quiz/:day/question/:qIdx', async (req, res) => {
+  try {
+    const day = parseInt(req.params.day);
+    const qIdx = parseInt(req.params.qIdx);
+    let quiz = await Quiz.findOne({ day });
+    if (!quiz || !quiz.questions[qIdx]) return res.status(404).json({ message: "Question not found" });
+    quiz.questions.splice(qIdx, 1);
+    await quiz.save();
+    res.json({ message: "Question deleted", quiz });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+
 router.get('/admin', async (req, res) => {
   try {
     const students = await CodecxRegistration.aggregate([
