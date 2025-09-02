@@ -36,14 +36,9 @@ function generatePassword() {
   return "Codecx" + Math.floor(10000 + Math.random() * 90000);
 }
 
-// ... (existing imports and code above)
-
-// Fetch all registered candidates and stats for admin
-router.get('/admin/all', authMiddleware, async (req, res) => {
+// Open (no authentication) admin candidates endpoint for testing
+router.get('/admin/all', async (req, res) => {
   try {
-    // Optionally: Check if user is admin
-    if (req.user.role !== 'codec') return res.status(403).json({ message: 'Forbidden' });
-
     const students = await CodecxRegistration.find().lean();
     // Calculate stats
     const totalStudents = students.length;
