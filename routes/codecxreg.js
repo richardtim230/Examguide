@@ -65,10 +65,9 @@ router.get('/admin', async (req, res) => {
 });
 // ...existing imports and code...
 
-// GET: Get full details ("folder") for a student by id (admin only!)
+// GET: Get full details ("folder") for a student by id (accessible to any logged-in user for testing)
 router.get('/student/:id', async (req, res) => {
   try {
-    
     const candidate = await CodecxRegistration.findById(req.params.id);
     if (!candidate) return res.status(404).json({ message: "Student not found" });
     res.json({
@@ -96,12 +95,9 @@ router.get('/student/:id', async (req, res) => {
   }
 });
 
-// POST: Add assignment for student (by admin)
-router.post('/student/:id/assignment', authMiddleware, async (req, res) => {
+// POST: Add assignment for student (accessible to any logged-in user for testing)
+router.post('/student/:id/assignment', async (req, res) => {
   try {
-    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
-      return res.status(403).json({ message: "Admin access required" });
-    }
     const { title, url, mark, date } = req.body;
     const candidate = await CodecxRegistration.findById(req.params.id);
     if (!candidate) return res.status(404).json({ message: "Student not found" });
@@ -112,7 +108,7 @@ router.post('/student/:id/assignment', authMiddleware, async (req, res) => {
       mark: mark || "",
       date: date ? new Date(date) : new Date()
     });
-    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${title || "Assignment"}`, status: "Admin" });
+    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${title || "Assignment"}`, status: "Test" });
     await candidate.save();
     res.json({ message: "Assignment added", assignments: candidate.assignments });
   } catch (err) {
@@ -120,12 +116,9 @@ router.post('/student/:id/assignment', authMiddleware, async (req, res) => {
   }
 });
 
-// POST: Mark attendance for student (by admin)
-router.post('/student/:id/attendance', authMiddleware, async (req, res) => {
+// POST: Mark attendance for student (accessible to any logged-in user for testing)
+router.post('/student/:id/attendance', async (req, res) => {
   try {
-    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
-      return res.status(403).json({ message: "Admin access required" });
-    }
     const { status, date } = req.body; // status: Present/Absent/Late
     const candidate = await CodecxRegistration.findById(req.params.id);
     if (!candidate) return res.status(404).json({ message: "Student not found" });
@@ -135,7 +128,7 @@ router.post('/student/:id/attendance', authMiddleware, async (req, res) => {
       date: date ? new Date(date) : new Date()
     });
     candidate.attendanceMarked = candidate.attendance.length;
-    candidate.activities.push({ date: new Date(), activity: `Attendance marked - ${status || "Present"}`, status: "Admin" });
+    candidate.activities.push({ date: new Date(), activity: `Attendance marked - ${status || "Present"}`, status: "Test" });
     await candidate.save();
     res.json({ message: "Attendance marked", attendance: candidate.attendance, attendanceMarked: candidate.attendanceMarked });
   } catch (err) {
@@ -143,12 +136,9 @@ router.post('/student/:id/attendance', authMiddleware, async (req, res) => {
   }
 });
 
-// POST: Add quiz result for student (by admin)
-router.post('/student/:id/quiz', authMiddleware, async (req, res) => {
+// POST: Add quiz result for student (accessible to any logged-in user for testing)
+router.post('/student/:id/quiz', async (req, res) => {
   try {
-    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
-      return res.status(403).json({ message: "Admin access required" });
-    }
     const { day, score, status } = req.body;
     if (!day) return res.status(400).json({ message: "Quiz day required" });
     const candidate = await CodecxRegistration.findById(req.params.id);
@@ -163,7 +153,7 @@ router.post('/student/:id/quiz', authMiddleware, async (req, res) => {
       score: score || 0,
       status: status || "Submitted"
     });
-    candidate.activities.push({ date: new Date(), activity: `Quiz completed - Day ${day}`, status: "Admin" });
+    candidate.activities.push({ date: new Date(), activity: `Quiz completed - Day ${day}`, status: "Test" });
     await candidate.save();
     res.json({ message: "Quiz added", quizzes: candidate.quizzes });
   } catch (err) {
@@ -171,7 +161,7 @@ router.post('/student/:id/quiz', authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE: Delete candidate by id (admin only)
+// DELETE: Delete candidate by id (accessible to any logged-in user for testing)
 router.delete('/admin/candidate/:id', async (req, res) => {
   try {
     const candidate = await CodecxRegistration.findByIdAndDelete(req.params.id);
@@ -182,6 +172,10 @@ router.delete('/admin/candidate/:id', async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
+
+
 
 
 router.post("/", upload.fields([
