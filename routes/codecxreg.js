@@ -63,6 +63,131 @@ router.get('/admin', async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+// ...existing imports and code...
+
+// GET: Get full details ("folder") for a student by id (admin only!)
+router.get('/student/:id', authMiddleware, async (req, res) => {
+  try {
+    // Ensure only admin can access this endpoint
+    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+    const candidate = await CodecxRegistration.findById(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    res.json({
+      _id: candidate._id,
+      fullName: candidate.fullName,
+      email: candidate.email,
+      phone: candidate.phone,
+      matricNumber: candidate.matricNumber,
+      passportBase64: candidate.passportBase64,
+      hasPaid: candidate.hasPaid,
+      lastPaymentRef: candidate.lastPaymentRef,
+      courses: candidate.courses || [],
+      progress: candidate.progress || {},
+      payments: candidate.payments || [],
+      activities: candidate.activities || [],
+      assignments: candidate.assignments || [],
+      attendance: candidate.attendance || [],
+      attendanceMarked: candidate.attendanceMarked || (candidate.attendance ? candidate.attendance.length : 0),
+      quizzes: candidate.quizzes || [],
+      adminNote: candidate.adminNote || "",
+      chatMessages: candidate.chatMessages || []
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// POST: Add assignment for student (by admin)
+router.post('/student/:id/assignment', authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+    const { title, url, mark, date } = req.body;
+    const candidate = await CodecxRegistration.findById(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    candidate.assignments = candidate.assignments || [];
+    candidate.assignments.push({
+      title: title || "Assignment",
+      url: url || "",
+      mark: mark || "",
+      date: date ? new Date(date) : new Date()
+    });
+    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${title || "Assignment"}`, status: "Admin" });
+    await candidate.save();
+    res.json({ message: "Assignment added", assignments: candidate.assignments });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// POST: Mark attendance for student (by admin)
+router.post('/student/:id/attendance', authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+    const { status, date } = req.body; // status: Present/Absent/Late
+    const candidate = await CodecxRegistration.findById(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    candidate.attendance = candidate.attendance || [];
+    candidate.attendance.push({
+      status: status || "Present",
+      date: date ? new Date(date) : new Date()
+    });
+    candidate.attendanceMarked = candidate.attendance.length;
+    candidate.activities.push({ date: new Date(), activity: `Attendance marked - ${status || "Present"}`, status: "Admin" });
+    await candidate.save();
+    res.json({ message: "Attendance marked", attendance: candidate.attendance, attendanceMarked: candidate.attendanceMarked });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// POST: Add quiz result for student (by admin)
+router.post('/student/:id/quiz', authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+    const { day, score, status } = req.body;
+    if (!day) return res.status(400).json({ message: "Quiz day required" });
+    const candidate = await CodecxRegistration.findById(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    candidate.quizzes = candidate.quizzes || [];
+    // Prevent duplicate quiz for a day
+    if (candidate.quizzes.some(q => String(q.day) === String(day))) {
+      return res.status(400).json({ message: "Quiz already exists for this day" });
+    }
+    candidate.quizzes.push({
+      day,
+      score: score || 0,
+      status: status || "Submitted"
+    });
+    candidate.activities.push({ date: new Date(), activity: `Quiz completed - Day ${day}`, status: "Admin" });
+    await candidate.save();
+    res.json({ message: "Quiz added", quizzes: candidate.quizzes });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// DELETE: Delete candidate by id (admin only)
+router.delete('/admin/candidate/:id', authMiddleware, async (req, res) => {
+  try {
+    if (!req.user || !(req.user.role === 'admin' || req.user.role === 'codec')) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+    const candidate = await CodecxRegistration.findByIdAndDelete(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    await User.deleteOne({ username: candidate.loginUsername });
+    res.json({ message: "Candidate deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 router.post("/", upload.fields([
