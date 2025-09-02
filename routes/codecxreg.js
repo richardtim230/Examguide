@@ -38,16 +38,28 @@ function generatePassword() {
 
 // ... (existing imports and code above)
 
-router.get("/admin/all", async (req, res) => {
+// Fetch all registered candidates and stats for admin
+router.get('/admin/all', authMiddleware, async (req, res) => {
+  try {
+    // Optionally: Check if user is admin
+    if (req.user.role !== 'codec') return res.status(403).json({ message: 'Forbidden' });
 
-    try {
-        const registrations = await CodecxRegistration.find().sort({ submittedAt: -1 });
-        res.json(registrations);
-    } catch (e) {
-        res.status(500).json({ message: "Server error" });
-    }
+    const students = await CodecxRegistration.find().lean();
+    // Calculate stats
+    const totalStudents = students.length;
+    const paidCount = students.filter(s => s.hasPaid).length;
+    const unpaidCount = totalStudents - paidCount;
+    const assignmentCount = students.reduce((c, s) => c + (s.assignments ? s.assignments.length : 0), 0);
+
+    res.json({
+      students,
+      stats: { totalStudents, paidCount, unpaidCount, assignmentCount }
+    });
+  } catch (err) {
+    console.error("Admin /all error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 });
-
 
 
 router.post("/", upload.fields([
