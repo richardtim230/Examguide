@@ -40,7 +40,14 @@ function generatePassword() {
 router.get('/admin', async (req, res) => {
   try {
     const students = await CodecxRegistration.aggregate([
-  { $sort: { fullName: 1 } }
+  { $match: { active: true } },           // Only active students
+  { $sort: { fullName: 1 } },             // Sort by name
+  { $project: {                           // Select fields to show
+      fullName: 1,
+      email: 1,
+      phone: 1,
+      hasPaid: 1
+  } }
 ], { allowDiskUse: true });
     const totalStudents = students.length;
     const paidCount = students.filter(s => s.hasPaid).length;
