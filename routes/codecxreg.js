@@ -269,7 +269,29 @@ router.delete('/admin/quiz/:day/question/:qIdx', async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+// QUIZ: Fetch quiz for a given day (loads real questions from DB)
+router.get("/quiz/:day", authMiddleware, async (req, res) => {
+  try {
+    const day = parseInt(req.params.day);
+    if (!day || day < 1 || day > 60) return res.status(400).json({ message: "Invalid day" });
 
+    // Find quiz for this day
+    const quiz = await Quiz.findOne({ day });
+    if (!quiz || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+      return res.status(404).json({ message: "No quiz found for this day." });
+    }
+    // Only send questions (do not include answers)
+    const questions = quiz.questions.map(q => ({
+      question: q.question,
+      options: q.options,
+      // Don't send correct answer to frontend!
+      // answer: q.answer // <-- OMITTED
+    }));
+    res.json({ questions, topic: quiz.topic || "" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 router.get('/admin', async (req, res) => {
   try {
@@ -511,7 +533,53 @@ router.post("/", upload.fields([
   }
 });
 
+// Score a quiz for a given day
+router.post("/quiz/score/:day", async (req, res) => {
+  try {
+    const day = parseInt(req.params.day);
+    const { answers } = req.body;
+    if (!day || day < 1 || day > 60) return res.status(400).json({ message: "Invalid day" });
+    if (!answers || !Array.isArray(answers)) return res.status(400).json({ message: "Answers required as array" });
 
+    const quiz = await Quiz.findOne({ day });
+    if (!quiz || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+      return res.status(404).json({ message: "No quiz found for this day." });
+    }
+
+    let score = 0;
+    quiz.questions.forEach((q, idx) => {
+      if (answers[idx] && answers[idx] === q.answer) score++;
+    });
+
+    res.json({ score, total: quiz.questions.length });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+// POST: Add quiz result for student (accessible to any logged-in user for testing)
+router.post('/student/:id/quiz', async (req, res) => {
+  try {
+    const { day, score, status } = req.body;
+    if (!day) return res.status(400).json({ message: "Quiz day required" });
+    const candidate = await CodecxRegistration.findById(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    candidate.quizzes = candidate.quizzes || [];
+    // Prevent duplicate quiz for a day
+    if (candidate.quizzes.some(q => String(q.day) === String(day))) {
+      return res.status(400).json({ message: "Quiz already exists for this day" });
+    }
+    candidate.quizzes.push({
+      day,
+      score: score || 0,
+      status: status || "Submitted"
+    });
+    candidate.activities.push({ date: new Date(), activity: `Quiz completed - Day ${day}`, status: "Test" });
+    await candidate.save();
+    res.json({ message: "Quiz added", quizzes: candidate.quizzes });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 // Login endpoint
 router.post("/login", async (req, res) => {
   try {
