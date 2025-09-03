@@ -540,7 +540,19 @@ router.post("/", upload.fields([
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-
+router.delete('/student/matric/:matricNumber/assignment/:index', async (req, res) => {
+  try {
+    const candidate = await CodecxRegistration.findOne({ matricNumber: req.params.matricNumber });
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    const idx = parseInt(req.params.index);
+    if (!candidate.assignments || !candidate.assignments[idx]) return res.status(404).json({ message: "Assignment not found" });
+    candidate.assignments.splice(idx, 1);
+    await candidate.save();
+    res.json({ message: "Assignment deleted", assignments: candidate.assignments });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 // Score a quiz for a given day
 router.post("/quiz/score/:day", async (req, res) => {
   try {
