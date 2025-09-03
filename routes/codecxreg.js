@@ -801,7 +801,32 @@ router.get("/quiz/:day", authMiddleware, async (req, res) => {
   }
   res.json({ questions });
 });
+// Assignment upload by matric number
+router.post('/student/matric/:matricNumber/assignment', upload.single("assignment"), async (req, res) => {
+  try {
+    const { title, mark, date } = req.body;
+    const candidate = await CodecxRegistration.findOne({ matricNumber: req.params.matricNumber });
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
 
+    let assignmentObj = {
+      title: title || (req.file?.originalname || "Assignment"),
+      date: date ? new Date(date) : new Date(),
+      mark: mark || ""
+    };
+    if (req.file) {
+      assignmentObj.fileName = req.file.originalname;
+      assignmentObj.fileType = req.file.mimetype;
+      assignmentObj.fileData = req.file.buffer.toString("base64");
+    }
+    candidate.assignments = candidate.assignments || [];
+    candidate.assignments.push(assignmentObj);
+    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${assignmentObj.title}`, status: "Test" });
+    await candidate.save();
+    res.json({ message: "Assignment added", assignments: candidate.assignments });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 // COMMUNITY CHAT - Get all messages
 router.get("/chat", authMiddleware, async (req, res) => {
   try {
