@@ -642,6 +642,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
 // GET /me dashboard data
 router.get("/me", authMiddleware, async (req, res) => {
   try {
@@ -660,8 +661,8 @@ router.get("/me", authMiddleware, async (req, res) => {
       courses: candidate.courses,
       progress: candidate.progress,
       payments: candidate.payments,
-      assignments: candidate.assignments || [],
       activities: candidate.activities,
+      assignments: candidate.assignments || [], // <--- FIXED LINE
       adminNote: candidate.adminNote || "",
       chatMessages: candidate.chatMessages || []
     });
