@@ -660,6 +660,7 @@ router.get("/me", authMiddleware, async (req, res) => {
       courses: candidate.courses,
       progress: candidate.progress,
       payments: candidate.payments,
+      assignments: candidate.assignments || [],
       activities: candidate.activities,
       adminNote: candidate.adminNote || "",
       chatMessages: candidate.chatMessages || []
