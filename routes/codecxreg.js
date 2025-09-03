@@ -361,24 +361,32 @@ router.get('/student/:id', async (req, res) => {
   }
 });
 
-// POST: Add assignment for student (accessible to any logged-in user for testing)
-router.post('/student/:id/assignment', async (req, res) => {
+
+
+router.post('/student/:id/assignment', upload.single("assignment"), async (req, res) => {
   try {
-    const { title, url, mark, date } = req.body;
+    const { title, mark, date } = req.body;
     const candidate = await CodecxRegistration.findById(req.params.id);
     if (!candidate) return res.status(404).json({ message: "Student not found" });
+
+    let assignmentObj = {
+      title: title || (req.file?.originalname || "Assignment"),
+      date: date ? new Date(date) : new Date(),
+      mark: mark || ""
+    };
+    if (req.file) {
+      // Store as base64 for retrieval
+      assignmentObj.fileName = req.file.originalname;
+      assignmentObj.fileType = req.file.mimetype;
+      assignmentObj.fileData = req.file.buffer.toString("base64");
+    }
     candidate.assignments = candidate.assignments || [];
-    candidate.assignments.push({
-      title: title || "Assignment",
-      url: url || "",
-      mark: mark || "",
-      date: date ? new Date(date) : new Date()
-    });
-    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${title || "Assignment"}`, status: "Test" });
+    candidate.assignments.push(assignmentObj);
+    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${assignmentObj.title}`, status: "Test" });
     await candidate.save();
     res.json({ message: "Assignment added", assignments: candidate.assignments });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 
