@@ -840,7 +840,7 @@ router.post('/student/matric/:matricNumber/assignment', upload.single("assignmen
     }
     candidate.assignments = candidate.assignments || [];
     candidate.assignments.push(assignmentObj);
-    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${assignmentObj.title}`, status: "Test" });
+    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${assignmentObj.title}`, status: "Success" });
     await candidate.save();
     res.json({ message: "Assignment added", assignments: candidate.assignments });
   } catch (err) {
