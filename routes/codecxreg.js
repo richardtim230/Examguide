@@ -817,7 +817,8 @@ router.get("/quiz/:day", authMiddleware, async (req, res) => {
 router.post('/student/matric/:matricNumber/assignment', upload.single("assignment"), async (req, res) => {
   try {
     const { title, mark, date } = req.body;
-    const candidate = await CodecxRegistration.findOne({ matricNumber: req.params.matricNumber });
+    const rawMatricNumber = req.params.matricNumber.replace(/-/g, '/');
+    const candidate = await CodecxRegistration.findOne({ matricNumber: rawMatricNumber });
     if (!candidate) return res.status(404).json({ message: "Student not found" });
 
     let assignmentObj = {
