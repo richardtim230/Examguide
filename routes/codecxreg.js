@@ -818,8 +818,13 @@ router.post('/student/matric/:matricNumber/assignment', upload.single("assignmen
   try {
     const { title, mark, date } = req.body;
     const rawMatricNumber = req.params.matricNumber.replace(/-/g, '/');
+    console.log("Matric number received:", req.params.matricNumber);
+    console.log("Matric number for DB:", rawMatricNumber);
     const candidate = await CodecxRegistration.findOne({ matricNumber: rawMatricNumber });
-    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    if (!candidate) {
+      console.log("No student found for matric:", rawMatricNumber);
+      return res.status(404).json({ message: "Student not found" });
+    }
 
     let assignmentObj = {
       title: title || (req.file?.originalname || "Assignment"),
@@ -830,6 +835,8 @@ router.post('/student/matric/:matricNumber/assignment', upload.single("assignmen
       assignmentObj.fileName = req.file.originalname;
       assignmentObj.fileType = req.file.mimetype;
       assignmentObj.fileData = req.file.buffer.toString("base64");
+    } else {
+      console.log("No file uploaded");
     }
     candidate.assignments = candidate.assignments || [];
     candidate.assignments.push(assignmentObj);
@@ -837,6 +844,7 @@ router.post('/student/matric/:matricNumber/assignment', upload.single("assignmen
     await candidate.save();
     res.json({ message: "Assignment added", assignments: candidate.assignments });
   } catch (err) {
+    console.error("Assignment upload error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
