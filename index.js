@@ -61,6 +61,8 @@ const uploadDir = "./uploads/broadcasts";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY; // Set in your .env
+
 import multer from "multer";
 // ...existing imports...
 import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
@@ -167,6 +169,28 @@ app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin")
   }
 });
 
+
+
+app.post('/api/ai', async (req, res) => {
+  const prompt = req.body.prompt;
+  if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
+
+  try {
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      }
+    );
+    const data = await geminiRes.json();
+    const response = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
+    res.json({ response });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 // ===== DEPARTMENT ROUTES =====
 // Get all departments
 app.get("/api/departments", async (req, res) => {
