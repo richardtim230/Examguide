@@ -820,29 +820,36 @@ router.post('/student/matric/:matricNumber/assignment', upload.single("assignmen
   try {
     const { title, mark, date } = req.body;
     const rawMatricNumber = req.params.matricNumber.replace(/-/g, '/');
-    console.log("Matric number received:", req.params.matricNumber);
-    console.log("Matric number for DB:", rawMatricNumber);
     const candidate = await CodecxRegistration.findOne({ matricNumber: rawMatricNumber });
     if (!candidate) {
-      console.log("No student found for matric:", rawMatricNumber);
       return res.status(404).json({ message: "Student not found" });
     }
 
     let assignmentObj = {
       title: title || (req.file?.originalname || "Assignment"),
       date: date ? new Date(date) : new Date(),
-      mark: mark || ""
+      mark: mark || "",
+      fileName: req.file?.originalname || "",
+      fileType: req.file?.mimetype || "",
+      fileData: req.file ? req.file.buffer.toString("base64") : ""
     };
-    if (req.file) {
-      assignmentObj.fileName = req.file.originalname;
-      assignmentObj.fileType = req.file.mimetype;
-      assignmentObj.fileData = req.file.buffer.toString("base64");
-    } else {
-      console.log("No file uploaded");
-    }
+
     candidate.assignments = candidate.assignments || [];
+    candidate.assignmentHistory = candidate.assignmentHistory || [];
     candidate.assignments.push(assignmentObj);
-    candidate.activities.push({ date: new Date(), activity: `Assignment uploaded: ${assignmentObj.title}`, status: "Success" });
+
+    candidate.assignmentHistory.push({
+      ...assignmentObj,
+      historyDate: new Date(),
+      status: "Submitted"
+    });
+
+    candidate.activities.push({
+      date: new Date(),
+      activity: `Assignment uploaded: ${assignmentObj.title}`,
+      status: "Success"
+    });
+
     await candidate.save();
     res.json({ message: "Assignment added", assignments: candidate.assignments });
   } catch (err) {
