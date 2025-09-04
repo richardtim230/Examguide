@@ -7,6 +7,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import fetch from 'node-fetch';
+
+const router = express.Router();
+
 import pastQuestionsRoutes from "./routes/pastQuestions.js";
 import fs from "fs";
 const profilePicsDir = "./uploads/profilepics";
@@ -171,26 +174,38 @@ app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin")
 
 
 
-app.post('/api/ai', async (req, res) => {
+
+router.post('/api/ai', async (req, res) => {
   const prompt = req.body.prompt;
   if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
+  if (!GEMINI_API_KEY) return res.status(500).json({ error: 'Missing Gemini API key' });
 
   try {
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
       }
     );
-    const data = await geminiRes.json();
-    const response = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
-    res.json({ response });
+    const data = await response.json();
+    // Log raw Gemini response for troubleshooting
+    console.log("Gemini response:", data);
+
+    // Handle Gemini NOT_FOUND error
+    if (data.error || !data.candidates) {
+      return res.status(400).json({ error: data.error?.message || "Gemini API error", raw: data });
+    }
+
+    const result = data.candidates[0]?.content?.parts[0]?.text || "No response";
+    res.json({ response: result });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
+
+
 // ===== DEPARTMENT ROUTES =====
 // Get all departments
 app.get("/api/departments", async (req, res) => {
