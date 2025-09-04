@@ -10,7 +10,7 @@ const PaymentSchema = new mongoose.Schema({
 const ActivitySchema = new mongoose.Schema({
     date: { type: Date, required: true },
     activity: { type: String, required: true },
-    status: { type: String, enum: ["Success", "Failed"], default: "Success" }
+    status: { type: String, enum: ["Success", "Failed", "Test"], default: "Success" }
 }, { _id: false });
 
 const CourseSchema = new mongoose.Schema({
@@ -21,6 +21,28 @@ const ProgressSchema = new mongoose.Schema({
     completed: { type: Number, default: 0 },
     total: { type: Number, default: 0 },
     grade: { type: String, default: "-" }
+}, { _id: false });
+
+// Assignment itself
+const AssignmentSchema = new mongoose.Schema({
+    title: { type: String, default: "Assignment" },
+    date: { type: Date, default: Date.now },
+    mark: { type: String, default: "" },
+    fileName: { type: String, default: "" },
+    fileType: { type: String, default: "" },
+    fileData: { type: String, default: "" }
+}, { _id: false });
+
+// Assignment history entry
+const AssignmentHistorySchema = new mongoose.Schema({
+    title: { type: String, default: "Assignment" },
+    date: { type: Date, default: Date.now },
+    mark: { type: String, default: "" },
+    fileName: { type: String, default: "" },
+    fileType: { type: String, default: "" },
+    fileData: { type: String, default: "" },
+    historyDate: { type: Date, default: Date.now },
+    status: { type: String, default: "Submitted" }
 }, { _id: false });
 
 const CodecxRegistrationSchema = new mongoose.Schema({
@@ -43,7 +65,10 @@ const CodecxRegistrationSchema = new mongoose.Schema({
     courses: [CourseSchema],
     progress: ProgressSchema,
     payments: [PaymentSchema],
-    activities: [ActivitySchema]
+    activities: [ActivitySchema],
+
+    assignments: [AssignmentSchema],
+    assignmentHistory: [AssignmentHistorySchema]
 }, { collection: "codecxregistrations" });
 
 export default mongoose.model("CodecxRegistration", CodecxRegistrationSchema);
