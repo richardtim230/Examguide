@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Web Dev Browser Console (Flowbite)</title>
+  <title>Web Dev Browser Console</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- Tailwind CSS & Flowbite CDN -->
+  <!-- Flowbite & Tailwind CDN -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
@@ -34,6 +34,7 @@
       <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="storage-tab" data-tabs-target="#storage" type="button" role="tab" aria-controls="storage" aria-selected="false">Storage</button></li>
       <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="cookies-tab" data-tabs-target="#cookies" type="button" role="tab" aria-controls="cookies" aria-selected="false">Cookies</button></li>
       <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="performance-tab" data-tabs-target="#performance" type="button" role="tab" aria-controls="performance" aria-selected="false">Performance</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="api-tester-tab" data-tabs-target="#api-tester" type="button" role="tab" aria-controls="api-tester" aria-selected="false">API Tester</button></li>
     </ul>
   </div>
   <div id="console-tabs-content">
@@ -44,6 +45,7 @@
     <div class="hidden" id="storage" role="tabpanel" aria-labelledby="storage-tab"></div>
     <div class="hidden" id="cookies" role="tabpanel" aria-labelledby="cookies-tab"></div>
     <div class="hidden" id="performance" role="tabpanel" aria-labelledby="performance-tab"></div>
+    <div class="hidden" id="api-tester" role="tabpanel" aria-labelledby="api-tester-tab"></div>
   </div>
 </div>
 <script>
@@ -91,7 +93,6 @@ function updateNavButtons() {
 function notifyLimitedAccess() {
   setTimeout(()=>{
     try {
-      // Try accessing iframe DOM
       let _ = browserFrame.contentWindow.document.body.innerHTML;
       limitedAccess = false;
     } catch {
@@ -175,7 +176,7 @@ function wrapXHR(){
 wrapFetch();wrapXHR();
 
 // ---- Tab Render ----
-const tabIds = ['logs','network','elements','webprops','storage','cookies','performance'];
+const tabIds = ['logs','network','elements','webprops','storage','cookies','performance','api-tester'];
 let currentTab = tabIds[0];
 function showTab(tabId){
   tabIds.forEach(id=>{
@@ -193,8 +194,8 @@ tabIds.forEach(id=>{
 showTab(currentTab);
 
 function renderTab(){
-  if(limitedAccess) {
-    // For all tabs, show limited-access warning for cross-origin
+  if(currentTab==='api-tester') renderApiTester();
+  else if(limitedAccess) {
     document.getElementById(currentTab).innerHTML =
       `<div class="p-6 text-center text-red-400 font-semibold">
         Due to browser security, developer features are limited for external sites.<br>
@@ -214,7 +215,6 @@ function renderTab(){
 // ---- Console Logs Tab ----
 function renderLogs(){
   const wrap = document.getElementById('logs');
-  // Try to get logs from iframe if same-origin
   let iframeLogs = [];
   try {
     iframeLogs = browserFrame.contentWindow._devConsoleLogs || [];
@@ -427,6 +427,48 @@ function renderPerformance(){
     </div>
     <div><h3 class="text-blue-400 font-semibold">Memory (experimental)</h3>
     <pre class="bg-gray-800 rounded p-2 overflow-x-auto text-xs">${htmlEscape(JSON.stringify(mem,null,2))}</pre></div>`;
+}
+
+// ---- API Tester Tab ----
+function renderApiTester(){
+  const wrap = document.getElementById('api-tester');
+  wrap.innerHTML = `
+    <div class="mb-2">
+      <label for="api-url" class="block mb-2">API URL:</label>
+      <input id="api-url" class="w-full bg-gray-800 text-gray-200 p-2 rounded mb-2" value="http://localhost:10000/api/auth">
+      <select id="api-method" class="bg-gray-800 text-gray-200 rounded mb-2">
+        <option>GET</option>
+        <option>POST</option>
+      </select>
+      <textarea id="api-body" class="w-full bg-gray-800 text-gray-200 p-2 rounded mb-2" rows="3" placeholder="Request Body (for POST)"></textarea>
+      <button id="api-send" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Send</button>
+      <pre id="api-response" class="mt-4 bg-gray-900 text-green-300 p-4 rounded"></pre>
+    </div>
+  `;
+  document.getElementById('api-send').onclick = sendApiRequest;
+}
+function sendApiRequest() {
+  const url = document.getElementById('api-url').value;
+  const method = document.getElementById('api-method').value;
+  const body = document.getElementById('api-body').value;
+  fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: method === 'POST' && body ? body : undefined,
+  })
+  .then(async res => {
+    const contentType = res.headers.get('content-type');
+    let txt;
+    if(contentType && contentType.includes('application/json')) {
+      txt = JSON.stringify(await res.json(), null, 2);
+    } else {
+      txt = await res.text();
+    }
+    document.getElementById('api-response').textContent = txt;
+  })
+  .catch(e => {
+    document.getElementById('api-response').textContent = e.message;
+  });
 }
 
 // ---- Inject Dev Console into iframe when same-origin ----
