@@ -113,7 +113,6 @@ const Department = mongoose.model("Department", DepartmentSchema);
 const {
   MONGODB_URI,
   JWT_SECRET,
-  GEMINI_API_KEY,
   FRONTEND_ORIGIN
 } = process.env;
 const PORT = process.env.PORT || 10000;
