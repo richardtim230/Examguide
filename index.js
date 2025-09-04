@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import fetch from 'node-fetch';
 import pastQuestionsRoutes from "./routes/pastQuestions.js";
 import fs from "fs";
 const profilePicsDir = "./uploads/profilepics";
@@ -219,6 +220,18 @@ app.get("/api/debug/schedules", authenticate, async (req, res) => {
   }
 });
 
+
+app.get('/api/proxy', async (req, res) => {
+  const targetUrl = req.query.url;
+  if (!targetUrl) return res.status(400).json({ error: 'Missing url query param' });
+  try {
+    const response = await fetch(targetUrl);
+    const data = await response.text();
+    res.status(response.status).send(data);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     const {
