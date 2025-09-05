@@ -53,7 +53,7 @@
 
 <!-- ... (Keep everything above as-is) ... -->
 
-  <!-- Hero Section (Replaced) -->
+  <!-- Hero Section (Replaced & Enhanced for Larger Mobile View) -->
   <section class="relative w-full bg-transparent pt-32 pb-20 px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[320px] flex items-stretch rounded-2xl overflow-hidden"
@@ -62,20 +62,64 @@
         <div class="absolute inset-0 rounded-2xl pointer-events-none"
              style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
         <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-8 sm:p-12">
-          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3">
+          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3
+                     sm:mb-5"
+              style="line-height: 1.15;">
             Welcome to<br>
             Intellilearn Virtual School
           </h1>
           <p class="text-white text-lg sm:text-xl mb-7 font-medium">Learn Anywhere, Anytime</p>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <button class="px-7 py-3 rounded-lg bg-blue-700 text-white font-semibold text-lg shadow hover:bg-blue-800 transition" onclick="browseCourses()">Browse Courses</button>
-            <button class="px-7 py-3 rounded-lg bg-green-600 text-white font-semibold text-lg shadow hover:bg-green-700 transition" onclick="signUp()">Sign Up Now</button>
+          <div class="flex flex-col gap-5">
+            <button class="w-full px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition" onclick="browseCourses()">Browse Courses</button>
+            <button class="w-full px-7 py-4 rounded-xl bg-green-600 text-white font-bold text-xl shadow hover:bg-green-700 transition" onclick="signUp()">Sign Up Now</button>
           </div>
         </div>
         <!-- Responsive image - only visible on md+ screens -->
         <div class="hidden md:block md:w-2/5"></div>
       </div>
     </div>
+    <style>
+      @media (max-width: 640px) {
+        .max-w-5xl {
+          max-width: 97vw !important;
+        }
+        .rounded-2xl {
+          border-radius: 1.5rem !important;
+        }
+        .min-h-\[320px\] {
+          min-height: 80vw !important;
+          min-height: 420px !important;
+        }
+        .p-8 {
+          padding: 1.9rem !important;
+        }
+        h1.text-3xl {
+          font-size: 2.1rem !important;
+        }
+        .text-lg {
+          font-size: 1.23rem !important;
+        }
+        .w-full.px-7.py-4 {
+          font-size: 1.12rem !important;
+          padding-top: 1.2rem !important;
+          padding-bottom: 1.2rem !important;
+        }
+      }
+      @media (max-width: 400px) {
+        .p-8 {
+          padding: 1rem !important;
+        }
+        h1.text-3xl {
+          font-size: 1.28rem !important;
+        }
+        .text-lg {
+          font-size: 1rem !important;
+        }
+        .w-full.px-7.py-4 {
+          font-size: 1rem !important;
+        }
+      }
+    </style>
   </section>
 
   <script>
@@ -88,6 +132,8 @@
       // You can replace with navigation logic as needed
     }
   </script>
+
+<!-- ... (Keep everything below as-is) ... -->
 
 <!-- ... (Keep everything below as-is) ... -->
 
