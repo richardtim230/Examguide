@@ -196,79 +196,106 @@
     </div>
   </footer>
 
-  <!-- Blog Data & JS -->
   <script>
-    // Demo blog data array
-    const blogData = [
-      {
-        id: "blog1",
-        category: "UNILAG",
-        tag: "Leadership",
-        author: "Chinedu Okeke",
-        reads: 342,
-        title: "How Group Study Saved My Semester",
-        excerpt: "Studying alone was my thing—until I nearly failed. Here’s why joining a campus study group turned things around for me, with less stress and more laughs.",
-        image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "blog2",
-        category: "OAU",
-        tag: "Communication",
-        author: "Aisha Bello",
-        reads: 289,
-        title: "My First Online Mock Exam: What I Got Wrong",
-        excerpt: "No more crowded halls or invigilator stares. My first digital test was a rollercoaster—here’s what I wish I knew before clicking ‘Start’.",
-        image: "https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "blog3",
-        category: "CODECX | UNIBEN",
-        tag: "Tech",
-        author: "Samuel Ero",
-        reads: 221,
-        title: "Debugging: The Real MVP of Coding",
-        excerpt: "For every “Hello World” that runs, there’s a bug that tries to spoil the party. Here’s how CODECX made me see errors as friends, not foes.",
-        image: "https://images.unsplash.com/photo-1515168833906-d2a3b82bdb09?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "blog4",
-        category: "UI | ABU Zaria",
-        tag: "Marketplace",
-        author: "Hauwa Sani",
-        reads: 198,
-        title: "How I Sold My Old Textbooks & Got Lunch Money",
-        excerpt: "From “Who wants?” in group chats to actual sales on ExamGuard, here’s how our marketplace helped me declutter and survive week 7 hunger.",
-        image: "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "blog5",
-        category: "UNN",
-        tag: "Reading",
-        author: "Chika Nwosu",
-        reads: 166,
-        title: "Reading and Earning? Here’s How I Did It",
-        excerpt: "Earning money just for reading helpful articles? Sounds like a dream, but ExamGuard made it a reality for me (and my airtime balance).",
-        image: "https://images.unsplash.com/photo-1482062364825-616fd23b8fc1?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: "blog6",
-        category: "LASU",
-        tag: "Academic",
-        author: "Tunde Faleye",
-        reads: 147,
-        title: "Why I Stopped Fearing Past Questions",
-        excerpt: "I used to avoid past questions like the plague, but here’s why they became my secret weapon for acing exams—no more “surprise topics”!",
-        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
-      }
-    ];
-
-    // Save blog data and id to localStorage when a card is clicked, then redirect to single page
-    function handleBlogClick(blog) {
-      localStorage.setItem('selectedBlogId', blog.id);
-      localStorage.setItem('selectedBlogData', JSON.stringify(blog));
-      // Redirect to single blog page (update 'blog-single.html' to your actual path)
-      window.location.href = "blog-single.html";
+  // Demo blog data array - UPDATED to match blog-single.html expected keys
+  const blogData = [
+    {
+      id: "blog1",
+      university: "UNILAG",
+      category: "Leadership",
+      tags: ["group-study", "semester", "tips"],
+      author: "Chinedu Okeke",
+      reads: 342,
+      title: "How Group Study Saved My Semester",
+      excerpt: "Studying alone was my thing—until I nearly failed. Here’s why joining a campus study group turned things around for me, with less stress and more laughs.",
+      content: "Studying alone was my thing—until I nearly failed. Here’s why joining a campus study group turned things around for me, with less stress and more laughs.<br /><br />I always thought I could handle it all alone, but after my first semester, my grades said otherwise. Joining a group not only helped me understand tough topics but also made studying fun. We shared resources, quizzed each other, and even took breaks together. <ul><li>Tip 1: Don’t be shy—join or form a study group early.</li><li>Tip 2: Set regular meetings and keep each other accountable.</li><li>Tip 3: Share your strengths, learn from others.</li></ul>Now, I look forward to study sessions, and my grades (and social life) are thanking me.",
+      image_url: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80",
+      date: "2025-08-25",
+      rating: 4.8
+    },
+    {
+      id: "blog2",
+      university: "OAU",
+      category: "Communication",
+      tags: ["mock-exam", "online", "mistakes"],
+      author: "Aisha Bello",
+      reads: 289,
+      title: "My First Online Mock Exam: What I Got Wrong",
+      excerpt: "No more crowded halls or invigilator stares. My first digital test was a rollercoaster—here’s what I wish I knew before clicking ‘Start’.",
+      content: "Digital exams are convenient, but my first attempt was full of surprises. I didn’t check my internet connection, ignored the timer, and panicked when questions got tough. <ul><li>Tip 1: Always check your tech before the exam starts.</li><li>Tip 2: Practice with a timer to manage your pace.</li><li>Tip 3: Stay calm and read instructions twice.</li></ul>Learn from my mistakes and ace your next online exam!",
+      image_url: "https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80",
+      date: "2025-08-20",
+      rating: 4.5
+    },
+    {
+      id: "blog3",
+      university: "CODECX | UNIBEN",
+      category: "Tech",
+      tags: ["coding", "debugging", "codecxi"],
+      author: "Samuel Ero",
+      reads: 221,
+      title: "Debugging: The Real MVP of Coding",
+      excerpt: "For every “Hello World” that runs, there’s a bug that tries to spoil the party. Here’s how CODECX made me see errors as friends, not foes.",
+      content: "Every coder dreads bugs, but they’re really just puzzles waiting to be solved. At CODECX, I learned to embrace errors, not fear them. <ul><li>Tip: Take breaks when debugging gets tough.</li><li>Tip: Ask for help—fresh eyes spot things you don’t.</li></ul>Debugging is a skill, and with patience, you’ll turn every error into a learning win.",
+      image_url: "https://images.unsplash.com/photo-1515168833906-d2a3b82bdb09?auto=format&fit=crop&w=600&q=80",
+      date: "2025-08-15",
+      rating: 4.7
+    },
+    {
+      id: "blog4",
+      university: "UI | ABU Zaria",
+      category: "Marketplace",
+      tags: ["marketplace", "sales", "textbooks"],
+      author: "Hauwa Sani",
+      reads: 198,
+      title: "How I Sold My Old Textbooks & Got Lunch Money",
+      excerpt: "From “Who wants?” in group chats to actual sales on ExamGuard, here’s how our marketplace helped me declutter and survive week 7 hunger.",
+      content: "Selling textbooks was easier than I thought thanks to ExamGuard’s marketplace. <ul><li>Step 1: List your books with clear photos.</li><li>Step 2: Set a fair price—students love bargains!</li><li>Step 3: Meet in a safe, public place for the handoff.</li></ul>I made quick money and helped juniors save cash too.",
+      image_url: "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80",
+      date: "2025-07-30",
+      rating: 4.6
+    },
+    {
+      id: "blog5",
+      university: "UNN",
+      category: "Reading",
+      tags: ["reading", "earning", "rewards"],
+      author: "Chika Nwosu",
+      reads: 166,
+      title: "Reading and Earning? Here’s How I Did It",
+      excerpt: "Earning money just for reading helpful articles? Sounds like a dream, but ExamGuard made it a reality for me (and my airtime balance).",
+      content: "ExamGuard rewards readers as well as writers. <ul><li>Read articles daily to earn points.</li><li>Refer friends for bonus rewards.</li></ul>It’s a win-win: learn more, earn more, and stay motivated during exam season.",
+      image_url: "https://images.unsplash.com/photo-1482062364825-616fd23b8fc1?auto=format&fit=crop&w=600&q=80",
+      date: "2025-07-21",
+      rating: 4.3
+    },
+    {
+      id: "blog6",
+      university: "LASU",
+      category: "Academic",
+      tags: ["past-questions", "exams", "study-hacks"],
+      author: "Tunde Faleye",
+      reads: 147,
+      title: "Why I Stopped Fearing Past Questions",
+      excerpt: "I used to avoid past questions like the plague, but here’s why they became my secret weapon for acing exams—no more “surprise topics”!",
+      content: "Past questions aren’t just practice—they’re exam gold. <ul><li>Use them to spot trends in questions.</li><li>Simulate real exam timing.</li></ul>Don’t fear them: master them and ace your papers!",
+      image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+      date: "2025-07-16",
+      rating: 4.2
     }
+  ];
+
+  // Save blog data and id to localStorage when a card is clicked, then redirect to single page
+  function handleBlogClick(blog) {
+    localStorage.setItem('selectedBlogId', blog.id);
+    localStorage.setItem('selectedBlogData', JSON.stringify(blog));
+    // Store all for related posts
+    localStorage.setItem('relatedBlogs', JSON.stringify(blogData));
+    // Redirect to single blog page
+    window.location.href = "blog-single.html";
+  }
+
+
 
     // Render blog cards for the two latest blogs in the top section
     function renderTopBlogs() {
