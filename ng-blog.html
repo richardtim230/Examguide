@@ -33,6 +33,9 @@
     }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    /* Responsive card fix */
+    .blog-card img { width: 100%; object-fit: cover; }
+    .blog-card { min-width: 0; }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
@@ -70,7 +73,6 @@
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[300px] flex items-stretch rounded-2xl overflow-hidden"
            style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
-        <!-- Left-to-right dark overlay -->
         <div class="absolute inset-0 rounded-2xl pointer-events-none"
              style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
         <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-6 sm:p-10 md:p-14">
@@ -106,9 +108,9 @@
   <section id="blog-list" class="container mx-auto px-2 sm:px-4 pb-10">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
       <!-- Blog Card 1 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+      <div class="blog-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
         <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80"
-             alt="Study Group" class="w-full h-44 object-cover">
+             alt="Study Group" class="h-44 object-cover">
         <div class="p-6 flex flex-col flex-1">
           <div class="flex items-center gap-2 mb-2">
             <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">UNILAG</span>
@@ -126,9 +128,9 @@
         </div>
       </div>
       <!-- Blog Card 2 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+      <div class="blog-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
         <img src="https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80"
-             alt="Online Exam" class="w-full h-44 object-cover">
+             alt="Online Exam" class="h-44 object-cover">
         <div class="p-6 flex flex-col flex-1">
           <div class="flex items-center gap-2 mb-2">
             <span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">OAU</span>
@@ -180,9 +182,9 @@
     <h2 class="section-title text-center">Latest From Our Community</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
       <!-- Blog Card 3 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+      <div class="blog-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
         <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82bdb09?auto=format&fit=crop&w=600&q=80"
-             alt="Coding Institute" class="w-full h-44 object-cover">
+             alt="Coding Institute" class="h-44 object-cover">
         <div class="p-6 flex flex-col flex-1">
           <div class="flex items-center gap-2 mb-2">
             <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">CODECX | UNIBEN</span>
@@ -200,9 +202,9 @@
         </div>
       </div>
       <!-- Blog Card 4 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+      <div class="blog-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
         <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80"
-             alt="Marketplace" class="w-full h-44 object-cover">
+             alt="Marketplace" class="h-44 object-cover">
         <div class="p-6 flex flex-col flex-1">
           <div class="flex items-center gap-2 mb-2">
             <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded">UI | ABU Zaria</span>
@@ -220,9 +222,9 @@
         </div>
       </div>
       <!-- Blog Card 5 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+      <div class="blog-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
         <img src="https://images.unsplash.com/photo-1482062364825-616fd23b8fc1?auto=format&fit=crop&w=600&q=80"
-             alt="Reading to earn" class="w-full h-44 object-cover">
+             alt="Reading to earn" class="h-44 object-cover">
         <div class="p-6 flex flex-col flex-1">
           <div class="flex items-center gap-2 mb-2">
             <span class="bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-1 rounded">UNN</span>
@@ -240,9 +242,9 @@
         </div>
       </div>
       <!-- Blog Card 6 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+      <div class="blog-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
         <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
-             alt="Past Questions" class="w-full h-44 object-cover">
+             alt="Past Questions" class="h-44 object-cover">
         <div class="p-6 flex flex-col flex-1">
           <div class="flex items-center gap-2 mb-2">
             <span class="bg-orange-100 text-orange-700 text-xs font-semibold px-2 py-1 rounded">LASU</span>
@@ -260,9 +262,9 @@
         </div>
       </div>
     </div>
-    <!-- Pagination -->
+    <!-- Pagination (80% width & centered) -->
     <div class="flex justify-center mt-12">
-      <nav aria-label="Blog Pagination">
+      <nav aria-label="Blog Pagination" class="mx-auto">
         <ul class="inline-flex items-center -space-x-px text-base h-10">
           <li>
             <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-blue-700 bg-white border border-blue-200 rounded-l-lg hover:bg-blue-100">Previous</a>
@@ -273,7 +275,6 @@
           <li>
             <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">2</a>
           </li>
-          
           <li>
             <span class="flex items-center justify-center px-4 h-10 leading-tight text-blue-400 bg-white border border-blue-200">...</span>
           </li>
