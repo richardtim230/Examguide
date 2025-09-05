@@ -305,7 +305,7 @@
       topBlogs.forEach(blog => {
         blogCards.innerHTML += `
         <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
-          <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
+          <img src="${blog.image_url}" alt="${blog.title}" class="w-full h-44 object-cover">
           <div class="p-6 flex flex-col flex-1">
             <div class="flex items-center gap-2 mb-2">
               <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
@@ -333,7 +333,7 @@
       gridBlogs.forEach(blog => {
         blogGrid.innerHTML += `
         <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
-          <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
+          <img src="${blog.image_url}" alt="${blog.title}" class="w-full h-44 object-cover">
           <div class="p-6 flex flex-col flex-1">
             <div class="flex items-center gap-2 mb-2">
               <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
