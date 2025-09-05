@@ -1,226 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExamGuard Nigeria - Your Exam, Our Priority</title>
-  <!-- Tailwind CSS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UniLMS | University Learning Management System</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Flowbite -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <!-- Flowbite CSS & JS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  <link rel="icon" href="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg">
+  <style>
+    html { scroll-behavior: smooth; }
+    /* Professional touch for section titles */
+    .section-title {
+      @apply text-3xl sm:text-4xl font-extrabold tracking-tight text-blue-900 mb-8;
+    }
+    /* Subtle gradient overlay for hero */
+    .hero-overlay {
+      background: linear-gradient(90deg, #f1f5f9 60%, #3b82f6 100%);
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-blue-50 text-blue-900">
 
   <!-- Navbar -->
-  <nav class="bg-white border-b border-gray-200 px-4 py-3 fixed w-full z-50">
-    <div class="flex flex-wrap justify-between items-center max-w-7xl mx-auto">
-      <a href="#" class="text-2xl font-bold text-blue-600">ExamGuard Nigeria</a>
-      <button data-collapse-toggle="navbar" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none" aria-controls="navbar" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+  <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
+    <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4">
+      <a href="#" class="flex items-center gap-2">
+        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" class="h-8" alt="UniLMS Logo">
+        <span class="text-2xl font-bold text-blue-700 tracking-tight">UniLMS</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button" class="md:hidden ml-auto p-2 rounded-lg text-blue-800 hover:bg-blue-50 focus:outline-none" aria-controls="navbar-default">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path></svg>
       </button>
-      <div class="hidden w-full lg:flex lg:w-auto" id="navbar">
-        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-          <li><a href="#" class="block py-2 px-3 hover:text-blue-600">Home</a></li>
-          <li><a href="#courses" class="block py-2 px-3 hover:text-blue-600">Courses</a></li>
-          <li><a href="#past-questions" class="block py-2 px-3 hover:text-blue-600">Past Questions</a></li>
-          <li><a href="#codecxx" class="block py-2 px-3 hover:text-blue-600">CODECX Institute</a></li>
-          <li><a href="#marketplace" class="block py-2 px-3 hover:text-blue-600">Marketplace</a></li>
-          <li><a href="#blog" class="block py-2 px-3 hover:text-blue-600">Blog</a></li>
-          <li><a href="#about" class="block py-2 px-3 hover:text-blue-600">About</a></li>
-          <li><a href="#contact" class="block py-2 px-3 hover:text-blue-600">Contact</a></li>
+      <div class="hidden w-full md:flex md:items-center md:w-auto" id="navbar-default">
+        <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
+          <li><a href="#features" class="block py-2 px-3 hover:text-blue-600 transition">Features</a></li>
+          <li><a href="#courses" class="block py-2 px-3 hover:text-blue-600 transition">Courses</a></li>
+          <li><a href="#events" class="block py-2 px-3 hover:text-blue-600 transition">Events</a></li>
+          <li><a href="#alumni" class="block py-2 px-3 hover:text-blue-600 transition">Alumni</a></li>
+          <li><a href="#faq" class="block py-2 px-3 hover:text-blue-600 transition">FAQ</a></li>
+          <li><a href="#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
         </ul>
+        <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
+          <a href="#login" class="px-4 py-2 border border-blue-700 text-blue-700 rounded-lg hover:bg-blue-700 hover:text-white transition font-semibold">Login</a>
+          <a href="#register" class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-900 transition font-semibold">Register</a>
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative bg-gray-900 text-white pt-28 pb-20">
-    <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center">
-      <div>
-        <h1 class="text-4xl font-bold mb-4">Welcome to ExamGuard Nigeria</h1>
-        <p class="text-lg mb-6">Your Exam, Our Priority. Learn anywhere, anytime with access to mock tests, study materials, coding bootcamps, marketplace and more.</p>
-        <div class="flex space-x-4">
-          <a href="#courses" class="px-6 py-3 bg-blue-600 rounded-lg shadow hover:bg-blue-700">Browse Courses</a>
-          <a href="#signup" class="px-6 py-3 bg-green-600 rounded-lg shadow hover:bg-green-700">Sign Up Now</a>
+  <section class="w-full hero-overlay pt-32 pb-20 px-4 bg-gradient-to-r from-blue-50 to-blue-200">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-10">
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h1 class="text-4xl sm:text-5xl font-extrabold mb-5 leading-tight text-blue-900">
+          <span class="block">Welcome to</span>
+          <span class="text-blue-700">UniLMS</span> – <span class="text-blue-500">Your Academic Gateway</span>
+        </h1>
+        <p class="mb-7 text-lg sm:text-xl text-blue-900/80 font-medium">A modern, user-friendly platform for learning, collaboration, and growth. Designed for real students, real faculty, real futures.</p>
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center md:justify-start">
+          <a href="#register" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Get Started</a>
+          <a href="#features" class="inline-block px-7 py-3 border border-blue-700 text-blue-700 font-bold rounded-lg hover:bg-blue-50 transition text-lg">Explore Features</a>
         </div>
       </div>
-      <div>
-        <img src="https://examguard.com.ng/portrait-teenager-suffering-from-hangover_23-2151306453.jpg?auto=format&fit=crop&w=800&q=80" alt="Student learning online" class="rounded-2xl shadow-lg">
+      <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+        <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80"
+          alt="University Students" class="rounded-3xl shadow-xl max-w-xs md:max-w-md w-full object-cover ring-4 ring-blue-100" />
       </div>
     </div>
   </section>
 
   <!-- Features Section -->
-  <section id="features" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-10">What We Offer</h2>
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
-          <h3 class="text-xl font-semibold mb-2">Mock Tests & Exams</h3>
-          <p>Prepare for university and professional exams with realistic mock tests.</p>
-        </div>
-        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
-          <h3 class="text-xl font-semibold mb-2">Past Questions</h3>
-          <p>Access a library of past questions from different universities and institutions.</p>
-        </div>
-        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
-          <h3 class="text-xl font-semibold mb-2">Study Materials</h3>
-          <p>Get curated notes, textbooks, and learning guides for your success.</p>
-        </div>
-        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
-          <h3 class="text-xl font-semibold mb-2">CODECX Institute</h3>
-          <p>Join our coding programs and become a professional developer.</p>
-        </div>
-        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
-          <h3 class="text-xl font-semibold mb-2">Student Blog & Earnings</h3>
-          <p>Write articles, share knowledge, and earn while students engage with your content.</p>
-        </div>
-        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
-          <h3 class="text-xl font-semibold mb-2">Marketplace</h3>
-          <p>Buy and sell educational products, gadgets, and resources securely.</p>
-        </div>
+  <section id="features" class="container mx-auto px-4 py-20">
+    <h2 class="section-title text-center">LMS Features That Empower</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5zm0 7v-7"></path></svg></div>
+        <h3 class="font-bold text-lg mb-2">Personal Dashboard</h3>
+        <p class="text-blue-900/80">One place for courses, schedules, news, and more—personalized for you.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+        <h3 class="font-bold text-lg mb-2">Assignments & Exams</h3>
+        <p class="text-blue-900/80">Submit coursework, get grades, receive reminders—stress-free academic life.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M9 20H4v-2a3 3 0 015.356-1.857M14 10V3m-4 7V3m4 7a4 4 0 00-8 0v7a3 3 0 003 3h2a3 3 0 003-3V10z"></path></svg></div>
+        <h3 class="font-bold text-lg mb-2">Live Classes & Replays</h3>
+        <p class="text-blue-900/80">Attend lectures in real-time or catch up later—flexible & convenient.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79V19a2 2 0 01-2 2H5a2 2 0 01-2-2v-6.21a2 2 0 01.89-1.66l7-4.09a2 2 0 012.22 0l7 4.09a2 2 0 01.89 1.66z"></path></svg></div>
+        <h3 class="font-bold text-lg mb-2">Resource Library</h3>
+        <p class="text-blue-900/80">24/7 access to e-books, slides, tutorials, and more—all in one place.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <h3 class="font-bold text-lg mb-2">Notifications & Calendar</h3>
+        <p class="text-blue-900/80">Never miss a deadline—custom reminders, calendar sync.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 8h10M7 12h8m-4 8v-8m-6 8h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+        <h3 class="font-bold text-lg mb-2">Mobile App</h3>
+        <p class="text-blue-900/80">Full-featured LMS on iOS & Android—study anytime, anywhere.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M16 8a6 6 0 01-8 0"/></svg></div>
+        <h3 class="font-bold text-lg mb-2">Community & Alumni</h3>
+        <p class="text-blue-900/80">Forums, chat, alumni network, mentorship, job boards.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
+        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a5 5 0 00-10 0v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2z"/></svg></div>
+        <h3 class="font-bold text-lg mb-2">Security & Privacy</h3>
+        <p class="text-blue-900/80">GDPR compliant, 2FA, secure by design. Your data, your control.</p>
       </div>
     </div>
   </section>
 
   <!-- Courses Section -->
-  <section id="courses" class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-10">Popular Courses & Exams</h2>
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="bg-white rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1581090700227-4c4dd1d2b0a5?auto=format&fit=crop&w=800&q=80" alt="JAMB Mock" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">JAMB Mock</h3>
-            <p>Practice and boost your JAMB exam confidence.</p>
+  <section id="courses" class="bg-blue-50 py-20 px-4">
+    <div class="container mx-auto">
+      <h2 class="section-title text-center">Featured Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200">
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80"
+               alt="Intro to CS" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">Beginner</span>
+            <h3 class="text-lg font-bold mt-2 mb-1">Computer Science 101</h3>
+            <p class="text-blue-900/80 mb-3">Programming, algorithms, and logic for digital thinkers.</p>
+            <a href="#" class="text-blue-700 font-semibold hover:underline">Learn More</a>
           </div>
         </div>
-        <div class="bg-white rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1600195077075-93d4fdf75f0e?auto=format&fit=crop&w=800&q=80" alt="WAEC" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">WAEC Past Questions</h3>
-            <p>Revise with authentic WAEC past exam papers.</p>
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200">
+          <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80"
+               alt="Business" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded">All Levels</span>
+            <h3 class="text-lg font-bold mt-2 mb-1">Business Management</h3>
+            <p class="text-blue-900/80 mb-3">Leadership, finance, and strategy for future leaders.</p>
+            <a href="#" class="text-blue-700 font-semibold hover:underline">Learn More</a>
           </div>
         </div>
-        <div class="bg-white rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1581093588401-08f43f72b88d?auto=format&fit=crop&w=800&q=80" alt="University Entrance" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">University Entrance</h3>
-            <p>Get ahead in your entrance exams with our mock tests.</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" alt="Coding" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">Programming Bootcamp</h3>
-            <p>Learn coding at CODECX Institute and build real-world projects.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Blog Section -->
-  <section id="blog" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-10">Student Blog</h2>
-      <div class="grid gap-8 md:grid-cols-3">
-        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1581091870622-4c04e3d6b7a2?auto=format&fit=crop&w=800&q=80" alt="Blog post" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">Balancing Studies and Side Hustles</h3>
-            <p>Learn how students are managing their studies while earning online.</p>
-          </div>
-        </div>
-        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1603570419988-c1fdb9f82301?auto=format&fit=crop&w=800&q=80" alt="Blog post" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">Top 10 Exam Prep Tips</h3>
-            <p>Discover strategies that help you ace your exams stress-free.</p>
-          </div>
-        </div>
-        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=800&q=80" alt="Blog post" class="h-40 w-full object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">Coding as a Student</h3>
-            <p>Why every student should consider coding as a skill for the future.</p>
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200">
+          <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=400&q=80"
+               alt="Digital Marketing" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">Intermediate</span>
+            <h3 class="text-lg font-bold mt-2 mb-1">Digital Marketing</h3>
+            <p class="text-blue-900/80 mb-3">SEO, social media, content for the digital age.</p>
+            <a href="#" class="text-blue-700 font-semibold hover:underline">Learn More</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Marketplace -->
-  <section id="marketplace" class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-10">Marketplace</h2>
-      <p class="mb-6">Discover educational resources, gadgets, and more.</p>
-      <a href="#" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">Visit Marketplace</a>
+  <!-- Events Section -->
+  <section id="events" class="container mx-auto px-4 py-20">
+    <h2 class="section-title text-center">News & Events</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white rounded-xl shadow p-6 flex flex-col">
+        <span class="bg-blue-200 text-blue-700 text-xs px-2 py-1 rounded-full w-max mb-2">Upcoming</span>
+        <h3 class="font-bold text-lg mb-2">AI Bootcamp 2025</h3>
+        <p class="text-blue-900/80 grow">Workshops & hackathons with global experts. <strong>Date:</strong> Sep 25, 2025</p>
+        <a href="#" class="mt-4 text-blue-700 font-semibold hover:underline">Register</a>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6 flex flex-col">
+        <span class="bg-green-200 text-green-700 text-xs px-2 py-1 rounded-full w-max mb-2">News</span>
+        <h3 class="font-bold text-lg mb-2">Mobile App Launch</h3>
+        <p class="text-blue-900/80 grow">Study on the go! Download UniLMS on iOS & Android.</p>
+        <a href="#" class="mt-4 text-blue-700 font-semibold hover:underline">Download</a>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6 flex flex-col">
+        <span class="bg-yellow-200 text-yellow-700 text-xs px-2 py-1 rounded-full w-max mb-2">Networking</span>
+        <h3 class="font-bold text-lg mb-2">Alumni Summit</h3>
+        <p class="text-blue-900/80 grow">Connect with industry leaders. <strong>Date:</strong> Oct 10, 2025</p>
+        <a href="#" class="mt-4 text-blue-700 font-semibold hover:underline">Join Event</a>
+      </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-10">What Students Say</h2>
-      <div id="carousel" class="relative" data-carousel="static">
-        <div class="overflow-hidden relative h-56 rounded-lg">
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <p class="text-center text-lg">“ExamGuard Nigeria helped me pass my exams with confidence. Highly recommend!”</p>
-          </div>
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <p class="text-center text-lg">“The coding bootcamp at CODECX Institute was life-changing. I landed my first tech internship.”</p>
-          </div>
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <p class="text-center text-lg">“The past questions library is a goldmine for any serious student.”</p>
-          </div>
+  <!-- Alumni & Partners -->
+  <section id="alumni" class="bg-blue-50 px-4 py-20">
+    <div class="container mx-auto">
+      <h2 class="section-title text-center">Global Alumni & Partners</h2>
+      <div class="flex flex-wrap items-center justify-center gap-8 mb-12">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Harvard_University_logo.png" alt="Harvard" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/MIT_Seal.svg" alt="MIT" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Stanford_University_seal_2003.svg" alt="Stanford" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Oxford-University-Circlet.svg" alt="Oxford" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alumni 1" class="w-16 h-16 rounded-full border-4 border-blue-200 mb-3">
+          <h4 class="font-bold text-blue-700 mb-1">James Obinna</h4>
+          <p class="text-blue-900/80 mb-2 text-sm">Software Engineer, Google | Class of 2022</p>
+          <p class="italic text-blue-900/90">"UniLMS helped me build a global network and land my dream job!"</p>
         </div>
-        <!-- Slider indicators -->
-        <div class="flex justify-center space-x-3 mt-4">
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-400" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-400" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-400" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Alumni 2" class="w-16 h-16 rounded-full border-4 border-green-200 mb-3">
+          <h4 class="font-bold text-blue-700 mb-1">Yewande Adebayo</h4>
+          <p class="text-blue-900/80 mb-2 text-sm">Marketing Analyst, Meta | Class of 2021</p>
+          <p class="italic text-blue-900/90">"The resources and mentorship through UniLMS are world class!"</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+          <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Alumni 3" class="w-16 h-16 rounded-full border-4 border-yellow-200 mb-3">
+          <h4 class="font-bold text-blue-700 mb-1">Liam Chen</h4>
+          <p class="text-blue-900/80 mb-2 text-sm">Entrepreneur | Class of 2020</p>
+          <p class="italic text-blue-900/90">"UniLMS made learning flexible. The alumni events are fantastic!"</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="container mx-auto px-4 py-20">
+    <h2 class="section-title text-center">Frequently Asked Questions</h2>
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-blue-50 text-blue-700" class="mx-auto max-w-3xl">
+      <h3 id="faq-1">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-1-body" aria-expanded="false" aria-controls="faq-1-body">
+          <span>Is UniLMS free for students?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-1-body" class="hidden" aria-labelledby="faq-1">
+        <div class="py-4 border-b border-gray-200">Yes! All enrolled students get unlimited access to UniLMS features and resources.</div>
+      </div>
+      <h3 id="faq-2">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-2-body" aria-expanded="false" aria-controls="faq-2-body">
+          <span>Can I use UniLMS on my phone?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-2-body" class="hidden" aria-labelledby="faq-2">
+        <div class="py-4 border-b border-gray-200">Absolutely! UniLMS is fully responsive and also has a dedicated mobile app.</div>
+      </div>
+      <h3 id="faq-3">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-3-body" aria-expanded="false" aria-controls="faq-3-body">
+          <span>How do I reset my password?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-3-body" class="hidden" aria-labelledby="faq-3">
+        <div class="py-4 border-b border-gray-200">Click “Login”, then “Forgot Password?” and follow the instructions sent to your email.</div>
+      </div>
+      <h3 id="faq-4">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-4-body" aria-expanded="false" aria-controls="faq-4-body">
+          <span>Who do I contact for technical support?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-4-body" class="hidden" aria-labelledby="faq-4">
+        <div class="py-4 border-b border-gray-200">Use the “Contact” form below or email <a href="mailto:support@unilms.edu" class="text-blue-700 underline">support@unilms.edu</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="bg-blue-700 py-10 px-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Stay updated on campus news & events!</div>
+      <form class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+        <input type="email" placeholder="Your email address" required
+               class="px-4 py-2 rounded-md border-none focus:ring-2 focus:ring-blue-300 outline-none w-full sm:w-auto" />
+        <button type="submit" class="px-6 py-2 bg-white text-blue-700 font-semibold rounded-md hover:bg-blue-100 transition">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-4">
+    <div class="container mx-auto max-w-2xl bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">Contact Us</h2>
+      <form>
+        <div class="mb-4">
+          <label class="block text-blue-900 font-medium mb-2" for="name">Name</label>
+          <input class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" type="text" id="name" placeholder="Your Name" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blue-900 font-medium mb-2" for="email">Email</label>
+          <input class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" type="email" id="email" placeholder="you@university.edu" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blue-900 font-medium mb-2" for="message">Message</label>
+          <textarea class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" id="message" rows="4" placeholder="How can we help you?" required></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Send Message</button>
+      </form>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 py-10">
-    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
-      <div>
-        <h3 class="text-xl font-bold mb-4 text-white">ExamGuard Nigeria</h3>
-        <p>Your Exam, Our Priority. Empowering students through resources, knowledge, and opportunities.</p>
+  <footer class="bg-white border-t border-blue-100 py-8">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-blue-900/80 mb-2">&copy; 2025 UniLMS. All rights reserved.</div>
+      <div class="flex space-x-4 text-blue-700">
+        <a href="#" class="hover:underline">Privacy Policy</a>
+        <a href="#" class="hover:underline">Terms of Service</a>
       </div>
-      <div>
-        <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white">Home</a></li>
-          <li><a href="#courses" class="hover:text-white">Courses</a></li>
-          <li><a href="#marketplace" class="hover:text-white">Marketplace</a></li>
-          <li><a href="#blog" class="hover:text-white">Blog</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-lg font-semibold mb-4 text-white">Contact</h4>
-        <p>Email: support@examguard.ng</p>
-        <p>Phone: +234 800 123 4567</p>
-      </div>
-      <div>
-        <h4 class="text-lg font-semibold mb-4 text-white">Follow Us</h4>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-white">Facebook</a>
-          <a href="#" class="hover:text-white">Twitter</a>
-          <a href="#" class="hover:text-white">Instagram</a>
-        </div>
+      <div class="flex space-x-2">
+        <a href="#" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16 4.15 0 .32.04.65.1.96C7.69 8.95 4.07 7.13 1.64 4.15c-.35.6-.56 1.3-.56 2.07 0 1.43.73 2.68 1.84 3.41a4.08 4.08 0 01-1.89-.52v.05c0 2 1.43 3.68 3.32 4.06a4.2 4.2 0 01-1.88.07 4.16 4.16 0 003.89 2.89A8.34 8.34 0 012 19.54c-.54 0-1.07-.03-1.6-.1A11.74 11.74 0 006.29 21c7.55 0 11.68-6.26 11.68-11.69 0-.18-.01-.35-.02-.53A8.4 8.4 0 0024 4.59a8.18 8.18 0 01-2.36.65 4.13 4.13 0 001.82-2.29"></path></svg>
+        </a>
+        <a href="#" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.696h-3.12V24h6.116A1.326 1.326 0 0024 22.674V1.326A1.326 1.326 0 0022.675 0"></path></svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.34 2.633-1.316 3.608-.976.976-2.243 1.254-3.608 1.316-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.34-3.608-1.316-.976-.976-1.254-2.243-1.316-3.608C2.175 15.646 2.163 15.266 2.163 12s.012-3.584.07-4.85c.062-1.366.34-2.633 1.316-3.608.976-.976 2.243-1.254 3.608-1.316C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.13 4.77.388 3.92 1.238c-.849.849-1.107 1.85-1.165 3.13C2.013 8.332 2 8.741 2 12s.013 3.668.072 4.948c.058 1.28.316 2.281 1.165 3.13.849.849 1.85 1.107 3.13 1.165C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.28-.058 2.281-.316 3.13-1.165.849-.849 1.107-1.85 1.165-3.13.059-1.28.072-1.689.072-4.948s-.013-3.668-.072-4.948c-.058-1.28-.316-2.281-1.165-3.13-.849-.849-1.85-1.107-3.13-1.165C15.668.013 15.259 0 12 0zm0 5.838A6.162 6.162 0 005.838 12 6.162 6.162 0 0012 18.162 6.162 6.162 0 0018.162 12 6.162 6.162 0 0012 5.838zm0 10.162A3.838 3.838 0 118.162 12 3.838 3.838 0 0112 16zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"></path></svg>
+        </a>
       </div>
     </div>
-    <div class="text-center text-gray-500 mt-10">© 2025 ExamGuard Nigeria. All Rights Reserved.</div>
   </footer>
 
-  <!-- Flowbite JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  <!-- Responsive navbar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.querySelector('[data-collapse-toggle]');
+      const menu = document.getElementById('navbar-default');
+      btn?.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    });
+  </script>
 </body>
-                </html>
-    
+</html>
