@@ -3,22 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UniLMS | University Learning Management System</title>
+  <title>ExamGuard Nigeria | Your Exam, Our Priority</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Flowbite CSS & JS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-  <link rel="icon" href="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2282/2282759.png">
   <style>
     html { scroll-behavior: smooth; }
     /* Professional touch for section titles */
     .section-title {
       @apply text-3xl sm:text-4xl font-extrabold tracking-tight text-blue-900 mb-8;
-    }
-    /* Subtle gradient overlay for hero */
-    .hero-overlay {
-      background: linear-gradient(90deg, #f1f5f9 60%, #3b82f6 100%);
     }
   </style>
 </head>
@@ -28,8 +24,8 @@
   <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
     <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4">
       <a href="#" class="flex items-center gap-2">
-        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" class="h-8" alt="UniLMS Logo">
-        <span class="text-2xl font-bold text-blue-700 tracking-tight">UniLMS</span>
+        <img src="logo.png" class="h-8" alt="ExamGuard Logo">
+        <span class="text-2xl font-bold text-blue-700 tracking-tight">ExamGuard Nigeria</span>
       </a>
       <button data-collapse-toggle="navbar-default" type="button" class="md:hidden ml-auto p-2 rounded-lg text-blue-800 hover:bg-blue-50 focus:outline-none" aria-controls="navbar-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path></svg>
@@ -37,10 +33,10 @@
       <div class="hidden w-full md:flex md:items-center md:w-auto" id="navbar-default">
         <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
           <li><a href="#features" class="block py-2 px-3 hover:text-blue-600 transition">Features</a></li>
-          <li><a href="#courses" class="block py-2 px-3 hover:text-blue-600 transition">Courses</a></li>
-          <li><a href="#events" class="block py-2 px-3 hover:text-blue-600 transition">Events</a></li>
-          <li><a href="#alumni" class="block py-2 px-3 hover:text-blue-600 transition">Alumni</a></li>
-          <li><a href="#faq" class="block py-2 px-3 hover:text-blue-600 transition">FAQ</a></li>
+          <li><a href="#mock-exams" class="block py-2 px-3 hover:text-blue-600 transition">Mock Exams</a></li>
+          <li><a href="#codecxi" class="block py-2 px-3 hover:text-blue-600 transition">CODECX Institute</a></li>
+          <li><a href="#marketplace" class="block py-2 px-3 hover:text-blue-600 transition">Marketplace</a></li>
+          <li><a href="#blog" class="block py-2 px-3 hover:text-blue-600 transition">Blog & Earn</a></li>
           <li><a href="#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
         </ul>
         <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
@@ -51,30 +47,26 @@
     </div>
   </nav>
 
-<!-- ... (Keep everything above as-is) ... -->
-
-  <!-- Hero Section (Replaced & Enhanced for Larger Mobile View) -->
+  <!-- Hero Section -->
   <section class="relative w-full bg-transparent pt-32 pb-20 px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
-      <div class="relative min-h-[320px] flex items-stretch rounded-2xl overflow-hidden"
-           style="background: url('https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=900&q=80') center/cover;">
+      <div class="relative min-h-[340px] flex items-stretch rounded-2xl overflow-hidden"
+           style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
         <!-- Left-to-right dark overlay -->
         <div class="absolute inset-0 rounded-2xl pointer-events-none"
              style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
         <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-8 sm:p-12">
-          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3
-                     sm:mb-5"
+          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3"
               style="line-height: 1.15;">
             Welcome to<br>
-            Intellilearn Virtual School
+            ExamGuard Nigeria
           </h1>
-          <p class="text-white text-lg sm:text-xl mb-7 font-medium">Learn Anywhere, Anytime</p>
-          <div class="flex flex-col gap-5">
-            <button class="w-full px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition" onclick="browseCourses()">Browse Courses</button>
-            <button class="w-full px-7 py-4 rounded-xl bg-green-600 text-white font-bold text-xl shadow hover:bg-green-700 transition" onclick="signUp()">Sign Up Now</button>
+          <p class="text-white text-lg sm:text-xl mb-7 font-medium">Your Exam, Our Priority</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#register" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition text-center">Get Started</a>
+            <a href="#features" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-green-600 text-white font-bold text-xl shadow hover:bg-green-700 transition text-center">Explore Features</a>
           </div>
         </div>
-        <!-- Responsive image - only visible on md+ screens -->
         <div class="hidden md:block md:w-2/5"></div>
       </div>
     </div>
@@ -86,15 +78,15 @@
         .rounded-2xl {
           border-radius: 1.5rem !important;
         }
-        .min-h-\[320px\] {
-          min-height: 80vw !important;
-          min-height: 420px !important;
+        .min-h-\[340px\] {
+          min-height: 90vw !important;
+          min-height: 440px !important;
         }
         .p-8 {
-          padding: 1.9rem !important;
+          padding: 2.1rem !important;
         }
         h1.text-3xl {
-          font-size: 2.1rem !important;
+          font-size: 2.3rem !important;
         }
         .text-lg {
           font-size: 1.23rem !important;
@@ -109,6 +101,8 @@
         .p-8 {
           padding: 1rem !important;
         }
+        top: 2px;
+        bottom: 4px;
         h1.text-3xl {
           font-size: 1.28rem !important;
         }
@@ -122,206 +116,148 @@
     </style>
   </section>
 
-  <script>
-    function browseCourses() {
-      alert('Browse Courses button clicked!');
-      // You can replace with navigation logic as needed
-    }
-    function signUp() {
-      alert('Sign Up Now button clicked!');
-      // You can replace with navigation logic as needed
-    }
-  </script>
-
-<!-- ... (Keep everything below as-is) ... -->
-
-<!-- ... (Keep everything below as-is) ... -->
-
   <!-- Features Section -->
   <section id="features" class="container mx-auto px-4 py-20">
-    <h2 class="section-title text-center">LMS Features That Empower</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5zm0 7v-7"></path></svg></div>
-        <h3 class="font-bold text-lg mb-2">Personal Dashboard</h3>
-        <p class="text-blue-900/80">One place for courses, schedules, news, and more—personalized for you.</p>
+    <h2 class="section-title text-center">Why ExamGuard?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-14">
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Mock Exams" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Mock Tests & Exams</h3>
+        <p class="text-blue-900/80">Simulate real exam conditions and boost your confidence. Practice for university and professional exams anytime, anywhere.</p>
       </div>
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-        <h3 class="font-bold text-lg mb-2">Assignments & Exams</h3>
-        <p class="text-blue-900/80">Submit coursework, get grades, receive reminders—stress-free academic life.</p>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Past Questions" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Past Questions & Study Materials</h3>
+        <p class="text-blue-900/80">Access a rich archive of past questions for various institutions and get study guides that actually make sense.</p>
       </div>
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M9 20H4v-2a3 3 0 015.356-1.857M14 10V3m-4 7V3m4 7a4 4 0 00-8 0v7a3 3 0 003 3h2a3 3 0 003-3V10z"></path></svg></div>
-        <h3 class="font-bold text-lg mb-2">Live Classes & Replays</h3>
-        <p class="text-blue-900/80">Attend lectures in real-time or catch up later—flexible & convenient.</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79V19a2 2 0 01-2 2H5a2 2 0 01-2-2v-6.21a2 2 0 01.89-1.66l7-4.09a2 2 0 012.22 0l7 4.09a2 2 0 01.89 1.66z"></path></svg></div>
-        <h3 class="font-bold text-lg mb-2">Resource Library</h3>
-        <p class="text-blue-900/80">24/7 access to e-books, slides, tutorials, and more—all in one place.</p>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/4249/4249854.png" alt="Adaptive Learning" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Adaptive Learning</h3>
+        <p class="text-blue-900/80">Our smart recommendation engine nudges you gently toward topics you need most, so learning feels like a conversation, not a chore.</p>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-        <h3 class="font-bold text-lg mb-2">Notifications & Calendar</h3>
-        <p class="text-blue-900/80">Never miss a deadline—custom reminders, calendar sync.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Blog and Earn" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Blog & Earn</h3>
+        <p class="text-blue-900/80">Write about your campus experience, share tips, or inspire others—and get rewarded. Readers earn, too. Here, your voice doesn’t just echo, it pays.</p>
       </div>
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 8h10M7 12h8m-4 8v-8m-6 8h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
-        <h3 class="font-bold text-lg mb-2">Mobile App</h3>
-        <p class="text-blue-900/80">Full-featured LMS on iOS & Android—study anytime, anywhere.</p>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/615/615075.png" alt="Marketplace" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Student Marketplace</h3>
+        <p class="text-blue-900/80">Buy, sell, or swap learning resources, gadgets, and everything students need. A campus market, minus the haggling noise.</p>
       </div>
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M16 8a6 6 0 01-8 0"/></svg></div>
-        <h3 class="font-bold text-lg mb-2">Community & Alumni</h3>
-        <p class="text-blue-900/80">Forums, chat, alumni network, mentorship, job boards.</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-7 flex flex-col items-center text-center transition hover:shadow-lg">
-        <div class="bg-blue-100 rounded-full p-4 mb-4"><svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a5 5 0 00-10 0v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2z"/></svg></div>
-        <h3 class="font-bold text-lg mb-2">Security & Privacy</h3>
-        <p class="text-blue-900/80">GDPR compliant, 2FA, secure by design. Your data, your control.</p>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Secure Platform" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Secure & Private</h3>
+        <p class="text-blue-900/80">Your data stays yours. Built with privacy in mind, guarded by encryption and responsible humans.</p>
       </div>
     </div>
   </section>
 
-  <!-- Courses Section -->
-  <section id="courses" class="bg-blue-50 py-20 px-4">
-    <div class="container mx-auto">
-      <h2 class="section-title text-center">Featured Courses</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200">
-          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80"
-               alt="Intro to CS" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">Beginner</span>
-            <h3 class="text-lg font-bold mt-2 mb-1">Computer Science 101</h3>
-            <p class="text-blue-900/80 mb-3">Programming, algorithms, and logic for digital thinkers.</p>
-            <a href="#" class="text-blue-700 font-semibold hover:underline">Learn More</a>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200">
-          <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80"
-               alt="Business" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded">All Levels</span>
-            <h3 class="text-lg font-bold mt-2 mb-1">Business Management</h3>
-            <p class="text-blue-900/80 mb-3">Leadership, finance, and strategy for future leaders.</p>
-            <a href="#" class="text-blue-700 font-semibold hover:underline">Learn More</a>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200">
-          <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=400&q=80"
-               alt="Digital Marketing" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">Intermediate</span>
-            <h3 class="text-lg font-bold mt-2 mb-1">Digital Marketing</h3>
-            <p class="text-blue-900/80 mb-3">SEO, social media, content for the digital age.</p>
-            <a href="#" class="text-blue-700 font-semibold hover:underline">Learn More</a>
-          </div>
-        </div>
+  <!-- Mock Exams Section -->
+  <section id="mock-exams" class="bg-blue-100 py-20 px-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 mb-8 md:mb-0">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Mock Exam Practice" class="rounded-2xl shadow-lg w-full max-w-md mx-auto md:mx-0"/>
+      </div>
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Real Practice, Real Progress</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          Step into your exam with less anxiety and more clarity. Our mock tests replicate the pressure and quirks of the real deal—timers, instant results, and gentle feedback loops. Practice for universities, professional bodies, or just for the thrill of outsmarting your last score.
+        </p>
+        <a href="#register" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Start Practicing</a>
       </div>
     </div>
   </section>
 
-  <!-- Events Section -->
-  <section id="events" class="container mx-auto px-4 py-20">
-    <h2 class="section-title text-center">News & Events</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col">
-        <span class="bg-blue-200 text-blue-700 text-xs px-2 py-1 rounded-full w-max mb-2">Upcoming</span>
-        <h3 class="font-bold text-lg mb-2">AI Bootcamp 2025</h3>
-        <p class="text-blue-900/80 grow">Workshops & hackathons with global experts. <strong>Date:</strong> Sep 25, 2025</p>
-        <a href="#" class="mt-4 text-blue-700 font-semibold hover:underline">Register</a>
+  <!-- CODECX Institute Section -->
+  <section id="codecxi" class="container mx-auto px-4 py-20">
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">CODECX Institute for Developers</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          From zero to deploy—CODECX is your friendly launchpad to coding mastery. Interactive lessons, live code battles, and hands-on projects. Whether you’re prepping for tech interviews or just curious, you’ll find a tribe of helpful mentors and fellow code explorers.
+        </p>
+        <a href="#register" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Join CODECX</a>
       </div>
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col">
-        <span class="bg-green-200 text-green-700 text-xs px-2 py-1 rounded-full w-max mb-2">News</span>
-        <h3 class="font-bold text-lg mb-2">Mobile App Launch</h3>
-        <p class="text-blue-900/80 grow">Study on the go! Download UniLMS on iOS & Android.</p>
-        <a href="#" class="mt-4 text-blue-700 font-semibold hover:underline">Download</a>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col">
-        <span class="bg-yellow-200 text-yellow-700 text-xs px-2 py-1 rounded-full w-max mb-2">Networking</span>
-        <h3 class="font-bold text-lg mb-2">Alumni Summit</h3>
-        <p class="text-blue-900/80 grow">Connect with industry leaders. <strong>Date:</strong> Oct 10, 2025</p>
-        <a href="#" class="mt-4 text-blue-700 font-semibold hover:underline">Join Event</a>
+      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Coding" class="rounded-2xl shadow-lg w-full max-w-md"/>
       </div>
     </div>
   </section>
 
-  <!-- Alumni & Partners -->
-  <section id="alumni" class="bg-blue-50 px-4 py-20">
-    <div class="container mx-auto">
-      <h2 class="section-title text-center">Global Alumni & Partners</h2>
-      <div class="flex flex-wrap items-center justify-center gap-8 mb-12">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Harvard_University_logo.png" alt="Harvard" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/MIT_Seal.svg" alt="MIT" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Stanford_University_seal_2003.svg" alt="Stanford" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Oxford-University-Circlet.svg" alt="Oxford" class="h-10 grayscale opacity-70 hover:opacity-100 transition" />
+  <!-- Marketplace Section -->
+  <section id="marketplace" class="bg-blue-50 py-20 px-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+        <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80" alt="Student Marketplace" class="rounded-2xl shadow-lg w-full max-w-md"/>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alumni 1" class="w-16 h-16 rounded-full border-4 border-blue-200 mb-3">
-          <h4 class="font-bold text-blue-700 mb-1">James Obinna</h4>
-          <p class="text-blue-900/80 mb-2 text-sm">Software Engineer, Google | Class of 2022</p>
-          <p class="italic text-blue-900/90">"UniLMS helped me build a global network and land my dream job!"</p>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Alumni 2" class="w-16 h-16 rounded-full border-4 border-green-200 mb-3">
-          <h4 class="font-bold text-blue-700 mb-1">Yewande Adebayo</h4>
-          <p class="text-blue-900/80 mb-2 text-sm">Marketing Analyst, Meta | Class of 2021</p>
-          <p class="italic text-blue-900/90">"The resources and mentorship through UniLMS are world class!"</p>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
-          <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Alumni 3" class="w-16 h-16 rounded-full border-4 border-yellow-200 mb-3">
-          <h4 class="font-bold text-blue-700 mb-1">Liam Chen</h4>
-          <p class="text-blue-900/80 mb-2 text-sm">Entrepreneur | Class of 2020</p>
-          <p class="italic text-blue-900/90">"UniLMS made learning flexible. The alumni events are fantastic!"</p>
-        </div>
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Marketplace—By Students, For Students</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          Upgrade your study setup or cash in on unused gear. Our marketplace is a friendly, student-run bazaar—think textbooks, gadgets, or that calculator you only used once. Trade with trust, powered by a safe, campus-only community.
+        </p>
+        <a href="#marketplace" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Browse Marketplace</a>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- Blog Section -->
+  <section id="blog" class="container mx-auto px-4 py-20">
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Blog & Earn—Share Your Story</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because knowledge deserves more than likes.
+        </p>
+        <a href="#register" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Start Blogging</a>
+      </div>
+      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+        <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80" alt="Student Blogging" class="rounded-2xl shadow-lg w-full max-w-md"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
   <section id="faq" class="container mx-auto px-4 py-20">
-    <h2 class="section-title text-center">Frequently Asked Questions</h2>
+    <h2 class="section-title text-center">Got Questions?</h2>
     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-blue-50 text-blue-700" class="mx-auto max-w-3xl">
       <h3 id="faq-1">
         <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-1-body" aria-expanded="false" aria-controls="faq-1-body">
-          <span>Is UniLMS free for students?</span>
+          <span>Is ExamGuard Nigeria free?</span>
           <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
       </h3>
       <div id="faq-1-body" class="hidden" aria-labelledby="faq-1">
-        <div class="py-4 border-b border-gray-200">Yes! All enrolled students get unlimited access to UniLMS features and resources.</div>
+        <div class="py-4 border-b border-gray-200">Yep! Most features are free for students. Some premium content and services may require a subscription, but you’ll always know before you pay.</div>
       </div>
       <h3 id="faq-2">
         <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-2-body" aria-expanded="false" aria-controls="faq-2-body">
-          <span>Can I use UniLMS on my phone?</span>
+          <span>Can I use ExamGuard on my phone?</span>
           <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
       </h3>
       <div id="faq-2-body" class="hidden" aria-labelledby="faq-2">
-        <div class="py-4 border-b border-gray-200">Absolutely! UniLMS is fully responsive and also has a dedicated mobile app.</div>
+        <div class="py-4 border-b border-gray-200">Absolutely. ExamGuard is built for all screens: phones, tablets, laptops, and even that old desktop in your library.</div>
       </div>
       <h3 id="faq-3">
         <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-3-body" aria-expanded="false" aria-controls="faq-3-body">
-          <span>How do I reset my password?</span>
+          <span>How can I earn from writing or reading articles?</span>
           <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
       </h3>
       <div id="faq-3-body" class="hidden" aria-labelledby="faq-3">
-        <div class="py-4 border-b border-gray-200">Click “Login”, then “Forgot Password?” and follow the instructions sent to your email.</div>
+        <div class="py-4 border-b border-gray-200">Publish your articles—when students read, both of you earn. It’s our way of cheering for knowledge-sharing.</div>
       </div>
       <h3 id="faq-4">
         <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-4-body" aria-expanded="false" aria-controls="faq-4-body">
-          <span>Who do I contact for technical support?</span>
+          <span>What schools are supported?</span>
           <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
       </h3>
       <div id="faq-4-body" class="hidden" aria-labelledby="faq-4">
-        <div class="py-4 border-b border-gray-200">Use the “Contact” form below or email <a href="mailto:support@unilms.edu" class="text-blue-700 underline">support@unilms.edu</a>.</div>
+        <div class="py-4 border-b border-gray-200">We cover major Nigerian universities and are adding more schools every semester. If yours isn’t here yet, let us know!</div>
       </div>
     </div>
   </section>
@@ -329,7 +265,7 @@
   <!-- Newsletter -->
   <section class="bg-blue-700 py-10 px-4">
     <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Stay updated on campus news & events!</div>
+      <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Never miss a hack, update, or event!</div>
       <form class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
         <input type="email" placeholder="Your email address" required
                class="px-4 py-2 rounded-md border-none focus:ring-2 focus:ring-blue-300 outline-none w-full sm:w-auto" />
@@ -349,11 +285,11 @@
         </div>
         <div class="mb-4">
           <label class="block text-blue-900 font-medium mb-2" for="email">Email</label>
-          <input class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" type="email" id="email" placeholder="you@university.edu" required>
+          <input class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" type="email" id="email" placeholder="you@student.ng" required>
         </div>
         <div class="mb-4">
           <label class="block text-blue-900 font-medium mb-2" for="message">Message</label>
-          <textarea class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" id="message" rows="4" placeholder="How can we help you?" required></textarea>
+          <textarea class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" id="message" rows="4" placeholder="Let us know how we can help!" required></textarea>
         </div>
         <button type="submit" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Send Message</button>
       </form>
@@ -363,7 +299,7 @@
   <!-- Footer -->
   <footer class="bg-white border-t border-blue-100 py-8">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-      <div class="text-blue-900/80 mb-2">&copy; 2025 UniLMS. All rights reserved.</div>
+      <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
       <div class="flex space-x-4 text-blue-700">
         <a href="#" class="hover:underline">Privacy Policy</a>
         <a href="#" class="hover:underline">Terms of Service</a>
