@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9"/>
+  <title>ExamGuard Blog & Stories | From Students, For Students</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Flowbite CSS & JS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2282/2282759.png">
+  <style>
+    html { scroll-behavior: smooth; }
+    .section-title, h2 {
+      font-size: 2.5rem !important;
+      font-weight: 900 !important;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: #1e3a8a;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 640px) {
+      .section-title, h2 {
+        font-size: 2rem !important;
+      }
+    }
+    .navbar-spacer {
+      height: 74px;
+    }
+    @media (min-width: 640px) {
+      .navbar-spacer { height: 88px; }
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-blue-50 text-blue-900">
+
+  <!-- Navbar -->
+  <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
+    <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4 md:py-6">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="https://cdn-icons-png.flaticon.com/512/2282/2282759.png" class="h-10 md:h-12" alt="ExamGuard Logo">
+        <span class="text-2xl md:text-3xl font-bold text-blue-700 tracking-tight leading-tight">ExamGuard<br><span class="block md:inline">Nigeria</span></span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button" class="md:hidden ml-auto p-2 rounded-lg text-blue-800 hover:bg-blue-50 focus:outline-none" aria-controls="navbar-default">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path></svg>
+      </button>
+      <div class="hidden w-full md:flex md:items-center md:w-auto" id="navbar-default">
+        <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
+          <li><a href="index.html#features" class="block py-2 px-3 hover:text-blue-600 transition">Features</a></li>
+          <li><a href="index.html#mock-exams" class="block py-2 px-3 hover:text-blue-600 transition">Mock Exams</a></li>
+          <li><a href="index.html#codecxi" class="block py-2 px-3 hover:text-blue-600 transition">CODECX Institute</a></li>
+          <li><a href="index.html#marketplace" class="block py-2 px-3 hover:text-blue-600 transition">Marketplace</a></li>
+          <li><a href="blog.html" class="block py-2 px-3 hover:text-blue-600 transition font-bold text-blue-700">Blog & Earn</a></li>
+          <li><a href="index.html#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
+        </ul>
+        <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
+          <a href="index.html#login" class="px-4 py-2 border border-blue-700 text-blue-700 rounded-lg hover:bg-blue-700 hover:text-white transition font-semibold">Login</a>
+          <a href="index.html#register" class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-900 transition font-semibold">Register</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="navbar-spacer"></div>
+
+  <!-- Hero Section (matching main landing page style) -->
+  <section class="relative w-full bg-transparent pt-4 pb-14 px-2 sm:px-4">
+    <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
+      <div class="relative min-h-[300px] flex items-stretch rounded-2xl overflow-hidden"
+           style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
+        <!-- Left-to-right dark overlay -->
+        <div class="absolute inset-0 rounded-2xl pointer-events-none"
+             style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
+        <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-6 sm:p-10 md:p-14">
+          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3"
+              style="line-height: 1.15;">
+            Welcome to <br>ExamGuard Blog
+          </h1>
+          <p class="text-white text-lg sm:text-xl mb-7 font-medium">
+            Campus Voices, Stories, Insights & Hustles. <br>
+            Real students. Real experiences. Discover articles, campus hacks, exam tips, and inspiring journeys from students all over Nigeria.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#blog-list" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition text-center">Read Latest</a>
+            <a href="index.html#register" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-green-600 text-white font-bold text-xl shadow hover:bg-green-700 transition text-center">Become a Contributor</a>
+          </div>
+        </div>
+        <div class="hidden md:block md:w-2/5"></div>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 640px) {
+        .max-w-5xl { max-width: 99vw !important; }
+        .rounded-2xl { border-radius: 1.5rem !important; }
+        .min-h-\[300px\] { min-height: 330px !important; }
+        .p-6 { padding: 1.5rem !important; }
+        h1.text-3xl { font-size: 2.1rem !important; }
+        .text-lg { font-size: 1.15rem !important; }
+      }
+    </style>
+  </section>
+
+  <!-- Two Blog Cards (Featured/Latest) -->
+  <section id="blog-list" class="container mx-auto px-2 sm:px-4 pb-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- Blog Card 1 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80"
+             alt="Study Group" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">UNILAG</span>
+            <span class="text-xs text-blue-800/80">By Chinedu Okeke</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">How Group Study Saved My Semester</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">Studying alone was my thing—until I nearly failed. Here’s why joining a campus study group turned things around for me, with less stress and more laughs.</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              342 reads
+            </span>
+            <a href="#" class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- Blog Card 2 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+        <img src="https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80"
+             alt="Online Exam" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">OAU</span>
+            <span class="text-xs text-blue-800/80">By Aisha Bello</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">My First Online Mock Exam: What I Got Wrong</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">No more crowded halls or invigilator stares. My first digital test was a rollercoaster—here’s what I wish I knew before clicking ‘Start’.</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              289 reads
+            </span>
+            <a href="#" class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Features Section -->
+  <section class="container mx-auto px-2 sm:px-4 pt-4 pb-14">
+    <h2 class="text-center">What Makes ExamGuard Blog Special?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-7">
+      <div class="bg-white rounded-xl shadow flex flex-col items-center text-center p-7 hover:shadow-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135773.png" alt="Diverse Voices" class="h-14 mb-4">
+        <h3 class="font-bold text-lg mb-2">Diverse Voices</h3>
+        <p class="text-blue-900/80">Read posts from students at universities all over Nigeria. Every campus, every vibe, every story.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow flex flex-col items-center text-center p-7 hover:shadow-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/3839/3839020.png" alt="Real-life Tips" class="h-14 mb-4">
+        <h3 class="font-bold text-lg mb-2">Real-life Tips</h3>
+        <p class="text-blue-900/80">From surviving first year to acing finals, get advice you can actually use from people who’ve been there.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow flex flex-col items-center text-center p-7 hover:shadow-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Earn as You Share" class="h-14 mb-4">
+        <h3 class="font-bold text-lg mb-2">Earn as You Share</h3>
+        <p class="text-blue-900/80">Writers and readers both earn rewards. Your words and your attention both matter here!</p>
+      </div>
+      <div class="bg-white rounded-xl shadow flex flex-col items-center text-center p-7 hover:shadow-lg">
+        <img src="https://cdn-icons-png.flaticon.com/512/3304/3304566.png" alt="Campus Community" class="h-14 mb-4">
+        <h3 class="font-bold text-lg mb-2">Campus Community</h3>
+        <p class="text-blue-900/80">Comment, like, and connect—ExamGuard isn’t just a blog, it’s a student community you belong to.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Articles Grid -->
+  <section class="container mx-auto px-2 sm:px-4 py-8">
+    <h2 class="section-title text-center">Latest From Our Community</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <!-- Blog Card 3 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+        <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82bdb09?auto=format&fit=crop&w=600&q=80"
+             alt="Coding Institute" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">CODECX | UNIBEN</span>
+            <span class="text-xs text-blue-800/80">By Samuel Ero</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">Debugging: The Real MVP of Coding</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">For every “Hello World” that runs, there’s a bug that tries to spoil the party. Here’s how CODECX made me see errors as friends, not foes.</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              221 reads
+            </span>
+            <a href="#" class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- Blog Card 4 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+        <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80"
+             alt="Marketplace" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded">UI | ABU Zaria</span>
+            <span class="text-xs text-blue-800/80">By Hauwa Sani</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">How I Sold My Old Textbooks & Got Lunch Money</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">From “Who wants?” in group chats to actual sales on ExamGuard, here’s how our marketplace helped me declutter and survive week 7 hunger.</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              198 reads
+            </span>
+            <a href="#" class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- Blog Card 5 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+        <img src="https://images.unsplash.com/photo-1482062364825-616fd23b8fc1?auto=format&fit=crop&w=600&q=80"
+             alt="Reading to earn" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-1 rounded">UNN</span>
+            <span class="text-xs text-blue-800/80">By Chika Nwosu</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">Reading and Earning? Here’s How I Did It</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">Earning money just for reading helpful articles? Sounds like a dream, but ExamGuard made it a reality for me (and my airtime balance).</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              166 reads
+            </span>
+            <a href="#" class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- Blog Card 6 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+             alt="Past Questions" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-orange-100 text-orange-700 text-xs font-semibold px-2 py-1 rounded">LASU</span>
+            <span class="text-xs text-blue-800/80">By Tunde Faleye</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">Why I Stopped Fearing Past Questions</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">I used to avoid past questions like the plague, but here’s why they became my secret weapon for acing exams—no more “surprise topics”!</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              147 reads
+            </span>
+            <a href="#" class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <div class="flex justify-center mt-12">
+      <nav aria-label="Blog Pagination">
+        <ul class="inline-flex items-center -space-x-px text-base h-10">
+          <li>
+            <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-blue-700 bg-white border border-blue-200 rounded-l-lg hover:bg-blue-100">Previous</a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">1</a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">2</a>
+          </li>
+          
+          <li>
+            <span class="flex items-center justify-center px-4 h-10 leading-tight text-blue-400 bg-white border border-blue-200">...</span>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">10</a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 rounded-r-lg hover:bg-blue-100">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- Blog Call-to-Action -->
+    <div class="flex flex-col sm:flex-row items-center justify-center mt-16 gap-6">
+      <div class="text-xl font-semibold text-blue-900 text-center">Want to share your story, hack, or review?</div>
+      <a href="index.html#register" class="inline-block px-8 py-4 bg-blue-700 text-white font-bold rounded-xl shadow-md hover:bg-blue-800 transition text-lg">Become a Contributor</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-blue-100 py-8 mt-10">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
+      <div class="flex space-x-4 text-blue-700">
+        <a href="#" class="hover:underline">Privacy Policy</a>
+        <a href="#" class="hover:underline">Terms of Service</a>
+      </div>
+      <div class="flex space-x-2">
+        <a href="#" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16 4.15 0 .32.04.65.1.96C7.69 8.95 4.07 7.13 1.64 4.15c-.35.6-.56 1.3-.56 2.07 0 1.43.73 2.68 1.84 3.41a4.08 4.08 0 01-1.89-.52v.05c0 2 1.43 3.68 3.32 4.06a4.2 4.2 0 01-1.88.07 4.16 4.16 0 003.89 2.89A8.34 8.34 0 012 19.54c-.54 0-1.07-.03-1.6-.1A11.74 11.74 0 006.29 21c7.55 0 11.68-6.26 11.68-11.69 0-.18-.01-.35-.02-.53A8.4 8.4 0 0024 4.59a8.18 8.18 0 01-2.36.65 4.13 4.13 0 001.82-2.29"></path></svg>
+        </a>
+        <a href="#" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.696h-3.12V24h6.116A1.326 1.326 0 0024 22.674V1.326A1.326 1.326 0 0022.675 0"></path></svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.34 2.633-1.316 3.608-.976.976-2.243 1.254-3.608 1.316-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.34-3.608-1.316-.976-.976-1.254-2.243-1.316-3.608C2.175 15.646 2.163 15.266 2.163 12s.012-3.584.07-4.85c.062-1.366.34-2.633 1.316-3.608.976-.976 2.243-1.254 3.608-1.316C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.13 4.77.388 3.92 1.238c-.849.849-1.107 1.85-1.165 3.13C2.013 8.332 2 8.741 2 12s.013 3.668.072 4.948c.058 1.28.316 2.281 1.165 3.13.849.849 1.85 1.107 3.13 1.165C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.28-.058 2.281-.316 3.13-1.165.849-.849 1.107-1.85 1.165-3.13.059-1.28.072-1.689.072-4.948s-.013-3.668-.072-4.948c-.058-1.28-.316-2.281-1.165-3.13-.849-.849-1.85-1.107-3.13-1.165C15.668.013 15.259 0 12 0zm0 5.838A6.162 6.162 0 005.838 12 6.162 6.162 0 0012 18.162 6.162 6.162 0 0018.162 12 6.162 6.162 0 0012 5.838zm0 10.162A3.838 3.838 0 118.162 12 3.838 3.838 0 0112 16zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.querySelector('[data-collapse-toggle]');
+      const menu = document.getElementById('navbar-default');
+      btn?.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
