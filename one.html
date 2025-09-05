@@ -51,26 +51,45 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="w-full hero-overlay pt-32 pb-20 px-4 bg-gradient-to-r from-blue-50 to-blue-200">
-    <div class="container mx-auto flex flex-col md:flex-row items-center gap-10">
-      <div class="w-full md:w-1/2 text-center md:text-left">
-        <h1 class="text-4xl sm:text-5xl font-extrabold mb-5 leading-tight text-blue-900">
-          <span class="block">Welcome to</span>
-          <span class="text-blue-700">UniLMS</span> – <span class="text-blue-500">Your Academic Gateway</span>
-        </h1>
-        <p class="mb-7 text-lg sm:text-xl text-blue-900/80 font-medium">A modern, user-friendly platform for learning, collaboration, and growth. Designed for real students, real faculty, real futures.</p>
-        <div class="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center md:justify-start">
-          <a href="#register" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Get Started</a>
-          <a href="#features" class="inline-block px-7 py-3 border border-blue-700 text-blue-700 font-bold rounded-lg hover:bg-blue-50 transition text-lg">Explore Features</a>
+<!-- ... (Keep everything above as-is) ... -->
+
+  <!-- Hero Section (Replaced) -->
+  <section class="relative w-full bg-transparent pt-32 pb-20 px-4">
+    <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
+      <div class="relative min-h-[320px] flex items-stretch rounded-2xl overflow-hidden"
+           style="background: url('https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=900&q=80') center/cover;">
+        <!-- Left-to-right dark overlay -->
+        <div class="absolute inset-0 rounded-2xl pointer-events-none"
+             style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
+        <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-8 sm:p-12">
+          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3">
+            Welcome to<br>
+            Intellilearn Virtual School
+          </h1>
+          <p class="text-white text-lg sm:text-xl mb-7 font-medium">Learn Anywhere, Anytime</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="px-7 py-3 rounded-lg bg-blue-700 text-white font-semibold text-lg shadow hover:bg-blue-800 transition" onclick="browseCourses()">Browse Courses</button>
+            <button class="px-7 py-3 rounded-lg bg-green-600 text-white font-semibold text-lg shadow hover:bg-green-700 transition" onclick="signUp()">Sign Up Now</button>
+          </div>
         </div>
-      </div>
-      <div class="w-full md:w-1/2 flex justify-center md:justify-end">
-        <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80"
-          alt="University Students" class="rounded-3xl shadow-xl max-w-xs md:max-w-md w-full object-cover ring-4 ring-blue-100" />
+        <!-- Responsive image - only visible on md+ screens -->
+        <div class="hidden md:block md:w-2/5"></div>
       </div>
     </div>
   </section>
+
+  <script>
+    function browseCourses() {
+      alert('Browse Courses button clicked!');
+      // You can replace with navigation logic as needed
+    }
+    function signUp() {
+      alert('Sign Up Now button clicked!');
+      // You can replace with navigation logic as needed
+    }
+  </script>
+
+<!-- ... (Keep everything below as-is) ... -->
 
   <!-- Features Section -->
   <section id="features" class="container mx-auto px-4 py-20">
