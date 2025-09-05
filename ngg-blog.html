@@ -264,8 +264,8 @@
 
     // Save blog data and id to localStorage when a card is clicked, then redirect to single page
     function handleBlogClick(blog) {
-      localStorage.setItem('examguard_blog_id', blog.id);
-      localStorage.setItem('examguard_blog_data', JSON.stringify(blog));
+      localStorage.setItem('selectedBlogId', blog.id);
+      localStorage.setItem('selectedBlogData', JSON.stringify(blog));
       // Redirect to single blog page (update 'blog-single.html' to your actual path)
       window.location.href = "blog-single.html";
     }
