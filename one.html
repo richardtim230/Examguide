@@ -16,6 +16,21 @@
     .section-title {
       @apply text-3xl sm:text-4xl font-extrabold tracking-tight text-blue-900 mb-8;
     }
+        html { scroll-behavior: smooth; }
+    /* Section titles */
+    .section-title, h2 {
+      font-size: 2.5rem !important;
+      font-weight: 900 !important;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: #1e3a8a;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 640px) {
+      .section-title, h2 {
+        font-size: 2rem !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
@@ -48,7 +63,7 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="relative w-full bg-transparent pt-32 pb-20 px-4">
+  <section class="relative w-full bottom-2px bg-transparent pt-32 pb-20 px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[340px] flex items-stretch rounded-2xl overflow-hidden"
            style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
