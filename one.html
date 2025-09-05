@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamGuard Nigeria - Your Exam, Our Priority</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Flowbite -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200 px-4 py-3 fixed w-full z-50">
+    <div class="flex flex-wrap justify-between items-center max-w-7xl mx-auto">
+      <a href="#" class="text-2xl font-bold text-blue-600">ExamGuard Nigeria</a>
+      <button data-collapse-toggle="navbar" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none" aria-controls="navbar" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <div class="hidden w-full lg:flex lg:w-auto" id="navbar">
+        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+          <li><a href="#" class="block py-2 px-3 hover:text-blue-600">Home</a></li>
+          <li><a href="#courses" class="block py-2 px-3 hover:text-blue-600">Courses</a></li>
+          <li><a href="#past-questions" class="block py-2 px-3 hover:text-blue-600">Past Questions</a></li>
+          <li><a href="#codecxx" class="block py-2 px-3 hover:text-blue-600">CODECX Institute</a></li>
+          <li><a href="#marketplace" class="block py-2 px-3 hover:text-blue-600">Marketplace</a></li>
+          <li><a href="#blog" class="block py-2 px-3 hover:text-blue-600">Blog</a></li>
+          <li><a href="#about" class="block py-2 px-3 hover:text-blue-600">About</a></li>
+          <li><a href="#contact" class="block py-2 px-3 hover:text-blue-600">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gray-900 text-white pt-28 pb-20">
+    <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <h1 class="text-4xl font-bold mb-4">Welcome to ExamGuard Nigeria</h1>
+        <p class="text-lg mb-6">Your Exam, Our Priority. Learn anywhere, anytime with access to mock tests, study materials, coding bootcamps, marketplace and more.</p>
+        <div class="flex space-x-4">
+          <a href="#courses" class="px-6 py-3 bg-blue-600 rounded-lg shadow hover:bg-blue-700">Browse Courses</a>
+          <a href="#signup" class="px-6 py-3 bg-green-600 rounded-lg shadow hover:bg-green-700">Sign Up Now</a>
+        </div>
+      </div>
+      <div>
+        <img src="https://examguard.com.ng/portrait-teenager-suffering-from-hangover_23-2151306453.jpg?auto=format&fit=crop&w=800&q=80" alt="Student learning online" class="rounded-2xl shadow-lg">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-10">What We Offer</h2>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Mock Tests & Exams</h3>
+          <p>Prepare for university and professional exams with realistic mock tests.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Past Questions</h3>
+          <p>Access a library of past questions from different universities and institutions.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Study Materials</h3>
+          <p>Get curated notes, textbooks, and learning guides for your success.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
+          <h3 class="text-xl font-semibold mb-2">CODECX Institute</h3>
+          <p>Join our coding programs and become a professional developer.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Student Blog & Earnings</h3>
+          <p>Write articles, share knowledge, and earn while students engage with your content.</p>
+        </div>
+        <div class="p-6 bg-gray-50 rounded-xl shadow hover:shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Marketplace</h3>
+          <p>Buy and sell educational products, gadgets, and resources securely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Section -->
+  <section id="courses" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-10">Popular Courses & Exams</h2>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1581090700227-4c4dd1d2b0a5?auto=format&fit=crop&w=800&q=80" alt="JAMB Mock" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">JAMB Mock</h3>
+            <p>Practice and boost your JAMB exam confidence.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600195077075-93d4fdf75f0e?auto=format&fit=crop&w=800&q=80" alt="WAEC" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">WAEC Past Questions</h3>
+            <p>Revise with authentic WAEC past exam papers.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1581093588401-08f43f72b88d?auto=format&fit=crop&w=800&q=80" alt="University Entrance" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">University Entrance</h3>
+            <p>Get ahead in your entrance exams with our mock tests.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" alt="Coding" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">Programming Bootcamp</h3>
+            <p>Learn coding at CODECX Institute and build real-world projects.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-10">Student Blog</h2>
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1581091870622-4c04e3d6b7a2?auto=format&fit=crop&w=800&q=80" alt="Blog post" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">Balancing Studies and Side Hustles</h3>
+            <p>Learn how students are managing their studies while earning online.</p>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1603570419988-c1fdb9f82301?auto=format&fit=crop&w=800&q=80" alt="Blog post" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">Top 10 Exam Prep Tips</h3>
+            <p>Discover strategies that help you ace your exams stress-free.</p>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=800&q=80" alt="Blog post" class="h-40 w-full object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-2">Coding as a Student</h3>
+            <p>Why every student should consider coding as a skill for the future.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marketplace -->
+  <section id="marketplace" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-10">Marketplace</h2>
+      <p class="mb-6">Discover educational resources, gadgets, and more.</p>
+      <a href="#" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">Visit Marketplace</a>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-10">What Students Say</h2>
+      <div id="carousel" class="relative" data-carousel="static">
+        <div class="overflow-hidden relative h-56 rounded-lg">
+          <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <p class="text-center text-lg">“ExamGuard Nigeria helped me pass my exams with confidence. Highly recommend!”</p>
+          </div>
+          <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <p class="text-center text-lg">“The coding bootcamp at CODECX Institute was life-changing. I landed my first tech internship.”</p>
+          </div>
+          <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <p class="text-center text-lg">“The past questions library is a goldmine for any serious student.”</p>
+          </div>
+        </div>
+        <!-- Slider indicators -->
+        <div class="flex justify-center space-x-3 mt-4">
+          <button type="button" class="w-3 h-3 rounded-full bg-gray-400" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+          <button type="button" class="w-3 h-3 rounded-full bg-gray-400" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+          <button type="button" class="w-3 h-3 rounded-full bg-gray-400" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-10">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-xl font-bold mb-4 text-white">ExamGuard Nigeria</h3>
+        <p>Your Exam, Our Priority. Empowering students through resources, knowledge, and opportunities.</p>
+      </div>
+      <div>
+        <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-white">Home</a></li>
+          <li><a href="#courses" class="hover:text-white">Courses</a></li>
+          <li><a href="#marketplace" class="hover:text-white">Marketplace</a></li>
+          <li><a href="#blog" class="hover:text-white">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-lg font-semibold mb-4 text-white">Contact</h4>
+        <p>Email: support@examguard.ng</p>
+        <p>Phone: +234 800 123 4567</p>
+      </div>
+      <div>
+        <h4 class="text-lg font-semibold mb-4 text-white">Follow Us</h4>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-white">Facebook</a>
+          <a href="#" class="hover:text-white">Twitter</a>
+          <a href="#" class="hover:text-white">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-gray-500 mt-10">© 2025 ExamGuard Nigeria. All Rights Reserved.</div>
+  </footer>
+
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+                </html>
+    
