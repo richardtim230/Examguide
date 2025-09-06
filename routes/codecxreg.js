@@ -910,7 +910,67 @@ router.post("/chat", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+// Place the following endpoints in your codecxreg.js after importing express and your authMiddleware, etc.
 
+// --- GET all comments for a challenge, across all students ---
+router.get("/challenge/:challengeId/comments", async (req, res) => {
+  try {
+    const { challengeId } = req.params;
+    // Collect comments for this challenge across all students
+    const students = await CodecxRegistration.find(
+      { "challengeComments.challengeId": challengeId },
+      { fullName: 1, passportBase64: 1, challengeComments: 1 }
+    );
+    // Flatten and filter only relevant comments, attach user info
+    let comments = [];
+    students.forEach(s => {
+      (s.challengeComments || []).forEach(c => {
+        if (c.challengeId === challengeId) {
+          comments.push({
+            text: c.text,
+            date: c.date,
+            user: s.fullName,
+            avatar: s.passportBase64
+          });
+        }
+      });
+    });
+    // Sort by date ascending
+    comments.sort((a, b) => new Date(a.date) - new Date(b.date));
+    res.json({ comments });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// --- POST a new comment to a challenge (logged-in user only) ---
+router.post("/challenge/:challengeId/comments", authMiddleware, async (req, res) => {
+  try {
+    const { challengeId } = req.params;
+    const { text } = req.body;
+    if (!text || !text.trim()) return res.status(400).json({ message: "Comment text required" });
+
+    const candidate = await CodecxRegistration.findById(req.user.id);
+    if (!candidate) return res.status(404).json({ message: "User not found" });
+
+    // Construct comment object
+    const comment = {
+      challengeId,
+      text,
+      date: new Date(),
+      user: candidate.fullName,
+      avatar: candidate.passportBase64
+    };
+
+    candidate.challengeComments = candidate.challengeComments || [];
+    candidate.challengeComments.push(comment);
+    await candidate.save();
+
+    res.json({ message: "Comment added!", comment });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 // --- Paystack Webhook for automatic payment update ---
 router.post("/paystack-webhook", express.json({ type: "application/json" }), async (req, res) => {
   const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY || "sk_test_xxx";
