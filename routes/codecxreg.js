@@ -662,7 +662,7 @@ router.get("/me", authMiddleware, async (req, res) => {
       progress: candidate.progress,
       payments: candidate.payments,
       activities: candidate.activities,
-      assignments: candidate.assignments || [], // <--- FIXED LINE
+      assignmentHistory: candidate.assignmentHistory || [],
       adminNote: candidate.adminNote || "",
       chatMessages: candidate.chatMessages || []
     });
