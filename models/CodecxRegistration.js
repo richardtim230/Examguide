@@ -32,8 +32,18 @@ const AssignmentSchema = new mongoose.Schema({
     fileType: { type: String, default: "" },
     fileData: { type: String, default: "" }
 }, { _id: false });
+import mongoose from "mongoose";
 
-// Assignment history entry
+
+const ChallengeCommentSchema = new mongoose.Schema({
+    challengeId: { type: String, required: true }, // or ObjectId if you have a Challenge collection
+    text: { type: String, required: true },
+    date: { type: Date, default: Date.now },
+    user: { type: String, required: true }, // Could be fullName, or userId if you wish
+    avatar: { type: String, default: "" } // For displaying user avatar if needed
+}, { _id: false });
+
+
 const AssignmentHistorySchema = new mongoose.Schema({
     title: { type: String, default: "Assignment" },
     date: { type: Date, default: Date.now },
@@ -66,7 +76,7 @@ const CodecxRegistrationSchema = new mongoose.Schema({
     progress: ProgressSchema,
     payments: [PaymentSchema],
     activities: [ActivitySchema],
-
+challengeComments: [ChallengeCommentSchema],
     assignments: [AssignmentSchema],
     assignmentHistory: [AssignmentHistorySchema]
 }, { collection: "codecxregistrations" });
