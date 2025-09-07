@@ -121,7 +121,34 @@ router.post('/admin/enroll', upload.fields([{ name: "passport", maxCount: 1 }]),
     res.status(500).json({ message: "Server error", error: e.message });
   }
 });
-
+// Waive payment for student (admin only)
+router.post('/admin/candidate/:id/waive-payment', async (req, res) => {
+  try {
+    const candidate = await CodecxRegistration.findById(req.params.id);
+    if (!candidate) return res.status(404).json({ message: "Student not found" });
+    // Already paid or already waived
+    if (candidate.hasPaid) return res.status(400).json({ message: "Student already marked as paid or waived." });
+    // Add waived payment record
+    candidate.payments = candidate.payments || [];
+    candidate.payments.push({
+      date: new Date(),
+      amount: 0,
+      status: "Waived",
+      ref: "WAIVED-" + Date.now()
+    });
+    candidate.hasPaid = true;
+    candidate.lastPaymentRef = "WAIVED-" + Date.now();
+    candidate.activities.push({
+      date: new Date(),
+      activity: "Payment status waived by admin",
+      status: "Success"
+    });
+    await candidate.save();
+    res.json({ message: "Payment waived for student.", payments: candidate.payments, hasPaid: candidate.hasPaid });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 // --- ALL SUBMITTED ASSIGNMENTS (ADMIN) ---
 router.get('/admin/assignments', async (req, res) => {
   try {
