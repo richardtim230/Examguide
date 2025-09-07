@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const PaymentSchema = new mongoose.Schema({
     date: { type: Date, required: true },
     amount: { type: Number, required: true },
-    status: { type: String, enum: ["Paid", "Unpaid"], default: "Unpaid" },
+    status: { type: String, enum: ["Paid", "Waived", "Unpaid"], default: "Unpaid" },
     ref: { type: String, default: "" }
 }, { _id: false });
 
