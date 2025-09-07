@@ -32,7 +32,7 @@ const AssignmentSchema = new mongoose.Schema({
     fileType: { type: String, default: "" },
     fileData: { type: String, default: "" }
 }, { _id: false });
-import mongoose from "mongoose";
+
 
 
 const ChallengeCommentSchema = new mongoose.Schema({
