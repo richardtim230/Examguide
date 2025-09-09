@@ -998,20 +998,20 @@ router.post("/challenge/:challengeId/comments", authMiddleware, async (req, res)
     res.status(500).json({ message: "Server error" });
   }
 });
-// ...existing imports...
-
-// --- FORGOT PASSWORD (Step 1: Verify identity) ---
+// --- FORGOT PASSWORD (Step 1: Verify identity, flexible matching) ---
 router.post('/student/forgot-password-init', async (req, res) => {
   try {
     const { fullName, matricNumber, email } = req.body;
-    if (!fullName || !matricNumber || !email) {
-      return res.status(400).json({ message: "All fields are required." });
+    if (!(fullName || matricNumber || email)) {
+      return res.status(400).json({ message: "At least one of Full Name, Matric Number, or Email is required." });
     }
-    const candidate = await CodecxRegistration.findOne({
-      fullName: { $regex: new RegExp("^" + fullName + "$", "i") },
-      matricNumber: matricNumber,
-      email: { $regex: new RegExp("^" + email + "$", "i") }
-    });
+    // Flexible: match on any one field
+    const query = [];
+    if (matricNumber) query.push({ matricNumber: matricNumber });
+    if (email) query.push({ email: new RegExp(`^${email}$`, 'i') });
+    if (fullName) query.push({ fullName: new RegExp(`^${fullName}$`, 'i') });
+
+    const candidate = await CodecxRegistration.findOne({ $or: query });
     if (!candidate) {
       return res.status(404).json({ message: "No student found with these details." });
     }
@@ -1021,25 +1021,26 @@ router.post('/student/forgot-password-init', async (req, res) => {
   }
 });
 
-// --- RESET PASSWORD (Step 2: Set new password) ---
+// --- RESET PASSWORD (Step 2: Set new password, flexible) ---
 router.post('/student/reset-password', async (req, res) => {
   try {
     const { fullName, matricNumber, email, newPassword } = req.body;
-    if (!fullName || !matricNumber || !email || !newPassword) {
-      return res.status(400).json({ message: "All fields are required." });
+    if (!newPassword || !(fullName || matricNumber || email)) {
+      return res.status(400).json({ message: "New password and at least one identifier are required." });
     }
-    const candidate = await CodecxRegistration.findOne({
-      fullName: { $regex: new RegExp("^" + fullName + "$", "i") },
-      matricNumber: matricNumber,
-      email: { $regex: new RegExp("^" + email + "$", "i") }
-    });
+    // Flexible: match on any one field
+    const query = [];
+    if (matricNumber) query.push({ matricNumber: matricNumber });
+    if (email) query.push({ email: new RegExp(`^${email}$`, 'i') });
+    if (fullName) query.push({ fullName: new RegExp(`^${fullName}$`, 'i') });
+
+    const candidate = await CodecxRegistration.findOne({ $or: query });
     if (!candidate) {
       return res.status(404).json({ message: "No student found with these details." });
     }
     // Update password in both CodecxRegistration and User models
     const bcrypt = require("bcryptjs");
     const loginPasswordHash = await bcrypt.hash(newPassword, 12);
-
     candidate.loginPasswordPlain = newPassword;
     candidate.loginPasswordHash = loginPasswordHash;
     await candidate.save();
@@ -1055,8 +1056,7 @@ router.post('/student/reset-password', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
-});
-                                                 
+});                                                 
 // --- Paystack Webhook for automatic payment update ---
 router.post("/paystack-webhook", express.json({ type: "application/json" }), async (req, res) => {
   const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY || "sk_test_xxx";
