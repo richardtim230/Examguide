@@ -243,7 +243,64 @@ router.get('/admin/quiz/:day', async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+// POST /codecxreg/forgot-password/verify
+router.post("/forgot-password/verify", async (req, res) => {
+  try {
+    const { fullName, email, matricNumber } = req.body;
+    if (!fullName || !email || !matricNumber)
+      return res.status(400).json({ message: "All fields required." });
 
+    const candidate = await CodecxRegistration.findOne({
+      fullName: { $regex: new RegExp("^" + fullName.trim() + "$", "i") },
+      email: email.trim(),
+      matricNumber: matricNumber.trim()
+    });
+
+    if (!candidate)
+      return res.status(404).json({ message: "No user found with those details." });
+
+    res.json({ success: true, userId: candidate._id });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// POST /codecxreg/forgot-password/reset
+router.post("/forgot-password/reset", async (req, res) => {
+  try {
+    const { userId, newPassword } = req.body;
+    if (!userId || !newPassword || newPassword.length < 6)
+      return res.status(400).json({ message: "User ID and valid new password required." });
+
+    const candidate = await CodecxRegistration.findById(userId);
+    if (!candidate) return res.status(404).json({ message: "User not found." });
+
+    const bcrypt = await import('bcryptjs');
+    const newHash = await bcrypt.default.hash(newPassword, 12);
+
+    candidate.loginPasswordPlain = newPassword;
+    candidate.loginPasswordHash = newHash;
+    candidate.activities.push({
+      date: new Date(),
+      activity: "Password reset by user (forgot password)",
+      status: "Success"
+    });
+    await candidate.save();
+
+    // Also update User model password (if exists)
+    if (candidate.loginUsername) {
+      const user = await User.findOne({ username: candidate.loginUsername });
+      if (user) {
+        user.password = newHash;
+        await user.save();
+      }
+    }
+
+    res.json({ success: true, message: "Password reset successfully." });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 // Add a single question to a day/topic
 router.post('/admin/quiz/:day/question', async (req, res) => {
   try {
