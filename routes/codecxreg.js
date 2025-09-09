@@ -998,22 +998,53 @@ router.post("/challenge/:challengeId/comments", authMiddleware, async (req, res)
     res.status(500).json({ message: "Server error" });
   }
 });
-// --- FORGOT PASSWORD (Step 1: Verify identity, flexible matching) ---
+
+// Helper function to count how many fields match
+function countMatches(candidate, { fullName, matricNumber, email }) {
+  let count = 0;
+  if (
+    fullName &&
+    candidate.fullName &&
+    candidate.fullName.trim().toLowerCase() === fullName.trim().toLowerCase()
+  )
+    count++;
+  if (
+    matricNumber &&
+    candidate.matricNumber &&
+    candidate.matricNumber.trim().toLowerCase() === matricNumber.trim().toLowerCase()
+  )
+    count++;
+  if (
+    email &&
+    candidate.email &&
+    candidate.email.trim().toLowerCase() === email.trim().toLowerCase()
+  )
+    count++;
+  return count;
+}
+
+// --- FORGOT PASSWORD (Step 1: Verify identity, require 2+ matches) ---
 router.post('/student/forgot-password-init', async (req, res) => {
   try {
     const { fullName, matricNumber, email } = req.body;
-    if (!(fullName || matricNumber || email)) {
-      return res.status(400).json({ message: "At least one of Full Name, Matric Number, or Email is required." });
+    if (
+      [fullName, matricNumber, email].filter(Boolean).length < 2
+    ) {
+      return res.status(400).json({ message: "Please provide at least two details." });
     }
-    // Flexible: match on any one field
-    const query = [];
-    if (matricNumber) query.push({ matricNumber: matricNumber });
-    if (email) query.push({ email: new RegExp(`^${email}$`, 'i') });
-    if (fullName) query.push({ fullName: new RegExp(`^${fullName}$`, 'i') });
 
-    const candidate = await CodecxRegistration.findOne({ $or: query });
+    // Find all candidates that match on at least one field
+    const orQuery = [];
+    if (fullName) orQuery.push({ fullName: new RegExp('^' + fullName.trim() + '$', 'i') });
+    if (matricNumber) orQuery.push({ matricNumber: new RegExp('^' + matricNumber.trim() + '$', 'i') });
+    if (email) orQuery.push({ email: new RegExp('^' + email.trim() + '$', 'i') });
+    const candidates = await CodecxRegistration.find({ $or: orQuery });
+
+    // Now filter those that match at least 2 fields
+    const candidate = candidates.find(c => countMatches(c, { fullName, matricNumber, email }) >= 2);
+
     if (!candidate) {
-      return res.status(404).json({ message: "No student found with these details." });
+      return res.status(404).json({ message: "No student found with at least two matching details." });
     }
     return res.json({ success: true, message: "Details verified. Continue to reset password." });
   } catch (err) {
@@ -1021,25 +1052,33 @@ router.post('/student/forgot-password-init', async (req, res) => {
   }
 });
 
-// --- RESET PASSWORD (Step 2: Set new password, flexible) ---
+// --- RESET PASSWORD (Step 2: Set new password, require 2+ matches) ---
 router.post('/student/reset-password', async (req, res) => {
   try {
     const { fullName, matricNumber, email, newPassword } = req.body;
-    if (!newPassword || !(fullName || matricNumber || email)) {
-      return res.status(400).json({ message: "New password and at least one identifier are required." });
+    if (
+      !newPassword ||
+      [fullName, matricNumber, email].filter(Boolean).length < 2
+    ) {
+      return res.status(400).json({ message: "New password and at least two details are required." });
     }
-    // Flexible: match on any one field
-    const query = [];
-    if (matricNumber) query.push({ matricNumber: matricNumber });
-    if (email) query.push({ email: new RegExp(`^${email}$`, 'i') });
-    if (fullName) query.push({ fullName: new RegExp(`^${fullName}$`, 'i') });
 
-    const candidate = await CodecxRegistration.findOne({ $or: query });
+    // Find all candidates that match on at least one field
+    const orQuery = [];
+    if (fullName) orQuery.push({ fullName: new RegExp('^' + fullName.trim() + '$', 'i') });
+    if (matricNumber) orQuery.push({ matricNumber: new RegExp('^' + matricNumber.trim() + '$', 'i') });
+    if (email) orQuery.push({ email: new RegExp('^' + email.trim() + '$', 'i') });
+    const candidates = await CodecxRegistration.find({ $or: orQuery });
+
+    // Now filter those that match at least 2 fields
+    const candidate = candidates.find(c => countMatches(c, { fullName, matricNumber, email }) >= 2);
+
     if (!candidate) {
-      return res.status(404).json({ message: "No student found with these details." });
+      return res.status(404).json({ message: "No student found with at least two matching details." });
     }
+
     // Update password in both CodecxRegistration and User models
-    const bcrypt = require("bcryptjs");
+    // (Assumes you are using import bcrypt from "bcryptjs"; at the top)
     const loginPasswordHash = await bcrypt.hash(newPassword, 12);
     candidate.loginPasswordPlain = newPassword;
     candidate.loginPasswordHash = loginPasswordHash;
