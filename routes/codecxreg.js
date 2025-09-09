@@ -938,45 +938,7 @@ router.post("/chat", authMiddleware, async (req, res) => {
   }
 });
 // Place the following endpoints in your codecxreg.js after importing express and your authMiddleware, etc.
-// --- RESET PASSWORD (ADMIN) ---
-// Add after other /admin/candidate/:id routes
 
-router.post('/admin/candidate/:id/reset-password', async (req, res) => {
-  try {
-    const { newPassword } = req.body;
-    if (!newPassword || newPassword.length < 6) {
-      return res.status(400).json({ message: "New password required (min 6 chars)." });
-    }
-    const candidate = await CodecxRegistration.findById(req.params.id);
-    if (!candidate) return res.status(404).json({ message: "Student not found" });
-
-    // Hash new password
-    const bcrypt = await import('bcryptjs');
-    const newHash = await bcrypt.default.hash(newPassword, 12);
-
-    candidate.loginPasswordPlain = newPassword;
-    candidate.loginPasswordHash = newHash;
-    candidate.activities.push({
-      date: new Date(),
-      activity: "Password reset by admin (forgot password workflow)",
-      status: "Success"
-    });
-    await candidate.save();
-
-    // Also update User model password (if exists)
-    if (candidate.loginUsername) {
-      const user = await User.findOne({ username: candidate.loginUsername });
-      if (user) {
-        user.password = newHash;
-        await user.save();
-      }
-    }
-
-    res.json({ success: true, message: "Password reset successfully." });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Server error", error: err.message });
-  }
-});
 // --- GET all comments for a challenge, across all students ---
 router.get("/challenge/:challengeId/comments", async (req, res) => {
   try {
