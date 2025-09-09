@@ -998,6 +998,65 @@ router.post("/challenge/:challengeId/comments", authMiddleware, async (req, res)
     res.status(500).json({ message: "Server error" });
   }
 });
+// ...existing imports...
+
+// --- FORGOT PASSWORD (Step 1: Verify identity) ---
+router.post('/student/forgot-password-init', async (req, res) => {
+  try {
+    const { fullName, matricNumber, email } = req.body;
+    if (!fullName || !matricNumber || !email) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+    const candidate = await CodecxRegistration.findOne({
+      fullName: { $regex: new RegExp("^" + fullName + "$", "i") },
+      matricNumber: matricNumber,
+      email: { $regex: new RegExp("^" + email + "$", "i") }
+    });
+    if (!candidate) {
+      return res.status(404).json({ message: "No student found with these details." });
+    }
+    return res.json({ success: true, message: "Details verified. Continue to reset password." });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// --- RESET PASSWORD (Step 2: Set new password) ---
+router.post('/student/reset-password', async (req, res) => {
+  try {
+    const { fullName, matricNumber, email, newPassword } = req.body;
+    if (!fullName || !matricNumber || !email || !newPassword) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+    const candidate = await CodecxRegistration.findOne({
+      fullName: { $regex: new RegExp("^" + fullName + "$", "i") },
+      matricNumber: matricNumber,
+      email: { $regex: new RegExp("^" + email + "$", "i") }
+    });
+    if (!candidate) {
+      return res.status(404).json({ message: "No student found with these details." });
+    }
+    // Update password in both CodecxRegistration and User models
+    const bcrypt = require("bcryptjs");
+    const loginPasswordHash = await bcrypt.hash(newPassword, 12);
+
+    candidate.loginPasswordPlain = newPassword;
+    candidate.loginPasswordHash = loginPasswordHash;
+    await candidate.save();
+
+    // Also update in User model (if exists)
+    const user = await User.findOne({ username: candidate.loginUsername });
+    if (user) {
+      user.password = loginPasswordHash;
+      await user.save();
+    }
+
+    return res.json({ success: true, message: "Password reset successful!" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+                                                 
 // --- Paystack Webhook for automatic payment update ---
 router.post("/paystack-webhook", express.json({ type: "application/json" }), async (req, res) => {
   const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY || "sk_test_xxx";
