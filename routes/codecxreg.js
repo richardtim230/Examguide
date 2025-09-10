@@ -1074,7 +1074,7 @@ router.post('/student/reset-password', async (req, res) => {
     const candidate = candidates.find(c => countMatches(c, { fullName, matricNumber, email }) >= 2);
 
     if (!candidate) {
-      return res.status(404).json({ message: "No student found with at least two matching details." });
+      return res.status(404).json({ message: "Details not found. Please check your input." });
     }
 
     // Update password in both CodecxRegistration and User models
