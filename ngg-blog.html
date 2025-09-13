@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9"/>
   <title>ExamGuard Blog & Stories | From Students, For Students</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Flowbite CSS & JS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2282/2282759.png">
@@ -21,23 +19,15 @@
       margin-bottom: 2rem;
     }
     @media (max-width: 640px) {
-      .section-title, h2 {
-        font-size: 2rem !important;
-      }
+      .section-title, h2 { font-size: 2rem !important; }
     }
-    .navbar-spacer {
-      height: 74px;
-    }
-    @media (min-width: 640px) {
-      .navbar-spacer { height: 88px; }
-    }
+    .navbar-spacer { height: 74px; }
+    @media (min-width: 640px) { .navbar-spacer { height: 88px; } }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
-
-  <!-- Navbar -->
   <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
     <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4 md:py-6">
       <a href="index.html" class="flex items-center gap-3">
@@ -64,13 +54,10 @@
     </div>
   </nav>
   <div class="navbar-spacer"></div>
-
-  <!-- Hero Section (matching main landing page style) -->
   <section class="relative w-full bg-transparent pt-4 pb-14 px-2 sm:px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[300px] flex items-stretch rounded-2xl overflow-hidden"
            style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
-        <!-- Left-to-right dark overlay -->
         <div class="absolute inset-0 rounded-2xl pointer-events-none"
              style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
         <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-6 sm:p-10 md:p-14">
@@ -101,15 +88,9 @@
       }
     </style>
   </section>
-
-  <!-- Blog List Section with Dynamic Save -->
   <section id="blog-list" class="container mx-auto px-2 sm:px-4 pb-10">
-    <div id="blogCards" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <!-- Blog cards will be inserted here by JS -->
-    </div>
+    <div id="blogCards" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"></div>
   </section>
-
-  <!-- Blog Features Section -->
   <section class="container mx-auto px-2 sm:px-4 pt-4 pb-14">
     <h2 class="text-center">What Makes ExamGuard Blog Special?</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-7">
@@ -135,14 +116,9 @@
       </div>
     </div>
   </section>
-
-  <!-- Blog Articles Grid -->
   <section class="container mx-auto px-2 sm:px-4 py-8">
     <h2 class="section-title text-center">Latest From Our Community</h2>
-    <div id="blogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-      <!-- Blog cards will be inserted here by JS -->
-    </div>
-    <!-- Pagination -->
+    <div id="blogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     <div class="flex justify-center mt-12">
       <nav aria-label="Blog Pagination" class="mx-auto">
         <ul class="inline-flex items-center -space-x-px text-base h-10">
@@ -167,14 +143,11 @@
         </ul>
       </nav>
     </div>
-    <!-- Blog Call-to-Action -->
     <div class="flex flex-col sm:flex-row items-center justify-center mt-16 gap-6">
       <div class="text-xl font-semibold text-blue-900 text-center">Want to share your story, hack, or review?</div>
       <a href="index.html#register" class="inline-block px-8 py-4 bg-blue-700 text-white font-bold rounded-xl shadow-md hover:bg-blue-800 transition text-lg">Become a Contributor</a>
     </div>
   </section>
-
-  <!-- Footer -->
   <footer class="bg-white border-t border-blue-100 py-8 mt-10">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
@@ -184,155 +157,26 @@
       </div>
       <div class="flex space-x-2">
         <a href="#" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16 4.15 0 .32.04.65.1.96C7.69 8.95 4.07 7.13 1.64 4.15c-.35.6-.56 1.3-.56 2.07 0 1.43.73 2.68 1.84 3.41a4.08 4.08 0 01-1.89-.52v.05c0 2 1.43 3.68 3.32 4.06a4.2 4.2 0 01-1.88.07 4.16 4.16 0 003.89 2.89A8.34 8.34 0 012 19.54c-.54 0-1.07-.03-1.6-.1A11.74 11.74 0 006.29 21c7.55 0 11.68-6.26 11.68-11.69 0-.18-.01-.35-.02-.53A8.4 8.4 0 0024 4.59a8.18 8.18 0 01-2.36.65 4.13 4.13 0 001.82-2.29"></path></svg>
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16[...]
         </a>
         <a href="#" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.696h-3.12V24h6.116A1.326 1.326 0 0024 22.674V1.326A1.326 1.326 0 0022.675 0"></path></svg>
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-[...]
         </a>
         <a href="#" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.34 2.633-1.316 3.608-.976.976-2.243 1.254-3.608 1.316-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.34-3.608-1.316-.976-.976-1.254-2.243-1.316-3.608C2.175 15.646 2.163 15.266 2.163 12s.012-3.584.07-4.85c.062-1.366.34-2.633 1.316-3.608.976-.976 2.243-1.254 3.608-1.316C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.13 4.77.388 3.92 1.238c-.849.849-1.107 1.85-1.165 3.13C2.013 8.332 2 8.741 2 12s.013 3.668.072 4.948c.058 1.28.316 2.281 1.165 3.13.849.849 1.85 1.107 3.13 1.165C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.28-.058 2.281-.316 3.13-1.165.849-.849 1.107-1.85 1.165-3.13.059-1.28.072-1.689.072-4.948s-.013-3.668-.072-4.948c-.058-1.28-.316-2.281-1.165-3.13-.849-.849-1.85-1.107-3.13-1.165C15.668.013 15.259 0 12 0zm0 5.838A6.162 6.162 0 005.838 12 6.162 6.162 0 0012 18.162 6.162 6.162 0 0018.162 12 6.162 6.162 0 0012 5.838zm0 10.162A3.838 3.838 0 118.162 12 3.838 3.838 0 0112 16zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"></path></svg>
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07[...]
         </a>
       </div>
     </div>
   </footer>
-
   <script>
-  // Demo blog data array - UPDATED to match blog-single.html expected keys
-  const blogData = [
-    {
-  id: "blog1",
-  university: "UNILAG",
-  category: "Leadership",
-  tags: ["group-study", "semester", "tips", "motivation", "campus-life"],
-  author: "Chinedu Okeke",
-  reads: 342,
-  title: "How Group Study Saved My Semester",
-  excerpt: "Studying alone was my thing—until I nearly failed. Here’s why joining a campus study group turned things around for me, with less stress and more laughs.",
-  content: `
-    <p><span style="font-size:1.2em;"><b>Confession time:</b></span> I used to think group study was just a waste of time. <i>“I work best alone!”</i> I’d say, clutching my notes like a lifeline. But then UNILAG happened—and reality hit me like a 7am test on a rainy Monday.</p>
-    <blockquote style="border-left:4px solid #2563eb; padding-left:1em; color:#2563eb; font-style:italic; margin:1.5em 0;">
-      “Sometimes, the best way to move forward is to let others walk with you.”
-    </blockquote>
-    <h2 style="color:#1e3a8a; font-weight:900; margin-top:2em;">The Lone Wolf Era (And My Wake-Up Call)</h2>
-    <p>First semester, I was the definition of ‘solo mode’. If you saw someone in the library with headphones, two bottles of coffee, and a mountain of handouts—that was me. But my confidence started to crack after getting my first results. Let’s just say, my grades were... <b>not</b> the flex I imagined.</p>
-    <p>One evening, my roommate barged in (as usual), saw my frustration, and said, “Guy, why not try our group session tomorrow? What’s the worst that could happen?”</p>
-    <h2 style="color:#1e3a8a; font-weight:900; margin-top:2em;">My First Group Study: From Awkward to Awesome</h2>
-    <p>Walking into that group meeting felt like a risk. <i>What if they’re all smarter than me? What if I can’t keep up?</i> Turns out, everyone had their strengths—and weaknesses. Tolu could break down complex theories with cartoons. Ada always had the latest past questions. I found out I was good at explaining stuff others found confusing. We balanced each other out.</p>
-    <ul style="margin:1.5em 0 1.5em 1.5em;">
-      <li><b>We set targets:</b> No aimless gist—every session had a clear topic.</li>
-      <li><b>We shared resources:</b> Past questions, helpful apps, even snacks.</li>
-      <li><b>We kept it real:</b> There were jokes, but there was also accountability.</li>
-    </ul>
-    <h3 style="color:#1e3a8a; font-weight:bold; margin-top:1.5em;">The Results? Night and Day.</h3>
-    <p>Within three weeks, I felt less anxious and more prepared. My understanding of key topics improved, and my confidence grew. Study time became something I actually <b>looked forward to</b>—no more silent suffering.</p>
-    <div style="background:#f1f5f9; border-radius:1em; padding:1em 1.5em; margin:2em 0;">
-      <p style="margin-bottom:0.5em;"><b>Tips if you’re thinking of joining (or starting) a study group:</b></p>
-      <ol style="margin-left:1.5em;">
-        <li><b>Pick your people:</b> Find serious but friendly classmates. Avoid “gist-over-books” gang.</li>
-        <li><b>Plan ahead:</b> Decide topics &amp; times—random meetups rarely work.</li>
-        <li><b>Help each other:</b> Everyone should contribute. No freeloaders!</li>
-        <li><b>Keep it balanced:</b> Mix focus with (moderate) fun to avoid burnout.</li>
-        <li><b>Check your progress:</b> Use quizzes and past questions to test your understanding.</li>
-      </ol>
-    </div>
-    <h2 style="color:#1e3a8a; font-weight:900; margin-top:2em;">Looking Back (and Forward)</h2>
-    <p>Group study didn’t just save my semester—it gave me new friends, better habits, and a reminder that asking for help isn’t weakness, it’s wisdom. If you’re struggling alone, trust me: let your guard down and try a team approach. You might be surprised what you can achieve—together.</p>
-    <p style="background:#e0f2fe; color:#0369a1; border-radius:0.5em; padding:0.8em; margin-top:2em;">
-      <b>Have your own group study hacks or a funny story?</b> Drop it in the comments—let’s help (and hype) each other!
-    </p>
-  `,
-  image_url: "images (7).jpeg",
-  date: "2025-08-25",
-  rating: 4.8
-},
-    {
-  id: "blog2",
-  university: "OAU",
-  category: "Communication",
-  tags: ["mock-exam", "online", "mistakes", "digital-learning", "student-life"],
-  author: "Aisha Bello",
-  reads: 289,
-  title: "My First Online Mock Exam: What I Got Wrong",
-  excerpt: "No more crowded halls or invigilator stares. My first digital test was a rollercoaster—here’s what I wish I knew before clicking ‘Start’.",
-  content: `
-    NONE
-  `,
-  image_url: "images (24).jpeg",
-  date: "2025-08-20",
-  rating: 4.5
-},
-    {
-      id: "blog3",
-      university: "CODECX | UNIBEN",
-      category: "Tech",
-      tags: ["coding", "debugging", "codecxi"],
-      author: "Samuel Ero",
-      reads: 221,
-      title: "Debugging: The Real MVP of Coding",
-      excerpt: "For every “Hello World” that runs, there’s a bug that tries to spoil the party. Here’s how CODECX made me see errors as friends, not foes.",
-      content: "Every coder dreads bugs, but they’re really just puzzles waiting to be solved. At CODECX, I learned to embrace errors, not fear them. <ul><li>Tip: Take breaks when debugging gets tough.</li><li>Tip: Ask for help—fresh eyes spot things you don’t.</li></ul>Debugging is a skill, and with patience, you’ll turn every error into a learning win.",
-      image_url: "examguide_bg1.webp?auto=format&fit=crop&w=600&q=80",
-      date: "2025-08-15",
-      rating: 4.7
-    },
-    {
-      id: "blog4",
-      university: "UI | ABU Zaria",
-      category: "Marketplace",
-      tags: ["marketplace", "sales", "textbooks"],
-      author: "Hauwa Sani",
-      reads: 198,
-      title: "How I Sold My Old Textbooks & Got Lunch Money",
-      excerpt: "From “Who wants?” in group chats to actual sales on ExamGuard, here’s how our marketplace helped me declutter and survive week 7 hunger.",
-      content: "Selling textbooks was easier than I thought thanks to ExamGuard’s marketplace. <ul><li>Step 1: List your books with clear photos.</li><li>Step 2: Set a fair price—students love bargains!</li><li>Step 3: Meet in a safe, public place for the handoff.</li></ul>I made quick money and helped juniors save cash too.",
-      image_url: "csc2.webp",
-      date: "2025-07-30",
-      rating: 4.6
-    },
-    {
-      id: "blog5",
-      university: "UNN",
-      category: "Reading",
-      tags: ["reading", "earning", "rewards"],
-      author: "Chika Nwosu",
-      reads: 166,
-      title: "Reading and Earning? Here’s How I Did It",
-      excerpt: "Earning money just for reading helpful articles? Sounds like a dream, but ExamGuard made it a reality for me (and my airtime balance).",
-      content: "ExamGuard rewards readers as well as writers. <ul><li>Read articles daily to earn points.</li><li>Refer friends for bonus rewards.</li></ul>It’s a win-win: learn more, earn more, and stay motivated during exam season.",
-      image_url: "csc1.webp",
-      date: "2025-07-21",
-      rating: 4.3
-    },
-    {
-      id: "blog6",
-      university: "LASU",
-      category: "Academic",
-      tags: ["past-questions", "exams", "study-hacks"],
-      author: "Tunde Faleye",
-      reads: 147,
-      title: "Why I Stopped Fearing Past Questions",
-      excerpt: "I used to avoid past questions like the plague, but here’s why they became my secret weapon for acing exams—no more “surprise topics”!",
-      content: "Past questions aren’t just practice—they’re exam gold. <ul><li>Use them to spot trends in questions.</li><li>Simulate real exam timing.</li></ul>Don’t fear them: master them and ace your papers!",
-      image_url: "images (24).jpeg",
-      date: "2025-07-16",
-      rating: 4.2
+    // Save blog data and id to localStorage when a card is clicked, then redirect to single page
+    function handleBlogClick(blog) {
+      localStorage.setItem('selectedBlogId', blog.id);
+      localStorage.setItem('selectedBlogData', JSON.stringify(blog));
+      localStorage.setItem('relatedBlogs', JSON.stringify(window.blogData));
+      window.location.href = "blog-single.html";
     }
-  ];
-
-  // Save blog data and id to localStorage when a card is clicked, then redirect to single page
-  function handleBlogClick(blog) {
-    localStorage.setItem('selectedBlogId', blog.id);
-    localStorage.setItem('selectedBlogData', JSON.stringify(blog));
-    // Store all for related posts
-    localStorage.setItem('relatedBlogs', JSON.stringify(blogData));
-    // Redirect to single blog page
-    window.location.href = "blog-single.html";
-  }
-
-
-
-    // Render blog cards for the two latest blogs in the top section
-    function renderTopBlogs() {
+    function renderTopBlogs(blogData) {
       const topBlogs = blogData.slice(0, 2);
       const blogCards = document.getElementById('blogCards');
       blogCards.innerHTML = "";
@@ -358,9 +202,7 @@
         </div>`;
       });
     }
-
-    // Render blog cards for the rest in the grid
-    function renderBlogGrid() {
+    function renderBlogGrid(blogData) {
       const gridBlogs = blogData.slice(2);
       const blogGrid = document.getElementById('blogGrid');
       blogGrid.innerHTML = "";
@@ -386,13 +228,14 @@
         </div>`;
       });
     }
-
-    // On page load, render blogs
     document.addEventListener('DOMContentLoaded', () => {
-      renderTopBlogs();
-      renderBlogGrid();
-
-      // Responsive navbar toggle
+      fetch('blog.json')
+        .then(response => response.json())
+        .then(data => {
+          window.blogData = data;
+          renderTopBlogs(data);
+          renderBlogGrid(data);
+        });
       const btn = document.querySelector('[data-collapse-toggle]');
       const menu = document.getElementById('navbar-default');
       btn?.addEventListener('click', () => {
