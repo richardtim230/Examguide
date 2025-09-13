@@ -1,23 +1,101 @@
 [
   {
+    "id": "blog1",
     "image": "https://images.unsplash.com/photo-1551836022-4c4c79ecde16?auto=format&fit=crop&w=600&q=80",
     "category": "Evaluation",
-    "date": "05 Jun, 2024",
+    "date": "2025-09-01",
     "author": "Admin",
-    "title": "Top Classroom Resources for Teachers"
+    "title": "Top Classroom Resources for Teachers",
+    "excerpt": "Discover the ultimate list of classroom tools and resources to help teachers inspire students and boost performance.",
+    "reads": 212,
+    "university": "UNILAG"
   },
   {
+    "id": "blog2",
     "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
     "category": "MATH",
-    "date": "05 Jun, 2024",
+    "date": "2025-08-28",
     "author": "Admin",
-    "title": "Promoting Health and Wellbeing in Schools"
+    "title": "Promoting Health and Wellbeing in Schools",
+    "excerpt": "Health is wealth! Explore practical ways schools can encourage healthy habits in students and staff.",
+    "reads": 178,
+    "university": "UI"
   },
   {
+    "id": "blog3",
     "image": "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80",
     "category": "Involvement",
-    "date": "05 Jun, 2024",
+    "date": "2025-08-21",
     "author": "Admin",
-    "title": "Involving Students in School Activities"
+    "title": "Involving Students in School Activities",
+    "excerpt": "Student participation matters! See how extracurricular activities shape character and build community.",
+    "reads": 120,
+    "university": "UNN"
+  },
+  {
+    "id": "blog4",
+    "image": "images (7).jpeg",
+    "category": "Leadership",
+    "date": "2025-07-30",
+    "author": "Chinedu Okeke",
+    "title": "How Group Study Saved My Semester",
+    "excerpt": "Studying alone was my thing—until I nearly failed. Here’s why joining a campus study group turned things around for me.",
+    "reads": 342,
+    "university": "UNILAG"
+  },
+  {
+    "id": "blog5",
+    "image": "images (24).jpeg",
+    "category": "Communication",
+    "date": "2025-07-23",
+    "author": "Aisha Bello",
+    "title": "My First Online Mock Exam: What I Got Wrong",
+    "excerpt": "No more crowded halls or invigilator stares. My first digital test was a rollercoaster—here’s what I wish I knew before clicking ‘Start’.",
+    "reads": 289,
+    "university": "OAU"
+  },
+  {
+    "id": "blog6",
+    "image": "examguide_bg1.webp?auto=format&fit=crop&w=600&q=80",
+    "category": "Tech",
+    "date": "2025-07-15",
+    "author": "Samuel Ero",
+    "title": "Debugging: The Real MVP of Coding",
+    "excerpt": "For every “Hello World” that runs, there’s a bug that tries to spoil the party. Here’s how CODECX made me see errors as friends, not foes.",
+    "reads": 221,
+    "university": "UNIBEN"
+  },
+  {
+    "id": "blog7",
+    "image": "csc2.webp",
+    "category": "Marketplace",
+    "date": "2025-07-10",
+    "author": "Hauwa Sani",
+    "title": "How I Sold My Old Textbooks & Got Lunch Money",
+    "excerpt": "From “Who wants?” in group chats to actual sales on ExamGuard, here’s how our marketplace helped me declutter and survive week 7 hunger.",
+    "reads": 198,
+    "university": "UI"
+  },
+  {
+    "id": "blog8",
+    "image": "csc1.webp",
+    "category": "Reading",
+    "date": "2025-07-05",
+    "author": "Chika Nwosu",
+    "title": "Reading and Earning? Here’s How I Did It",
+    "excerpt": "Earning money just for reading articles? Sounds like a dream, but ExamGuard made it a reality for me (and my airtime balance).",
+    "reads": 166,
+    "university": "UNN"
+  },
+  {
+    "id": "blog9",
+    "image": "images (24).jpeg",
+    "category": "Academic",
+    "date": "2025-07-02",
+    "author": "Tunde Faleye",
+    "title": "Why I Stopped Fearing Past Questions",
+    "excerpt": "I used to avoid past questions, but here’s why they became my secret weapon for acing exams—no more “surprise topics”!",
+    "reads": 147,
+    "university": "LASU"
   }
 ]
