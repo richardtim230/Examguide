@@ -169,13 +169,13 @@
     </div>
   </footer>
 <script>
-  // Save blog data and id to localStorage when a card is clicked, then redirect to single page
   function handleBlogClick(blog) {
     localStorage.setItem('selectedBlogId', blog.id);
     localStorage.setItem('selectedBlogData', JSON.stringify(blog));
     localStorage.setItem('relatedBlogs', JSON.stringify(window.blogData));
     window.location.href = "blog-single.html";
   }
+
   function renderTopBlogs(blogData) {
     const topBlogs = blogData.slice(0, 2);
     const blogCards = document.getElementById('blogCards');
@@ -190,7 +190,7 @@
             <span class="text-xs text-blue-800/80">By ${blog.author}</span>
           </div>
           <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
-          <p class="text-blue-900/80 mb-4 flex-1">${
+          <p class="text-sm text-blue-800/90 font-normal mb-2">${
             blog.excerpt.split(" ").slice(0,10).join(" ") + (blog.excerpt.split(" ").length > 10 ? "..." : "")
           }</p>
           <div class="flex items-center justify-between mt-auto">
@@ -204,6 +204,7 @@
       </div>`;
     });
   }
+
   function renderBlogGrid(blogData) {
     const gridBlogs = blogData.slice(2);
     const blogGrid = document.getElementById('blogGrid');
@@ -218,7 +219,7 @@
             <span class="text-xs text-blue-800/80">By ${blog.author}</span>
           </div>
           <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
-          <p class="text-blue-900/80 mb-4 flex-1">${
+          <p class="text-sm text-blue-800/90 font-normal mb-2">${
             blog.excerpt.split(" ").slice(0,10).join(" ") + (blog.excerpt.split(" ").length > 10 ? "..." : "")
           }</p>
           <div class="flex items-center justify-between mt-auto">
@@ -232,6 +233,7 @@
       </div>`;
     });
   }
+
   document.addEventListener('DOMContentLoaded', () => {
     fetch('blog.json')
       .then(response => response.json())
@@ -249,7 +251,7 @@
       menu.classList.toggle('hidden');
     });
   });
-</script>
+</script>      
 
 </body>
 </html>
