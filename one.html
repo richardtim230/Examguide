@@ -4,20 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ExamGuard Nigeria | Your Exam, Our Priority</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Flowbite CSS & JS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2282/2282759.png">
   <style>
     html { scroll-behavior: smooth; }
-    /* Professional touch for section titles */
     .section-title {
       @apply text-3xl sm:text-4xl font-extrabold tracking-tight text-blue-900 mb-8;
     }
-        html { scroll-behavior: smooth; }
-    /* Section titles */
     .section-title, h2 {
       font-size: 2.5rem !important;
       font-weight: 900 !important;
@@ -27,15 +22,20 @@
       margin-bottom: 2rem;
     }
     @media (max-width: 640px) {
-      .section-title, h2 {
-        font-size: 2rem !important;
-      }
+      .section-title, h2 { font-size: 2rem !important; }
+    }
+    .marketplace-tight {
+      margin-bottom: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+    }
+    .marketplace-items-tight {
+      margin-top: 0.5rem !important;
+      padding-top: 0.5rem !important;
     }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
 
-  <!-- Navbar -->
   <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
     <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4">
       <a href="#" class="flex items-center gap-2">
@@ -62,76 +62,52 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="relative w-full bottom-2px bg-transparent pt-32 pb-6 px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[340px] flex items-stretch rounded-2xl overflow-hidden"
            style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
-        <!-- Left-to-right dark overlay -->
         <div class="absolute inset-0 rounded-2xl pointer-events-none"
              style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
         <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-8 sm:p-12">
-          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3"
-              style="line-height: 1.15;">
-            Welcome to<br>
-            ExamGuard Nigeria
+          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3" style="line-height: 1.15;">
+            Welcome to<br> ExamGuard Nigeria
           </h1>
           <p class="text-white text-lg sm:text-xl mb-7 font-medium">Your Exam, Our Priority</p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#register" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition text-center">Get Started</a>
+            <button id="getStartedBtn" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition text-center">Get Started</button>
             <a href="#features" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-green-600 text-white font-bold text-xl shadow hover:bg-green-700 transition text-center">Explore Features</a>
           </div>
         </div>
         <div class="hidden md:block md:w-2/5"></div>
       </div>
     </div>
-    <style>
-      @media (max-width: 640px) {
-        .max-w-5xl {
-          max-width: 97vw !important;
-        }
-        .rounded-2xl {
-          border-radius: 1.5rem !important;
-        }
-        .min-h-\[340px\] {
-          min-height: 90vw !important;
-          min-height: 440px !important;
-        }
-        .p-8 {
-          padding: 2.1rem !important;
-        }
-        h1.text-3xl {
-          font-size: 2.3rem !important;
-        }
-        .text-lg {
-          font-size: 1.23rem !important;
-        }
-        .w-full.px-7.py-4 {
-          font-size: 1.12rem !important;
-          padding-top: 1.2rem !important;
-          padding-bottom: 1.2rem !important;
-        }
-      }
-      @media (max-width: 400px) {
-        .p-8 {
-          padding: 1rem !important;
-        }
-        top: 2px;
-        bottom: 4px;
-        h1.text-3xl {
-          font-size: 1.28rem !important;
-        }
-        .text-lg {
-          font-size: 1rem !important;
-        }
-        .w-full.px-7.py-4 {
-          font-size: 1rem !important;
-        }
-      }
-    </style>
   </section>
 
-  <!-- Features Section -->
+  <div id="institutionModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+      <h3 class="text-xl font-bold mb-4">Select Your Institution</h3>
+      <select id="institutionSelect" class="w-full border border-blue-200 rounded px-3 py-2 mb-4">
+        <option value="" selected disabled>Select institution</option>
+        <option value="unilag" data-link="https://unilag.edu.ng/">University of Lagos (UNILAG)</option>
+        <option value="ui" data-link="https://ui.edu.ng/">University of Ibadan (UI)</option>
+        <option value="unn" data-link="https://unn.edu.ng/">University of Nigeria (UNN)</option>
+        <option value="not-available" data-link="">My School is Not Listed</option>
+      </select>
+      <button id="institutionProceed" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Proceed</button>
+      <button id="institutionClose" class="w-full mt-2 bg-gray-200 text-blue-900 font-semibold py-2 rounded hover:bg-gray-300 transition">Cancel</button>
+    </div>
+  </div>
+  <div id="notAvailableModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+      <h3 class="text-xl font-bold mb-4">Institution Not Available Yet</h3>
+      <p class="mb-4">Mind being an Ambassador?</p>
+      <div class="flex gap-4 justify-center">
+        <button id="ambassadorYes" class="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition">Yes</button>
+        <button id="ambassadorNo" class="bg-gray-200 text-blue-900 font-semibold py-2 px-4 rounded hover:bg-gray-300 transition">No</button>
+      </div>
+    </div>
+  </div>
+
   <section id="features" class="container mx-auto px-4 pt-5 py-20">
     <h2 class="section-title text-center">Why ExamGuard?</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-14">
@@ -170,7 +146,6 @@
     </div>
   </section>
 
-  <!-- Mock Exams Section -->
   <section id="mock-exams" class="bg-blue-100 py-20 px-4">
     <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 mb-8 md:mb-0">
@@ -179,20 +154,19 @@
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Real Practice, Real Progress</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Step into your exam with less anxiety and more clarity. Our mock tests replicate the pressure and quirks of the real deal—timers, instant results, and gentle feedback loops. Practice for universities, professional bodies, or just for the thrill of outsmarting your last score.
+          Step into your exam with less anxiety and more clarity. Our mock tests replicate the pressure and quirks of the real deal—timers, instant results, and gentle feedback loops. Practice for university and professional exams.
         </p>
         <a href="#register" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Start Practicing</a>
       </div>
     </div>
   </section>
 
-  <!-- CODECX Institute Section -->
   <section id="codecxi" class="container mx-auto px-4 py-20">
     <div class="flex flex-col-reverse md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">CODECX Institute for Developers</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          From zero to deploy—CODECX is your friendly launchpad to coding mastery. Interactive lessons, live code battles, and hands-on projects. Whether you’re prepping for tech interviews or just curious, you’ll find a tribe of helpful mentors and fellow code explorers.
+          From zero to deploy—CODECX is your friendly launchpad to coding mastery. Interactive lessons, live code battles, and hands-on projects. Whether you’re prepping for tech interviews or just want to build cool stuff.
         </p>
         <a href="#register" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Join CODECX</a>
       </div>
@@ -202,97 +176,12 @@
     </div>
   </section>
 
-
-<!-- Blog/Article Section as shown in your screenshots -->
-<section class="w-full min-h-screen py-8 pb-3 px-2 sm:px-0 bg-gradient-to-b from-[#f2f3fb] to-[#f7f8fc] flex flex-col items-center">
-  <div class="max-w-lg w-full mx-auto">
-    <!-- Section Title -->
-    <div class="mb-8 text-center">
-      <div class="text-[#1b355e] font-medium text-lg mb-1">News & Blogs</div>
-      <h2 class="font-extrabold text-3xl md:text-4xl text-[#1b1c39] mb-2" style="letter-spacing: -1px;">Our Latest News Feed</h2>
-      <p class="text-[#7a7a8c] text-base sm:text-lg font-medium">Dont Miss Stay Updated with the Latest Articles and Insights</p>
-    </div>
-
-    <!-- Blog Card 1 -->
-    <div class="rounded-2xl border border-[#d3d4e5] bg-white shadow-sm mb-8 overflow-hidden relative" style="box-shadow: 0 8px 32px 0 rgba(31,38,135,0.07);">
-      <div class="relative p-4 pb-0">
-        <div class="relative">
-          <img src="https://images.unsplash.com/photo-1551836022-4c4c79ecde16?auto=format&fit=crop&w=600&q=80"
-               alt="Classroom Resources" class="rounded-xl w-full h-48 object-cover"/>
-          <span class="absolute top-4 left-4 bg-[#09465a] text-white text-sm font-semibold px-4 py-1 rounded-full shadow">Evaluation</span>
-        </div>
-      </div>
-      <div class="px-4 pt-4 pb-2">
-        <div class="flex items-center text-[#485069] gap-4 mb-2 text-base">
-          <span class="flex items-center gap-1">
-            <svg width="20" height="20" fill="none" class="inline-block align-middle"><path d="M6.667 2.5A1.667 1.667 0 0 0 5 4.167V5h10v-.833A1.667 1.667 0 0 0 13.333 2.5H6.667Z" stroke="#485069" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="3.333" y="5" width="13.333" height="12.5" rx="2" stroke="#485069" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            05 Jun, 2024
-          </span>
-          <span class="flex items-center gap-1">
-            <svg width="20" height="20" fill="none" class="inline-block align-middle"><circle cx="10" cy="7" r="3" stroke="#485069" stroke-width="1.5"/><path d="M16.667 17.5v-.833a4.167 4.167 0 0 0-4.167-4.167H7.5a4.167 4.167 0 0 0-4.167 4.167v.833" stroke="#485069" stroke-width="1.5" stroke-linecap="round"/></svg>
-            by Admin
-          </span>
-        </div>
-        <h3 class="font-extrabold text-xl text-[#1b1c39] mb-2">Top Classroom Resources for Teachers</h3>
-      </div>
-    </div>
-
-    <!-- Blog Card 2 -->
-    <div class="rounded-2xl border border-[#d3d4e5] bg-white shadow-sm mb-8 overflow-hidden relative" style="box-shadow: 0 8px 32px 0 rgba(31,38,135,0.07);">
-      <div class="relative p-4 pb-0">
-        <div class="relative">
-          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80"
-               alt="Health & Wellbeing" class="rounded-xl w-full h-48 object-cover"/>
-          <span class="absolute top-4 left-4 bg-[#09465a] text-white text-sm font-semibold px-4 py-1 rounded-full shadow">MATH</span>
-        </div>
-      </div>
-      <div class="px-4 pt-4 pb-2">
-        <div class="flex items-center text-[#485069] gap-4 mb-2 text-base">
-          <span class="flex items-center gap-1">
-            <svg width="20" height="20" fill="none" class="inline-block align-middle"><path d="M6.667 2.5A1.667 1.667 0 0 0 5 4.167V5h10v-.833A1.667 1.667 0 0 0 13.333 2.5H6.667Z" stroke="#485069" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="3.333" y="5" width="13.333" height="12.5" rx="2" stroke="#485069" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            05 Jun, 2024
-          </span>
-          <span class="flex items-center gap-1">
-            <svg width="20" height="20" fill="none" class="inline-block align-middle"><circle cx="10" cy="7" r="3" stroke="#485069" stroke-width="1.5"/><path d="M16.667 17.5v-.833a4.167 4.167 0 0 0-4.167-4.167H7.5a4.167 4.167 0 0 0-4.167 4.167v.833" stroke="#485069" stroke-width="1.5" stroke-linecap="round"/></svg>
-            by Admin
-          </span>
-        </div>
-        <h3 class="font-extrabold text-xl text-[#1b1c39] mb-2">Promoting Health and Wellbeing in Schools</h3>
-      </div>
-    </div>
-
-    <!-- Blog Card 3 -->
-    <div class="rounded-2xl border border-[#d3d4e5] bg-white shadow-sm mb-8 overflow-hidden relative" style="box-shadow: 0 8px 32px 0 rgba(31,38,135,0.07);">
-      <div class="relative p-4 pb-0">
-        <div class="relative">
-          <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80"
-               alt="Involvement" class="rounded-xl w-full h-48 object-cover"/>
-          <span class="absolute top-4 left-4 bg-[#09465a] text-white text-sm font-semibold px-4 py-1 rounded-full shadow">Involvement</span>
-        </div>
-      </div>
-      <div class="px-4 pt-4 pb-2">
-        <div class="flex items-center text-[#485069] gap-4 mb-2 text-base">
-          <span class="flex items-center gap-1">
-            <svg width="20" height="20" fill="none" class="inline-block align-middle"><path d="M6.667 2.5A1.667 1.667 0 0 0 5 4.167V5h10v-.833A1.667 1.667 0 0 0 13.333 2.5H6.667Z" stroke="#485069" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="3.333" y="5" width="13.333" height="12.5" rx="2" stroke="#485069" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            05 Jun, 2024
-          </span>
-          <span class="flex items-center gap-1">
-            <svg width="20" height="20" fill="none" class="inline-block align-middle"><circle cx="10" cy="7" r="3" stroke="#485069" stroke-width="1.5"/><path d="M16.667 17.5v-.833a4.167 4.167 0 0 0-4.167-4.167H7.5a4.167 4.167 0 0 0-4.167 4.167v.833" stroke="#485069" stroke-width="1.5" stroke-linecap="round"/></svg>
-            by Admin
-          </span>
-        </div>
-        <h3 class="font-extrabold text-xl text-[#1b1c39] mb-2">Involving Students in School Activities</h3>
-      </div>
-    </div>
-  </div>
-</section>
-  <!-- Blog Section -->
   <section id="blog" class="container mx-auto pt-5 px-4 py-20">
     <div class="flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Blog & Earn—Share Your Story</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because knowledge deserves more than likes.
+          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because knowledge pays.
         </p>
         <a href="#register" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Start Blogging</a>
       </div>
@@ -300,74 +189,33 @@
         <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80" alt="Student Blogging" class="rounded-2xl shadow-lg w-full max-w-md"/>
       </div>
     </div>
+    <div id="blogList"></div>
   </section>
-  <section class="w-full px-2 sm:px-6 py-10 bg-blue-50">
-  <div class="max-w-4xl mx-auto">
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-900 mb-6">MARKETPLACE ITEMS</h2>
-    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2">
-      <!-- Item Card 1 -->
-      <div class="bg-white border border-blue-100 rounded-2xl shadow-sm transition hover:shadow-lg flex flex-col">
-        <div class="relative rounded-t-2xl overflow-hidden bg-blue-200 p-3">
-          <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80" alt="Course 1"
-               class="w-full h-40 object-cover rounded-xl">
-          <button class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-blue-50 transition">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M5 15.5A7.5 7.5 0 0112 21a7.5 7.5 0 017-5.5c0-4.5-7-11-7-11s-7 6.5-7 11z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="flex-1 flex flex-col p-5">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="inline-block bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded-full">Leadership</span>
-            <span class="flex items-center text-yellow-400 text-sm font-semibold ml-auto">
-              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.371-2.448a1 1 0 00-1.176 0l-3.371 2.448c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.075 9.384c-.783-.57-.38-1.81.588-1.81h4.159a1 1 0 00.95-.69l1.286-3.957z"/>
-              </svg>
-              0.0
-            </span>
+  <script>
+    fetch('blog.json')
+      .then(response => response.json())
+      .then(data => {
+        const blogList = document.getElementById('blogList');
+        blogList.innerHTML = data.map(blog => `
+          <div class="rounded-2xl border border-[#d3d4e5] bg-white shadow-sm mb-8 overflow-hidden relative">
+            <div class="relative p-4 pb-0">
+              <img src="${blog.image}" alt="${blog.category}" class="rounded-xl w-full h-48 object-cover"/>
+              <span class="absolute top-4 left-4 bg-[#09465a] text-white text-sm font-semibold px-4 py-1 rounded-full shadow">${blog.category}</span>
+            </div>
+            <div class="px-4 pt-4 pb-2">
+              <div class="flex items-center text-[#485069] gap-4 mb-2 text-base">
+                <span>${blog.date}</span>
+                <span>by ${blog.author}</span>
+              </div>
+              <h3 class="font-extrabold text-xl text-[#1b1c39] mb-2">${blog.title}</h3>
+            </div>
           </div>
-          <h3 class="text-lg font-bold text-blue-900 mb-1">Introduction to Financial Markets</h3>
-          <p class="text-gray-700 mb-3 text-sm">By Ethan Granger</p>
-          <div class="flex items-end justify-between mt-auto">
-            <a href="#" class="inline-block px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition text-base">View Item</a>
-            <span class="text-xl font-bold text-green-700 ml-2">₦2,250.00</span>
-          </div>
-        </div>
-      </div>
-      <!-- Item Card 2 -->
-      <div class="bg-white border border-blue-100 rounded-2xl shadow-sm transition hover:shadow-lg flex flex-col">
-        <div class="relative rounded-t-2xl overflow-hidden bg-purple-200 p-3">
-          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Course 2"
-               class="w-full h-40 object-cover rounded-xl">
-          <button class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-blue-50 transition">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M5 15.5A7.5 7.5 0 0112 21a7.5 7.5 0 017-5.5c0-4.5-7-11-7-11s-7 6.5-7 11z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="flex-1 flex flex-col p-5">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="inline-block bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded-full">Communication</span>
-            <span class="flex items-center text-yellow-400 text-sm font-semibold ml-auto">
-              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.371-2.448a1 1 0 00-1.176 0l-3.371 2.448c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.075 9.384c-.783-.57-.38-1.81.588-1.81h4.159a1 1 0 00.95-.69l1.286-3.957z"/>
-              </svg>
-              0.0
-            </span>
-          </div>
-          <h3 class="text-lg font-bold text-blue-900 mb-1">Songwriting Basics: Crafting Melodies</h3>
-          <p class="text-gray-700 mb-3 text-sm">By Nathaniel Cross</p>
-          <div class="flex items-end justify-between mt-auto">
-            <a href="#" class="inline-block px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition text-base">View Item</a>
-            <span class="text-xl font-bold text-green-700 ml-2">₦1,140.00</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-  <!-- Marketplace Section -->
-  <section id="marketplace" class="bg-blue-50 py-20 px-4">
+        `).join('');
+      })
+      .catch(() => {});
+  </script>
+
+  <section id="marketplace" class="bg-blue-50 py-20 px-4 marketplace-tight">
     <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
         <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80" alt="Student Marketplace" class="rounded-2xl shadow-lg w-full max-w-md"/>
@@ -375,13 +223,56 @@
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Marketplace—By Students, For Students</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Upgrade your study setup or cash in on unused gear. Our marketplace is a friendly, student-run bazaar—think textbooks, gadgets, or that calculator you only used once. Trade with trust, powered by a safe, campus-only community.
+          Upgrade your study setup or cash in on unused gear. Our marketplace is a friendly, student-run bazaar—think textbooks, gadgets, or that calculator you only used once. Trade with trust, powered by students.
         </p>
         <a href="#marketplace" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Browse Marketplace</a>
       </div>
     </div>
   </section>
-  <!-- FAQ Section -->
+  <section class="w-full px-2 sm:px-6 py-10 bg-blue-50 marketplace-items-tight">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-900 mb-6">MARKETPLACE ITEMS</h2>
+      <div id="marketItemsGrid" class="grid gap-8 grid-cols-1 sm:grid-cols-2"></div>
+    </div>
+  </section>
+  <script>
+    fetch('market.json')
+      .then(response => response.json())
+      .then(data => {
+        const grid = document.getElementById('marketItemsGrid');
+        grid.innerHTML = data.map(item => `
+          <div class="bg-white border border-blue-100 rounded-2xl shadow-sm transition hover:shadow-lg flex flex-col">
+            <div class="relative rounded-t-2xl overflow-hidden bg-blue-200 p-3">
+              <img src="${item.image}" alt="${item.category}" class="w-full h-40 object-cover rounded-xl">
+              <button class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-blue-50 transition">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M5 15.5A7.5 7.5 0 0112 21a7.5 7.5 0 017-5.5c0-4.5-7-11-7-11s-7 6.5-7 11z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="flex-1 flex flex-col p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="inline-block bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded-full">${item.category}</span>
+                <span class="flex items-center text-yellow-400 text-sm font-semibold ml-auto">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-[...]
+                  </svg>
+                  ${item.rating || "0.0"}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-blue-900 mb-1">${item.title}</h3>
+              <p class="text-gray-700 mb-3 text-sm">By ${item.author}</p>
+              <div class="flex items-end justify-between mt-auto">
+                <a href="${item.link || '#'}" class="inline-block px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition text-base">View Item</a>
+                <span class="text-xl font-bold text-green-700 ml-2">${item.price}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(() => {});
+  </script>
+
   <section id="faq" class="container mx-auto px-4 py-20">
     <h2 class="section-title text-center">Got Questions?</h2>
     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-blue-50 text-blue-700" class="mx-auto max-w-3xl">
@@ -424,7 +315,6 @@
     </div>
   </section>
 
-  <!-- Newsletter -->
   <section class="bg-blue-700 py-10 px-4">
     <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Never miss a hack, update, or event!</div>
@@ -436,7 +326,6 @@
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact" class="py-20 px-4">
     <div class="container mx-auto max-w-2xl bg-white rounded-xl shadow-lg p-8">
       <h2 class="text-2xl font-bold text-blue-900 mb-4">Contact Us</h2>
@@ -458,7 +347,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="bg-white border-t border-blue-100 py-8">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
@@ -468,19 +356,18 @@
       </div>
       <div class="flex space-x-2">
         <a href="#" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16 4.15 0 .32.04.65.1.96C7.69 8.95 4.07 7.13 1.64 4.15c-.35.6-.56 1.3-.56 2.07 0 1.43.73 2.68 1.84 3.41a4.08 4.08 0 01-1.89-.52v.05c0 2 1.43 3.68 3.32 4.06a4.2 4.2 0 01-1.88.07 4.16 4.16 0 003.89 2.89A8.34 8.34 0 012 19.54c-.54 0-1.07-.03-1.6-.1A11.74 11.74 0 006.29 21c7.55 0 11.68-6.26 11.68-11.69 0-.18-.01-.35-.02-.53A8.4 8.4 0 0024 4.59a8.18 8.18 0 01-2.36.65 4.13 4.13 0 001.82-2.29"></path></svg>
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16[...]
         </a>
         <a href="#" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.312h3.587l-.467 3.696h-3.12V24h6.116A1.326 1.326 0 0024 22.674V1.326A1.326 1.326 0 0022.675 0"></path></svg>
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-[...]
         </a>
         <a href="#" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.34 2.633-1.316 3.608-.976.976-2.243 1.254-3.608 1.316-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.34-3.608-1.316-.976-.976-1.254-2.243-1.316-3.608C2.175 15.646 2.163 15.266 2.163 12s.012-3.584.07-4.85c.062-1.366.34-2.633 1.316-3.608.976-.976 2.243-1.254 3.608-1.316C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.13 4.77.388 3.92 1.238c-.849.849-1.107 1.85-1.165 3.13C2.013 8.332 2 8.741 2 12s.013 3.668.072 4.948c.058 1.28.316 2.281 1.165 3.13.849.849 1.85 1.107 3.13 1.165C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.28-.058 2.281-.316 3.13-1.165.849-.849 1.107-1.85 1.165-3.13.059-1.28.072-1.689.072-4.948s-.013-3.668-.072-4.948c-.058-1.28-.316-2.281-1.165-3.13-.849-.849-1.85-1.107-3.13-1.165C15.668.013 15.259 0 12 0zm0 5.838A6.162 6.162 0 005.838 12 6.162 6.162 0 0012 18.162 6.162 6.162 0 0018.162 12 6.162 6.162 0 0012 5.838zm0 10.162A3.838 3.838 0 118.162 12 3.838 3.838 0 0112 16zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"></path></svg>
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07[...]
         </a>
       </div>
     </div>
   </footer>
 
-  <!-- Responsive navbar toggle -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const btn = document.querySelector('[data-collapse-toggle]');
@@ -488,6 +375,42 @@
       btn?.addEventListener('click', () => {
         menu.classList.toggle('hidden');
       });
+
+      const getStartedBtn = document.getElementById('getStartedBtn');
+      const institutionModal = document.getElementById('institutionModal');
+      const institutionClose = document.getElementById('institutionClose');
+      const institutionProceed = document.getElementById('institutionProceed');
+      const institutionSelect = document.getElementById('institutionSelect');
+      const notAvailableModal = document.getElementById('notAvailableModal');
+      const ambassadorYes = document.getElementById('ambassadorYes');
+      const ambassadorNo = document.getElementById('ambassadorNo');
+
+      getStartedBtn.onclick = () => {
+        institutionModal.classList.remove('hidden');
+      };
+      institutionClose.onclick = () => {
+        institutionModal.classList.add('hidden');
+      };
+
+      institutionProceed.onclick = () => {
+        const selected = institutionSelect.options[institutionSelect.selectedIndex];
+        const value = selected.value;
+        const link = selected.getAttribute('data-link');
+        institutionModal.classList.add('hidden');
+        if (value === 'not-available') {
+          notAvailableModal.classList.remove('hidden');
+        } else if (link) {
+          window.location.href = link;
+        }
+      };
+
+      ambassadorYes.onclick = () => {
+        notAvailableModal.classList.add('hidden');
+        window.open('https://wa.me/2349155127634?text=Hello%20Admin,%20I%20want%20to%20be%20an%20ExamGuard%20Ambassador', '_blank');
+      };
+      ambassadorNo.onclick = () => {
+        notAvailableModal.classList.add('hidden');
+      };
     });
   </script>
 </body>
