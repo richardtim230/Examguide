@@ -1,0 +1,20 @@
+[
+  {
+    "image": "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80",
+    "category": "Leadership",
+    "rating": "0.0",
+    "title": "Introduction to Financial Markets",
+    "author": "Ethan Granger",
+    "link": "#",
+    "price": "₦2,250.00"
+  },
+  {
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80",
+    "category": "Communication",
+    "rating": "0.0",
+    "title": "Songwriting Basics: Crafting Melodies",
+    "author": "Nathaniel Cross",
+    "link": "#",
+    "price": "₦1,140.00"
+  }
+]
