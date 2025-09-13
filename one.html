@@ -11,9 +11,6 @@
   <style>
     html { scroll-behavior: smooth; }
     .section-title {
-      @apply text-3xl sm:text-4xl font-extrabold tracking-tight text-blue-900 mb-8;
-    }
-    .section-title, h2 {
       font-size: 2.5rem !important;
       font-weight: 900 !important;
       line-height: 1.1;
@@ -22,20 +19,13 @@
       margin-bottom: 2rem;
     }
     @media (max-width: 640px) {
-      .section-title, h2 { font-size: 2rem !important; }
+      .section-title { font-size: 2rem !important; }
     }
-    .marketplace-tight {
-      margin-bottom: 0.5rem !important;
-      padding-bottom: 0.5rem !important;
-    }
-    .marketplace-items-tight {
-      margin-top: 0.5rem !important;
-      padding-top: 0.5rem !important;
-    }
+    .marketplace-tight { margin-bottom: 0.5rem !important; padding-bottom: 0.5rem !important; }
+    .marketplace-items-tight { margin-top: 0.5rem !important; padding-top: 0.5rem !important; }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
-
   <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
     <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4">
       <a href="#" class="flex items-center gap-2">
@@ -55,13 +45,12 @@
           <li><a href="#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
         </ul>
         <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
-          <a href="#login" class="px-4 py-2 border border-blue-700 text-blue-700 rounded-lg hover:bg-blue-700 hover:text-white transition font-semibold">Login</a>
-          <a href="#register" class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-900 transition font-semibold">Register</a>
+          <a href="login.html" class="px-4 py-2 border border-blue-700 text-blue-700 rounded-lg hover:bg-blue-700 hover:text-white transition font-semibold">Login</a>
+          <a href="register.html" class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-900 transition font-semibold">Register</a>
         </div>
       </div>
     </div>
   </nav>
-
   <section class="relative w-full bottom-2px bg-transparent pt-32 pb-6 px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[340px] flex items-stretch rounded-2xl overflow-hidden"
@@ -82,7 +71,6 @@
       </div>
     </div>
   </section>
-
   <div id="institutionModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60">
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
       <h3 class="text-xl font-bold mb-4">Select Your Institution</h3>
@@ -91,6 +79,8 @@
         <option value="unilag" data-link="https://unilag.edu.ng/">University of Lagos (UNILAG)</option>
         <option value="ui" data-link="https://ui.edu.ng/">University of Ibadan (UI)</option>
         <option value="unn" data-link="https://unn.edu.ng/">University of Nigeria (UNN)</option>
+        <option value="abu" data-link="https://abu.edu.ng/">Ahmadu Bello University (ABU)</option>
+        <option value="futa" data-link="https://futa.edu.ng/">Federal University of Technology Akure (FUTA)</option>
         <option value="not-available" data-link="">My School is Not Listed</option>
       </select>
       <button id="institutionProceed" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Proceed</button>
@@ -107,7 +97,6 @@
       </div>
     </div>
   </div>
-
   <section id="features" class="container mx-auto px-4 pt-5 py-20">
     <h2 class="section-title text-center">Why ExamGuard?</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-14">
@@ -145,7 +134,6 @@
       </div>
     </div>
   </section>
-
   <section id="mock-exams" class="bg-blue-100 py-20 px-4">
     <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 mb-8 md:mb-0">
@@ -154,36 +142,34 @@
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Real Practice, Real Progress</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Step into your exam with less anxiety and more clarity. Our mock tests replicate the pressure and quirks of the real deal—timers, instant results, and gentle feedback loops. Practice for university and professional exams.
+          Step into your exam with less anxiety and more clarity. Our mock tests replicate the pressure and quirks of the real deal—timers, instant results, and gentle feedback loops. Practice for university and professional exams, anytime.
         </p>
-        <a href="#register" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Start Practicing</a>
+        <a href="practice.html" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Start Practicing</a>
       </div>
     </div>
   </section>
-
   <section id="codecxi" class="container mx-auto px-4 py-20">
     <div class="flex flex-col-reverse md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">CODECX Institute for Developers</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          From zero to deploy—CODECX is your friendly launchpad to coding mastery. Interactive lessons, live code battles, and hands-on projects. Whether you’re prepping for tech interviews or just want to build cool stuff.
+          From zero to deploy—CODECX is your friendly launchpad to coding mastery. Interactive lessons, live code battles, and hands-on projects. Whether you’re prepping for tech interviews or just want to build, CODECX is for you.
         </p>
-        <a href="#register" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Join CODECX</a>
+        <a href="codecxi.html" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Join CODECX</a>
       </div>
       <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
         <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Coding" class="rounded-2xl shadow-lg w-full max-w-md"/>
       </div>
     </div>
   </section>
-
   <section id="blog" class="container mx-auto pt-5 px-4 py-20">
     <div class="flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Blog & Earn—Share Your Story</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because knowledge pays.
+          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because your words matter!
         </p>
-        <a href="#register" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Start Blogging</a>
+        <a href="blog.html" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Start Blogging</a>
       </div>
       <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
         <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80" alt="Student Blogging" class="rounded-2xl shadow-lg w-full max-w-md"/>
@@ -191,30 +177,6 @@
     </div>
     <div id="blogList"></div>
   </section>
-  <script>
-    fetch('blog.json')
-      .then(response => response.json())
-      .then(data => {
-        const blogList = document.getElementById('blogList');
-        blogList.innerHTML = data.map(blog => `
-          <div class="rounded-2xl border border-[#d3d4e5] bg-white shadow-sm mb-8 overflow-hidden relative">
-            <div class="relative p-4 pb-0">
-              <img src="${blog.image}" alt="${blog.category}" class="rounded-xl w-full h-48 object-cover"/>
-              <span class="absolute top-4 left-4 bg-[#09465a] text-white text-sm font-semibold px-4 py-1 rounded-full shadow">${blog.category}</span>
-            </div>
-            <div class="px-4 pt-4 pb-2">
-              <div class="flex items-center text-[#485069] gap-4 mb-2 text-base">
-                <span>${blog.date}</span>
-                <span>by ${blog.author}</span>
-              </div>
-              <h3 class="font-extrabold text-xl text-[#1b1c39] mb-2">${blog.title}</h3>
-            </div>
-          </div>
-        `).join('');
-      })
-      .catch(() => {});
-  </script>
-
   <section id="marketplace" class="bg-blue-50 py-20 px-4 marketplace-tight">
     <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
@@ -223,9 +185,9 @@
       <div class="w-full md:w-1/2 text-center md:text-left">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Marketplace—By Students, For Students</h2>
         <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Upgrade your study setup or cash in on unused gear. Our marketplace is a friendly, student-run bazaar—think textbooks, gadgets, or that calculator you only used once. Trade with trust, powered by students.
+          Upgrade your study setup or cash in on unused gear. Our marketplace is a friendly, student-run bazaar—textbooks, gadgets, or that calculator you only used once. Trade with trust, power your campus life.
         </p>
-        <a href="#marketplace" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Browse Marketplace</a>
+        <a href="marketplace.html" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Browse Marketplace</a>
       </div>
     </div>
   </section>
@@ -235,44 +197,6 @@
       <div id="marketItemsGrid" class="grid gap-8 grid-cols-1 sm:grid-cols-2"></div>
     </div>
   </section>
-  <script>
-    fetch('market.json')
-      .then(response => response.json())
-      .then(data => {
-        const grid = document.getElementById('marketItemsGrid');
-        grid.innerHTML = data.map(item => `
-          <div class="bg-white border border-blue-100 rounded-2xl shadow-sm transition hover:shadow-lg flex flex-col">
-            <div class="relative rounded-t-2xl overflow-hidden bg-blue-200 p-3">
-              <img src="${item.image}" alt="${item.category}" class="w-full h-40 object-cover rounded-xl">
-              <button class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-blue-50 transition">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M5 15.5A7.5 7.5 0 0112 21a7.5 7.5 0 017-5.5c0-4.5-7-11-7-11s-7 6.5-7 11z"/>
-                </svg>
-              </button>
-            </div>
-            <div class="flex-1 flex flex-col p-5">
-              <div class="flex items-center gap-2 mb-2">
-                <span class="inline-block bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded-full">${item.category}</span>
-                <span class="flex items-center text-yellow-400 text-sm font-semibold ml-auto">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-[...]
-                  </svg>
-                  ${item.rating || "0.0"}
-                </span>
-              </div>
-              <h3 class="text-lg font-bold text-blue-900 mb-1">${item.title}</h3>
-              <p class="text-gray-700 mb-3 text-sm">By ${item.author}</p>
-              <div class="flex items-end justify-between mt-auto">
-                <a href="${item.link || '#'}" class="inline-block px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition text-base">View Item</a>
-                <span class="text-xl font-bold text-green-700 ml-2">${item.price}</span>
-              </div>
-            </div>
-          </div>
-        `).join('');
-      })
-      .catch(() => {});
-  </script>
-
   <section id="faq" class="container mx-auto px-4 py-20">
     <h2 class="section-title text-center">Got Questions?</h2>
     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-blue-50 text-blue-700" class="mx-auto max-w-3xl">
@@ -314,7 +238,6 @@
       </div>
     </div>
   </section>
-
   <section class="bg-blue-700 py-10 px-4">
     <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Never miss a hack, update, or event!</div>
@@ -325,7 +248,6 @@
       </form>
     </div>
   </section>
-
   <section id="contact" class="py-20 px-4">
     <div class="container mx-auto max-w-2xl bg-white rounded-xl shadow-lg p-8">
       <h2 class="text-2xl font-bold text-blue-900 mb-4">Contact Us</h2>
@@ -346,28 +268,26 @@
       </form>
     </div>
   </section>
-
   <footer class="bg-white border-t border-blue-100 py-8">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
       <div class="flex space-x-4 text-blue-700">
-        <a href="#" class="hover:underline">Privacy Policy</a>
-        <a href="#" class="hover:underline">Terms of Service</a>
+        <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+        <a href="terms.html" class="hover:underline">Terms of Service</a>
       </div>
       <div class="flex space-x-2">
-        <a href="#" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16[...]
+        <a href="https://twitter.com/" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16 4.15 0 .33.04.65.1.96C7.69 8.96 4.07 7.13 1.64 4.16c-.36.62-.57 1.35-.57 2.13 0 1.47.74 2.77 1.86 3.53a4.07 4.07 0 01-1.88-.52v.05c0 2.05 1.46 3.76 3.41 4.14a4.18 4.18 0 01-1.88.07c.53 1.67 2.06 2.88 3.88 2.91A8.33 8.33 0 012 19.54a11.7 11.7 0 006.29 1.84c7.55 0 11.69-6.26 11.69-11.69 0-.18-.01-.36-.02-.54A8.5 8.5 0 0024 5.5c-.87.39-1.8.66-2.8.79z"></path></svg>
         </a>
-        <a href="#" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-[...]
+        <a href="https://facebook.com/" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.098 2.796.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.31h3.587l-.467 3.696h-3.12V24h6.116c.734 0 1.326-.592 1.326-1.326V1.326C24 .592 23.408 0 22.675 0"></path></svg>
         </a>
-        <a href="#" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
-          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07[...]
+        <a href="https://instagram.com/" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.34 2.633-1.316 3.608-.976.976-2.243 1.254-3.608 1.316-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.34-3.608-1.316-.976-.976-1.254-2.243-1.316-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.34-2.633 1.316-3.608C4.525 2.573 5.792 2.295 7.157 2.233 8.423 2.175 8.803 2.163 12 2.163zm0-2.163C8.756 0 8.331.013 7.052.072 5.78.132 4.674.417 3.678 1.414c-.995.997-1.282 2.102-1.342 3.374C2.013 8.331 2 8.756 2 12c0 3.244.013 3.669.072 4.948.06 1.272.347 2.377 1.342 3.374.995.997 2.102 1.282 3.374 1.342C8.331 23.987 8.756 24 12 24s3.669-.013 4.948-.072c1.272-.06 2.377-.347 3.374-1.342.997-.995 1.282-2.102 1.342-3.374.059-1.279.072-1.704.072-4.948 0-3.244-.013-3.669-.072-4.948-.06-1.272-.347-2.377-1.342-3.374-.995-.997-2.102-1.282-3.374-1.342C15.669.013 15.244 0 12 0z"></path></svg>
         </a>
       </div>
     </div>
   </footer>
-
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const btn = document.querySelector('[data-collapse-toggle]');
@@ -375,7 +295,6 @@
       btn?.addEventListener('click', () => {
         menu.classList.toggle('hidden');
       });
-
       const getStartedBtn = document.getElementById('getStartedBtn');
       const institutionModal = document.getElementById('institutionModal');
       const institutionClose = document.getElementById('institutionClose');
@@ -384,14 +303,12 @@
       const notAvailableModal = document.getElementById('notAvailableModal');
       const ambassadorYes = document.getElementById('ambassadorYes');
       const ambassadorNo = document.getElementById('ambassadorNo');
-
       getStartedBtn.onclick = () => {
         institutionModal.classList.remove('hidden');
       };
       institutionClose.onclick = () => {
         institutionModal.classList.add('hidden');
       };
-
       institutionProceed.onclick = () => {
         const selected = institutionSelect.options[institutionSelect.selectedIndex];
         const value = selected.value;
@@ -403,15 +320,70 @@
           window.location.href = link;
         }
       };
-
       ambassadorYes.onclick = () => {
         notAvailableModal.classList.add('hidden');
-        window.open('https://wa.me/2349155127634?text=Hello%20Admin,%20I%20want%20to%20be%20an%20ExamGuard%20Ambassador', '_blank');
+        window.open('https://wa.me/2348030000000?text=Hello%20Admin,%20I%20want%20to%20be%20an%20ExamGuard%20Ambassador', '_blank');
       };
       ambassadorNo.onclick = () => {
         notAvailableModal.classList.add('hidden');
       };
     });
+    fetch('blog.json')
+      .then(response => response.json())
+      .then(data => {
+        const blogList = document.getElementById('blogList');
+        blogList.innerHTML = data.map(blog => `
+          <div class="rounded-2xl border border-[#d3d4e5] bg-white shadow-sm mb-8 overflow-hidden relative">
+            <div class="relative p-4 pb-0">
+              <img src="${blog.image}" alt="${blog.category}" class="rounded-xl w-full h-48 object-cover"/>
+              <span class="absolute top-4 left-4 bg-[#09465a] text-white text-sm font-semibold px-4 py-1 rounded-full shadow">${blog.category}</span>
+            </div>
+            <div class="px-4 pt-4 pb-2">
+              <div class="flex items-center text-[#485069] gap-4 mb-2 text-base">
+                <span>${blog.date}</span>
+                <span>by ${blog.author}</span>
+              </div>
+              <h3 class="font-extrabold text-xl text-[#1b1c39] mb-2">${blog.title}</h3>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(() => {});
+    fetch('market.json')
+      .then(response => response.json())
+      .then(data => {
+        const grid = document.getElementById('marketItemsGrid');
+        grid.innerHTML = data.map(item => `
+          <div class="bg-white border border-blue-100 rounded-2xl shadow-sm transition hover:shadow-lg flex flex-col">
+            <div class="relative rounded-t-2xl overflow-hidden bg-blue-200 p-3">
+              <img src="${item.image}" alt="${item.category}" class="w-full h-40 object-cover rounded-xl">
+              <button class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-blue-50 transition">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M5 15.5A7.5 7.5 0 0112 21a7.5 7.5 0 017-5.5c0-4.5-7-11-7-11s-7 6.5-7 11z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="flex-1 flex flex-col p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="inline-block bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded-full">${item.category}</span>
+                <span class="flex items-center text-yellow-400 text-sm font-semibold ml-auto">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118l-3.37-2.448c-.784-.57-.38-1.81.588-1.81h4.159a1 1 0 00.95-.69l1.286-3.957z"/>
+                  </svg>
+                  ${item.rating || "0.0"}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-blue-900 mb-1">${item.title}</h3>
+              <p class="text-gray-700 mb-3 text-sm">By ${item.author}</p>
+              <div class="flex items-end justify-between mt-auto">
+                <a href="${item.link || '#'}" class="inline-block px-6 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition text-base">View Item</a>
+                <span class="text-xl font-bold text-green-700 ml-2">${item.price}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(() => {});
   </script>
 </body>
 </html>
