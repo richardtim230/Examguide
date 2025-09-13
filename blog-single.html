@@ -11,7 +11,7 @@
   <style>
     html { scroll-behavior: smooth; }
     .section-title, h2 {
-      font-size: 2.5rem !important;
+      font-size: 2.3rem !important;
       font-weight: 900 !important;
       line-height: 1.1;
       letter-spacing: -1px;
@@ -19,21 +19,44 @@
       margin-bottom: 2rem;
     }
     @media (max-width: 640px) {
-      .section-title, h2 { font-size: 2rem !important; }
+      .section-title, h2 { font-size: 1.5rem !important; }
     }
     .navbar-spacer { height: 74px; }
     @media (min-width: 640px) {
       .navbar-spacer { height: 88px; }
     }
-    .blog-content p { margin-bottom: 1.3em; line-height: 1.8; font-size: 1.12rem; }
-    .blog-content h2, .blog-content h3 { margin-top: 2.2em; margin-bottom: 1em; font-weight: bold; color: #1e3a8a; font-size: 1.35rem; }
+    /* Blog content typography */
+    .blog-content p { margin-bottom: 1.2em; line-height: 1.85; font-size: 1.11rem; color: #223052;}
+    .blog-content h2, .blog-content h3 { margin-top: 2em; margin-bottom: 1em; font-weight: bold; color: #1e3a8a; font-size: 1.32rem; }
     .blog-content ul, .blog-content ol { margin-left: 1.5em; margin-bottom: 1.2em; }
-    .blog-content li { margin-bottom: 0.8em; line-height: 1.7; font-size: 1.08rem; }
+    .blog-content li { margin-bottom: 0.7em; line-height: 1.7; font-size: 1.06rem; }
     .blog-content strong { color: #2563eb; }
     .blog-content { padding-top: 0.2em; padding-bottom: 0.2em; }
     @media (max-width: 640px) {
       .blog-content p, .blog-content li { font-size: 1rem; }
-      .blog-content h2, .blog-content h3 { font-size: 1.1rem; }
+      .blog-content h2, .blog-content h3 { font-size: 1.07rem; }
+    }
+    /* Custom accent bar on desktop */
+    .accent-bar {
+      height: 6px;
+      width: 68px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg,#2563eb 60%,#22d3ee 100%);
+      margin-bottom: 20px;
+    }
+    /* Related horizontal scroll mobile */
+    @media (max-width: 640px) {
+      #related-blogs {
+        display: flex !important;
+        overflow-x: auto;
+        gap: 14px;
+        padding-bottom: 2px;
+        scroll-snap-type: x mandatory;
+      }
+      #related-blogs > div {
+        min-width: 70vw;
+        scroll-snap-align: start;
+      }
     }
   </style>
 </head>
@@ -68,14 +91,16 @@
   <div class="navbar-spacer"></div>
 
   <!-- Blog Single Main Section -->
-  <section class="w-full px-2 sm:px-4 py-8">
-    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div class="p-6 sm:p-10">
+  <section class="w-full px-2 sm:px-0 py-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-blue-100">
+      <!-- Accent bar -->
+      <div class="accent-bar mx-8 mt-8"></div>
+      <div class="px-6 py-6 sm:px-12 sm:py-10">
         <div id="blog-meta"></div>
-        <h1 id="blog-title" class="text-2xl sm:text-3xl font-extrabold text-blue-900 mb-4 leading-tight"></h1>
-        <div id="blog-author-date" class="flex flex-wrap items-center gap-3 mb-6 text-sm text-blue-900/70"></div>
-        <img id="blog-image" class="rounded-xl shadow-md w-full h-64 object-cover mb-7" alt="Blog Cover" />
-        <article id="blog-content" class="blog-content w-90% pt-2 max-w-none text-lg leading-relaxed"></article>
+        <h1 id="blog-title" class="text-left text-2xl sm:text-3xl font-extrabold text-blue-900 mb-3 leading-tight"></h1>
+        <div id="blog-author-date" class="flex flex-wrap items-center gap-3 mb-5 text-[0.93rem] text-blue-900/70"></div>
+        <img id="blog-image" class="rounded-xl shadow-md w-full h-56 sm:h-72 object-cover mb-7 border border-blue-100" alt="Blog Cover" />
+        <article id="blog-content" class="blog-content w-full pt-2 max-w-none text-[1.12rem] leading-relaxed text-left"></article>
         <div id="blog-tags" class="flex flex-wrap gap-3 mt-8"></div>
       </div>
     </div>
@@ -107,8 +132,6 @@
       </div>
     </div>
   </footer>
-
-                                                                         
   <script>
     // Responsive Navbar Toggle
     document.addEventListener('DOMContentLoaded', function () {
@@ -165,7 +188,7 @@
             ${blog.category ? `<span class="bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded">${blog.category}</span>` : ""}
             <span class="inline-flex items-center gap-1 text-yellow-500 text-sm font-semibold ml-auto">
               <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.783.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.174 9.384c-.783-.57-.38-1.81.588-1.81h4.159a1 1 0 00.95-.69l1.286-3.957z"/>
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-[...]
               </svg>
               ${(blog.rating !== undefined && blog.rating !== null) ? blog.rating : '0.0'}
             </span>
@@ -205,14 +228,14 @@
           }
           if (rel.length) {
             relatedDiv.innerHTML = rel.map(item => `
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col">
+              <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col border border-blue-100">
                 <img src="${item.image || item.image_url || 'https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80'}"
-                  alt="${item.title}" class="w-full h-40 object-cover">
+                  alt="${item.title}" class="w-full h-36 object-cover border-b border-blue-50">
                 <div class="p-5 flex flex-col flex-1">
                   <div class="flex items-center gap-2 mb-2">
                     ${item.university ? `<span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">${item.university}</span>` : ""}
                   </div>
-                  <h3 class="font-bold text-lg mb-1">${item.title}</h3>
+                  <h3 class="font-bold text-lg mb-1 text-blue-900">${item.title}</h3>
                   <a href="blog-single.html" onclick="selectBlog('${item.id}')" class="text-blue-700 font-semibold mt-auto hover:underline">Read More</a>
                 </div>
               </div>
