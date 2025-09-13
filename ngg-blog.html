@@ -168,83 +168,88 @@
       </div>
     </div>
   </footer>
-  <script>
-    // Save blog data and id to localStorage when a card is clicked, then redirect to single page
-    function handleBlogClick(blog) {
-      localStorage.setItem('selectedBlogId', blog.id);
-      localStorage.setItem('selectedBlogData', JSON.stringify(blog));
-      localStorage.setItem('relatedBlogs', JSON.stringify(window.blogData));
-      window.location.href = "blog-single.html";
-    }
-    function renderTopBlogs(blogData) {
-      const topBlogs = blogData.slice(0, 2);
-      const blogCards = document.getElementById('blogCards');
-      blogCards.innerHTML = "";
-      topBlogs.forEach(blog => {
-        blogCards.innerHTML += `
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
-          <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
-          <div class="p-6 flex flex-col flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
-              <span class="text-xs text-blue-800/80">By ${blog.author}</span>
-            </div>
-            <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
-            <p class="text-blue-900/80 mb-4 flex-1">${blog.excerpt}</p>
-            <div class="flex items-center justify-between mt-auto">
-              <span class="inline-flex items-center gap-1 text-sm text-blue-700">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
-                ${blog.reads} reads
-              </span>
-              <span class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</span>
-            </div>
+<script>
+  // Save blog data and id to localStorage when a card is clicked, then redirect to single page
+  function handleBlogClick(blog) {
+    localStorage.setItem('selectedBlogId', blog.id);
+    localStorage.setItem('selectedBlogData', JSON.stringify(blog));
+    localStorage.setItem('relatedBlogs', JSON.stringify(window.blogData));
+    window.location.href = "blog-single.html";
+  }
+  function renderTopBlogs(blogData) {
+    const topBlogs = blogData.slice(0, 2);
+    const blogCards = document.getElementById('blogCards');
+    blogCards.innerHTML = "";
+    topBlogs.forEach(blog => {
+      blogCards.innerHTML += `
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
+        <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
+            <span class="text-xs text-blue-800/80">By ${blog.author}</span>
           </div>
-        </div>`;
-      });
-    }
-    function renderBlogGrid(blogData) {
-      const gridBlogs = blogData.slice(2);
-      const blogGrid = document.getElementById('blogGrid');
-      blogGrid.innerHTML = "";
-      gridBlogs.forEach(blog => {
-        blogGrid.innerHTML += `
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
-          <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
-          <div class="p-6 flex flex-col flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
-              <span class="text-xs text-blue-800/80">By ${blog.author}</span>
-            </div>
-            <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
-            <p class="text-blue-900/80 mb-4 flex-1">${blog.excerpt}</p>
-            <div class="flex items-center justify-between mt-auto">
-              <span class="inline-flex items-center gap-1 text-sm text-blue-700">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
-                ${blog.reads} reads
-              </span>
-              <span class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</span>
-            </div>
+          <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">${
+            blog.excerpt.split(" ").slice(0,10).join(" ") + (blog.excerpt.split(" ").length > 10 ? "..." : "")
+          }</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              ${blog.reads} reads
+            </span>
+            <span class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</span>
           </div>
-        </div>`;
-      });
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('blog.json')
-        .then(response => response.json())
-        .then(data => {
-          window.blogData = data;
-          renderTopBlogs(data);
-          renderBlogGrid(data);
-        })
-        .catch(error => {
-          console.error("Failed to load blog.json:", error);
-        });
-      const btn = document.querySelector('[data-collapse-toggle]');
-      const menu = document.getElementById('navbar-default');
-      btn?.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-      });
+        </div>
+      </div>`;
     });
-  </script>
+  }
+  function renderBlogGrid(blogData) {
+    const gridBlogs = blogData.slice(2);
+    const blogGrid = document.getElementById('blogGrid');
+    blogGrid.innerHTML = "";
+    gridBlogs.forEach(blog => {
+      blogGrid.innerHTML += `
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
+        <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
+        <div class="p-6 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
+            <span class="text-xs text-blue-800/80">By ${blog.author}</span>
+          </div>
+          <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
+          <p class="text-blue-900/80 mb-4 flex-1">${
+            blog.excerpt.split(" ").slice(0,10).join(" ") + (blog.excerpt.split(" ").length > 10 ? "..." : "")
+          }</p>
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+              ${blog.reads} reads
+            </span>
+            <span class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</span>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('blog.json')
+      .then(response => response.json())
+      .then(data => {
+        window.blogData = data;
+        renderTopBlogs(data);
+        renderBlogGrid(data);
+      })
+      .catch(error => {
+        console.error("Failed to load blog.json:", error);
+      });
+    const btn = document.querySelector('[data-collapse-toggle]');
+    const menu = document.getElementById('navbar-default');
+    btn?.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  });
+</script>
+
 </body>
 </html>
