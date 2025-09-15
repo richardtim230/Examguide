@@ -67,32 +67,42 @@ router.get("/myposts", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not fetch posts." });
   }
 });
+// Use multer for multiple images:
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: function (req, file, cb) {
+    if (!file.mimetype.match(/^image\/(png|jpe?g|gif|svg\+xml)$/)) {
+      return cb(new Error("Only image files are allowed!"), false);
+    }
+    cb(null, true);
+  }
+});
 
-// CREATE blog post (multi-image upload)
-router.post("/posts", authenticate, upload.array("images", 3), async (req, res) => {
+// CREATE blog post (multiple images)
+router.post("/posts", authenticate, upload.array("images", 5), async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
-
-    const { title, content, status = "Draft" } = req.body;
+    const { title, content, status = "Draft", category } = req.body;
     if (!title || !content) return res.status(400).json({ error: "Title and content required" });
-
-    let images = [];
-    if (req.files && req.files.length) {
-      images = req.files.map(f => "/uploads/posts/" + f.filename);
-    }
     const postData = {
       _id: new mongoose.Types.ObjectId(),
       title,
       content,
+      category,
       status,
       date: new Date(),
       views: 0,
       likes: 0,
       earnings: 0,
       comments: [],
-      images
+      images: []
     };
+    if (req.files && req.files.length) {
+      postData.images = req.files.map(f => "/uploads/posts/" + f.filename);
+      postData.imageUrl = postData.images[0];
+    }
     dashboard.posts.unshift(postData);
     await dashboard.save();
     res.status(201).json(postData);
@@ -101,21 +111,21 @@ router.post("/posts", authenticate, upload.array("images", 3), async (req, res) 
   }
 });
 
-// UPDATE blog post (JSON body or form-data, multi-image support)
-router.put("/posts/:id", authenticate, upload.array("images", 3), async (req, res) => {
+// UPDATE blog post (support multiple images)
+router.put("/posts/:id", authenticate, upload.array("images", 5), async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
     const post = dashboard.posts.id(req.params.id);
     if (!post) return res.status(404).json({ error: "Post not found" });
-
     if (req.body.title !== undefined) post.title = req.body.title;
     if (req.body.content !== undefined) post.content = req.body.content;
     if (req.body.status !== undefined) post.status = req.body.status;
+    if (req.body.category !== undefined) post.category = req.body.category;
     post.date = new Date();
-
     if (req.files && req.files.length) {
       post.images = req.files.map(f => "/uploads/posts/" + f.filename);
+      post.imageUrl = post.images[0];
     }
     await dashboard.save();
     res.json(post);
@@ -123,6 +133,7 @@ router.put("/posts/:id", authenticate, upload.array("images", 3), async (req, re
     res.status(500).json({ error: "Could not update post." });
   }
 });
+
 
 // DELETE blog post
 router.delete("/posts/:id", authenticate, async (req, res) => {
