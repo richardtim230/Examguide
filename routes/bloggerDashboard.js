@@ -67,17 +67,7 @@ router.get("/myposts", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not fetch posts." });
   }
 });
-// Use multer for multiple images:
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 },
-  fileFilter: function (req, file, cb) {
-    if (!file.mimetype.match(/^image\/(png|jpe?g|gif|svg\+xml)$/)) {
-      return cb(new Error("Only image files are allowed!"), false);
-    }
-    cb(null, true);
-  }
-});
+
 
 // CREATE blog post (multiple images)
 router.post("/posts", authenticate, upload.array("images", 5), async (req, res) => {
