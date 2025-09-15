@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 
 const router = express.Router();
 
-// Setup multer for image uploads (for posts/listings)
+// Multer setup for multi-image upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const dir = path.join(process.cwd(), "uploads/posts/");
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB per file
   fileFilter: function (req, file, cb) {
     if (!file.mimetype.match(/^image\/(png|jpe?g|gif|svg\+xml)$/)) {
       return cb(new Error("Only image files are allowed!"), false);
@@ -29,8 +29,6 @@ const upload = multer({
     cb(null, true);
   }
 });
-
-// ==== GENERAL DASHBOARD ====
 
 // GET: Fetch dashboard for current user (includes posts, listings, analytics, etc)
 router.get("/", authenticate, async (req, res) => {
@@ -55,8 +53,6 @@ router.patch("/", authenticate, async (req, res) => {
   res.json(dashboard);
 });
 
-// ==== BLOGGER ENDPOINTS ====
-
 // GET all posts for the current blogger (for dashboard list)
 router.get("/myposts", authenticate, async (req, res) => {
   try {
@@ -72,8 +68,8 @@ router.get("/myposts", authenticate, async (req, res) => {
   }
 });
 
-// CREATE blog post (with optional image upload)
-router.post("/posts", authenticate, upload.single("image"), async (req, res) => {
+// CREATE blog post (multi-image upload)
+router.post("/posts", authenticate, upload.array("images", 3), async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
@@ -81,6 +77,10 @@ router.post("/posts", authenticate, upload.single("image"), async (req, res) => 
     const { title, content, status = "Draft" } = req.body;
     if (!title || !content) return res.status(400).json({ error: "Title and content required" });
 
+    let images = [];
+    if (req.files && req.files.length) {
+      images = req.files.map(f => "/uploads/posts/" + f.filename);
+    }
     const postData = {
       _id: new mongoose.Types.ObjectId(),
       title,
@@ -91,10 +91,8 @@ router.post("/posts", authenticate, upload.single("image"), async (req, res) => 
       likes: 0,
       earnings: 0,
       comments: [],
+      images
     };
-    if (req.file) {
-      postData.imageUrl = "/uploads/posts/" + req.file.filename;
-    }
     dashboard.posts.unshift(postData);
     await dashboard.save();
     res.status(201).json(postData);
@@ -102,6 +100,45 @@ router.post("/posts", authenticate, upload.single("image"), async (req, res) => 
     res.status(500).json({ error: "Could not create post." });
   }
 });
+
+// UPDATE blog post (JSON body or form-data, multi-image support)
+router.put("/posts/:id", authenticate, upload.array("images", 3), async (req, res) => {
+  try {
+    let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
+    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
+    const post = dashboard.posts.id(req.params.id);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+
+    if (req.body.title !== undefined) post.title = req.body.title;
+    if (req.body.content !== undefined) post.content = req.body.content;
+    if (req.body.status !== undefined) post.status = req.body.status;
+    post.date = new Date();
+
+    if (req.files && req.files.length) {
+      post.images = req.files.map(f => "/uploads/posts/" + f.filename);
+    }
+    await dashboard.save();
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: "Could not update post." });
+  }
+});
+
+// DELETE blog post
+router.delete("/posts/:id", authenticate, async (req, res) => {
+  try {
+    let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
+    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
+    const post = dashboard.posts.id(req.params.id);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    post.remove();
+    await dashboard.save();
+    res.json({ message: "Post deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "Could not delete post." });
+  }
+});
+
 // GET all published blog posts (public)
 router.get("/allposts", async (req, res) => {
   try {
@@ -110,10 +147,12 @@ router.get("/allposts", async (req, res) => {
     dashboards.forEach(dash => {
       (dash.posts || []).forEach(post => {
         if (post.status === "Published") {
-          allPosts.push({
-            ...post.toObject(),
-            authorId: dash.user
-          });
+          let obj = post.toObject ? post.toObject() : post;
+          obj.authorId = dash.user;
+          // Ensure images array exists for frontend
+          if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
+          if (!obj.images) obj.images = [];
+          allPosts.push(obj);
         }
       });
     });
@@ -123,7 +162,6 @@ router.get("/allposts", async (req, res) => {
     res.status(500).json({ error: "Could not fetch blog posts." });
   }
 });
-// ...existing imports & code
 
 // PATCH increment views for a post (public)
 router.patch("/increment-views/:postId", async (req, res) => {
@@ -144,10 +182,8 @@ router.patch("/increment-views/:postId", async (req, res) => {
   }
 });
 
-
-// POST a comment (public, or require auth if desired)
+// POST a comment
 router.post("/add-comment/:postId", async (req, res) => {
-  // Find the dashboard containing this post
   const { postId } = req.params;
   const { name, text, user } = req.body;
   if (!name || !text) return res.status(400).json({ error: "Name and text required" });
@@ -156,12 +192,7 @@ router.post("/add-comment/:postId", async (req, res) => {
     for (let dash of dashboards) {
       const post = dash.posts.id(postId);
       if (post) {
-        post.comments.push({
-          name,
-          text,
-          user: user || null,
-          date: new Date()
-        });
+        post.comments.push({ name, text, user: user || null, date: new Date() });
         await dash.save();
         return res.json({ success: true });
       }
@@ -171,6 +202,7 @@ router.post("/add-comment/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not add comment" });
   }
 });
+
 // UPDATE blog post (JSON body or form-data)
 router.put("/posts/:id", authenticate, upload.single("image"), async (req, res) => {
   try {
