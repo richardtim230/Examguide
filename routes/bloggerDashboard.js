@@ -123,6 +123,27 @@ router.get("/allposts", async (req, res) => {
     res.status(500).json({ error: "Could not fetch blog posts." });
   }
 });
+// ...existing imports & code
+
+// PATCH increment views for a post (public)
+router.patch("/increment-views/:postId", async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const dashboards = await BloggerDashboard.find({});
+    for (let dash of dashboards) {
+      const post = dash.posts.id(postId);
+      if (post) {
+        post.views = (post.views || 0) + 1;
+        await dash.save();
+        return res.json({ success: true, views: post.views });
+      }
+    }
+    res.status(404).json({ error: "Post not found" });
+  } catch (e) {
+    res.status(500).json({ error: "Could not increment views" });
+  }
+});
+
 
 // POST a comment (public, or require auth if desired)
 router.post("/add-comment/:postId", async (req, res) => {
