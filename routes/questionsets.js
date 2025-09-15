@@ -66,7 +66,26 @@ router.post("/bulk", authenticate, authorizeRole("admin", "uploader", "superadmi
     res.status(400).json({ error: e.message });
   }
 });
+// Get total number of quizzes (question sets)
+router.get("/count", async (req, res) => {
+  try {
+    const count = await QuestionSet.countDocuments();
+    res.json({ count });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
+  }
+});
 
+// Get total number of questions across all sets
+router.get("/questions/count", async (req, res) => {
+  try {
+    const sets = await QuestionSet.find({}, "questions");
+    const total = sets.reduce((sum, set) => sum + (set.questions?.length || 0), 0);
+    res.json({ count: total });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
+  }
+});
 // Add questions in bulk to an existing set by id
 router.post("/:id/questions", authenticate, authorizeRole("admin", "uploader", "superadmin"), async (req, res) => {
   const { id } = req.params;
