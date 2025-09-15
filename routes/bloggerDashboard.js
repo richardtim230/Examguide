@@ -102,7 +102,54 @@ router.post("/posts", authenticate, upload.single("image"), async (req, res) => 
     res.status(500).json({ error: "Could not create post." });
   }
 });
+// GET all published blog posts (public)
+router.get("/allposts", async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts user');
+    let allPosts = [];
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        if (post.status === "Published") {
+          allPosts.push({
+            ...post.toObject(),
+            authorId: dash.user
+          });
+        }
+      });
+    });
+    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    res.json(allPosts);
+  } catch (e) {
+    res.status(500).json({ error: "Could not fetch blog posts." });
+  }
+});
 
+// POST a comment (public, or require auth if desired)
+router.post("/add-comment/:postId", async (req, res) => {
+  // Find the dashboard containing this post
+  const { postId } = req.params;
+  const { name, text, user } = req.body;
+  if (!name || !text) return res.status(400).json({ error: "Name and text required" });
+  try {
+    const dashboards = await BloggerDashboard.find({});
+    for (let dash of dashboards) {
+      const post = dash.posts.id(postId);
+      if (post) {
+        post.comments.push({
+          name,
+          text,
+          user: user || null,
+          date: new Date()
+        });
+        await dash.save();
+        return res.json({ success: true });
+      }
+    }
+    res.status(404).json({ error: "Post not found" });
+  } catch (e) {
+    res.status(500).json({ error: "Could not add comment" });
+  }
+});
 // UPDATE blog post (JSON body or form-data)
 router.put("/posts/:id", authenticate, upload.single("image"), async (req, res) => {
   try {
