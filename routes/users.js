@@ -31,7 +31,18 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+// --- Add this route to your users.js/users route file ---
 
+// GET user by id (for author lookup)
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("fullname username profilePic faculty department bio");
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json({ user });
+  } catch (e) {
+    res.status(500).json({ error: "Could not fetch user" });
+  }
+});
 // CREATE new user (admin/superadmin only)
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
@@ -83,19 +94,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   }
 });
 
-// GET single user by ID (admin/superadmin only)
-router.get("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id)
-      .populate("faculty", "name")
-      .populate("department", "name")
-      .select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
-  } catch (err) {
-    res.status(500).json({ message: err.message || "Server error" });
-  }
-});
+
 
 // UPDATE user profile (admin or superadmin)
 router.put("/:id", authenticate, authorizeRole("admin", "student", "superadmin"), async (req, res) => {
