@@ -18,6 +18,7 @@ const PostSchema = new mongoose.Schema({
   earnings: { type: Number, default: 0 },
   status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
   imageUrl: String,
+  images: [String],
   comments: [CommentSchema]
 }, { _id: true });
 
