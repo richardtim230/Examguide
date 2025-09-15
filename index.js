@@ -73,7 +73,11 @@ import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API ro
 import adminRoutes from "./routes/admin.js";
 import responsesRoutes from "./routes/responses.js";
 import settingsRoutes from "./routes/settings.js";
-  
+ 
+import buyerDashboardRoutes from "./routes/buyerDashboard.js";
+
+
+
 // ===== Models and Middleware =====
 import User from "./models/User.js";
 import Progress from "./models/Progress.js";
@@ -523,6 +527,7 @@ app.use("/api/adminstats", adminStatsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/registrations", registrationsRoutes);
 app.use("/api/responses", responsesRoutes);
+app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
