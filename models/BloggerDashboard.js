@@ -29,6 +29,7 @@ const PostSchema = new mongoose.Schema({
   status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
   category: { type: String, default: "General" }, // <------ ADD THIS LINE
   imageUrl: String,
+  readers: { type: [String], default: [] }, 
   images: { type: [String], default: [] },
   comments: [CommentSchema]
 }, { _id: true });
