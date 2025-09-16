@@ -125,12 +125,15 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
   throw new Error("Missing required environment variables. Check MONGODB_URI, JWT_SECRET, FRONTEND_ORIGIN.");
 }
 
+// Increase limits for JSON and urlencoded bodies
+app.use(express.json({ limit: '20mb' }));      // or more if needed
+app.use(express.urlencoded({ limit: '20mb', extended: true }));
 // ===== CORS Config =====
 app.use(cors({
   origin: true, // Reflects the request origin
   credentials: true,
 }));
-app.use(express.json());
+
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/forms", formsRoutes); 
 
