@@ -69,6 +69,16 @@ router.get("/myposts", authenticate, async (req, res) => {
 });
 
 
+// Allowed categories - you can expand this list if needed
+const allowedCategories = [
+  "Campus Life",
+  "Academics",
+  "Tips & Hacks",
+  "Opportunities",
+  "Events",
+  "General"
+];
+
 // CREATE blog post (base64 images)
 router.post("/posts", authenticate, async (req, res) => {
   try {
@@ -76,11 +86,13 @@ router.post("/posts", authenticate, async (req, res) => {
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
     const { title, content, status = "Draft", category, images } = req.body;
     if (!title || !content) return res.status(400).json({ error: "Title and content required" });
+    // Ensure valid, non-empty category
+    const safeCategory = allowedCategories.includes(category) ? category : "General";
     const postData = {
       _id: new mongoose.Types.ObjectId(),
       title,
       content,
-      category,
+      category: safeCategory,
       status,
       date: new Date(),
       views: 0,
@@ -109,7 +121,12 @@ router.put("/posts/:id", authenticate, async (req, res) => {
     if (req.body.title !== undefined) post.title = req.body.title;
     if (req.body.content !== undefined) post.content = req.body.content;
     if (req.body.status !== undefined) post.status = req.body.status;
-    if (req.body.category !== undefined) post.category = req.body.category;
+    // Patch: ensure valid, non-empty category
+    if (req.body.category !== undefined) {
+      post.category = allowedCategories.includes(req.body.category)
+        ? req.body.category
+        : "General";
+    }
     post.date = new Date();
     if (req.body.images && Array.isArray(req.body.images)) {
       post.images = req.body.images;
@@ -123,22 +140,6 @@ router.put("/posts/:id", authenticate, async (req, res) => {
   }
 });
 
-
-
-// DELETE blog post
-router.delete("/posts/:id", authenticate, async (req, res) => {
-  try {
-    let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
-    const post = dashboard.posts.id(req.params.id);
-    if (!post) return res.status(404).json({ error: "Post not found" });
-    post.remove();
-    await dashboard.save();
-    res.json({ message: "Post deleted" });
-  } catch (err) {
-    res.status(500).json({ error: "Could not delete post." });
-  }
-});
 
 // GET all published blog posts (public)
 router.get("/allposts", async (req, res) => {
