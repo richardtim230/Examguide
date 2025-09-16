@@ -35,19 +35,38 @@ router.get("/", async (req, res) => {
 
 
 
-// GET single user by ID (admin/superadmin only)
-router.get("/:id", authenticate, authorizeRole("admin", "student", "superadmin"), async (req, res) => {
+// GET user by id
+router.get("/:id", authenticateOptional, async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
       .populate("faculty", "name")
-      .populate("department", "name")
-      .select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
+      .populate("department", "name");
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // If no logged-in user OR role not admin/superadmin → return public info only
+    if (!req.user || !["admin", "superadmin"].includes(req.user.role)) {
+      return res.json({
+        user: {
+          fullname: user.fullname,
+          username: user.username,
+          profilePic: user.profilePic,
+          faculty: user.faculty,
+          department: user.department,
+          bio: user.bio,
+        },
+      });
+    }
+
+    // Admin/superadmin → return full details (excluding password)
+    const { password, ...safeUser } = user.toObject();
+    res.json(safeUser);
+
   } catch (err) {
-    res.status(500).json({ message: err.message || "Server error" });
+    res.status(500).json({ error: err.message || "Server error" });
   }
 });
+
       
 // CREATE new user (admin/superadmin only)
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
