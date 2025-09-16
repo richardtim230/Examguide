@@ -33,10 +33,12 @@ router.get("/", async (req, res) => {
 });
 // --- Add this route to your users.js/users route file ---
 
-// GET user by id (for author lookup)
 router.get("/:id", async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("fullname username profilePic faculty department bio");
+    const user = await User.findById(req.params.id)
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .select("fullname username profilePic faculty department bio");
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json({ user });
   } catch (e) {
