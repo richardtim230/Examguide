@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-// --- Nested Schemas ---
-
 const CommentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   name: String,
@@ -9,7 +7,6 @@ const CommentSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 }, { _id: true });
 
-// ... other schema code ...
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -18,10 +15,11 @@ const PostSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   earnings: { type: Number, default: 0 },
   status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
-  imageUrl: String,
-  images: String,
+  imageUrl: String, // For convenience, always set this to images[0] if present
+  images: { type: [String], default: [] }, // Array of base64 strings (data URLs)
   comments: [CommentSchema]
 }, { _id: true });
+
 
 const ListingSchema = new mongoose.Schema({
   title: { type: String },
