@@ -1,15 +1,24 @@
 import mongoose from "mongoose";
 
-// Recursive Comment Schema for replies
+
+
+// Recursive Comment Schema for replies (fixed!)
 const CommentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   name: String,
   text: String,
   date: { type: Date, default: Date.now },
   parentId: { type: mongoose.Schema.Types.ObjectId, ref: "Comment", default: null },
-  likes: { type: Number, default: 0 },
-  replies: [this], // recursive for nested replies
+  likes: { type: Number, default: 0 }
 }, { _id: true });
+
+// Add recursive field AFTER initial definition!
+CommentSchema.add({
+  replies: [CommentSchema]
+});
+
+// ... rest of your schemas ...
+
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
