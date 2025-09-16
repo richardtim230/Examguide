@@ -204,7 +204,50 @@ router.post("/add-comment/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not add comment" });
   }
 });
+// Award reading points endpoint
+router.post("/award-points", authenticate, async (req, res) => {
+  const { postId } = req.body;
+  if (!postId) return res.status(400).json({ error: "Missing postId" });
 
+  try {
+    // Find user dashboard
+    let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
+    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
+
+    // Prevent multiple credits (store a field in the post or in dashboard, e.g. post.readers = [userIds])
+    let post = dashboard.posts.id(postId) || null;
+    if (!post) {
+      // If not in this dashboard, search all dashboards for the post
+      const dashboards = await BloggerDashboard.find({});
+      for (const dash of dashboards) {
+        const p = dash.posts.id(postId);
+        if (p) {
+          post = p;
+          dashboard = dash;
+          break;
+        }
+      }
+      if (!post) return res.status(404).json({ error: "Post not found" });
+    }
+
+    // Use a readers array to track who has already earned for this post
+    if (!post.readers) post.readers = [];
+    if (post.readers.includes(req.user.id)) {
+      return res.status(400).json({ error: "Points already awarded for this post" });
+    }
+    post.readers.push(req.user.id);
+
+    // Now award points: you can increment a 'points' field on user, or however you track it
+    const user = await User.findById(req.user.id);
+    user.points = (user.points || 0) + 5;
+    await user.save();
+    await dashboard.save();
+
+    res.json({ success: true, points: user.points });
+  } catch (e) {
+    res.status(500).json({ error: "Could not award points" });
+  }
+});
 // UPDATE blog post (JSON body or form-data)
 router.put("/posts/:id", authenticate, upload.single("image"), async (req, res) => {
   try {
