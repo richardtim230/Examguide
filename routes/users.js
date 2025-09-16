@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 
 
 // GET user by id
-router.get("/:id", authenticateOptional, async (req, res) => {
+router.get("/:id", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
       .populate("faculty", "name")
