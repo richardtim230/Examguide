@@ -338,7 +338,97 @@ router.delete("/commissions/:commissionId", authenticate, async (req, res) => {
   await dashboard.save();
   res.json({ message: "Commission deleted" });
 });
+// --- Likes and Reply Endpoints for Blog Posts and Comments ---
 
+// PATCH: Like a blog post
+router.patch("/like/:postId", async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const dashboards = await BloggerDashboard.find({});
+    for (let dash of dashboards) {
+      const post = dash.posts.id(postId);
+      if (post) {
+        post.likes = (post.likes || 0) + 1;
+        await dash.save();
+        return res.json({ success: true, likes: post.likes });
+      }
+    }
+    res.status(404).json({ error: "Post not found" });
+  } catch (e) {
+    res.status(500).json({ error: "Could not like post" });
+  }
+});
+
+// PATCH: Like a comment on a post
+router.patch("/like-comment/:postId/:commentId", async (req, res) => {
+  const { postId, commentId } = req.params;
+  try {
+    const dashboards = await BloggerDashboard.find({});
+    for (let dash of dashboards) {
+      const post = dash.posts.id(postId);
+      if (post && Array.isArray(post.comments)) {
+        const comment = post.comments.id(commentId);
+        if (comment) {
+          comment.likes = (comment.likes || 0) + 1;
+          await dash.save();
+          return res.json({ success: true, likes: comment.likes });
+        }
+      }
+    }
+    res.status(404).json({ error: "Comment not found" });
+  } catch (e) {
+    res.status(500).json({ error: "Could not like comment" });
+  }
+});
+
+// POST: Add a comment or reply (supports parentId for replies)
+router.post("/add-comment/:postId", async (req, res) => {
+  const { postId } = req.params;
+  const { name, text, user, parentId } = req.body;
+  if (!name || !text) return res.status(400).json({ error: "Name and text required" });
+  try {
+    const dashboards = await BloggerDashboard.find({});
+    for (let dash of dashboards) {
+      const post = dash.posts.id(postId);
+      if (post) {
+        // If parentId is set, this is a reply
+        if (parentId) {
+          // Find parent comment and push to .replies array (create if not exist)
+          const parentComment = post.comments.id(parentId);
+          if (!parentComment) return res.status(404).json({ error: "Parent comment not found" });
+          if (!parentComment.replies) parentComment.replies = [];
+          parentComment.replies.push({
+            _id: new mongoose.Types.ObjectId(),
+            name,
+            text,
+            user: user || null,
+            date: new Date(),
+            parentId, // for easier frontend rendering
+            likes: 0,
+            replies: [],
+          });
+        } else {
+          // Root comment
+          post.comments.push({
+            _id: new mongoose.Types.ObjectId(),
+            name,
+            text,
+            user: user || null,
+            date: new Date(),
+            parentId: null,
+            likes: 0,
+            replies: [],
+          });
+        }
+        await dash.save();
+        return res.json({ success: true });
+      }
+    }
+    res.status(404).json({ error: "Post not found" });
+  } catch (e) {
+    res.status(500).json({ error: "Could not add comment" });
+  }
+});
 // ==== FOLLOWERS ====
 
 // ADD follower
