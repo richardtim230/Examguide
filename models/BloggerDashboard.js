@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 
+// Recursive Comment Schema for replies
 const CommentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   name: String,
   text: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  parentId: { type: mongoose.Schema.Types.ObjectId, ref: "Comment", default: null },
+  likes: { type: Number, default: 0 },
+  replies: [this], // recursive for nested replies
 }, { _id: true });
 
 const PostSchema = new mongoose.Schema({
@@ -15,11 +19,10 @@ const PostSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   earnings: { type: Number, default: 0 },
   status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
-  imageUrl: String, // For convenience, always set this to images[0] if present
+  imageUrl: String, // Convenience: always set this to images[0] if present
   images: { type: [String], default: [] }, // Array of base64 strings (data URLs)
   comments: [CommentSchema]
 }, { _id: true });
-
 
 const ListingSchema = new mongoose.Schema({
   title: { type: String },
@@ -87,8 +90,6 @@ const BloggerDashboardSchema = new mongoose.Schema({
 
   // Messages (inbox, support, chat)
   messages: [MessageSchema]
-
-  // Expand with more dashboard-related fields as needed.
 });
 
 export default mongoose.model("BloggerDashboard", BloggerDashboardSchema);
