@@ -69,12 +69,12 @@ router.get("/myposts", authenticate, async (req, res) => {
 });
 
 
-// CREATE blog post (multiple images)
-router.post("/posts", authenticate, upload.array("images", 5), async (req, res) => {
+// CREATE blog post (base64 images)
+router.post("/posts", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
-    const { title, content, status = "Draft", category } = req.body;
+    const { title, content, status = "Draft", category, images } = req.body;
     if (!title || !content) return res.status(400).json({ error: "Title and content required" });
     const postData = {
       _id: new mongoose.Types.ObjectId(),
@@ -87,22 +87,20 @@ router.post("/posts", authenticate, upload.array("images", 5), async (req, res) 
       likes: 0,
       earnings: 0,
       comments: [],
-      images: []
+      images: Array.isArray(images) ? images : [],
+      imageUrl: Array.isArray(images) && images.length ? images[0] : undefined
     };
-    if (req.files && req.files.length) {
-      postData.images = req.files.map(f => "/uploads/posts/" + f.filename);
-      postData.imageUrl = postData.images[0];
-    }
     dashboard.posts.unshift(postData);
     await dashboard.save();
     res.status(201).json(postData);
   } catch (err) {
+    console.error("Error creating post:", err);
     res.status(500).json({ error: "Could not create post." });
   }
 });
 
-// UPDATE blog post (support multiple images)
-router.put("/posts/:id", authenticate, upload.array("images", 5), async (req, res) => {
+// UPDATE blog post (base64 images)
+router.put("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
@@ -113,16 +111,18 @@ router.put("/posts/:id", authenticate, upload.array("images", 5), async (req, re
     if (req.body.status !== undefined) post.status = req.body.status;
     if (req.body.category !== undefined) post.category = req.body.category;
     post.date = new Date();
-    if (req.files && req.files.length) {
-      post.images = req.files.map(f => "/uploads/posts/" + f.filename);
-      post.imageUrl = post.images[0];
+    if (req.body.images && Array.isArray(req.body.images)) {
+      post.images = req.body.images;
+      post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
     }
     await dashboard.save();
     res.json(post);
   } catch (err) {
+    console.error("Error updating post:", err);
     res.status(500).json({ error: "Could not update post." });
   }
 });
+
 
 
 // DELETE blog post
