@@ -9,6 +9,7 @@ const CommentSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 }, { _id: true });
 
+// ... other schema code ...
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -18,7 +19,7 @@ const PostSchema = new mongoose.Schema({
   earnings: { type: Number, default: 0 },
   status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
   imageUrl: String,
-  images: String,
+  images: { type: [String], default: [] }, // <-- Fix here
   comments: [CommentSchema]
 }, { _id: true });
 
