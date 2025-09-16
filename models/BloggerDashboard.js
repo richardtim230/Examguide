@@ -10,7 +10,6 @@ const CommentSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   replies: [this], // recursive for nested replies
 }, { _id: true });
-
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -19,10 +18,12 @@ const PostSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   earnings: { type: Number, default: 0 },
   status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
-  imageUrl: String, // Convenience: always set this to images[0] if present
-  images: { type: [String], default: [] }, // Array of base64 strings (data URLs)
+  category: { type: String, default: "General" }, // <------ ADD THIS LINE
+  imageUrl: String,
+  images: { type: [String], default: [] },
   comments: [CommentSchema]
 }, { _id: true });
+
 
 const ListingSchema = new mongoose.Schema({
   title: { type: String },
