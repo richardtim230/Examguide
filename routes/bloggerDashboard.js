@@ -205,13 +205,7 @@ router.post("/add-comment/:postId", async (req, res) => {
   }
 });
 
-// Add readers array to PostSchema if not present!
-/*
-const PostSchema = new mongoose.Schema({
-  ...
-  readers: { type: [String], default: [] }, // <-- add this!
-});
-*/
+
 
 router.post("/award-points", authenticate, async (req, res) => {
   const { postId } = req.body;
