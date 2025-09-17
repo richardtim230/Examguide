@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Dev Browser Console</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Flowbite & Tailwind CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+<div class="container mx-auto py-6 px-2">
+  <h1 class="text-3xl font-bold mb-6 text-center text-blue-400">Web Dev Browser Console</h1>
+  <!-- Browser Controls -->
+  <div class="flex items-center gap-2 mb-4">
+    <input id="browser-url" type="text" value="https://oau.examguard.com.ng/" class="w-full bg-gray-800 text-gray-200 rounded px-3 py-2 border border-gray-700 focus:outline-none focus:border-blue-400" placeholder="Enter a URL...">
+    <button id="browser-go" class="bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-2 font-semibold">Go</button>
+    <button id="browser-back" class="bg-gray-700 hover:bg-gray-800 text-white rounded px-2 py-2 ml-2" title="Back">&larr;</button>
+    <button id="browser-forward" class="bg-gray-700 hover:bg-gray-800 text-white rounded px-2 py-2" title="Forward">&rarr;</button>
+    <button id="browser-refresh" class="bg-gray-700 hover:bg-gray-800 text-white rounded px-2 py-2" title="Refresh">&#x21bb;</button>
+  </div>
+  <!-- Browser View -->
+  <div class="bg-gray-800 border border-gray-700 rounded overflow-hidden mb-5" style="height: 380px;">
+    <iframe id="browser-frame" src="https://codecx.examguard.com.ng/" class="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+  </div>
+  <!-- Tabs -->
+  <div class="mb-6 border-b border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="console-tabs" data-tabs-toggle="#console-tabs-content" role="tablist">
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="logs-tab" data-tabs-target="#logs" type="button" role="tab" aria-controls="logs" aria-selected="true">Console</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="network-tab" data-tabs-target="#network" type="button" role="tab" aria-controls="network" aria-selected="false">Network</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="elements-tab" data-tabs-target="#elements" type="button" role="tab" aria-controls="elements" aria-selected="false">Elements</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="webprops-tab" data-tabs-target="#webprops" type="button" role="tab" aria-controls="webprops" aria-selected="false">Web Properties</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="storage-tab" data-tabs-target="#storage" type="button" role="tab" aria-controls="storage" aria-selected="false">Storage</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="cookies-tab" data-tabs-target="#cookies" type="button" role="tab" aria-controls="cookies" aria-selected="false">Cookies</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="performance-tab" data-tabs-target="#performance" type="button" role="tab" aria-controls="performance" aria-selected="false">Performance</button></li>
+      <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="api-tester-tab" data-tabs-target="#api-tester" type="button" role="tab" aria-controls="api-tester" aria-selected="false">API Tester</button></li>
+    </ul>
+  </div>
+  <div class="p-4 bg-gray-800 rounded shadow-lg">
+  <h2 class="text-xl font-bold text-blue-400 mb-4">AI Toolbox</h2>
+  <div class="mb-3">
+    <label for="ai-feature" class="mb-1 block text-sm">Choose AI Feature:</label>
+    <select id="ai-feature" class="bg-gray-900 text-gray-200 p-2 rounded w-full">
+      <option value="explain">Code Explanation</option>
+      <option value="bugfinder">Bug Finder</option>
+      <option value="accessibility">Accessibility Review</option>
+      <option value="testgen">Test Generator</option>
+      <option value="apidoc">API Documentation</option>
+      <option value="chat">AI Chatbot (General)</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="ai-context" class="mb-1 block text-sm">Context (auto-filled from selection):</label>
+    <textarea id="ai-context" class="w-full bg-gray-900 text-gray-200 p-2 rounded mb-2" rows="5"
+      placeholder="Select code, DOM, or network data to fill this automatically."></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="ai-question" class="mb-1 block text-sm">Extra Instructions / Question (optional):</label>
+    <input id="ai-question" class="w-full bg-gray-900 text-gray-200 p-2 rounded" placeholder="e.g. 'How can I improve accessibility?'">
+  </div>
+  <button id="ai-ask" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Run AI Tool</button>
+  <div id="ai-response" class="mt-4 bg-gray-900 text-green-300 p-4 rounded"></div>
+</div>
+<script>
+// Example code: auto-fill context from selection (expand for real use)
+window.fillAIContext = function(context) {
+  document.getElementById('ai-context').value = context;
+};
+// You'd call fillAIContext from your dev console tabs (e.g., when code is selected).
+
+function getPrompt(feature, context, question) {
+  const prompts = {
+    explain: `Explain the following code in detail:\n\n${context}\n\n${question}`,
+    bugfinder: `Analyze this code and find possible bugs or anti-patterns:\n\n${context}\n\n${question}`,
+    accessibility: `Review the following DOM/code for accessibility issues and suggest improvements:\n\n${context}\n\n${question}`,
+    testgen: `Generate unit/integration tests for the following code or API data:\n\n${context}\n\n${question}`,
+    apidoc: `Generate API documentation and explain the following network/API response:\n\n${context}\n\n${question}`,
+    chat: `${question}\n\n(Reference context: ${context})`
+  };
+  return prompts[feature] || `${question}\n\nContext: ${context}`;
+}
+
+document.getElementById('ai-ask').onclick = function() {
+  const feature = document.getElementById('ai-feature').value;
+  const context = document.getElementById('ai-context').value;
+  const question = document.getElementById('ai-question').value;
+  const prompt = getPrompt(feature, context, question);
+  document.getElementById('ai-response').textContent = 'Thinking...';
+  fetch('/api/ai', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ prompt })
+})
+.then(async res => {
+  const raw = await res.text();
+  let txt;
+  try {
+    const j = JSON.parse(raw);
+    txt = j.response || j.error || raw;
+  } catch (e) {
+    txt = raw;
+  }
+  document.getElementById('ai-response').textContent = txt;
+})
+.catch(e => {
+  document.getElementById('ai-response').textContent = 'Error: ' + e.message;
+});
+  
+};
+</script>
+  <div id="console-tabs-content">
+    <div class="hidden" id="logs" role="tabpanel" aria-labelledby="logs-tab"></div>
+    <div class="hidden" id="network" role="tabpanel" aria-labelledby="network-tab"></div>
+    <div class="hidden" id="elements" role="tabpanel" aria-labelledby="elements-tab"></div>
+    <div class="hidden" id="webprops" role="tabpanel" aria-labelledby="webprops-tab"></div>
+    <div class="hidden" id="storage" role="tabpanel" aria-labelledby="storage-tab"></div>
+    <div class="hidden" id="cookies" role="tabpanel" aria-labelledby="cookies-tab"></div>
+    <div class="hidden" id="performance" role="tabpanel" aria-labelledby="performance-tab"></div>
+    <div class="hidden" id="api-tester" role="tabpanel" aria-labelledby="api-tester-tab"></div>
+  </div>
+</div>
+<script>
+// Browser Navigation
+const browserFrame = document.getElementById('browser-frame');
+const browserUrl = document.getElementById('browser-url');
+const browserGo = document.getElementById('browser-go');
+const browserBack = document.getElementById('browser-back');
+const browserForward = document.getElementById('browser-forward');
+const browserRefresh = document.getElementById('browser-refresh');
+let historyStack = [browserUrl.value], historyIndex = 0;
+
+function setFrameSrc(url, push=true) {
+  browserFrame.src = url;
+  browserUrl.value = url;
+  if(push) {
+    historyStack = historyStack.slice(0, historyIndex+1);
+    historyStack.push(url);
+    historyIndex = historyStack.length-1;
+  }
+  updateNavButtons();
+  notifyLimitedAccess();
+}
+browserGo.onclick = () => setFrameSrc(browserUrl.value);
+browserUrl.onkeydown = e => { if(e.key==='Enter') setFrameSrc(browserUrl.value); };
+browserBack.onclick = () => {
+  if(historyIndex>0) {
+    historyIndex--;
+    setFrameSrc(historyStack[historyIndex], false);
+  }
+};
+browserForward.onclick = () => {
+  if(historyIndex<historyStack.length-1) {
+    historyIndex++;
+    setFrameSrc(historyStack[historyIndex], false);
+  }
+};
+browserRefresh.onclick = () => browserFrame.contentWindow.location.reload();
+function updateNavButtons() {
+  browserBack.disabled = historyIndex<=0;
+  browserForward.disabled = historyIndex>=historyStack.length-1;
+}
+
+// Notify if limited access to page (cross-origin)
+function notifyLimitedAccess() {
+  setTimeout(()=>{
+    try {
+      let _ = browserFrame.contentWindow.document.body.innerHTML;
+      limitedAccess = false;
+    } catch {
+      limitedAccess = true;
+    }
+    renderTab();
+  }, 600);
+}
+let limitedAccess = false;
+
+// ---- UI Helper ----
+function htmlEscape(str) {
+  return (str||'').replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// ---- Log Capture (Host Page) ----
+const logEntries = [];
+['log','warn','error','info'].forEach(type=>{
+  const orig=console[type];
+  console[type]=function(...args){
+    logEntries.push({type,msg:args.map(a=>typeof a==='object'?JSON.stringify(a):a).join(' '),time:new Date()});
+    orig.apply(console,args);
+    if(currentTab==='logs') renderLogs();
+  }
+});
+
+// ---- Network Capture (Host Page) ----
+const networkEntries = [];
+function wrapFetch(){
+  if(window.fetch){
+    const origFetch=window.fetch;
+    window.fetch=async function(...args){
+      const start=performance.now();
+      try{
+        const res=await origFetch.apply(this,args);
+        const clone=res.clone(); let body='';
+        try{body=await clone.text();}catch{}
+        networkEntries.push({
+          time:new Date(),method:args[1]?.method||'GET',url:args[0],status:res.status,
+          duration:(performance.now()-start).toFixed(1),
+          response:body.length>200?body.slice(0,200)+'...':body
+        });
+        if(currentTab==='network') renderNetwork();
+        return res;
+      }catch(err){
+        networkEntries.push({
+          time:new Date(),method:args[1]?.method||'GET',url:args[0],status:'ERROR',
+          duration:(performance.now()-start).toFixed(1),
+          response:String(err)
+        });
+        if(currentTab==='network') renderNetwork();
+        throw err;
+      }
+    };
+  }
+}
+function wrapXHR(){
+  const OrigXHR=window.XMLHttpRequest;
+  function XHRWrap(){
+    const xhr=new OrigXHR();
+    let url='',method='',start=0;
+    xhr._open=xhr.open;
+    xhr.open=function(m,u){method=m;url=u;xhr._open.apply(xhr,arguments);};
+    xhr._send=xhr.send;
+    xhr.send=function(){
+      start=performance.now();
+      xhr.addEventListener('loadend',function(){
+        networkEntries.push({
+          time:new Date(),method,url,status:xhr.status,
+          duration:(performance.now()-start).toFixed(1),
+          response:xhr.responseText?.slice(0,200)
+        });
+        if(currentTab==='network') renderNetwork();
+      });
+      xhr._send.apply(xhr,arguments);
+    };
+    return xhr;
+  }
+  window.XMLHttpRequest=XHRWrap;
+}
+wrapFetch();wrapXHR();
+
+// ---- Tab Render ----
+const tabIds = ['logs','network','elements','webprops','storage','cookies','performance','api-tester'];
+let currentTab = tabIds[0];
+function showTab(tabId){
+  tabIds.forEach(id=>{
+    document.getElementById(id).classList.toggle('hidden',id!==tabId);
+    document.getElementById(id+'-tab').classList.toggle('border-blue-400',id===tabId);
+    document.getElementById(id+'-tab').setAttribute('aria-selected',id===tabId);
+  });
+  currentTab=tabId;
+  renderTab();
+}
+// Set up tab switching
+tabIds.forEach(id=>{
+  document.getElementById(id+'-tab').onclick = ()=>showTab(id);
+});
+showTab(currentTab);
+
+function renderTab(){
+  if(currentTab==='api-tester') renderApiTester();
+  else if(limitedAccess) {
+    document.getElementById(currentTab).innerHTML =
+      `<div class="p-6 text-center text-red-400 font-semibold">
+        Due to browser security, developer features are limited for external sites.<br>
+        <span class="text-xs text-gray-400">Only pages from the same origin as this app will show complete developer info.</span>
+      </div>`;
+    return;
+  }
+  if(currentTab==='logs') renderLogs();
+  if(currentTab==='network') renderNetwork();
+  if(currentTab==='elements') renderElements();
+  if(currentTab==='webprops') renderWebProps();
+  if(currentTab==='storage') renderStorage();
+  if(currentTab==='cookies') renderCookies();
+  if(currentTab==='performance') renderPerformance();
+}
+
+// ---- Console Logs Tab ----
+function renderLogs(){
+  const wrap = document.getElementById('logs');
+  let iframeLogs = [];
+  try {
+    iframeLogs = browserFrame.contentWindow._devConsoleLogs || [];
+  } catch {}
+  wrap.innerHTML = `
+    <div class="mb-2 flex gap-2"><button onclick="clearLogs()" class="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-3 py-1">Clear</button></div>
+    <div class="overflow-y-auto max-h-[60vh]">
+      ${iframeLogs.length===0?'<div class="text-gray-400">No logs yet.</div>':
+        iframeLogs.slice(-300).map(e=>
+          `<div class="mb-2 flex items-start gap-2 text-sm">
+            <span class="font-mono text-gray-400">${e.time}</span>
+            <span class="font-bold ${e.type==='error'?'text-red-400':e.type==='warn'?'text-yellow-400':e.type==='info'?'text-blue-400':'text-gray-100'}">${e.type.toUpperCase()}</span>
+            <span class="break-all">${htmlEscape(e.msg)}</span>
+          </div>`
+        ).join('')
+      }
+    </div>
+  `;
+}
+window.clearLogs = function(){
+  try { browserFrame.contentWindow._devConsoleLogs = []; } catch {}
+  renderLogs();
+}
+
+// ---- Network Tab ----
+function renderNetwork(){
+  const wrap = document.getElementById('network');
+  let iframeNetwork = [];
+  try {
+    iframeNetwork = browserFrame.contentWindow._devConsoleNetwork || [];
+  } catch {}
+  wrap.innerHTML = `
+    <div class="mb-2 flex gap-2"><button onclick="clearNetwork()" class="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-3 py-1">Clear</button></div>
+    <div class="overflow-x-auto max-h-[60vh]">
+      ${iframeNetwork.length===0?'<div class="text-gray-400">No network requests captured.</div>':
+        `<table class="table-auto w-full text-xs border border-gray-700">
+          <thead class="bg-gray-800 text-blue-400">
+            <tr>
+              <th class="p-2">Time</th><th class="p-2">Method</th><th class="p-2">URL</th>
+              <th class="p-2">Status</th><th class="p-2">Duration</th><th class="p-2">Response</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${iframeNetwork.slice(-300).map(e=>
+              `<tr class="border-t border-gray-700">
+                <td class="p-2 font-mono text-gray-400">${e.time}</td>
+                <td class="p-2">${e.method}</td>
+                <td class="p-2 break-all">${htmlEscape(e.url)}</td>
+                <td class="p-2">${e.status}</td>
+                <td class="p-2">${e.duration}</td>
+                <td class="p-2 break-all">${htmlEscape(e.response||'')}</td>
+              </tr>`
+            ).join('')}
+          </tbody>
+        </table>`
+      }
+    </div>
+  `;
+}
+window.clearNetwork = function(){
+  try { browserFrame.contentWindow._devConsoleNetwork = []; } catch {}
+  renderNetwork();
+}
+
+// ---- Elements Tab ----
+function renderElements(){
+  const wrap = document.getElementById('elements');
+  let html = '';
+  try {
+    html = renderElementTree(browserFrame.contentWindow.document.body,0);
+  } catch {}
+  wrap.innerHTML = `<div class="mb-2"><button onclick="renderElements()" class="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-3 py-1">Refresh</button></div>
+  <div class="overflow-x-auto max-h-[60vh] font-mono text-xs">${html}</div>`;
+}
+function renderElementTree(node,depth){
+  if(!node) return '';
+  let out = '&nbsp;'.repeat(depth*2);
+  if(node.nodeType===Node.ELEMENT_NODE){
+    out += `<span class="text-blue-400">&lt;${node.tagName.toLowerCase()}</span>`;
+    if(node.id) out += ` <span class="text-green-400">id="${node.id}"</span>`;
+    if(node.className) out += ` <span class="text-yellow-200">class="${htmlEscape(node.className)}"</span>`;
+    out += '<span class="text-blue-400">&gt;</span>';
+    if(node.childNodes.length){
+      out += '<br>';
+      for(const child of node.childNodes) out += renderElementTree(child,depth+1);
+    }
+    out += '&nbsp;'.repeat(depth*2)+`<span class="text-blue-400">&lt;/${node.tagName.toLowerCase()}&gt;</span><br>`;
+  }else if(node.nodeType===Node.TEXT_NODE){
+    const txt=node.textContent.trim();
+    if(txt) out += `<span class="text-gray-300">${htmlEscape(txt)}</span><br>`;
+  }
+  return out;
+}
+
+// ---- Web Properties Tab ----
+function renderWebProps(){
+  const wrap = document.getElementById('webprops');
+  let nav, loc, doc, scr;
+  try {
+    nav = browserFrame.contentWindow.navigator;
+    loc = browserFrame.contentWindow.location;
+    doc = {
+      title: browserFrame.contentWindow.document.title,
+      URL: browserFrame.contentWindow.document.URL,
+      referrer: browserFrame.contentWindow.document.referrer,
+      readyState: browserFrame.contentWindow.document.readyState,
+      lastModified: browserFrame.contentWindow.document.lastModified
+    };
+    scr = browserFrame.contentWindow.screen;
+  } catch {}
+  const props = [
+    {title:'Navigator', obj:nav},
+    {title:'Location', obj:loc},
+    {title:'Document', obj:doc},
+    {title:'Screen', obj:scr}
+  ];
+  wrap.innerHTML = props.map(p=>
+    `<div class="mb-4">
+      <h3 class="text-lg text-blue-400 font-semibold">${p.title}</h3>
+      <pre class="bg-gray-800 rounded p-2 overflow-x-auto text-xs">${htmlEscape(JSON.stringify(p.obj,null,2))}</pre>
+    </div>`
+  ).join('');
+}
+
+// ---- Storage Tab ----
+function renderStorage(){
+  const wrap = document.getElementById('storage');
+  let localS, sessionS;
+  try {
+    localS = browserFrame.contentWindow.localStorage;
+    sessionS = browserFrame.contentWindow.sessionStorage;
+  } catch {}
+  wrap.innerHTML = `
+    <div class="mb-2 flex gap-2">
+      <button onclick="renderStorage()" class="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-3 py-1">Refresh</button>
+      <button onclick="clearStorage()" class="btn btn-sm bg-red-600 hover:bg-red-700 text-white rounded px-3 py-1">Clear All</button>
+    </div>
+    <div class="mb-4"><h3 class="text-blue-400 font-semibold">localStorage</h3>${renderStorageList(localS)}</div>
+    <div><h3 class="text-blue-400 font-semibold">sessionStorage</h3>${renderStorageList(sessionS)}</div>
+  `;
+}
+function renderStorageList(storage){
+  if(!storage || storage.length===0) return '<div class="text-gray-400">(empty)</div>';
+  let out = `<table class="table-auto w-full text-xs border border-gray-700 mb-2">
+    <thead><tr class="bg-gray-800 text-blue-400"><th class="p-2">Key</th><th class="p-2">Value</th></tr></thead><tbody>`;
+  for(let i=0;i<storage.length;i++){
+    const k=storage.key(i);
+    out += `<tr class="border-t border-gray-700"><td class="p-2">${htmlEscape(k)}</td><td class="p-2 break-all">${htmlEscape(storage.getItem(k))}</td></tr>`;
+  }
+  out += '</tbody></table>';
+  return out;
+}
+window.clearStorage = function(){
+  try {
+    browserFrame.contentWindow.localStorage.clear();
+    browserFrame.contentWindow.sessionStorage.clear();
+  } catch {}
+  renderStorage();
+}
+
+// ---- Cookies Tab ----
+function renderCookies(){
+  const wrap = document.getElementById('cookies');
+  let cookies = [];
+  try {
+    cookies = browserFrame.contentWindow.document.cookie.split('; ').map(c=>c.split('='));
+  } catch {}
+  wrap.innerHTML = `<div class="mb-2 flex gap-2">
+    <button onclick="renderCookies()" class="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-3 py-1">Refresh</button>
+    <button onclick="clearCookies()" class="btn btn-sm bg-red-600 hover:bg-red-700 text-white rounded px-3 py-1">Clear All</button>
+  </div>`;
+  if(!cookies[0]||cookies[0][0]==='') wrap.innerHTML += '<div class="text-gray-400">No cookies.</div>';
+  else {
+    wrap.innerHTML += `<table class="table-auto w-full text-xs border border-gray-700 mb-2">
+      <thead><tr class="bg-gray-800 text-blue-400"><th class="p-2">Name</th><th class="p-2">Value</th></tr></thead><tbody>
+      ${cookies.map(([k,v])=>
+        `<tr class="border-t border-gray-700"><td class="p-2">${htmlEscape(k)}</td><td class="p-2 break-all">${htmlEscape(v)}</td></tr>`
+      ).join('')}
+      </tbody></table>`;
+  }
+}
+window.clearCookies = function(){
+  try {
+    const cookies = browserFrame.contentWindow.document.cookie.split('; ');
+    for(const c of cookies){
+      const eq=c.indexOf('=');
+      const name=eq>-1?c.substring(0,eq):c;
+      browserFrame.contentWindow.document.cookie=name+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
+    }
+  } catch {}
+  renderCookies();
+}
+
+// ---- Performance Tab ----
+function renderPerformance(){
+  const wrap = document.getElementById('performance');
+  let perf={}, mem={};
+  try {
+    perf=browserFrame.contentWindow.performance.getEntriesByType('navigation')[0]||{};
+    mem=browserFrame.contentWindow.performance.memory||"Not supported";
+  } catch {}
+  wrap.innerHTML = `<div class="mb-2 flex gap-2"><button onclick="renderPerformance()" class="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white rounded px-3 py-1">Refresh</button></div>
+    <div class="mb-4"><h3 class="text-blue-400 font-semibold">Navigation Timing</h3>
+    <table class="table-auto w-full text-xs border border-gray-700 mb-2">
+      <thead><tr class="bg-gray-800 text-blue-400"><th class="p-2">Property</th><th class="p-2">Value</th></tr></thead><tbody>
+        ${Object.entries(perf).filter(([k,v])=>typeof v==='number').map(([k,v])=>
+          `<tr class="border-t border-gray-700"><td class="p-2">${htmlEscape(k)}</td><td class="p-2">${htmlEscape(String(v))}</td></tr>`
+        ).join('')}
+      </tbody></table>
+    </div>
+    <div><h3 class="text-blue-400 font-semibold">Memory (experimental)</h3>
+    <pre class="bg-gray-800 rounded p-2 overflow-x-auto text-xs">${htmlEscape(JSON.stringify(mem,null,2))}</pre></div>`;
+}
+
+// ---- API Tester Tab ----
+function renderApiTester(){
+  const wrap = document.getElementById('api-tester');
+  wrap.innerHTML = `
+    <div class="mb-2">
+      <label for="api-url" class="block mb-2">API URL:</label>
+      <input id="api-url" class="w-full bg-gray-800 text-gray-200 p-2 rounded mb-2" value="http://localhost:10000/api/auth">
+      <select id="api-method" class="bg-gray-800 text-gray-200 rounded mb-2">
+        <option>GET</option>
+        <option>POST</option>
+      </select>
+      <textarea id="api-body" class="w-full bg-gray-800 text-gray-200 p-2 rounded mb-2" rows="3" placeholder="Request Body (for POST)"></textarea>
+      <button id="api-send" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Send</button>
+      <pre id="api-response" class="mt-4 bg-gray-900 text-green-300 p-4 rounded"></pre>
+    </div>
+  `;
+  document.getElementById('api-send').onclick = sendApiRequest;
+}
+function sendApiRequest() {
+  const url = document.getElementById('api-url').value;
+  const method = document.getElementById('api-method').value;
+  const body = document.getElementById('api-body').value;
+  fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: method === 'POST' && body ? body : undefined,
+  })
+  .then(async res => {
+    const contentType = res.headers.get('content-type');
+    let txt;
+    if(contentType && contentType.includes('application/json')) {
+      txt = JSON.stringify(await res.json(), null, 2);
+    } else {
+      txt = await res.text();
+    }
+    document.getElementById('api-response').textContent = txt;
+  })
+  .catch(e => {
+    document.getElementById('api-response').textContent = e.message;
+  });
+}
+
+// ---- Inject Dev Console into iframe when same-origin ----
+browserFrame.onload = function() {
+  try {
+    let win = browserFrame.contentWindow;
+    // Logs
+    win._devConsoleLogs = [];
+    ['log','warn','error','info'].forEach(type=>{
+      const orig=win.console[type];
+      win.console[type]=function(...args){
+        win._devConsoleLogs.push({type,msg:args.map(a=>typeof a==='object'?JSON.stringify(a):a).join(' '),time:new Date().toLocaleTimeString()});
+        orig.apply(win.console,args);
+      };
+    });
+    // Network
+    win._devConsoleNetwork = [];
+    if(win.fetch){
+      const origFetch=win.fetch;
+      win.fetch=async function(...args){
+        const start=performance.now();
+        try{
+          const res=await origFetch.apply(this,args);
+          const clone=res.clone(); let body='';
+          try{body=await clone.text();}catch{}
+          win._devConsoleNetwork.push({
+            time:new Date().toLocaleTimeString(),method:args[1]?.method||'GET',url:args[0],status:res.status,
+            duration:(performance.now()-start).toFixed(1),
+            response:body.length>200?body.slice(0,200)+'...':body
+          });
+          return res;
+        }catch(err){
+          win._devConsoleNetwork.push({
+            time:new Date().toLocaleTimeString(),method:args[1]?.method||'GET',url:args[0],status:'ERROR',
+            duration:(performance.now()-start).toFixed(1),
+            response:String(err)
+          });
+          throw err;
+        }
+      };
+    }
+    if(win.XMLHttpRequest){
+      const OrigXHR=win.XMLHttpRequest;
+      function XHRWrap(){
+        const xhr=new OrigXHR();
+        let url='',method='',start=0;
+        xhr._open=xhr.open;
+        xhr.open=function(m,u){method=m;url=u;xhr._open.apply(xhr,arguments);};
+        xhr._send=xhr.send;
+        xhr.send=function(){
+          start=performance.now();
+          xhr.addEventListener('loadend',function(){
+            win._devConsoleNetwork.push({
+              time:new Date().toLocaleTimeString(),method,url,status:xhr.status,
+              duration:(performance.now()-start).toFixed(1),
+              response:xhr.responseText?.slice(0,200)
+            });
+          });
+          xhr._send.apply(xhr,arguments);
+        };
+        return xhr;
+      }
+      win.XMLHttpRequest=XHRWrap;
+    }
+  } catch {}
+  // Notify for cross-origin
+  notifyLimitedAccess();
+};
+
+</script>
+</body>
+</html>
