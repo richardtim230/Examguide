@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
   // Accept either ObjectId (for populate) or string (for legacy/text)
   faculty: { type: mongoose.Schema.Types.Mixed, ref: "Faculty", default: "" },
   department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: "" },
-  role: { type: String, enum: ["student", "uploader", "admin", "superadmin", "codec"], default: "student" },
+  role: { type: String, enum: ["student", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
   active: { type: Boolean, default: true },
   points: { type: Number, dedault: 0 },
   createdAt: { type: Date, default: Date.now }
