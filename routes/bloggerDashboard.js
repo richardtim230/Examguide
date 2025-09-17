@@ -165,17 +165,34 @@ router.get("/allposts", async (req, res) => {
   }
 });
 
-// PATCH increment views for a post (public)
+// Accepts: x-visitor-id header for guests, or uses req.user.id for logged-in users
 router.patch("/increment-views/:postId", async (req, res) => {
   const { postId } = req.params;
+  // Use authenticated user if available, else use visitorId from header
+  const userId = (req.user && req.user.id) ? req.user.id : req.headers['x-visitor-id'] || null;
   try {
     const dashboards = await BloggerDashboard.find({});
     for (let dash of dashboards) {
       const post = dash.posts.id(postId);
       if (post) {
-        post.views = (post.views || 0) + 1;
-        await dash.save();
-        return res.json({ success: true, views: post.views });
+        // Deduplication: Only count if not in viewRecords within 2 hours
+        if (!post.viewRecords) post.viewRecords = [];
+        // Remove records older than 2 hours
+        const now = Date.now();
+        post.viewRecords = post.viewRecords.filter(vr => now - vr.time < 2 * 60 * 60 * 1000);
+        // If no userId, always count (for legacy support)
+        let alreadyViewed = false;
+        if (userId) {
+          alreadyViewed = post.viewRecords.some(vr => vr.userId === userId);
+        }
+        if (!alreadyViewed) {
+          post.views = (post.views || 0) + 1;
+          if (userId) post.viewRecords.push({ userId, time: now });
+          await dash.save();
+          return res.json({ success: true, views: post.views });
+        }
+        // Already viewed within window; return current count, don't increment
+        return res.json({ success: true, views: post.views, skipped: true });
       }
     }
     res.status(404).json({ error: "Post not found" });
