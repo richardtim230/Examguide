@@ -31,7 +31,11 @@ const PostSchema = new mongoose.Schema({
   imageUrl: String,
   readers: { type: [String], default: [] }, 
   images: { type: [String], default: [] },
-  comments: [CommentSchema]
+  comments: [CommentSchema],
+  viewRecords: [{
+    userId: String,
+    time: Number
+  }]
 }, { _id: true });
 
 
