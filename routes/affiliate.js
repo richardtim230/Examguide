@@ -2,7 +2,9 @@ import express from "express";
 import Affiliate from "../models/Affiliate.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import { authenticate } from "../middleware/authenticate.js";
+import multer from "multer";
+import path from "path";
 const router = express.Router();
 
 // Register affiliate
