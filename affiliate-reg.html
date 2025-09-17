@@ -291,7 +291,7 @@
     const password = document.getElementById('password').value.trim();
     const ref = document.getElementById('ref').value.trim();
     try {
-      const res = await fetch("/api/affiliate/register", {
+      const res = await fetch("https://examguide.onrender.com/api/affiliate/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, school, ref, password })
@@ -303,6 +303,7 @@
       } else {
         showNotificationModal('Error', data.message || 'Registration failed. Please check your info and try again.', 'error');
       }
+  
     } catch {
       showNotificationModal('Error', 'Network error. Please try again.', 'error');
     }
