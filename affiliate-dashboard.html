@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Affiliate Dashboard | University of Ibadan ExamGuard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2282/2282759.png">
+  <style>
+    html { scroll-behavior: smooth; }
+    .tab-active {
+      background: linear-gradient(90deg,#2563eb 60%,#22d3ee 100%);
+      color: #fff !important;
+    }
+    .tab-inactive {
+      background: #f1f5f9;
+      color: #2563eb;
+    }
+    .tablist::-webkit-scrollbar { display: none; }
+    .tablist { scrollbar-width: none; }
+    .fade-in { animation: fadeInUp 1s cubic-bezier(.36,.66,.04,1) both; }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(24px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .darkmode {
+      background: #111827 !important;
+      color: #e5e7eb !important;
+    }
+    .darkmode .tab-inactive {
+      background: #1e293b !important;
+      color: #22d3ee !important;
+    }
+    .darkmode .tab-active {
+      background: linear-gradient(90deg,#0ea5e9 60%,#22d3ee 100%) !important;
+      color: #fff !important;
+    }
+    .darkmode .bg-white {
+      background: #1e293b !important;
+      color: #e5e7eb !important;
+    }
+    .darkmode .text-blue-900, .darkmode .text-blue-700, .darkmode .text-blue-800 { color: #e5e7eb !important; }
+    .darkmode .border-blue-100 { border-color: #334155 !important; }
+  </style>
+</head>
+<body id="body" class="bg-blue-50 min-h-screen flex flex-col">
+
+  <!-- Header/Nav -->
+  <nav class="bg-white shadow flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2282/2282759.png" class="h-10" alt="Logo">
+      <span class="text-2xl font-bold text-blue-700">UI ExamGuard Affiliate</span>
+    </div>
+    <div class="flex gap-2 items-center">
+      <button id="darkToggle" class="px-3 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold text-sm shadow" onclick="toggleDark()">Dark Mode</button>
+      <button class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold text-sm shadow">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Tab Navigation -->
+  <div class="tablist flex gap-2 overflow-x-auto px-2 sm:px-6 py-3 bg-white border-b border-blue-100">
+    <button class="tab-active px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-overview-btn" onclick="showTab('overview')">Overview</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-analytics-btn" onclick="showTab('analytics')">Analytics</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-tools-btn" onclick="showTab('tools')">Referral Tools</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-activity-btn" onclick="showTab('activity')">Activity</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-payments-btn" onclick="showTab('payments')">Payments</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-leaderboard-btn" onclick="showTab('leaderboard')">Leaderboard</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-notifications-btn" onclick="showTab('notifications')">Notifications</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-documents-btn" onclick="showTab('documents')">Documents</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-referrals-btn" onclick="showTab('referrals')">Referrals Tree</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-support-btn" onclick="showTab('support')">Support</button>
+    <button class="tab-inactive px-5 py-2 rounded-xl font-bold text-base outline-none transition" id="tab-settings-btn" onclick="showTab('settings')">Profile/Settings</button>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto w-full px-2 sm:px-6 py-8">
+
+    <!-- Overview Tab -->
+    <section id="tab-overview" class="fade-in">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
+        <div class="bg-white rounded-2xl shadow flex flex-col items-center py-6">
+          <svg class="w-8 h-8 mb-2 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3"/></svg>
+          <div class="text-2xl font-bold text-blue-900">₦18,500</div>
+          <div class="text-xs text-blue-600 font-medium">Total Earnings</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow flex flex-col items-center py-6">
+          <svg class="w-8 h-8 mb-2 text-cyan-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m2-4h.01"/></svg>
+          <div class="text-2xl font-bold text-blue-900">3,210</div>
+          <div class="text-xs text-cyan-600 font-medium">Clicks</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow flex flex-col items-center py-6">
+          <svg class="w-8 h-8 mb-2 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <div class="text-2xl font-bold text-blue-900">41</div>
+          <div class="text-xs text-green-600 font-medium">Conversions</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow flex flex-col items-center py-6">
+          <svg class="w-8 h-8 mb-2 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-4-4"/></svg>
+          <div class="text-2xl font-bold text-blue-900">17</div>
+          <div class="text-xs text-purple-600 font-medium">Referrals</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 mb-6">
+        <h2 class="text-blue-900 font-bold text-lg mb-4">Welcome, John Doe!</h2>
+        <p class="text-blue-700 text-base mb-2">Track your affiliate performance, manage your links, and earn more as you promote ExamGuard.</p>
+        <p class="text-blue-700 text-sm">Need help? <a href="#" class="text-blue-600 font-semibold hover:underline">Contact Support</a></p>
+      </div>
+    </section>
+
+    <!-- Analytics Tab -->
+    <section id="tab-analytics" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6 mb-6">
+        <h2 class="text-blue-900 font-bold text-lg mb-4">Analytics</h2>
+        <div class="flex flex-wrap gap-8">
+          <div class="flex-1 min-w-[250px]">
+            <div class="text-blue-700 font-medium mb-2">Earnings Trend</div>
+            <div class="w-full h-40 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 font-bold">[Chart Here]</div>
+          </div>
+          <div class="flex-1 min-w-[250px]">
+            <div class="text-blue-700 font-medium mb-2">Conversion Rate</div>
+            <div class="w-full h-40 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 font-bold">[Chart Here]</div>
+          </div>
+          <div class="flex-1 min-w-[250px]">
+            <div class="text-blue-700 font-medium mb-2">Earnings per Click</div>
+            <div class="w-full h-40 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 font-bold">[Chart Here]</div>
+          </div>
+        </div>
+        <div class="mt-8 flex gap-3">
+          <button class="px-6 py-2 bg-cyan-600 text-white rounded-lg font-bold hover:bg-cyan-700 transition">Export Data (CSV)</button>
+          <button class="px-6 py-2 bg-blue-700 text-white rounded-lg font-bold hover:bg-blue-800 transition">Download PDF Report</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Referral Tools Tab -->
+    <section id="tab-tools" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="text-blue-900 font-bold text-lg mb-1">Your Referral Link</div>
+          <div class="flex items-center gap-2 mb-2">
+            <input type="text" readonly value="https://examguard.ui.edu.ng/?ref=YOURCODE" class="px-3 py-2 rounded-lg border border-blue-200 text-blue-700 font-mono w-64 bg-blue-50" />
+            <button class="px-3 py-2 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition">Copy</button>
+          </div>
+          <div class="text-blue-900/70 text-sm">Share your link on social media, blogs, or with friends!</div>
+        </div>
+        <div class="flex gap-2 mt-4 md:mt-0">
+          <button class="px-4 py-2 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h12zm-5 14h2v2h-2v-2zm-1-2h-2v2h2v-2zm-2-4h2v2h-2v-2zm4 0h2v2h-2v-2zm-4-4h2v2h-2V6zm4 0h2v2h-2V6z"/></svg> Share</button>
+          <button class="px-4 py-2 bg-cyan-600 text-white rounded-lg font-bold hover:bg-cyan-700 transition flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15v3a2 2 0 01-2 2h-3m-4 0H5a2 2 0 01-2-2v-5a2 2 0 012-2h2"/><path d="M17 8l4-4m0 0l-4-4m4 4H7"/></svg> QR Code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activity Tab -->
+    <section id="tab-activity" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-blue-900 font-bold text-lg">Recent Activity</div>
+          <a href="#" class="text-blue-700 text-sm font-semibold hover:underline">View All</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-blue-900">
+            <thead>
+              <tr class="border-b border-blue-100">
+                <th class="py-2">Date</th>
+                <th class="py-2">Action</th>
+                <th class="py-2">User</th>
+                <th class="py-2">Reward</th>
+                <th class="py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-blue-50">
+                <td class="py-2">2025-09-12</td>
+                <td class="py-2">Referral Signup</td>
+                <td class="py-2">johndoe</td>
+                <td class="py-2">₦500</td>
+                <td class="py-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Confirmed</span></td>
+              </tr>
+              <tr class="border-b border-blue-50">
+                <td class="py-2">2025-09-11</td>
+                <td class="py-2">Link Click</td>
+                <td class="py-2">anonymous</td>
+                <td class="py-2">₦0</td>
+                <td class="py-2"><span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-semibold">Pending</span></td>
+              </tr>
+              <tr class="border-b border-blue-50">
+                <td class="py-2">2025-09-10</td>
+                <td class="py-2">Conversion</td>
+                <td class="py-2">maryui</td>
+                <td class="py-2">₦1,000</td>
+                <td class="py-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Confirmed</span></td>
+              </tr>
+              <tr>
+                <td class="py-2">2025-09-09</td>
+                <td class="py-2">Referral Signup</td>
+                <td class="py-2">alexib</td>
+                <td class="py-2">₦500</td>
+                <td class="py-2"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Reviewing</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payments Tab -->
+    <section id="tab-payments" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-blue-900 font-bold text-lg">Payments</div>
+          <a href="#" class="text-blue-700 text-sm font-semibold hover:underline">Request Payout</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-blue-900">
+            <thead>
+              <tr class="border-b border-blue-100">
+                <th class="py-2">Date</th>
+                <th class="py-2">Amount</th>
+                <th class="py-2">Method</th>
+                <th class="py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-blue-50">
+                <td class="py-2">2025-09-05</td>
+                <td class="py-2">₦5,000</td>
+                <td class="py-2">Bank Transfer</td>
+                <td class="py-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Paid</span></td>
+              </tr>
+              <tr class="border-b border-blue-50">
+                <td class="py-2">2025-08-28</td>
+                <td class="py-2">₦3,500</td>
+                <td class="py-2">Bank Transfer</td>
+                <td class="py-2"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Processing</span></td>
+              </tr>
+              <tr>
+                <td class="py-2">2025-08-14</td>
+                <td class="py-2">₦10,000</td>
+                <td class="py-2">Bank Transfer</td>
+                <td class="py-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Paid</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Tab -->
+    <section id="tab-leaderboard" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-blue-900 font-bold text-lg">Top Affiliates</div>
+          <a href="#" class="text-blue-700 text-sm font-semibold hover:underline">View Leaderboard</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-blue-900">
+            <thead>
+              <tr class="border-b border-blue-100">
+                <th class="py-2">Rank</th>
+                <th class="py-2">Name</th>
+                <th class="py-2">Referrals</th>
+                <th class="py-2">Earnings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-blue-50">
+                <td class="py-2 font-bold text-blue-700">1</td>
+                <td class="py-2">maryui</td>
+                <td class="py-2">21</td>
+                <td class="py-2">₦7,000</td>
+              </tr>
+              <tr class="border-b border-blue-50">
+                <td class="py-2 font-bold text-blue-700">2</td>
+                <td class="py-2">alexib</td>
+                <td class="py-2">19</td>
+                <td class="py-2">₦6,500</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-bold text-blue-700">3</td>
+                <td class="py-2">johndoe</td>
+                <td class="py-2">17</td>
+                <td class="py-2">₦5,500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notifications Tab -->
+    <section id="tab-notifications" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h2 class="text-blue-900 font-bold text-lg mb-4">Notifications</h2>
+        <ul class="space-y-4">
+          <li class="flex items-center gap-3">
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Payout</span>
+            <span>Your payout of ₦5,000 was processed successfully.</span>
+            <span class="text-blue-700 text-xs ml-auto">5 min ago</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-semibold">Milestone</span>
+            <span>Congratulations! You reached 40 conversions!</span>
+            <span class="text-blue-700 text-xs ml-auto">2 days ago</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Reminder</span>
+            <span>Update your bank account to receive next payout.</span>
+            <span class="text-blue-700 text-xs ml-auto">3 days ago</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Documents Tab -->
+    <section id="tab-documents" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h2 class="text-blue-900 font-bold text-lg mb-4">Resources & Documents</h2>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+            <span>Affiliate Guide PDF</span>
+            <a href="#" class="ml-auto px-3 py-1 bg-blue-700 text-white rounded hover:bg-blue-800 text-xs font-semibold">Download</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+            <span>Banner Pack (ZIP)</span>
+            <a href="#" class="ml-auto px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-xs font-semibold">Download</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-cyan-600" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+            <span>ExamGuard Brand Assets</span>
+            <a href="#" class="ml-auto px-3 py-1 bg-cyan-600 text-white rounded hover:bg-cyan-700 text-xs font-semibold">Download</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Referrals Tree Tab -->
+    <section id="tab-referrals" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h2 class="text-blue-900 font-bold text-lg mb-4">Your Referral Tree</h2>
+        <div class="flex flex-col gap-4 text-blue-900">
+          <div>
+            <span class="font-bold">You</span>
+            <span class="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">17 Direct Referrals</span>
+          </div>
+          <div class="ml-8">
+            <div class="mb-2"><span class="font-semibold">alexib</span> <span class="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">5 Referrals</span></div>
+            <div class="mb-2"><span class="font-semibold">maryui</span> <span class="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">7 Referrals</span></div>
+            <div class="mb-2"><span class="font-semibold">johndoe</span> <span class="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">3 Referrals</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Tab -->
+    <section id="tab-support" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h2 class="text-blue-900 font-bold text-lg mb-4">Support & FAQ</h2>
+        <div class="mb-6">
+          <div class="font-semibold mb-2">How do I get paid?</div>
+          <div class="text-blue-700 mb-4">Request payout in the Payments tab. Payments are processed via bank transfer within 3 working days.</div>
+          <div class="font-semibold mb-2">How do I refer new users?</div>
+          <div class="text-blue-700 mb-4">Share your referral link using the Referral Tools tab. Earn when users sign up and activate their account.</div>
+          <div class="font-semibold mb-2">Need more help?</div>
+          <div class="text-blue-700 mb-4">Use the contact form below or start a live chat.</div>
+        </div>
+        <form class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+          <div>
+            <label class="text-blue-900 text-sm font-semibold">Your Email</label>
+            <input type="email" class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1" placeholder="your@email.com"/>
+          </div>
+          <div>
+            <label class="text-blue-900 text-sm font-semibold">Subject</label>
+            <input type="text" class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1" placeholder="Payment Issue"/>
+          </div>
+          <div class="col-span-2">
+            <label class="text-blue-900 text-sm font-semibold">Message</label>
+            <textarea class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1" rows="3" placeholder="Describe your issue..."></textarea>
+          </div>
+        </form>
+        <div class="flex gap-3">
+          <button class="px-6 py-2 bg-blue-700 text-white rounded-lg font-bold hover:bg-blue-800 transition">Send Message</button>
+          <button class="px-6 py-2 bg-cyan-600 text-white rounded-lg font-bold hover:bg-cyan-700 transition">Live Chat</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile/Settings Tab -->
+    <section id="tab-settings" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <div class="flex items-center gap-4 mb-4">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="h-14 w-14 rounded-full border-2 border-blue-100" alt="Profile">
+          <div>
+            <div class="text-blue-900 font-bold text-lg">John Doe</div>
+            <div class="text-blue-700 text-sm">Affiliate since Feb 2025</div>
+            <div class="flex gap-2 mt-2">
+              <a href="#" class="text-blue-700 hover:text-blue-900 text-xs bg-blue-100 px-2 py-1 rounded">Twitter</a>
+              <a href="#" class="text-blue-700 hover:text-blue-900 text-xs bg-blue-100 px-2 py-1 rounded">LinkedIn</a>
+              <a href="#" class="text-blue-700 hover:text-blue-900 text-xs bg-blue-100 px-2 py-1 rounded">Instagram</a>
+            </div>
+          </div>
+        </div>
+        <form class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="text-blue-900 text-sm font-semibold">Email</label>
+            <input type="email" class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1" value="john@email.com"/>
+          </div>
+          <div>
+            <label class="text-blue-900 text-sm font-semibold">Bank Account</label>
+            <input type="text" class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1" value="1234567890"/>
+          </div>
+          <div>
+            <label class="text-blue-900 text-sm font-semibold">Change Password</label>
+            <input type="password" class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1" placeholder="••••••••"/>
+          </div>
+          <div>
+            <label class="text-blue-900 text-sm font-semibold">Notification Preferences</label>
+            <select class="w-full px-3 py-2 rounded-lg border border-blue-200 focus:border-blue-500 focus:outline-none text-blue-900 mt-1">
+              <option>Email</option>
+              <option>SMS</option>
+              <option>Push Only</option>
+              <option>All</option>
+            </select>
+          </div>
+        </form>
+        <div class="mt-6 flex gap-3">
+          <button class="px-6 py-2 bg-blue-700 text-white rounded-lg font-bold hover:bg-blue-800 transition">Update Profile</button>
+          <button class="px-6 py-2 bg-gray-200 text-blue-700 rounded-lg font-bold hover:bg-gray-300 transition">Cancel</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-blue-100 py-6 mt-10 text-center text-blue-900/80 text-sm">
+    &copy; 2025 University of Ibadan ExamGuard Affiliate. All rights reserved.
+  </footer>
+
+  <script>
+    // Tab logic
+    const tabs = [
+      'overview','analytics','tools','activity','payments','leaderboard',
+      'notifications','documents','referrals','support','settings'
+    ];
+    function showTab(tab) {
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}-btn`).classList.remove('tab-active');
+        document.getElementById(`tab-${t}-btn`).classList.add('tab-inactive');
+      });
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}-btn`).classList.remove('tab-inactive');
+      document.getElementById(`tab-${tab}-btn`).classList.add('tab-active');
+    }
+    window.onload = () => showTab('overview');
+
+    // Dark mode toggle
+    function toggleDark() {
+      document.getElementById('body').classList.toggle('darkmode');
+    }
+  </script>
+</body>
+</html>
