@@ -181,7 +181,7 @@
       }
       setLoginLoading(true);
       try {
-        const res = await fetch("/api/affiliate/login", {
+        const res = await fetch("https://examguide.onrender.com/api/affiliate/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
