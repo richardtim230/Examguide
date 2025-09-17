@@ -82,6 +82,7 @@ import buyerDashboardRoutes from "./routes/buyerDashboard.js";
 import User from "./models/User.js";
 import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
+import affiliateRoutes from "./routes/affiliate.js";
 
 // ===== Routes =====
 import codecxregRoutes from "./routes/codecxreg.js";
@@ -530,6 +531,7 @@ app.use("/api/adminstats", adminStatsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/registrations", registrationsRoutes);
 app.use("/api/responses", responsesRoutes);
+app.use("/api/affiliate", affiliateRoutes);
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/applications", applicationsRoutes);
