@@ -474,7 +474,7 @@
         };
 
         // Leaderboard Table
-        let leaderboardRes = await fetch("/api/affiliate/leaderboard", {
+        let leaderboardRes = await fetch("https://examguide.onrender.com/api/affiliate/leaderboard", {
           headers: { "Authorization": "Bearer " + affiliateToken }
         });
         let leaderboard = await leaderboardRes.json();
