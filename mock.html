@@ -998,64 +998,71 @@
     });
 
     // REGISTRATION HANDLING (with confirmation modal)
-    forms.register.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        // Collect all registration details
-        const fullName = document.getElementById('reg-fullname').value.trim();
-        const username = document.getElementById('reg-username').value.trim();
-        const password = document.getElementById('reg-password').value;
-        const email = document.getElementById('reg-email').value.trim();
-        const faculty = document.getElementById('reg-faculty').value.trim();
-        const department = document.getElementById('reg-department').value.trim();
-        const level = document.getElementById('reg-level').value;
-        const phone = document.getElementById('reg-phone').value.trim();
+forms.register.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    // Collect all registration details
+    const fullName = document.getElementById('reg-fullname').value.trim();
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const email = document.getElementById('reg-email').value.trim();
+    const faculty = document.getElementById('reg-faculty').value.trim();
+    const department = document.getElementById('reg-department').value.trim();
+    const level = document.getElementById('reg-level').value;
+    const phone = document.getElementById('reg-phone').value.trim();
 
-        if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
-            showStatusModal("error","Registration Error","All fields are required!");
-            return;
-        }
+    if (!fullName || !username || !password || !email || !faculty || !department || !level || !phone) {
+        showStatusModal("error", "Registration Error", "All fields are required!");
+        return;
+    }
 
-        // Show confirmation modal
-        showConfirmationModal({
-            "Full Name": fullName,
-            "Username": username,
-            "Email": email,
-            "Faculty": faculty,
-            "Department": department,
-            "Level": level,
-            "Phone": phone
-        }, async function proceedReg(){
-            showLoadingModal("Registering...","Please wait while we create your account.");
-            await setRegLoading(true);
-            try {
-                let registerResponse = await fetch("https://examguide.onrender.com/api/auth/register", {
-                    method: "POST",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        username,
-                        password,
-                        email,
-                        fullname: fullName,
-                        faculty,
-                        department,
-                        level,
-                        phone
-                    })
-                });
-                let registerData = await registerResponse.json();
-                if (registerResponse.ok) {
-                    localStorage.setItem('token', registerData.token);
-                    showStatusModal("success","Registration Successful","Registered successfully!",false);
-                    setTimeout(() => { window.location.href = 'loader.html'; }, 1300);
-                } else {
-                    showStatusModal("error","Registration Failed",registerData.message || "Registration failed");
-                }
-            } catch (err) {
-                showStatusModal("error","Network Error","Network or server error. Please try again.");
+    // Get referral code from localStorage if user landed via referral link
+    const referralCode = localStorage.getItem('pendingReferral') || "";
+
+    // Show confirmation modal
+    showConfirmationModal({
+        "Full Name": fullName,
+        "Username": username,
+        "Email": email,
+        "Faculty": faculty,
+        "Department": department,
+        "Level": level,
+        "Phone": phone,
+        ...(referralCode ? { "Referral Code": referralCode } : {})
+    }, async function proceedReg() {
+        showLoadingModal("Registering...", "Please wait while we create your account.");
+        await setRegLoading(true);
+        try {
+            let registerResponse = await fetch("https://examguide.onrender.com/api/auth/register", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username,
+                    password,
+                    email,
+                    fullname: fullName,
+                    faculty,
+                    department,
+                    level,
+                    phone,
+                    ref: referralCode // Pass referral code if present
+                })
+            });
+            let registerData = await registerResponse.json();
+            if (registerResponse.ok) {
+                localStorage.setItem('token', registerData.token);
+                // Clear referral code after successful registration
+                localStorage.removeItem('pendingReferral');
+                showStatusModal("success", "Registration Successful", "Registered successfully!", false);
+                setTimeout(() => { window.location.href = 'loader.html'; }, 1300);
+            } else {
+                showStatusModal("error", "Registration Failed", registerData.message || "Registration failed");
             }
-            await setRegLoading(false);
-        }, function cancelReg(){});
-    });
+        } catch (err) {
+            showStatusModal("error", "Network Error", "Network or server error. Please try again.");
+        }
+        await setRegLoading(false);
+    }, function cancelReg() { });
+});
 
     // Social Login/Register (Simulated)
     document.querySelectorAll('.social-btn').forEach(btn => {
