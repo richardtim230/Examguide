@@ -279,6 +279,8 @@ app.get('/api/proxy', async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     const {
@@ -290,8 +292,10 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       email,
       faculty,
       department,
-      fullname // <-- added fullname!
+      fullname, // <-- added fullname!
+      ref // <-- NEW: referral code from frontend, if any
     } = req.body;
+
     if (!username || !password)
       return res.status(400).json({message: "All fields required"});
     if (username.length < 3)
@@ -306,20 +310,20 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       // Use URL path for the uploaded profile pic
       profilePicUrl = `/uploads/profilepics/${req.file.filename}`;
     }
-    // After handling req.file (inside /api/auth/register)
-if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:image")) {
-  // Extract file extension (png/jpg/jpeg)
-  const matches = req.body.profilePic.match(/^data:image\/([a-zA-Z]+);base64,(.+)$/);
-  if (matches) {
-    const ext = matches[1];
-    const data = matches[2];
-    const buffer = Buffer.from(data, 'base64');
-    const filename = `profile_${Date.now()}.${ext}`;
-    const filePath = path.join(profilePicsDir, filename);
-    fs.writeFileSync(filePath, buffer);
-    profilePicUrl = `/uploads/profilepics/${filename}`;
-  }
-}
+    // Handle base64 profilePic if provided
+    if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:image")) {
+      // Extract file extension (png/jpg/jpeg)
+      const matches = req.body.profilePic.match(/^data:image\/([a-zA-Z]+);base64,(.+)$/);
+      if (matches) {
+        const ext = matches[1];
+        const data = matches[2];
+        const buffer = Buffer.from(data, 'base64');
+        const filename = `profile_${Date.now()}.${ext}`;
+        const filePath = path.join(profilePicsDir, filename);
+        fs.writeFileSync(filePath, buffer);
+        profilePicUrl = `/uploads/profilepics/${filename}`;
+      }
+    }
     const user = new User({
       username,
       password: hashed,
@@ -334,6 +338,39 @@ if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:ima
     });
 
     await user.save();
+
+    // ---- AFFILIATE REFERRAL LOGIC ----
+    if (ref && typeof ref === "string" && ref.trim().length > 0) {
+      // Dynamically require Affiliate model
+      let Affiliate;
+      try {
+        Affiliate = require("../models/Affiliate.js").default || require("../models/Affiliate.js");
+      } catch (err) {
+        Affiliate = null;
+      }
+      if (Affiliate) {
+        // Find affiliate by referralCode
+        const affiliate = await Affiliate.findOne({ referralCode: ref.trim() });
+        if (affiliate) {
+          // Prevent double-count for the same user (by email or username)
+          affiliate.referrals = affiliate.referrals || [];
+          const alreadyReferred = affiliate.referrals.some(
+            r => (r.email && r.email === user.email) || (r.username && r.username === user.username)
+          );
+          if (!alreadyReferred) {
+            affiliate.clicks = (affiliate.clicks || 0) + 1;
+            affiliate.referrals.push({
+              name: user.fullname,
+              email: user.email,
+              username: user.username,
+              referrals: 0
+            });
+            await affiliate.save();
+          }
+        }
+      }
+    }
+
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({token, message: "Registration successful", profilePic: profilePicUrl});
   } catch (e) {
@@ -341,7 +378,6 @@ if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:ima
     res.status(500).json({message: "Server error"});
   }
 });
-
 
 // In routes/auth.js or index.js
 app.post("/api/auth/login", async (req, res) => {
