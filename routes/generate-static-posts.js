@@ -5,7 +5,7 @@ import axios from "axios";
 // ==== CONFIGURATION ====
 const API_URL = "https://examguide.onrender.com/api/blogger-dashboard/allposts"; // Your backend API
 const TEMPLATE_PATH = "./blog-template.html"; // Path to your template file
-const OUTPUT_DIR = "./public/blog/"; // Output directory for generated HTML files
+const OUTPUT_DIR = "./blog/"; // Output directory for generated HTML files
 const SITE_URL = "https://oau.examguard.com.ng/oau-blog.html"; // Used for canonical/og:url
 
 // ==== UTILITY FUNCTIONS ====
