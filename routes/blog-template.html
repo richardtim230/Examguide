@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.95"/>
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}" />
+  <meta name="keywords" content="{{KEYWORDS}}" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="{{URL}}" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{URL}}" />
+  <meta property="og:image" content="{{IMAGE}}" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{TITLE}}" />
+  <meta name="twitter:description" content="{{DESCRIPTION}}" />
+  <meta name="twitter:image" content="{{IMAGE}}" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <!-- JSON-LD for blog post -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{TITLE}}",
+    "image": "{{IMAGE}}",
+    "author": {
+      "@type": "Person",
+      "name": "{{AUTHOR}}"
+    },
+    "datePublished": "{{DATE}}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "OAU ExamGuard",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "/logo.png"
+      }
+    },
+    "description": "{{DESCRIPTION}}"
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  <style>
+    body { background-color: #f9fafb; padding-top: 74px !important; padding-bottom: 120px !important; }
+    .sticky-footer { position: fixed; z-index: 50; bottom: 0; left: 0; width: 100%; background: #fff; height: 120px; box-shadow: 0 -2px 12px rgba(0,0,0,0.03); display: flex; align-items: center; }
+    .prose img { border-radius: 0.5rem; width: 100% !important; height: auto !important; object-fit: contain !important; }
+    .prose { max-width: 100%; }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .related-img { width: 100% !important; object-fit: contain !important; aspect-ratio: 2.7/1 !important; height: 135px !important; }
+  </style>
+</head>
+<body class="text-gray-900 bg-gray-50">
+  <nav class="sticky-header w-full bg-white shadow-sm border-b border-blue-900/10 px-4 py-3 flex items-center justify-between">
+    <a href="/oau-blog.html" class="flex items-center gap-2 font-bold text-xl text-blue-900">
+      <img src="/logo.png" class="h-8" alt="logo">
+      OAU <span class="text-yellow-600">ExamGuard</span> Blog
+    </a>
+    <!-- ...menu etc... -->
+  </nav>
+  <main class="max-w-3xl mx-auto px-4 py-8">
+    <article class="bg-white rounded-2xl shadow p-6 mb-12 min-h-[320px] flex flex-col items-stretch">
+      <div class="relative w-full mb-4">
+        <img src="{{IMAGE}}" alt="{{TITLE}}" class="w-full h-auto object-cover rounded-lg shadow" />
+      </div>
+      <h1 class="text-3xl font-extrabold text-blue-900 mb-2">{{TITLE}}</h1>
+      <div class="flex flex-wrap gap-2 text-sm text-gray-500 mb-2">
+        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-medium">{{CATEGORY}}</span>
+        <span>{{AUTHOR}}</span>
+        <span>• {{DATE}}</span>
+      </div>
+      <div class="prose prose-lg max-w-none text-gray-900 mb-6">{{CONTENT}}</div>
+    </article>
+    <!-- Optionally: comments, related posts, etc. -->
+  </main>
+  <footer class="sticky-footer bg-white border-t pt-6 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-blue-900 font-bold text-lg">
+        <img src="/logo.png" class="h-6" alt="logo">
+        OAU ExamGuard
+      </div>
+      <div class="text-yellow-600">&copy; 2025 OAU ExamGuard. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
