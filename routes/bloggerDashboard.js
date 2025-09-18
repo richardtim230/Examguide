@@ -4,8 +4,9 @@ import { authenticate } from "../middleware/authenticate.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { exec } from "child_process";
 import mongoose from "mongoose";
-
+const GENERATOR_SCRIPT = path.join(process.cwd(), "generate-static-posts.js");
 const router = express.Router();
 
 // Multer setup for multi-image upload
@@ -104,6 +105,12 @@ router.post("/posts", authenticate, async (req, res) => {
     };
     dashboard.posts.unshift(postData);
     await dashboard.save();
+    exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
+      if (error) console.error(`Static gen error: ${error.message}`);
+      if (stderr) console.error(`Static gen stderr: ${stderr}`);
+      if (stdout) console.error(`Static gen output:\n${stdout}`);
+    });
+      
     res.status(201).json(postData);
   } catch (err) {
     console.error("Error creating post:", err);
@@ -133,6 +140,11 @@ router.put("/posts/:id", authenticate, async (req, res) => {
       post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
     }
     await dashboard.save();
+    exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
+      if (error) console.error(`Static gen error: ${error.message}`);
+      if (stderr) console.error(`Static gen stderr: ${stderr}`);
+      if (stdout) console.error(`Static gen output:\n${stdout}`);
+    });
     res.json(post);
   } catch (err) {
     console.error("Error updating post:", err);
