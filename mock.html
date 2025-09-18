@@ -662,6 +662,15 @@
     </div>
 </div>
 <script>
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+        localStorage.setItem('pendingReferral', ref);
+    }
+})();
+
+    
     // Faculties and Departments (OAU)
     const facultyDepartments = {
         "Administration": [
