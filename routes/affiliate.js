@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { authenticate } from "../middleware/authenticate.js";
 import path from "path";
+import crypto from "crypto";
 
 const router = express.Router();
 
@@ -22,6 +23,9 @@ router.post("/register", async (req, res) => {
       return res.status(409).json({ message: "Affiliate already registered" });
     }
     const hashed = await bcrypt.hash(password, 12);
+    // --- Generate a unique referral code ---
+    const referralCode = crypto.randomBytes(5).toString("hex");
+
     const affiliate = new Affiliate({
       name,
       email,
