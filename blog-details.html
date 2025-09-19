@@ -71,6 +71,12 @@
       display: block;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .blog-content p, .prose p {
+  margin-bottom: 0.7em !important; /* or reduce further, e.g., 0.5em */
+}
+@media (max-width: 640px) {
+  .blog-content p, .prose p { margin-bottom: 0.45em !important; }
+}
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
