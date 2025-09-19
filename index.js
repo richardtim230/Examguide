@@ -86,6 +86,8 @@ import affiliateRoutes from "./routes/affiliate.js";
 
 // ===== Routes =====
 import codecxregRoutes from "./routes/codecxreg.js";
+import withdrawalRoutes from "./routes/withdrawals.js";
+import rewardsRoutes from "./routes/rewards.js";
 import questionSetRoutes from "./routes/questionsets.js";
 import resultsRoutes from "./routes/results.js";
 import scheduleRoutes from "./routes/schedule.js";
@@ -555,6 +557,8 @@ app.use("/api/superadmin", superadminRoutes);
 
 // --- Main Features ---
 app.use("/api/codecxreg", codecxregRoutes);
+app.use("/api/rewards", rewardsRoutes);
+app.use("/api/withdrawals", withdrawalRoutes);
 app.use("/api/blogger-dashboard", bloggerDashboardRoutes);
 app.use("/uploads/profilepics", express.static(path.join(process.cwd(), "uploads/profilepics")));
 app.use("/api/questionsets", questionSetRoutes);
