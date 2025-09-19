@@ -4,7 +4,7 @@
   "rewrites": [
     { "source": "/school-mock", "destination": "/new-index.html" },
     { "source": "/past-questions", "destination": "/index.html.htm" },
-    { "source": "/register-studentsApp", "destination": "/index.html.htm" },
+    { "source": "/campus-news-update", "destination": "/blog-details.html" },
     { "source": "/login-studentsApp", "destination": "/index.html.htm" },
     { "source": "/cbt-examoau", "destination": "/tp.html" },
     { "source": "/general-articles", "destination": "/blog.html" },
