@@ -1,0 +1,6 @@
+google.com, pub-8296874482515167, DIRECT, f08c47fec0942fa0
+
+User-agent: *
+Disallow:
+
+Sitemap: https://examguard.com.ng/sitemap.xml
