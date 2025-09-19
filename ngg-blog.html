@@ -25,6 +25,7 @@
     @media (min-width: 640px) { .navbar-spacer { height: 88px; } }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
@@ -43,7 +44,7 @@
           <li><a href="index.html#mock-exams" class="block py-2 px-3 hover:text-blue-600 transition">Mock Exams</a></li>
           <li><a href="index.html#codecxi" class="block py-2 px-3 hover:text-blue-600 transition">CODECX Institute</a></li>
           <li><a href="index.html#marketplace" class="block py-2 px-3 hover:text-blue-600 transition">Marketplace</a></li>
-          <li><a href="blog.html" class="block py-2 px-3 hover:text-blue-600 transition font-bold text-blue-700">Blog & Earn</a></li>
+          <li><a href="ngg-blog.html" class="block py-2 px-3 hover:text-blue-600 transition font-bold text-blue-700">Blog & Earn</a></li>
           <li><a href="index.html#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
         </ul>
         <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
@@ -88,8 +89,34 @@
       }
     </style>
   </section>
+  <!-- Blog Filtering & Sorting -->
+  <section class="max-w-6xl mx-auto px-4 py-6">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+      <div class="flex flex-wrap gap-3">
+        <button onclick="filterBlogCategory('All')" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-yellow-500 hover:text-blue-900 transition">All</button>
+        <button onclick="filterBlogCategory('Campus Life')" class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded hover:bg-yellow-200 transition">Campus Life</button>
+        <button onclick="filterBlogCategory('Academics')" class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded hover:bg-yellow-200 transition">Academics</button>
+        <button onclick="filterBlogCategory('Tips & Hacks')" class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded hover:bg-yellow-200 transition">Tips & Hacks</button>
+        <button onclick="filterBlogCategory('Opportunities')" class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded hover:bg-yellow-200 transition">Opportunities</button>
+        <button onclick="filterBlogCategory('Events')" class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded hover:bg-yellow-200 transition">Events</button>
+      </div>
+      <div class="flex items-center gap-1">
+        <label for="blogSortSelect" class="hidden sm:inline text-blue-900 font-medium">Sort:</label>
+        <select id="blogSortSelect" class="px-2 py-1 border rounded focus:ring-2 focus:ring-yellow-400">
+          <option value="latest">Latest</option>
+          <option value="popular">Most Popular</option>
+          <option value="highest">Highest Rated</option>
+        </select>
+      </div>
+    </div>
+  </section>
   <section id="blog-list" class="container mx-auto px-2 sm:px-4 pb-10">
-    <div id="blogCards" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"></div>
+    <!-- Loader -->
+    <div id="blogLoader" class="flex items-center justify-center min-h-[120px]">
+      <div style="width: 48px; height: 48px; border: 5px solid #fcd34d; border-top: 5px solid #1e3a8a; border-radius: 50%; animation: spin 0.9s linear infinite;"></div>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    </div>
+    <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
   </section>
   <section class="container mx-auto px-2 sm:px-4 pt-4 pb-14">
     <h2 class="text-center">What Makes ExamGuard Blog Special?</h2>
@@ -116,39 +143,7 @@
       </div>
     </div>
   </section>
-  <section class="container mx-auto px-2 sm:px-4 py-8">
-    <h2 class="section-title text-center">Latest From Our Community</h2>
-    <div id="blogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"></div>
-    <div class="flex justify-center mt-12">
-      <nav aria-label="Blog Pagination" class="mx-auto">
-        <ul class="inline-flex items-center -space-x-px text-base h-10">
-          <li>
-            <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-blue-700 bg-white border border-blue-200 rounded-l-lg hover:bg-blue-100">Previous</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">1</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">2</a>
-          </li>
-          <li>
-            <span class="flex items-center justify-center px-4 h-10 leading-tight text-blue-400 bg-white border border-blue-200">...</span>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 hover:bg-blue-100">10</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-blue-700 bg-white border border-blue-200 rounded-r-lg hover:bg-blue-100">Next</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="flex flex-col sm:flex-row items-center justify-center mt-16 gap-6">
-      <div class="text-xl font-semibold text-blue-900 text-center">Want to share your story, hack, or review?</div>
-      <a href="index.html#register" class="inline-block px-8 py-4 bg-blue-700 text-white font-bold rounded-xl shadow-md hover:bg-blue-800 transition text-lg">Become a Contributor</a>
-    </div>
-  </section>
-  <footer class="bg-white border-t border-blue-100 py-8 mt-10">
+<footer class="bg-white border-t border-blue-100 py-8 mt-10">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
       <div class="flex space-x-4 text-blue-700">
@@ -169,89 +164,159 @@
     </div>
   </footer>
 <script>
-  function handleBlogClick(blog) {
-    localStorage.setItem('selectedBlogId', blog.id);
-    localStorage.setItem('selectedBlogData', JSON.stringify(blog));
-    localStorage.setItem('relatedBlogs', JSON.stringify(window.blogData));
-    window.location.href = "blog-single.html";
-  }
+const API_URL = "https://examguide.onrender.com/api/blogger-dashboard/allposts";
+const USER_API = "https://examguide.onrender.com/api/users/";
 
-  function renderTopBlogs(blogData) {
-    const topBlogs = blogData.slice(0, 2);
-    const blogCards = document.getElementById('blogCards');
-    blogCards.innerHTML = "";
-    topBlogs.forEach(blog => {
-      blogCards.innerHTML += `
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
-        <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
-        <div class="p-6 flex flex-col flex-1">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
-            <span class="text-xs text-blue-800/80">By ${blog.author}</span>
-          </div>
-          <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
-          <p class="text-sm text-blue-800/90 font-normal mb-2">${
-            blog.excerpt.split(" ").slice(0,10).join(" ") + (blog.excerpt.split(" ").length > 10 ? "..." : "")
-          }</p>
-          <div class="flex items-center justify-between mt-auto">
-            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
-              ${blog.reads} reads
-            </span>
-            <span class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</span>
-          </div>
+let blogPosts = [];
+let filteredBlogs = [];
+let authorsCache = {};
+
+document.getElementById('blogLoader').style.display = "flex";
+document.getElementById('blogGrid').style.display = "none";
+
+async function fetchBlogPosts() {
+  document.getElementById('blogLoader').style.display = "flex";
+  document.getElementById('blogGrid').style.display = "none";
+  try {
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error("Could not fetch blogs");
+    const data = await res.json();
+    const authorIds = [...new Set(data.map(post => post.authorId || post.user).filter(Boolean))];
+    await Promise.all(authorIds.map(async uid => {
+      if (authorsCache[uid]) return;
+      try {
+        const resp = await fetch(USER_API + uid);
+        if (!resp.ok) return;
+        const d = await resp.json();
+        authorsCache[uid] = {
+          name: d.user?.fullname || d.user?.username || "Anonymous",
+          avatar: d.user?.profilePic
+            ? (d.user.profilePic.startsWith("http") ? d.user.profilePic : d.user.profilePic)
+            : `https://ui-avatars.com/api/?name=${encodeURIComponent(d.user?.fullname || d.user?.username || "A")}&background=FFCE45&color=263159&rounded=true`
+        };
+      } catch {}
+    }));
+
+    blogPosts = data.map(post => {
+      const userId = post.authorId || post.user;
+      const authorData = userId && authorsCache[userId] ? authorsCache[userId] : { name: "Anonymous", avatar: "https://ui-avatars.com/api/?name=A&background=FFCE45&color=263159&rounded=true" };
+      return {
+        id: post._id,
+        title: post.title,
+        category: post.category || "General",
+        author: authorData.name,
+        authorAvatar: authorData.avatar,
+        date: post.date ? new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : "",
+        image: post.images || post.imageUrl || "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80",
+        summary: post.content ? post.content.replace(/<[^>]+>/g, '').substring(0, 120) + "..." : "",
+        content: post.content || "",
+        reads: post.views || 0,
+        rating: post.likes ? (Math.min(5, 3 + (post.likes / 20))).toFixed(1) : 4.5,
+        comments: Array.isArray(post.comments) ? post.comments.length : 0,
+        featured: post.featured || false,
+        userId
+      };
+    });
+    filteredBlogs = [...blogPosts];
+    renderBlogs(filteredBlogs);
+  } catch (e) {
+    document.getElementById('blogGrid').innerHTML = `<div class='col-span-3 text-center text-gray-500 py-10'>Could not load blog posts.</div>`;
+  }
+  document.getElementById('blogLoader').style.display = "none";
+  document.getElementById('blogGrid').style.display = "grid";
+}
+
+function renderBlogs(posts) {
+  const grid = document.getElementById('blogGrid');
+  if (!grid) return;
+  grid.innerHTML = "";
+  if (posts.length === 0) {
+    grid.innerHTML = "<div class='col-span-3 text-center text-gray-500 py-10'>No blog posts found.</div>";
+    return;
+  }
+  posts.forEach(blog => {
+    let imagesArr = [];
+    if (Array.isArray(blog.image)) {
+      imagesArr = blog.image;
+    } else if (Array.isArray(blog.images)) {
+      imagesArr = blog.images;
+    } else if (typeof blog.image === "string" && blog.image.startsWith("data:image")) {
+      imagesArr = [blog.image];
+    } else if (typeof blog.images === "string" && blog.images.startsWith("data:image")) {
+      imagesArr = [blog.images];
+    } else if (blog.imageUrl && blog.imageUrl.startsWith("data:image")) {
+      imagesArr = [blog.imageUrl];
+    } else if (blog.imageUrl) {
+      imagesArr = [blog.imageUrl];
+    } else if (typeof blog.image === "string" && blog.image) {
+      imagesArr = [blog.image];
+    }
+    if (!imagesArr.length || !imagesArr[0]) {
+      imagesArr = ['https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80'];
+    }
+
+    grid.innerHTML += `
+      <div class="bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden hover:scale-[1.025] hover:shadow-2xl transition-all duration-200 border border-gray-100 group relative cursor-pointer"
+           onclick="window.location.href='blog-post.html?id=${blog.id}'">
+        <div class="relative">
+          <img 
+            src="${imagesArr[0]}" 
+            alt="${blog.title}" 
+            class="w-full max-h-64 object-contain rounded-lg mb-3 group-hover:scale-105 transition bg-gray-50" 
+          />
+          ${blog.featured ? `<span class="absolute top-4 left-4 bg-yellow-400 text-blue-900 px-3 py-1 rounded-full text-xs font-bold shadow-lg">Featured</span>` : ''}
         </div>
-      </div>`;
-    });
-  }
-
-  function renderBlogGrid(blogData) {
-    const gridBlogs = blogData.slice(2);
-    const blogGrid = document.getElementById('blogGrid');
-    blogGrid.innerHTML = "";
-    gridBlogs.forEach(blog => {
-      blogGrid.innerHTML += `
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col cursor-pointer" onclick='handleBlogClick(${JSON.stringify(blog)})'>
-        <img src="${blog.image}" alt="${blog.title}" class="w-full h-44 object-cover">
-        <div class="p-6 flex flex-col flex-1">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>
-            <span class="text-xs text-blue-800/80">By ${blog.author}</span>
+        <div class="flex-1 flex flex-col px-5 pt-4 pb-5">
+          <div class="flex items-center gap-2 mb-3">
+            <img src="${blog.authorAvatar}" alt="${blog.author}" class="w-8 h-8 rounded-full border-2 border-yellow-300 object-cover bg-white" loading="lazy" />
+            <span class="font-semibold text-blue-900 text-sm mr-2">${blog.author}</span>
+            <span class="text-xs text-gray-400">&bull; ${blog.date}</span>
+            <span class="ml-auto bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold">${blog.category}</span>
           </div>
-          <h3 class="font-bold text-xl mb-1">${blog.title}</h3>
-          <p class="text-sm text-blue-800/90 font-normal mb-2">${
-            blog.excerpt.split(" ").slice(0,10).join(" ") + (blog.excerpt.split(" ").length > 10 ? "..." : "")
-          }</p>
-          <div class="flex items-center justify-between mt-auto">
-            <span class="inline-flex items-center gap-1 text-sm text-blue-700">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-4a4 4 0 100 8 4 4 0 000-8z"/></svg>
-              ${blog.reads} reads
-            </span>
-            <span class="inline-block bg-blue-700 text-white text-xs px-4 py-2 rounded font-semibold hover:bg-blue-800 transition">Read More</span>
+          <h3 class="font-bold text-blue-900 text-xl mb-1 transition-colors group-hover:text-yellow-600">${blog.title}</h3>
+          <p class="text-gray-600 mb-3 line-clamp-3 text-sm">${blog.summary}</p>
+          <div class="flex gap-4 items-center text-xs text-gray-500 mb-4 mt-auto">
+            <span title="Views">👁️ ${blog.reads}</span>
+            <span title="Rating">⭐ ${blog.rating}</span>
+            <span title="Comments">💬 ${blog.comments}</span>
           </div>
+          <button 
+            class="w-full bg-yellow-500 text-blue-900 px-4 py-2 rounded-lg font-bold hover:bg-blue-900 hover:text-yellow-400 transition mt-auto focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            aria-label="Read full blog post by ${blog.author}">
+            Read & Earn
+          </button>
         </div>
-      </div>`;
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    fetch('blog.json')
-      .then(response => response.json())
-      .then(data => {
-        window.blogData = data;
-        renderTopBlogs(data);
-        renderBlogGrid(data);
-      })
-      .catch(error => {
-        console.error("Failed to load blog.json:", error);
-      });
-    const btn = document.querySelector('[data-collapse-toggle]');
-    const menu = document.getElementById('navbar-default');
-    btn?.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
+      </div>
+    `;
   });
-</script>      
+}
 
+function filterBlogCategory(cat) {
+  if (cat === 'All') {
+    filteredBlogs = [...blogPosts];
+  } else {
+    filteredBlogs = blogPosts.filter(blog => blog.category === cat);
+  }
+  renderBlogs(filteredBlogs);
+}
+
+document.getElementById('blogSortSelect').addEventListener('change', function(e){
+  let sorted = [...filteredBlogs];
+  if (this.value === 'popular') sorted.sort((a, b) => b.reads - a.reads);
+  else if (this.value === 'highest') sorted.sort((a, b) => b.rating - a.rating);
+  else sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+  renderBlogs(sorted);
+});
+
+// Init
+fetchBlogPosts();
+
+// Navbar collapse menu
+const btn = document.querySelector('[data-collapse-toggle]');
+const menu = document.getElementById('navbar-default');
+btn?.addEventListener('click', () => {
+  menu.classList.toggle('hidden');
+});
+</script>
 </body>
 </html>
