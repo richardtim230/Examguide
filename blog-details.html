@@ -78,7 +78,7 @@
           <li><a href="index.html#mock-exams" class="block py-2 px-3 hover:text-blue-600 transition">Mock Exams</a></li>
           <li><a href="index.html#codecxi" class="block py-2 px-3 hover:text-blue-600 transition">CODECX Institute</a></li>
           <li><a href="index.html#marketplace" class="block py-2 px-3 hover:text-blue-600 transition">Marketplace</a></li>
-          <li><a href="blog.html" class="block py-2 px-3 hover:text-blue-600 transition font-bold text-blue-700">Blog & Earn</a></li>
+          <li><a href="ngg-blog.html" class="block py-2 px-3 hover:text-blue-600 transition font-bold text-blue-700">Blog & Earn</a></li>
           <li><a href="index.html#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
         </ul>
         <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
@@ -112,7 +112,7 @@
     <div id="related-blogs" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto"></div>
   </section>
   <!-- Footer -->
-  <footer class="bg-white border-t border-blue-100 py-8 mt-10">
+<footer class="bg-white border-t border-blue-100 py-8 mt-10">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
       <div class="flex space-x-4 text-blue-700">
@@ -141,34 +141,30 @@
         menu.classList.toggle('hidden');
       });
 
-      // Utility: get blog data from localStorage, or fallback to blog.json
-      function getBlogData() {
-        const blogId = localStorage.getItem('selectedBlogId');
-        let blog = null;
-        let blogDataRaw = localStorage.getItem('selectedBlogData');
-        if (blogDataRaw) {
-          try { blog = JSON.parse(blogDataRaw); } catch {}
-        }
-        if (!blog || (blogId && blog.id && String(blog.id) !== String(blogId))) {
-          return fetch('blog.json')
-            .then(res => res.json())
-            .then(data => {
-              const found = data.find(b => String(b.id) === String(blogId));
-              if (found) {
-                localStorage.setItem('selectedBlogData', JSON.stringify(found));
-                return found;
-              }
-              return null;
-            })
-            .catch(() => null);
-        } else {
-          return Promise.resolve(blog);
-        }
+      // Get blogId from URL param (?id=...)
+      function getBlogId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
       }
 
-      // Sanitize blog content so script tags cannot break out
+      // Load all blogs from localStorage (from ngg-blog page), or fallback to blog.json
+      function getRelatedBlogs() {
+        let related = [];
+        try {
+          const relatedRaw = localStorage.getItem('relatedBlogs');
+          if (relatedRaw) related = JSON.parse(relatedRaw);
+        } catch {}
+        return related;
+      }
+
+      // Find blog by id from data
+      function findBlogById(id, data) {
+        if (!data) return null;
+        return data.find(blog => String(blog.id) === String(id));
+      }
+
+      // Sanitize blog content (very basic, for demo)
       function sanitizeHTML(html) {
-        // Basic script tag removal for leakage prevention
         return typeof html === "string"
           ? html.replace(/<\/script>/gi, "&lt;/script&gt;").replace(/<script/gi, "&lt;script")
           : html;
@@ -203,7 +199,7 @@
           <span>${blog.reads || 0} reads</span>
         `;
         document.getElementById('blog-image').src = blog.image || blog.image_url || "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80";
-        document.getElementById('blog-content').innerHTML = sanitizeHTML(blog.content || blog.excerpt || "<p>No content available.</p>");
+        document.getElementById('blog-content').innerHTML = sanitizeHTML(blog.content || blog.summary || "<p>No content available.</p>");
         const tagsDiv = document.getElementById('blog-tags');
         if (Array.isArray(blog.tags)) {
           tagsDiv.innerHTML = blog.tags.map(tag =>
@@ -214,61 +210,49 @@
         }
       }
 
-      function renderRelated(blog) {
+      // Render related blogs (from same category, or just others if not enough)
+      function renderRelated(blog, allBlogs) {
         let related = [];
-        try {
-          const relatedRaw = localStorage.getItem('relatedBlogs');
-          if (relatedRaw) related = JSON.parse(relatedRaw);
-        } catch {}
-        function showRelated(data) {
-          const relatedDiv = document.getElementById('related-blogs');
-          let rel = [];
-          if (Array.isArray(data)) {
-            rel = data.filter(item => String(item.id) !== String(blog.id)).slice(0, 3);
-          }
-          if (rel.length) {
-            relatedDiv.innerHTML = rel.map(item => `
-              <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col border border-blue-100">
-                <img src="${item.image || item.image_url || 'https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80'}"
-                  alt="${item.title}" class="w-full h-36 object-cover border-b border-blue-50">
-                <div class="p-5 flex flex-col flex-1">
-                  <div class="flex items-center gap-2 mb-2">
-                    ${item.university ? `<span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">${item.university}</span>` : ""}
-                  </div>
-                  <h3 class="font-bold text-lg mb-1 text-blue-900">${item.title}</h3>
-                  <a href="blog-single.html" onclick="selectBlog('${item.id}')" class="text-blue-700 font-semibold mt-auto hover:underline">Read More</a>
-                </div>
-              </div>
-            `).join("");
+        if (Array.isArray(allBlogs)) {
+          related = allBlogs.filter(item => String(item.id) !== String(blog.id) && item.category === blog.category);
+          if (related.length < 3) {
+            // Fill with any others, excluding self and duplicates
+            const extra = allBlogs.filter(item => String(item.id) !== String(blog.id) && !related.includes(item));
+            related = related.concat(extra).slice(0, 3);
           } else {
-            relatedDiv.innerHTML = "<div class='text-blue-700 text-center col-span-3'>No related articles found.</div>";
+            related = related.slice(0, 3);
           }
         }
-        if (Array.isArray(related) && related.length) {
-          showRelated(related);
+        const relatedDiv = document.getElementById('related-blogs');
+        if (related.length) {
+          relatedDiv.innerHTML = related.map(item => `
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col border border-blue-100">
+              <img src="${item.image || item.image_url || 'https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80'}"
+                alt="${item.title}" class="w-full h-36 object-cover border-b border-blue-50">
+              <div class="p-5 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  ${item.university ? `<span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">${item.university}</span>` : ""}
+                </div>
+                <h3 class="font-bold text-lg mb-1 text-blue-900">${item.title}</h3>
+                <a href="blog-single.html?id=${item.id}" class="text-blue-700 font-semibold mt-auto hover:underline" onclick="selectBlog('${item.id}')">Read More</a>
+              </div>
+            </div>
+          `).join("");
         } else {
-          fetch('blog.json')
-            .then(res => res.json())
-            .then(data => showRelated(data))
-            .catch(() => {
-              document.getElementById('related-blogs').innerHTML = "";
-            });
+          relatedDiv.innerHTML = "<div class='text-blue-700 text-center col-span-3'>No related articles found.</div>";
         }
       }
 
+      // For related click: update selectedBlogId/data in localStorage
       window.selectBlog = function(id) {
-        let data = [];
-        try {
-          const raw = localStorage.getItem('relatedBlogs');
-          if (raw) data = JSON.parse(raw);
-        } catch {}
+        let data = getRelatedBlogs();
         function findAndNavigate(arr) {
           const found = arr.find(b => String(b.id) === String(id));
           if (found) {
             localStorage.setItem('selectedBlogId', id);
             localStorage.setItem('selectedBlogData', JSON.stringify(found));
           }
-          window.location.href = "blog-single.html";
+          window.location.href = "blog-single.html?id=" + id;
           return false;
         }
         if (Array.isArray(data) && data.length) {
@@ -277,14 +261,34 @@
           fetch('blog.json')
             .then(res => res.json())
             .then(data => findAndNavigate(data))
-            .catch(() => window.location.href = "blog-single.html");
+            .catch(() => window.location.href = "blog-single.html?id=" + id);
         }
       };
 
-      getBlogData().then(blog => {
-        renderBlog(blog);
-        if (blog) renderRelated(blog);
-      });
+      // MAIN INIT
+      (function(){
+        const blogId = getBlogId();
+        let blog = null;
+        let blogs = getRelatedBlogs();
+
+        function renderFromData(blogsArr) {
+          blog = findBlogById(blogId, blogsArr);
+          renderBlog(blog);
+          renderRelated(blog, blogsArr);
+        }
+
+        if (Array.isArray(blogs) && blogs.length) {
+          renderFromData(blogs);
+        } else {
+          fetch('blog.json')
+            .then(res => res.json())
+            .then(data => {
+              blogs = data;
+              renderFromData(blogs);
+            })
+            .catch(() => renderBlog(null));
+        }
+      })();
     });
   </script>
 </body>
