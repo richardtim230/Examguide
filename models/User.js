@@ -7,16 +7,50 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, default: "" },
   phone: { type: String, default: "" },
   studentId: { type: String, default: "" },
-  level: { type: String, default: "" }, // or "year"
-  religion: { type: String, default: "" }, // or "year"
+  level: { type: String, default: "" },
+  religion: { type: String, default: "" },
   password: { type: String, required: true },
   profilePic: { type: String, default: "" },
-  // Accept either ObjectId (for populate) or string (for legacy/text)
   faculty: { type: mongoose.Schema.Types.Mixed, ref: "Faculty", default: "" },
   department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: "" },
   role: { type: String, enum: ["student", "blogger", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
   active: { type: Boolean, default: true },
-  points: { type: Number, dedault: 0 },
+  points: { type: Number, default: 0 },
+
+  // Track reward history for breakdown and to prevent double-awards
+  rewardHistory: {
+    practiced: [
+      {
+        key: String, // e.g. "mock:examSetId"
+        points: Number,
+        date: { type: Date, default: Date.now }
+      }
+    ],
+    reading: [
+      {
+        postId: String,
+        points: Number,
+        date: { type: Date, default: Date.now }
+      }
+    ],
+    bonus: [
+      {
+        reason: String,
+        points: Number,
+        date: { type: Date, default: Date.now },
+        by: String // admin username
+      }
+    ],
+    admin: [
+      {
+        reason: String,
+        points: Number,
+        date: { type: Date, default: Date.now },
+        by: String // admin username
+      }
+    ]
+  },
+
   createdAt: { type: Date, default: Date.now }
 });
 
