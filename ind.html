@@ -197,6 +197,26 @@
       </div>
     </div>
   </div>
+  <section id="blog" class="container mx-auto pt-5 px-4 py-20">
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Blog & Earn—Share Your Story</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because your knowledge matters.
+        </p>
+        <a href="ngg-blog.html" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Start Blogging</a>
+      </div>
+      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+        <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80" alt="Student Blogging" class="rounded-2xl shadow-lg w-full max-w-md"/>
+      </div>
+    </div>
+    <div id="blogLoader" class="flex items-center justify-center min-h-[120px]" style="display: none;">
+      <div style="width: 48px; height: 48px; border: 5px solid #fcd34d; border-top: 5px solid #1e3a8a; border-radius: 50%; animation: spin 0.9s linear infinite;"></div>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    </div>
+    <div id="blogList" class="grid gap-8 grid-cols-1 sm:grid-cols-2 mt-8"></div>
+  </section>
+  
   <section id="features" class="container mx-auto px-4 pt-5 py-20">
     <h2 class="section-title text-center">Why ExamGuard?</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-14">
@@ -262,27 +282,20 @@
       </div>
     </div>
   </section>
-  <section id="blog" class="container mx-auto pt-5 px-4 py-20">
-    <div class="flex flex-col md:flex-row items-center gap-12">
-      <div class="w-full md:w-1/2 text-center md:text-left">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Blog & Earn—Share Your Story</h2>
-        <p class="mb-6 text-lg text-blue-900/80 font-medium">
-          Everyone’s got a story, a hack, or a lesson learned the hard way. Write articles, post insights, or just share memes that help others survive campus life. Earn as you write or read—because your knowledge matters.
-        </p>
-        <a href="ngg-blog.html" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Start Blogging</a>
-      </div>
-      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
-        <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=600&q=80" alt="Student Blogging" class="rounded-2xl shadow-lg w-full max-w-md"/>
-      </div>
-    </div>
-    <div id="blogLoader" class="flex items-center justify-center min-h-[120px]" style="display: none;">
-      <div style="width: 48px; height: 48px; border: 5px solid #fcd34d; border-top: 5px solid #1e3a8a; border-radius: 50%; animation: spin 0.9s linear infinite;"></div>
-      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-    </div>
-    <div id="blogList" class="grid gap-8 grid-cols-1 sm:grid-cols-2 mt-8"></div>
-  </section>
+
   <section id="marketplace" class="bg-blue-50 py-20 px-4 marketplace-tight">
-    <!-- ...marketplace hero unchanged... -->
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+        <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80" alt="Student Marketplace" class="rounded-2xl shadow-lg w-full max-w-md"/>
+      </div>
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Marketplace—By Students, For Students</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          Upgrade your study setup or cash in on unused gear. Our marketplace is a friendly, student-run bazaar—textbooks, gadgets, or that calculator you only used once. Trade with trust, power your campus life.
+        </p>
+        <a href="#" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Browse Marketplace</a>
+      </div>
+    </div>
   </section>
   <section class="w-full px-2 sm:px-6 py-10 bg-blue-50 marketplace-items-tight">
     <div class="max-w-4xl mx-auto">
@@ -291,6 +304,98 @@
       <div id="marketItemsGrid" class="grid gap-8 grid-cols-1 sm:grid-cols-2"></div>
     </div>
   </section>
+  <section id="faq" class="container mx-auto px-4 py-20">
+    <h2 class="section-title text-center">Got Questions?</h2>
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-blue-50 text-blue-700" class="mx-auto max-w-3xl">
+      <h3 id="faq-1">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-1-body" aria-expanded="false" aria-controls="faq-1-body">
+          <span>Is ExamGuard Nigeria free?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-1-body" class="hidden" aria-labelledby="faq-1">
+        <div class="py-4 border-b border-gray-200">Yep! Most features are free for students. Some premium content and services may require a subscription, but you’ll always know before you pay.</div>
+      </div>
+      <h3 id="faq-2">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-2-body" aria-expanded="false" aria-controls="faq-2-body">
+          <span>Can I use ExamGuard on my phone?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-2-body" class="hidden" aria-labelledby="faq-2">
+        <div class="py-4 border-b border-gray-200">Absolutely. ExamGuard is built for all screens: phones, tablets, laptops, and even that old desktop in your library.</div>
+      </div>
+      <h3 id="faq-3">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-3-body" aria-expanded="false" aria-controls="faq-3-body">
+          <span>How can I earn from writing or reading articles?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-3-body" class="hidden" aria-labelledby="faq-3">
+        <div class="py-4 border-b border-gray-200">Publish your articles—when students read, both of you earn. It’s our way of cheering for knowledge-sharing.</div>
+      </div>
+      <h3 id="faq-4">
+        <button type="button" class="flex items-center justify-between w-full py-4 font-medium text-left border-b border-gray-200" data-accordion-target="#faq-4-body" aria-expanded="false" aria-controls="faq-4-body">
+          <span>What schools are supported?</span>
+          <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </h3>
+      <div id="faq-4-body" class="hidden" aria-labelledby="faq-4">
+        <div class="py-4 border-b border-gray-200">We cover major Nigerian universities and are adding more schools every semester. If yours isn’t here yet, let us know!</div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-blue-700 py-10 px-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Never miss a hack, update, or event!</div>
+      <form class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+        <input type="email" placeholder="Your email address" required
+               class="px-4 py-2 rounded-md border-none focus:ring-2 focus:ring-blue-300 outline-none w-full sm:w-auto" />
+        <button type="submit" class="px-6 py-2 bg-white text-blue-700 font-semibold rounded-md hover:bg-blue-100 transition">Subscribe</button>
+      </form>
+    </div>
+  </section>
+  <section id="contact" class="py-20 px-4">
+    <div class="container mx-auto max-w-2xl bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">Contact Us</h2>
+      <form>
+        <div class="mb-4">
+          <label class="block text-blue-900 font-medium mb-2" for="name">Name</label>
+          <input class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" type="text" id="name" placeholder="Your Name" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blue-900 font-medium mb-2" for="email">Email</label>
+          <input class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" type="email" id="email" placeholder="you@student.ng" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-blue-900 font-medium mb-2" for="message">Message</label>
+          <textarea class="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700" id="message" rows="4" placeholder="Let us know how we can help!" required></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Send Message</button>
+      </form>
+    </div>
+  </section>
+  <footer class="bg-white border-t border-blue-100 py-8">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-blue-900/80 mb-2">&copy; 2025 ExamGuard Nigeria. All rights reserved.</div>
+      <div class="flex space-x-4 text-blue-700">
+        <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+        <a href="terms.html" class="hover:underline">Terms of Service</a>
+      </div>
+      <div class="flex space-x-2">
+        <a href="https://twitter.com/" aria-label="Twitter" class="text-blue-400 hover:text-blue-700">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.15 4.15 0 001.82-2.29c-.78.46-1.67.8-2.6.98A4.14 4.14 0 0016.11 4c-2.3 0-4.16 1.86-4.16 4.15 0 .33.04.65.1.96C7.69 8.96 4.07 7.13 1.64 4.16c-.36.62-.57 1.35-.57 2.13 0 1.47.74 2.77 1.86 3.53a4.07 4.07 0 01-1.88-.52v.05c0 2.05 1.46 3.76 3.41 4.14a4.18 4.18 0 01-1.88.07c.53 1.67 2.06 2.88 3.88 2.91A8.33 8.33 0 012 19.54a11.7 11.7 0 006.29 1.84c7.55 0 11.69-6.26 11.69-11.69 0-.18-.01-.36-.02-.54A8.5 8.5 0 0024 5.5c-.87.39-1.8.66-2.8.79z"></path></svg>
+        </a>
+        <a href="https://facebook.com/" aria-label="Facebook" class="text-blue-600 hover:text-blue-900">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.326v21.348C0 23.408.592 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.098 2.796.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.31h3.587l-.467 3.696h-3.12V24h6.116c.734 0 1.326-.592 1.326-1.326V1.326C24 .592 23.408 0 22.675 0"></path></svg>
+        </a>
+        <a href="https://instagram.com/" aria-label="Instagram" class="text-pink-500 hover:text-pink-800">
+          <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.316.976.976 1.254 2.243 1.316 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.34 2.633-1.316 3.608-.976.976-2.243 1.254-3.608 1.316-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.34-3.608-1.316-.976-.976-1.254-2.243-1.316-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.34-2.633 1.316-3.608C4.525 2.573 5.792 2.295 7.157 2.233 8.423 2.175 8.803 2.163 12 2.163zm0-2.163C8.756 0 8.331.013 7.052.072 5.78.132 4.674.417 3.678 1.414c-.995.997-1.282 2.102-1.342 3.374C2.013 8.331 2 8.756 2 12c0 3.244.013 3.669.072 4.948.06 1.272.347 2.377 1.342 3.374.995.997 2.102 1.282 3.374 1.342C8.331 23.987 8.756 24 12 24s3.669-.013 4.948-.072c1.272-.06 2.377-.347 3.374-1.342.997-.995 1.282-2.102 1.342-3.374.059-1.279.072-1.704.072-4.948 0-3.244-.013-3.669-.072-4.948-.06-1.272-.347-2.377-1.342-3.374-.995-.997-2.102-1.282-3.374-1.342C15.669.013 15.244 0 12 0z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
   <!-- ...rest of the file unchanged... -->
   <script>
     // ...nav/modal code unchanged...
