@@ -25,7 +25,6 @@
     @media (min-width: 640px) {
       .navbar-spacer { height: 88px; }
     }
-    /* Blog content typography */
     .blog-content p { margin-bottom: 1.2em; line-height: 1.85; font-size: 1.11rem; color: #223052;}
     .blog-content h2, .blog-content h3 { margin-top: 2em; margin-bottom: 1em; font-weight: bold; color: #1e3a8a; font-size: 1.32rem; }
     .blog-content ul, .blog-content ol { margin-left: 1.5em; margin-bottom: 1.2em; }
@@ -36,7 +35,6 @@
       .blog-content p, .blog-content li { font-size: 1rem; }
       .blog-content h2, .blog-content h3 { font-size: 1.07rem; }
     }
-    /* Custom accent bar on desktop */
     .accent-bar {
       height: 6px;
       width: 68px;
@@ -44,7 +42,6 @@
       background: linear-gradient(90deg,#2563eb 60%,#22d3ee 100%);
       margin-bottom: 20px;
     }
-    /* Related horizontal scroll mobile */
     @media (max-width: 640px) {
       #related-blogs {
         display: flex !important;
@@ -58,6 +55,45 @@
         scroll-snap-align: start;
       }
     }
+    .comment-bubble {
+      background: #fffdfa;
+      border-radius: 0.8em;
+      padding: 1em 1.2em;
+      margin-bottom: 1.5em;
+      box-shadow: 0 1px 5px 0 rgb(0 0 0 / 7%);
+      border: 1px solid #f3e8ff;
+      transition: box-shadow 0.2s;
+      position: relative;
+    }
+    .comment-bubble:hover {
+      box-shadow: 0 4px 20px 0 rgb(190 180 255 / 13%);
+    }
+    .comment-author { font-weight: 600; color: #263159; }
+    .comment-date { color: #9ca3af; font-size: 0.92em; }
+    .comment-actions { margin-top: 0.4em; display: flex; gap: 1.2em; align-items: center; }
+    .like-btn, .reply-btn {
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+      color: #b49b2d;
+      border: none;
+      background: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25em;
+      font-size: 0.97em;
+    }
+    .like-btn.liked { color: #facc15; }
+    .reply-btn.active { color: #263159; }
+    .replies-container { margin-left: 1.5em; border-left: 2px solid #facc15; padding-left: 1em; margin-top: 1em; }
+    .reply-form { background: #f9fafb; border-radius: 0.5em; padding: 0.9em 1em 0.7em 1em; border: 1px solid #e0e7ff; margin-top: 0.6em; }
+    .reply-form input, .reply-form textarea { margin-bottom: 0.7em; }
+    @media (max-width: 640px) {
+      .replies-container { margin-left: 0.7em; padding-left: 0.5em; }
+    }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .related-img { width: 100% !important; object-fit: contain !important; aspect-ratio: 2.7/1 !important; height: 135px !important; }
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
@@ -93,7 +129,6 @@
   <!-- Blog Single Main Section -->
   <section class="w-full px-2 sm:px-0 py-8">
     <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-blue-100">
-      <!-- Accent bar -->
       <div class="accent-bar mx-8 mt-8"></div>
       <div class="px-6 py-6 sm:px-12 sm:py-10">
         <div id="blog-meta"></div>
@@ -103,10 +138,20 @@
         <article id="blog-content" class="blog-content w-full pt-2 max-w-none text-[1.12rem] leading-relaxed text-left"></article>
         <div id="blog-tags" class="flex flex-wrap gap-3 mt-8"></div>
       </div>
+      <!-- Comments Section -->
+      <div class="px-6 py-8 border-t border-blue-100">
+        <h2 class="text-xl font-bold text-blue-900 mb-4">Comments</h2>
+        <form id="commentForm" class="flex flex-col sm:flex-row gap-2 mb-6">
+          <input type="text" id="commentName" placeholder="Your name" required class="sm:w-1/4 px-3 py-2 border rounded focus:ring-2 focus:ring-yellow-400"/>
+          <input type="text" id="commentText" placeholder="Add a comment..." required class="flex-1 px-3 py-2 border rounded focus:ring-2 focus:ring-yellow-400"/>
+          <button type="submit" class="bg-yellow-500 text-blue-900 px-5 py-2 rounded font-bold hover:bg-blue-900 hover:text-yellow-400 transition">Comment</button>
+        </form>
+        <div id="commentsList"></div>
+      </div>
     </div>
   </section>
 
-  <!-- Related Posts (Optional) -->
+  <!-- Related Posts -->
   <section class="container mx-auto px-2 sm:px-4 py-10">
     <h2 class="section-title text-center">Related Articles</h2>
     <div id="related-blogs" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto"></div>
@@ -133,162 +178,183 @@
     </div>
   </footer>
   <script>
-    // Responsive Navbar Toggle
     document.addEventListener('DOMContentLoaded', function () {
+      // Navbar responsive toggle
       const btn = document.querySelector('[data-collapse-toggle]');
       const menu = document.getElementById('navbar-default');
       btn?.addEventListener('click', () => {
         menu.classList.toggle('hidden');
       });
 
-      // Get blogId from URL param (?id=...)
-      function getBlogId() {
+      // Get post id from URL
+      function getPostIdFromURL() {
         const params = new URLSearchParams(window.location.search);
         return params.get('id');
       }
 
-      // Load all blogs from localStorage (from ngg-blog page), or fallback to blog.json
-      function getRelatedBlogs() {
-        let related = [];
+      // Fetch all blogs for details and related
+      const API_URL = "https://examguide.onrender.com/api/blogger-dashboard/allposts";
+      const USER_API = "https://examguide.onrender.com/api/users/";
+      let allPosts = [];
+
+      async function fetchAllBlogs() {
+        const res = await fetch(API_URL);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return data;
+      }
+
+      async function fetchAuthor(userId) {
+        if (!userId) return {};
         try {
-          const relatedRaw = localStorage.getItem('relatedBlogs');
-          if (relatedRaw) related = JSON.parse(relatedRaw);
-        } catch {}
-        return related;
+          const resp = await fetch(USER_API + userId);
+          if (!resp.ok) return {};
+          const d = await resp.json();
+          return d.user || {};
+        } catch {
+          return {};
+        }
       }
 
-      // Find blog by id from data
-      function findBlogById(id, data) {
-        if (!data) return null;
-        return data.find(blog => String(blog.id) === String(id));
-      }
-
-      // Sanitize blog content (very basic, for demo)
       function sanitizeHTML(html) {
         return typeof html === "string"
           ? html.replace(/<\/script>/gi, "&lt;/script&gt;").replace(/<script/gi, "&lt;script")
           : html;
       }
 
-      // Render blog details
-      function renderBlog(blog) {
-        if (!blog) {
+      function renderComments(comments) {
+        const commentsDiv = document.getElementById('commentsList');
+        commentsDiv.innerHTML = '';
+        if (!Array.isArray(comments) || comments.length === 0) {
+          commentsDiv.innerHTML = `<div class="text-gray-400 italic">No comments yet. Be the first to comment!</div>`;
+          return;
+        }
+        comments.forEach(comment => {
+          const commentElement = document.createElement('div');
+          commentElement.className = 'comment-bubble';
+          commentElement.innerHTML = `
+            <span class="comment-author">${comment.name || 'Anonymous'}</span>
+            <span class="comment-date ml-2">${comment.date ? new Date(comment.date).toLocaleString() : ''}</span>
+            <div class="mt-1 text-gray-800">${comment.text}</div>
+          `;
+          commentsDiv.appendChild(commentElement);
+        });
+      }
+
+      async function main() {
+        allPosts = await fetchAllBlogs();
+        const postId = getPostIdFromURL() || (window.localStorage.getItem('selectedBlogId') || "");
+        let mainPost = allPosts.find(p => (String(p._id) === String(postId) || String(p.id) === String(postId)));
+        if (!mainPost) {
+          // fallback to localStorage (from legacy/old navigation)
+          let blogDataRaw = localStorage.getItem('selectedBlogData');
+          if (blogDataRaw) {
+            try { mainPost = JSON.parse(blogDataRaw); } catch {}
+          }
+        }
+        if (!mainPost) {
           document.getElementById('blog-title').innerText = 'Blog not found';
           document.getElementById('blog-content').innerHTML = "<p>Sorry, this blog post could not be loaded.</p>";
           document.getElementById('blog-image').src = "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80";
           return;
         }
+        // Author Info
+        let authorName = mainPost.authorName || mainPost.author || "Anonymous";
+        let authorBio = "";
+        let authorAvatar = "https://ui-avatars.com/api/?name=" + encodeURIComponent(authorName) + "&background=FFCE45&color=263159&rounded=true";
+        if (mainPost.authorId || mainPost.user) {
+          const authorData = await fetchAuthor(mainPost.authorId || mainPost.user);
+          if (authorData && (authorData.fullname || authorData.username)) {
+            authorName = authorData.fullname || authorData.username;
+            authorBio = authorData.bio || "";
+            authorAvatar = authorData.profilePic
+              ? (authorData.profilePic.startsWith("http") ? authorData.profilePic : authorData.profilePic)
+              : authorAvatar;
+          }
+        }
+        // Meta & title
         document.getElementById('blog-meta').innerHTML = `
           <div class="flex flex-wrap items-center mb-5 gap-2">
-            ${blog.university ? `<span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded">${blog.university}</span>` : ""}
-            ${blog.category ? `<span class="bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded">${blog.category}</span>` : ""}
+            ${mainPost.university ? `<span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded">${mainPost.university}</span>` : ""}
+            ${mainPost.category ? `<span class="bg-gray-100 text-blue-900 text-xs font-semibold px-3 py-1 rounded">${mainPost.category}</span>` : ""}
             <span class="inline-flex items-center gap-1 text-yellow-500 text-sm font-semibold ml-auto">
               <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-[...]
               </svg>
-              ${(blog.rating !== undefined && blog.rating !== null) ? blog.rating : '0.0'}
+              ${(mainPost.rating !== undefined && mainPost.rating !== null) ? mainPost.rating : '0.0'}
             </span>
           </div>
         `;
-        document.getElementById('blog-title').innerText = blog.title || "Untitled";
+        document.getElementById('blog-title').innerText = mainPost.title || "Untitled";
         document.getElementById('blog-author-date').innerHTML = `
-          <span>By <strong>${blog.author || "Anonymous"}</strong></span>
+          <span>By <strong>${authorName}</strong></span>
           <span>·</span>
-          <span>Published: ${blog.date || "Unknown date"}</span>
+          <span>Published: ${mainPost.date ? new Date(mainPost.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : "Unknown date"}</span>
           <span>·</span>
-          <span>${blog.reads || 0} reads</span>
+          <span>${mainPost.reads || 0} reads</span>
         `;
-        document.getElementById('blog-image').src = blog.image || blog.image_url || "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80";
-        document.getElementById('blog-content').innerHTML = sanitizeHTML(blog.content || blog.summary || "<p>No content available.</p>");
+        document.getElementById('blog-image').src = mainPost.images || mainPost.imageUrl || mainPost.image || "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80";
+        document.getElementById('blog-content').innerHTML = sanitizeHTML(mainPost.content || mainPost.summary || "<p>No content available.</p>");
         const tagsDiv = document.getElementById('blog-tags');
-        if (Array.isArray(blog.tags)) {
-          tagsDiv.innerHTML = blog.tags.map(tag =>
+        if (Array.isArray(mainPost.tags)) {
+          tagsDiv.innerHTML = mainPost.tags.map(tag =>
             `<span class="bg-blue-100 text-blue-700 rounded-full px-4 py-1 text-xs font-semibold">#${tag}</span>`
           ).join("");
         } else {
           tagsDiv.innerHTML = "";
         }
-      }
-
-      // Render related blogs (from same category, or just others if not enough)
-      function renderRelated(blog, allBlogs) {
-        let related = [];
-        if (Array.isArray(allBlogs)) {
-          related = allBlogs.filter(item => String(item.id) !== String(blog.id) && item.category === blog.category);
-          if (related.length < 3) {
-            // Fill with any others, excluding self and duplicates
-            const extra = allBlogs.filter(item => String(item.id) !== String(blog.id) && !related.includes(item));
-            related = related.concat(extra).slice(0, 3);
-          } else {
-            related = related.slice(0, 3);
-          }
+        // Comments
+        renderComments(mainPost.comments || []);
+        // Comment submit
+        document.getElementById('commentForm').onsubmit = function(e) {
+          e.preventDefault();
+          const name = document.getElementById('commentName').value.trim() || "Anonymous";
+          const text = document.getElementById('commentText').value.trim();
+          if (!text) return;
+          let arr = mainPost.comments || [];
+          arr = arr.concat([{
+            name,
+            text,
+            date: new Date().toISOString()
+          }]);
+          mainPost.comments = arr;
+          renderComments(arr);
+          this.reset();
+        };
+        // Related posts: same category, exclude self
+        let related = allPosts.filter(p =>
+          (p._id || p.id) !== (mainPost._id || mainPost.id) &&
+          (p.category === mainPost.category)
+        );
+        if (related.length < 2) {
+          related = allPosts.filter(p => (p._id || p.id) !== (mainPost._id || mainPost.id)).slice(0, 4);
+        } else {
+          related = related.slice(0, 4);
         }
         const relatedDiv = document.getElementById('related-blogs');
-        if (related.length) {
-          relatedDiv.innerHTML = related.map(item => `
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col border border-blue-100">
-              <img src="${item.image || item.image_url || 'https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80'}"
-                alt="${item.title}" class="w-full h-36 object-cover border-b border-blue-50">
-              <div class="p-5 flex flex-col flex-1">
-                <div class="flex items-center gap-2 mb-2">
-                  ${item.university ? `<span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">${item.university}</span>` : ""}
-                </div>
-                <h3 class="font-bold text-lg mb-1 text-blue-900">${item.title}</h3>
-                <a href="blog-single.html?id=${item.id}" class="text-blue-700 font-semibold mt-auto hover:underline" onclick="selectBlog('${item.id}')">Read More</a>
+        relatedDiv.innerHTML = '';
+        related.forEach(blog => {
+          const div = document.createElement('div');
+          div.className = 'bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-200 flex flex-col border border-blue-100 cursor-pointer';
+          div.innerHTML = `
+            <img src="${blog.images || blog.imageUrl || blog.image || 'https://images.unsplash.com/photo-1510936111840-6c2d098e3c49?auto=format&fit=crop&w=600&q=80'}"
+              alt="${blog.title}" class="w-full h-36 object-cover border-b border-blue-50">
+            <div class="p-5 flex flex-col flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                ${blog.university ? `<span class="bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded">${blog.university}</span>` : ""}
+                ${blog.category ? `<span class="bg-gray-100 text-blue-900 text-xs font-semibold px-2 py-1 rounded">${blog.category}</span>` : ""}
               </div>
+              <h3 class="font-bold text-lg mb-1 text-blue-900">${blog.title}</h3>
+              <a href="blog-single.html?id=${blog._id || blog.id}" class="text-blue-700 font-semibold mt-auto hover:underline">Read More</a>
             </div>
-          `).join("");
-        } else {
-          relatedDiv.innerHTML = "<div class='text-blue-700 text-center col-span-3'>No related articles found.</div>";
-        }
+          `;
+          div.onclick = () => {
+            window.location.href = `blog-single.html?id=${blog._id || blog.id}`;
+          };
+          relatedDiv.appendChild(div);
+        });
       }
-
-      // For related click: update selectedBlogId/data in localStorage
-      window.selectBlog = function(id) {
-        let data = getRelatedBlogs();
-        function findAndNavigate(arr) {
-          const found = arr.find(b => String(b.id) === String(id));
-          if (found) {
-            localStorage.setItem('selectedBlogId', id);
-            localStorage.setItem('selectedBlogData', JSON.stringify(found));
-          }
-          window.location.href = "blog-single.html?id=" + id;
-          return false;
-        }
-        if (Array.isArray(data) && data.length) {
-          findAndNavigate(data);
-        } else {
-          fetch('blog.json')
-            .then(res => res.json())
-            .then(data => findAndNavigate(data))
-            .catch(() => window.location.href = "blog-single.html?id=" + id);
-        }
-      };
-
-      // MAIN INIT
-      (function(){
-        const blogId = getBlogId();
-        let blog = null;
-        let blogs = getRelatedBlogs();
-
-        function renderFromData(blogsArr) {
-          blog = findBlogById(blogId, blogsArr);
-          renderBlog(blog);
-          renderRelated(blog, blogsArr);
-        }
-
-        if (Array.isArray(blogs) && blogs.length) {
-          renderFromData(blogs);
-        } else {
-          fetch('blog.json')
-            .then(res => res.json())
-            .then(data => {
-              blogs = data;
-              renderFromData(blogs);
-            })
-            .catch(() => renderBlog(null));
-        }
-      })();
+      main();
     });
   </script>
 </body>
