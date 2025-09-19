@@ -124,7 +124,144 @@
   </style>
 </head>
 <body class="bg-blue-50 text-blue-900">
-  <!-- ...nav and other sections unchanged... -->
+  <nav class="bg-white/95 border-b border-blue-100 fixed w-full z-30 top-0 left-0 shadow-sm">
+    <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-4">
+      <a href="#" class="flex items-center gap-2">
+        <img src="logo.png" class="h-8" alt="ExamGuard Logo">
+        <span class="text-2xl font-bold text-blue-700 tracking-tight">ExamGuard Nigeria</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button" class="md:hidden ml-auto p-2 rounded-lg text-blue-800 hover:bg-blue-50 focus:outline-none" aria-controls="navbar-default">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path></svg>
+      </button>
+      <div class="hidden w-full md:flex md:items-center md:w-auto" id="navbar-default">
+        <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
+          <li><a href="#features" class="block py-2 px-3 hover:text-blue-600 transition">Features</a></li>
+          <li><a href="#mock-exams" class="block py-2 px-3 hover:text-blue-600 transition">Mock Exams</a></li>
+          <li><a href="#codecxi" class="block py-2 px-3 hover:text-blue-600 transition">CODECX Institute</a></li>
+          <li><a href="#marketplace" class="block py-2 px-3 hover:text-blue-600 transition">Marketplace</a></li>
+          <li><a href="#blog" class="block py-2 px-3 hover:text-blue-600 transition">Blog & Earn</a></li>
+          <li><a href="#contact" class="block py-2 px-3 hover:text-blue-600 transition">Contact</a></li>
+        </ul>
+        <div class="flex space-x-2 mt-4 md:mt-0 md:ml-6">
+          <a href="affiliate-login.html" class="px-4 py-2 border border-blue-700 text-blue-700 rounded-lg hover:bg-blue-700 hover:text-white transition font-semibold">Affiliate Login</a>
+          <a href="affiliate-reg.html" class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-900 transition font-semibold">Affiliate Register</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section class="relative w-full bottom-2px bg-transparent pt-32 pb-6 px-4">
+    <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
+      <div class="relative min-h-[340px] flex items-stretch rounded-2xl overflow-hidden"
+           style="background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80') center/cover;">
+        <div class="absolute inset-0 rounded-2xl pointer-events-none"
+             style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
+        <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-8 sm:p-12">
+          <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-3" style="line-height: 1.15;">
+            Welcome to<br> ExamGuard Nigeria
+          </h1>
+          <p class="text-white text-lg sm:text-xl mb-7 font-medium">Your Exam, Our Priority</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button id="getStartedBtn" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-blue-700 text-white font-bold text-xl shadow hover:bg-blue-800 transition text-center">Get Started</button>
+            <a href="#features" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-green-600 text-white font-bold text-xl shadow hover:bg-green-700 transition text-center">Explore Features</a>
+          </div>
+        </div>
+        <div class="hidden md:block md:w-2/5"></div>
+      </div>
+    </div>
+  </section>
+  <div id="institutionModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+      <h3 class="text-xl font-bold mb-4">Select Your Institution</h3>
+      <select id="institutionSelect" class="w-full border border-blue-200 rounded px-3 py-2 mb-4">
+        <option value="" selected disabled>Select institution</option>
+        <option value="ui" data-link="https://uniben.examguard.com.ng/">University of Benin (Uniben)</option>
+        <option value="unn" data-link="https://oau.examguard.com.ng/">Obafemi Awolowo University (OAU)</option>
+        <option value="unilag" data-link="https://unilag.examguard.com.ng/">University of Lagos (UNILAG)</option>
+        <option value="ui" data-link="https://ui.examguard.com.ng/">University of Ibadan (UI)</option>
+        <option value="unn" data-link="https://unn.examguard.com.ng/">University of Nigeria (UNN)</option>
+        <option value="abu" data-link="https://abu.examguard.com.ng/">Ahmadu Bello University (ABU)</option>
+        <option value="futa" data-link="https://futa.examguard.com.ng/">Federal University of Technology Akure (FUTA)</option>
+        <option value="not-available" data-link="">My School is Not Listed</option>
+      </select>
+      <button id="institutionProceed" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Proceed</button>
+      <button id="institutionClose" class="w-full mt-2 bg-gray-200 text-blue-900 font-semibold py-2 rounded hover:bg-gray-300 transition">Cancel</button>
+    </div>
+  </div>
+  <div id="notAvailableModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+      <h3 class="text-xl font-bold mb-4">Institution Not Available Yet</h3>
+      <p class="mb-4">Mind being an Ambassador?</p>
+      <div class="flex gap-4 justify-center">
+        <button id="ambassadorYes" class="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition">Yes</button>
+        <button id="ambassadorNo" class="bg-gray-200 text-blue-900 font-semibold py-2 px-4 rounded hover:bg-gray-300 transition">No</button>
+      </div>
+    </div>
+  </div>
+  <section id="features" class="container mx-auto px-4 pt-5 py-20">
+    <h2 class="section-title text-center">Why ExamGuard?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-14">
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Mock Exams" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Mock Tests & Exams</h3>
+        <p class="text-blue-900/80">Simulate real exam conditions and boost your confidence. Practice for university and professional exams anytime, anywhere.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Past Questions" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Past Questions & Study Materials</h3>
+        <p class="text-blue-900/80">Access a rich archive of past questions for various institutions and get study guides that actually make sense.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/4249/4249854.png" alt="Adaptive Learning" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Adaptive Learning</h3>
+        <p class="text-blue-900/80">Our smart recommendation engine nudges you gently toward topics you need most, so learning feels like a conversation, not a chore.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Blog and Earn" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Blog & Earn</h3>
+        <p class="text-blue-900/80">Write about your campus experience, share tips, or inspire others—and get rewarded. Readers earn, too. Here, your voice doesn’t just echo, it pays.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/615/615075.png" alt="Marketplace" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Student Marketplace</h3>
+        <p class="text-blue-900/80">Buy, sell, or swap learning resources, gadgets, and everything students need. A campus market, minus the haggling noise.</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-8 flex flex-col items-center text-center transition hover:shadow-xl">
+        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Secure Platform" class="h-16 mb-4"/>
+        <h3 class="font-bold text-xl mb-2">Secure & Private</h3>
+        <p class="text-blue-900/80">Your data stays yours. Built with privacy in mind, guarded by encryption and responsible humans.</p>
+      </div>
+    </div>
+  </section>
+  <section id="mock-exams" class="bg-blue-100 py-20 px-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 mb-8 md:mb-0">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Mock Exam Practice" class="rounded-2xl shadow-lg w-full max-w-md mx-auto md:mx-0"/>
+      </div>
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">Real Practice, Real Progress</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          Step into your exam with less anxiety and more clarity. Our mock tests replicate the pressure and quirks of the real deal—timers, instant results, and gentle feedback loops. Practice for university and professional exams, anytime.
+        </p>
+        <a href="#" class="inline-block px-7 py-3 bg-blue-700 text-white font-bold rounded-lg shadow-md hover:bg-blue-800 transition text-lg">Start Practicing</a>
+      </div>
+    </div>
+  </section>
+  <section id="codecxi" class="container mx-auto px-4 py-20">
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-5">CODECX Institute for Developers</h2>
+        <p class="mb-6 text-lg text-blue-900/80 font-medium">
+          From zero to deploy—CODECX is your friendly launchpad to coding mastery. Interactive lessons, live code battles, and hands-on projects. Whether you’re prepping for tech interviews or just want to build, CODECX is for you.
+        </p>
+        <a href="https://codecx.examguard.com.ng" class="inline-block px-7 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition text-lg">Join CODECX</a>
+      </div>
+      <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Coding" class="rounded-2xl shadow-lg w-full max-w-md"/>
+      </div>
+    </div>
+  </section>
   <section id="blog" class="container mx-auto pt-5 px-4 py-20">
     <div class="flex flex-col md:flex-row items-center gap-12">
       <div class="w-full md:w-1/2 text-center md:text-left">
