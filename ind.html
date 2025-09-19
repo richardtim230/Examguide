@@ -152,7 +152,7 @@
   <section class="relative w-full bottom-2px bg-transparent pt-32 pb-6 px-4">
     <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-none" style="background: none;">
       <div class="relative min-h-[340px] flex items-stretch rounded-2xl overflow-hidden"
-           style="background: url('images (7).jpg') center/cover;">
+           style="background: url('images (4).jpeg') center/cover;">
         <div class="absolute inset-0 rounded-2xl pointer-events-none"
              style="background: linear-gradient(90deg, rgba(35,38,47,0.92) 0%, rgba(35,38,47,0.65) 45%, rgba(35,38,47,0.22) 100%);"></div>
         <div class="relative z-10 flex flex-col justify-center w-full md:w-3/5 h-full p-8 sm:p-12">
@@ -398,7 +398,45 @@
 
   <!-- ...rest of the file unchanged... -->
   <script>
-    // ...nav/modal code unchanged...
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.querySelector('[data-collapse-toggle]');
+      const menu = document.getElementById('navbar-default');
+      btn?.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+      const getStartedBtn = document.getElementById('getStartedBtn');
+      const institutionModal = document.getElementById('institutionModal');
+      const institutionClose = document.getElementById('institutionClose');
+      const institutionProceed = document.getElementById('institutionProceed');
+      const institutionSelect = document.getElementById('institutionSelect');
+      const notAvailableModal = document.getElementById('notAvailableModal');
+      const ambassadorYes = document.getElementById('ambassadorYes');
+      const ambassadorNo = document.getElementById('ambassadorNo');
+      getStartedBtn.onclick = () => {
+        institutionModal.classList.remove('hidden');
+      };
+      institutionClose.onclick = () => {
+        institutionModal.classList.add('hidden');
+      };
+      institutionProceed.onclick = () => {
+        const selected = institutionSelect.options[institutionSelect.selectedIndex];
+        const value = selected.value;
+        const link = selected.getAttribute('data-link');
+        institutionModal.classList.add('hidden');
+        if (value === 'not-available') {
+          notAvailableModal.classList.remove('hidden');
+        } else if (link) {
+          window.location.href = link;
+        }
+      };
+      ambassadorYes.onclick = () => {
+        notAvailableModal.classList.add('hidden');
+        window.open('https://wa.me/2349155127634?text=Hello%20Admin,%20I%20want%20to%20be%20an%20ExamGuard%20Ambassador', '_blank');
+      };
+      ambassadorNo.onclick = () => {
+        notAvailableModal.classList.add('hidden');
+      };
+    });
 
     // BLOG FETCH (oau-blog.html logic)
     const BLOG_API_URL = "https://examguide.onrender.com/api/blogger-dashboard/allposts";
