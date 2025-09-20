@@ -40,7 +40,28 @@ router.get("/", authenticate, async (req, res) => {
   }
   res.json(dashboard);
 });
-
+// GET all blog posts for admin (any status)
+router.get("/admin/allposts", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts user');
+    let allPosts = [];
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        let obj = post.toObject ? post.toObject() : post;
+        obj.authorId = dash.user;
+        // Ensure images array exists for frontend
+        if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
+        if (!obj.images) obj.images = [];
+        allPosts.push(obj);
+      });
+    });
+    // You can choose to sort, or not
+    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    res.json(allPosts);
+  } catch (e) {
+    res.status(500).json({ error: "Could not fetch blog posts." });
+  }
+});
 // PATCH: Partial update of dashboard (any fields)
 router.patch("/", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
