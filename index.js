@@ -7,7 +7,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import fetch from 'node-fetch';
-
+import Faculty from "./models/Faculty.js";
+import Department from "./models/Department.js";
 const router = express.Router();
 
 import pastQuestionsRoutes from "./routes/pastQuestions.js";
@@ -106,17 +107,6 @@ import BloggerDashboard from "./models/BloggerDashboard.js";
 
 dotenv.config();
 
-// ===== FACULTY & DEPARTMENT MODELS =====
-const FacultySchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true }
-});
-const Faculty = mongoose.model("Faculty", FacultySchema);
-
-const DepartmentSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  faculty: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty", required: true }
-});
-const Department = mongoose.model("Department", DepartmentSchema);
 
 const {
   MONGODB_URI,
