@@ -73,7 +73,8 @@ import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API ro
 import adminRoutes from "./routes/admin.js";
 import responsesRoutes from "./routes/responses.js";
 import settingsRoutes from "./routes/settings.js";
- 
+ import marketplaceRoutes from "./routes/marketplace.js";
+
 import buyerDashboardRoutes from "./routes/buyerDashboard.js";
 
 
@@ -556,6 +557,7 @@ app.get("/api/listings/count", async (req, res) => {
 app.use("/api/superadmin", superadminRoutes);
 
 // --- Main Features ---
+app.use("/api/marketplace", marketplaceRoutes);
 app.use("/api/codecxreg", codecxregRoutes);
 app.use("/api/rewards", rewardsRoutes);
 app.use("/api/withdrawals", withdrawalRoutes);
