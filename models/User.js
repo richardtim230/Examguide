@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, enum: ["student", "blogger", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
   active: { type: Boolean, default: true },
   points: { type: Number, default: 0 },
-
+  verified: { type: Boolean, default: false },
   // Track reward history for breakdown and to prevent double-awards
   rewardHistory: {
     practiced: [
