@@ -18,7 +18,7 @@ const PostSchema = new mongoose.Schema({
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
   earnings: { type: Number, default: 0 },
-  status: { type: String, enum: ["Draft", "Published"], default: "Draft" },
+  status: { type: String, enum: ["Draft", "Pending", "pending", "Published"], default: "Draft" },
   category: { type: String, default: "General" }, // <------ ADD THIS LINE
   imageUrl: String,
   readers: { type: [String], default: [] }, 
