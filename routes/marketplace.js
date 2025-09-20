@@ -52,7 +52,24 @@ router.get("/mylistings", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not fetch listings." });
   }
 });
-
+// GET all listings (admin, any status/approval)
+router.get("/admin/alllistings", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'listings user');
+    let allListings = [];
+    dashboards.forEach(dash => {
+      (dash.listings || []).forEach(listing => {
+        let obj = listing.toObject ? listing.toObject() : listing;
+        obj.seller = dash.user;
+        allListings.push(obj);
+      });
+    });
+    allListings.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+    res.json(allListings);
+  } catch (e) {
+    res.status(500).json({ error: "Could not fetch listings." });
+  }
+});
 router.post("/listings", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
