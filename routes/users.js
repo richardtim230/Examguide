@@ -15,17 +15,25 @@ router.get("/", async (req, res) => {
 
   try {
     const users = await User.find(filter)
-      .populate("faculty", "name")
-      .populate("department", "name")
       .select("-password")
       .sort({ createdAt: -1 });
 
-    const data = users.map(u => {
+    const data = await Promise.all(users.map(async u => {
       const obj = u.toObject();
-      obj.facultyName = obj.faculty?.name || "";
-      obj.departmentName = obj.department?.name || "";
+      if (mongoose.isValidObjectId(obj.faculty)) {
+        const faculty = await Faculty.findById(obj.faculty);
+        obj.facultyName = faculty ? faculty.name : "";
+      } else {
+        obj.facultyName = typeof obj.faculty === 'string' ? obj.faculty : "";
+      }
+      if (mongoose.isValidObjectId(obj.department)) {
+        const department = await Department.findById(obj.department);
+        obj.departmentName = department ? department.name : "";
+      } else {
+        obj.departmentName = typeof obj.department === 'string' ? obj.department : "";
+      }
       return obj;
-    });
+    }));
     res.json(data);
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
