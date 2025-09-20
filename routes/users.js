@@ -1,9 +1,9 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
-
+import BloggerDashboard from "../models/BloggerDashboard.js";
+import mongoose from "mongoose";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
-
 const router = express.Router();
 
 // GET all users (supports ?role, ?faculty, ?department; populates faculty/department names)
