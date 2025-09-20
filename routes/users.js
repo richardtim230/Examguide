@@ -31,8 +31,36 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-// --- Add this route to your users.js/users route file ---
-
+router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    user.verified = true;
+    await user.save();
+    res.json({ message: "User verified." });
+  } catch (err) {
+    res.status(500).json({ message: err.message || "Server error" });
+  }
+});
+router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    user.active = false;
+    await user.save();
+    res.json({ message: "User banned." });
+  } catch (err) {
+    res.status(500).json({ message: err.message || "Server error" });
+  }
+});
+router.get("/count", async (req, res) => {
+  try {
+    const count = await User.countDocuments({});
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ message: err.message || "Server error" });
+  }
+});
 // GET user by id (for author lookup)
 router.get("/:id", async (req, res) => {
   try {
