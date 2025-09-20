@@ -57,9 +57,10 @@ router.post("/listings", authenticate, async (req, res) => {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
     const { title, item, price, category, stock, status, sales, description, img, imageUrl } = req.body;
+    if (!title && !item) return res.status(400).json({ error: "Title or item is required." });
     const listingData = {
       _id: new mongoose.Types.ObjectId(),
-      title: title || item, // accept either
+      title: title || item,
       item: item || title,
       price: Number(price) || 0,
       category: category || "",
@@ -69,13 +70,13 @@ router.post("/listings", authenticate, async (req, res) => {
       description: description || "",
       img: img || imageUrl || "",
       orders: 0,
-      approved: false // <-- always false on create
+      approved: false
     };
     dashboard.listings.unshift(listingData);
     await dashboard.save();
     res.status(201).json(listingData);
   } catch (err) {
-    res.status(500).json({ error: "Could not create listing." });
+    res.status(500).json({ error: "Could not create listing.", msg: err.message });
   }
 });
 
