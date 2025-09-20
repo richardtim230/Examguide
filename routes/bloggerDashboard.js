@@ -1,7 +1,7 @@
 import express from "express";
 import BloggerDashboard from "../models/BloggerDashboard.js";
-import { authenticate } from "../middleware/authenticate.js";
 import multer from "multer";
+import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import path from "path";
 import fs from "fs";
 import { exec } from "child_process";
