@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-
-
-
-// Recursive Comment Schema for replies (fixed!)
 const CommentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   name: String,
@@ -12,13 +8,9 @@ const CommentSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 }
 }, { _id: true });
 
-// Add recursive field AFTER initial definition!
 CommentSchema.add({
   replies: [CommentSchema]
 });
-
-// ... rest of your schemas ...
-
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -37,8 +29,6 @@ const PostSchema = new mongoose.Schema({
     time: Number
   }]
 }, { _id: true });
-
-
 const ListingSchema = new mongoose.Schema({
   title: { type: String },
   item: { type: String }, // synonym for title
@@ -50,6 +40,7 @@ const ListingSchema = new mongoose.Schema({
   description: { type: String, default: "" },
   img: { type: String, default: "" },
   imageUrl: { type: String, default: "" },
+  approved: { type: Boolean, default: false },
   orders: { type: Number, default: 0 }
 }, { _id: true });
 
@@ -72,18 +63,10 @@ const MessageSchema = new mongoose.Schema({
   date: String
 }, { _id: true });
 
-// --- Main BloggerDashboard Schema ---
-
 const BloggerDashboardSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true },
-
-  // Blog Posts
   posts: [PostSchema],
-
-  // Seller Listings
   listings: [ListingSchema],
-
-  // Analytics for dashboard/statistics
   analytics: {
     viewsOverTime: {
       type: [Number],
@@ -96,15 +79,8 @@ const BloggerDashboardSchema = new mongoose.Schema({
       referrals: { type: Number, default: 0 }
     }
   },
-
-  // Followers (array of users following this dashboard owner)
   followers: [FollowerSchema],
-
-  // Commissions (earnings from the platform)
   commissions: [CommissionSchema],
-
-  // Messages (inbox, support, chat)
   messages: [MessageSchema]
 });
-
 export default mongoose.model("BloggerDashboard", BloggerDashboardSchema);
