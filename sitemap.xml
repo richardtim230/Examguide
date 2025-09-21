@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://examguard.com.ng/</loc>
-    <lastmod>2025-09-19</lastmod>
+    <loc>https://examguard.com.ng</loc>
+    <lastmod>2025-09-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <!-- Blog main page -->
   <url>
     <loc>https://examguard.com.ng/ngg-blog.html</loc>
-    <lastmod>2025-09-19</lastmod>
+    <lastmod>2025-09-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
