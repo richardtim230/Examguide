@@ -174,13 +174,9 @@ router.put("/posts/:id", authenticate, async (req, res) => {
 });
 
 
-// GET all published blog posts (public, paginated)
+// GET all published blog posts (public)
 router.get("/allposts", async (req, res) => {
   try {
-    let page = parseInt(req.query.page, 10) || 1;
-    let limit = parseInt(req.query.limit, 10) || 9; // default 9 per page
-    let skip = (page - 1) * limit;
-
     const dashboards = await BloggerDashboard.find({}, 'posts user');
     let allPosts = [];
     dashboards.forEach(dash => {
@@ -188,6 +184,7 @@ router.get("/allposts", async (req, res) => {
         if (post.status === "Published") {
           let obj = post.toObject ? post.toObject() : post;
           obj.authorId = dash.user;
+          // Ensure images array exists for frontend
           if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
           if (!obj.images) obj.images = [];
           allPosts.push(obj);
@@ -195,17 +192,7 @@ router.get("/allposts", async (req, res) => {
       });
     });
     allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    const total = allPosts.length;
-    const pagedPosts = allPosts.slice(skip, skip + limit);
-
-    res.json({
-      posts: pagedPosts,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit)
-    });
+    res.json(allPosts);
   } catch (e) {
     res.status(500).json({ error: "Could not fetch blog posts." });
   }
@@ -545,7 +532,6 @@ router.post("/followers", authenticate, async (req, res) => {
   res.status(201).json(dashboard.followers[dashboard.followers.length - 1]);
 });
 
-// REMOVE follower
 router.delete("/followers/:followerId", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
   if (!dashboard) return res.status(404).json({ message: "Dashboard not found" });
@@ -556,9 +542,6 @@ router.delete("/followers/:followerId", authenticate, async (req, res) => {
   res.json({ message: "Follower removed" });
 });
 
-// ==== MESSAGES ====
-
-// SEND message
 router.post("/messages", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
   if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
@@ -578,8 +561,6 @@ router.delete("/messages/:messageId", authenticate, async (req, res) => {
   res.json({ message: "Message deleted" });
 });
 
-// ==== ANALYTICS ====
-// PATCH analytics object (for updating views, engagements, etc.)
 router.patch("/analytics", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
   if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
