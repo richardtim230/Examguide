@@ -60,6 +60,12 @@
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
+    <url>
+    <loc>https://oau.examguard.com.ng/campus-news-update?id=68cfdb643347c5f17517b8e7</loc>
+    <lastmod>2025-09-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- Example Marketplace Item (should also be generated dynamically) -->
   <url>
     <loc>https://examguard.com.ng/marketplace-item?id=67890</loc>
