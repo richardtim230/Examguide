@@ -98,6 +98,8 @@ const allowedCategories = [
   "Tips & Hacks",
   "Opportunities",
   "Events",
+  "Science",
+  "News",
   "General"
 ];
 
@@ -174,9 +176,13 @@ router.put("/posts/:id", authenticate, async (req, res) => {
 });
 
 
-// GET all published blog posts (public)
+// GET all published blog posts (public, paginated)
 router.get("/allposts", async (req, res) => {
   try {
+    let page = parseInt(req.query.page, 10) || 1;
+    let limit = parseInt(req.query.limit, 10) || 9; // default 9 per page
+    let skip = (page - 1) * limit;
+
     const dashboards = await BloggerDashboard.find({}, 'posts user');
     let allPosts = [];
     dashboards.forEach(dash => {
@@ -184,7 +190,6 @@ router.get("/allposts", async (req, res) => {
         if (post.status === "Published") {
           let obj = post.toObject ? post.toObject() : post;
           obj.authorId = dash.user;
-          // Ensure images array exists for frontend
           if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
           if (!obj.images) obj.images = [];
           allPosts.push(obj);
@@ -192,7 +197,17 @@ router.get("/allposts", async (req, res) => {
       });
     });
     allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    res.json(allPosts);
+
+    const total = allPosts.length;
+    const pagedPosts = allPosts.slice(skip, skip + limit);
+
+    res.json({
+      posts: pagedPosts,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (e) {
     res.status(500).json({ error: "Could not fetch blog posts." });
   }
