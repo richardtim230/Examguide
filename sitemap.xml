@@ -49,8 +49,14 @@
   </url>
   <!-- Example Blog Posts (these should be generated dynamically in production) -->
   <url>
-    <loc>https://examguard.com.ng/campus-news-update?id=12345</loc>
-    <lastmod>2025-09-18</lastmod>
+    <loc>https://www.examguard.com.ng/campus-news-update?id=68cf8be80cff58616e9d71e6</loc>
+    <lastmod>2025-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.examguard.com.ng/campus-news-update?id=68cf8be80cff58616e9d71e6</loc>
+    <lastmod>2025-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
