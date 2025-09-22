@@ -90,31 +90,40 @@ router.get("/myposts", authenticate, async (req, res) => {
   }
 });
 
-
-// Allowed categories - you can expand this list if needed
-const allowedCategories = [
-  "Campus Life",
-  "Academics",
-  "Tips & Hacks",
-  "Opportunities",
-  "Events",
-  "General"
-];
-
-// CREATE blog post (base64 images)
+// CREATE blog post (with category, subject, topic support)
 router.post("/posts", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
-    const { title, content, status = "Draft", category, images } = req.body;
+    const {
+      title,
+      content,
+      status = "Draft",
+      category,
+      subject,
+      topic,
+      images
+    } = req.body;
     if (!title || !content) return res.status(400).json({ error: "Title and content required" });
-    // Ensure valid, non-empty category
+
+    // Categories - adjust as needed
+    const allowedCategories = [
+      "Campus Life",
+      "Academics",
+      "Tips & Hacks",
+      "Opportunities",
+      "Events",
+      "General"
+    ];
     const safeCategory = allowedCategories.includes(category) ? category : "General";
+
     const postData = {
       _id: new mongoose.Types.ObjectId(),
       title,
       content,
       category: safeCategory,
+      subject: subject || "",
+      topic: topic || "",
       status,
       date: new Date(),
       views: 0,
@@ -124,14 +133,19 @@ router.post("/posts", authenticate, async (req, res) => {
       images: Array.isArray(images) ? images : [],
       imageUrl: Array.isArray(images) && images.length ? images[0] : undefined
     };
+
     dashboard.posts.unshift(postData);
     await dashboard.save();
-    exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
-      if (error) console.error(`Static gen error: ${error.message}`);
-      if (stderr) console.error(`Static gen stderr: ${stderr}`);
-      if (stdout) console.error(`Static gen output:\n${stdout}`);
-    });
-      
+
+    // Trigger static page generation if you use it:
+    if (typeof GENERATOR_SCRIPT !== "undefined") {
+      exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
+        if (error) console.error(`Static gen error: ${error.message}`);
+        if (stderr) console.error(`Static gen stderr: ${stderr}`);
+        if (stdout) console.error(`Static gen output:\n${stdout}`);
+      });
+    }
+
     res.status(201).json(postData);
   } catch (err) {
     console.error("Error creating post:", err);
@@ -139,41 +153,157 @@ router.post("/posts", authenticate, async (req, res) => {
   }
 });
 
-// UPDATE blog post (base64 images)
+// UPDATE blog post (with category, subject, topic support)
 router.put("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
     const post = dashboard.posts.id(req.params.id);
     if (!post) return res.status(404).json({ error: "Post not found" });
+
     if (req.body.title !== undefined) post.title = req.body.title;
     if (req.body.content !== undefined) post.content = req.body.content;
     if (req.body.status !== undefined) post.status = req.body.status;
-    // Patch: ensure valid, non-empty category
+
+    // Categories - adjust as needed
+    const allowedCategories = [
+      "Campus Life",
+      "Academics",
+      "Tips & Hacks",
+      "Opportunities",
+      "Events",
+      "General"
+    ];
     if (req.body.category !== undefined) {
       post.category = allowedCategories.includes(req.body.category)
         ? req.body.category
         : "General";
     }
+    if (req.body.subject !== undefined) post.subject = req.body.subject;
+    if (req.body.topic !== undefined) post.topic = req.body.topic;
+
     post.date = new Date();
+
     if (req.body.images && Array.isArray(req.body.images)) {
       post.images = req.body.images;
       post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
     }
+
     await dashboard.save();
-    exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
-      if (error) console.error(`Static gen error: ${error.message}`);
-      if (stderr) console.error(`Static gen stderr: ${stderr}`);
-      if (stdout) console.error(`Static gen output:\n${stdout}`);
-    });
+
+    // Trigger static page generation if you use it:
+    if (typeof GENERATOR_SCRIPT !== "undefined") {
+      exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
+        if (error) console.error(`Static gen error: ${error.message}`);
+        if (stderr) console.error(`Static gen stderr: ${stderr}`);
+        if (stdout) console.error(`Static gen output:\n${stdout}`);
+      });
+    }
+
     res.json(post);
   } catch (err) {
     console.error("Error updating post:", err);
     res.status(500).json({ error: "Could not update post." });
   }
+});    
+
+// GET: List all unique categories, subjects, topics (for filters/menus)
+router.get("/taxonomy/all", async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts');
+    const categories = new Set();
+    const subjects = new Set();
+    const topics = new Set();
+
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        if (post.category) categories.add(post.category);
+        if (post.subject) subjects.add(post.subject);
+        if (post.topic) topics.add(post.topic);
+      });
+    });
+
+    res.json({
+      categories: Array.from(categories),
+      subjects: Array.from(subjects),
+      topics: Array.from(topics)
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch taxonomy." });
+  }
 });
 
+// GET: List all unique subjects for a given category
+router.get("/taxonomy/subjects", async (req, res) => {
+  const { category } = req.query;
+  if (!category) return res.status(400).json({ error: "Missing category" });
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts');
+    const subjects = new Set();
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        if (post.category === category && post.subject) {
+          subjects.add(post.subject);
+        }
+      });
+    });
+    res.json({ subjects: Array.from(subjects) });
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch subjects." });
+  }
+});
 
+// GET: List all unique topics for a given subject (and optionally category)
+router.get("/taxonomy/topics", async (req, res) => {
+  const { category, subject } = req.query;
+  if (!subject) return res.status(400).json({ error: "Missing subject" });
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts');
+    const topics = new Set();
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        if (
+          post.subject === subject &&
+          (!category || post.category === category) &&
+          post.topic
+        ) {
+          topics.add(post.topic);
+        }
+      });
+    });
+    res.json({ topics: Array.from(topics) });
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch topics." });
+  }
+});
+
+// GET: All posts filtered by category, subject, or topic
+router.get("/posts/filter", async (req, res) => {
+  const { category, subject, topic } = req.query;
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts user');
+    let posts = [];
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        let match = true;
+        if (category && post.category !== category) match = false;
+        if (subject && post.subject !== subject) match = false;
+        if (topic && post.topic !== topic) match = false;
+        if (match) {
+          let obj = post.toObject ? post.toObject() : post;
+          obj.authorId = dash.user;
+          if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
+          if (!obj.images) obj.images = [];
+          posts.push(obj);
+        }
+      });
+    });
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: "Could not filter posts." });
+  }
+});
 // GET all published blog posts (public)
 router.get("/allposts", async (req, res) => {
   try {
