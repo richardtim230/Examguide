@@ -342,7 +342,8 @@ router.get('/admin', async (req, res) => {
         progress: 1,
         passportBase64: 1
       } }
-    ], { allowDiskUse: true });
+    ])
+    .allowDiskUse(true); // <-- Fix is here!
     const totalStudents = students.length;
     const paidCount = students.filter(s => s.hasPaid).length;
     const unpaidCount = totalStudents - paidCount;
