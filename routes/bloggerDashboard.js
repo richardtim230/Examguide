@@ -424,7 +424,20 @@ router.post("/add-comment/:postId", async (req, res) => {
   }
 });
 
-
+router.get("/public/posts/count", async (req, res) => {
+  const category = req.query.category || "General";
+  try {
+    const pipeline = [
+      { $unwind: "$posts" },
+      { $match: { "posts.status": "Published", ...(category !== "All" ? { "posts.category": category } : {}) } },
+      { $count: "count" }
+    ];
+    const result = await BloggerDashboard.aggregate(pipeline);
+    res.json({ count: result[0]?.count || 0 });
+  } catch (err) {
+    res.status(500).json({ count: 0 });
+  }
+});
 
 router.post("/award-points", authenticate, async (req, res) => {
   const { postId } = req.body;
