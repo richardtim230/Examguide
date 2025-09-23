@@ -208,12 +208,22 @@ router.put("/posts/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not update post." });
   }
 });    
-// Get single post by ID, with author info
+
+// Helper: Validate ObjectId
+function isValidObjectId(id) {
+  return /^[a-fA-F0-9]{24}$/.test(id);
+}
+
+// [1] Get a single published post by ID (with author info)
 router.get('/public/posts/:id', async (req, res) => {
   const { id } = req.params;
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ error: "Invalid post ID" });
+  }
+  const postId = new mongoose.Types.ObjectId(id);
   const pipeline = [
     { $unwind: "$posts" },
-    { $match: { "posts._id": new mongoose.Types.ObjectId(id), "posts.status": "Published" } },
+    { $match: { "posts._id": postId, "posts.status": "Published" } },
     {
       $lookup: {
         from: "users",
@@ -240,45 +250,67 @@ router.get('/public/posts/:id', async (req, res) => {
   ];
   const [post] = await BloggerDashboard.aggregate(pipeline);
   if (!post) return res.status(404).json({ error: "Post not found" });
+  // Fallback avatar if missing
+  if (!post.authorAvatar) {
+    post.authorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(post.authorName || "A")}&background=FFCE45&color=263159&rounded=true`;
+  }
   res.json(post);
 });
 
-// Related posts API
+// [2] Get related posts by ID (same category, exclude current, limit param)
 router.get('/public/posts/:id/related', async (req, res) => {
   const { id } = req.params;
   const limit = parseInt(req.query.limit) || 4;
-  // Get the main post's category
+  if (!isValidObjectId(id)) return res.json([]);
+  const postId = new mongoose.Types.ObjectId(id);
+
+  // Get main post's category
   const mainPipeline = [
     { $unwind: "$posts" },
-    { $match: { "posts._id": new mongoose.Types.ObjectId(id), "posts.status": "Published" } },
+    { $match: { "posts._id": postId, "posts.status": "Published" } },
     { $project: { category: "$posts.category" } }
   ];
   const [main] = await BloggerDashboard.aggregate(mainPipeline);
   if (!main) return res.json([]);
   const category = main.category;
-  // Now fetch related posts (same category, not current post)
+
+  // Fetch related posts
   const relatedPipeline = [
     { $unwind: "$posts" },
-    { $match: { "posts.status": "Published", "posts.category": category, "posts._id": { $ne: new mongoose.Types.ObjectId(id) } } },
+    { $match: { "posts.status": "Published", "posts.category": category, "posts._id": { $ne: postId } } },
     { $sort: { "posts.date": -1 } },
     { $limit: limit },
     {
-      $project: {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "authorInfo"
+      }
+    },
+    { $project: {
         _id: "$posts._id",
         title: "$posts.title",
         imageUrl: "$posts.imageUrl",
         category: "$posts.category",
-        authorName: "$posts.authorName",
+        authorName: { $ifNull: [{ $arrayElemAt: ["$authorInfo.fullname", 0] }, { $arrayElemAt: ["$authorInfo.username", 0] }] },
+        authorAvatar: { $arrayElemAt: ["$authorInfo.profilePic", 0] },
         date: "$posts.date",
         views: "$posts.views",
         likes: "$posts.likes",
-        comments: "$posts.comments"
-      }
-    }
+        comments: "$posts.comments",
+        summary: { $substr: [ "$posts.content", 0, 120 ] }
+    }}
   ];
   const related = await BloggerDashboard.aggregate(relatedPipeline);
+  related.forEach(post => {
+    if (!post.authorAvatar) {
+      post.authorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(post.authorName || "A")}&background=FFCE45&color=263159&rounded=true`;
+    }
+  });
   res.json(related);
 });
+
 // GET: List all unique categories, subjects, topics (for filters/menus)
 router.get("/taxonomy/all", async (req, res) => {
   try {
