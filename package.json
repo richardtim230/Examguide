@@ -18,6 +18,7 @@
 "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+   "setup:indexes": "node setup-mongo-indexes.js",
     "generate:posts": "node generate-static-posts.js"
   },
   "devDependencies": {
