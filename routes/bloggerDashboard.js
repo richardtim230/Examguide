@@ -6,6 +6,8 @@ import path from "path";
 import fs from "fs";
 import { exec } from "child_process";
 import mongoose from "mongoose";
+// Add at the top with other imports
+import User from "../models/User.js";
 const GENERATOR_SCRIPT = path.join(process.cwd(), "generate-static-posts.js");
 const router = express.Router();
 
@@ -304,27 +306,64 @@ router.get("/posts/filter", async (req, res) => {
     res.status(500).json({ error: "Could not filter posts." });
   }
 });
-// GET all published blog posts (public)
-router.get("/allposts", async (req, res) => {
+
+
+// --- Optimized paginated blog posts endpoint ---
+router.get("/public/posts", async (req, res) => {
+  // Query params: category, page, limit
+  const category = req.query.category || "General";
+  const page = Math.max(1, parseInt(req.query.page) || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 20);
+
   try {
-    const dashboards = await BloggerDashboard.find({}, 'posts user');
-    let allPosts = [];
-    dashboards.forEach(dash => {
-      (dash.posts || []).forEach(post => {
-        if (post.status === "Published") {
-          let obj = post.toObject ? post.toObject() : post;
-          obj.authorId = dash.user;
-          // Ensure images array exists for frontend
-          if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
-          if (!obj.images) obj.images = [];
-          allPosts.push(obj);
+    // Aggregation: flatten posts, filter, join author info
+    const pipeline = [
+      { $unwind: "$posts" },
+      { $match: { "posts.status": "Published", ...(category !== "All" ? { "posts.category": category } : {}) } },
+      {
+        $lookup: {
+          from: "users", // MongoDB collection name for User
+          localField: "user",
+          foreignField: "_id",
+          as: "authorInfo"
         }
-      });
+      },
+      { $sort: { "posts.date": -1 } }, // Latest first
+      { $skip: (page - 1) * limit },
+      { $limit: limit },
+      {
+        $project: {
+          _id: "$posts._id",
+          title: "$posts.title",
+          content: "$posts.content",
+          category: "$posts.category",
+          date: "$posts.date",
+          views: "$posts.views",
+          likes: "$posts.likes",
+          comments: { $size: { $ifNull: ["$posts.comments", []] } },
+          images: "$posts.images",
+          imageUrl: "$posts.imageUrl",
+          authorId: "$user",
+          // Author fields
+          author: { $ifNull: [ { $arrayElemAt: ["$authorInfo.fullname", 0] }, { $arrayElemAt: ["$authorInfo.username", 0] } ] },
+          authorAvatar: { $arrayElemAt: ["$authorInfo.profilePic", 0] }
+        }
+      }
+    ];
+
+    const posts = await BloggerDashboard.aggregate(pipeline);
+
+    // Fallback for missing avatars
+    posts.forEach(post => {
+      if (!post.authorAvatar) {
+        post.authorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(post.author || "A")}&background=FFCE45&color=263159&rounded=true`;
+      }
     });
-    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    res.json(allPosts);
-  } catch (e) {
-    res.status(500).json({ error: "Could not fetch blog posts." });
+
+    res.json(posts);
+  } catch (err) {
+    console.error("Paginated fetch error", err);
+    res.status(500).json({ error: "Could not fetch posts." });
   }
 });
 
