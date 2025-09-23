@@ -208,7 +208,77 @@ router.put("/posts/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not update post." });
   }
 });    
+// Get single post by ID, with author info
+router.get('/public/posts/:id', async (req, res) => {
+  const { id } = req.params;
+  const pipeline = [
+    { $unwind: "$posts" },
+    { $match: { "posts._id": new mongoose.Types.ObjectId(id), "posts.status": "Published" } },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "authorInfo"
+      }
+    },
+    { $project: {
+        _id: "$posts._id",
+        title: "$posts.title",
+        content: "$posts.content",
+        category: "$posts.category",
+        date: "$posts.date",
+        views: "$posts.views",
+        likes: "$posts.likes",
+        comments: "$posts.comments",
+        images: "$posts.images",
+        imageUrl: "$posts.imageUrl",
+        authorId: "$user",
+        authorName: { $ifNull: [{ $arrayElemAt: ["$authorInfo.fullname", 0] }, { $arrayElemAt: ["$authorInfo.username", 0] }] },
+        authorAvatar: { $arrayElemAt: ["$authorInfo.profilePic", 0] }
+    }}
+  ];
+  const [post] = await BloggerDashboard.aggregate(pipeline);
+  if (!post) return res.status(404).json({ error: "Post not found" });
+  res.json(post);
+});
 
+// Related posts API
+router.get('/public/posts/:id/related', async (req, res) => {
+  const { id } = req.params;
+  const limit = parseInt(req.query.limit) || 4;
+  // Get the main post's category
+  const mainPipeline = [
+    { $unwind: "$posts" },
+    { $match: { "posts._id": new mongoose.Types.ObjectId(id), "posts.status": "Published" } },
+    { $project: { category: "$posts.category" } }
+  ];
+  const [main] = await BloggerDashboard.aggregate(mainPipeline);
+  if (!main) return res.json([]);
+  const category = main.category;
+  // Now fetch related posts (same category, not current post)
+  const relatedPipeline = [
+    { $unwind: "$posts" },
+    { $match: { "posts.status": "Published", "posts.category": category, "posts._id": { $ne: new mongoose.Types.ObjectId(id) } } },
+    { $sort: { "posts.date": -1 } },
+    { $limit: limit },
+    {
+      $project: {
+        _id: "$posts._id",
+        title: "$posts.title",
+        imageUrl: "$posts.imageUrl",
+        category: "$posts.category",
+        authorName: "$posts.authorName",
+        date: "$posts.date",
+        views: "$posts.views",
+        likes: "$posts.likes",
+        comments: "$posts.comments"
+      }
+    }
+  ];
+  const related = await BloggerDashboard.aggregate(relatedPipeline);
+  res.json(related);
+});
 // GET: List all unique categories, subjects, topics (for filters/menus)
 router.get("/taxonomy/all", async (req, res) => {
   try {
