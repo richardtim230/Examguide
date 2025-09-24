@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema({
   department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: "" },
   role: { type: String, enum: ["student", "blogger", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
   active: { type: Boolean, default: true },
+  status: { type: String, enum: ["pending", "active", "banned"], default: "pending" },
+approved: { type: Boolean, default: false },
+ninSlip: { type: String, default: "" },
+institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   verified: { type: Boolean, default: false },
   // Track reward history for breakdown and to prevent double-awards
