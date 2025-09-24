@@ -432,7 +432,7 @@ document.getElementById('quickNewsletterForm').addEventListener('submit', async 
   spinner.classList.remove('hidden');
 
   try {
-    const res = await fetch('/api/newsletter', {
+    const res = await fetch('https://examguide.onrender.com/api/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name: "Newsletter Signup" })
