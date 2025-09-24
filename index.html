@@ -338,16 +338,53 @@
       </div>
     </div>
   </section>
-  <section class="bg-blue-700 py-10 px-4">
-    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">Never miss a hack, update, or event!</div>
-      <form class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-        <input type="email" placeholder="Your email address" required
-               class="px-4 py-2 rounded-md border-none focus:ring-2 focus:ring-blue-300 outline-none w-full sm:w-auto" />
-        <button type="submit" class="px-6 py-2 bg-white text-blue-700 font-semibold rounded-md hover:bg-blue-100 transition">Subscribe</button>
-      </form>
+<section class="bg-blue-700 py-10 px-4">
+  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="text-white text-2xl md:text-3xl font-bold mb-2 md:mb-0">
+      Never miss a hack, update, or event!
     </div>
-  </section>
+    <form id="quickNewsletterForm" class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+      <input
+        type="email"
+        id="quickNewsletterEmail"
+        placeholder="Your email address"
+        required
+        class="px-4 py-2 rounded-md border-none focus:ring-2 focus:ring-blue-300 outline-none w-full sm:w-auto"
+      />
+      <button
+        type="submit"
+        id="quickNewsletterBtn"
+        class="px-6 py-2 bg-white text-blue-700 font-semibold rounded-md hover:bg-blue-100 transition flex items-center justify-center"
+      >
+        <span id="quickNewsletterBtnText">Subscribe</span>
+        <svg
+          id="quickNewsletterSpinner"
+          class="animate-spin ml-2 h-5 w-5 text-blue-700 hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8z"
+          ></path>
+        </svg>
+      </button>
+    </form>
+    <p id="quickNewsletterMsg" class="mt-4 text-white text-center w-full md:w-auto"></p>
+  </div>
+</section>
+
+
 <section id="contact" class="py-20 px-4">
   <div class="container mx-auto max-w-2xl bg-white rounded-xl shadow-lg p-8">
     <h2 class="text-2xl font-bold text-blue-900 mb-4">Contact Us</h2>
@@ -381,6 +418,43 @@
 </section>
 
 <script>
+// Newsletter quick subscribe (footer or promo section)
+document.getElementById('quickNewsletterForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const email = document.getElementById('quickNewsletterEmail').value.trim();
+  const btn = document.getElementById('quickNewsletterBtn');
+  const btnText = document.getElementById('quickNewsletterBtnText');
+  const spinner = document.getElementById('quickNewsletterSpinner');
+  const msg = document.getElementById('quickNewsletterMsg');
+  msg.textContent = "";
+  btn.disabled = true;
+  btnText.textContent = 'Submitting...';
+  spinner.classList.remove('hidden');
+
+  try {
+    const res = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name: "Newsletter Signup" })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      msg.textContent = "You're subscribed! Check your inbox for updates.";
+      msg.className = "mt-4 text-green-100 text-center w-full md:w-auto";
+      this.reset();
+    } else {
+      msg.textContent = data.message || "Subscription failed. Try another email.";
+      msg.className = "mt-4 text-red-200 text-center w-full md:w-auto";
+    }
+  } catch (err) {
+    msg.textContent = "Network error. Please try again.";
+    msg.className = "mt-4 text-red-200 text-center w-full md:w-auto";
+  }
+  btn.disabled = false;
+  btnText.textContent = 'Subscribe';
+  spinner.classList.add('hidden');
+});
+  
 document.getElementById('newsletterForm').addEventListener('submit', async function(e){
   e.preventDefault();
   const btn = document.getElementById('newsletterSubmit');
