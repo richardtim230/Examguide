@@ -576,24 +576,34 @@ router.post("/award-points", authenticate, async (req, res) => {
   }
 });
 
-// UPDATE blog post (JSON body or form-data)
-router.put("/posts/:id", authenticate, upload.single("image"), async (req, res) => {
+// UPDATE blog post (robust array logic)
+router.put("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
-    const post = dashboard.posts.id(req.params.id);
-    if (!post) return res.status(404).json({ error: "Post not found" });
-
-    if (req.body.title !== undefined) post.title = req.body.title;
-    if (req.body.content !== undefined) post.content = req.body.content;
-    if (req.body.status !== undefined) post.status = req.body.status;
-    post.date = new Date();
-    if (req.file) {
-      post.imageUrl = "/uploads/posts/" + req.file.filename;
-    }
+    let updated = null;
+    dashboard.posts = dashboard.posts.map(post => {
+      if (post._id.toString() === req.params.id) {
+        if (req.body.title !== undefined) post.title = req.body.title;
+        if (req.body.content !== undefined) post.content = req.body.content;
+        if (req.body.status !== undefined) post.status = req.body.status;
+        if (req.body.category !== undefined) post.category = req.body.category;
+        if (req.body.subject !== undefined) post.subject = req.body.subject;
+        if (req.body.topic !== undefined) post.topic = req.body.topic;
+        if (req.body.images && Array.isArray(req.body.images)) {
+          post.images = req.body.images;
+          post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
+        }
+        post.date = new Date();
+        updated = post;
+      }
+      return post;
+    });
+    if (!updated) return res.status(404).json({ error: "Post not found" });
     await dashboard.save();
-    res.json(post);
+    res.json(updated);
   } catch (err) {
+    console.error("Update error:", err);
     res.status(500).json({ error: "Could not update post." });
   }
 });
