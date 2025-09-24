@@ -413,7 +413,7 @@ router.get("/posts/filter", async (req, res) => {
 // --- Optimized paginated blog posts endpoint ---
 router.get("/public/posts", async (req, res) => {
   // Query params: category, page, limit
-  const category = req.query.category || "General";
+  const category = req.query.category || "General" || "Academics";
   const page = Math.max(1, parseInt(req.query.page) || 1);
   const limit = Math.max(1, parseInt(req.query.limit) || 20);
 
