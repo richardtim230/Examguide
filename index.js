@@ -69,6 +69,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY; // Set in your .env
 
 import multer from "multer";
 // ...existing imports...
+import newsletterRoutes from "./routes/newsletter.js";
 import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
 import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API route
 import adminRoutes from "./routes/admin.js";
@@ -549,7 +550,7 @@ app.get("/api/listings/count", async (req, res) => {
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/blogger", bloggerAuthRoutes);
 app.use("/uploads/blogger", express.static(path.join(process.cwd(), "uploads/blogger")));
-// --- Main Features ---
+app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/marketplace", marketplaceRoutes);
 app.use("/api/codecxreg", codecxregRoutes);
 app.use("/api/rewards", rewardsRoutes);
