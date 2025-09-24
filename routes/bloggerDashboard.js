@@ -598,17 +598,23 @@ router.put("/posts/:id", authenticate, upload.single("image"), async (req, res) 
   }
 });
 
-// DELETE blog post
 router.delete("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
+    if (!dashboard) {
+      console.error("Dashboard not found for user", req.user.id);
+      return res.status(404).json({ error: "Dashboard not found" });
+    }
     const post = dashboard.posts.id(req.params.id);
-    if (!post) return res.status(404).json({ error: "Post not found" });
+    if (!post) {
+      console.error("Post not found", req.params.id);
+      return res.status(404).json({ error: "Post not found" });
+    }
     post.remove();
     await dashboard.save();
     res.json({ message: "Post deleted" });
   } catch (err) {
+    console.error("Delete error:", err);
     res.status(500).json({ error: "Could not delete post." });
   }
 });
