@@ -42,9 +42,9 @@ router.post("/register", upload.fields([
 ]), async (req, res) => {
   try {
     const {
-      fullname, email, phone, matric, role, institution, otherInstitution, username, password
+      fullname, email, phone, matric, role, institution, username, password
     } = req.body;
-    if (!fullname || !email || !phone || !matric || !role || !institution || !username || !password)
+    if (!fullname || !email || !phone || !username || !password)
       return res.status(400).json({ message: "All fields are required" });
 
     const exists = await User.findOne({ $or: [{ email }, { username }] });
