@@ -410,27 +410,25 @@ router.get("/posts/filter", async (req, res) => {
 });
 
 
-// --- Optimized paginated blog posts endpoint ---
 router.get("/public/posts", async (req, res) => {
   // Query params: category, page, limit
-  const category = req.query.category || "General" || "Academics";
+  const category = req.query.category;
   const page = Math.max(1, parseInt(req.query.page) || 1);
   const limit = Math.max(1, parseInt(req.query.limit) || 20);
 
   try {
-    // Aggregation: flatten posts, filter, join author info
     const pipeline = [
       { $unwind: "$posts" },
-      { $match: { "posts.status": "Published", ...(category !== "All" ? { "posts.category": category } : {}) } },
+      { $match: { "posts.status": "Published", ...(category && category !== "All" ? { "posts.category": category } : {}) } },
       {
         $lookup: {
-          from: "users", // MongoDB collection name for User
+          from: "users",
           localField: "user",
           foreignField: "_id",
           as: "authorInfo"
         }
       },
-      { $sort: { "posts.date": -1 } }, // Latest first
+      { $sort: { "posts.date": -1 } },
       { $skip: (page - 1) * limit },
       { $limit: limit },
       {
@@ -446,7 +444,6 @@ router.get("/public/posts", async (req, res) => {
           images: "$posts.images",
           imageUrl: "$posts.imageUrl",
           authorId: "$user",
-          // Author fields
           author: { $ifNull: [ { $arrayElemAt: ["$authorInfo.fullname", 0] }, { $arrayElemAt: ["$authorInfo.username", 0] } ] },
           authorAvatar: { $arrayElemAt: ["$authorInfo.profilePic", 0] }
         }
@@ -455,7 +452,6 @@ router.get("/public/posts", async (req, res) => {
 
     const posts = await BloggerDashboard.aggregate(pipeline);
 
-    // Fallback for missing avatars
     posts.forEach(post => {
       if (!post.authorAvatar) {
         post.authorAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(post.author || "A")}&background=FFCE45&color=263159&rounded=true`;
