@@ -90,7 +90,14 @@ router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (re
   }
 });
 
-
+router.get("/counts", async (req, res) => {
+  try {
+    const count = await Schedule.countDocuments({});
+    res.json({ count });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
+  }
+});
 // Delete a schedule by id
 router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
