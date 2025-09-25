@@ -558,7 +558,7 @@
         {"text": "Circulation and Reference."},
         {"text": "Cataloguing and Bindery."},
         {"text": "Serials and Orders."},
-text": "Repository and Multimedia."}
+        {"text": "Repository and Multimedia."}
       ],
       "answer": "Serials and Orders.",
       "explanation": "Under 'Collection Development', the listed units are 'Serials' and 'Orders'. The other options belong to different departments.",
