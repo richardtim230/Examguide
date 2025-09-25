@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Marketplace</title>
+  <title>Marketplace</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" rel="stylesheet" />
 </head>
@@ -19,7 +19,10 @@
         <a href="#" class="hover:text-blue-600 transition">Categories</a>
         <a href="#" class="hover:text-blue-600 transition">Contact</a>
       </nav>
-      <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Sign In</a>
+      <div class="flex gap-4">
+        <a href="#" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition">Sign In</a>
+        <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Sign Up</a>
+      </div>
     </div>
   </header>
 
@@ -29,78 +32,133 @@
     <div class="absolute inset-0 bg-black/50"></div>
     <div class="relative z-10 text-center px-6 sm:px-12 lg:px-20 max-w-3xl">
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
-        Discover, Buy & Sell <span class="text-blue-400">Everything</span> You Need
+        Buy, Sell & Discover <span class="text-blue-400">Everything</span> You Need
       </h1>
       <p class="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8">
-        Explore thousands of products across multiple categories. Join our growing community of buyers and sellers today.
+        Explore thousands of student-verified listings. Shop safely, chat instantly, and leave reviews.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <input type="text" placeholder="Search products..." 
                class="w-full sm:w-80 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
         <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-lg transition">Search</button>
       </div>
-      <div class="mt-8 flex justify-center gap-4">
-        <a href="#carousel-section" class="px-6 py-3 bg-white text-blue-600 rounded-lg shadow hover:bg-gray-100 transition">Start Shopping</a>
-        <a href="#" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">Become a Seller</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+      <div class="p-6 rounded-xl shadow bg-gray-50 border-t-4 border-yellow-400 text-center">
+        <div class="text-4xl mb-3">🔒</div>
+        <h3 class="font-bold text-xl text-blue-700">Safe & Verified</h3>
+        <p class="text-gray-600 mt-2">All listings are student-verified. Chat safely and only with real users.</p>
+      </div>
+      <div class="p-6 rounded-xl shadow bg-gray-50 border-t-4 border-blue-600 text-center">
+        <div class="text-4xl mb-3">💬</div>
+        <h3 class="font-bold text-xl text-yellow-600">Instant Messaging</h3>
+        <p class="text-gray-600 mt-2">Negotiate and ask questions directly with sellers—no third-party needed.</p>
+      </div>
+      <div class="p-6 rounded-xl shadow bg-gray-50 border-t-4 border-yellow-500 text-center">
+        <div class="text-4xl mb-3">⭐</div>
+        <h3 class="font-bold text-xl text-blue-700">Ratings & Reviews</h3>
+        <p class="text-gray-600 mt-2">See real feedback before you buy. Rate your experience and earn points.</p>
       </div>
     </div>
   </section>
 
-  <!-- Featured Products Carousel -->
-  <section id="carousel-section" class="py-16 bg-gray-100">
+  <!-- Featured Products -->
+  <section class="py-16 bg-gray-100">
     <h2 class="text-3xl font-bold text-center mb-10">Featured Products</h2>
-    <div id="market-carousel" class="relative w-11/12 md:w-4/5 mx-auto" data-carousel="slide" data-carousel-interval="4000">
-      <div class="relative h-64 overflow-hidden rounded-lg md:h-96">
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="absolute block w-full h-full object-cover" alt="Product 1">
+    <div class="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="h-48 w-full object-cover" alt="Product">
+        <div class="p-4">
+          <h3 class="font-bold text-lg text-blue-800">Casio FX-991EX Calculator</h3>
+          <p class="text-yellow-600 font-semibold">₦6,500</p>
+          <p class="text-gray-500 text-sm">Gadgets • 3 hours ago</p>
+          <div class="flex items-center gap-2 mt-2">
+            <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Blessing (Sciences 200L)</span>
+            <span class="flex items-center text-sm text-yellow-600">⭐ 4.6 (7)</span>
           </div>
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" class="absolute block w-full h-full object-cover" alt="Product 2">
+          <p class="mt-2 text-gray-700 text-sm">Like new. Used for only one semester.</p>
+          <div class="flex gap-3 mt-4">
+            <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">View & Chat</button>
+            <button class="flex-1 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">Send Offer</button>
           </div>
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" class="absolute block w-full h-full object-cover" alt="Product 3">
-          </div>
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" class="absolute block w-full h-full object-cover" alt="Product 4">
-          </div>
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-              <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" class="absolute block w-full h-full object-cover" alt="Product 5">
-          </div>
+          <a href="#" class="block text-right text-red-500 text-sm mt-2 hover:underline">Report</a>
+        </div>
       </div>
-      <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="0"></button>
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="1"></button>
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="2"></button>
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="3"></button>
-          <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="4"></button>
+
+      <!-- Duplicate this card for more products -->
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" class="h-48 w-full object-cover" alt="Product">
+        <div class="p-4">
+          <h3 class="font-bold text-lg text-blue-800">HP Elitebook Laptop</h3>
+          <p class="text-yellow-600 font-semibold">₦180,000</p>
+          <p class="text-gray-500 text-sm">Electronics • 1 day ago</p>
+          <div class="flex items-center gap-2 mt-2">
+            <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">Michael (Engineering 300L)</span>
+            <span class="flex items-center text-sm text-yellow-600">⭐ 4.9 (15)</span>
+          </div>
+          <p class="mt-2 text-gray-700 text-sm">Slim, powerful, and perfect for students.</p>
+          <div class="flex gap-3 mt-4">
+            <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">View & Chat</button>
+            <button class="flex-1 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">Send Offer</button>
+          </div>
+          <a href="#" class="block text-right text-red-500 text-sm mt-2 hover:underline">Report</a>
+        </div>
       </div>
-      <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-              <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-              </svg>
-          </span>
-      </button>
-      <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-              <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-              </svg>
-          </span>
-      </button>
+    </div>
+  </section>
+
+  <!-- Popular Categories -->
+  <section class="py-16 bg-white">
+    <h2 class="text-3xl font-bold text-center mb-10">Popular Categories</h2>
+    <div class="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6">
+      <div class="p-6 bg-gray-50 shadow rounded-lg text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">💻</div>
+        <h3 class="font-semibold">Electronics</h3>
+      </div>
+      <div class="p-6 bg-gray-50 shadow rounded-lg text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">📚</div>
+        <h3 class="font-semibold">Books</h3>
+      </div>
+      <div class="p-6 bg-gray-50 shadow rounded-lg text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">👕</div>
+        <h3 class="font-semibold">Fashion</h3>
+      </div>
+      <div class="p-6 bg-gray-50 shadow rounded-lg text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">🏠</div>
+        <h3 class="font-semibold">Home & Living</h3>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-white border-t py-8 mt-12">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-gray-600">
-      <p>© 2025 Marketplace. All rights reserved.</p>
-      <div class="flex gap-6 mt-4 md:mt-0">
-        <a href="#" class="hover:text-blue-600">Privacy Policy</a>
-        <a href="#" class="hover:text-blue-600">Terms of Service</a>
-        <a href="#" class="hover:text-blue-600">Support</a>
+  <footer class="bg-gray-900 text-gray-300 py-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="text-xl font-bold text-white">Marketplace</h3>
+        <p class="mt-3 text-sm">Buy, sell, and discover products in your community with trust & safety guaranteed.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white">Quick Links</h3>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Categories</a></li>
+          <li><a href="#" class="hover:text-white">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white">Follow Us</h3>
+        <div class="flex gap-4 mt-3">
+          <a href="#" class="hover:text-white">🌐</a>
+          <a href="#" class="hover:text-white">🐦</a>
+          <a href="#" class="hover:text-white">📸</a>
+        </div>
       </div>
     </div>
+    <div class="text-center text-sm text-gray-500 mt-10">© 2025 Marketplace. All rights reserved.</div>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
