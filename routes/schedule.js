@@ -56,11 +56,20 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 router.get("/count", async (req, res) => {
+  const filter = {};
+  if (req.query.faculty) filter.faculty = req.query.faculty;
+  if (req.query.department) filter.departments = { $in: [req.query.department] };
+  if (req.query.level) filter.levels = { $in: [req.query.level] };
   try {
-    const count = await Schedule.countDocuments({});
-    res.json({ count });
+    const schedules = await Schedule.find(filter)
+      .sort({ start: -1 })
+      .populate({
+        path: "examSet",
+        select: "title status questions faculty department schedule"
+      });
+    res.json(schedules);
   } catch (e) {
-    res.status(500).json({ count: 0 });
+    res.status(500).json({ error: e.message });
   }
 });
 router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
