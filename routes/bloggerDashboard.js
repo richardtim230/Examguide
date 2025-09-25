@@ -612,19 +612,21 @@ router.delete("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) {
-      console.error("Dashboard not found for user", req.user.id);
       return res.status(404).json({ error: "Dashboard not found" });
     }
-    const post = dashboard.posts.id(req.params.id);
+    // Try both string and ObjectId comparison
+    let post = dashboard.posts.id(req.params.id);
     if (!post) {
-      console.error("Post not found", req.params.id);
+      // Fallback: try ObjectId
+      post = dashboard.posts.id(mongoose.Types.ObjectId(req.params.id));
+    }
+    if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
     post.remove();
     await dashboard.save();
     res.json({ message: "Post deleted" });
   } catch (err) {
-    console.error("Delete error:", err);
     res.status(500).json({ error: "Could not delete post." });
   }
 });
