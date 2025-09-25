@@ -55,7 +55,14 @@ router.get("/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
-
+router.get("/count", async (req, res) => {
+  try {
+    const count = await Schedule.countDocuments({});
+    res.json({ count });
+  } catch (e) {
+    res.status(500).json({ count: 0 });
+  }
+});
 router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const { examSet, faculty, departments, levels, start, end } = req.body;
   try {
