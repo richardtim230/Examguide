@@ -570,6 +570,8 @@ app.use("/api/responses", responsesRoutes);
 app.use("/api/affiliate", affiliateRoutes);
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api/offers", offerRouter);
+
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 
