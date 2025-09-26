@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Details - Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<script>
+  // Auth check & buyer profile
+  let buyerProfile = null;
+  async function checkAuth() {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const res = await fetch("https://examguide.onrender.com/api/auth/me", {
+          headers: { "Authorization": "Bearer " + token }
+        });
+        if (res.ok) {
+          document.getElementById("account-btn").textContent = "My Dashboard";
+          document.getElementById("account-btn").href = "/dashboard";
+          buyerProfile = await res.json();
+          return true;
+        }
+      }
+    } catch (e) {}
+    document.getElementById("account-btn").textContent = "Sign In";
+    document.getElementById("account-btn").href = "/login";
+    buyerProfile = null;
+    return false;
+  }
+
+  // Get product ID from URL
+  function getProductId() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id") || "";
+  }
+
+  // Render item data from backend
+  async function renderItem() {
+    const id = getProductId();
+    let product = null;
+    let demo = null;
+    // Demo fallback products
+    const demoProducts = {
+      "1": {
+        id: 1,
+        title: "Casio FX-991EX Calculator",
+        price: "₦6,500",
+        category: "Gadgets",
+        posted: "3 hours ago",
+        seller: { name: "Blessing", avatar: "https://randomuser.me/api/portraits/women/44.jpg", dept: "Sciences 200L", rating: 4.6, sales: 7 },
+        images: [
+          "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg",
+          "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"
+        ],
+        condition: "Like New",
+        desc: "Like new. Used for only one semester. Perfect for science students.",
+        reviews: [
+          { name: "Michael", comment: "Great seller, fast response!", date: "2 days ago", rating: 5 },
+          { name: "Janet", comment: "Calculator was as described.", date: "5 days ago", rating: 4 }
+        ],
+        similar: [
+          { id: 2, title: "HP Elitebook Laptop", price: "₦180,000", image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" }
+        ]
+      },
+      "2": {
+        id: 2,
+        title: "HP Elitebook Laptop",
+        price: "₦180,000",
+        category: "Electronics",
+        posted: "1 day ago",
+        seller: { name: "Michael", avatar: "https://randomuser.me/api/portraits/men/32.jpg", dept: "Engineering 300L", rating: 4.9, sales: 15 },
+        images: [
+          "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg",
+          "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"
+        ],
+        condition: "Used",
+        desc: "Slim, powerful, and perfect for students.",
+        reviews: [
+          { name: "Blessing", comment: "Laptop battery lasts long!", date: "3 days ago", rating: 5 },
+          { name: "Janet", comment: "Perfect for my engineering projects.", date: "1 week ago", rating: 4 }
+        ],
+        similar: [
+          { id: 1, title: "Casio FX-991EX Calculator", price: "₦6,500", image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" }
+        ]
+      }
+    };
+
+    // Try backend fetch first
+    if (id) {
+      try {
+        let url = `https://examguide.onrender.com/api/bloggerDashboard/public/posts/${id}`;
+        let res = await fetch(url);
+        if (res.ok) {
+          product = await res.json();
+        }
+      } catch (e) {}
+    }
+    // If no product, fallback to demo
+    if (!product || !product.title) {
+      product = demoProducts[id] || demoProducts["1"];
+      demo = true;
+    } else {
+      demo = false;
+    }
+
+    // Render breadcrumbs
+    document.getElementById("breadcrumb-category").textContent = product.category || "";
+    document.getElementById("breadcrumb-title").textContent = product.title || "";
+
+    // Render images
+    const mainImg = document.getElementById("main-img");
+    mainImg.src = (product.images && product.images[0]) || product.imageUrl || "";
+    mainImg.alt = product.title + " main image";
+    document.getElementById("thumbnails").innerHTML = (product.images || [product.imageUrl]).filter(Boolean).map((img, idx) =>
+      `<img src="${img}" class="w-16 h-16 object-cover rounded cursor-pointer ${idx === 0 ? 'border-2 border-blue-600':''}" alt="Thumb ${idx+1}" onclick="document.getElementById('main-img').src='${img}'">`
+    ).join("");
+
+    // Item Info
+    document.getElementById("item-title").textContent = product.title || "";
+    document.getElementById("item-price").textContent = product.price || "";
+    document.getElementById("item-cond").textContent = product.condition || "";
+    document.getElementById("item-posted").textContent = product.posted || (product.date ? ("Posted " + new Date(product.date).toLocaleDateString()) : "");
+    document.getElementById("item-desc").textContent = product.desc || product.content || "";
+
+    // Seller Info
+    let sellerName = demo ? product.seller.name : product.authorName;
+    let sellerDept = demo ? product.seller.dept : (product.authorDepartment || "");
+    let sellerAvatar = demo ? product.seller.avatar : (product.authorAvatar || "");
+    let sellerRating = demo ? product.seller.rating : (product.likes ? (product.likes + "/5") : "N/A");
+    let sellerSales = demo ? product.seller.sales : (product.comments ? product.comments.length : "");
+    document.getElementById("seller-avatar").src = sellerAvatar || "";
+    document.getElementById("seller-name").textContent = sellerName || "";
+    document.getElementById("seller-dept").textContent = "(" + sellerDept + ")";
+    document.getElementById("seller-rating").textContent = "⭐ " + sellerRating + " (" + sellerSales + " sales)";
+
+    // Profile Modal
+    document.getElementById("modal-seller-avatar").src = sellerAvatar || "";
+    document.getElementById("modal-seller-name").textContent = sellerName || "";
+    document.getElementById("modal-seller-dept").textContent = sellerDept || "";
+    document.getElementById("modal-seller-rating").textContent = "⭐ " + sellerRating + " (" + sellerSales + " sales)";
+    document.getElementById("modal-seller-verified").textContent = demo ? "Verified Student Seller" : "";
+    document.getElementById("modal-seller-joined").textContent = demo ? "Joined: Jan 2024" : "";
+
+    // Reviews
+    let reviews = demo ? product.reviews : (product.comments || []);
+    document.getElementById("reviews-list").innerHTML = reviews.map(r =>
+      `<div class="bg-gray-50 p-3 rounded shadow flex gap-3 items-center">
+        <span class="text-yellow-500 text-2xl">⭐</span>
+        <div>
+          <div class="font-bold">${r.name || r.authorName || ""}</div>
+          <div class="text-sm text-gray-500">"${r.comment || r.text || ""}"</div>
+          <div class="text-xs text-gray-400">${r.date ? r.date : ''}</div>
+        </div>
+      </div>`
+    ).join("");
+
+    // Similar Items (only for demo or if you want to fetch related posts from backend)
+    if (demo) {
+      document.getElementById("similar-items").innerHTML = product.similar.map(s =>
+        `<div class="bg-white rounded-xl shadow overflow-hidden">
+          <a href="item.html?id=${s.id}">
+            <img src="${s.image}" class="h-32 w-full object-cover" alt="${s.title}">
+          </a>
+          <div class="p-3">
+            <div class="font-bold text-blue-800">${s.title}</div>
+            <div class="text-yellow-600 font-semibold">${s.price}</div>
+          </div>
+        </div>`
+      ).join("");
+    } else {
+      // Fetch related from backend
+      try {
+        let url = `https://examguide.onrender.com/api/bloggerDashboard/public/posts/${id}/related?limit=4`;
+        let res = await fetch(url);
+        if (res.ok) {
+          let related = await res.json();
+          document.getElementById("similar-items").innerHTML = related.map(s =>
+            `<div class="bg-white rounded-xl shadow overflow-hidden">
+              <a href="item.html?id=${s._id}">
+                <img src="${s.imageUrl}" class="h-32 w-full object-cover" alt="${s.title}">
+              </a>
+              <div class="p-3">
+                <div class="font-bold text-blue-800">${s.title}</div>
+              </div>
+            </div>`
+          ).join("");
+        }
+      } catch (e) {}
+    }
+  }
+
+  // OFFER MODAL logic
+  let currentOfferProductId = null;
+  let currentOfferProductTitle = null;
+  window.openOfferModal = function(productId, productTitle){
+    currentOfferProductId = productId;
+    currentOfferProductTitle = productTitle;
+    document.getElementById('offerProductId').value = productId;
+    document.getElementById('sendOfferModal').classList.remove('hidden');
+    // Pre-populate buyer details
+    let details = "";
+    if(buyerProfile && buyerProfile.user){
+      const u = buyerProfile.user;
+      details = `
+        <span class="block"><strong>Your Details for Seller:</strong></span>
+        <span>Name: ${u.fullname || u.username}</span><br>
+        <span>Email: ${u.email || ''}</span><br>
+        <span>Phone: ${u.phone || ''}</span><br>
+        <span>Faculty: ${u.faculty || ''}</span><br>
+        <span>Department: ${u.department || ''}</span>
+      `;
+    } else {
+      details = `<span class="block text-red-600">You must sign in for communication and offer follow-up.</span>`;
+    }
+    document.getElementById('buyerDetails').innerHTML = details;
+  }
+  window.closeOfferModal = function(){
+    document.getElementById('sendOfferModal').classList.add('hidden');
+    document.getElementById('offerForm').reset();
+    document.getElementById('offerResponse').classList.add('hidden');
+  }
+
+  // Offer form submit handler
+  document.addEventListener("DOMContentLoaded", function() {
+    checkAuth();
+    renderItem();
+
+    document.getElementById('offerForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const productId = document.getElementById('offerProductId').value;
+      const offerPrice = document.getElementById('offerPrice').value;
+      const offerMessage = document.getElementById('offerMessage').value;
+      const token = localStorage.getItem("token");
+      // Gather buyer details
+      let buyerDetails = "";
+      if(buyerProfile && buyerProfile.user){
+  const u = buyerProfile.user;
+  details = `
+    <span class="block"><strong>Your Details for Seller:</strong></span>
+    <span>Name: ${u.fullname || u.username}</span><br>
+    <span>Email: ${u.email || ''}</span><br>
+    <span>Phone: ${u.phone || ''}</span><br>
+    <span>Faculty: ${u.faculty?.name || u.faculty || ''}</span><br>
+    <span>Department: ${u.department?.name || u.department || ''}</span>
+  `;
+  }
+      // Compose full message to seller
+      const fullMessage = `
+Offer from: ${buyerDetails.name || "Guest"}
+Email: ${buyerDetails.email || "N/A"}
+Phone: ${buyerDetails.phone || "N/A"}
+Faculty: ${buyerDetails.faculty || ""}
+Department: ${buyerDetails.department || ""}
+Product: ${currentOfferProductTitle || ""}
+---
+${offerMessage}
+      `.trim();
+
+      try {
+        const res = await fetch("https://examguide.onrender.com/api/offers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": "Bearer " + token } : {})
+          },
+          body: JSON.stringify({
+            productId,
+            offerPrice,
+            message: fullMessage,
+            buyer: buyerDetails
+          })
+        });
+        if (res.ok) {
+          document.getElementById('offerResponse').textContent = "Offer sent successfully! Saved for follow-up.";
+          document.getElementById('offerResponse').classList.remove('hidden');
+          document.getElementById('offerForm').reset();
+          setTimeout(closeOfferModal, 1500);
+        } else {
+          throw new Error("Failed to send offer");
+        }
+      } catch (err) {
+        document.getElementById('offerResponse').textContent = "Could not send offer. Please try again.";
+        document.getElementById('offerResponse').classList.remove('hidden');
+      }
+    }
+  });
+</script>
+
+  <!-- Header -->
+  <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <h1 class="text-2xl font-bold text-blue-600">Market<span class="text-gray-900">Place</span></h1>
+      <nav class="hidden md:flex gap-8 font-medium">
+        <a href="mart.html" class="hover:text-blue-600 transition">Home</a>
+        <a href="#" class="hover:text-blue-600 transition">Shop</a>
+        <a href="#" class="hover:text-blue-600 transition">Categories</a>
+        <a href="#" class="hover:text-blue-600 transition">Contact</a>
+      </nav>
+      <a id="account-btn" href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Sign In</a>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <nav class="mt-24 px-6 max-w-7xl mx-auto text-sm text-gray-500">
+    <a href="mart.html" class="hover:underline">Home</a> /
+    <a href="#" class="hover:underline" id="breadcrumb-category"></a> /
+    <span class="text-gray-800 font-semibold" id="breadcrumb-title"></span>
+  </nav>
+
+  <!-- Main Item Section -->
+  <main class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-12">
+    <!-- Images Carousel/Slider -->
+    <div class="md:w-1/2">
+      <div class="relative overflow-hidden rounded-lg h-80 mb-4">
+        <img id="main-img" src="" class="w-full h-full object-cover" alt="Main Product Image">
+      </div>
+      <div id="thumbnails" class="flex gap-2 mt-2"></div>
+    </div>
+
+    <!-- Details & Actions -->
+    <div class="md:w-1/2 flex flex-col gap-6">
+      <!-- Item Info -->
+      <div>
+        <h2 class="text-3xl font-bold text-blue-800 mb-3" id="item-title"></h2>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-yellow-600 font-semibold text-2xl" id="item-price"></span>
+          <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded" id="item-cond"></span>
+          <span class="text-gray-500 text-sm" id="item-posted"></span>
+        </div>
+        <p class="text-gray-700 mb-4" id="item-desc"></p>
+      </div>
+      <!-- Seller Info -->
+      <div class="flex items-center gap-4 bg-gray-100 p-4 rounded">
+        <img id="seller-avatar" src="" alt="Seller" class="w-12 h-12 rounded-full border-2 border-blue-600">
+        <div>
+          <div class="font-bold text-blue-700" id="seller-name"></div>
+          <span class="text-xs text-gray-400" id="seller-dept"></span>
+          <div class="flex items-center gap-1 text-yellow-600 text-sm" id="seller-rating"></div>
+          <!-- View Profile Modal Trigger -->
+          <button data-modal-target="profileModal" data-modal-toggle="profileModal" class="text-blue-600 underline text-sm">View Profile</button>
+        </div>
+        <!-- Chat Seller Modal Trigger -->
+        <button data-modal-target="chatModal" data-modal-toggle="chatModal" class="ml-auto px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Chat Seller</button>
+      </div>
+      <!-- Actions -->
+      <div class="flex gap-4 mt-4">
+        <button class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-lg">Add to Cart</button>
+        <!-- Send Offer Modal Trigger -->
+        <button type="button" onclick="openOfferModal(getProductId(), document.getElementById('item-title').textContent)" class="flex-1 px-4 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-lg">Send Offer</button>
+        <!-- Report Modal Trigger -->
+        <button data-modal-target="reportModal" data-modal-toggle="reportModal" class="flex-1 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 text-lg">Report</button>
+      </div>
+      <!-- Ratings & Reviews -->
+      <section class="mt-8">
+        <h3 class="font-semibold text-lg mb-3">Ratings & Reviews</h3>
+        <div id="reviews-list" class="space-y-4"></div>
+        <!-- Add Review Modal Trigger -->
+        <button data-modal-target="reviewModal" data-modal-toggle="reviewModal" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Review</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- Send Offer Modal -->
+  <div id="sendOfferModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold">Send Offer</h3>
+        <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeOfferModal()">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form class="p-6 flex flex-col gap-3" id="offerForm">
+        <input type="hidden" name="productId" id="offerProductId"/>
+        <label class="text-sm font-semibold">Your Offer (₦)</label>
+        <input type="number" class="border rounded px-3 py-2" id="offerPrice" placeholder="Enter your price" required>
+        <label class="text-sm font-semibold">Message to Seller</label>
+        <textarea rows="2" class="border rounded px-3 py-2" id="offerMessage" placeholder="Message..." required></textarea>
+        <div id="buyerDetails" class="mt-2 mb-2 text-sm text-gray-700"></div>
+        <button type="submit" class="mt-2 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Send Offer</button>
+      </form>
+      <div id="offerResponse" class="p-4 text-center text-green-600 hidden"></div>
+    </div>
+  </div>
+
+  <!-- Similar Items -->
+  <section class="max-w-7xl mx-auto px-6 py-10">
+    <h3 class="text-xl font-bold mb-6">Similar Items</h3>
+    <div id="similar-items" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </section>
+
+  <!-- Modals Section (Flowbite Style) -->
+  <!-- Profile Modal -->
+  <div id="profileModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold">Seller Profile</h3>
+        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="profileModal">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6">
+        <div class="flex gap-4 items-center mb-3">
+          <img id="modal-seller-avatar" src="" class="w-16 h-16 rounded-full border-2 border-blue-600" alt="Seller">
+          <div>
+            <div class="font-bold text-blue-700 text-lg" id="modal-seller-name"></div>
+            <div class="text-xs text-gray-500" id="modal-seller-dept"></div>
+            <div class="flex items-center gap-1 text-yellow-600 text-sm" id="modal-seller-rating"></div>
+          </div>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600 mb-2" id="modal-seller-verified"></p>
+          <p class="text-sm text-gray-600" id="modal-seller-joined"></p>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <button class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Chat Seller</button>
+          <button class="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">View Listings</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Chat Modal -->
+  <div id="chatModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold">Chat with Seller</h3>
+        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="chatModal">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6">
+        <form class="flex flex-col gap-2">
+          <textarea rows="3" class="border rounded px-3 py-2" placeholder="Type your message to the seller..."></textarea>
+          <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Offer Modal (already included above) -->
+
+  <!-- Report Modal -->
+  <div id="reportModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold">Report Item</h3>
+        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="reportModal">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6">
+        <form class="flex flex-col gap-2">
+          <label class="text-sm font-semibold">Reason</label>
+          <select class="border rounded px-3 py-2">
+            <option>Spam or Scam</option>
+            <option>Fake Product</option>
+            <option>Harassment</option>
+            <option>Other</option>
+          </select>
+          <textarea rows="2" class="border rounded px-3 py-2" placeholder="Additional details..."></textarea>
+          <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Submit Report</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Review Modal -->
+  <div id="reviewModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold">Add Review</h3>
+        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="reviewModal">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6">
+        <form class="flex flex-col gap-2">
+          <label class="text-sm font-semibold">Your Review</label>
+          <textarea rows="3" class="border rounded px-3 py-2" placeholder="Share your experience..."></textarea>
+          <label class="text-sm font-semibold">Rating</label>
+          <select class="border rounded px-2 py-1">
+            <option>5 ⭐</option>
+            <option>4 ⭐</option>
+            <option>3 ⭐</option>
+            <option>2 ⭐</option>
+            <option>1 ⭐</option>
+          </select>
+          <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Submit Review</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="text-xl font-bold text-white">Marketplace</h3>
+        <p class="mt-3 text-sm">Buy, sell, and discover products in your community with trust & safety guaranteed.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white">Quick Links</h3>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Categories</a></li>
+          <li><a href="#" class="hover:text-white">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white">Follow Us</h3>
+        <div class="flex gap-4 mt-3">
+          <a href="#" class="hover:text-white">🌐</a>
+          <a href="#" class="hover:text-white">🐦</a>
+          <a href="#" class="hover:text-white">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-10">© 2025 Marketplace. All rights reserved.</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
+</body>
+</html>
