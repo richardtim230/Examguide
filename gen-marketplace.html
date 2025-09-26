@@ -1,838 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.80">
-    <title>OAU ExamGuard - General Marketplace</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-        }
-        .hero-bg {
-            background: url('images (4).jpeg?text=General+Marketplace+Banner') center/cover no-repeat;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
-        }
-        .product-card {
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border-radius: 16px;
-            background: white;
-        }
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-        }
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .product-card:hover::before {
-            opacity: 1;
-        }
-        .search-bar {
-            transition: box-shadow 0.3s ease;
-        }
-        .search-bar:focus-within {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        .category-btn, .sort-btn {
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-        }
-        .category-btn.active, .category-btn:hover, .sort-btn.active, .sort-btn:hover {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-            transform: scale(1.05);
-        }
-        .pagination-btn {
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .pagination-btn:hover:not(.disabled) {
-            background: #5b21b6;
-            transform: scale(1.05);
-        }
-        .pagination-btn.active {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-        }
-        .pagination-btn.disabled {
-            background-color: #e5e7eb;
-            color: #9ca3af;
-            cursor: not-allowed;
-        }
-        .cart-btn, .deal-btn {
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .cart-btn:hover, .deal-btn:hover {
-            background: #5b21b6;
-            transform: scale(1.05);
-        }
-        .cart-icon {
-            position: relative;
-        }
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: #ef4444;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.75rem;
-        }
-        .product-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 12px;
-            transition: transform 0.5s ease;
-        }
-        .product-card:hover .product-img {
-            transform: scale(1.1);
-        }
-        .sidebar {
-            position: sticky;
-            top: 100px;
-        }
-        .filter-option, .category-link {
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .filter-option:hover, .category-link:hover {
-            background: #4f46e5;
-            color: white;
-        }
-        .deal-card {
-            background: linear-gradient(135deg, #fef3c7, #fef9c3);
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        .deal-card:hover {
-            transform: scale(1.03);
-        }
-        .rating-stars {
-            color: #f59e0b;
-        }
-        .autocomplete-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 10;
-        }
-        .autocomplete-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .autocomplete-item:hover {
-            background: #4f46e5;
-            color: white;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            animation: fadeIn 0.6s ease forwards;
-        }
-        @media (max-width: 768px) {
-            .hero-bg {
-                background-attachment: scroll;
-            }
-            .product-img {
-                height: 140px;
-            }
-            .sidebar {
-                position: static;
-                margin-top: 2rem;
-            }
-            .product-card h3 {
-                font-size: 1.125rem;
-            }
-            .pagination-btn, .cart-btn, .category-btn, .sort-btn, .deal-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-            }
-            .deal-card {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-        /* Modal styles for nav menu */
-        .nav-modal-bg {
-            background: rgba(0, 0, 0, 0.4);
-            position: fixed;
-            inset: 0;
-            z-index: 60;
-            display: none;
-            transition: all 0.2s;
-        }
-        .nav-modal-bg.active {
-            display: block;
-        }
-        .nav-modal {
-            background: #fff;
-            border-radius: 1.2rem;
-            box-shadow: 0 4px 32px rgba(0,0,0,0.18);
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            max-width: 370px;
-            margin: 5vh auto 0 auto;
-            position: relative;
-        }
-        .nav-modal .nav-list {
-            margin-bottom: 2rem;
-        }
-        .nav-modal .nav-list a {
-            display: block;
-            color: #2d3748;
-            font-size: 1.1rem;
-            padding: 0.75rem 0;
-            text-align: left;
-            font-weight: 500;
-            transition: background 0.18s;
-            border-radius: 0.5rem;
-        }
-        .nav-modal .nav-list a:hover {
-            background: #f3f3f6;
-        }
-        .nav-modal .nav-action {
-            background: #3b82f6;
-            color: #fff;
-            font-weight: 600;
-            border-radius: 2rem;
-            padding: 0.75rem 0;
-            text-align: center;
-            font-size: 1rem;
-            transition: background 0.18s;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            display: block;
-            margin-bottom: 1rem;
-        }
-        .nav-modal .nav-action:hover {
-            background: #2563eb;
-        }
-        .nav-modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.1rem;
-            background: none;
-            border: none;
-            font-size: 1.3rem;
-            color: #333;
-            cursor: pointer;
-        }
-        .nav-bar-trigger {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: #4f46e5;
-            cursor: pointer;
-            margin-left: 1.25rem;
-            margin-right: 0.5rem;
-        }
-        .nav-header-logo {
-            display: flex;
-            align-items: center;
-        }
-        .nav-header-logo img {
-            height: 2.5rem;
-            width: 2.5rem;
-            margin-right: 0.5rem;
-        }
-        .nav-header-logo span {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #4f46e5;
-        }
-        @media (min-width: 640px) {
-            .nav-modal {
-                margin-top: 7vh;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" rel="stylesheet" />
 </head>
-<body>
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <div class="nav-header-logo">
-                <img src="logo.png?text=Logo" alt="OAU ExamGuard Logo">
-                <span>OAU ExamGuard</span>
-            </div>
-            <button class="nav-bar-trigger" id="navBarTrigger" aria-label="Open menu">&#9776;</button>
-        </nav>
-    </header>
-    <!-- Navigation Modal (mobile nav menu style) -->
-    <div class="nav-modal-bg" id="navModalBg">
-        <div class="nav-modal">
-            <button class="nav-modal-close" id="navModalClose" aria-label="Close menu">&times;</button>
-            <div class="nav-list mb-4">
-                <a href="student-dashoards.html">Home</a>
-                <a href="blogg.html">Blogs</a>
-                <a href="marketplace.html">Study Materials</a>
-                <a href="#cart">Cart <span id="cartCountModal" class="cart-count" style="background-color: #ef4444; color:white; padding: 2px 7px; border-radius: 50%; font-size: 0.9em;">0</span></a>
-                <a href="#signup">Sign Up</a>
-                <a href="#sell">Sell Your Items</a>
-            </div>
-            <a href="#sell" class="nav-action">Start Selling Now!</a>
-        </div>
+<body class="bg-gray-50 text-gray-900">
+
+  <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <h1 class="text-2xl font-bold text-blue-600">Market<span class="text-gray-900">Place</span></h1>
+      <nav class="hidden md:flex gap-8 font-medium">
+        <a href="#" class="hover:text-blue-600 transition">Home</a>
+        <a href="#" class="hover:text-blue-600 transition">Shop</a>
+        <a href="#" class="hover:text-blue-600 transition">Categories</a>
+        <a href="#" class="hover:text-blue-600 transition">Contact</a>
+      </nav>
+      <a id="account-btn" href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Sign In</a>
     </div>
+  </header>
 
-    <!-- Marketplace Hero Section -->
-    <section class="hero-bg text-white py-16 sm:py-20">
-        <div class="container mx-auto px-4 sm:px-6 text-center relative z-10">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">General Marketplace</h2>
-            <p class="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">Discover student essentials: foodstuffs, gadgets, utilities, and more, all in one vibrant marketplace!</p>
-            <a href="#sell" class="mt-6 inline-block bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Sell Your Items</a>
+  <!-- Hero Section -->
+  <section class="relative bg-center bg-no-repeat bg-cover h-screen flex items-center justify-center pt-20"
+           style="background-image: url('newmart.jpg');">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 text-center px-6 sm:px-12 lg:px-20 max-w-3xl">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+        Discover, Buy & Sell <span class="text-blue-400">Everything</span> You Need
+      </h1>
+      <p class="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8">
+        Explore thousands of products across multiple categories. Join our growing community of buyers and sellers today.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <input id="search-input" type="text" placeholder="Search products..." 
+               class="w-full sm:w-80 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+        <button id="search-btn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-lg transition">Search</button>
+      </div>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="#products-section" class="px-6 py-3 bg-white text-blue-600 rounded-lg shadow hover:bg-gray-100 transition">Start Shopping</a>
+        <a href="#" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">Become a Seller</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Carousel -->
+  <section id="carousel-section" class="py-16 bg-gray-100">
+    <h2 class="text-3xl font-bold text-center mb-10">Featured Products</h2>
+    <div id="market-carousel" class="relative w-11/12 md:w-4/5 mx-auto" data-carousel="slide" data-carousel-interval="4000">
+      <div class="relative h-64 overflow-hidden rounded-lg md:h-96">
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="absolute block w-full h-full object-cover" alt="Product 1">
         </div>
-    </section>
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" class="absolute block w-full h-full object-cover" alt="Product 2">
+        </div>
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" class="absolute block w-full h-full object-cover" alt="Product 3">
+        </div>
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" class="absolute block w-full h-full object-cover" alt="Product 4">
+        </div>
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" class="absolute block w-full h-full object-cover" alt="Product 5">
+        </div>
+      </div>
+      <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
+        <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="0"></button>
+        <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="1"></button>
+        <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="2"></button>
+        <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="3"></button>
+        <button type="button" class="w-3 h-3 rounded-full bg-gray-300" data-carousel-slide-to="4"></button>
+      </div>
+      <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
+          <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+          </svg>
+        </span>
+      </button>
+      <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
+          <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </section>
 
-    <!-- Featured Deals Section -->
-    <section class="py-8 bg-gray-100">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Featured Deals</h3>
-            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 overflow-x-auto pb-4">
-                <a href="item-details.html?title=Fast+Phone+Charger&description=High-speed+USB-C+charger+with+20W+power+delivery,+compatible+with+most+devices&price=9990&originalPrice=14990&seller=Temi" class="deal-card flex items-center p-4 min-w-[300px]">
-                    <img src="images (12).jpeg?text=Phone+Charger" alt="Phone Charger" class="w-24 h-24 object-cover rounded-lg mr-4">
-                    <div>
-                        <h4 class="text-lg font-semibold text-gray-800">Fast Phone Charger</h4>
-                        <p class="text-indigo-600 font-semibold">₦9,990 <span class="line-through text-gray-500">₦14,990</span></p>
-                        <p class="text-sm text-gray-600">By Temi | 4.8 ★★★★☆ (15 reviews)</p>
-                        <button class="deal-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mt-2 hover:bg-indigo-700">Grab Deal</button>
-                    </div>
-                </a>
-                <a href="item-details.html?title=Snack+Combo+Pack&description=Assorted+pack+of+chips,+cookies,+and+drinks+for+quick+snacks,+perfect+for+study+breaks&price=4990&originalPrice=7990&seller=Chidi" class="deal-card flex items-center p-4 min-w-[300px]">
-                    <img src="images (13).jpeg?text=Snack+Pack" alt="Snack Pack" class="w-24 h-24 object-cover rounded-lg mr-4">
-                    <div>
-                        <h4 class="text-lg font-semibold text-gray-800">Snack Combo Pack</h4>
-                        <p class="text-indigo-600 font-semibold">₦4,990 <span class="line-through text-gray-500">₦7,990</span></p>
-                        <p class="text-sm text-gray-600">By Chidi | 4.5 ★★★★☆ (12 reviews)</p>
-                        <button class="deal-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm mt-2 hover:bg-indigo-700">Grab Deal</button>
-                    </div>
-                </a>
+  <!-- Features -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+      <div class="p-6 rounded-xl shadow bg-gray-50 border-t-4 border-yellow-400 text-center">
+        <div class="text-4xl mb-3">🔒</div>
+        <h3 class="font-bold text-xl text-blue-700">Safe & Verified</h3>
+        <p class="text-gray-600 mt-2">All listings are student-verified. Chat safely and only with real users.</p>
+      </div>
+      <div class="p-6 rounded-xl shadow bg-gray-50 border-t-4 border-blue-600 text-center">
+        <div class="text-4xl mb-3">💬</div>
+        <h3 class="font-bold text-xl text-yellow-600">Instant Messaging</h3>
+        <p class="text-gray-600 mt-2">Negotiate and ask questions directly with sellers—no third-party needed.</p>
+      </div>
+      <div class="p-6 rounded-xl shadow bg-gray-50 border-t-4 border-yellow-500 text-center">
+        <div class="text-4xl mb-3">⭐</div>
+        <h3 class="font-bold text-xl text-blue-700">Ratings & Reviews</h3>
+        <p class="text-gray-600 mt-2">See real feedback before you buy. Rate your experience and earn points.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products-section" class="py-16 bg-gray-100">
+    <h2 class="text-3xl font-bold text-center mb-10">Featured Products</h2>
+    <div id="products-list" class="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
+      <!-- Products will be rendered here by JS -->
+    </div>
+  </section>
+
+  <!-- Send Offer Modal -->
+  <div id="sendOfferModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold">Send Offer</h3>
+        <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeOfferModal()">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form class="p-6 flex flex-col gap-3" id="offerForm">
+        <input type="hidden" name="productId" id="offerProductId"/>
+        <label class="text-sm font-semibold">Your Offer (₦)</label>
+        <input type="number" class="border rounded px-3 py-2" id="offerPrice" placeholder="Enter your price" required>
+        <label class="text-sm font-semibold">Message to Seller</label>
+        <textarea rows="2" class="border rounded px-3 py-2" id="offerMessage" placeholder="Message..." required></textarea>
+        <div id="buyerDetails" class="mt-2 mb-2 text-sm text-gray-700"></div>
+        <button type="submit" class="mt-2 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Send Offer</button>
+      </form>
+      <div id="offerResponse" class="p-4 text-center text-green-600 hidden"></div>
+    </div>
+  </div>
+
+  <!-- Popular Categories -->
+  <section class="py-16 bg-white">
+    <h2 class="text-3xl font-bold text-center mb-10">Popular Categories</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6">
+      <a href="#" class="relative group rounded-xl overflow-hidden shadow-lg h-40 sm:h-48 md:h-56">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Electronics" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <h3 class="text-white text-lg sm:text-xl md:text-2xl font-bold">Electronics</h3>
+        </div>
+      </a>
+      <a href="#" class="relative group rounded-xl overflow-hidden shadow-lg h-40 sm:h-48 md:h-56">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80" alt="Books" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <h3 class="text-white text-lg sm:text-xl md:text-2xl font-bold">Books</h3>
+        </div>
+      </a>
+      <a href="#" class="relative group rounded-xl overflow-hidden shadow-lg h-40 sm:h-48 md:h-56">
+        <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?auto=format&fit=crop&w=600&q=80" alt="Fashion" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <h3 class="text-white text-lg sm:text-xl md:text-2xl font-bold">Fashion</h3>
+        </div>
+      </a>
+      <a href="#" class="relative group rounded-xl overflow-hidden shadow-lg h-40 sm:h-48 md:h-56">
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80" alt="Home & Living" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <h3 class="text-white text-lg sm:text-xl md:text-2xl font-bold">Home & Living</h3>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="text-xl font-bold text-white">Marketplace</h3>
+        <p class="mt-3 text-sm">Buy, sell, and discover products in your community with trust & safety guaranteed.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white">Quick Links</h3>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Categories</a></li>
+          <li><a href="#" class="hover:text-white">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white">Follow Us</h3>
+        <div class="flex gap-4 mt-3">
+          <a href="#" class="hover:text-white">🌐</a>
+          <a href="#" class="hover:text-white">🐦</a>
+          <a href="#" class="hover:text-white">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-10">© 2025 Marketplace. All rights reserved.</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
+  <script>
+    // Auth Check & Buyer Info
+    let buyerProfile = null;
+    async function checkAuth() {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const res = await fetch("https://examguide.onrender.com/api/auth/me", {
+            headers: { "Authorization": "Bearer " + token }
+          });
+          if (res.ok) {
+            document.getElementById("account-btn").textContent = "My Dashboard";
+            document.getElementById("account-btn").href = "/dashboard";
+            buyerProfile = await res.json();
+            return true;
+          }
+        }
+      } catch (e) {}
+      document.getElementById("account-btn").textContent = "Sign In";
+      document.getElementById("account-btn").href = "/login";
+      buyerProfile = null;
+      return false;
+    }
+
+    // Demo Products (fallback)
+    const demoProducts = [
+      {
+        id: 1,
+        title: "Casio FX-991EX Calculator",
+        price: "₦6,500",
+        category: "Gadgets",
+        posted: "3 hours ago",
+        seller: "Blessing (Sciences 200L)",
+        rating: "⭐ 4.6 (7)",
+        images: ["https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"],
+        description: "Like new. Used for only one semester."
+      },
+      {
+        id: 2,
+        title: "HP Elitebook Laptop",
+        price: "₦180,000",
+        category: "Electronics",
+        posted: "1 day ago",
+        seller: "Michael (Engineering 300L)",
+        rating: "⭐ 4.9 (15)",
+        images: ["https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"],
+        description: "Slim, powerful, and perfect for students."
+      }
+    ];
+
+    // Render Products
+    function renderProducts(products) {
+      const list = document.getElementById("products-list");
+      if (!products.length) {
+        list.innerHTML = `<div class="text-center col-span-3 text-lg text-gray-500 py-12">No products found.</div>`;
+        return;
+      }
+      list.innerHTML = products.map(p => `
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+          <a href="item.html?id=${p._id || p.id}">
+            <img src="${(p.imageUrl || (p.images && p.images[0]) || '')}" class="h-48 w-full object-cover" alt="${p.title}">
+          </a>
+          <div class="p-4">
+            <h3 class="font-bold text-lg text-blue-800">
+              <a href="sales/items.html?id=${p._id || p.id}">${p.title}</a>
+            </h3>
+            <p class="text-yellow-600 font-semibold">${p.price}</p>
+            <p class="text-gray-500 text-sm">${p.category || ''} • ${p.posted || (p.date ? new Date(p.date).toLocaleDateString() : "")}</p>
+            <div class="flex items-center gap-2 mt-2">
+              <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">${p.seller || p.author || p.authorName || ""}</span>
+              <span class="flex items-center text-sm text-yellow-600">${p.rating || ("⭐ " + (p.likes || 0))}</span>
             </div>
-        </div>
-    </section>
-
-    <!-- Marketplace Content Section -->
-    <section class="py-12 sm:py-16">
-        <div class="container mx-auto px-4 sm:px-6">
-            <div class="flex flex-col lg:flex-row gap-8">
-                <!-- Main Marketplace Content -->
-                <div class="lg:w-3/4">
-                    <!-- Search, Filters, and Sorting -->
-                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
-                        <div class="search-bar flex-1 relative">
-                            <input type="text" id="searchInput" placeholder="Search items..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600"/>
-                            <svg class="absolute right-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"></path></svg>
-                            <div id="autocompleteDropdown" class="autocomplete-dropdown hidden"></div>
-                        </div>
-                        <div class="flex gap-2 flex-wrap">
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base active" data-category="All">All (12)</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Foodstuffs">Foodstuffs (4)</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Gadgets">Gadgets (4)</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Utilities">Utilities (3)</button>
-                            <button class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-800 text-sm sm:text-base" data-category="Others">Others (1)</button>
-                        </div>
-                    </div>
-                    <div class="flex justify-end mb-4">
-                        <select id="sortSelect" class="sort-btn p-2 rounded-lg border border-gray-300 text-sm sm:text-base">
-                            <option value="price-asc">Price: Low to High</option>
-                            <option value="price-desc">Price: High to Low</option>
-                            <option value="newest">Newest First</option>
-                            <option value="rating">Highest Rated</option>
-                        </select>
-                    </div>
-                    <!-- Product Grid -->
-                    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                        <!-- Products will be dynamically inserted here -->
-                    </div>
-                    <!-- Pagination -->
-                    <div class="flex justify-center mt-8">
-                        <div class="flex gap-2 flex-wrap">
-                            <button id="prevBtn" class="pagination-btn px-4 py-2 bg-indigo-600 text-white rounded-full text-sm sm:text-base disabled">Previous</button>
-                            <button class="pagination-btn px-4 py-2 bg-indigo-600 text-white rounded-full text-sm sm:text-base active">1</button>
-                            <button class="pagination-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm sm:text-base">2</button>
-                            <button class="pagination-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm sm:text-base">3</button>
-                            <button id="nextBtn" class="pagination-btn px-4 py-2 bg-indigo-600 text-white rounded-full text-sm sm:text-base">Next</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Sidebar -->
-                <aside class="lg:w-1/4 sidebar">
-                    <!-- Price Filter -->
-                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filter by Price</h3>
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <input type="checkbox" id="price-0-10000" class="mr-2">
-                                <label for="price-0-10000" class="text-sm sm:text-base text-gray-600">Under ₦10,000</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="price-10000-20000" class="mr-2">
-                                <label for="price-10000-20000" class="text-sm sm:text-base text-gray-600">₦10,000 - ₦20,000</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="price-20000-plus" class="mr-2">
-                                <label for="price-20000-plus" class="text-sm sm:text-base text-gray-600">₦20,000+</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Condition Filter -->
-                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Filter by Condition</h3>
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <input type="checkbox" id="condition-new" class="mr-2">
-                                <label for="condition-new" class="text-sm sm:text-base text-gray-600">New</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="condition-used" class="mr-2">
-                                <label for="condition-used" class="text-sm sm:text-base text-gray-600">Used</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Top Categories -->
-                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Top Categories</h3>
-                        <div class="space-y-2">
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Foodstuffs (4)</a>
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Gadgets (4)</a>
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Utilities (3)</a>
-                            <a href="#" class="category-link block px-3 py-2 text-sm sm:text-base text-gray-600 hover:bg-indigo-600 hover:text-white rounded">Fashion (1)</a>
-                        </div>
-                    </div>
-                    <!-- Trending Items -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Trending Items</h3>
-                        <div class="space-y-4">
-                            <a href="item-detail.html?title=Portable+Fan&description=Compact+fan+for+cooling+on+hot+campus+days&price=15990&seller=Funmi&date=Sep+28,+2025&rating=4.6&image=https://via.placeholder.com/300x180?text=Fan" class="block">
-                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Portable Fan</p>
-                                <p class="text-sm text-gray-500">By Funmi | ₦15,990 | ★★★★☆ 4.6 (10 reviews)</p>
-                            </a>
-                            <a href="item-detail.html?title=Snack+Variety+Pack&description=Assorted+snacks+for+quick+bites+between+classes&price=6500&seller=David&date=Sep+25,+2025&rating=4.7&image=https://via.placeholder.com/300x180?text=Snacks" class="block">
-                                <p class="text-sm sm:text-base font-medium text-indigo-600 hover:text-indigo-800">Snack Variety Pack</p>
-                                <p class="text-sm text-gray-500">By David | ₦6,500 | ★★★★☆ 4.7 (8 reviews)</p>
-                            </a>
-                        </div>
-                    </div>
-                </aside>
+            <p class="mt-2 text-gray-700 text-sm">${p.description || p.summary || ""}</p>
+            <div class="flex gap-3 mt-4">
+              <a href="sales/items.html?id=${p._id || p.id}" class="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-center">View Product</a>
+              <button type="button" onclick="openOfferModal('${p._id || p.id}', '${p.title}')" class="flex-1 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">Send Offer</button>
             </div>
+            <a href="#" class="block text-right text-red-500 text-sm mt-2 hover:underline">Report</a>
+          </div>
         </div>
-    </section>
+      `).join("");
+    }
 
-    <!-- CTA Section -->
-    <section class="py-12 sm:py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
-        <div class="container mx-auto px-4 sm:px-6">
-            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Sell Your Items Today!</h3>
-            <p class="text-base sm:text-lg mb-8">Turn your extra items into cash on OAU ExamGuard’s vibrant marketplace. 🚀</p>
-            <a href="#sell" class="bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-gray-100 transition">Start Selling Now!</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4 sm:px-6 text-center">
-            <p class="text-sm sm:text-base">© 2025 OAU ExamGuard. All rights reserved.</p>
-            <div class="mt-4 space-x-4">
-                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Privacy Policy</a>
-                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Terms of Service</a>
-                <a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contact Us</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Nav Modal (menu) logic
-        const navBarTrigger = document.getElementById('navBarTrigger');
-        const navModalBg = document.getElementById('navModalBg');
-        const navModalClose = document.getElementById('navModalClose');
-        navBarTrigger.addEventListener('click', function() {
-            navModalBg.classList.add('active');
-            // Sync the cart count to modal
-            document.getElementById('cartCountModal').textContent = document.getElementById('cartCount').textContent;
-        });
-        navModalClose.addEventListener('click', function() {
-            navModalBg.classList.remove('active');
-        });
-        navModalBg.addEventListener('click', function(e) {
-            if (e.target === navModalBg) {
-                navModalBg.classList.remove('active');
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                navModalBg.classList.remove('active'); // Close modal on menu click
-            });
-        });
-
-        // Simulated product data
-        const productData = [
-            [
-                {
-                    title: "5kg Rice Bag",
-                    description: "High-quality rice for your daily meals, locally sourced. Perfect for students looking for affordable bulk food.",
-                    price: 8990,
-                    seller: "Sarah",
-                    date: "Oct 10, 2025",
-                    rating: 4.7,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Foodstuffs",
-                    condition: "New",
-                    reviews: 20
-                },
-                {
-                    title: "USB-C Cable",
-                    description: "Durable USB-C cable for fast charging and data transfer. Supports up to 60W power delivery.",
-                    price: 6990,
-                    seller: "Ahmed",
-                    date: "Oct 8, 2025",
-                    rating: 4.9,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Gadgets",
-                    condition: "New",
-                    reviews: 25
-                },
-                {
-                    title: "Insulated Water Bottle",
-                    description: "Keeps drinks hot or cold for 12 hours, perfect for campus life. Made from stainless steel.",
-                    price: 12990,
-                    seller: "Temi",
-                    date: "Oct 5, 2025",
-                    rating: 4.5,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Utilities",
-                    condition: "New",
-                    reviews: 18
-                },
-                {
-                    title: "Wireless Headphones",
-                    description: "Noise-canceling headphones for focused study sessions. Up to 20 hours of battery life.",
-                    price: 29990,
-                    seller: "Chidi",
-                    date: "Oct 2, 2025",
-                    rating: 4.8,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Gadgets",
-                    condition: "New",
-                    reviews: 30
-                }
-            ],
-            [
-                {
-                    title: "Portable Fan",
-                    description: "Compact fan for cooling on hot campus days. USB-powered with adjustable speed.",
-                    price: 15990,
-                    seller: "Funmi",
-                    date: "Sep 28, 2025",
-                    rating: 4.6,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Utilities",
-                    condition: "New",
-                    reviews: 10
-                },
-                {
-                    title: "Snack Variety Pack",
-                    description: "Assorted snacks for quick bites between classes. Includes chips, biscuits, and candy.",
-                    price: 6500,
-                    seller: "David",
-                    date: "Sep 25, 2025",
-                    rating: 4.7,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Foodstuffs",
-                    condition: "New",
-                    reviews: 8
-                },
-                {
-                    title: "Laptop Stand",
-                    description: "Adjustable stand for ergonomic laptop use. Foldable and lightweight for portability.",
-                    price: 19990,
-                    seller: "Ngozi",
-                    date: "Sep 20, 2025",
-                    rating: 4.8,
-                    image: "https://via.placeholder.com/300x180?text=Laptop+Stand",
-                    availability: "In Stock",
-                    category: "Gadgets",
-                    condition: "New",
-                    reviews: 15
-                },
-                {
-                    title: "Reusable Tote Bag",
-                    description: "Eco-friendly tote for carrying books and groceries. Durable and stylish design.",
-                    price: 9990,
-                    seller: "Tobi",
-                    date: "Sep 15, 2025",
-                    rating: 4.5,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Others",
-                    condition: "New",
-                    reviews: 12
-                }
-            ],
-            [
-                {
-                    title: "Bluetooth Speaker",
-                    description: "Portable speaker with high-quality sound for music and study. Waterproof and durable.",
-                    price: 24990,
-                    seller: "Esther",
-                    date: "Sep 10, 2025",
-                    rating: 4.9,
-                    image: "image2.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Gadgets",
-                    condition: "New",
-                    reviews: 22
-                },
-                {
-                    title: "Instant Noodles Pack",
-                    description: "Pack of 10 instant noodles for quick meals. Includes assorted flavors.",
-                    price: 5990,
-                    seller: "Ife",
-                    date: "Sep 5, 2025",
-                    rating: 4.6,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Foodstuffs",
-                    condition: "New",
-                    reviews: 17
-                },
-                {
-                    title: "Desk Lamp",
-                    description: "LED desk lamp with adjustable brightness for late-night study. USB-powered.",
-                    price: 17990,
-                    seller: "Kemi",
-                    date: "Sep 1, 2025",
-                    rating: 4.7,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Utilities",
-                    condition: "New",
-                    reviews: 14
-                },
-                {
-                    title: "Phone Case",
-                    description: "Stylish and durable phone case for iPhone 13. Shockproof and lightweight.",
-                    price: 11990,
-                    seller: "Victor",
-                    date: "Aug 28, 2025",
-                    rating: 4.8,
-                    image: "image1.jpg?text=Phone+Case",
-                    availability: "In Stock",
-                    category: "Gadgets",
-                    condition: "New",
-                    reviews: 19
-                }
-            ]
-        ];
-
-        // Cart functionality
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        const cartCount = document.getElementById('cartCount');
-        function updateCartCount() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            // Sync modal cart count if modal is open
-            const cartCountModal = document.getElementById('cartCountModal');
-            if (cartCountModal) cartCountModal.textContent = totalItems;
-        }
-        function addToCart(item, quantity = 1) {
-            const existingItem = cart.find(cartItem => cartItem.title === item.title);
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({ ...item, quantity });
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-        }
-        function updateCartButtons() {
-            document.querySelectorAll('.cart-btn, .deal-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const card = button.closest('.product-card, .deal-card');
-                    const title = card.querySelector('h3, h4').textContent;
-                    const item = productData.flat().find(p => p.title === title);
-                    addToCart(item);
-                });
-            });
-        }
-
-        // Autocomplete search
-        const searchInput = document.getElementById('searchInput');
-        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
-        let debounceTimeout;
-        searchInput.addEventListener('input', function () {
-            clearTimeout(debounceTimeout);
-            debounceTimeout = setTimeout(() => {
-                const searchTerm = this.value.toLowerCase();
-                autocompleteDropdown.innerHTML = '';
-                if (searchTerm) {
-                    const suggestions = productData.flat().filter(item =>
-                        item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm)
-                    ).slice(0, 5);
-                    suggestions.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'autocomplete-item text-sm p-2';
-                        div.textContent = item.title;
-                        div.addEventListener('click', () => {
-                            searchInput.value = item.title;
-                            autocompleteDropdown.classList.add('hidden');
-                            filterProducts(searchTerm, getActiveCategory());
-                        });
-                        autocompleteDropdown.appendChild(div);
-                    });
-                    autocompleteDropdown.classList.toggle('hidden', suggestions.length === 0);
-                } else {
-                    autocompleteDropdown.classList.add('hidden');
-                    filterProducts('', getActiveCategory());
-                }
-                filterProducts(searchTerm, getActiveCategory());
-            }, 300);
-        });
-
-        // Category filter
-        function getActiveCategory() {
-            return document.querySelector('.category-btn.active')?.dataset.category || 'All';
-        }
-        document.querySelectorAll('.category-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                filterProducts(searchInput.value.toLowerCase(), this.dataset.category);
-            });
-        });
-
-        // Filter products
-        const productGrid = document.getElementById('productGrid');
-        function filterProducts(searchTerm, category) {
-            const filteredData = productData.map(page =>
-                page.filter(item =>
-                    (category === 'All' || item.category === category) &&
-                    (item.title.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm))
-                )
+    // Fetch Products from Backend (public listings)
+    async function fetchPublicProducts(query="") {
+      try {
+        let url = "https://examguide.onrender.com/api/bloggerDashboard/public/posts";
+        let res = await fetch(url);
+        let products = [];
+        if (res.ok) {
+          products = await res.json();
+          products = products.filter(p => p.status && (p.status === "Published" || p.status === "Active"));
+          if (query) {
+            const q = query.toLowerCase();
+            products = products.filter(p =>
+              (p.title && p.title.toLowerCase().includes(q)) ||
+              (p.category && p.category.toLowerCase().includes(q)) ||
+              (p.summary && p.summary.toLowerCase().includes(q))
             );
-            currentPage = 1;
-            updateProductGrid(filteredData);
+          }
         }
+        if (!products.length) products = demoProducts;
+        renderProducts(products);
+      } catch (e) {
+        renderProducts(demoProducts);
+      }
+    }
 
-        // Sorting functionality
-        const sortSelect = document.getElementById('sortSelect');
-        sortSelect.addEventListener('change', function () {
-            const sortValue = this.value;
-            let sortedData = [...productData.flat()];
-            if (sortValue === 'price-asc') {
-                sortedData.sort((a, b) => a.price - b.price);
-            } else if (sortValue === 'price-desc') {
-                sortedData.sort((a, b) => b.price - a.price);
-            } else if (sortValue === 'newest') {
-                sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
-            } else if (sortValue === 'rating') {
-                sortedData.sort((a, b) => b.rating - a.rating);
-            }
-            const paginatedData = [];
-            for (let i = 0; i < sortedData.length; i += 4) {
-                paginatedData.push(sortedData.slice(i, i + 4));
-            }
-            updateProductGrid(paginatedData.length > 0 ? paginatedData : [[]]);
+    // OFFER MODAL logic
+    let currentOfferProductId = null;
+    let currentOfferProductTitle = null;
+window.openOfferModal = async function(productId, productTitle){
+  currentOfferProductId = productId;
+  currentOfferProductTitle = productTitle;
+  document.getElementById('offerProductId').value = productId;
+  document.getElementById('sendOfferModal').classList.remove('hidden');
+
+  let details = "";
+  if (buyerProfile && buyerProfile.user) {
+    const u = buyerProfile.user;
+
+    // Placeholders for faculty/department
+    let facultyDisplay = "";
+    let departmentDisplay = "";
+
+    // If ID, set "Loading..." and fetch name
+    if (typeof u.faculty === "string" && u.faculty.length === 24) {
+      facultyDisplay = `<span id="buyerFaculty">Loading...</span>`;
+      fetch(`https://examguide.onrender.com/api/faculties/${u.faculty}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('buyerFaculty').textContent = data.name || "Unknown Faculty";
+        })
+        .catch(() => {
+          document.getElementById('buyerFaculty').textContent = "Unknown Faculty";
         });
+    } else if (typeof u.faculty === "object" && u.faculty.name) {
+      facultyDisplay = `<span id="buyerFaculty">${u.faculty.name}</span>`;
+    } else {
+      facultyDisplay = `<span id="buyerFaculty">${u.faculty || ""}</span>`;
+    }
 
-        // Pagination
-        let currentPage = 1;
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        function updateProductGrid(data) {
-            productGrid.innerHTML = '';
-            if (data[currentPage - 1]?.length > 0) {
-                data[currentPage - 1].forEach(product => {
-                    const productElement = document.createElement('a');
-                    productElement.href = `item-details.html?title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&price=${product.price}&seller=${encodeURIComponent(product.seller)}`;
-                    productElement.target = '_blank';
-                    productElement.className = 'product-card bg-white p-6 rounded-lg shadow-md fade-in';
-                    productElement.innerHTML = `
-                        <img src="${product.image}" alt="${product.title}" class="product-img mb-4">
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-800">${product.title}</h3>
-                        <p class="text-gray-600 text-sm sm:text-base mt-2 line-clamp-2">${product.description}</p>
-                        <p class="text-indigo-600 font-semibold mt-2">₦${product.price.toLocaleString()}</p>
-                        <div class="flex justify-between items-center mt-4">
-                            <p class="text-sm text-gray-500">By ${product.seller} | ${product.date} | <span class="rating-stars">★★★★☆ ${product.rating.toFixed(1)}</span> (${product.reviews} reviews)</p>
-                            <button class="cart-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700">Add to Cart</button>
-                        </div>
-                    `;
-                    productGrid.appendChild(productElement);
-                });
-            } else {
-                productGrid.innerHTML = '<p class="text-center text-gray-600 col-span-full">No items found.</p>';
-            }
-            updateCartButtons();
-            document.querySelectorAll('.pagination-btn').forEach(btn => {
-                btn.classList.remove('active', 'disabled');
-                if (btn.textContent === String(currentPage)) {
-                    btn.classList.add('active');
-                }
-            });
-            prevBtn.classList.toggle('disabled', currentPage === 1);
-            nextBtn.classList.toggle('disabled', currentPage === data.length || data.length === 0);
+    if (typeof u.department === "string" && u.department.length === 24) {
+      departmentDisplay = `<span id="buyerDepartment">Loading...</span>`;
+      fetch(`https://examguide.onrender.com/api/departments/${u.department}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('buyerDepartment').textContent = data.name || "Unknown Department";
+        })
+        .catch(() => {
+          document.getElementById('buyerDepartment').textContent = "Unknown Department";
+        });
+    } else if (typeof u.department === "object" && u.department.name) {
+      departmentDisplay = `<span id="buyerDepartment">${u.department.name}</span>`;
+    } else {
+      departmentDisplay = `<span id="buyerDepartment">${u.department || ""}</span>`;
+    }
+
+    details = `
+      <span class="block"><strong>Your Details for Seller:</strong></span>
+      <span>Name: ${u.fullname || u.username}</span><br>
+      <span>Email: ${u.email || ''}</span><br>
+      <span>Phone: ${u.phone || ''}</span><br>
+      <span>Faculty: ${facultyDisplay}</span><br>
+      <span>Department: ${departmentDisplay}</span>
+    `;
+    document.getElementById('buyerDetails').innerHTML = details;
+  } else {
+    details = `<span class="block text-red-600">You must sign in for communication and offer follow-up.</span>`;
+    document.getElementById('buyerDetails').innerHTML = details;
+  }
+}
+    window.closeOfferModal = function(){
+      document.getElementById('sendOfferModal').classList.add('hidden');
+      document.getElementById('offerForm').reset();
+      document.getElementById('offerResponse').classList.add('hidden');
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      checkAuth();
+      fetchPublicProducts();
+
+      document.getElementById("search-btn").onclick = function() {
+        const q = document.getElementById("search-input").value.trim();
+        fetchPublicProducts(q);
+      };
+      document.getElementById("search-input").addEventListener("keyup", function(e){
+        if(e.key === "Enter"){
+          document.getElementById("search-btn").click();
         }
+      });
 
-        document.querySelectorAll('.pagination-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                if (this.classList.contains('disabled')) return;
-                if (this.id === 'prevBtn' && currentPage > 1) {
-                    currentPage--;
-                } else if (this.id === 'nextBtn' && currentPage < productData.length) {
-                    currentPage++;
-                } else if (!this.id) {
-                    currentPage = parseInt(this.textContent);
-                }
-                updateProductGrid(productData);
-            });
-        });
+      // Offer form submit handler
+      document.getElementById('offerForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const productId = document.getElementById('offerProductId').value;
+        const offerPrice = document.getElementById('offerPrice').value;
+        const offerMessage = document.getElementById('offerMessage').value;
+        const token = localStorage.getItem("token");
+        // Gather buyer details
+        let buyerDetails = "";
+        if(buyerProfile && buyerProfile.user){
+          const u = buyerProfile.user;
+          buyerDetails = {
+            id: u._id,
+            name: u.fullname || u.username,
+            email: u.email,
+            phone: u.phone,
+            faculty: u.faculty,
+            department: u.department
+          };
+        }
+        // Compose full message to seller
+        const fullMessage = `
+Offer from: ${buyerDetails.name || "Guest"}
+Email: ${buyerDetails.email || "N/A"}
+Phone: ${buyerDetails.phone || "N/A"}
+Faculty: ${buyerDetails.faculty || ""}
+Department: ${buyerDetails.department || ""}
+Product: ${currentOfferProductTitle || ""}
+---
+${offerMessage}
+        `.trim();
 
-        // Initialize
-        updateProductGrid(productData);
-        updateCartCount();
-    </script>
+        // Try sending to backend (replace with real endpoint)
+        try {
+          const res = await fetch("https://examguide.onrender.com/api/offers", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              ...(token ? { "Authorization": "Bearer " + token } : {})
+            },
+            body: JSON.stringify({
+              productId,
+              offerPrice,
+              message: fullMessage,
+              buyer: buyerDetails
+            })
+          });
+          if (res.ok) {
+            document.getElementById('offerResponse').textContent = "Offer sent successfully! Saved for follow-up.";
+            document.getElementById('offerResponse').classList.remove('hidden');
+            document.getElementById('offerForm').reset();
+            setTimeout(closeOfferModal, 1500);
+          } else {
+            throw new Error("Failed to send offer");
+          }
+        } catch (err) {
+          document.getElementById('offerResponse').textContent = "Could not send offer. Please try again.";
+          document.getElementById('offerResponse').classList.remove('hidden');
+        }
+      }
+    });
+  </script>
 </body>
 </html>
