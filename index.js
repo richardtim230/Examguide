@@ -10,6 +10,19 @@ import fetch from 'node-fetch';
 import Faculty from "./models/Faculty.js";
 import Department from "./models/Department.js";
 const router = express.Router();
+import cloudinary from 'cloudinary';
+import streamifier from 'streamifier';
+
+dotenv.config();
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// ...other code...
+
 
 import pastQuestionsRoutes from "./routes/pastQuestions.js";
 import fs from "fs";
@@ -463,12 +476,31 @@ app.get("/api/auth/me", authenticate, async (req, res) => {
 // 2. Serve editor uploads statically
 app.use("/uploads/editor", express.static(path.join(process.cwd(), "uploads/editor")));
 
-// 3. Add API endpoint for uploads from the editor
-app.post("/api/images", uploadEditorImage.single("image"), (req, res) => {
+// Use memoryStorage for Cloudinary as we upload the image buffer directly
+const memStorage = multer.memoryStorage();
+const uploadToMemory = multer({ storage: memStorage });
+
+app.post("/api/images", uploadToMemory.single("image"), async (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
-  // Return the public URL of the uploaded image
-  const imageUrl = `/uploads/editor/${req.file.filename}`;
-  res.json({ url: imageUrl });
+  try {
+    const stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder: "editor-uploads", // (Optional) change folder as needed
+        resource_type: "image"
+      },
+      (error, result) => {
+        if (error) {
+          console.error("Cloudinary upload error:", error);
+          return res.status(500).json({ error: "Cloudinary upload failed" });
+        }
+        // Return the secure Cloudinary URL
+        res.json({ url: result.secure_url });
+      }
+    );
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  } catch (e) {
+    res.status(500).json({ error: "Upload failed" });
+  }
 });
 
 // Health check endpoint for /api/auth (for browser test)
