@@ -49,9 +49,21 @@ router.post("/login", async (req, res) => {
   res.json({ token });
 });
 
-// Authenticated user info endpoint
-router.get("/me", authenticate, (req, res) => {
-  resp.json({ user: req.user });
+// Update the /me endpoint to populate faculty and department names for the logged-in user
+
+router.get("/me", authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+      .populate("faculty", "name") // Only pull the name field
+      .populate("department", "name")
+      .select("-password"); // Exclude password field
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch user profile." });
+  }
 });
 
 export default router;
