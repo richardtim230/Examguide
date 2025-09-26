@@ -6,7 +6,7 @@
     { "source": "/login-studentsApp", "destination": "/index.html.htm" },
     { "source": "/cbt-examoau", "destination": "/tp.html" },
     { "source": "/general-articles", "destination": "/blog.html" },
-    { "source": "/login", "destination": "/login.html" },
+    { "source": "/login", "destination": "/mock.html" },
     { "source": "/result-summary", "destination": "/summary.html" },
     { "source": "/mock-icthallb", "destination": "/mock.html" },
     { "source": "/testsession", "destination": "/test.html" },
