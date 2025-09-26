@@ -333,7 +333,7 @@ uploadButton.addEventListener('click', async function() {
             const result = await response.json();
             if (result.url) {
                 // Use the absolute URL for frontend consumption
-                dataUrl.value = 'https://examguide.onrender.com' + result.url;
+                dataUrl.value = result.url;
                 copyButton.disabled = false;
                 downloadButton.disabled = false;
                 alert('Image uploaded! URL ready.');
