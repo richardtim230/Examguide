@@ -8,6 +8,8 @@ import Department from "../models/Department.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
+
+
 // GET all users (supports ?role, ?faculty, ?department; populates faculty/department names)
 router.get("/", async (req, res) => {
   const filter = {};
@@ -16,31 +18,20 @@ router.get("/", async (req, res) => {
   if (req.query.department) filter.department = req.query.department;
 
   try {
+    // Populate faculty and department with their names
     const users = await User.find(filter)
       .select("-password")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate("faculty", "name")
+      .populate("department", "name");
 
-    const data = await Promise.all(users.map(async u => {
-      const obj = u.toObject();
-      if (mongoose.isValidObjectId(obj.faculty)) {
-        const faculty = await Faculty.findById(obj.faculty);
-        obj.facultyName = faculty ? faculty.name : "";
-      } else {
-        obj.facultyName = typeof obj.faculty === 'string' ? obj.faculty : "";
-      }
-      if (mongoose.isValidObjectId(obj.department)) {
-        const department = await Department.findById(obj.department);
-        obj.departmentName = department ? department.name : "";
-      } else {
-        obj.departmentName = typeof obj.department === 'string' ? obj.department : "";
-      }
-      return obj;
-    }));
+    // Convert Mongoose documents to plain objects if needed
+    const data = users.map(u => u.toObject());
     res.json(data);
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
   }
-});
+});    
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
