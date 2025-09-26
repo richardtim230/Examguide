@@ -331,7 +331,7 @@
         posted: "3 hours ago",
         seller: "Blessing (Sciences 200L)",
         rating: "⭐ 4.6 (7)",
-        images: ["https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"],
+        images: ["calc.webp"],
         description: "Like new. Used for only one semester."
       },
       {
@@ -342,7 +342,7 @@
         posted: "1 day ago",
         seller: "Michael (Engineering 300L)",
         rating: "⭐ 4.9 (15)",
-        images: ["https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"],
+        images: ["hplapt.avif"],
         description: "Slim, powerful, and perfect for students."
       }
     ];
@@ -356,7 +356,7 @@
       }
       list.innerHTML = products.map(p => `
         <div class="bg-white rounded-xl shadow overflow-hidden">
-          <a href="item.html?id=${p._id || p.id}">
+          <a href="sales/items.html?id=${p._id || p.id}">
             <img src="${(p.imageUrl || (p.images && p.images[0]) || '')}" class="h-48 w-full object-cover" alt="${p.title}">
           </a>
           <div class="p-4">
