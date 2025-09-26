@@ -21,6 +21,7 @@ ninSlip: { type: String, default: "" },
 institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   verified: { type: Boolean, default: false },
+  offers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Offer" }],
   // Track reward history for breakdown and to prevent double-awards
   rewardHistory: {
     practiced: [
