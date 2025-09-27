@@ -62,6 +62,19 @@ router.get("/count", async (req, res) => {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+// In routes/users.js (or wherever you handle user routes)
+router.patch('/users/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
+  try {
+    const { approved } = req.body;
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    user.approved = approved;
+    await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: 'Could not update user approval.' });
+  }
+});
 // GET user by id (for author lookup)
 router.get("/:id", async (req, res) => {
   try {
