@@ -590,18 +590,22 @@ router.put("/posts/:id", authenticate, async (req, res) => {
 router.delete("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-    if (!dashboard) {
-      return res.status(404).json({ error: "Dashboard not found" });
-    }
+    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
+
     const postId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(postId)) {
       return res.status(400).json({ error: "Invalid post ID" });
     }
-    let post = dashboard.posts.id(postId);
-    if (!post) {
+
+    // Find index of the post
+    const postIndex = dashboard.posts.findIndex(
+      p => p._id.toString() === postId
+    );
+    if (postIndex === -1) {
       return res.status(404).json({ error: "Post not found" });
     }
-    post.remove();
+
+    dashboard.posts.splice(postIndex, 1); // Remove the post
     await dashboard.save();
     res.json({ message: "Post deleted" });
   } catch (err) {
