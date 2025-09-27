@@ -155,59 +155,9 @@ router.post("/posts", authenticate, async (req, res) => {
   }
 });
 
-// UPDATE blog post (with category, subject, topic support)
-router.put("/posts/:id", authenticate, async (req, res) => {
-  try {
-    let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-    if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
-    const post = dashboard.posts.id(req.params.id);
-    if (!post) return res.status(404).json({ error: "Post not found" });
 
-    if (req.body.title !== undefined) post.title = req.body.title;
-    if (req.body.content !== undefined) post.content = req.body.content;
-    if (req.body.status !== undefined) post.status = req.body.status;
 
-    // Categories - adjust as needed
-    const allowedCategories = [
-      "Campus Life",
-      "Academics",
-      "Tips & Hacks",
-      "Opportunities",
-      "Events",
-      "General"
-    ];
-    if (req.body.category !== undefined) {
-      post.category = allowedCategories.includes(req.body.category)
-        ? req.body.category
-        : "General";
-    }
-    if (req.body.subject !== undefined) post.subject = req.body.subject;
-    if (req.body.topic !== undefined) post.topic = req.body.topic;
-
-    post.date = new Date();
-
-    if (req.body.images && Array.isArray(req.body.images)) {
-      post.images = req.body.images;
-      post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
-    }
-
-    await dashboard.save();
-
-    // Trigger static page generation if you use it:
-    if (typeof GENERATOR_SCRIPT !== "undefined") {
-      exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
-        if (error) console.error(`Static gen error: ${error.message}`);
-        if (stderr) console.error(`Static gen stderr: ${stderr}`);
-        if (stdout) console.error(`Static gen output:\n${stdout}`);
-      });
-    }
-
-    res.json(post);
-  } catch (err) {
-    console.error("Error updating post:", err);
-    res.status(500).json({ error: "Could not update post." });
-  }
-});    
+    
 
 // Helper: Validate ObjectId
 function isValidObjectId(id) {
@@ -576,34 +526,63 @@ router.post("/award-points", authenticate, async (req, res) => {
   }
 });
 
-// UPDATE blog post (robust array logic)
 router.put("/posts/:id", authenticate, async (req, res) => {
   try {
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ error: "Invalid post ID" });
+    }
+
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ error: "Dashboard not found" });
-    let updated = null;
-    dashboard.posts = dashboard.posts.map(post => {
-      if (post._id.toString() === req.params.id) {
-        if (req.body.title !== undefined) post.title = req.body.title;
-        if (req.body.content !== undefined) post.content = req.body.content;
-        if (req.body.status !== undefined) post.status = req.body.status;
-        if (req.body.category !== undefined) post.category = req.body.category;
-        if (req.body.subject !== undefined) post.subject = req.body.subject;
-        if (req.body.topic !== undefined) post.topic = req.body.topic;
-        if (req.body.images && Array.isArray(req.body.images)) {
-          post.images = req.body.images;
-          post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
-        }
-        post.date = new Date();
-        updated = post;
-      }
-      return post;
-    });
-    if (!updated) return res.status(404).json({ error: "Post not found" });
+    
+    // Find the post by its _id (as string)
+    let post = dashboard.posts.id(req.params.id);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    
+    // Allowed categories (adjust if needed)
+    const allowedCategories = [
+      "Campus Life",
+      "Academics",
+      "Tips & Hacks",
+      "Opportunities",
+      "Events",
+      "General"
+    ];
+
+    if (req.body.title !== undefined) post.title = req.body.title;
+    if (req.body.content !== undefined) post.content = req.body.content;
+    if (req.body.status !== undefined) post.status = req.body.status;
+
+    if (req.body.category !== undefined) {
+      post.category = allowedCategories.includes(req.body.category)
+        ? req.body.category
+        : "General";
+    }
+    if (req.body.subject !== undefined) post.subject = req.body.subject;
+    if (req.body.topic !== undefined) post.topic = req.body.topic;
+
+    if (req.body.images && Array.isArray(req.body.images)) {
+      post.images = req.body.images;
+      post.imageUrl = req.body.images.length ? req.body.images[0] : undefined;
+    }
+
+    post.date = new Date();
+
     await dashboard.save();
-    res.json(updated);
+
+    // Trigger static page generation if you use it:
+    if (typeof GENERATOR_SCRIPT !== "undefined") {
+      exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr) => {
+        if (error) console.error(`Static gen error: ${error.message}`);
+        if (stderr) console.error(`Static gen stderr: ${stderr}`);
+        if (stdout) console.error(`Static gen output:\n${stdout}`);
+      });
+    }
+
+    res.json(post);
   } catch (err) {
-    console.error("Update error:", err);
+    console.error("Error updating post:", err);
     res.status(500).json({ error: "Could not update post." });
   }
 });
@@ -614,12 +593,11 @@ router.delete("/posts/:id", authenticate, async (req, res) => {
     if (!dashboard) {
       return res.status(404).json({ error: "Dashboard not found" });
     }
-    // Try both string and ObjectId comparison
-    let post = dashboard.posts.id(req.params.id);
-    if (!post) {
-      // Fallback: try ObjectId
-      post = dashboard.posts.id(mongoose.Types.ObjectId(req.params.id));
+    const postId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      return res.status(400).json({ error: "Invalid post ID" });
     }
+    let post = dashboard.posts.id(postId);
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
@@ -627,6 +605,7 @@ router.delete("/posts/:id", authenticate, async (req, res) => {
     await dashboard.save();
     res.json({ message: "Post deleted" });
   } catch (err) {
+    console.error("Delete post error:", err);
     res.status(500).json({ error: "Could not delete post." });
   }
 });
