@@ -359,7 +359,25 @@ router.get("/posts/filter", async (req, res) => {
   }
 });
 
-
+// ADMIN: Get all listings for moderation (approved or not)
+router.get("/admin/alllistings", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'listings user');
+    let allListings = [];
+    dashboards.forEach(dash => {
+      (dash.listings || []).forEach(listing => {
+        let obj = listing.toObject ? listing.toObject() : listing;
+        obj.sellerId = dash.user;
+        allListings.push(obj);
+      });
+    });
+    // Optional: sort newest first
+    allListings.sort((a, b) => new Date(b._id.getTimestamp?.() || b._id) - new Date(a._id.getTimestamp?.() || a._id));
+    res.json(allListings);
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch all listings." });
+  }
+});
 router.get("/public/posts", async (req, res) => {
   // Query params: category, page, limit
   const category = req.query.category;
