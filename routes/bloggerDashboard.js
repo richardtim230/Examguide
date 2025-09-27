@@ -306,7 +306,29 @@ router.get("/taxonomy/subjects", async (req, res) => {
     res.status(500).json({ error: "Could not fetch subjects." });
   }
 });
-
+// ADMIN: Update any listing by ID (approve/reject, etc)
+router.patch("/admin/listings/:listingId", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    // Find the dashboard that owns this listing
+    const dashboards = await BloggerDashboard.find({});
+    let found = false, listing = null, dash = null;
+    for (const d of dashboards) {
+      const l = d.listings.id(req.params.listingId);
+      if (l) {
+        listing = l;
+        dash = d;
+        found = true;
+        break;
+      }
+    }
+    if (!found) return res.status(404).json({ message: "Listing not found" });
+    Object.assign(listing, req.body);
+    await dash.save();
+    res.json(listing);
+  } catch (err) {
+    res.status(500).json({ error: "Could not update listing." });
+  }
+});
 // GET: List all unique topics for a given subject (and optionally category)
 router.get("/taxonomy/topics", async (req, res) => {
   const { category, subject } = req.query;
