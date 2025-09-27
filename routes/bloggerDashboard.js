@@ -529,7 +529,34 @@ router.post("/add-comment/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not add comment" });
   }
 });
+// Get a single public listing by ID (for item detail page)
+router.get("/public/listings/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid listing ID" });
+  }
+  const listingId = new mongoose.Types.ObjectId(id);
 
+  try {
+    // Search all dashboards
+    const dashboards = await BloggerDashboard.find({}, 'listings user');
+    for (const dash of dashboards) {
+      const listing = dash.listings.id(listingId);
+      if (
+        listing &&
+        (listing.approved || listing.status === "Active" || listing.status === "Published")
+      ) {
+        // Optionally add seller info if needed
+        let obj = listing.toObject ? listing.toObject() : listing;
+        obj.sellerId = dash.user;
+        return res.json(obj);
+      }
+    }
+    return res.status(404).json({ error: "Listing not found" });
+  } catch (e) {
+    return res.status(500).json({ error: "Could not fetch listing." });
+  }
+});
 router.get("/public/posts/count", async (req, res) => {
   const category = req.query.category || "General";
   try {
