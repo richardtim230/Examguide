@@ -156,7 +156,25 @@ router.post("/posts", authenticate, async (req, res) => {
 });
 
 
-
+// In routes/bloggerDashboard.js
+router.patch('/admin/posts/:postId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
+  try {
+    const { approved, status } = req.body;
+    const dashboards = await BloggerDashboard.find({});
+    let found = false, post = null, dash = null;
+    for (const d of dashboards) {
+      const p = d.posts.id(req.params.postId);
+      if (p) { post = p; dash = d; found = true; break; }
+    }
+    if (!found) return res.status(404).json({ message: 'Post not found' });
+    if (typeof approved !== 'undefined') post.approved = approved;
+    if (status) post.status = status;
+    await dash.save();
+    return res.json(post);
+  } catch (e) {
+    res.status(500).json({ error: 'Could not update post approval.' });
+  }
+});
     
 
 // Helper: Validate ObjectId
@@ -793,7 +811,24 @@ router.patch("/like-comment/:postId/:commentId", async (req, res) => {
     res.status(500).json({ error: "Could not like comment" });
   }
 });
-
+// Add this to routes/bloggerDashboard.js or your marketplace routes
+router.get("/public/listings", async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'listings');
+    let listings = [];
+    dashboards.forEach(dash => {
+      (dash.listings || []).forEach(listing => {
+        // Only approved/published/active
+        if (listing.approved || listing.status === "Active" || listing.status === "Published") {
+          listings.push(listing.toObject ? listing.toObject() : listing);
+        }
+      });
+    });
+    res.json(listings);
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch listings." });
+  }
+});
 // POST: Add a comment or reply (supports parentId for replies)
 router.post("/add-comment/:postId", async (req, res) => {
   const { postId } = req.params;
