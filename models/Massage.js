@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MessageSchema = new mongoose.Schema({
+const MassageSchema = new mongoose.Schema({
   senderId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   senderName: { type: String },
   receiverId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -10,4 +10,4 @@ const MessageSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Message", MessageSchema);
+export default mongoose.model("Massage", MassageSchema);
