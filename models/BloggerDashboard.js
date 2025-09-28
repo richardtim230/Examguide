@@ -42,6 +42,7 @@ const ListingSchema = new mongoose.Schema({
   description: { type: String, default: "" },
   img: { type: String, default: "" },
   imageUrl: { type: String, default: "" },
+  images: { type: [String], default: [] }, // <-- add this line!
   approved: { type: Boolean, default: false },
   orders: { type: Number, default: 0 }
 }, { _id: true });
