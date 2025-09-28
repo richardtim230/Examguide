@@ -1,6 +1,6 @@
 import express from "express";
 import { authenticate } from "../middleware/authenticate.js";
-import Message from "../models/Massage.js";
+import Massage from "../models/Massage.js";
 import User from "../models/User.js";
 const router = express.Router();
 
