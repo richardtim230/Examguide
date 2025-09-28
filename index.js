@@ -102,7 +102,7 @@ import User from "./models/User.js";
 import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 import affiliateRoutes from "./routes/affiliate.js";
-import messagesRoutes from './routes/massages.js';
+import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
 
 import codecxregRoutes from "./routes/codecxreg.js";
@@ -605,7 +605,7 @@ app.use("/api/affiliate", affiliateRoutes);
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/offers", offerRoutes);
-app.use("/api/blogger-dashboard", messagesRoutes);
+app.use("/api/blogger-dashboard", massagesRoutes);
 app.use("/api", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
