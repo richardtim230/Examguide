@@ -102,8 +102,8 @@ import User from "./models/User.js";
 import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 import affiliateRoutes from "./routes/affiliate.js";
+import messagesRoutes from './routes/massages.js';
 
-// ===== Routes =====
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
 import rewardsRoutes from "./routes/rewards.js";
@@ -604,6 +604,7 @@ app.use("/api/affiliate", affiliateRoutes);
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/offers", offerRoutes);
+app.use("/api/blogger-dashboard", messagesRoutes);
 
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
