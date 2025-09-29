@@ -229,5 +229,24 @@ router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+// PATCH: Approve user (e.g., pending_blogger -> blogger)
+router.patch('/users/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
+  try {
+    const { approved } = req.body;
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
+    user.approved = approved;
+
+    // If user is a pending_blogger and is approved, update their role to blogger
+    if (user.role === "pending_blogger" && approved === true) {
+      user.role = "blogger";
+    }
+
+    await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: 'Could not update user approval.' });
+  }
+});
 export default router;
