@@ -25,12 +25,26 @@ router.post("/cart/add", authenticate, async (req, res) => {
   }
 });
 
-// Get user's cart
+// GET user's cart (manual population)
 router.get("/cart", authenticate, async (req, res) => {
   try {
-    let cart = await Cart.findOne({ user: req.user.id }).populate("items.productId");
+    let cart = await Cart.findOne({ user: req.user.id });
     if (!cart) return res.json({ items: [] });
-    res.json(cart);
+
+    // Manually populate product info from BloggerDashboard listings
+    const dashboards = await BloggerDashboard.find({}, 'listings');
+    const allListings = dashboards.flatMap(dash => dash.listings);
+
+    // Map cart items
+    const items = cart.items.map(item => {
+      const product = allListings.find(l => l._id.toString() === item.productId?.toString());
+      return {
+        ...item.toObject(),
+        productId: product || null // attach product details or null
+      };
+    });
+
+    res.json({ ...cart.toObject(), items });
   } catch (err) {
     res.status(500).json({ error: "Could not fetch cart" });
   }
