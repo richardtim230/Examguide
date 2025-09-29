@@ -707,39 +707,57 @@ document.getElementById('newsletterForm').addEventListener('submit', async funct
 
     fetchAndRenderBlogs();
 
-    // === MARKETPLACE FETCH (using gen-marketplace.html logic) ===
-    const BACKEND = "https://examguide.onrender.com";
-    let marketItems = [];
-    let filteredItems = [];
-    const wishlist = new Set();
 
-    // Fetch all published/active items from all sellers
-    async function fetchAllListings() {
-      try {
-        const res = await fetch(BACKEND + "/api/marketplace/listings-public");
-        if (!res.ok) throw new Error("Could not fetch listings");
-        const data = await res.json();
-        // Normalizing results for UI compatibility
-        marketItems = (data || []).map(item => ({
-          id: item._id || item.id,
-          title: item.title || item.item,
-          price: item.price,
-          category: item.category || "Others",
-          description: item.description || "",
-          image: item.img || item.imageUrl || "https://placehold.co/400x300?text=No+Image",
-          seller: item.sellerName || item.seller || "Unknown",
-          verified: item.verified || false,
-          rating: item.rating || (4 + Math.random()),
-          reviews: item.reviews || Math.floor(Math.random() * 10) + 1,
-          date: item.date || "Recently"
-        }));
-        filteredItems = [...marketItems];
-        renderMarket(filteredItems);
-      } catch (err) {
-        document.getElementById('marketItemsGrid').innerHTML = "<div class='col-span-2 text-center text-red-500 py-10'>Failed to load marketplace items. Please try again later.</div>";
-        document.getElementById('listingCount').textContent = "";
-      }
-    }
+const BACKEND = "https://examguide.onrender.com";
+let marketItems = [];
+let filteredItems = [];
+const wishlist = new Set();
+let sellersCache = {};
+
+async function fetchSellerName(sellerId) {
+  if (!sellerId) return "Unknown";
+  if (sellersCache[sellerId]) return sellersCache[sellerId];
+  try {
+    const res = await fetch(BACKEND + "/api/users/" + sellerId);
+    if (!res.ok) return sellerId;
+    const data = await res.json();
+    const name = data.user?.fullname || data.user?.username || sellerId;
+    sellersCache[sellerId] = name;
+    return name;
+  } catch {
+    return sellerId;
+  }
+}
+
+async function fetchAllListings() {
+  try {
+    const res = await fetch(BACKEND + "/api/marketplace/listings-public");
+    if (!res.ok) throw new Error("Could not fetch listings");
+    const data = await res.json();
+    // Get all unique seller IDs for lookup
+    const sellerIds = [...new Set(data.map(item => item.seller).filter(Boolean))];
+    await Promise.all(sellerIds.map(async id => await fetchSellerName(id)));
+    marketItems = (data || []).map(item => ({
+      id: item._id || item.id,
+      title: item.title || item.item,
+      price: item.price,
+      category: item.category || "Others",
+      description: item.description || "",
+      image: item.img || item.imageUrl || "https://placehold.co/400x300?text=No+Image",
+      seller: sellersCache[item.seller] || "Unknown",
+      verified: item.verified || false,
+      rating: item.rating || (4 + Math.random()),
+      reviews: item.reviews || Math.floor(Math.random() * 10) + 1,
+      date: item.date || "Recently"
+    }));
+    filteredItems = [...marketItems];
+    renderMarket(filteredItems);
+  } catch (err) {
+    document.getElementById('marketItemsGrid').innerHTML = "<div class='col-span-2 text-center text-red-500 py-10'>Failed to load marketplace items. Please try again later.</div>";
+    document.getElementById('listingCount').textContent = "";
+  }
+}
+
 
     // RENDER MARKETPLACE ITEMS
     function renderMarket(items) {
