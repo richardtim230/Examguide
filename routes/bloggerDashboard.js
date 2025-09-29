@@ -33,6 +33,17 @@ const upload = multer({
   }
 });
 
+// --- Report Listing Schema/Model ---
+const ReportSchema = new mongoose.Schema({
+  productId: { type: mongoose.Schema.Types.ObjectId, ref: "Listing" },
+  reporter: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  reason: String,
+  description: String,
+  date: { type: Date, default: Date.now }
+}, { _id: true });
+
+const Report = mongoose.models.Report || mongoose.model("Report", ReportSchema);
+
 // GET: Fetch dashboard for current user (includes posts, listings, analytics, etc)
 router.get("/", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
@@ -63,6 +74,36 @@ router.get("/admin/allposts", authenticate, authorizeRole("admin", "superadmin")
   } catch (e) {
     res.status(500).json({ error: "Could not fetch blog posts." });
   }
+});
+
+
+// --- Report Listing Endpoint ---
+router.post("/report/:listingId", authenticate, async (req, res) => {
+  const { reason, description } = req.body;
+  if (!reason) return res.status(400).json({ error: "Reason required." });
+  const report = await Report.create({
+    productId: req.params.listingId,
+    reporter: req.user.id,
+    reason,
+    description
+  });
+  res.status(201).json({ success: true, report });
+});
+
+// --- Wishlist Endpoints ---
+router.get("/wishlist", authenticate, async (req, res) => {
+  const user = await User.findById(req.user.id).populate("wishlist");
+  res.json({ wishlist: user.wishlist || [] });
+});
+
+router.post("/wishlist/add/:listingId", authenticate, async (req, res) => {
+  await User.findByIdAndUpdate(req.user.id, { $addToSet: { wishlist: req.params.listingId } });
+  res.json({ success: true });
+});
+
+router.delete("/wishlist/remove/:listingId", authenticate, async (req, res) => {
+  await User.findByIdAndUpdate(req.user.id, { $pull: { wishlist: req.params.listingId } });
+  res.json({ success: true });
 });
 // PATCH: Partial update of dashboard (any fields)
 router.patch("/", authenticate, async (req, res) => {
