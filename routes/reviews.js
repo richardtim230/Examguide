@@ -13,7 +13,8 @@ router.get("/product/:productId", async (req, res) => {
 router.post("/product/:productId", authenticate, async (req, res) => {
   const { rating, comment } = req.body;
   if (!rating || !comment) return res.status(400).json({ error: "Rating and comment required." });
-  const avatar = req.user.profilePic || "";
+ const userDoc = await User.findById(req.user.id);
+  const avatar = userDoc.profilePic || "";
   const username = req.user.fullname || req.user.username || "User";
   // Prevent duplicate review by same user per product
   const existing = await Review.findOne({ productId: req.params.productId, user: req.user.id });
