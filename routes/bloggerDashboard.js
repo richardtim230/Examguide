@@ -4,8 +4,6 @@ import multer from "multer";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import path from "path";
 import fs from "fs";
-import User from "../models/User.js"; // Already imported
-
 import Listing from "../models/Listing.js";
 import { exec } from "child_process";
 import mongoose from "mongoose";
