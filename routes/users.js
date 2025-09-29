@@ -9,8 +9,8 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
 
-
 // GET all users (supports ?role, ?faculty, ?department; populates faculty/department names)
+// Fix: Prevent ObjectId cast error on empty string for faculty/department
 router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
@@ -18,12 +18,22 @@ router.get("/", async (req, res) => {
   if (req.query.department) filter.department = req.query.department;
 
   try {
-    // Populate faculty and department with their names
+    // Find users with filter
     const users = await User.find(filter)
       .select("-password")
-      .sort({ createdAt: -1 })
-      .populate("faculty", "name")
-      .populate("department", "name");
+      .sort({ createdAt: -1 });
+
+    // Fix empty string for faculty/department before populating
+    for (const user of users) {
+      if (user.faculty === "") user.faculty = null;
+      if (user.department === "") user.department = null;
+    }
+
+    // Populate faculty and department with their names
+    await User.populate(users, [
+      { path: "faculty", select: "name" },
+      { path: "department", select: "name" }
+    ]);
 
     // Convert Mongoose documents to plain objects if needed
     const data = users.map(u => u.toObject());
@@ -31,7 +41,8 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
   }
-});    
+});
+
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -43,6 +54,7 @@ router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+
 router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -54,6 +66,7 @@ router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), asy
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
+
 router.get("/count", async (req, res) => {
   try {
     const count = await User.countDocuments({});
@@ -62,19 +75,28 @@ router.get("/count", async (req, res) => {
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-// In routes/users.js (or wherever you handle user routes)
+
+// PATCH user approval (e.g., pending_blogger -> blogger)
 router.patch('/users/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
   try {
     const { approved } = req.body;
     const user = await User.findById(req.params.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
+
     user.approved = approved;
+
+    // If user is a pending_blogger and is approved, update their role to blogger
+    if (user.role === "pending_blogger" && approved === true) {
+      user.role = "blogger";
+    }
+
     await user.save();
     res.json(user);
   } catch (e) {
     res.status(500).json({ error: 'Could not update user approval.' });
   }
 });
+
 // GET user by id (for author lookup)
 router.get("/:id", async (req, res) => {
   try {
@@ -98,7 +120,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// GET user by id
+// GET user by id (admin view)
 router.get("/admin/users/:id", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
@@ -130,7 +152,6 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
   }
 });
 
-      
 // CREATE new user (admin/superadmin only)
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
@@ -147,14 +168,14 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 
     // Faculty and department are now optional for all roles, including uploader.
     // Validate existence of faculty and department if provided
-    if (faculty) {
+    if (faculty && faculty !== "") {
       if (!faculty.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ message: "Invalid faculty ObjectId." });
       }
       const fac = await Faculty.findById(faculty);
       if (!fac) return res.status(400).json({ message: "Faculty not found." });
     }
-    if (department) {
+    if (department && department !== "") {
       if (!department.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).json({ message: "Invalid department ObjectId." });
       }
@@ -169,7 +190,10 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     const hashed = await bcrypt.hash(password, 12);
 
     const user = new User({
-      fullname, username, email, password: hashed, role, faculty, department, profilePic, active
+      fullname, username, email, password: hashed, role,
+      faculty: faculty === "" ? null : faculty,
+      department: department === "" ? null : department,
+      profilePic, active
     });
     await user.save();
     const retUser = await User.findById(user._id)
@@ -183,14 +207,20 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 });
 
 
-
 // UPDATE user profile (admin or superadmin)
 router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "pq-uploader", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     ["fullname", "username", "email", "level", "phone", "faculty", "department", "profilePic", "active", "religion", "role"].forEach(field => {
-      if (req.body[field] !== undefined) user[field] = req.body[field];
+      if (req.body[field] !== undefined) {
+        // Fix: Convert empty string to null for faculty/department
+        if ((field === "faculty" || field === "department") && req.body[field] === "") {
+          user[field] = null;
+        } else {
+          user[field] = req.body[field];
+        }
+      }
     });
     if (req.body.password) {
       user.password = await bcrypt.hash(req.body.password, 12);
@@ -229,24 +259,5 @@ router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-// PATCH: Approve user (e.g., pending_blogger -> blogger)
-router.patch('/users/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
-  try {
-    const { approved } = req.body;
-    const user = await User.findById(req.params.userId);
-    if (!user) return res.status(404).json({ message: 'User not found' });
 
-    user.approved = approved;
-
-    // If user is a pending_blogger and is approved, update their role to blogger
-    if (user.role === "pending_blogger" && approved === true) {
-      user.role = "blogger";
-    }
-
-    await user.save();
-    res.json(user);
-  } catch (e) {
-    res.status(500).json({ error: 'Could not update user approval.' });
-  }
-});
 export default router;
