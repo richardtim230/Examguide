@@ -590,7 +590,7 @@ router.get("/public/listings/:id", async (req, res) => {
         (listing.approved || listing.status === "Active" || listing.status === "Published")
       ) {
         // Optionally add seller info if needed
-        let obj = listing.toObject ? listing.toObject() : listing;
+        
         let obj = listing.toObject ? listing.toObject() : listing;
 obj.sellerId = dash.user;
 
