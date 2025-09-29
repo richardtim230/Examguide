@@ -3,460 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ExamGuard Nigeria Marketplace</title>
-<meta name="description" content="ExamGuard Nigeria: Practice mock exams, access past questions, join the student marketplace, and share your story. Adaptive learning, secure platform, and campus blog.">
-<meta name="keywords" content="School News, examguide, Examguide, ExamGuide, Post Utme, Jamb, JAMB, NIGERIA, OAU, Unilag, examguard, oau, OAU, Post Utme, News Update, marketplace , Marketplace, Online Market, Online Marketing, OAU news update, post utme news update, school, university, finance, earning, earnings, smart contracts, examguard nigeria, online test, mock exams, study materials, nigeria, past questions, blockchain technology, students, contracts, online examination conducting system, blog, questions, technology, questions, platforms, learning, Write and Earn, Students Earning platform, OAU, ExamGuard Nigeria, OAU ExamGuard, Obafemi Awolowo University, School News, Best Online Marketing Platform, Blog, Marketplace, Mock Tests"/>
-<meta name="robots" content="index,follow" />
-<link rel="canonical" href="https://examguard.com.ng" />
-<meta name="google-site-verification" content="1xsUKdZie_UFDQv0BXYoQjyaEPzJCVb89H2S2CwquA0" />
-<meta property="og:site_name" content="ExamGuard Nigeria" />
-<meta property="og:title" content="ExamGuard Nigeria | Marketplace, Blog & Campus Tools" />
-<meta property="og:description" content="Practice mock exams, access past questions, join the campus marketplace, and share your story on ExamGuard Nigeria. Built for students, by students." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://examguard.com.ng/" />
-<meta property="og:image" content="https://examguard.com.ng/mainlogo.png" />
-<meta property="og:image:alt" content="ExamGuard Nigeria Logo" />
-<meta property="og:locale" content="en_NG" />
-<meta property="og:image:width" content="512" />
-<meta property="og:image:height" content="512" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@ExamGuardNG" />
-<meta name="twitter:creator" content="@ExamGuardNG" />
-<meta name="twitter:title" content="ExamGuard Nigeria | Mock Exams, Marketplace, Blog & Campus Tools" />
-<meta name="twitter:description" content="Join ExamGuard Nigeria for mock exams, past questions, blogging, and campus marketplace. All-in-one for Nigerian students." />
-<meta name="twitter:image" content="https://examguard.com.ng/mainlogo.png" />
-<meta name="twitter:image:alt" content="ExamGuard Nigeria Logo" />
-<link rel="icon" href="https://examguard.com.ng/mainlogo.png" sizes="32x32"/>
-<link rel="apple-touch-icon" href="https://examguard.com.ng/mainlogo.png" />
-<meta name="theme-color" content="#1e3a8a" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://examguard.com.ng/m"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Features",
-      "item": "https://examguard.com.ng/#features"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Marketplace",
-      "item": "https://examguard.com.ng/#marketplace"
-    },
-    {
-      "@type": "ListItem",
-      "position": 4,
-      "name": "Blog & Earn",
-      "item": "https://examguard.com.ng/#blog"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "ExamGuard Nigeria",
-  "url": "https://examguard.com.ng/",
-  "logo": "https://cdn-icons-png.flaticon.com/512/2282/2282759.png",
-  "sameAs": [
-    "https://twitter.com/ExamGuardNG",
-    "https://facebook.com/ExamGuardNG",
-    "https://instagram.com/ExamGuardNG"
-  ],
-  "description": "ExamGuard Nigeria is the ultimate portal for mock exams, study resources, blogging, and student marketplace. Secure, private, and built for Nigerian universities."
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "ExamGuard Nigeria",
-  "url": "https://examguard.com.ng/",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://examguard.com.ng/search?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8296874482515167"
-     crossorigin="anonymous"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2282/2282759.png"
+  <title>Product Details | Marketplace</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .lightbox-bg { background: rgba(0,0,0,0.85); }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
-
-<script>
-  // Auth check & buyer profile
-  let buyerProfile = null;
-  async function checkAuth() {
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const res = await fetch("https://examguide.onrender.com/api/auth/me", {
-          headers: { "Authorization": "Bearer " + token }
-        });
-        if (res.ok) {
-          document.getElementById("account-btn").textContent = "My Dashboard";
-          document.getElementById("account-btn").href = "/dashboard";
-          buyerProfile = await res.json();
-          return true;
-        }
-      }
-    } catch (e) {}
-    document.getElementById("account-btn").textContent = "Sign In";
-    document.getElementById("account-btn").href = "/login";
-    buyerProfile = null;
-    return false;
-  }
-
-  // Get product ID from URL
-  function getProductId() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id") || "";
-  }
-
-  // Render item data from backend
-  async function renderItem() {
-    const id = getProductId();
-    let product = null;
-    let demo = null;
-    // Demo fallback products
-    const demoProducts = {
-      "1": {
-        id: 1,
-        title: "Casio FX-991EX Calculator",
-        price: "₦6,500",
-        category: "Gadgets",
-        posted: "3 hours ago",
-        seller: { name: "Blessing", avatar: "https://randomuser.me/api/portraits/women/44.jpg", dept: "Sciences 200L", rating: 4.6, sales: 7 },
-        images: [
-          "https://examguard.com.ng/calcu.webp",
-          "https://examguard.com.ng/calc.webp"
-        ],
-        condition: "Like New",
-        desc: "Like new. Used for only one semester. Perfect for science students.",
-        reviews: [
-          { name: "Michael", comment: "Great seller, fast response!", date: "2 days ago", rating: 5 },
-          { name: "Janet", comment: "Calculator was as described.", date: "5 days ago", rating: 4 }
-        ],
-        similar: [
-          { id: 2, title: "HP Elitebook Laptop", price: "₦180,000", image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" }
-        ]
-      },
-      "2": {
-        id: 2,
-        title: "HP Elitebook Laptop",
-        price: "₦180,000",
-        category: "Electronics",
-        posted: "1 day ago",
-        seller: { name: "Michael", avatar: "hplapto.avif", dept: "Engineering 300L", rating: 4.9, sales: 15 },
-        images: [
-          "hplapt.avif",
-          "hplap.avif"
-        ],
-        condition: "Used",
-        desc: "Slim, powerful, and perfect for students.",
-        reviews: [
-          { name: "Blessing", comment: "Laptop battery lasts long!", date: "3 days ago", rating: 5 },
-          { name: "Janet", comment: "Perfect for my engineering projects.", date: "1 week ago", rating: 4 }
-        ],
-        similar: [
-          { id: 1, title: "Casio FX-991EX Calculator", price: "₦6,500", image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" }
-        ]
-      }
-    };
-
-    // Try backend fetch first
-    if (id) {
-      try {
-        let url = `https://examguide.onrender.com/api/bloggerDashboard/public/posts/${id}`;
-        let res = await fetch(url);
-        if (res.ok) {
-          product = await res.json();
-        }
-      } catch (e) {}
-    }
-    // If no product, fallback to demo
-    if (!product || !product.title) {
-      product = demoProducts[id] || demoProducts["1"];
-      demo = true;
-    } else {
-      demo = false;
-    }
-
-    // Render breadcrumbs
-    document.getElementById("breadcrumb-category").textContent = product.category || "";
-    document.getElementById("breadcrumb-title").textContent = product.title || "";
-
-    // Render images
-    const mainImg = document.getElementById("main-img");
-    mainImg.src = (product.images && product.images[0]) || product.imageUrl || "";
-    mainImg.alt = product.title + " main image";
-    document.getElementById("thumbnails").innerHTML = (product.images || [product.imageUrl]).filter(Boolean).map((img, idx) =>
-      `<img src="${img}" class="w-16 h-16 object-cover rounded cursor-pointer ${idx === 0 ? 'border-2 border-blue-600':''}" alt="Thumb ${idx+1}" onclick="document.getElementById('main-img').src='${img}'">`
-    ).join("");
-
-    // Item Info
-    document.getElementById("item-title").textContent = product.title || "";
-    document.getElementById("item-price").textContent = product.price || "";
-    document.getElementById("item-cond").textContent = product.condition || "";
-    document.getElementById("item-posted").textContent = product.posted || (product.date ? ("Posted " + new Date(product.date).toLocaleDateString()) : "");
-    document.getElementById("item-desc").textContent = product.desc || product.content || "";
-
-    // Seller Info
-    let sellerName = demo ? product.seller.name : product.authorName;
-    let sellerDept = demo ? product.seller.dept : (product.authorDepartment || "");
-    let sellerAvatar = demo ? product.seller.avatar : (product.authorAvatar || "");
-    let sellerRating = demo ? product.seller.rating : (product.likes ? (product.likes + "/5") : "N/A");
-    let sellerSales = demo ? product.seller.sales : (product.comments ? product.comments.length : "");
-    document.getElementById("seller-avatar").src = sellerAvatar || "";
-    document.getElementById("seller-name").textContent = sellerName || "";
-    document.getElementById("seller-dept").textContent = "(" + sellerDept + ")";
-    document.getElementById("seller-rating").textContent = "⭐ " + sellerRating + " (" + sellerSales + " sales)";
-
-    // Profile Modal
-    document.getElementById("modal-seller-avatar").src = sellerAvatar || "";
-    document.getElementById("modal-seller-name").textContent = sellerName || "";
-    document.getElementById("modal-seller-dept").textContent = sellerDept || "";
-    document.getElementById("modal-seller-rating").textContent = "⭐ " + sellerRating + " (" + sellerSales + " sales)";
-    document.getElementById("modal-seller-verified").textContent = demo ? "Verified Student Seller" : "";
-    document.getElementById("modal-seller-joined").textContent = demo ? "Joined: Jan 2024" : "";
-
-    // Reviews
-    let reviews = demo ? product.reviews : (product.comments || []);
-    document.getElementById("reviews-list").innerHTML = reviews.map(r =>
-      `<div class="bg-gray-50 p-3 rounded shadow flex gap-3 items-center">
-        <span class="text-yellow-500 text-2xl">⭐</span>
-        <div>
-          <div class="font-bold">${r.name || r.authorName || ""}</div>
-          <div class="text-sm text-gray-500">"${r.comment || r.text || ""}"</div>
-          <div class="text-xs text-gray-400">${r.date ? r.date : ''}</div>
-        </div>
-      </div>`
-    ).join("");
-
-    // Similar Items (only for demo or if you want to fetch related posts from backend)
-    if (demo) {
-      document.getElementById("similar-items").innerHTML = product.similar.map(s =>
-        `<div class="bg-white rounded-xl shadow overflow-hidden">
-          <a href="items.html?id=${s.id}">
-            <img src="${s.image}" class="h-32 w-full object-cover" alt="${s.title}">
-          </a>
-          <div class="p-3">
-            <div class="font-bold text-blue-800">${s.title}</div>
-            <div class="text-yellow-600 font-semibold">${s.price}</div>
-          </div>
-        </div>`
-      ).join("");
-    } else {
-      // Fetch related from backend
-      try {
-        let url = `https://examguide.onrender.com/api/bloggerDashboard/public/posts/${id}/related?limit=4`;
-        let res = await fetch(url);
-        if (res.ok) {
-          let related = await res.json();
-          document.getElementById("similar-items").innerHTML = related.map(s =>
-            `<div class="bg-white rounded-xl shadow overflow-hidden">
-              <a href="items.html?id=${s._id}">
-                <img src="${s.imageUrl}" class="h-32 w-full object-cover" alt="${s.title}">
-              </a>
-              <div class="p-3">
-                <div class="font-bold text-blue-800">${s.title}</div>
-              </div>
-            </div>`
-          ).join("");
-        }
-      } catch (e) {}
-    }
-  }
-
-  // OFFER MODAL logic
-  let currentOfferProductId = null;
-  let currentOfferProductTitle = null;
-  window.openOfferModal = function(productId, productTitle){
-    currentOfferProductId = productId;
-    currentOfferProductTitle = productTitle;
-    document.getElementById('offerProductId').value = productId;
-    document.getElementById('sendOfferModal').classList.remove('hidden');
-    // Pre-populate buyer details
-    let details = "";
-    if(buyerProfile && buyerProfile.user){
-      const u = buyerProfile.user;
-      details = `
-        <span class="block"><strong>Your Details for Seller:</strong></span>
-        <span>Name: ${u.fullname || u.username}</span><br>
-        <span>Email: ${u.email || ''}</span><br>
-        <span>Phone: ${u.phone || ''}</span><br>
-        <span>Faculty: ${u.faculty || ''}</span><br>
-        <span>Department: ${u.department || ''}</span>
-      `;
-    } else {
-      details = `<span class="block text-red-600">You must sign in for communication and offer follow-up.</span>`;
-    }
-    document.getElementById('buyerDetails').innerHTML = details;
-  }
-  window.closeOfferModal = function(){
-    document.getElementById('sendOfferModal').classList.add('hidden');
-    document.getElementById('offerForm').reset();
-    document.getElementById('offerResponse').classList.add('hidden');
-  }
-
-  // Offer form submit handler
-  document.addEventListener("DOMContentLoaded", function() {
-    checkAuth();
-    renderItem();
-
-    document.getElementById('offerForm').onsubmit = async function(e) {
-      e.preventDefault();
-      const productId = document.getElementById('offerProductId').value;
-      const offerPrice = document.getElementById('offerPrice').value;
-      const offerMessage = document.getElementById('offerMessage').value;
-      const token = localStorage.getItem("token");
-      // Gather buyer details
-      let buyerDetails = "";
-      if(buyerProfile && buyerProfile.user){
-  const u = buyerProfile.user;
-  details = `
-    <span class="block"><strong>Your Details for Seller:</strong></span>
-    <span>Name: ${u.fullname || u.username}</span><br>
-    <span>Email: ${u.email || ''}</span><br>
-    <span>Phone: ${u.phone || ''}</span><br>
-    <span>Faculty: ${u.faculty?.name || u.faculty || ''}</span><br>
-    <span>Department: ${u.department?.name || u.department || ''}</span>
-  `;
-  }
-      // Compose full message to seller
-      const fullMessage = `
-Offer from: ${buyerDetails.name || "Guest"}
-Email: ${buyerDetails.email || "N/A"}
-Phone: ${buyerDetails.phone || "N/A"}
-Faculty: ${buyerDetails.faculty || ""}
-Department: ${buyerDetails.department || ""}
-Product: ${currentOfferProductTitle || ""}
----
-${offerMessage}
-      `.trim();
-
-      try {
-        const res = await fetch("https://examguide.onrender.com/api/offers", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token ? { "Authorization": "Bearer " + token } : {})
-          },
-          body: JSON.stringify({
-            productId,
-            offerPrice,
-            message: fullMessage,
-            buyer: buyerDetails
-          })
-        });
-        if (res.ok) {
-          document.getElementById('offerResponse').textContent = "Offer sent successfully! Saved for follow-up.";
-          document.getElementById('offerResponse').classList.remove('hidden');
-          document.getElementById('offerForm').reset();
-          setTimeout(closeOfferModal, 1500);
-        } else {
-          throw new Error("Failed to send offer");
-        }
-      } catch (err) {
-        document.getElementById('offerResponse').textContent = "Could not send offer. Please try again.";
-        document.getElementById('offerResponse').classList.remove('hidden');
-      }
-    }
-  });
-</script>
-
   <!-- Header -->
-  <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+  <header class="bg-white shadow-md fixed top-0 left-0 w-full z-30">
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <h1 class="text-2xl font-bold text-blue-600">Market<span class="text-gray-900">Place</span></h1>
+      <a href="mart.html"><h1 class="text-2xl font-bold text-blue-600">Market<span class="text-gray-900">Place</span></h1></a>
       <nav class="hidden md:flex gap-8 font-medium">
         <a href="mart.html" class="hover:text-blue-600 transition">Home</a>
-        <a href="#" class="hover:text-blue-600 transition">Shop</a>
-        <a href="#" class="hover:text-blue-600 transition">Categories</a>
-        <a href="#" class="hover:text-blue-600 transition">Contact</a>
+        <a href="mart.html#products-section" class="hover:text-blue-600 transition">Shop</a>
+        <a href="mart.html#carousel-section" class="hover:text-blue-600 transition">Featured</a>
       </nav>
       <a id="account-btn" href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Sign In</a>
     </div>
   </header>
 
-  <!-- Breadcrumbs -->
-  <nav class="mt-24 px-6 max-w-7xl mx-auto text-sm text-gray-500">
-    <a href="mart.html" class="hover:underline">Home</a> /
-    <a href="#" class="hover:underline" id="breadcrumb-category"></a> /
-    <span class="text-gray-800 font-semibold" id="breadcrumb-title"></span>
-  </nav>
-
-  <!-- Main Item Section -->
-  <main class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-12">
-    <!-- Images Carousel/Slider -->
-    <div class="md:w-1/2">
-      <div class="relative overflow-hidden rounded-lg h-80 mb-4">
-        <img id="main-img" src="" class="w-full h-full object-cover" alt="Main Product Image">
+  <main class="pt-28 pb-10 px-2 max-w-6xl mx-auto">
+    <!-- Breadcrumb -->
+    <nav class="mb-4 text-sm text-gray-500 flex items-center gap-2" aria-label="Breadcrumb">
+      <a href="mart.html" class="hover:text-blue-700">Home</a>
+      <span>/</span>
+      <a href="mart.html#products-section" class="hover:text-blue-700">Products</a>
+      <span>/</span>
+      <span id="breadcrumb-title" class="truncate max-w-xs"></span>
+    </nav>
+    <div id="product-loading" class="text-center text-blue-600 py-20 text-lg">Loading product...</div>
+    <div id="product-details" class="hidden grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- Images Preview (fills container) -->
+      <div class="flex flex-col gap-3">
+        <div class="relative w-full aspect-square rounded-xl overflow-hidden bg-gray-100 group cursor-zoom-in" onclick="openLightbox()">
+          <img id="product-main-img" src="" alt="Product Image" class="w-full h-full object-contain object-center transition-all duration-300"/>
+          <span class="absolute bottom-2 right-2 bg-white/70 px-2 py-1 rounded text-xs text-gray-700 shadow hidden md:block">🔍 Click to Zoom</span>
+        </div>
+        <div id="product-thumbs" class="flex gap-2"></div>
+        <div class="flex gap-2 mt-1">
+          <button id="favorite-btn" class="flex items-center gap-1 px-4 py-2 bg-pink-100 text-pink-700 rounded hover:bg-pink-200 transition">
+            <span id="favorite-icon">♡</span> <span>Wishlist</span>
+          </button>
+          <button id="report-btn" class="flex items-center gap-1 px-4 py-2 bg-red-100 text-red-600 rounded hover:bg-red-200 transition">🚩 Report</button>
+        </div>
       </div>
-      <div id="thumbnails" class="flex gap-2 mt-2"></div>
+      <!-- Details -->
+      <div class="flex flex-col gap-3">
+        <h2 id="product-title" class="font-bold text-2xl md:text-3xl text-blue-800"></h2>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span id="product-category" class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold"></span>
+          <span id="product-posted" class="text-gray-500 text-xs"></span>
+          <span id="stock-indicator" class="text-xs px-2 py-1 rounded bg-green-100 text-green-700 font-medium"></span>
+        </div>
+        <div class="flex items-center gap-4 flex-wrap">
+          <span id="product-price" class="text-2xl font-bold text-yellow-700 flex items-center gap-2">
+            <span class="text-xl">&#8358;</span><span id="product-price-value"></span>
+          </span>
+          <span id="product-rating" class="text-yellow-500"></span>
+          <span id="product-views" class="text-xs text-gray-500"></span>
+        </div>
+        <div id="product-tags" class="flex flex-wrap gap-2"></div>
+        <div id="seller-info" class="flex items-center gap-3 mt-2">
+          <a id="seller-profile-link" href="#" class="flex items-center gap-2 group">
+            <div id="seller-avatar" class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-xl font-bold text-blue-900"></div>
+            <div>
+              <div id="seller-name" class="font-semibold group-hover:underline"></div>
+              <div id="seller-meta" class="text-xs text-gray-500"></div>
+            </div>
+          </a>
+          <button id="chat-seller-btn" class="ml-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">💬 Chat Seller</button>
+        </div>
+        <div id="product-description" class="mt-2 text-gray-800"></div>
+        <!-- Add to Product Details Buttons section -->
+<div class="flex gap-2 mt-2">
+  <button id="send-offer-btn" class="px-5 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">Send Offer</button>
+  <button id="add-to-cart-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">Add to Cart</button>
+  <button id="share-btn" class="px-4 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition">Share</button>
+</div>
+      </div>
     </div>
 
-    <!-- Details & Actions -->
-    <div class="md:w-1/2 flex flex-col gap-6">
-      <!-- Item Info -->
-      <div>
-        <h2 class="text-3xl font-bold text-blue-800 mb-3" id="item-title"></h2>
-        <div class="flex items-center gap-3 mb-2">
-          <span class="text-yellow-600 font-semibold text-2xl" id="item-price"></span>
-          <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded" id="item-cond"></span>
-          <span class="text-gray-500 text-sm" id="item-posted"></span>
-        </div>
-        <p class="text-gray-700 mb-4" id="item-desc"></p>
-      </div>
-      <!-- Seller Info -->
-      <div class="flex items-center gap-4 bg-gray-100 p-4 rounded">
-        <img id="seller-avatar" src="" alt="Seller" class="w-12 h-12 rounded-full border-2 border-blue-600">
-        <div>
-          <div class="font-bold text-blue-700" id="seller-name"></div>
-          <span class="text-xs text-gray-400" id="seller-dept"></span>
-          <div class="flex items-center gap-1 text-yellow-600 text-sm" id="seller-rating"></div>
-          <!-- View Profile Modal Trigger -->
-          <button data-modal-target="profileModal" data-modal-toggle="profileModal" class="text-blue-600 underline text-sm">View Profile</button>
-        </div>
-        <!-- Chat Seller Modal Trigger -->
-        <button data-modal-target="chatModal" data-modal-toggle="chatModal" class="ml-auto px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Chat Seller</button>
-      </div>
-      <!-- Actions -->
-      <div class="flex gap-4 mt-4">
-        <button class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-lg">Add to Cart</button>
-        <!-- Send Offer Modal Trigger -->
-        <button type="button" onclick="openOfferModal(getProductId(), document.getElementById('item-title').textContent)" class="flex-1 px-4 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-lg">Send Offer</button>
-        <!-- Report Modal Trigger -->
-        <button data-modal-target="reportModal" data-modal-toggle="reportModal" class="flex-1 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 text-lg">Report</button>
-      </div>
-      <!-- Ratings & Reviews -->
-      <section class="mt-8">
-        <h3 class="font-semibold text-lg mb-3">Ratings & Reviews</h3>
-        <div id="reviews-list" class="space-y-4"></div>
-        <!-- Add Review Modal Trigger -->
-        <button data-modal-target="reviewModal" data-modal-toggle="reviewModal" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Review</button>
-      </section>
+
+<!-- Chat Seller Modal -->
+<div id="chatSellerModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
+  <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto flex flex-col">
+    <div class="flex items-center justify-between p-4 border-b rounded-t">
+      <h3 class="text-xl font-semibold">Chat with Seller</h3>
+      <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeChatModal()">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
+    <div id="chatMessages" class="flex-1 overflow-y-auto p-4 bg-gray-50 h-64"></div>
+    <form id="chatForm" class="flex gap-2 p-4 border-t">
+      <input id="chatInput" type="text" class="flex-1 border rounded px-3 py-2" placeholder="Type your message..." required>
+      <button type="submit" class="px-3 py-2 bg-blue-600 text-white rounded">Send</button>
+    </form>
+    <div id="chatResponse" class="p-2 text-center text-green-600 hidden"></div>
+  </div>
+</div>
+    <!-- Reviews (with add form) -->
+    <div class="mt-8 max-w-2xl mx-auto" id="reviews-section">
+      <h3 class="font-semibold mb-2 text-lg text-blue-900">Ratings & Reviews</h3>
+      <div id="reviews-list" class="space-y-3"></div>
+
+      <!-- Add Review/Ratings: Only show if logged in -->
+      <div id="add-review-card" class="bg-white rounded-lg shadow p-4 mt-4 hidden">
+        <div class="font-semibold mb-2">Add Your Review</div>
+        <form id="reviewForm" class="flex flex-col gap-3">
+          <div class="flex items-center gap-2">
+            <label class="text-sm font-semibold">Your Rating:</label>
+            <div id="rating-stars" class="flex items-center gap-1">
+              <!-- Stars inserted by JS -->
+            </div>
+          </div>
+          <textarea id="reviewMessage" rows="2" class="border rounded px-3 py-2" placeholder="Write your review..." required></textarea>
+          <button type="submit" class="self-end px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Submit Review</button>
+        </form>
+        <div id="reviewResponse" class="p-2 text-center text-green-600 hidden"></div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="mt-10 max-w-2xl mx-auto hidden" id="offers-chart-section">
+      <h3 class="font-semibold mb-3 text-center text-lg text-blue-900">Offers History</h3>
+      <canvas id="offersChart" height="120"></canvas>
+    </div>
+
+    <!-- Related Items -->
+    <section class="mt-12">
+      <h3 class="text-2xl font-bold text-blue-800 mb-4">Related Items</h3>
+      <div id="related-items" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </section>
   </main>
+
+  <!-- Image Lightbox Modal -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 hidden items-center justify-center lightbox-bg">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-2xl font-bold p-2 bg-black/70 rounded-full z-10">✕</button>
+    <img id="lightbox-img" src="" alt="Full Image" class="max-h-[90vh] max-w-[96vw] rounded-lg shadow-xl border-4 border-white"/>
+  </div>
 
   <!-- Send Offer Modal -->
   <div id="sendOfferModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
@@ -480,129 +167,35 @@ ${offerMessage}
     </div>
   </div>
 
-  <!-- Similar Items -->
-  <section class="max-w-7xl mx-auto px-6 py-10">
-    <h3 class="text-xl font-bold mb-6">Similar Items</h3>
-    <div id="similar-items" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-  </section>
-
-  <!-- Modals Section (Flowbite Style) -->
-  <!-- Profile Modal -->
-  <div id="profileModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
-    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
-      <div class="flex items-center justify-between p-4 border-b rounded-t">
-        <h3 class="text-xl font-semibold">Seller Profile</h3>
-        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="profileModal">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="p-6">
-        <div class="flex gap-4 items-center mb-3">
-          <img id="modal-seller-avatar" src="" class="w-16 h-16 rounded-full border-2 border-blue-600" alt="Seller">
-          <div>
-            <div class="font-bold text-blue-700 text-lg" id="modal-seller-name"></div>
-            <div class="text-xs text-gray-500" id="modal-seller-dept"></div>
-            <div class="flex items-center gap-1 text-yellow-600 text-sm" id="modal-seller-rating"></div>
-          </div>
-        </div>
-        <div>
-          <p class="text-sm text-gray-600 mb-2" id="modal-seller-verified"></p>
-          <p class="text-sm text-gray-600" id="modal-seller-joined"></p>
-        </div>
-        <div class="mt-4 flex gap-2">
-          <button class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Chat Seller</button>
-          <button class="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">View Listings</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Chat Modal -->
-  <div id="chatModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
-    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
-      <div class="flex items-center justify-between p-4 border-b rounded-t">
-        <h3 class="text-xl font-semibold">Chat with Seller</h3>
-        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="chatModal">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="p-6">
-        <form class="flex flex-col gap-2">
-          <textarea rows="3" class="border rounded px-3 py-2" placeholder="Type your message to the seller..."></textarea>
-          <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Send Message</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Offer Modal (already included above) -->
-
   <!-- Report Modal -->
   <div id="reportModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
     <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
       <div class="flex items-center justify-between p-4 border-b rounded-t">
         <h3 class="text-xl font-semibold">Report Item</h3>
-        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="reportModal">
+        <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeReportModal()">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
-      <div class="p-6">
-        <form class="flex flex-col gap-2">
-          <label class="text-sm font-semibold">Reason</label>
-          <select class="border rounded px-3 py-2">
-            <option>Spam or Scam</option>
-            <option>Fake Product</option>
-            <option>Harassment</option>
-            <option>Other</option>
-          </select>
-          <textarea rows="2" class="border rounded px-3 py-2" placeholder="Additional details..."></textarea>
-          <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Submit Report</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Review Modal -->
-  <div id="reviewModal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black/40 flex items-center justify-center">
-    <div class="relative bg-white rounded-lg shadow w-full max-w-md mx-auto">
-      <div class="flex items-center justify-between p-4 border-b rounded-t">
-        <h3 class="text-xl font-semibold">Add Review</h3>
-        <button type="button" class="text-gray-400 hover:text-gray-900" data-modal-hide="reviewModal">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="p-6">
-        <form class="flex flex-col gap-2">
-          <label class="text-sm font-semibold">Your Review</label>
-          <textarea rows="3" class="border rounded px-3 py-2" placeholder="Share your experience..."></textarea>
-          <label class="text-sm font-semibold">Rating</label>
-          <select class="border rounded px-2 py-1">
-            <option>5 ⭐</option>
-            <option>4 ⭐</option>
-            <option>3 ⭐</option>
-            <option>2 ⭐</option>
-            <option>1 ⭐</option>
-          </select>
-          <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Submit Review</button>
-        </form>
-      </div>
+      <form class="p-6 flex flex-col gap-3" id="reportForm">
+        <label class="text-sm font-semibold">Reason</label>
+        <textarea rows="3" class="border rounded px-3 py-2" id="reportMessage" placeholder="Describe the problem..." required></textarea>
+        <button type="submit" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Submit Report</button>
+      </form>
+      <div id="reportResponse" class="p-4 text-center text-green-600 hidden"></div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 py-10">
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-10">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
       <div>
         <h3 class="text-xl font-bold text-white">Marketplace</h3>
-        <p class="mt-3 text-sm">Buy, sell, and discover products in your community with trust & safety guaranteed.</p>
+        <p class="mt-3 text-sm">Buy, sell, and discover products in your community with trust &amp; safety guaranteed.</p>
       </div>
       <div>
         <h3 class="font-semibold text-white">Quick Links</h3>
         <ul class="mt-3 space-y-2 text-sm">
-          <li><a href="./" class="hover:text-white">Home</a></li>
-          <li><a href="#" class="hover:text-white">About Us</a></li>
-          <li><a href="#" class="hover:text-white">Categories</a></li>
-          <li><a href="#" class="hover:text-white">Support</a></li>
+          <li><a href="mart.html" class="hover:text-white">Home</a></li>
         </ul>
       </div>
       <div>
@@ -618,5 +211,7 @@ ${offerMessage}
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.1/flowbite.min.js"></script>
+
+  <script src="item.js"></script>
 </body>
-</html>
+                                              </html>
