@@ -716,7 +716,7 @@ document.getElementById('newsletterForm').addEventListener('submit', async funct
     // Fetch all published/active items from all sellers
     async function fetchAllListings() {
       try {
-        const res = await fetch(BACKEND + "/api/blogger-dashboard/listings-public");
+        const res = await fetch(BACKEND + "/api/marketplace/listings-public");
         if (!res.ok) throw new Error("Could not fetch listings");
         const data = await res.json();
         // Normalizing results for UI compatibility
