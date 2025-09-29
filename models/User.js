@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   status: { type: String, enum: ["pending", "active", "banned"], default: "pending" },
 approved: { type: Boolean, default: false },
 ninSlip: { type: String, default: "" },
+wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
 institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   verified: { type: Boolean, default: false },
