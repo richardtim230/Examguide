@@ -3,7 +3,7 @@ import { authenticate } from "../middleware/authenticate.js";
 import mongoose from "mongoose";
 import BloggerDashboard from "../models/BloggerDashboard.js";
 import User from "../models/User.js";
-
+import Listing from "../models/Listing.js";
 const router = express.Router();
 
 // Offer Schema (can be moved to models/Offer.js for scalability)
