@@ -5,7 +5,7 @@ import User from "../models/User.js";
 const router = express.Router();
 
 // Send a message (buyer <-> seller)
-router.post("/messages", authenticate, async (req, res) => {
+router.post("/massages", authenticate, async (req, res) => {
   try {
     const { sellerId, text, productId } = req.body;
     if (!sellerId || !text) return res.status(400).json({ error: "Missing sellerId or text" });
@@ -13,7 +13,7 @@ router.post("/messages", authenticate, async (req, res) => {
     const receiver = await User.findById(sellerId);
     if (!receiver) return res.status(404).json({ error: "Seller not found" });
 
-    const msg = new Message({
+    const msg = new Massage({
       senderId: sender.id,
       senderName: sender.fullname || sender.username,
       receiverId: sellerId,
@@ -29,11 +29,11 @@ router.post("/messages", authenticate, async (req, res) => {
 });
 
 // Get chat history between logged-in user and seller
-router.get("/messages/:sellerId", authenticate, async (req, res) => {
+router.get("/massages/:sellerId", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
-    const msgs = await Message.find({
+    const msgs = await Massage.find({
       $or: [
         { senderId: userId, receiverId: sellerId },
         { senderId: sellerId, receiverId: userId }
