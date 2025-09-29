@@ -4,6 +4,8 @@ import multer from "multer";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import path from "path";
 import fs from "fs";
+import User from "../models/User.js"; // Already imported
+
 import Listing from "../models/Listing.js";
 import { exec } from "child_process";
 import mongoose from "mongoose";
@@ -571,6 +573,7 @@ router.post("/add-comment/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not add comment" });
   }
 });
+                         
 // Get a single public listing by ID (for item detail page)
 router.get("/public/listings/:id", async (req, res) => {
   const { id } = req.params;
@@ -590,8 +593,15 @@ router.get("/public/listings/:id", async (req, res) => {
       ) {
         // Optionally add seller info if needed
         let obj = listing.toObject ? listing.toObject() : listing;
-        obj.sellerId = dash.user;
-        return res.json(obj);
+        let obj = listing.toObject ? listing.toObject() : listing;
+obj.sellerId = dash.user;
+
+// Fetch seller details
+const seller = await User.findById(dash.user).select("fullname username profilePic");
+obj.sellerName = seller?.fullname || seller?.username || "Unknown";
+obj.sellerAvatar = seller?.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(obj.sellerName)}&background=eee&color=263159&rounded=true`;
+
+return res.json(obj);
       }
     }
     return res.status(404).json({ error: "Listing not found" });
