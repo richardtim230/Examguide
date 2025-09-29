@@ -77,7 +77,7 @@ router.get("/count", async (req, res) => {
 });
 
 // PATCH user approval (e.g., pending_blogger -> blogger)
-router.patch('/users/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
+router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
   try {
     const { approved } = req.body;
     const user = await User.findById(req.params.userId);
