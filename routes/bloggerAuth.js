@@ -102,9 +102,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-/**
- * Blogger/Marketer Login (Only if approved and status is "active")
- */
 router.post("/login", async (req, res) => {
   try {
     const { emailOrUsername, password } = req.body;
@@ -115,20 +112,21 @@ router.post("/login", async (req, res) => {
       $or: [{ email: emailOrUsername }, { username: emailOrUsername }],
     });
 
-    if (
-      !user ||
-      !["blogger", "marketer", "both"].includes(user.role) ||
-      user.status !== "active" ||
-      user.approved !== true
-    ) {
+    // Reject if role is pending_blogger
+    if (!user || user.role === "pending_blogger") {
       return res
         .status(403)
         .json({ message: "Account pending approval by admin." });
     }
 
-    if (!user.active)
-      return res.status(403).json({ message: "Account is deactivated" });
+    // Only allow blogger/marketer/both
+    if (!["blogger", "marketer", "both"].includes(user.role)) {
+      return res
+        .status(403)
+        .json({ message: "Account type not permitted for this login." });
+    }
 
+    // Password check
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(401).json({ message: "Invalid credentials" });
