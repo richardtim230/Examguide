@@ -121,7 +121,7 @@ import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
 import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
 import BloggerDashboard from "./models/BloggerDashboard.js";
-
+import reviewsRoutes from "./routes/reviews.js";
 
 dotenv.config();
 
@@ -609,7 +609,8 @@ app.use("/api/blogger-dashboard", massagesRoutes);
 app.use("/api", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
-
+app.use("/api/reviews", reviewsRoutes);
+              
 app.get("/", (req, res) => res.json({status: "ok"}));
 
 app.listen(PORT, () => console.log(`Backend running on port: ${PORT}`));
