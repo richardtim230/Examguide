@@ -774,8 +774,9 @@ router.post("/listings", authenticate, async (req, res) => {
 
     const { title, item, price, category, stock, status, sales, description, img, imageUrl, images } = req.body;
     const imagesArr = Array.isArray(images) ? images : (img || imageUrl ? [img || imageUrl] : []);
-    const listingData = {
-      _id: new mongoose.Types.ObjectId(),
+
+    // Create top-level Listing document
+    const listingDoc = await Listing.create({
       title: title || item,
       item: item || title,
       price: Number(price) || 0,
@@ -787,11 +788,15 @@ router.post("/listings", authenticate, async (req, res) => {
       img: imagesArr[0] || "",
       imageUrl: imagesArr[0] || "",
       images: imagesArr,
-      orders: 0
-    };
-    dashboard.listings.unshift(listingData);
+      orders: 0,
+      approved: true // or whatever logic you use
+    });
+
+    // Optionally also push into dashboard (for legacy logic)
+    dashboard.listings.unshift(listingDoc);
     await dashboard.save();
-    res.status(201).json(listingData);
+
+    res.status(201).json(listingDoc);
   } catch (err) {
     res.status(500).json({ error: "Could not create listing." });
   }
