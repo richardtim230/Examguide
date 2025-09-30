@@ -44,5 +44,14 @@ router.get("/massages/:sellerId", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not fetch messages" });
   }
 });
-
+router.get("/massages", authenticate, async (req, res) => {
+  const userId = req.user.id;
+  const msgs = await Massage.find({
+    $or: [
+      { senderId: userId },
+      { receiverId: userId }
+    ]
+  }).sort({ date: 1 });
+  res.json(msgs);
+});
 export default router;
