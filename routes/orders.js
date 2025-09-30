@@ -4,8 +4,7 @@ import Order from "../models/Order.js";
 import Listing from "../models/Listing.js";
 const router = express.Router();
 
-// Import Offer model for offer-based orders
-import Offer from "../models/Offer.js";
+
 
 // Create new order (supports offer-based and regular)
 router.post("/", authenticate, async (req, res) => {
