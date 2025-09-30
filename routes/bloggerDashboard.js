@@ -8,7 +8,7 @@ import { exec } from "child_process";
 import mongoose from "mongoose";
 // Add at the top with other imports
 import User from "../models/User.js";
-const GENERATOR_SCRIPT = path.join(process.cwd(), "generate-static-posts.js");
+const GENERATOR_SCRIPT = path.join(process.cwd(), "routes/generate-static-posts.js");
 const router = express.Router();
 
 // Multer setup for multi-image upload
