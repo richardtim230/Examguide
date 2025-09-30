@@ -81,4 +81,30 @@ router.patch("/:orderId/pay", authenticate, async (req, res) => {
   }
 });
 
+// Remove/cancel an order (before payment)
+router.delete("/:orderId", authenticate, async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.orderId, buyer: req.user.id });
+    if (!order) return res.status(404).json({ error: "Order not found" });
+
+    // Optionally, block removal if already paid
+    if (order.status === "paid") {
+      return res.status(400).json({ error: "Cannot remove a paid order." });
+    }
+
+    // If this was an offer-based order, update the Offer document
+    if (order.offerId) {
+      const Offer = (await import("../models/Offer.js")).default;
+      await Offer.findByIdAndUpdate(order.offerId, {
+        ordered: false,
+        orderId: null
+      });
+    }
+
+    await order.deleteOne();
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: "Could not remove order." });
+  }
+});
 export default router;
