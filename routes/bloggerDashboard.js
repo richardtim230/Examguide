@@ -7,12 +7,9 @@ import fs from "fs";
 import Listing from "../models/Listing.js";
 import { exec } from "child_process";
 import mongoose from "mongoose";
-// Add at the top with other imports
 import User from "../models/User.js";
 const GENERATOR_SCRIPT = path.join(process.cwd(), "generate-static-posts.js");
 const router = express.Router();
-
-// Multer setup for multi-image upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const dir = path.join(process.cwd(), "uploads/posts/");
@@ -33,8 +30,6 @@ const upload = multer({
     cb(null, true);
   }
 });
-
-// --- Report Listing Schema/Model ---
 const ReportSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: "Listing" },
   reporter: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -42,10 +37,7 @@ const ReportSchema = new mongoose.Schema({
   description: String,
   date: { type: Date, default: Date.now }
 }, { _id: true });
-
 const Report = mongoose.models.Report || mongoose.model("Report", ReportSchema);
-
-// GET: Fetch dashboard for current user (includes posts, listings, analytics, etc)
 router.get("/", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
   if (!dashboard) {
@@ -866,9 +858,6 @@ router.delete("/commissions/:commissionId", authenticate, async (req, res) => {
   await dashboard.save();
   res.json({ message: "Commission deleted" });
 });
-// --- Likes and Reply Endpoints for Blog Posts and Comments ---
-
-// PATCH: Like a blog post
 router.patch("/like/:postId", async (req, res) => {
   const { postId } = req.params;
   try {
@@ -1002,26 +991,7 @@ router.post("/messages", authenticate, async (req, res) => {
   await dashboard.save();
   res.status(201).json(dashboard.messages[dashboard.messages.length - 1]);
 });
-router.get("/massages/:sellerId", authenticate, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const sellerId = req.params.sellerId;
-    // Validate ObjectIds
-    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
-      return res.status(400).json({ error: "Invalid user or seller id" });
-    }
-    const msgs = await Massage.find({
-      $or: [
-        { senderId: userId, receiverId: sellerId },
-        { senderId: sellerId, receiverId: userId }
-      ]
-    }).sort({ date: 1 });
-    res.json(msgs);
-  } catch (err) {
-    console.error("Error fetching messages:", err); // <--- add this!
-    res.status(500).json({ error: "Could not fetch messages" });
-  }
-});
+
 // DELETE message
 router.delete("/messages/:messageId", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
