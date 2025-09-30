@@ -4,12 +4,14 @@ import multer from "multer";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 import path from "path";
 import fs from "fs";
-import Listing from "../models/Listing.js";
 import { exec } from "child_process";
 import mongoose from "mongoose";
+// Add at the top with other imports
 import User from "../models/User.js";
 const GENERATOR_SCRIPT = path.join(process.cwd(), "generate-static-posts.js");
 const router = express.Router();
+
+// Multer setup for multi-image upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const dir = path.join(process.cwd(), "uploads/posts/");
@@ -30,14 +32,8 @@ const upload = multer({
     cb(null, true);
   }
 });
-const ReportSchema = new mongoose.Schema({
-  productId: { type: mongoose.Schema.Types.ObjectId, ref: "Listing" },
-  reporter: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  reason: String,
-  description: String,
-  date: { type: Date, default: Date.now }
-}, { _id: true });
-const Report = mongoose.models.Report || mongoose.model("Report", ReportSchema);
+
+// GET: Fetch dashboard for current user (includes posts, listings, analytics, etc)
 router.get("/", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
   if (!dashboard) {
@@ -67,36 +63,6 @@ router.get("/admin/allposts", authenticate, authorizeRole("admin", "superadmin")
   } catch (e) {
     res.status(500).json({ error: "Could not fetch blog posts." });
   }
-});
-
-
-// --- Report Listing Endpoint ---
-router.post("/report/:listingId", authenticate, async (req, res) => {
-  const { reason, description } = req.body;
-  if (!reason) return res.status(400).json({ error: "Reason required." });
-  const report = await Report.create({
-    productId: req.params.listingId,
-    reporter: req.user.id,
-    reason,
-    description
-  });
-  res.status(201).json({ success: true, report });
-});
-
-// --- Wishlist Endpoints ---
-router.get("/wishlist", authenticate, async (req, res) => {
-  const user = await User.findById(req.user.id).populate("wishlist");
-  res.json({ wishlist: user.wishlist || [] });
-});
-
-router.post("/wishlist/add/:listingId", authenticate, async (req, res) => {
-  await User.findByIdAndUpdate(req.user.id, { $addToSet: { wishlist: req.params.listingId } });
-  res.json({ success: true });
-});
-
-router.delete("/wishlist/remove/:listingId", authenticate, async (req, res) => {
-  await User.findByIdAndUpdate(req.user.id, { $pull: { wishlist: req.params.listingId } });
-  res.json({ success: true });
 });
 // PATCH: Partial update of dashboard (any fields)
 router.patch("/", authenticate, async (req, res) => {
@@ -405,53 +371,6 @@ router.get("/taxonomy/topics", async (req, res) => {
   }
 });
 
-// GET: All posts filtered by category, subject, or topic
-router.get("/posts/filter", async (req, res) => {
-  const { category, subject, topic } = req.query;
-  try {
-    const dashboards = await BloggerDashboard.find({}, 'posts user');
-    let posts = [];
-    dashboards.forEach(dash => {
-      (dash.posts || []).forEach(post => {
-        let match = true;
-        if (category && post.category !== category) match = false;
-        if (subject && post.subject !== subject) match = false;
-        if (topic && post.topic !== topic) match = false;
-        if (match) {
-          let obj = post.toObject ? post.toObject() : post;
-          obj.authorId = dash.user;
-          if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
-          if (!obj.images) obj.images = [];
-          posts.push(obj);
-        }
-      });
-    });
-    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    res.json(posts);
-  } catch (err) {
-    res.status(500).json({ error: "Could not filter posts." });
-  }
-});
-
-// ADMIN: Get all listings for moderation (approved or not)
-router.get("/admin/alllistings", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const dashboards = await BloggerDashboard.find({}, 'listings user');
-    let allListings = [];
-    dashboards.forEach(dash => {
-      (dash.listings || []).forEach(listing => {
-        let obj = listing.toObject ? listing.toObject() : listing;
-        obj.sellerId = dash.user;
-        allListings.push(obj);
-      });
-    });
-    // Optional: sort newest first
-    allListings.sort((a, b) => new Date(b._id.getTimestamp?.() || b._id) - new Date(a._id.getTimestamp?.() || a._id));
-    res.json(allListings);
-  } catch (err) {
-    res.status(500).json({ error: "Could not fetch all listings." });
-  }
-});
 router.get("/public/posts", async (req, res) => {
   // Query params: category, page, limit
   const category = req.query.category;
@@ -506,7 +425,33 @@ router.get("/public/posts", async (req, res) => {
     res.status(500).json({ error: "Could not fetch posts." });
   }
 });
-
+// GET: All posts filtered by category, subject, or topic
+router.get("/posts/filter", async (req, res) => {
+  const { category, subject, topic } = req.query;
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'posts user');
+    let posts = [];
+    dashboards.forEach(dash => {
+      (dash.posts || []).forEach(post => {
+        let match = true;
+        if (category && post.category !== category) match = false;
+        if (subject && post.subject !== subject) match = false;
+        if (topic && post.topic !== topic) match = false;
+        if (match) {
+          let obj = post.toObject ? post.toObject() : post;
+          obj.authorId = dash.user;
+          if (!obj.images && obj.imageUrl) obj.images = [obj.imageUrl];
+          if (!obj.images) obj.images = [];
+          posts.push(obj);
+        }
+      });
+    });
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: "Could not filter posts." });
+  }
+});
 // Accepts: x-visitor-id header for guests, or uses req.user.id for logged-in users
 router.patch("/increment-views/:postId", async (req, res) => {
   const { postId } = req.params;
@@ -542,7 +487,25 @@ router.patch("/increment-views/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not increment views" });
   }
 });
-
+// ADMIN: Get all listings for moderation (approved or not)
+router.get("/admin/alllistings", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dashboards = await BloggerDashboard.find({}, 'listings user');
+    let allListings = [];
+    dashboards.forEach(dash => {
+      (dash.listings || []).forEach(listing => {
+        let obj = listing.toObject ? listing.toObject() : listing;
+        obj.sellerId = dash.user;
+        allListings.push(obj);
+      });
+    });
+    // Optional: sort newest first
+    allListings.sort((a, b) => new Date(b._id.getTimestamp?.() || b._id) - new Date(a._id.getTimestamp?.() || a._id));
+    res.json(allListings);
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch all listings." });
+  }
+});
 // POST a comment
 router.post("/add-comment/:postId", async (req, res) => {
   const { postId } = req.params;
@@ -563,7 +526,6 @@ router.post("/add-comment/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not add comment" });
   }
 });
-                         
 // Get a single public listing by ID (for item detail page)
 router.get("/public/listings/:id", async (req, res) => {
   const { id } = req.params;
@@ -582,16 +544,9 @@ router.get("/public/listings/:id", async (req, res) => {
         (listing.approved || listing.status === "Active" || listing.status === "Published")
       ) {
         // Optionally add seller info if needed
-        
         let obj = listing.toObject ? listing.toObject() : listing;
-obj.sellerId = dash.user;
-
-// Fetch seller details
-const seller = await User.findById(dash.user).select("fullname username profilePic");
-obj.sellerName = seller?.fullname || seller?.username || "Unknown";
-obj.sellerAvatar = seller?.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(obj.sellerName)}&background=eee&color=263159&rounded=true`;
-
-return res.json(obj);
+        obj.sellerId = dash.user;
+        return res.json(obj);
       }
     }
     return res.status(404).json({ error: "Listing not found" });
@@ -713,7 +668,27 @@ router.put("/posts/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not update post." });
   }
 });
-
+// PATCH: Like a comment on a post
+router.patch("/like-comment/:postId/:commentId", async (req, res) => {
+  const { postId, commentId } = req.params;
+  try {
+    const dashboards = await BloggerDashboard.find({});
+    for (let dash of dashboards) {
+      const post = dash.posts.id(postId);
+      if (post && Array.isArray(post.comments)) {
+        const comment = post.comments.id(commentId);
+        if (comment) {
+          comment.likes = (comment.likes || 0) + 1;
+          await dash.save();
+          return res.json({ success: true, likes: comment.likes });
+        }
+      }
+    }
+    res.status(404).json({ error: "Comment not found" });
+  } catch (e) {
+    res.status(500).json({ error: "Could not like comment" });
+  }
+});
 router.delete("/posts/:id", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
@@ -764,12 +739,11 @@ router.post("/listings", authenticate, async (req, res) => {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
 
-    const { title, item, price, category, stock, status, sales, description, img, imageUrl, images } = req.body;
-    const imagesArr = Array.isArray(images) ? images : (img || imageUrl ? [img || imageUrl] : []);
-
-    // Create top-level Listing document
-    const listingDoc = await Listing.create({
-      title: title || item,
+    // Support both minimal and full product fields
+    const { title, item, price, category, stock, status, sales, description, img, imageUrl } = req.body;
+    const listingData = {
+      _id: new mongoose.Types.ObjectId(),
+      title: title || item, // accept either
       item: item || title,
       price: Number(price) || 0,
       category: category || "",
@@ -777,50 +751,31 @@ router.post("/listings", authenticate, async (req, res) => {
       status: status || "Active",
       sales: Number(sales) || 0,
       description: description || "",
-      img: imagesArr[0] || "",
-      imageUrl: imagesArr[0] || "",
-      images: imagesArr,
-      orders: 0,
-      approved: true // or whatever logic you use
-    });
-
-    // Optionally also push into dashboard (for legacy logic)
-    dashboard.listings.unshift(listingDoc);
+      img: img || imageUrl || "",
+      orders: 0
+    };
+    dashboard.listings.unshift(listingData);
     await dashboard.save();
-
-    res.status(201).json(listingDoc);
+    res.status(201).json(listingData);
   } catch (err) {
     res.status(500).json({ error: "Could not create listing." });
   }
 });
 
+// UPDATE listing
 router.patch("/listings/:listingId", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ message: "Dashboard not found" });
     const listing = dashboard.listings.id(req.params.listingId);
     if (!listing) return res.status(404).json({ message: "Listing not found" });
-
-    // Update embedded listing
-    const update = req.body;
-    if (Array.isArray(update.images)) {
-      listing.images = update.images;
-      listing.img = update.images[0] || "";
-      listing.imageUrl = update.images[0] || "";
-    }
-    Object.assign(listing, update);
+    Object.assign(listing, req.body);
     await dashboard.save();
-
-    // Update top-level Listing document
-    await Listing.findByIdAndUpdate(req.params.listingId, update);
-
     res.json(listing);
   } catch (err) {
     res.status(500).json({ error: "Could not update listing." });
   }
 });
-
-
 
 // DELETE listing
 router.delete("/listings/:listingId", authenticate, async (req, res) => {
@@ -858,6 +813,9 @@ router.delete("/commissions/:commissionId", authenticate, async (req, res) => {
   await dashboard.save();
   res.json({ message: "Commission deleted" });
 });
+// --- Likes and Reply Endpoints for Blog Posts and Comments ---
+
+// PATCH: Like a blog post
 router.patch("/like/:postId", async (req, res) => {
   const { postId } = req.params;
   try {
@@ -876,27 +834,7 @@ router.patch("/like/:postId", async (req, res) => {
   }
 });
 
-// PATCH: Like a comment on a post
-router.patch("/like-comment/:postId/:commentId", async (req, res) => {
-  const { postId, commentId } = req.params;
-  try {
-    const dashboards = await BloggerDashboard.find({});
-    for (let dash of dashboards) {
-      const post = dash.posts.id(postId);
-      if (post && Array.isArray(post.comments)) {
-        const comment = post.comments.id(commentId);
-        if (comment) {
-          comment.likes = (comment.likes || 0) + 1;
-          await dash.save();
-          return res.json({ success: true, likes: comment.likes });
-        }
-      }
-    }
-    res.status(404).json({ error: "Comment not found" });
-  } catch (e) {
-    res.status(500).json({ error: "Could not like comment" });
-  }
-});
+
 // Add this to routes/bloggerDashboard.js or your marketplace routes
 router.get("/public/listings", async (req, res) => {
   try {
@@ -963,52 +901,6 @@ router.post("/add-comment/:postId", async (req, res) => {
     res.status(500).json({ error: "Could not add comment" });
   }
 });
-// ==== FOLLOWERS ====
 
-// ADD follower
-router.post("/followers", authenticate, async (req, res) => {
-  let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-  if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
-  dashboard.followers.push(req.body);
-  await dashboard.save();
-  res.status(201).json(dashboard.followers[dashboard.followers.length - 1]);
-});
-
-router.delete("/followers/:followerId", authenticate, async (req, res) => {
-  let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-  if (!dashboard) return res.status(404).json({ message: "Dashboard not found" });
-  const follower = dashboard.followers.id(req.params.followerId);
-  if (!follower) return res.status(404).json({ message: "Follower not found" });
-  follower.remove();
-  await dashboard.save();
-  res.json({ message: "Follower removed" });
-});
-
-router.post("/messages", authenticate, async (req, res) => {
-  let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-  if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
-  dashboard.messages.push(req.body);
-  await dashboard.save();
-  res.status(201).json(dashboard.messages[dashboard.messages.length - 1]);
-});
-
-// DELETE message
-router.delete("/messages/:messageId", authenticate, async (req, res) => {
-  let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-  if (!dashboard) return res.status(404).json({ message: "Dashboard not found" });
-  const msg = dashboard.messages.id(req.params.messageId);
-  if (!msg) return res.status(404).json({ message: "Message not found" });
-  msg.remove();
-  await dashboard.save();
-  res.json({ message: "Message deleted" });
-});
-
-router.patch("/analytics", authenticate, async (req, res) => {
-  let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
-  if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
-  dashboard.analytics = { ...dashboard.analytics, ...req.body };
-  await dashboard.save();
-  res.json(dashboard.analytics);
-});
 
 export default router;
