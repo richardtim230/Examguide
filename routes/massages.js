@@ -1,4 +1,6 @@
 import express from "express";
+import mongoose from "mongoose";
+
 import { authenticate } from "../middleware/authenticate.js";
 import Massage from "../models/Massage.js";
 import User from "../models/User.js";
@@ -28,11 +30,15 @@ router.post("/massages", authenticate, async (req, res) => {
   }
 });
 
-// Get chat history between logged-in user and seller
+
 router.get("/massages/:sellerId", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
+    // Validate ObjectIds
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
+      return res.status(400).json({ error: "Invalid user or seller id" });
+    }
     const msgs = await Massage.find({
       $or: [
         { senderId: userId, receiverId: sellerId },
@@ -41,6 +47,7 @@ router.get("/massages/:sellerId", authenticate, async (req, res) => {
     }).sort({ date: 1 });
     res.json(msgs);
   } catch (err) {
+    console.error("Error fetching messages:", err); // <--- add this!
     res.status(500).json({ error: "Could not fetch messages" });
   }
 });
@@ -53,5 +60,28 @@ router.get("/massages", authenticate, async (req, res) => {
     ]
   }).sort({ date: 1 });
   res.json(msgs);
+});
+
+router.get("/massages/:sellerId", authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const sellerId = req.params.sellerId;
+
+    // Validate ObjectIds
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
+      return res.status(400).json({ error: "Invalid user or seller id" });
+    }
+
+    const msgs = await Massage.find({
+      $or: [
+        { senderId: userId, receiverId: sellerId },
+        { senderId: sellerId, receiverId: userId }
+      ]
+    }).sort({ date: 1 });
+    res.json(msgs);
+  } catch (err) {
+    console.error("Error fetching messages:", err);
+    res.status(500).json({ error: "Could not fetch messages" });
+  }
 });
 export default router;
