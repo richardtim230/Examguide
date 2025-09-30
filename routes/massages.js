@@ -41,11 +41,11 @@ router.get("/massages", authenticate, async (req, res) => {
 });
 
 // Get chat history between logged-in user and seller
-router.get("/messages/:sellerId", authenticate, async (req, res) => {
+router.get("/massages/:sellerId", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
-    const msgs = await Message.find({
+    const msgs = await Massage.find({
       $or: [
         { senderId: userId, receiverId: sellerId },
         { senderId: sellerId, receiverId: userId }
