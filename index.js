@@ -157,7 +157,7 @@ app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/
 app.use("/api/broadcasts", broadcastsRoutes); // NEW: broadcasts API
 
 // ===== MongoDB Connect =====
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URI)
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
