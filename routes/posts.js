@@ -248,5 +248,21 @@ router.patch("/posts/:postId/comments/:commentId/like", async (req, res) => {
     res.status(500).json({ error: "Could not like comment" });
   }
 });
-
+router.get("/posts/filter", async (req, res) => {
+  const { category, subject, topic, page = 1, limit = 12 } = req.query;
+  const filter = {};
+  if (category) filter.category = category;
+  if (subject) filter.subject = subject;
+  if (topic) filter.topic = topic;
+  filter.status = "Published";
+  try {
+    const posts = await Post.find(filter)
+      .sort({ date: -1 })
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: "Could not filter posts." });
+  }
+});
 export default router;
