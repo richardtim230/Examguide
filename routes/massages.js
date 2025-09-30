@@ -40,26 +40,19 @@ router.get("/massages", authenticate, async (req, res) => {
   res.json(msgs);
 });
 
-router.get("/massages/:sellerId", authenticate, async (req, res) => {
+// Get chat history between logged-in user and seller
+router.get("/messages/:sellerId", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
-
-    // Validate ObjectIds only if your frontend always sends true MongoDB ObjectIds
-    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
-      return res.status(400).json({ error: "Invalid user or seller id" });
-    }
-
-    // Always match as strings!
-    const msgs = await Massage.find({
+    const msgs = await Message.find({
       $or: [
-        { senderId: userId.toString(), receiverId: sellerId.toString() },
-        { senderId: sellerId.toString(), receiverId: userId.toString() }
+        { senderId: userId, receiverId: sellerId },
+        { senderId: sellerId, receiverId: userId }
       ]
     }).sort({ date: 1 });
     res.json(msgs);
   } catch (err) {
-    console.error("Error fetching messages:", err);
     res.status(500).json({ error: "Could not fetch messages" });
   }
 });
