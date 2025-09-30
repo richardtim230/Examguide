@@ -29,28 +29,6 @@ router.post("/massages", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not send message" });
   }
 });
-
-
-router.get("/massages/:sellerId", authenticate, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const sellerId = req.params.sellerId;
-    // Validate ObjectIds
-    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
-      return res.status(400).json({ error: "Invalid user or seller id" });
-    }
-    const msgs = await Massage.find({
-      $or: [
-        { senderId: userId, receiverId: sellerId },
-        { senderId: sellerId, receiverId: userId }
-      ]
-    }).sort({ date: 1 });
-    res.json(msgs);
-  } catch (err) {
-    console.error("Error fetching messages:", err); // <--- add this!
-    res.status(500).json({ error: "Could not fetch messages" });
-  }
-});
 router.get("/massages", authenticate, async (req, res) => {
   const userId = req.user.id;
   const msgs = await Massage.find({
@@ -67,15 +45,16 @@ router.get("/massages/:sellerId", authenticate, async (req, res) => {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
 
-    // Validate ObjectIds
+    // Validate ObjectIds only if your frontend always sends true MongoDB ObjectIds
     if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
       return res.status(400).json({ error: "Invalid user or seller id" });
     }
 
+    // Always match as strings!
     const msgs = await Massage.find({
       $or: [
-        { senderId: userId, receiverId: sellerId },
-        { senderId: sellerId, receiverId: userId }
+        { senderId: userId.toString(), receiverId: sellerId.toString() },
+        { senderId: sellerId.toString(), receiverId: userId.toString() }
       ]
     }).sort({ date: 1 });
     res.json(msgs);
