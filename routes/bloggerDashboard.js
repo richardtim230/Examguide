@@ -1002,7 +1002,26 @@ router.post("/messages", authenticate, async (req, res) => {
   await dashboard.save();
   res.status(201).json(dashboard.messages[dashboard.messages.length - 1]);
 });
-
+router.get("/massages/:sellerId", authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const sellerId = req.params.sellerId;
+    // Validate ObjectIds
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
+      return res.status(400).json({ error: "Invalid user or seller id" });
+    }
+    const msgs = await Massage.find({
+      $or: [
+        { senderId: userId, receiverId: sellerId },
+        { senderId: sellerId, receiverId: userId }
+      ]
+    }).sort({ date: 1 });
+    res.json(msgs);
+  } catch (err) {
+    console.error("Error fetching messages:", err); // <--- add this!
+    res.status(500).json({ error: "Could not fetch messages" });
+  }
+});
 // DELETE message
 router.delete("/messages/:messageId", authenticate, async (req, res) => {
   let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
