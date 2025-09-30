@@ -6,11 +6,12 @@ import User from "../models/User.js";
 import Listing from "../models/Listing.js";
 const router = express.Router();
 
-// Offer Schema (can be moved to models/Offer.js for scalability)
+// Offer Schema (should be moved to models/Offer.js for scalability)
 const offerSchema = new mongoose.Schema({
   productId: { type: String, required: true },
   productTitle: { type: String },
   offerPrice: { type: Number, required: true },
+  originalPrice: { type: Number }, // New: Store original price for reference
   message: { type: String },
   buyer: {
     id: { type: String },
@@ -22,23 +23,23 @@ const offerSchema = new mongoose.Schema({
   },
   sellerId: { type: String },
   status: { type: String, enum: ["pending", "accepted", "rejected"], default: "pending" },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  orderUnlocked: { type: Boolean, default: false }, // New: flag when order button is unlocked
+  ordered: { type: Boolean, default: false }, // New: flag if order has been placed
+  orderId: { type: String } // Optional: link to order
 });
 const Offer = mongoose.models.Offer || mongoose.model("Offer", offerSchema);
 
-// Utility: Find sellerId from product/listing/post
-async function getSellerIdFromProduct(productId) {
-  // Try to find a post or listing by productId in dashboards
+// Utility: Find sellerId and product details
+async function getProductDetails(productId) {
   const dashboards = await BloggerDashboard.find({});
   for (const dash of dashboards) {
-    // Posts (for public posts/products)
     const post = dash.posts?.id(productId);
-    if (post) return dash.user?.toString();
-    // Listings (for marketplace products)
+    if (post) return { sellerId: dash.user?.toString(), productTitle: post.title, originalPrice: post.price || 0 };
     const listing = dash.listings?.id(productId);
-    if (listing) return dash.user?.toString();
+    if (listing) return { sellerId: dash.user?.toString(), productTitle: listing.title || listing.item || "", originalPrice: listing.price || 0 };
   }
-  return null;
+  return { sellerId: null, productTitle: "", originalPrice: 0 };
 }
 
 // Create Offer (must be logged in)
@@ -49,24 +50,15 @@ router.post("/", authenticate, async (req, res) => {
       return res.status(400).json({ error: "Missing required fields." });
     }
 
-    // Find sellerId (for communication)
-    const sellerId = await getSellerIdFromProduct(productId);
-
-    // Optionally, get product title for easier reference
-    let productTitle = "";
-    const dashboards = await BloggerDashboard.find({});
-    for (const dash of dashboards) {
-      const post = dash.posts?.id(productId);
-      if (post) productTitle = post.title;
-      const listing = dash.listings?.id(productId);
-      if (listing) productTitle = listing.title || listing.item || "";
-    }
+    // Find seller and product details
+    const { sellerId, productTitle, originalPrice } = await getProductDetails(productId);
 
     // Save offer for seller and buyer follow-up
     const offer = new Offer({
       productId,
       productTitle,
       offerPrice,
+      originalPrice,
       message,
       buyer: {
         id: req.user.id,
@@ -81,14 +73,14 @@ router.post("/", authenticate, async (req, res) => {
     });
     await offer.save();
 
-    // Optionally, push offer reference to buyer's User document for tracking (offers array)
+    // Track on buyer profile
     await User.findByIdAndUpdate(
       req.user.id,
       { $push: { offers: offer._id } },
       { new: true }
     );
 
-    // Optionally, send notification to seller (e.g., via dashboard/messages array)
+    // Notify seller
     if (sellerId) {
       let sellerDashboard = await BloggerDashboard.findOne({ user: sellerId });
       if (sellerDashboard) {
@@ -109,7 +101,7 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
-// Optional: Get offers for logged-in buyer
+// Get offers for logged-in buyer
 router.get("/mine", authenticate, async (req, res) => {
   try {
     const offers = await Offer.find({ "buyer.id": req.user.id }).sort({ createdAt: -1 });
@@ -119,7 +111,7 @@ router.get("/mine", authenticate, async (req, res) => {
   }
 });
 
-// Optional: Get offers for seller (by their user ID)
+// Get offers for seller (by their user ID)
 router.get("/seller", authenticate, async (req, res) => {
   try {
     const offers = await Offer.find({ sellerId: req.user.id }).sort({ createdAt: -1 });
@@ -129,7 +121,7 @@ router.get("/seller", authenticate, async (req, res) => {
   }
 });
 
-// Optional: Accept or reject an offer (seller only)
+// Accept or reject an offer (seller only)
 router.patch("/:offerId/status", authenticate, async (req, res) => {
   try {
     const { status } = req.body;
@@ -141,10 +133,46 @@ router.patch("/:offerId/status", authenticate, async (req, res) => {
     if (offer.sellerId !== req.user.id) return res.status(403).json({ error: "Not allowed." });
 
     offer.status = status;
+    // Unlock order button if accepted
+    offer.orderUnlocked = status === "accepted";
     await offer.save();
     res.json({ success: true, offer });
   } catch (err) {
     res.status(500).json({ error: "Could not update offer status." });
+  }
+});
+
+// Buyer places order after offer is accepted (order button unlocked)
+router.post("/:offerId/order", authenticate, async (req, res) => {
+  try {
+    const offer = await Offer.findById(req.params.offerId);
+    if (!offer) return res.status(404).json({ error: "Offer not found." });
+    if (offer.buyer.id !== req.user.id) return res.status(403).json({ error: "Not allowed." });
+    if (!offer.orderUnlocked || offer.status !== "accepted") {
+      return res.status(400).json({ error: "Offer is not accepted yet." });
+    }
+    if (offer.ordered) return res.status(400).json({ error: "Offer already ordered." });
+
+    // Create order (assume you have an Order model)
+    const Order = (await import("../models/Order.js")).default;
+    const order = await Order.create({
+      buyer: req.user.id,
+      productId: offer.productId,
+      productTitle: offer.productTitle,
+      price: offer.offerPrice,
+      quantity: req.body.quantity || 1,
+      offerId: offer._id,
+      status: "pending_payment"
+    });
+
+    offer.ordered = true;
+    offer.orderId = order._id;
+    await offer.save();
+
+    res.status(201).json({ success: true, order });
+  } catch (err) {
+    console.error("Error placing order from offer:", err);
+    res.status(500).json({ error: "Could not place order from offer." });
   }
 });
 
