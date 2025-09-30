@@ -40,11 +40,14 @@ router.get("/massages", authenticate, async (req, res) => {
   res.json(msgs);
 });
 
-// Get chat history between logged-in user and seller
 router.get("/massages/:sellerId", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
+    // Validate ObjectIds
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(sellerId)) {
+      return res.status(400).json({ error: "Invalid user or seller id" });
+    }
     const msgs = await Massage.find({
       $or: [
         { senderId: userId, receiverId: sellerId },
@@ -53,6 +56,7 @@ router.get("/massages/:sellerId", authenticate, async (req, res) => {
     }).sort({ date: 1 });
     res.json(msgs);
   } catch (err) {
+    console.error("Error fetching messages:", err); // helpful log
     res.status(500).json({ error: "Could not fetch messages" });
   }
 });
