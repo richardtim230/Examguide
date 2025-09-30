@@ -4,24 +4,55 @@ import Order from "../models/Order.js";
 import Listing from "../models/Listing.js";
 const router = express.Router();
 
-// Create new order (pending payment)
+// Import Offer model for offer-based orders
+import Offer from "../models/Offer.js";
+
+// Create new order (supports offer-based and regular)
 router.post("/", authenticate, async (req, res) => {
   try {
-    const { productId, quantity = 1 } = req.body;
+    const { productId, quantity = 1, price, offerId } = req.body;
+
     if (!productId) return res.status(400).json({ error: "Missing productId" });
 
-    // Find product details
-    const product = await Listing.findById(productId);
-    if (!product) return res.status(404).json({ error: "Product not found" });
+    let orderPrice, productTitle, usedOffer = false;
+    // If offerId is provided, validate offer
+    if (offerId) {
+      const offer = await Offer.findById(offerId);
+      if (!offer) return res.status(404).json({ error: "Offer not found" });
+      if (offer.buyer.id !== req.user.id) return res.status(403).json({ error: "Not allowed" });
+      if (offer.status !== "accepted") return res.status(400).json({ error: "Offer not accepted" });
+      if (offer.ordered) return res.status(400).json({ error: "Order already placed for offer" });
+
+      orderPrice = offer.offerPrice;
+      productTitle = offer.productTitle;
+      usedOffer = true;
+    } else {
+      // Regular product order
+      const product = await Listing.findById(productId);
+      if (!product) return res.status(404).json({ error: "Product not found" });
+
+      orderPrice = price || product.price;
+      productTitle = product.title;
+    }
 
     const order = await Order.create({
       buyer: req.user.id,
       productId,
-      productTitle: product.title,
-      price: product.price,
+      productTitle,
+      price: orderPrice,
       quantity,
-      status: "pending_payment"
+      status: "pending_payment",
+      offerId: offerId || undefined
     });
+
+    // If this was an offer-based order, mark the offer as ordered and link orderId
+    if (usedOffer) {
+      await Offer.findByIdAndUpdate(offerId, {
+        ordered: true,
+        orderId: order._id
+      });
+    }
+
     res.status(201).json(order);
   } catch (err) {
     res.status(500).json({ error: "Could not create order." });
