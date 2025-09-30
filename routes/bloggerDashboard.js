@@ -902,5 +902,19 @@ router.post("/add-comment/:postId", async (req, res) => {
   }
 });
 
+// --- Wishlist Endpoints ---
+router.get("/wishlist", authenticate, async (req, res) => {
+  const user = await User.findById(req.user.id).populate("wishlist");
+  res.json({ wishlist: user.wishlist || [] });
+});
 
+router.post("/wishlist/add/:listingId", authenticate, async (req, res) => {
+  await User.findByIdAndUpdate(req.user.id, { $addToSet: { wishlist: req.params.listingId } });
+  res.json({ success: true });
+});
+
+router.delete("/wishlist/remove/:listingId", authenticate, async (req, res) => {
+  await User.findByIdAndUpdate(req.user.id, { $pull: { wishlist: req.params.listingId } });
+  res.json({ success: true });
+});
 export default router;
