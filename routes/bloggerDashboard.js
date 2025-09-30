@@ -8,7 +8,6 @@ import { exec } from "child_process";
 import mongoose from "mongoose";
 // Add at the top with other imports
 import User from "../models/User.js";
-const GENERATOR_SCRIPT = path.join(process.cwd(), "routes/generate-static-posts.js");
 const router = express.Router();
 
 // Multer setup for multi-image upload
@@ -138,15 +137,6 @@ router.post("/posts", authenticate, async (req, res) => {
 
     dashboard.posts.unshift(postData);
     await dashboard.save();
-
-    // Trigger static page generation if you use it:
-    if (typeof GENERATOR_SCRIPT !== "undefined") {
-      exec(`node ${GENERATOR_SCRIPT}`, (error, stdout, stderr)=> {
-        if (error) console.error(`Static gen error: ${error.message}`);
-        if (stderr) console.error(`Static gen stderr: ${stderr}`);
-        if (stdout) console.error(`Static gen output:\n${stdout}`);
-      });
-    }
 
     res.status(201).json(postData);
   } catch (err) {
