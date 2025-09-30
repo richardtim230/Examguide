@@ -802,13 +802,14 @@ router.post("/listings", authenticate, async (req, res) => {
   }
 });
 
-// UPDATE listing
 router.patch("/listings/:listingId", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ message: "Dashboard not found" });
     const listing = dashboard.listings.id(req.params.listingId);
     if (!listing) return res.status(404).json({ message: "Listing not found" });
+
+    // Update embedded listing
     const update = req.body;
     if (Array.isArray(update.images)) {
       listing.images = update.images;
@@ -817,6 +818,10 @@ router.patch("/listings/:listingId", authenticate, async (req, res) => {
     }
     Object.assign(listing, update);
     await dashboard.save();
+
+    // Update top-level Listing document
+    await Listing.findByIdAndUpdate(req.params.listingId, update);
+
     res.json(listing);
   } catch (err) {
     res.status(500).json({ error: "Could not update listing." });
