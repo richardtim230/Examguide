@@ -610,7 +610,8 @@ app.use("/api", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 app.use("/api/reviews", reviewsRoutes);
-              
+app.use("/api/orders", ordersRouter);
+  
 app.get("/", (req, res) => res.json({status: "ok"}));
 
 app.listen(PORT, () => console.log(`Backend running on port: ${PORT}`));
