@@ -104,6 +104,7 @@ import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 import affiliateRoutes from "./routes/affiliate.js";
 import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
+import ordersRoutes from './routes/orders.js';
 
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
@@ -610,7 +611,7 @@ app.use("/api", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 app.use("/api/reviews", reviewsRoutes);
-app.use("/api/orders", ordersRouter);
+app.use("/api/orders", ordersRoutes);
   
 app.get("/", (req, res) => res.json({status: "ok"}));
 
