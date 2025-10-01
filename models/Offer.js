@@ -1,16 +1,28 @@
 import mongoose from "mongoose";
 
-const OfferSchema = new mongoose.Schema({
-  buyer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  productId: { type: mongoose.Schema.Types.ObjectId, ref: "Listing", required: true },
-  productTitle: String,
-  offerPrice: Number,
-  status: { type: String, default: "pending" }, // accepted, rejected, etc.
+const offerSchema = new mongoose.Schema({
+  productId: { type: String, required: true },
+  productTitle: { type: String },
+  offerPrice: { type: Number, required: true },
+  originalPrice: { type: Number },
+  message: { type: String },
+  buyer: {
+    id: { type: String },
+    name: { type: String },
+    email: { type: String },
+    phone: { type: String },
+    faculty: { type: String },
+    department: { type: String }
+  },
+  sellerId: { type: String },
+  status: { type: String, enum: ["pending", "accepted", "rejected"], default: "pending" },
+  createdAt: { type: Date, default: Date.now },
+  orderUnlocked: { type: Boolean, default: false },
   ordered: { type: Boolean, default: false },
-  orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
-  createdAt: { type: Date, default: Date.now }
+  orderId: { type: String }
 });
 
-const Offer = mongoose.model("Offer", OfferSchema);
+// Fix OverwriteModelError by using mongoose.models.Offer if already compiled
+const Offer = mongoose.models.Offer || mongoose.model("Offer", offerSchema);
 
 export default Offer;
