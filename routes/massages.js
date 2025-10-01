@@ -7,7 +7,7 @@ import User from "../models/User.js";
 const router = express.Router();
 
 // Send a message (buyer <-> seller)
-router.post("/massages", authenticate, async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
   try {
     const { sellerId, text, productId } = req.body;
     if (!sellerId || !text) return res.status(400).json({ error: "Missing sellerId or text" });
@@ -29,7 +29,7 @@ router.post("/massages", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not send message" });
   }
 });
-router.get("/massages", authenticate, async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   const userId = req.user.id;
   const msgs = await Massage.find({
     $or: [
@@ -40,7 +40,7 @@ router.get("/massages", authenticate, async (req, res) => {
   res.json(msgs);
 });
 
-router.get("/massages/:sellerId", authenticate, async (req, res) => {
+router.get("/:sellerId", authenticate, async (req, res) => {
   try {
     const userId = req.user.id;
     const sellerId = req.params.sellerId;
