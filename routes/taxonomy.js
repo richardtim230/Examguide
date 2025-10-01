@@ -1,6 +1,7 @@
 import express from "express";
 import Post from "../models/Post.js";
 const router = express.Router();
+import User from "../models/User.js";
 
 router.get("/taxonomy/all", async (req, res) => {
   try {
