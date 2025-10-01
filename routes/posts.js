@@ -149,7 +149,6 @@ router.put("/posts/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not update post." });
   }
 });
-
 router.delete("/posts/:id", authenticate, async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -164,7 +163,9 @@ router.delete("/posts/:id", authenticate, async (req, res) => {
       return res.status(403).json({ error: "Not authorized" });
     }
 
-    await post.remove();
+    // Use deleteOne for robust deletion (avoids deprecation and ensures removal)
+    await Post.deleteOne({ _id: id });
+
     res.json({ message: "Post deleted" });
   } catch (err) {
     console.error("Delete post error:", err);
