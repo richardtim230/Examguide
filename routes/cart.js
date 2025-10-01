@@ -4,7 +4,7 @@ import Cart from "../models/Cart.js";
 const router = express.Router();
 
 // Add item to cart
-router.post("/cart/add", authenticate, async (req, res) => {
+router.post("/add", authenticate, async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body;
     if (!productId) return res.status(400).json({ error: "Missing productId" });
@@ -27,7 +27,7 @@ router.post("/cart/add", authenticate, async (req, res) => {
 
 // GET user's cart (manual population)
 // Get user's cart
-router.get("/cart", authenticate, async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   try {
     let cart = await Cart.findOne({ user: req.user.id }).populate("items.productId");
     if (!cart) return res.json({ items: [] });
@@ -38,7 +38,7 @@ router.get("/cart", authenticate, async (req, res) => {
 });
 
 // Remove item from cart
-router.post("/cart/remove", authenticate, async (req, res) => {
+router.post("/remove", authenticate, async (req, res) => {
   try {
     const { productId } = req.body;
     let cart = await Cart.findOne({ user: req.user.id });
