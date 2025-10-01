@@ -3,7 +3,8 @@ import { authenticate } from "../middleware/authenticate.js";
 import Order from "../models/Order.js";
 import Listing from "../models/Listing.js";
 import Offer from "../models/Offer.js";
-import Cart from "../models/Cart.js"; // <-- Add import for Cart model
+import Cart from "../models/Cart.js";
+import User from "../models/User.js"; // <-- Add import for User model to update wishlist
 
 const router = express.Router();
 
@@ -53,10 +54,16 @@ router.post("/", authenticate, async (req, res) => {
       });
     }
 
-    // --- NEW: Remove product from user's cart after ordering, for neatness ---
+    // --- Remove product from user's cart after ordering ---
     await Cart.updateOne(
       { user: req.user.id },
       { $pull: { items: { productId } } }
+    );
+
+    // --- Remove product from user's wishlist after ordering ---
+    await User.updateOne(
+      { _id: req.user.id },
+      { $pull: { wishlist: productId } }
     );
 
     res.status(201).json(order);
