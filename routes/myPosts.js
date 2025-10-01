@@ -4,7 +4,7 @@ import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-router.get("/myposts", authenticate, async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   try {
     const myPosts = await Post.find({ author: req.user.id }).sort({ date: -1 });
     res.json(myPosts.map(post => ({
