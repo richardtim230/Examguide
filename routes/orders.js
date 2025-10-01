@@ -2,6 +2,7 @@ import express from "express";
 import { authenticate } from "../middleware/authenticate.js";
 import Order from "../models/Order.js";
 import Listing from "../models/Listing.js";
+import Offer from "../models/Offer.js"; // <-- Add this line!
 const router = express.Router();
 
 
