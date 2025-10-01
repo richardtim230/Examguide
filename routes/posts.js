@@ -232,6 +232,19 @@ router.patch("/posts/:id/like", async (req, res) => {
   }
 });
 
+router.patch("/public/posts/:id/view", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid post ID" });
+  try {
+    const post = await Post.findById(id);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    post.views = (post.views || 0) + 1;
+    await post.save();
+    res.json({ success: true, views: post.views });
+  } catch (e) {
+    res.status(500).json({ error: "Could not increment views" });
+  }
+});
 router.patch("/posts/:postId/comments/:commentId/like", async (req, res) => {
   const { postId, commentId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(commentId)) {
