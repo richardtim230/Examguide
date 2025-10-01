@@ -621,7 +621,7 @@ app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
-app.use("/api/blogger-dashboard", myPostsRoutes); // For /api/blogger-dashboard/myposts
+app.use("/api", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
 
 app.listen(PORT, () => console.log(`Backend running on port: ${PORT}`));
