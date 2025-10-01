@@ -2,10 +2,10 @@ import express from "express";
 import { authenticate } from "../middleware/authenticate.js";
 import Order from "../models/Order.js";
 import Listing from "../models/Listing.js";
-import Offer from "../models/Offer.js"; // <-- Add this line!
+import Offer from "../models/Offer.js";
+import Cart from "../models/Cart.js"; // <-- Add import for Cart model
+
 const router = express.Router();
-
-
 
 // Create new order (supports offer-based and regular)
 router.post("/", authenticate, async (req, res) => {
@@ -53,6 +53,12 @@ router.post("/", authenticate, async (req, res) => {
       });
     }
 
+    // --- NEW: Remove product from user's cart after ordering, for neatness ---
+    await Cart.updateOne(
+      { user: req.user.id },
+      { $pull: { items: { productId } } }
+    );
+
     res.status(201).json(order);
   } catch (err) {
     res.status(500).json({ error: "Could not create order." });
@@ -95,7 +101,6 @@ router.delete("/:orderId", authenticate, async (req, res) => {
 
     // If this was an offer-based order, update the Offer document
     if (order.offerId) {
-      const Offer = (await import("../models/Offer.js")).default;
       await Offer.findByIdAndUpdate(order.offerId, {
         ordered: false,
         orderId: null
@@ -108,4 +113,5 @@ router.delete("/:orderId", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not remove order." });
   }
 });
+
 export default router;
