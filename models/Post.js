@@ -9,7 +9,7 @@ const ReplySchema = new mongoose.Schema({
   parentId: mongoose.Schema.Types.ObjectId,
   likes: { type: Number, default: 0 },
   replies: []
-}, { _id: true }); // allow _id for replies
+}, { _id: true });
 
 const CommentSchema = new mongoose.Schema({
   name: String,
@@ -19,24 +19,25 @@ const CommentSchema = new mongoose.Schema({
   parentId: mongoose.Schema.Types.ObjectId,
   likes: { type: Number, default: 0 },
   replies: [ReplySchema]
-}, { _id: true }); // allow _id for comments
+}, { _id: true });
 
 // --- Main Post Schema ---
+// Remove index: true from fields, only use schema.index at the bottom
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   content: { type: String, required: true },
-  category: { type: String },
+  category: { type: String }, // index via schema.index below
   subject: { type: String },
   topic: { type: String },
-  status: { type: String, enum: ["Draft", "Published", "Archived"], default: "Draft", index: true },
-  date: { type: Date, default: Date.now, index: true },
+  status: { type: String, enum: ["Draft", "Published", "Archived"], default: "Draft" }, // index via schema.index below
+  date: { type: Date, default: Date.now }, // index via schema.index below
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
   earnings: { type: Number, default: 0 },
   comments: [CommentSchema],
   images: [{ type: String }],
   imageUrl: { type: String },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // index via schema.index below
   approved: { type: Boolean, default: false },
   readers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   viewRecords: [{
@@ -45,7 +46,7 @@ const PostSchema = new mongoose.Schema({
   }]
 });
 
-// --- Indexes for lightning-fast taxonomy and article queries ---
+// --- Explicit Indexes for maximum speed, avoid duplicates ---
 PostSchema.index({ category: 1 });
 PostSchema.index({ subject: 1 });
 PostSchema.index({ topic: 1 });
