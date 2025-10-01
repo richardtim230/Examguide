@@ -25,9 +25,9 @@ const CommentSchema = new mongoose.Schema({
 const PostSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   content: { type: String, required: true },
-  category: { type: String, index: true },
-  subject: { type: String, index: true },
-  topic: { type: String, index: true },
+  category: { type: String },
+  subject: { type: String },
+  topic: { type: String },
   status: { type: String, enum: ["Draft", "Published", "Archived"], default: "Draft", index: true },
   date: { type: Date, default: Date.now, index: true },
   views: { type: Number, default: 0 },
