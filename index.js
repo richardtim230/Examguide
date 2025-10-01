@@ -612,8 +612,8 @@ app.use("/api/affiliate", affiliateRoutes);
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/offers", offerRoutes);
-app.use("/api", massagesRoutes);
-app.use("/api", cartRoutes);
+app.use("/api/massage", massagesRoutes);
+app.use("/api/cart", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 app.use("/api/reviews", reviewsRoutes);
@@ -621,7 +621,7 @@ app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
-app.use("/api", myPostsRoutes); // For /api/blogger-dashboard/myposts
+app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
 
 app.listen(PORT, () => console.log(`Backend running on port: ${PORT}`));
