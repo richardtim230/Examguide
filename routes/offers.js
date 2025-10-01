@@ -101,10 +101,9 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
-// Get offers for logged-in buyer
 router.get("/mine", authenticate, async (req, res) => {
   try {
-    const offers = await Offer.find({ "buyer.id": req.user.id }).sort({ createdAt: -1 });
+    const offers = await Offer.find({ "buyer.id": req.user.id, ordered: false }).sort({ createdAt: -1 });
     res.json({ offers });
   } catch (err) {
     res.status(500).json({ error: "Could not fetch offers." });
