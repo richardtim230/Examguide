@@ -224,5 +224,23 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
-
+router.post("/practice", authenticate, async (req, res) => {
+  const { answers, score, timeTaken, questions, subject, year, courseCode } = req.body;
+  // Save a result for practice mode
+  const result = new Result({
+    user: req.user.id,
+    answers,
+    score,
+    timeTaken,
+    questions,
+    subject,
+    year,
+    courseCode,
+    type: "practice",
+    examSetTitle: `${subject || ''} ${courseCode || ''} ${year || ''}`.trim(),
+    submittedAt: new Date()
+  });
+  await result.save();
+  res.status(201).json({ message: "Practice result saved", result });
+});
 export default router;
