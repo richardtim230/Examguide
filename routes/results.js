@@ -228,7 +228,7 @@ router.post("/practice", authenticate, async (req, res) => {
   const { answers, score, timeTaken, questions, subject, year, courseCode } = req.body;
   // Save a result for practice mode
   const result = new Result({
-    user: req.user.id,
+    user: mongoose.Types.ObjectId(req.user.id),
     answers,
     score,
     timeTaken,
