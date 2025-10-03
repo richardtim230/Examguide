@@ -778,6 +778,7 @@ router.delete("/listings/:listingId", authenticate, async (req, res) => {
     await dashboard.save();
     res.json({ message: "Listing deleted" });
   } catch (err) {
+    console.error("Delete listing error:", err); // <--- Add this!
     res.status(500).json({ error: "Could not delete listing." });
   }
 });
