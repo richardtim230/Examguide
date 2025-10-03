@@ -772,13 +772,18 @@ router.delete("/listings/:listingId", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) return res.status(404).json({ message: "Dashboard not found" });
-    const listing = dashboard.listings.id(req.params.listingId);
-    if (!listing) return res.status(404).json({ message: "Listing not found" });
-    listing.remove();
+
+    // Find index of the listing
+    const index = dashboard.listings.findIndex(
+      l => l._id.toString() === req.params.listingId
+    );
+    if (index === -1) return res.status(404).json({ message: "Listing not found" });
+
+    dashboard.listings.splice(index, 1); // Remove the listing
     await dashboard.save();
     res.json({ message: "Listing deleted" });
   } catch (err) {
-    console.error("Delete listing error:", err); // <--- Add this!
+    console.error("Delete listing error:", err);
     res.status(500).json({ error: "Could not delete listing." });
   }
 });
