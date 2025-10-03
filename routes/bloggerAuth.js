@@ -75,21 +75,26 @@ router.post("/register", async (req, res) => {
       "nin_"
     );
 
-    const user = new User({
-      fullname,
-      username,
-      email,
-      phone,
-      studentId: matric,
-      password: hashed,
-      role: "pending_blogger", // must be approved to become "blogger" etc.
-      status: "pending",
-      approved: false,
-      profilePic: passportUrl,
-      ninSlip: ninUrl,
-      institution: institution === "other" ? otherInstitution : institution,
-      active: false, // Not active until approved
-    });
+    // Determine pending role based on selected role
+let pendingRole = "pending_blogger";
+if (role === "marketer") pendingRole = "pending_marketer";
+else if (role === "both") pendingRole = "pending_both";
+
+const user = new User({
+  fullname,
+  username,
+  email,
+  phone,
+  studentId: matric,
+  password: hashed,
+  role: pendingRole, // dynamically set pending role
+  status: "pending",
+  approved: false,
+  profilePic: passportUrl,
+  ninSlip: ninUrl,
+  institution: institution === "other" ? otherInstitution : institution,
+  active: false, // Not active until approved
+});
     await user.save();
     res
       .status(201)
