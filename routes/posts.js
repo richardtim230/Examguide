@@ -48,6 +48,30 @@ router.get("/public/posts/:id", async (req, res) => {
   }
 });
 
+router.get("/posts/featured-general", async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      category: "General",
+      status: "Published",
+      $or: [{ subject: { $exists: false } }, { subject: "" }],
+      $or: [{ topic: { $exists: false } }, { topic: "" }]
+    })
+      .sort({ date: -1 });
+
+    if (!post) return res.status(404).json({ error: "No featured general post found." });
+
+    // Optionally: populate author if you want to include name/avatar
+    await post.populate("author", "fullname username profilePic");
+
+    const obj = post.toObject();
+    obj.authorName = post.author?.fullname || post.author?.username || "";
+    obj.authorAvatar = post.author?.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(obj.authorName || "A")}&background=FFCE45&color=263159&rounded=true`;
+
+    res.json(obj);
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch featured general post." });
+  }
+});
 router.post("/posts", authenticate, async (req, res) => {
   try {
     const {
