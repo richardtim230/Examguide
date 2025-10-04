@@ -22,6 +22,8 @@ wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
 institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   verified: { type: Boolean, default: false },
+  emailVerified: { type: Boolean, default: false },
+emailVerificationToken: { type: String },
   offers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Offer" }],
   // Track reward history for breakdown and to prevent double-awards
   rewardHistory: {
