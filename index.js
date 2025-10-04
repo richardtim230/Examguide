@@ -420,10 +420,9 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
 
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({
-      token,
-      message: "Registration successful. Please check your email to verify your account.",
-      profilePic: profilePicUrl
-    });
+  message: "Registration successful. Please check your email for a verification link before logging in.",
+  profilePic: profilePicUrl
+});
   } catch (e) {
     console.error("Register error:", e);
     res.status(500).json({message: "Server error"});
