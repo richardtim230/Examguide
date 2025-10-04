@@ -404,11 +404,11 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
-    if (email) {
+if (email) {
   const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
   try {
-    await postmarkClient.sendEmail({
-      From: "richardochuko@examguard.com.ng", // Must be a sender signature verified in Postmark!
+    await client.sendEmail({
+      From: "richardochuko@examguard.com.ng", // Postmark sender signature
       To: user.email,
       Subject: "Verify your email",
       HtmlBody: `<p>Hello ${user.fullname || user.username},<br>
@@ -419,7 +419,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
   } catch (err) {
     console.error("Error sending verification email via Postmark:", err);
   }
-  }
+}
 
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({
