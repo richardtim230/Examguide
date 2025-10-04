@@ -404,21 +404,22 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
-    // --- SEND EMAIL VERIFICATION ---
     if (email) {
-      const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
-      const mailOptions = {
-        from: '"ExamGuide" <no-reply@examguide.com>',
-        to: user.email,
-        subject: 'Verify your email',
-        html: `<p>Hello ${user.fullname || user.username},<br>
-          Please verify your email by clicking <a href="${verifyUrl}">here</a>.<br>
-          If you did not register, please ignore this email.</p>`
-      };
-      transporter.sendMail(mailOptions, (err, info) => {
-        if (err) console.error("Error sending verification email:", err);
-      });
-    }
+  const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
+  try {
+    await postmarkClient.sendEmail({
+      From: "richardochuko@examguard.com.ng", // Must be a sender signature verified in Postmark!
+      To: user.email,
+      Subject: "Verify your email",
+      HtmlBody: `<p>Hello ${user.fullname || user.username},<br>
+        Please verify your email by clicking <a href="${verifyUrl}">here</a>.<br>
+        If you did not register, please ignore this email.</p>`
+    });
+    console.log("Verification email sent to " + user.email);
+  } catch (err) {
+    console.error("Error sending verification email via Postmark:", err);
+  }
+  }
 
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({
