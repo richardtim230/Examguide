@@ -420,9 +420,10 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
 
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
     res.status(201).json({
-  message: "Registration successful. Please check your email for a verification link before logging in.",
-  profilePic: profilePicUrl
-});
+      token,
+      message: "Registration successful. Please check your email to verify your account.",
+      profilePic: profilePicUrl
+    });
   } catch (e) {
     console.error("Register error:", e);
     res.status(500).json({message: "Server error"});
@@ -671,4 +672,3 @@ app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
 
 app.listen(PORT, () => console.log(`Backend running on port: ${PORT}`));
-
