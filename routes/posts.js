@@ -27,7 +27,34 @@ router.get("/public/posts", async (req, res) => {
     res.status(500).json({ error: "Could not fetch posts." });
   }
 });
+router.get("/public/posts/academics", async (req, res) => {
+  const page = Math.max(1, parseInt(req.query.page) || 1);
+  const limit = Math.max(1, parseInt(req.query.limit) || 20);
+  // Optional: support sort by date, views, likes, etc.
+  const sortField = req.query.sortBy || "date";
+  const sortOrder = req.query.order === "asc" ? 1 : -1;
 
+  const filter = { status: "Published", category: "Academics" };
+  // Optionally filter by subject or topic
+  if (req.query.subject) filter.subject = req.query.subject;
+  if (req.query.topic) filter.topic = req.query.topic;
+
+  try {
+    const posts = await Post.find(filter)
+      .populate("author", "fullname username profilePic")
+      .sort({ [sortField]: sortOrder })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json(posts.map(post => ({
+      ...post.toObject(),
+      authorName: post.author?.fullname || post.author?.username || "",
+      authorAvatar: post.author?.profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(post.author?.fullname || "A")}&background=FFCE45&color=263159&rounded=true`
+    })));
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch academics posts." });
+  }
+});
 router.get("/public/posts/:id", async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
