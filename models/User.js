@@ -21,6 +21,13 @@ ninSlip: { type: String, default: "" },
 wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
 institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
+  
+  dailyTasks: [
+    {
+      date: { type: String }, // "YYYY-MM-DD"
+      done: [String] // array of task IDs (e.g. "post-123", "listing-456", ...)
+    }
+  ],
   verified: { type: Boolean, default: false },
   emailVerified: { type: Boolean, default: false },
 emailVerificationToken: { type: String },
