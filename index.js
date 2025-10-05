@@ -12,10 +12,6 @@ import Department from "./models/Department.js";
 const router = express.Router();
 import cloudinary from 'cloudinary';
 import streamifier from 'streamifier';
-import nodemailer from 'nodemailer'; // <-- NEW: Nodemailer import
-import crypto from 'crypto';  
-import postmark from "postmark";
-const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
 
 dotenv.config();
 
@@ -25,14 +21,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Nodemailer transporter setup
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // or use SMTP if you want
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+// ...other code...
 
 
 import pastQuestionsRoutes from "./routes/pastQuestions.js";
@@ -310,7 +299,6 @@ app.get('/api/proxy', async (req, res) => {
 });
 
 
-// Registration endpoint
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     const {
@@ -322,8 +310,8 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       email,
       faculty,
       department,
-      fullname,
-      ref
+      fullname, // <-- added fullname!
+      ref // <-- NEW: referral code from frontend, if any
     } = req.body;
 
     if (!username || !password)
@@ -337,9 +325,12 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
 
     let profilePicUrl = "";
     if (req.file) {
+      // Use URL path for the uploaded profile pic
       profilePicUrl = `/uploads/profilepics/${req.file.filename}`;
     }
+    // Handle base64 profilePic if provided
     if (!req.file && req.body.profilePic && req.body.profilePic.startsWith("data:image")) {
+      // Extract file extension (png/jpg/jpeg)
       const matches = req.body.profilePic.match(/^data:image\/([a-zA-Z]+);base64,(.+)$/);
       if (matches) {
         const ext = matches[1];
@@ -351,10 +342,6 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
         profilePicUrl = `/uploads/profilepics/${filename}`;
       }
     }
-
-    // --- EMAIL VERIFICATION LOGIC ---
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-
     const user = new User({
       username,
       password: hashed,
@@ -365,9 +352,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       level: level || "",
       phone: phone || "",
       fullname: fullname || "",
-      profilePic: profilePicUrl,
-      emailVerified: false, // <-- NEW
-      emailVerificationToken: verificationToken // <-- NEW
+      profilePic: profilePicUrl
     });
 
     await user.save();
@@ -404,47 +389,14 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
-if (email) {
-  const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
-  try {
-    await client.sendEmail({
-      From: "richardochuko@examguard.com.ng", // Postmark sender signature
-      To: user.email,
-      Subject: "Verify your email",
-      HtmlBody: `<p>Hello ${user.fullname || user.username},<br>
-        Please verify your email by clicking <a href="${verifyUrl}">here</a>.<br>
-        If you did not register, please ignore this email.</p>`
-    });
-    console.log("Verification email sent to " + user.email);
-  } catch (err) {
-    console.error("Error sending verification email via Postmark:", err);
-  }
-}
-
     const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
-    res.status(201).json({
-  message: "Registration successful. Please check your email for a verification link before logging in.",
-  profilePic: profilePicUrl
-});
+    res.status(201).json({token, message: "Registration successful", profilePic: profilePicUrl});
   } catch (e) {
     console.error("Register error:", e);
     res.status(500).json({message: "Server error"});
   }
 });
-// --- EMAIL VERIFICATION ENDPOINT ---
-app.get("/api/auth/verify-email", async (req, res) => {
-  const { token, id } = req.query;
-  if (!token || !id) return res.status(400).json({ message: "Invalid verification link" });
-  const user = await User.findById(id);
-  if (!user || user.emailVerificationToken !== token) {
-    return res.status(400).json({ message: "Invalid or expired token" });
-  }
-  user.emailVerified = true;
-  user.emailVerificationToken = "";
-  await user.save();
-  res.json({ message: "Email verified successfully! You can now log in." });
-});
-// --- LOGIN ENDPOINT: BLOCK NON-VERIFIED EMAILS ---
+
 // In routes/auth.js or index.js
 app.post("/api/auth/login", async (req, res) => {
   try {
