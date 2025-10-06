@@ -462,10 +462,7 @@ app.post("/api/auth/login", async (req, res) => {
 
     if (!user)
       return res.status(401).json({ message: "Invalid username or password" });
-    // --- ADD THIS: Block if email not verified ---
-    if (user.emailVerified === false) {
-      return res.status(403).json({ message: "Please verify your email before logging in." });
-    }
+    
 
     // Optionally, check if user is active
     if (user.active === false)
