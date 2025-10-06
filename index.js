@@ -529,7 +529,6 @@ app.post("/api/auth/resend-verification", async (req, res) => {
     }
 
     // Generate a new token and save
-    const crypto = require('crypto');
     user.emailVerificationToken = crypto.randomBytes(32).toString('hex');
     await user.save();
 
