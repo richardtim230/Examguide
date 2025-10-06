@@ -502,6 +502,111 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+app.post("/api/auth/resend-verification", async (req, res) => {
+  try {
+    const { usernameOrEmail } = req.body;
+    if (!usernameOrEmail) {
+      return res.status(400).json({ message: "Username or email is required." });
+    }
+
+    // Find user by username OR email
+    const user = await User.findOne({
+      $or: [
+        { username: usernameOrEmail },
+        { email: usernameOrEmail }
+      ]
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    if (user.emailVerified) {
+      return res.status(200).json({ message: "Email already verified. You can log in." });
+    }
+
+    if (!user.email) {
+      return res.status(400).json({ message: "This account does not have an email address. Please contact support." });
+    }
+
+    // Generate a new token and save
+    const crypto = require('crypto');
+    user.emailVerificationToken = crypto.randomBytes(32).toString('hex');
+    await user.save();
+
+    // Construct verify URL
+    const verifyUrl = `${process.env.FRONTEND_ORIGIN}/verify-email?token=${user.emailVerificationToken}&id=${user._id}`;
+
+    // Send a rich HTML email
+    await client.sendEmail({
+      From: "richardochuko@examguard.com.ng",
+      To: user.email,
+      Subject: "Verify your email - OAU ExamGuard",
+      HtmlBody: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Verify your Email | OAU ExamGuard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body { background: #f5f7fa; margin: 0; padding: 0; }
+          .container { max-width: 540px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 6px 32px rgba(39,110,241,.11); padding: 32px 24px; font-family: 'Roboto', Arial, sans-serif; }
+          .logo { display: block; margin: 0 auto 21px auto; width: 90px; }
+          .title { color: #276EF1; font-size: 1.75rem; font-weight: 800; text-align: center; margin-bottom: 12px; }
+          .description { font-size: 1.08rem; color: #222; text-align: center; margin-bottom: 22px; }
+          .button { display: block; width: 90%; max-width: 330px; margin: 18px auto 24px auto; background: linear-gradient(90deg, #276EF1 60%, #003366 100%); color: #fff; text-align: center; text-decoration: none; font-size: 1.11rem; font-weight: 700; padding: 1rem 0; border-radius: 9px; letter-spacing: 1px; box-shadow: 0 4px 18px rgba(39,110,241,.19); }
+          .greeting { margin-bottom: 17px; color: #003366; font-size: 1.09rem; }
+          .info { font-size: .97rem; color: #222; margin-bottom: 17px; line-height: 1.6; }
+          .support { margin: 28px 0 0 0; text-align: center; font-size: .97rem; color: #555; }
+          .link { word-break: break-all; color: #276EF1; }
+          .footer { margin-top: 36px; color: #bbb; font-size: .91rem; text-align: center; }
+          .socials img { width: 30px; margin: 0 6px; }
+          @media (max-width:600px) {
+            .container { padding: 18px 3vw; }
+            .title { font-size: 1.2rem; }
+            .logo { width: 60px; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <img class="logo" src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+          <div class="title">Verify your Email Address</div>
+          <div class="description">
+            Hi <strong>${user.fullname || user.username}</strong>,<br>
+            You're almost ready to access secure exams, resources, and more.
+          </div>
+          <div class="greeting">Please verify your email address to activate your ExamGuard account:</div>
+          <a href="${verifyUrl}" class="button">Verify My Email</a>
+          <div class="info">
+            Can't click? Copy and paste the link below into your browser:<br>
+            <span class="link">${verifyUrl}</span>
+          </div>
+          <div class="support">
+            If you did not sign up for OAU ExamGuard, you can safely ignore this email.<br>
+            Need help? Contact us at <a href="mailto:support@examguard.com.ng" style="color:#276EF1;">support@examguard.com.ng</a>
+          </div>
+          <div class="socials" style="text-align:center;margin-top:28px;">
+            <a href="https://facebook.com/examguard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" title="Facebook"></a>
+            <a href="https://twitter.com/examguard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" title="Twitter"></a>
+            <a href="https://instagram.com/examguard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" title="Instagram"></a>
+          </div>
+          <div class="footer">
+            &copy; ${new Date().getFullYear()} OAU ExamGuard. All rights reserved.<br>
+            123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria
+          </div>
+        </div>
+      </body>
+      </html>
+      `
+    });
+
+    res.status(200).json({ message: "Verification email sent! Please check your email inbox (and spam/promotions folders)." });
+  } catch (e) {
+    console.error("Resend verification error:", e);
+    res.status(500).json({ message: "Something went wrong. Please try again or contact support." });
+  }
+});
 // Password reset
 app.post("/api/auth/reset", async (req, res) => {
   try {
