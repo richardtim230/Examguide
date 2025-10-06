@@ -421,11 +421,10 @@ if (email) {
   }
 }
 
-    const token = jwt.sign({username, id: user._id, role: user.role}, JWT_SECRET, {expiresIn: "1h"});
-    res.status(201).json({
-  message: "Registration successful. Please check your email for a verification link before logging in.",
-  profilePic: profilePicUrl
-});
+res.status(201).json({
+      message: "Registration successful. Please check your email for a verification link before logging in.",
+      profilePic: profilePicUrl
+    });
   } catch (e) {
     console.error("Register error:", e);
     res.status(500).json({message: "Server error"});
