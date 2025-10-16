@@ -22,6 +22,7 @@
 "scripts": {
   "start": "node index.js",
   "dev": "nodemon index.js",
+  "migrate:faculty-department": "node fixCode.js"
   "setup:indexes": "node setup-mongo-indexes.js",
   "migrate:posts": "node scripts/migratePosts.js"
 },
