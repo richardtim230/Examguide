@@ -14,28 +14,24 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
-  if (req.query.faculty) filter.faculty = req.query.faculty;
-  if (req.query.department) filter.department = req.query.department;
+  if (req.query.faculty && isObjectId(req.query.faculty)) filter.faculty = req.query.faculty;
+  if (req.query.department && isObjectId(req.query.department)) filter.department = req.query.department;
 
   try {
-    // Find users with filter
     const users = await User.find(filter)
       .select("-password")
       .sort({ createdAt: -1 });
 
-    // Fix empty string for faculty/department before populating
     for (const user of users) {
       if (user.faculty === "") user.faculty = null;
       if (user.department === "") user.department = null;
     }
 
-    // Populate faculty and department with their names
     await User.populate(users, [
       { path: "faculty", select: "name" },
       { path: "department", select: "name" }
     ]);
 
-    // Convert Mongoose documents to plain objects if needed
     const data = users.map(u => u.toObject());
     res.json(data);
   } catch (err) {
@@ -182,7 +178,6 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
   }
 });
 
-// CREATE new user (admin/superadmin only)
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const {
@@ -196,21 +191,38 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     const allowedRoles = ["student", "admin", "superadmin", "uploader"];
     if (!allowedRoles.includes(role)) return res.status(400).json({ message: "Invalid role." });
 
-    // Faculty and department are now optional for all roles, including uploader.
-    // Validate existence of faculty and department if provided
+    let facultyId = null;
+    let departmentId = null;
+
+    // Handle faculty string or ObjectId
     if (faculty && faculty !== "") {
-      if (!faculty.match(/^[0-9a-fA-F]{24}$/)) {
-        return res.status(400).json({ message: "Invalid faculty ObjectId." });
+      if (isObjectId(faculty)) {
+        const fac = await Faculty.findById(faculty);
+        if (!fac) return res.status(400).json({ message: "Faculty not found." });
+        facultyId = faculty;
+      } else {
+        // Try to find by name, else create
+        let fac = await Faculty.findOne({ name: faculty });
+        if (!fac) fac = await Faculty.create({ name: faculty });
+        facultyId = fac._id;
       }
-      const fac = await Faculty.findById(faculty);
-      if (!fac) return res.status(400).json({ message: "Faculty not found." });
     }
+
+    // Handle department string or ObjectId
     if (department && department !== "") {
-      if (!department.match(/^[0-9a-fA-F]{24}$/)) {
-        return res.status(400).json({ message: "Invalid department ObjectId." });
+      if (isObjectId(department)) {
+        const dept = await Department.findById(department);
+        if (!dept) return res.status(400).json({ message: "Department not found." });
+        departmentId = department;
+      } else {
+        // Try to find by name, else create
+        let dept = await Department.findOne({ name: department });
+        if (!dept) {
+          // Try to attach faculty reference if possible
+          dept = await Department.create({ name: department, faculty: facultyId });
+        }
+        departmentId = dept._id;
       }
-      const dept = await Department.findById(department);
-      if (!dept) return res.status(400).json({ message: "Department not found." });
     }
 
     // Check duplicate username/email
@@ -221,8 +233,8 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 
     const user = new User({
       fullname, username, email, password: hashed, role,
-      faculty: faculty === "" ? null : faculty,
-      department: department === "" ? null : department,
+      faculty: facultyId,
+      department: departmentId,
       profilePic, active
     });
     await user.save();
@@ -237,21 +249,51 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 });
 
 
+
 // UPDATE user profile (admin or superadmin)
+// PATCH: Accept faculty/department name and auto-create if needed
 router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "pq-uploader", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    ["fullname", "username", "email", "level", "phone", "faculty", "department", "profilePic", "active", "religion", "role"].forEach(field => {
-      if (req.body[field] !== undefined) {
-        // Fix: Convert empty string to null for faculty/department
-        if ((field === "faculty" || field === "department") && req.body[field] === "") {
-          user[field] = null;
-        } else {
-          user[field] = req.body[field];
-        }
+
+    for (const field of ["fullname", "username", "email", "level", "phone", "profilePic", "active", "religion", "role"]) {
+      if (req.body[field] !== undefined) user[field] = req.body[field];
+    }
+
+    // Patch: Accept faculty/department name and auto-create if needed
+    if (req.body.faculty !== undefined) {
+      let facultyId = null;
+      if (req.body.faculty === "") facultyId = null;
+      else if (isObjectId(req.body.faculty)) {
+        const fac = await Faculty.findById(req.body.faculty);
+        if (!fac) return res.status(400).json({ message: "Faculty not found." });
+        facultyId = fac._id;
+      } else {
+        let fac = await Faculty.findOne({ name: req.body.faculty });
+        if (!fac) fac = await Faculty.create({ name: req.body.faculty });
+        facultyId = fac._id;
       }
-    });
+      user.faculty = facultyId;
+    }
+    if (req.body.department !== undefined) {
+      let departmentId = null;
+      if (req.body.department === "") departmentId = null;
+      else if (isObjectId(req.body.department)) {
+        const dept = await Department.findById(req.body.department);
+        if (!dept) return res.status(400).json({ message: "Department not found." });
+        departmentId = dept._id;
+      } else {
+        let dept = await Department.findOne({ name: req.body.department });
+        if (!dept) {
+          // Try to attach faculty reference if possible
+          dept = await Department.create({ name: req.body.department, faculty: user.faculty });
+        }
+        departmentId = dept._id;
+      }
+      user.department = departmentId;
+    }
+
     if (req.body.password) {
       user.password = await bcrypt.hash(req.body.password, 12);
     }
