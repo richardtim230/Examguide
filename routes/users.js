@@ -9,13 +9,33 @@ import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
 
-// GET all users (supports ?role, ?faculty, ?department; populates faculty/department names)
-// Fix: Prevent ObjectId cast error on empty string for faculty/department
 router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
-  if (req.query.faculty && isObjectId(req.query.faculty)) filter.faculty = req.query.faculty;
-  if (req.query.department && isObjectId(req.query.department)) filter.department = req.query.department;
+
+  // Accept faculty as either ObjectId or name string
+  if (req.query.faculty) {
+    if (/^[0-9a-fA-F]{24}$/.test(req.query.faculty)) {
+      // It's an ObjectId
+      filter.faculty = req.query.faculty;
+    } else if (req.query.faculty.trim() !== "") {
+      // It's a name: lookup id
+      const fac = await Faculty.findOne({ name: req.query.faculty.trim() });
+      if (fac) filter.faculty = fac._id;
+      else filter.faculty = null; // or skip filter
+    }
+  }
+
+  // Accept department as either ObjectId or name string
+  if (req.query.department) {
+    if (/^[0-9a-fA-F]{24}$/.test(req.query.department)) {
+      filter.department = req.query.department;
+    } else if (req.query.department.trim() !== "") {
+      const dept = await Department.findOne({ name: req.query.department.trim() });
+      if (dept) filter.department = dept._id;
+      else filter.department = null;
+    }
+  }
 
   try {
     const users = await User.find(filter)
