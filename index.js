@@ -334,7 +334,7 @@ app.get('/api/proxy', async (req, res) => {
 });
 
 
-// Registration endpoint
+// Registration endpoint with auto-create for faculty/department
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     const {
@@ -376,6 +376,38 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
+    // --- PATCH: Auto-create faculty/department if string name given ---
+    function isObjectId(v) {
+      return typeof v === 'string' && /^[0-9a-fA-F]{24}$/.test(v);
+    }
+    let facultyId = null;
+    let departmentId = null;
+
+    if (faculty && faculty !== "") {
+      if (isObjectId(faculty)) {
+        const fac = await Faculty.findById(faculty);
+        if (!fac) return res.status(400).json({ message: "Faculty not found." });
+        facultyId = faculty;
+      } else {
+        let fac = await Faculty.findOne({ name: faculty });
+        if (!fac) fac = await Faculty.create({ name: faculty });
+        facultyId = fac._id;
+      }
+    }
+    if (department && department !== "") {
+      if (isObjectId(department)) {
+        const dept = await Department.findById(department);
+        if (!dept) return res.status(400).json({ message: "Department not found." });
+        departmentId = department;
+      } else {
+        let dept = await Department.findOne({ name: department });
+        if (!dept) {
+          dept = await Department.create({ name: department, faculty: facultyId });
+        }
+        departmentId = dept._id;
+      }
+    }
+
     // --- EMAIL VERIFICATION LOGIC ---
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
@@ -383,8 +415,8 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       username,
       password: hashed,
       role: role || "student",
-      faculty,
-      department,
+      faculty: facultyId,
+      department: departmentId,
       email: email || "",
       level: level || "",
       phone: phone || "",
@@ -398,7 +430,6 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
 
     // ---- AFFILIATE REFERRAL LOGIC ----
     if (ref && typeof ref === "string" && ref.trim().length > 0) {
-      // Dynamically require Affiliate model
       let Affiliate;
       try {
         Affiliate = require("../models/Affiliate.js").default || require("../models/Affiliate.js");
@@ -406,10 +437,8 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
         Affiliate = null;
       }
       if (Affiliate) {
-        // Find affiliate by referralCode
         const affiliate = await Affiliate.findOne({ referralCode: ref.trim() });
         if (affiliate) {
-          // Prevent double-count for the same user (by email or username)
           affiliate.referrals = affiliate.referrals || [];
           const alreadyReferred = affiliate.referrals.some(
             r => (r.email && r.email === user.email) || (r.username && r.username === user.username)
@@ -428,24 +457,24 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       }
     }
 
-if (email) {
-  const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
-  try {
-    await client.sendEmail({
-      From: "richardochuko@examguard.com.ng", // Postmark sender signature
-      To: user.email,
-      Subject: "Verify your email",
-      HtmlBody: `<p>Hello ${user.fullname || user.username},<br>
-        Please verify your email by clicking <a href="${verifyUrl}">here</a>.<br>
-        If you did not register, please ignore this email.</p>`
-    });
-    console.log("Verification email sent to " + user.email);
-  } catch (err) {
-    console.error("Error sending verification email via Postmark:", err);
-  }
-}
+    if (email) {
+      const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
+      try {
+        await client.sendEmail({
+          From: "richardochuko@examguard.com.ng",
+          To: user.email,
+          Subject: "Verify your email",
+          HtmlBody: `<p>Hello ${user.fullname || user.username},<br>
+            Please verify your email by clicking <a href="${verifyUrl}">here</a>.<br>
+            If you did not register, please ignore this email.</p>`
+        });
+        console.log("Verification email sent to " + user.email);
+      } catch (err) {
+        console.error("Error sending verification email via Postmark:", err);
+      }
+    }
 
-res.status(201).json({
+    res.status(201).json({
       message: "Registration successful. Please check your email for a verification link before logging in.",
       profilePic: profilePicUrl
     });
@@ -453,7 +482,9 @@ res.status(201).json({
     console.error("Register error:", e);
     res.status(500).json({message: "Server error"});
   }
-});
+}); 
+
+
 // --- EMAIL VERIFICATION ENDPOINT ---
 app.get("/api/auth/verify-email", async (req, res) => {
   const { token, id } = req.query;
