@@ -8,7 +8,9 @@ import Department from "../models/Department.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
-
+function isObjectId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
+}
 router.get("/", async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
