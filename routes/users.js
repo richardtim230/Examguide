@@ -8,34 +8,54 @@ import Department from "../models/Department.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
+// Helper to check ObjectId
 function isObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
+
 router.get("/", async (req, res) => {
   const filter = {};
+
+  // Accept role filter
   if (req.query.role) filter.role = req.query.role;
 
-  // Accept faculty as either ObjectId or name string
+  // Accept faculty as either ObjectId or name string or legacy string (allow both)
   if (req.query.faculty) {
-    if (/^[0-9a-fA-F]{24}$/.test(req.query.faculty)) {
+    const facultyValue = req.query.faculty.trim();
+    if (/^[0-9a-fA-F]{24}$/.test(facultyValue)) {
       // It's an ObjectId
-      filter.faculty = req.query.faculty;
-    } else if (req.query.faculty.trim() !== "") {
-      // It's a name: lookup id
-      const fac = await Faculty.findOne({ name: req.query.faculty.trim() });
-      if (fac) filter.faculty = fac._id;
-      else filter.faculty = null; // or skip filter
+      filter.$or = [
+        { faculty: facultyValue },
+        { faculty: facultyValue } // for legacy string, but will match only if stored as string
+      ];
+    } else if (facultyValue !== "") {
+      const fac = await Faculty.findOne({ name: facultyValue });
+      if (fac) {
+        filter.$or = [
+          { faculty: fac._id },
+          { faculty: facultyValue }
+        ];
+      } else {
+        // No such faculty exists, so return no results
+        return res.json([]);
+      }
     }
   }
 
-  // Accept department as either ObjectId or name string
+  // Accept department as either ObjectId or name string or legacy string (allow both)
   if (req.query.department) {
-    if (/^[0-9a-fA-F]{24}$/.test(req.query.department)) {
-      filter.department = req.query.department;
-    } else if (req.query.department.trim() !== "") {
-      const dept = await Department.findOne({ name: req.query.department.trim() });
-      if (dept) filter.department = dept._id;
-      else filter.department = null;
+    const departmentValue = req.query.department.trim();
+    if (/^[0-9a-fA-F]{24}$/.test(departmentValue)) {
+      filter.$or = filter.$or || [];
+      filter.$or.push({ department: departmentValue }, { department: departmentValue });
+    } else if (departmentValue !== "") {
+      const dept = await Department.findOne({ name: departmentValue });
+      if (dept) {
+        filter.$or = filter.$or || [];
+        filter.$or.push({ department: dept._id }, { department: departmentValue });
+      } else {
+        return res.json([]);
+      }
     }
   }
 
@@ -44,9 +64,14 @@ router.get("/", async (req, res) => {
       .select("-password")
       .sort({ createdAt: -1 });
 
+    // Patch: if faculty/department is a string, convert to { name: ... } for population-like frontend support
     for (const user of users) {
-      if (user.faculty === "") user.faculty = null;
-      if (user.department === "") user.department = null;
+      if (typeof user.faculty === "string") {
+        user.faculty = { name: user.faculty };
+      }
+      if (typeof user.department === "string") {
+        user.department = { name: user.department };
+      }
     }
 
     await User.populate(users, [
@@ -72,7 +97,6 @@ router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), 
     res.status(500).json({ message: err.message || "Server error" });
   }
 });
-
 
 // GET /api/users/:id/daily-tasks?date=YYYY-MM-DD
 router.get("/:id/daily-tasks", authenticate, async (req, res) => {
@@ -103,6 +127,7 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
   }
   res.json({ success: true, done: daily.done });
 });
+
 router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -153,13 +178,19 @@ router.get("/:id", async (req, res) => {
       .populate("department", "name")
       .select("fullname username profilePic faculty department bio");
     if (!user) return res.status(404).json({ error: "User not found" });
+
+    let faculty = user.faculty;
+    let department = user.department;
+    if (typeof faculty === "string") faculty = { name: faculty };
+    if (typeof department === "string") department = { name: department };
+
     res.json({
       user: {
         fullname: user.fullname,
         username: user.username,
         profilePic: user.profilePic,
-        faculty: user.faculty?.name || "",
-        department: user.department?.name || "",
+        faculty: faculty?.name || "",
+        department: department?.name || "",
         bio: user.bio,
       }
     });
@@ -179,13 +210,17 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
 
     // If no logged-in user OR role not admin/superadmin → return public info only
     if (!req.user || !["admin", "superadmin"].includes(req.user.role)) {
+      let faculty = user.faculty;
+      let department = user.department;
+      if (typeof faculty === "string") faculty = { name: faculty };
+      if (typeof department === "string") department = { name: department };
       return res.json({
         user: {
           fullname: user.fullname,
           username: user.username,
           profilePic: user.profilePic,
-          faculty: user.faculty,
-          department: user.department,
+          faculty: faculty,
+          department: department,
           bio: user.bio,
         },
       });
@@ -216,7 +251,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     let facultyId = null;
     let departmentId = null;
 
-    // Handle faculty string or ObjectId
+    // Handle faculty string or ObjectId (allow both)
     if (faculty && faculty !== "") {
       if (isObjectId(faculty)) {
         const fac = await Faculty.findById(faculty);
@@ -230,7 +265,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
       }
     }
 
-    // Handle department string or ObjectId
+    // Handle department string or ObjectId (allow both)
     if (department && department !== "") {
       if (isObjectId(department)) {
         const dept = await Department.findById(department);
@@ -255,8 +290,8 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 
     const user = new User({
       fullname, username, email, password: hashed, role,
-      faculty: facultyId,
-      department: departmentId,
+      faculty: facultyId || faculty, // fallback to string if not resolved
+      department: departmentId || department, // fallback to string if not resolved
       profilePic, active
     });
     await user.save();
@@ -270,10 +305,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
   }
 });
 
-
-
-// UPDATE user profile (admin or superadmin)
-// PATCH: Accept faculty/department name and auto-create if needed
+// UPDATE user profile (admin or superadmin, allow both string/ObjectId & allow legacy)
 router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "pq-uploader", "superadmin"), async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -283,7 +315,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
       if (req.body[field] !== undefined) user[field] = req.body[field];
     }
 
-    // Patch: Accept faculty/department name and auto-create if needed
+    // Patch: Accept faculty/department name and auto-create if needed, allow legacy string
     if (req.body.faculty !== undefined) {
       let facultyId = null;
       if (req.body.faculty === "") facultyId = null;
@@ -296,7 +328,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
         if (!fac) fac = await Faculty.create({ name: req.body.faculty });
         facultyId = fac._id;
       }
-      user.faculty = facultyId;
+      user.faculty = facultyId || req.body.faculty;
     }
     if (req.body.department !== undefined) {
       let departmentId = null;
@@ -313,7 +345,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
         }
         departmentId = dept._id;
       }
-      user.department = departmentId;
+      user.department = departmentId || req.body.department;
     }
 
     if (req.body.password) {
