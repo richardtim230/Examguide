@@ -27,8 +27,9 @@ router.post("/add", authenticate, async (req, res) => {
     await cart.save();
     res.status(201).json(cart);
   } catch (err) {
-    res.status(500).json({ error: "Could not add to cart" });
-  }
+  console.error("Add to cart error:", err); // <-- Add this line!
+  res.status(500).json({ error: "Could not add to cart" });
+}
 });
 router.get("/", authenticate, async (req, res) => {
   try {
