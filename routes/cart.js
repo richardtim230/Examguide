@@ -22,7 +22,7 @@ router.post("/add", authenticate, async (req, res) => {
       cart.items[itemIdx].quantity += quantity;
     } else {
       // Cast productId to ObjectId before saving!
-      cart.items.push({ productId: mongoose.Types.ObjectId(productId), quantity });
+      cart.items.push({ productId: new mongoose.Types.ObjectId(productId), quantity });
     }
     await cart.save();
     res.status(201).json(cart);
