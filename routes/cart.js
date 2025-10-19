@@ -27,7 +27,7 @@ router.post("/cart/add", authenticate, async (req, res) => {
 
 // GET user's cart (manual population)
 // Get user's cart
-router.get("/cart", authenticate, async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   try {
     let cart = await Cart.findOne({ user: req.user.id }).populate("items.productId");
     if (!cart) return res.json({ items: [] });
