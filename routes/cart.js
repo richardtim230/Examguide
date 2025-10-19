@@ -2,12 +2,17 @@ import express from "express";
 import { authenticate } from "../middleware/authenticate.js";
 import Cart from "../models/Cart.js";
 const router = express.Router();
+import mongoose from "mongoose";
+
 
 // Add item to cart
 router.post("/add", authenticate, async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body;
     if (!productId) return res.status(400).json({ error: "Missing productId" });
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return res.status(400).json({ error: "Invalid productId" });
+    }
 
     let cart = await Cart.findOne({ user: req.user.id });
     if (!cart) cart = new Cart({ user: req.user.id, items: [] });
@@ -16,7 +21,8 @@ router.post("/add", authenticate, async (req, res) => {
     if (itemIdx > -1) {
       cart.items[itemIdx].quantity += quantity;
     } else {
-      cart.items.push({ productId, quantity });
+      // Cast productId to ObjectId before saving!
+      cart.items.push({ productId: mongoose.Types.ObjectId(productId), quantity });
     }
     await cart.save();
     res.status(201).json(cart);
@@ -24,9 +30,6 @@ router.post("/add", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not add to cart" });
   }
 });
-
-// GET user's cart (manual population)
-// Get user's cart
 router.get("/", authenticate, async (req, res) => {
   try {
     let cart = await Cart.findOne({ user: req.user.id }).populate("items.productId");
