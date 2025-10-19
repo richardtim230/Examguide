@@ -4,7 +4,7 @@ import Cart from "../models/Cart.js";
 const router = express.Router();
 
 // Add item to cart
-router.post("/cart/add", authenticate, async (req, res) => {
+router.post("/add", authenticate, async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body;
     if (!productId) return res.status(400).json({ error: "Missing productId" });
