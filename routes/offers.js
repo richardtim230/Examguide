@@ -100,6 +100,21 @@ router.post("/", authenticate, async (req, res) => {
     res.status(500).json({ error: "Could not submit offer." });
   }
 });
+// Get all offers for a specific product (for seller view or product detail)
+router.get("/product/:productId", authenticate, async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const offers = await Offer.find({ productId }).sort({ createdAt: -1 });
+
+    if (!offers.length)
+      return res.status(404).json({ error: "No offers found for this product." });
+
+    res.json({ offers });
+  } catch (err) {
+    console.error("Error fetching offers by productId:", err);
+    res.status(500).json({ error: "Could not fetch offers for product." });
+  }
+});
 
 router.get("/mine", authenticate, async (req, res) => {
   try {
