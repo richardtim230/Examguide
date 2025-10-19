@@ -7,10 +7,15 @@ import mongoose from "mongoose";
 
 // Add item to cart
 router.post("/add", authenticate, async (req, res) => {
+  console.log("Received /add request", req.body); // <-- Add this line
   try {
     const { productId, quantity = 1 } = req.body;
-    if (!productId) return res.status(400).json({ error: "Missing productId" });
+    if (!productId) {
+      console.log("Missing productId");
+      return res.status(400).json({ error: "Missing productId" });
+    }
     if (!mongoose.Types.ObjectId.isValid(productId)) {
+      console.log("Invalid productId format");
       return res.status(400).json({ error: "Invalid productId" });
     }
 
@@ -21,15 +26,15 @@ router.post("/add", authenticate, async (req, res) => {
     if (itemIdx > -1) {
       cart.items[itemIdx].quantity += quantity;
     } else {
-      // Cast productId to ObjectId before saving!
       cart.items.push({ productId: new mongoose.Types.ObjectId(productId), quantity });
     }
     await cart.save();
+    console.log("Cart saved", cart); // <-- Add this line
     res.status(201).json(cart);
   } catch (err) {
-  console.error("Add to cart error:", err); // <-- Add this line!
-  res.status(500).json({ error: "Could not add to cart" });
-}
+    console.error("Add to cart error:", err); // <-- Ensure this is here!
+    res.status(500).json({ error: "Could not add to cart" });
+  }
 });
 router.get("/", authenticate, async (req, res) => {
   try {
