@@ -27,7 +27,8 @@ router.post("/add", authenticate, async (req, res) => {
       return res.status(400).json({ error: "Invalid productId" });
     }
 
-    const productObjId = mongoose.Types.ObjectId(productId);
+    // Construct ObjectId with `new` to avoid "cannot be invoked without 'new'"
+    const productObjId = new mongoose.Types.ObjectId(productId);
 
     let cart = await Cart.findOne({ user: req.user.id });
     if (!cart) cart = new Cart({ user: req.user.id, items: [] });
