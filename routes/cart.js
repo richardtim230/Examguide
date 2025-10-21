@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import mongoose from "mongoose";
 
-import authenticate from "../middleware/authenticate.js"; // assumes default export or adjust if named export
+import { authenticate } from "../middleware/authenticate.js";
 import Cart from "../models/Cart.js";
 import BloggerDashboard from "../models/BloggerDashboard.js"; // used to find listings for validation/enrichment
 
