@@ -6,6 +6,23 @@ import Offer from "../models/Offer.js";
 import Cart from "../models/Cart.js";
 import User from "../models/User.js"; // <-- Add import for User model to update wishlist
 
+// --- PATCH START: import BloggerDashboard and findListingById ---
+import BloggerDashboard from "../models/BloggerDashboard.js";
+import mongoose from "mongoose";
+
+// Utility: find listing by listing _id across blogger dashboards
+async function findListingById(listingId) {
+  if (!mongoose.Types.ObjectId.isValid(listingId)) return null;
+  // Try to find a matching listing inside BloggerDashboard.listings array
+  const dashboard = await BloggerDashboard.findOne(
+    { "listings._id": listingId },
+    { "listings.$": 1 } // projection returns only the matched listing in array
+  ).lean();
+  if (!dashboard || !dashboard.listings || !dashboard.listings.length) return null;
+  return dashboard.listings[0];
+}
+// --- PATCH END ---
+
 const router = express.Router();
 
 // Create new order (supports offer-based and regular)
@@ -29,7 +46,12 @@ router.post("/", authenticate, async (req, res) => {
       usedOffer = true;
     } else {
       // Regular product order
-      const product = await Listing.findById(productId);
+      // --- PATCH START: try Listing first, then embedded listing ---
+      let product = await Listing.findById(productId);
+      if (!product) {
+        product = await findListingById(productId);
+      }
+      // --- PATCH END ---
       if (!product) return res.status(404).json({ error: "Product not found" });
 
       orderPrice = price || product.price;
