@@ -21,7 +21,15 @@ ninSlip: { type: String, default: "" },
 wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
 institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
-  
+  bank: { type: String },
+accountName: { type: String },
+accountNumber: { type: String },
+idType: { type: String },
+verification: {
+  idDocument: String,
+  proofOfAddress: String,
+  status: { type: String, default: "pending" }
+},
   dailyTasks: [
     {
       date: { type: String }, // "YYYY-MM-DD"
