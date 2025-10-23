@@ -107,6 +107,7 @@ import offerRoutes from "./routes/offers.js";
 import adminPostsRoutes from './routes/adminPosts.js';
 import myPostsRoutes from './routes/myPosts.js';
 
+import accountSettingsRouter from './routes/accountSettings.js';
 
 import taxonomyRoutes from './routes/taxonomy.js';
 
@@ -832,5 +833,5 @@ app.use("/api", postsRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
-
+app.use("/api/account-settings", accountSettingsRouter);
 app.listen(PORT, () => console.log(`Backend running on port: ${PORT}`));
