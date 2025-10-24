@@ -121,12 +121,10 @@ router.post("/watch-ad", authenticate, async (req, res) => {
   if (!user) return res.status(404).json({ error: "User not found" });
 
   if (!user.rewardHistory) user.rewardHistory = {};
-  if (!user.rewardHistory.ad) user.rewardHistory.ad = [];
+  if (!user.rewardHistory.bonus) user.rewardHistory.bonus = [];
 
-  // Prevent double-award if needed (e.g. only once per X minutes/hours)
-  // For now, just always award
   user.points = (user.points || 0) + points;
-  user.rewardHistory.ad.push({
+  user.rewardHistory.bonus.push({
     reason: reason || "Watched Ad",
     points,
     date: new Date(),
