@@ -90,7 +90,7 @@ router.post("/reading", authenticate, async (req, res) => {
 });
 
 // BONUS REWARD (admin/superadmin only)
-router.post("/bonus", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+router.post("/bonus", authenticate, authorizeRole("admin", "student", "superadmin"), async (req, res) => {
   // Body: { userId, points, reason }
   const { userId, points, reason } = req.body;
   if (!userId || typeof points !== "number" || points === 0) {
@@ -111,7 +111,30 @@ router.post("/bonus", authenticate, authorizeRole("admin", "superadmin"), async 
   await user.save();
   res.json({ awarded: true, pointsAwarded: points, totalPoints: user.points });
 });
+router.post("/watch-ad", authenticate, async (req, res) => {
+  // Body: { points, reason }
+  const { points, reason } = req.body;
+  if (typeof points !== "number" || points <= 0) {
+    return res.status(400).json({ error: "Invalid points" });
+  }
+  const user = await User.findById(req.user.id);
+  if (!user) return res.status(404).json({ error: "User not found" });
 
+  if (!user.rewardHistory) user.rewardHistory = {};
+  if (!user.rewardHistory.ad) user.rewardHistory.ad = [];
+
+  // Prevent double-award if needed (e.g. only once per X minutes/hours)
+  // For now, just always award
+  user.points = (user.points || 0) + points;
+  user.rewardHistory.ad.push({
+    reason: reason || "Watched Ad",
+    points,
+    date: new Date(),
+    by: req.user.username
+  });
+  await user.save();
+  res.json({ awarded: true, pointsAwarded: points, totalPoints: user.points });
+});
 // ADMIN REWARD (admin/superadmin only, for manual adjustments)
 router.post("/admin", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   // Body: { userId, points, reason }
