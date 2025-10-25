@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcryptjs";
-import User from "../models/User.js";
+import Users from "../models/Users.js";
 import BloggerDashboard from "../models/BloggerDashboard.js";
 import mongoose from "mongoose";
 import Faculty from "../models/Faculty.js";
@@ -60,7 +60,7 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const users = await User.find(filter)
+    const users = await Users.find(filter)
       .select("-password")
       .sort({ createdAt: -1 });
 
@@ -137,7 +137,7 @@ router.get("/", async (req, res) => {
 
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await Users.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     user.verified = true;
     await user.save();
@@ -152,7 +152,7 @@ router.get("/:id/daily-tasks", authenticate, async (req, res) => {
   const { id } = req.params;
   const { date } = req.query;
   if (!date) return res.status(400).json({ error: "Missing date" });
-  const user = await User.findById(id);
+  const user = await Users.findById(id);
   if (!user) return res.status(404).json({ error: "User not found" });
   const daily = (user.dailyTasks || []).find(d => d.date === date);
   res.json({ done: daily ? daily.done : [] });
@@ -163,7 +163,7 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
   const { id } = req.params;
   const { date, taskId } = req.body;
   if (!date || !taskId) return res.status(400).json({ error: "Missing date or taskId" });
-  const user = await User.findById(id);
+  const user = await Users.findById(id);
   if (!user) return res.status(404).json({ error: "User not found" });
   let daily = user.dailyTasks.find(d => d.date === date);
   if (!daily) {
@@ -179,7 +179,7 @@ router.post("/:id/daily-tasks", authenticate, async (req, res) => {
 
 router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await Users.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     user.active = false;
     await user.save();
@@ -191,7 +191,7 @@ router.patch("/:id/ban", authenticate, authorizeRole("admin", "superadmin"), asy
 
 router.get("/count", async (req, res) => {
   try {
-    const count = await User.countDocuments({});
+    const count = await Users.countDocuments({});
     res.json({ count });
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
@@ -202,7 +202,7 @@ router.get("/count", async (req, res) => {
 router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadmin'), async (req, res) => {
   try {
     const { approved } = req.body;
-    const user = await User.findById(req.params.userId);
+    const user = await Users.findById(req.params.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     user.approved = approved;
@@ -222,7 +222,7 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
 // GET user by id (for author lookup)
 router.get("/:id", async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await Users.findById(req.params.id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("fullname username profilePic faculty department bio");
@@ -251,7 +251,7 @@ router.get("/:id", async (req, res) => {
 // GET user by id (admin view)
 router.get("/admin/users/:id", authenticate, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await Users.findById(req.params.id)
       .populate("faculty", "name")
       .populate("department", "name");
 
@@ -332,7 +332,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
     }
 
     // Check duplicate username/email
-    const exists = await User.findOne({ $or: [{ username }, { email }] });
+    const exists = await Users.findOne({ $or: [{ username }, { email }] });
     if (exists) return res.status(400).json({ message: "Username or email already exists." });
 
     const hashed = await bcrypt.hash(password, 12);
@@ -357,7 +357,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 // UPDATE user profile (admin or superadmin, allow both string/ObjectId & allow legacy)
 router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "pq-uploader", "superadmin"), async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await Users.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     for (const field of ["fullname", "username", "email", "level", "phone", "profilePic", "active", "religion", "role"]) {
@@ -401,7 +401,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
       user.password = await bcrypt.hash(req.body.password, 12);
     }
     await user.save();
-    const retUser = await User.findById(user._id)
+    const retUser = await Users.findById(user._id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("-password");
@@ -414,7 +414,7 @@ router.put("/:id", authenticate, authorizeRole("admin", "blogger", "student", "p
 // Activate/deactivate user (shortcut)
 router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await Users.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     user.active = !!req.body.active;
     await user.save();
@@ -427,7 +427,7 @@ router.patch("/:id/status", authenticate, authorizeRole("admin", "superadmin"), 
 // DELETE user (admin/superadmin)
 router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await Users.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ message: "User deleted." });
   } catch (err) {
