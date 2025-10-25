@@ -337,14 +337,14 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 
     const hashed = await bcrypt.hash(password, 12);
 
-    const user = new User({
+    const user = new Users({
       fullname, username, email, password: hashed, role,
       faculty: facultyId || faculty, // fallback to string if not resolved
       department: departmentId || department, // fallback to string if not resolved
       profilePic, active
     });
     await user.save();
-    const retUser = await User.findById(user._id)
+    const retUser = await Users.findById(user._id)
       .populate("faculty", "name")
       .populate("department", "name")
       .select("-password");
