@@ -1,0 +1,80 @@
+import mongoose from "mongoose";
+
+// This schema supports BOTH string and ObjectId for faculty/department (legacy and relational).
+const UsersSchema = new mongoose.Schema({
+  fullname: { type: String, default: "" },
+  username: { type: String, required: true, unique: true, trim: true },
+  email: { type: String, default: "" },
+  phone: { type: String, default: "" },
+  studentId: { type: String, default: "" },
+  level: { type: String, default: "" },
+  religion: { type: String, default: "" },
+  password: { type: String, required: true },
+  profilePic: { type: String, default: "" },
+  faculty: { type: mongoose.Schema.Types.Mixed, ref: "Faculty", default: null },
+department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: null },
+  role: { type: String, enum: ["student", "blogger", "pending_blogger", "pending_marketer", "pending_both", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
+  active: { type: Boolean, default: true },
+  status: { type: String, enum: ["pending", "active", "banned"], default: "pending" },
+approved: { type: Boolean, default: false },
+ninSlip: { type: String, default: "" },
+wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
+institution: { type: String, default: "" },
+  points: { type: Number, default: 0 },
+  bank: { type: String },
+accountName: { type: String },
+accountNumber: { type: String },
+idType: { type: String },
+verification: {
+  idDocument: String,
+  proofOfAddress: String,
+  status: { type: String, default: "pending" }
+},
+  dailyTasks: [
+    {
+      date: { type: String }, // "YYYY-MM-DD"
+      done: [String] // array of task IDs (e.g. "post-123", "listing-456", ...)
+    }
+  ],
+  verified: { type: Boolean, default: false },
+  emailVerified: { type: Boolean, default: false },
+emailVerificationToken: { type: String },
+  offers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Offer" }],
+  // Track reward history for breakdown and to prevent double-awards
+  rewardHistory: {
+    practiced: [
+      {
+        key: String, // e.g. "mock:examSetId"
+        points: Number,
+        date: { type: Date, default: Date.now }
+      }
+    ],
+    reading: [
+      {
+        postId: String,
+        points: Number,
+        date: { type: Date, default: Date.now }
+      }
+    ],
+    bonus: [
+      {
+        reason: String,
+        points: Number,
+        date: { type: Date, default: Date.now },
+        by: String // admin username
+      }
+    ],
+    admin: [
+      {
+        reason: String,
+        points: Number,
+        date: { type: Date, default: Date.now },
+        by: String // admin username
+      }
+    ]
+  },
+
+  createdAt: { type: Date, default: Date.now }
+});
+
+export default mongoose.model("Users", UsersSchema);
