@@ -109,24 +109,22 @@ router.get("/", async (req, res) => {
       }
     }
 
-    // Only populate users whose faculty/department fields are valid ObjectIds
-    // This prevents Cast errors when populating
-    await Users.populate(users, [
-      {
-        path: "faculty",
-        select: "name",
-        match: {
-          _id: { $type: "objectId" }
-        }
-      },
-      {
-        path: "department",
-        select: "name",
-        match: {
-          _id: { $type: "objectId" }
-        }
-      }
-    ]);
+    // Only populate faculty/department for users whose field is a valid ObjectId
+const usersToPopulate = users.filter(u =>
+  mongoose.Types.ObjectId.isValid(u.faculty) ||
+  mongoose.Types.ObjectId.isValid(u.department)
+);
+
+await Users.populate(usersToPopulate, [
+  {
+    path: "faculty",
+    select: "name"
+  },
+  {
+    path: "department",
+    select: "name"
+  }
+]);
 
     const data = users.map(u => u.toObject());
     res.json(data);
