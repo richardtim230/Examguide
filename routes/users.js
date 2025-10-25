@@ -111,7 +111,7 @@ router.get("/", async (req, res) => {
 
     // Only populate users whose faculty/department fields are valid ObjectIds
     // This prevents Cast errors when populating
-    await User.populate(users, [
+    await Users.populate(users, [
       {
         path: "faculty",
         select: "name",
