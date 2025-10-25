@@ -64,19 +64,68 @@ router.get("/", async (req, res) => {
       .select("-password")
       .sort({ createdAt: -1 });
 
-    // Patch: if faculty/department is a string, convert to { name: ... } for population-like frontend support
+    // Defensive patch: ensure faculty/department fields are either ObjectId, string, or null
     for (const user of users) {
+      // Patch legacy string
       if (typeof user.faculty === "string") {
         user.faculty = { name: user.faculty };
       }
       if (typeof user.department === "string") {
         user.department = { name: user.department };
       }
+      // Patch invalid object (not ObjectId and not a populated Faculty object)
+      if (
+        typeof user.faculty === "object" &&
+        user.faculty !== null &&
+        !user.faculty._id &&
+        !user.faculty.name
+      ) {
+        user.faculty = "";
+      }
+      if (
+        typeof user.department === "object" &&
+        user.department !== null &&
+        !user.department._id &&
+        !user.department.name
+      ) {
+        user.department = "";
+      }
+      // If faculty is a plain object (legacy patch) but not a valid ObjectId or Faculty document, convert to string or null
+      if (
+        typeof user.faculty === "object" &&
+        user.faculty !== null &&
+        !user.faculty._id &&
+        typeof user.faculty.name === "string"
+      ) {
+        // leave as is: { name: ... }
+      }
+      if (
+        typeof user.department === "object" &&
+        user.department !== null &&
+        !user.department._id &&
+        typeof user.department.name === "string"
+      ) {
+        // leave as is: { name: ... }
+      }
     }
 
+    // Only populate users whose faculty/department fields are valid ObjectIds
+    // This prevents Cast errors when populating
     await User.populate(users, [
-      { path: "faculty", select: "name" },
-      { path: "department", select: "name" }
+      {
+        path: "faculty",
+        select: "name",
+        match: {
+          _id: { $type: "objectId" }
+        }
+      },
+      {
+        path: "department",
+        select: "name",
+        match: {
+          _id: { $type: "objectId" }
+        }
+      }
     ]);
 
     const data = users.map(u => u.toObject());
