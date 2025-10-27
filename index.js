@@ -741,7 +741,37 @@ app.post("/api/progress/save", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not save progress" });
   }
 });
+// Add this to index.js (or a separate route file)
+app.post('/api/ai-lecture', async (req, res) => {
+  const { topic } = req.body;
+  if (!topic) return res.status(400).json({ error: 'Missing topic' });
+  if (!GEMINI_API_KEY) return res.status(500).json({ error: 'Missing Gemini API key' });
 
+  const SYSTEM_PROMPT = `
+You are an expert and professional university lecturer and instructional designer.
+Generate a comprehensive, well-formatted lecture note for the given topic, tailored for university students preparing for standard examination boards worldwide. The note must provide clear explanations...
+Topic: ${topic}
+`;
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: SYSTEM_PROMPT }] }] })
+      }
+    );
+    const data = await response.json();
+    if (data.error || !data.candidates) {
+      return res.status(400).json({ error: data.error?.message || "Gemini API error", raw: data });
+    }
+    const result = data.candidates[0]?.content?.parts[0]?.text || "No response";
+    res.json({ response: result });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 app.get("/api/progress", authenticate, async (req, res) => {
   const examSet = req.query.examSet;
   if (!examSet) return res.status(400).json({ message: "examSet query param required" });
