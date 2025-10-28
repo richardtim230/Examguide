@@ -311,6 +311,24 @@ app.post("/api/departments/:id/image", uploadToMemory.single("image"), authentic
     res.status(500).json({ error: "Upload failed" });
   }
 });
+app.delete("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const result = await Department.deleteOne({ _id: req.params.id });
+    if (result.deletedCount === 0) return res.status(404).json({ message: "Department not found" });
+    res.json({ message: "Department deleted" });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+app.get("/api/departments/:id", async (req, res) => {
+  try {
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
+    res.json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
 // ===== DEPARTMENT ROUTES =====
 // Get all departments
 app.get("/api/departments", async (req, res) => {
