@@ -243,7 +243,74 @@ router.post('/api/ai', async (req, res) => {
   }
 });
 
+// PATCH department details (backgroundImage, subtitle, courses, etc.)
+app.patch("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
 
+    // Only update fields if present in body
+    if (req.body.backgroundImage !== undefined) dept.backgroundImage = req.body.backgroundImage;
+    if (req.body.subtitle !== undefined) dept.subtitle = req.body.subtitle;
+    if (req.body.courses !== undefined) dept.courses = req.body.courses;
+
+    await dept.save();
+    res.json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// Add a course to department
+app.post("/api/departments/:id/courses", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const { course } = req.body;
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
+    if (!course || typeof course !== 'string') return res.status(400).json({ message: "Course required" });
+    if (!dept.courses.includes(course)) dept.courses.push(course);
+    await dept.save();
+    res.json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// Remove a course from department
+app.delete("/api/departments/:id/courses", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const { course } = req.body;
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
+    dept.courses = dept.courses.filter(c => c !== course);
+    await dept.save();
+    res.json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// Upload department image to Cloudinary and save to department
+// You must use multer's memory storage for this endpoint
+app.post("/api/departments/:id/image", uploadToMemory.single("image"), authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const dept = await Department.findById(req.params.id);
+  if (!dept) return res.status(404).json({ message: "Department not found" });
+  if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+  try {
+    const stream = cloudinary.v2.uploader.upload_stream(
+      { folder: "department-images", resource_type: "image" },
+      async (error, result) => {
+        if (error) return res.status(500).json({ error: "Cloudinary upload failed" });
+        dept.backgroundImage = result.secure_url;
+        await dept.save();
+        res.json({ url: result.secure_url, dept });
+      }
+    );
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  } catch (e) {
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
 // ===== DEPARTMENT ROUTES =====
 // Get all departments
 app.get("/api/departments", async (req, res) => {
