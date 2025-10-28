@@ -313,13 +313,10 @@ app.post("/api/departments/:id/image", uploadToMemory.single("image"), authentic
   }
 });
 
-import fs from 'fs';
-import path from 'path';
-
 app.get('/blog/:slug-:id', async (req, res) => {
   const { id, slug } = req.params;
   // Fetch post data from DB or API
-  const postRes = await fetch(`https://examguard-jmvj.onrender.com/api/posts/${id}`);
+  const postRes = await fetch(`https://examguard-jmvj.onrender.com/api/public/posts/${id}`);
   if (!postRes.ok) return res.status(404).send('Post not found');
   const post = await postRes.json();
 
