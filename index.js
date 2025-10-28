@@ -313,6 +313,46 @@ app.post("/api/departments/:id/image", uploadToMemory.single("image"), authentic
   }
 });
 
+import fs from 'fs';
+import path from 'path';
+
+app.get('/blog/:slug-:id', async (req, res) => {
+  const { id, slug } = req.params;
+  // Fetch post data from DB or API
+  const postRes = await fetch(`https://examguard-jmvj.onrender.com/api/posts/${id}`);
+  if (!postRes.ok) return res.status(404).send('Post not found');
+  const post = await postRes.json();
+
+  // Read the HTML template
+  const templatePath = path.join(process.cwd(), 'views', 'blog-details.html');
+  let html = fs.readFileSync(templatePath, 'utf8');
+
+  // Prepare dynamic meta tag values
+  const title = post.title || 'Blog Post';
+  const description = post.summary || (post.content ? post.content.replace(/<[^>]+>/g, '').substring(0, 150) : '');
+  const image = (post.images && post.images[0]) || post.imageUrl || '/default.jpg';
+  const author = post.authorName || 'Author';
+  const date = post.date || new Date().toISOString();
+  const canonicalUrl = `https://oau.examguard.com.ng/blog/${slug}-${id}`;
+
+  // Replace meta tags and placeholders
+  html = html
+    .replace(/<title>.*?<\/title>/, `<title>${title} | OAU ExamGuard</title>`)
+    .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${description}"`)
+    .replace(/<meta property="og:title" content=".*?"/, `<meta property="og:title" content="${title}"`)
+    .replace(/<meta property="og:description" content=".*?"/, `<meta property="og:description" content="${description}"`)
+    .replace(/<meta property="og:image" content=".*?"/, `<meta property="og:image" content="${image}"`)
+    .replace(/<meta property="og:url" content=".*?"/, `<meta property="og:url" content="${canonicalUrl}"`)
+    .replace(/<meta name="twitter:title" content=".*?"/, `<meta name="twitter:title" content="${title}"`)
+    .replace(/<meta name="twitter:description" content=".*?"/, `<meta name="twitter:description" content="${description}"`)
+    .replace(/<meta name="twitter:image" content=".*?"/, `<meta name="twitter:image" content="${image}"`)
+    .replace(/<link rel="canonical" href=".*?"/, `<link rel="canonical" href="${canonicalUrl}"`);
+
+  // Optionally, replace the article content, title, author, etc. in the body if you use placeholders (e.g., {{postTitle}})
+  // html = html.replace('{{postTitle}}', title).replace('{{postContent}}', post.content);
+
+  res.send(html);
+});
 
 app.post("/api/auth/change-password", authenticate, async (req, res) => {
   try {
