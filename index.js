@@ -12,7 +12,7 @@ import Department from "./models/Department.js";
 const router = express.Router();
 import cloudinary from 'cloudinary';
 import streamifier from 'streamifier';
-import nodemailer from 'nodemailer'; // <-- NEW: Nodemailer import
+import nodemailer from 'nodemailer';
 import crypto from 'crypto';  
 import postmark from "postmark";
 const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
@@ -25,16 +25,9 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Nodemailer transporter setup
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // or use SMTP if you want
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+import multer from "multer";
 
-
+// Profile pic uploads
 import pastQuestionsRoutes from "./routes/pastQuestions.js";
 import fs from "fs";
 const profilePicsDir = "./uploads/profilepics";
@@ -46,7 +39,6 @@ const profilePicStorage = multer.diskStorage({
     cb(null, profilePicsDir);
   },
   filename: function (req, file, cb) {
-    // Use timestamp+originalname to prevent duplicates
     const ext = path.extname(file.originalname);
     const base = path.basename(file.originalname, ext);
     cb(null, `${base.replace(/\s+/g,'_')}_${Date.now()}${ext}`);
@@ -54,13 +46,13 @@ const profilePicStorage = multer.diskStorage({
 });
 const uploadProfilePic = multer({
   storage: profilePicStorage,
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB max
+  limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith("image/")) cb(null, true);
     else cb(new Error("Only image files allowed!"));
   }
 });
-// 1. Setup a directory for editor uploads
+// Editor image uploads
 const editorUploadsDir = "./uploads/editor";
 if (!fs.existsSync(editorUploadsDir)) {
   fs.mkdirSync(editorUploadsDir, { recursive: true });
@@ -77,45 +69,35 @@ const editorImageStorage = multer.diskStorage({
 });
 const uploadEditorImage = multer({
   storage: editorImageStorage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith("image/")) cb(null, true);
     else cb(new Error("Only image files allowed!"));
   }
 });
 
-
+// Broadcast image uploads
 const uploadDir = "./uploads/broadcasts";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY; // Set in your .env
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-import multer from "multer";
-// ...existing imports...
 import newsletterRoutes from "./routes/newsletter.js";
-import Broadcast from "./models/Broadcast.js"; // NEW: broadcast model (see below)
-import broadcastsRoutes from "./routes/broadcasts.js"; // NEW: broadcasts API route
+import Broadcast from "./models/Broadcast.js";
+import broadcastsRoutes from "./routes/broadcasts.js";
 import adminRoutes from "./routes/admin.js";
 import responsesRoutes from "./routes/responses.js";
 import settingsRoutes from "./routes/settings.js";
- import marketplaceRoutes from "./routes/marketplace.js";
+import marketplaceRoutes from "./routes/marketplace.js";
 import bloggerAuthRoutes from "./routes/bloggerAuth.js";
 import offerRoutes from "./routes/offers.js";
-  import postsRoutes from './routes/posts.js';
-
+import postsRoutes from './routes/posts.js';
 import adminPostsRoutes from './routes/adminPosts.js';
 import myPostsRoutes from './routes/myPosts.js';
-
 import accountSettingsRouter from './routes/accountSettings.js';
-
 import taxonomyRoutes from './routes/taxonomy.js';
-
 import buyerDashboardRoutes from "./routes/buyerDashboard.js";
-
-
-
-// ===== Models and Middleware =====
 import User from "./models/User.js";
 import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
@@ -123,7 +105,6 @@ import affiliateRoutes from "./routes/affiliate.js";
 import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
 import ordersRoutes from './routes/orders.js';
-
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
 import rewardsRoutes from "./routes/rewards.js";
@@ -135,17 +116,16 @@ import adminStatsRoutes from "./routes/adminStats.js";
 import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
-import formsRoutes from "./routes/forms.js"; // <-- add this line
+import formsRoutes from "./routes/forms.js";
 import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
 import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
 import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
 
-dotenv.config();
+// Multer memory storage for Cloudinary uploads
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
-
 
 const {
   MONGODB_URI,
@@ -159,38 +139,30 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 }
 
 // Increase limits for JSON and urlencoded bodies
-app.use(express.json({ limit: '20mb' }));      // or more if needed
+app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
-// ===== CORS Config =====
+
 app.use(cors({
-  origin: true, // Reflects the request origin
+  origin: true,
   credentials: true,
 }));
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
-app.use("/api/forms", formsRoutes); 
+app.use("/api/forms", formsRoutes);
+app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts")));
+app.use("/api/broadcasts", broadcastsRoutes);
 
-// ===== Add after notifications/multer setup =====
-app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts"))); // NEW: serve broadcast images
-
-// ===== Register broadcasts API route =====
-app.use("/api/broadcasts", broadcastsRoutes); // NEW: broadcasts API
-
-// ===== MongoDB Connect =====
 mongoose.connect(MONGODB_URI)
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
 
-// ===== Main User Routes =====
 app.use("/api/users", usersRoutes);
 
 // ===== FACULTY ROUTES =====
-// Get all faculties
 app.get("/api/faculties", async (req, res) => {
   const list = await Faculty.find().sort({ name: 1 });
   res.json(list);
 });
-// Create faculty
 app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const faculty = await Faculty.create({ name: req.body.name });
@@ -199,7 +171,6 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
     res.status(400).json({ message: e.message });
   }
 });
-// Edit faculty
 app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const faculty = await Faculty.findById(req.params.id);
@@ -212,36 +183,55 @@ app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin")
   }
 });
 
+// ===== DEPARTMENT ROUTES =====
 
+// Get all departments (optionally filter by faculty)
+app.get("/api/departments", async (req, res) => {
+  const { faculty } = req.query;
+  let query = {};
+  if (faculty) query.faculty = faculty;
+  const list = await Department.find(query).sort({ name: 1 });
+  res.json(list);
+});
 
-
-router.post('/api/ai', async (req, res) => {
-  const prompt = req.body.prompt;
-  if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
-  if (!GEMINI_API_KEY) return res.status(500).json({ error: 'Missing Gemini API key' });
-
+// Get department by ID
+app.get("/api/departments/:id", async (req, res) => {
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      }
-    );
-    const data = await response.json();
-    // Log raw Gemini response for troubleshooting
-    console.log("Gemini response:", data);
-
-    // Handle Gemini NOT_FOUND error
-    if (data.error || !data.candidates) {
-      return res.status(400).json({ error: data.error?.message || "Gemini API error", raw: data });
-    }
-
-    const result = data.candidates[0]?.content?.parts[0]?.text || "No response";
-    res.json({ response: result });
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
+    res.json(dept);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// Create department
+app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dept = await Department.create({
+      name: req.body.name,
+      faculty: req.body.faculty,
+      subtitle: req.body.subtitle || "",
+      backgroundImage: req.body.backgroundImage || "",
+      courses: req.body.courses || []
+    });
+    res.status(201).json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// Edit department (name, faculty)
+app.put("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const dept = await Department.findById(req.params.id);
+    if (!dept) return res.status(404).json({ message: "Department not found" });
+    if (req.body.name !== undefined) dept.name = req.body.name;
+    if (req.body.faculty !== undefined) dept.faculty = req.body.faculty;
+    await dept.save();
+    res.json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
   }
 });
 
@@ -250,14 +240,24 @@ app.patch("/api/departments/:id", authenticate, authorizeRole("admin", "superadm
   try {
     const dept = await Department.findById(req.params.id);
     if (!dept) return res.status(404).json({ message: "Department not found" });
-
-    // Only update fields if present in body
+    if (req.body.name !== undefined) dept.name = req.body.name;
+    if (req.body.faculty !== undefined) dept.faculty = req.body.faculty;
     if (req.body.backgroundImage !== undefined) dept.backgroundImage = req.body.backgroundImage;
     if (req.body.subtitle !== undefined) dept.subtitle = req.body.subtitle;
     if (req.body.courses !== undefined) dept.courses = req.body.courses;
-
     await dept.save();
     res.json(dept);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+// Delete department
+app.delete("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const result = await Department.deleteOne({ _id: req.params.id });
+    if (result.deletedCount === 0) return res.status(404).json({ message: "Department not found" });
+    res.json({ message: "Department deleted" });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
@@ -293,7 +293,6 @@ app.delete("/api/departments/:id/courses", authenticate, authorizeRole("admin", 
 });
 
 // Upload department image to Cloudinary and save to department
-// You must use multer's memory storage for this endpoint
 app.post("/api/departments/:id/image", uploadToMemory.single("image"), authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   const dept = await Department.findById(req.params.id);
   if (!dept) return res.status(404).json({ message: "Department not found" });
@@ -313,53 +312,8 @@ app.post("/api/departments/:id/image", uploadToMemory.single("image"), authentic
     res.status(500).json({ error: "Upload failed" });
   }
 });
-app.delete("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const result = await Department.deleteOne({ _id: req.params.id });
-    if (result.deletedCount === 0) return res.status(404).json({ message: "Department not found" });
-    res.json({ message: "Department deleted" });
-  } catch (e) {
-    res.status(400).json({ message: e.message });
-  }
-});
-app.get("/api/departments/:id", async (req, res) => {
-  try {
-    const dept = await Department.findById(req.params.id);
-    if (!dept) return res.status(404).json({ message: "Department not found" });
-    res.json(dept);
-  } catch (e) {
-    res.status(400).json({ message: e.message });
-  }
-});
-// ===== DEPARTMENT ROUTES =====
-// Get all departments
-app.get("/api/departments", async (req, res) => {
-  const list = await Department.find().sort({ name: 1 });
-  res.json(list);
-});
-// Create department
-app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const dept = await Department.create({ name: req.body.name, faculty: req.body.faculty });
-    res.status(201).json(dept);
-  } catch (e) {
-    res.status(400).json({ message: e.message });
-  }
-});
-// Edit department
-app.put("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const dept = await Department.findById(req.params.id);
-    if (!dept) return res.status(404).json({ message: "Department not found" });
-    if (req.body.name !== undefined) dept.name = req.body.name;
-    if (req.body.faculty !== undefined) dept.faculty = req.body.faculty;
-    await dept.save();
-    res.json(dept);
-  } catch (e) {
-    res.status(400).json({ message: e.message });
-  }
-});
-// Change password (Authenticated)
+
+
 app.post("/api/auth/change-password", authenticate, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
