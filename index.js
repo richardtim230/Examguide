@@ -735,9 +735,6 @@ app.get("/api/auth/me", authenticate, async (req, res) => {
 // 2. Serve editor uploads statically
 app.use("/uploads/editor", express.static(path.join(process.cwd(), "uploads/editor")));
 
-// Use memoryStorage for Cloudinary as we upload the image buffer directly
-const memStorage = multer.memoryStorage();
-const uploadToMemory = multer({ storage: memStorage });
 
 app.post("/api/images", uploadToMemory.single("image"), async (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
