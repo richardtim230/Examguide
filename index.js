@@ -143,6 +143,8 @@ import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
 
 dotenv.config();
+const memStorage = multer.memoryStorage();
+const uploadToMemory = multer({ storage: memStorage });
 
 
 const {
