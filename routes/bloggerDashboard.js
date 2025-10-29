@@ -724,13 +724,15 @@ router.get("/mylistings", authenticate, async (req, res) => {
 });
 
 // CREATE listing
+// CREATE listing
 router.post("/listings", authenticate, async (req, res) => {
   try {
     let dashboard = await BloggerDashboard.findOne({ user: req.user.id });
     if (!dashboard) dashboard = new BloggerDashboard({ user: req.user.id });
 
     // Support both minimal and full product fields
-    const { title, item, price, category, stock, status, sales, description, img, imageUrl } = req.body;
+    const { title, item, price, category, stock, status, sales, description, img, imageUrl, images } = req.body;
+    const imagesArr = Array.isArray(images) ? images : (images ? [images] : []);
     const listingData = {
       _id: new mongoose.Types.ObjectId(),
       title: title || item, // accept either
@@ -741,7 +743,8 @@ router.post("/listings", authenticate, async (req, res) => {
       status: status || "Active",
       sales: Number(sales) || 0,
       description: description || "",
-      img: img || imageUrl || "",
+      img: img || imageUrl || (imagesArr[0] || ""),
+      images: imagesArr,
       orders: 0
     };
     dashboard.listings.unshift(listingData);
