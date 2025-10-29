@@ -122,6 +122,7 @@ import applicationsRoutes from "./routes/applications.js";
 import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
 import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
+import supportRoutes from "./routes/support.js";
 
 // Multer memory storage for Cloudinary uploads
 const memStorage = multer.memoryStorage();
@@ -982,6 +983,7 @@ app.use("/api/affiliate", affiliateRoutes);
 app.use("/api/buyer-dashboard", buyerDashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/offers", offerRoutes);
+app.use("/api/support", supportRoutes);
 app.use("/api/massages", massagesRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
