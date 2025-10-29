@@ -12,24 +12,25 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   profilePic: { type: String, default: "" },
   faculty: { type: mongoose.Schema.Types.Mixed, ref: "Faculty", default: null },
-department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: null },
+  department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: null },
   role: { type: String, enum: ["student", "blogger", "pending_blogger", "pending_marketer", "pending_both", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
   active: { type: Boolean, default: true },
   status: { type: String, enum: ["pending", "active", "banned"], default: "pending" },
-approved: { type: Boolean, default: false },
-ninSlip: { type: String, default: "" },
-wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
-institution: { type: String, default: "" },
+  approved: { type: Boolean, default: false },
+  ninSlip: { type: String, default: "" },
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
+  institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   bank: { type: String },
-accountName: { type: String },
-accountNumber: { type: String },
-idType: { type: String },
-verification: {
-  idDocument: String,
-  proofOfAddress: String,
-  status: { type: String, default: "pending" }
-},
+  accountName: { type: String },
+  accountNumber: { type: String },
+  idType: { type: String },
+  location: { type: String, default: "" }, // Added location field for seller dashboard
+  verification: {
+    idDocument: String,
+    proofOfAddress: String,
+    status: { type: String, default: "pending" }
+  },
   dailyTasks: [
     {
       date: { type: String }, // "YYYY-MM-DD"
@@ -38,7 +39,7 @@ verification: {
   ],
   verified: { type: Boolean, default: false },
   emailVerified: { type: Boolean, default: false },
-emailVerificationToken: { type: String },
+  emailVerificationToken: { type: String },
   offers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Offer" }],
   // Track reward history for breakdown and to prevent double-awards
   rewardHistory: {
