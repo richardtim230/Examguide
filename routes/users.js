@@ -218,13 +218,13 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
   }
 });
 
-// GET user by id (for author lookup)
+// GET user by id (for author lookup, with account/payment/contact details)
 router.get("/:id", async (req, res) => {
   try {
     const user = await Users.findById(req.params.id)
       .populate("faculty", "name")
       .populate("department", "name")
-      .select("fullname username profilePic faculty department bio");
+      .select("fullname username profilePic faculty department bio phone bank accountName accountNumber location email");
     if (!user) return res.status(404).json({ error: "User not found" });
 
     let faculty = user.faculty;
@@ -240,6 +240,12 @@ router.get("/:id", async (req, res) => {
         faculty: faculty?.name || "",
         department: department?.name || "",
         bio: user.bio,
+        phone: user.phone || "",
+        bank: user.bank || "",
+        accountName: user.accountName || "",
+        accountNumber: user.accountNumber || "",
+        location: user.location || "",
+        email: user.email || ""
       }
     });
   } catch (e) {
