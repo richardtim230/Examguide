@@ -123,6 +123,7 @@ import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
 import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
 import supportRoutes from "./routes/support.js";
+import Ad from "./models/Ad.js";
 
 // Multer memory storage for Cloudinary uploads
 const memStorage = multer.memoryStorage();
@@ -184,8 +185,56 @@ app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin")
   }
 });
 
-// ===== DEPARTMENT ROUTES =====
 
+// CREATE Ad
+app.post("/api/ads", async (req, res) => {
+  try {
+    const ad = await Ad.create(req.body);
+    res.status(201).json(ad);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+// READ all Ads
+app.get("/api/ads", async (req, res) => {
+  const ads = await Ad.find().sort({ createdAt: -1 });
+  res.json(ads);
+});
+
+// READ one Ad by ID
+app.get("/api/ads/:id", async (req, res) => {
+  const ad = await Ad.findById(req.params.id);
+  if (!ad) return res.status(404).json({ error: "Ad not found" });
+  res.json(ad);
+});
+
+// UPDATE Ad
+app.put("/api/ads/:id", async (req, res) => {
+  try {
+    const ad = await Ad.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!ad) return res.status(404).json({ error: "Ad not found" });
+    res.json(ad);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+// DELETE Ad
+app.delete("/api/ads/:id", async (req, res) => {
+  const ad = await Ad.findByIdAndDelete(req.params.id);
+  if (!ad) return res.status(404).json({ error: "Ad not found" });
+  res.json({ success: true });
+});
+
+// GET random ad (for frontend)
+app.get("/api/random-ad", async (req, res) => {
+  const count = await Ad.countDocuments();
+  if (count === 0) return res.status(404).json({ error: "No ads in database" });
+  const random = Math.floor(Math.random() * count);
+  const ad = await Ad.findOne().skip(random);
+  res.json(ad);
+});
 // Get all departments (optionally filter by faculty)
 app.get("/api/departments", async (req, res) => {
   const { faculty } = req.query;
