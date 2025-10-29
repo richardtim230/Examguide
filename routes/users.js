@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import Users from "../models/Users.js";
 import BloggerDashboard from "../models/BloggerDashboard.js";
 import mongoose from "mongoose";
+import User from '../models/User.js'; 
 import Faculty from "../models/Faculty.js";
 import Department from "../models/Department.js";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
