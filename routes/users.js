@@ -281,7 +281,23 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: err.message || "Server error" });
   }
 });
-
+// In routes/auth.js or routes/user.js
+router.patch('/auth/me', authenticate, async (req, res) => {
+  const updates = req.body;
+  const user = await User.findById(req.user.id);
+  if (!user) return res.status(404).json({ error: "User not found" });
+  Object.assign(user, updates);
+  await user.save();
+  res.json(user);
+});
+router.patch('/:id', authenticate, async (req, res) => {
+  if (req.user.id !== req.params.id) return res.status(403).json({ error: "Forbidden" });
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).json({ error: "User not found" });
+  Object.assign(user, req.body);
+  await user.save();
+  res.json(user);
+});
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const {
