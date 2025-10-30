@@ -839,6 +839,30 @@ app.get("/api/auth/me", authenticate, async (req, res) => {
 // 2. Serve editor uploads statically
 app.use("/uploads/editor", express.static(path.join(process.cwd(), "uploads/editor")));
 
+// APK upload to Cloudinary (resource_type: "raw")
+app.post("/api/apk", uploadToMemory.single("apk"), async (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+  try {
+    const stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder: "apks", // Optional: organize your uploads
+        resource_type: "raw"
+      },
+      (error, result) => {
+        if (error) {
+          console.error("Cloudinary APK upload error:", error);
+          return res.status(500).json({ error: "Cloudinary upload failed" });
+        }
+        // Return the secure Cloudinary URL for the APK
+        res.json({ url: result.secure_url });
+      }
+    );
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  } catch (e) {
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
+
 
 app.post("/api/images", uploadToMemory.single("image"), async (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
