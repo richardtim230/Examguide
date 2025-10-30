@@ -851,7 +851,7 @@ app.post("/api/apk", uploadToMemory.single("apk"), async (req, res) => {
       {
         folder: "apks",
         resource_type: "raw",
-        public_id: originalName.replace(/\.apk$/i, '') // Remove extension: Cloudinary will add it back for serving
+        public_id: originalName // Remove extension: Cloudinary will add it back for serving
       },
       (error, result) => {
         if (error) {
