@@ -839,18 +839,13 @@ app.get("/api/auth/me", authenticate, async (req, res) => {
 // 2. Serve editor uploads statically
 app.use("/uploads/editor", express.static(path.join(process.cwd(), "uploads/editor")));
 
+// APK upload to Cloudinary (resource_type: "raw")
 app.post("/api/apk", uploadToMemory.single("apk"), async (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
   try {
-    const originalname = req.file.originalname; // e.g. myapp.apk
-    const ext = path.extname(originalname);     // .apk
-    const base = path.basename(originalname, ext).replace(/\s+/g, "_"); // myapp
-    // Use timestamp or random string to avoid collisions
-    const publicId = `apks/${base}_${Date.now()}${ext}`; // apks/myapp_1690000000000.apk
-
     const stream = cloudinary.v2.uploader.upload_stream(
       {
-        public_id: publicId, // This now includes the .apk extension
+        folder: "apks", // Optional: organize your uploads
         resource_type: "raw"
       },
       (error, result) => {
@@ -858,9 +853,8 @@ app.post("/api/apk", uploadToMemory.single("apk"), async (req, res) => {
           console.error("Cloudinary APK upload error:", error);
           return res.status(500).json({ error: "Cloudinary upload failed" });
         }
-        // Always recommend adding ?fl_attachment=originalname to the URL for the download link
-        const urlWithDownload = result.secure_url + `?fl_attachment=${encodeURIComponent(originalname)}`;
-        res.json({ url: result.secure_url, download: urlWithDownload });
+        // Return the secure Cloudinary URL for the APK
+        res.json({ url: result.secure_url });
       }
     );
     streamifier.createReadStream(req.file.buffer).pipe(stream);
