@@ -607,13 +607,67 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
       const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
         await client.sendEmail({
-          From: "richardochuko@examguard.com.ng",
-          To: user.email,
-          Subject: "Verify your email",
-          HtmlBody: `<p>Hello ${user.fullname || user.username},<br>
-            Please verify your email by clicking <a href="${verifyUrl}">here</a>.<br>
-            If you did not register, please ignore this email.</p>`
-        });
+  From: "richardochuko@examguard.com.ng",
+  To: user.email,
+  Subject: "Verify your Email - Welcome to OAU ExamGuard",
+  HtmlBody: `
+<!DOCTYPE html>
+<html lang="en" style="background:#f3f7fb;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Verify Your Email | OAU ExamGuard</title>
+  <style>
+    body {background:#f3f7fb;font-family:'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0;color:#1b2541;}
+    .container {max-width:540px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px #276ef11a;padding:40px 24px 28px 24px;}
+    .logo {display:block;margin:0 auto 26px auto;width:80px;border-radius:14px;box-shadow:0 2px 8px #276ef11a;background:#fff;}
+    .title {color:#276EF1;font-size:2rem;font-weight:800;text-align:center;margin-bottom:12px;}
+    .subtitle {font-size:1.12rem;color:#1b2541;text-align:center;margin-bottom:12px;}
+    .button {display:block;margin:38px auto 15px auto;padding:16px 0;width:90%;max-width:330px;background:linear-gradient(90deg,#276EF1 60%,#003366 100%);color:#fff;text-align:center;text-decoration:none;font-size:1.13rem;font-weight:bold;border-radius:999px;letter-spacing:0.02em;box-shadow:0 2px 10px #276ef140;}
+    .button:hover {background:linear-gradient(90deg,#003366 60%,#276EF1 100%);}
+    .info {font-size:.99rem;color:#222;margin:18px 0 18px 0;line-height:1.6;text-align:center;}
+    .support {margin:16px 0 0 0;text-align:center;font-size:.98rem;color:#555;}
+    .link {word-break:break-all;color:#276EF1;text-decoration:underline;}
+    .footer {margin-top:32px;color:#bbb;font-size:.93rem;text-align:center;border-top:1px solid #eee;padding-top:16px;}
+    .socials {text-align:center;margin-top:18px;}
+    .socials a {display:inline-block;margin:0 8px;}
+    .socials img {width:32px;height:32px;}
+    @media (max-width:600px) {.container{padding:16px 3vw;}.title{font-size:1.3rem;}.logo{width:56px;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="logo" src="https://oau.examguard.com.ng/logo.png" alt="OAU ExamGuard Logo">
+    <div class="title">Verify your Email Address</div>
+    <div class="subtitle">
+      Hi <b>${user.fullname || user.username},</b>
+    </div>
+    <div class="subtitle" style="font-size:1.01rem;">
+      Thank you for registering with <b>OAU ExamGuard Nigeria</b>!<br>
+      Please verify your email to activate your account and access all features.
+    </div>
+    <a href="${verifyUrl}" class="button" target="_blank">Verify My Email</a>
+    <div class="info">
+      If the button doesn't work, copy and paste this link into your browser:<br>
+      <span class="link">${verifyUrl}</span>
+    </div>
+    <div class="support">
+      Need help? <a class="link" style="color:#276EF1;" href="mailto:support@examguard.com.ng">Contact Support</a>
+    </div>
+    <div class="socials">
+      <a href="https://facebook.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+      <a href="https://twitter.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter"></a>
+      <a href="https://instagram.com/OAUExamGuard" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+    </div>
+    <div class="footer">
+      &copy; ${new Date().getFullYear()} OAU ExamGuard. All rights reserved.<br>
+      123 ExamGuard Ave, OAU Campus, Ile-Ife, Nigeria
+    </div>
+  </div>
+</body>
+</html>
+`
+});
         console.log("Verification email sent to " + user.email);
       } catch (err) {
         console.error("Error sending verification email via Postmark:", err);
