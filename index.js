@@ -605,7 +605,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     }
 
     if (email) {
-      const verifyUrl = `${FROTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
+      const verifyUrl = `https//oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
         await client.sendEmail({
   From: "richardochuko@examguard.com.ng",
