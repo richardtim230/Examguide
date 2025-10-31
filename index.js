@@ -132,7 +132,8 @@ const uploadToMemory = multer({ storage: memStorage });
 const {
   MONGODB_URI,
   JWT_SECRET,
-  FRONTEND_ORIGIN
+  FRONTEND_ORIGIN,
+  FROTEND_ORIGIN
 } = process.env;
 const PORT = process.env.PORT || 10000;
 
@@ -604,7 +605,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     }
 
     if (email) {
-      const verifyUrl = `${FRONTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
+      const verifyUrl = `${FROTEND_ORIGIN}/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
         await client.sendEmail({
   From: "richardochuko@examguard.com.ng",
@@ -785,7 +786,7 @@ app.post("/api/auth/resend-verification", async (req, res) => {
     await user.save();
 
     // Construct verify URL
-    const verifyUrl = `${process.env.FRONTEND_ORIGIN}/verify-email?token=${user.emailVerificationToken}&id=${user._id}`;
+    const verifyUrl = `${process.env.FROTEND_ORIGIN}/verify-email?token=${user.emailVerificationToken}&id=${user._id}`;
 
     // Send a rich HTML email
     await client.sendEmail({
