@@ -676,7 +676,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     }
 
     res.status(201).json({
-      message: "Registration successful. Please check your email for a verification link before logging in.",
+      message: "Registration successful. Please check your email for a verification link before logging in. Check you spam folder if not found in Inbox",
       profilePic: profilePicUrl
     });
   } catch (e) {
