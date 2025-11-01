@@ -3,7 +3,7 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
-
+import sendBlogNotification from '../utils/sendBlogNotification.js';
 const router = express.Router();
 
 router.get("/public/posts", async (req, res) => {
