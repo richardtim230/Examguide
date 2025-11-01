@@ -146,9 +146,9 @@ router.post("/posts", authenticate, async (req, res) => {
     const newPost = new Post(postData);
     await newPost.save();
 await sendBlogNotification({
-  title: `New Blog: ${blog.title}`,
-  message: `${blog.summary || blog.content.slice(0, 100)}...`,
-  url: `https://oau.examguard.com.ng/blog/${slug}-${blog._id}` // Adjust as needed!
+  title: `New Blog: ${newPost.title}`,
+  message: `${newPost.summary || newPost.content.slice(0, 100)}...`,
+  url: `https://oau.examguard.com.ng/blog/${newPost._id}` // Adjust as needed!
 });
     res.status(201).json(newPost);
   } catch (err) {
