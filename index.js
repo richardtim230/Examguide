@@ -740,7 +740,7 @@ Format the output as a JSON object only, with this structure:
         {"text": "Option D"}
       ],
       "answer": "One of the above options",
-      "explanation": "Short explanation for the correct answer.",
+      "explanation": "Short explanation for the correct answer. Use good HTML tags for breaking words into new lines where necessary for neatness and clarity, also try explain why other options are wrong. Use the actual multiplication sign (×) for multiplication instead of using asterisk.",
       "questionImage": ""
     }
     // ... repeat for all questions
@@ -772,7 +772,7 @@ Convert the following pasted questions (may be in free form or exam-style) into 
         {"text": "Option D"}
       ],
       "answer": "Correct option text",
-      "explanation": "Short explanation.",
+      "explanation": "Short explanation for the correct answer. Use good HTML tags for breaking words into new lines where necessary for neatness and clarity, also try explain why other options are wrong. Use the actual multiplication sign (×) for multiplication instead of using asterisk.",
       "questionImage": ""
     }
     // ... for each question
@@ -789,7 +789,7 @@ ${text}
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
