@@ -720,7 +720,7 @@ app.post('/api/ai-questions', async (req, res) => {
     SYSTEM_PROMPT = `
 You are an expert assessment designer for university-level exams.
 Generate exactly ${number} multiple-choice questions for the topic "${topic}" under the faculty "${faculty}" and department "${department}".
-The questions must not be too simple or too hard, but should be tricky and nuanced.
+The questions must not be too simple or too hard and must not use too complicated terms because it is for 100level OAU students, but should be tricky and nuanced.
 For each question, provide 4 options with almost equal lengths and nuances—don't make the correct answer obvious or easy to guess.
 Format the output as a JSON object only, with this structure:
 
