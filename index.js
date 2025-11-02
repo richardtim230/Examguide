@@ -707,7 +707,113 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
   }
 }); 
 
+// --- AI Question Generator/Converter Endpoint using Gemini API ---
+app.post('/api/ai-questions', async (req, res) => {
+  const { type, topic, number, faculty, department, text } = req.body;
+  if (!GEMINI_API_KEY) return res.status(500).json({ error: "Missing Gemini API key" });
 
+  let SYSTEM_PROMPT = "";
+  if (type === "generate") {
+    if (!topic || !number || !faculty || !department) {
+      return res.status(400).json({ error: "Missing required fields for question generation" });
+    }
+    SYSTEM_PROMPT = `
+You are an expert assessment designer for university-level exams.
+Generate exactly ${number} multiple-choice questions for the topic "${topic}" under the faculty "${faculty}" and department "${department}".
+The questions must not be too simple or too hard, but should be tricky and nuanced.
+For each question, provide 4 options with almost equal lengths and nuances—don't make the correct answer obvious or easy to guess.
+Format the output as a JSON object only, with this structure:
+
+{
+  "title": "${topic}",
+  "status": "ACTIVE",
+  "faculty": "${faculty}",
+  "department": "${department}",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Your question text here",
+      "options": [
+        {"text": "Option A"},
+        {"text": "Option B"},
+        {"text": "Option C"},
+        {"text": "Option D"}
+      ],
+      "answer": "One of the above options",
+      "explanation": "Short explanation for the correct answer.",
+      "questionImage": ""
+    }
+    // ... repeat for all questions
+  ]
+}
+
+- Do not add any comments, explanations, or text outside the JSON object.
+- Use only the JSON file as your output, no code block markers, and no extra commentary.
+`;
+  } else if (type === "convert") {
+    if (!text) return res.status(400).json({ error: "Missing text for conversion" });
+    SYSTEM_PROMPT = `
+You are a university exam question parser.
+Convert the following pasted questions (may be in free form or exam-style) into a clean JSON file using this structure:
+
+{
+  "title": "Inferred or best topic",
+  "status": "ACTIVE",
+  "faculty": "Inferred or leave blank if not known",
+  "department": "Inferred or leave blank if not known",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Question text",
+      "options": [
+        {"text": "Option A"},
+        {"text": "Option B"},
+        {"text": "Option C"},
+        {"text": "Option D"}
+      ],
+      "answer": "Correct option text",
+      "explanation": "Short explanation.",
+      "questionImage": ""
+    }
+    // ... for each question
+  ]
+}
+
+The response must be valid JSON only. Do not add any code block markers, comments, or extra explanation—just the JSON file.
+Here are the questions to convert:
+${text}
+`;
+  } else {
+    return res.status(400).json({ error: "Invalid type. Must be 'generate' or 'convert'." });
+  }
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: SYSTEM_PROMPT }] }] })
+      }
+    );
+    const data = await response.json();
+    if (data.error || !data.candidates) {
+      return res.status(400).json({ error: data.error?.message || "Gemini API error", raw: data });
+    }
+    // Gemini returns JSON as plain text
+    const result = data.candidates[0]?.content?.parts[0]?.text || "";
+    // Optionally: validate that it's valid JSON, else send as plain text
+    try {
+      JSON.parse(result); // Throws if not valid JSON
+      res.type('application/json').send(result.trim());
+    } catch {
+      // If not valid JSON, but still Gemini's best try, just return as text
+      res.type('text/plain').send(result.trim());
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 // --- EMAIL VERIFICATION ENDPOINT ---
 app.get("/api/auth/verify-email", async (req, res) => {
   const { token, id } = req.query;
