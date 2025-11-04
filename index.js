@@ -720,8 +720,8 @@ app.post('/api/ai-questions', async (req, res) => {
     SYSTEM_PROMPT = `
 You are an expert assessment designer for university-level exams.
 Generate exactly ${number} multiple-choice questions for the topic "${topic}" under the faculty "${faculty}" and department "${department}".
-The questions must not be too simple or too hard and must not use too complicated terms because it is for 100level OAU students, but should be tricky and nuanced.
-For each question, provide 4 options with almost equal lengths and nuances—don't make the correct answer obvious or easy to guess.
+The questions must not be too simple or too hard and must not use too complicated terms because it is for 100level OAU students, use html tags for highlighting where and when necessary, but should be tricky and nuanced.
+For each question, provide 4 options with almost equal lengths and nuances but shouldn't be too long—don't make the correct answer obvious or easy to guess.
 Format the output as a JSON object only, with this structure:
 
 {
@@ -1103,8 +1103,8 @@ app.post('/api/ai-lecture', async (req, res) => {
   const SYSTEM_PROMPT = `
 You are an expert and professional university lecturer and instructional designer.  
 Generate a comprehensive, well-formatted lecture note for the given topic, tailored for university students preparing for standard examination boards worldwide. The note must provide clear explanations, intelligent reasoning, logical breakdowns, and practical, good examples for all key concepts. It should be well-organized, detailed, and universally accessible to students in any country and any level.
-You must sound completely humanly and a passionate one, good at teaching and using accurate materials for teaching. 
-you are the best at your field.
+You must sound completely humanly and a passionate one, avoid unnecessary greetings and unnecessary welcoming, make sure not to use regular AI terms such as crucial, explore and the likes, be good at teaching and using accurate materials for teaching. 
+you are the best at your field, do not use too big grammars and unnecessary examples.
 Your response must be a single valid JSON object, with no code block markers or commentary. Use this structure:
 {
   "outlines": [ "Section 1 Title", "Section 2 Title", ... ],
@@ -1146,7 +1146,7 @@ Topic: ${topic}
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
