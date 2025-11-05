@@ -1253,7 +1253,7 @@ app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
-app.use("/api", kiaChatEndpoint);
+app.use("/api/ai-chat", kiaChatEndpoint);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
