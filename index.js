@@ -146,7 +146,7 @@ import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
 import supportRoutes from "./routes/support.js";
 import Ad from "./models/Ad.js";
-import kiaChatEndpoint from "./kiaChatEndpoint.js";
+import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
 
 // Multer memory storage for Cloudinary uploads
 const memStorage = multer.memoryStorage();
