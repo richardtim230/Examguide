@@ -15,7 +15,7 @@ const imageUsage = {};
 const storage = multer.memoryStorage();
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB per file
 
-router.post("/api/ai-chat", upload.fields([
+router.post("/", upload.fields([
   { name: "voice", maxCount: 1 },
   { name: "images", maxCount: IMAGE_LIMIT_PER_SEND }
 ]), async (req, res) => {
