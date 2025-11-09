@@ -3,15 +3,13 @@ import multer from "multer";
 import fetch from "node-fetch";
 import path from "path";
 import fs from "fs";
-import ChatTopic from "../models/ChatTopic.js"; // add at top
-import CBTExam from "../models/CBTExam.js"; // <-- New model for CBT exams
-
+import ChatTopic from "../models/ChatTopic.js";
+import CBTExam from "../models/CBTExam.js";
 import { authenticate } from "../middleware/authenticate.js";
 import GeminiMessage from "../models/GeminiMessage.js";
 
 const router = express.Router();
 
-// Multer image upload for temp storage
 const upload = multer({ dest: "uploads/gemini/" });
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -30,9 +28,7 @@ Your tone is lively, personable, straightforward, and very practical. Avoid clic
 `;
 
 function buildPrompt(historyMessages, attachedImage = null, imageRefs = []) {
-  // historyMessages must alternate student/professor for effective context
   let prompt = SYSTEM_PROMPT;
-
   historyMessages.forEach(msg => {
     (msg.messages || []).forEach(m => {
       prompt += (
@@ -74,7 +70,6 @@ router.post("/topics", authenticate, async (req, res) => {
     if (!name || typeof name !== "string" || !name.trim()) {
       return res.status(400).json({ error: "Topic name required" });
     }
-    // Prevent duplicate topic names for user
     const exist = await ChatTopic.findOne({ user: userId, name: name.trim() });
     if (exist) {
       return res.status(400).json({ error: "Topic name already exists for user" });
@@ -88,6 +83,7 @@ router.post("/topics", authenticate, async (req, res) => {
 });
 
 // --- SEND MESSAGE to Gemini endpoint ---
+// Auto-triggers CBT generation if explanation -- sends MCQs in the same response!
 router.post("/send", authenticate, async (req, res) => {
   try {
     const { messages, image, channel = "general" } = req.body;
@@ -95,23 +91,18 @@ router.post("/send", authenticate, async (req, res) => {
       return res.status(400).json({ error: "Messages required" });
 
     let userId = req.user ? req.user.id : null;
-
-    // Session: fetch all previous images referenced so far in this channel
     const previousImages = await GeminiMessage.find({ user: userId, channel, image: { $ne: null } }).sort({ date: 1 });
     let imageRefNumber = previousImages.length + 1;
     let attachedImage = image ? { ...image, refNumber: imageRefNumber } : null;
 
-    // Prepare message context: include N previous messages for continuity
+    // Prepare message context
     const recentMsgs = await GeminiMessage.find({ user: userId, channel }).sort({ date: 1 });
     let contextMsgs = [];
     let imageRefs = previousImages.map(imgDoc =>
       imgDoc.image && imgDoc.image.refNumber ? { refNumber: imgDoc.image.refNumber } : null
     ).filter(Boolean);
 
-    // Add full chronologically ordered dialog, including professor replies
-    contextMsgs = recentMsgs.slice(-9); // last 9 exchanges for context
-
-    // Then add the new user messages at end
+    contextMsgs = recentMsgs.slice(-9);
     contextMsgs.push({
       messages: messages.map(m => ({
         role: m.role === 'professor' ? 'professor' : 'user',
@@ -121,7 +112,6 @@ router.post("/send", authenticate, async (req, res) => {
       professorReply: null
     });
 
-    // Generate Gemini prompt from correct dialog
     let geminiPrompt = buildPrompt(contextMsgs, attachedImage, imageRefs);
 
     let payload = {
@@ -136,7 +126,7 @@ router.post("/send", authenticate, async (req, res) => {
       });
     }
 
-    // Gemini API call
+    // Gemini API call for explanation
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
@@ -160,48 +150,78 @@ router.post("/send", authenticate, async (req, res) => {
     });
     await chatMsg.save();
 
-    res.json({ reply: profReply, messageId: chatMsg._id });
-  } catch (err) {
-    console.error("Gemini send error:", err);
-    res.status(500).json({ error: "Gemini API error", detail: err.message });
+    // --- CBT AUTO-GENERATION LOGIC ---
+    // Gemini MCQ generation on topic (channel)
+    async function generateMCQs(topic, n) {
+      // This should be a Gemini API call for production!
+      // Example prompt:
+      // "Generate {n} MCQs (multiple choice questions), each with 4 options and answer index, for the topic: {topic}. Return JSON format: [{text, options:[...], answer, explanation}]"
+      let prompt = `Generate ${n} MCQs (multiple choice questions), each with 4 options and answer index, for the topic: "${topic}". Each question should also include a brief explanation for the answer. Please return your reply in valid JSON array as:
+[
+  {
+    "text": "...question...",
+    "options": ["...", "...", "...", "..."],
+    "answer": 0,
+    "explanation": "...why this answer is correct..."
   }
-});
-
-// --- SCHEDULE CBT: generate and store a 20-question MCQ set for this topic ---
-router.post("/schedule-cbt", authenticate, async (req, res) => {
-  const { channel = "general", n = 20 } = req.body;
-  const userId = req.user?.id;
-  if (!channel) return res.status(400).json({ error: "Missing topic/channel name" });
-
-  // Simulate Gemini API MCQ generation for given topic (replace for production!)
-  async function generateMCQs(topic, n) {
-    // TODO: Call Gemini API with {topic, n} to get MCQ array
-    let questions = [];
-    for(let i=0; i<n; i++) {
-      questions.push({
-        text: `MCQ #${i+1} about ${topic}?`, // Gemini should create meaningful question
-        options: ["Option A", "Option B", "Option C", "Option D"], // Gemini-generated options
-        answer: Math.floor(Math.random()*4), // Gemini answer index
-        explanation: `Explanation for MCQ #${i+1} of ${topic}` // Gemini-generated detailed solution
-      });
+]
+`;
+      let mcqPayload = {
+        contents: [{ parts: [{ text: prompt }] }]
+      };
+      const mcqResponse = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(mcqPayload)
+        }
+      );
+      const mcqData = await mcqResponse.json();
+      let mcqText = mcqData.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      let questions = [];
+      try {
+        questions = JSON.parse(mcqText);
+      } catch (e) {
+        // Gemini's output might not be pure JSON; fallback: sample
+        for(let i=0; i<n; i++) {
+          questions.push({
+            text: `MCQ #${i+1} about ${topic}?`,
+            options: ["Option A","Option B","Option C","Option D"],
+            answer: Math.floor(Math.random()*4),
+            explanation: `Explanation for MCQ #${i+1} of ${topic}`
+          });
+        }
+      }
+      return questions;
     }
-    return questions;
+
+    // Generate 20 MCQs for the topic/channel immediately after explanation
+    let questions = await generateMCQs(channel, 20);
+
+    // Save CBT exam to DB
+    const exam = new CBTExam({
+      user: userId,
+      channel,
+      questions,
+      status: "scheduled",
+      startedAt: new Date()
+    });
+    await exam.save();
+
+    // Respond: include explanation AND exam MCQs in same response
+    res.json({
+      reply: profReply,
+      messageId: chatMsg._id,
+      cbt: {
+        examId: exam._id,
+        questions // MCQs
+      }
+    });
+  } catch (err) {
+    console.error("Gemini send/CBT error:", err);
+    res.status(500).json({ error: "Gemini/CBT error", detail: err.message });
   }
-
-  const questions = await generateMCQs(channel, n);
-
-  // Save exam session
-  const exam = new CBTExam({
-    user: userId,
-    channel,
-    questions,
-    status: "scheduled",
-    startedAt: new Date()
-  });
-
-  await exam.save();
-
-  res.json({ examId: exam._id, questions });
 });
 
 // --- SUBMIT CBT: score answers, save result, return explanations ---
@@ -232,7 +252,6 @@ router.post("/submit-cbt", authenticate, async (req, res) => {
     });
   }
 
-  // Store results
   exam.answers = answers;
   exam.explanations = explanations;
   exam.score = score;
@@ -271,6 +290,7 @@ router.get("/cbt/:id", authenticate, async (req, res) => {
     completedAt: exam.completedAt
   });
 });
+
 // --- Paginated message history ---
 router.get("/history", authenticate, async (req, res) => {
   try {
@@ -279,7 +299,6 @@ router.get("/history", authenticate, async (req, res) => {
     let channel = req.query.channel || "general";
     let userId = req.user ? req.user.id : null;
 
-    // Only fetch for this channel/topic, sorted by oldest first (for dialog context)
     const totalCount = await GeminiMessage.countDocuments({ user: userId, channel });
     let history = [];
     if (offset < totalCount) {
@@ -317,14 +336,11 @@ router.post("/upload-image", authenticate, upload.single("image"), async (req, r
   try {
     let channel = req.body.channel || "general";
     if (!req.file) return res.status(400).json({ error: "No image provided" });
-    // Read image data
     const imageData = fs.readFileSync(req.file.path);
     const base64Image = imageData.toString("base64");
     const mimeType = req.file.mimetype;
-    // Sequential image refNumber in this channel
     let previousImages = await GeminiMessage.find({ user: req.user?.id, channel, image: { $ne: null } }).sort({ date: 1 });
     let imageRefNumber = previousImages.length + 1;
-    // Gemini image query
     const prompt = SYSTEM_PROMPT + `\nStudent: Please analyze the attached image number ${imageRefNumber}. Professor:`;
     const payload = {
       contents: [{
@@ -346,7 +362,6 @@ router.post("/upload-image", authenticate, upload.single("image"), async (req, r
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
     fs.unlinkSync(req.file.path); // remove temporary image
 
-    // Save to history
     const chatMsg = new GeminiMessage({
       user: req.user?.id,
       channel,
