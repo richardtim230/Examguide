@@ -3,6 +3,8 @@ import multer from "multer";
 import fetch from "node-fetch";
 import path from "path";
 import fs from "fs";
+import ChatTopic from "../models/ChatTopic.js"; // add at top
+
 import { authenticate } from "../middleware/authenticate.js";
 import GeminiMessage from "../models/GeminiMessage.js";
 
@@ -40,8 +42,37 @@ function buildPrompt(userMessages, attachedImage = null, imageRefs = []) {
   return prompt;
 }
 
+// --- GET Topics List ---
+router.get("/topics", authenticate, async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const topics = await ChatTopic.find({ user: userId }).sort({ createdAt: 1 });
+    res.json({ topics });
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching topics", detail: err.message });
+  }
+});
 
-
+// --- CREATE Topic ---
+router.post("/topics", authenticate, async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const { name } = req.body;
+    if (!name || typeof name !== "string" || !name.trim()) {
+      return res.status(400).json({ error: "Topic name required" });
+    }
+    // Prevent duplicate topic names for user
+    const exist = await ChatTopic.findOne({ user: userId, name: name.trim() });
+    if (exist) {
+      return res.status(400).json({ error: "Topic name already exists for user" });
+    }
+    const topic = new ChatTopic({ user: userId, name: name.trim() });
+    await topic.save();
+    res.json({ topic });
+  } catch (err) {
+    res.status(500).json({ error: "Error creating topic", detail: err.message });
+  }
+});
 // --- Send message to Gemini endpoint ---
 router.post("/send", authenticate, async (req, res) => {
   try {
