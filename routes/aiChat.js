@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import path from "path";
 import fs from "fs";
 import ChatTopic from "../models/ChatTopic.js"; // add at top
+import CBTExam from "../models/CBTExam.js"; // <-- New model for CBT exams
 
 import { authenticate } from "../middleware/authenticate.js";
 import GeminiMessage from "../models/GeminiMessage.js";
@@ -166,6 +167,110 @@ router.post("/send", authenticate, async (req, res) => {
   }
 });
 
+// --- SCHEDULE CBT: generate and store a 20-question MCQ set for this topic ---
+router.post("/schedule-cbt", authenticate, async (req, res) => {
+  const { channel = "general", n = 20 } = req.body;
+  const userId = req.user?.id;
+  if (!channel) return res.status(400).json({ error: "Missing topic/channel name" });
+
+  // Simulate Gemini API MCQ generation for given topic (replace for production!)
+  async function generateMCQs(topic, n) {
+    // TODO: Call Gemini API with {topic, n} to get MCQ array
+    let questions = [];
+    for(let i=0; i<n; i++) {
+      questions.push({
+        text: `MCQ #${i+1} about ${topic}?`, // Gemini should create meaningful question
+        options: ["Option A", "Option B", "Option C", "Option D"], // Gemini-generated options
+        answer: Math.floor(Math.random()*4), // Gemini answer index
+        explanation: `Explanation for MCQ #${i+1} of ${topic}` // Gemini-generated detailed solution
+      });
+    }
+    return questions;
+  }
+
+  const questions = await generateMCQs(channel, n);
+
+  // Save exam session
+  const exam = new CBTExam({
+    user: userId,
+    channel,
+    questions,
+    status: "scheduled",
+    startedAt: new Date()
+  });
+
+  await exam.save();
+
+  res.json({ examId: exam._id, questions });
+});
+
+// --- SUBMIT CBT: score answers, save result, return explanations ---
+router.post("/submit-cbt", authenticate, async (req, res) => {
+  const { examId, answers } = req.body;
+  const userId = req.user?.id;
+
+  if (!examId || !answers || !Array.isArray(answers)) {
+    return res.status(400).json({ error: "Exam ID and answer array required" });
+  }
+
+  const exam = await CBTExam.findOne({ _id: examId, user: userId });
+  if (!exam) return res.status(404).json({ error: "Exam not found" });
+  if (exam.status === "completed") return res.status(400).json({ error: "Exam already submitted" });
+
+  let score = 0, explanations = [];
+  for (let i = 0; i < exam.questions.length; i++) {
+    const q = exam.questions[i];
+    let correct = answers[i] === q.answer;
+    if (correct) score++;
+    explanations.push({
+      correct,
+      answer: q.answer,
+      yourAnswer: answers[i] ?? null,
+      options: q.options,
+      explanation: q.explanation || "",
+      question: q.text
+    });
+  }
+
+  // Store results
+  exam.answers = answers;
+  exam.explanations = explanations;
+  exam.score = score;
+  exam.status = "completed";
+  exam.completedAt = new Date();
+  await exam.save();
+
+  res.json({
+    score,
+    explanations,
+    total: exam.questions.length,
+    summary: `You scored ${score}/${exam.questions.length}`
+  });
+});
+
+// --- CBT HISTORY: List completed attempts for a user/topic ---
+router.get("/cbt-history", authenticate, async (req, res) => {
+  const channel = req.query.channel || "general";
+  const userId = req.user?.id;
+  const history = await CBTExam.find({ user: userId, channel, status: "completed" }).sort({ completedAt: -1 });
+  res.json({ history });
+});
+
+// --- GET specific completed exam result ---
+router.get("/cbt/:id", authenticate, async (req, res) => {
+  const userId = req.user?.id;
+  const examId = req.params.id;
+  const exam = await CBTExam.findOne({ _id: examId, user: userId });
+  if (!exam) return res.status(404).json({ error: "Exam not found" });
+  res.json({
+    examId,
+    channel: exam.channel,
+    score: exam.score,
+    explanations: exam.explanations,
+    startedAt: exam.startedAt,
+    completedAt: exam.completedAt
+  });
+});
 // --- Paginated message history ---
 router.get("/history", authenticate, async (req, res) => {
   try {
