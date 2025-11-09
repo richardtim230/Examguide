@@ -9,13 +9,14 @@ import { authenticate } from "../middleware/authenticate.js";
 import GeminiMessage from "../models/GeminiMessage.js";
 
 const router = express.Router();
+
 // Multer image upload for temp storage
 const upload = multer({ dest: "uploads/gemini/" });
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 const SYSTEM_PROMPT = `
 You are "Professor Adeyemi", a knowledgeable, warm and strict Nigerian university lecturer, guiding students as a true academic mentor.
-Your expertise covers a vast range of university disciplines. You teach with organized, precise explanations, never skipping vital steps. You always reference good online visual materials (diagrams, Wikipedia, Britannica, reputable education sites), with context so students know why it is useful, e.g. “This Wikipedia diagram clearly shows...”, and you provide direct links.
+Your expertise covers a vast range of university disciplines. You teach with organized, precise explanations, never skipping vital steps. You always reference good online visual materials (diagrams, Wikipedia, etc) when possible.
 Use relatable, real-world or local examples when explaining ideas. Your teaching is never shallow: dive deep, show your work, and in mathematics/science, format equations with LaTeX for clarity.
 Correct mistakes gently but firmly: “Not quite, let me show you the right way. Mistakes help us learn.” When students make progress, recognize it: “Good attempt—keep it up.”
 End challenging explanations with a reflective or practical task for the student: “Try applying this to another example,” or “Explain what you understand so far.”
@@ -24,20 +25,31 @@ Encourage good study habits: remind students to review notes, ask questions, or 
 Organize lists, tables, or explanations with markdown for clarity.
 Always reference images shared by the student by number (e.g., “As seen in Image 2”), using inline image HTML if a URL is available.
 At no point do you refer to yourself as ‘an AI’, ‘a bot’, or use robotic wording of any kind. Never say you’re ‘here at the university’ unless context calls for it.
-Your tone is lively, personable, straightforward, and very practical. Avoid clichés or generic encouragement. Address the student directly and respectfully, and sign off as “– Prof. Adeyemi” on long explanations.
+Your tone is lively, personable, straightforward, and very practical. Avoid clichés or generic encouragement. Address the student directly and respectfully, and sign off as “– Prof. Adeyemi” only on the last reply in each session.
 `;
 
-function buildPrompt(userMessages, attachedImage = null, imageRefs = []) {
+function buildPrompt(historyMessages, attachedImage = null, imageRefs = []) {
+  // historyMessages must alternate student/professor for effective context
   let prompt = SYSTEM_PROMPT;
-  userMessages.forEach(msg => {
-    prompt += `\nStudent: ${msg.content}`;
+
+  historyMessages.forEach(msg => {
+    (msg.messages || []).forEach(m => {
+      prompt += (
+        m.role === 'professor' ? `\nProfessor: ${m.content}` : `\nStudent: ${m.content}`
+      );
+    });
+    if (msg.professorReply) {
+      prompt += `\nProfessor: ${msg.professorReply}`;
+    }
   });
+
   if (attachedImage) {
     prompt += `\nStudent has also attached image number ${attachedImage.refNumber} for analysis. Please reference it as 'Image ${attachedImage.refNumber}' if relevant.`;
   }
-  if (imageRefs && imageRefs.length) {
-    prompt += `\nImages available in this session: ${imageRefs.map(v=>`Image ${v.refNumber}`).join(', ')}.`;
+  if (imageRefs.length) {
+    prompt += `\nImages available in this session: ${imageRefs.map(v => `Image ${v.refNumber}`).join(', ')}.`;
   }
+
   prompt += `\nProfessor:`;
   return prompt;
 }
@@ -73,35 +85,42 @@ router.post("/topics", authenticate, async (req, res) => {
     res.status(500).json({ error: "Error creating topic", detail: err.message });
   }
 });
-// --- Send message to Gemini endpoint ---
+
+// --- SEND MESSAGE to Gemini endpoint ---
 router.post("/send", authenticate, async (req, res) => {
   try {
     const { messages, image, channel = "general" } = req.body;
     if (!messages || !Array.isArray(messages) || messages.length === 0)
       return res.status(400).json({ error: "Messages required" });
+
     let userId = req.user ? req.user.id : null;
+
     // Session: fetch all previous images referenced so far in this channel
-    const previousImages = await GeminiMessage.find({ user: userId, channel, image: {$ne: null} }).sort({ date: 1 });
-    // Assign refNumber for any new image
+    const previousImages = await GeminiMessage.find({ user: userId, channel, image: { $ne: null } }).sort({ date: 1 });
     let imageRefNumber = previousImages.length + 1;
     let attachedImage = image ? { ...image, refNumber: imageRefNumber } : null;
-    // Prepare message context for Gemini: include N previous user/professor messages from this channel for continuity
-    const recentMsgs = await GeminiMessage.find({ user: userId, channel })
-      .sort({ date: -1 }).limit(9); // get up to 9 previous messages for context
-    let contextMsgs = [], imageRefs = [];
-    recentMsgs.reverse().forEach(msgDoc => {
-      contextMsgs.push(...msgDoc.messages.map(m => ({
+
+    // Prepare message context: include N previous messages for continuity
+    const recentMsgs = await GeminiMessage.find({ user: userId, channel }).sort({ date: 1 });
+    let contextMsgs = [];
+    let imageRefs = previousImages.map(imgDoc =>
+      imgDoc.image && imgDoc.image.refNumber ? { refNumber: imgDoc.image.refNumber } : null
+    ).filter(Boolean);
+
+    // Add full chronologically ordered dialog, including professor replies
+    contextMsgs = recentMsgs.slice(-9); // last 9 exchanges for context
+
+    // Then add the new user messages at end
+    contextMsgs.push({
+      messages: messages.map(m => ({
         role: m.role === 'professor' ? 'professor' : 'user',
         content: m.content
-      })));
-      if (msgDoc.image && msgDoc.image.refNumber) imageRefs.push({ refNumber: msgDoc.image.refNumber });
+      })),
+      image: attachedImage,
+      professorReply: null
     });
-    // User message is always last
-    contextMsgs.push(...messages.map(m => ({
-      role: m.role === 'professor' ? 'professor' : 'user',
-      content: m.content
-    })));
-    // Generate Gemini prompt
+
+    // Generate Gemini prompt from correct dialog
     let geminiPrompt = buildPrompt(contextMsgs, attachedImage, imageRefs);
 
     let payload = {
@@ -115,6 +134,7 @@ router.post("/send", authenticate, async (req, res) => {
         }
       });
     }
+
     // Gemini API call
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
@@ -149,23 +169,41 @@ router.post("/send", authenticate, async (req, res) => {
 // --- Paginated message history ---
 router.get("/history", authenticate, async (req, res) => {
   try {
-    let offset = parseInt(req.query.offset) || 0;
-    let limit = parseInt(req.query.limit) || 10;
+    let offset = Math.max(0, parseInt(req.query.offset) || 0);
+    let limit = Math.max(1, parseInt(req.query.limit) || 10);
     let channel = req.query.channel || "general";
     let userId = req.user ? req.user.id : null;
 
-    // Only fetch for this channel/topic
-    const history = await GeminiMessage.find({ user: userId, channel })
-      .sort({ date: -1 })
-      .skip(offset)
-      .limit(limit);
+    // Only fetch for this channel/topic, sorted by oldest first (for dialog context)
+    const totalCount = await GeminiMessage.countDocuments({ user: userId, channel });
+    let history = [];
+    if (offset < totalCount) {
+      history = await GeminiMessage.find({ user: userId, channel })
+        .sort({ date: 1 })
+        .skip(offset)
+        .limit(limit);
+    }
+    const hasMore = offset + history.length < totalCount;
 
     res.json({
       history,
-      hasMore: history.length === limit
+      hasMore,
+      totalCount
     });
   } catch (err) {
     res.status(500).json({ error: "Error fetching chat history", detail: err.message });
+  }
+});
+
+// --- Utility: Get total message count per topic/channel ---
+router.get("/history/count", authenticate, async (req, res) => {
+  try {
+    let channel = req.query.channel || "general";
+    let userId = req.user ? req.user.id : null;
+    const totalCount = await GeminiMessage.countDocuments({ user: userId, channel });
+    res.json({ totalCount });
+  } catch (err) {
+    res.status(500).json({ error: "Error counting chat history", detail: err.message });
   }
 });
 
@@ -178,7 +216,7 @@ router.post("/upload-image", authenticate, upload.single("image"), async (req, r
     const imageData = fs.readFileSync(req.file.path);
     const base64Image = imageData.toString("base64");
     const mimeType = req.file.mimetype;
-    // Assign sequential image refNumber in this channel
+    // Sequential image refNumber in this channel
     let previousImages = await GeminiMessage.find({ user: req.user?.id, channel, image: { $ne: null } }).sort({ date: 1 });
     let imageRefNumber = previousImages.length + 1;
     // Gemini image query
