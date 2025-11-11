@@ -115,7 +115,8 @@ router.post("/generate-questions", authenticate, uploadMCQ.single("file"), async
     const prompt = `
 Based strictly on the content below, generate ${numQuestions} ${difficulty} level multiple choice questions (MCQs).
 Provide four options per question, mark the correct option as "answer" (0-based index), and a one-sentence explanation per correct answer.
-Respond ONLY with valid JSON array:
+IMPORTANT: Respond with NOTHING except the pure JSON array below—no commentary, no markdown, no explanation. The output MUST start with "[" and end with "]".
+
 [
   { "text": "...", "options":["...","...","...","..."], "answer":2, "explanation":"..." }
 ]
