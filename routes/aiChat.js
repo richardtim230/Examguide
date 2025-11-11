@@ -1,13 +1,16 @@
+// ...existing imports...
 import express from "express";
 import multer from "multer";
 import fetch from "node-fetch";
 import path from "path";
 import fs from "fs";
+import pdfParse from "pdf-parse";
+import mammoth from "mammoth";
+import Tesseract from "tesseract.js";
 import ChatTopic from "../models/ChatTopic.js";
 import CBTExam from "../models/CBTExam.js";
 import { authenticate } from "../middleware/authenticate.js";
 import GeminiMessage from "../models/GeminiMessage.js";
-
 const router = express.Router();
 
 const upload = multer({ dest: "uploads/gemini/" });
@@ -62,6 +65,106 @@ function buildPrompt(historyMessages, attachedImage = null, imageRefs = []) {
   prompt += `\nProfessor:`;
   return prompt;
 }
+// --- MCQ GENERATION FROM FILE ENDPOINT ---
+const uploadMCQ = multer({ dest: "uploads/mcq/" });
+
+const SUPPORTED_EXTENSIONS = [".pdf", ".docx", ".doc", ".jpg", ".jpeg", ".png", ".bmp", ".gif"];
+
+router.post("/generate-questions", authenticate, uploadMCQ.single("file"), async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const { difficulty = "medium", numQuestions = 20, instructions = "" } = req.body;
+    if (!req.file) return res.status(400).json({ error: "No file provided" });
+    const ext = path.extname(req.file.originalname).toLowerCase();
+
+    if (!SUPPORTED_EXTENSIONS.includes(ext))
+      return res.status(400).json({ error: `File format not supported (${ext}). Supported: ${SUPPORTED_EXTENSIONS.join(", ")}` });
+
+    let fileText = "";
+
+    // --- PDF ---
+    if (ext === ".pdf") {
+      const fileData = fs.readFileSync(req.file.path);
+      const pdfData = await pdfParse(fileData);
+      fileText = pdfData.text;
+    }
+    // --- Word DOCX/DOC ---
+    else if ([".docx", ".doc"].includes(ext)) {
+      const result = await mammoth.extractRawText({ path: req.file.path });
+      fileText = result.value;
+    }
+    // --- Image (OCR)—jpg, jpeg, png, bmp, gif ---
+    else if ([".jpg", ".jpeg", ".png", ".bmp", ".gif"].includes(ext)) {
+      const imgPath = req.file.path;
+      const { data: { text } } = await Tesseract.recognize(imgPath, "eng");
+      fileText = text;
+    } else {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({ error: "Unsupported file format" });
+    }
+
+    fs.unlinkSync(req.file.path);
+
+    if (!fileText || fileText.trim().length < 20)
+      return res.status(400).json({ error: "File content could not be read or is too short." });
+
+    // --- New session/channel name based on file/time
+    const channelName = `Generated Quiz – ${req.file.originalname.replace(/\.[^/.]+$/, "")} – ${Date.now()}`;
+
+    // Compose Prompt for Gemini
+    const prompt = `
+Based strictly on the content below, generate ${numQuestions} ${difficulty} level multiple choice questions (MCQs).
+Provide four options per question, mark the correct option as "answer" (0-based index), and a one-sentence explanation per correct answer.
+Respond ONLY with valid JSON array:
+[
+  { "text": "...", "options":["...","...","...","..."], "answer":2, "explanation":"..." }
+]
+${instructions && instructions.trim().length > 0 ? "Extra instructions: " + instructions : ""}
+Material for questions (summarize where appropriate, but do not hallucinate content):
+
+${fileText.substring(0, 6500)}
+
+`;
+
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+    // --- Gemini API CALL
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    let mcqText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    let questions = [];
+    try {
+      questions = JSON.parse(mcqText);
+    } catch (e) {
+      // If Gemini's output is not valid JSON, show user
+      return res.status(500).json({ error: "Could not parse MCQ response.", raw: mcqText });
+    }
+
+    // Create new CBTExam in DB
+    const exam = new CBTExam({
+      user: userId,
+      channel: channelName,
+      questions,
+      status: "scheduled",
+      startedAt: new Date()
+    });
+    await exam.save();
+
+    res.json({
+      message: `MCQ quiz generated from file "${req.file.originalname}".`,
+      channel: channelName,
+      examId: exam._id,
+      questions
+    });
+  } catch (err) {
+    res.status(500).json({ error: "MCQ generation failed.", detail: err.message });
+  }
+});
 
 // --- GET Topics List ---
 router.get("/topics", authenticate, async (req, res) => {
