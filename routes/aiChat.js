@@ -69,7 +69,58 @@ function buildPrompt(historyMessages, attachedImage = null, imageRefs = []) {
 const uploadMCQ = multer({ dest: "uploads/mcq/" });
 
 const SUPPORTED_EXTENSIONS = [".pdf", ".docx", ".doc", ".jpg", ".jpeg", ".png", ".bmp", ".gif"];
+// Add this endpoint:
+router.post("/schedule-cbt", authenticate, async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const { channel = "general", n = 20 } = req.body;
 
+    const prompt = `Generate ${n} MCQs (multiple choice questions), each with 4 options and answer index, for the topic: "${channel}". 
+Each question should also include a brief explanation for the answer. 
+Return ONLY valid JSON array: [ {text, options:[...], answer, explanation} ]`;
+
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    const payload = {
+      contents: [{ parts: [{ text: prompt }] }]
+    };
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }
+    );
+    const data = await response.json();
+    let mcqText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    let questions = [];
+    try {
+      questions = JSON.parse(mcqText);
+    } catch (e) {
+      // Try to extract a JSON array if Gemini is messy
+      const jsonMatch = mcqText.match(/\[.*\{[\s\S]*?\}\s*\]/);
+      if(jsonMatch){
+        try { questions = JSON.parse(jsonMatch[0]); }
+        catch { questions = []; }
+      }
+    }
+
+    // Save to CBTExam
+    const exam = new CBTExam({
+      user: userId,
+      channel,
+      questions,
+      status: "scheduled",
+      startedAt: new Date()
+    });
+    await exam.save();
+
+    res.json({ examId: exam._id, questions });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to schedule CBT exam", detail: err.message });
+  }
+});
 router.post("/generate-questions", authenticate, uploadMCQ.single("file"), async (req, res) => {
   try {
     const userId = req.user?.id;
