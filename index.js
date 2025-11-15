@@ -15,7 +15,10 @@ import streamifier from 'streamifier';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';  
 import postmark from "postmark";
-const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
+import liveclassRoutes, { setupLiveClassSocket } from './routes/liveclass.js';
+import { Server } from 'socket.io';
+import http from "http";
+const server = http.createServer(app);
 
 dotenv.config();
 
@@ -1220,6 +1223,13 @@ app.get("/api/listings/count", async (req, res) => {
     res.status(500).json({ count: 0 });
   }
 });
+
+const io = new Server(server, { cors: { origin: "*", credentials: true }, path: "/" });
+setupLiveClassSocket(io);
+
+server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
+const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
+
 // --- Superadmin & Student Profile Updates ---
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/blogger", bloggerAuthRoutes);
@@ -1254,6 +1264,9 @@ app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
+app.use("/uploads/liveclass", express.static(path.join(process.cwd(), "uploads/liveclass"))); // Serve files publicly
+app.use("/api/liveclass", liveclassRoutes);
+  
 app.use("/api/ai-chat", aiChatRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
