@@ -1224,9 +1224,8 @@ app.get("/api/listings/count", async (req, res) => {
   }
 });
 
-const io = new Server(server, { cors: { origin: "*", credentials: true }, path: "/" });
+const io = new Server(server, { cors: { origin: "*", credentials: true }, path: "/liveclass" });
 setupLiveClassSocket(io);
-
 server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
 const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
 
