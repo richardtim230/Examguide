@@ -287,7 +287,52 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Could not fetch user" });
   }
 });
-
+// POST /api/users/batch-assign-keys
+// { studentIds: [array of studentId strings] }
+router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const { studentIds } = req.body;
+  if (!studentIds || !Array.isArray(studentIds)) return res.status(400).json({ message: "studentIds array required" });
+  const results = [];
+  for (let studentId of studentIds) {
+    const user = await Users.findOne({ studentId });
+    if (!user) {
+      results.push({ studentId, error: "Not found" });
+      continue;
+    }
+    // Only assign if not already premium or has pending key
+    if (user.isPremium || (user.activationKeyStatus === "pending" && user.assignedActivationKey)) {
+      results.push({ studentId, status: "Already premium or has pending key" });
+      continue;
+    }
+    const key = crypto.randomBytes(8).toString("hex").toUpperCase();
+    user.assignedActivationKey = key;
+    user.activationKeyStatus = "pending";
+    await user.save();
+    results.push({ studentId, activationKey: key, status: "Assigned" });
+  }
+  res.json({ results });
+});
+// PATCH /api/users/:studentId/expire-key (admin)
+// Expires/revokes a key, disables premium if already active
+router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const user = await Users.findOne({ studentId: req.params.studentId });
+  if (!user) return res.status(404).json({ message: "Student not found" });
+  user.activationKeyStatus = "expired";
+  user.assignedActivationKey = "";
+  user.isPremium = false;
+  await user.save();
+  res.json({ message: "Activation key expired/revoked", studentId: user.studentId });
+});
+// GET /api/users/activation-keys?status=&studentId= (admin only)
+// Returns all users with activation key info, or filtered by status or studentId
+router.get("/activation-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const { status, studentId } = req.query;
+  let filter = { assignedActivationKey: { $ne: "" } };
+  if (status) filter.activationKeyStatus = status;
+  if (studentId) filter.studentId = studentId;
+  const users = await Users.find(filter).select("studentId fullname email assignedActivationKey activationKeyStatus isPremium");
+  res.json({ data: users });
+});
 // GET user by id (admin view)
 router.get("/admin/users/:id", authenticate, async (req, res) => {
   try {
