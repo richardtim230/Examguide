@@ -15,23 +15,6 @@ function isObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
-// Helper: find user by either mongo _id or studentId (tries _id first if it looks like an ObjectId)
-async function findUserByAnyId(id) {
-  if (!id) return null;
-  // If looks like mongo id, try by _id first
-  if (isObjectId(id)) {
-    try {
-      const byId = await Users.findById(id);
-      if (byId) return byId;
-    } catch (e) {
-      // ignore and fall back to studentId lookup
-    }
-  }
-  // Fallback to studentId lookup
-  return await Users.findOne({ studentId: id });
-}
-
-// Accept role filter and return user list
 router.get("/", async (req, res) => {
   const filter = {};
 
@@ -129,21 +112,21 @@ router.get("/", async (req, res) => {
     }
 
     // Only populate faculty/department for users whose field is a valid ObjectId
-    const usersToPopulate = users.filter(u =>
-      mongoose.Types.ObjectId.isValid(u.faculty) ||
-      mongoose.Types.ObjectId.isValid(u.department)
-    );
+const usersToPopulate = users.filter(u =>
+  mongoose.Types.ObjectId.isValid(u.faculty) ||
+  mongoose.Types.ObjectId.isValid(u.department)
+);
 
-    await Users.populate(usersToPopulate, [
-      {
-        path: "faculty",
-        select: "name"
-      },
-      {
-        path: "department",
-        select: "name"
-      }
-    ]);
+await Users.populate(usersToPopulate, [
+  {
+    path: "faculty",
+    select: "name"
+  },
+  {
+    path: "department",
+    select: "name"
+  }
+]);
 
     const data = users.map(u => u.toObject());
     res.json(data);
@@ -153,20 +136,17 @@ router.get("/", async (req, res) => {
 });
 
 // POST /api/users/:studentId/activation-key (admin)
-// Now accepts either a studentId or a mongo _id in the URL param
 router.post("/:studentId/activation-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
-    const param = req.params.studentId;
-    const user = await findUserByAnyId(param);
+    const studentId = req.params.studentId;
+    const user = await Users.findOne({ studentId });
     if (!user) return res.status(404).json({ message: "Student not found" });
 
     const key = crypto.randomBytes(8).toString("hex").toUpperCase();
     user.assignedActivationKey = key;
     user.activationKeyStatus = "pending";
     await user.save();
-
-    // return studentId as stored (if user.studentId exists prefer that)
-    res.json({ message: "Activation key assigned", studentId: user.studentId || user._id, activationKey: key });
+    res.json({ message: "Activation key assigned", studentId, activationKey: key });
   } catch (err) {
     res.status(500).json({ message: err.message || "Could not assign key" });
   }
@@ -189,7 +169,6 @@ router.post("/redeem-activation", authenticate, async (req, res) => {
     res.status(500).json({ message: err.message || "Could not redeem key." });
   }
 });
-
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await Users.findById(req.params.id);
@@ -274,83 +253,86 @@ router.patch('/:userId/approval', authenticate, authorizeRole('admin', 'superadm
   }
 });
 
+// GET user by id (for author lookup, with account/payment/contact details)
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await Users.findById(req.params.id)
+      .populate("faculty", "name")
+      .populate("department", "name")
+      .select("fullname username profilePic faculty department bio phone bank accountName accountNumber location email");
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    let faculty = user.faculty;
+    let department = user.department;
+    if (typeof faculty === "string") faculty = { name: faculty };
+    if (typeof department === "string") department = { name: department };
+
+    res.json({
+      user: {
+        fullname: user.fullname,
+        username: user.username,
+        profilePic: user.profilePic,
+        faculty: faculty?.name || "",
+        department: department?.name || "",
+        bio: user.bio,
+        phone: user.phone || "",
+        bank: user.bank || "",
+        accountName: user.accountName || "",
+        accountNumber: user.accountNumber || "",
+        location: user.location || "",
+        email: user.email || ""
+      }
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Could not fetch user" });
+  }
+});
 // POST /api/users/batch-assign-keys
-// { studentIds: [array of studentId strings or mongo _ids] }
+// { studentIds: [array of studentId strings] }
 router.post("/batch-assign-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const { studentIds } = req.body;
-    if (!studentIds || !Array.isArray(studentIds)) return res.status(400).json({ message: "studentIds array required" });
-
-    const results = [];
-    for (let idOrStudentId of studentIds) {
-      // Resolve: if a mongo id is given, find that user and use its studentId for assignment
-      let user = null;
-      if (isObjectId(idOrStudentId)) {
-        user = await Users.findById(idOrStudentId);
-      }
-      if (!user) {
-        user = await Users.findOne({ studentId: idOrStudentId });
-      }
-      if (!user) {
-        results.push({ provided: idOrStudentId, error: "Not found" });
-        continue;
-      }
-      // Only assign if not already premium or has pending key
-      if (user.isPremium || (user.activationKeyStatus === "pending" && user.assignedActivationKey)) {
-        results.push({ studentId: user.studentId || user._id, status: "Already premium or has pending key" });
-        continue;
-      }
-      const key = crypto.randomBytes(8).toString("hex").toUpperCase();
-      user.assignedActivationKey = key;
-      user.activationKeyStatus = "pending";
-      await user.save();
-      results.push({ studentId: user.studentId || user._id, activationKey: key, status: "Assigned" });
+  const { studentIds } = req.body;
+  if (!studentIds || !Array.isArray(studentIds)) return res.status(400).json({ message: "studentIds array required" });
+  const results = [];
+  for (let studentId of studentIds) {
+    const user = await Users.findOne({ studentId });
+    if (!user) {
+      results.push({ studentId, error: "Not found" });
+      continue;
     }
-    res.json({ results });
-  } catch (err) {
-    res.status(500).json({ message: err.message || "Server error" });
-  }
-});
-
-// PATCH /api/users/:studentId/expire-key (admin)
-// Now accepts either a studentId or a mongo _id in the URL param
-router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const param = req.params.studentId;
-    const user = await findUserByAnyId(param);
-    if (!user) return res.status(404).json({ message: "Student not found" });
-    user.activationKeyStatus = "expired";
-    user.assignedActivationKey = "";
-    user.isPremium = false;
+    // Only assign if not already premium or has pending key
+    if (user.isPremium || (user.activationKeyStatus === "pending" && user.assignedActivationKey)) {
+      results.push({ studentId, status: "Already premium or has pending key" });
+      continue;
+    }
+    const key = crypto.randomBytes(8).toString("hex").toUpperCase();
+    user.assignedActivationKey = key;
+    user.activationKeyStatus = "pending";
     await user.save();
-    res.json({ message: "Activation key expired/revoked", studentId: user.studentId || user._id });
-  } catch (err) {
-    res.status(500).json({ message: err.message || "Server error" });
+    results.push({ studentId, activationKey: key, status: "Assigned" });
   }
+  res.json({ results });
 });
-
+// PATCH /api/users/:studentId/expire-key (admin)
+// Expires/revokes a key, disables premium if already active
+router.patch("/:studentId/expire-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  const user = await Users.findOne({ studentId: req.params.studentId });
+  if (!user) return res.status(404).json({ message: "Student not found" });
+  user.activationKeyStatus = "expired";
+  user.assignedActivationKey = "";
+  user.isPremium = false;
+  await user.save();
+  res.json({ message: "Activation key expired/revoked", studentId: user.studentId });
+});
 // GET /api/users/activation-keys?status=&studentId= (admin only)
-// Returns all users with activation key info, or filtered by status or studentId/_id
+// Returns all users with activation key info, or filtered by status or studentId
 router.get("/activation-keys", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  try {
-    const { status, studentId } = req.query;
-    let filter = { assignedActivationKey: { $ne: "" } };
-    if (status) filter.activationKeyStatus = status;
-    if (studentId) {
-      if (isObjectId(String(studentId))) {
-        // search by either _id or studentId
-        filter.$or = [{ _id: studentId }, { studentId: studentId }];
-      } else {
-        filter.studentId = studentId;
-      }
-    }
-    const users = await Users.find(filter).select("studentId fullname email assignedActivationKey activationKeyStatus isPremium _id");
-    res.json({ data: users });
-  } catch (err) {
-    res.status(500).json({ message: err.message || "Server error" });
-  }
+  const { status, studentId } = req.query;
+  let filter = { assignedActivationKey: { $ne: "" } };
+  if (status) filter.activationKeyStatus = status;
+  if (studentId) filter.studentId = studentId;
+  const users = await Users.find(filter).select("studentId fullname email assignedActivationKey activationKeyStatus isPremium");
+  res.json({ data: users });
 });
-
 // GET user by id (admin view)
 router.get("/admin/users/:id", authenticate, async (req, res) => {
   try {
@@ -386,7 +368,6 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: err.message || "Server error" });
   }
 });
-
 // In routes/auth.js or routes/user.js
 router.patch('/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
@@ -552,47 +533,6 @@ router.delete("/:id", authenticate, authorizeRole("admin", "superadmin"), async 
     res.json({ message: "User deleted." });
   } catch (err) {
     res.status(500).json({ message: err.message || "Server error" });
-  }
-});
-
-/*
-  NOTE: keep the generic GET '/:id' AFTER all specific literal routes in the file to
-  avoid shadowing (e.g. '/activation-keys', '/count', '/admin/users/:id', etc).
-  The generic route below is intentionally placed near the end.
-*/
-
-// GET user by id (for author lookup, with account/payment/contact details)
-router.get("/:id", async (req, res) => {
-  try {
-    const user = await Users.findById(req.params.id)
-      .populate("faculty", "name")
-      .populate("department", "name")
-      .select("fullname username profilePic faculty department bio phone bank accountName accountNumber location email");
-    if (!user) return res.status(404).json({ error: "User not found" });
-
-    let faculty = user.faculty;
-    let department = user.department;
-    if (typeof faculty === "string") faculty = { name: faculty };
-    if (typeof department === "string") department = { name: department };
-
-    res.json({
-      user: {
-        fullname: user.fullname,
-        username: user.username,
-        profilePic: user.profilePic,
-        faculty: faculty?.name || "",
-        department: department?.name || "",
-        bio: user.bio,
-        phone: user.phone || "",
-        bank: user.bank || "",
-        accountName: user.accountName || "",
-        accountNumber: user.accountNumber || "",
-        location: user.location || "",
-        email: user.email || ""
-      }
-    });
-  } catch (e) {
-    res.status(500).json({ error: "Could not fetch user" });
   }
 });
 
