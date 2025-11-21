@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import User from '../models/User.js'; 
 import Faculty from "../models/Faculty.js";
 import Department from "../models/Department.js";
+import crypto from "crypto";
 import { authenticate, authorizeRole } from "../middleware/authenticate.js";
 const router = express.Router();
 
@@ -134,6 +135,40 @@ await Users.populate(usersToPopulate, [
   }
 });
 
+// POST /api/users/:studentId/activation-key (admin)
+router.post("/:studentId/activation-key", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+  try {
+    const studentId = req.params.studentId;
+    const user = await Users.findOne({ studentId });
+    if (!user) return res.status(404).json({ message: "Student not found" });
+
+    const key = crypto.randomBytes(8).toString("hex").toUpperCase();
+    user.assignedActivationKey = key;
+    user.activationKeyStatus = "pending";
+    await user.save();
+    res.json({ message: "Activation key assigned", studentId, activationKey: key });
+  } catch (err) {
+    res.status(500).json({ message: err.message || "Could not assign key" });
+  }
+});
+
+// POST /api/users/redeem-activation (student)
+router.post("/redeem-activation", authenticate, async (req, res) => {
+  try {
+    const { activationKey } = req.body;
+    if (!activationKey) return res.status(400).json({ message: "Activation key required." });
+
+    const user = await Users.findOne({ assignedActivationKey: activationKey, activationKeyStatus: "pending", _id: req.user.id });
+    if (!user) return res.status(404).json({ message: "Invalid or expired key." });
+
+    user.isPremium = true;
+    user.activationKeyStatus = "redeemed";
+    await user.save();
+    res.json({ message: "Account successfully upgraded to premium!", isPremium: true });
+  } catch (err) {
+    res.status(500).json({ message: err.message || "Could not redeem key." });
+  }
+});
 router.patch("/:id/verify", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
   try {
     const user = await Users.findById(req.params.id);
