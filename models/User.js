@@ -25,6 +25,9 @@ const UserSchema = new mongoose.Schema({
   accountName: { type: String },
   accountNumber: { type: String },
   idType: { type: String },
+  isPremium: { type: Boolean, default: false },
+  assignedActivationKey: { type: String, default: "" },
+  activationKeyStatus: { type: String, enum: ["pending", "redeemed", "expired"], default: "pending" },
   location: { type: String, default: "" }, // Added location field for seller dashboard
   verification: {
     idDocument: String,
