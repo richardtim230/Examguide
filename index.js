@@ -150,7 +150,8 @@ import reviewsRoutes from "./routes/reviews.js";
 import supportRoutes from "./routes/support.js";
 import Ad from "./models/Ad.js";
 import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
-// ... other imports ...
+// ... existing imports ...
+import lectureNotesRoutes from "./routes/lectureNotes.js";
 import aiChatRoutes from "./routes/aiChat.js";
 
 const memStorage = multer.memoryStorage();
@@ -1265,9 +1266,10 @@ app.use("/api/orders", ordersRoutes);
 app.use("/api", postsRoutes);
 app.use("/uploads/liveclass", express.static(path.join(process.cwd(), "uploads/liveclass"))); // Serve files publicly
 app.use("/api/liveclass", liveclassRoutes);
-  
+app.use("/api/lecturenotes", lectureNotesRoutes);
 app.use("/api/ai-chat", aiChatRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
 app.use("/api/account-settings", accountSettingsRouter);
+
