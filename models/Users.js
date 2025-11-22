@@ -13,7 +13,7 @@ const UsersSchema = new mongoose.Schema({
   profilePic: { type: String, default: "" },
   faculty: { type: mongoose.Schema.Types.Mixed, ref: "Faculty", default: null },
 department: { type: mongoose.Schema.Types.Mixed, ref: "Department", default: null },
-  role: { type: String, enum: ["student", "blogger", "pending_blogger", "pending_marketer", "pending_both", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
+  role: { type: String, enum: ["student", "tutor", "blogger", "pending_blogger", "pending_marketer", "pending_both", "uploader", "pq-uploader", "admin", "superadmin", "codec"], default: "student" },
   active: { type: Boolean, default: true },
   status: { type: String, enum: ["pending", "active", "banned"], default: "pending" },
 approved: { type: Boolean, default: false },
