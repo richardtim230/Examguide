@@ -6,13 +6,13 @@ const router = express.Router();
 
 // Create a new test schedule (support many departments and levels)
 router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const { examSet, faculty, departments, levels, start, end } = req.body;
+  const { examSet, faculties, departments, levels, start, end } = req.body;
   try {
     const sched = await Schedule.create({
       examSet,
-      faculty,
+      faculties, // <-- updated
       departments,
-      levels, // <-- NEW
+      levels,
       start: new Date(start),
       end: new Date(end),
       createdBy: req.user.id
@@ -24,7 +24,7 @@ router.post("/", authenticate, authorizeRole("admin", "superadmin"), async (req,
 });
 router.get("/", authenticate, async (req, res) => {
   const filter = {};
-  if (req.query.faculty) filter.faculty = req.query.faculty;
+  if (req.query.faculty) filter.faculties = { $in: [req.query.faculty] };
   if (req.query.department) filter.departments = { $in: [req.query.department] };
   if (req.query.level) filter.levels = { $in: [req.query.level] };
   try {
@@ -73,14 +73,14 @@ router.get("/count", async (req, res) => {
   }
 });
 router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
-  const { examSet, faculty, departments, levels, start, end } = req.body;
+  const { examSet, faculties, departments, levels, start, end } = req.body;
   try {
     const sched = await Schedule.findById(req.params.id);
     if (!sched) return res.status(404).json({ error: "Schedule not found" });
     if (examSet !== undefined) sched.examSet = examSet;
-    if (faculty !== undefined) sched.faculty = faculty;
+    if (faculties !== undefined) sched.faculties = faculties; // <-- updated
     if (departments !== undefined) sched.departments = departments;
-    if (levels !== undefined) sched.levels = levels; // <-- NEW
+    if (levels !== undefined) sched.levels = levels;
     if (start !== undefined) sched.start = new Date(start);
     if (end !== undefined) sched.end = new Date(end);
     await sched.save();
@@ -89,7 +89,6 @@ router.put("/:id", authenticate, authorizeRole("admin", "superadmin"), async (re
     res.status(400).json({ error: e.message });
   }
 });
-
 router.get("/counts", async (req, res) => {
   try {
     const count = await Schedule.countDocuments({});
