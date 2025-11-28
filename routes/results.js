@@ -183,8 +183,20 @@ router.get("/:resultId", authenticate, async (req, res) => {
   });
 });
 
-// REVIEW ENDPOINT: Only show answered questions
+// REVIEW ENDPOINT: Improved answer key matching for correct "selected" answers
 router.get("/:sessionId/review", authenticate, async (req, res) => {
+  function findAnswer(answers, id) {
+    // Try various possible representations of an id as key
+    if (answers[id] !== undefined) return answers[id];
+    if (answers[String(id)] !== undefined) return answers[String(id)];
+    if (typeof id === "object" && id?.toString) {
+      if (answers[id.toString()] !== undefined) return answers[id.toString()];
+    }
+    // For numeric id fallback
+    if (!isNaN(id) && answers[Number(id)] !== undefined) return answers[Number(id)];
+    return "";
+  }
+
   try {
     const { sessionId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(sessionId)) {
@@ -209,14 +221,14 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
       question: q.question,
       options: q.options,
       correct: q.answer,
-      selected: answers[String(q.id)] ?? "",
+      selected: findAnswer(answers, q.id),
       explanation: q.explanation || "",
       questionImage: q.questionImage || null
     }));
 
     res.json({
       sessionId: result._id,
-      examTitle: result.examSetTitle || "", // or fetch title from set if you want
+      examTitle: result.examSetTitle || "",
       questions
     });
   } catch (e) {
@@ -224,6 +236,7 @@ router.get("/:sessionId/review", authenticate, async (req, res) => {
     res.status(500).json({ message: "Could not load review", error: e.message });
   }
 });
+
 router.post("/practice", authenticate, async (req, res) => {
   const { answers, score, timeTaken, questions, subject, year, courseCode } = req.body;
   // Save a result for practice mode
@@ -243,4 +256,5 @@ router.post("/practice", authenticate, async (req, res) => {
   await result.save();
   res.status(201).json({ message: "Practice result saved", result });
 });
+
 export default router;
