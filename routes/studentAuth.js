@@ -1,5 +1,3 @@
-
-
 import express from "express";
 import multer from "multer";
 import path from "path";
@@ -51,14 +49,9 @@ function authenticate(req, res, next) {
   }
 }
 
-/**
- * Registration Route (POST /api/student/register)
- * Expects multipart/form-data for passport upload
- * Body: { fullName, email, phone, dob, gender, address, program, password, referral, guardianName, guardianPhone }
- */
 router.post("/register", upload.single("passport"), async (req, res) => {
   try {
-    const {
+    let {
       fullName,
       email,
       phone,
@@ -71,6 +64,11 @@ router.post("/register", upload.single("passport"), async (req, res) => {
       guardianName,
       guardianPhone
     } = req.body;
+
+    // Sanitize and normalize
+    fullName = (fullName || "").trim();
+    email = (email || "").trim().toLowerCase();
+    phone = (phone || "").trim();
 
     if (!fullName || !email || !phone || !program || !password)
       return res.status(400).json({ message: "All required fields not provided" });
@@ -87,7 +85,7 @@ router.post("/register", upload.single("passport"), async (req, res) => {
     const hash = await bcrypt.hash(password, 12);
     const user = new User({
       fullName,
-      email,
+      email, // Already sanitized!
       phone,
       dob,
       gender,
