@@ -153,6 +153,7 @@ import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
 // ... existing imports ...
 import lectureNotesRoutes from "./routes/lectureNotes.js";
 import aiChatRoutes from "./routes/aiChat.js";
+import studentAuthRoutes from "./routes/studentAuth.js";
 
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
@@ -1264,6 +1265,7 @@ app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
+app.use("/api/student", studentAuthRoutes);
 app.use("/uploads/liveclass", express.static(path.join(process.cwd(), "uploads/liveclass"))); // Serve files publicly
 app.use("/api/liveclass", liveclassRoutes);
 app.use("/api/lecturenotes", lectureNotesRoutes);
