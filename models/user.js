@@ -93,5 +93,5 @@ userSchema.pre('save', function(next) {
   next();
 });
 
-const User = mongoose.models.user || mongoose.model("user", userSchema);
+const User = mongoose.models.student_account || mongoose.model("student_account", userSchema, "student_accounts");
 export default User;
