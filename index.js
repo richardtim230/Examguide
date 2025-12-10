@@ -154,6 +154,7 @@ import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
 import lectureNotesRoutes from "./routes/lectureNotes.js";
 import aiChatRoutes from "./routes/aiChat.js";
 import studentAuthRoutes from "./routes/studentAuth.js";
+import oauWizardChatRoutes from "./routes/oauWizardChat.js";
 
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
@@ -183,7 +184,7 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/forms", formsRoutes);
 app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts")));
 app.use("/api/broadcasts", broadcastsRoutes);
-
+app.use("/api/oau-wizard", oauWizardChatRoutes);
 mongoose.connect(MONGODB_URI)
   .then(()=>console.log("MongoDB connected"))
   .catch(err=>console.error("MongoDB error", err));
