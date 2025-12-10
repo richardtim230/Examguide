@@ -13,9 +13,9 @@ const upload = multer({ dest: "uploads/oauwizard/" });
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "<YOUR_GEMINI_API_KEY>";
 
 const SYSTEM_PROMPT = `
-You are a lecturer at Obafemi Awolowo University (OAU), Nigeria — your style is distinctly human, direct, lively, and practical, with local university flavor. When students upload or paste exam materi[...]
-Always reply without sounding robotic or like an AI. Use OAU local wisdom, light humor, and academic discipline. Format answers with markdown or HTML for clarity (headings, lists, tables, formulas, et[...]
-Whenever a student uploads a material (PDF, Word, PPT, or image), always reference it precisely and make sure your explanation is based ONLY on the source content provided (summarize main topics; do n[...]
+You are a lecturer at Obafemi Awolowo University (OAU), Nigeria — your style is distinctly human, direct, lively, and practical, with local university flavor. When students upload or paste exam materials, always reply as a real OAU lecturer.
+Always reply without sounding robotic or like an AI. Use OAU local wisdom, light humor, and academic discipline. Format answers with markdown or HTML for clarity (headings, lists, tables, formulas, etc).
+Whenever a student uploads a material (PDF, Word, PPT, or image), always reference it precisely and make sure your explanation is based ONLY on the source content provided (summarize main topics; do not hallucinate).
 After your main explanation, you must IMMEDIATELY generate a CBT quiz of 20 MCQs strictly drawn from the material/topic, with 4 options each, index of the correct answer, and a brief explanation.
 Your CBT output format (as valid JSON array ONLY!):
 [
@@ -89,36 +89,66 @@ router.post("/chat", upload.array("files"), async (req, res) => {
       contents: [{ parts: [{ text: fullPrompt }] }]
     };
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      }
-    );
-    const data = await response.json();
-    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-
-    // Separate explanation and MCQs JSON array (MCQ format as per SYSTEM_PROMPT)
-    let explainText = text;
+    let aiError = null;
+    let text = "";
+    let explainText = "";
     let mcqJson = [];
-    // Find the MCQ JSON block in Gemini's output (should start with [ and end with ])
-    const jsonMatch = text.match(/\[\s*{[\s\S]*?\}\s*\]/);
-    if (jsonMatch) {
-      try {
-        mcqJson = JSON.parse(jsonMatch[0]);
-        explainText = text.slice(0, jsonMatch.index).trim();
-      } catch (e) {
-        mcqJson = [];
+
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        }
+      );
+      const data = await response.json();
+
+      // If Gemini returns error, propagate it
+      if (data.error) {
+        aiError = data.error.message || "Unknown error from Gemini API";
+        text = "";
+      } else if (!data.candidates || !data.candidates.length) {
+        aiError = "No candidates returned from Gemini API (maybe quota issue or API key problem)";
+        text = "";
+      } else {
+        text = data.candidates[0]?.content?.parts?.[0]?.text || "";
+        // Separate explanation and MCQs JSON array (MCQ format as per SYSTEM_PROMPT)
+        explainText = text;
+        // Find the MCQ JSON block in Gemini's output (should start with [ and end with ])
+        const jsonMatch = text.match(/\[\s*{[\s\S]*?\}\s*\]/);
+        if (jsonMatch) {
+          try {
+            mcqJson = JSON.parse(jsonMatch[0]);
+            explainText = text.slice(0, jsonMatch.index).trim();
+          } catch (e) {
+            mcqJson = [];
+            aiError = "AI returned MCQ block in invalid JSON format";
+          }
+        }
       }
+    } catch (err) {
+      aiError = "Gemini API call failed: " + err.message;
+      explainText = "";
+      mcqJson = [];
     }
+
+    // Improved error reporting visible to frontend
+    if (aiError) {
+      return res.json({
+        reply: "",
+        mcqs: [],
+        error: aiError
+      });
+    }
+
     // Optionally further clean/format lecturer reply for HTML/markdown:
     // (Can be as simple as passing through, or send as markdown for frontend)
-
     res.json({
       reply: explainText, // OAU-lecturer explanation (may be Markdown/HTML)
-      mcqs: mcqJson       // MCQs for frontend quiz rendering
+      mcqs: mcqJson,      // MCQs for frontend quiz rendering
+      error: null
     });
   } catch (err) {
     res.status(500).json({ error: "OAU Wizard error", detail: err.message });
