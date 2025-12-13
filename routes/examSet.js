@@ -48,18 +48,32 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * Get a specific ExamSet and its questions by access code
- * GET /api/exam-set/by-access?accessCode=xxxx
+ * Get or auto-create a specific ExamSet and its questions by access code
+ * GET /api/exam-set/by-access?accessCode=xxxx[&subject=...&title=...&duration=...]
  */
 router.get("/by-access", async (req, res) => {
   try {
-    const { accessCode } = req.query;
+    const { accessCode, subject, title, duration } = req.query;
+
     if (!accessCode) return res.status(400).json({ error: "accessCode required" });
 
-    const examSet = await ExamSet.findOne({ accessCode });
-    if (!examSet) return res.status(404).json({ error: "No exam set with this access code" });
+    // Try to find an existing ExamSet
+    let examSet = await ExamSet.findOne({ accessCode });
 
-    // Populate questions for this examSet
+    // If not found, auto-create using provided info (subject required for create)
+    if (!examSet) {
+      if (!subject || typeof subject !== "string" || subject.trim().length === 0) {
+        return res.status(400).json({ error: "Exam set not found and subject parameter required to create new set." });
+      }
+      examSet = await ExamSet.create({
+        subject: subject.trim(),
+        title: (title && typeof title === "string" && title.trim().length > 0) ? title.trim() : `${subject.trim()} Exam`,
+        accessCode: accessCode.trim(),
+        duration: duration ? Number(duration) : 3600
+      });
+    }
+
+    // Always get latest questions for this set
     const questions = await CbtQuestion.find({ examSet: examSet._id });
     res.json({ examSet, questions });
   } catch (e) {
@@ -82,7 +96,7 @@ router.put("/:id", async (req, res) => {
 });
 
 /**
- * Delete ExamSet (& optionally cascade-delete questions)
+ * Delete ExamSet (& cascade-delete questions)
  * DELETE /api/exam-set/:id
  */
 router.delete("/:id", async (req, res) => {
