@@ -155,7 +155,8 @@ import lectureNotesRoutes from "./routes/lectureNotes.js";
 import aiChatRoutes from "./routes/aiChat.js";
 import studentAuthRoutes from "./routes/studentAuth.js";
 import oauWizardChatRoutes from "./routes/oauWizardChat.js";
-
+import examSetRoutes from "./routes/examSet.js";
+import cbtQuestionsRoutes from "./routes/cbtQuestions.js";
 const memStorage = multer.memoryStorage();
 const uploadToMemory = multer({ storage: memStorage });
 
@@ -1266,6 +1267,8 @@ app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
+app.use("/api/exam-set", examSetRoutes);
+app.use("/api/cbt-questions", cbtQuestionsRoutes);
 app.use("/api/student", studentAuthRoutes);
 app.use("/uploads/liveclass", express.static(path.join(process.cwd(), "uploads/liveclass"))); // Serve files publicly
 app.use("/api/liveclass", liveclassRoutes);
