@@ -149,6 +149,7 @@ import BloggerDashboard from "./models/BloggerDashboard.js";
 import reviewsRoutes from "./routes/reviews.js";
 import supportRoutes from "./routes/support.js";
 import Ad from "./models/Ad.js";
+import creditRoutes from "./routes/credit.js";
 import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
 // ... existing imports ...
 import lectureNotesRoutes from "./routes/lectureNotes.js";
@@ -183,6 +184,7 @@ app.use(cors({
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/forms", formsRoutes);
+app.use("/api/credit", creditRoutes);
 app.use("/uploads/broadcasts", express.static(path.join(process.cwd(), "uploads/broadcasts")));
 app.use("/api/broadcasts", broadcastsRoutes);
 app.use("/api/oau-wizard", oauWizardChatRoutes);
