@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
   dob: { // Date of birth
     type: Date,
   },
+  creditPoints: {
+  type: Number,
+  default: 35
+  },
   gender: {
     type: String,
     enum: ["Male", "Female", "Other", ""],
