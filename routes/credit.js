@@ -24,7 +24,47 @@ router.post("/generate", async (req, res) => {
   }
   res.json({ codes: codes.map(c => ({ code: c.code, points: c.points })) });
 });
+// Add near the bottom of the file, after your studentAuth endpoint
 
+// ADMIN/STAFF: assign credit by email or username, no login required (use identifier)
+router.post("/admin-redeem", async (req, res) => {
+  try {
+    let { identifier, code } = req.body;
+    if (!identifier || !code)
+      return res.status(400).json({ message: "identifier and code required." });
+
+    // Find user by email or username (case-insensitive)
+    const user = await User.findOne({
+      $or: [
+        { email: identifier.toLowerCase() },
+        { username: identifier }
+      ]
+    });
+    if (!user) return res.status(404).json({ message: "Student not found for identifier." });
+
+    const credit = await CreditCode.findOne({ code: code.toUpperCase() });
+    if (!credit) return res.status(404).json({ message: "Recharge code not found." });
+    if (credit.used) return res.status(409).json({ message: "Recharge code already used." });
+
+    // Add points to student, mark credit as used
+    const points = credit.points || 250;
+    user.creditPoints = (user.creditPoints || 0) + points;
+    await user.save();
+    credit.used = true;
+    credit.usedBy = user._id;
+    credit.usedAt = new Date();
+    await credit.save();
+
+    res.json({
+      success: true,
+      message: `Credit points added to ${user.email || user.username}.`,
+      creditPoints: user.creditPoints,
+      points
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error.", error: err.message });
+  }
+});
 // List credit codes (GET, filter by used/unused)
 router.get("/", async (req, res) => {
   const { status } = req.query; // status=used|unused|all
