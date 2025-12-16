@@ -22,6 +22,10 @@ wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
 institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   bank: { type: String },
+  creditPoints: {
+  type: Number,
+  default: 35
+  },
   isPremium: { type: Boolean, default: false },
   assignedActivationKey: { type: String, default: "" },
   activationKeyStatus: { type: String, enum: ["pending", "redeemed", "expired"], default: "pending" },
