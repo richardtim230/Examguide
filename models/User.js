@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
   institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
   bank: { type: String },
+  creditPoints: {
+  type: Number,
+  default: 35
+  },
   accountName: { type: String },
   accountNumber: { type: String },
   idType: { type: String },
