@@ -5,6 +5,7 @@ import fs from "fs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import Users from "../models/Users.js"; // <-- Import the Users model
 import ExamSet from "../models/ExamSet.js"; // or wherever your exam sets are defined
 
 const router = express.Router();
@@ -127,6 +128,35 @@ router.post("/register", upload.single("passport"), async (req, res) => {
   }
 });
 
+// DUPLICATE: Use Users model for lookup (new endpoint!)
+router.post("/exam-set/use-credit-v2", authenticate, async (req, res) => {
+  try {
+    const { accessCode } = req.body;
+    if (!accessCode) return res.status(400).json({ message: "Access code required." });
+
+    // Find the student and exam set, but using Users model instead of User
+    const user = await Users.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "Student not found (Users model)" });
+    const examSet = await ExamSet.findOne({ accessCode });
+    if (!examSet) return res.status(404).json({ message: "Invalid/expired Exam Access code." });
+
+    // Check credits (note: property is still creditPoints in Users model)
+    if ((user.creditPoints || 0) < 10) 
+      return res.status(403).json({ message: "Insufficient credit points to access this exam." });
+
+    // Deduct 10 credit points and save
+    user.creditPoints -= 10;
+    await user.save();
+
+    return res.json({
+      message: "Exam access granted (Users model). 10 credit points deducted.",
+      creditPoints: user.creditPoints,
+      examSet,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 router.post("/exam-set/use-credit", authenticate, async (req, res) => {
   try {
     const { accessCode } = req.body;
