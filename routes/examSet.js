@@ -11,10 +11,20 @@ const router = express.Router();
  */
 router.post("/", async (req, res) => {
   try {
-    const { subject, title, accessCode, duration, tags } = req.body;
+    const { subject, title, accessCode, duration } = req.body;
+    let { tags } = req.body;
     if (!subject || !title || !accessCode) {
       return res.status(400).json({ error: "Missing required fields" });
     }
+    // Parse tags field robustly
+    let tagsArr = [];
+    if (Array.isArray(tags)) tagsArr = tags.filter(Boolean);
+    else if (typeof tags === "string" && tags.length)
+      tagsArr = tags.split(",").map(t => t.trim()).filter(Boolean);
+
+    // Set default tag if missing/empty
+    if (!tagsArr || tagsArr.length === 0) tagsArr = ["university"];
+
     // Ensure unique access code
     if (await ExamSet.findOne({ accessCode })) {
       return res.status(409).json({ error: "Access code already exists" });
@@ -24,11 +34,7 @@ router.post("/", async (req, res) => {
       title,
       accessCode,
       duration: duration || 3600,
-      tags: Array.isArray(tags)
-        ? tags.filter(Boolean)
-        : (typeof tags === "string" && tags.length
-            ? tags.split(",").map(t => t.trim()).filter(Boolean)
-            : []),
+      tags: tagsArr,
       createdBy: req.user?.id,
     });
     res.status(201).json(set);
@@ -82,6 +88,9 @@ router.get("/by-access", async (req, res) => {
       if (Array.isArray(tags)) tagsArr = tags.filter(Boolean);
       else if (typeof tags === "string" && tags.length)
         tagsArr = tags.split(",").map(t => t.trim()).filter(Boolean);
+
+      // Set default tag if missing/empty
+      if (!tagsArr || tagsArr.length === 0) tagsArr = ["university"];
 
       examSet = await ExamSet.create({
         subject: subject.trim(),
