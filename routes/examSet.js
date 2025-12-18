@@ -7,11 +7,11 @@ const router = express.Router();
 /**
  * Create an ExamSet
  * POST /api/exam-set
- * Body: {subject, title, accessCode, duration}
+ * Body: {subject, title, accessCode, duration, tags}
  */
 router.post("/", async (req, res) => {
   try {
-    const { subject, title, accessCode, duration } = req.body;
+    const { subject, title, accessCode, duration, tags } = req.body;
     if (!subject || !title || !accessCode) {
       return res.status(400).json({ error: "Missing required fields" });
     }
@@ -24,7 +24,12 @@ router.post("/", async (req, res) => {
       title,
       accessCode,
       duration: duration || 3600,
-      createdBy: req.user?.id
+      tags: Array.isArray(tags)
+        ? tags.filter(Boolean)
+        : (typeof tags === "string" && tags.length
+            ? tags.split(",").map(t => t.trim()).filter(Boolean)
+            : []),
+      createdBy: req.user?.id,
     });
     res.status(201).json(set);
   } catch (e) {
@@ -33,13 +38,20 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * List ExamSets (optionally filter by subject)
- * GET /api/exam-set?subject=MTH101
+ * List ExamSets (optionally filter by subject, tag, or tags)
+ * GET /api/exam-set?subject=MTH101&tag=undergraduate  OR  /api/exam-set?tags=undergraduate,university
  */
 router.get("/", async (req, res) => {
   try {
     const filter = {};
     if (req.query.subject) filter.subject = req.query.subject;
+    if (req.query.tag) filter.tags = req.query.tag;
+    if (req.query.tags) {
+      const tagsArr = Array.isArray(req.query.tags)
+        ? req.query.tags
+        : req.query.tags.split(",").map(t => t.trim()).filter(Boolean);
+      filter.tags = { $in: tagsArr };
+    }
     const sets = await ExamSet.find(filter).sort({ createdAt: -1 });
     res.json(sets);
   } catch (e) {
@@ -48,13 +60,13 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * Get or auto-create a specific ExamSet and its questions by access code
- * GET /api/exam-set/by-access?accessCode=xxxx[&subject=...&title=...&duration=...]
+ * Get or auto-create a specific ExamSet and its questions by access code.
+ * GET /api/exam-set/by-access?accessCode=xxxx[&subject=...&title=...&duration=...&tags=...]
  */
 router.get("/by-access", async (req, res) => {
   try {
     const { accessCode, subject, title, duration } = req.query;
-
+    let { tags } = req.query;
     if (!accessCode) return res.status(400).json({ error: "accessCode required" });
 
     // Try to find an existing ExamSet
@@ -65,11 +77,18 @@ router.get("/by-access", async (req, res) => {
       if (!subject || typeof subject !== "string" || subject.trim().length === 0) {
         return res.status(400).json({ error: "Exam set not found and subject parameter required to create new set." });
       }
+      // Normalize tags
+      let tagsArr = [];
+      if (Array.isArray(tags)) tagsArr = tags.filter(Boolean);
+      else if (typeof tags === "string" && tags.length)
+        tagsArr = tags.split(",").map(t => t.trim()).filter(Boolean);
+
       examSet = await ExamSet.create({
         subject: subject.trim(),
         title: (title && typeof title === "string" && title.trim().length > 0) ? title.trim() : `${subject.trim()} Exam`,
         accessCode: accessCode.trim(),
-        duration: duration ? Number(duration) : 3600
+        duration: duration ? Number(duration) : 3600,
+        tags: tagsArr,
       });
     }
 
@@ -82,12 +101,15 @@ router.get("/by-access", async (req, res) => {
 });
 
 /**
- * Update ExamSet
+ * Update ExamSet -- Now supports updating tags!
  * PUT /api/exam-set/:id
  */
 router.put("/:id", async (req, res) => {
   try {
-    const set = await ExamSet.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const update = { ...req.body };
+    if (update.tags && typeof update.tags === "string")
+      update.tags = update.tags.split(",").map(t => t.trim()).filter(Boolean);
+    const set = await ExamSet.findByIdAndUpdate(req.params.id, update, { new: true });
     if (!set) return res.status(404).json({ error: "Not found" });
     res.json(set);
   } catch (e) {
