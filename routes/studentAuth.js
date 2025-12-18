@@ -141,15 +141,15 @@ router.post("/exam-set/use-credit-v2", authenticate, async (req, res) => {
     if (!examSet) return res.status(404).json({ message: "Invalid/expired Exam Access code." });
 
     // Check credits (note: property is still creditPoints in Users model)
-    if ((user.creditPoints || 0) < 10) 
+    if ((user.creditPoints || 0) < 8) 
       return res.status(403).json({ message: "Insufficient credit points to access this exam." });
 
     // Deduct 10 credit points and save
-    user.creditPoints -= 10;
+    user.creditPoints -= 8;
     await user.save();
 
     return res.json({
-      message: "Exam access granted (Users model). 10 credit points deducted.",
+      message: "Exam access granted (Users model). 8 credit points deducted.",
       creditPoints: user.creditPoints,
       examSet,
     });
