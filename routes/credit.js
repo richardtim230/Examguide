@@ -1,7 +1,11 @@
 import express from "express";
 import CreditCode from "../models/creditCode.js";
 import User from "../models/user.js";
+import Users from "../models/Users.js";
 const router = express.Router();
+
+/* === User Model Selection === */
+const UserModel = (Users && Users.modelName === "Users") ? Users : User;
 
 /* === NO ADMIN AUTH on these endpoints! === */
 
@@ -24,7 +28,6 @@ router.post("/generate", async (req, res) => {
   }
   res.json({ codes: codes.map(c => ({ code: c.code, points: c.points })) });
 });
-// Add near the bottom of the file, after your studentAuth endpoint
 
 // ADMIN/STAFF: assign credit by email or username, no login required (use identifier)
 router.post("/admin-redeem", async (req, res) => {
@@ -34,7 +37,7 @@ router.post("/admin-redeem", async (req, res) => {
       return res.status(400).json({ message: "identifier and code required." });
 
     // Find user by email or username (case-insensitive)
-    const user = await User.findOne({
+    const user = await UserModel.findOne({
       $or: [
         { email: identifier.toLowerCase() },
         { username: identifier }
@@ -65,13 +68,14 @@ router.post("/admin-redeem", async (req, res) => {
     res.status(500).json({ message: "Server error.", error: err.message });
   }
 });
+
 // List credit codes (GET, filter by used/unused)
 router.get("/", async (req, res) => {
   const { status } = req.query; // status=used|unused|all
   let filter = {};
   if (status === "used") filter.used = true;
   else if (status === "unused") filter.used = false;
-  const codes = await CreditCode.find(filter).sort({ createdAt: -1 }).populate('usedBy', 'fullName email');
+  const codes = await CreditCode.find(filter).sort({ createdAt: -1 }).populate('usedBy', 'fullname fullName email');
   res.json(codes);
 });
 
@@ -109,7 +113,7 @@ router.post("/redeem-credit", studentAuth, async (req, res) => {
     const { code } = req.body;
     if (!code || typeof code !== "string" || code.length !== 12)
       return res.status(400).json({ message: "Invalid code." });
-    const user = await User.findById(req.user.id);
+    const user = await UserModel.findById(req.user.id);
     if (!user) return res.status(401).json({ message: "Student not found." });
 
     const credit = await CreditCode.findOne({ code: code.toUpperCase() });
