@@ -532,6 +532,7 @@ app.get('/api/proxy', async (req, res) => {
 
 
 // Registration endpoint with auto-create for faculty/department
+// Registration endpoint with auto-create for faculty/department
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
     // DEVICE CHECK START
@@ -541,10 +542,11 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     }
     const regExists = await DeviceRegistration.findOne({ deviceId });
     if (regExists) {
-      // Optionally, you could even look up the user: await User.findById(regExists.userId)
+      // Optionally, you could even look up the user:
+      // await User.findById(regExists.userId)
       return res.status(403).json({ message: "This device has already been used to register an account. Multiple registrations per device are not permitted." });
-  }
-  try {
+    }
+
     const {
       username,
       password,
@@ -635,7 +637,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     });
 
     await user.save();
-await DeviceRegistration.create({ deviceId, userId: user._id });
+    await DeviceRegistration.create({ deviceId, userId: user._id });
 
     // ---- AFFILIATE REFERRAL LOGIC ----
     if (ref && typeof ref === "string" && ref.trim().length > 0) {
@@ -665,7 +667,6 @@ await DeviceRegistration.create({ deviceId, userId: user._id });
         }
       }
     }
-
     if (email) {
       const verifyUrl = `https//oau.examguard.com.ng/verify-email?token=${verificationToken}&id=${user._id}`;
       try {
