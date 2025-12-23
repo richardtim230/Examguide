@@ -6,6 +6,9 @@ import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import DeviceRegistration from "./models/DeviceRegistration.js";
+import cookieParser from 'cookie-parser';
+import { v4 as uuidv4 } from 'uuid';
 import fetch from 'node-fetch';
 import Faculty from "./models/Faculty.js";
 import Department from "./models/Department.js";
@@ -181,7 +184,21 @@ app.use(cors({
   origin: true,
   credentials: true,
 }));
+app.use(cookieParser());
 
+// Set device_id cookie if not present
+app.use((req, res, next) => {
+  if (!req.cookies.device_id) {
+    const deviceId = uuidv4();
+    res.cookie('device_id', deviceId, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // only over HTTPS in prod
+      maxAge: 1000 * 60 * 60 * 24 * 365 * 5 // 5 years
+    });
+    req.cookies.device_id = deviceId; // so it's available during this request
+  }
+  next();
+});
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/forms", formsRoutes);
 app.use("/api/credit", creditRoutes);
@@ -517,6 +534,17 @@ app.get('/api/proxy', async (req, res) => {
 // Registration endpoint with auto-create for faculty/department
 app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req, res) => {
   try {
+    // DEVICE CHECK START
+    const deviceId = req.cookies.device_id;
+    if (!deviceId) {
+      return res.status(400).json({ message: "Device ID missing. Please enable cookies." });
+    }
+    const regExists = await DeviceRegistration.findOne({ deviceId });
+    if (regExists) {
+      // Optionally, you could even look up the user: await User.findById(regExists.userId)
+      return res.status(403).json({ message: "This device has already been used to register an account. Multiple registrations per device are not permitted." });
+  }
+  try {
     const {
       username,
       password,
@@ -607,6 +635,7 @@ app.post("/api/auth/register", uploadProfilePic.single("profilePic"), async (req
     });
 
     await user.save();
+await DeviceRegistration.create({ deviceId, userId: user._id });
 
     // ---- AFFILIATE REFERRAL LOGIC ----
     if (ref && typeof ref === "string" && ref.trim().length > 0) {
