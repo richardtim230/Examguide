@@ -145,6 +145,7 @@ import superadminRoutes from "./routes/superadmin.js";
 import messagesRoutes from "./routes/messages.js";
 import usersRoutes from "./routes/users.js";
 import formsRoutes from "./routes/forms.js";
+import tasksRoutes from './routes/tasks.js';
 import registrationsRoutes from "./routes/registrations.js";
 import applicationsRoutes from "./routes/applications.js";
 import bloggerDashboardRoutes from "./routes/bloggerDashboard.js";
@@ -1306,6 +1307,7 @@ app.use("/uploads/liveclass", express.static(path.join(process.cwd(), "uploads/l
 app.use("/api/liveclass", liveclassRoutes);
 app.use("/api/lecturenotes", lectureNotesRoutes);
 app.use("/api/ai-chat", aiChatRoutes);
+app.use("/api/tasks", tasksRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
