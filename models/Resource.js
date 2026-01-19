@@ -14,6 +14,7 @@ const ResourceSchema = new mongoose.Schema({
   fileId: { type: mongoose.Schema.Types.ObjectId, default: null },
   // If external link (not using GridFS)
   fileUrl: { type: String, default: "" },
+  thumbnailUrl: { type: String, default: "" },
   fileMime: { type: String, default: "" },
   fileSize: { type: Number, default: 0 },
   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
