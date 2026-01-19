@@ -51,58 +51,94 @@ router.get("/", async (req, res) => {
 });
 
 // POST /api/resources  (upload)
-// Accepts multipart/form-data with fields: title (required), description, type, course, link (external), file (uploaded)
-router.post("/", authenticate, upload.single("file"), async (req, res) => {
-  try {
-    const { title, description = "", type = "other", course = "", link } = req.body;
-    if (!title) return res.status(400).json({ message: "title is required" });
+// Use upload.fields to accept both 'file' and 'thumbnail' (memory storage)
+router.post(
+  "/",
+  authenticate,
+  upload.fields([
+    { name: "file", maxCount: 1 },
+    { name: "thumbnail", maxCount: 1 }
+  ]),
+  async (req, res) => {
+    try {
+      const { title, description = "", type = "other", course = "", link } = req.body;
+      if (!title) return res.status(400).json({ message: "Title required" });
 
-    let fileId = null;
-    let fileUrl = "";
-    let fileMime = "";
-    let fileSize = 0;
+      // Files (if any)
+      const fileObj = req.files?.file?.[0] ?? null;
+      const thumbObj = req.files?.thumbnail?.[0] ?? null;
 
-    if (req.file && req.file.buffer) {
-      // stream buffer to GridFS
-      const bucket = getBucket();
-      const uploadStream = bucket.openUploadStream(req.file.originalname, {
-        contentType: req.file.mimetype,
-        metadata: { uploadedBy: req.user.id, originalName: req.file.originalname }
-      });
+      let fileUrl = "";
+      let cloudinaryPublicId = "";
+      let fileMime = "";
+      let fileSize = 0;
+      let thumbnailUrl = "";
 
-      await new Promise((resolve, reject) => {
-        streamifier.createReadStream(req.file.buffer)
-          .pipe(uploadStream)
-          .on("error", (err) => reject(err))
-          .on("finish", () => {
-            fileId = uploadStream.id;
-            fileMime = req.file.mimetype;
-            fileSize = req.file.size;
-            resolve();
+      // Upload main file to Cloudinary if provided
+      if (fileObj && fileObj.buffer) {
+        const uploadResult = await new Promise((resolve, reject) => {
+          const opts = {
+            folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+            resource_type: "auto",
+            use_filename: true,
+            unique_filename: true,
+            overwrite: false
+          };
+          const stream = cloudinary.v2.uploader.upload_stream(opts, (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
           });
+          streamifier.createReadStream(fileObj.buffer).pipe(stream);
+        });
+
+        fileUrl = uploadResult.secure_url || "";
+        cloudinaryPublicId = uploadResult.public_id || "";
+        fileSize = uploadResult.bytes || fileObj.size || 0;
+        fileMime = fileObj.mimetype || uploadResult.resource_type || "";
+      } else if (link) {
+        fileUrl = link;
+      }
+
+      // Upload thumbnail (image) if provided
+      if (thumbObj && thumbObj.buffer) {
+        const thumbResult = await new Promise((resolve, reject) => {
+          const opts = {
+            folder: (process.env.CLOUDINARY_RESOURCES_FOLDER || "resources") + "/thumbnails",
+            resource_type: "image",
+            use_filename: true,
+            unique_filename: true,
+            overwrite: false
+          };
+          const stream = cloudinary.v2.uploader.upload_stream(opts, (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          });
+          streamifier.createReadStream(thumbObj.buffer).pipe(stream);
+        });
+        thumbnailUrl = thumbResult.secure_url || "";
+      }
+
+      const resource = await Resource.create({
+        title,
+        description,
+        type,
+        course,
+        fileUrl,
+        cloudinaryPublicId,
+        fileMime,
+        fileSize,
+        thumbnailUrl,          // store thumbnail URL in the doc
+        uploadedBy: req.user.id
       });
-    } else if (link) {
-      fileUrl = link;
+
+      res.status(201).json(resource);
+    } catch (e) {
+      console.error("POST /api/resources error:", e);
+      // Return JSON error for easier debugging
+      res.status(500).json({ error: e.message, stack: process.env.NODE_ENV === "development" ? e.stack : undefined });
     }
-
-    const resource = await Resource.create({
-      title,
-      description,
-      type,
-      course,
-      fileId,
-      fileUrl,
-      fileMime,
-      fileSize,
-      uploadedBy: req.user.id
-    });
-
-    res.status(201).json(resource);
-  } catch (err) {
-    console.error("upload error:", err);
-    res.status(500).json({ error: err.message });
   }
-});
+);
 
 // GET /api/resources/:id  (details)
 router.get("/:id", async (req, res) => {
