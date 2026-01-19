@@ -10,20 +10,19 @@ const ResourceSchema = new mongoose.Schema({
   description: { type: String, default: "" },
   type: { type: String, enum: ["pdf", "video", "notes", "audio", "link", "other"], default: "other" },
   course: { type: String, default: "" }, // e.g. "PHY101"
-  fileUrl: { type: String, default: "" }, // local path like /uploads/resources/..., or external link
+  fileUrl: { type: String, default: "" }, // secure Cloudinary URL or external link
+  cloudinaryPublicId: { type: String, default: "" }, // Cloudinary public_id for management
   fileMime: { type: String, default: "" },
   fileSize: { type: Number, default: 0 },
   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   downloads: { type: Number, default: 0 },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  ratings: [RatingSchema],
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  ratings: [RatingSchema]
 }, {
   timestamps: true
 });
 
-// virtuals
+// virtual avg rating
 ResourceSchema.virtual("ratingAvg").get(function() {
   if (!this.ratings || this.ratings.length === 0) return 0;
   const sum = this.ratings.reduce((s, r) => s + (r.rating || 0), 0);
