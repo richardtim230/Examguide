@@ -10,8 +10,10 @@ const ResourceSchema = new mongoose.Schema({
   description: { type: String, default: "" },
   type: { type: String, enum: ["pdf", "video", "notes", "audio", "link", "other"], default: "other" },
   course: { type: String, default: "" }, // e.g. "PHY101"
-  fileUrl: { type: String, default: "" }, // secure Cloudinary URL or external link
-  cloudinaryPublicId: { type: String, default: "" }, // Cloudinary public_id for management
+  // GridFS file reference (when using GridFS)
+  fileId: { type: mongoose.Schema.Types.ObjectId, default: null },
+  // If external link (not using GridFS)
+  fileUrl: { type: String, default: "" },
   fileMime: { type: String, default: "" },
   fileSize: { type: Number, default: 0 },
   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
