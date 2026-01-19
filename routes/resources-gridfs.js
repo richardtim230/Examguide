@@ -1,29 +1,51 @@
 import express from "express";
-import mongoose from "mongoose";
+import fs from "fs";
+import path from "path";
 import multer from "multer";
-import { ObjectId } from "mongodb";
 import streamifier from "streamifier";
 import Resource from "../models/Resource.js";
 import UserLibrary from "../models/UserLibrary.js";
+import User from "../models/User.js";
 import { authenticate } from "../middleware/authenticate.js";
+import cloudinary from "cloudinary";
 
 const router = express.Router();
 
-// Use memory storage so we can stream directly into GridFS
-const storage = multer.memoryStorage();
-const upload = multer({ storage, limits: { fileSize: 200 * 1024 * 1024 } }); // 200MB cap
+// Use Cloudinary v2 API
+const cl = cloudinary.v2;
 
-// Helper to get GridFS bucket (must be created after mongoose connects)
-function getBucket() {
-  const db = mongoose.connection.db;
-  if (!db) throw new Error("MongoDB connection not ready for GridFS");
-  return new mongoose.mongo.GridFSBucket(db, { bucketName: process.env.GRIDFS_BUCKET_NAME || "resourcesFiles" });
+// Memory storage for direct streaming to Cloudinary
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage,
+  limits: { fileSize: 200 * 1024 * 1024 } // 200MB
+});
+
+// Helper to upload a buffer to Cloudinary
+async function uploadBufferToCloudinary(buffer, filename, options = {}) {
+  return new Promise((resolve, reject) => {
+    const opts = {
+      folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
+      resource_type: "auto",
+      use_filename: true,
+      unique_filename: true,
+      overwrite: false,
+      ...options
+    };
+    const stream = cl.uploader.upload_stream(opts, (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
 }
 
-// GET /api/resources  (list)
+/**
+ * GET /api/resources
+ */
 router.get("/", async (req, res) => {
   try {
-    const { q, type, course, uploader, page = 1, limit = 20 } = req.query;
+    const { q, type, course, uploader, page = 1, limit = 20, sort = "-createdAt" } = req.query;
     const query = {};
     if (type) query.type = type;
     if (course) query.course = course;
@@ -32,118 +54,109 @@ router.get("/", async (req, res) => {
       const re = new RegExp(q.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
       query.$or = [{ title: re }, { description: re }, { course: re }];
     }
-    const pg = Math.max(1, parseInt(page, 10));
-    const lim = Math.max(1, Math.min(200, parseInt(limit, 10)));
+    const pg = Math.max(1, parseInt(page, 10) || 1);
+    const lim = Math.max(1, Math.min(200, parseInt(limit, 10) || 20));
     const [total, items] = await Promise.all([
       Resource.countDocuments(query),
       Resource.find(query)
-        .sort({ createdAt: -1 })
+        .sort(sort)
         .skip((pg - 1) * lim)
         .limit(lim)
-        .populate("uploadedBy", "fullname username email")
+        .populate("uploadedBy", "fullname username email profilePic")
         .lean()
     ]);
     res.json({ meta: { page: pg, limit: lim, total, pages: Math.ceil(total / lim) }, items });
   } catch (e) {
-    console.error(e);
+    console.error("GET /api/resources error:", e);
     res.status(500).json({ error: e.message });
   }
 });
 
-// POST /api/resources  (upload)
-// Use upload.fields to accept both 'file' and 'thumbnail' (memory storage)
-router.post(
-  "/",
-  authenticate,
-  upload.fields([
-    { name: "file", maxCount: 1 },
-    { name: "thumbnail", maxCount: 1 }
-  ]),
-  async (req, res) => {
-    try {
-      const { title, description = "", type = "other", course = "", link } = req.body;
-      if (!title) return res.status(400).json({ message: "Title required" });
-
-      // Files (if any)
-      const fileObj = req.files?.file?.[0] ?? null;
-      const thumbObj = req.files?.thumbnail?.[0] ?? null;
-
-      let fileUrl = "";
-      let cloudinaryPublicId = "";
-      let fileMime = "";
-      let fileSize = 0;
-      let thumbnailUrl = "";
-
-      // Upload main file to Cloudinary if provided
-      if (fileObj && fileObj.buffer) {
-        const uploadResult = await new Promise((resolve, reject) => {
-          const opts = {
-            folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources",
-            resource_type: "auto",
-            use_filename: true,
-            unique_filename: true,
-            overwrite: false
-          };
-          const stream = cloudinary.v2.uploader.upload_stream(opts, (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          });
-          streamifier.createReadStream(fileObj.buffer).pipe(stream);
-        });
-
-        fileUrl = uploadResult.secure_url || "";
-        cloudinaryPublicId = uploadResult.public_id || "";
-        fileSize = uploadResult.bytes || fileObj.size || 0;
-        fileMime = fileObj.mimetype || uploadResult.resource_type || "";
-      } else if (link) {
-        fileUrl = link;
-      }
-
-      // Upload thumbnail (image) if provided
-      if (thumbObj && thumbObj.buffer) {
-        const thumbResult = await new Promise((resolve, reject) => {
-          const opts = {
-            folder: (process.env.CLOUDINARY_RESOURCES_FOLDER || "resources") + "/thumbnails",
-            resource_type: "image",
-            use_filename: true,
-            unique_filename: true,
-            overwrite: false
-          };
-          const stream = cloudinary.v2.uploader.upload_stream(opts, (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          });
-          streamifier.createReadStream(thumbObj.buffer).pipe(stream);
-        });
-        thumbnailUrl = thumbResult.secure_url || "";
-      }
-
-      const resource = await Resource.create({
-        title,
-        description,
-        type,
-        course,
-        fileUrl,
-        cloudinaryPublicId,
-        fileMime,
-        fileSize,
-        thumbnailUrl,          // store thumbnail URL in the doc
-        uploadedBy: req.user.id
-      });
-
-      res.status(201).json(resource);
-    } catch (e) {
-      console.error("POST /api/resources error:", e);
-      // Return JSON error for easier debugging
-      res.status(500).json({ error: e.message, stack: process.env.NODE_ENV === "development" ? e.stack : undefined });
-    }
+/**
+ * GET /api/resources/courses
+ */
+router.get("/courses", async (req, res) => {
+  try {
+    const courses = await Resource.distinct("course", { course: { $ne: "" } });
+    res.json(courses.sort());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
-);
+});
 
-// GET /api/resources/:id  (details)
+/**
+ * POST /api/resources
+ * multipart/form-data: title (required), description, type, course, link, file, thumbnail
+ */
+router.post("/", authenticate, upload.fields([{ name: "file", maxCount: 1 }, { name: "thumbnail", maxCount: 1 }]), async (req, res) => {
+  try {
+    const { title, description = "", type = "other", course = "", link } = req.body;
+    if (!title) return res.status(400).json({ message: "Title required" });
+
+    let fileUrl = "";
+    let cloudinaryPublicId = "";
+    let thumbUrl = "";
+    let thumbPublicId = "";
+    let fileMime = "";
+    let fileSize = 0;
+
+    // Upload main file if provided
+    if (req.files && req.files.file && req.files.file[0]) {
+      const file = req.files.file[0];
+      const uploadResult = await uploadBufferToCloudinary(file.buffer, file.originalname, {
+        folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources"
+      });
+      fileUrl = uploadResult.secure_url || "";
+      cloudinaryPublicId = uploadResult.public_id || "";
+      fileSize = uploadResult.bytes || file.size || 0;
+      fileMime = file.mimetype || uploadResult.resource_type || "";
+    } else if (link) {
+      // external link
+      fileUrl = link;
+    }
+
+    // Upload thumbnail if provided
+    if (req.files && req.files.thumbnail && req.files.thumbnail[0]) {
+      const t = req.files.thumbnail[0];
+      try {
+        const thumbResult = await uploadBufferToCloudinary(t.buffer, t.originalname, {
+          folder: process.env.CLOUDINARY_RESOURCES_FOLDER ? `${process.env.CLOUDINARY_RESOURCES_FOLDER}/thumbnails` : "resources/thumbnails"
+        });
+        thumbUrl = thumbResult.secure_url || "";
+        thumbPublicId = thumbResult.public_id || "";
+      } catch (thumbErr) {
+        // non-fatal: log and continue without thumbnail
+        console.warn("Thumbnail upload failed:", thumbErr.message || thumbErr);
+      }
+    }
+
+    const resource = await Resource.create({
+      title,
+      description,
+      type,
+      course,
+      fileUrl,
+      cloudinaryPublicId,
+      thumbnailUrl: thumbUrl,
+      thumbnailPublicId: thumbPublicId,
+      fileMime,
+      fileSize,
+      uploadedBy: req.user.id
+    });
+
+    res.status(201).json(resource);
+  } catch (e) {
+    console.error("POST /api/resources error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * GET /api/resources/:id
+ */
 router.get("/:id", async (req, res) => {
   try {
-    const resource = await Resource.findById(req.params.id).populate("uploadedBy", "fullname username email").lean();
+    const resource = await Resource.findById(req.params.id).populate("uploadedBy", "fullname username email profilePic").lean();
     if (!resource) return res.status(404).json({ message: "Not found" });
     res.json(resource);
   } catch (e) {
@@ -151,45 +164,75 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// GET /api/resources/:id/download  (stream file)
+/**
+ * GET /api/resources/:id/download
+ * redirect to Cloudinary or external link
+ */
 router.get("/:id/download", async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
-    if (!resource) return res.status(404).json({ message: "Resource not found" });
+    if (!resource) return res.status(404).json({ message: "Not found" });
 
     resource.downloads = (resource.downloads || 0) + 1;
     await resource.save();
 
-    if (resource.fileUrl && /^https?:\/\//.test(resource.fileUrl)) {
-      // external link
-      return res.redirect(resource.fileUrl);
-    }
+    const url = resource.fileUrl || "";
+    if (!url) return res.status(404).json({ message: "No file available" });
 
-    if (!resource.fileId) {
-      return res.status(404).json({ message: "No file available for this resource" });
-    }
-
-    const bucket = getBucket();
-    const fileObjectId = typeof resource.fileId === "string" ? new ObjectId(resource.fileId) : resource.fileId;
-
-    const downloadStream = bucket.openDownloadStream(fileObjectId);
-    res.setHeader("Content-Disposition", `attachment; filename="${resource.title.replace(/"/g, "")}"`);
-    if (resource.fileMime) res.setHeader("Content-Type", resource.fileMime);
-
-    downloadStream.on("error", (err) => {
-      console.error("gridfs download error:", err);
-      res.status(500).end("Could not download file");
-    });
-
-    downloadStream.pipe(res);
+    // redirect to the hosted file (Cloudinary or external)
+    return res.redirect(url);
   } catch (e) {
-    console.error(e);
+    console.error("GET download error:", e);
     res.status(500).json({ error: e.message });
   }
 });
 
-// DELETE /api/resources/:id  (owner or admin)
-router.delete("/:id", authenticate, async (req, res) => {
+/**
+ * POST /api/resources/:id/favorite
+ */
+router.post("/:id/favorite", authenticate, async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    if (!resource) return res.status(404).json({ message: "Not found" });
+
+    const uid = req.user.id;
+    const idx = (resource.favorites || []).findIndex(f => String(f) === String(uid));
+    if (idx === -1) resource.favorites.push(uid);
+    else resource.favorites.splice(idx, 1);
+    await resource.save();
+    res.json({ favorited: idx === -1, favoritesCount: resource.favorites.length });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * POST /api/resources/:id/rate
+ */
+router.post("/:id/rate", authenticate, async (req, res) => {
+  try {
+    const { rating } = req.body;
+    const r = Math.max(1, Math.min(5, parseInt(rating, 10) || 0));
+    if (!r) return res.status(400).json({ message: "Invalid rating" });
+
+    const resource = await Resource.findById(req.params.id);
+    if (!resource) return res.status(404).json({ message: "Not found" });
+
+    const existing = resource.ratings.find(rt => String(rt.user) === String(req.user.id));
+    if (existing) existing.rating = r;
+    else resource.ratings.push({ user: req.user.id, rating: r });
+    await resource.save();
+    res.json({ ratingAvg: resource.ratingAvg, ratingCount: resource.ratings.length });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * PUT /api/resources/:id (edit)
+ * Allows replacing file/thumbnail (uploads new Cloudinary assets and tries to destroy previous ones)
+ */
+router.put("/:id", authenticate, upload.fields([{ name: "file", maxCount: 1 }, { name: "thumbnail", maxCount: 1 }]), async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
     if (!resource) return res.status(404).json({ message: "Not found" });
@@ -197,18 +240,76 @@ router.delete("/:id", authenticate, async (req, res) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    // remove GridFS file if present
-    if (resource.fileId) {
-      const bucket = getBucket();
-      const fileObjectId = typeof resource.fileId === "string" ? new ObjectId(resource.fileId) : resource.fileId;
-      try {
-        await bucket.delete(fileObjectId);
-      } catch (er) {
-        // ignore deletion errors (file might already be gone)
-        console.warn("GridFS delete error (ignored):", er.message);
+    const { title, description, type, course, link } = req.body;
+    if (title) resource.title = title;
+    if (description !== undefined) resource.description = description;
+    if (type) resource.type = type;
+    if (course !== undefined) resource.course = course;
+
+    // Replace file if provided
+    if (req.files && req.files.file && req.files.file[0]) {
+      const file = req.files.file[0];
+      const uploadResult = await uploadBufferToCloudinary(file.buffer, file.originalname, {
+        folder: process.env.CLOUDINARY_RESOURCES_FOLDER || "resources"
+      });
+      // try destroy existing
+      if (resource.cloudinaryPublicId) {
+        try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) { /* ignore */ }
       }
+      resource.fileUrl = uploadResult.secure_url || "";
+      resource.cloudinaryPublicId = uploadResult.public_id || "";
+      resource.fileSize = uploadResult.bytes || file.size || 0;
+      resource.fileMime = file.mimetype || uploadResult.resource_type || "";
+    } else if (link) {
+      // switch to external link: delete cloudinary asset if existed
+      if (resource.cloudinaryPublicId) {
+        try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) {}
+        resource.cloudinaryPublicId = "";
+      }
+      resource.fileUrl = link;
+      resource.fileMime = "";
+      resource.fileSize = 0;
     }
 
+    // Replace thumbnail if provided
+    if (req.files && req.files.thumbnail && req.files.thumbnail[0]) {
+      const t = req.files.thumbnail[0];
+      const thumbResult = await uploadBufferToCloudinary(t.buffer, t.originalname, {
+        folder: process.env.CLOUDINARY_RESOURCES_FOLDER ? `${process.env.CLOUDINARY_RESOURCES_FOLDER}/thumbnails` : "resources/thumbnails"
+      });
+      if (resource.thumbnailPublicId) {
+        try { await cl.uploader.destroy(resource.thumbnailPublicId, { resource_type: "image" }); } catch (er) {}
+      }
+      resource.thumbnailUrl = thumbResult.secure_url || "";
+      resource.thumbnailPublicId = thumbResult.public_id || "";
+    }
+
+    resource.updatedAt = new Date();
+    await resource.save();
+    res.json(resource);
+  } catch (e) {
+    console.error("PUT /api/resources/:id error:", e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+/**
+ * DELETE /api/resources/:id
+ */
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    if (!resource) return res.status(404).json({ message: "Not found" });
+    if (String(resource.uploadedBy) !== String(req.user.id) && req.user.role !== "admin") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    // remove cloudinary assets if present
+    if (resource.cloudinaryPublicId) {
+      try { await cl.uploader.destroy(resource.cloudinaryPublicId, { resource_type: "auto" }); } catch (er) {}
+    }
+    if (resource.thumbnailPublicId) {
+      try { await cl.uploader.destroy(resource.thumbnailPublicId, { resource_type: "image" }); } catch (er) {}
+    }
     await resource.remove();
     res.json({ message: "Deleted" });
   } catch (e) {
@@ -216,7 +317,9 @@ router.delete("/:id", authenticate, async (req, res) => {
   }
 });
 
-// Save to library endpoints (same as Cloudinary route)
+/**
+ * Save to / remove from library & library listing (same as before)
+ */
 router.post("/:id/save", authenticate, async (req, res) => {
   try {
     const resourceId = req.params.id;
