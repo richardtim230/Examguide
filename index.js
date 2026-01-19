@@ -134,6 +134,10 @@ import affiliateRoutes from "./routes/affiliate.js";
 import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
 import ordersRoutes from './routes/orders.js';
+// at top imports
+import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
+
+
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
 import rewardsRoutes from "./routes/rewards.js";
@@ -1310,7 +1314,8 @@ app.use("/api/lecturenotes", lectureNotesRoutes);
 app.use("/api/ai-chat", aiChatRoutes);
 app.use("/api/tasks", tasksRoutes);
 // after your other app.use(...) route registrations, add:
-app.use("/api/resources", resourcesRoutes);
+// later, after mongoose.connect(...) and other middleware
+app.use("/api/resources", resourcesGridFSRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
