@@ -127,6 +127,7 @@ import accountSettingsRouter from './routes/accountSettings.js';
 import taxonomyRoutes from './routes/taxonomy.js';
 import buyerDashboardRoutes from "./routes/buyerDashboard.js";
 import User from "./models/User.js";
+import resourcesRoutes from "./routes/resources.js";
 import Progress from "./models/Progress.js";
 import { authenticate, authorizeRole } from "./middleware/authenticate.js";
 import affiliateRoutes from "./routes/affiliate.js";
@@ -1308,6 +1309,8 @@ app.use("/api/liveclass", liveclassRoutes);
 app.use("/api/lecturenotes", lectureNotesRoutes);
 app.use("/api/ai-chat", aiChatRoutes);
 app.use("/api/tasks", tasksRoutes);
+// after your other app.use(...) route registrations, add:
+app.use("/api/resources", resourcesRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
