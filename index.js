@@ -482,9 +482,8 @@ app.post("/api/auth/change-password", authenticate, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-// In routes/auth.js or routes/user.js
-// PATCH /auth/me
-router.patch('/auth/me', authenticate, async (req, res) => {
+// Replace this block that uses router.patch(...)
+app.patch('/api/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
   const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ error: "User not found" });
@@ -510,7 +509,7 @@ router.patch('/auth/me', authenticate, async (req, res) => {
   await user.save();
   res.json(user);
 });
-router.patch('/users/:id', authenticate, async (req, res) => {
+app.patch('/users/:id', authenticate, async (req, res) => {
   if (req.user.id !== req.params.id) return res.status(403).json({ error: "Forbidden" });
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).json({ error: "User not found" });
