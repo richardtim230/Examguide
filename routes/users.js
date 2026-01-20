@@ -371,7 +371,7 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
 // In routes/auth.js or routes/user.js
 // PATCH /auth/me
 // Replace this block that uses router.patch(...)
-app.patch('/api/auth/me', authenticate, async (req, res) => {
+router.patch('/api/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
   const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ error: "User not found" });
