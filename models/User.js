@@ -21,6 +21,19 @@ const UserSchema = new mongoose.Schema({
   wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Listing" }],
   institution: { type: String, default: "" },
   points: { type: Number, default: 0 },
+   address: { type: String, default: "" },
+  zip: { type: String, default: "" },
+  bio: { type: String, default: "" },
+  social: {
+    facebook: { type: String, default: "" },
+    twitter: { type: String, default: "" },
+    instagram: { type: String, default: "" },
+    tiktok: { type: String, default: "" },
+    github: { type: String, default: "" },
+    behance: { type: String, default: "" },
+    pinterest: { type: String, default: "" },
+    dribbble: { type: String, default: "" }
+  },
   bank: { type: String },
   creditPoints: {
   type: Number,
