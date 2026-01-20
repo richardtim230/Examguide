@@ -369,11 +369,30 @@ router.get("/admin/users/:id", authenticate, async (req, res) => {
   }
 });
 // In routes/auth.js or routes/user.js
+// PATCH /auth/me
 router.patch('/auth/me', authenticate, async (req, res) => {
   const updates = req.body;
   const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ error: "User not found" });
-  Object.assign(user, updates);
+
+  // Only allow these keys to be updated
+  const allowed = [
+    "fullname", "institution", "country", "location", "phone",
+    "level", "department", "faculty", "role", "religion",
+    "address", "zip", "bio"
+  ];
+
+  allowed.forEach(key => {
+    if (updates[key] !== undefined) user[key] = updates[key];
+  });
+
+  // Handle nested social object
+  if (typeof updates.social === "object" && updates.social !== null) {
+    user.social = user.social || {};
+    for (const [k, v] of Object.entries(updates.social)) {
+      user.social[k] = v;
+    }
+  }
   await user.save();
   res.json(user);
 });
