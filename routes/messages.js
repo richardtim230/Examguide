@@ -1,124 +1,213 @@
 import express from "express";
 import mongoose from "mongoose";
-import multer from "multer";
-import path from "path";
 import Message from "../models/Message.js";
+import Chat from "../models/Chat.js";
+import GroupChat from "../models/GroupChat.js";
 import User from "../models/User.js";
 import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-// --- Multer config for file uploads ---
-const upload = multer({
-  dest: "uploads/",
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
-  fileFilter: (req, file, cb) => {
-    // Optionally restrict mime types
-    cb(null, true);
+// All endpoints are authenticated
+router.use(authenticate);
+
+/**
+ * GET /api/messages/chats
+ * List all 1-1 and group chats for current user + meta for sidebar
+ */
+router.get("/chats", async (req, res) => {
+  try {
+    // 1-1 chats (those where current user is a participant)
+    const directChats = await Chat.find({ participants: req.user.id })
+      .populate({path: "participants", select: "username fullname avatar"})
+      .populate({path: "lastMessage"})
+      .sort("-updatedAt").exec();
+
+    // Map for sidebar: username, fullname, unread, lastMessage etc
+    const chats = await Promise.all(directChats.map(async chat => {
+      const otherUser = chat.participants.find(u => u._id.toString() !== req.user.id);
+      // Count unread for this chat
+      const unreadCount = await Message.countDocuments({ 
+        chat: chat._id, 
+        isGroup: false, 
+        from: { $ne: req.user.id }, 
+        readBy: { $ne: req.user.id }
+      });
+      return {
+        _id: chat._id,
+        username: otherUser?.username, 
+        fullname: otherUser?.fullname,
+        avatar: otherUser?.avatar,
+        lastMessageText: chat.lastMessage?.text,
+        lastMessageTime: chat.lastMessage?.createdAt,
+        unreadCount,
+        isGroup: false
+      };
+    }));
+
+    // Group chats (the user is a member)
+    const groupChats = await GroupChat.find({ members: req.user.id })
+      .populate({ path: "lastMessage" })
+      .sort("-updatedAt").exec();
+
+    const groups = await Promise.all(groupChats.map(async group => {
+      const unreadCount = await Message.countDocuments({
+        chat: group._id,
+        isGroup: true,
+        readBy: { $ne: req.user.id }
+      });
+      return {
+        _id: group._id,
+        name: group.name,
+        avatar: group.avatar,
+        lastMessageText: group.lastMessage?.text,
+        lastMessageTime: group.lastMessage?.createdAt,
+        unreadCount,
+        isGroup: true
+      };
+    }));
+
+    res.json({ chats, groups });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
 
-// --- 1. List all chats for notification (MUST come BEFORE '/:otherUserId') ---
-router.get("/chats", authenticate, async (req, res) => {
-  const userId = req.user.id;
-  const userObjectId = new mongoose.Types.ObjectId(userId);
-  const chats = await Message.aggregate([
-    { $match: { $or: [{ from: userObjectId }, { to: userObjectId }] }},
-    { $sort: { createdAt: -1 } },
-    { $group: {
-      _id: {
-        $cond: [
-          { $eq: ["$from", userObjectId] },
-          "$to",
-          "$from"
-        ]
-      },
-      lastMsgText: { $first: "$text" },
-      lastMsgAt: { $first: "$createdAt" },
-      unreadCount: { $sum: { $cond: [ { $and: [ { $eq: ["$to", userObjectId] }, { $eq: ["$read", false] } ] }, 1, 0 ] } }
-    }},
-    { $sort: { lastMsgAt: -1 } }
-  ]);
-  for (let chat of chats) {
-    if (mongoose.Types.ObjectId.isValid(chat._id)) {
-      const user = await User.findById(chat._id);
-      chat.otherUserId = chat._id;
-      chat.otherUserName = user ? user.username : "Unknown";
-    } else {
-      chat.otherUserId = chat._id;
-      chat.otherUserName = "Unknown";
+
+/**
+ * GET /api/messages/user/:userId/messages
+ * Get message thread between me and userId (direct chat)
+ */
+router.get("/user/:userId/messages", async (req, res) => {
+  try {
+    const otherUserId = req.params.userId;
+    // Find/create chat
+    let chat = await Chat.findOne({ participants: { $all: [req.user.id, otherUserId] } });
+    if (!chat) {
+      // No chat: return empty array
+      return res.json([]);
     }
+    // Find messages for this chat
+    const msgs = await Message.find({ chat: chat._id, isGroup: false })
+      .sort("createdAt")
+      .populate("from", "username fullname avatar")
+      .exec();
+    // Mark the fetched as read (if not already)
+    await Message.updateMany(
+      { chat: chat._id, isGroup: false, from: { $ne: req.user.id }, readBy: { $ne: req.user.id } },
+      { $addToSet: { readBy: req.user.id } }
+    );
+    // Format for frontend
+    const arr = msgs.map(msg => ({
+      _id: msg._id,
+      from: msg.from?._id,
+      fromAvatar: msg.from?.avatar,
+      text: msg.text,
+      attachmentUrl: msg.attachmentUrl,
+      attachmentType: msg.attachmentType,
+      time: msg.createdAt,
+    }));
+    res.json(arr);
+  } catch (e) {
+    res.status(500).json({error: e.message});
   }
-  res.json(chats);
 });
 
-// --- 2. Get chat history between current user and another user ---
-router.get("/:otherUserId", authenticate, async (req, res) => {
-  const userId = req.user.id;
-  const otherUserId = req.params.otherUserId;
-  if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
-    return res.status(400).json({ message: "Invalid user ID" });
+/**
+ * POST /api/messages/user/:userId/send
+ * Send a message to a user (starts chat if needed)
+ * { text }
+ */
+router.post("/user/:userId/send", async (req, res) => {
+  try {
+    const { text } = req.body;
+    const toUserId = req.params.userId;
+    if (!text || !toUserId) return res.status(400).json({error: "Missing params"});
+    // Find or create chat
+    let chat = await Chat.findOne({ participants: { $all: [req.user.id, toUserId] } });
+    if (!chat) {
+      chat = await Chat.create({ participants: [req.user.id, toUserId] });
+    }
+    // Save message
+    const m = await Message.create({
+      chat: chat._id,
+      from: req.user.id,
+      to: toUserId,
+      text,
+      isGroup: false,
+      readBy: [req.user.id]
+    });
+    chat.lastMessage = m._id;
+    chat.updatedAt = Date.now();
+    await chat.save();
+    res.json({ success: true, message: m });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
-  await Message.updateMany(
-    { from: otherUserId, to: userId, read: false },
-    { $set: { read: true } }
-  );
-  const messages = await Message.find({
-    $or: [
-      { from: userId, to: otherUserId },
-      { from: otherUserId, to: userId }
-    ]
-  }).sort({ createdAt: 1 });
-  res.json(messages);
 });
 
-// --- 3. Send a text message to another user ---
-router.post("/:otherUserId", authenticate, async (req, res) => {
-  const userId = req.user.id;
-  const otherUserId = req.params.otherUserId;
-  const { text } = req.body;
-  if (!text && !req.file) return res.status(400).json({ message: "Text required" });
-  if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
-    return res.status(400).json({ message: "Invalid user ID" });
+/**
+ * GET /api/messages/group/:groupId/messages
+ * Messages for a group
+ */
+router.get("/group/:groupId/messages", async (req, res) => {
+  try {
+    const group = await GroupChat.findById(req.params.groupId);
+    if (!group) return res.status(404).json({error: "Group not found"});
+    // Access: must be a member
+    if (!group.members.map(x => x.toString()).includes(req.user.id))
+      return res.status(403).json({error: "Not a group member"});
+    // Messages
+    const msgs = await Message.find({ chat: group._id, isGroup: true })
+      .sort("createdAt")
+      .populate("from", "username fullname avatar")
+      .exec();
+    // Mark as read
+    await Message.updateMany(
+      { chat: group._id, isGroup: true, from: { $ne: req.user.id }, readBy: { $ne: req.user.id } },
+      { $addToSet: { readBy: req.user.id } }
+    );
+    const arr = msgs.map(msg => ({
+      _id: msg._id,
+      from: msg.from?._id,
+      fromAvatar: msg.from?.avatar,
+      text: msg.text,
+      attachmentUrl: msg.attachmentUrl,
+      attachmentType: msg.attachmentType,
+      time: msg.createdAt
+    }));
+    res.json(arr);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
-  const msg = await Message.create({
-    from: userId,
-    to: otherUserId,
-    text,
-    read: false
-  });
-  res.status(201).json(msg);
 });
 
-// --- 4. Send a file (optionally with text) ---
-router.post("/:otherUserId/file", authenticate, upload.single("file"), async (req, res) => {
-  const userId = req.user.id;
-  const otherUserId = req.params.otherUserId;
-  const { text } = req.body;
-  if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
-    return res.status(400).json({ message: "Invalid user ID" });
+/**
+ * POST /api/messages/group/:groupId/send
+ * Send a message to a group
+ */
+router.post("/group/:groupId/send", async (req, res) => {
+  try {
+    const { text } = req.body;
+    const group = await GroupChat.findById(req.params.groupId);
+    if (!group) return res.status(404).json({error: "Group not found"});
+    if (!group.members.map(x => x.toString()).includes(req.user.id))
+      return res.status(403).json({error: "Not a group member"});
+    // Create message
+    const m = await Message.create({
+      chat: group._id,
+      from: req.user.id,
+      text,
+      isGroup: true,
+      readBy: [req.user.id]
+    });
+    group.lastMessage = m._id;
+    group.updatedAt = Date.now();
+    await group.save();
+    res.json({ success: true, message: m });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
-  if (!req.file) return res.status(400).json({ message: "File required" });
-
-  // Save file message
-  const fileObj = {
-    originalname: req.file.originalname,
-    mimetype: req.file.mimetype,
-    filename: req.file.filename,
-    size: req.file.size,
-    url: `/uploads/${req.file.filename}`
-  };
-  const msg = await Message.create({
-    from: userId,
-    to: otherUserId,
-    text: text || "",
-    file: fileObj,
-    read: false
-  });
-  res.status(201).json(msg);
 });
-
-// --- Serve uploads statically (should be in main app.js/server.js) ---
-// app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 export default router;
