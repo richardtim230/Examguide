@@ -1,19 +1,16 @@
 import mongoose from "mongoose";
-const FileSchema = new mongoose.Schema({
-  originalname: String,
-  mimetype: String,
-  filename: String,
-  size: Number,
-  url: String
-}, { _id: false });
+const { Schema } = mongoose;
 
-const MessageSchema = new mongoose.Schema({
-  from: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
-  to: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
-  text: { type: String, required: false }, // now allow empty for pure file messages
-  createdAt: { type: Date, default: Date.now },
-  read: { type: Boolean, default: false },
-  type: { type: String, enum: ["user", "system", "group"], default: "user" },
-  file: { type: FileSchema, required: false } // Add file support!
+const MessageSchema = new Schema({
+  chat:       { type: Schema.Types.ObjectId, ref: "Chat", required: true },       // 1-1 or group chat  
+  from:       { type: Schema.Types.ObjectId, ref: "User", required: true },
+  to:         { type: Schema.Types.ObjectId, ref: "User" },      // only for direct chat else null
+  text:       { type: String, default: "" },
+  attachmentUrl: { type: String },
+  attachmentType: { type: String }, // "image", "file" etc
+  isGroup:    { type: Boolean, default: false },
+  readBy:     [{ type: Schema.Types.ObjectId, ref: "User" }],
+  createdAt:  { type: Date, default: Date.now }
 });
+
 export default mongoose.model("Message", MessageSchema);
