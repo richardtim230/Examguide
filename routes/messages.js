@@ -5,6 +5,7 @@ import Chat from "../models/Chat.js";
 import GroupChat from "../models/GroupChat.js";
 import User from "../models/User.js";
 import { authenticate } from "../middleware/authenticate.js";
+import { nanoid } from "nanoid"; // add to deps 
 
 const router = express.Router();
 
@@ -209,5 +210,41 @@ router.post("/group/:groupId/send", async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+router.post("/groups/create", async (req, res) => {
+  try {
+    const { name, memberIds } = req.body; // memberIds = [userID,...]
+    if (!name || !Array.isArray(memberIds) || memberIds.length < 1)
+      return res.status(400).json({ error: "Name and memberIds required" });
 
+    // Generate join code
+    const code = nanoid(8);
+
+    const group = await GroupChat.create({
+      name,
+      avatar: req.body.avatar || "",
+      members: [req.user.id, ...memberIds],
+      admins: [req.user.id],
+      createdBy: req.user.id,
+      joinCode: code
+    });
+    res.json({ success: true, groupId: group._id, code });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+// GET /api/messages/similar-users -- List other users in same department+level (except self)
+router.get("/similar-users", async (req, res) => {
+  try {
+    const me = await User.findById(req.user.id);
+    if (!me) return res.status(404).json({ error: "User not found" });
+    const users = await User.find({
+      _id: { $ne: req.user.id },
+      department: me.department,
+      level: me.level
+    }).select("_id username fullname avatar department level");
+    res.json(users);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 export default router;
