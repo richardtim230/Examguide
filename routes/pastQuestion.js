@@ -4,7 +4,7 @@ import cloudinary from "cloudinary";
 import streamifier from "streamifier";
 import PastQuestion from "../models/PastQuestion.js";
 import { authenticate } from "../middleware/authenticate.js"; // Optional
-
+import path from "path";
 const router = express.Router();
 
 function getCloudinaryResourceType(mimetype) {
@@ -51,6 +51,7 @@ router.delete("/:id", authenticate, async (req, res) => {
   await pq.deleteOne();
   res.json({ message: "Deleted" });
 });
+
 router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
   try {
     const { course, title, year, type, description } = req.body;
@@ -58,18 +59,21 @@ router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => 
       return res.status(400).json({ message: "All fields and file required" });
 
     const resourceType = getCloudinaryResourceType(req.file.mimetype);
-    // Ensure extension is included in public_id!
-    const originalExt = req.file.originalname.split('.').pop();
-    const cleanedExt = originalExt && originalExt.length < 8 ? '.' + originalExt.replace(/[^a-zA-Z0-9]/g, '') : '';
-    const safeTitle = title.trim().replace(/\s+/g, "_").replace(/[^\w-]/g,'');
-    const safeCourse = course.trim().replace(/\s+/g, "_").replace(/[^\w-]/g,'');
-    const now = Date.now();
-    const publicId = `${safeCourse}_${safeTitle}_${now}${cleanedExt}`; // include .pdf/.docx/etc
+
+    // Extract correct extension from original file
+    const origExt = path.extname(req.file.originalname)?.toLowerCase() || "";
+    // Sanitize file name for cloudinary
+    const safeCourse = String(course || "").trim().replace(/\s+/g, "_");
+    const safeTitle = String(title || "").trim().replace(/\s+/g, "_");
+    const timestamp = Date.now();
+
+    // Compose public_id with EXTENSION (for correct URLs)
+    const publicId = `${safeCourse}_${safeTitle}_${timestamp}${origExt}`;
 
     cloudinary.v2.uploader.upload_stream(
       {
         folder: "pastquestions",
-        public_id: publicId,
+        public_id: publicId.replace(/[^a-zA-Z0-9_.-]/g, ''), // Remove bad chars
         resource_type: resourceType
       },
       async (error, result) => {
