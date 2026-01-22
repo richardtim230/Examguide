@@ -7,7 +7,6 @@ import { authenticate } from "../middleware/authenticate.js"; // Optional
 
 const router = express.Router();
 
-// Helper to set how Cloudinary should handle upload type based on mimetype
 function getCloudinaryResourceType(mimetype) {
   if (/^image\//.test(mimetype)) return "image";
   if (
@@ -18,15 +17,15 @@ function getCloudinaryResourceType(mimetype) {
   return "auto";
 }
 
-// Use memory storage for multer so we never write to disk
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB limit
+  limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    // Accept: images, PDF, Word doc/docx
     const allowed = [
       "application/pdf",
-      "image/jpeg", "image/png", "image/gif",
+      "image/jpeg",
+      "image/png",
+      "image/gif",
       "application/msword",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ];
@@ -35,9 +34,7 @@ const upload = multer({
   }
 });
 
-// GET: List/filter past questions
 router.get("/", async (req, res) => {
-  // Accepts optional filters: ?course= &year= &type=
   const q = {};
   if (req.query.course) q.course = new RegExp(req.query.course, "i");
   if (req.query.year) q.year = +req.query.year;
@@ -54,7 +51,6 @@ router.delete("/:id", authenticate, async (req, res) => {
   await pq.deleteOne();
   res.json({ message: "Deleted" });
 });
-// POST: Upload a new past question file (PDF/IMG/DOCX) to Cloudinary (with correct resource_type)
 router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
   try {
     const { course, title, year, type, description } = req.body;
@@ -62,11 +58,18 @@ router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => 
       return res.status(400).json({ message: "All fields and file required" });
 
     const resourceType = getCloudinaryResourceType(req.file.mimetype);
+    // Ensure extension is included in public_id!
+    const originalExt = req.file.originalname.split('.').pop();
+    const cleanedExt = originalExt && originalExt.length < 8 ? '.' + originalExt.replace(/[^a-zA-Z0-9]/g, '') : '';
+    const safeTitle = title.trim().replace(/\s+/g, "_").replace(/[^\w-]/g,'');
+    const safeCourse = course.trim().replace(/\s+/g, "_").replace(/[^\w-]/g,'');
+    const now = Date.now();
+    const publicId = `${safeCourse}_${safeTitle}_${now}${cleanedExt}`; // include .pdf/.docx/etc
 
     cloudinary.v2.uploader.upload_stream(
       {
         folder: "pastquestions",
-        public_id: `${course.trim().replace(/\s+/g, "_")}_${title.trim().replace(/\s+/g, "_")}_${Date.now()}`,
+        public_id: publicId,
         resource_type: resourceType
       },
       async (error, result) => {
