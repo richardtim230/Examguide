@@ -45,7 +45,15 @@ router.get("/", async (req, res) => {
   const results = await PastQuestion.find(q).sort({ createdAt: -1 }).lean();
   res.json(results);
 });
-
+// DELETE: Only user who uploaded may delete (backend protection!)
+router.delete("/:id", authenticate, async (req, res) => {
+  const pq = await PastQuestion.findById(req.params.id);
+  if (!pq) return res.status(404).json({ message: "Not found" });
+  if (!pq.uploadedBy || pq.uploadedBy.toString() !== req.user.id)
+    return res.status(403).json({ message: "Forbidden" });
+  await pq.deleteOne();
+  res.json({ message: "Deleted" });
+});
 // POST: Upload a new past question file (PDF/IMG/DOCX) to Cloudinary (with correct resource_type)
 router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
   try {
