@@ -6,8 +6,8 @@ const PastQuestionSchema = new mongoose.Schema({
   year: { type: Number, required: true },
   type: { type: String, enum: ["midterm", "final", "quiz"], required: true },
   description: String,
-  fileUrl: { type: String, required: true },
-  mimetype: String, // "application/pdf", "image/jpeg", etc.
+ fileUrl: { type: [String], required: true }, // Now always array!
+  mimetype: [String], 
   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now }
 });
