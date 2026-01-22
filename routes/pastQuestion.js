@@ -1,74 +1,72 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
+import cloudinary from "cloudinary";
+import streamifier from "streamifier";
 import PastQuestion from "../models/PastQuestion.js";
-import { authenticate } from "../middleware/authenticate.js"; // If you want to require login for uploads
+import { authenticate } from "../middleware/authenticate.js"; // Optional: uncomment if you want upload protection
 
 const router = express.Router();
 
-const uploadDir = "./uploads/pastquestions";
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-// Allow PDF, image, DOC, DOCX (adjust as desired)
-const allowed = [
-  "application/pdf",
-  "image/jpeg", "image/png", "image/gif",
-  "application/msword", // .doc
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-];
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function(req, file, cb) {
-    const cleanBase = path.basename(file.originalname, path.extname(file.originalname)).replace(/\s+/g, '_').replace(/[^\w\-]/g, '');
-    cb(null, `${cleanBase}_${Date.now()}${path.extname(file.originalname)}`);
-  }
-});
+// Use memory storage: no files written to disk, upload directly to Cloudinary
 const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 },
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 20 * 1024 * 1024 }, // up to 20MB
   fileFilter: (req, file, cb) => {
+    // Accept PDF, images, Word doc
+    const allowed = [
+      "application/pdf",
+      "image/jpeg", "image/png", "image/gif",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ];
     if (allowed.includes(file.mimetype)) cb(null, true);
     else cb(new Error("File type not allowed!"));
   }
 });
 
-
-// --- GET: list/filter ---
+// GET: Past questions list/filter endpoint
 router.get("/", async (req, res) => {
-  // Filter: accept ?course= &year= &type=
+  // Optional filters: ?course= &year= &type=
   const q = {};
-  if (req.query.course) q.course = new RegExp(req.query.course, "i"); // case-insensitive partial match
+  if (req.query.course) q.course = new RegExp(req.query.course, "i");
   if (req.query.year) q.year = +req.query.year;
   if (req.query.type) q.type = req.query.type;
- const backendHost = process.env.BACKEND_HOST || 'https://examguide.onrender.com';
   const results = await PastQuestion.find(q).sort({ createdAt: -1 }).lean();
-  results.forEach(x=>{
-    x.fileUrl = `${backendHost}/uploads/pastquestions/${path.basename(x.fileUrl||"")}`;
-  });
   res.json(results);
 });
-// --- POST: create -->
+
+// POST: Upload a new past question (file goes to Cloudinary)
 router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
   try {
     const { course, title, year, type, description } = req.body;
     if (!course || !title || !year || !type || !req.file)
       return res.status(400).json({ message: "All fields and file required" });
-    const doc = new PastQuestion({
-      course,
-      title,
-      year,
-      type,
-      description,
-      fileUrl: `/uploads/pastquestions/${req.file.filename}`,
-      mimetype: req.file.mimetype,
-      uploadedBy: req.user?.id // if using auth
-    });
-    await doc.save();
-    res.status(201).json({ message: "Uploaded!", doc });
+
+    // Upload to Cloudinary (auto-detect any file type)
+    const stream = cloudinary.v2.uploader.upload_stream(
+      {
+        folder: "pastquestions",
+        resource_type: "auto",
+        public_id: `${course.trim().replace(/\s+/g, "_")}_${title.trim().replace(/\s+/g, "_")}_${Date.now()}`
+      },
+      async (error, result) => {
+        if (error) return res.status(500).json({ message: "Cloudinary upload failed", error });
+
+        const doc = new PastQuestion({
+          course,
+          title,
+          year,
+          type,
+          description,
+          fileUrl: result.secure_url,
+          mimetype: req.file.mimetype,
+          uploadedBy: req.user?.id
+        });
+        await doc.save();
+        res.status(201).json({ message: "Uploaded!", doc });
+      }
+    );
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
   } catch (e) {
     res.status(500).json({ message: "Upload failed", error: e.message });
   }
