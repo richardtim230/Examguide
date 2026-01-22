@@ -21,7 +21,7 @@ function getCloudinaryResourceType(mimetype) {
 // Use memory storage for multer so we never write to disk
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB limit
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB per file
   fileFilter: (req, file, cb) => {
     // Accept: images, PDF, Word doc/docx
     const allowed = [
@@ -46,38 +46,78 @@ router.get("/", async (req, res) => {
   res.json(results);
 });
 
-// POST: Upload a new past question file (PDF/IMG/DOCX) to Cloudinary (with correct resource_type)
-router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
+// POST: Upload one PDF/Doc OR multiple images as a single "past question"
+router.post("/", upload.array("file", 50), /* authenticate, */ async (req, res) => {
   try {
     const { course, title, year, type, description } = req.body;
-    if (!course || !title || !year || !type || !req.file)
-      return res.status(400).json({ message: "All fields and file required" });
+    const files = req.files;
+    if (!course || !title || !year || !type || !files?.length)
+      return res.status(400).json({ message: "All fields and file(s) required" });
 
-    const resourceType = getCloudinaryResourceType(req.file.mimetype);
-
-    cloudinary.v2.uploader.upload_stream(
-      {
-        folder: "pastquestions",
-        public_id: `${course.trim().replace(/\s+/g, "_")}_${title.trim().replace(/\s+/g, "_")}_${Date.now()}`,
-        resource_type: resourceType
-      },
-      async (error, result) => {
-        if (error) return res.status(500).json({ message: "Cloudinary upload failed", error });
-
-        const doc = new PastQuestion({
-          course,
-          title,
-          year,
-          type,
-          description,
-          fileUrl: result.secure_url,
-          mimetype: req.file.mimetype,
-          uploadedBy: req.user?.id
+    // Multiple images upload (scanned booklet)
+    const isAllImages = files.length > 1 && files.every(f => /^image\//.test(f.mimetype));
+    if (isAllImages) {
+      let fileUrls = [];
+      let mimetypes = [];
+      for (let i = 0; i < files.length; i++) {
+        await new Promise((resolve, reject) => {
+          cloudinary.v2.uploader.upload_stream(
+            {
+              folder: "pastquestions/multi-image",
+              resource_type: "image"
+            },
+            (err, result) => {
+              if (err) return reject(err);
+              fileUrls.push(result.secure_url);
+              mimetypes.push(files[i].mimetype);
+              resolve();
+            }
+          ).end(files[i].buffer);
         });
-        await doc.save();
-        res.status(201).json({ message: "Uploaded!", doc });
       }
-    ).end(req.file.buffer);
+      const doc = new PastQuestion({
+        course,
+        title,
+        year,
+        type,
+        description,
+        fileUrl: fileUrls, // store as array
+        mimetype: mimetypes,
+        uploadedBy: req.user?.id
+      });
+      await doc.save();
+      return res.status(201).json({ message: "Uploaded!", doc });
+    }
+
+    // Handle single file (PDF/image/doc)
+    const file = files[0];
+    const resourceType = getCloudinaryResourceType(file.mimetype);
+    await new Promise((resolve, reject) => {
+      cloudinary.v2.uploader.upload_stream(
+        {
+          folder: "pastquestions",
+          public_id: `${course.trim().replace(/\s+/g, "_")}_${title.trim().replace(/\s+/g, "_")}_${Date.now()}`,
+          resource_type: resourceType
+        },
+        async (error, result) => {
+          if (error) return reject(error);
+          const doc = new PastQuestion({
+            course,
+            title,
+            year,
+            type,
+            description,
+            fileUrl: [result.secure_url], // store as array for consistency
+            mimetype: [file.mimetype],
+            uploadedBy: req.user?.id
+          });
+          await doc.save();
+          res.status(201).json({ message: "Uploaded!", doc });
+          resolve();
+        }
+      ).end(file.buffer);
+    });
+
   } catch (e) {
     res.status(500).json({ message: "Upload failed", error: e.message });
   }
