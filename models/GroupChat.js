@@ -7,6 +7,7 @@ const GroupChatSchema = new Schema({
   members:     [{ type: Schema.Types.ObjectId, ref: "User" }],
   admins:      [{ type: Schema.Types.ObjectId, ref: "User" }],
   lastMessage: { type: Schema.Types.ObjectId, ref: "Message" },
+joinCode: { type: String, unique: true, sparse: true },
   createdBy:   { type: Schema.Types.ObjectId, ref: "User" },
   createdAt:   { type: Date, default: Date.now },
   updatedAt:   { type: Date, default: Date.now }
