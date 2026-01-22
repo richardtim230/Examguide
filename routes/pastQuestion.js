@@ -44,14 +44,13 @@ router.get("/", async (req, res) => {
   if (req.query.course) q.course = new RegExp(req.query.course, "i"); // case-insensitive partial match
   if (req.query.year) q.year = +req.query.year;
   if (req.query.type) q.type = req.query.type;
+ const backendHost = process.env.BACKEND_HOST || 'https://examguide.onrender.com';
   const results = await PastQuestion.find(q).sort({ createdAt: -1 }).lean();
   results.forEach(x=>{
-    // File URL for frontend to download/view (static mapped in index.js as /uploads)
-    x.fileUrl = `/uploads/pastquestions/${path.basename(x.fileUrl||"")}`;
+    x.fileUrl = `${backendHost}/uploads/pastquestions/${path.basename(x.fileUrl||"")}`;
   });
   res.json(results);
 });
-
 // --- POST: create -->
 router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
   try {
