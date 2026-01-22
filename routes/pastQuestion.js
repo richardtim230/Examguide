@@ -3,16 +3,27 @@ import multer from "multer";
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
 import PastQuestion from "../models/PastQuestion.js";
-import { authenticate } from "../middleware/authenticate.js"; // Optional: uncomment if you want upload protection
+import { authenticate } from "../middleware/authenticate.js"; // Optional
 
 const router = express.Router();
 
-// Use memory storage: no files written to disk, upload directly to Cloudinary
+// Helper to set how Cloudinary should handle upload type based on mimetype
+function getCloudinaryResourceType(mimetype) {
+  if (/^image\//.test(mimetype)) return "image";
+  if (
+    mimetype === "application/pdf" ||
+    mimetype === "application/msword" ||
+    mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ) return "raw";
+  return "auto";
+}
+
+// Use memory storage for multer so we never write to disk
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 20 * 1024 * 1024 }, // up to 20MB
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB limit
   fileFilter: (req, file, cb) => {
-    // Accept PDF, images, Word doc
+    // Accept: images, PDF, Word doc/docx
     const allowed = [
       "application/pdf",
       "image/jpeg", "image/png", "image/gif",
@@ -24,9 +35,9 @@ const upload = multer({
   }
 });
 
-// GET: Past questions list/filter endpoint
+// GET: List/filter past questions
 router.get("/", async (req, res) => {
-  // Optional filters: ?course= &year= &type=
+  // Accepts optional filters: ?course= &year= &type=
   const q = {};
   if (req.query.course) q.course = new RegExp(req.query.course, "i");
   if (req.query.year) q.year = +req.query.year;
@@ -35,19 +46,20 @@ router.get("/", async (req, res) => {
   res.json(results);
 });
 
-// POST: Upload a new past question (file goes to Cloudinary)
+// POST: Upload a new past question file (PDF/IMG/DOCX) to Cloudinary (with correct resource_type)
 router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => {
   try {
     const { course, title, year, type, description } = req.body;
     if (!course || !title || !year || !type || !req.file)
       return res.status(400).json({ message: "All fields and file required" });
 
-    // Upload to Cloudinary (auto-detect any file type)
-    const stream = cloudinary.v2.uploader.upload_stream(
+    const resourceType = getCloudinaryResourceType(req.file.mimetype);
+
+    cloudinary.v2.uploader.upload_stream(
       {
         folder: "pastquestions",
-        resource_type: "auto",
-        public_id: `${course.trim().replace(/\s+/g, "_")}_${title.trim().replace(/\s+/g, "_")}_${Date.now()}`
+        public_id: `${course.trim().replace(/\s+/g, "_")}_${title.trim().replace(/\s+/g, "_")}_${Date.now()}`,
+        resource_type: resourceType
       },
       async (error, result) => {
         if (error) return res.status(500).json({ message: "Cloudinary upload failed", error });
@@ -65,8 +77,7 @@ router.post("/", upload.single("file"), /* authenticate, */ async (req, res) => 
         await doc.save();
         res.status(201).json({ message: "Uploaded!", doc });
       }
-    );
-    streamifier.createReadStream(req.file.buffer).pipe(stream);
+    ).end(req.file.buffer);
   } catch (e) {
     res.status(500).json({ message: "Upload failed", error: e.message });
   }
