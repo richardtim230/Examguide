@@ -1342,4 +1342,4 @@ app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
 app.get("/", (req, res) => res.json({status: "ok"}));
 app.use("/api/account-settings", accountSettingsRouter);
-
+app.use("/api/messages", messagesRoutes);
