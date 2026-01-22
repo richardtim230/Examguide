@@ -168,7 +168,7 @@ import oauWizardChatRoutes from "./routes/oauWizardChat.js";
 import examSetRoutes from "./routes/examSet.js";
 import cbtQuestionsRoutes from "./routes/cbtQuestions.js";
 const memStorage = multer.memoryStorage();
-import pastQuestionsRoutes from "./routes/pastQuestion.js";
+import pastQuestionsRoute from "./routes/pastQuestion.js";
 // ...other code...
 const uploadToMemory = multer({ storage: memStorage });
 
@@ -1300,7 +1300,7 @@ app.use("/api/marketplace", marketplaceRoutes);
 app.use("/api/codecxreg", codecxregRoutes);
 app.use("/api/rewards", rewardsRoutes);
 app.use("/uploads/pastquestions", express.static(path.join(process.cwd(), "uploads/pastquestions"))); // Serve files public
-app.use("/api/pastquestions", pastQuestionsRoutes);
+app.use("/api/pastquestions", pastQuestionsRoute);
 app.use("/api/withdrawals", withdrawalRoutes);
 app.use("/api/blogger-dashboard", bloggerDashboardRoutes);
 app.use("/uploads/profilepics", express.static(path.join(process.cwd(), "uploads/profilepics")));
