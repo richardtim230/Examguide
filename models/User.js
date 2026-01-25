@@ -2,9 +2,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-if (!mongoose.isValidObjectId(req.params.id)) {
-  return res.status(400).json({ message: "Invalid tutor id" });
-}
+
 const { Schema, model } = mongoose;
 
 const socialSchema = new Schema({
