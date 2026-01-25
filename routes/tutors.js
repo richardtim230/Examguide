@@ -143,11 +143,23 @@ router.post("/request", authenticate, async (req, res) => {
     const tutor = await User.findOne({ _id: tutorId, role: "tutor", approved: true });
     if (!tutor) return res.status(404).json({ message: "Tutor not found" });
 
+    // Try to get student display name for a friendly notification title/message
+    let studentDisplay = "A student";
+    try {
+      const student = await User.findById(req.user.id).select("fullname username");
+      if (student) studentDisplay = student.fullname || student.username || studentDisplay;
+    } catch (e) {
+      // ignore - fallback to generic
+    }
+
+    const title = `Tutor request from ${studentDisplay}`;
+
     await Notification.create({
+      title, // <-- ensure Notification has required title field
       to: tutorId,
       from: req.user.id,
       type: "tutor-request",
-      message: message || "A student has requested tutoring.",
+      message: message || `${title}: Please check the request.`,
       data: { type: "tutor_request", student: req.user.id },
       read: false,
       createdAt: new Date(),
@@ -322,7 +334,7 @@ router.get("/dashboard-summary", authenticate, authorizeRole("tutor"), async (re
   ]);
   const reviews = await Review.find({ tutor: req.user.id });
   let avgRating = 0;
-  if (reviews.length) avgRating = (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(2);
+  if (reviews.length) avgRating = (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(02);
   res.json({
     studentsCount,
     activeSessions,
