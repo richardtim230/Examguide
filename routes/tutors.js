@@ -22,22 +22,78 @@ const router = express.Router();
 // Register as tutor (applies, pending admin approval)
 router.post("/register", async (req, res) => {
   try {
-    const { fullname, email, phone, specialties, about, achievements, avatar, social } = req.body;
-    if (!fullname || !email || !specialties) return res.status(400).json({ message: "Full name, email, and specialties are required." });
-    if (await User.findOne({ email })) return res.status(409).json({ message: "Email already registered" });
+    // Accept username/password in addition to other tutor profile fields
+    const {
+      username,
+      password,
+      fullname,
+      email,
+      phone,
+      specialties,
+      about,
+      achievements,
+      avatar,
+      social
+    } = req.body;
 
-    // Save as User with role tutor
-    const user = await User.create({
-      fullname, email, phone, role: "tutor",
-      specialties, about, achievements, profilePic: avatar,
+    // Basic required validation
+    if (!fullname || !email || !specialties) {
+      return res.status(400).json({ message: "Full name, email, and specialties are required." });
+    }
+
+    // Check for existing email or username
+    const existing = await User.findOne({
+      $or: [
+        { email: (email || "").toLowerCase() },
+        ...(username ? [{ username: username }] : [])
+      ]
+    });
+    if (existing) {
+      // Distinguish between username/email collisions if possible
+      if (existing.email && String(existing.email).toLowerCase() === String(email).toLowerCase()) {
+        return res.status(409).json({ message: "Email already registered" });
+      }
+      if (username && existing.username && existing.username === username) {
+        return res.status(409).json({ message: "Username already taken" });
+      }
+      return res.status(409).json({ message: "Account with provided email/username already exists" });
+    }
+
+    // If user supplied password, do minimal check. (User model will hash on save.)
+    let finalPassword = password;
+    if (finalPassword) {
+      if (typeof finalPassword !== "string" || finalPassword.length < 6) {
+        return res.status(400).json({ message: "Password must be at least 6 characters long." });
+      }
+    } else {
+      // fallback: random password (forces user to reset after approval)
+      finalPassword = uuidv4();
+    }
+
+    // Create user record with role tutor. Use supplied username if present; else use email.
+    const newUser = await User.create({
+      fullname,
+      email: email || "",
+      phone: phone || "",
+      specialties,
+      about: about || "",
+      achievements: achievements || [],
+      profilePic: avatar || "",
       socials: social || {},
-      username: email, // Use email as unique username
-      password: uuidv4(), // Force password reset on approval
-      approved: false, // Awaiting admin approval
+      username: username && username.trim().length ? username.trim() : (email || "").toLowerCase(),
+      password: finalPassword,
+      role: "tutor",
+      approved: false,
       emailVerified: false
     });
-    res.status(201).json({ message: "Tutor application received.", userId: user._id });
+
+    // Optionally create an initial notification to admins (left out here)
+    res.status(201).json({ message: "Tutor application received.", userId: newUser._id });
   } catch (e) {
+    // For duplicate key race or other DB errors, return a helpful message
+    if (e.code === 11000) {
+      return res.status(409).json({ message: "Username or email already exists." });
+    }
     res.status(500).json({ error: e.message });
   }
 });
