@@ -301,17 +301,32 @@ router.get("/messages", authenticate, authorizeRole("tutor"), async (req, res) =
   res.json(msgs);
 });
 // Send a message (to student or admin)
-// NOTE: Message model requires `chat` — ensure we include it (create new chat id if not provided)
+// Ensure a Chat/Conversation exists and use its ObjectId for Message.chat
 router.post("/messages", authenticate, authorizeRole("tutor"), async (req, res) => {
   const { to, text, chat } = req.body;
   if (!to || !text) return res.status(400).json({ message: "Recipient and message text required" });
 
   try {
-    // If client provides a chat/conversation id, use it. Otherwise generate a new one.
-    // Ideally you'd have a Chat/Conversation collection and reuse existing chat ids, but
-    // generating a UUID here satisfies the Message schema and keeps a usable conversation id.
-    const chatId = chat || uuidv4();
+    // Determine chatId
+    let chatId = null;
 
+    // If chat provided, validate it's a valid ObjectId
+    if (chat) {
+      if (!mongoose.Types.ObjectId.isValid(chat)) {
+        return res.status(400).json({ message: "Invalid chat id" });
+      }
+      chatId = chat;
+    } else {
+      // Try to find an existing chat between the two participants (exactly those two)
+      let existing = await Chat.findOne({ participants: { $all: [req.user.id, to] } }).exec();
+      if (!existing) {
+        // create new chat
+        existing = await Chat.create({ participants: [req.user.id, to] });
+      }
+      chatId = existing._id;
+    }
+
+    // Create message with a proper ObjectId reference to chat
     const msg = await Message.create({
       chat: chatId,
       from: req.user.id,
@@ -320,9 +335,11 @@ router.post("/messages", authenticate, authorizeRole("tutor"), async (req, res) 
       createdAt: new Date()
     });
 
+    // Update chat.lastMessageAt
+    await Chat.updateOne({ _id: chatId }, { $set: { lastMessageAt: new Date() } }).catch(()=>{});
+
     res.json({ success: true, msg });
   } catch (e) {
-    // If validation still fails, return the detailed message for debugging (or log it)
     console.error("Failed to create message:", e);
     res.status(500).json({ message: "Failed to create message", error: e.message });
   }
