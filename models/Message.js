@@ -12,7 +12,7 @@ const attachmentSchema = new Schema({
 const MessageSchema = new Schema({
   // grouping: chat reference (existing) and an optional conversationId string
   chat:       { type: Schema.Types.ObjectId, ref: "Chat", required: true, index: true }, // 1-1 or group chat
-  conversationId: { type: String, default: "", index: true }, // optional string id used by some clients
+  conversationId: { type: String, default: "", index: true },
 
   // sender / recipient
   from:       { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
@@ -38,7 +38,6 @@ const MessageSchema = new Schema({
   // meta and extensibility
   meta: { type: Schema.Types.Mixed, default: {} },
 
-  // createdAt will be provided by timestamps option
 }, {
   timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" }
 });
