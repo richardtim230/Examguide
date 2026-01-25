@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 const { Schema, model } = mongoose;
@@ -15,15 +15,6 @@ const socialSchema = new Schema({
   pinterest: { type: String, default: "" },
   dribbble: { type: String, default: "" },
   website: { type: String, default: "" }
-}, { _id: false });
-
-const rewardSubSchema = new Schema({
-  key: String,
-  points: Number,
-  date: { type: Date, default: Date.now },
-  postId: String,
-  reason: String,
-  by: String
 }, { _id: false });
 
 const UserSchema = new Schema({
@@ -66,12 +57,12 @@ const UserSchema = new Schema({
   approved: { type: Boolean, default: false }, // used for tutors
 
   // Tutor-specific / public profile fields (added)
-  specialties: { type: [String], default: [] },     // e.g., ["Math", "Physics"]
+  specialties: { type: [String], default: [] },
   about: { type: String, default: "" },
   achievements: { type: [String], default: [] },
-  socials: { type: socialSchema, default: {} },      // alias/duplicate of `social` for compatibility
+  socials: { type: socialSchema, default: {} }, // alias/duplicate of `social` for compatibility
 
-  // Existing 'social' field kept for backwards compatibility
+  // Legacy 'social' kept
   social: {
     facebook: { type: String, default: "" },
     twitter: { type: String, default: "" },
@@ -119,7 +110,7 @@ const UserSchema = new Schema({
   zip: { type: String, default: "" },
   bio: { type: String, default: "" },
 
-  // Reward history (keep original structure but normalize subdocs)
+  // Reward history
   rewardHistory: {
     practiced: [{ key: String, points: Number, date: { type: Date, default: Date.now } }],
     reading: [{ postId: String, points: Number, date: { type: Date, default: Date.now } }],
@@ -132,12 +123,18 @@ const UserSchema = new Schema({
   meta: { type: Schema.Types.Mixed, default: {} },
 
 }, {
-  timestamps: true // adds createdAt and updatedAt
+  timestamps: true
 });
 
+/**
+ * Virtuals
+ */
 UserSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
 UserSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
 
+/**
+ * Sanitize JSON output: remove sensitive fields
+ */
 UserSchema.methods.toJSON = function () {
   const obj = this.toObject({ virtuals: true });
   delete obj.password;
@@ -148,35 +145,55 @@ UserSchema.methods.toJSON = function () {
   return obj;
 };
 
+/**
+ * Password hashing (bcryptjs)
+ */
 const SALT_ROUNDS = 10;
-UserSchema.pre("save", async function (next) {
+UserSchema.pre("save", function (next) {
   try {
     if (!this.isModified("password")) return next();
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    this.password = await bcrypt.hash(this.password, salt);
+    const salt = bcrypt.genSaltSync(SALT_ROUNDS);
+    this.password = bcrypt.hashSync(this.password, salt);
     return next();
   } catch (err) {
     return next(err);
   }
 });
 
+/**
+ * Compare candidate password with stored hash
+ * Returns a Promise<boolean> to keep compatibility with async usage
+ */
 UserSchema.methods.comparePassword = function (candidate) {
-  return bcrypt.compare(candidate, this.password);
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(candidate, this.password, (err, isMatch) => {
+      if (err) return reject(err);
+      resolve(isMatch);
+    });
+  });
 };
 
+/**
+ * Generate email verification token
+ */
 UserSchema.methods.generateEmailVerificationToken = function () {
   const token = crypto.randomBytes(24).toString("hex");
   this.emailVerificationToken = token;
   return token;
 };
 
+/**
+ * Keep backwards-compatible `socials` mapping to/from `social`.
+ */
 UserSchema.virtual("socialMerged").get(function () {
-  // Prefer the structured `socials` (newer). If empty, fall back to `social`.
   const hasSocials = this.socials && Object.keys(this.socials || {}).length > 0;
   if (hasSocials) return this.socials;
   return this.social || {};
 });
 
+/**
+ * Indexes
+ */
 UserSchema.index({ username: 1 }, { unique: true, background: true });
 UserSchema.index({ email: 1 }, { background: true });
 
