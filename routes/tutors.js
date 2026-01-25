@@ -104,11 +104,16 @@ router.get("/", async (req, res) => {
   res.json(tutors);
 });
 
-// Get tutor profile by ID
-router.get("/:id", async (req, res) => {
-  const tutor = await User.findOne({ _id: req.params.id, role: "tutor", approved: true }).select("-password -emailVerificationToken");
-  if (!tutor) return res.status(404).json({ message: "Tutor not found" });
-  res.json(tutor);
+// only matches routes where :id is a 24-hex Mongo ObjectId
+router.get("/:id([0-9a-fA-F]{24})", async (req, res) => {
+  try {
+    const tutor = await User.findOne({ _id: req.params.id, role: "tutor", approved: true })
+      .select("-password -emailVerificationToken");
+    if (!tutor) return res.status(404).json({ message: "Tutor not found" });
+    res.json(tutor);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 // Tutor updates their profile
