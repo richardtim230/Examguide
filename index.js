@@ -185,6 +185,31 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
   throw new Error("Missing required environment variables. Check MONGODB_URI, JWT_SECRET, FRONTEND_ORIGIN.");
 }
 
+const rawOrigins = (process.env.ALLOWED_ORIGINS || "https://oau.examguard.com.ng").split(",").map(s => s.trim()).filter(Boolean);
+
+// Always allow localhost dev origins optionally
+const devOrigins = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173"];
+const ALLOWED_ORIGINS = Array.from(new Set([...rawOrigins, ...devOrigins]));
+
+// CORS options to whitelist specified frontends and allow Authorization header
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g. mobile apps, postfix servers, curl)
+    if (!origin) return callback(null, true);
+    if (ALLOWED_ORIGINS.indexOf(origin) !== -1) return callback(null, true);
+    // For debugging, you can log origin here (be careful in production logs)
+    return callback(new Error("CORS policy: This origin is not allowed: " + origin));
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Requested-With"],
+  exposedHeaders: ["Authorization"], // expose if your API returns auth headers
+  credentials: false, // set true if you use cookie-based auth and want credentials to be sent
+  optionsSuccessStatus: 204
+};
+
+// Register middleware (make sure this runs BEFORE route registrations)
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); 
 // Increase limits for JSON and urlencoded bodies
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
