@@ -17,7 +17,7 @@ const socialSchema = new Schema({
   website: { type: String, default: "" }
 }, { _id: false });
 
-const UserSchema = new Schema({
+const UsersSchema = new Schema({
   // Basic profile
   fullname: { type: String, default: "" },
   username: { type: String, required: true, unique: true, trim: true, index: true },
@@ -129,13 +129,13 @@ const UserSchema = new Schema({
 /**
  * Virtuals
  */
-UserSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
-UserSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
+UsersSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
+UsersSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
 
 /**
  * Sanitize JSON output: remove sensitive fields
  */
-UserSchema.methods.toJSON = function () {
+UsersSchema.methods.toJSON = function () {
   const obj = this.toObject({ virtuals: true });
   delete obj.password;
   delete obj.emailVerificationToken;
@@ -149,7 +149,7 @@ UserSchema.methods.toJSON = function () {
  * Password hashing (bcryptjs)
  */
 const SALT_ROUNDS = 10;
-UserSchema.pre("save", function (next) {
+UsersSchema.pre("save", function (next) {
   try {
     if (!this.isModified("password")) return next();
     const salt = bcrypt.genSaltSync(SALT_ROUNDS);
@@ -164,7 +164,7 @@ UserSchema.pre("save", function (next) {
  * Compare candidate password with stored hash
  * Returns a Promise<boolean> to keep compatibility with async usage
  */
-UserSchema.methods.comparePassword = function (candidate) {
+UsersSchema.methods.comparePassword = function (candidate) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidate, this.password, (err, isMatch) => {
       if (err) return reject(err);
@@ -176,7 +176,7 @@ UserSchema.methods.comparePassword = function (candidate) {
 /**
  * Generate email verification token
  */
-UserSchema.methods.generateEmailVerificationToken = function () {
+UsersSchema.methods.generateEmailVerificationToken = function () {
   const token = crypto.randomBytes(24).toString("hex");
   this.emailVerificationToken = token;
   return token;
@@ -185,7 +185,7 @@ UserSchema.methods.generateEmailVerificationToken = function () {
 /**
  * Keep backwards-compatible `socials` mapping to/from `social`.
  */
-UserSchema.virtual("socialMerged").get(function () {
+UsersSchema.virtual("socialMerged").get(function () {
   const hasSocials = this.socials && Object.keys(this.socials || {}).length > 0;
   if (hasSocials) return this.socials;
   return this.social || {};
@@ -194,7 +194,7 @@ UserSchema.virtual("socialMerged").get(function () {
 /**
  * Indexes
  */
-UserSchema.index({ username: 1 }, { unique: true, background: true });
-UserSchema.index({ email: 1 }, { background: true });
+UsersSchema.index({ username: 1 }, { unique: true, background: true });
+UsersSchema.index({ email: 1 }, { background: true });
 
 export default model("Users", UsersSchema);
