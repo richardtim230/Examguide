@@ -197,4 +197,4 @@ UserSchema.virtual("socialMerged").get(function () {
 UserSchema.index({ username: 1 }, { unique: true, background: true });
 UserSchema.index({ email: 1 }, { background: true });
 
-export default model("User", UserSchema);
+export default model("Users", UsersSchema);
