@@ -155,7 +155,7 @@ router.post("/request", authenticate, async (req, res) => {
     const title = `Tutor request from ${studentDisplay}`;
 
     await Notification.create({
-      title,
+      title, // <-- ensure Notification has required title field
       to: tutorId,
       from: req.user.id,
       type: "tutor-request",
@@ -301,11 +301,31 @@ router.get("/messages", authenticate, authorizeRole("tutor"), async (req, res) =
   res.json(msgs);
 });
 // Send a message (to student or admin)
+// NOTE: Message model requires `chat` — ensure we include it (create new chat id if not provided)
 router.post("/messages", authenticate, authorizeRole("tutor"), async (req, res) => {
-  const { to, text } = req.body;
+  const { to, text, chat } = req.body;
   if (!to || !text) return res.status(400).json({ message: "Recipient and message text required" });
-  const msg = await Message.create({ from: req.user.id, to, text, createdAt: new Date() });
-  res.json({ success: true, msg });
+
+  try {
+    // If client provides a chat/conversation id, use it. Otherwise generate a new one.
+    // Ideally you'd have a Chat/Conversation collection and reuse existing chat ids, but
+    // generating a UUID here satisfies the Message schema and keeps a usable conversation id.
+    const chatId = chat || uuidv4();
+
+    const msg = await Message.create({
+      chat: chatId,
+      from: req.user.id,
+      to,
+      text,
+      createdAt: new Date()
+    });
+
+    res.json({ success: true, msg });
+  } catch (e) {
+    // If validation still fails, return the detailed message for debugging (or log it)
+    console.error("Failed to create message:", e);
+    res.status(500).json({ message: "Failed to create message", error: e.message });
+  }
 });
 /* ============ REVIEWS/FEEDBACK =============== */
 router.get("/reviews", authenticate, authorizeRole("tutor"), async (req, res) => {
