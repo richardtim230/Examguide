@@ -1,11 +1,13 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+import mongoose from 'mongoose';
 
-// Used for direct 1-1 chat. For group, see GroupChat.
-const ChatSchema = new Schema({
-  participants: [{ type: Schema.Types.ObjectId, ref: "User", required: true }], // Always length 2!
-  lastMessage:  { type: Schema.Types.ObjectId, ref: "Message" },
-  updatedAt:    { type: Date, default: Date.now }
+const ChatSchema = new mongoose.Schema({
+  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }],
+  title: { type: String, default: '' },
+  lastMessageAt: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model("Chat", ChatSchema);
+// Ensure we can search by participants
+ChatSchema.index({ participants: 1 });
+
+export default mongoose.models.Chat || mongoose.model('Chat', ChatSchema);
