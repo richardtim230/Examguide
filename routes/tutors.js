@@ -155,7 +155,7 @@ router.post("/request", authenticate, async (req, res) => {
     const title = `Tutor request from ${studentDisplay}`;
 
     await Notification.create({
-      title, // <-- ensure Notification has required title field
+      title,
       to: tutorId,
       from: req.user.id,
       type: "tutor-request",
@@ -334,7 +334,7 @@ router.get("/dashboard-summary", authenticate, authorizeRole("tutor"), async (re
   ]);
   const reviews = await Review.find({ tutor: req.user.id });
   let avgRating = 0;
-  if (reviews.length) avgRating = (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(02);
+  if (reviews.length) avgRating = (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(2);
   res.json({
     studentsCount,
     activeSessions,
