@@ -203,7 +203,7 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Requested-With"],
   exposedHeaders: ["Authorization"], // expose if your API returns auth headers
-  credentials: false, // set true if you use cookie-based auth and want credentials to be sent
+  credentials: true, // set true if you use cookie-based auth and want credentials to be sent
   optionsSuccessStatus: 204
 };
 
