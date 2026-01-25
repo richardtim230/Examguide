@@ -10,7 +10,7 @@ import Message from "../models/Message.js";
 import Notification from "../models/Notification.js";
 import TutorEarnings from "../models/TutorEarnings.js";
 import { v4 as uuidv4 } from "uuid";
-
+import Chat from "../models/Chat.js";
 const router = express.Router();
 
 /**
