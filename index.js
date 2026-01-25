@@ -188,7 +188,7 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 const rawOrigins = (process.env.ALLOWED_ORIGINS || "https://oau.examguard.com.ng").split(",").map(s => s.trim()).filter(Boolean);
 
 // Always allow localhost dev origins optionally
-const devOrigins = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173"];
+const devOrigins = ["http://drich.examguard.com.ng", "http://127.0.0.1:3000", "http://localhost:5173"];
 const ALLOWED_ORIGINS = Array.from(new Set([...rawOrigins, ...devOrigins]));
 
 // CORS options to whitelist specified frontends and allow Authorization header
