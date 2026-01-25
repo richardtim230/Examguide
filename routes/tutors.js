@@ -83,8 +83,8 @@ router.post("/register", async (req, res) => {
       username: username && username.trim().length ? username.trim() : (email || "").toLowerCase(),
       password: finalPassword,
       role: "tutor",
-      approved: false,
-      emailVerified: false
+      approved: true,
+      emailVerified: true
     });
 
     // Optionally create an initial notification to admins (left out here)
