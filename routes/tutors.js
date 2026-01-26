@@ -10,6 +10,7 @@ import Message from "../models/Message.js";
 import Notification from "../models/Notification.js";
 import TutorEarnings from "../models/TutorEarnings.js";
 import { v4 as uuidv4 } from "uuid";
+import mongoose from "mongoose";
 import Chat from "../models/Chat.js";
 const router = express.Router();
 
@@ -19,10 +20,8 @@ const router = express.Router();
 
 /* ============ Registration & Listing =============== */
 
-// Register as tutor (applies, pending admin approval)
 router.post("/register", async (req, res) => {
   try {
-    // Accept username/password in addition to other tutor profile fields
     const {
       username,
       password,
@@ -36,12 +35,10 @@ router.post("/register", async (req, res) => {
       social
     } = req.body;
 
-    // Basic required validation
     if (!fullname || !email || !specialties) {
       return res.status(400).json({ message: "Full name, email, and specialties are required." });
     }
 
-    // Check for existing email or username
     const existing = await User.findOne({
       $or: [
         { email: (email || "").toLowerCase() },
@@ -49,7 +46,6 @@ router.post("/register", async (req, res) => {
       ]
     });
     if (existing) {
-      // Distinguish between username/email collisions if possible
       if (existing.email && String(existing.email).toLowerCase() === String(email).toLowerCase()) {
         return res.status(409).json({ message: "Email already registered" });
       }
@@ -59,18 +55,15 @@ router.post("/register", async (req, res) => {
       return res.status(409).json({ message: "Account with provided email/username already exists" });
     }
 
-    // If user supplied password, do minimal check. (User model will hash on save.)
     let finalPassword = password;
     if (finalPassword) {
       if (typeof finalPassword !== "string" || finalPassword.length < 6) {
         return res.status(400).json({ message: "Password must be at least 6 characters long." });
       }
     } else {
-      // fallback: random password (forces user to reset after approval)
       finalPassword = uuidv4();
     }
 
-    // Create user record with role tutor. Use supplied username if present; else use email.
     const newUser = await User.create({
       fullname,
       email: email || "",
@@ -87,10 +80,8 @@ router.post("/register", async (req, res) => {
       emailVerified: true
     });
 
-    // Optionally create an initial notification to admins (left out here)
     res.status(201).json({ message: "Tutor application received.", userId: newUser._id });
   } catch (e) {
-    // For duplicate key race or other DB errors, return a helpful message
     if (e.code === 11000) {
       return res.status(409).json({ message: "Username or email already exists." });
     }
@@ -98,13 +89,13 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Get all approved tutors (for request-a-tutor and search, production)
+// Get all approved tutors
 router.get("/", async (req, res) => {
   const tutors = await User.find({ role: "tutor", approved: true }).select("-password -emailVerificationToken").sort({ createdAt: -1 });
   res.json(tutors);
 });
 
-// only matches routes where :id is a 24-hex Mongo ObjectId
+// Get specific tutor by ID
 router.get("/:id([0-9a-fA-F]{24})", async (req, res) => {
   try {
     const tutor = await User.findOne({ _id: req.params.id, role: "tutor", approved: true })
@@ -133,29 +124,26 @@ router.get("/me", authenticate, authorizeRole("tutor"), async (req, res) => {
 });
 
 /* ============ Request a Tutor =============== */
+
 // Student requests a tutor
 router.post("/request", authenticate, async (req, res) => {
   try {
     const { tutorId, message } = req.body;
     if (!tutorId) return res.status(400).json({ message: "Tutor ID required." });
 
-    // Double check tutor exists & approved
     const tutor = await User.findOne({ _id: tutorId, role: "tutor", approved: true });
     if (!tutor) return res.status(404).json({ message: "Tutor not found" });
 
-    // Try to get student display name for a friendly notification title/message
     let studentDisplay = "A student";
     try {
       const student = await User.findById(req.user.id).select("fullname username");
       if (student) studentDisplay = student.fullname || student.username || studentDisplay;
-    } catch (e) {
-      // ignore - fallback to generic
-    }
+    } catch (e) {}
 
     const title = `Tutor request from ${studentDisplay}`;
 
     await Notification.create({
-      title, // <-- ensure Notification has required title field
+      title,
       to: tutorId,
       from: req.user.id,
       type: "tutor-request",
@@ -170,25 +158,150 @@ router.post("/request", authenticate, async (req, res) => {
   }
 });
 
-// Tutor can list all students assigned to them (students who have been approved, have requests, or are in sessions)
+/**
+ * FEATURE-RICH STUDENTS ENDPOINTS
+ * - Returns students with status: 'active' or 'pending'
+ * - Returns requestId (Notification ID) if pending, lastSession, metadata
+ */
 router.get("/students", authenticate, authorizeRole("tutor"), async (req, res) => {
-  // Student IDs involved in sessions, or requests.
-  const activeStudentIds = await Session.find({ tutor: req.user.id }).distinct("student");
-  const requestedStudentIds = await Notification.find({ to: req.user.id, type: "tutor-request" }).distinct("from");
-  const allIds = Array.from(new Set([...activeStudentIds, ...requestedStudentIds]));
-  const students = await User.find({ _id: { $in: allIds }, role: "student" }).select("-password -emailVerificationToken");
+  // Get sessions (active students)
+  const sessionStudentIds = (await Session.find({ tutor: req.user.id }).distinct("student")).map(String);
+  // Get all unread tutor-requests (pending requests)
+  const pendingRequests = await Notification.find({ to: req.user.id, type: "tutor-request", read: false });
+  const requestedStudentIds = pendingRequests.map(n => String(n.from));
+  const allIdsSet = new Set([...sessionStudentIds, ...requestedStudentIds]);
+  const allIds = Array.from(allIdsSet);
+
+  // Find all students in either group
+  const studentsRaw = await User.find({ _id: { $in: allIds }, role: "student" }).select("-password -emailVerificationToken");
+
+  // Get last session data per student (if any)
+  const sessionMap = {};
+  const sessions = await Session.find({
+    tutor: req.user.id,
+    student: { $in: allIds }
+  }).sort({ date: -1 });
+  sessions.forEach(sess => {
+    const id = String(sess.student);
+    if (!sessionMap[id]) sessionMap[id] = sess;
+  });
+
+  // Compose enhanced response
+  const students = studentsRaw.map(stud => {
+    const sid = String(stud._id);
+    if (sessionStudentIds.includes(sid)) {
+      return {
+        ...stud.toObject(),
+        status: "active",
+        lastSession: sessionMap[sid]?.date,
+        meta: sessionMap[sid] ? {
+          subject: sessionMap[sid].subject,
+          level: sessionMap[sid].level,
+        } : {},
+      };
+    } else {
+      const note = pendingRequests.find(n => String(n.from) === sid);
+      return {
+        ...stud.toObject(),
+        status: "pending",
+        requestId: note?._id,
+        meta: note?.data || {},
+      };
+    }
+  });
   res.json(students);
+});
+
+/* =============== Accept/Reject Student Request (New Endpoints) =============== */
+
+// Accept student request: marks notification as read, optionally creates "welcome" session, message, and notifies student
+router.post("/accept-student", authenticate, authorizeRole("tutor"), async (req, res) => {
+  const { studentId, note } = req.body;
+  if (!studentId) return res.status(400).json({ message: "studentId required" });
+
+  // Find and mark notification as read
+  const notif = await Notification.findOneAndUpdate(
+    { to: req.user.id, from: studentId, type: "tutor-request", read: false },
+    { $set: { read: true, accepted: true } }
+  );
+
+  // Upsert a session if one doesn't exist
+  let latestSession = await Session.findOne({ tutor: req.user.id, student: studentId });
+  if (!latestSession) {
+    latestSession = await Session.create({
+      tutor: req.user.id,
+      student: studentId,
+      title: "Welcome/Onboarding",
+      date: new Date(),
+      status: "Active",
+      subject: "Introductory Session"
+    });
+  }
+
+  // Send notification and/or message to student
+  if (notif) {
+    await Notification.create({
+      title: "Tutor request accepted",
+      to: studentId,
+      from: req.user.id,
+      type: "tutor-request-response",
+      message: note ? `Tutor's message: "${note}"` : "You have been accepted by the tutor!",
+      data: { accepted: true, tutor: req.user.id, session: latestSession._id },
+      read: false,
+      createdAt: new Date(),
+    });
+    // Optionally, send a chat message
+    if (note) {
+      // Find or create chat
+      let existingChat = await Chat.findOne({ participants: { $all: [req.user.id, studentId] } });
+      if (!existingChat) {
+        existingChat = await Chat.create({ participants: [req.user.id, studentId] });
+      }
+      await Message.create({
+        chat: existingChat._id,
+        from: req.user.id,
+        to: studentId,
+        text: note,
+        createdAt: new Date()
+      });
+    }
+  }
+  res.json({ success: true, message: "Student accepted and notified." });
+});
+
+// Reject student request: marks notification as read, notifies student with reason
+router.post("/reject-student", authenticate, authorizeRole("tutor"), async (req, res) => {
+  const { studentId, note } = req.body;
+  if (!studentId) return res.status(400).json({ message: "studentId required" });
+
+  // Find and mark notification as read & rejected
+  await Notification.findOneAndUpdate(
+    { to: req.user.id, from: studentId, type: "tutor-request", read: false },
+    { $set: { read: true, accepted: false } }
+  );
+
+  // Notify student with feedback
+  await Notification.create({
+    title: "Tutor request rejected",
+    to: studentId,
+    from: req.user.id,
+    type: "tutor-request-response",
+    message: note ? `Tutor's message: "${note}"` : "Your tutor request was rejected.",
+    data: { accepted: false, tutor: req.user.id },
+    read: false,
+    createdAt: new Date(),
+  });
+
+  res.json({ success: true, message: "Request rejected, student notified." });
 });
 
 /* ============ Assignments CRUD =============== */
 
-// List all assignments created by this tutor
 router.get("/assignments", authenticate, authorizeRole("tutor"), async (req, res) => {
   const assignments = await Assignment.find({ tutor: req.user.id }).sort({ dueDate: -1 });
   res.json(assignments);
 });
 
-// Create new assignment
 router.post("/assignments", authenticate, authorizeRole("tutor"), async (req, res) => {
   const { title, subject, instructions, dueDate, assignedTo } = req.body;
   if (!title || !subject || !dueDate || !assignedTo)
@@ -200,7 +313,6 @@ router.post("/assignments", authenticate, authorizeRole("tutor"), async (req, re
   res.status(201).json(assignment);
 });
 
-// Update/edit assignment
 router.put("/assignments/:id", authenticate, authorizeRole("tutor"), async (req, res) => {
   const assignment = await Assignment.findOne({ _id: req.params.id, tutor: req.user.id });
   if (!assignment) return res.status(404).json({ message: "Assignment not found" });
@@ -210,20 +322,17 @@ router.put("/assignments/:id", authenticate, authorizeRole("tutor"), async (req,
   res.json(assignment);
 });
 
-// Delete assignment
 router.delete("/assignments/:id", authenticate, authorizeRole("tutor"), async (req, res) => {
   const removed = await Assignment.deleteOne({ _id: req.params.id, tutor: req.user.id });
   res.json({ success: removed.deletedCount > 0 });
 });
 
-// View assignment submissions
 router.get("/assignments/:id/submissions", authenticate, authorizeRole("tutor"), async (req, res) => {
   const submissions = await AssignmentSubmission.find({ assignment: req.params.id })
     .populate("student", "fullname username email");
   res.json(submissions);
 });
 
-// Grade assignment submission
 router.patch("/assignments/:id/grade", authenticate, authorizeRole("tutor"), async (req, res) => {
   const { submissionId, grade, feedback } = req.body;
   const submission = await AssignmentSubmission.findOneAndUpdate(
@@ -237,13 +346,11 @@ router.patch("/assignments/:id/grade", authenticate, authorizeRole("tutor"), asy
 
 /* ============ SESSIONS CRUD =============== */
 
-// List sessions for tutor
 router.get("/sessions", authenticate, authorizeRole("tutor"), async (req, res) => {
   const sessions = await Session.find({ tutor: req.user.id }).sort({ date: -1 });
   res.json(sessions);
 });
 
-// Create new session
 router.post("/sessions", authenticate, authorizeRole("tutor"), async (req, res) => {
   const { title, date, student, subject, description } = req.body;
   if (!title || !date || !student) return res.status(400).json({ message: "All required fields needed" });
@@ -251,7 +358,6 @@ router.post("/sessions", authenticate, authorizeRole("tutor"), async (req, res) 
   res.status(201).json(session);
 });
 
-// Update session
 router.put("/sessions/:id", authenticate, authorizeRole("tutor"), async (req, res) => {
   const session = await Session.findOne({ _id: req.params.id, tutor: req.user.id });
   if (!session) return res.status(404).json({ message: "Session not found" });
@@ -262,7 +368,6 @@ router.put("/sessions/:id", authenticate, authorizeRole("tutor"), async (req, re
   res.json(session);
 });
 
-// Delete session
 router.delete("/sessions/:id", authenticate, authorizeRole("tutor"), async (req, res) => {
   const rm = await Session.deleteOne({ _id: req.params.id, tutor: req.user.id });
   res.json({ success: rm.deletedCount > 0 });
@@ -270,18 +375,14 @@ router.delete("/sessions/:id", authenticate, authorizeRole("tutor"), async (req,
 
 /* ============ Earnings =============== */
 
-// Get earnings breakdown
 router.get("/earnings", authenticate, authorizeRole("tutor"), async (req, res) => {
-  // Earnings: {[{amount, status, date, ...}]}
   const earnings = await TutorEarnings.find({ tutor: req.user.id }).sort({ date: -1 });
-  // Compute totals:
   const total = earnings.reduce((t, e) => t + (e.amount || 0), 0);
   const pending = earnings.filter(e=>e.status==="Pending").reduce((t,e)=>t+e.amount,0);
   const withdrawn = earnings.filter(e=>e.status==="Withdrawn").reduce((t,e)=>t+e.amount,0);
   res.json({ earnings, summary: { total, pending, withdrawn } });
 });
 
-// Request a withdrawal (just records request, doesn't process payouts)
 router.post("/withdraw", authenticate, authorizeRole("tutor"), async (req, res) => {
   const amount = req.body.amount;
   if (!amount || isNaN(Number(amount)) || Number(amount) <= 0)
@@ -290,9 +391,8 @@ router.post("/withdraw", authenticate, authorizeRole("tutor"), async (req, res) 
   res.json({ success: true, withdrawal });
 });
 
-/* ============ Messaging (Messages with students/admin) =============== */
+/* ============ Messaging =============== */
 
-// All messages/conversations (limited for performance)
 router.get("/messages", authenticate, authorizeRole("tutor"), async (req, res) => {
   const msgs = await Message.find({ $or: [ { to: req.user.id }, { from: req.user.id } ] })
     .sort({ createdAt: -1 }).limit(100)
@@ -300,33 +400,25 @@ router.get("/messages", authenticate, authorizeRole("tutor"), async (req, res) =
     .populate("from","fullname username");
   res.json(msgs);
 });
-// Send a message (to student or admin)
-// Ensure a Chat/Conversation exists and use its ObjectId for Message.chat
+
 router.post("/messages", authenticate, authorizeRole("tutor"), async (req, res) => {
   const { to, text, chat } = req.body;
   if (!to || !text) return res.status(400).json({ message: "Recipient and message text required" });
 
   try {
-    // Determine chatId
     let chatId = null;
-
-    // If chat provided, validate it's a valid ObjectId
     if (chat) {
       if (!mongoose.Types.ObjectId.isValid(chat)) {
         return res.status(400).json({ message: "Invalid chat id" });
       }
       chatId = chat;
     } else {
-      // Try to find an existing chat between the two participants (exactly those two)
       let existing = await Chat.findOne({ participants: { $all: [req.user.id, to] } }).exec();
       if (!existing) {
-        // create new chat
         existing = await Chat.create({ participants: [req.user.id, to] });
       }
       chatId = existing._id;
     }
-
-    // Create message with a proper ObjectId reference to chat
     const msg = await Message.create({
       chat: chatId,
       from: req.user.id,
@@ -334,16 +426,14 @@ router.post("/messages", authenticate, authorizeRole("tutor"), async (req, res) 
       text,
       createdAt: new Date()
     });
-
-    // Update chat.lastMessageAt
     await Chat.updateOne({ _id: chatId }, { $set: { lastMessageAt: new Date() } }).catch(()=>{});
-
     res.json({ success: true, msg });
   } catch (e) {
     console.error("Failed to create message:", e);
     res.status(500).json({ message: "Failed to create message", error: e.message });
   }
 });
+
 /* ============ REVIEWS/FEEDBACK =============== */
 router.get("/reviews", authenticate, authorizeRole("tutor"), async (req, res) => {
   const reviews = await Review.find({ tutor: req.user.id }).sort({ createdAt: -1 }).populate("student", "fullname");
@@ -361,7 +451,6 @@ router.patch("/notifications/:id/read", authenticate, authorizeRole("tutor"), as
 });
 
 /* ============ Dashboard/Analytics =============== */
-// Get dashboard summary/stat cards for tutor
 router.get("/dashboard-summary", authenticate, authorizeRole("tutor"), async (req, res) => {
   const studentsCount = await Session.countDocuments({ tutor: req.user.id });
   const activeSessions = await Session.countDocuments({ tutor: req.user.id, status: "Active" });
