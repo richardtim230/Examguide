@@ -136,6 +136,7 @@ import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
 import ordersRoutes from './routes/orders.js';
 import studypadiRoutes from "./routes/studypadi.js";
+import studypadiAiRoutes from "./routes/studypadi-ai.js";
 
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
 
@@ -1355,6 +1356,7 @@ app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
  app.use("/api", taxonomyRoutes);
 app.use("/api", postsRoutes);
+app.use("/api/studypadi/ai", studypadiAiRoutes);
 app.use("/api/exam-set", examSetRoutes);
 app.use("/api/cbt-questions", cbtQuestionsRoutes);
 app.use("/api/student", studentAuthRoutes);
