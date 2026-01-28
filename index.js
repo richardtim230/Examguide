@@ -163,7 +163,6 @@ import supportRoutes from "./routes/support.js";
 import Ad from "./models/Ad.js";
 import creditRoutes from "./routes/credit.js";
 import kiaChatEndpoint from "./routes/kiaChatEndpoint.js";
-// ... existing imports ...
 import lectureNotesRoutes from "./routes/lectureNotes.js";
 import aiChatRoutes from "./routes/aiChat.js";
 import studentAuthRoutes from "./routes/studentAuth.js";
@@ -172,7 +171,6 @@ import examSetRoutes from "./routes/examSet.js";
 import cbtQuestionsRoutes from "./routes/cbtQuestions.js";
 const memStorage = multer.memoryStorage();
 import pastQuestionsRoute from "./routes/pastQuestion.js";
-// ...other code...
 const uploadToMemory = multer({ storage: memStorage });
 
 const {
@@ -188,24 +186,18 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 }
 
 const rawOrigins = (process.env.ALLOWED_ORIGINS || "https://oau.examguard.com.ng").split(",").map(s => s.trim()).filter(Boolean);
-
-// Always allow localhost dev origins optionally
-const devOrigins = ["http://drich.examguard.com.ng", "https://drich.examguard.com.ng", "http://localhost:5173"];
+const devOrigins = ["http://drich.examguard.com.ng", "https://drich.examguard.com.ng", "https://examguard.com.ng"];
 const ALLOWED_ORIGINS = Array.from(new Set([...rawOrigins, ...devOrigins]));
-
-// CORS options to whitelist specified frontends and allow Authorization header
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (e.g. mobile apps, postfix servers, curl)
     if (!origin) return callback(null, true);
     if (ALLOWED_ORIGINS.indexOf(origin) !== -1) return callback(null, true);
-    // For debugging, you can log origin here (be careful in production logs)
     return callback(new Error("CORS policy: This origin is not allowed: " + origin));
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Requested-With"],
   exposedHeaders: ["Authorization"], // expose if your API returns auth headers
-  credentials: true, // set true if you use cookie-based auth and want credentials to be sent
+  credentials: true,
   optionsSuccessStatus: 204
 };
 
