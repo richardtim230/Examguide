@@ -135,7 +135,8 @@ import affiliateRoutes from "./routes/affiliate.js";
 import massagesRoutes from './routes/massages.js';
 import cartRoutes from './routes/cart.js';
 import ordersRoutes from './routes/orders.js';
-// at top imports
+import studypadiRoutes from "./routes/studypadi.js";
+
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
 
 
@@ -1362,8 +1363,7 @@ app.use("/api/liveclass", liveclassRoutes);
 app.use("/api/lecturenotes", lectureNotesRoutes);
 app.use("/api/ai-chat", aiChatRoutes);
 app.use("/api/tasks", tasksRoutes);
-// after your other app.use(...) route registrations, add:
-// later, after mongoose.connect(...) and other middleware
+app.use("/api/studypadi", studypadiRoutes);
 app.use("/api/resources", resourcesGridFSRoutes);
 app.use("/api/admin", adminPostsRoutes);    // For /api/admin/allposts
 app.use("/api/myposts", myPostsRoutes); // For /api/blogger-dashboard/myposts
