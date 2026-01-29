@@ -78,7 +78,7 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
       systemPrompt += `Return a JSON with a single key "raw" containing the text output in readable plain format. `;
     }
     if (instructions) systemPrompt += `Additional instructions: ${instructions}. `;
-    systemPrompt += `Do not include any commentary or text outside the JSON. Ensure the JSON is valid.`;
+    systemPrompt += `Do not include any commentary or text outside the JSON. Ensure the JSON is valid ensuring to follow OAU standard. Do not give refrence to the attached document or material in your response, dont say according to the material.`;
 
     // request body to Gemini
     const apiBody = {
