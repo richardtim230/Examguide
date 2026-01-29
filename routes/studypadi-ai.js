@@ -1,15 +1,25 @@
-
 import express from "express";
 import multer from "multer";
 import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 import fetch from "node-fetch";
+import mongoose from "mongoose";
 import { authenticate } from "../middleware/authenticate.js";
 
 const router = express.Router();
 router.use(authenticate);
 
-// memory multer
+// =================== SavedSet Model ===================
+const SavedSetSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  title: { type: String, default: "" },
+  questions: { type: mongoose.Schema.Types.Mixed, default: null }, // array or string or object
+  raw: { type: String, default: "" },
+  createdAt: { type: Date, default: Date.now }
+}, { timestamps: true });
+const SavedSet = mongoose.models.SavedSet || mongoose.model("SavedSet", SavedSetSchema);
+
+// =================== Multer Config ====================
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 15 * 1024 * 1024 } // 15 MB
@@ -17,7 +27,7 @@ const upload = multer({
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// utility extractors
+// ============ Document Text Extraction ================
 async function extractTextFromBuffer(buffer, mimetype, originalname) {
   if (/pdf$/i.test(originalname) || mimetype === "application/pdf") {
     const data = await pdfParse(buffer);
@@ -35,6 +45,7 @@ async function extractTextFromBuffer(buffer, mimetype, originalname) {
   return buffer.toString("utf8");
 }
 
+// ========= Convert File =============
 // POST /api/studypadi/ai/convert-file
 // fields: file (file), qtype (mcq|short|mixed), count (<=40), format (json|plain|gpt-examset), instructions (optional)
 router.post("/convert-file", upload.single("file"), async (req, res) => {
@@ -43,7 +54,7 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
     const qtype = (req.body.qtype || "mcq").toLowerCase();
     let count = parseInt(req.body.count) || 10;
     if (count < 1) count = 1;
-    if (count > 40) count = 40; // enforce max
+    if (count > 40) count = 40;
     const fmt = (req.body.format || "json").toLowerCase();
     const instructions = req.body.instructions || "";
 
@@ -55,9 +66,8 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
 
     if (!GEMINI_API_KEY) return res.status(500).json({ error: "Missing Gemini API key on server" });
 
-    // build prompt: instruct to return JSON according to format choice
+    // build prompt
     let systemPrompt = "";
-    // base instructions
     systemPrompt += `You are a university exam designer. Convert the provided document text into exactly ${count} ${qtype === 'mcq' ? 'multiple-choice' : (qtype==='short' ? 'short-answer' : 'questions (mixed MCQ and short-answer)')} questions. `;
     systemPrompt += `Output must be a single JSON object only. `;
     if (fmt === "json") {
@@ -76,7 +86,7 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
         {
           parts: [
             {
-              text: systemPrompt + "\n\nDocument Text:\n" + text.slice(0, 20000) // limit text length if huge
+              text: systemPrompt + "\n\nDocument Text:\n" + text.slice(0, 20000) // trim if too long
             }
           ]
         }
@@ -106,15 +116,76 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
       // try to extract a JSON substring
       const m = rawText.match(/\{[\s\S]*\}$/m);
       if (m) {
-        try { parsed = JSON.parse(m[0]); } catch(err) { parsed = null; }
+        try { parsed = JSON.parse(m[0]); } catch (err) { parsed = null; }
       }
     }
 
-    return res.json({ success: true, questions: parsed || null, raw: parsed ? null : rawText });
+    // Persist this set for the user (for history/saved sets)
+    let setTitle = "";
+    let setQuestions = null, setRaw = null;
+    if (parsed) {
+      setTitle = parsed.title || parsed.examTitle || parsed.setTitle || req.file.originalname || "Untitled";
+      setQuestions = parsed.questions || parsed.raw || null;
+      setRaw = (typeof parsed.raw === "string") ? parsed.raw : null;
+    } else {
+      setTitle = req.file.originalname || "Untitled";
+      setRaw = rawText;
+    }
+
+    const savedSet = await SavedSet.create({
+      user: req.user.id,
+      title: setTitle,
+      questions: setQuestions,
+      raw: setRaw,
+      createdAt: new Date()
+    });
+
+    return res.json({ 
+      success: true, 
+      questions: parsed || null, 
+      raw: parsed ? null : rawText, 
+      setId: savedSet._id 
+    });
   } catch (err) {
     console.error("AI convert-file error:", err);
     return res.status(500).json({ error: err.message || 'Server error' });
   }
 });
+
+// =================== Saved Sets List & Aliases =====================
+
+// Helper: list sets for user
+async function listSavedSets(userId) {
+  return await SavedSet.find({ user: userId }).sort({ createdAt: -1 }).limit(100).select("-__v");
+}
+function setsListHandler(req, res) {
+  listSavedSets(req.user.id)
+    .then(sets => res.json(sets))
+    .catch(err => {
+      console.error("Error fetching AI saved sets:", err);
+      res.status(500).json({ error: "Server error" });
+    });
+}
+
+// Aliased list endpoints
+router.get("/sets", setsListHandler);
+router.get("/history", setsListHandler);
+router.get("/list", setsListHandler);
+router.get("/previous", setsListHandler);
+
+// =================== Single Set Fetching ========================
+async function getSingleSet(req, res) {
+  try {
+    const set = await SavedSet.findOne({ _id: req.params.id, user: req.user.id });
+    if (!set) return res.status(404).json({ error: "Not found" });
+    res.json(set);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+}
+router.get("/sets/:id", getSingleSet);
+router.get("/history/:id", getSingleSet);
+router.get("/get/:id", getSingleSet);
+router.get("/:id", getSingleSet);
 
 export default router;
