@@ -191,7 +191,7 @@
           localStorage.setItem("affiliateToken", data.token);
           showNotificationModal('Success', 'Login successful! Redirecting to your dashboard...', 'success');
           setTimeout(function() {
-            window.location.href = "affiliate-dashboard.html";
+            window.location.href = "affiliate-app-dashboard";
           }, 1700);
         } else {
           showNotificationModal('Error', data.message || 'Invalid credentials. Please try again.', 'error');
