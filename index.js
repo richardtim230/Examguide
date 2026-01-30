@@ -187,7 +187,7 @@ if (!MONGODB_URI || !JWT_SECRET || !FRONTEND_ORIGIN) {
 }
 
 const rawOrigins = (process.env.ALLOWED_ORIGINS || "https://oau.examguard.com.ng").split(",").map(s => s.trim()).filter(Boolean);
-const devOrigins = ["http://drich.examguard.com.ng", "https://drich.examguard.com.ng", "https://examguard.com.ng"];
+const devOrigins = ["http://drich.examguard.com.ng", "https://www.examguard.com.ng/", "https://drich.examguard.com.ng", "https://www.examguard.com.ng"];
 const ALLOWED_ORIGINS = Array.from(new Set([...rawOrigins, ...devOrigins]));
 const corsOptions = {
   origin: function (origin, callback) {
