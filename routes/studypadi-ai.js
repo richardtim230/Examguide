@@ -165,7 +165,21 @@ function normalizeAiParsed(parsed) {
 // ========= Convert File =============
 // POST /api/studypadi/ai/convert-file
 // fields: file (file), qtype (mcq|short|mixed), count (<=40), format (json|plain|gpt-examset), instructions (optional)
+// Replace the existing router.post("/convert-file", ...) handler with this updated version.
+
 router.post("/convert-file", upload.single("file"), async (req, res) => {
+  // Charge-per-convert configuration
+  const COST_PER_CONVERT = 8;
+
+  // Helper to attempt to load User model safely
+  let UserModel = null;
+  try {
+    UserModel = mongoose.model("User");
+  } catch (e) {
+    // model not registered - will handle below
+    UserModel = null;
+  }
+
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
     const qtype = (req.body.qtype || "mcq").toLowerCase();
@@ -175,14 +189,64 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
     const fmt = (req.body.format || "json").toLowerCase();
     const instructions = req.body.instructions || "";
 
+    // --- Ensure user has enough credits (if User model is available) ---
+    let userDoc = null;
+    if (UserModel) {
+      userDoc = await UserModel.findById(req.user.id).select("creditPoints credits").exec();
+      if (!userDoc) {
+        console.warn("User not found when checking credits for AI convert:", req.user.id);
+        // continue without billing if you prefer; here we'll return error
+        return res.status(403).json({ error: "Authenticated user not found" });
+      }
+      // Determine balance (prefer creditPoints)
+      const balance = (typeof userDoc.creditPoints !== "undefined" && userDoc.creditPoints !== null)
+        ? Number(userDoc.creditPoints)
+        : (typeof userDoc.credits !== "undefined" && userDoc.credits !== null) ? Number(userDoc.credits) : 0;
+
+      if (balance < COST_PER_CONVERT) {
+        return res.status(402).json({ error: "Insufficient credits", creditPoints: balance });
+      }
+
+      // Deduct immediately
+      if (typeof userDoc.creditPoints !== "undefined" && userDoc.creditPoints !== null) {
+        userDoc.creditPoints = Math.max(0, balance - COST_PER_CONVERT);
+      } else {
+        userDoc.credits = Math.max(0, balance - COST_PER_CONVERT);
+      }
+      await userDoc.save();
+    } else {
+      // If User model is missing, log and proceed (or you could error out)
+      console.warn("User model not registered in mongoose. Skipping credit deduction.");
+    }
+
     // extract text
     const text = await extractTextFromBuffer(req.file.buffer, req.file.mimetype, req.file.originalname);
     if (!text || text.trim().length < 50) {
+      // Refund if we deducted earlier
+      if (userDoc && UserModel) {
+        // refund
+        if (typeof userDoc.creditPoints !== "undefined" && userDoc.creditPoints !== null) {
+          userDoc.creditPoints = Number(userDoc.creditPoints) + COST_PER_CONVERT;
+        } else {
+          userDoc.credits = Number(userDoc.credits) + COST_PER_CONVERT;
+        }
+        await userDoc.save().catch(()=>{ console.warn("Failed to refund credits after extraction failure"); });
+      }
       return res.status(400).json({ error: "Could not extract meaningful text from file" });
     }
 
-    if (!GEMINI_API_KEY) return res.status(500).json({ error: "Missing Gemini API key on server" });
-
+    if (!GEMINI_API_KEY) {
+      // refund
+      if (userDoc && UserModel) {
+        if (typeof userDoc.creditPoints !== "undefined" && userDoc.creditPoints !== null) {
+          userDoc.creditPoints = Number(userDoc.creditPoints) + COST_PER_CONVERT;
+        } else {
+          userDoc.credits = Number(userDoc.credits) + COST_PER_CONVERT;
+        }
+        await userDoc.save().catch(()=>{ console.warn("Failed to refund credits (missing API key)"); });
+      }
+      return res.status(500).json({ error: "Missing Gemini API key on server" });
+    }
     // build prompt
     let systemPrompt = "";
     systemPrompt += `You are a university exam designer. Convert the provided document text into exactly ${count} ${qtype === 'mcq' ? 'multiple-choice' : (qtype==='short' ? 'short-answer' : 'questions')} questions. `;
@@ -209,7 +273,6 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
         }
       ]
     };
-
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
@@ -221,6 +284,15 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
 
     const data = await response.json();
     if (data.error || !data.candidates) {
+      // refund on provider error
+      if (userDoc && UserModel) {
+        if (typeof userDoc.creditPoints !== "undefined" && userDoc.creditPoints !== null) {
+          userDoc.creditPoints = Number(userDoc.creditPoints) + COST_PER_CONVERT;
+        } else {
+          userDoc.credits = Number(userDoc.credits) + COST_PER_CONVERT;
+        }
+        await userDoc.save().catch(()=>{ console.warn("Failed to refund credits after AI provider error"); });
+      }
       return res.status(500).json({ error: data.error?.message || "AI provider error", raw: data });
     }
     const rawText = data.candidates[0]?.content?.parts[0]?.text || "";
@@ -230,7 +302,6 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
     try {
       parsed = JSON.parse(rawText);
     } catch (e) {
-      // try to extract a JSON substring
       const m = rawText.match(/\{[\s\S]*\}$/m);
       if (m) {
         try { parsed = JSON.parse(m[0]); } catch (err) { parsed = null; }
@@ -243,7 +314,6 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
     if (parsed) {
       const normalized = normalizeAiParsed(parsed);
       setTitle = normalized.title || req.file.originalname || "Untitled";
-      // store normalized questions array if available, otherwise null
       setQuestions = normalized.questions && normalized.questions.length ? normalized.questions : null;
       setRaw = normalized.raw || null;
     } else {
@@ -259,12 +329,45 @@ router.post("/convert-file", upload.single("file"), async (req, res) => {
       createdAt: new Date()
     });
 
-    // Return normalized shape to client
+    // Re-fetch user to get updated balance (if user model present)
+    let remainingCredits = null;
+    if (UserModel) {
+      try {
+        const refreshed = await UserModel.findById(req.user.id).select("creditPoints credits").lean().exec();
+        remainingCredits = (refreshed && typeof refreshed.creditPoints !== "undefined" && refreshed.creditPoints !== null) ? refreshed.creditPoints : (refreshed && typeof refreshed.credits !== "undefined" ? refreshed.credits : null);
+      } catch (e) {
+        // ignore
+      }
+    }
+
     const returnObj = parsed ? normalizeAiParsed(parsed) : { title: setTitle, questions: null, raw: setRaw };
-    return res.json({ success: true, title: returnObj.title || setTitle, questions: returnObj.questions, raw: returnObj.raw, setId: savedSet._id });
+
+    return res.json({
+      success: true,
+      title: returnObj.title || setTitle,
+      questions: returnObj.questions || null,
+      raw: returnObj.raw || null,
+      setId: savedSet._id,
+      remainingCredits
+    });
 
   } catch (err) {
     console.error("AI convert-file error:", err);
+    // in case something else failed, attempt to refund if deduction occurred earlier
+    try {
+      if (UserModel && req.user && req.user.id) {
+        const userDoc2 = await mongoose.model("User").findById(req.user.id).select("creditPoints credits").exec();
+        if (userDoc2) {
+          // attempt a best-effort refund (add COST_PER_CONVERT)
+          if (typeof userDoc2.creditPoints !== "undefined" && userDoc2.creditPoints !== null) {
+            userDoc2.creditPoints = Number(userDoc2.creditPoints) + COST_PER_CONVERT;
+          } else {
+            userDoc2.credits = Number(userDoc2.credits) + COST_PER_CONVERT;
+          }
+          await userDoc2.save().catch(()=>{});
+        }
+      }
+    } catch (_) {}
     return res.status(500).json({ error: err.message || 'Server error' });
   }
 });
