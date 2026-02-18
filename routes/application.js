@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import Applications from "../models/market/Application.js";
 import fs from "fs";
-import bcrypt from "bcryptjs"; // Add this
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ const upload = multer({
   limits: { fileSize: 8 * 1024 * 1024 }
 });
 
-router.post("/", 
+router.post("/",
   upload.fields([
     { name: "idFile", maxCount: 1 },
     { name: "transcripts", maxCount: 5 }
@@ -40,14 +40,14 @@ router.post("/",
         return res.status(400).json({ message: "Missing required fields" });
       }
 
-      // Username should be unique
-      const exists = await Applications.findOne({ username });
-      if (exists) {
-        return res.status(409).json({ message: "Username already exists" });
+      // Handle duplicate username
+      const existingUser = await Applications.findOne({ username });
+      if (existingUser) {
+        return res.status(409).json({ message: "Username already exists. Please choose another." });
       }
 
-      // Hash password (recommended for security)
-      const hashedPassword = await bcrypt.hash(password, 12);
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       const idFile = req.files.idFile?.[0]?.filename
         ? `/uploads/applications/${req.files.idFile[0].filename}`
@@ -87,7 +87,7 @@ router.post("/",
 );
 
 router.get("/", async (req, res) => {
-  const apps = await Applications.find().sort({submittedAt: -1}).select("-password");
+  const apps = await Applications.find().sort({submittedAt: -1});
   res.json(apps);
 });
 
