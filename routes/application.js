@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-import Application from "../models/market/Application.js";
+import Applications from "../models/market/Application.js";
 import fs from "fs";
 
 const router = express.Router();
@@ -47,7 +47,7 @@ router.post("/",
 
       const transcripts = (req.files.transcripts || []).map(f => `/uploads/applications/${f.filename}`);
 
-      const application = await Application.create({
+      const application = await Applications.create({
         applicantType, firstName, lastName, dob, email, phone, nationality, address,
         intakeTerm, program, currentSchool, currentGrade, prevAcademics, languageProof,
         emergencyName, emergencyPhone, idFile, transcripts
@@ -63,7 +63,7 @@ router.post("/",
 
 // (Optional) Admin: list all applications
 router.get("/", async (req, res) => {
-  const apps = await Application.find().sort({submittedAt: -1});
+  const apps = await Applications.find().sort({submittedAt: -1});
   res.json(apps);
 });
 
