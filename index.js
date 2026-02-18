@@ -141,6 +141,7 @@ import studentsRouter from './routes/students.js';
 import assignmentsRouter from './routes/assignments.js';
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
 
+import applicationRoutes from 'market/routes/application.js';
 
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
@@ -1344,6 +1345,7 @@ app.use("/api/support", supportRoutes);
 app.use("/api/massages", massagesRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/applications", applicationsRoutes);
+app.use('/api/application', applicationRoutes);
 app.get("/", (req, res) => res.json({ status: "form platform api ok" }));
 app.use("/api/reviews", reviewsRoutes);
 app.use("/api/orders", ordersRoutes);
