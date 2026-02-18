@@ -3,6 +3,7 @@ import multer from "multer";
 import path from "path";
 import Applications from "../models/market/Application.js";
 import fs from "fs";
+import bcrypt from "bcryptjs"; // Add this
 
 const router = express.Router();
 
@@ -29,18 +30,25 @@ router.post("/",
   ]),
   async (req, res) => {
     try {
-      // Validate required fields (server-side)
       const {
-        applicantType, firstName, lastName, dob, email, phone,
+        applicantType, username, password, firstName, lastName, dob, email, phone,
         nationality, address, intakeTerm, program, currentSchool, currentGrade,
         prevAcademics, languageProof, emergencyName, emergencyPhone
       } = req.body;
 
-      if (![applicantType, firstName, lastName, dob, email, phone, intakeTerm, program].every(Boolean)) {
+      if (![applicantType, username, password, firstName, lastName, dob, email, phone, intakeTerm, program].every(Boolean)) {
         return res.status(400).json({ message: "Missing required fields" });
       }
 
-      // Handle file uploads
+      // Username should be unique
+      const exists = await Applications.findOne({ username });
+      if (exists) {
+        return res.status(409).json({ message: "Username already exists" });
+      }
+
+      // Hash password (recommended for security)
+      const hashedPassword = await bcrypt.hash(password, 12);
+
       const idFile = req.files.idFile?.[0]?.filename
         ? `/uploads/applications/${req.files.idFile[0].filename}`
         : "";
@@ -48,9 +56,26 @@ router.post("/",
       const transcripts = (req.files.transcripts || []).map(f => `/uploads/applications/${f.filename}`);
 
       const application = await Applications.create({
-        applicantType, firstName, lastName, dob, email, phone, nationality, address,
-        intakeTerm, program, currentSchool, currentGrade, prevAcademics, languageProof,
-        emergencyName, emergencyPhone, idFile, transcripts
+        applicantType,
+        username,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        dob,
+        email,
+        phone,
+        nationality,
+        address,
+        intakeTerm,
+        program,
+        currentSchool,
+        currentGrade,
+        prevAcademics,
+        languageProof,
+        emergencyName,
+        emergencyPhone,
+        idFile,
+        transcripts
       });
 
       res.status(201).json({ message: "Application submitted", application });
@@ -61,9 +86,8 @@ router.post("/",
   }
 );
 
-// (Optional) Admin: list all applications
 router.get("/", async (req, res) => {
-  const apps = await Applications.find().sort({submittedAt: -1});
+  const apps = await Applications.find().sort({submittedAt: -1}).select("-password");
   res.json(apps);
 });
 
