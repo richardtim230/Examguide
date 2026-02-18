@@ -141,7 +141,7 @@ import studentsRouter from './routes/students.js';
 import assignmentsRouter from './routes/assignments.js';
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
 
-import applicationRoutes from './market/routes/application.js';
+import applicationRoutes from './routes/application.js';
 
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
