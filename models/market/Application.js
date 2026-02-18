@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ApplicationSchema = new mongoose.Schema({
+const ApplicationsSchema = new mongoose.Schema({
   applicantType: { type: String, required: true }, // "national" | "international"
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -22,4 +22,4 @@ const ApplicationSchema = new mongoose.Schema({
   submittedAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model("Application", ApplicationSchema);
+export default mongoose.model("Applications", ApplicationsSchema);
