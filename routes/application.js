@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-import Application from "market/models/Application.js";
+import Application from "models/market/Application.js";
 import fs from "fs";
 
 const router = express.Router();
