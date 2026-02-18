@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const ApplicationsSchema = new mongoose.Schema({
   applicantType: { type: String, required: true },
-  username: { type: String, required: true, unique: true, minlength: 3 },
-  password: { type: String, required: true }, // Store as hash in production!
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   dob: { type: Date, required: true },
