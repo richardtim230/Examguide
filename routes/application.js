@@ -4,7 +4,7 @@ import path from "path";
 import Applications from "../models/market/Application.js";
 import fs from "fs";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
 const router = express.Router();
 
 const uploadDir = "./uploads/applications";
@@ -22,54 +22,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 8 * 1024 * 1024 }
 });
-router.post("/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ message: "Username and password required" });
-    }
-
-    // Find user
-    const user = await Applications.findOne({ username });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Create token
-    const token = jwt.sign(
-      {
-        id: user._id,
-        username: user.username,
-        applicantType: user.applicantType
-      },
-      process.env.JWT_SECRET || "supersecretkey",
-      { expiresIn: "1d" }
-    );
-
-    res.json({
-      message: "Login successful",
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        applicantType: user.applicantType
-      }
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 router.post("/",
   upload.fields([
     { name: "idFile", maxCount: 1 },
