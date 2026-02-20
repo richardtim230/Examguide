@@ -148,17 +148,7 @@ UsersSchema.methods.toJSON = function () {
 /**
  * Password hashing (bcryptjs)
  */
-const SALT_ROUNDS = 10;
-UsersSchema.pre("save", function (next) {
-  try {
-    if (!this.isModified("password")) return next();
-    const salt = bcrypt.genSaltSync(SALT_ROUNDS);
-    this.password = bcrypt.hashSync(this.password, salt);
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-});
+
 
 /**
  * Compare candidate password with stored hash
