@@ -29,7 +29,7 @@ const UsersSchema = new Schema({
 
   // Authentication
   password: { type: String, required: true },
-  emailVerified: { type: Boolean, default: false },
+  emailVerified: { type: Boolean, default: true },
   emailVerificationToken: { type: String },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
