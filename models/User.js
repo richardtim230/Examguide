@@ -29,7 +29,7 @@ const UserSchema = new Schema({
 
   // Authentication
   password: { type: String, required: true },
-  emailVerified: { type: Boolean, default: false },
+  emailVerified: { type: Boolean, default: true },
   emailVerificationToken: { type: String },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
@@ -99,7 +99,7 @@ const UserSchema = new Schema({
       done: [String]
     }
   ],
-  verified: { type: Boolean, default: false },
+  verified: { type: Boolean, default: true },
 
   // Meta fields used elsewhere
   offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }],
