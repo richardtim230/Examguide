@@ -17,7 +17,7 @@ const socialSchema = new Schema({
   website: { type: String, default: "" }
 }, { _id: false });
 
-const UsersSchema = new Schema({
+const UserSchema = new Schema({
   // Basic profile
   fullname: { type: String, default: "" },
   username: { type: String, required: true, unique: true, trim: true, index: true },
@@ -129,13 +129,13 @@ const UsersSchema = new Schema({
 /**
  * Virtuals
  */
-UsersSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
-UsersSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
+UserSchema.virtual("isTutor").get(function () { return this.role === "tutor"; });
+UserSchema.virtual("isAdmin").get(function () { return ["admin","superadmin"].includes(this.role); });
 
 /**
  * Sanitize JSON output: remove sensitive fields
  */
-UsersSchema.methods.toJSON = function () {
+UserSchema.methods.toJSON = function () {
   const obj = this.toObject({ virtuals: true });
   delete obj.password;
   delete obj.emailVerificationToken;
