@@ -149,7 +149,7 @@ UsersSchema.methods.toJSON = function () {
  * Password hashing (bcryptjs)
  */
 const SALT_ROUNDS = 10;
-UsersSchema.pre("save", function (next) {
+UserSchema.pre("save", function (next) {
   try {
     if (!this.isModified("password")) return next();
     const salt = bcrypt.genSaltSync(SALT_ROUNDS);
@@ -164,7 +164,7 @@ UsersSchema.pre("save", function (next) {
  * Compare candidate password with stored hash
  * Returns a Promise<boolean> to keep compatibility with async usage
  */
-UsersSchema.methods.comparePassword = function (candidate) {
+UserSchema.methods.comparePassword = function (candidate) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidate, this.password, (err, isMatch) => {
       if (err) return reject(err);
@@ -176,7 +176,7 @@ UsersSchema.methods.comparePassword = function (candidate) {
 /**
  * Generate email verification token
  */
-UsersSchema.methods.generateEmailVerificationToken = function () {
+UserSchema.methods.generateEmailVerificationToken = function () {
   const token = crypto.randomBytes(24).toString("hex");
   this.emailVerificationToken = token;
   return token;
@@ -185,7 +185,7 @@ UsersSchema.methods.generateEmailVerificationToken = function () {
 /**
  * Keep backwards-compatible `socials` mapping to/from `social`.
  */
-UsersSchema.virtual("socialMerged").get(function () {
+UserSchema.virtual("socialMerged").get(function () {
   const hasSocials = this.socials && Object.keys(this.socials || {}).length > 0;
   if (hasSocials) return this.socials;
   return this.social || {};
@@ -194,7 +194,7 @@ UsersSchema.virtual("socialMerged").get(function () {
 /**
  * Indexes
  */
-UsersSchema.index({ username: 1 }, { unique: true, background: true });
-UsersSchema.index({ email: 1 }, { background: true });
+UserSchema.index({ username: 1 }, { unique: true, background: true });
+UserSchema.index({ email: 1 }, { background: true });
 
 export default model("User", UserSchema);
