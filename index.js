@@ -245,7 +245,7 @@ app.get("/api/faculties", async (req, res) => {
   const list = await Faculty.find().sort({ name: 1 });
   res.json(list);
 });
-app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+app.post("/api/faculties", async (req, res) => {
   try {
     const faculty = await Faculty.create({ name: req.body.name });
     res.status(201).json(faculty);
@@ -253,7 +253,7 @@ app.post("/api/faculties", authenticate, authorizeRole("admin", "superadmin"), a
     res.status(400).json({ message: e.message });
   }
 });
-app.put("/api/faculties/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+app.put("/api/faculties/:id", async (req, res) => {
   try {
     const faculty = await Faculty.findById(req.params.id);
     if (!faculty) return res.status(404).json({ message: "Faculty not found" });
@@ -336,7 +336,7 @@ app.get("/api/departments/:id", async (req, res) => {
 });
 
 // Create department
-app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+app.post("/api/departments", async (req, res) => {
   try {
     const dept = await Department.create({
       name: req.body.name,
@@ -352,7 +352,7 @@ app.post("/api/departments", authenticate, authorizeRole("admin", "superadmin"),
 });
 
 // Edit department (name, faculty)
-app.put("/api/departments/:id", authenticate, authorizeRole("admin", "superadmin"), async (req, res) => {
+app.put("/api/departments/:id", async (req, res) => {
   try {
     const dept = await Department.findById(req.params.id);
     if (!dept) return res.status(404).json({ message: "Department not found" });
