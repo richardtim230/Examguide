@@ -140,7 +140,8 @@ import studypadiAiRoutes from "./routes/studypadi-ai.js";
 import studentsRouter from './routes/students.js';
 import assignmentsRouter from './routes/assignments.js';
 import resourcesGridFSRoutes from "./routes/resources-gridfs.js";
-
+// add near other imports
+import aiMaterialRoutes from "./routes/aiMaterial.js";
 
 import codecxregRoutes from "./routes/codecxreg.js";
 import withdrawalRoutes from "./routes/withdrawals.js";
@@ -1311,8 +1312,7 @@ const io = new Server(server, { cors: { origin: "*", credentials: true }, path: 
 setupLiveClassSocket(io);
 server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
 const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
-app.use('/', require('./routes/aiMaterial').default);
-// --- Superadmin & Student Profile Updates ---
+app.use("/api/ai", aiMaterialRoutes);
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/blogger", bloggerAuthRoutes);
 app.use("/uploads/blogger", express.static(path.join(process.cwd(), "uploads/blogger")));
