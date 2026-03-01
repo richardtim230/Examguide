@@ -1311,7 +1311,7 @@ const io = new Server(server, { cors: { origin: "*", credentials: true }, path: 
 setupLiveClassSocket(io);
 server.listen(process.env.PORT || 10000, ()=>console.log("Server with live class running!"));
 const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
-
+app.use('/', require('./routes/aiMaterial').default);
 // --- Superadmin & Student Profile Updates ---
 app.use("/api/superadmin", superadminRoutes);
 app.use("/api/blogger", bloggerAuthRoutes);
