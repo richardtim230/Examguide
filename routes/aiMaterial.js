@@ -108,7 +108,7 @@ async function forwardToChatService(target, message) {
    - field name: file
    - returns: { pages: [{page, keypoints: []}, ...], extractedAt, name }
 */
-router.post("/api/ai/extract", upload.single("file"), async (req, res) => {
+router.post("/extract", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded (field name must be 'file')" });
 
@@ -143,7 +143,7 @@ router.post("/api/ai/extract", upload.single("file"), async (req, res) => {
    - returns: { reply: '...' }
    - If upstream AI_CHAT_URL exists, forward; otherwise simulate using extracted keypoints if provided.
 */
-router.post("/api/ai/chat", express.json(), async (req, res) => {
+router.post("/chat", express.json(), async (req, res) => {
   try {
     const { fileName, message, context } = req.body || {};
     if (!message) return res.status(400).json({ error: "Missing message" });
@@ -180,7 +180,7 @@ router.post("/api/ai/chat", express.json(), async (req, res) => {
 });
 
 /* Optional health/status endpoint for this router */
-router.get("/api/ai/status", (req, res) => {
+router.get("/status", (req, res) => {
   res.json({
     ok: true,
     extraction: !!AI_EXTRACTION_URL,
