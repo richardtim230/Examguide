@@ -590,6 +590,15 @@
       .page-hero h1 { font-size: 24px; }
       .section-header h2 { font-size: 32px; }
     }
+    @media (max-width: 520px) {
+  header {
+    height: 65px; /* Reduce from 80px to 65px */
+  }
+  
+  .nav-container {
+    padding: 0 10px; /* Even tighter padding */
+  }
+}
   </style>
 </head>
 
@@ -647,7 +656,7 @@
   <div class="pricing-grid">
     <div class="pricing-card">
       <h3>Starter</h3>
-      <div class="pricing-amount">₦50,000</div>
+      <div class="pricing-amount">₦80,000</div>
       <div class="pricing-period">One-Time Payment</div>
       <div class="pricing-duration">
         <i class="fas fa-user-group"></i> Up to 500 Students
@@ -668,7 +677,7 @@
     <div class="pricing-card featured">
       <span class="badge">BEST VALUE</span>
       <h3>Enterprise</h3>
-      <div class="pricing-amount">₦100,000</div>
+      <div class="pricing-amount">₦150,000</div>
       <div class="pricing-period">Lifetime License</div>
       <div class="pricing-duration">
         <i class="fas fa-infinity"></i> Unlimited Students
@@ -696,11 +705,11 @@
     <div style="display: grid; gap: 20px;">
       <details style="background: var(--white); border: 2px solid var(--gray-200); border-radius: 12px; padding: 24px; cursor: pointer;">
         <summary style="font-size: 15px; font-weight: 700; color: var(--navy); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-          <span>Is ₦100,000 a true lifetime license?</span>
+          <span>Is ₦150,000 a true lifetime license?</span>
           <span style="font-size: 20px;">▼</span>
         </summary>
         <p style="color: var(--gray-600); margin-top: 16px; line-height: 1.8; font-size: 14px;">
-          Yes! The ₦100,000 is a true lifetime license. You get unlimited access forever with all maintenance, updates, security patches, and 24/7 support included at no additional cost. No renewal fees or hidden charges.
+          Yes! The ₦150,000 is a true lifetime license. You get unlimited access forever with all maintenance, updates, security patches, and 24/7 support included at no additional cost. No renewal fees or hidden charges.
         </p>
       </details>
 
@@ -721,16 +730,6 @@
         </summary>
         <p style="color: var(--gray-600); margin-top: 16px; line-height: 1.8; font-size: 14px;">
           We accept bank transfers, credit/debit cards, and mobile payment platforms. Flexible payment plans are available for Enterprise upon request.
-        </p>
-      </details>
-
-      <details style="background: var(--white); border: 2px solid var(--gray-200); border-radius: 12px; padding: 24px; cursor: pointer;">
-        <summary style="font-size: 15px; font-weight: 700; color: var(--navy); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-          <span>Is there a free trial?</span>
-          <span style="font-size: 20px;">▼</span>
-        </summary>
-        <p style="color: var(--gray-600); margin-top: 16px; line-height: 1.8; font-size: 14px;">
-          Yes! 30-day free trial for Enterprise plan with full feature access. No credit card required. Cancel anytime if you're not satisfied.
         </p>
       </details>
     </div>
