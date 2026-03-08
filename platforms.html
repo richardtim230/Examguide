@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platforms – ExamGuard School Management Solution</title>
+  <meta name="description" content="Explore ExamGuard's web portal, mobile apps, and integrated platform architecture for seamless school management." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --navy: #061728;
+      --navy-light: #0f2847;
+      --gold: #ffb400;
+      --gold-light: #ffc933;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --accent-green: #10b981;
+      --shadow-sm: 0 2px 8px rgba(6,23,40,0.08);
+      --shadow-md: 0 6px 20px rgba(6,23,40,0.12);
+      --shadow-lg: 0 12px 40px rgba(6,23,40,0.16);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(6,23,40,0.98);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+      border-bottom: 1px solid rgba(255,180,0,0.1);
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 10px rgba(255,180,0,0.5);
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold), #ffc933);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn-login {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .nav-btn-login:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn-demo {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .nav-btn-demo:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1101;
+    }
+
+    /* ================= PAGE HERO ================= */
+    .page-hero {
+      min-height: 50vh;
+      padding-top: 80px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 180, 0, 0.1), transparent 70%);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .page-hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .page-hero h1 span {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ================= MAIN CONTENT ================= */
+    main {
+      padding: 120px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-header p {
+      font-size: 16px;
+      color: var(--gray-600);
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: stretch;
+      margin-top: 60px;
+    }
+
+    .platform-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 48px;
+      border: 2px solid var(--gray-200);
+      transition: all 0.4s ease;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .platform-box:nth-child(1) { animation-delay: 0.2s; }
+    .platform-box:nth-child(2) { animation-delay: 0.4s; }
+
+    .platform-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,180,0,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 16px;
+    }
+
+    .platform-box:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-8px);
+    }
+
+    .platform-box:hover::before {
+      opacity: 1;
+    }
+
+    .platform-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .platform-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--navy);
+      box-shadow: var(--shadow-md);
+      flex-shrink: 0;
+    }
+
+    .platform-box p {
+      font-size: 15px;
+      color: var(--gray-600);
+      margin-bottom: 24px;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+
+    .platform-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, rgba(255,180,0,0.08), rgba(61,130,246,0.08));
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      color: rgba(255,180,0,0.2);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .platform-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 24px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .features-list li {
+      font-size: 14px;
+      color: var(--gray-800);
+      padding: 10px 0;
+      padding-left: 28px;
+      position: relative;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .features-list li:hover {
+      padding-left: 32px;
+      color: var(--gold);
+    }
+
+    .features-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    /* ================= ARCHITECTURE SECTION ================= */
+    .architecture-section {
+      margin-top: 100px;
+      padding: 60px;
+      background: linear-gradient(180deg, var(--gray-50) 0%, var(--white) 100%);
+      border-radius: 16px;
+      border: 2px solid var(--gray-200);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .architecture-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .arch-item {
+      padding: 28px;
+      background: var(--white);
+      border-radius: 12px;
+      border: 2px solid var(--gray-200);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .arch-item:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .arch-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--navy);
+      margin: 0 auto 16px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .arch-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .arch-item p {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ================= INTEGRATIONS ================= */
+    .integrations-section {
+      margin-top: 100px;
+      padding-top: 60px;
+      border-top: 2px solid var(--gray-200);
+    }
+
+    .integrations-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .integration-item {
+      background: var(--white);
+      padding: 28px 20px;
+      border-radius: 12px;
+      border: 2px solid var(--gray-200);
+      text-align: center;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .integration-item:nth-child(1) { animation-delay: 0.1s; }
+    .integration-item:nth-child(2) { animation-delay: 0.2s; }
+    .integration-item:nth-child(3) { animation-delay: 0.3s; }
+    .integration-item:nth-child(4) { animation-delay: 0.4s; }
+    .integration-item:nth-child(5) { animation-delay: 0.5s; }
+    .integration-item:nth-child(6) { animation-delay: 0.6s; }
+
+    .integration-item:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-6px);
+    }
+
+    .integration-logo {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--navy);
+      box-shadow: var(--shadow-md);
+    }
+
+    .integration-item p {
+      font-size: 13px;
+      color: var(--gray-600);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      background: #040d1a;
+      padding: 80px 40px 30px;
+      color: rgba(255,255,255,0.8);
+      max-width: 1400px;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .footer-col a:hover {
+      color: var(--gold);
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1100px) {
+      .platforms-grid { grid-template-columns: 1fr; }
+      .integrations-grid { grid-template-columns: repeat(3, 1fr); }
+      .architecture-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-hero h1 { font-size: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      nav { display: none; }
+      nav.open { 
+        display: flex; 
+        position: absolute; 
+        top: 80px; 
+        left: 0; 
+        right: 0; 
+        flex-direction: column; 
+        background: var(--navy); 
+        padding: 20px; 
+        gap: 12px; 
+        z-index: 999; 
+      }
+      nav ul { flex-direction: column; gap: 12px; }
+      
+      main { padding: 60px 20px; }
+      footer { padding: 60px 20px 30px; }
+      .page-hero h1 { font-size: 32px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .platform-box { padding: 32px 24px; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-container { padding: 0 16px; }
+      main { padding: 40px 16px; }
+      .platform-box { padding: 24px; }
+      .architecture-grid { grid-template-columns: 1fr; }
+      .integrations-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-hero h1 { font-size: 24px; }
+      .section-header h2 { font-size: 32px; }
+      .architecture-section { padding: 32px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      ExamGuard
+    </a>
+
+    <button class="nav-toggle" aria-label="Menu" id="navToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="main-nav">
+      <ul>
+        <li><a href="/features.html">Features</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/platforms.html">Platforms</a></li>
+        <li><a href="/security.html">Security</a></li>
+        <li><a href="/roadmap.html">Roadmap</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-buttons">
+      <a href="#" class="nav-btn nav-btn-login">Login</a>
+      <a href="/" class="nav-btn nav-btn-demo">Back to Home</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PAGE HERO ================= -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <h1>Unified <span>Platform Architecture</span></h1>
+    <p>Seamless integration across web, mobile, and cloud infrastructure for complete school management</p>
+  </div>
+</section>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main>
+  <div class="section-header">
+    <span class="section-label">
+      <i class="fas fa-code-branch"></i> Platform Components
+    </span>
+    <h2>Multiple Platforms, One Solution</h2>
+    <p>Comprehensive access across all devices with automatic synchronization and real-time updates</p>
+  </div>
+
+  <div class="platforms-grid">
+    <div class="platform-box">
+      <h3>
+        <div class="platform-icon">
+          <i class="fas fa-globe"></i>
+        </div>
+        Web Management Portal
+      </h3>
+      <div class="platform-image">
+        <i class="fas fa-desktop"></i>
+      </div>
+      <p>
+        Comprehensive admin dashboard with advanced analytics, reporting tools, and complete system management capabilities. Access everything from any modern web browser with an intuitive, powerful interface.
+      </p>
+      <ul class="features-list">
+        <li>Real-time dashboards & analytics</li>
+        <li>Advanced reporting & data exports</li>
+        <li>User & role management</li>
+        <li>System settings & integrations</li>
+        <li>Multi-branch management</li>
+        <li>Scheduled automated reports</li>
+        <li>Full data visualization tools</li>
+        <li>Responsive design for tablets</li>
+      </ul>
+    </div>
+
+    <div class="platform-box">
+      <h3>
+        <div class="platform-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        Native Mobile Applications
+      </h3>
+      <div class="platform-image">
+        <i class="fas fa-smartphone"></i>
+      </div>
+      <p>
+        Purpose-built iOS and Android applications providing instant access to grades, attendance, communications, and notifications. Optimized for speed, security, and offline functionality for on-the-go access anytime.
+      </p>
+      <ul class="features-list">
+        <li>Push notifications & real-time alerts</li>
+        <li>Offline accessibility & sync</li>
+        <li>Quick attendance marking</li>
+        <li>Fast grade & assignment access</li>
+        <li>Biometric authentication</li>
+        <li>Photo & document uploads</li>
+        <li>Native platform experience</li>
+        <li>App store updates & improvements</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Architecture Section -->
+  <div class="architecture-section">
+    <h3>
+      <i class="fas fa-layer-group" style="color: var(--gold);"></i>
+      Platform Architecture & Infrastructure
+    </h3>
+    <p style="color: var(--gray-600); margin-top: 12px; line-height: 1.8;">Our enterprise-grade architecture ensures reliability, security, and scalability for institutions of all sizes.</p>
+
+    <div class="architecture-grid">
+      <div class="arch-item">
+        <div class="arch-icon">☁️</div>
+        <h4>Cloud Infrastructure</h4>
+        <p>99.9% uptime SLA with global redundancy, automatic failover, and disaster recovery.</p>
+      </div>
+
+      <div class="arch-item">
+        <div class="arch-icon">🔒</div>
+        <h4>Security & Compliance</h4>
+        <p>End-to-end encryption, GDPR compliant, HIPAA certified, with role-based access control.</p>
+      </div>
+
+      <div class="arch-item">
+        <div class="arch-icon">⚡</div>
+        <h4>High Performance</h4>
+        <p>Global CDN acceleration, optimized databases, and instant-loading interfaces worldwide.</p>
+      </div>
+
+      <div class="arch-item">
+        <div class="arch-icon">🔄</div>
+        <h4>Real-Time Sync</h4>
+        <p>Automatic data synchronization across all platforms with instant updates and notifications.</p>
+      </div>
+
+      <div class="arch-item">
+        <div class="arch-icon">💾</div>
+        <h4>Data Management</h4>
+        <p>Automatic daily backups, unlimited storage, data archival, and easy restoration options.</p>
+      </div>
+
+      <div class="arch-item">
+        <div class="arch-icon">📊</div>
+        <h4>Analytics Engine</h4>
+        <p>Real-time analytics, predictive insights, custom reports, and data-driven recommendations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integrations Section -->
+  <div class="integrations-section">
+    <div class="section-header">
+      <span class="section-label">
+        <i class="fas fa-link"></i> Ecosystem
+      </span>
+      <h2>Seamless Integrations</h2>
+      <p>Connect with your favorite tools and services to extend functionality</p>
+    </div>
+
+    <div class="integrations-grid">
+      <div class="integration-item">
+        <div class="integration-logo">G</div>
+        <p>Google Workspace & Classroom</p>
+      </div>
+      <div class="integration-item">
+        <div class="integration-logo">M</div>
+        <p>Microsoft 365</p>
+      </div>
+      <div class="integration-item">
+        <div class="integration-logo">Z</div>
+        <p>Zoom Video Conferencing</p>
+      </div>
+      <div class="integration-item">
+        <div class="integration-logo">S</div>
+        <p>Stripe Payments</p>
+      </div>
+      <div class="integration-item">
+        <div class="integration-logo">T</div>
+        <p>Twilio & SMS Services</p>
+      </div>
+      <div class="integration-item">
+        <div class="integration-logo">E</div>
+        <p>Email Service Providers</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="/features.html">Features</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/platforms.html">Platforms</a></li>
+        <li><a href="/security.html">Security</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">API Reference</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Compliance</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 ExamGuard. All rights reserved.</p>
+    <div style="display: flex; gap: 20px;">
+      <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none;">Twitter</a>
+      <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none;">LinkedIn</a>
+      <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none;">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.querySelector('#navToggle');
+  const mainNav = document.getElementById('main-nav');
+  
+  navToggle.addEventListener('click', () => {
+    mainNav.classList.toggle('open');
+    navToggle.innerHTML = mainNav.classList.contains('open') 
+      ? '<i class="fas fa-times"></i>' 
+      : '<i class="fas fa-bars"></i>';
+  });
+
+  document.querySelectorAll('#main-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+  });
+</script>
+
+</body>
+</html>
