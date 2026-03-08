@@ -599,6 +599,86 @@
     padding: 0 10px; /* Even tighter padding */
   }
 }
+    /* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+  .nav-container { padding: 0 30px; }
+  /* ... rest of existing rules ... */
+}
+
+@media (max-width: 768px) {
+  .nav-container { 
+    padding: 0 16px;
+    gap: 12px;
+  }
+  
+  .logo {
+    font-size: 22px;
+  }
+  
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  .nav-buttons {
+    gap: 8px;
+  }
+  
+  .nav-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+  
+  /* ... rest of existing rules ... */
+}
+
+@media (max-width: 520px) {
+  header {
+    height: 70px;
+  }
+
+  .nav-container { 
+    padding: 0 12px;
+    gap: 8px;
+  }
+  
+  .logo {
+    font-size: 18px;
+    gap: 6px;
+  }
+  
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  
+  nav {
+    top: 70px !important;
+  }
+  
+  .nav-buttons {
+    display: none;
+  }
+  
+  .nav-btn-demo,
+  .nav-btn-login {
+    display: none;
+  }
+  
+  /* Show buttons inside mobile menu instead */
+  nav.open .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    width: 100%;
+  }
+
+  /* ... rest of existing rules ... */
+}
   </style>
 </head>
 
