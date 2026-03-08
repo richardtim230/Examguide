@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features – ExamGuard School Management Platform</title>
+  <meta name="description" content="Explore ExamGuard's comprehensive features for academic management, fee collection, student information systems, and more." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --navy: #061728;
+      --navy-light: #0f2847;
+      --gold: #ffb400;
+      --gold-light: #ffc933;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --accent-green: #10b981;
+      --shadow-sm: 0 2px 8px rgba(6,23,40,0.08);
+      --shadow-md: 0 6px 20px rgba(6,23,40,0.12);
+      --shadow-lg: 0 12px 40px rgba(6,23,40,0.16);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(6,23,40,0.98);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+      border-bottom: 1px solid rgba(255,180,0,0.1);
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 10px rgba(255,180,0,0.5);
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold), #ffc933);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn-login {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .nav-btn-login:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn-demo {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .nav-btn-demo:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1101;
+    }
+
+    /* ================= HERO SECTION ================= */
+    .page-hero {
+      min-height: 50vh;
+      padding-top: 80px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 180, 0, 0.1), transparent 70%);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .page-hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .page-hero h1 span {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ================= MAIN CONTENT ================= */
+    main {
+      padding: 120px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-header p {
+      font-size: 16px;
+      color: var(--gray-600);
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .feature-item {
+      padding: 40px;
+      background: linear-gradient(180deg, var(--gray-50) 0%, var(--white) 100%);
+      border-radius: 16px;
+      border: 2px solid var(--gray-200);
+      transition: all 0.4s ease;
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .feature-item:nth-child(1) { animation-delay: 0.1s; }
+    .feature-item:nth-child(2) { animation-delay: 0.2s; }
+    .feature-item:nth-child(3) { animation-delay: 0.3s; }
+    .feature-item:nth-child(4) { animation-delay: 0.4s; }
+    .feature-item:nth-child(5) { animation-delay: 0.5s; }
+    .feature-item:nth-child(6) { animation-delay: 0.6s; }
+    .feature-item:nth-child(7) { animation-delay: 0.7s; }
+    .feature-item:nth-child(8) { animation-delay: 0.8s; }
+
+    .feature-item:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: var(--navy);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .feature-item p {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .feature-benefits {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .feature-benefits li {
+      font-size: 13px;
+      color: var(--gray-800);
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .feature-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: 800;
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      background: #040d1a;
+      padding: 80px 40px 30px;
+      color: rgba(255,255,255,0.8);
+      max-width: 1400px;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .footer-col a:hover {
+      color: var(--gold);
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1100px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-hero h1 { font-size: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      nav { display: none; }
+      nav.open { 
+        display: flex; 
+        position: absolute; 
+        top: 80px; 
+        left: 0; 
+        right: 0; 
+        flex-direction: column; 
+        background: var(--navy); 
+        padding: 20px; 
+        gap: 12px; 
+        z-index: 999; 
+      }
+      nav ul { flex-direction: column; gap: 12px; }
+      
+      main { padding: 60px 20px; }
+      footer { padding: 60px 20px 30px; }
+      .page-hero h1 { font-size: 32px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-container { padding: 0 16px; }
+      main { padding: 40px 16px; }
+      .feature-item { padding: 24px; }
+      .page-hero h1 { font-size: 24px; }
+      .section-header h2 { font-size: 32px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      ExamGuard
+    </a>
+
+    <button class="nav-toggle" aria-label="Menu" id="navToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="main-nav">
+      <ul>
+        <li><a href="/features.html">Features</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/platforms.html">Platforms</a></li>
+        <li><a href="/security.html">Security</a></li>
+        <li><a href="/roadmap.html">Roadmap</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-buttons">
+      <a href="#" class="nav-btn nav-btn-login">Login</a>
+      <a href="/" class="nav-btn nav-btn-demo">Back to Home</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PAGE HERO ================= -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <h1>Powerful <span>Features</span> for Modern Schools</h1>
+    <p>Comprehensive tools designed to streamline every aspect of school management and enhance the educational experience</p>
+  </div>
+</section>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main>
+  <div class="section-header">
+    <span class="section-label">
+      <i class="fas fa-check-circle"></i> Complete Feature Set
+    </span>
+    <h2>Everything You Need</h2>
+    <p>Explore our comprehensive suite of features designed to simplify school management and improve outcomes</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon">📊</div>
+      <h3>Academic Management</h3>
+      <p>Centralized system for managing grades, attendance, and academic progress with automated report generation.</p>
+      <ul class="feature-benefits">
+        <li>Grade management & tracking</li>
+        <li>Automated report cards</li>
+        <li>Attendance tracking</li>
+        <li>Performance analytics</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">💰</div>
+      <h3>Smart Fee Management</h3>
+      <p>Streamlined fee collection with multiple payment gateways and comprehensive financial reporting.</p>
+      <ul class="feature-benefits">
+        <li>Multiple payment gateways</li>
+        <li>Automated invoicing</li>
+        <li>Late payment alerts</li>
+        <li>Financial reports</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">🔐</div>
+      <h3>Student Information System</h3>
+      <p>Complete student profiles with secure data management and streamlined admissions workflows.</p>
+      <ul class="feature-benefits">
+        <li>Student profiles & records</li>
+        <li>Admissions management</li>
+        <li>Document storage</li>
+        <li>Data archival</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">📱</div>
+      <h3>Parent Portal</h3>
+      <p>Real-time communication and updates keeping parents informed about their child's progress.</p>
+      <ul class="feature-benefits">
+        <li>Real-time notifications</li>
+        <li>Grade updates</li>
+        <li>Event calendars</li>
+        <li>Teacher messaging</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">🤖</div>
+      <h3>AI-Powered Analytics</h3>
+      <p>Intelligent insights and predictive analytics to identify trends and support better decision-making.</p>
+      <ul class="feature-benefits">
+        <li>Predictive analytics</li>
+        <li>Risk identification</li>
+        <li>Performance trends</li>
+        <li>Custom dashboards</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">👥</div>
+      <h3>Staff Management</h3>
+      <p>Comprehensive staff administration including leave, payroll, and performance tracking.</p>
+      <ul class="feature-benefits">
+        <li>Leave management</li>
+        <li>Payroll integration</li>
+        <li>Performance tracking</li>
+        <li>Schedule management</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">📲</div>
+      <h3>Mobile Applications</h3>
+      <p>Native iOS and Android apps for on-the-go access to all features with offline functionality.</p>
+      <ul class="feature-benefits">
+        <li>iOS & Android apps</li>
+        <li>Push notifications</li>
+        <li>Offline access</li>
+        <li>Biometric login</li>
+      </ul>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">🔗</div>
+      <h3>Third-Party Integrations</h3>
+      <p>Seamless integration with popular tools and services to extend functionality and streamline workflows.</p>
+      <ul class="feature-benefits">
+        <li>Google Workspace</li>
+        <li>Microsoft 365</li>
+        <li>Payment gateways</li>
+        <li>Custom APIs</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="/features.html">Features</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/platforms.html">Platforms</a></li>
+        <li><a href="/security.html">Security</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">API Reference</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Support Center</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Security Policy</a></li>
+        <li><a href="#">Compliance</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 ExamGuard Institutional Solutions. All rights reserved.</p>
+    <div style="display: flex; gap: 20px;">
+      <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none;">Twitter</a>
+      <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none;">LinkedIn</a>
+      <a href="#" style="color: rgba(255,255,255,0.6); text-decoration: none;">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const navToggle = document.querySelector('#navToggle');
+  const mainNav = document.getElementById('main-nav');
+  
+  navToggle.addEventListener('click', () => {
+    mainNav.classList.toggle('open');
+    navToggle.innerHTML = mainNav.classList.contains('open') 
+      ? '<i class="fas fa-times"></i>' 
+      : '<i class="fas fa-bars"></i>';
+  });
+
+  document.querySelectorAll('#main-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+  });
+</script>
+
+</body>
+</html>
