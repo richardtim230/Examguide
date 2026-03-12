@@ -16,7 +16,7 @@
     { "source": "/demo-request", "destination": "/demo.html" },
     { "source": "/features", "destination": "/features.html" },
     { "source": "/solutions", "destination": "/security.html" },
-    { "source": "/MainStudentDashboard", "destination": "/student-dashoards.html" }
+    { "source": "/platforms", "destination": "/platforms.html" }
   ],
 
   
