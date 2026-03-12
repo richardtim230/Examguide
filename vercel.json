@@ -12,9 +12,14 @@
     { "source": "/testsession", "destination": "/test.html" },
     { "source": "/advertisement", "destination": "/advert.html" },
     { "source": "/photo-editor", "destination": "/photo-editor.html" },
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/demo-request", "destination": "/demo.html" },
+    { "source": "/photo-editor", "destination": "/photo-editor.html" },
     { "source": "/css-lecturemanual", "destination": "/wweeek2.html" },
     { "source": "/MainStudentDashboard", "destination": "/student-dashoards.html" }
   ],
+
+  
   "redirects": [
     { "source": "/old-past-questions", "destination": "/past-questions", "permanent": true },
     { "source": "/old-school-mock", "destination": "/school-mock", "permanent": true },
