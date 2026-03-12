@@ -14,8 +14,8 @@
     { "source": "/photo-editor", "destination": "/photo-editor.html" },
     { "source": "/pricing", "destination": "/pricing.html" },
     { "source": "/demo-request", "destination": "/demo.html" },
-    { "source": "/photo-editor", "destination": "/photo-editor.html" },
-    { "source": "/css-lecturemanual", "destination": "/wweeek2.html" },
+    { "source": "/features", "destination": "/features.html" },
+    { "source": "/solutions", "destination": "/security.html" },
     { "source": "/MainStudentDashboard", "destination": "/student-dashoards.html" }
   ],
 
