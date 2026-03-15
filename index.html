@@ -2544,6 +2544,492 @@
     header.style.transition = 'transform 0.3s ease';
   }
 </script>
+<!-- WhatsApp Widget HTML - Add this before closing </body> tag -->
+<div id="whatsapp-widget">
+  <!-- WhatsApp Icon/Button -->
+  <div id="whatsapp-icon" class="whatsapp-icon">
+    <i class="fab fa-whatsapp"></i>
+  </div>
 
+  <!-- Welcome Popup Message -->
+  <div id="welcome-popup" class="whatsapp-popup">
+    <div class="popup-content">
+      <p>👋 Hi there! How can we help you today?</p>
+      <small>Click to chat with us</small>
+    </div>
+  </div>
+
+  <!-- Chat Modal -->
+  <div id="chat-modal" class="chat-modal hidden">
+    <div class="chat-modal-content">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <h3>Chat with us</h3>
+        <button id="close-chat" class="close-btn">&times;</button>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages">
+        <div class="message bot-message">
+          <p>Welcome! 👋 How can we assist you today? Feel free to share your inquiries or concerns.</p>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-area">
+        <input 
+          type="text" 
+          id="chat-input" 
+          placeholder="Type your message..." 
+          class="chat-input"
+        />
+        <button id="send-btn" class="send-btn">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ================= WHATSAPP WIDGET STYLES ================= */
+  
+  /* WhatsApp Icon */
+  .whatsapp-icon {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    z-index: 999;
+    transition: all 0.3s ease;
+    animation: pulse-whatsapp 2s infinite;
+  }
+
+  .whatsapp-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+  }
+
+  .whatsapp-icon i {
+    font-size: 32px;
+    color: white;
+  }
+
+  /* Pulse Animation for Icon */
+  @keyframes pulse-whatsapp {
+    0%, 100% {
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+      box-shadow: 0 4px 30px rgba(37, 211, 102, 0.7);
+    }
+  }
+
+  /* Welcome Popup */
+  .whatsapp-popup {
+    position: fixed;
+    bottom: 100px;
+    left: 30px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 280px;
+    z-index: 998;
+    animation: slideInUp 0.5s ease-out;
+  }
+
+  .whatsapp-popup.hidden {
+    display: none;
+  }
+
+  .popup-content p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+  }
+
+  .popup-content small {
+    font-size: 12px;
+    color: #6b7280;
+    display: block;
+  }
+
+  /* Slide In Animation */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Chat Modal */
+  .chat-modal {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 380px;
+    height: 550px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    animation: slideInUp 0.4s ease-out;
+    overflow: hidden;
+  }
+
+  .chat-modal.hidden {
+    display: none;
+  }
+
+  .chat-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Chat Header */
+  .chat-header {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .chat-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .close-btn:hover {
+    transform: rotate(90deg);
+  }
+
+  /* Chat Messages Container */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Message Styling */
+  .message {
+    display: flex;
+    margin-bottom: 8px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .message p {
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 85%;
+  }
+
+  /* Bot Message */
+  .bot-message p {
+    background: white;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px 12px 12px 0;
+  }
+
+  /* User Message */
+  .user-message {
+    justify-content: flex-end;
+  }
+
+  .user-message p {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+    border-radius: 12px 12px 0 12px;
+  }
+
+  /* Chat Input Area */
+  .chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .chat-input {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 24px;
+    padding: 12px 16px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .chat-input:focus {
+    border-color: #25d366;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+  }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 18px;
+  }
+
+  .send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  }
+
+  .send-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .chat-modal {
+      width: calc(100% - 40px);
+      height: calc(100vh - 100px);
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .whatsapp-icon {
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .whatsapp-popup {
+      left: 20px;
+      max-width: calc(100% - 80px);
+    }
+  }
+
+  /* Scrollbar Styling */
+  .chat-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+  }
+
+  .chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+  // WhatsApp Widget Functionality
+  const whatsappIcon = document.getElementById('whatsapp-icon');
+  const welcomePopup = document.getElementById('welcome-popup');
+  const chatModal = document.getElementById('chat-modal');
+  const chatInput = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const closeBtn = document.getElementById('close-chat');
+  const chatMessages = document.querySelector('.chat-messages');
+
+  const WHATSAPP_NUMBER = '2349155127634'; // WhatsApp number without + sign
+
+  // Show welcome popup on page load (after 1 second)
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      welcomePopup.classList.remove('hidden');
+    }, 1000);
+  });
+
+  // Hide welcome popup after 5 seconds
+  setTimeout(() => {
+    welcomePopup.classList.add('hidden');
+  }, 6000);
+
+  // Open chat modal on icon click
+  whatsappIcon.addEventListener('click', () => {
+    welcomePopup.classList.add('hidden');
+    chatModal.classList.remove('hidden');
+    chatInput.focus();
+  });
+
+  // Open chat modal on popup click
+  welcomePopup.addEventListener('click', () => {
+    welcomePopup.classList.add('hidden');
+    chatModal.classList.remove('hidden');
+    chatInput.focus();
+  });
+
+  // Close chat modal
+  closeBtn.addEventListener('click', () => {
+    chatModal.classList.add('hidden');
+  });
+
+  // Send message on button click
+  sendBtn.addEventListener('click', sendMessage);
+
+  // Send message on Enter key
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && chatInput.value.trim()) {
+      sendMessage();
+    }
+  });
+
+  function sendMessage() {
+    const messageText = chatInput.value.trim();
+    
+    if (!messageText) return;
+
+    // Add user message to chat
+    addMessageToChat(messageText, 'user-message');
+    chatInput.value = '';
+
+    // Show typing indicator
+    showTypingIndicator();
+
+    // Simulate bot response delay
+    setTimeout(() => {
+      removeTypingIndicator();
+      addMessageToChat(
+        'Thank you for your message! We\'ll respond to your inquiry on WhatsApp shortly. 😊',
+        'bot-message'
+      );
+
+      // Prepare WhatsApp message
+      const whatsappMessage = encodeURIComponent(
+        `Hi, I have a query:\n\n"${messageText}"\n\nPlease help me with this.`
+      );
+      const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
+      // Redirect to WhatsApp after a short delay
+      setTimeout(() => {
+        window.open(whatsappURL, '_blank');
+      }, 1500);
+    }, 800);
+  }
+
+  function addMessageToChat(text, className) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${className}`;
+    messageDiv.innerHTML = `<p>${text}</p>`;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot-message typing-indicator';
+    typingDiv.id = 'typing-indicator';
+    typingDiv.innerHTML = `
+      <p style="padding: 12px 16px;">
+        <span></span><span></span><span></span>
+      </p>
+    `;
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Add typing animation
+    const style = document.createElement('style');
+    style.textContent = `
+      .typing-indicator p span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #999;
+        margin: 0 2px;
+        animation: typing 1.4s infinite;
+      }
+      .typing-indicator p span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-indicator p span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes typing {
+        0%, 60%, 100% { opacity: 0.3; }
+        30% { opacity: 1; }
+      }
+    `;
+    if (!document.querySelector('style[data-typing]')) {
+      style.setAttribute('data-typing', 'true');
+      document.head.appendChild(style);
+    }
+  }
+
+  function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+</script>
 </body>
 </html>
