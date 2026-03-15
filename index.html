@@ -989,7 +989,180 @@
       margin: 0;
       font-weight: 600;
     }
+    /* ================= PLATFORM SHOWCASE SECTION ================= */
+    .platform-showcase {
+      padding: 120px 40px;
+      background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
+    .platform-showcase .section-header {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .showcase-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--gray-200);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: var(--shadow-sm);
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-card:nth-child(1) { animation-delay: 0.2s; }
+    .showcase-card:nth-child(2) { animation-delay: 0.4s; }
+    .showcase-card:nth-child(3) { animation-delay: 0.6s; }
+    .showcase-card:nth-child(4) { animation-delay: 0.8s; }
+
+    .showcase-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-12px);
+    }
+
+    .showcase-image {
+      width: 100%;
+      height: 280px;
+      background: linear-gradient(135deg, rgba(255,180,0,0.08), rgba(61,130,246,0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .showcase-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-placeholder-showcase {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      color: rgba(255,180,0,0.15);
+      background: linear-gradient(135deg, var(--navy-lighter) 0%, var(--navy) 100%);
+    }
+
+    .showcase-content {
+      padding: 36px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .showcase-subtitle {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .showcase-description {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .showcase-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 2px solid var(--gray-200);
+      padding-top: 20px;
+    }
+
+    .showcase-features li {
+      font-size: 13px;
+      color: var(--gray-800);
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .showcase-features li:hover {
+      padding-left: 28px;
+      color: var(--gold);
+    }
+
+    .showcase-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    /* ================= RESPONSIVE DESIGN ================= */
+    @media (max-width: 1024px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .platform-showcase {
+        padding: 80px 24px;
+      }
+
+      .showcase-card {
+        border-radius: 12px;
+      }
+
+      .showcase-image {
+        height: 220px;
+      }
+
+      .image-placeholder-showcase {
+        font-size: 70px;
+      }
+
+      .showcase-content {
+        padding: 24px;
+      }
+
+      .showcase-card h3 {
+        font-size: 20px;
+      }
+
+      .showcase-description {
+        font-size: 13px;
+      }
+    }
     /* ================= PRICING SECTION ================= */
     .pricing {
       padding: 120px 40px;
@@ -1744,7 +1917,97 @@
     </div>
   </div>
 </section>
+    <!-- ================= PLATFORM SHOWCASE SECTION ================= -->
+    <section class="platform-showcase">
+      <div class="section-header">
+        <span class="section-label">See It In Action</span>
+        <h2>Experience ExamGuard's Power</h2>
+        <p>Discover how our comprehensive school management platform transforms education administration with intuitive dashboards and intelligent automation</p>
+      </div>
 
+      <div class="showcase-grid">
+        <!-- Card 1: Student Profile -->
+        <div class="showcase-card">
+          <div class="showcase-image">
+            <div class="image-placeholder-showcase">
+              <i class="fas fa-user-circle"></i>
+            </div>
+          </div>
+          <div class="showcase-content">
+            <h3>Know Your Students Better</h3>
+            <p class="showcase-subtitle">Student Profile Management</p>
+            <p class="showcase-description">Centralized student profiles with complete academic records, personal information, contact details, and real-time engagement metrics. Empower parents and students with instant access to performance data and institutional updates.</p>
+            <ul class="showcase-features">
+              <li>Complete Student Profiles</li>
+              <li>Parent Communication Hub</li>
+              <li>Academic Progress Tracking</li>
+              <li>Instant Information Access</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2: Fees Management -->
+        <div class="showcase-card">
+          <div class="showcase-image">
+            <div class="image-placeholder-showcase">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+          </div>
+          <div class="showcase-content">
+            <h3>Fees Management Made Simple</h3>
+            <p class="showcase-subtitle">Financial Control & Transparency</p>
+            <p class="showcase-description">Streamlined fee collection, payment tracking, and financial reporting. Monitor outstanding balances, waived fees, and payment history in real-time. Automate billing workflows and reduce administrative overhead.</p>
+            <ul class="showcase-features">
+              <li>Automated Fee Setup</li>
+              <li>Payment Tracking Dashboard</li>
+              <li>Outstanding Balance Alerts</li>
+              <li>Financial Reporting Suite</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 3: Attendance Intelligence -->
+        <div class="showcase-card">
+          <div class="showcase-image">
+            <div class="image-placeholder-showcase">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+          <div class="showcase-content">
+            <h3>Track, Analyze, Improve</h3>
+            <p class="showcase-subtitle">Attendance Intelligence</p>
+            <p class="showcase-description">Real-time attendance summaries with intelligent trend analysis. Track student, teaching staff, and non-teaching staff presence at a glance. Identify patterns and take proactive measures to improve engagement and compliance.</p>
+            <ul class="showcase-features">
+              <li>Real-Time Attendance Summary</li>
+              <li>Trend Analytics & Insights</li>
+              <li>Staff & Student Tracking</li>
+              <li>Compliance Reporting</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 4: Staff Management -->
+        <div class="showcase-card">
+          <div class="showcase-image">
+            <div class="image-placeholder-showcase">
+              <i class="fas fa-chalkboard-user"></i>
+            </div>
+          </div>
+          <div class="showcase-content">
+            <h3>Empower Your Teaching Team</h3>
+            <p class="showcase-subtitle">Staff Management System</p>
+            <p class="showcase-description">Comprehensive staff profiles including personal details, contact information, professional designations, and department assignments. Streamline HR operations and maintain accurate staff records with ease.</p>
+            <ul class="showcase-features">
+              <li>Complete Staff Profiles</li>
+              <li>Department Organization</li>
+              <li>HR Documentation</li>
+              <li>Performance Tracking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= END PLATFORM SHOWCASE ================= -->
 <!-- ================= INTEGRATIONS ================= -->
 <section class="integrations">
   <div class="section-header">
