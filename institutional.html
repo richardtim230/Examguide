@@ -25,6 +25,7 @@
       --shadow-sm: 0 4px 12px rgba(11, 42, 60, 0.04);
       --shadow-md: 0 8px 20px rgba(11, 42, 60, 0.08);
       --shadow-lg: 0 12px 32px rgba(59, 130, 246, 0.12);
+      --sidebar-width: 280px;
     }
 
     * {
@@ -47,88 +48,242 @@
       text-decoration: none;
     }
 
-    /* HEADER */
-    .header {
+    /* LAYOUT */
+    .app-wrapper {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      grid-column: 1;
+      grid-row: 1 / 4;
       background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: #fff;
-      padding: 24px 20px;
-      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: var(--sidebar-width);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 0;
+    }
+
+    .sidebar-header {
+      padding: 24px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 224, 102, 0.3);
+    }
+
+    .sidebar-brand {
+      flex: 1;
+    }
+
+    .sidebar-brand h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #ffe066;
+      font-weight: 800;
+    }
+
+    .sidebar-brand p {
+      margin: 2px 0 0 0;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.12s;
+      border: 2px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffe066;
+    }
+
+    .nav-item.active {
+      background: rgba(255, 224, 102, 0.2);
+      color: #ffe066;
+      border-color: rgba(255, 224, 102, 0.4);
+    }
+
+    .nav-item i {
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: #ef4444;
+      color: #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-footer img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 224, 102, 0.3);
+    }
+
+    .sidebar-footer-info {
+      flex: 1;
+    }
+
+    .sidebar-footer-info p {
+      margin: 0;
+      color: #ffe066;
+      font-weight: 700;
+    }
+
+    .sidebar-footer-info span {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.8rem;
+    }
+
+    /* HEADER */
+    .header {
+      grid-column: 2;
+      grid-row: 1;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    .header-content {
-      max-width: 1600px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .header-brand {
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
 
-    .header-brand img {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 2px solid rgba(255, 224, 102, 0.3);
-    }
-
-    .header-brand-text {
+    .header-title h1 {
+      margin: 0;
+      font-size: 1.3rem;
       font-weight: 800;
-      font-size: 1.1rem;
-      color: #ffe066;
+      color: var(--primary);
     }
 
-    .header-brand-subtext {
+    .header-title p {
+      margin: 2px 0 0 0;
       font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--text-light);
     }
 
-    .header-actions {
+    .header-right {
       display: flex;
-      gap: 12px;
       align-items: center;
+      gap: 16px;
     }
 
     .header-btn {
       padding: 8px 16px;
-      background: rgba(255, 224, 102, 0.15);
-      color: #ffe066;
-      border: 1px solid rgba(255, 224, 102, 0.3);
+      border: 1px solid var(--border);
+      background: #fff;
       border-radius: 8px;
+      color: var(--primary);
       font-weight: 700;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.12s;
-      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .header-btn:hover {
-      background: rgba(255, 224, 102, 0.25);
-      border-color: rgba(255, 224, 102, 0.5);
+      background: var(--bg-lighter);
+      border-color: var(--accent);
     }
 
-    /* MAIN CONTAINER */
-    .container {
+    .header-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid var(--accent-light);
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      grid-column: 2;
+      grid-row: 2;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .main-content {
       max-width: 1600px;
       margin: 0 auto;
-      padding: 30px 20px;
     }
 
+    /* TWO COLUMN LAYOUT */
     .two-column {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
       gap: 24px;
-      min-height: calc(100vh - 200px);
+      min-height: 600px;
     }
 
-    /* LEFT COLUMN - FORM */
+    /* FORM COLUMN */
     .form-column {
       display: flex;
       flex-direction: column;
@@ -199,15 +354,8 @@
       line-height: 1;
     }
 
-    .form-label .help-icon {
-      font-size: 0.8rem;
-      color: var(--muted);
-      cursor: help;
-    }
-
     .form-input,
-    .form-select,
-    .form-textarea {
+    .form-select {
       padding: 12px 14px;
       border: 1.5px solid var(--border);
       border-radius: 10px;
@@ -219,8 +367,7 @@
     }
 
     .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
+    .form-select:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
@@ -231,11 +378,6 @@
     .form-select.error {
       border-color: var(--danger);
       box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 80px;
     }
 
     .form-hint {
@@ -317,7 +459,7 @@
 
     /* ALERTS */
     .alert {
-      padding: 16px 16px;
+      padding: 16px;
       border-radius: 10px;
       border-left: 4px solid;
       display: none;
@@ -382,17 +524,7 @@
       color: #f59e0b;
     }
 
-    .alert-info {
-      background: #e0f2fe;
-      border-color: #0284c7;
-      color: #0c4a6e;
-    }
-
-    .alert-info .alert-icon {
-      color: #0284c7;
-    }
-
-    /* RIGHT COLUMN - REPORT DISPLAY */
+    /* REPORT COLUMN */
     .report-column {
       display: flex;
       flex-direction: column;
@@ -427,7 +559,6 @@
       font-size: 0.95rem;
     }
 
-    /* REPORT CARD */
     .report-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -514,9 +645,10 @@
       color: #dc2626;
     }
 
-    /* REPORT BODY */
     .report-body {
       padding: 28px;
+      max-height: 800px;
+      overflow-y: auto;
     }
 
     .report-section {
@@ -571,6 +703,7 @@
       font-size: 1.1rem;
       font-weight: 800;
       color: var(--primary);
+      word-break: break-word;
     }
 
     .info-item-value.grade {
@@ -593,6 +726,7 @@
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--accent-light);
+      font-size: 0.9rem;
     }
 
     .subjects-table thead {
@@ -601,7 +735,7 @@
     }
 
     .subjects-table th {
-      padding: 14px 12px;
+      padding: 12px 10px;
       text-align: left;
       font-weight: 700;
       font-size: 0.85rem;
@@ -610,9 +744,8 @@
     }
 
     .subjects-table td {
-      padding: 12px;
+      padding: 10px;
       border-bottom: 1px solid var(--accent-light);
-      font-size: 0.9rem;
     }
 
     .subjects-table tbody tr:hover {
@@ -643,11 +776,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 38px;
-      height: 38px;
+      min-width: 35px;
+      height: 35px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #fff;
     }
 
@@ -664,7 +797,6 @@
       color: var(--primary);
     }
 
-    /* TEACHER REVIEW & PRINCIPAL REMARK */
     .review-box {
       background: linear-gradient(135deg, #f0f4ff 0%, #eff6ff 100%);
       border: 1.5px solid var(--accent-light);
@@ -701,7 +833,6 @@
       border-top: 1px solid rgba(59, 130, 246, 0.2);
     }
 
-    /* ACTIONS */
     .report-actions {
       display: flex;
       gap: 12px;
@@ -758,6 +889,275 @@
       box-shadow: var(--shadow-md);
     }
 
+    /* CHAT/TICKETS MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.12s;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .modal-body {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .chat-message {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+
+    .chat-message.user {
+      flex-direction: row-reverse;
+    }
+
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .chat-bubble {
+      background: var(--bg-lighter);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .chat-message.user .chat-bubble {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #fff;
+    }
+
+    .ticket-item {
+      background: var(--bg-lighter);
+      padding: 16px;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .ticket-id {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .ticket-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .ticket-status.open {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .ticket-status.resolved {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .ticket-status.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .ticket-title {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .ticket-meta {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .form-group-modal {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group-modal label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .form-group-modal input,
+    .form-group-modal textarea,
+    .form-group-modal select {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .form-group-modal textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* FOOTER */
+    .footer {
+      grid-column: 1 / 3;
+      grid-row: 3;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      padding: 40px 24px;
+      margin-left: var(--sidebar-width);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h4 {
+      color: #ffe066;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .footer-section a {
+      display: block;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      transition: color 0.12s;
+    }
+
+    .footer-section a:hover {
+      color: #ffe066;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .footer-social a {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 224, 102, 0.2);
+      border-radius: 8px;
+      color: #ffe066;
+      transition: all 0.12s;
+    }
+
+    .footer-social a:hover {
+      background: rgba(255, 224, 102, 0.3);
+      transform: translateY(-2px);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 1200px) {
       .two-column {
@@ -766,8 +1166,37 @@
     }
 
     @media (max-width: 900px) {
-      .container {
-        padding: 20px 16px;
+      .app-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: -280px;
+        transition: left 0.3s ease;
+        z-index: 1100;
+      }
+
+      .sidebar.active {
+        left: 0;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .main {
+        grid-column: 1;
+      }
+
+      .footer {
+        grid-column: 1;
+        margin-left: 0;
+      }
+
+      .header-left {
+        gap: 8px;
+      }
+
+      .header-title h1 {
+        font-size: 1.1rem;
       }
 
       .two-column {
@@ -775,9 +1204,12 @@
         gap: 20px;
       }
 
+      .main {
+        padding: 16px;
+      }
+
       .form-card,
       .report-card {
-        border-radius: 12px;
         padding: 20px;
       }
 
@@ -791,26 +1223,44 @@
     }
 
     @media (max-width: 640px) {
-      .header-content {
-        gap: 12px;
+      :root {
+        --sidebar-width: 0;
       }
 
-      .header-brand img {
-        width: 36px;
-        height: 36px;
+      .sidebar {
+        width: 100%;
+        left: -100%;
       }
 
-      .header-brand-text {
-        font-size: 0.95rem;
+      .header {
+        padding: 12px 16px;
       }
 
-      .header-actions {
+      .header-title h1 {
+        font-size: 1rem;
+      }
+
+      .header-title p {
         display: none;
+      }
+
+      .header-right {
+        gap: 8px;
+      }
+
+      .header-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+
+      .main {
+        padding: 12px;
       }
 
       .form-card,
       .report-card {
         padding: 16px;
+        border-radius: 12px;
       }
 
       .form-header-text h2 {
@@ -821,8 +1271,8 @@
         font-size: 1.2rem;
       }
 
-      .report-student-meta {
-        font-size: 0.85rem;
+      .report-body {
+        max-height: 600px;
       }
 
       .info-grid {
@@ -835,7 +1285,7 @@
 
       .subjects-table th,
       .subjects-table td {
-        padding: 8px;
+        padding: 6px 4px;
       }
 
       .report-actions {
@@ -846,16 +1296,38 @@
         width: 100%;
         justify-content: center;
       }
+
+      .modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+        border-radius: 12px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .footer {
+        padding: 24px 16px;
+      }
     }
 
     @media print {
+      .sidebar,
       .header,
       .form-column,
-      .report-actions {
+      .report-actions,
+      .footer {
         display: none;
       }
 
-      .container {
+      .app-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .main {
+        grid-column: 1;
         padding: 0;
       }
 
@@ -868,534 +1340,1028 @@
         border: 1px solid #ddd;
       }
     }
+
+    /* Loading State */
+    .loading {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading.active {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="header-content">
-      <div class="header-brand">
-        <img src="mainlogo.png" alt="ExamGuard Logo">
-        <div>
-          <div class="header-brand-text">ExamGuard</div>
-          <div class="header-brand-subtext">Institution Verification Portal</div>
+  <div class="app-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="mainlogo.png" alt="ExamGuard" class="sidebar-logo">
+        <div class="sidebar-brand">
+          <h3>ExamGuard</h3>
+          <p>Institution Portal</p>
         </div>
       </div>
-      <div class="header-actions">
-        <button class="header-btn" onclick="showHelp()">
-          <i class="fas fa-question-circle"></i> Help
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="switchPage('verify', this)">
+          <i class="fas fa-search"></i>
+          <span>Verify Report</span>
+        </div>
+
+        <div class="nav-item" onclick="switchPage('history', this)">
+          <i class="fas fa-history"></i>
+          <span>Verification History</span>
+          <div class="nav-badge" id="historyBadge">0</div>
+        </div>
+
+        <div class="nav-item" onclick="openChatModal()">
+          <i class="fas fa-comments"></i>
+          <span>Live Chat</span>
+          <div class="nav-badge" id="chatBadge" style="display: none;">0</div>
+        </div>
+
+        <div class="nav-item" onclick="openTicketsModal()">
+          <i class="fas fa-ticket-alt"></i>
+          <span>Support Tickets</span>
+          <div class="nav-badge" id="ticketBadge" style="display: none;">0</div>
+        </div>
+
+        <div class="nav-item" onclick="openContactModal()">
+          <i class="fas fa-envelope"></i>
+          <span>Contact Schools</span>
+        </div>
+
+        <div class="nav-item" onclick="openSettingsModal()">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <img src="avatar.jpg" alt="User" style="object-fit: cover;">
+        <div class="sidebar-footer-info">
+          <p id="userNameSidebar">User</p>
+          <span id="userRoleSidebar">Institution</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <button class="header-btn" onclick="toggleSidebar()" style="display: none;" id="toggleSidebarBtn">
+          <i class="fas fa-bars"></i>
         </button>
-        <button class="header-btn" onclick="logout()">
-          <i class="fas fa-sign-out-alt"></i> Logout
+        <div class="header-title">
+          <h1 id="pageTitle">Verify Student Report</h1>
+          <p id="pageSubtitle">Search and verify academic credentials</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="header-btn" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          Notifications
+          <span id="notificationBadge" style="background: var(--danger); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; margin-left: 4px; display: none;">0</span>
+        </button>
+        <img src="avatar.jpg" alt="User Avatar" class="header-avatar">
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="main-content">
+
+        <!-- VERIFY PAGE -->
+        <div id="verifyPage" style="display: block;">
+          <div class="two-column">
+
+            <!-- LEFT COLUMN - FORM -->
+            <div class="form-column">
+              <div class="form-card">
+                <div class="form-header">
+                  <div class="form-header-icon">
+                    <i class="fas fa-search"></i>
+                  </div>
+                  <div class="form-header-text">
+                    <h2>Verify Student Report</h2>
+                    <p>Enter student details to retrieve their academic record</p>
+                  </div>
+                </div>
+
+                <!-- Alerts -->
+                <div class="alert alert-success" id="successAlert">
+                  <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
+                  <div class="alert-content">
+                    <div class="alert-title">Success</div>
+                    <div class="alert-message" id="successMessage"></div>
+                  </div>
+                </div>
+
+                <div class="alert alert-error" id="errorAlert">
+                  <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+                  <div class="alert-content">
+                    <div class="alert-title">Error</div>
+                    <div class="alert-message" id="errorMessage"></div>
+                  </div>
+                </div>
+
+                <div class="alert alert-warning" id="warningAlert">
+                  <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                  <div class="alert-content">
+                    <div class="alert-title">Warning</div>
+                    <div class="alert-message" id="warningMessage"></div>
+                  </div>
+                </div>
+
+                <!-- FORM -->
+                <form id="verificationForm" onsubmit="handleVerification(event)">
+
+                  <div class="form-group">
+                    <label class="form-label">
+                      School Name <span class="required">*</span>
+                    </label>
+                    <select class="form-select" id="schoolName" required onchange="updateSchoolInfo()">
+                      <option value="">Select School</option>
+                    </select>
+                    <div class="form-hint">The school where the student is studying</div>
+                    <div class="form-error" id="schoolName-error"></div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">
+                        Registration Number <span class="required">*</span>
+                      </label>
+                      <input 
+                        type="text" 
+                        class="form-input" 
+                        id="regNo" 
+                        placeholder="e.g., EG-2024-001234"
+                        required
+                        autocomplete="off"
+                      >
+                      <div class="form-hint">Found on student's ID card</div>
+                      <div class="form-error" id="regNo-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">
+                        Scratch Card Code <span class="required">*</span>
+                      </label>
+                      <input 
+                        type="password" 
+                        class="form-input" 
+                        id="scratchCard" 
+                        placeholder="••••••••••"
+                        required
+                        autocomplete="off"
+                      >
+                      <div class="form-hint">Verification code on report</div>
+                      <div class="form-error" id="scratchCard-error"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">
+                        Academic Year <span class="required">*</span>
+                      </label>
+                      <select class="form-select" id="academicYear" required>
+                        <option value="">Select Year</option>
+                      </select>
+                      <div class="form-error" id="academicYear-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">
+                        Term <span class="required">*</span>
+                      </label>
+                      <select class="form-select" id="term" required>
+                        <option value="">Select Term</option>
+                        <option value="1">FIRST TERM</option>
+                        <option value="2">SECOND TERM</option>
+                        <option value="3">THIRD TERM</option>
+                      </select>
+                      <div class="form-error" id="term-error"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">
+                      Class <span class="required">*</span>
+                    </label>
+                    <select class="form-select" id="classLevel" required>
+                      <option value="">Select Class</option>
+                      <optgroup label="Primary">
+                        <option value="P1">Primary 1</option>
+                        <option value="P2">Primary 2</option>
+                        <option value="P3">Primary 3</option>
+                        <option value="P4">Primary 4</option>
+                        <option value="P5">Primary 5</option>
+                        <option value="P6">Primary 6</option>
+                      </optgroup>
+                      <optgroup label="Secondary">
+                        <option value="JSS1">JSS1</option>
+                        <option value="JSS2">JSS2</option>
+                        <option value="JSS3">JSS3</option>
+                        <option value="SS1">SS1</option>
+                        <option value="SS2">SS2</option>
+                        <option value="SS3">SS3</option>
+                      </optgroup>
+                    </select>
+                    <div class="form-error" id="classLevel-error"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">
+                      Purpose of Verification <span class="required">*</span>
+                    </label>
+                    <select class="form-select" id="verificationPurpose" required>
+                      <option value="">Select Purpose</option>
+                      <option value="admission">University/School Admission</option>
+                      <option value="employment">Employment Verification</option>
+                      <option value="scholarship">Scholarship Application</option>
+                      <option value="transfer">School Transfer</option>
+                      <option value="government">Government Registration</option>
+                      <option value="other">Other Purpose</option>
+                    </select>
+                    <div class="form-error" id="verificationPurpose-error"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">
+                      Institution/Organization <span class="required">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-input" 
+                      id="institutionName" 
+                      placeholder="Your institution or organization name"
+                      required
+                      autocomplete="off"
+                    >
+                    <div class="form-hint">For audit and verification records</div>
+                    <div class="form-error" id="institutionName-error"></div>
+                  </div>
+
+                  <button type="submit" class="form-submit" id="submitBtn">
+                    <i class="fas fa-check-circle"></i> Verify Report
+                  </button>
+
+                  <p style="text-align: center; margin-top: 14px; font-size: 0.85rem; color: var(--text-light);">
+                    <i class="fas fa-lock"></i> All data is encrypted and secure
+                  </p>
+                </form>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN - REPORT DISPLAY -->
+            <div class="report-column">
+              <!-- Empty State -->
+              <div class="report-empty" id="reportEmpty">
+                <div class="report-empty-icon">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+                <h3>No Report Selected</h3>
+                <p>Enter student details on the left and click "Verify Report" to view their academic record</p>
+              </div>
+
+              <!-- Report Card (Hidden by default) -->
+              <div class="report-card" id="reportCard" style="display: none;">
+
+                <!-- Report Header -->
+                <div class="report-header">
+                  <div class="report-header-info">
+                    <h1 class="report-student-name" id="reportStudentName">Student Name</h1>
+                    <div class="report-student-meta">
+                      <div class="report-student-meta-item">
+                        <i class="fas fa-id-card"></i>
+                        <span id="reportRegNo">REG: N/A</span>
+                      </div>
+                      <div class="report-student-meta-item">
+                        <i class="fas fa-school"></i>
+                        <span id="reportSchoolName">School: N/A</span>
+                      </div>
+                      <div class="report-student-meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span id="reportYear">Year: N/A</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="verification-badge verification-verified" id="verificationBadge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Verified</span>
+                  </div>
+                </div>
+
+                <!-- Report Body -->
+                <div class="report-body">
+
+                  <!-- Academic Summary -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-chart-bar"></i> Academic Summary
+                    </h3>
+                    <div class="info-grid">
+                      <div class="info-item">
+                        <div class="info-item-label">Term</div>
+                        <div class="info-item-value" id="reportTerm">N/A</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Class</div>
+                        <div class="info-item-value" id="reportClass">N/A</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Total Score</div>
+                        <div class="info-item-value" id="reportTotalScore">0</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Average Score</div>
+                        <div class="info-item-value" id="reportAverageScore">0.00</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Highest Score</div>
+                        <div class="info-item-value" id="reportHighestScore">0</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Overall Grade</div>
+                        <div class="info-item-value grade" id="reportGrade">-</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Subject Breakdown -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-book"></i> Subject Performance
+                    </h3>
+                    <div style="overflow-x: auto;">
+                      <table class="subjects-table">
+                        <thead>
+                          <tr>
+                            <th>Subject</th>
+                            <th>CA1</th>
+                            <th>CA2</th>
+                            <th>Midterm</th>
+                            <th>Exam</th>
+                            <th>Total</th>
+                            <th>Grade</th>
+                            <th>Position</th>
+                          </tr>
+                        </thead>
+                        <tbody id="subjectsTableBody">
+                          <tr>
+                            <td colspan="8" style="text-align: center; padding: 20px;">No subject data</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Affective Skills -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-heart"></i> Affective Skills Assessment
+                    </h3>
+                    <div class="info-grid">
+                      <div class="info-item">
+                        <div class="info-item-label">Punctuality</div>
+                        <div class="info-item-value" id="skillsPunctuality">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Obedience</div>
+                        <div class="info-item-value" id="skillsObedience">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Honesty</div>
+                        <div class="info-item-value" id="skillsHonesty">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Cleanliness</div>
+                        <div class="info-item-value" id="skillsCleanliness">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Initiative</div>
+                        <div class="info-item-value" id="skillsInitiative">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Cooperation</div>
+                        <div class="info-item-value" id="skillsCooperation">-</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Attendance -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-calendar-check"></i> Attendance
+                    </h3>
+                    <div class="info-grid">
+                      <div class="info-item">
+                        <div class="info-item-label">Total Days Present</div>
+                        <div class="info-item-value" id="attendancePresent">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Total Days Absent</div>
+                        <div class="info-item-value" id="attendanceAbsent">-</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Attendance Rate</div>
+                        <div class="info-item-value" id="attendanceRate">-</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Teacher's Comments -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-chalkboard-user"></i> Teacher's Comments
+                    </h3>
+                    <div class="review-box">
+                      <div class="review-box-label">
+                        <i class="fas fa-quote-left"></i> Class Teacher
+                      </div>
+                      <div class="review-box-content" id="teacherComment">
+                        [Comment will appear here]
+                      </div>
+                      <div class="review-box-author" id="teacherName">Teacher Name</div>
+                    </div>
+                  </div>
+
+                  <!-- Principal's Remark -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-crown"></i> Principal's Remark
+                    </h3>
+                    <div class="review-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #f0fdf4 100%); border-color: #86efac;">
+                      <div class="review-box-label" style="color: #166534;">
+                        <i class="fas fa-quote-left"></i> Principal's Office
+                      </div>
+                      <div class="review-box-content" id="principalRemark">
+                        [Remark will appear here]
+                      </div>
+                      <div class="review-box-author" id="principalName">Principal Name</div>
+                    </div>
+                  </div>
+
+                  <!-- Verification Info -->
+                  <div class="report-section">
+                    <h3 class="report-section-title">
+                      <i class="fas fa-shield-alt"></i> Verification Information
+                    </h3>
+                    <div class="info-grid">
+                      <div class="info-item">
+                        <div class="info-item-label">Verification Code</div>
+                        <div class="info-item-value" style="font-family: 'Courier New', monospace; font-size: 0.9rem;" id="reportVerificationCode">VER-000000</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Issue Date</div>
+                        <div class="info-item-value" id="reportIssueDate">N/A</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="info-item-label">Verification Status</div>
+                        <div class="info-item-value" id="reportVerificationStatus" style="color: #16a34a;">Verified ✓</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="report-actions">
+                    <button class="action-btn print" onclick="printReport()">
+                      <i class="fas fa-print"></i> Print Report
+                    </button>
+                    <button class="action-btn download" onclick="downloadReport()">
+                      <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <button class="action-btn share" onclick="shareReport()">
+                      <i class="fas fa-share-alt"></i> Share
+                    </button>
+                  </div>
+                </div>
+              </div>
+                          </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HISTORY PAGE -->
+        <div id="historyPage" style="display: none;">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-header-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <div class="form-header-text">
+                <h2>Verification History</h2>
+                <p>View your past verification requests and results</p>
+              </div>
+            </div>
+
+            <div id="historyContainer" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- History items will be populated here -->
+            </div>
+
+            <div id="emptyHistory" style="text-align: center; padding: 40px; color: var(--text-light);">
+              <i class="fas fa-inbox" style="font-size: 3rem; color: var(--accent-light); margin-bottom: 16px; display: block;"></i>
+              <p>No verification history yet</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4><i class="fas fa-info-circle"></i> About ExamGuard</h4>
+          <a href="#">Our Mission</a>
+          <a href="#">Partner Schools</a>
+          <a href="#">How It Works</a>
+          <a href="#">Blog</a>
+        </div>
+
+        <div class="footer-section">
+          <h4><i class="fas fa-headset"></i> Support</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Contact Support</a>
+          <a href="#">Report Issue</a>
+          <a href="#">FAQ</a>
+        </div>
+
+        <div class="footer-section">
+          <h4><i class="fas fa-lock"></i> Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security Policy</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+
+        <div class="footer-section">
+          <h4><i class="fas fa-code"></i> Developers</h4>
+          <a href="#">API Documentation</a>
+          <a href="#">Integration Guide</a>
+          <a href="#">Status Page</a>
+          <a href="#">GitHub</a>
+        </div>
+
+        <div class="footer-section">
+          <h4><i class="fas fa-share-alt"></i> Follow Us</h4>
+          <div class="footer-social">
+            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 ExamGuard. All rights reserved. | Secure Verification Platform</p>
+        <p style="font-size: 0.85rem; margin: 12px 0 0 0;">Made with <i class="fas fa-heart" style="color: var(--danger);"></i> for Educational Excellence</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- CHAT MODAL -->
+  <div class="modal" id="chatModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-comments"></i> Live Chat Support
+        </h3>
+        <button class="modal-close" onclick="closeChatModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="chatMessages" style="max-height: 400px; overflow-y: auto;">
+        <div class="chat-message">
+          <div class="chat-avatar">E</div>
+          <div class="chat-bubble">
+            Hello! How can I assist you with your verification today?
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <input 
+          type="text" 
+          id="chatInput" 
+          placeholder="Type your message..." 
+          style="flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', Arial, sans-serif;"
+        >
+        <button onclick="sendMessage()" class="header-btn" style="margin: 0;">
+          <i class="fas fa-paper-plane"></i> Send
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MAIN CONTAINER -->
-  <div class="container">
-    <div class="two-column">
+  <!-- TICKETS MODAL -->
+  <div class="modal" id="ticketsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-ticket-alt"></i> Support Tickets
+        </h3>
+        <button class="modal-close" onclick="closeTicketsModal()">&times;</button>
+      </div>
 
-      <!-- LEFT COLUMN - FORM -->
-      <div class="form-column">
-        <div class="form-card">
-          <div class="form-header">
-            <div class="form-header-icon">
-              <i class="fas fa-search"></i>
-            </div>
-            <div class="form-header-text">
-              <h2>Verify Student Report</h2>
-              <p>Enter student details to retrieve their academic record</p>
-            </div>
+      <div class="modal-body" id="ticketsContainer" style="max-height: 400px; overflow-y: auto;">
+        <!-- Tickets will be populated here -->
+      </div>
+
+      <div class="modal-footer">
+        <button onclick="closeTicketsModal()" class="header-btn">Close</button>
+        <button onclick="openCreateTicketModal()" class="header-btn" style="background: linear-gradient(135deg, var(--accent), var(--primary)); color: #fff; border: none;">
+          <i class="fas fa-plus"></i> New Ticket
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE TICKET MODAL -->
+  <div class="modal" id="createTicketModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-plus-circle"></i> Create Support Ticket
+        </h3>
+        <button class="modal-close" onclick="closeCreateTicketModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="ticketForm" onsubmit="submitTicket(event)">
+          <div class="form-group-modal">
+            <label>Subject <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="ticketSubject" 
+              placeholder="Brief subject of your issue"
+              required
+            >
           </div>
 
-          <!-- Alerts -->
-          <div class="alert alert-success" id="successAlert">
-            <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
-            <div class="alert-content">
-              <div class="alert-title">Success</div>
-              <div class="alert-message" id="successMessage"></div>
-            </div>
+          <div class="form-group-modal">
+            <label>Category <span class="required">*</span></label>
+            <select id="ticketCategory" required>
+              <option value="">Select Category</option>
+              <option value="verification">Verification Issue</option>
+              <option value="account">Account Issue</option>
+              <option value="technical">Technical Problem</option>
+              <option value="billing">Billing</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
-          <div class="alert alert-error" id="errorAlert">
-            <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
-            <div class="alert-content">
-              <div class="alert-title">Error</div>
-              <div class="alert-message" id="errorMessage"></div>
-            </div>
+          <div class="form-group-modal">
+            <label>Priority <span class="required">*</span></label>
+            <select id="ticketPriority" required>
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+              <option value="urgent">Urgent</option>
+            </select>
           </div>
 
-          <div class="alert alert-warning" id="warningAlert">
-            <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
-            <div class="alert-content">
-              <div class="alert-title">Warning</div>
-              <div class="alert-message" id="warningMessage"></div>
-            </div>
+          <div class="form-group-modal">
+            <label>Description <span class="required">*</span></label>
+            <textarea 
+              id="ticketDescription" 
+              placeholder="Describe your issue in detail"
+              required
+            ></textarea>
           </div>
 
-          <div class="alert alert-info" id="infoAlert">
-            <div class="alert-icon"><i class="fas fa-info-circle"></i></div>
-            <div class="alert-content">
-              <div class="alert-title">Information</div>
-              <div class="alert-message" id="infoMessage"></div>
-            </div>
-          </div>
-
-          <!-- FORM -->
-          <form id="verificationForm" onsubmit="handleVerification(event)">
-
-            <div class="form-group">
-              <label class="form-label">
-                School Name <span class="required">*</span>
-              </label>
-              <select class="form-select" id="schoolName" required>
-                <option value="">Select School</option>
-                <option>ExamGuard International School</option>
-                <option>Elite Academy Lagos</option>
-                <option>Sunshine Learning Center</option>
-                <option>Heritage College</option>
-                <option>Future Leaders Academy</option>
-              </select>
-              <div class="form-error" id="schoolName-error"></div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">
-                  Registration Number <span class="required">*</span>
-                </label>
-                <input 
-                  type="text" 
-                  class="form-input" 
-                  id="regNo" 
-                  placeholder="e.g., EG-2024-001234"
-                  required
-                  autocomplete="off"
-                >
-                <div class="form-hint">Found on student's ID card</div>
-                <div class="form-error" id="regNo-error"></div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">
-                  Scratch Card Code <span class="required">*</span>
-                </label>
-                <input 
-                  type="password" 
-                  class="form-input" 
-                  id="scratchCard" 
-                  placeholder="••••••••••"
-                  required
-                  autocomplete="off"
-                >
-                <div class="form-hint">Verification code on report</div>
-                <div class="form-error" id="scratchCard-error"></div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">
-                  Academic Year <span class="required">*</span>
-                </label>
-                <select class="form-select" id="academicYear" required>
-                  <option value="">Select Year</option>
-                  <option>2027-2028</option>
-                  <option>2026-2027</option>
-                  <option>2025-2026</option>
-                  <option>2024-2025</option>
-                  <option>2023-2024</option>
-                </select>
-                <div class="form-error" id="academicYear-error"></div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">
-                  Term <span class="required">*</span>
-                </label>
-                <select class="form-select" id="term" required>
-                  <option value="">Select Term</option>
-                  <option>FIRST TERM</option>
-                  <option>SECOND TERM</option>
-                  <option>THIRD TERM</option>
-                </select>
-                <div class="form-error" id="term-error"></div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">
-                Class <span class="required">*</span>
-              </label>
-              <select class="form-select" id="classLevel" required>
-                <option value="">Select Class</option>
-                <optgroup label="Primary">
-                  <option>Primary 1</option>
-                  <option>Primary 2</option>
-                  <option>Primary 3</option>
-                  <option>Primary 4</option>
-                  <option>Primary 5</option>
-                  <option>Primary 6</option>
-                </optgroup>
-                <optgroup label="Secondary">
-                  <option>JSS1</option>
-                  <option>JSS2</option>
-                  <option>JSS3</option>
-                  <option>SS1</option>
-                  <option>SS2</option>
-                  <option>SS3</option>
-                </optgroup>
-              </select>
-              <div class="form-error" id="classLevel-error"></div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">
-                Student Full Name <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-input" 
-                id="studentName" 
-                placeholder="Enter student's full name"
-                required
-                autocomplete="off"
-              >
-              <div class="form-hint">Must match official school records</div>
-              <div class="form-error" id="studentName-error"></div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">
-                Purpose of Verification <span class="required">*</span>
-              </label>
-              <select class="form-select" id="verificationPurpose" required>
-                <option value="">Select Purpose</option>
-                <option value="admission">University/School Admission</option>
-                <option value="employment">Employment Verification</option>
-                <option value="scholarship">Scholarship Application</option>
-                <option value="transfer">School Transfer</option>
-                <option value="government">Government Registration</option>
-                <option value="other">Other Purpose</option>
-              </select>
-              <div class="form-error" id="verificationPurpose-error"></div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">
-                Institution/Organization <span class="required">*</span>
-              </label>
-              <input 
-                type="text" 
-                class="form-input" 
-                id="institutionName" 
-                placeholder="Your institution or organization name"
-                required
-                autocomplete="off"
-              >
-              <div class="form-hint">For audit and verification records</div>
-              <div class="form-error" id="institutionName-error"></div>
-            </div>
-
-            <button type="submit" class="form-submit" id="submitBtn">
-              <i class="fas fa-check-circle"></i> Verify Report
+          <div style="display: flex; gap: 12px; margin-top: 20px;">
+            <button type="button" onclick="closeCreateTicketModal()" class="header-btn">Cancel</button>
+            <button type="submit" class="header-btn" style="background: linear-gradient(135deg, var(--accent), var(--primary)); color: #fff; border: none; flex: 1;">
+              <i class="fas fa-check"></i> Submit Ticket
             </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-            <p style="text-align: center; margin-top: 14px; font-size: 0.85rem; color: var(--text-light);">
-              <i class="fas fa-lock"></i> All data is encrypted and secure
-            </p>
-          </form>
-        </div>
+  <!-- CONTACT SCHOOLS MODAL -->
+  <div class="modal" id="contactModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-envelope"></i> Contact Schools
+        </h3>
+        <button class="modal-close" onclick="closeContactModal()">&times;</button>
       </div>
 
-      <!-- RIGHT COLUMN - REPORT DISPLAY -->
-      <div class="report-column">
-        <!-- Empty State -->
-        <div class="report-empty" id="reportEmpty">
-          <div class="report-empty-icon">
-            <i class="fas fa-file-alt"></i>
-          </div>
-          <h3>No Report Selected</h3>
-          <p>Enter student details on the left and click "Verify Report" to view their academic record</p>
-        </div>
-
-        <!-- Report Card (Hidden by default) -->
-        <div class="report-card" id="reportCard" style="display: none;">
-
-          <!-- Report Header -->
-          <div class="report-header">
-            <div class="report-header-info">
-              <h1 class="report-student-name" id="reportStudentName">Student Name</h1>
-              <div class="report-student-meta">
-                <div class="report-student-meta-item">
-                  <i class="fas fa-id-card"></i>
-                  <span id="reportRegNo">REG: N/A</span>
-                </div>
-                <div class="report-student-meta-item">
-                  <i class="fas fa-school"></i>
-                  <span id="reportSchoolName">School: N/A</span>
-                </div>
-                <div class="report-student-meta-item">
-                  <i class="fas fa-calendar"></i>
-                  <span id="reportYear">Year: N/A</span>
-                </div>
-              </div>
-            </div>
-            <div class="verification-badge verification-verified" id="verificationBadge">
-              <i class="fas fa-check-circle"></i>
-              <span>Verified</span>
-            </div>
-          </div>
-
-          <!-- Report Body -->
-          <div class="report-body">
-
-            <!-- Academic Summary -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-chart-bar"></i> Academic Summary
-              </h3>
-              <div class="info-grid">
-                <div class="info-item">
-                  <div class="info-item-label">Term</div>
-                  <div class="info-item-value" id="reportTerm">N/A</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Class</div>
-                  <div class="info-item-value" id="reportClass">N/A</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Total Score</div>
-                  <div class="info-item-value" id="reportTotalScore">0</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Average Score</div>
-                  <div class="info-item-value" id="reportAverageScore">0.00</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Highest Score</div>
-                  <div class="info-item-value" id="reportHighestScore">0</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Overall Grade</div>
-                  <div class="info-item-value grade" id="reportGrade">-</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Subject Breakdown -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-book"></i> Subject Performance
-              </h3>
-              <div style="overflow-x: auto;">
-                <table class="subjects-table">
-                  <thead>
-                    <tr>
-                      <th>Subject</th>
-                      <th>CA1</th>
-                      <th>CA2</th>
-                      <th>Midterm</th>
-                      <th>Exam</th>
-                      <th>Total</th>
-                      <th>Grade</th>
-                      <th>Position</th>
-                    </tr>
-                  </thead>
-                  <tbody id="subjectsTableBody">
-                    <tr>
-                      <td colspan="8" style="text-align: center; padding: 20px;">No subject data</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Affective Skills -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-heart"></i> Affective Skills Assessment
-              </h3>
-              <div class="info-grid">
-                <div class="info-item">
-                  <div class="info-item-label">Punctuality</div>
-                  <div class="info-item-value" id="skillsPunctuality">Excellent</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Obedience</div>
-                  <div class="info-item-value" id="skillsObedience">Very Good</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Honesty</div>
-                  <div class="info-item-value" id="skillsHonesty">Good</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Cleanliness</div>
-                  <div class="info-item-value" id="skillsCleanliness">Good</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Initiative</div>
-                  <div class="info-item-value" id="skillsInitiative">Very Good</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Cooperation</div>
-                  <div class="info-item-value" id="skillsCooperation">Excellent</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Attendance -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-calendar-check"></i> Attendance
-              </h3>
-              <div class="info-grid">
-                <div class="info-item">
-                  <div class="info-item-label">Total Days Present</div>
-                  <div class="info-item-value" id="attendancePresent">95</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Total Days Absent</div>
-                  <div class="info-item-value" id="attendanceAbsent">2</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Attendance Rate</div>
-                  <div class="info-item-value" id="attendanceRate">97.9%</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Teacher's Comments -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-chalkboard-user"></i> Teacher's Comments
-              </h3>
-              <div class="review-box">
-                <div class="review-box-label">
-                  <i class="fas fa-quote-left"></i> Class Teacher
-                </div>
-                <div class="review-box-content" id="teacherComment">
-                  [Student comment will appear here]
-                </div>
-                <div class="review-box-author" id="teacherName">Teacher Name</div>
-              </div>
-            </div>
-
-            <!-- Principal's Remark -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-crown"></i> Principal's Remark
-              </h3>
-              <div class="review-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #f0fdf4 100%); border-color: #86efac;">
-                <div class="review-box-label" style="color: #166534;">
-                  <i class="fas fa-quote-left"></i> Principal's Office
-                </div>
-                <div class="review-box-content" id="principalRemark">
-                  [Principal's remark will appear here]
-                </div>
-                <div class="review-box-author" id="principalName">Principal Name</div>
-              </div>
-            </div>
-
-            <!-- Verification Info -->
-            <div class="report-section">
-              <h3 class="report-section-title">
-                <i class="fas fa-shield-alt"></i> Verification Information
-              </h3>
-              <div class="info-grid">
-                <div class="info-item">
-                  <div class="info-item-label">Verification Code</div>
-                  <div class="info-item-value" style="font-family: 'Courier New', monospace; font-size: 0.9rem;" id="reportVerificationCode">VER-000000</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Issue Date</div>
-                  <div class="info-item-value" id="reportIssueDate">N/A</div>
-                </div>
-                <div class="info-item">
-                  <div class="info-item-label">Verification Status</div>
-                  <div class="info-item-value" id="reportVerificationStatus" style="color: #16a34a;">Verified ✓</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="report-actions">
-              <button class="action-btn print" onclick="printReport()">
-                <i class="fas fa-print"></i> Print Report
-              </button>
-              <button class="action-btn download" onclick="downloadReport()">
-                <i class="fas fa-download"></i> Download PDF
-              </button>
-              <button class="action-btn share" onclick="shareReport()">
-                <i class="fas fa-share-alt"></i> Share
-              </button>
-            </div>
-          </div>
-        </div>
+      <div class="modal-body" id="schoolsContactList" style="max-height: 400px; overflow-y: auto;">
+        <!-- Schools list will be populated here -->
       </div>
 
+      <div class="modal-footer">
+        <button onclick="closeContactModal()" class="header-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-cog"></i> Settings
+        </h3>
+        <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group-modal">
+          <label>Institution Name</label>
+          <input 
+            type="text" 
+            id="settingsInstitution" 
+            placeholder="Your institution name"
+          >
+        </div>
+
+        <div class="form-group-modal">
+          <label>Email Address</label>
+          <input 
+            type="email" 
+            id="settingsEmail" 
+            placeholder="Your email address"
+          >
+        </div>
+
+        <div class="form-group-modal">
+          <label>Phone Number</label>
+          <input 
+            type="tel" 
+            id="settingsPhone" 
+            placeholder="Your phone number"
+          >
+        </div>
+
+        <div class="form-group-modal">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="notificationsEnabled" checked>
+            <span>Enable Email Notifications</span>
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 20px;">
+          <button type="button" onclick="closeSettingsModal()" class="header-btn">Cancel</button>
+          <button type="button" onclick="saveSettings()" class="header-btn" style="background: linear-gradient(135deg, var(--accent), var(--primary)); color: #fff; border: none; flex: 1;">
+            <i class="fas fa-save"></i> Save Settings
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // ============ CONFIGURATION ============
-    const API_BASE_URL = "https://examguard-8rxe.onrender.com";
+    // ============ API CONFIGURATION ============
+    const API_BASE_URL = "https://examgide.onrender.com";
+    const token = localStorage.getItem('authToken') || '';
 
     // ============ STATE ============
     let currentReport = null;
+    let verificationHistory = [];
+    let schools = [];
+    let unreadMessages = 0;
+    let unreadTickets = 0;
 
-    // ============ EVENT LISTENERS ============
-    document.getElementById('verificationForm').addEventListener('submit', handleVerification);
+    // ============ INITIALIZATION ============
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeApp();
+      setupEventListeners();
+      setupFormValidation();
+      loadInitialData();
+      
+      // Show sidebar toggle on mobile
+      if (window.innerWidth <= 900) {
+        document.getElementById('toggleSidebarBtn').style.display = 'flex';
+      }
+    });
 
-    // ============ MAIN VERIFICATION FUNCTION ============
+    function initializeApp() {
+      // Set user info from localStorage
+      const userName = localStorage.getItem('userName') || 'User';
+      const userRole = localStorage.getItem('userRole') || 'Institution';
+      
+      document.getElementById('userNameSidebar').textContent = userName;
+      document.getElementById('userRoleSidebar').textContent = userRole;
+    }
+
+    function setupEventListeners() {
+      document.getElementById('verificationForm').addEventListener('submit', handleVerification);
+      
+      // Clear form errors on input
+      document.querySelectorAll('.form-input, .form-select').forEach(field => {
+        field.addEventListener('input', function() {
+          const errorEl = document.getElementById(this.id + '-error');
+          if (errorEl) {
+            this.classList.remove('error');
+            errorEl.classList.remove('show');
+          }
+        });
+      });
+    }
+
+    function setupFormValidation() {
+      // Real-time validation
+      document.getElementById('regNo').addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+      });
+
+      document.getElementById('scratchCard').addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+      });
+    }
+
+    // ============ LOAD INITIAL DATA ============
+    async function loadInitialData() {
+      try {
+        showLoading(true);
+        
+        // Load schools
+        await loadSchools();
+        
+        // Load academic years
+        await loadAcademicYears();
+        
+        // Load verification history
+        await loadVerificationHistory();
+        
+        showLoading(false);
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+        showLoading(false);
+      }
+    }
+
+    async function loadSchools() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/schools`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load schools');
+        
+        schools = await response.json();
+        populateSchoolDropdown();
+      } catch (error) {
+        console.error('Error loading schools:', error);
+        showAlert('error', 'Could not load schools. Please refresh the page.');
+      }
+    }
+
+    function populateSchoolDropdown() {
+      const schoolSelect = document.getElementById('schoolName');
+      schools.forEach(school => {
+        const option = document.createElement('option');
+        option.value = school.id;
+        option.textContent = school.name;
+        schoolSelect.appendChild(option);
+      });
+    }
+
+    async function loadAcademicYears() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/academic-years`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load years');
+        
+        const years = await response.json();
+        const yearSelect = document.getElementById('academicYear');
+        
+        years.forEach(year => {
+          const option = document.createElement('option');
+          option.value = year.id;
+          option.textContent = year.name;
+          yearSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading academic years:', error);
+      }
+    }
+
+    async function loadVerificationHistory() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/verification-history`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load history');
+        
+        verificationHistory = await response.json();
+        updateHistoryBadge();
+      } catch (error) {
+        console.error('Error loading history:', error);
+      }
+    }
+
+    function updateHistoryBadge() {
+      const badge = document.getElementById('historyBadge');
+      if (verificationHistory.length > 0) {
+        badge.textContent = verificationHistory.length;
+      }
+    }
+
+    // ============ VERIFICATION FUNCTION ============
     async function handleVerification(event) {
       event.preventDefault();
 
-      const schoolName = document.getElementById('schoolName').value;
-      const regNo = document.getElementById('regNo').value.trim();
-      const scratchCard = document.getElementById('scratchCard').value.trim();
-      const academicYear = document.getElementById('academicYear').value;
-      const term = document.getElementById('term').value;
-      const classLevel = document.getElementById('classLevel').value;
-      const studentName = document.getElementById('studentName').value.trim();
-      const verificationPurpose = document.getElementById('verificationPurpose').value;
-      const institutionName = document.getElementById('institutionName').value.trim();
-
-      // Validation
       if (!validateForm()) {
         return;
       }
+
+      const schoolId = document.getElementById('schoolName').value;
+      const regNo = document.getElementById('regNo').value.trim();
+      const scratchCard = document.getElementById('scratchCard').value.trim();
+      const academicYearId = document.getElementById('academicYear').value;
+      const termId = document.getElementById('term').value;
+      const classLevelId = document.getElementById('classLevel').value;
+      const verificationPurpose = document.getElementById('verificationPurpose').value;
+      const institutionName = document.getElementById('institutionName').value.trim();
 
       try {
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner"></span> Verifying...';
 
-        // Simulate API call
-        const response = await simulateVerification({
-          schoolName,
-          regNo,
-          scratchCard,
-          academicYear,
-          term,
-          classLevel,
-          studentName,
-          verificationPurpose,
-          institutionName
+        const response = await fetch(`${API_BASE_URL}/api/verify-student-report`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            schoolId,
+            regNo,
+            scratchCard,
+            academicYearId,
+            termId,
+            classLevelId,
+            verificationPurpose,
+            institutionName
+          })
         });
 
-        if (response.verified) {
-          currentReport = response;
-          displayReport(response);
-          showAlert('success', 'Report verified successfully!');
+        const data = await response.json();
+
+        if (response.ok && data.verified) {
+          currentReport = data;
+          displayReport(data);
+          showAlert('success', `Report for ${data.studentName} verified successfully!`);
+          
+          // Add to history
+          addToHistory(data);
+          
+          // Scroll to report
+          setTimeout(() => {
+            document.getElementById('reportCard').scrollIntoView({ behavior: 'smooth' });
+          }, 300);
         } else {
-          showAlert('error', 'Verification failed. Please check your details and try again.');
+          showAlert('error', data.message || 'Verification failed. Please check your details and try again.');
         }
       } catch (error) {
         console.error('Verification error:', error);
-        showAlert('error', 'An error occurred. Please try again later.');
+        showAlert('error', 'An error occurred during verification. Please try again later.');
       } finally {
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = false;
@@ -1403,10 +2369,9 @@
       }
     }
 
-    // ============ VALIDATION ============
     function validateForm() {
       let isValid = true;
-      const fields = ['schoolName', 'regNo', 'scratchCard', 'academicYear', 'term', 'classLevel', 'studentName', 'verificationPurpose', 'institutionName'];
+      const fields = ['schoolName', 'regNo', 'scratchCard', 'academicYear', 'term', 'classLevel', 'verificationPurpose', 'institutionName'];
 
       fields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
@@ -1419,52 +2384,35 @@
             errorEl.classList.add('show');
           }
           isValid = false;
-        } else {
-          field.classList.remove('error');
-          if (errorEl) {
-            errorEl.classList.remove('show');
-          }
         }
       });
 
       return isValid;
     }
 
-    // Clear error on input
-    document.querySelectorAll('.form-input, .form-select').forEach(field => {
-      field.addEventListener('input', function() {
-        this.classList.remove('error');
-        const errorEl = document.getElementById(this.id + '-error');
-        if (errorEl) {
-          errorEl.classList.remove('show');
-        }
-      });
-    });
-
     // ============ DISPLAY REPORT ============
     function displayReport(data) {
-      // Hide empty state, show report
       document.getElementById('reportEmpty').style.display = 'none';
       document.getElementById('reportCard').style.display = 'block';
 
-      // Header Info
+      // Header
       document.getElementById('reportStudentName').textContent = data.studentName;
       document.getElementById('reportRegNo').textContent = `REG: ${data.regNo}`;
-      document.getElementById('reportSchoolName').textContent = `School: ${data.schoolName}`;
-      document.getElementById('reportYear').textContent = `Year: ${data.academicYear}`;
+      document.getElementById('reportSchoolName').textContent = `School: ${data.school.name}`;
+      document.getElementById('reportYear').textContent = `Year: ${data.academicYear.name}`;
 
       // Summary
-      document.getElementById('reportTerm').textContent = data.term;
-      document.getElementById('reportClass').textContent = data.classLevel;
-      document.getElementById('reportTotalScore').textContent = data.totalScore;
-      document.getElementById('reportAverageScore').textContent = data.averageScore.toFixed(2);
-      document.getElementById('reportHighestScore').textContent = data.highestScore;
+      document.getElementById('reportTerm').textContent = data.term.name;
+      document.getElementById('reportClass').textContent = data.classLevel.name;
+      document.getElementById('reportTotalScore').textContent = data.totalScore.toFixed(2);
+      document.getElementById('reportAverageScore').textContent = (data.totalScore / data.subjects.length).toFixed(2);
+      document.getElementById('reportHighestScore').textContent = Math.max(...data.subjects.map(s => s.total));
       
-      const gradeElement = document.getElementById('reportGrade');
-      gradeElement.textContent = data.grade;
-      gradeElement.className = `info-item-value grade grade-${data.grade.toLowerCase()}`;
+      const gradeEl = document.getElementById('reportGrade');
+      gradeEl.textContent = data.overallGrade;
+      gradeEl.className = `info-item-value grade grade-${data.overallGrade.toLowerCase()}`;
 
-      // Subjects Table
+      // Subjects
       const tableBody = document.getElementById('subjectsTableBody');
       tableBody.innerHTML = '';
       data.subjects.forEach(subject => {
@@ -1475,7 +2423,7 @@
           <td class="score">${subject.ca2 || '-'}</td>
           <td class="score">${subject.midterm || '-'}</td>
           <td class="score">${subject.exam || '-'}</td>
-          <td class="score score-total">${subject.total}</td>
+          <td class="score score-total">${subject.total.toFixed(2)}</td>
           <td style="text-align: center;"><span class="grade-badge grade-${subject.grade.toLowerCase()}">${subject.grade}</span></td>
           <td class="position">${subject.position}</td>
         `;
@@ -1483,88 +2431,40 @@
       });
 
       // Skills
-      document.getElementById('skillsPunctuality').textContent = data.skills.punctuality;
-      document.getElementById('skillsObedience').textContent = data.skills.obedience;
-      document.getElementById('skillsHonesty').textContent = data.skills.honesty;
-      document.getElementById('skillsCleanliness').textContent = data.skills.cleanliness;
-      document.getElementById('skillsInitiative').textContent = data.skills.initiative;
-      document.getElementById('skillsCooperation').textContent = data.skills.cooperation;
+      if (data.skills) {
+        document.getElementById('skillsPunctuality').textContent = data.skills.punctuality || '-';
+        document.getElementById('skillsObedience').textContent = data.skills.obedience || '-';
+        document.getElementById('skillsHonesty').textContent = data.skills.honesty || '-';
+        document.getElementById('skillsCleanliness').textContent = data.skills.cleanliness || '-';
+        document.getElementById('skillsInitiative').textContent = data.skills.initiative || '-';
+        document.getElementById('skillsCooperation').textContent = data.skills.cooperation || '-';
+      }
 
       // Attendance
-      document.getElementById('attendancePresent').textContent = data.attendance.present;
-      document.getElementById('attendanceAbsent').textContent = data.attendance.absent;
-      document.getElementById('attendanceRate').textContent = data.attendance.rate + '%';
+      if (data.attendance) {
+        document.getElementById('attendancePresent').textContent = data.attendance.present;
+        document.getElementById('attendanceAbsent').textContent = data.attendance.absent;
+        document.getElementById('attendanceRate').textContent = data.attendance.rate.toFixed(1) + '%';
+      }
 
-      // Comments & Remarks
-      document.getElementById('teacherComment').textContent = data.teacherComment;
-      document.getElementById('teacherName').innerHTML = `<strong>Teacher:</strong> ${data.teacherName}`;
-      document.getElementById('principalRemark').textContent = data.principalRemark;
-      document.getElementById('principalName').innerHTML = `<strong>Principal:</strong> ${data.principalName}`;
+      // Comments
+      if (data.teacherComment) {
+        document.getElementById('teacherComment').textContent = data.teacherComment.comment;
+        document.getElementById('teacherName').innerHTML = `<strong>Teacher:</strong> ${data.teacherComment.teacherName}`;
+      }
+
+      if (data.principalRemark) {
+        document.getElementById('principalRemark').textContent = data.principalRemark.remark;
+        document.getElementById('principalName').innerHTML = `<strong>Principal:</strong> ${data.principalRemark.principalName}`;
+      }
 
       // Verification Info
       document.getElementById('reportVerificationCode').textContent = data.verificationCode;
       document.getElementById('reportIssueDate').textContent = new Date(data.issueDate).toLocaleDateString();
-
-      // Scroll to report
-      setTimeout(() => {
-        document.getElementById('reportCard').scrollIntoView({ behavior: 'smooth' });
-      }, 300);
-    }
-
-    // ============ MOCK DATA / SIMULATION ============
-    function simulateVerification(formData) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            verified: true,
-            studentName: formData.studentName,
-            regNo: formData.regNo,
-            schoolName: formData.schoolName,
-            academicYear: formData.academicYear,
-            term: formData.term,
-            classLevel: formData.classLevel,
-            verificationCode: 'VER-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-            issueDate: new Date(),
-            totalScore: 745,
-            averageScore: 74.5,
-            highestScore: 92,
-            grade: 'A',
-            subjects: [
-              { name: 'Mathematics', ca1: 15, ca2: 16, midterm: 18, exam: 45, total: 94, grade: 'A', position: '1st' },
-              { name: 'English Language', ca1: 14, ca2: 15, midterm: 17, exam: 43, total: 89, grade: 'A', position: '2nd' },
-              { name: 'Science', ca1: 16, ca2: 17, midterm: 19, exam: 44, total: 96, grade: 'A', position: '1st' },
-              { name: 'Social Studies', ca1: 13, ca2: 14, midterm: 16, exam: 41, total: 84, grade: 'B', position: '3rd' },
-              { name: 'Civic Education', ca1: 14, ca2: 15, midterm: 17, exam: 42, total: 88, grade: 'A', position: '2nd' },
-              { name: 'Physical Education', ca1: 17, ca2: 18, midterm: 19, exam: 42, total: 96, grade: 'A', position: '1st' },
-              { name: 'Computer Studies', ca1: 15, ca2: 16, midterm: 18, exam: 46, total: 95, grade: 'A', position: '1st' },
-              { name: 'Fine Arts', ca1: 16, ca2: 17, midterm: 18, exam: 44, total: 95, grade: 'A', position: '1st' },
-              { name: 'Music', ca1: 14, ca2: 15, midterm: 17, exam: 44, total: 90, grade: 'A', position: '2nd' }
-            ],
-            skills: {
-              punctuality: 'Excellent',
-              obedience: 'Very Good',
-              honesty: 'Excellent',
-              cleanliness: 'Good',
-              initiative: 'Very Good',
-              cooperation: 'Excellent'
-            },
-            attendance: {
-              present: 95,
-              absent: 2,
-              rate: 97.9
-            },
-            teacherComment: 'An exceptionally brilliant student with outstanding academic performance. Shows great initiative, excellent behavior, and strong leadership qualities. Continues to set a positive example for peers. Highly recommended for advanced placement programs.',
-            teacherName: 'Mrs. Chioma Okafor',
-            principalRemark: 'An exemplary student demonstrating exceptional excellence across all aspects of school life. Commendable dedication to studies, impeccable conduct, and outstanding character. Represents our school values perfectly. We are proud of this student\'s achievements and progress.',
-            principalName: 'Prof. Adebayo Adeleke'
-          });
-        }, 1200);
-      });
     }
 
     // ============ ALERT FUNCTION ============
     function showAlert(type, message) {
-      // Hide all alerts
       document.querySelectorAll('.alert').forEach(alert => {
         alert.classList.remove('show');
       });
@@ -1579,26 +2479,354 @@
 
       alertEl.classList.add('show');
 
-      // Auto-hide
       setTimeout(() => {
         alertEl.classList.remove('show');
       }, 6000);
     }
 
-    // ============ ACTION FUNCTIONS ============
+    // ============ MODAL FUNCTIONS ============
+    function openChatModal() {
+      document.getElementById('chatModal').classList.add('active');
+    }
+
+    function closeChatModal() {
+      document.getElementById('chatModal').classList.remove('active');
+    }
+
+    function openTicketsModal() {
+      document.getElementById('ticketsModal').classList.add('active');
+      loadTickets();
+    }
+
+    function closeTicketsModal() {
+      document.getElementById('ticketsModal').classList.remove('active');
+    }
+
+    function openCreateTicketModal() {
+      document.getElementById('createTicketModal').classList.add('active');
+    }
+
+    function closeCreateTicketModal() {
+      document.getElementById('createTicketModal').classList.remove('active');
+    }
+
+    function openContactModal() {
+      document.getElementById('contactModal').classList.add('active');
+      loadSchoolsContact();
+    }
+
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('active');
+    }
+
+    function openSettingsModal() {
+      document.getElementById('settingsModal').classList.add('active');
+      loadSettings();
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.remove('active');
+    }
+
+    function openNotifications() {
+      showAlert('info', 'You have no new notifications');
+    }
+
+    // ============ CHAT FUNCTIONS ============
+    async function sendMessage() {
+      const chatInput = document.getElementById('chatInput');
+      const message = chatInput.value.trim();
+
+      if (!message) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/chat/send`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+
+        if (response.ok) {
+          const messagesContainer = document.getElementById('chatMessages');
+          
+          // Add user message
+          const userMsg = document.createElement('div');
+          userMsg.className = 'chat-message user';
+          userMsg.innerHTML = `
+            <div class="chat-avatar">You</div>
+            <div class="chat-bubble">${message}</div>
+          `;
+          messagesContainer.appendChild(userMsg);
+
+          chatInput.value = '';
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        showAlert('error', 'Failed to send message');
+      }
+    }
+
+    // ============ TICKET FUNCTIONS ============
+    async function loadTickets() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/support-tickets`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load tickets');
+
+        const tickets = await response.json();
+        const ticketsContainer = document.getElementById('ticketsContainer');
+        
+        if (tickets.length === 0) {
+          ticketsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light);">No tickets yet</p>';
+          return;
+        }
+
+        ticketsContainer.innerHTML = tickets.map(ticket => `
+          <div class="ticket-item">
+            <div class="ticket-header">
+              <div class="ticket-id">#${ticket.id}</div>
+              <div class="ticket-status ${ticket.status.toLowerCase()}">${ticket.status}</div>
+            </div>
+            <div class="ticket-title">${ticket.subject}</div>
+            <div class="ticket-meta">Created: ${new Date(ticket.createdAt).toLocaleDateString()} | Category: ${ticket.category}</div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading tickets:', error);
+      }
+    }
+
+    async function submitTicket(event) {
+      event.preventDefault();
+
+      const subject = document.getElementById('ticketSubject').value;
+      const category = document.getElementById('ticketCategory').value;
+      const priority = document.getElementById('ticketPriority').value;
+      const description = document.getElementById('ticketDescription').value;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/support-tickets`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            subject,
+            category,
+            priority,
+            description
+          })
+        });
+
+        if (response.ok) {
+          showAlert('success', 'Support ticket created successfully!');
+          closeCreateTicketModal();
+          document.getElementById('ticketForm').reset();
+          loadTickets();
+        }
+      } catch (error) {
+        console.error('Error submitting ticket:', error);
+        showAlert('error', 'Failed to create ticket');
+      }
+    }
+
+    // ============ SCHOOL CONTACT FUNCTIONS ============
+    async function loadSchoolsContact() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/schools-contact`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load schools');
+
+        const schoolsList = await response.json();
+        const container = document.getElementById('schoolsContactList');
+
+        container.innerHTML = schoolsList.map(school => `
+          <div style="background: var(--bg-lighter); padding: 16px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <div style="font-weight: 800; color: var(--primary); margin-bottom: 8px;">${school.name}</div>
+            <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 4px;">
+              <i class="fas fa-phone"></i> ${school.phone}
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 8px;">
+              <i class="fas fa-envelope"></i> ${school.email}
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 12px;">
+              <i class="fas fa-map-marker-alt"></i> ${school.address}
+            </div>
+            <a href="tel:${school.phone}" class="header-btn" style="font-size: 0.85rem; padding: 6px 12px;">
+              <i class="fas fa-phone"></i> Call
+            </a>
+            <a href="mailto:${school.email}" class="header-btn" style="font-size: 0.85rem; padding: 6px 12px; margin-left: 4px;">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading schools:', error);
+      }
+    }
+
+    // ============ SETTINGS FUNCTIONS ============
+    async function loadSettings() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/user-settings`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          const settings = await response.json();
+          document.getElementById('settingsInstitution').value = settings.institutionName || '';
+          document.getElementById('settingsEmail').value = settings.email || '';
+          document.getElementById('settingsPhone').value = settings.phone || '';
+          document.getElementById('notificationsEnabled').checked = settings.notificationsEnabled !== false;
+        }
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
+    }
+
+    async function saveSettings() {
+      const settings = {
+        institutionName: document.getElementById('settingsInstitution').value,
+        email: document.getElementById('settingsEmail').value,
+        phone: document.getElementById('settingsPhone').value,
+        notificationsEnabled: document.getElementById('notificationsEnabled').checked
+      };
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/user-settings`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(settings)
+        });
+
+        if (response.ok) {
+          showAlert('success', 'Settings saved successfully!');
+          closeSettingsModal();
+        }
+      } catch (error) {
+        console.error('Error saving settings:', error);
+        showAlert('error', 'Failed to save settings');
+      }
+    }
+
+    // ============ UTILITY FUNCTIONS ============
+    function showLoading(show) {
+      document.getElementById('loadingOverlay').classList.toggle('active', show);
+    }
+
+    function switchPage(pageName, element) {
+      // Hide all pages
+      document.getElementById('verifyPage').style.display = 'none';
+      document.getElementById('historyPage').style.display = 'none';
+
+      // Show selected page
+      document.getElementById(pageName + 'Page').style.display = 'block';
+
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+
+      // Update header
+      const titles = {
+        verify: { title: 'Verify Student Report', subtitle: 'Search and verify academic credentials' },
+        history: { title: 'Verification History', subtitle: 'View your past verification requests' }
+      };
+
+      document.getElementById('pageTitle').textContent = titles[pageName]?.title || 'ExamGuard';
+      document.getElementById('pageSubtitle').textContent = titles[pageName]?.subtitle || '';
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    function updateSchoolInfo() {
+      const schoolId = document.getElementById('schoolName').value;
+      const school = schools.find(s => s.id === schoolId);
+      if (school) {
+        console.log('Selected school:', school);
+      }
+    }
+
+    async function addToHistory(report) {
+      try {
+        await fetch(`${API_BASE_URL}/api/verification-history`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            studentName: report.studentName,
+            regNo: report.regNo,
+            schoolId: report.school.id,
+            verificationCode: report.verificationCode
+          })
+        });
+
+        loadVerificationHistory();
+      } catch (error) {
+        console.error('Error saving to history:', error);
+      }
+    }
+
     function printReport() {
       window.print();
     }
 
     function downloadReport() {
       if (!currentReport) return;
-      
-      const content = generatePDFContent(currentReport);
+
+      const content = `
+STUDENT ACADEMIC REPORT - VERIFICATION CERTIFICATE
+====================================================
+School: ${currentReport.school.name}
+Student: ${currentReport.studentName}
+Registration: ${currentReport.regNo}
+Year: ${currentReport.academicYear.name}
+Term: ${currentReport.term.name}
+Class: ${currentReport.classLevel.name}
+
+ACADEMIC PERFORMANCE
+====================
+Total Score: ${currentReport.totalScore.toFixed(2)}
+Average: ${(currentReport.totalScore / currentReport.subjects.length).toFixed(2)}
+Grade: ${currentReport.overallGrade}
+
+VERIFICATION
+=============
+Code: ${currentReport.verificationCode}
+Date: ${new Date().toLocaleDateString()}
+Status: VERIFIED
+
+This is an electronically verified document from ExamGuard.
+`;
+
       const blob = new Blob([content], { type: 'text/plain' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Report_${currentReport.regNo}_${new Date().getTime()}.txt`;
+      a.download = `Report_${currentReport.regNo}_${Date.now()}.txt`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -1608,18 +2836,19 @@
     }
 
     function shareReport() {
-      const reportUrl = `${window.location.origin}?report=${currentReport.verificationCode}`;
-      
+      if (!currentReport) return;
+
+      const shareUrl = `${window.location.origin}?verify=${currentReport.verificationCode}`;
+
       if (navigator.share) {
         navigator.share({
-          title: `${currentReport.studentName}'s Academic Report`,
-          text: `Verified report for ${currentReport.studentName}`,
-          url: reportUrl
-        }).catch(err => console.log('Share error:', err));
+          title: `${currentReport.studentName}'s Report`,
+          text: `Verified academic report for ${currentReport.studentName}`,
+          url: shareUrl
+        });
       } else {
-        // Fallback
         const textarea = document.createElement('textarea');
-        textarea.value = reportUrl;
+        textarea.value = shareUrl;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
@@ -1628,77 +2857,30 @@
       }
     }
 
-    function generatePDFContent(report) {
-      return `
-╔════════════════════════════════════════════════════════════════════════════╗
-║                        STUDENT ACADEMIC REPORT                             ║
-║                    ExamGuard Institution Verification                       ║
-╚════════════════════════════════════════════════════════════════════════════╝
-
-STUDENT INFORMATION
-─────────────────────────────────────────────────────────────────────────────
-Name:                    ${report.studentName}
-Registration Number:     ${report.regNo}
-School:                  ${report.schoolName}
-Class:                   ${report.classLevel}
-Academic Year:           ${report.academicYear}
-Term:                    ${report.term}
-
-ACADEMIC PERFORMANCE SUMMARY
-─────────────────────────────────────────────────────────────────────────────
-Total Score:             ${report.totalScore}
-Average Score:           ${report.averageScore.toFixed(2)}
-Highest Subject Score:   ${report.highestScore}
-Overall Grade:           ${report.grade}
-
-VERIFICATION DETAILS
-─────────────────────────────────────────────────────────────────────────────
-Verification Code:       ${report.verificationCode}
-Issue Date:              ${new Date(report.issueDate).toLocaleDateString()}
-Status:                  ✓ VERIFIED
-
-AFFECTIVE SKILLS
-─────────────────────────────────────────────────────────────────────────────
-Punctuality:             ${report.skills.punctuality}
-Obedience:               ${report.skills.obedience}
-Honesty:                 ${report.skills.honesty}
-Cleanliness:             ${report.skills.cleanliness}
-Initiative:              ${report.skills.initiative}
-Cooperation:             ${report.skills.cooperation}
-
-ATTENDANCE RECORD
-─────────────────────────────────────────────────────────────────────────────
-Days Present:            ${report.attendance.present}
-Days Absent:             ${report.attendance.absent}
-Attendance Rate:         ${report.attendance.rate}%
-
-TEACHER'S COMMENT
-─────────────────────────────────────────────────────────────────────────────
-${report.teacherComment}
-                         - ${report.teacherName}
-
-PRINCIPAL'S REMARK
-─────────────────────────────────────────────────────────────────────────────
-${report.principalRemark}
-                         - ${report.principalName}
-
-═════════════════════════════════════════════════════════════════════════════
-This is an officially verified document from ExamGuard.
-For inquiries, contact your school administration.
-═════════════════════════════════════════════════════════════════════════════
-      `;
-    }
-
-    function showHelp() {
-      alert('How to Verify:\n\n1. Select the student\'s school\n2. Enter their registration number\n3. Enter the scratch card code from their report\n4. Select the academic year, term, and class\n5. Enter the student\'s full name\n6. Select the purpose of verification\n7. Enter your institution name\n8. Click "Verify Report"\n\nAll fields are required for verification.');
-    }
-
     function logout() {
       if (confirm('Are you sure you want to logout?')) {
-        alert('Logged out successfully');
-        // Redirect to login page
+        localStorage.clear();
+        window.location.href = '/login';
       }
     }
+
+    // Close modals on escape
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(modal => {
+          modal.classList.remove('active');
+        });
+      }
+    });
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', function(event) {
+        if (event.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    });
   </script>
 
 </body>
