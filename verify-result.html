@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Verify Results | ExamGuard International School</title>
+  <title>Verify & Publish Results | ExamGuard International School</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -279,7 +279,7 @@
     /* FILTER FORM */
     .verify-filter-form {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
       align-items: end;
       margin-bottom: 20px;
@@ -350,16 +350,6 @@
       transform: none;
     }
 
-    .verify-btn.secondary {
-      background: #f3f6fb;
-      color: var(--accent-2);
-      border: 1px solid #dbeafe;
-    }
-
-    .verify-btn.secondary:hover:not(:disabled) {
-      background: #ecf0ff;
-    }
-
     /* ALERT MESSAGES */
     .alert {
       padding: 14px 16px;
@@ -418,18 +408,8 @@
       color: #f59e0b;
     }
 
-    .alert-info {
-      background: #e0f2fe;
-      border-color: #bae6fd;
-      color: #0c4a6e;
-    }
-
-    .alert-info i {
-      color: #0284c7;
-    }
-
-    /* RESULT CARD */
-    .result-card {
+    /* STUDENT RESULT CARD */
+    .student-result-card {
       background: linear-gradient(135deg, #f0f9ff 0%, #eff6ff 100%);
       border: 2px solid #bfdbfe;
       border-radius: 12px;
@@ -438,128 +418,211 @@
       transition: all 0.12s ease;
     }
 
-    .result-card:hover {
+    .student-result-card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
       border-color: var(--accent);
     }
 
-    .result-card-header {
+    .student-card-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 16px;
       gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .result-card-title {
-      font-size: 1.1rem;
+    .student-card-info {
+      flex: 1;
+    }
+
+    .student-name {
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--accent-2);
+      margin: 0 0 4px 0;
     }
 
-    .result-card-subtitle {
+    .student-meta {
       font-size: 0.9rem;
       color: var(--muted);
-      margin-top: 4px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .verification-badge {
+    .meta-item {
       display: flex;
       align-items: center;
+      gap: 4px;
+    }
+
+    .cloud-status-badge {
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 0.85rem;
       white-space: nowrap;
     }
 
-    .verification-verified {
+    .cloud-uploaded {
       background: #dcfce7;
       color: #166534;
+      border: 1px solid #86efac;
     }
 
-    .verification-unverified {
-      background: #fee2e2;
-      color: #991b1b;
+    .cloud-uploaded i {
+      color: #16a34a;
     }
 
-    .verification-pending {
+    .cloud-pending {
       background: #fef3c7;
       color: #92400e;
+      border: 1px solid #fde68a;
     }
 
-    .result-card-content {
+    .cloud-pending i {
+      color: #f59e0b;
+    }
+
+    .cloud-not-uploaded {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .cloud-not-uploaded i {
+      color: #dc2626;
+    }
+
+    .student-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
     }
 
-    .result-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    .stat-item {
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #bfdbfe;
+      text-align: center;
     }
 
-    .result-item-label {
-      font-size: 0.85rem;
+    .stat-label {
+      font-size: 0.8rem;
       color: var(--muted);
       font-weight: 600;
     }
 
-    .result-item-value {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-main);
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent-2);
+      margin-top: 4px;
     }
 
-    .result-card-actions {
+    .subjects-preview {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .subjects-preview-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+
+    .subjects-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .subject-tag {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .student-card-actions {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      border-top: 2px solid #bfdbfe;
+      padding-top: 12px;
     }
 
     .action-btn {
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: 1px solid;
+      padding: 10px 16px;
+      border: 1.5px solid;
       background: #fff;
+      border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.12s ease;
       font-size: 0.9rem;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
     }
 
-    .action-btn.verify {
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .action-btn.upload-cloud {
       border-color: var(--success);
       color: var(--success);
     }
 
-    .action-btn.verify:hover {
+    .action-btn.upload-cloud:hover:not(:disabled) {
       background: rgba(16, 185, 129, 0.1);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
-    .action-btn.view {
+    .action-btn.remove-cloud {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .action-btn.remove-cloud:hover:not(:disabled) {
+      background: rgba(239, 68, 68, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .action-btn.view-details {
       border-color: var(--accent);
       color: var(--accent);
     }
 
-    .action-btn.view:hover {
+    .action-btn.view-details:hover:not(:disabled) {
       background: rgba(59, 130, 246, 0.1);
+      transform: translateY(-2px);
     }
 
-    .action-btn.download {
-      border-color: #7c3aed;
-      color: #7c3aed;
+    .action-btn.edit {
+      border-color: var(--warning);
+      color: var(--warning);
     }
 
-    .action-btn.download:hover {
-      background: rgba(124, 58, 237, 0.1);
+    .action-btn.edit:hover:not(:disabled) {
+      background: rgba(245, 158, 11, 0.1);
+      transform: translateY(-2px);
     }
 
     /* STATS CARDS */
@@ -689,7 +752,7 @@
       background: var(--card-bg);
       border-radius: 12px;
       padding: 28px;
-      max-width: 600px;
+      max-width: 700px;
       width: 100%;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       position: relative;
@@ -722,15 +785,85 @@
     }
 
     .modal-body {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .modal-footer {
+    .info-section {
+      background: #f8faff;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #bfdbfe;
+      margin-bottom: 16px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .info-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .modal-actions {
       display: flex;
       gap: 12px;
       justify-content: flex-end;
-      padding-top: 20px;
-      border-top: 1px solid #eef3ff;
+      border-top: 2px solid #bfdbfe;
+      padding-top: 16px;
+    }
+
+    .modal-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+    }
+
+    .modal-btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .modal-btn-secondary {
+      background: #f8faff;
+      color: var(--accent-2);
+      border: 1px solid #bfdbfe;
+    }
+
+    .modal-btn-secondary:hover:not(:disabled) {
+      background: #ecf0ff;
+    }
+
+    .modal-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     /* RESPONSIVE */
@@ -811,8 +944,13 @@
         font-size: 1.15rem;
       }
 
-      .result-card-content {
-        grid-template-columns: 1fr;
+      .student-card-actions {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
       }
 
       .stats-grid {
@@ -822,6 +960,15 @@
       .modal-content {
         max-width: 95vw;
         padding: 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .student-meta {
+        flex-direction: column;
+        gap: 4px;
       }
     }
 
@@ -852,17 +999,12 @@
         gap: 12px;
       }
 
-      .result-card {
-        padding: 16px;
+      .student-result-card {
+        padding: 14px;
       }
 
-      .result-card-actions {
-        flex-direction: column;
-      }
-
-      .action-btn {
-        width: 100%;
-        justify-content: center;
+      .student-stats {
+        grid-template-columns: 1fr 1fr;
       }
 
       .stat-card {
@@ -876,17 +1018,30 @@
         font-size: 1.8rem;
       }
 
-      .result-card-header {
+      .student-card-header {
         flex-direction: column;
       }
 
-      .verification-badge {
+      .cloud-status-badge {
         align-self: flex-start;
+      }
+
+      .student-name {
+        font-size: 1rem;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+
+      .modal-btn {
+        width: 100%;
+        justify-content: center;
       }
     }
 
     @media print {
-      .sidebar, .topbar, .verify-filter-form, .result-card-actions, .stats-grid {
+      .sidebar, .topbar, .verify-filter-form, .student-card-actions, .stats-grid {
         display: none;
       }
 
@@ -901,7 +1056,7 @@
         border: 1px solid #ddd;
       }
 
-      .result-card {
+      .student-result-card {
         page-break-inside: avoid;
       }
     }
@@ -926,7 +1081,7 @@
         <a href="student-dashboard.html">📘 My Courses</a>
         <a href="#student-dashboard.html">📝 Assignments</a>
         <a href="check-result.html">📊 Grades</a>
-        <a href="verify-result.html" data-section="verify" class="active" onclick="navClick(event)">✅ Verify Result</a>
+        <a href="verify-result.html" data-section="verify" class="active" onclick="navClick(event)">✅ Verify & Publish</a>
         <a href="student-dashboard.html">⏰ Timetable</a>
         <a href="student-dashboard.html">✉️ Messages</a>
         <a href="student-dashboard.html">📂 Resources</a>
@@ -938,8 +1093,8 @@
       <div class="profile" role="region" aria-label="User profile">
         <img src="avatar.jpg" alt="User avatar" id="userAvatar">
         <div>
-          <div class="name" id="userName">Guest</div>
-          <div class="muted" id="userRole">Visitor</div>
+          <div class="name" id="userName">Admin</div>
+          <div class="muted" id="userRole">School Administrator</div>
         </div>
       </div>
     </aside>
@@ -947,9 +1102,9 @@
     <!-- Fixed Topbar -->
     <div class="topbar" id="fixedTopbar">
       <div style="display:flex; gap:12px; align-items:center;">
-        <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleSidebar()">☰</button>
         <div>
-          <div class="page-title" id="pageTitle">✅ Verify Results</div>
+          <div class="page-title" id="pageTitle">✅ Verify & Publish Results</div>
         </div>
       </div>
 
@@ -969,8 +1124,18 @@
               <i class="fas fa-file-check"></i>
             </div>
             <div class="stat-content">
-              <div class="stat-label">Verified Results</div>
-              <div class="stat-value" id="verifiedCount">0</div>
+              <div class="stat-label">Total Students</div>
+              <div class="stat-value" id="totalStudents">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <i class="fas fa-cloud-check"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Published to Cloud</div>
+              <div class="stat-value" id="publishedCount">0</div>
             </div>
           </div>
 
@@ -979,603 +1144,846 @@
               <i class="fas fa-hourglass-half"></i>
             </div>
             <div class="stat-content">
-              <div class="stat-label">Pending Verification</div>
+              <div class="stat-label">Pending Publication</div>
               <div class="stat-value" id="pendingCount">0</div>
             </div>
           </div>
 
           <div class="stat-card">
             <div class="stat-icon red">
-              <i class="fas fa-times-circle"></i>
+              <i class="fas fa-cloud-upload-alt"></i>
             </div>
             <div class="stat-content">
-              <div class="stat-label">Unverified Results</div>
-              <div class="stat-value" id="unverifiedCount">0</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon green">
-              <i class="fas fa-school"></i>
-            </div>
-            <div class="stat-content">
-              <div class="stat-label">Total Schools</div>
-              <div class="stat-value" id="schoolCount">0</div>
+              <div class="stat-label">Ready to Upload</div>
+              <div class="stat-value" id="readyCount">0</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Verification Section -->
+      <!-- Filter Section -->
       <section class="verify-section">
         <div class="section-title">
-          <i class="fas fa-search"></i> Verify Student Result
+          <i class="fas fa-filter"></i> Filter Results
         </div>
 
         <!-- Alerts -->
-        <div class="alert alert-error" id="errorAlert" role="alert">
-          <i class="fas fa-exclamation-circle"></i>
-          <span id="errorMessage"></span>
-        </div>
-
-        <div class="alert alert-success" id="successAlert" role="alert">
+        <div class="alert alert-success" id="successAlert">
           <i class="fas fa-check-circle"></i>
           <span id="successMessage"></span>
         </div>
 
-        <div class="alert alert-warning" id="warningAlert" role="alert">
+        <div class="alert alert-error" id="errorAlert">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorMessage"></span>
+        </div>
+
+        <div class="alert alert-warning" id="warningAlert">
           <i class="fas fa-exclamation-triangle"></i>
           <span id="warningMessage"></span>
         </div>
 
-        <!-- Filter Form -->
-        <form class="verify-filter-form" id="verifyForm" onsubmit="handleVerification(event)">
+        <form class="verify-filter-form" onsubmit="handleFilterSubmit(event)">
           <div class="form-group">
-            <label class="form-label" for="schoolSelect">School Name *</label>
-            <select id="schoolSelect" class="form-select" required onchange="updateSchoolInfo()">
-              <option value="">Select School</option>
+            <label class="form-label">Academic Year</label>
+            <select class="form-select" id="filterYear" onchange="loadStudentResults()">
+              <option value="">All Years</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="yearSelect">Academic Year *</label>
-            <select id="yearSelect" class="form-select" required>
-              <option value="">Select Year</option>
-              <option>2027-2028</option>
-              <option>2026-2027</option>
-              <option>2025-2026</option>
-              <option>2024-2025</option>
-              <option>2023-2024</option>
-              <option>2022-2023</option>
+            <label class="form-label">Term</label>
+            <select class="form-select" id="filterTerm" onchange="loadStudentResults()">
+              <option value="">All Terms</option>
+              <option value="1">First Term</option>
+              <option value="2">Second Term</option>
+              <option value="3">Third Term</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="termSelect">Term *</label>
-            <select id="termSelect" class="form-select" required>
-              <option value="">Select Term</option>
-              <option>FIRST TERM</option>
-              <option>SECOND TERM</option>
-              <option>THIRD TERM</option>
+            <label class="form-label">Class</label>
+            <select class="form-select" id="filterClass" onchange="loadStudentResults()">
+              <option value="">All Classes</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="classSelect">Class *</label>
-            <select id="classSelect" class="form-select" required>
-              <option value="">Select Class</option>
-              <option>Beginner</option>
-              <option>KG1</option>
-              <option>KG2</option>
-              <option>Creche</option>
-              <option>Nursery 1</option>
-              <option>Nursery 2</option>
-              <option>Nursery 3</option>
-              <option>Primary 1</option>
-              <option>Primary 2</option>
-              <option>Primary 3</option>
-              <option>Primary 4</option>
-              <option>Primary 5</option>
-              <option>Primary 6</option>
-              <option>JSS1</option>
-              <option>JSS2</option>
-              <option>JSS3</option>
-              <option>SS1</option>
-              <option>SS2</option>
-              <option>SS3</option>
+            <label class="form-label">Cloud Status</label>
+            <select class="form-select" id="filterCloudStatus" onchange="loadStudentResults()">
+              <option value="">All Status</option>
+              <option value="uploaded">Uploaded</option>
+              <option value="pending">Pending</option>
+              <option value="not_uploaded">Not Uploaded</option>
             </select>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" for="studentSearch">Student Name or ID *</label>
-            <input 
-              id="studentSearch" 
-              class="form-input" 
-              type="text" 
-              placeholder="Enter student name or ID"
-              required
-              autocomplete="off"
-            >
-          </div>
-
-          <button class="verify-btn" type="submit" id="searchBtn">
-            <i class="fas fa-search"></i> Search & Verify
+          <button type="submit" class="verify-btn">
+            <i class="fas fa-search"></i> Search
           </button>
         </form>
       </section>
 
       <!-- Results Display Section -->
-      <section class="verify-section" id="resultsSection" style="display: none;">
+      <section class="verify-section">
         <div class="section-title">
-          <i class="fas fa-certificate"></i> Verification Results
+          <i class="fas fa-users"></i> Student Results
         </div>
 
         <div id="resultsContainer">
-          <!-- Results will be populated here -->
+          <!-- Student cards will be loaded here -->
         </div>
       </section>
+    </main>
+  </div>
 
-      <!-- Empty State -->
-      <div class="empty-state" id="emptyState" style="display: none;">
-        <i class="fas fa-search"></i>
-        <h3>No Results Yet</h3>
-        <p>Enter search criteria above and click "Search & Verify" to check student results.</p>
+  <!-- DETAIL MODAL -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-file-alt"></i> Student Result Details
+        </h3>
+        <button class="modal-close" onclick="closeModal('detailModal')">&times;</button>
       </div>
 
-    </main>
+      <div class="modal-body" id="detailModalBody">
+        <!-- Details will be loaded here -->
+      </div>
 
-    <!-- Result Details Modal -->
-    <div class="modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="resultModalTitle">Result Details</h3>
-          <button class="modal-close" aria-label="Close modal" onclick="closeResultModal()">&times;</button>
-        </div>
-        <div class="modal-body" id="resultModalBody">
-          <!-- Dynamic content will be inserted here -->
-        </div>
-        <div class="modal-footer">
-          <button class="verify-btn secondary" onclick="closeResultModal()">Close</button>
-          <button class="verify-btn" id="printBtn" onclick="printResult()">
-            <i class="fas fa-print"></i> Print
-          </button>
-        </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-secondary" onclick="closeModal('detailModal')">Close</button>
+        <button class="modal-btn modal-btn-primary" onclick="downloadStudentReport()">
+          <i class="fas fa-download"></i> Download Report
+        </button>
       </div>
     </div>
+  </div>
 
+  <!-- PUBLISH CONFIRMATION MODAL -->
+  <div class="modal" id="publishModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-cloud-upload-alt"></i> Publish to Cloud
+        </h3>
+        <button class="modal-close" onclick="closeModal('publishModal')">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="info-section">
+          <div style="font-weight: 700; color: var(--accent-2); margin-bottom: 12px;">Publishing Details:</div>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">Student Name</div>
+              <div class="info-value" id="publishStudentName">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Registration No.</div>
+              <div class="info-value" id="publishRegNo">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Institution</div>
+              <div class="info-value" id="publishInstitution">ExamGuard International School</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Academic Year</div>
+              <div class="info-value" id="publishYear">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Class</div>
+              <div class="info-value" id="publishClass">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Total Score</div>
+              <div class="info-value" id="publishScore">-</div>
+            </div>
+          </div>
+
+          <div style="background: #dcfce7; border: 1px solid #86efac; border-radius: 8px; padding: 12px; margin-top: 12px; color: #166534; font-size: 0.9rem;">
+            <i class="fas fa-info-circle"></i> This report will be published to the ExamGuard Universal Cloud and can be verified by institutions worldwide.
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-secondary" onclick="closeModal('publishModal')">Cancel</button>
+        <button class="modal-btn modal-btn-primary" id="confirmPublishBtn" onclick="confirmPublishToCloud()">
+          <span class="spinner-small"></span> Publishing...
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REMOVE CONFIRMATION MODAL -->
+  <div class="modal" id="removeModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-trash"></i> Remove from Cloud
+        </h3>
+        <button class="modal-close" onclick="closeModal('removeModal')">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background: #fee2e2; border: 1px solid #fca5a5; border-radius: 8px; padding: 12px; color: #991b1b; font-size: 0.9rem;">
+          <i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This will remove the student's report from the ExamGuard Universal Cloud. Institutions will no longer be able to verify this record.
+        </div>
+
+        <div class="info-section" style="margin-top: 16px;">
+          <div style="font-weight: 700; color: var(--accent-2); margin-bottom: 8px;">Student:</div>
+          <div style="color: var(--text-main); font-weight: 700;" id="removeStudentName">-</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-secondary" onclick="closeModal('removeModal')">Cancel</button>
+        <button class="modal-btn" style="background: var(--danger); color: #fff;" id="confirmRemoveBtn" onclick="confirmRemoveFromCloud()">
+          <i class="fas fa-check"></i> Confirm Remove
+        </button>
+      </div>
+    </div>
   </div>
 
   <script>
-    // ============ CONFIGURATION ============
-    const API_BASE_URL = "https://examguard-8rxe.onrender.com";
-    const token = localStorage.getItem('token') || "";
+    // ============ API CONFIGURATION ============
+    const API_BASE_URL = "https://examgide.onrender.com";
+    const SCHOOL_NAME = "ExamGuard International School";
+    const token = localStorage.getItem('authToken') || '';
 
     // ============ STATE ============
-    let allResults = [];
-    let schools = [];
-    let currentSelectedResult = null;
+    let allStudentResults = [];
+    let filteredResults = [];
+    let currentSelectedStudent = null;
+    let academicYears = [];
+    let classes = [];
 
     // ============ INITIALIZATION ============
     document.addEventListener('DOMContentLoaded', function() {
-      initializeUI();
-      loadSchools();
-      setupEventListeners();
-      updateStats();
+      initializeApp();
+      loadInitialData();
     });
 
-    function initializeUI() {
-      const hamburger = document.getElementById('hamburger');
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
+    function initializeApp() {
+      const userName = localStorage.getItem('userName') || 'Administrator';
+      const userRole = localStorage.getItem('userRole') || 'School Admin';
 
-      hamburger.addEventListener('click', toggleSidebar);
-      overlay.addEventListener('click', closeSidebar);
+      document.getElementById('userName').textContent = userName;
+      document.getElementById('userRole').textContent = userRole;
 
-      function toggleSidebar() {
-        sidebar.classList.toggle('open');
-        sidebar.classList.toggle('hidden');
-        overlay.classList.toggle('visible');
-        document.body.classList.toggle('no-scroll');
-      }
-
-      function closeSidebar() {
-        sidebar.classList.remove('open');
-        sidebar.classList.add('hidden');
-        overlay.classList.remove('visible');
-        document.body.classList.remove('no-scroll');
-      }
-    }
-
-    function setupEventListeners() {
-      document.getElementById('verifyForm').addEventListener('submit', handleVerification);
-    }
-
-    // ============ API CALLS ============
-    async function loadSchools() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/schools`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (response.ok) {
-          schools = await response.json();
-          populateSchoolDropdown();
+      // Setup modal close on escape
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeAllModals();
         }
-      } catch (error) {
-        console.error('Error loading schools:', error);
-        showAlert('error', 'Could not load schools. Please refresh the page.');
-      }
-    }
-
-    function populateSchoolDropdown() {
-      const schoolSelect = document.getElementById('schoolSelect');
-      schools.forEach(school => {
-        const option = document.createElement('option');
-        option.value = school.id || school.name;
-        option.textContent = school.name;
-        schoolSelect.appendChild(option);
       });
     }
 
-    function updateSchoolInfo() {
-      const schoolId = document.getElementById('schoolSelect').value;
-      const school = schools.find(s => (s.id || s.name) === schoolId);
-      // You can update school-specific information here if needed
+    // ============ LOAD INITIAL DATA ============
+    async function loadInitialData() {
+      try {
+        await loadAcademicYears();
+        await loadClasses();
+        await loadStudentResults();
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+        showAlert('error', 'Failed to load data. Please refresh the page.');
+      }
     }
 
-    async function handleVerification(event) {
-      event.preventDefault();
-      
-      const schoolId = document.getElementById('schoolSelect').value;
-      const year = document.getElementById('yearSelect').value;
-      const term = document.getElementById('termSelect').value;
-      const classVal = document.getElementById('classSelect').value;
-      const studentSearch = document.getElementById('studentSearch').value;
+    async function loadAcademicYears() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/academic-years`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
 
-      if (!schoolId || !year || !term || !classVal || !studentSearch) {
-        showAlert('warning', 'Please fill all required fields');
+        if (!response.ok) throw new Error('Failed to load academic years');
+
+        academicYears = await response.json();
+
+        const yearSelect = document.getElementById('filterYear');
+        academicYears.forEach(year => {
+          const option = document.createElement('option');
+          option.value = year.id;
+          option.textContent = year.name;
+          yearSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading academic years:', error);
+      }
+    }
+
+    async function loadClasses() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/classes`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load classes');
+
+        classes = await response.json();
+
+        const classSelect = document.getElementById('filterClass');
+        classes.forEach(cls => {
+          const option = document.createElement('option');
+          option.value = cls.id;
+          option.textContent = cls.name;
+          classSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading classes:', error);
+      }
+    }
+
+    // ============ LOAD STUDENT RESULTS ============
+    async function loadStudentResults() {
+      try {
+        const yearId = document.getElementById('filterYear').value;
+        const termId = document.getElementById('filterTerm').value;
+        const classId = document.getElementById('filterClass').value;
+        const cloudStatus = document.getElementById('filterCloudStatus').value;
+
+        let url = `${API_BASE_URL}/api/school/student-results`;
+        const params = new URLSearchParams();
+
+        if (yearId) params.append('yearId', yearId);
+        if (termId) params.append('termId', termId);
+        if (classId) params.append('classId', classId);
+        if (cloudStatus) params.append('cloudStatus', cloudStatus);
+
+        if (params.toString()) {
+          url += '?' + params.toString();
+        }
+
+        const response = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load results');
+
+        allStudentResults = await response.json();
+        filteredResults = allStudentResults;
+        displayStudentResults();
+        updateStatistics();
+      } catch (error) {
+        console.error('Error loading results:', error);
+        showAlert('error', 'Failed to load student results');
+      }
+    }
+
+    // ============ DISPLAY RESULTS ============
+    function displayStudentResults() {
+      const container = document.getElementById('resultsContainer');
+
+      if (filteredResults.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h3>No Results Found</h3>
+            <p>No student results match your current filters</p>
+          </div>
+        `;
         return;
       }
 
+      container.innerHTML = filteredResults.map(student => {
+        const cloudStatus = student.cloudStatus || 'not_uploaded';
+        const cloudStatusBadgeClass = {
+          'uploaded': 'cloud-uploaded',
+          'pending': 'cloud-pending',
+          'not_uploaded': 'cloud-not-uploaded'
+        }[cloudStatus];
+
+        const cloudStatusIcon = {
+          'uploaded': 'fa-cloud-check',
+          'pending': 'fa-hourglass-half',
+          'not_uploaded': 'fa-cloud'
+        }[cloudStatus];
+
+        const cloudStatusText = {
+          'uploaded': 'Published',
+          'pending': 'Publishing...',
+          'not_uploaded': 'Not Published'
+        }[cloudStatus];
+
+        const subjectsHtml = student.subjects && student.subjects.length > 0
+          ? student.subjects.map(s => `<div class="subject-tag">${s.name}</div>`).join('')
+          : '<div class="subject-tag">No subjects</div>';
+
+        const totalScore = student.totalScore || 0;
+        const averageScore = student.averageScore || 0;
+        const classSize = student.classSize || 0;
+        const position = student.position || '-';
+
+        return `
+          <div class="student-result-card">
+            <div class="student-card-header">
+              <div class="student-card-info">
+                <h3 class="student-name">${student.studentName}</h3>
+                <div class="student-meta">
+                  <div class="meta-item">
+                    <i class="fas fa-id-card"></i>
+                    <span><strong>Reg:</strong> ${student.regNo}</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fas fa-school"></i>
+                    <span>${student.className}</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>${student.academicYear}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cloud-status-badge ${cloudStatusBadgeClass}">
+                <i class="fas ${cloudStatusIcon}"></i>
+                <span>${cloudStatusText}</span>
+              </div>
+            </div>
+
+            <div class="student-stats">
+              <div class="stat-item">
+                <div class="stat-label">Total Score</div>
+                <div class="stat-value">${totalScore.toFixed(2)}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Average</div>
+                <div class="stat-value">${averageScore.toFixed(2)}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Position</div>
+                <div class="stat-value">${position}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Grade</div>
+                <div class="stat-value" style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; padding: 4px; border-radius: 6px; text-align: center;">${student.grade || '-'}</div>
+              </div>
+            </div>
+
+            <div class="subjects-preview">
+              <div class="subjects-preview-title">Subjects (${student.subjects ? student.subjects.length : 0})</div>
+              <div class="subjects-list">
+                ${subjectsHtml}
+              </div>
+            </div>
+
+            <div class="student-card-actions">
+              <button class="action-btn view-details" onclick="viewStudentDetails('${student.id}')">
+                <i class="fas fa-eye"></i> View Details
+              </button>
+              ${cloudStatus === 'not_uploaded' ? `
+                <button class="action-btn upload-cloud" onclick="openPublishModal('${student.id}')">
+                  <i class="fas fa-cloud-upload-alt"></i> Publish to Cloud
+                </button>
+              ` : `
+                <button class="action-btn remove-cloud" onclick="openRemoveModal('${student.id}')">
+                  <i class="fas fa-trash"></i> Remove from Cloud
+                </button>
+              `}
+              <button class="action-btn edit" onclick="editStudentResult('${student.id}')">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ============ STATISTICS ============
+    function updateStatistics() {
+      const total = filteredResults.length;
+      const uploaded = filteredResults.filter(s => s.cloudStatus === 'uploaded').length;
+      const pending = filteredResults.filter(s => s.cloudStatus === 'pending').length;
+      const notUploaded = filteredResults.filter(s => !s.cloudStatus || s.cloudStatus === 'not_uploaded').length;
+
+      document.getElementById('totalStudents').textContent = total;
+      document.getElementById('publishedCount').textContent = uploaded;
+      document.getElementById('pendingCount').textContent = pending;
+      document.getElementById('readyCount').textContent = notUploaded;
+    }
+
+    // ============ MODAL FUNCTIONS ============
+    async function viewStudentDetails(studentId) {
       try {
-        document.getElementById('searchBtn').disabled = true;
-        document.getElementById('searchBtn').innerHTML = '<span class="spinner-small"></span> Searching...';
+        const student = filteredResults.find(s => s.id === studentId);
+        if (!student) return;
 
-        const response = await fetch(`${API_BASE_URL}/api/verify-results`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            schoolId,
-            year,
-            term,
-            class: classVal,
-            studentQuery: studentSearch
-          })
-        });
+        const body = document.getElementById('detailModalBody');
+        
+        const subjectsHtml = student.subjects && student.subjects.length > 0
+          ? `
+            <div style="margin-top: 16px;">
+              <h4 style="color: var(--accent-2); font-weight: 800; margin: 0 0 12px 0;">Subjects Performance</h4>
+              <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                  <tr style="background: #f8faff; border-bottom: 2px solid #bfdbfe;">
+                    <th style="padding: 10px; text-align: left; font-weight: 700; color: var(--accent-2);">Subject</th>
+                    <th style="padding: 10px; text-align: center; font-weight: 700; color: var(--accent-2);">Score</th>
+                    <th style="padding: 10px; text-align: center; font-weight: 700; color: var(--accent-2);">Grade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${student.subjects.map(s => `
+                    <tr style="border-bottom: 1px solid #bfdbfe;">
+                      <td style="padding: 10px; color: var(--text-main);">${s.name}</td>
+                      <td style="padding: 10px; text-align: center; color: var(--accent-2); font-weight: 700;">${s.total || '-'}</td>
+                      <td style="padding: 10px; text-align: center; font-weight: 700;">
+                        <span style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; padding: 4px 8px; border-radius: 4px;">${s.grade || '-'}</span>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `
+          : '';
 
-        if (response.ok) {
-          const result = await response.json();
-          displayVerificationResult(result);
-          showAlert('success', 'Student result found and verified successfully!');
-          updateStats();
-        } else {
-          showAlert('error', 'No matching results found. Please verify your details.');
-          document.getElementById('resultsSection').style.display = 'none';
-          document.getElementById('emptyState').style.display = 'block';
-        }
+        body.innerHTML = `
+          <div class="info-section">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Student Name</div>
+                <div class="info-value">${student.studentName}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Registration Number</div>
+                <div class="info-value">${student.regNo}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Class</div>
+                <div class="info-value">${student.className}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Academic Year</div>
+                <div class="info-value">${student.academicYear}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Term</div>
+                <div class="info-value">${student.term || '-'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Total Score</div>
+                <div class="info-value" style="color: var(--success); font-weight: 800;">${student.totalScore.toFixed(2)}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Average Score</div>
+                <div class="info-value">${student.averageScore.toFixed(2)}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Position in Class</div>
+                <div class="info-value">${student.position || '-'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Grade</div>
+                <div class="info-value" style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; padding: 6px 12px; border-radius: 6px; text-align: center; font-size: 1.2rem;">${student.grade || '-'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Cloud Status</div>
+                <div class="info-value">${student.cloudStatus === 'uploaded' ? '✅ Published' : student.cloudStatus === 'pending' ? '⏳ Publishing' : '❌ Not Published'}</div>
+              </div>
+            </div>
+          </div>
+
+          ${student.teacherComment ? `
+            <div class="info-section">
+              <div style="font-weight: 700; color: var(--accent-2); margin-bottom: 8px;">Teacher's Comment</div>
+              <p style="margin: 0; color: var(--text-main); font-style: italic;">"${student.teacherComment}"</p>
+              <div style="font-size: 0.85rem; color: var(--muted); margin-top: 8px;">- ${student.teacherName || 'Class Teacher'}</div>
+            </div>
+          ` : ''}
+
+          ${student.principalRemark ? `
+            <div class="info-section">
+              <div style="font-weight: 700; color: var(--accent-2); margin-bottom: 8px;">Principal's Remark</div>
+              <p style="margin: 0; color: var(--text-main); font-style: italic;">"${student.principalRemark}"</p>
+              <div style="font-size: 0.85rem; color: var(--muted); margin-top: 8px;">- ${student.principalName || 'Principal'}</div>
+            </div>
+          ` : ''}
+
+          ${subjectsHtml}
+        `;
+
+        currentSelectedStudent = student;
+        openModal('detailModal');
       } catch (error) {
-        console.error('Verification error:', error);
-        showAlert('error', 'Error verifying result. Please try again.');
-      } finally {
-        document.getElementById('searchBtn').disabled = false;
-        document.getElementById('searchBtn').innerHTML = '<i class="fas fa-search"></i> Search & Verify';
+        console.error('Error loading details:', error);
+        showAlert('error', 'Failed to load student details');
       }
     }
 
-    function displayVerificationResult(result) {
-      document.getElementById('resultsSection').style.display = 'block';
-      document.getElementById('emptyState').style.display = 'none';
+    function openPublishModal(studentId) {
+      const student = filteredResults.find(s => s.id === studentId);
+      if (!student) return;
 
-      const resultsContainer = document.getElementById('resultsContainer');
-      resultsContainer.innerHTML = '';
+      currentSelectedStudent = student;
 
-      const verificationStatus = result.verified ? 'verified' : 'unverified';
-      const verificationBadge = result.verified 
-        ? '<span class="verification-badge verification-verified"><i class="fas fa-check"></i> Verified</span>'
-        : '<span class="verification-badge verification-unverified"><i class="fas fa-times"></i> Unverified</span>';
+      document.getElementById('publishStudentName').textContent = student.studentName;
+      document.getElementById('publishRegNo').textContent = student.regNo;
+      document.getElementById('publishYear').textContent = student.academicYear;
+      document.getElementById('publishClass').textContent = student.className;
+      document.getElementById('publishScore').textContent = student.totalScore.toFixed(2);
+      document.getElementById('publishInstitution').textContent = SCHOOL_NAME;
 
-      const card = document.createElement('div');
-      card.className = 'result-card';
-      card.innerHTML = `
-        <div class="result-card-header">
-          <div>
-            <div class="result-card-title">${result.studentName}</div>
-            <div class="result-card-subtitle">Reg. No: ${result.regNo}</div>
-          </div>
-          ${verificationBadge}
-        </div>
+      openModal('publishModal');
+    }
 
-        <div class="result-card-content">
-          <div class="result-item">
-            <div class="result-item-label">School</div>
-            <div class="result-item-value">${result.schoolName}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Academic Year</div>
-            <div class="result-item-value">${result.academicYear}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Term</div>
-            <div class="result-item-value">${result.term}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Class</div>
-            <div class="result-item-value">${result.class}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Total Score</div>
-            <div class="result-item-value">${result.totalScore}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Grade</div>
-            <div class="result-item-value" style="color: ${getGradeColor(result.grade)}">${result.grade}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Verification Code</div>
-            <div class="result-item-value" style="font-family: 'Courier New', monospace; font-size: 0.9rem;">${result.verificationCode || 'N/A'}</div>
-          </div>
-          <div class="result-item">
-            <div class="result-item-label">Issue Date</div>
-            <div class="result-item-value">${new Date(result.issueDate).toLocaleDateString()}</div>
-          </div>
-        </div>
+    function openRemoveModal(studentId) {
+      const student = filteredResults.find(s => s.id === studentId);
+      if (!student) return;
 
-        <div class="result-card-actions">
-          <button class="action-btn view" onclick="viewDetailedResult(${JSON.stringify(result).replace(/"/g, '&quot;')})">
-            <i class="fas fa-eye"></i> View Full Details
-          </button>
-          <button class="action-btn download" onclick="downloadResult('${result.regNo}')">
-            <i class="fas fa-download"></i> Download
-          </button>
-          <button class="action-btn verify" onclick="markAsVerified('${result.id}')">
-            <i class="fas fa-check"></i> Mark Verified
-          </button>
-        </div>
+      currentSelectedStudent = student;
+      document.getElementById('removeStudentName').textContent = student.studentName;
+
+      openModal('removeModal');
+    }
+
+    async function confirmPublishToCloud() {
+      if (!currentSelectedStudent) return;
+
+      try {
+        const publishBtn = document.getElementById('confirmPublishBtn');
+        publishBtn.disabled = true;
+
+        const response = await fetch(`${API_BASE_URL}/api/school/publish-result`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            studentId: currentSelectedStudent.id,
+            schoolName: SCHOOL_NAME,
+            institution: SCHOOL_NAME
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Failed to publish result');
+        }
+
+        const result = await response.json();
+
+        showAlert('success', `${currentSelectedStudent.studentName}'s report has been successfully published to the cloud!`);
+        closeModal('publishModal');
+        await loadStudentResults();
+        updateStatistics();
+      } catch (error) {
+        console.error('Publish error:', error);
+        showAlert('error', error.message || 'Failed to publish result');
+      } finally {
+        const publishBtn = document.getElementById('confirmPublishBtn');
+        publishBtn.disabled = false;
+      }
+    }
+
+    async function confirmRemoveFromCloud() {
+      if (!currentSelectedStudent) return;
+
+      try {
+        const removeBtn = document.getElementById('confirmRemoveBtn');
+        removeBtn.disabled = true;
+
+        const response = await fetch(`${API_BASE_URL}/api/school/remove-result`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            studentId: currentSelectedStudent.id,
+            schoolName: SCHOOL_NAME
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Failed to remove result');
+        }
+
+        showAlert('success', `${currentSelectedStudent.studentName}'s report has been removed from the cloud.`);
+        closeModal('removeModal');
+        await loadStudentResults();
+        updateStatistics();
+      } catch (error) {
+        console.error('Remove error:', error);
+        showAlert('error', error.message || 'Failed to remove result');
+      } finally {
+        const removeBtn = document.getElementById('confirmRemoveBtn');
+        removeBtn.disabled = false;
+      }
+    }
+
+    function editStudentResult(studentId) {
+      const student = filteredResults.find(s => s.id === studentId);
+      if (!student) return;
+
+      // Navigate to edit page or open edit modal
+      window.location.href = `/edit-result.html?studentId=${studentId}`;
+    }
+
+    function downloadStudentReport() {
+      if (!currentSelectedStudent) return;
+
+      const reportData = `
+STUDENT ACADEMIC REPORT
+=======================
+School: ${SCHOOL_NAME}
+Student: ${currentSelectedStudent.studentName}
+Registration: ${currentSelectedStudent.regNo}
+Class: ${currentSelectedStudent.className}
+Year: ${currentSelectedStudent.academicYear}
+Term: ${currentSelectedStudent.term || '-'}
+
+ACADEMIC PERFORMANCE
+====================
+Total Score: ${currentSelectedStudent.totalScore.toFixed(2)}
+Average Score: ${currentSelectedStudent.averageScore.toFixed(2)}
+Position: ${currentSelectedStudent.position || '-'}
+Grade: ${currentSelectedStudent.grade || '-'}
+
+SUBJECTS BREAKDOWN
+==================
+${currentSelectedStudent.subjects ? currentSelectedStudent.subjects.map(s => `${s.name}: ${s.total} (${s.grade})`).join('\n') : 'No subjects'}
+
+TEACHER'S COMMENT
+=================
+${currentSelectedStudent.teacherComment || 'No comment'}
+- ${currentSelectedStudent.teacherName || 'Class Teacher'}
+
+PRINCIPAL'S REMARK
+==================
+${currentSelectedStudent.principalRemark || 'No remark'}
+- ${currentSelectedStudent.principalName || 'Principal'}
+
+VERIFICATION
+=============
+Published: ${currentSelectedStudent.cloudStatus === 'uploaded' ? 'Yes' : 'No'}
+Verification Code: ${currentSelectedStudent.verificationCode || 'N/A'}
+Date Generated: ${new Date().toLocaleDateString()}
+
+This is an officially verified academic record from ${SCHOOL_NAME}.
+For inquiries, contact the school administration.
       `;
 
-      resultsContainer.appendChild(card);
-      currentSelectedResult = result;
-    }
-
-    function viewDetailedResult(result) {
-      const modalBody = document.getElementById('resultModalBody');
-      
-      const subjectsHTML = result.subjects ? result.subjects.map(s => `
-        <tr>
-          <td>${s.name}</td>
-          <td>${s.ca1 || '-'}</td>
-          <td>${s.ca2 || '-'}</td>
-          <td>${s.midterm || '-'}</td>
-          <td>${s.exam || '-'}</td>
-          <td><strong>${s.total || '-'}</strong></td>
-          <td><strong style="color: ${getGradeColor(s.grade)}">${s.grade || '-'}</strong></td>
-        </tr>
-      `).join('') : '<tr><td colspan="7">No subject data available</td></tr>';
-
-      modalBody.innerHTML = `
-        <div style="margin-bottom: 20px;">
-          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Student Information</h4>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8faff; padding: 12px; border-radius: 8px;">
-            <div><strong>Name:</strong> ${result.studentName}</div>
-            <div><strong>Reg. No:</strong> ${result.regNo}</div>
-            <div><strong>Gender:</strong> ${result.gender || 'N/A'}</div>
-            <div><strong>Class:</strong> ${result.class}</div>
-            <div><strong>School:</strong> ${result.schoolName}</div>
-            <div><strong>Year:</strong> ${result.academicYear}</div>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Verification Details</h4>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8faff; padding: 12px; border-radius: 8px;">
-            <div><strong>Status:</strong> <span style="color: ${result.verified ? 'var(--success)' : 'var(--danger)'}; font-weight: 700;">${result.verified ? 'Verified' : 'Unverified'}</span></div>
-            <div><strong>Verification Code:</strong> <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">${result.verificationCode || 'N/A'}</code></div>
-            <div><strong>Issue Date:</strong> ${new Date(result.issueDate).toLocaleDateString()}</div>
-            <div><strong>Verified Date:</strong> ${result.verifiedDate ? new Date(result.verifiedDate).toLocaleDateString() : 'N/A'}</div>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Results Summary</h4>
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: #f8faff; padding: 12px; border-radius: 8px;">
-            <div style="text-align: center;">
-              <div style="font-size: 0.85rem; color: var(--muted);">Total Score</div>
-              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-2);">${result.totalScore}</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="font-size: 0.85rem; color: var(--muted);">Average</div>
-              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-2);">${(result.totalScore / (result.subjects ? result.subjects.length : 1)).toFixed(2)}</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="font-size: 0.85rem; color: var(--muted);">Grade</div>
-              <div style="font-size: 1.5rem; font-weight: 800; color: ${getGradeColor(result.grade)};">${result.grade}</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="font-size: 0.85rem; color: var(--muted);">Position</div>
-              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-2);">${result.position || 'N/A'}</div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Subject Breakdown</h4>
-          <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
-              <thead style="background: #f8faff;">
-                <tr>
-                  <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e5e7eb;">Subject</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">CA1</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">CA2</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Midterm</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Exam</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Total</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Grade</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${subjectsHTML}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('resultModal').classList.add('active');
-    }
-
-    function closeResultModal() {
-      document.getElementById('resultModal').classList.remove('active');
-    }
-
-    function printResult() {
-      window.print();
-    }
-
-    function downloadResult(regNo) {
-      if (!currentSelectedResult) return;
-      
-      const content = generateResultPDF(currentSelectedResult);
-      const blob = new Blob([content], { type: 'application/pdf' });
+      const blob = new Blob([reportData], { type: 'text/plain' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Result_${regNo}.pdf`;
+      a.download = `Report_${currentSelectedStudent.regNo}_${Date.now()}.txt`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+
+      showAlert('success', 'Report downloaded successfully!');
+      closeModal('detailModal');
     }
 
-    function generateResultPDF(result) {
-      // Simple text-based PDF generation
-      // For production, use a library like jsPDF or pdfkit
-      return `
-        ExamGuard International School - Result Verification
-        =======================================================
-        
-        Student Name: ${result.studentName}
-        Registration Number: ${result.regNo}
-        School: ${result.schoolName}
-        Class: ${result.class}
-        Academic Year: ${result.academicYear}
-        Term: ${result.term}
-        
-        Verification Status: ${result.verified ? 'VERIFIED' : 'UNVERIFIED'}
-        Verification Code: ${result.verificationCode || 'N/A'}
-        Issue Date: ${new Date(result.issueDate).toLocaleDateString()}
-        
-        Results Summary:
-        Total Score: ${result.totalScore}
-        Grade: ${result.grade}
-        
-        This is an electronically generated document and is valid without signature.
-      `;
+    // ============ UTILITY FUNCTIONS ============
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
     }
 
-    async function markAsVerified(resultId) {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/results/${resultId}/verify`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (response.ok) {
-          showAlert('success', 'Result marked as verified successfully!');
-          updateStats();
-          // Refresh the current result
-          if (currentSelectedResult && currentSelectedResult.id === resultId) {
-            currentSelectedResult.verified = true;
-            displayVerificationResult(currentSelectedResult);
-          }
-        }
-      } catch (error) {
-        console.error('Error marking result as verified:', error);
-        showAlert('error', 'Error marking result as verified.');
-      }
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
     }
 
-    async function updateStats() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/verification-stats`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (response.ok) {
-          const stats = await response.json();
-          document.getElementById('verifiedCount').textContent = stats.verified || 0;
-          document.getElementById('pendingCount').textContent = stats.pending || 0;
-          document.getElementById('unverifiedCount').textContent = stats.unverified || 0;
-          document.getElementById('schoolCount').textContent = stats.schools || 0;
-        }
-      } catch (error) {
-        console.error('Error updating stats:', error);
-      }
-    }
-
-    function getGradeColor(grade) {
-      const colors = {
-        'A': '#16a34a',
-        'B': '#2563eb',
-        'C': '#0891b2',
-        'D': '#f59e0b',
-        'E': '#f97316',
-        'F': '#dc2626'
-      };
-      return colors[grade] || '#6b7280';
+    function closeAllModals() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.remove('active');
+      });
     }
 
     function showAlert(type, message) {
-      const errorAlert = document.getElementById('errorAlert');
-      const successAlert = document.getElementById('successAlert');
-      const warningAlert = document.getElementById('warningAlert');
+      const alertIds = {
+        'success': 'successAlert',
+        'error': 'errorAlert',
+        'warning': 'warningAlert'
+      };
 
-      errorAlert.classList.remove('show');
-      successAlert.classList.remove('show');
-      warningAlert.classList.remove('show');
+      // Hide all alerts
+      document.querySelectorAll('.alert').forEach(alert => {
+        alert.classList.remove('show');
+      });
 
-      if (type === 'error') {
-        document.getElementById('errorMessage').textContent = message;
-        errorAlert.classList.add('show');
-      } else if (type === 'success') {
-        document.getElementById('successMessage').textContent = message;
-        successAlert.classList.add('show');
-      } else if (type === 'warning') {
-        document.getElementById('warningMessage').textContent = message;
-        warningAlert.classList.add('show');
+      const alertEl = document.getElementById(alertIds[type]);
+      if (alertEl) {
+        const messageEl = alertEl.querySelector('[id$="Message"]');
+        if (messageEl) {
+          messageEl.textContent = message;
+        }
+        alertEl.classList.add('show');
+
+        setTimeout(() => {
+          alertEl.classList.remove('show');
+        }, 6000);
       }
+    }
 
-      // Auto-hide after 5 seconds
-      setTimeout(() => {
-        errorAlert.classList.remove('show');
-        successAlert.classList.remove('show');
-        warningAlert.classList.remove('show');
-      }, 5000);
+    function handleFilterSubmit(event) {
+      event.preventDefault();
+      loadStudentResults();
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+
+      sidebar.classList.toggle('open');
+      sidebar.classList.toggle('hidden');
+      overlay.classList.toggle('visible');
+
+      if (sidebar.classList.contains('open')) {
+        document.body.classList.add('no-scroll');
+      } else {
+        document.body.classList.remove('no-scroll');
+      }
     }
 
     function navClick(event) {
       event.preventDefault();
-      const section = event.target.getAttribute('data-section');
-      if (section) {
-        document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-        event.target.classList.add('active');
+
+      // Remove active class from all nav items
+      document.querySelectorAll('.nav a').forEach(a => {
+        a.classList.remove('active');
+      });
+
+      // Add active class to clicked item
+      event.target.closest('a').classList.add('active');
+
+      // Close sidebar on mobile
+      if (window.innerWidth <= 720) {
+        toggleSidebar();
       }
     }
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', function(event) {
+        if (event.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 720) {
+        document.getElementById('sidebar').classList.remove('open', 'hidden');
+        document.getElementById('overlay').classList.remove('visible');
+        document.body.classList.remove('no-scroll');
+      }
+    });
   </script>
+
 </body>
 </html>
