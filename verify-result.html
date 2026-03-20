@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verify Results | ExamGuard International School</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --bg-0: #f6f8ff;
+      --bg-1: #eef2ff;
+      --accent: #3b82f6;
+      --accent-2: #1e40af;
+      --accent-light: #dbeafe;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --radius: 12px;
+      --sidebar-w: 300px;
+      --shadow: 0 8px 20px rgba(11, 42, 60, 0.04);
+      --shadow-hover: 0 12px 32px rgba(59, 130, 246, 0.08);
+      --text-main: #0b2a44;
+      --text-muted: #7a90b3;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #0ea5e9;
+      --primary: #2647a6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', system-ui, Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      color: var(--text-main);
+      width: 100vw;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* App layout */
+    .app {
+      display: flex;
+      min-height: 100vh;
+      align-items: stretch;
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.45);
+      z-index: 50;
+      display: none;
+    }
+
+    .overlay.visible {
+      display: block;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      padding: 20px 16px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 100;
+      box-shadow: 4px 0 28px rgba(15, 23, 42, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      will-change: transform;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-110%);
+      transition: transform 0.28s ease;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+      transition: transform 0.28s ease;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 3px solid rgba(255, 224, 102, 0.12);
+      background: #fff;
+    }
+
+    .brand .title {
+      font-weight: 700;
+      font-size: 1.18rem;
+      color: #ffe066;
+    }
+
+    .brand .subtitle {
+      font-size: 0.96rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #e6eefc;
+      background: transparent;
+      transition: background 0.12s, transform 0.08s;
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+
+    .nav a.active,
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #ffe066;
+      transform: translateX(3px);
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    .profile {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .profile img {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #ffe066;
+    }
+
+    .profile .name {
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: #ffe066;
+    }
+
+    .profile .muted {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.92rem;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: fixed;
+      left: var(--sidebar-w);
+      top: 0;
+      width: calc(100vw - var(--sidebar-w));
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      backdrop-filter: blur(6px);
+      background: rgba(255, 255, 255, 0.86);
+      border-bottom: 1px solid rgba(11, 42, 60, 0.06);
+      box-shadow: 0 6px 18px rgba(11, 42, 60, 0.04);
+      min-height: 64px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .topbar .hamburger {
+      display: none;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .topbar .page-title {
+      font-weight: 800;
+      font-size: 1.18rem;
+      color: var(--accent-2);
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      margin-left: var(--sidebar-w);
+      padding: 20px;
+      flex: 1;
+      transition: margin-left 0.28s;
+      min-height: 100vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      max-width: calc(100vw - var(--sidebar-w));
+      box-sizing: border-box;
+      overflow-x: hidden;
+      padding-top: 90px;
+    }
+
+    .main.full {
+      margin-left: 0;
+      max-width: 100vw;
+    }
+
+    /* SECTIONS */
+    .verify-section {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(11, 42, 60, 0.03);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent-2);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title i {
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+
+    /* FILTER FORM */
+    .verify-filter-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .form-input,
+    .form-select {
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'Inter', Arial, sans-serif;
+      transition: all 0.12s ease;
+      background: #fff;
+      color: var(--text-main);
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-input:disabled {
+      background: #f3f6fb;
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    /* BUTTONS */
+    .verify-btn {
+      padding: 12px 24px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+
+    .verify-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .verify-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .verify-btn.secondary {
+      background: #f3f6fb;
+      color: var(--accent-2);
+      border: 1px solid #dbeafe;
+    }
+
+    .verify-btn.secondary:hover:not(:disabled) {
+      background: #ecf0ff;
+    }
+
+    /* ALERT MESSAGES */
+    .alert {
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+      border: 1px solid;
+      font-weight: 600;
+      animation: slideInDown 0.3s ease;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert.show {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .alert-error {
+      background: #fee2e2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+
+    .alert-error i {
+      color: #dc2626;
+    }
+
+    .alert-success {
+      background: #dcfce7;
+      border-color: #bbf7d0;
+      color: #166534;
+    }
+
+    .alert-success i {
+      color: #16a34a;
+    }
+
+    .alert-warning {
+      background: #fef3c7;
+      border-color: #fde68a;
+      color: #92400e;
+    }
+
+    .alert-warning i {
+      color: #f59e0b;
+    }
+
+    .alert-info {
+      background: #e0f2fe;
+      border-color: #bae6fd;
+      color: #0c4a6e;
+    }
+
+    .alert-info i {
+      color: #0284c7;
+    }
+
+    /* RESULT CARD */
+    .result-card {
+      background: linear-gradient(135deg, #f0f9ff 0%, #eff6ff 100%);
+      border: 2px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.12s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+    }
+
+    .result-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .result-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-2);
+    }
+
+    .result-card-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .verification-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .verification-verified {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .verification-unverified {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .verification-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .result-card-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .result-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .result-item-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .result-item-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .result-card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid;
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-btn.verify {
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .action-btn.verify:hover {
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .action-btn.view {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .action-btn.view:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .action-btn.download {
+      border-color: #7c3aed;
+      color: #7c3aed;
+    }
+
+    .action-btn.download:hover {
+      background: rgba(124, 58, 237, 0.1);
+    }
+
+    /* STATS CARDS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(11, 42, 60, 0.03);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-icon.blue {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent);
+    }
+
+    .stat-icon.green {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .stat-icon.orange {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+    }
+
+    .stat-icon.red {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-2);
+      margin-top: 2px;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state i {
+      font-size: 3.5rem;
+      color: #dbeafe;
+      margin-bottom: 16px;
+    }
+
+    .empty-state h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 8px 0;
+    }
+
+    .empty-state p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    /* LOADING SPINNER */
+    .spinner-small {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 28px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent-2);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.12s;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .modal-body {
+      margin-bottom: 24px;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      padding-top: 20px;
+      border-top: 1px solid #eef3ff;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .main {
+        padding: 20px 13px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .topbar .hamburger {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --sidebar-w: 86vw;
+      }
+
+      .sidebar {
+        transform: translateX(-110%);
+        position: fixed;
+        width: var(--sidebar-w);
+        min-width: var(--sidebar-w);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 0 24px 48px rgba(2, 6, 23, 0.5);
+      }
+
+      .sidebar.hidden {
+        transform: translateX(-110%);
+      }
+
+      .overlay {
+        display: none;
+      }
+
+      .overlay.visible {
+        display: block;
+      }
+
+      body.no-scroll {
+        overflow: hidden;
+        height: 100vh;
+        touch-action: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 20px 14px;
+        padding-top: 20px;
+        max-width: 100vw;
+      }
+
+      .main.full {
+        margin-left: 0;
+      }
+
+      .topbar {
+        left: 0;
+        width: 100vw;
+        padding: 10px 12px;
+        min-height: 56px;
+      }
+
+      .topbar .page-title {
+        font-size: 1.05rem;
+      }
+
+      .verify-filter-form {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        font-size: 1.15rem;
+      }
+
+      .result-card-content {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        max-width: 95vw;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main {
+        padding: 20px 2vw;
+        padding-top: 80px;
+      }
+
+      .topbar {
+        padding: 10px 2vw;
+      }
+
+      .verify-section {
+        padding: 16px;
+      }
+
+      .section-title {
+        font-size: 1rem;
+        gap: 8px;
+      }
+
+      .section-title i {
+        font-size: 1.2rem;
+      }
+
+      .verify-filter-form {
+        gap: 12px;
+      }
+
+      .result-card {
+        padding: 16px;
+      }
+
+      .result-card-actions {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .stat-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+      }
+
+      .result-card-header {
+        flex-direction: column;
+      }
+
+      .verification-badge {
+        align-self: flex-start;
+      }
+    }
+
+    @media print {
+      .sidebar, .topbar, .verify-filter-form, .result-card-actions, .stats-grid {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 0;
+      }
+
+      .verify-section {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+
+      .result-card {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation" role="navigation">
+      <div class="brand" aria-hidden="false">
+        <img src="mainlogo.png" alt="ExamGuard Logo">
+        <div>
+          <div class="title">ExamGuard International School</div>
+          <div class="subtitle" id="schoolSubtitle">Verification Portal</div>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav" aria-label="Primary">
+        <a href="student-dashboard.html" data-section="home" onclick="navClick(event)">🏠 Home</a>
+        <a href="student-dashboard.html">📘 My Courses</a>
+        <a href="#student-dashboard.html">📝 Assignments</a>
+        <a href="check-result.html">📊 Grades</a>
+        <a href="verify-result.html" data-section="verify" class="active" onclick="navClick(event)">✅ Verify Result</a>
+        <a href="student-dashboard.html">⏰ Timetable</a>
+        <a href="student-dashboard.html">✉️ Messages</a>
+        <a href="student-dashboard.html">📂 Resources</a>
+        <a href="student-dashboard.html">⚙️ Settings</a>
+      </nav>
+
+      <div class="spacer" aria-hidden="true"></div>
+
+      <div class="profile" role="region" aria-label="User profile">
+        <img src="avatar.jpg" alt="User avatar" id="userAvatar">
+        <div>
+          <div class="name" id="userName">Guest</div>
+          <div class="muted" id="userRole">Visitor</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Fixed Topbar -->
+    <div class="topbar" id="fixedTopbar">
+      <div style="display:flex; gap:12px; align-items:center;">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+        <div>
+          <div class="page-title" id="pageTitle">✅ Verify Results</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; align-items:center;">
+        <img src="avatar.jpg" alt="You" style="width:44px;height:44px;border-radius:8px;object-fit:cover;border:2px solid #fff;" id="topbarAvatar">
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main" id="main" role="main" tabindex="-1">
+      
+      <!-- Statistics Section -->
+      <section class="verify-section">
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <i class="fas fa-file-check"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Verified Results</div>
+              <div class="stat-value" id="verifiedCount">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon orange">
+              <i class="fas fa-hourglass-half"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Pending Verification</div>
+              <div class="stat-value" id="pendingCount">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon red">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Unverified Results</div>
+              <div class="stat-value" id="unverifiedCount">0</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <i class="fas fa-school"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-label">Total Schools</div>
+              <div class="stat-value" id="schoolCount">0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Verification Section -->
+      <section class="verify-section">
+        <div class="section-title">
+          <i class="fas fa-search"></i> Verify Student Result
+        </div>
+
+        <!-- Alerts -->
+        <div class="alert alert-error" id="errorAlert" role="alert">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorMessage"></span>
+        </div>
+
+        <div class="alert alert-success" id="successAlert" role="alert">
+          <i class="fas fa-check-circle"></i>
+          <span id="successMessage"></span>
+        </div>
+
+        <div class="alert alert-warning" id="warningAlert" role="alert">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span id="warningMessage"></span>
+        </div>
+
+        <!-- Filter Form -->
+        <form class="verify-filter-form" id="verifyForm" onsubmit="handleVerification(event)">
+          <div class="form-group">
+            <label class="form-label" for="schoolSelect">School Name *</label>
+            <select id="schoolSelect" class="form-select" required onchange="updateSchoolInfo()">
+              <option value="">Select School</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="yearSelect">Academic Year *</label>
+            <select id="yearSelect" class="form-select" required>
+              <option value="">Select Year</option>
+              <option>2027-2028</option>
+              <option>2026-2027</option>
+              <option>2025-2026</option>
+              <option>2024-2025</option>
+              <option>2023-2024</option>
+              <option>2022-2023</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="termSelect">Term *</label>
+            <select id="termSelect" class="form-select" required>
+              <option value="">Select Term</option>
+              <option>FIRST TERM</option>
+              <option>SECOND TERM</option>
+              <option>THIRD TERM</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="classSelect">Class *</label>
+            <select id="classSelect" class="form-select" required>
+              <option value="">Select Class</option>
+              <option>Beginner</option>
+              <option>KG1</option>
+              <option>KG2</option>
+              <option>Creche</option>
+              <option>Nursery 1</option>
+              <option>Nursery 2</option>
+              <option>Nursery 3</option>
+              <option>Primary 1</option>
+              <option>Primary 2</option>
+              <option>Primary 3</option>
+              <option>Primary 4</option>
+              <option>Primary 5</option>
+              <option>Primary 6</option>
+              <option>JSS1</option>
+              <option>JSS2</option>
+              <option>JSS3</option>
+              <option>SS1</option>
+              <option>SS2</option>
+              <option>SS3</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="studentSearch">Student Name or ID *</label>
+            <input 
+              id="studentSearch" 
+              class="form-input" 
+              type="text" 
+              placeholder="Enter student name or ID"
+              required
+              autocomplete="off"
+            >
+          </div>
+
+          <button class="verify-btn" type="submit" id="searchBtn">
+            <i class="fas fa-search"></i> Search & Verify
+          </button>
+        </form>
+      </section>
+
+      <!-- Results Display Section -->
+      <section class="verify-section" id="resultsSection" style="display: none;">
+        <div class="section-title">
+          <i class="fas fa-certificate"></i> Verification Results
+        </div>
+
+        <div id="resultsContainer">
+          <!-- Results will be populated here -->
+        </div>
+      </section>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <i class="fas fa-search"></i>
+        <h3>No Results Yet</h3>
+        <p>Enter search criteria above and click "Search & Verify" to check student results.</p>
+      </div>
+
+    </main>
+
+    <!-- Result Details Modal -->
+    <div class="modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="resultModalTitle">Result Details</h3>
+          <button class="modal-close" aria-label="Close modal" onclick="closeResultModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="resultModalBody">
+          <!-- Dynamic content will be inserted here -->
+        </div>
+        <div class="modal-footer">
+          <button class="verify-btn secondary" onclick="closeResultModal()">Close</button>
+          <button class="verify-btn" id="printBtn" onclick="printResult()">
+            <i class="fas fa-print"></i> Print
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ============ CONFIGURATION ============
+    const API_BASE_URL = "https://examguard-8rxe.onrender.com";
+    const token = localStorage.getItem('token') || "";
+
+    // ============ STATE ============
+    let allResults = [];
+    let schools = [];
+    let currentSelectedResult = null;
+
+    // ============ INITIALIZATION ============
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeUI();
+      loadSchools();
+      setupEventListeners();
+      updateStats();
+    });
+
+    function initializeUI() {
+      const hamburger = document.getElementById('hamburger');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+
+      hamburger.addEventListener('click', toggleSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      function toggleSidebar() {
+        sidebar.classList.toggle('open');
+        sidebar.classList.toggle('hidden');
+        overlay.classList.toggle('visible');
+        document.body.classList.toggle('no-scroll');
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebar.classList.add('hidden');
+        overlay.classList.remove('visible');
+        document.body.classList.remove('no-scroll');
+      }
+    }
+
+    function setupEventListeners() {
+      document.getElementById('verifyForm').addEventListener('submit', handleVerification);
+    }
+
+    // ============ API CALLS ============
+    async function loadSchools() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/schools`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.ok) {
+          schools = await response.json();
+          populateSchoolDropdown();
+        }
+      } catch (error) {
+        console.error('Error loading schools:', error);
+        showAlert('error', 'Could not load schools. Please refresh the page.');
+      }
+    }
+
+    function populateSchoolDropdown() {
+      const schoolSelect = document.getElementById('schoolSelect');
+      schools.forEach(school => {
+        const option = document.createElement('option');
+        option.value = school.id || school.name;
+        option.textContent = school.name;
+        schoolSelect.appendChild(option);
+      });
+    }
+
+    function updateSchoolInfo() {
+      const schoolId = document.getElementById('schoolSelect').value;
+      const school = schools.find(s => (s.id || s.name) === schoolId);
+      // You can update school-specific information here if needed
+    }
+
+    async function handleVerification(event) {
+      event.preventDefault();
+      
+      const schoolId = document.getElementById('schoolSelect').value;
+      const year = document.getElementById('yearSelect').value;
+      const term = document.getElementById('termSelect').value;
+      const classVal = document.getElementById('classSelect').value;
+      const studentSearch = document.getElementById('studentSearch').value;
+
+      if (!schoolId || !year || !term || !classVal || !studentSearch) {
+        showAlert('warning', 'Please fill all required fields');
+        return;
+      }
+
+      try {
+        document.getElementById('searchBtn').disabled = true;
+        document.getElementById('searchBtn').innerHTML = '<span class="spinner-small"></span> Searching...';
+
+        const response = await fetch(`${API_BASE_URL}/api/verify-results`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            schoolId,
+            year,
+            term,
+            class: classVal,
+            studentQuery: studentSearch
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          displayVerificationResult(result);
+          showAlert('success', 'Student result found and verified successfully!');
+          updateStats();
+        } else {
+          showAlert('error', 'No matching results found. Please verify your details.');
+          document.getElementById('resultsSection').style.display = 'none';
+          document.getElementById('emptyState').style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Verification error:', error);
+        showAlert('error', 'Error verifying result. Please try again.');
+      } finally {
+        document.getElementById('searchBtn').disabled = false;
+        document.getElementById('searchBtn').innerHTML = '<i class="fas fa-search"></i> Search & Verify';
+      }
+    }
+
+    function displayVerificationResult(result) {
+      document.getElementById('resultsSection').style.display = 'block';
+      document.getElementById('emptyState').style.display = 'none';
+
+      const resultsContainer = document.getElementById('resultsContainer');
+      resultsContainer.innerHTML = '';
+
+      const verificationStatus = result.verified ? 'verified' : 'unverified';
+      const verificationBadge = result.verified 
+        ? '<span class="verification-badge verification-verified"><i class="fas fa-check"></i> Verified</span>'
+        : '<span class="verification-badge verification-unverified"><i class="fas fa-times"></i> Unverified</span>';
+
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML = `
+        <div class="result-card-header">
+          <div>
+            <div class="result-card-title">${result.studentName}</div>
+            <div class="result-card-subtitle">Reg. No: ${result.regNo}</div>
+          </div>
+          ${verificationBadge}
+        </div>
+
+        <div class="result-card-content">
+          <div class="result-item">
+            <div class="result-item-label">School</div>
+            <div class="result-item-value">${result.schoolName}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Academic Year</div>
+            <div class="result-item-value">${result.academicYear}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Term</div>
+            <div class="result-item-value">${result.term}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Class</div>
+            <div class="result-item-value">${result.class}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Total Score</div>
+            <div class="result-item-value">${result.totalScore}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Grade</div>
+            <div class="result-item-value" style="color: ${getGradeColor(result.grade)}">${result.grade}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Verification Code</div>
+            <div class="result-item-value" style="font-family: 'Courier New', monospace; font-size: 0.9rem;">${result.verificationCode || 'N/A'}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-item-label">Issue Date</div>
+            <div class="result-item-value">${new Date(result.issueDate).toLocaleDateString()}</div>
+          </div>
+        </div>
+
+        <div class="result-card-actions">
+          <button class="action-btn view" onclick="viewDetailedResult(${JSON.stringify(result).replace(/"/g, '&quot;')})">
+            <i class="fas fa-eye"></i> View Full Details
+          </button>
+          <button class="action-btn download" onclick="downloadResult('${result.regNo}')">
+            <i class="fas fa-download"></i> Download
+          </button>
+          <button class="action-btn verify" onclick="markAsVerified('${result.id}')">
+            <i class="fas fa-check"></i> Mark Verified
+          </button>
+        </div>
+      `;
+
+      resultsContainer.appendChild(card);
+      currentSelectedResult = result;
+    }
+
+    function viewDetailedResult(result) {
+      const modalBody = document.getElementById('resultModalBody');
+      
+      const subjectsHTML = result.subjects ? result.subjects.map(s => `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.ca1 || '-'}</td>
+          <td>${s.ca2 || '-'}</td>
+          <td>${s.midterm || '-'}</td>
+          <td>${s.exam || '-'}</td>
+          <td><strong>${s.total || '-'}</strong></td>
+          <td><strong style="color: ${getGradeColor(s.grade)}">${s.grade || '-'}</strong></td>
+        </tr>
+      `).join('') : '<tr><td colspan="7">No subject data available</td></tr>';
+
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Student Information</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8faff; padding: 12px; border-radius: 8px;">
+            <div><strong>Name:</strong> ${result.studentName}</div>
+            <div><strong>Reg. No:</strong> ${result.regNo}</div>
+            <div><strong>Gender:</strong> ${result.gender || 'N/A'}</div>
+            <div><strong>Class:</strong> ${result.class}</div>
+            <div><strong>School:</strong> ${result.schoolName}</div>
+            <div><strong>Year:</strong> ${result.academicYear}</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Verification Details</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8faff; padding: 12px; border-radius: 8px;">
+            <div><strong>Status:</strong> <span style="color: ${result.verified ? 'var(--success)' : 'var(--danger)'}; font-weight: 700;">${result.verified ? 'Verified' : 'Unverified'}</span></div>
+            <div><strong>Verification Code:</strong> <code style="background: #fff; padding: 2px 6px; border-radius: 4px;">${result.verificationCode || 'N/A'}</code></div>
+            <div><strong>Issue Date:</strong> ${new Date(result.issueDate).toLocaleDateString()}</div>
+            <div><strong>Verified Date:</strong> ${result.verifiedDate ? new Date(result.verifiedDate).toLocaleDateString() : 'N/A'}</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Results Summary</h4>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: #f8faff; padding: 12px; border-radius: 8px;">
+            <div style="text-align: center;">
+              <div style="font-size: 0.85rem; color: var(--muted);">Total Score</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-2);">${result.totalScore}</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: 0.85rem; color: var(--muted);">Average</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-2);">${(result.totalScore / (result.subjects ? result.subjects.length : 1)).toFixed(2)}</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: 0.85rem; color: var(--muted);">Grade</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: ${getGradeColor(result.grade)};">${result.grade}</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: 0.85rem; color: var(--muted);">Position</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-2);">${result.position || 'N/A'}</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px 0; color: var(--accent-2);">Subject Breakdown</h4>
+          <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead style="background: #f8faff;">
+                <tr>
+                  <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e5e7eb;">Subject</th>
+                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">CA1</th>
+                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">CA2</th>
+                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Midterm</th>
+                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Exam</th>
+                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Total</th>
+                  <th style="padding: 10px; text-align: center; border-bottom: 2px solid #e5e7eb;">Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${subjectsHTML}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('resultModal').classList.add('active');
+    }
+
+    function closeResultModal() {
+      document.getElementById('resultModal').classList.remove('active');
+    }
+
+    function printResult() {
+      window.print();
+    }
+
+    function downloadResult(regNo) {
+      if (!currentSelectedResult) return;
+      
+      const content = generateResultPDF(currentSelectedResult);
+      const blob = new Blob([content], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Result_${regNo}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+
+    function generateResultPDF(result) {
+      // Simple text-based PDF generation
+      // For production, use a library like jsPDF or pdfkit
+      return `
+        ExamGuard International School - Result Verification
+        =======================================================
+        
+        Student Name: ${result.studentName}
+        Registration Number: ${result.regNo}
+        School: ${result.schoolName}
+        Class: ${result.class}
+        Academic Year: ${result.academicYear}
+        Term: ${result.term}
+        
+        Verification Status: ${result.verified ? 'VERIFIED' : 'UNVERIFIED'}
+        Verification Code: ${result.verificationCode || 'N/A'}
+        Issue Date: ${new Date(result.issueDate).toLocaleDateString()}
+        
+        Results Summary:
+        Total Score: ${result.totalScore}
+        Grade: ${result.grade}
+        
+        This is an electronically generated document and is valid without signature.
+      `;
+    }
+
+    async function markAsVerified(resultId) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/results/${resultId}/verify`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          showAlert('success', 'Result marked as verified successfully!');
+          updateStats();
+          // Refresh the current result
+          if (currentSelectedResult && currentSelectedResult.id === resultId) {
+            currentSelectedResult.verified = true;
+            displayVerificationResult(currentSelectedResult);
+          }
+        }
+      } catch (error) {
+        console.error('Error marking result as verified:', error);
+        showAlert('error', 'Error marking result as verified.');
+      }
+    }
+
+    async function updateStats() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/verification-stats`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+          const stats = await response.json();
+          document.getElementById('verifiedCount').textContent = stats.verified || 0;
+          document.getElementById('pendingCount').textContent = stats.pending || 0;
+          document.getElementById('unverifiedCount').textContent = stats.unverified || 0;
+          document.getElementById('schoolCount').textContent = stats.schools || 0;
+        }
+      } catch (error) {
+        console.error('Error updating stats:', error);
+      }
+    }
+
+    function getGradeColor(grade) {
+      const colors = {
+        'A': '#16a34a',
+        'B': '#2563eb',
+        'C': '#0891b2',
+        'D': '#f59e0b',
+        'E': '#f97316',
+        'F': '#dc2626'
+      };
+      return colors[grade] || '#6b7280';
+    }
+
+    function showAlert(type, message) {
+      const errorAlert = document.getElementById('errorAlert');
+      const successAlert = document.getElementById('successAlert');
+      const warningAlert = document.getElementById('warningAlert');
+
+      errorAlert.classList.remove('show');
+      successAlert.classList.remove('show');
+      warningAlert.classList.remove('show');
+
+      if (type === 'error') {
+        document.getElementById('errorMessage').textContent = message;
+        errorAlert.classList.add('show');
+      } else if (type === 'success') {
+        document.getElementById('successMessage').textContent = message;
+        successAlert.classList.add('show');
+      } else if (type === 'warning') {
+        document.getElementById('warningMessage').textContent = message;
+        warningAlert.classList.add('show');
+      }
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        errorAlert.classList.remove('show');
+        successAlert.classList.remove('show');
+        warningAlert.classList.remove('show');
+      }, 5000);
+    }
+
+    function navClick(event) {
+      event.preventDefault();
+      const section = event.target.getAttribute('data-section');
+      if (section) {
+        document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
