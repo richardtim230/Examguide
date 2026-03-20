@@ -1809,7 +1809,7 @@
 
   <script>
     // ============ API CONFIGURATION ============
-    const API_BASE_URL = "https://examgide.onrender.com";
+    const API_BASE_URL = "https://examguard-8rxe.onrender.com";
     const schoolId = localStorage.getItem('schoolId') || 'SCHOOL_001';
     const token = localStorage.getItem('authToken') || '';
 
@@ -2271,7 +2271,7 @@
         const yearId = document.getElementById('filterYear').value;
         const classLevel = document.getElementById('filterClass').value;
 
-        let url = `${API_BASE_URL}/api/school/${schoolId}/results`;
+        let url = `${API_BASE_URL}/api/results`;
         const params = new URLSearchParams();
         if (yearId) params.append('yearId', yearId);
         if (classLevel) params.append('class', classLevel);
