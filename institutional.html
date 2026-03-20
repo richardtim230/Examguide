@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verify Student Report | ExamGuard Institution Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --accent: #3b82f6;
+      --accent-light: #dbeafe;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --muted: #6b7280;
+      --text-main: #0b2a44;
+      --text-light: #7a90b3;
+      --bg-light: #f8faff;
+      --bg-lighter: #f0f4ff;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --shadow-sm: 0 4px 12px rgba(11, 42, 60, 0.04);
+      --shadow-md: 0 8px 20px rgba(11, 42, 60, 0.08);
+      --shadow-lg: 0 12px 32px rgba(59, 130, 246, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #f8faff 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 224, 102, 0.3);
+    }
+
+    .header-brand-text {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #ffe066;
+    }
+
+    .header-brand-subtext {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .header-btn {
+      padding: 8px 16px;
+      background: rgba(255, 224, 102, 0.15);
+      color: #ffe066;
+      border: 1px solid rgba(255, 224, 102, 0.3);
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s;
+      font-size: 0.9rem;
+    }
+
+    .header-btn:hover {
+      background: rgba(255, 224, 102, 0.25);
+      border-color: rgba(255, 224, 102, 0.5);
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 24px;
+      min-height: calc(100vh - 200px);
+    }
+
+    /* LEFT COLUMN - FORM */
+    .form-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(11, 42, 60, 0.05);
+    }
+
+    .form-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    .form-header-icon {
+      font-size: 1.8rem;
+      color: var(--accent);
+      width: 45px;
+      height: 45px;
+      background: var(--bg-lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-header-text h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .form-header-text p {
+      margin: 4px 0 0 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-label .required {
+      color: var(--danger);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .form-label .help-icon {
+      font-size: 0.8rem;
+      color: var(--muted);
+      cursor: help;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      color: var(--text-main);
+      transition: all 0.15s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: #fafcff;
+    }
+
+    .form-input.error,
+    .form-select.error {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-hint {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .form-error {
+      font-size: 0.85rem;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+      animation: slideInDown 0.2s ease;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .form-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ALERTS */
+    .alert {
+      padding: 16px 16px;
+      border-radius: 10px;
+      border-left: 4px solid;
+      display: none;
+      animation: slideInDown 0.3s ease;
+      margin-bottom: 16px;
+    }
+
+    .alert.show {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .alert-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .alert-content {
+      flex: 1;
+    }
+
+    .alert-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .alert-message {
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .alert-success {
+      background: #dcfce7;
+      border-color: #16a34a;
+      color: #166534;
+    }
+
+    .alert-success .alert-icon {
+      color: #16a34a;
+    }
+
+    .alert-error {
+      background: #fee2e2;
+      border-color: #dc2626;
+      color: #991b1b;
+    }
+
+    .alert-error .alert-icon {
+      color: #dc2626;
+    }
+
+    .alert-warning {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .alert-warning .alert-icon {
+      color: #f59e0b;
+    }
+
+    .alert-info {
+      background: #e0f2fe;
+      border-color: #0284c7;
+      color: #0c4a6e;
+    }
+
+    .alert-info .alert-icon {
+      color: #0284c7;
+    }
+
+    /* RIGHT COLUMN - REPORT DISPLAY */
+    .report-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .report-empty {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 60px 28px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      border: 2px dashed var(--accent-light);
+    }
+
+    .report-empty-icon {
+      font-size: 4rem;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+    }
+
+    .report-empty h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .report-empty p {
+      margin: 0;
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    /* REPORT CARD */
+    .report-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(11, 42, 60, 0.05);
+      animation: slideInUp 0.4s ease;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .report-header {
+      background: linear-gradient(135deg, #f0f4ff 0%, #eff6ff 100%);
+      padding: 24px 28px;
+      border-bottom: 2px solid var(--accent-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .report-header-info {
+      flex: 1;
+    }
+
+    .report-student-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0 0 8px 0;
+    }
+
+    .report-student-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .report-student-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .verification-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .verification-verified {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .verification-verified i {
+      color: #16a34a;
+    }
+
+    .verification-unverified {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .verification-unverified i {
+      color: #dc2626;
+    }
+
+    /* REPORT BODY */
+    .report-body {
+      padding: 28px;
+    }
+
+    .report-section {
+      margin-bottom: 28px;
+    }
+
+    .report-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .report-section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0 0 16px 0;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .report-section-title i {
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      background: var(--bg-lighter);
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--accent-light);
+    }
+
+    .info-item-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .info-item-value {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .info-item-value.grade {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      font-size: 1.5rem;
+    }
+
+    /* SUBJECTS TABLE */
+    .subjects-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-lighter);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--accent-light);
+    }
+
+    .subjects-table thead {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: #fff;
+    }
+
+    .subjects-table th {
+      padding: 14px 12px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .subjects-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--accent-light);
+      font-size: 0.9rem;
+    }
+
+    .subjects-table tbody tr:hover {
+      background: #fff;
+    }
+
+    .subjects-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .subject-name {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .score {
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .score-total {
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .grade-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .grade-a { background: linear-gradient(135deg, #10b981, #059669); }
+    .grade-b { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+    .grade-c { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+    .grade-d { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .grade-e { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .grade-f { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+
+    .position {
+      text-align: center;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* TEACHER REVIEW & PRINCIPAL REMARK */
+    .review-box {
+      background: linear-gradient(135deg, #f0f4ff 0%, #eff6ff 100%);
+      border: 1.5px solid var(--accent-light);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .review-box-label {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .review-box-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      font-style: italic;
+    }
+
+    .review-box-author {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 8px;
+      font-style: normal;
+      padding-top: 8px;
+      border-top: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    /* ACTIONS */
+    .report-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px solid var(--accent-light);
+    }
+
+    .action-btn {
+      padding: 10px 18px;
+      border: 2px solid;
+      background: #fff;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-btn.print {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .action-btn.print:hover {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .action-btn.download {
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .action-btn.download:hover {
+      background: var(--success);
+      color: #fff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .action-btn.share {
+      border-color: #7c3aed;
+      color: #7c3aed;
+    }
+
+    .action-btn.share:hover {
+      background: #7c3aed;
+      color: #fff;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .two-column {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        padding: 20px 16px;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .form-card,
+      .report-card {
+        border-radius: 12px;
+        padding: 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-content {
+        gap: 12px;
+      }
+
+      .header-brand img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .header-brand-text {
+        font-size: 0.95rem;
+      }
+
+      .header-actions {
+        display: none;
+      }
+
+      .form-card,
+      .report-card {
+        padding: 16px;
+      }
+
+      .form-header-text h2 {
+        font-size: 1.1rem;
+      }
+
+      .report-student-name {
+        font-size: 1.2rem;
+      }
+
+      .report-student-meta {
+        font-size: 0.85rem;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .subjects-table {
+        font-size: 0.8rem;
+      }
+
+      .subjects-table th,
+      .subjects-table td {
+        padding: 8px;
+      }
+
+      .report-actions {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media print {
+      .header,
+      .form-column,
+      .report-actions {
+        display: none;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      .report-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-content">
+      <div class="header-brand">
+        <img src="mainlogo.png" alt="ExamGuard Logo">
+        <div>
+          <div class="header-brand-text">ExamGuard</div>
+          <div class="header-brand-subtext">Institution Verification Portal</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" onclick="showHelp()">
+          <i class="fas fa-question-circle"></i> Help
+        </button>
+        <button class="header-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    <div class="two-column">
+
+      <!-- LEFT COLUMN - FORM -->
+      <div class="form-column">
+        <div class="form-card">
+          <div class="form-header">
+            <div class="form-header-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <div class="form-header-text">
+              <h2>Verify Student Report</h2>
+              <p>Enter student details to retrieve their academic record</p>
+            </div>
+          </div>
+
+          <!-- Alerts -->
+          <div class="alert alert-success" id="successAlert">
+            <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="alert-content">
+              <div class="alert-title">Success</div>
+              <div class="alert-message" id="successMessage"></div>
+            </div>
+          </div>
+
+          <div class="alert alert-error" id="errorAlert">
+            <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+            <div class="alert-content">
+              <div class="alert-title">Error</div>
+              <div class="alert-message" id="errorMessage"></div>
+            </div>
+          </div>
+
+          <div class="alert alert-warning" id="warningAlert">
+            <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="alert-content">
+              <div class="alert-title">Warning</div>
+              <div class="alert-message" id="warningMessage"></div>
+            </div>
+          </div>
+
+          <div class="alert alert-info" id="infoAlert">
+            <div class="alert-icon"><i class="fas fa-info-circle"></i></div>
+            <div class="alert-content">
+              <div class="alert-title">Information</div>
+              <div class="alert-message" id="infoMessage"></div>
+            </div>
+          </div>
+
+          <!-- FORM -->
+          <form id="verificationForm" onsubmit="handleVerification(event)">
+
+            <div class="form-group">
+              <label class="form-label">
+                School Name <span class="required">*</span>
+              </label>
+              <select class="form-select" id="schoolName" required>
+                <option value="">Select School</option>
+                <option>ExamGuard International School</option>
+                <option>Elite Academy Lagos</option>
+                <option>Sunshine Learning Center</option>
+                <option>Heritage College</option>
+                <option>Future Leaders Academy</option>
+              </select>
+              <div class="form-error" id="schoolName-error"></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">
+                  Registration Number <span class="required">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  id="regNo" 
+                  placeholder="e.g., EG-2024-001234"
+                  required
+                  autocomplete="off"
+                >
+                <div class="form-hint">Found on student's ID card</div>
+                <div class="form-error" id="regNo-error"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  Scratch Card Code <span class="required">*</span>
+                </label>
+                <input 
+                  type="password" 
+                  class="form-input" 
+                  id="scratchCard" 
+                  placeholder="••••••••••"
+                  required
+                  autocomplete="off"
+                >
+                <div class="form-hint">Verification code on report</div>
+                <div class="form-error" id="scratchCard-error"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">
+                  Academic Year <span class="required">*</span>
+                </label>
+                <select class="form-select" id="academicYear" required>
+                  <option value="">Select Year</option>
+                  <option>2027-2028</option>
+                  <option>2026-2027</option>
+                  <option>2025-2026</option>
+                  <option>2024-2025</option>
+                  <option>2023-2024</option>
+                </select>
+                <div class="form-error" id="academicYear-error"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  Term <span class="required">*</span>
+                </label>
+                <select class="form-select" id="term" required>
+                  <option value="">Select Term</option>
+                  <option>FIRST TERM</option>
+                  <option>SECOND TERM</option>
+                  <option>THIRD TERM</option>
+                </select>
+                <div class="form-error" id="term-error"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Class <span class="required">*</span>
+              </label>
+              <select class="form-select" id="classLevel" required>
+                <option value="">Select Class</option>
+                <optgroup label="Primary">
+                  <option>Primary 1</option>
+                  <option>Primary 2</option>
+                  <option>Primary 3</option>
+                  <option>Primary 4</option>
+                  <option>Primary 5</option>
+                  <option>Primary 6</option>
+                </optgroup>
+                <optgroup label="Secondary">
+                  <option>JSS1</option>
+                  <option>JSS2</option>
+                  <option>JSS3</option>
+                  <option>SS1</option>
+                  <option>SS2</option>
+                  <option>SS3</option>
+                </optgroup>
+              </select>
+              <div class="form-error" id="classLevel-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Student Full Name <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-input" 
+                id="studentName" 
+                placeholder="Enter student's full name"
+                required
+                autocomplete="off"
+              >
+              <div class="form-hint">Must match official school records</div>
+              <div class="form-error" id="studentName-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Purpose of Verification <span class="required">*</span>
+              </label>
+              <select class="form-select" id="verificationPurpose" required>
+                <option value="">Select Purpose</option>
+                <option value="admission">University/School Admission</option>
+                <option value="employment">Employment Verification</option>
+                <option value="scholarship">Scholarship Application</option>
+                <option value="transfer">School Transfer</option>
+                <option value="government">Government Registration</option>
+                <option value="other">Other Purpose</option>
+              </select>
+              <div class="form-error" id="verificationPurpose-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Institution/Organization <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-input" 
+                id="institutionName" 
+                placeholder="Your institution or organization name"
+                required
+                autocomplete="off"
+              >
+              <div class="form-hint">For audit and verification records</div>
+              <div class="form-error" id="institutionName-error"></div>
+            </div>
+
+            <button type="submit" class="form-submit" id="submitBtn">
+              <i class="fas fa-check-circle"></i> Verify Report
+            </button>
+
+            <p style="text-align: center; margin-top: 14px; font-size: 0.85rem; color: var(--text-light);">
+              <i class="fas fa-lock"></i> All data is encrypted and secure
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN - REPORT DISPLAY -->
+      <div class="report-column">
+        <!-- Empty State -->
+        <div class="report-empty" id="reportEmpty">
+          <div class="report-empty-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <h3>No Report Selected</h3>
+          <p>Enter student details on the left and click "Verify Report" to view their academic record</p>
+        </div>
+
+        <!-- Report Card (Hidden by default) -->
+        <div class="report-card" id="reportCard" style="display: none;">
+
+          <!-- Report Header -->
+          <div class="report-header">
+            <div class="report-header-info">
+              <h1 class="report-student-name" id="reportStudentName">Student Name</h1>
+              <div class="report-student-meta">
+                <div class="report-student-meta-item">
+                  <i class="fas fa-id-card"></i>
+                  <span id="reportRegNo">REG: N/A</span>
+                </div>
+                <div class="report-student-meta-item">
+                  <i class="fas fa-school"></i>
+                  <span id="reportSchoolName">School: N/A</span>
+                </div>
+                <div class="report-student-meta-item">
+                  <i class="fas fa-calendar"></i>
+                  <span id="reportYear">Year: N/A</span>
+                </div>
+              </div>
+            </div>
+            <div class="verification-badge verification-verified" id="verificationBadge">
+              <i class="fas fa-check-circle"></i>
+              <span>Verified</span>
+            </div>
+          </div>
+
+          <!-- Report Body -->
+          <div class="report-body">
+
+            <!-- Academic Summary -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-chart-bar"></i> Academic Summary
+              </h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-item-label">Term</div>
+                  <div class="info-item-value" id="reportTerm">N/A</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Class</div>
+                  <div class="info-item-value" id="reportClass">N/A</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Total Score</div>
+                  <div class="info-item-value" id="reportTotalScore">0</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Average Score</div>
+                  <div class="info-item-value" id="reportAverageScore">0.00</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Highest Score</div>
+                  <div class="info-item-value" id="reportHighestScore">0</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Overall Grade</div>
+                  <div class="info-item-value grade" id="reportGrade">-</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subject Breakdown -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-book"></i> Subject Performance
+              </h3>
+              <div style="overflow-x: auto;">
+                <table class="subjects-table">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>CA1</th>
+                      <th>CA2</th>
+                      <th>Midterm</th>
+                      <th>Exam</th>
+                      <th>Total</th>
+                      <th>Grade</th>
+                      <th>Position</th>
+                    </tr>
+                  </thead>
+                  <tbody id="subjectsTableBody">
+                    <tr>
+                      <td colspan="8" style="text-align: center; padding: 20px;">No subject data</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Affective Skills -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-heart"></i> Affective Skills Assessment
+              </h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-item-label">Punctuality</div>
+                  <div class="info-item-value" id="skillsPunctuality">Excellent</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Obedience</div>
+                  <div class="info-item-value" id="skillsObedience">Very Good</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Honesty</div>
+                  <div class="info-item-value" id="skillsHonesty">Good</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Cleanliness</div>
+                  <div class="info-item-value" id="skillsCleanliness">Good</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Initiative</div>
+                  <div class="info-item-value" id="skillsInitiative">Very Good</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Cooperation</div>
+                  <div class="info-item-value" id="skillsCooperation">Excellent</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Attendance -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-calendar-check"></i> Attendance
+              </h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-item-label">Total Days Present</div>
+                  <div class="info-item-value" id="attendancePresent">95</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Total Days Absent</div>
+                  <div class="info-item-value" id="attendanceAbsent">2</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Attendance Rate</div>
+                  <div class="info-item-value" id="attendanceRate">97.9%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Teacher's Comments -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-chalkboard-user"></i> Teacher's Comments
+              </h3>
+              <div class="review-box">
+                <div class="review-box-label">
+                  <i class="fas fa-quote-left"></i> Class Teacher
+                </div>
+                <div class="review-box-content" id="teacherComment">
+                  [Student comment will appear here]
+                </div>
+                <div class="review-box-author" id="teacherName">Teacher Name</div>
+              </div>
+            </div>
+
+            <!-- Principal's Remark -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-crown"></i> Principal's Remark
+              </h3>
+              <div class="review-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #f0fdf4 100%); border-color: #86efac;">
+                <div class="review-box-label" style="color: #166534;">
+                  <i class="fas fa-quote-left"></i> Principal's Office
+                </div>
+                <div class="review-box-content" id="principalRemark">
+                  [Principal's remark will appear here]
+                </div>
+                <div class="review-box-author" id="principalName">Principal Name</div>
+              </div>
+            </div>
+
+            <!-- Verification Info -->
+            <div class="report-section">
+              <h3 class="report-section-title">
+                <i class="fas fa-shield-alt"></i> Verification Information
+              </h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-item-label">Verification Code</div>
+                  <div class="info-item-value" style="font-family: 'Courier New', monospace; font-size: 0.9rem;" id="reportVerificationCode">VER-000000</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Issue Date</div>
+                  <div class="info-item-value" id="reportIssueDate">N/A</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Verification Status</div>
+                  <div class="info-item-value" id="reportVerificationStatus" style="color: #16a34a;">Verified ✓</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="report-actions">
+              <button class="action-btn print" onclick="printReport()">
+                <i class="fas fa-print"></i> Print Report
+              </button>
+              <button class="action-btn download" onclick="downloadReport()">
+                <i class="fas fa-download"></i> Download PDF
+              </button>
+              <button class="action-btn share" onclick="shareReport()">
+                <i class="fas fa-share-alt"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ============ CONFIGURATION ============
+    const API_BASE_URL = "https://examguard-8rxe.onrender.com";
+
+    // ============ STATE ============
+    let currentReport = null;
+
+    // ============ EVENT LISTENERS ============
+    document.getElementById('verificationForm').addEventListener('submit', handleVerification);
+
+    // ============ MAIN VERIFICATION FUNCTION ============
+    async function handleVerification(event) {
+      event.preventDefault();
+
+      const schoolName = document.getElementById('schoolName').value;
+      const regNo = document.getElementById('regNo').value.trim();
+      const scratchCard = document.getElementById('scratchCard').value.trim();
+      const academicYear = document.getElementById('academicYear').value;
+      const term = document.getElementById('term').value;
+      const classLevel = document.getElementById('classLevel').value;
+      const studentName = document.getElementById('studentName').value.trim();
+      const verificationPurpose = document.getElementById('verificationPurpose').value;
+      const institutionName = document.getElementById('institutionName').value.trim();
+
+      // Validation
+      if (!validateForm()) {
+        return;
+      }
+
+      try {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Verifying...';
+
+        // Simulate API call
+        const response = await simulateVerification({
+          schoolName,
+          regNo,
+          scratchCard,
+          academicYear,
+          term,
+          classLevel,
+          studentName,
+          verificationPurpose,
+          institutionName
+        });
+
+        if (response.verified) {
+          currentReport = response;
+          displayReport(response);
+          showAlert('success', 'Report verified successfully!');
+        } else {
+          showAlert('error', 'Verification failed. Please check your details and try again.');
+        }
+      } catch (error) {
+        console.error('Verification error:', error);
+        showAlert('error', 'An error occurred. Please try again later.');
+      } finally {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Report';
+      }
+    }
+
+    // ============ VALIDATION ============
+    function validateForm() {
+      let isValid = true;
+      const fields = ['schoolName', 'regNo', 'scratchCard', 'academicYear', 'term', 'classLevel', 'studentName', 'verificationPurpose', 'institutionName'];
+
+      fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        const errorEl = document.getElementById(fieldId + '-error');
+        
+        if (!field.value.trim()) {
+          field.classList.add('error');
+          if (errorEl) {
+            errorEl.textContent = 'This field is required';
+            errorEl.classList.add('show');
+          }
+          isValid = false;
+        } else {
+          field.classList.remove('error');
+          if (errorEl) {
+            errorEl.classList.remove('show');
+          }
+        }
+      });
+
+      return isValid;
+    }
+
+    // Clear error on input
+    document.querySelectorAll('.form-input, .form-select').forEach(field => {
+      field.addEventListener('input', function() {
+        this.classList.remove('error');
+        const errorEl = document.getElementById(this.id + '-error');
+        if (errorEl) {
+          errorEl.classList.remove('show');
+        }
+      });
+    });
+
+    // ============ DISPLAY REPORT ============
+    function displayReport(data) {
+      // Hide empty state, show report
+      document.getElementById('reportEmpty').style.display = 'none';
+      document.getElementById('reportCard').style.display = 'block';
+
+      // Header Info
+      document.getElementById('reportStudentName').textContent = data.studentName;
+      document.getElementById('reportRegNo').textContent = `REG: ${data.regNo}`;
+      document.getElementById('reportSchoolName').textContent = `School: ${data.schoolName}`;
+      document.getElementById('reportYear').textContent = `Year: ${data.academicYear}`;
+
+      // Summary
+      document.getElementById('reportTerm').textContent = data.term;
+      document.getElementById('reportClass').textContent = data.classLevel;
+      document.getElementById('reportTotalScore').textContent = data.totalScore;
+      document.getElementById('reportAverageScore').textContent = data.averageScore.toFixed(2);
+      document.getElementById('reportHighestScore').textContent = data.highestScore;
+      
+      const gradeElement = document.getElementById('reportGrade');
+      gradeElement.textContent = data.grade;
+      gradeElement.className = `info-item-value grade grade-${data.grade.toLowerCase()}`;
+
+      // Subjects Table
+      const tableBody = document.getElementById('subjectsTableBody');
+      tableBody.innerHTML = '';
+      data.subjects.forEach(subject => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="subject-name">${subject.name}</td>
+          <td class="score">${subject.ca1 || '-'}</td>
+          <td class="score">${subject.ca2 || '-'}</td>
+          <td class="score">${subject.midterm || '-'}</td>
+          <td class="score">${subject.exam || '-'}</td>
+          <td class="score score-total">${subject.total}</td>
+          <td style="text-align: center;"><span class="grade-badge grade-${subject.grade.toLowerCase()}">${subject.grade}</span></td>
+          <td class="position">${subject.position}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+      // Skills
+      document.getElementById('skillsPunctuality').textContent = data.skills.punctuality;
+      document.getElementById('skillsObedience').textContent = data.skills.obedience;
+      document.getElementById('skillsHonesty').textContent = data.skills.honesty;
+      document.getElementById('skillsCleanliness').textContent = data.skills.cleanliness;
+      document.getElementById('skillsInitiative').textContent = data.skills.initiative;
+      document.getElementById('skillsCooperation').textContent = data.skills.cooperation;
+
+      // Attendance
+      document.getElementById('attendancePresent').textContent = data.attendance.present;
+      document.getElementById('attendanceAbsent').textContent = data.attendance.absent;
+      document.getElementById('attendanceRate').textContent = data.attendance.rate + '%';
+
+      // Comments & Remarks
+      document.getElementById('teacherComment').textContent = data.teacherComment;
+      document.getElementById('teacherName').innerHTML = `<strong>Teacher:</strong> ${data.teacherName}`;
+      document.getElementById('principalRemark').textContent = data.principalRemark;
+      document.getElementById('principalName').innerHTML = `<strong>Principal:</strong> ${data.principalName}`;
+
+      // Verification Info
+      document.getElementById('reportVerificationCode').textContent = data.verificationCode;
+      document.getElementById('reportIssueDate').textContent = new Date(data.issueDate).toLocaleDateString();
+
+      // Scroll to report
+      setTimeout(() => {
+        document.getElementById('reportCard').scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+
+    // ============ MOCK DATA / SIMULATION ============
+    function simulateVerification(formData) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            verified: true,
+            studentName: formData.studentName,
+            regNo: formData.regNo,
+            schoolName: formData.schoolName,
+            academicYear: formData.academicYear,
+            term: formData.term,
+            classLevel: formData.classLevel,
+            verificationCode: 'VER-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+            issueDate: new Date(),
+            totalScore: 745,
+            averageScore: 74.5,
+            highestScore: 92,
+            grade: 'A',
+            subjects: [
+              { name: 'Mathematics', ca1: 15, ca2: 16, midterm: 18, exam: 45, total: 94, grade: 'A', position: '1st' },
+              { name: 'English Language', ca1: 14, ca2: 15, midterm: 17, exam: 43, total: 89, grade: 'A', position: '2nd' },
+              { name: 'Science', ca1: 16, ca2: 17, midterm: 19, exam: 44, total: 96, grade: 'A', position: '1st' },
+              { name: 'Social Studies', ca1: 13, ca2: 14, midterm: 16, exam: 41, total: 84, grade: 'B', position: '3rd' },
+              { name: 'Civic Education', ca1: 14, ca2: 15, midterm: 17, exam: 42, total: 88, grade: 'A', position: '2nd' },
+              { name: 'Physical Education', ca1: 17, ca2: 18, midterm: 19, exam: 42, total: 96, grade: 'A', position: '1st' },
+              { name: 'Computer Studies', ca1: 15, ca2: 16, midterm: 18, exam: 46, total: 95, grade: 'A', position: '1st' },
+              { name: 'Fine Arts', ca1: 16, ca2: 17, midterm: 18, exam: 44, total: 95, grade: 'A', position: '1st' },
+              { name: 'Music', ca1: 14, ca2: 15, midterm: 17, exam: 44, total: 90, grade: 'A', position: '2nd' }
+            ],
+            skills: {
+              punctuality: 'Excellent',
+              obedience: 'Very Good',
+              honesty: 'Excellent',
+              cleanliness: 'Good',
+              initiative: 'Very Good',
+              cooperation: 'Excellent'
+            },
+            attendance: {
+              present: 95,
+              absent: 2,
+              rate: 97.9
+            },
+            teacherComment: 'An exceptionally brilliant student with outstanding academic performance. Shows great initiative, excellent behavior, and strong leadership qualities. Continues to set a positive example for peers. Highly recommended for advanced placement programs.',
+            teacherName: 'Mrs. Chioma Okafor',
+            principalRemark: 'An exemplary student demonstrating exceptional excellence across all aspects of school life. Commendable dedication to studies, impeccable conduct, and outstanding character. Represents our school values perfectly. We are proud of this student\'s achievements and progress.',
+            principalName: 'Prof. Adebayo Adeleke'
+          });
+        }, 1200);
+      });
+    }
+
+    // ============ ALERT FUNCTION ============
+    function showAlert(type, message) {
+      // Hide all alerts
+      document.querySelectorAll('.alert').forEach(alert => {
+        alert.classList.remove('show');
+      });
+
+      const alertEl = document.getElementById(type + 'Alert');
+      if (!alertEl) return;
+
+      const messageEl = alertEl.querySelector('[id$="Message"]');
+      if (messageEl) {
+        messageEl.textContent = message;
+      }
+
+      alertEl.classList.add('show');
+
+      // Auto-hide
+      setTimeout(() => {
+        alertEl.classList.remove('show');
+      }, 6000);
+    }
+
+    // ============ ACTION FUNCTIONS ============
+    function printReport() {
+      window.print();
+    }
+
+    function downloadReport() {
+      if (!currentReport) return;
+      
+      const content = generatePDFContent(currentReport);
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Report_${currentReport.regNo}_${new Date().getTime()}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      showAlert('success', 'Report downloaded successfully!');
+    }
+
+    function shareReport() {
+      const reportUrl = `${window.location.origin}?report=${currentReport.verificationCode}`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: `${currentReport.studentName}'s Academic Report`,
+          text: `Verified report for ${currentReport.studentName}`,
+          url: reportUrl
+        }).catch(err => console.log('Share error:', err));
+      } else {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = reportUrl;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showAlert('success', 'Report link copied to clipboard!');
+      }
+    }
+
+    function generatePDFContent(report) {
+      return `
+╔════════════════════════════════════════════════════════════════════════════╗
+║                        STUDENT ACADEMIC REPORT                             ║
+║                    ExamGuard Institution Verification                       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+STUDENT INFORMATION
+─────────────────────────────────────────────────────────────────────────────
+Name:                    ${report.studentName}
+Registration Number:     ${report.regNo}
+School:                  ${report.schoolName}
+Class:                   ${report.classLevel}
+Academic Year:           ${report.academicYear}
+Term:                    ${report.term}
+
+ACADEMIC PERFORMANCE SUMMARY
+─────────────────────────────────────────────────────────────────────────────
+Total Score:             ${report.totalScore}
+Average Score:           ${report.averageScore.toFixed(2)}
+Highest Subject Score:   ${report.highestScore}
+Overall Grade:           ${report.grade}
+
+VERIFICATION DETAILS
+─────────────────────────────────────────────────────────────────────────────
+Verification Code:       ${report.verificationCode}
+Issue Date:              ${new Date(report.issueDate).toLocaleDateString()}
+Status:                  ✓ VERIFIED
+
+AFFECTIVE SKILLS
+─────────────────────────────────────────────────────────────────────────────
+Punctuality:             ${report.skills.punctuality}
+Obedience:               ${report.skills.obedience}
+Honesty:                 ${report.skills.honesty}
+Cleanliness:             ${report.skills.cleanliness}
+Initiative:              ${report.skills.initiative}
+Cooperation:             ${report.skills.cooperation}
+
+ATTENDANCE RECORD
+─────────────────────────────────────────────────────────────────────────────
+Days Present:            ${report.attendance.present}
+Days Absent:             ${report.attendance.absent}
+Attendance Rate:         ${report.attendance.rate}%
+
+TEACHER'S COMMENT
+─────────────────────────────────────────────────────────────────────────────
+${report.teacherComment}
+                         - ${report.teacherName}
+
+PRINCIPAL'S REMARK
+─────────────────────────────────────────────────────────────────────────────
+${report.principalRemark}
+                         - ${report.principalName}
+
+═════════════════════════════════════════════════════════════════════════════
+This is an officially verified document from ExamGuard.
+For inquiries, contact your school administration.
+═════════════════════════════════════════════════════════════════════════════
+      `;
+    }
+
+    function showHelp() {
+      alert('How to Verify:\n\n1. Select the student\'s school\n2. Enter their registration number\n3. Enter the scratch card code from their report\n4. Select the academic year, term, and class\n5. Enter the student\'s full name\n6. Select the purpose of verification\n7. Enter your institution name\n8. Click "Verify Report"\n\nAll fields are required for verification.');
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        alert('Logged out successfully');
+        // Redirect to login page
+      }
+    }
+  </script>
+
+</body>
+</html>
