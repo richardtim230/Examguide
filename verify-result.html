@@ -1347,7 +1347,7 @@
 
   <script>
     // ============ API CONFIGURATION ============
-    const API_BASE_URL = "https://examgide.onrender.com";
+    const API_BASE_URL = "https://examguard-8rxe.onrender.com";
     const SCHOOL_NAME = "ExamGuard International School";
     const token = localStorage.getItem('authToken') || '';
 
@@ -1448,7 +1448,7 @@
         const classId = document.getElementById('filterClass').value;
         const cloudStatus = document.getElementById('filterCloudStatus').value;
 
-        let url = `${API_BASE_URL}/api/school/student-results`;
+        let url = `${API_BASE_URL}/api/results`;
         const params = new URLSearchParams();
 
         if (yearId) params.append('yearId', yearId);
